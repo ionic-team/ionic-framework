@@ -4,14 +4,14 @@
 .tabbar-md {
   height: $tabs-md-tab-height;
 
-  border-top: 1px solid $tabs-md-border-color;
-  background: $tabs-md-background-color;
+  border-top: 1px solid $tabbar-md-border-color;
+  background: $tabbar-md-background-color;
 
   contain: strict;
 }
 
 .tabbar-md .tabbar-highlight {
-  background: $tabs-md-tab-color-active;
+  background: $tabbar-md-text-color-active;
 }
 
 // Material Design Tab Button

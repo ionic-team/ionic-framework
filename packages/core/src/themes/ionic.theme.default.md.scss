@@ -24,10 +24,10 @@ $text-md-color:                         css-var($text-color, text-md-color) !def
 
 // Material Design Tabs & Tab bar
 // --------------------------------------------------
-$tabs-md-background-color:              css-var($tabs-background-color, tabs-md-background-color) !default;
-$tabs-md-border-color:                  css-var(rgba(0, 0, 0, .07), tabs-md-border-color) !default;
-$tabs-md-tab-color-inactive:            css-var(#rgba(60, 60, 60, 0.7), tabs-md-tab-color-inactive) !default;
-$tabs-md-tab-color-active:              css-var($tabs-tab-color-active, tabs-md-tab-color-active) !default;
+$tabbar-md-background-color:            css-var($tabbar-background-color, tabbar-md-background-color) !default;
+$tabbar-md-border-color:                css-var(rgba(0, 0, 0, .07), tabbar-md-border-color) !default;
+$tabbar-md-text-color:                  css-var(#rgba(60, 60, 60, 0.7), tabbar-md-text-color) !default;
+$tabbar-md-text-color-active:           css-var($tabbar-text-color-active, tabbar-md-text-color-active) !default;
 
 // Material Design Toolbar
 // --------------------------------------------------
@@ -41,7 +41,7 @@ $toolbar-md-text-color:                 css-var(#424242, toolbar-md-text-color) 
 
 // Material Design List & List Items
 // --------------------------------------------------
-$list-md-background-color:              css-var($list-background-color, list-md-background-color) !default;
-$list-md-background-color-active:       css-var(#f1f1f1, list-md-background-color-active) !default;
-$list-md-border-color:                  css-var(#dedede, list-md-border-color) !default;
-$list-md-text-color:                    css-var($list-text-color, list-md-text-color) !default;
+$item-md-background-color:              css-var($item-background-color, item-md-background-color) !default;
+$item-md-background-color-active:       css-var(#f1f1f1, item-md-background-color-active) !default;
+$item-md-border-color:                  css-var(#dedede, item-md-border-color) !default;
+$item-md-border-color:                  css-var($item-border-color, item-md-border-color) !default;

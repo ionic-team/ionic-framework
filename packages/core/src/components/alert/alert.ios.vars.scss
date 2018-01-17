@@ -249,13 +249,13 @@ $alert-ios-checkbox-border-style:               solid !default;
 $alert-ios-checkbox-border-radius:              50% !default;
 
 /// @prop - Border color of the checkbox in the alert when off
-$alert-ios-checkbox-border-color-off:           $list-ios-border-color !default;
+$alert-ios-checkbox-border-color-off:           $item-ios-border-color !default;
 
 /// @prop - Border color of the checkbox in the alert when on
 $alert-ios-checkbox-border-color-on:            ion-color($colors-ios, primary, base, ios) !default;
 
 /// @prop - Background color of the checkbox in the alert when off
-$alert-ios-checkbox-background-color-off:       $list-ios-background-color !default;
+$alert-ios-checkbox-background-color-off:       $item-ios-background-color !default;
 
 /// @prop - Background color of the checkbox in the alert when on
 $alert-ios-checkbox-background-color-on:        ion-color($colors-ios, primary, base, ios) !default;

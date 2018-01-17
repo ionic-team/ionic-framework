@@ -28,7 +28,7 @@ $item-md-thumbnail-height:           $item-md-thumbnail-width !default;
 $item-md-detail-push-show:           false !default;
 
 /// @prop - Color of the detail arrow icon
-$item-md-detail-push-color:          $list-md-border-color !default;
+$item-md-detail-push-color:          $item-md-border-color !default;
 
 /// @prop - Icon for the detail arrow
 $item-md-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-md-detail-push-color}'/></svg>" !default;

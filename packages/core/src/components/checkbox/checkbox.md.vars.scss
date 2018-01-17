@@ -9,7 +9,7 @@
 $checkbox-md-disabled-opacity:           .3 !default;
 
 /// @prop - Background color of the checkbox icon when off
-$checkbox-md-icon-background-color-off:  $list-md-background-color !default;
+$checkbox-md-icon-background-color-off:  $item-md-background-color !default;
 
 /// @prop - Background color of the checkbox icon when on
 $checkbox-md-icon-background-color-on:   ion-color($colors-md, primary, base, md) !default;

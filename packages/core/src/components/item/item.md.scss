@@ -14,14 +14,14 @@
   font-weight: normal;
   text-transform: none;
 
-  color: $list-md-text-color;
-  background-color: $list-md-background-color;
+  color: $item-md-border-color;
+  background-color: $item-md-background-color;
   box-shadow: none;
   transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
 }
 
 .item-md.activated {
-  background-color: $list-md-background-color-active;
+  background-color: $item-md-background-color-active;
 }
 
 .item-md[no-lines] {
@@ -67,7 +67,7 @@
 .item-md.item-block .item-inner {
   @include padding-horizontal(null, ($item-md-padding-end / 2));
 
-  border-bottom: 1px solid $list-md-border-color;
+  border-bottom: 1px solid $item-md-border-color;
 }
 
 

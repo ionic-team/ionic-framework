@@ -10,7 +10,7 @@
   height: $tabs-ios-tab-height;
 
   border-top: $tabs-ios-border;
-  background-color: $tabs-ios-background-color;
+  background-color: $tabbar-ios-background-color;
 
   contain: strict;
 }
@@ -21,7 +21,7 @@
 }
 
 .tabbar-ios .tabbar-highlight {
-  background: $tabs-ios-tab-color-active;
+  background: $tabbar-ios-text-color-active;
 }
 
 .tabbar-ios > ion-tab-button {
@@ -104,7 +104,7 @@
 // --------------------------------------------------
 
 .tabbar-translucent-ios {
-  background-color: $tabs-ios-translucent-background-color;
+  background-color: $tabbar-ios-translucent-background-color;
 
   -webkit-backdrop-filter: $tabbar-ios-translucent-filter;
   backdrop-filter: $tabbar-ios-translucent-filter;

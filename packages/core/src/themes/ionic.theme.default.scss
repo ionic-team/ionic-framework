@@ -80,10 +80,10 @@ $link-color:                            css-var(ion-color($colors, primary, base
 
 // Default Tabs & Tab bar
 // --------------------------------------------------
-$tabs-background-color:                 css-var(#f8f8f8, tabs-background-color) !default;
-$tabs-border-color:                     $border-color !default;
-$tabs-tab-color-active:                 css-var($link-color, tabs-tab-color-active) !default;
-$tabs-tab-color-inactive:               css-var(#8c8c8c, tabs-tab-color-inactive) !default;
+$tabbar-background-color:               css-var(#f8f8f8, tabbar-background-color) !default;
+$tabbar-border-color:                   $border-color !default;
+$tabbar-text-color-active:              css-var($link-color, tabbar-text-color-active) !default;
+$tabbar-text-color:                     css-var(#8c8c8c, tabbar-text-color) !default;
 
 // Default Toolbar
 // --------------------------------------------------
@@ -95,7 +95,7 @@ $toolbar-text-color:                    $text-color !default;
 
 // Default List & List Items
 // --------------------------------------------------
-$list-background-color:                 css-var($background-color, list-background-color) !default;
-$list-background-color-active:          css-var($background-color, list-background-color-active) !default;
-$list-border-color:                     css-var(#c8c7cc, list-border-color) !default;
-$list-text-color:                       css-var($text-color, list-text-color) !default;
+$item-background-color:                 css-var($background-color, item-background-color) !default;
+$item-background-color-active:          css-var($background-color, item-background-color-active) !default;
+$item-border-color:                     css-var(#c8c7cc, item-border-color) !default;
+$item-border-color:                     css-var($text-color, item-border-color) !default;

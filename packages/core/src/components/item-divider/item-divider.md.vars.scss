@@ -15,7 +15,7 @@ $item-md-divider-background:         #fff !default;
 $item-md-divider-font-size:          14px !default;
 
 /// @prop - Border bottom for the divider
-$item-md-divider-border-bottom:      1px solid $list-md-border-color !default;
+$item-md-divider-border-bottom:      1px solid $item-md-border-color !default;
 
 /// @prop - Padding start for the divider
 $item-md-divider-padding-start:      $item-md-padding-start !default;

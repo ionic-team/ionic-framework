@@ -10,7 +10,7 @@ $picker-ios-font-family:                       $font-family-ios-base !default;
 $picker-ios-height:                               260px !default;
 
 /// @prop - Border color of the picker wrapper
-$picker-ios-border-color:                         $list-ios-border-color !default;
+$picker-ios-border-color:                         $item-ios-border-color !default;
 
 /// @prop - Background Color of the picker wrapper
 $picker-ios-background-color:                     #fff !default;
@@ -82,7 +82,7 @@ $picker-ios-option-padding-bottom:                $picker-ios-option-padding-top
 $picker-ios-option-padding-start:                 $picker-ios-option-padding-end !default;
 
 /// @prop - Text color of the picker option
-$picker-ios-option-text-color:                    $list-ios-text-color !default;
+$picker-ios-option-text-color:                    $item-ios-border-color !default;
 
 /// @prop - Font size of the picker option
 $picker-ios-option-font-size:                     20px !default;

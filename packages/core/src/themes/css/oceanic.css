@@ -44,16 +44,16 @@
   --box-shadow-color: #000000;
   --link-color: var(--color-primary);
   --text-color: #ffffff;
-  --tabs-background-color: #343d46;
-  --tabs-tab-color-inactive: #a7adba;
-  --tabs-tab-color-active: #549ee7;
+  --tabbar-background-color: #343d46;
+  --tabbar-text-color: #a7adba;
+  --tabbar-text-color-active: #549ee7;
   --toolbar-background-color: #343d46;
   --toolbar-border-color: var(--border-color);
   --toolbar-color-active: var(--link-color);
   --toolbar-color-inactive: #a7adba;
   --toolbar-text-color: var(--text-color);
-  --list-background-color: #343d46;
-  --list-background-color-active: #232b34;
-  --list-border-color: var(--border-color);
-  --list-text-color: var(--text-color);
+  --item-background-color: #343d46;
+  --item-background-color-active: #232b34;
+  --item-border-color: var(--border-color);
+  --item-border-color: var(--text-color);
 }
