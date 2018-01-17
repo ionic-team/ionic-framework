@@ -188,9 +188,19 @@ export class Select extends BaseInput<any> implements OnDestroy {
   @Input() cancelText: string = 'Cancel';
 
   /**
+   * @input {string} The text of the Cancel ID. Default: `cancel-button`.
+   */
+  @Input() cancelId: string = 'cancel-button';
+
+  /**
    * @input {string} The text to display on the ok button. Default: `OK`.
    */
   @Input() okText: string = 'OK';
+
+  /**
+   * @input {string} The text of the OK ID. Default: `ok-button`.
+   */
+  @Input() okId: string = 'ok-button';
 
   /**
    * @input {string} The text to display when the select is empty.
@@ -285,7 +295,8 @@ export class Select extends BaseInput<any> implements OnDestroy {
       role: 'cancel',
       handler: () => {
         this.ionCancel.emit(this);
-      }
+      },
+      id: this.cancelId
     }];
 
     // if the selectOptions didn't provide a title then use the label's text
@@ -396,7 +407,8 @@ export class Select extends BaseInput<any> implements OnDestroy {
 
       (overlay as Alert).addButton({
         text: this.okText,
-        handler: (selectedValues: any) => this.value = selectedValues
+        handler: (selectedValues: any) => this.value = selectedValues,
+        id: this.okId
       });
 
     }

@@ -59,7 +59,7 @@ import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
 
       '</div>' +
       '<div class="alert-button-group" [ngClass]="{\'alert-button-group-vertical\':d.buttons.length>2}">' +
-        '<button ion-button="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">' +
+        '<button id="{{b.id}}" ion-button="alert-button" *ngFor="let b of d.buttons" (click)="btnClick(b)" [ngClass]="b.cssClass">' +
           '{{b.text}}' +
         '</button>' +
       '</div>' +
@@ -135,6 +135,7 @@ export class AlertCmp {
     const data = this.d;
 
     data.buttons = data.buttons.map(button => {
+      console.log(button);
       if (typeof button === 'string') {
         return { text: button };
       }
