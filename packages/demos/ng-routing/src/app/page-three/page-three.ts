@@ -26,7 +26,7 @@ export class PageThree {
 
   navPop() {
     // this.navController.pop();
-    this.router.navigateByUrl('/page-two');
+    this.router.navigateByUrl('/page-two/section-two');
   }
 
 }

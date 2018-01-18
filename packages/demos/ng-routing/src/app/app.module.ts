@@ -6,21 +6,18 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { IonicAngularModule } from '@ionic/angular';
 
-import { IonicRouterOutlet } from './ionic-router-outlet';
-import { RouterIntegration } from './router-integration';
+import { IonicRouterModule } from '../custom/ionic-router.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    IonicRouterOutlet
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
-    IonicAngularModule.forRoot()
-  ],
-  providers: [
-    RouterIntegration
+    IonicAngularModule.forRoot(),
+    IonicRouterModule.forRoot()
   ],
   bootstrap: [
     AppComponent
