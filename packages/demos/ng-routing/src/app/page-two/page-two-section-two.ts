@@ -8,11 +8,11 @@ import { NavController } from '@ionic/angular';
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Page Two Section One</ion-title>
+        <ion-title>Page Two Section Two</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
-      Page Two Section One
+      Page Two Section Two
       <ion-button (click)="pushPageTwoComponent()">Go to Page Three</ion-button>
       <ion-button (click)="goBack()">Go Back</ion-button>
     </ion-content>

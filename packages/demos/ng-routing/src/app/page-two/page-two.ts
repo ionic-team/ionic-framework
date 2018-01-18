@@ -6,8 +6,8 @@ import { NavController } from '@ionic/angular';
 @Component({
   selector: 'page-two',
   template: `
-  <ion-outlet></ion-outlet>
-  <!-- <router-outlet></router-outlet> -->
+  <!-- <ion-outlet></ion-outlet> -->
+  <router-outlet></router-outlet>
   `
 })
 export class PageTwo {

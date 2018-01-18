@@ -1,78 +1,131 @@
 import {
-  AfterViewInit,
-  ApplicationRef,
   Attribute,
   ChangeDetectorRef,
   ComponentFactoryResolver,
   ComponentRef,
   Directive,
   ElementRef,
+  EventEmitter,
   Injector,
+  OnDestroy,
   OnInit,
-  ViewContainerRef,
+  Output,
+  Type,
+  ViewContainerRef
 } from '@angular/core';
 
-import {
-  PRIMARY_OUTLET,
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-  ChildrenOutletContexts,
-  NavigationStart,
-  NavigationEnd,
-  Router,
-  RouterOutlet
-} from '@angular/router';
+import { PRIMARY_OUTLET, ActivatedRoute, ChildrenOutletContexts } from '@angular/router';
 
-import { RouterIntegration } from './router-integration';
-
-import { filter, map } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
+import { RouterDelegate } from './router-delegate';
+import { AngularMountingData } from '@ionic/angular';
 
 @Directive({
-  selector: 'ion-outlet'
+  selector: 'ion-outlet',
 })
-export class IonicRouterOutlet extends RouterOutlet {
+export class IonicRouterOutlet implements OnDestroy, OnInit {
 
-  private componentRef: ComponentRef<any>;
-  private _activated: any;
+  public name: string;
+  public activationStatus = NOT_ACTIVATED;
+  public componentConstructor: Type<any> = null;
+  public componentInstance: any = null;
+  public activatedRoute: ActivatedRoute = null;
+  public activatedRouteData: any = {};
+  public activeComponentRef: ComponentRef<any> = null;
+
+  @Output('activate') activateEvents = new EventEmitter<any>();
+  @Output('deactivate') deactivateEvents = new EventEmitter<any>();
 
   constructor(
-    private appRef: ApplicationRef,
-    private elementRef: ElementRef,
-    private _parentContexts: ChildrenOutletContexts,
-    private _location: ViewContainerRef,
-    private componentFactoryResolver: ComponentFactoryResolver,
-    @Attribute('name') private _name: string,
-    private _changeDetector: ChangeDetectorRef,
-    private integration: RouterIntegration,
-    private router: Router,
-    private injector: Injector
-  ) {
-    super(_parentContexts, _location, componentFactoryResolver, name, _changeDetector);
-    console.log('I am an outlet instance');
+    protected elementRef: ElementRef,
+    protected parentContexts: ChildrenOutletContexts,
+    protected location: ViewContainerRef,
+    protected resolver: ComponentFactoryResolver,
+    @Attribute('name') name: string,
+    protected changeDetector: ChangeDetectorRef,
+    protected routerComponentMounter: RouterDelegate) {
+
+      console.log('name: ', name);
+    this.name = name || PRIMARY_OUTLET;
+    parentContexts.onChildOutletCreated(this.name, this as any);
   }
 
-  activateWith(activatedRoute: ActivatedRoute, resolver: ComponentFactoryResolver) {
-    console.log('activateWith');
-    /*if (this.isActivated) {
-      throw new Error('Cannot activate an already activated outlet');
+  ngOnDestroy(): void {
+    this.parentContexts.onChildOutletDestroyed(this.name);
+  }
+
+  get isActivated(): boolean {
+    return this.activationStatus === ACTIVATION_IN_PROGRESS
+      || this.activationStatus === ACTIVATED;
+  }
+
+  ngOnInit(): void {
+    if (!this.isActivated) {
+      // If the outlet was not instantiated at the time the route got activated we need to populate
+      // the outlet when it is initialized (ie inside a NgIf)
+      const context = this.parentContexts.getContext(this.name);
+      if (context && context.route) {
+        if (context.attachRef) {
+          // `attachRef` is populated when there is an existing component to mount
+          this.attach(context.attachRef, context.route);
+        } else {
+          // otherwise the component defined in the configuration is created
+          this.activateWith(context.route, context.resolver || null);
+        }
+      }
     }
-    (this as any)._activatedRoute = activatedRoute;
+  }
+
+  get component(): Object {
+    return this.componentInstance;
+  }
+
+  detach(): ComponentRef<any> {
+    return null;
+  }
+
+  attach(ref: ComponentRef<any>, activatedRoute: ActivatedRoute) {
+  }
+
+  deactivate(): void {
+  }
+
+  activateWith(activatedRoute: ActivatedRoute, resolver: ComponentFactoryResolver|null) {
+    /*if (this.activationStatus !== NOT_ACTIVATED) {
+      return;
+    }*/
+    this.activationStatus = ACTIVATION_IN_PROGRESS;
+    this.activatedRoute = activatedRoute;
     const snapshot = (activatedRoute as any)._futureSnapshot;
-    const component = <any>snapshot.routeConfig ? snapshot.routeConfig.component : null;
-    resolver = resolver || this.componentFactoryResolver;
+    const component = snapshot.routeConfig ? snapshot.routeConfig.component : null;
+    resolver = resolver || this.resolver;
     const factory = resolver.resolveComponentFactory(component);
-    const childContexts = this._parentContexts.getOrCreateContext(this._name).children;
-    const injector = new OutletInjector(activatedRoute, childContexts, this._location.injector);
-    this._activated = this._location.createComponent(factory, this._location.length, injector);
+    const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
+    const injector = new OutletInjector(activatedRoute, childContexts, this.location.injector);
+    this.activeComponentRef = this.location.createComponent(factory, this.location.length, injector);
     // Calling `markForCheck` to make sure we will run the change detection when the
     // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
-    this._changeDetector.markForCheck();
-    this.activateEvents.emit(this._activated.instance);
-*/
-    super.activateWith(activatedRoute, resolver);
-  }
+    this.changeDetector.markForCheck();
+    this.activateEvents.emit(this.activeComponentRef.instance);
+    console.log('activateWith');
+    this.activationStatus = ACTIVATED;
 
+
+    // console.log('activateWith: ', this.activationStatus);
+    /*this.routerComponentMounter.addEntryToQueue({
+      activatedRoute,
+      componentFactoryResolver: resolver,
+      injector,
+      elementRef: this.elementRef,
+      callback: (data: AngularMountingData) => {
+        // console.log('callback!');
+        this.changeDetector.markForCheck();
+        this.activateEvents.emit(data.instance);
+        this.activationStatus = ACTIVATED;
+      }
+    });
+    */
+
+  }
 }
 
 class OutletInjector implements Injector {
@@ -92,3 +145,7 @@ class OutletInjector implements Injector {
     return this.parent.get(token, notFoundValue);
   }
 }
+
+export const NOT_ACTIVATED = 0;
+export const ACTIVATION_IN_PROGRESS = 1;
+export const ACTIVATED = 2;
