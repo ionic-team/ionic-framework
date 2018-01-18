@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PageOne } from './page-one';
 
 const routes: Routes = [
-  { path: '', component: PageOne }
+  { path: '', component: PageOne}
 ];
 
 @NgModule({

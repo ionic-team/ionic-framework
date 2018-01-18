@@ -16,6 +16,7 @@ import { PageTwo } from '../page-two/page-two';
     <ion-content padding>
       Page One
       <ion-button (click)="pushPageTwoComponent()">Go to Page Two</ion-button>
+      <a [routerLink]="[ '/page-two/section-one']">Go To Page Two</a>
     </ion-content>
   </ion-page>
   `

@@ -12,11 +12,11 @@ const routes: Routes = [
     children: [
       {
         path: 'section-one',
-        component: PageTwoSectionOne
+        component: PageTwoSectionOne,
       },
       {
         path: 'section-two',
-        component: PageTwoSectionTwo
+        component: PageTwoSectionTwo,
       }
     ]
   }

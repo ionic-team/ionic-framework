@@ -14,6 +14,7 @@ import { NavController } from '@ionic/angular';
     <ion-content padding>
       Page Two Section One
       <ion-button (click)="pushPageTwoComponent()">Go to Section Two</ion-button>
+      <ion-button (click)="goBack()">Go Back</ion-button>
     </ion-content>
   </ion-page>
   `
@@ -27,4 +28,7 @@ export class PageTwoSectionOne {
     this.router.navigateByUrl('/page-two/section-two');
   }
 
+  goBack() {
+    this.router.navigateByUrl('/page-one');
+  }
 }
