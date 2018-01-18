@@ -7,6 +7,7 @@ export { MenuToggle } from './directives/menu-toggle';
 /* Providers */
 export { ActionSheetController, ActionSheetProxy } from './providers/action-sheet-controller';
 export { AlertController, AlertProxy } from './providers/alert-controller';
+export { AngularComponentMounter } from './providers/angular-component-mounter';
 export { App } from './providers/app';
 export { Events } from './providers/events';
 export { LoadingController, LoadingProxy } from './providers/loading-controller';
@@ -16,3 +17,5 @@ export { NavController } from './providers/nav-controller';
 export { NavParams } from './providers/nav-params';
 export { PopoverController, PopoverProxy } from './providers/popover-controller';
 export { ToastController, ToastProxy } from './providers/toast-controller';
+
+export * from './types/interfaces';
