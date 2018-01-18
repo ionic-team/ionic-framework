@@ -54,7 +54,7 @@ export class IonicRouterOutlet extends RouterOutlet {
 
   activateWith(activatedRoute: ActivatedRoute, resolver: ComponentFactoryResolver) {
     console.log('activateWith');
-    if (this.isActivated) {
+    /*if (this.isActivated) {
       throw new Error('Cannot activate an already activated outlet');
     }
     (this as any)._activatedRoute = activatedRoute;
@@ -69,8 +69,8 @@ export class IonicRouterOutlet extends RouterOutlet {
     // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
     this._changeDetector.markForCheck();
     this.activateEvents.emit(this._activated.instance);
-
-    //super.activateWith(activatedRoute, resolver);
+*/
+    super.activateWith(activatedRoute, resolver);
   }
 
 }
