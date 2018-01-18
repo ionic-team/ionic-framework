@@ -2,33 +2,33 @@ import { Component, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 
-import { PageTwo } from '../page-two/page-two';
-
 @Component({
-  selector: 'page-one',
+  selector: 'page-two-section-two',
   template: `
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Page One</ion-title>
+        <ion-title>Page Two Section One</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
-      Page One
-      <ion-button (click)="pushPageTwoComponent()">Go to Page Two</ion-button>
+      Page Two Section One
+      <ion-button (click)="pushPageTwoComponent()">Go to Page Three</ion-button>
+      <ion-button (click)="goBack()">Go Back</ion-button>
     </ion-content>
   </ion-page>
   `
 })
-export class PageOne {
+export class PageTwoSectionTwo {
 
   constructor(/*private navController: NavController*/private router: Router) {
   }
 
-
   pushPageTwoComponent() {
-    // this.navController.push('/page-two');
-    this.router.navigateByUrl('/page-two/section-one');
+    this.router.navigateByUrl('/page-three');
   }
 
+  goBack() {
+    this.router.navigateByUrl('/page-two/section-one');
+  }
 }
