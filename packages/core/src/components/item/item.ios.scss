@@ -80,21 +80,30 @@
 }
 
 
-// iOS Item Media
+// iOS Item Slots
 // --------------------------------------------------
 
 .item-ios [slot="start"] {
-  @include margin($item-ios-padding-media-top, $item-ios-padding-start, $item-ios-padding-media-bottom, 0);
+  @include margin($item-ios-slot-start-margin-top, $item-ios-slot-start-margin-end, $item-ios-slot-start-margin-bottom, $item-ios-slot-start-margin-start);
 }
 
 .item-ios [slot="end"] {
-  @include margin($item-ios-padding-media-top, ($item-ios-padding-start / 2), $item-ios-padding-media-bottom, ($item-ios-padding-end / 2));
+  @include margin($item-ios-slot-end-margin-top, $item-ios-slot-end-margin-end, $item-ios-slot-end-margin-bottom, $item-ios-slot-end-margin-start);
 }
 
 .item-ios ion-icon[slot="start"],
 .item-ios ion-icon[slot="end"] {
-  @include margin($item-ios-padding-icon-top, null, $item-ios-padding-icon-bottom, 0);
+  @include margin($item-ios-icon-slot-margin-top, $item-ios-icon-slot-margin-end, $item-ios-icon-slot-margin-bottom, $item-ios-icon-slot-margin-start);
 }
+
+.item-ios.item-label-stacked [slot="end"],
+.item-ios.item-label-floating [slot="end"] {
+  @include margin($item-ios-label-slot-end-margin-top, $item-ios-label-slot-end-margin-end, $item-ios-label-slot-end-margin-bottom, $item-ios-label-slot-end-margin-start);
+}
+
+
+// TODO iOS Item Button
+// --------------------------------------------------
 
 .item-ios .item-button {
   @include padding(0, .5em);
@@ -106,21 +115,6 @@
 
 .item-ios .item-button ion-icon[slot="icon-only"] {
   @include padding(0, 1px);
-}
-
-.item-ios ion-avatar[slot="start"],
-.item-ios ion-thumbnail[slot="start"] {
-  @include margin(($item-ios-padding-end / 2), $item-ios-padding-end, ($item-ios-padding-end / 2), 0);
-}
-
-.item-ios ion-avatar[slot="end"],
-.item-ios ion-thumbnail[slot="end"] {
-  @include margin(($item-ios-padding-end / 2));
-}
-
-.item-ios.item-label-stacked [slot="end"],
-.item-ios.item-label-floating [slot="end"] {
-  @include margin($item-ios-padding-media-top - 2, null, $item-ios-padding-media-bottom - 2, null);
 }
 
 
@@ -171,14 +165,7 @@
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-  // If there is text with a color it should use this color
-  // and override whatever item sets it to
-  .item-ios .text-ios-#{$color-name} {
-    color: $color-base;
-  }
-
-  .item-ios-#{$color-name},
-  .item-divider-ios-#{$color-name} {
+  .item-ios-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
 

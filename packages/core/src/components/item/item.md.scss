@@ -89,29 +89,17 @@
 }
 
 
-// Material Design Item Media
+// Material Design Item Slots
 // --------------------------------------------------
 
 .item-md [slot="start"],
 .item-md [slot="end"] {
-  @include margin($item-md-padding-media-top, ($item-md-padding-end / 2), $item-md-padding-media-bottom, 0);
+  @include margin($item-md-slot-margin-top, $item-md-slot-margin-end, $item-md-slot-margin-bottom, $item-md-slot-margin-start);
 }
 
 .item-md ion-icon[slot="start"],
 .item-md ion-icon[slot="end"] {
-  @include margin($item-md-padding-icon-top, null, $item-md-padding-icon-bottom, 0);
-}
-
-.item-md .item-button {
-  @include padding(0, .6em);
-
-  height: 25px;
-
-  font-size: 12px;
-}
-
-.item-md .item-button ion-icon[slot="icon-only"] {
-  @include padding(0);
+  @include margin($item-md-icon-slot-margin-top, $item-md-icon-slot-margin-end, $item-md-icon-slot-margin-bottom, $item-md-icon-slot-margin-start);
 }
 
 .item-md ion-icon[slot="start"] + .item-inner,
@@ -131,9 +119,25 @@
 
 .item-md.item-label-stacked [slot="end"],
 .item-md.item-label-floating [slot="end"] {
-  @include margin($item-md-padding-media-top - 2, null, $item-md-padding-media-bottom - 2, null);
+  @include margin($item-md-label-slot-end-margin-top, $item-md-label-slot-end-margin-end, $item-md-label-slot-end-margin-bottom, $item-md-label-slot-end-margin-start);
 }
 
+
+// TODO Material Design Item Button
+// --------------------------------------------------
+
+.item-md .item-button {
+  @include padding(0, .6em);
+
+  height: 25px;
+
+  font-size: 12px;
+}
+
+.item-md .item-button ion-icon[slot="icon-only"] {
+  @include padding(0);
+
+}
 
 // Material Design Item Avatar
 // --------------------------------------------------
@@ -153,18 +157,20 @@
 }
 
 
+// Item reorder
+// --------------------------------------------------
+
+.item-md ion-reorder {
+  font-size: 1.5em;
+  opacity: .3;
+}
+
+
 // Generate Material Design Item and Item Divider Colors
 // --------------------------------------------------
 
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
-  // If there is text with a color it should use this color
-  // and override whatever item sets it to
-  .item-md .text-md-#{$color-name} {
-    color: $color-base;
-  }
-
-  .item-md-#{$color-name},
-  .item-divider-md-#{$color-name} {
+  .item-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
 
@@ -176,13 +182,4 @@
       background-color: color-shade($color-base);
     }
   }
-}
-
-
-// Item reorder
-// --------------------------------------------------
-
-.item-md ion-reorder {
-  font-size: 1.5em;
-  opacity: .3;
 }

@@ -8,7 +8,7 @@ import { Component, Prop } from '@stencil/core';
     md: 'item-divider.md.scss'
   },
   host: {
-    theme: 'item item-divider'
+    theme: 'item-divider'
   }
 })
 export class ItemDivider {
@@ -30,8 +30,8 @@ export class ItemDivider {
   render() {
     return [
       <slot name='start'></slot>,
-      <div class='item-inner'>
-        <div class='input-wrapper'>
+      <div class='item-divider-inner'>
+        <div class='item-divider-wrapper'>
           <slot></slot>
         </div>
         <slot name='end'></slot>
