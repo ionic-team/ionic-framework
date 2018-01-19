@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State } from '@stencil/core';
 import { DomController, GestureDetail } from '../../index';
 
-const enum RefresherState {
+export const enum RefresherState {
   Inactive = 1 << 0,
   Pulling = 1 << 1,
   Ready = 1 << 2,
