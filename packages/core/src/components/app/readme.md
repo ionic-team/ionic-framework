@@ -18,9 +18,15 @@
 Returns an array of top level Navs
 
 
+#### isEnabled()
+
+
 #### isScrolling()
 
-Check if the app is currently scrolling
+Boolean if the app is actively scrolling or not.
+
+
+#### setScrolling()
 
 
 

@@ -12,11 +12,6 @@
 boolean
 
 
-#### jsScroll
-
-boolean
-
-
 #### onionScroll
 
 any
@@ -35,11 +30,6 @@ any
 ## Attributes
 
 #### enabled
-
-boolean
-
-
-#### jsScroll
 
 boolean
 

@@ -5,6 +5,25 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+#### useTapClick
+
+boolean
+
+
+## Attributes
+
+#### useTapClick
+
+boolean
+
+
+## Methods
+
+#### addRipple()
+
+
 
 ----------------------------------------------
 

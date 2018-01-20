@@ -924,36 +924,6 @@ declare global {
 
 
 import {
-  GestureController as IonGestureController
-} from './components/gesture-controller/gesture-controller';
-
-declare global {
-  interface HTMLIonGestureControllerElement extends IonGestureController, HTMLElement {
-  }
-  var HTMLIonGestureControllerElement: {
-    prototype: HTMLIonGestureControllerElement;
-    new (): HTMLIonGestureControllerElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-gesture-controller": HTMLIonGestureControllerElement;
-  }
-  interface ElementTagNameMap {
-    "ion-gesture-controller": HTMLIonGestureControllerElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-gesture-controller": JSXElements.IonGestureControllerAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonGestureControllerAttributes extends HTMLAttributes {
-      
-    }
-  }
-}
-
-
-import {
   Gesture as IonGesture
 } from './components/gesture/gesture';
 
@@ -2295,7 +2265,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRippleEffectAttributes extends HTMLAttributes {
-      
+      useTapClick?: boolean;
     }
   }
 }
@@ -2449,7 +2419,6 @@ declare global {
   namespace JSXElements {
     export interface IonScrollAttributes extends HTMLAttributes {
       enabled?: boolean;
-      jsScroll?: boolean;
       onionScroll?: ScrollCallback;
       onionScrollEnd?: ScrollCallback;
       onionScrollStart?: ScrollCallback;
@@ -2965,6 +2934,36 @@ declare global {
       tabbarLayout?: string;
       tabbarPlacement?: string;
       translucent?: boolean;
+    }
+  }
+}
+
+
+import {
+  TapClick as IonTapClick
+} from './components/tap-click/tap-click';
+
+declare global {
+  interface HTMLIonTapClickElement extends IonTapClick, HTMLElement {
+  }
+  var HTMLIonTapClickElement: {
+    prototype: HTMLIonTapClickElement;
+    new (): HTMLIonTapClickElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-tap-click": HTMLIonTapClickElement;
+  }
+  interface ElementTagNameMap {
+    "ion-tap-click": HTMLIonTapClickElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-tap-click": JSXElements.IonTapClickAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonTapClickAttributes extends HTMLAttributes {
+      
     }
   }
 }

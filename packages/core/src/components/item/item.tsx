@@ -99,7 +99,7 @@ export class Item {
           </div>
           <slot name='end'></slot>
         </div>
-        { this.href && this.mode === 'md' && <ion-ripple-effect /> }
+        { this.href && this.mode === 'md' && <ion-ripple-effect useTapClick={true} /> }
       </TagType>
     );
   }
