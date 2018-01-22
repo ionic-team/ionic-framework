@@ -45,8 +45,13 @@ exports.config = {
   collections: [
     'ionicons'
   ],
+  copy: [
+    { src: '**/*.scss' }
+  ],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
-  globalScript: 'src/global/ionic-global.ts'
+  globalScript: 'src/global/ionic-global.ts',
+  enableCache: false,
+  buildStats: true
 };
 
 exports.devServer = {
