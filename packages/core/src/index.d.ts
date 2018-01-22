@@ -12,6 +12,7 @@ export {
 } from './components/animation-controller/animation-interface';
 export { App } from './components/app/app';
 export { Avatar } from './components/avatar/avatar';
+export { BackButton } from './components/back-button/back-button';
 export { Backdrop } from './components/backdrop/backdrop';
 export { Badge } from './components/badge/badge';
 export { Button } from './components/button/button';
@@ -67,7 +68,6 @@ export { ModalController } from './components/modal-controller/modal-controller'
 export { Nav } from './components/nav/nav';
 export * from './components/nav/nav-interfaces';
 export { ViewController } from './components/nav/view-controller';
-export { Navbar } from './components/navbar/navbar';
 export { Note } from './components/note/note';
 export { Page } from './components/page/page';
 export { PickerColumnCmp } from './components/picker-column/picker-column';
