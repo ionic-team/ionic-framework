@@ -14,7 +14,7 @@ import { PageTwo } from '../page-two/page-two';
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
-      Page One
+      Page One - TS {{ts}}
       <ion-button (click)="pushPageTwoComponent()">Go to Page Two</ion-button>
       <a [routerLink]="[ '/page-two/section-one']">Go To Page Two</a>
     </ion-content>
@@ -23,7 +23,11 @@ import { PageTwo } from '../page-two/page-two';
 })
 export class PageOne {
 
+  ts: number;
   constructor(/*private navController: NavController*/private router: Router) {
+    setInterval(() => {
+      this.ts = Date.now();
+    }, 500);
   }
 
 
@@ -31,5 +35,7 @@ export class PageOne {
     // this.navController.push('/page-two');
     this.router.navigateByUrl('/page-two/section-one');
   }
+
+
 
 }

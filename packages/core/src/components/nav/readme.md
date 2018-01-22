@@ -86,6 +86,9 @@ boolean
 #### getState()
 
 
+#### getViews()
+
+
 #### insert()
 
 
@@ -113,10 +116,10 @@ boolean
 #### removeView()
 
 
-#### retrofitFromMountingData()
-
-
 #### setPages()
+
+
+#### setParent()
 
 
 #### setRoot()

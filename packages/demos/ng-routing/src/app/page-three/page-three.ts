@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 
@@ -20,13 +21,14 @@ import { NavController } from '@ionic/angular';
 })
 export class PageThree {
 
-  constructor(/*private navController: NavController*/private router: Router) {
+  constructor(/*private navController: NavController*/private router: Router, private location: Location) {
   }
 
 
   navPop() {
     // this.navController.pop();
-    this.router.navigateByUrl('/page-two/section-two');
+    // this.router.navigateByUrl('/page-two/section-two');
+    window.history.back();
   }
 
 }

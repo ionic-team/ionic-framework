@@ -16,8 +16,10 @@ import { TextValueAccessor } from './control-value-accessors/text-value-accessor
 
 
 /* Directives */
-import { IonNavDelegate } from './directives/ion-nav';
 import { MenuToggle } from './directives/menu-toggle';
+
+/* Nav */
+import { IonNav } from './nav/ion-nav';
 
 /* Providers */
 import { ActionSheetController } from './providers/action-sheet-controller';
@@ -34,7 +36,7 @@ import { ToastController } from './providers/toast-controller';
 @NgModule({
   declarations: [
     BooleanValueAccessor,
-    IonNavDelegate,
+    IonNav,
     MenuToggle,
     NumericValueAccessor,
     RadioValueAccessor,
@@ -43,7 +45,7 @@ import { ToastController } from './providers/toast-controller';
   ],
   exports: [
     BooleanValueAccessor,
-    IonNavDelegate,
+    IonNav,
     MenuToggle,
     NumericValueAccessor,
     RadioValueAccessor,
