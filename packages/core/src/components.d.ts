@@ -1701,39 +1701,6 @@ declare global {
 
 
 import {
-  Navbar as IonNavbar
-} from './components/navbar/navbar';
-
-declare global {
-  interface HTMLIonNavbarElement extends IonNavbar, HTMLElement {
-  }
-  var HTMLIonNavbarElement: {
-    prototype: HTMLIonNavbarElement;
-    new (): HTMLIonNavbarElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-navbar": HTMLIonNavbarElement;
-  }
-  interface ElementTagNameMap {
-    "ion-navbar": HTMLIonNavbarElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-navbar": JSXElements.IonNavbarAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonNavbarAttributes extends HTMLAttributes {
-      backButtonIcon?: string;
-      backButtonText?: string;
-      hidden?: boolean;
-      hideBackButton?: boolean;
-    }
-  }
-}
-
-
-import {
   Note as IonNote
 } from './components/note/note';
 
