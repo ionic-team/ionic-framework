@@ -44,6 +44,7 @@ exports.config = {
     { components: ['ion-toast', 'ion-toast-controller'] },
     { components: ['ion-tap-click', 'ion-status-tap'] },
     { components: ['ion-cordova-platform'] },
+    { components: ['ion-back-button'] },
   ],
   collections: [
     'ionicons'
@@ -53,7 +54,6 @@ exports.config = {
   ],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',
-  enableCache: false,
   buildStats: true
 };
 
