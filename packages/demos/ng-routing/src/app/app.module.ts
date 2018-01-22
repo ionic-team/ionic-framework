@@ -5,9 +5,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { IonicAngularModule } from '@ionic/angular';
-
-import { IonicRouterModule } from '../custom/ionic-router.module';
-
+import { IonicRouterModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [

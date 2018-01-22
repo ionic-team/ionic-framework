@@ -6,7 +6,6 @@ import {
   ComponentDataPair,
   Config,
   FrameworkDelegate,
-  FrameworkMountingData,
   NavContainer,
   NavOptions,
   NavResult,
@@ -116,6 +115,7 @@ export class Nav implements PublicNav, NavContainer {
     }
   }
 
+  @Method()
   getViews(): PublicViewController[] {
     return getViews(this);
   }
@@ -196,7 +196,7 @@ export class Nav implements PublicNav, NavContainer {
   }
 
   @Listen('navInit')
-  navInitialized(event: CustomEvent) {
+  navInitialized(event: NavEvent) {
     navInitializedImpl(this, event);
   }
 
@@ -227,10 +227,6 @@ export class Nav implements PublicNav, NavContainer {
     return this.childNavs || [];
   }
 
-  @Method()
-  retrofitFromMountingData(mountingData: FrameworkMountingData, clearExistingViews = true) {
-    return retrofitFromMountingDataImpl(this, mountingData, clearExistingViews);
-  }
 
   @Method()
   isTransitioning() {
@@ -240,6 +236,11 @@ export class Nav implements PublicNav, NavContainer {
   @Method()
   getId() {
     return this.navId;
+  }
+
+  @Method()
+  setParent(parent: Nav) {
+    this.parent = parent;
   }
 
   render() {
@@ -326,10 +327,10 @@ export function canGoBackImpl(nav: Nav) {
   return nav.views && nav.views.length > 0;
 }
 
-export function navInitializedImpl(potentialParent: Nav, event: CustomEvent) {
+export function navInitializedImpl(potentialParent: Nav, event: NavEvent) {
   if (potentialParent.element !== event.target) {
     // set the parent on the child nav that dispatched the event
-    (event.detail as Nav).parent = potentialParent;
+    event.target.setParent(potentialParent);
     if (!potentialParent.childNavs) {
       potentialParent.childNavs = [];
     }
@@ -470,15 +471,6 @@ export function setRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animat
   return setPages(nav, delegate, animation, [{ component, data }], opts, done, escapeHatch);
 }
 
-export function retrofitFromMountingDataImpl(nav: Nav, mountingData: FrameworkMountingData, clearExistingViews: boolean): void {
-  if (clearExistingViews) {
-    nav.views = [];
-  }
-  const viewController = new ViewController(mountingData.component, mountingData.data);
-  Object.assign(viewController, mountingData);
-  nav.views.push(viewController);
-}
-
 export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, componentDataPairs: ComponentDataPair[], opts: NavOptions, done: () => void, escapeHatch: any): Promise<any> {
   if (!isDef(opts)) {
     opts = {};
@@ -544,22 +536,7 @@ export function nextTransaction(nav: Nav): Promise<any> {
     return Promise.resolve();
   }
 
-  if (topTransaction.method === 'push') {
-    return routeOrNav(nav, topTransaction);
-  }
   return doNav(nav, topTransaction);
-}
-
-export function routeOrNav(nav: Nav, ti: TransitionInstruction) {
-  const component = ti.insertViews[0].component;
-  const deferPromise = nav.delegate.shouldDeferToRouter ? nav.delegate.shouldDeferToRouter(component) : Promise.resolve(false);
-  return deferPromise.then((response: boolean) => {
-    if (response) {
-      const routePromise = nav.delegate.routeToUrl ? nav.delegate.routeToUrl(component) : Promise.resolve(true);
-      return routePromise;
-    }
-    return doNav(nav, ti);
-  });
 }
 
 export function doNav(nav: Nav, ti: TransitionInstruction) {

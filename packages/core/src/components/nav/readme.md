@@ -86,6 +86,9 @@ boolean
 #### getState()
 
 
+#### getViews()
+
+
 #### insert()
 
 
@@ -112,18 +115,11 @@ boolean
 
 #### removeView()
 
-
-<<<<<<< HEAD
-=======
-#### retrofitFromMountingData()
-
-
->>>>>>> core changes so they're easy to see
 #### setPages()
 
+#### setParent()
 
 #### setRoot()
-
 
 #### setRouteId()
 

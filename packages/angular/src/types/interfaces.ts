@@ -4,6 +4,7 @@ import {
   ComponentRef,
   Injector
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { FrameworkMountingData } from '@ionic/core';
 
@@ -16,6 +17,7 @@ export interface AngularMountingData extends FrameworkMountingData {
 }
 
 export interface AngularEscapeHatch {
-  cfr: ComponentFactoryResolver;
-  injector: Injector;
+  activatedRoute?: ActivatedRoute;
+  cfr?: ComponentFactoryResolver;
+  injector?: Injector;
 }
