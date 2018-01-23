@@ -121,14 +121,14 @@ Alternatevely you can execute helper function inside template:
 
 ## Properties
 
-#### enabled
+#### disabled
 
 boolean
 
 
 ## Attributes
 
-#### enabled
+#### disabled
 
 boolean
 

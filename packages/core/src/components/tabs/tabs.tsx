@@ -183,7 +183,7 @@ export class Tabs {
 
   private initSelect() {
     // find pre-selected tabs
-    const selectedTab = this.tabs.find(t => t.selected) || this.tabs.find(t => t.show && t.enabled);
+    const selectedTab = this.tabs.find(t => t.selected) || this.tabs.find(t => t.show && !t.disabled);
 
     // reset all tabs none is selected
     for (const tab of this.tabs) {

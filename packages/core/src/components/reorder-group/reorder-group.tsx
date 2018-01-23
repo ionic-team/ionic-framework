@@ -47,14 +47,14 @@ export class ReorderGroup {
 
   @Prop({ context: 'dom' }) dom: DomController;
 
-  @Prop() enabled = false;
+  @Prop() disabled = true;
 
   /**
    * @input {string} Which side of the view the ion-reorder should be placed. Default `"end"`.
    */
-  @Watch('enabled')
-  protected enabledChanged(enabled: boolean) {
-    if (enabled) {
+  @Watch('disabled')
+  protected disabledChanged(disabled: boolean) {
+    if (!disabled) {
       this._enabled = true;
       this.dom.raf(() => {
         this._iconVisible = true;
@@ -68,8 +68,8 @@ export class ReorderGroup {
   componentDidLoad() {
     this.containerEl = this.el.querySelector('ion-gesture') as HTMLElement;
     this.scrollEl = this.el.closest('ion-scroll') as HTMLElement;
-    if (this.enabled) {
-      this.enabledChanged(true);
+    if (!this.disabled) {
+      this.disabledChanged(true);
     }
   }
 
@@ -268,7 +268,7 @@ export class ReorderGroup {
         onStart: this.onDragStart.bind(this),
         onMove: this.onDragMove.bind(this),
         onEnd: this.onDragEnd.bind(this),
-        disabled: !this.enabled,
+        enabled: !this.disabled,
         disableScroll: true,
         gestureName: 'reorder',
         gesturePriority: 30,

@@ -46,7 +46,7 @@ export class Tab {
    * the user cannot interact with this element.
    * Default: `true`.
    */
-  @Prop() enabled = true;
+  @Prop() disabled = false;
 
   /**
    * @input {boolean} If true, the tab button is visible within the

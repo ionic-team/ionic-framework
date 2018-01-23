@@ -243,7 +243,7 @@ export class PickerColumnCmp {
     this.lastTempIndex = currentIndex;
   }
 
-  // TODO should this check enabled?
+  // TODO should this check disabled?
   private canStart() {
     return true;
   }

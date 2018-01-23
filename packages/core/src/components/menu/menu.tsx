@@ -69,11 +69,11 @@ export class Menu {
   }
 
   /**
-   * @input {boolean} If true, the menu is enabled. Default `true`.
+   * @input {boolean} If true, the menu is disabled. Default `false`.
    */
-  @Prop({ mutable: true }) enabled: boolean;
+  @Prop({ mutable: true }) disabled = false;
 
-  @Watch('enabled')
+  @Watch('disabled')
   protected enabledChanged() {
     this.updateState();
   }
@@ -135,13 +135,13 @@ export class Menu {
       ? '#' + this.content
       : '[main]';
     const parent = el.parentElement;
-    const content = this.contentEl = parent.querySelector(contentQuery);
+    const content = this.contentEl = parent.querySelector(contentQuery) as HTMLElement;
     if (!content || !content.tagName) {
       // requires content element
       return console.error('Menu: must have a "content" element to listen for drag events on.');
     }
-    this.menuInnerEl = el.querySelector('.menu-inner');
-    this.backdropEl = el.querySelector('.menu-backdrop');
+    this.menuInnerEl = el.querySelector('.menu-inner') as HTMLElement;
+    this.backdropEl = el.querySelector('.menu-backdrop') as HTMLElement;
 
     // add menu's content classes
     content.classList.add('menu-content');
@@ -149,18 +149,18 @@ export class Menu {
     this.typeChanged(this.type);
     this.sideChanged();
 
-    let isEnabled = this.enabled;
+    let isEnabled = !this.disabled;
     if (isEnabled === true || typeof isEnabled === 'undefined') {
       const menus = this.menuCtrl.getMenus();
       isEnabled = !menus.some(m => {
-        return m.side === this.side && m.enabled;
+        return m.side === this.side && !m.disabled;
       });
     }
     // register this menu with the app's menu controller
     this.menuCtrl._register(this);
 
     // mask it as enabled / disabled
-    this.enabled = isEnabled;
+    this.disabled = !isEnabled;
   }
 
   componentDidUnload() {
@@ -259,7 +259,7 @@ export class Menu {
   }
 
   private isActive(): boolean {
-    return this.enabled && !this.isPane;
+    return !this.disabled && !this.isPane;
   }
 
   private canSwipe(): boolean {
@@ -411,7 +411,7 @@ export class Menu {
       this.forceClosing();
     }
 
-    if (this.enabled && this.menuCtrl) {
+    if (!this.disabled && this.menuCtrl) {
       this.menuCtrl._setActiveMenu(this);
     }
     assert(!this.isAnimating, 'can not be animating');
@@ -430,7 +430,7 @@ export class Menu {
     return {
       role: 'complementary',
       class: {
-        'menu-enabled': this.enabled,
+        'menu-enabled': !this.disabled,
         'menu-side-right': this.isRightSide,
         'menu-side-left': !this.isRightSide,
         [typeClass]: true,

@@ -1086,7 +1086,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonInfiniteScrollAttributes extends HTMLAttributes {
-      enabled?: boolean;
+      disabled?: boolean;
       position?: string;
       threshold?: string;
     }
@@ -1331,6 +1331,7 @@ declare global {
       color?: string;
       href?: string;
       mode?: 'ios' | 'md';
+      onclick?: (this: HTMLElement, ev: MouseEvent) => any;
     }
   }
 }
@@ -1585,7 +1586,7 @@ declare global {
   namespace JSXElements {
     export interface IonMenuAttributes extends HTMLAttributes {
       content?: string;
-      enabled?: boolean;
+      disabled?: boolean;
       maxEdgeStart?: number;
       menuId?: string;
       persistent?: boolean;
@@ -2139,8 +2140,8 @@ declare global {
   namespace JSXElements {
     export interface IonRefresherAttributes extends HTMLAttributes {
       closeDuration?: string;
-      enabled?: boolean;
-      pullDelta?: number;
+      disabled?: boolean;
+      pullMax?: any;
       pullMin?: number;
       snapbackDuration?: string;
     }
@@ -2172,7 +2173,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonReorderGroupAttributes extends HTMLAttributes {
-      enabled?: boolean;
+      disabled?: boolean;
     }
   }
 }
@@ -2385,7 +2386,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonScrollAttributes extends HTMLAttributes {
-      enabled?: boolean;
+      disabled?: boolean;
       onionScroll?: ScrollCallback;
       onionScrollEnd?: ScrollCallback;
       onionScrollStart?: ScrollCallback;
@@ -2756,7 +2757,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSplitPaneAttributes extends HTMLAttributes {
-      enabled?: boolean;
+      disabled?: boolean;
       when?: string | boolean;
     }
   }
@@ -2822,7 +2823,7 @@ declare global {
       badge?: string;
       badgeStyle?: string;
       btnId?: string;
-      enabled?: boolean;
+      disabled?: boolean;
       icon?: string;
       path?: string;
       selected?: boolean;

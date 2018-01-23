@@ -25,7 +25,7 @@ export class Scroll {
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop({ context: 'isServer' }) isServer: boolean;
 
-  @Prop() enabled = true;
+  @Prop() disabled = false;
 
   @Prop() onionScrollStart: ScrollCallback;
   @Prop() onionScroll: ScrollCallback;

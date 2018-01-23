@@ -135,7 +135,7 @@ You could replace our default content with custom SVG or CSS animations.
 
 ## Properties
 
-#### enabled
+#### disabled
 
 boolean
 
@@ -152,7 +152,7 @@ string
 
 ## Attributes
 
-#### enabled
+#### disabled
 
 boolean
 

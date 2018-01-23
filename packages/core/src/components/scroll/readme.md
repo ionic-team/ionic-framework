@@ -7,7 +7,7 @@
 
 ## Properties
 
-#### enabled
+#### disabled
 
 boolean
 
@@ -29,7 +29,7 @@ any
 
 ## Attributes
 
-#### enabled
+#### disabled
 
 boolean
 
