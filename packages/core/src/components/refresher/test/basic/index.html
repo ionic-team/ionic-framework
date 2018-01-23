@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Ionic Item Sliding</title>
+  <title>Refresher - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
 </head>
@@ -14,13 +14,17 @@
 
       <ion-header>
         <ion-toolbar>
-          <ion-title>Ionic CDN demo</ion-title>
+          <ion-title>Pull To Refresh</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content>
-        <ion-refresher id="refresher" enabled="true" slot="fixed">
-          <ion-refresher-content></ion-refresher-content>
+        <ion-refresher id="refresher" disabled="false" slot="fixed">
+          <ion-refresher-content
+            pulling-text="Pull to refresh..."
+            refreshing-spinner="bubbles"
+            refreshing-text="Refreshing...">
+          </ion-refresher-content>
         </ion-refresher>
 
         <ion-list id="list"></ion-list>
