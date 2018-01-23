@@ -25,11 +25,15 @@ export class TapClick {
   passive = true;
   attachTo = 'document';
 
+  @Prop({context: 'isServer'}) isServer: boolean;
   @Prop({context: 'enableListener'}) enableListener: EventListenerEnable;
 
   @Element() el: HTMLElement;
 
   componentDidLoad() {
+    if (this.isServer) {
+      return;
+    }
     this.gestureCtrl = Ionic.gesture = Ionic.gesture || new GestureController();
 
     this.app = this.el.closest('ion-app') as HTMLIonAppElement;
