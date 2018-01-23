@@ -105,3 +105,14 @@ ion-alert input {
   line-height: initial;
   background: transparent;
 }
+
+
+.alert-button,
+.alert-checkbox,
+.alert-input,
+.alert-radio {
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}

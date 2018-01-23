@@ -9,4 +9,9 @@
 
   width: $chip-button-size;
   height: $chip-button-size;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }

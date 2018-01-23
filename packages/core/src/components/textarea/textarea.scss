@@ -43,6 +43,11 @@ ion-textarea {
   font-size: inherit;
 
   background: transparent;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
 
 .native-textarea[disabled] {

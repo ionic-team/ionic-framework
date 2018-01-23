@@ -36,6 +36,11 @@ ion-searchbar {
 
   border: 0;
   font-family: inherit;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
 
 .searchbar-clear-icon {

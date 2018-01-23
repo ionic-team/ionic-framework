@@ -104,6 +104,11 @@ ion-buttons,
   vertical-align: -webkit-baseline-middle; // the best for those that support it
 
   user-select: none;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
 
 .bar-button::after {
