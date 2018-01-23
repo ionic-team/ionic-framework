@@ -49,12 +49,21 @@
 
         <ion-header>
           <ion-toolbar>
-            <ion-title>Ionic CDN demo</ion-title>
+            <ion-buttons slot="start">
+              <ion-button onclick="openLeft()"><ion-icon slot="icon-only" name="menu"></ion-icon></ion-button>
+            </ion-buttons>
+            <ion-title>Navigation</ion-title>
           </ion-toolbar>
         </ion-header>
 
         <ion-content padding>
-          <ion-button onclick="openLeft()">Open left menu</ion-button>
+          <h1>Page 1</h1>
+          <ion-button onclick="push()">Push</ion-button>
+          <ion-button onclick="menu()">Disable/enable menu</ion-button>
+          <f></f>
+          <f></f>
+          <f></f>
+          <f></f>
         </ion-content>
 
       </ion-page>
@@ -64,11 +73,34 @@
   <ion-menu-controller></ion-menu-controller>
 
   <script>
-    const menu = document.querySelector('ion-menu-controller');
+    const menuCtrl = document.querySelector('ion-menu-controller');
     function openLeft() {
       console.log('Open left menu');
-      menu.open('left');
+      menuCtrl.open('left');
+    }
+
+    function push() {
+      console.log('Push page');
+    }
+
+    function menu() {
+      console.log('Disable/enable menu');
+      menuCtrl.enable(!menuCtrl.isEnabled());
     }
   </script>
+
+  <style>
+    f {
+      display: block;
+      height: 150px;
+      width: 150px;
+      background-color: blue;
+      margin: 15px auto;
+    }
+
+    f:last-child {
+      background-color: red;
+    }
+  </style>
 </body>
 </html>
