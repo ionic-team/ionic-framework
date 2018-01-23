@@ -952,8 +952,8 @@ declare global {
       block?: string;
       canStart?: GestureCallback;
       direction?: string;
+      disabled?: boolean;
       disableScroll?: boolean;
-      enabled?: boolean;
       gestureName?: string;
       gesturePriority?: number;
       maxAngle?: number;

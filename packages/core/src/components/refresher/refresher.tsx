@@ -361,7 +361,7 @@ export class Refresher {
 
   render() {
     return <ion-gesture {...this.gestureConfig}
-      enabled={this.enabled}>
+      disabled={!this.enabled}>
       <slot></slot>
     </ion-gesture>;
   }

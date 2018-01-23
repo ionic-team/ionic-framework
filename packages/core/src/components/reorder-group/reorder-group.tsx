@@ -268,7 +268,7 @@ export class ReorderGroup {
         onStart: this.onDragStart.bind(this),
         onMove: this.onDragMove.bind(this),
         onEnd: this.onDragEnd.bind(this),
-        enabled: this.enabled,
+        disabled: !this.enabled,
         disableScroll: true,
         gestureName: 'reorder',
         gesturePriority: 30,

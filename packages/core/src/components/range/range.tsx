@@ -411,20 +411,18 @@ export class Range implements BaseInputComponent {
   render() {
     return [
       <slot name='start'></slot>,
-      <ion-gesture
-        {...{
-          disableScroll: true,
-          onStart: this.onDragStart.bind(this),
-          onMove: this.onDragMove.bind(this),
-          onEnd: this.onDragEnd.bind(this),
-          enabled: !this.disabled,
-          gestureName: 'range',
-          gesturePriority: 30,
-          type: 'pan',
-          direction: 'x',
-          threshold: 0
-        }}
-      >
+      <ion-gesture {...{
+        disableScroll: true,
+        onStart: this.onDragStart.bind(this),
+        onMove: this.onDragMove.bind(this),
+        onEnd: this.onDragEnd.bind(this),
+        disabled: this.disabled,
+        gestureName: 'range',
+        gesturePriority: 30,
+        type: 'pan',
+        direction: 'x',
+        threshold: 0
+      }}>
         <div class='range-slider'>
           {this.ticks.map(t =>
             <div

@@ -452,7 +452,7 @@ export class Menu {
         'onEnd': this.onDragEnd.bind(this),
         'maxEdgeStart': this.maxEdgeStart,
         'edge': this.side,
-        'enabled': this.isActive() && this.swipeEnabled,
+        'disabled': !this.isActive() || !this.swipeEnabled,
         'gestureName': 'menu-swipe',
         'gesturePriority': 10,
         'type': 'pan',
