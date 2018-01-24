@@ -1,29 +1,42 @@
 # ion-checkbox
 
-
-Placed in an `ion-item` or used as a stand-alone checkbox.
+Checkboxes allow the selection of multiple options from a set of options. They appear as checked (ticked) when activated. Clicking on a checkbox will toggle the `checked` property. They can also be checked programmatically by setting the `checked` property.
 
 
 ```html
+<!-- Default Checkbox -->
+<ion-checkbox></ion-checkbox>
 
- <ion-list>
+<!-- Disabled Checkbox -->
+<ion-checkbox disabled></ion-checkbox>
 
-   <ion-item>
-     <ion-label>Pepperoni</ion-label>
-     <ion-checkbox value="pepperoni" checked></ion-checkbox>
-   </ion-item>
+<!-- Checked Checkbox -->
+<ion-checkbox checked></ion-checkbox>
 
-   <ion-item>
-     <ion-label>Sausage</ion-label>
-     <ion-checkbox value="sausage" disabled></ion-checkbox>
-   </ion-item>
+<!-- Checkbox Colors -->
+<ion-checkbox color="primary"></ion-checkbox>
+<ion-checkbox color="secondary"></ion-checkbox>
+<ion-checkbox color="danger"></ion-checkbox>
+<ion-checkbox color="light"></ion-checkbox>
+<ion-checkbox color="dark"></ion-checkbox>
 
-   <ion-item>
-     <ion-label>Mushrooms</ion-label>
-     <ion-checkbox value="mushrooms"></ion-checkbox>
-   </ion-item>
+<!-- Checkboxes in a List -->
+<ion-list>
+  <ion-item>
+    <ion-label>Pepperoni</ion-label>
+    <ion-checkbox slot="end" value="pepperoni" checked></ion-checkbox>
+  </ion-item>
 
- </ion-list>
+  <ion-item>
+    <ion-label>Sausage</ion-label>
+    <ion-checkbox slot="end" value="sausage" disabled></ion-checkbox>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Mushrooms</ion-label>
+    <ion-checkbox slot="end" value="mushrooms"></ion-checkbox>
+  </ion-item>
+</ion-list>
 ```
 
 
