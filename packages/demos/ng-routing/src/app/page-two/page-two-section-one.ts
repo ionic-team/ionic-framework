@@ -13,10 +13,20 @@ import { NavController } from '@ionic/angular';
     </ion-header>
     <ion-content padding>
       Page Two Section One - TS {{ts}}
-      <ion-button (click)="pushPageTwoComponent()">Go to Section Two</ion-button>
-      <ion-button (click)="goBack()">Go Back</ion-button>
+      <div>
+        <ion-button (click)="pushPageTwoComponent()">Go to Section Two</ion-button>
+      </div>
+      <div>
+        <ion-button (click)="goBack()">Go Back</ion-button>
+      </div>
     </ion-content>
   </ion-page>
+
+  <!-- <div>
+    <h2>Page Two Section One</h2>
+    <button (click)="pushPageTwoComponent()">Go to Section Two</button>
+    <button (click)="goBack()">Go Back</button>
+  </div> -->
   `
 })
 export class PageTwoSectionOne {

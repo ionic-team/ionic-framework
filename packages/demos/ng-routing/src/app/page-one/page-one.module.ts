@@ -10,6 +10,8 @@ import { PageOneRoutingModule } from './page-one-routing.module';
     PageOneRoutingModule
   ],
   declarations: [PageOne],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ]
 })
 export class PageOneModule { }

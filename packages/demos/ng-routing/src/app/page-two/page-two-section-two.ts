@@ -12,16 +12,30 @@ import { NavController } from '@ionic/angular';
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
-      Page Two Section Two
-      <ion-button (click)="pushPageTwoComponent()">Go to Page Three</ion-button>
-      <ion-button (click)="goBack()">Go Back</ion-button>
+      Page Two Section Two {{ts}}
+      <div>
+        <ion-button (click)="pushPageTwoComponent()">Go to Page Three</ion-button>
+      </div>
+      <div>
+        <ion-button (click)="goBack()">Go Back</ion-button>
+      </div>
     </ion-content>
   </ion-page>
+
+  <!-- <div>
+    <h2>Page Two Section Two</h2>
+    <button (click)="pushPageTwoComponent()">Go to Page Three</button>
+    <button (click)="goBack()">Go Back</button>
+  </div> -->
   `
 })
 export class PageTwoSectionTwo {
 
+  ts: number;
   constructor(/*private navController: NavController*/private router: Router) {
+    setInterval(() => {
+      this.ts = Date.now();
+    }, 500);
   }
 
   pushPageTwoComponent() {

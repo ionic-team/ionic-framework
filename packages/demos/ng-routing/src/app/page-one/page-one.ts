@@ -7,6 +7,13 @@ import { PageTwo } from '../page-two/page-two';
 @Component({
   selector: 'page-one',
   template: `
+  <!-- <div>
+    <h1>Page One</h1>
+    <div>
+      <button (click)="pushPageTwoComponent()">Go to Page Two</button>
+    </div>
+  </div> -->
+
   <ion-page>
     <ion-header>
       <ion-toolbar>
@@ -14,9 +21,10 @@ import { PageTwo } from '../page-two/page-two';
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
-      Page One - TS {{ts}}
-      <ion-button (click)="pushPageTwoComponent()">Go to Page Two</ion-button>
-      <a [routerLink]="[ '/page-two/section-one']">Go To Page Two</a>
+      Page One - {{ts}}
+      <div>
+        <ion-button (click)="pushPageTwoComponent()">Go to Page Two</ion-button>
+      </div>
     </ion-content>
   </ion-page>
   `
