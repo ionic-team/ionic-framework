@@ -1,14 +1,14 @@
 export { IonicAngularModule } from './module';
 
 /* Directives */
-
 export { MenuToggle } from './directives/menu-toggle';
 
 /* Nav */
 export { IonNav } from './nav/ion-nav';
 export { OutletInjector } from './nav/router/outlet-injector';
 export { IonicRouteReuseStrategy } from './nav/router/reuse-strategy';
-export { IonicRouterModule } from './nav/router/router-module';
+
+export { IonicRouterModule } from './nav/nav-module';
 
 /* Providers */
 export { ActionSheetController, ActionSheetProxy } from './providers/action-sheet-controller';

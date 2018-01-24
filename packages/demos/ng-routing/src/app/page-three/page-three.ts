@@ -13,15 +13,29 @@ import { NavController } from '@ionic/angular';
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
-      Page Three
-      <ion-button (click)="navPop()">Go Back</ion-button>
+      Page Three {{ts}}
+      <div>
+        <ion-button (click)="navPop()">Go Back</ion-button>
+      </div>
     </ion-content>
   </ion-page>
+
+  <!-- <div>
+    <h1>Page One</h1>
+    <div>
+      <button (click)="navPop()">Go Back</button>
+    </div>
+  </div> -->
   `
 })
 export class PageThree {
 
+  ts: number;
   constructor(/*private navController: NavController*/private router: Router, private location: Location) {
+
+    setInterval(() => {
+      this.ts = Date.now();
+    }, 500);
   }
 
 
