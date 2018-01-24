@@ -39,9 +39,9 @@ export class ReorderGroup {
   private containerTop: number;
   private containerBottom: number;
 
-  @State() _enabled = false;
-  @State() _iconVisible = false;
-  @State() _actived = false;
+  @State() enabled = false;
+  @State() iconVisible = false;
+  @State() activated = false;
 
   @Element() private el: HTMLElement;
 
@@ -52,13 +52,13 @@ export class ReorderGroup {
   @Watch('disabled')
   protected disabledChanged(disabled: boolean) {
     if (!disabled) {
-      this._enabled = true;
+      this.enabled = true;
       this.dom.raf(() => {
-        this._iconVisible = true;
+        this.iconVisible = true;
       });
     } else {
-      this._iconVisible = false;
-      setTimeout(() => this._enabled = false, 400);
+      this.iconVisible = false;
+      setTimeout(() => this.enabled = false, 400);
     }
   }
 
@@ -103,7 +103,7 @@ export class ReorderGroup {
     }
 
     let sum = 0;
-    for (let i = 0, ilen = children.length; i < ilen; i++) {
+    for (let i = 0; i < children.length; i++) {
       const child = children[i];
       sum += child.offsetHeight;
       heights.push(sum);
@@ -127,7 +127,7 @@ export class ReorderGroup {
 
     this.lastToIndex = indexForItem(item);
     this.selectedItemHeight = item.offsetHeight;
-    this._actived = true;
+    this.activated = true;
 
     item.classList.add(ITEM_REORDER_SELECTED);
 
@@ -154,7 +154,7 @@ export class ReorderGroup {
       this.lastToIndex = toIndex;
 
       hapticSelectionChanged();
-      this._reorderMove(fromIndex, toIndex);
+      this.reorderMove(fromIndex, toIndex);
     }
 
     // Update selected item position
@@ -162,7 +162,7 @@ export class ReorderGroup {
   }
 
   private onDragEnd() {
-    this._actived = false;
+    this.activated = false;
     const selectedItem = this.selectedItemEl;
     if (!selectedItem) {
       return;
@@ -215,7 +215,7 @@ export class ReorderGroup {
   }
 
   /********* DOM WRITE ********* */
-  private _reorderMove(fromIndex: number, toIndex: number) {
+  private reorderMove(fromIndex: number, toIndex: number) {
     const itemHeight = this.selectedItemHeight;
     const children = this.containerEl.children;
     const transform = CSS_PROP.transformProp;
@@ -251,9 +251,9 @@ export class ReorderGroup {
   hostData() {
     return {
       class: {
-        'reorder-enabled': this._enabled,
-        'reorder-list-active': this._actived,
-        'reorder-visible': this._iconVisible
+        'reorder-enabled': this.enabled,
+        'reorder-list-active': this.activated,
+        'reorder-visible': this.iconVisible
       }
     };
   }
