@@ -3,5 +3,8 @@
 // iOS Note
 // --------------------------------------------------
 
+/// @prop - Font family of the note
+$note-ios-font-family:    $font-family-ios-base !default;
+
 /// @prop - Text color of the note
-$note-ios-color:      darken($list-ios-border-color, 10%) !default;
+$note-ios-color:          darken($list-ios-border-color, 10%) !default;
