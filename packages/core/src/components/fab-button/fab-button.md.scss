@@ -62,7 +62,7 @@
 @each $color-name, $color-value in $colors-md {
 
   $bg-color: ion-color($colors-md, $color-name, base, md);
-  $bg-color-activated: ion-color($colors-md, $bg-color, shade, md);
+  $bg-color-activated: ion-color($colors-md, $bg-color, tint, md);
   $fg-color: ion-color($colors-md, $color-name, contrast, md);
 
   .fab-button-md-#{$color-name} {

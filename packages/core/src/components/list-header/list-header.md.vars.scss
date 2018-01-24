@@ -21,4 +21,4 @@ $list-md-header-border-top:      1px solid $item-md-border-color !default;
 $list-md-header-font-size:       14px !default;
 
 /// @prop - Text color of the header in a list
-$list-md-header-color:           #757575 !default;
+$list-md-header-color:           $text-md-color-step-200 !default;

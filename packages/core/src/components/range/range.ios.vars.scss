@@ -25,7 +25,7 @@ $range-ios-hit-height:                        $range-ios-slider-height !default;
 $range-ios-bar-height:                        1px !default;
 
 /// @prop - Background of the range bar
-$range-ios-bar-background-color:              #bdbdbd !default;
+$range-ios-bar-background-color:              $background-ios-color-step-200 !default;
 
 /// @prop - Background of the active range bar
 $range-ios-bar-active-background-color:       ion-color($colors-ios, primary, base, ios) !default;
@@ -43,7 +43,7 @@ $range-ios-knob-box-shadow:                   0 3px 1px rgba(0, 0, 0, .1), 0 4px
 $range-ios-knob-border-radius:                50% !default;
 
 /// @prop - Background of the range knob
-$range-ios-knob-background-color:             #fff !default;
+$range-ios-knob-background-color:             $background-ios-color !default;
 
 /// @prop - Width of the range tick
 $range-ios-tick-width:                        $range-ios-bar-height !default;

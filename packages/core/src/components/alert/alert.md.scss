@@ -61,6 +61,7 @@
 // --------------------------------------------------
 
 .alert-md .alert-input {
+  @include placeholder($alert-md-input-placeholder-color);
   @include margin($alert-md-input-margin-top, $alert-md-input-margin-end, $alert-md-input-margin-bottom, $alert-md-input-margin-start);
 
   border-bottom: $alert-md-input-border-width $alert-md-input-border-style $alert-md-input-border-color;

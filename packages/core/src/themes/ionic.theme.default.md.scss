@@ -13,20 +13,58 @@ $content-md-padding:                    $content-padding !default;
 $font-family-md-base:                   "Roboto", "Helvetica Neue", sans-serif !default;
 $font-size-md-base:                     $font-size-base !default;
 
+// Default Material Design Alpha levels
+// --------------------------------------------------
+$alpha-md-lowest:                       css-var($alpha-lowest, alpha-md-lowest);
+$alpha-md-low:                          css-var($alpha-low, alpha-md-low);
+$alpha-md-medium:                       css-var($alpha-medium, alpha-md-medium);
+$alpha-md-high:                         css-var($alpha-high, alpha-md-high);
+$alpha-md-highest:                      css-var($alpha-highest, alpha-md-highest);
+
+// Default Foreground and Background Colors values
+// Allows users to override an foreground / background colors
+// @color-mod: remove all this
+$background-md-color-value:             $background-color-value !default;
+$text-md-color-value:                   $text-color-value !default;
+
+// Default Material Design Foreground and Background Colors
+// --------------------------------------------------
+$background-md-color:                   css-var($background-md-color-value, background-md-color) !default;
+$text-md-color:                         css-var($text-md-color-value, text-md-color) !default;
+$placeholder-text-md-color:             css-var($placeholder-text-color, placeholder-text-md-color) !default;
+
+// Generated Foreground and Background Colors for alpha
+// These variables are not used, but we call this here in order to add these colors
+// to the global list of css variables for a theme. This is only used to get a dump of all
+// css variables that the theme uses.
+// @color-mod: remove all of this
+// --------------------------------------------------
+$background-color-rgb:                  css-var(color-to-rgb-list($background-md-color-value), background-md-color-rgb) !default;
+$text-color-rgb:                        css-var(color-to-rgb-list($text-md-color-value), text-md-color-rgb) !default;
+
+// Default Material Design Background & Text Color Steps
+// --------------------------------------------------
+$background-md-color-step-100:          css-var($background-color-step-100, background-md-color-step-100) !default;
+$background-md-color-step-200:          css-var($background-color-step-200, background-md-color-step-200) !default;
+$background-md-color-step-300:          css-var($background-color-step-300, background-md-color-step-300) !default;
+$background-md-color-step-400:          css-var($background-color-step-400, background-md-color-step-400) !default;
+$text-md-color-step-100:                css-var($text-color-step-100, text-md-color-step-100) !default;
+$text-md-color-step-200:                css-var($text-color-step-200, text-md-color-step-200) !default;
+$text-md-color-step-300:                css-var($text-color-step-300, text-md-color-step-300) !default;
+$text-md-color-step-400:                css-var($text-color-step-400, text-md-color-step-400) !default
+
 // Material Design General Colors
 // --------------------------------------------------
 $backdrop-md-color:                     css-var($backdrop-color, backdrop-md-color) !default;
-$background-md-color:                   css-var($background-color, background-md-color) !default;
+$modal-md-background-color:             css-var($modal-background-color, background-md-color) !default;
 $border-md-color:                       css-var(#c1c4cd, border-md-color) !default;
 $box-shadow-md-color:                   css-var($box-shadow-color, box-shadow-md-color) !default;
-$link-md-color:                         css-var(ion-color($colors-md, primary, base, md), link-md-color) !default;
-$text-md-color:                         css-var($text-color, text-md-color) !default;
 
 // Material Design Tabs & Tab bar
 // --------------------------------------------------
 $tabbar-md-background-color:            css-var($tabbar-background-color, tabbar-md-background-color) !default;
-$tabbar-md-border-color:                css-var(rgba(0, 0, 0, .07), tabbar-md-border-color) !default;
-$tabbar-md-text-color:                  css-var(#rgba(60, 60, 60, 0.7), tabbar-md-text-color) !default;
+$tabbar-md-border-color:                css-var(rgba(0, 0, 0, .07), tabbar-md-border-color) !default; // @color-mod($border-md-color, a($alpha-ios-lowest))
+$tabbar-md-text-color:                  css-var(#rgba(60, 60, 60, 0.7), tabbar-md-text-color) !default; // @color-mod($text-md-color, a($alpha-ios-high))
 $tabbar-md-text-color-active:           css-var($tabbar-text-color-active, tabbar-md-text-color-active) !default;
 
 // Material Design Toolbar
@@ -34,7 +72,7 @@ $tabbar-md-text-color-active:           css-var($tabbar-text-color-active, tabba
 $toolbar-md-height:                     56px !default;
 $toolbar-md-padding:                    4px !default;
 $toolbar-md-background-color:           css-var($toolbar-background-color, toolbar-md-background-color) !default;
-$toolbar-md-border-color:               css-var($toolbar-border-color, toolbar-md-border-color) !default;
+$toolbar-md-border-color:               css-var($border-md-color, toolbar-md-border-color) !default;
 $toolbar-md-color-active:               css-var($toolbar-color-active, toolbar-md-color-active) !default;
 $toolbar-md-color-inactive:             css-var($toolbar-color-inactive, toolbar-md-color-inactive) !default;
 $toolbar-md-text-color:                 css-var(#424242, toolbar-md-text-color) !default;
@@ -44,4 +82,4 @@ $toolbar-md-text-color:                 css-var(#424242, toolbar-md-text-color) 
 $item-md-background-color:              css-var($item-background-color, item-md-background-color) !default;
 $item-md-background-color-active:       css-var(#f1f1f1, item-md-background-color-active) !default;
 $item-md-border-color:                  css-var(#dedede, item-md-border-color) !default;
-$item-md-border-color:                  css-var($item-border-color, item-md-border-color) !default;
+$item-md-text-color:                    css-var($item-text-color, item-md-text-color) !default;

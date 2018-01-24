@@ -15,7 +15,7 @@ $alert-md-max-width:                          280px !default;
 $alert-md-border-radius:                      2px !default;
 
 /// @prop - Background color of the alert
-$alert-md-background-color:                   #fafafa !default;
+$alert-md-background-color:                   $background-md-color-step-100 !default;
 
 /// @prop - Box shadow color of the alert
 $alert-md-box-shadow-color:                   rgba(0, 0, 0, .4) !default;
@@ -60,7 +60,7 @@ $alert-md-message-padding-start:              24px !default;
 $alert-md-message-font-size:                  15px !default;
 
 /// @prop - Text color of the alert message
-$alert-md-message-text-color:                 rgba(0, 0, 0, .5) !default;
+$alert-md-message-text-color:                 $text-md-color-step-300 !default;
 
 /// @prop - Padding top of the alert empty message
 $alert-md-message-empty-padding-top:          0 !default;
@@ -84,10 +84,10 @@ $alert-md-input-border-width:                 1px !default;
 $alert-md-input-border-style:                 solid !default;
 
 /// @prop - Border color of the alert input
-$alert-md-input-border-color:                 #dedede !default;
+$alert-md-input-border-color:                 $border-md-color !default;
 
 /// @prop - Text color of the alert input
-$alert-md-input-text-color:                   #000 !default;
+$alert-md-input-text-color:                   $text-md-color !default;
 
 /// @prop - Border width of the alert input when focused
 $alert-md-input-border-width-focused:         2px !default;
@@ -109,6 +109,9 @@ $alert-md-input-margin-bottom:                5px !default;
 
 /// @prop - Margin start of the alert input
 $alert-md-input-margin-start:                 0 !default;
+
+/// @prop - Placeholder Color for input
+$alert-md-input-placeholder-color:            $placeholder-text-md-color !default;
 
 /// @prop - Flex wrap of the alert button group
 $alert-md-button-group-flex-wrap:             wrap-reverse !default;
@@ -162,7 +165,7 @@ $alert-md-button-text-color:                  ion-color($colors-md, primary, bas
 $alert-md-button-background-color:            transparent !default;
 
 /// @prop - Background color of the alert activated button
-$alert-md-button-background-color-activated:  rgba(158, 158, 158, .2) !default;
+$alert-md-button-background-color-activated:  $background-color-step-200 !default;
 
 /// @prop - Border radius of the alert button
 $alert-md-button-border-radius:               2px !default;
@@ -192,7 +195,7 @@ $alert-md-radio-label-padding-bottom:         $alert-md-radio-label-padding-top 
 $alert-md-radio-label-padding-start:          $alert-md-radio-label-padding-end !default;
 
 /// @prop - Text color of the label for the radio alert
-$alert-md-radio-label-text-color:             initial !default;
+$alert-md-radio-label-text-color:             $text-md-color !default;
 
 /// @prop - Text color of the label for the checked radio alert
 $alert-md-radio-label-text-color-checked:     $alert-md-button-text-color !default;
@@ -219,7 +222,7 @@ $alert-md-radio-border-style:                 solid !default;
 $alert-md-radio-border-radius:                50% !default;
 
 /// @prop - Border color of the alert radio when off
-$alert-md-radio-border-color-off:             #ababab !default;
+$alert-md-radio-border-color-off:             $text-md-color-step-300 !default;
 
 /// @prop - Border color of the alert radio when on
 $alert-md-radio-border-color-on:              $alert-md-button-text-color !default;
@@ -261,10 +264,10 @@ $alert-md-checkbox-label-padding-bottom:      $alert-md-checkbox-label-padding-t
 $alert-md-checkbox-label-padding-start:       $alert-md-checkbox-label-padding-end !default;
 
 /// @prop - Text color of the label for the checkbox in the alert
-$alert-md-checkbox-label-text-color:          initial !default;
+$alert-md-checkbox-label-text-color:          $text-md-color !default;
 
 /// @prop - Text color of the label for the checked checkbox in the alert
-$alert-md-checkbox-label-text-color-checked:  initial !default;
+$alert-md-checkbox-label-text-color-checked:  ion-color($colors-md, primary, base, md) !default;
 
 /// @prop - Top of the checkbox in the alert
 $alert-md-checkbox-top:                       0 !default;
@@ -288,7 +291,7 @@ $alert-md-checkbox-border-style:              solid !default;
 $alert-md-checkbox-border-radius:             2px !default;
 
 /// @prop - Border color of the checkbox in the alert when off
-$alert-md-checkbox-border-color-off:          #787878 !default;
+$alert-md-checkbox-border-color-off:          $border-md-color !default;
 
 /// @prop - Border color of the checkbox in the alert when on
 $alert-md-checkbox-border-color-on:           $alert-md-button-text-color !default;

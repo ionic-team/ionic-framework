@@ -28,7 +28,7 @@ $toolbar-ios-button-color:                          $toolbar-ios-text-color !def
 $toolbar-ios-button-background-color:               $toolbar-ios-background-color !default;
 
 /// @prop - Background color of the toolbar button when activated
-$toolbar-ios-button-background-color-activated:     ion-color($colors-ios, primary, shade, ios);
+$toolbar-ios-button-background-color-activated:     ion-color($colors-ios, primary, tint, ios);
 
 /// @prop - Border radius of the toolbar button
 $toolbar-ios-button-border-radius:                  4px !default;

@@ -19,7 +19,7 @@ $fab-md-text-color:                               ion-color($colors-md, $fab-md-
 $fab-md-icon-fill-color:                          $fab-md-text-color !default;
 
 /// @prop - Background color of the activated button
-$fab-md-background-color-activated:               ion-color($colors-md, $fab-md-background-color, shade, md) !default;
+$fab-md-background-color-activated:               ion-color($colors-md, $fab-md-background-color, tint, md) !default;
 
 /// @prop - Background color of the button in a list
 $fab-md-list-button-background-color:             ion-color($colors-md, tertiary, base, md) !default;
@@ -31,7 +31,7 @@ $fab-md-list-button-text-color:                   ion-color($colors-md, $fab-md-
 $fab-md-list-button-icon-fill-color:              $fab-md-list-button-text-color !default;
 
 /// @prop - Background color of the activated button in a list
-$fab-md-list-button-background-color-activated:   ion-color($colors-md, $fab-md-list-button-background-color, shade, md) !default;
+$fab-md-list-button-background-color-activated:   ion-color($colors-md, $fab-md-list-button-background-color, tint, md) !default;
 
 /// @prop - Transition duration of the transform and opacity of the button in a list
 $fab-md-list-button-transition-duration:          200ms !default;

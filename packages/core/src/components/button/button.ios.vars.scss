@@ -46,7 +46,7 @@ $button-ios-background-color:                       ion-color($colors-ios, prima
 $button-ios-text-color:                             ion-color($colors-ios, $button-ios-background-color, contrast, ios) !default;
 
 /// @prop - Background color of the activated button
-$button-ios-background-color-activated:             ion-color($colors-ios, $button-ios-background-color, shade, ios) !default;
+$button-ios-background-color-activated:             ion-color($colors-ios, $button-ios-background-color, tint, ios) !default;
 
 /// @prop - Opacity of the activated button
 $button-ios-opacity-activated:                      1 !default;
@@ -55,7 +55,7 @@ $button-ios-opacity-activated:                      1 !default;
 $button-ios-opacity-hover:                          .8 !default;
 
 /// @prop - Background color of the focused button
-$button-ios-background-color-focused:               ion-color($colors-ios, $button-ios-background-color, tint, ios) !default;
+$button-ios-background-color-focused:               ion-color($colors-ios, $button-ios-background-color, shade, ios) !default;
 
 
 // iOS Large Button

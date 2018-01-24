@@ -153,7 +153,7 @@
   }
 
   .searchbar-ios-#{$color-name} .searchbar-ios-cancel:hover:not(.disable-hover) {
-    color: ion-color($colors-ios, $color-base, shade, ios);
+    color: ion-color($colors-ios, $color-base, tint, ios);
   }
 
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-search-icon {

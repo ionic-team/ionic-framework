@@ -14,7 +14,7 @@
   font-family: $item-ios-font-family;
 
   font-size: $item-ios-font-size;
-  color: $item-ios-border-color;
+  color: $item-ios-text-color;
   background-color: $item-ios-background-color;
   transition: background-color 200ms linear;
 }
@@ -173,7 +173,7 @@
 @each $color-name, $color-value in $colors-ios {
   $color-base: ion-color($colors-ios, $color-name, base, ios);
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-shade: ion-color($colors-ios, $color-name, shade, ios);
+  $color-shade: ion-color($colors-ios, $color-name, tint, ios);
 
   // If there is text with a color it should use this color
   // and override whatever item sets it to

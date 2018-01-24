@@ -117,7 +117,7 @@
 
 .action-sheet-ios .action-sheet-selected {
   font-weight: bold;
-  background: #fff;
+  background: $action-sheet-ios-button-background-selected;
 }
 
 .action-sheet-ios .action-sheet-destructive {

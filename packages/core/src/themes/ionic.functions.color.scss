@@ -18,12 +18,45 @@ $modes:                     (ios,md);
 
 @function get-mode($name) {
   @each $mode in $modes {
-  @if (str-contains($name, "-#{$mode}-") or (str-index($name, "#{$mode}-") == 1)) {
+    @if (str-contains($name, "-#{$mode}-") or (str-index($name, "#{$mode}-") == 1)) {
       @return $mode;
     }
   }
 
   @return null;
+}
+
+/**
+  Parses a color into its name/variation pairs from the color map
+  @private
+ */
+@function color-to-name-variation($colors, $color, $variation: null) {
+  $results: ();
+  $found: false;
+  @each $color-name, $color-value in $colors {
+    @if (not $found and type-of($color-value) == map) {
+      @each $color-variation-name, $color-variation-value in $color-value {
+        @if ($color == $color-variation-value) {
+          $variation: if($variation == $color-variation-name, $default-color-variation, $variation);
+          @if ($variation) {
+            $results: map-merge($results, (variation: $variation))
+          }
+          $results: map-merge($results, (name: $color-name));
+          $found: true;
+        }
+      }
+    } @else if (not $found and $color == $color-value) {
+      $results: map-merge($results, (name: $color-name));
+      $found: true;
+    }
+  }
+
+  @return $results;
+}
+
+
+@function color-to-rgb-list($color) {
+  @return #{red($color)},#{green($color)},#{blue($color)};
 }
 
 /**
@@ -67,33 +100,7 @@ $modes:                     (ios,md);
   @return (name: $name, variation: $variation, mode: $mode);
 }
 
-/**
-  Parses a color into its name/variation pairs from the color map
-  @private
- */
-@function color-to-name-variation($colors, $color, $variation: null) {
-  $results: ();
-  $found: false;
-  @each $color-name, $color-value in $colors {
-    @if (not $found and type-of($color-value) == map) {
-      @each $color-variation-name, $color-variation-value in $color-value {
-        @if ($color == $color-variation-value) {
-          $variation: if($variation == $color-variation-name, $default-color-variation, $variation);
-          @if ($variation) {
-            $results: map-merge($results, (variation: $variation))
-          }
-          $results: map-merge($results, (name: $color-name));
-          $found: true;
-        }
-      }
-    } @else if (not $found and $color == $color-value) {
-      $results: map-merge($results, (name: $color-name));
-      $found: true;
-    }
-  }
 
-  @return $results;
-}
 
 @function css-var($color, $name) {
   @if ($enable-css-variables) {
@@ -121,7 +128,7 @@ $modes:                     (ios,md);
 
 @function ion-color($colors, $name, $variation: null, $mode: null, $returnColorValue: false) {
 
-  // If CSS variables are off, we will be passed color values
+  // If CSS variables are off or someone passed a raw color, we will be passed color values
   // we need to look up the map in order to provide variations
   @if (type-of($name) == color) {
     $results: color-to-name-variation($colors, $name, $variation);
@@ -162,11 +169,20 @@ $modes:                     (ios,md);
     // If the color contains variations pick the appropriate one
     @if (type-of($color) == map) {
       @if (not map-has-key($color, $variation)) {
-        @error "Unknown Color: '#{$name}' with variation '#{$variation}'. Using #{$default-color-variation}";
+
+        // Automatic variation fallback for colors that do not have light/dark
+        @if ($variation == 'light') {
+          $variation: 'tint';
+        }@else if($variation == 'dark') {
+          $variation: 'shade';
+        }
+        @if (not map-has-key($color, $variation)) {
+          @error "Unknown Color: '#{$name}' with variation '#{$variation}'.";
+        }
       }
       $color: map-get($color, $variation);
     } @else if $variation != $default-color-variation {
-      @error "Color '#{$name}' is not a map. Cannot contain variation '#{$variation}'. Using #{$default-color-variation}";
+      @error "Color '#{$name}' is not a map. Cannot contain variation '#{$variation}'.";
     }
 
     $name: "#{$default-color-prefix}#{if($mode, '#{$mode}-', '')}#{$name}";
@@ -182,6 +198,17 @@ $modes:                     (ios,md);
   }
 
   @error "Unknown Color: '#{$name}' with variation '#{$variation}'";
+}
+
+@function ion-color-alpha($colors, $name, $alpha, $mode) {
+  @if (type-of($colors) == color) {
+    $fallback: color-to-rgb-list($colors);
+    $value: css-var($fallback, $name);
+    @return unquote("rgba(#{$value}, #{$alpha})");
+  } @else {
+    $value: ion-color($colors, $name, rgb, $mode);
+    @return unquote("rgba(#{$value}, #{$alpha})");
+  }
 }
 
 @function ion-extend-colors($parent, $children...) {

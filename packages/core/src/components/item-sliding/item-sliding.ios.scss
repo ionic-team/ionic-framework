@@ -46,7 +46,7 @@
 @each $color-name, $color-value in $colors-ios {
   $color-base: ion-color($colors-ios, $color-name, base, ios);
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-shade: ion-color($colors-ios, $color-name, shade, ios);
+  $color-shade: ion-color($colors-ios, $color-name, tint, ios);
 
   .item-option-ios-#{$color-name} {
     color: $color-contrast;

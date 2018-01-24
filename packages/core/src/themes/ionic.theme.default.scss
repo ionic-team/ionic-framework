@@ -2,65 +2,124 @@
 
 // Default Theme
 // ----------------------------------
-$colors:          () !default;
 
+// Private color variables, use colors() to override
+$primary:         #488aff;
+$secondary:       #32db64;
+$tertiary:        #f4a942;
+$success:         #10dc60;
+$warning:         #ffce00;
+$danger:          #f53d3d;
+$light:           #f4f4f4;
+$medium:          #989aa2;
+$dark:            #222;
+
+// Allows users to override an individual color
+$colors:        () !default;
+
+// Allows users to override all alpha levels
+$alpha-highest: .9 !default;
+$alpha-high:    .75 !default;
+$alpha-medium:  .5 !default;
+$alpha-low:     .25 !default;
+$alpha-lowest:  .1 !default;
+
+/**
+  Primary color map should provide
+    - base: main color to be used.
+    - rgb: a R,G,B list version of the base color. Used for alpha processing
+    - contrast: Color that will provide readable text against the base color
+    - dark: darker version of the base color (mix with black)
+    - light: lighter version of the base color (mix with white)
+    - shade: slightly darker version of the base color (mix with black)
+    - tint: slightly lighter version of the base color (mix with white)
+ */
 $ion-colors:  (
   primary: (
-    base:         #488aff,
-    contrast:     #fff,
-    shade:        #427feb,
-    tint:         #3f79e0
+    base:             $primary,
+    contrast:         #fff,
+    dark:             #2341a8,
+    light:            #c8cfff,
+    rgb:              color-to-rgb-list($primary),
+    shade:            #3f79e0,
+    tint:             #427feb
   ),
   secondary: (
-    base:         #32db64,
-    contrast:     #fff,
-    shade:        #2ec95c,
-    tint:         #2cc158
+    base:             $secondary,
+    contrast:         #fff,
+    dark:             #1c6f37,
+    light:            #a7ffb9,
+    rgb:              color-to-rgb-list($secondary),
+    shade:            #2cc158,
+    tint:             #2ec95c
   ),
   tertiary: (
-    base:         #f4a942,
-    contrast:     #fff,
-    tint:         #ffa529,
-    shade:        #d6903d
+    base:             $tertiary,
+    contrast:         #fff,
+    dark:             #d5852e,
+    light:            #f9d78b,
+    rgb:              color-to-rgb-list($tertiary),
+    shade:            #d6903d,
+    tint:             #ffa529
   ),
   success: (
-    base:         #10dc60,
-    contrast:     #fff,
-    shade:        #23df6d,
-    tint:         #2de073
+    base:             $success,
+    contrast:         #fff,
+    dark:             #0f8f48,
+    light:            #a0ffba,
+    rgb:              color-to-rgb-list($success),
+    shade:            #2de073,
+    tint:             #23df6d
   ),
   warning: (
-    base:         #ffce00,
-    contrast:     #fff,
-    shade:        #ffd214,
-    tint:         #ffd41f
+    base:             $warning,
+    contrast:         #fff,
+    dark:             #cc9d00,
+    light:            #fff282,
+    rgb:              color-to-rgb-list($warning),
+    shade:            #ffd41f,
+    tint:             #ffd214
   ),
   danger: (
-    base:         #f53d3d,
-    contrast:     #fff,
-    shade:        #e13838,
-    tint:         #d83636
+    base:             $danger,
+    contrast:         #fff,
+    dark:             #8a2929,
+    light:            #f5b6a7,
+    rgb:              color-to-rgb-list($danger),
+    shade:            #d83636,
+    tint:             #e13838
   ),
   light: (
-    base:         #f4f4f4,
-    contrast:     #000,
-    shade:        #e0e0e0,
-    tint:         #d7d7d7
+    base:             $light,
+    contrast:         #000,
+    rgb:              color-to-rgb-list($light),
+    shade:            #e0e0e0,
+    tint:             #d7d7d7
   ),
   medium: (
-    base:         #989aa2,
-    contrast:     #000,
-    shade:        #8c8e95,
-    tint:         #86888f
+    base:             $medium,
+    contrast:         #000,
+    rgb:              color-to-rgb-list($medium),
+    shade:            #8c8e95,
+    tint:             #86888f
   ),
   dark: (
-    base:         #222,
-    contrast:     #fff,
-    shade:        #343434,
-    tint:         #3d3d3d
+    base:             $dark,
+    contrast:         #fff,
+    rgb:              color-to-rgb-list($dark),
+    shade:            #343434,
+    tint:             #3d3d3d
   )
 );
 $colors:                                ion-extend-colors($ion-colors, $colors);
+
+// Default Alpha levels
+// --------------------------------------------------
+$alpha-lowest: css-var(.1, alpha-lowest) !default;
+$alpha-low: css-var(.25, alpha-low) !default;
+$alpha-medium: css-var(.5, alpha-medium) !default;
+$alpha-high: css-var(.75, alpha-high) !default;
+$alpha-highest: css-var(.9, alpha-highest) !default;
 
 // Default General
 // --------------------------------------------------
@@ -69,33 +128,68 @@ $content-padding:                       16px !default;
 $font-family-base:                      -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif !default;
 $font-size-base:                        14px !default; // TODO: remove
 
+// Default Foreground and Background Colors values
+// Allows users to override an foreground / background colors
+// @color-mod: remove all this
+$background-color-value:                #fff !default;
+$text-color-value:                      #000 !default;
+
+// Default Foreground and Background Colors
+// --------------------------------------------------
+$background-color:                      css-var($background-color-value, background-color) !default;
+$text-color:                            css-var($text-color-value, text-color) !default;
+$placeholder-text-color:                css-var(#999, placeholder-text-color) !default;
+
+// Generated Foreground and Background Colors for alpha
+// These variables are not used, but we call this here in order to add these colors
+// to the global list of css variables for a theme. This is only used to get a dump of all
+// css variables that the theme uses.
+// @color-mod: remove all of this
+// --------------------------------------------------
+$background-color-rgb:                  css-var(color-to-rgb-list($background-color-value), background-color-rgb) !default; //@color-mod: remove
+$text-color-rgb:                        css-var(color-to-rgb-list($text-color-value), text-color-rgb) !default; //@color-mod: remove
+
+// Default Background & Text Color Steps
+// Color Steps are used to provide variations in text and background colors of elements.
+// Steps are generally meant to move "away from" their  base color.
+// For example a $text-color of white would generally step towards black,
+// but a $text-color of black would step towards white.
+// --------------------------------------------------
+$background-color-step-100:             css-var(#f2f2f2, background-color-step-100) !default;
+$background-color-step-200:             css-var(#dcdcdc, background-color-step-200) !default;
+$background-color-step-300:             css-var(#bdbdbd, background-color-step-300) !default;
+$background-color-step-400:             css-var(#444, background-color-step-400) !default;
+$text-color-step-100:                   css-var(#222, text-color-step-100) !default;
+$text-color-step-200:                   css-var(#666, text-color-step-200) !default;
+$text-color-step-300:                   css-var(#999, text-color-step-300) !default;
+$text-color-step-400:                   css-var(#c5c5c5, text-color-step-400) !default;
+$text-color-step-400:                   css-var(#c5c5c5, text-color-step-400) !default;
+
 // Default General Colors
 // --------------------------------------------------
 $backdrop-color:                        css-var(#000, backdrop-color) !default;
-$background-color:                      css-var(#fff, background-color) !default;
+$modal-background-color:                css-var(#f1f1f1, modal-background-color) !default;
 $border-color:                          css-var(#b2b2b2, border-color) !default;
 $box-shadow-color:                      css-var(#000, box-shadow-color) !default;
-$text-color:                            css-var(#000, text-color) !default;
-$link-color:                            css-var(ion-color($colors, primary, base), link-color) !default;
 
 // Default Tabs & Tab bar
 // --------------------------------------------------
 $tabbar-background-color:               css-var(#f8f8f8, tabbar-background-color) !default;
-$tabbar-border-color:                   $border-color !default;
-$tabbar-text-color-active:              css-var($link-color, tabbar-text-color-active) !default;
+$tabbar-border-color:                   css-var($border-color, tabbar-border-color) !default;
+$tabbar-text-color-active:              css-var(#488aff, tabbar-text-color-active) !default;
 $tabbar-text-color:                     css-var(#8c8c8c, tabbar-text-color) !default;
 
 // Default Toolbar
 // --------------------------------------------------
 $toolbar-background-color:              css-var(#f8f8f8, toolbar-background-color) !default;
-$toolbar-border-color:                  $border-color !default
-$toolbar-color-active:                  $link-color !default;
-$toolbar-color-inactive:                #8c8c8c !default;
-$toolbar-text-color:                    $text-color !default;
+$toolbar-border-color:                  css-var($border-color, toolbar-border-color) !default;
+$toolbar-color-active:                  css-var(#488aff, toolbar-color-active) !default;
+$toolbar-color-inactive:                css-var(#8c8c8c, toolbar-color-inactive) !default;
+$toolbar-text-color:                    css-var($text-color, toolbar-text-color) !default;
 
 // Default List & List Items
 // --------------------------------------------------
 $item-background-color:                 css-var($background-color, item-background-color) !default;
 $item-background-color-active:          css-var($background-color, item-background-color-active) !default;
 $item-border-color:                     css-var(#c8c7cc, item-border-color) !default;
-$item-border-color:                     css-var($text-color, item-border-color) !default;
+$item-text-color:                       css-var($text-color, item-text-color) !default;

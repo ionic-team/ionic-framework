@@ -14,7 +14,8 @@
 
   font-size: $card-ios-font-size;
 
-  background: $card-ios-background-color;
+  background-color: $card-ios-background-color;
+  color: $card-ios-text-color;
   box-shadow: $card-ios-box-shadow;
 
   transform: translateZ(0);
@@ -72,7 +73,6 @@
 .card-ios + ion-card {
   @include margin(0, null, null, null);
 }
-
 
 // Generate iOS Card Colors
 // --------------------------------------------------

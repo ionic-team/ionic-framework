@@ -61,7 +61,6 @@ ion-alert input {
 }
 
 .alert-input {
-  @include placeholder($alert-input-placeholder-color);
   @include padding(10px, 0);
 
   border: 0;

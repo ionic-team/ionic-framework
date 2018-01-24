@@ -1,28 +1,39 @@
 /** oceanic theme **/
 
-
 :root {
   --color-primary: #549ee7;
+  --color-primary-dark: #3b6093;
+  --color-primary-light: #8ad0ff;
   --color-primary-tint: #59aafc;
   --color-primary-shade: #498bce;
   --color-primary-contrast: #ffffff;
   --color-secondary: #5fb3b3;
+  --color-secondary-dark: #336666;
+  --color-secondary-light: #87efef;
   --color-secondary-tint: #6ececf;
   --color-secondary-shade: #34a29d;
-  --color-secondary-contrast: #ffffff;
+  --color-secondary-contrast: #fff;
   --color-tertiary: #fac863;
+  --color-tertiary-dark: #b58d49;
+  --color-tertiary-light: #fae89c;
   --color-tertiary-tint: #ffd36a;
   --color-tertiary-shade: #eab30f;
-  --color-tertiary-contrast: #ffffff;
+  --color-tertiary-contrast: #fff;
   --color-success: #90d089;
+  --color-success-dark: #658c60;
+  --color-success-light: #bff7b9;
   --color-success-tint: #a1eb9a;
   --color-success-shade: #81bc7b;
   --color-success-contrast: #ffffff;
   --color-warning: #f99157;
+  --color-warning-dark: #c9653f;
+  --color-warning-light: #f9c595;
   --color-warning-tint: #ff9e60;
   --color-warning-shade: #ec8a54;
   --color-warning-contrast: #ffffff;
   --color-danger: #ec5f67;
+  --color-danger-dark: #ac3e42;
+  --color-danger-light: #f5b4ae;
   --color-danger-tint: #ff707b;
   --color-danger-shade: #cb535b;
   --color-danger-contrast: #ffffff;
@@ -40,20 +51,27 @@
   --color-dark-contrast: #d8dee9;
   --backdrop-color: #1b2b34;
   --background-color: #1b2b34;
+  --background-color-step-100: #293a43;
+  --background-color-step-200: #465b6e;
+  --background-color-step-300: #61879e;
+  --background-color-step-400: #91adbf;
   --border-color: #1b2b34;
   --box-shadow-color: #000000;
-  --link-color: var(--color-primary);
   --text-color: #ffffff;
+  --text-color-step-100: #c5c5c5;
+  --text-color-step-200: #b0b0b0;
+  --text-color-step-300: #aeaeae;
+  --text-color-step-400: #222;
   --tabbar-background-color: #343d46;
   --tabbar-text-color: #a7adba;
   --tabbar-text-color-active: #549ee7;
   --toolbar-background-color: #343d46;
   --toolbar-border-color: var(--border-color);
-  --toolbar-color-active: var(--link-color);
+  --toolbar-color-active: var(--color-primary);
   --toolbar-color-inactive: #a7adba;
   --toolbar-text-color: var(--text-color);
   --item-background-color: #343d46;
   --item-background-color-active: #232b34;
   --item-border-color: var(--border-color);
-  --item-border-color: var(--text-color);
+  --item-text-color: var(--text-color);
 }

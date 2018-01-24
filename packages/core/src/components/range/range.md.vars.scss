@@ -25,7 +25,7 @@ $range-md-hit-height:                        $range-md-slider-height !default;
 $range-md-bar-height:                        2px !default;
 
 /// @prop - Background of the range bar
-$range-md-bar-background-color:              #bdbdbd !default;
+$range-md-bar-background-color:              $background-md-color-step-300 !default;
 
 /// @prop - Background of the active range bar
 $range-md-bar-active-background-color:       ion-color($colors-md, primary, base, md) !default;
@@ -55,7 +55,7 @@ $range-md-tick-height:                       $range-md-tick-width !default;
 $range-md-tick-border-radius:                50% !default;
 
 /// @prop - Background of the range tick
-$range-md-tick-background-color:             #000 !default;
+$range-md-tick-background-color:             $background-md-color !default;
 
 /// @prop - Background of the active range tick
 $range-md-tick-active-background-color:      $range-md-tick-background-color !default;

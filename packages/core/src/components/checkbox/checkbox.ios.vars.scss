@@ -11,6 +11,9 @@ $checkbox-ios-background-color-off:       $item-ios-background-color !default;
 /// @prop - Background color of the checkbox when on
 $checkbox-ios-background-color-on:        ion-color($colors-ios, primary, base, ios) !default;
 
+/// @prop - Background color of focus indicator for checkbox when focused
+$checkbox-ios-background-color-focused:   ion-color($colors-ios, primary, tint, ios) !default;
+
 /// @prop - Size of the checkbox icon
 $checkbox-ios-icon-size:                  21px !default;
 

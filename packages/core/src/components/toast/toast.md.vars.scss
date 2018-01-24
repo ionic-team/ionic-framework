@@ -7,10 +7,10 @@
 $toast-md-font-family:                           $font-family-md-base !default;
 
 /// @prop - Background of the toast wrapper
-$toast-md-background:                            #333 !default;
+$toast-md-background:                            $text-md-color-step-100 !default;
 
 /// @prop - Color of the toast title
-$toast-md-title-color:                           #fff !default;
+$toast-md-title-color:                           $background-md-color !default;
 
 /// @prop - Font size of the toast title
 $toast-md-title-font-size:                       15px !default;

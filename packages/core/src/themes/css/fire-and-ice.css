@@ -42,18 +42,17 @@
   --background-color: #af381c;
   --border-color: #608f99;
   --box-shadow-color: #171717;
-  --link-color: var(--color-primary);
   --text-color: #ced8e1;
   --tabbar-background-color: #687e81;
   --tabbar-text-color: rgba(206, 216, 225, 0.57);
   --tabbar-text-color-active: #ced8e1;
   --toolbar-background-color: #343d46;
   --toolbar-border-color: var(--border-color);
-  --toolbar-color-active: var(--link-color);
+  --toolbar-color-active: var(--color-primary);
   --toolbar-color-inactive: rgba(206, 216, 225, 0.57);
   --toolbar-text-color: var(--text-color);
   --item-background-color: #364a52;
   --item-background-color-active: #243840;
   --item-border-color: var(--border-color);
-  --item-border-color: var(--text-color);
+  --item-text-color: var(--text-color);
 }

@@ -4,7 +4,13 @@ import { DomController } from '../../global/dom-controller';
 
 @Component({
   tag: 'ion-ripple-effect',
-  styleUrl: 'ripple-effect.scss'
+  styleUrls: {
+    ios: 'ripple-effect.ios.scss',
+    md: 'ripple-effect.md.scss'
+  },
+  host: {
+    theme: 'ripple'
+  }
 })
 export class RippleEffect {
 

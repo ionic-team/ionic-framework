@@ -16,7 +16,7 @@ $fab-ios-text-color:                                    ion-color($colors-ios, $
 $fab-ios-icon-fill-color:                               $fab-ios-text-color !default;
 
 /// @prop - Background color of the activated button
-$fab-ios-background-color-activated:                    ion-color($colors-ios, $fab-ios-background-color, shade, ios) !default;
+$fab-ios-background-color-activated:                    ion-color($colors-ios, $fab-ios-background-color, tint, ios) !default;
 
 /// @prop - Background color of the button in a list
 $fab-ios-list-button-background-color:                  ion-color($colors-ios, tertiary, base, ios) !default;
@@ -31,7 +31,7 @@ $fab-ios-list-button-text-color:                        ion-color($colors-ios, $
 $fab-ios-list-button-icon-fill-color:                   $fab-ios-list-button-text-color !default;
 
 /// @prop - Background color of the activated button in a list
-$fab-ios-list-button-background-color-activated:        ion-color($colors-ios, $fab-ios-list-button-background-color, shade, ios) !default;
+$fab-ios-list-button-background-color-activated:        ion-color($colors-ios, $fab-ios-list-button-background-color, tint, ios) !default;
 
 /// @prop - Transition duration of the transform and opacity of the button in a list
 $fab-ios-list-button-transition-duration:               200ms !default;

@@ -213,7 +213,7 @@
 }
 
 @mixin md-bar-button-outline($color-name) {
-  $color-shade: ion-color($colors-md, $color-name, shade, md);
+  $color-shade: ion-color($colors-md, $color-name, tint, md);
 
   .bar-button-outline-md-#{$color-name} {
     border-color: $color-shade;
@@ -258,7 +258,7 @@
 
     &.activated {
       color: $color-contrast;
-      background-color: ion-color($colors-md, $color-base, shade, md);
+      background-color: ion-color($colors-md, $color-base, tint, md);
     }
   }
 }

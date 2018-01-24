@@ -28,10 +28,10 @@ $loading-ios-max-height:                    90% !default;
 $loading-ios-border-radius:                 8px !default;
 
 /// @prop - Text color of the loading wrapper
-$loading-ios-text-color:                    #000 !default;
+$loading-ios-text-color:                    $text-ios-color !default;
 
 /// @prop - Background of the loading wrapper
-$loading-ios-background-color:              #f8f8f8 !default;
+$loading-ios-background-color:              $background-ios-color-step-100 !default;
 
 /// @prop - Background of the loading wrapper
 $loading-ios-translucent-background-color:  rgba(#f8f8f8, .88) !default;
@@ -40,7 +40,7 @@ $loading-ios-translucent-background-color:  rgba(#f8f8f8, .88) !default;
 $loading-ios-content-font-weight:           bold !default;
 
 /// @prop - Color of the loading spinner
-$loading-ios-spinner-color:                 #69717d !default;
+$loading-ios-spinner-color:                 $text-ios-color-step-200 !default;
 
 /// @prop - Color of the ios loading spinner
 $loading-ios-spinner-ios-color:             $loading-ios-spinner-color !default;

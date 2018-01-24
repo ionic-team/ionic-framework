@@ -14,7 +14,13 @@ const enum RefresherState {
 
 @Component({
   tag: 'ion-refresher',
-  styleUrl: 'refresher.scss'
+  styleUrls: {
+    ios: 'refresher.ios.scss',
+    md: 'refresher.md.scss'
+  },
+  host: {
+    theme: 'refresher'
+  }
 })
 export class Refresher {
 

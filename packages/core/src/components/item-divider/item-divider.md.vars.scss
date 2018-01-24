@@ -6,10 +6,10 @@
 // --------------------------------------------------
 
 /// @prop - Color for the divider
-$item-md-divider-color:              #858585 !default;
+$item-md-divider-color:              $text-md-color-step-300 !default;
 
 /// @prop - Background for the divider
-$item-md-divider-background:         #fff !default;
+$item-md-divider-background:         $background-md-color !default;
 
 /// @prop - Font size for the divider
 $item-md-divider-font-size:          14px !default;

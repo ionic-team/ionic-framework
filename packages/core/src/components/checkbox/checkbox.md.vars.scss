@@ -11,6 +11,9 @@ $checkbox-md-disabled-opacity:           .3 !default;
 /// @prop - Background color of the checkbox icon when off
 $checkbox-md-icon-background-color-off:  $item-md-background-color !default;
 
+/// @prop - Background color of focus indicator for checkbox when focused
+$checkbox-md-background-color-focused:   ion-color($colors-md, primary, tint, md) !default;
+
 /// @prop - Background color of the checkbox icon when on
 $checkbox-md-icon-background-color-on:   ion-color($colors-md, primary, base, md) !default;
 
@@ -36,7 +39,7 @@ $checkbox-md-icon-border-style:          solid !default;
 $checkbox-md-icon-border-radius:         2px !default;
 
 /// @prop - Border color of the checkbox icon when off
-$checkbox-md-icon-border-color-off:      #787878 !default;
+$checkbox-md-icon-border-color-off:      $border-md-color !default;
 
 /// @prop - Border color of the checkbox icon when on
 $checkbox-md-icon-border-color-on:       ion-color($colors-md, primary, base, md) !default;

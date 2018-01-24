@@ -13,37 +13,75 @@ $content-ios-padding:                         $content-padding !default;
 $font-family-ios-base:                        $font-family-base !default;
 $font-size-ios-base:                          $font-size-base !default;
 
+// Default Material Design Alpha levels
+// --------------------------------------------------
+$alpha-ios-lowest:                            css-var($alpha-lowest, alpha-ios-lowest);
+$alpha-ios-low:                               css-var($alpha-low, alpha-ios-low);
+$alpha-ios-medium:                            css-var($alpha-medium, alpha-ios-medium);
+$alpha-ios-high:                              css-var($alpha-high, alpha-ios-high);
+$alpha-ios-highest:                           css-var($alpha-highest, alpha-ios-highest);
+
+// Default Foreground and Background Colors values
+// Allows users to override an foreground / background colors
+// @color-mod: remove all this
+$background-ios-color-value:                  $background-color-value !default;
+$text-ios-color-value:                        $text-color-value !default;
+
+// Default iOS Foreground and Background Colors
+// --------------------------------------------------
+$background-ios-color:                        css-var($background-ios-color-value, background-ios-color) !default;
+$text-ios-color:                              css-var($text-ios-color-value, text-ios-color) !default;
+$placeholder-text-ios-color:                  css-var($placeholder-text-color, placeholder-text-ios-color) !default;
+
+// Generated Foreground and Background Colors for alpha
+// These variables are not used, but we call this here in order to add these colors
+// to the global list of css variables for a theme. This is only used to get a dump of all
+// css variables that the theme uses.
+// @color-mod: remove all of this
+// --------------------------------------------------
+$background-color-rgb:                        css-var(color-to-rgb-list($background-ios-color-value), background-ios-color-rgb) !default; //@color-mod: remove
+$text-color-rgb:                              css-var(color-to-rgb-list($text-ios-color-value), text-ios-color-rgb) !default; //@color-mod: remove
+
+// Default iOS Background & Text Color Steps
+// --------------------------------------------------
+$background-ios-color-step-100:               css-var(#f7f7f7, background-ios-color-step-100) !default;
+$background-ios-color-step-200:               css-var(#bdbdbd, background-ios-color-step-200) !default;
+$background-ios-color-step-300:               css-var(#999, background-ios-color-step-300) !default;
+$background-ios-color-step-400:               css-var(#222, background-ios-color-step-400) !default;
+$text-ios-color-step-100:                     css-var(#222, text-ios-color-step-100) !default;
+$text-ios-color-step-200:                     css-var(#666, text-ios-color-step-200) !default;
+$text-ios-color-step-300:                     css-var(#8f8f8f, text-ios-color-step-400) !default;
+$text-ios-color-step-400:                     css-var(#aeaeae, text-ios-color-step-300) !default;
+
 // iOS General Colors
 // --------------------------------------------------
-$backdrop-ios-color:                          css-var(#000000, backdrop-ios-color) !default;
-$background-ios-color:                        css-var(#ffffff, background-ios-color) !default;
+$backdrop-ios-color:                          css-var($backdrop-color, backdrop-ios-color) !default;
+$modal-ios-background-color:                  css-var($modal-background-color, background-ios-color) !default;
 $border-ios-color:                            css-var(#c1c4cd, border-ios-color) !default;
-$box-shadow-ios-color:                        css-var(#000000, box-shadow-ios-color) !default;
-$text-ios-color:                              css-var(#000000, text-ios-color) !default;
-$link-ios-color:                              css-var(ion-color($colors-ios, primary, base, ios), link-ios-color) !default;
+$box-shadow-ios-color:                        css-var($box-shadow-color, box-shadow-ios-color) !default;
 
 // iOS Tabs & Tab bar
 // --------------------------------------------------
 $tabbar-ios-background-color:                 css-var($tabbar-background-color, tabbar-ios-background-color) !default;
-$tabbar-ios-translucent-background-color:     css-var(rgba(248, 248, 248, 0.8), tabbar-ios-translucent-background-color) !default;
-$tabbar-ios-border-color:                     css-var(rgba(0, 0, 0, .2), tabbar-ios-border-color) !default;
+$tabbar-ios-translucent-background-color:     css-var(rgba(248, 248, 248, 0.8), tabbar-ios-translucent-background-color) !default; // @color-mod: remove
+$tabbar-ios-border-color:                     css-var(rgba(0, 0, 0, .2), tabbar-ios-border-color) !default; // @color-mod($border-ios-color, a($alpha-ios-low))
 $tabbar-ios-text-color:                       css-var($tabbar-text-color, tabbar-ios-text-color) !default;
-$tabbar-ios-text-color-active:                css-var($tabbar-text-color-active, tabbar-ios-text-color-active) !default;
+$tabbar-ios-text-color-active:                css-var(color($colors-ios, primary, base, ios), tabbar-ios-text-color-active) !default;
 
 // iOS Toolbar
 // --------------------------------------------------
 $toolbar-ios-height:                          44px !default;
 $toolbar-ios-padding:                         4px !default;
 $toolbar-ios-background-color:                css-var($tabbar-background-color, toolbar-ios-background-color) !default;
-$toolbar-ios-translucent-background-color:    css-var(rgba(248, 248, 248, 0.8), toolbar-ios-background-color) !default;
-$toolbar-ios-border-color:                    css-var(rgba(0, 0, 0, .2), toolbar-ios-border-color) !default;
-$toolbar-ios-color-active:                    css-var($toolbar-color-active, toolbar-ios-color-active) !default;
+$toolbar-ios-translucent-background-color:    css-var(rgba(248, 248, 248, 0.8), toolbar-ios-background-color) !default; // @color-mod: remove
+$toolbar-ios-border-color:                    css-var(rgba(0, 0, 0, .2), toolbar-ios-border-color) !default; // @color-mod($border-ios-color, a($alpha-ios-low))
+$toolbar-ios-color-active:                    css-var(ion-color($colors-ios, primary, base, ios), toolbar-ios-color-active) !default;
 $toolbar-ios-color-inactive:                  css-var($toolbar-color-inactive, toolbar-ios-color-inactive) !default;
 $toolbar-ios-text-color:                      css-var($toolbar-text-color, toolbar-ios-text-color) !default;
 
 // iOS List & List Items
 // --------------------------------------------------
-$item-ios-background-color:                   css-var($item-background-color, item-ios-background-color) !default;
+$item-ios-background-color:                   css-var($background-ios-color, item-ios-background-color) !default;
 $item-ios-background-color-active:            css-var(#d9d9d9, item-ios-background-color-active) !default;
 $item-ios-border-color:                       css-var($item-border-color, item-ios-border-color) !default;
-$item-ios-border-color:                       css-var($item-border-color, item-ios-border-color) !default;
+$item-ios-text-color:                         css-var($item-text-color, item-ios-text-color) !default;

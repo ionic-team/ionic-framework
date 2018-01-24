@@ -28,7 +28,7 @@ $chip-ios-font-family:                      $font-family-ios-base !default;
 $chip-ios-font-size:                        13px !default;
 
 /// @prop - Text color of the chip
-$chip-ios-text-color:                       rgba(0, 0, 0, .87) !default;
+$chip-ios-text-color:                       $text-ios-color-step-100 !default;
 
 /// @prop - Background color of the chip
 $chip-ios-background-color:                 rgba(0, 0, 0, .12) !default;

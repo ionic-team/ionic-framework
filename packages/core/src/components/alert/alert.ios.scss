@@ -80,6 +80,7 @@
 // --------------------------------------------------
 
 .alert-ios .alert-input {
+  @include placeholder($alert-ios-input-placeholder-color);
   @include appearance(none);
 
   @include border-radius($alert-ios-input-border-radius);

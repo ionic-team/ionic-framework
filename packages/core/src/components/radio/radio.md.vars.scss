@@ -8,8 +8,11 @@
 /// @prop - Color of the checked radio
 $radio-md-color-on:                  ion-color($colors-md, primary, base, md) !default;
 
+/// @prop - Background color of focus indicator for radio when focused
+$radio-md-background-color-focused:   ion-color($colors-md, primary, tint, md) !default;
+
 /// @prop - Color of the unchecked radio
-$radio-md-color-off:                 #787878 !default;
+$radio-md-color-off:                 $text-md-color-step-300 !default;
 
 /// @prop - Width of the radio icon
 $radio-md-icon-width:                16px !default;

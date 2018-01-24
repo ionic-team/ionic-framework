@@ -246,7 +246,7 @@ button.swiper-pagination-bullet {
   position: absolute;
 }
 .swiper-pagination-progress .swiper-pagination-progressbar {
-  background: #007aff;
+  background: #007aff; //--safe-color
   position: absolute;
   left: 0;
   top: 0;
@@ -282,13 +282,13 @@ button.swiper-pagination-bullet {
   top: 0;
 }
 .swiper-pagination-progress.swiper-pagination-white {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.5); //--safe-color
 }
 .swiper-pagination-progress.swiper-pagination-white .swiper-pagination-progressbar {
-  background: #fff;
+  background: #fff; //--safe-color
 }
 .swiper-pagination-progress.swiper-pagination-black .swiper-pagination-progressbar {
-  background: #000;
+  background: #000; //--safe-color
 }
 /* 3D Container */
 .swiper-container-3d {
@@ -301,7 +301,7 @@ button.swiper-pagination-bullet {
 .swiper-container-3d .swiper-slide,
 .swiper-container-3d .swiper-slide-shadow-left,
 .swiper-container-3d .swiper-slide-shadow-right,
-.swiper-container-3d .swiper-slide-shadow-top,
+.swiper-container-3d .swiper-slide-shadow-top,¡
 .swiper-container-3d .swiper-slide-shadow-bottom,
 .swiper-container-3d .swiper-cube-shadow {
   -webkit-transform-style: preserve-3d;
@@ -442,7 +442,7 @@ button.swiper-pagination-bullet {
   bottom: 0px;
   width: 100%;
   height: 100%;
-  background: #000;
+  background: #000; //--safe-color
   opacity: 0.6;
   -webkit-filter: blur(50px);
   filter: blur(50px);

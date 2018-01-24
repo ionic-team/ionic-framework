@@ -28,7 +28,7 @@ $toolbar-md-button-color:                         $toolbar-md-text-color !defaul
 $toolbar-md-button-background-color:              $toolbar-md-background-color !default;
 
 /// @prop - Background color of the toolbar button when activated
-$toolbar-md-button-background-color-activated:    ion-color($colors-md, primary, shade, md);
+$toolbar-md-button-background-color-activated:    ion-color($colors-md, primary, tint, md);
 
 /// @prop - Border radius of the toolbar button
 $toolbar-md-button-border-radius:                 2px !default;
