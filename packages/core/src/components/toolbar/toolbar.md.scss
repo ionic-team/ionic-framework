@@ -210,12 +210,12 @@
   }
 }
 
+.enable-hover .bar-button-outline-md:hover {
+  opacity: .4;
+}
+
 @mixin md-bar-button-outline($color-name) {
   $color-shade: ion-color($colors-md, $color-name, tint, md);
-
-  .enable-hover .bar-button-outline-md:hover {
-    opacity: .4;
-  }
 
   .bar-button-outline-md-#{$color-name} {
     border-color: $color-shade;
