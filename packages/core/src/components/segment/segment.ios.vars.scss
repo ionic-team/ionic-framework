@@ -16,13 +16,13 @@ $segment-button-ios-background-color:           transparent !default;
 $segment-button-ios-background-color-activated:       ion-color($colors-ios, primary, base, ios) !default;
 
 /// @prop - Background of the segment button when hovered
-$segment-button-ios-background-color-hover:           rgba(ion-color($colors-ios, primary, base, ios, true), .1) !default;
+$segment-button-ios-background-color-hover:           ion-color-alpha($colors-ios, primary, $alpha-ios-lowest) !default;
 
 /// @prop - Background of the segment button when active
-$segment-button-ios-background-color-active:          rgba(ion-color($colors-ios, primary, base, ios, true), .16) !default;
+$segment-button-ios-background-color-active:          ion-color-alpha($colors-ios, primary, $alpha-ios-low) !default;
 
 /// @prop - Background of the activated segment button when active
-$segment-button-ios-background-color-disabled:        rgba(ion-color($colors-ios, primary, base, ios, true), .3) !default;
+$segment-button-ios-background-color-disabled:        ion-color-alpha($colors-ios, primary, $alpha-ios-medium) !default;
 
 /// @prop - Text color of the segment button
 $segment-button-ios-text-color:                       ion-color($colors-ios, primary, contrast, ios) !default;

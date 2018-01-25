@@ -28,10 +28,10 @@ $action-sheet-ios-group-margin-top:                     10px !default;
 $action-sheet-ios-group-margin-bottom:                  10px !default;
 
 /// @prop - Background color of the action sheet
-$action-sheet-ios-background-color:                    $background-ios-color-step-100 !default;
+$action-sheet-ios-background-color:                     $background-ios-color-step-100 !default;
 
 /// @prop - Background color of the action sheet when translucent
-$action-sheet-ios-translucent-background-color:         rgba(#f9f9f9, .88) !default;
+$action-sheet-ios-translucent-background-color:         ion-color-alpha($background-ios-color-value, background-ios-color, $alpha-ios-high) !default;
 
 /// @prop - Border radius of the action sheet
 $action-sheet-ios-border-radius:                        13px !default;
@@ -118,7 +118,7 @@ $action-sheet-ios-button-border-color:                  $background-ios-color-st
 $action-sheet-ios-button-background:                    transparent !default;
 
 /// @prop - Background color of the activated action sheet button
-$action-sheet-ios-button-background-activated:          rgba(115, 115, 115, .1) !default;
+$action-sheet-ios-button-background-activated:          ion-color-alpha($text-ios-color-value, text-ios-color, $alpha-ios-lowest) !default;
 
 /// @prop - Background color of the selected action sheet button
 $action-sheet-ios-button-background-selected:           $background-ios-color !default;

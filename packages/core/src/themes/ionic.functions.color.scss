@@ -169,13 +169,6 @@ $modes:                     (ios,md);
     // If the color contains variations pick the appropriate one
     @if (type-of($color) == map) {
       @if (not map-has-key($color, $variation)) {
-
-        // Automatic variation fallback for colors that do not have light/dark
-        @if ($variation == 'light') {
-          $variation: 'tint';
-        }@else if($variation == 'dark') {
-          $variation: 'shade';
-        }
         @if (not map-has-key($color, $variation)) {
           @error "Unknown Color: '#{$name}' with variation '#{$variation}'.";
         }
@@ -200,10 +193,12 @@ $modes:                     (ios,md);
   @error "Unknown Color: '#{$name}' with variation '#{$variation}'";
 }
 
-@function ion-color-alpha($colors, $name, $alpha, $mode) {
+// Also can take the format
+// ion-color-alpha($color-value, $css-variable-name, $alpha) {
+@function ion-color-alpha($colors, $name, $alpha, $mode: null) {
   @if (type-of($colors) == color) {
-    $fallback: color-to-rgb-list($colors);
-    $value: css-var($fallback, $name);
+    $value: color-to-rgb-list($colors);
+    $fallback: css-var($value, $name);
     @return unquote("rgba(#{$value}, #{$alpha})");
   } @else {
     $value: ion-color($colors, $name, rgb, $mode);

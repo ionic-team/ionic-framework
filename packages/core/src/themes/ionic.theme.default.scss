@@ -15,22 +15,20 @@ $medium:          #989aa2;
 $dark:            #222;
 
 // Allows users to override an individual color
-$colors:        () !default;
+$colors:              () !default;
 
 // Allows users to override all alpha levels
-$alpha-highest: .9 !default;
-$alpha-high:    .75 !default;
-$alpha-medium:  .5 !default;
-$alpha-low:     .25 !default;
-$alpha-lowest:  .1 !default;
+$alpha-lowest:        .06 !default;
+$alpha-low:           .1 !default;
+$alpha-medium:        .4 !default;
+$alpha-high:          .75 !default;
+$alpha-highest:       .9 !default;
 
 /**
   Primary color map should provide
     - base: main color to be used.
     - rgb: a R,G,B list version of the base color. Used for alpha processing
     - contrast: Color that will provide readable text against the base color
-    - dark: darker version of the base color (mix with black)
-    - light: lighter version of the base color (mix with white)
     - shade: slightly darker version of the base color (mix with black)
     - tint: slightly lighter version of the base color (mix with white)
  */
@@ -56,8 +54,6 @@ $ion-colors:  (
   tertiary: (
     base:             $tertiary,
     contrast:         #fff,
-    dark:             #d5852e,
-    light:            #f9d78b,
     rgb:              color-to-rgb-list($tertiary),
     shade:            #d6903d,
     tint:             #ffa529
@@ -65,26 +61,20 @@ $ion-colors:  (
   success: (
     base:             $success,
     contrast:         #fff,
-    dark:             #0f8f48,
-    light:            #a0ffba,
     rgb:              color-to-rgb-list($success),
-    shade:            #2de073,
+    shade: #10cb60,
     tint:             #23df6d
   ),
   warning: (
     base:             $warning,
-    contrast:         #fff,
-    dark:             #cc9d00,
-    light:            #fff282,
+    contrast:         #000,
     rgb:              color-to-rgb-list($warning),
-    shade:            #ffd41f,
+    shade:            #f1c100,
     tint:             #ffd214
   ),
   danger: (
     base:             $danger,
     contrast:         #fff,
-    dark:             #8a2929,
-    light:            #f5b6a7,
     rgb:              color-to-rgb-list($danger),
     shade:            #d83636,
     tint:             #e13838
@@ -93,8 +83,8 @@ $ion-colors:  (
     base:             $light,
     contrast:         #000,
     rgb:              color-to-rgb-list($light),
-    shade:            #e0e0e0,
-    tint:             #d7d7d7
+    shade:            #d7d7d7,
+    tint:             #e0e0e0
   ),
   medium: (
     base:             $medium,

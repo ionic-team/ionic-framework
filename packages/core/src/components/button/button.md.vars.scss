@@ -145,7 +145,7 @@ $button-md-outline-background-color:            transparent !default;
 $button-md-outline-box-shadow:                  none !default;
 
 /// @prop - Background color of the outline button on hover
-$button-md-outline-background-color-hover:      rgba(158, 158, 158, .1) !default;
+$button-md-outline-background-color-hover:      ion-color-alpha($text-md-color-value, text-md-color, $alpha-md-lowest) !default;
 
 /// @prop - Background color of the activated outline button
 $button-md-outline-background-color-activated:  transparent !default;
@@ -160,8 +160,7 @@ $button-md-outline-opacity-activated:           1 !default;
 $button-md-outline-ripple-background-color:     $button-md-background-color !default;
 
 /// @prop - Background color of the focused outline button
-$button-md-outline-background-color-focused:    rgba(ion-color($colors-md, primary, base, md, true), 0.12) !default;
-
+$button-md-outline-background-color-focused:    ion-color-alpha($colors-md, primary, $alpha-md-low, md) !default;
 
 // Material Design Clear Button
 // --------------------------------------------------
@@ -182,19 +181,19 @@ $button-md-clear-box-shadow:                    none !default;
 $button-md-clear-opacity:                       1 !default;
 
 /// @prop - Background color of the activated clear button
-$button-md-clear-background-color-activated:    rgba(158, 158, 158, .2) !default;
+$button-md-clear-background-color-activated:    ion-color-alpha($text-md-color-value, text-md-color, $alpha-md-lowest) !default;
 
 /// @prop - Box shadow of the activated clear button
 $button-md-clear-box-shadow-activated:          $button-md-clear-box-shadow !default;
 
 /// @prop - Background color of the clear button on hover
-$button-md-clear-background-color-hover:        rgba(158, 158, 158, .1) !default;
+$button-md-clear-background-color-hover:        ion-color-alpha($text-md-color-value, text-md-color, $alpha-md-lowest) !default;
 
 /// @prop - Background color of the ripple on the clear button
 $button-md-clear-ripple-background-color:       $text-md-color-step-300 !default;
 
 /// @props - Background color of the focused clear button
-$button-md-clear-background-color-focused:      rgba(ion-color($colors-md, primary, base, md, true), 0.12) !default;
+$button-md-clear-background-color-focused:      ion-color-alpha($colors-md, primary, $alpha-md-low, md) !default;
 
 
 // Material Design Round Button

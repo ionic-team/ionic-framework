@@ -145,8 +145,7 @@
 @each $color-name, $color-value in $colors-ios {
   $color-base: ion-color($colors-ios, $color-name, base, ios);
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-contrast-value: ion-color($colors-ios, $color-name, contrast, ios, true);
-  $fg-color: rgba($color-contrast-value, .5);
+  $color-shade: ion-color($colors-ios, $color-name, shade, ios);
 
   .searchbar-ios-#{$color-name} .searchbar-ios-cancel {
     color: $color-base;
@@ -157,17 +156,19 @@
   }
 
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-search-icon {
-    @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $fg-color);
+    @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $color-contrast);
+    opacity: .5;
   }
 
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-input {
-    @include placeholder($fg-color);
+    @include placeholder($color-contrast, $opacity: .5);
     color: $color-contrast;
-    background: rgba($color-contrast-value, .1);
+    background: $color-shade;
   }
 
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-clear-icon {
-    @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $fg-color);
+    @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $color-contrast);
+    opacity: .5;
   }
 
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-ios-cancel {

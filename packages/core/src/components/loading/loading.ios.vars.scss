@@ -34,7 +34,7 @@ $loading-ios-text-color:                    $text-ios-color !default;
 $loading-ios-background-color:              $background-ios-color-step-100 !default;
 
 /// @prop - Background of the loading wrapper
-$loading-ios-translucent-background-color:  rgba(#f8f8f8, .88) !default;
+$loading-ios-translucent-background-color:  ion-color-alpha($background-ios-color-value, background-ios-color, $alpha-ios-high) !default;
 
 /// @prop - Font weight of the loading content
 $loading-ios-content-font-weight:           bold !default;

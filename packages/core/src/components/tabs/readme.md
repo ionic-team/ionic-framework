@@ -90,6 +90,15 @@ components to switch to `TabsRoot3`:
 
 ## Properties
 
+#### color
+
+string
+
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
+
+
 #### name
 
 string
@@ -126,6 +135,15 @@ boolean
 
 
 ## Attributes
+
+#### color
+
+string
+
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
+
 
 #### name
 

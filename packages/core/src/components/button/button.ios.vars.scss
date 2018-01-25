@@ -133,8 +133,7 @@ $button-ios-outline-background-color-activated:     $button-ios-background-color
 $button-ios-outline-opacity-activated:              1 !default;
 
 /// @prop - Background color of the focused outline button
-$button-ios-outline-background-color-focused:       rgba(ion-color($colors-ios, primary, base, ios, true), 0.12) !default;
-
+$button-ios-outline-background-color-focused:       ion-color-alpha($colors-ios, primary, $alpha-ios-low, ios) !default
 
 // iOS Clear Button
 // --------------------------------------------------
@@ -158,7 +157,7 @@ $button-ios-clear-text-color-hover:                 $button-ios-background-color
 $button-ios-clear-opacity-hover:                    .6 !default;
 
 /// @prop - Background color of the focused clear button
-$button-ios-clear-background-color-focused:         rgba(ion-color($colors-ios, primary, base, ios, true), 0.12) !default;
+$button-ios-clear-background-color-focused:         ion-color-alpha($colors-ios, primary, $alpha-ios-low, ios) !default;
 
 
 // iOS Round Button

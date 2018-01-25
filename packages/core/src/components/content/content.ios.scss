@@ -18,7 +18,7 @@
 .content-ios hr {
   height: $hairlines-width;
 
-  background-color: rgba(0, 0, 0, .12);
+  background-color: ion-color-alpha($background-ios-color-value, background-ios-color, $alpha-ios-low);
 }
 
 

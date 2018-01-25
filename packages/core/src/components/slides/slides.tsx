@@ -3,7 +3,13 @@ import { Swiper } from './vendor/swiper.js';
 import { debounce } from '../../utils/helpers';
 @Component({
   tag: 'ion-slides',
-  styleUrl: 'slides.scss',
+  styleUrls: {
+    ios: 'slides.ios.scss',
+    md: 'slides.md.scss'
+  },
+  host: {
+    theme: 'slides'
+  },
   assetsDir: 'vendor'
 })
 export class Slides {

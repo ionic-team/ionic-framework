@@ -73,11 +73,12 @@
   }
 
   .fab-translucent-ios-#{$color-name} {
-    background-color: rgba(ion-color($colors-ios, $color-name, base, ios, true), $fab-ios-translucent-opacity);
+    background-color: ion-color-alpha($colors-ios, $color-name, $alpha-ios-highest);
+    opacity: .8;
   }
 
   .fab-translucent-ios-#{$color-name}.activated {
-    background-color: rgba(ion-color($colors-ios, $color-name, tint, ios, true), $fab-ios-translucent-opacity);
+    opacity: 1;
   }
 }
 

@@ -121,27 +121,29 @@
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
   $color-shade: ion-color($colors-ios, $color-name, tint, ios);
 
-  $color-base-value: ion-color($colors-ios, $color-name, base, ios, true);
-  $color-contrast-value: ion-color($colors-ios, $color-name, contrast, ios, true);
+  $translucent-background-color: ion-color-alpha($colors-ios, $color-name, $alpha-ios-high, ios);
 
   .tabbar-ios-#{$color-name} {
-    border-color: darken($color-base-value, 10%);
-    color: rgba($color-contrast-value, .7);
-    background-color: $color-base;
-
-    fill: rgba($color-contrast-value, .7);
-  }
-
-  .tabbar-ios-#{$color-name} .tab-selected {
+    border-color: $background-ios-color-step-300;
     color: $color-contrast;
+    background-color: $color-base;
 
     fill: $color-contrast;
   }
 
-  .tabbar-translucent-ios-#{$color-name} {
-    background-color: rgba($color-base-value, $tabbar-ios-translucent-opacity);
+  .tabbar-ios-#{$color-name} ion-tab-button{
+    color: $color-contrast;
   }
 
+  .tabbar-ios-#{$color-name} ion-tab-button:hover:not(.disable-hover), .tabbar-ios-#{$color-name} .tab-selected {
+    color: $color-contrast;
+    fill: $color-contrast;
+    font-weight: bold;
+  }
+
+  .tabbar-translucent-ios-#{$color-name} {
+    background-color: $translucent-background-color
+  }
 }
 
 // iOS Tabbar Color Generation

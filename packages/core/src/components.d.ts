@@ -2958,6 +2958,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTabsAttributes extends HTMLAttributes {
+      color?: string;
       name?: string;
       scrollable?: boolean;
       tabbarHidden?: boolean;

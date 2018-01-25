@@ -1,0 +1,19 @@
+@import "../../themes/ionic.globals.ios";
+
+/// @prop - Slides Bullet Background Color
+$slides-ios-bullet-background-color: $text-ios-color-step-200 !default;
+
+/// @prop - Slides Bullet Background Color when Active
+$slides-ios-bullet-background-color-active: ion-color($colors-ios, primary, base, ios) !default;
+
+/// @prop - Slides Progress indicator background color
+$slides-ios-progress-background-color: ion-color-alpha($text-ios-color-value, text-ios-color, $alpha-ios-low) !default;
+
+/// @prop - Slides Progress indicator bar background color
+$slides-ios-progress-bar-background-color: ion-color($colors-ios, primary, shade, ios) !default;
+
+/// @prop - Slides Scroll bar background color
+$slides-ios-scroll-bar-background-color: ion-color-alpha($text-ios-color-value, text-ios-color, $alpha-ios-low) !default;
+
+/// @prop - Slides Scroll bar drag handle background color
+$slides-ios-scroll-bar-drag-background-color: ion-color-alpha($text-ios-color-value, text-ios-color, $alpha-ios-medium) !default;

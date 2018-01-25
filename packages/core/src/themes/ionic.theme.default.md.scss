@@ -3,7 +3,17 @@
 // Material Design Default Theme
 // ----------------------------------
 $colors-md:       () !default;
-$ion-colors-md:   ();
+
+$light-md: #e3e3e3;
+$ion-colors-md:   (
+  light: (
+    base:             $light-md,
+    contrast:         #000,
+    rgb:              color-to-rgb-list($light-md),
+    shade:            #d0d0d0,
+    tint:             #f0f0f0
+  )
+);
 $colors-md:                             ion-extend-colors($colors, $ion-colors-md, $colors-md);
 
 // Material Design General
@@ -64,7 +74,7 @@ $box-shadow-md-color:                   css-var($box-shadow-color, box-shadow-md
 // --------------------------------------------------
 $tabbar-md-background-color:            css-var($tabbar-background-color, tabbar-md-background-color) !default;
 $tabbar-md-border-color:                css-var(rgba(0, 0, 0, .07), tabbar-md-border-color) !default; // @color-mod($border-md-color, a($alpha-ios-lowest))
-$tabbar-md-text-color:                  css-var(#rgba(60, 60, 60, 0.7), tabbar-md-text-color) !default; // @color-mod($text-md-color, a($alpha-ios-high))
+$tabbar-md-text-color:                  css-var($text-md-color-step-200, tabbar-md-text-color) !default; // @color-mod($text-md-color, a($alpha-ios-high))
 $tabbar-md-text-color-active:           css-var($tabbar-text-color-active, tabbar-md-text-color-active) !default;
 
 // Material Design Toolbar

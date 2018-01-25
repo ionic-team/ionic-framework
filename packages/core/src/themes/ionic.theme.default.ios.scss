@@ -13,7 +13,8 @@ $content-ios-padding:                         $content-padding !default;
 $font-family-ios-base:                        $font-family-base !default;
 $font-size-ios-base:                          $font-size-base !default;
 
-// Default Material Design Alpha levels
+
+// Default iOS Alpha levels
 // --------------------------------------------------
 $alpha-ios-lowest:                            css-var($alpha-lowest, alpha-ios-lowest);
 $alpha-ios-low:                               css-var($alpha-low, alpha-ios-low);
@@ -66,7 +67,7 @@ $tabbar-ios-background-color:                 css-var($tabbar-background-color, 
 $tabbar-ios-translucent-background-color:     css-var(rgba(248, 248, 248, 0.8), tabbar-ios-translucent-background-color) !default; // @color-mod: remove
 $tabbar-ios-border-color:                     css-var(rgba(0, 0, 0, .2), tabbar-ios-border-color) !default; // @color-mod($border-ios-color, a($alpha-ios-low))
 $tabbar-ios-text-color:                       css-var($tabbar-text-color, tabbar-ios-text-color) !default;
-$tabbar-ios-text-color-active:                css-var(color($colors-ios, primary, base, ios), tabbar-ios-text-color-active) !default;
+$tabbar-ios-text-color-active:                css-var(ion-color($colors-ios, primary, base, ios), tabbar-ios-text-color-active) !default;
 
 // iOS Toolbar
 // --------------------------------------------------
