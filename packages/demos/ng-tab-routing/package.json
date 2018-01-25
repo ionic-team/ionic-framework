@@ -24,6 +24,7 @@
     "@ionic/angular": "next",
     "@ionic/core": "next",
     "core-js": "^2.4.1",
+    "node-sass": "^4.7.2",
     "rxjs": "^5.5.2",
     "zone.js": "latest"
   },
