@@ -104,7 +104,6 @@ export class InfiniteScroll {
   }
 
   componentDidUnload() {
-    this.enableScrollEvents(!this.disabled);
     this.scrollEl = null;
   }
 
