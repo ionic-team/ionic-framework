@@ -1,6 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import { Swiper } from './vendor/swiper.js';
-import { debounce } from '../../utils/helpers';
 @Component({
   tag: 'ion-slides',
   styleUrls: {
@@ -269,19 +268,8 @@ export class Slides {
    * child slides.
    */
   @Method()
-  update(debounce = 300) {
+  update() {
     this.swiper.update();
-    // if (this.init) {
-    //   window.clearTimeout(this.tmr);
-    //   this.tmr = window.setTimeout(() => {
-    //     this.swiper.update();
-    //
-    //     // Don't allow pager to show with > 10 slides
-    //     if (this.length() > 10) {
-    //       this.options.paginationType = undefined;
-    //     }
-    //   }, debounce);
-    // }
   }
 
   /**
@@ -415,5 +403,3 @@ export class Slides {
     this.enableKeyboardControl(false);
   }
 }
-
-let slidesId = -1;

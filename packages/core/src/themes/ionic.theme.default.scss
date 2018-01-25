@@ -105,11 +105,11 @@ $colors:                                ion-extend-colors($ion-colors, $colors);
 
 // Default Alpha levels
 // --------------------------------------------------
-$alpha-lowest: css-var(.1, alpha-lowest) !default;
-$alpha-low: css-var(.25, alpha-low) !default;
-$alpha-medium: css-var(.5, alpha-medium) !default;
-$alpha-high: css-var(.75, alpha-high) !default;
-$alpha-highest: css-var(.9, alpha-highest) !default;
+$alpha-lowest:                          css-var(.1, alpha-lowest) !default;
+$alpha-low:                             css-var(.25, alpha-low) !default;
+$alpha-medium:                          css-var(.5, alpha-medium) !default;
+$alpha-high:                            css-var(.75, alpha-high) !default;
+$alpha-highest:                         css-var(.9, alpha-highest) !default;
 
 // Default General
 // --------------------------------------------------
