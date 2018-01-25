@@ -3,24 +3,21 @@ import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 
 @Component({
-  selector: 'page-one',
+  selector: 'tab-three-page-one',
   template: `
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Login Page</ion-title>
+        <ion-title>Tab Three Page One</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
-      Login - {{ts}}
-      <div>
-        <ion-button (click)="pushPageTwoComponent()">Login to app</ion-button>
-      </div>
+      Tab Three Page One {{ts}}
     </ion-content>
   </ion-page>
   `
 })
-export class PageOne {
+export class TabThreePageOne {
 
   ts: number;
   constructor(/*private navController: NavController*/private router: Router) {
@@ -28,13 +25,5 @@ export class PageOne {
       this.ts = Date.now();
     }, 500);
   }
-
-
-  pushPageTwoComponent() {
-    // this.navController.push('/page-two');
-    this.router.navigateByUrl('/app/tabs');
-  }
-
-
 
 }

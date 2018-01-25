@@ -141,45 +141,96 @@ export function activateRoute(navElement: HTMLIonNavElement,
 
   return (navElement as any).componentOnReady().then(() => {
 
-    // check if the component is the top view
-    const activeViews = navElement.getViews();
-    if (activeViews.length === 0) {
-      // there isn't a view in the stack, so push one
-      return navElement.push(component, {}, {}, {
-        cfr,
-        injector
+    // check if the nav has an `<ion-tab>` as a parent
+    if (isParentTab(navElement)) {
+      // check if the tab is selected
+      return updateTab(navElement, component, cfr, injector);
+    } else {
+      return updateNav(navElement, component, cfr, injector);
+    }
+  });
+}
+
+
+
+function isParentTab(navElement: HTMLIonNavElement) {
+  return navElement.parentElement.tagName.toLowerCase() === 'ion-tab';
+}
+
+function isTabSelected(tabsElement: HTMLIonTabsElement, tabElement: HTMLIonTabElement ): Promise<boolean> {
+  const promises: Promise<any>[] = [];
+  promises.push((tabsElement as any).componentOnReady());
+  promises.push((tabElement as any).componentOnReady());
+  return Promise.all(promises).then(() => {
+    return tabsElement.getSelected() === tabElement;
+  });
+}
+
+function getSelected(tabsElement: HTMLIonTabsElement) {
+  tabsElement.getSelected();
+}
+
+function updateTab(navElement: HTMLIonNavElement,
+  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector) {
+
+  const tab = navElement.parentElement as HTMLIonTabElement;
+  // yeah yeah, I know this is kind of ugly but oh well, I know the internal structure of <ion-tabs>
+  const tabs = tab.parentElement.parentElement as HTMLIonTabsElement;
+  return isTabSelected(tabs, tab).then((isSelected: boolean) => {
+    if (!isSelected) {
+      // okay, the tab is not selected, so we need to do a "switch" transition
+      // basically, we should update the nav, and then swap the tabs
+      return updateNav(navElement, component, cfr, injector).then(() => {
+        return tabs.select(tab);
       });
     }
 
-    const currentView = activeViews[activeViews.length - 1];
-    if (currentView.component === component) {
-      // the top view is already the component being activated, so there is no change needed
-      return Promise.resolve();
-    }
+    // okay cool, the tab is already selected, so we want to see a transition
+    return updateNav(navElement, component, cfr, injector);
+  })
+}
 
-    // check if the component is the previous view, if so, pop back to it
-    if (activeViews.length > 1) {
-      // there's at least two views in the stack
-      const previousView = activeViews[activeViews.length - 2];
-      if (previousView.component === component) {
-        // cool, we match the previous view, so pop it
-        return navElement.pop();
-      }
-    }
+function updateNav(navElement: HTMLIonNavElement,
+  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector) {
 
-    // check if the component is already in the stack of views, in which case we pop back to it
-    for (const view of activeViews) {
-      if (view.component === component) {
-        // cool, we found the match, pop back to that bad boy
-        return navElement.popTo(view);
-      }
-    }
-
-    // since it's none of those things, we should probably just push that bad boy and call it a day
+  // check if the component is the top view
+  const activeViews = navElement.getViews();
+  if (activeViews.length === 0) {
+    // there isn't a view in the stack, so push one
     return navElement.push(component, {}, {}, {
       cfr,
       injector
     });
+  }
+
+  const currentView = activeViews[activeViews.length - 1];
+  if (currentView.component === component) {
+    // the top view is already the component being activated, so there is no change needed
+    return Promise.resolve();
+  }
+
+  // check if the component is the previous view, if so, pop back to it
+  if (activeViews.length > 1) {
+    // there's at least two views in the stack
+    const previousView = activeViews[activeViews.length - 2];
+    if (previousView.component === component) {
+      // cool, we match the previous view, so pop it
+      return navElement.pop();
+    }
+  }
+
+  // check if the component is already in the stack of views, in which case we pop back to it
+  for (const view of activeViews) {
+    if (view.component === component) {
+      // cool, we found the match, pop back to that bad boy
+      return navElement.popTo(view);
+    }
+  }
+
+  // since it's none of those things, we should probably just push that bad boy and call it a day
+  return navElement.push(component, {}, {}, {
+    cfr,
+    injector
   });
 }
 
