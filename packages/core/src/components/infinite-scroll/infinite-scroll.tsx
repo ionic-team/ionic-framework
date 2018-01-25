@@ -65,7 +65,7 @@ export class InfiniteScroll {
 
   @Watch('disabled')
   protected disabledChanged(val: boolean) {
-    this.enableScrollEvents(val);
+    this.enableScrollEvents(!val);
   }
 
   /**
@@ -97,14 +97,14 @@ export class InfiniteScroll {
     }
     this.init = true;
     this.thresholdChanged(this.threshold);
-    this.enableScrollEvents(this.disabled);
+    this.enableScrollEvents(!this.disabled);
     if (this.position === Position.Top) {
       this.dom.write(() => this.scrollEl.scrollToBottom(0));
     }
   }
 
   componentDidUnload() {
-    this.enableScrollEvents(false);
+    this.enableScrollEvents(!this.disabled);
     this.scrollEl = null;
   }
 
@@ -145,7 +145,7 @@ export class InfiniteScroll {
 
   private canStart(): boolean {
     return (
-      this.disabled &&
+      !this.disabled &&
       !this.isBusy &&
       this.scrollEl &&
       !this.isLoading);

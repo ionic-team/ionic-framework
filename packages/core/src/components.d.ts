@@ -1331,7 +1331,6 @@ declare global {
       color?: string;
       href?: string;
       mode?: 'ios' | 'md';
-      onclick?: (this: HTMLElement, ev: MouseEvent) => any;
     }
   }
 }
