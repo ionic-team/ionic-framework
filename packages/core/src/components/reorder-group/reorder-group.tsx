@@ -69,7 +69,7 @@ export class ReorderGroup {
     this.containerEl = this.el.querySelector('ion-gesture') as HTMLElement;
     this.scrollEl = this.el.closest('ion-scroll') as HTMLElement;
     if (!this.disabled) {
-      this.disabledChanged(true);
+      this.disabledChanged(false);
     }
   }
 
@@ -268,7 +268,7 @@ export class ReorderGroup {
         onStart: this.onDragStart.bind(this),
         onMove: this.onDragMove.bind(this),
         onEnd: this.onDragEnd.bind(this),
-        enabled: !this.disabled,
+        disabled: this.disabled,
         disableScroll: true,
         gestureName: 'reorder',
         gesturePriority: 30,
