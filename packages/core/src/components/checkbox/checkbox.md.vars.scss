@@ -51,13 +51,13 @@ $checkbox-md-transition-duration:        280ms !default;
 $checkbox-md-transition-easing:          cubic-bezier(.4, 0, .2, 1) !default;
 
 /// @prop - Margin top of the start checkbox item
-$checkbox-md-item-start-margin-top:      $item-md-padding-media-top !default;
+$checkbox-md-item-start-margin-top:      9px !default;
 
 /// @prop - Margin end of the start checkbox item
 $checkbox-md-item-start-margin-end:      36px !default;
 
 /// @prop - Margin bottom of the start checkbox item
-$checkbox-md-item-start-margin-bottom:   $item-md-padding-media-bottom !default;
+$checkbox-md-item-start-margin-bottom:   $checkbox-md-item-start-margin-top !default;
 
 /// @prop - Margin start of the start checkbox item
 $checkbox-md-item-start-margin-start:    4px !default;

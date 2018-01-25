@@ -12,10 +12,9 @@ export class Scroll {
 
   private gesture: GestureDelegate;
   private positions: number[] = [];
-  private _l: number;
-  private _t: number;
   private tmr: any;
   private queued = false;
+  private app: HTMLIonAppElement;
 
   isScrolling = false;
   detail: ScrollDetail = {};
@@ -26,15 +25,7 @@ export class Scroll {
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop({ context: 'isServer' }) isServer: boolean;
 
-  @Prop() enabled = true;
-  @Prop() jsScroll = false;
-
-  @Watch('jsScroll')
-  jsScrollChanged(js: boolean) {
-    if (js) {
-      throw new Error('jsScroll: TODO!');
-    }
-  }
+  @Prop() disabled = false;
 
   @Prop() onionScrollStart: ScrollCallback;
   @Prop() onionScroll: ScrollCallback;
@@ -48,7 +39,7 @@ export class Scroll {
   /**
    * @output {ScrollEvent} Emitted while scrolling.
    */
-  @Event() ionScroll: EventEmitter;
+  @Event({bubbles: false}) ionScroll: EventEmitter;
 
   /**
    * @output {ScrollEvent} Emitted when the scroll has ended.
@@ -62,11 +53,26 @@ export class Scroll {
 
     const gestureCtrl = Ionic.gesture = Ionic.gesture || new GestureController();
     this.gesture = gestureCtrl.createGesture('scroll', 100, false);
+    this.app = this.el.closest('ion-app') as HTMLIonAppElement;
   }
 
   componentDidUnload() {
     this.gesture && this.gesture.destroy();
     this.gesture = this.detail = this.detail.event = null;
+  }
+
+  // Native Scroll *************************
+
+  @Listen('scroll', { passive: true })
+  onNativeScroll() {
+    if (!this.queued) {
+      this.queued = true;
+
+      this.dom.read(timeStamp => {
+        this.queued = false;
+        this.onScroll(timeStamp);
+      });
+    }
   }
 
   @Method()
@@ -106,8 +112,8 @@ export class Scroll {
     }
 
     if (duration < 32) {
-      self.setTop(y);
-      self.setLeft(x);
+      el.scrollTop = y;
+      el.scrollLeft = x;
       done();
       return promise;
     }
@@ -139,11 +145,11 @@ export class Scroll {
       const easedT = (--time) * time * time + 1;
 
       if (fromY !== y) {
-        self.setTop((easedT * (y - fromY)) + fromY);
+        el.scrollTop = (easedT * (y - fromY)) + fromY;
       }
 
       if (fromX !== x) {
-        self.setLeft(Math.floor((easedT * (x - fromX)) + fromX));
+        el.scrollLeft = Math.floor((easedT * (x - fromX)) + fromX);
       }
 
       if (easedT < 1) {
@@ -173,33 +179,23 @@ export class Scroll {
     return promise;
   }
 
-  // Native Scroll *************************
-
-  @Listen('scroll', { passive: true })
-  protected onNativeScroll() {
-    if (!this.queued) {
-      this.queued = true;
-
-      this.dom.read(timeStamp => {
-        this.queued = false;
-        this.onScroll(timeStamp);
-      });
-    }
-  }
-
   private onScroll(timeStamp: number) {
     const detail = this.detail;
     const positions = this.positions;
+    const el = this.el;
+    if (this.app) {
+      this.app.setScrolling();
+    }
 
     detail.timeStamp = timeStamp;
 
     // get the current scrollTop
     // ******** DOM READ ****************
-    detail.scrollTop = this.getTop();
+    detail.scrollTop = el.scrollTop;
 
     // get the current scrollLeft
     // ******** DOM READ ****************
-    detail.scrollLeft = this.getLeft();
+    detail.scrollLeft = el.scrollLeft;
 
     if (!this.isScrolling) {
       // currently not scrolling, so this is a scroll start
@@ -215,9 +211,8 @@ export class Scroll {
       // emit only on the first scroll event
       if (this.onionScrollStart) {
         this.onionScrollStart(detail);
-      } else {
-        this.ionScrollStart.emit(detail);
       }
+      this.ionScrollStart.emit(detail);
     }
 
     // actively scrolling
@@ -270,7 +265,6 @@ export class Scroll {
     }
   }
 
-
   private onEnd(timeStamp: number) {
     const detail = this.detail;
 
@@ -279,49 +273,8 @@ export class Scroll {
     // emit that the scroll has ended
     if (this.onionScrollEnd) {
       this.onionScrollEnd(detail);
-    } else {
-      this.ionScrollEnd.emit(detail);
     }
-  }
-
-  /** DOM READ */
-  private getTop() {
-    if (this.jsScroll) {
-      return this._t;
-    }
-    return this._t = this.el.scrollTop;
-  }
-
-  /** DOM READ */
-  private getLeft() {
-    if (this.jsScroll) {
-      return 0;
-    }
-    return this._l = this.el.scrollLeft;
-  }
-
-  /** DOM WRITE */
-  private setTop(top: number) {
-    this._t = top;
-
-    if (this.jsScroll) {
-      this.el.style.transform = this.el.style.webkitTransform = `translate3d(${this._l * -1}px,${top * -1}px,0px)`;
-
-    } else {
-      this.el.scrollTop = top;
-    }
-  }
-
-  /** DOM WRITE */
-  private setLeft(left: number) {
-    this._l = left;
-
-    if (this.jsScroll) {
-      this.el.style.transform = this.el.style.webkitTransform = `translate3d(${left * -1}px,${this._t * -1}px,0px)`;
-
-    } else {
-      this.el.scrollLeft = left;
-    }
+    this.ionScrollEnd.emit(detail);
   }
 
   render() {

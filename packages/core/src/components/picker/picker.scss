@@ -172,3 +172,11 @@ ion-picker {
   border: 0;
   font-family: inherit;
 }
+
+.picker-opt,
+.picker-button {
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}

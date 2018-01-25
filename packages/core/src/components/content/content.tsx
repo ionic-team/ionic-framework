@@ -69,11 +69,6 @@ export class Content {
     };
   }
 
-  @Method()
-  enableJsScroll() {
-    this.scrollEl.jsScroll = true;
-  }
-
   /**
    * Scroll to the top of the content component.
    *

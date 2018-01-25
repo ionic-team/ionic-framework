@@ -3,6 +3,7 @@ import { Config, Nav, NavContainer } from '../../index';
 import { isReady } from '../../utils/helpers';
 
 const rootNavs = new Map<number, NavContainer>();
+const ACTIVE_SCROLLING_TIME = 100;
 
 @Component({
   tag: 'ion-app',
@@ -16,6 +17,9 @@ const rootNavs = new Map<number, NavContainer>();
 })
 export class App {
 
+  private didScroll = false;
+  private scrollTime = 0;
+
   @Element() element: HTMLElement;
 
   @State() modeCode: string;
@@ -27,14 +31,13 @@ export class App {
   componentWillLoad() {
     this.modeCode = this.config.get('mode');
     this.useRouter = this.config.getBoolean('useRouter', false);
-    this.hoverCSS = this.config.getBoolean('hoverCSS', true);
+    this.hoverCSS = this.config.getBoolean('hoverCSS', false);
   }
 
   @Listen('body:navInit')
   protected registerRootNav(event: CustomEvent) {
     rootNavs.set((event.detail as Nav).navId, (event.detail as Nav));
   }
-
 
   /**
    * Returns an array of top level Navs
@@ -48,16 +51,36 @@ export class App {
     return navs;
   }
 
-
-  /**
-   * Check if the app is currently scrolling
-   */
-  @Method() isScrolling(): boolean {
-    // TODO - sync with Manu
-    return false;
+  @Method()
+  isEnabled(): boolean {
+    return true;
   }
 
-  @Method() getActiveNavs(rootNavId?: number): NavContainer[] {
+  /**
+   * Boolean if the app is actively scrolling or not.
+   * @return {boolean} returns true or false
+   */
+  @Method()
+  isScrolling(): boolean {
+    const scrollTime = this.scrollTime;
+    if (scrollTime === 0) {
+      return false;
+    }
+    if (scrollTime < Date.now()) {
+      this.scrollTime = 0;
+      return false;
+    }
+    return true;
+  }
+
+  @Method()
+  setScrolling() {
+    this.scrollTime = Date.now() + ACTIVE_SCROLLING_TIME;
+    this.didScroll = true;
+  }
+
+  @Method()
+  getActiveNavs(rootNavId?: number): NavContainer[] {
     /*const portal = portals.get(PORTAL_MODAL);
     if (portal && portal.views && portal.views.length) {
       return findTopNavs(portal);
@@ -81,7 +104,8 @@ export class App {
     return activeNavs;
   }
 
-  @Method() getNavByIdOrName(nameOrId: number | string) {
+  @Method()
+  getNavByIdOrName(nameOrId: number | string) {
     const navs = Array.from(rootNavs.values());
     for (const navContainer of navs) {
       const match = getNavByIdOrNameImpl(navContainer, nameOrId);
@@ -102,8 +126,9 @@ export class App {
   }
 
   render() {
-    const dom = [<slot></slot>];
+    const dom = [<ion-tap-click />, <slot></slot>];
     if (this.useRouter) {
+
       // dom.push(<ion-router-controller></ion-router-controller>);
     }
     return dom;

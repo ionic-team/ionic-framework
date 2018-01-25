@@ -45,13 +45,13 @@ $checkbox-ios-icon-checkmark-color:       ion-color($colors-ios, $checkbox-ios-b
 $checkbox-ios-disabled-opacity:           .3 !default;
 
 /// @prop - Margin top of the left checkbox item
-$checkbox-ios-item-start-margin-top:      $item-ios-padding-media-top !default;
+$checkbox-ios-item-start-margin-top:      8px !default;
 
 /// @prop - Margin end of the left checkbox item
 $checkbox-ios-item-start-margin-end:      $item-ios-padding-end !default;
 
 /// @prop - Margin bottom of the left checkbox item
-$checkbox-ios-item-start-margin-bottom:   $item-ios-padding-media-bottom !default;
+$checkbox-ios-item-start-margin-bottom:   $checkbox-ios-item-start-margin-top !default;
 
 /// @prop - Margin start of the left checkbox item
 $checkbox-ios-item-start-margin-start:    2px !default;

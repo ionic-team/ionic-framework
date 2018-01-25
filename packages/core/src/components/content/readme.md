@@ -80,9 +80,6 @@ Emitted when the scrolling first starts.
 
 ## Methods
 
-#### enableJsScroll()
-
-
 #### scrollToBottom()
 
 Scroll to the bottom of the content component.

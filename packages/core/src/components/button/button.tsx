@@ -111,18 +111,16 @@ export class Button {
       strong
     } = this;
 
-    const elementClasses: string[] = []
-      .concat(
-        getButtonClassList(buttonType, mode),
-        getClassList(buttonType, expand, mode),
-        getClassList(buttonType, size, mode),
-        getClassList(buttonType, round ? 'round' : null, mode),
-        getClassList(buttonType, strong ? 'strong' : null, mode),
-        getColorClassList(buttonType, color, fill, mode),
-      );
+    const elementClasses = [
+      ...getButtonClassList(buttonType, mode),
+      ...getClassList(buttonType, expand, mode),
+      ...getClassList(buttonType, size, mode),
+      ...getClassList(buttonType, round ? 'round' : null, mode),
+      ...getClassList(buttonType, strong ? 'strong' : null, mode),
+      ...getColorClassList(buttonType, color, fill, mode),
+    ];
 
     const TagType = this.href ? 'a' : 'button';
-
     const buttonClasses = {
       ...getElementClassObject(this.el.classList),
       ...getElementClassObject(elementClasses),
@@ -143,7 +141,7 @@ export class Button {
             <slot></slot>
             <slot name='end'></slot>
           </span>
-          { this.mode === 'md' && <ion-ripple-effect /> }
+          { this.mode === 'md' && <ion-ripple-effect useTapClick={true} /> }
       </TagType>
     );
   }

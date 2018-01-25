@@ -1,13 +1,22 @@
-# ion-refresher-content
-The Refresher provides pull-to-refresh functionality on a content component.
-Place the `ion-refresher` as the first child of your `ion-content` element.
+# ion-refresher
 
-Pages can then listen to the refresher's various output events. The `refresh`
-output event is fired when the user has pulled down far enough to kick off the
-refreshing process. Once the async operation has completed and the refreshing
-should end, call `complete()`.
+The refresher provides pull-to-refresh functionality on a content component.
+The pull-to-refresh pattern lets a user pull down on a list of data using touch
+in order to retrieve more data.
+
+Data should be modified during the refresher's output events. Once the async
+operation has completed and the refreshing should end, call `complete()` on the
+refresher.
 
 
+```html
+<ion-content>
+  <ion-refresher slot="fixed">
+    <ion-refresher-content>
+    </ion-refresher-content>
+  </ion-refresher>
+</ion-content>
+```
 
 
 <!-- Auto Generated Below -->
@@ -19,38 +28,38 @@ should end, call `complete()`.
 
 string
 
-Time it takes to close the refresher. Default is `280ms`.
+Time it takes to close the refresher. Defaults to `280ms`.
 
 
-#### enabled
+#### disabled
 
 boolean
 
-If the refresher is enabled or not. This should be used in place of an `ngIf`. Default is `true`.
+If the refresher is disabled or not. Defaults to `true`.
 
 
-#### pullDelta
+#### pullMax
 
-number
+any
 
 The maximum distance of the pull until the refresher
-will automatically go into the `refreshing` state. By default, the pull
-maximum will be the result of `pullMin + 60`.
+will automatically go into the `refreshing` state.
+Defaults to the result of `pullMin + 60`.
 
 
 #### pullMin
 
 number
 
-The min distance the user must pull down until the
-refresher can go into the `refreshing` state. Default is `60`.
+The minimum distance the user must pull down until the
+refresher will go into the `refreshing` state. Defaults to `60`.
 
 
 #### snapbackDuration
 
 string
 
-Time it takes the refresher to to snap back to the `refreshing` state. Default is `280ms`.
+Time it takes the refresher to to snap back to the `refreshing` state. Defaults to `280ms`.
 
 
 ## Attributes
@@ -59,38 +68,38 @@ Time it takes the refresher to to snap back to the `refreshing` state. Default i
 
 string
 
-Time it takes to close the refresher. Default is `280ms`.
+Time it takes to close the refresher. Defaults to `280ms`.
 
 
-#### enabled
+#### disabled
 
 boolean
 
-If the refresher is enabled or not. This should be used in place of an `ngIf`. Default is `true`.
+If the refresher is disabled or not. Defaults to `true`.
 
 
-#### pullDelta
+#### pullMax
 
-number
+any
 
 The maximum distance of the pull until the refresher
-will automatically go into the `refreshing` state. By default, the pull
-maximum will be the result of `pullMin + 60`.
+will automatically go into the `refreshing` state.
+Defaults to the result of `pullMin + 60`.
 
 
 #### pullMin
 
 number
 
-The min distance the user must pull down until the
-refresher can go into the `refreshing` state. Default is `60`.
+The minimum distance the user must pull down until the
+refresher will go into the `refreshing` state. Defaults to `60`.
 
 
 #### snapbackDuration
 
 string
 
-Time it takes the refresher to to snap back to the `refreshing` state. Default is `280ms`.
+Time it takes the refresher to to snap back to the `refreshing` state. Defaults to `280ms`.
 
 
 ## Events
@@ -102,10 +111,10 @@ Emitted while the user is pulling down the content and exposing the refresher.
 
 #### ionRefresh
 
-Emitted when the user lets go and has pulled down
-far enough, which would be farther than the `pullMin`, then your refresh hander if
-fired and the state is updated to `refreshing`. From within your refresh handler,
-you must call the `complete()` method when your async operation has completed.
+Emitted when the user lets go of the content and has pulled down
+further than the `pullMin` or pulls the content down and exceeds the pullMax.
+Updates the refresher state to `refreshing`. The `complete()` method should be
+called when the async operation has completed.
 
 
 #### ionStart

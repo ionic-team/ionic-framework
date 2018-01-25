@@ -207,7 +207,7 @@ export class Toggle implements CheckboxInput {
   render() {
     return [
       <ion-gesture {...this.gestureConfig}
-        enabled={!this.disabled} tabIndex={-1}>
+        disabled={this.disabled} tabIndex={-1}>
         <div class='toggle-icon'>
           <div class='toggle-inner'/>
         </div>

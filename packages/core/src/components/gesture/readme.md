@@ -37,7 +37,7 @@ string
 boolean
 
 
-#### enabled
+#### disabled
 
 boolean
 
@@ -134,7 +134,7 @@ string
 boolean
 
 
-#### enabled
+#### disabled
 
 boolean
 

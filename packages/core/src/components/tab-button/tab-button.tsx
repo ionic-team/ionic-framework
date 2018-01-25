@@ -55,7 +55,7 @@ export class TabButton {
         'has-title-only': hasTitleOnly,
         'has-icon-only': hasIconOnly,
         'has-badge': hasBadge,
-        'tab-disabled': !tab.enabled,
+        'tab-disabled': tab.disabled,
         'tab-hidden': tab.hidden,
       }
     };

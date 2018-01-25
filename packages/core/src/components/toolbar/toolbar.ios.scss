@@ -167,14 +167,17 @@
     color: $color-base;
     background-color: transparent;
 
-    &:hover:not(.disable-hover) {
-      color: $color-base;
-    }
-
     &.activated {
       opacity: .4;
     }
   }
+
+  .enable-hover .bar-button-#{$color-name}-ios:hover,
+  .enable-hover .bar-button-clear-ios-#{$color-name}:hover,
+  .enable-hover .bar-button-ios-#{$color-name}:hover {
+    color: $color-base;
+  }
+
 }
 
 // iOS Toolbar Button Icon
@@ -195,14 +198,14 @@
   color: $toolbar-ios-button-color;
   background-color: transparent;
 
-  &:hover:not(.disable-hover) {
-    opacity: .4;
-  }
-
   &.activated {
     color: $toolbar-ios-text-color;
     background-color: $toolbar-ios-button-color;
   }
+}
+
+.enable-hover .bar-button-outline-ios:hover {
+  opacity: .4;
 }
 
 @mixin ios-bar-button-outline($color-name) {
@@ -239,6 +242,10 @@
     background-color: $toolbar-ios-button-background-color-activated;
     opacity: .4;
   }
+}
+
+.enable-hover .bar-button-solid-ios:hover {
+  opacity: .4;
 }
 
 @mixin ios-bar-button-solid($color-name) {

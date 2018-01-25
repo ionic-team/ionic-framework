@@ -29,6 +29,11 @@
   user-select: none;
 
   contain: strict;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
 
 .fab-button ion-icon {

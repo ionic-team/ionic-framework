@@ -33,7 +33,7 @@ export class SplitPane {
    * @input {boolean} If `false`, the split-pane is disabled, ie. the side pane will
    * never be displayed. Default `true`.
    */
-  @Prop() enabled = true;
+  @Prop() disabled = false;
 
   /**
    * @input {string | boolean} When the split-pane should be shown.
@@ -89,7 +89,7 @@ export class SplitPane {
     this.rmL = null;
 
     // Check if the split-pane is disabled
-    if (!this.enabled) {
+    if (this.disabled) {
       this._setVisible(false);
       return;
     }

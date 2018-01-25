@@ -173,10 +173,12 @@
   .bar-button-md-#{$color-name} {
     color: $color-base;
     background-color: transparent;
+  }
 
-    &:hover:not(.disable-hover) {
-      color: $color-base;
-    }
+  .enable-hover .bar-button-#{$color-name}-md:hover,
+  .enable-hover .bar-button-clear-md-#{$color-name}:hover,
+  .enable-hover .bar-button-md-#{$color-name}:hover {
+    color: $color-base;
   }
 }
 
@@ -199,10 +201,6 @@
   color: $toolbar-md-button-color;
   background-color: transparent;
 
-  &:hover:not(.disable-hover) {
-    opacity: .4;
-  }
-
   &.activated {
     background-color: transparent;
   }
@@ -214,6 +212,10 @@
 
 @mixin md-bar-button-outline($color-name) {
   $color-shade: ion-color($colors-md, $color-name, tint, md);
+
+  .enable-hover .bar-button-outline-md:hover {
+    opacity: .4;
+  }
 
   .bar-button-outline-md-#{$color-name} {
     border-color: $color-shade;
@@ -238,14 +240,14 @@
   color: $toolbar-md-button-background-color;
   background-color: $toolbar-md-button-color;
 
-  &:hover:not(.disable-hover) {
-    color: $toolbar-md-button-background-color;
-  }
-
   &.activated {
     color: $toolbar-md-button-background-color;
     background-color: $toolbar-md-button-background-color-activated;
   }
+}
+
+.enable-hover .bar-button-solid-md:hover {
+  color: $toolbar-md-button-background-color;
 }
 
 @mixin md-bar-button-solid($color-name) {

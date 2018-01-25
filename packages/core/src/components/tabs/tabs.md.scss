@@ -147,7 +147,7 @@
     fill: $color-contrast;
   }
 
-  .tabbar-md-#{$color-name} ion-tab-button:hover:not(.disable-hover),
+  .enable-hover .tabbar-md-#{$color-name} ion-tab-button:hover,
   .tabbar-md-#{$color-name} ion-tab-button.tab-selected {
     color: $color-contrast;
 

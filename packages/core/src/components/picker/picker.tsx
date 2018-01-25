@@ -188,7 +188,7 @@ export class Picker {
   }
 
   buttonClick(button: PickerButton) {
-    // if (!this.enabled) {
+    // if (this.disabled) {
     //   return;
     // }
 
@@ -249,7 +249,7 @@ export class Picker {
   }
 
   protected backdropClick() {
-    // TODO this.enabled
+    // TODO !this.disabled
     if (this.enableBackdropDismiss) {
       const cancelBtn = this.buttons.find(b => b.role === 'cancel');
       if (cancelBtn) {

@@ -21,7 +21,11 @@ class Snapshot {
     this.height =
       (options && options.platformDefaults && options.platformDefaults.params && options.platformDefaults.params.height) || -1;
 
-    this.start(options && options.testId);
+    this.testId = (options && options.testId);
+    this.queue = [];
+    this.highestMismatch = 0;
+    this.mismatches = [];
+    this.results = {};
   }
 
   async finish() {
@@ -30,14 +34,7 @@ class Snapshot {
     console.log(`done processing ${this.queue.length} screenshots`);
     console.log(`${this.mismatches.length} snapshots had significant mismatches`);
     console.log(`Test Id: ${this.testId}`);
-  }
-
-  start(testId) {
-    this.testId = testId;
-    this.queue = [];
-    this.highestMismatch = 0;
-    this.mismatches = [];
-    this.results = {};
+    console.log(`URL: ${this.domain}/${this.groupId}/${this.appId}/${this.testId}`);
   }
 
   async takeScreenshot(driver, options) {

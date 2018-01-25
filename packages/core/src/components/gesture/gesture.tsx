@@ -30,7 +30,7 @@ export class Gesture {
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
 
-  @Prop() enabled = true;
+  @Prop() disabled = false;
   @Prop() attachTo: ElementRef = 'child';
   @Prop() autoBlockAll = false;
   @Prop() block: string = null;
@@ -90,7 +90,7 @@ export class Gesture {
     }
     this.hasPress = (types.indexOf('press') > -1);
 
-    this.enabledChanged(this.enabled);
+    this.disabledChanged(this.disabled);
     if (this.pan || this.hasPress) {
       this.dom.write(() => {
         applyStyles(getElementReference(this.el, this.attachTo), GESTURE_INLINE_STYLES);
@@ -103,12 +103,12 @@ export class Gesture {
     }
   }
 
-  @Watch('enabled')
-  protected enabledChanged(isEnabled: boolean) {
+  @Watch('disabled')
+  protected disabledChanged(isDisabled: boolean) {
     if (this.pan || this.hasPress) {
-      this.enableListener(this, 'touchstart', isEnabled, this.attachTo, this.passive);
-      this.enableListener(this, 'mousedown', isEnabled, this.attachTo, this.passive);
-      if (!isEnabled) {
+      this.enableListener(this, 'touchstart', !isDisabled, this.attachTo, this.passive);
+      this.enableListener(this, 'mousedown', !isDisabled, this.attachTo, this.passive);
+      if (isDisabled) {
         this.abortGesture();
       }
     }

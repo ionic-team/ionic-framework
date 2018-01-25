@@ -4,7 +4,7 @@ exports.config = {
   generateWWW: false,
   bundles: [
     { components: ['ion-animation-controller'] },
-    { components: ['ion-app', 'ion-content', 'ion-scroll', 'ion-footer', 'ion-header', 'ion-navbar', 'ion-title', 'ion-toolbar'] },
+    { components: ['ion-app', 'ion-content', 'ion-scroll', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-action-sheet', 'ion-action-sheet-controller'] },
     { components: ['ion-alert', 'ion-alert-controller'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
@@ -45,8 +45,13 @@ exports.config = {
   collections: [
     'ionicons'
   ],
+  copy: [
+    { src: '**/*.scss' }
+  ],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
-  globalScript: 'src/global/ionic-global.ts'
+  globalScript: 'src/global/ionic-global.ts',
+  enableCache: false,
+  buildStats: true
 };
 
 exports.devServer = {

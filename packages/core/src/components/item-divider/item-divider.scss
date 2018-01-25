@@ -8,6 +8,8 @@ ion-item-divider {
   @include margin(0);
   @include padding(0);
 
+  box-sizing: border-box;
+
   z-index: $z-index-item-divider;
   display: flex;
   overflow: hidden;
@@ -24,4 +26,33 @@ ion-item-divider[sticky] {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+}
+
+.item-divider-inner {
+  @include margin(0);
+  @include padding(0);
+
+  display: flex;
+  overflow: hidden;
+
+  flex: 1;
+  flex-direction: inherit;
+  align-items: inherit;
+  align-self: stretch;
+
+  min-height: inherit;
+
+  border: 0;
+}
+
+.item-divider-wrapper {
+  display: flex;
+  overflow: hidden;
+
+  flex: 1;
+  flex-direction: inherit;
+  align-items: inherit;
+  align-self: stretch;
+
+  text-overflow: ellipsis;
 }

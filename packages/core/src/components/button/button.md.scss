@@ -29,7 +29,7 @@
               color $button-md-transition-duration $button-md-transition-timing-function;
 }
 
-.button-md:hover:not(.disable-hover) {
+.enable-hover .button-md:hover {
   background-color: $button-md-background-color-hover;
 }
 
@@ -61,7 +61,7 @@
     background-color: $bg-color;
   }
 
-  .button-md-#{$color-name}:hover:not(.disable-hover) {
+  .enable-hover  .button-md-#{$color-name}:hover {
     background-color: $bg-color;
   }
 
@@ -129,7 +129,7 @@
   box-shadow: $button-md-outline-box-shadow;
 }
 
-.button-outline-md:hover:not(.disable-hover) {
+.enable-hover .button-outline-md:hover {
   background-color: $button-md-outline-background-color-hover;
 }
 
@@ -161,7 +161,7 @@
     background-color: $button-md-outline-background-color;
   }
 
-  .button-outline-md-#{$color-name}:hover:not(.disable-hover) {
+  .enable-hover .button-outline-md-#{$color-name}:hover {
     background-color: $button-md-outline-background-color-hover;
   }
 
@@ -199,7 +199,7 @@
   background-color: $button-md-clear-background-color-focused;
 }
 
-.button-clear-md:hover:not(.disable-hover) {
+.enable-hover .button-clear-md:hover {
   background-color: $button-md-clear-background-color-hover;
 }
 
@@ -230,7 +230,7 @@
     background-color: $bg-color-focused;
   }
 
-  .button-clear-md-#{$color-name}:hover:not(.disable-hover) {
+  .enable-hover .button-clear-md-#{$color-name}:hover {
     color: $fg-color;
   }
 }

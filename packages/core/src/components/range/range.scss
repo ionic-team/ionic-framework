@@ -52,3 +52,10 @@ ion-range .range-slider {
 .range-pin {
   box-sizing: border-box;
 }
+
+.range-knob-handle {
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}

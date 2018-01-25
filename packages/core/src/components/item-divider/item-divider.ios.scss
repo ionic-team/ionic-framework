@@ -6,9 +6,41 @@
 
 .item-divider-ios {
   @include padding-horizontal($item-ios-divider-padding-start, null);
+  @include safe-area-padding-horizontal($item-ios-divider-padding-start, null);
+  @include border-radius(0);
+
+  position: relative;
+
+  font-family: $item-ios-divider-font-family;
+  font-size: $item-ios-divider-font-size;
 
   color: $item-ios-divider-color;
   background-color: $item-ios-divider-background;
+}
+
+.item-divider-ios .item-divider-inner {
+  @include padding-horizontal(null, $item-ios-divider-padding-end / 2);
+
+  @media screen and (orientation: landscape) {
+    @include safe-area-padding-horizontal(null, $item-ios-divider-padding-end / 2);
+  }
+}
+
+
+// iOS Item Slots
+// --------------------------------------------------
+
+.item-divider-ios [slot="start"] {
+  @include margin($item-ios-slot-start-margin-top, $item-ios-slot-start-margin-end, $item-ios-slot-start-margin-bottom, $item-ios-slot-start-margin-start);
+}
+
+.item-divider-ios [slot="end"] {
+  @include margin($item-ios-slot-end-margin-top, $item-ios-slot-end-margin-end, $item-ios-slot-end-margin-bottom, $item-ios-slot-end-margin-start);
+}
+
+.item-divider-ios ion-icon[slot="start"],
+.item-divider-ios ion-icon[slot="end"] {
+  @include margin($item-ios-icon-slot-margin-top, $item-ios-icon-slot-margin-end, $item-ios-icon-slot-margin-bottom, $item-ios-icon-slot-margin-start);
 }
 
 

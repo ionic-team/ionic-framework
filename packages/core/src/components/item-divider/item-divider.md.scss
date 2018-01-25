@@ -8,10 +8,45 @@
   @include padding-horizontal($item-md-divider-padding-start, null);
 
   border-bottom: $item-md-divider-border-bottom;
+
+  font-family: $item-md-divider-font-family;
   font-size: $item-md-divider-font-size;
 
   color: $item-md-divider-color;
   background-color: $item-md-divider-background;
+}
+
+.item-divider-md .item-divider-inner {
+  @include padding-horizontal(null, ($item-md-divider-padding-end / 2));
+}
+
+
+// Material Design Item Slots
+// --------------------------------------------------
+
+.item-divider-md [slot="start"],
+.item-divider-md [slot="end"] {
+  @include margin($item-md-slot-margin-top, $item-md-slot-margin-end, $item-md-slot-margin-bottom, $item-md-slot-margin-start);
+}
+
+.item-divider-md ion-icon[slot="start"],
+.item-divider-md ion-icon[slot="end"] {
+  @include margin($item-md-icon-slot-margin-top, $item-md-icon-slot-margin-end, $item-md-icon-slot-margin-bottom, $item-md-icon-slot-margin-start);
+}
+
+.item-divider-md ion-icon[slot="start"] + .item-inner,
+.item-divider-md ion-icon[slot="start"] + .item-input {
+  @include margin-horizontal($item-md-padding-start + ($item-md-padding-start / 2), null);
+}
+
+.item-divider-md ion-avatar[slot="start"],
+.item-divider-md ion-thumbnail[slot="start"] {
+  @include margin(($item-md-padding-end / 2), $item-md-padding-end, ($item-md-padding-end / 2), 0);
+}
+
+.item-divider-md ion-avatar[slot="end"],
+.item-divider-md ion-thumbnail[slot="end"] {
+  @include margin(($item-md-padding-end / 2));
 }
 
 

@@ -37,6 +37,11 @@ ion-input {
   border: 0;
 
   background: transparent;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
 
 .native-input[disabled] {

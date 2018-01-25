@@ -40,7 +40,7 @@ export class InfiniteScroll {
    * output event to get called when the user has scrolled 10%
    * from the bottom of the page. Use the value `100px` when the
    * scroll is within 100 pixels from the bottom of the page.
-   * Default is `15%`.
+   * Defaults to `15%`.
    */
   @Prop() threshold = '15%';
 
@@ -58,29 +58,26 @@ export class InfiniteScroll {
 
 
   /**
-   * @input {boolean} If true, Whether or not the infinite scroll should be
-   * enabled or not. Setting to `false` will remove scroll event listeners
+   * @input {boolean} If true, whether or not the infinite scroll should be
+   * disabled or not. Setting to `true` will remove scroll event listeners
    * and hide the display.
    *
    * Call `enable(false)` to disable the infinite scroll from actively
    * trying to receive new data while scrolling. This method is useful
    * when it is known that there is no more data that can be added, and
    * the infinite scroll is no longer needed.
-   * @param {boolean} shouldEnable  If the infinite scroll should be
-   * enabled or not. Setting to `false` will remove scroll event listeners
-   * and hide the display.
    */
-  @Prop() enabled = true;
+  @Prop() disabled = false;
 
-  @Watch('enabled')
-  protected enabledChanged(val: boolean) {
+  @Watch('disabled')
+  protected disabledChanged(val: boolean) {
     this.enableScrollEvents(val);
   }
 
   /**
    * @input {string} The position of the infinite scroll element.
    * The value can be either `top` or `bottom`.
-   * Default is `bottom`.
+   * Defaults to `bottom`.
    */
   @Prop() position: string = Position.Bottom;
 
@@ -106,7 +103,7 @@ export class InfiniteScroll {
     }
     this.init = true;
     this.thresholdChanged(this.threshold);
-    this.enableScrollEvents(this.enabled);
+    this.enableScrollEvents(this.disabled);
     if (this.position === Position.Top) {
       this.dom.write(() => this.scrollEl.scrollToBottom(0));
     }
@@ -154,7 +151,7 @@ export class InfiniteScroll {
 
   private canStart(): boolean {
     return (
-      this.enabled &&
+      this.disabled &&
       !this.isBusy &&
       this.scrollEl &&
       !this.isLoading);
@@ -235,7 +232,7 @@ export class InfiniteScroll {
     return {
       class: {
         'infinite-scroll-loading': this.isLoading,
-        'infinite-scroll-enabled': this.enabled
+        'infinite-scroll-enabled': !this.disabled
       }
     };
   }

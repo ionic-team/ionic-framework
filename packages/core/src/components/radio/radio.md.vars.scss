@@ -51,13 +51,13 @@ $radio-md-item-start-margin-bottom:  10px !default;
 $radio-md-item-start-margin-start:   4px !default;
 
 /// @prop - Margin top of the item-end in a radio
-$radio-md-item-end-margin-top:       $item-md-padding-media-top !default;
+$radio-md-item-end-margin-top:       9px !default;
 
 /// @prop - Margin end of the item-end in a radio
 $radio-md-item-end-margin-end:       10px !default;
 
 /// @prop - Margin bottom of the item-end in a radio
-$radio-md-item-end-margin-bottom:    $item-md-padding-media-bottom !default;
+$radio-md-item-end-margin-bottom:    $radio-md-item-end-margin-top !default;
 
 /// @prop - Margin start of the item-end in a radio
 $radio-md-item-end-margin-start:     0 !default;

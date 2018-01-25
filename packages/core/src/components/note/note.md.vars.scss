@@ -3,5 +3,8 @@
 // Material Design Note
 // --------------------------------------------------
 
+/// @prop - Font family of the note
+$note-md-font-family:    $font-family-md-base !default;
+
 /// @prop - Text color of the note
 $note-md-color:      $text-md-color-step-400 !default;

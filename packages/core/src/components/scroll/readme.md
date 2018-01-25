@@ -7,12 +7,7 @@
 
 ## Properties
 
-#### enabled
-
-boolean
-
-
-#### jsScroll
+#### disabled
 
 boolean
 
@@ -34,12 +29,7 @@ any
 
 ## Attributes
 
-#### enabled
-
-boolean
-
-
-#### jsScroll
+#### disabled
 
 boolean
 

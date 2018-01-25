@@ -9,8 +9,9 @@
 @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
 
   .text-md-#{$color-name},
-  .text-md-#{$color-name} a {
-    color: $color-base;
+  .text-md-#{$color-name} a,
+  .text-md-#{$color-name} p {
+    color: $color-base !important;
   }
 
 }

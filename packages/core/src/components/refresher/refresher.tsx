@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State } from '@stencil/core';
 import { DomController, GestureDetail } from '../../index';
 
-const enum RefresherState {
+export const enum RefresherState {
   Inactive = 1 << 0,
   Pulling = 1 << 1,
   Ready = 1 << 2,
@@ -49,39 +49,39 @@ export class Refresher {
   @Element() el: HTMLElement;
 
   /**
-   * The min distance the user must pull down until the
-   * refresher can go into the `refreshing` state. Default is `60`.
+   * The minimum distance the user must pull down until the
+   * refresher will go into the `refreshing` state. Defaults to `60`.
    */
   @Prop() pullMin = 60;
 
   /**
    * The maximum distance of the pull until the refresher
-   * will automatically go into the `refreshing` state. By default, the pull
-   * maximum will be the result of `pullMin + 60`.
+   * will automatically go into the `refreshing` state.
+   * Defaults to the result of `pullMin + 60`.
    */
-  @Prop() pullDelta = 60;
+  @Prop() pullMax = this.pullMin + 60;
 
   // TODO: NEVER USED
   /**
-   * Time it takes to close the refresher. Default is `280ms`.
+   * Time it takes to close the refresher. Defaults to `280ms`.
    */
   @Prop() closeDuration = '280ms';
 
   /**
-   * Time it takes the refresher to to snap back to the `refreshing` state. Default is `280ms`.
+   * Time it takes the refresher to to snap back to the `refreshing` state. Defaults to `280ms`.
    */
   @Prop() snapbackDuration = '280ms';
 
   /**
-   * If the refresher is enabled or not. This should be used in place of an `ngIf`. Default is `true`.
+   * If the refresher is disabled or not. Defaults to `true`.
    */
-  @Prop() enabled = false;
+  @Prop() disabled = true;
 
   /**
-   * Emitted when the user lets go and has pulled down
-   * far enough, which would be farther than the `pullMin`, then your refresh hander if
-   * fired and the state is updated to `refreshing`. From within your refresh handler,
-   * you must call the `complete()` method when your async operation has completed.
+   * Emitted when the user lets go of the content and has pulled down
+   * further than the `pullMin` or pulls the content down and exceeds the pullMax.
+   * Updates the refresher state to `refreshing`. The `complete()` method should be
+   * called when the async operation has completed.
    */
   @Event() ionRefresh: EventEmitter;
 
@@ -266,7 +266,7 @@ export class Refresher {
       return 2;
     }
 
-    if (deltaY > pullMin + this.pullDelta) {
+    if (deltaY > this.pullMax) {
       // they pulled farther than the max, so kick off the refresh
       this.beginRefresh();
       return 3;
@@ -367,7 +367,7 @@ export class Refresher {
 
   render() {
     return <ion-gesture {...this.gestureConfig}
-      enabled={this.enabled}>
+      disabled={this.disabled}>
       <slot></slot>
     </ion-gesture>;
   }

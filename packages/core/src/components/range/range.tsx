@@ -417,7 +417,7 @@ export class Range implements BaseInputComponent {
           onStart: this.onDragStart.bind(this),
           onMove: this.onDragMove.bind(this),
           onEnd: this.onDragEnd.bind(this),
-          enabled: !this.disabled,
+          disabled: this.disabled,
           gestureName: 'range',
           gesturePriority: 30,
           type: 'pan',

@@ -25,4 +25,9 @@ ion-segment {
   text-overflow: ellipsis;
   white-space: nowrap;
   cursor: pointer;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
