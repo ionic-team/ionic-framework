@@ -291,7 +291,7 @@ export function domControllerAsync(domControllerFunction: Function, callback?: F
   });
 }
 
-export function debounce(func: Function, wait = 250) {
+export function debounce(func: Function, wait = 0) {
   let timer: number;
   return (...args: any[]): void => {
     clearTimeout(timer);
