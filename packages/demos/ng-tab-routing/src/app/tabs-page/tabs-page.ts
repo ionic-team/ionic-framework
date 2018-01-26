@@ -12,19 +12,19 @@ import { NavController } from '@ionic/angular';
       <ion-nav [root]="tabOnePageOne" name="tab-one"></ion-nav>
     </ion-tab>
     <ion-tab title="Tab Two" icon="globe" #tabTwo>
-      <ion-nav [root]="tabTwoPageOne" name="tab-two"></ion-nav>
+      <ion-nav [root]="tabTwoPageOne" name="tab-two" lazy="true"></ion-nav>
     </ion-tab>
     <ion-tab title="Tab Three" icon="logo-facebook" #tabThree>
-      <ion-nav [root]="tabThreePageOne" name="tab-three"></ion-nav>
+      <ion-nav [root]="tabThreePageOne" name="tab-three" lazy="true"></ion-nav>
     </ion-tab>
   </ion-tabs>
   `
 })
 export class TabsPage {
 
-  tabOnePageOne: any = null;
-  tabTwoPageOne: any = null;
-  tabThreePageOne: any = null;
+  tabOnePageOne = '/app/tabs/(tab-one:one)';
+  tabTwoPageOne = '/app/tabs/(tab-two:one)';
+  tabThreePageOne = '/app/tabs/(tab-three:one)';
 
   @ViewChild('tabOne') tabOne: ElementRef;
   @ViewChild('tabTwo') tabTwo: ElementRef;
@@ -44,16 +44,17 @@ export class TabsPage {
   }
 
   tabChanged(event: Event) {
-    const tabs = event.target as HTMLIonTabsElement;
+    /*const tabs = event.target as HTMLIonTabsElement;
     return (tabs as any).componentOnReady().then(() => {
       const selected = tabs.getSelected();
       if (selected === this.tabOne.nativeElement) {
-        return this.router.navigateByUrl('/app/tabs/(tab-one:tabOne)');
+        return this.router.navigateByUrl('/app/tabs/(tab-one:one)');
       } else if (selected === this.tabTwo.nativeElement) {
-        return this.router.navigateByUrl('/app/tabs/(tab-two:tabTwo)');
+        return this.router.navigateByUrl('/app/tabs/(tab-two:one)');
       } else {
-        return this.router.navigateByUrl('/app/tabs/(tab-three:tabThree)');
+        return this.router.navigateByUrl('/app/tabs/(tab-three:one)');
       }
     });
+    */
   }
 }

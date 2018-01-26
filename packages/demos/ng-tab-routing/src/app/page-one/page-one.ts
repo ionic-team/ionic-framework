@@ -31,8 +31,7 @@ export class PageOne {
 
 
   pushPageTwoComponent() {
-    // this.navController.push('/page-two');
-    this.router.navigateByUrl('/app/tabs');
+    this.router.navigateByUrl('/app/tabs/(tab-one:one)');
   }
 
 
