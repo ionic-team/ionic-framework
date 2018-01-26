@@ -1,5 +1,6 @@
 import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
 import { Component, CssClassMap, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { debounce } from '../../utils/helpers';
 
 
 @Component({
@@ -16,7 +17,6 @@ export class Checkbox implements CheckboxInput {
   private didLoad: boolean;
   private inputId: string;
   private nativeInput: HTMLInputElement;
-  private styleTmr: any;
 
   @State() keyFocus: boolean;
 
@@ -81,6 +81,7 @@ export class Checkbox implements CheckboxInput {
   }
 
   componentDidLoad() {
+    this.ionStyle.emit = debounce(this.ionStyle.emit.bind(this.ionStyle));
     this.nativeInput.checked = this.checked;
     this.didLoad = true;
 
@@ -116,13 +117,9 @@ export class Checkbox implements CheckboxInput {
   }
 
   emitStyle() {
-    clearTimeout(this.styleTmr);
-
-    this.styleTmr = setTimeout(() => {
-      this.ionStyle.emit({
-        'checkbox-disabled': this.disabled,
-        'checkbox-checked': this.checked,
-      });
+    this.ionStyle.emit({
+      'checkbox-disabled': this.disabled,
+      'checkbox-checked': this.checked,
     });
   }
 
