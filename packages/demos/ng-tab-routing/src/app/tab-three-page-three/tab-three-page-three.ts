@@ -3,24 +3,24 @@ import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 
 @Component({
-  selector: 'tab-two-page-one',
+  selector: 'tab-three-page-three',
   template: `
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Tab Two Page One</ion-title>
+        <ion-title>Tab Three Page Three</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
-      Tab Two Page One {{ts}}
+      Tab Three Page Three {{ts}}
       <div>
-        <ion-button (click)="next()">Go to Page Two</ion-button>
+        <ion-button (click)="back()">Go Back</ion-button>
       </div>
     </ion-content>
   </ion-page>
   `
 })
-export class TabTwoPageOne {
+export class TabThreePageThree {
 
   ts: number;
   constructor(/*private navController: NavController*/private router: Router) {
@@ -29,7 +29,7 @@ export class TabTwoPageOne {
     }, 500);
   }
 
-  next() {
-    this.router.navigateByUrl('/app/tabs/(tab-two:two)');
+  back() {
+    this.router.navigateByUrl('/app/tabs/(tab-three:two)');
   }
 }

@@ -13,6 +13,9 @@ import { NavController } from '@ionic/angular';
     </ion-header>
     <ion-content padding>
       Tab One Page One {{ts}}
+      <div>
+        <ion-button (click)="next()">Go to Page Two</ion-button>
+      </div>
     </ion-content>
   </ion-page>
   `
@@ -26,4 +29,7 @@ export class TabOnePageOne {
     }, 500);
   }
 
+  next() {
+    this.router.navigateByUrl('/app/tabs/(tab-one:two)');
+  }
 }
