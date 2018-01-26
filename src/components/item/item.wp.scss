@@ -128,12 +128,11 @@ $item-wp-sliding-content-background: $list-wp-background-color !default;
   .item-wp[detail-push] .item-inner,
   button.item-wp:not([detail-none]) .item-inner,
   a.item-wp:not([detail-none]) .item-inner {
-    @include svg-background-image($item-wp-detail-push-svg);
-
+    @include svg-background-image($item-wp-detail-push-svg, true);
     @include padding-horizontal(null, 32px);
+    @include background-position(end, $item-wp-padding-end - 2, center);
 
     background-repeat: no-repeat;
-    background-position: right ($item-wp-padding-end - 2) center;
     background-size: 14px 14px;
   }
 }

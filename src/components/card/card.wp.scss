@@ -17,7 +17,7 @@ $card-wp-margin-bottom:               8px !default;
 // deprecated
 $card-wp-margin-left:                 8px !default;
 /// @prop - Margin start of the card
-$card-wp-margin-start:                $card-wp-margin-left;
+$card-wp-margin-start:                $card-wp-margin-left !default;
 
 /// @prop - Padding top of the card
 $card-wp-padding-top:                 13px !default;
@@ -25,7 +25,7 @@ $card-wp-padding-top:                 13px !default;
 // deprecated
 $card-wp-padding-right:               16px !default;
 /// @prop - Padding end of the card
-$card-wp-padding-end:                 $card-wp-padding-right;
+$card-wp-padding-end:                 $card-wp-padding-right !default;
 
 /// @prop - Padding bottom of the card
 $card-wp-padding-bottom:              13px !default;
@@ -33,7 +33,7 @@ $card-wp-padding-bottom:              13px !default;
 // deprecated
 $card-wp-padding-left:                16px !default;
 /// @prop - Padding start of the card
-$card-wp-padding-start:               $card-wp-padding-left;
+$card-wp-padding-start:               $card-wp-padding-left !default;
 
 /// @prop - Padding top of the media on the card
 $card-wp-padding-media-top:           10px !default;
@@ -139,7 +139,7 @@ $card-wp-header-color:                #222 !default;
 }
 
 .card-wp ion-list {
-  margin-bottom: 0;
+  @include margin(null, null, 0, null);
 }
 
 .card-wp > .item:last-child,
@@ -171,7 +171,7 @@ $card-wp-header-color:                #222 !default;
 
 .card-header-wp + .card-content-wp,
 .card-wp .item + .card-content-wp {
-  padding-top: 0;
+  @include padding(0, null, null, null);
 }
 
 .card .note-wp {
@@ -231,7 +231,7 @@ $card-wp-header-color:                #222 !default;
 }
 
 .card-wp + ion-card {
-  margin-top: 0;
+  @include margin(0, null, null, null);
 }
 
 

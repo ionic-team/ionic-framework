@@ -8,7 +8,7 @@ import { IonicPage, NavParams } from '../../../../../..';
 export class DetailPage {
   city: string;
 
-  constructor(private _navParams: NavParams) {
+  constructor(_navParams: NavParams) {
     this.city = _navParams.get('city');
   }
 }

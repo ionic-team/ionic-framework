@@ -44,7 +44,7 @@ export class OverlayProxy {
 
   dismiss(data?: any, role?: string, navOptions?: NavOptions): Promise<any> {
     if (this.overlay) {
-      return this.overlay.dismiss();
+      return this.overlay.dismiss(data, role, navOptions);
     }
   }
 

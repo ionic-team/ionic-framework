@@ -29,6 +29,14 @@ module.exports = function jekyll(renderDocsProcessor) {
         if (docs[i].href) {
           docs[i].href = doc.href.replace('content/', '');
         }
+        if (docs[i].description) {
+          docs[i].description = docs[i].description.replace(/(\#\#\#).+/g, (section) => {
+            const title = section.replace(/^(\#+\s?)/, '');
+            const segment = title.replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase();
+
+            return `\n<h3><a class="anchor" name="${segment}" href="#${segment}">${title}</a></h3>\n`;
+          });
+        }
       });
 
       docs.push({

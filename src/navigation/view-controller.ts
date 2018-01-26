@@ -1,8 +1,8 @@
 import { ComponentRef, ElementRef, EventEmitter, Output, Renderer } from '@angular/core';
 
-import { isPresent, assert } from '../util/util';
+import { assert, isPresent } from '../util/util';
 import { NavController } from './nav-controller';
-import { NavOptions, STATE_NEW, STATE_INITIALIZED, STATE_ATTACHED, STATE_DESTROYED } from './nav-util';
+import { NavOptions, STATE_ATTACHED, STATE_DESTROYED, STATE_INITIALIZED, STATE_NEW } from './nav-util';
 import { NavParams } from './nav-params';
 import { Content, Footer, Header, Navbar } from './nav-interfaces';
 
@@ -46,6 +46,7 @@ export class ViewController {
   _zIndex: number;
   _state: number = STATE_NEW;
   _cssClass: string;
+  _ts: number;
 
   /**
    * Observable to be subscribed to when the current component will become active
@@ -111,6 +112,14 @@ export class ViewController {
     this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
 
     this._cssClass = rootCssClass;
+    this._ts = Date.now();
+    window.addEventListener('orientationchange', this.handleOrientationChange.bind(this));
+  }
+
+  handleOrientationChange() {
+    if (this.getContent()) {
+      this.getContent().resize();
+    }
   }
 
   /**
@@ -118,7 +127,7 @@ export class ViewController {
    */
   init(componentRef: ComponentRef<any>) {
     assert(componentRef, 'componentRef can not be null');
-
+    this._ts = Date.now();
     this._cmp = componentRef;
     this.instance = this.instance || componentRef.instance;
     this._detached = false;
@@ -195,7 +204,7 @@ export class ViewController {
   /**
    * @hidden
    */
-  getTransitionName(direction: string): string {
+  getTransitionName(_direction: string): string {
     return this._nav && this._nav.config.get('pageTransition');
   }
 
@@ -446,6 +455,8 @@ export class ViewController {
    * The view is about to enter and become the active view.
    */
   _willEnter() {
+    this.handleOrientationChange();
+
     assert(this._state === STATE_ATTACHED, 'view state must be ATTACHED');
 
     if (this._detached && this._cmp) {
@@ -531,6 +542,7 @@ export class ViewController {
         renderer.setElementAttribute(cmpEle, 'style', null);
       }
 
+      window.removeEventListener('orientationchange', this.handleOrientationChange.bind(this));
       // completely destroy this component. boom.
       this._cmp.destroy();
     }

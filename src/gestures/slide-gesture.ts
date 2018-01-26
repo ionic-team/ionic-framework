@@ -1,5 +1,5 @@
 import { PanGesture } from './pan-gesture';
-import { clamp, assert } from '../util/util';
+import { assert, clamp } from '../util/util';
 import { Platform } from '../platform/platform';
 import { pointerCoord } from '../util/dom';
 
@@ -17,7 +17,7 @@ export class SlideGesture extends PanGesture {
    * Get the min and max for the slide. pageX/pageY.
    * Only called on dragstart.
    */
-  getSlideBoundaries(slide: SlideData, ev: any) {
+  getSlideBoundaries(_slide: SlideData, _ev: any) {
     return {
       min: 0,
       max: this.getNativeElement().offsetWidth
@@ -29,7 +29,7 @@ export class SlideGesture extends PanGesture {
    * For example, an open side menu starts at 100% and a closed
    * sidemenu starts at 0%.
    */
-  getElementStartPos(slide: SlideData, ev: any) {
+  getElementStartPos(_slide: SlideData, _ev: any) {
     return 0;
   }
 
@@ -66,17 +66,17 @@ export class SlideGesture extends PanGesture {
     let coord = <any>pointerCoord(ev);
     let newPos = coord[this.direction];
     let newTimestamp = Date.now();
-    let velocity = (newPos - slide.pos) / (newTimestamp - slide.timestamp);
+    let velocity = (this.plt.isRTL ? (slide.pos - newPos) : (newPos - slide.pos)) / (newTimestamp - slide.timestamp);
 
     slide.pos = newPos;
     slide.timestamp = newTimestamp;
     slide.distance = clamp(
       slide.min,
-      newPos - slide.pointerStartPos + slide.elementStartPos,
+      (this.plt.isRTL ? slide.pointerStartPos - newPos : newPos - slide.pointerStartPos) + slide.elementStartPos,
       slide.max
     );
     slide.velocity = velocity;
-    slide.delta = newPos - slide.pointerStartPos;
+    slide.delta = (this.plt.isRTL ? slide.pointerStartPos - newPos : newPos - slide.pointerStartPos);
     this.onSlide(slide, ev);
   }
 
@@ -85,10 +85,10 @@ export class SlideGesture extends PanGesture {
     this.slide = null;
   }
 
-  onSlideBeforeStart(ev?: any): void {}
-  onSlideStart(slide?: SlideData, ev?: any): void {}
-  onSlide(slide?: SlideData, ev?: any): void {}
-  onSlideEnd(slide?: SlideData, ev?: any): void {}
+  onSlideBeforeStart(_ev?: any): void {}
+  onSlideStart(_slide?: SlideData, _ev?: any): void {}
+  onSlide(_slide?: SlideData, _ev?: any): void {}
+  onSlideEnd(_slide?: SlideData, _ev?: any): void {}
 }
 
 /**

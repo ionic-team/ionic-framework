@@ -42,15 +42,18 @@ export class PageOne {
   }
 
   setApple() {
-    this.fruitsCtrl.updateValueAndValidity('apple');
+    this.fruitsCtrl.setValue('apple');
+    this.fruitsCtrl.updateValueAndValidity();
   }
 
   setBanana() {
-    this.fruitsCtrl.updateValueAndValidity('banana');
+    this.fruitsCtrl.setValue('banana');
+    this.fruitsCtrl.updateValueAndValidity();
   }
 
   setCherry() {
-    this.fruitsCtrl.updateValueAndValidity('cherry');
+    this.fruitsCtrl.setValue('cherry');
+    this.fruitsCtrl.updateValueAndValidity();
   }
 
   doSubmit(ev: UIEvent) {

@@ -33,6 +33,9 @@ $loading-wp-text-color:                #fff !default;
 /// @prop - Background of the loading wrapper
 $loading-wp-background:                #000 !default;
 
+/// @prop - Margin start of the loading content next to a spinner
+$loading-wp-content-margin-start:      $content-wp-margin !default;
+
 /// @prop - Color of the loading spinner
 $loading-wp-spinner-color:             $loading-wp-text-color !default;
 
@@ -71,7 +74,7 @@ $loading-wp-spinner-dots-color:        $loading-wp-spinner-color !default;
 // -----------------------------------------
 
 .loading-wp .loading-spinner + .loading-content {
-  @include margin-horizontal(16px, null);
+  @include margin-horizontal($loading-wp-content-margin-start, null);
 }
 
 

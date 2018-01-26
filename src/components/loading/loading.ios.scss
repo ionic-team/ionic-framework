@@ -36,6 +36,9 @@ $loading-ios-background:                #f8f8f8 !default;
 /// @prop - Font weight of the loading content
 $loading-ios-content-font-weight:       bold !default;
 
+/// @prop - Margin start of the loading content next to a spinner
+$loading-ios-content-margin-start:      $content-ios-margin !default;
+
 /// @prop - Color of the loading spinner
 $loading-ios-spinner-color:             #69717d !default;
 
@@ -78,7 +81,7 @@ $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 }
 
 .loading-ios .loading-spinner + .loading-content {
-  @include margin-horizontal(16px, null);
+  @include margin-horizontal($loading-ios-content-margin-start, null);
 }
 
 

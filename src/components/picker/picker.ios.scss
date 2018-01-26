@@ -148,6 +148,7 @@ $picker-button-ios-strong-font-weight:         600 !default;
 
 .picker-ios .picker-opt {
   @include margin(0);
+  @include transform-origin(center, center);
 
   height: 4.6rem;
 
@@ -156,7 +157,6 @@ $picker-button-ios-strong-font-weight:         600 !default;
   color: $picker-ios-option-text-color;
 
   background: transparent;
-  transform-origin: center center;
   transform-style: preserve-3d;
   transition-timing-function: ease-out;
 
@@ -171,6 +171,7 @@ $picker-button-ios-strong-font-weight:         600 !default;
 
 .picker-ios .picker-above-highlight {
   @include position(0, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
 
   position: absolute;
   z-index: 10;
@@ -184,12 +185,11 @@ $picker-button-ios-strong-font-weight:         600 !default;
   background: linear-gradient(to bottom,
                             rgba($picker-ios-background-color, 1) 20%,
                             rgba($picker-ios-background-color, .7) 100%);
-
-  transform: translate3d(0, 0, 90px);
 }
 
 .picker-ios .picker-below-highlight {
   @include position($picker-ios-option-offset-y + $picker-ios-option-height - 4, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
 
   position: absolute;
 
@@ -204,6 +204,4 @@ $picker-button-ios-strong-font-weight:         600 !default;
   background: linear-gradient(to top,
                            rgba($picker-ios-background-color, 1) 30%,
                            rgba($picker-ios-background-color, .7) 100%);
-
-  transform: translate3d(0, 0, 90px);
 }

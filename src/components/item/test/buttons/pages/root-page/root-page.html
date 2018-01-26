@@ -40,24 +40,24 @@
   </ion-item>
 
   <button ion-item disabled>
-    <button ion-button item-start icon-left (click)="testClick($event)">
+    <button ion-button item-start icon-start (click)="testClick($event)">
       <ion-icon name="home"></ion-icon>
       Left Icon
     </button>
     disabled left icon buttons
-    <button ion-button outline item-end icon-left (click)="testClick($event)">
+    <button ion-button outline item-end icon-start (click)="testClick($event)">
       <ion-icon name="star"></ion-icon>
       Left Icon
     </button>
   </button>
 
   <ion-item>
-    <button ion-button item-start icon-right (click)="testClick($event)">
+    <button ion-button item-start icon-end (click)="testClick($event)">
       Right Icon
       <ion-icon name="home"></ion-icon>
     </button>
     right icon buttons
-    <button ion-button outline item-end icon-right (click)="testClick($event)">
+    <button ion-button outline item-end icon-end (click)="testClick($event)">
       Right Icon
       <ion-icon name="star"></ion-icon>
     </button>
@@ -75,14 +75,14 @@
 
   <a ion-item disabled>
     a ion-item disabled right icon/text button large
-    <button ion-button item-end large icon-left (click)="testClick($event)">
+    <button ion-button item-end large icon-start (click)="testClick($event)">
       <ion-icon name="refresh"></ion-icon>
       Refresh
     </button>
   </a>
 
   <ion-item>
-    <button ion-button clear item-start small icon-left (click)="testClick($event)">
+    <button ion-button clear item-start small icon-start (click)="testClick($event)">
       <ion-icon name="settings"></ion-icon>
       Settings
     </button>

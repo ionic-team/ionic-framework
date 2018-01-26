@@ -15,7 +15,7 @@ export function inlineStyle(ele: any, styles: any) {
 
     } else if (ele.nodeType) {
       var cssProps = Object.keys(styles);
-      for (var i = 0; i < cssProps.length; i++) {
+      for (let i = 0; i < cssProps.length; i++) {
         ele.style[cssProps[i]] = styles[cssProps[i]];
       }
     }

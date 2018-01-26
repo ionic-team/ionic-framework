@@ -132,8 +132,8 @@ task('docs.sassVariables', () => {
         callback();
     }).on('end', () => {
       const config = require('../../config.json');
-      console.log(`Writing to file at /driftyco/ionic/${outputFile}`);
-      console.log(`Place this file in /driftyco/ionic-site/${config.v2DocsDir}/theming/overriding-ionic-variables in order to update the docs`);
+      console.log(`Writing to file at /ionic-team/ionic/${outputFile}`);
+      console.log(`Place this file in /ionic-team/ionic-site/${config.v2DocsDir}/theming/overriding-ionic-variables in order to update the docs`);
       mkdirp.sync('tmp');
       writeFileSync(outputFile, JSON.stringify(variables));
     }));

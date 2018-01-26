@@ -41,7 +41,7 @@ $list-inset-wp-border-radius:    2px !default;
 // deprecated
 $list-wp-header-padding-left:    $item-wp-padding-start !default;
 /// @prop - Padding start of the header in a list
-$list-wp-header-padding-start:   $list-wp-header-padding-left;
+$list-wp-header-padding-start:   $list-wp-header-padding-left !default;
 
 /// @prop - Border bottom of the header in a list
 $list-wp-header-border-bottom:   1px solid $list-wp-border-color !default;
@@ -115,8 +115,8 @@ $list-wp-header-color:           $list-wp-text-color !default;
 }
 
 .list-wp + ion-list ion-list-header {
-  margin-top: -$list-wp-margin-top;
-  padding-top: 0;
+  @include margin(-$list-wp-margin-top, null, null, null);
+  @include padding(0, null, null, null);
 }
 
 
@@ -145,7 +145,7 @@ $list-wp-header-color:           $list-wp-text-color !default;
 }
 
 .list-wp[inset] + ion-list[inset] {
-  margin-top: 0;
+  @include margin(0, null, null, null);
 }
 
 .list-wp[inset] ion-list-header {

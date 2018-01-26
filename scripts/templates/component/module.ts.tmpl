@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
+import { IonicModule } from 'ionic-angular';
 import { $CLASSNAME } from './$FILENAME';
 
 @NgModule({
@@ -7,7 +7,7 @@ import { $CLASSNAME } from './$FILENAME';
     $CLASSNAME,
   ],
   imports: [
-    IonicPageModule.forChild($CLASSNAME),
+    IonicModule,
   ],
   exports: [
     $CLASSNAME

@@ -1,12 +1,12 @@
 import { Menu, MenuType } from './menu-interface';
 import { Platform } from '../../platform/platform';
-import { removeArrayItem, assert } from '../../util/util';
+import { assert, removeArrayItem  } from '../../util/util';
 
 
 /**
  * @name MenuController
  * @description
- * The MenuController is a provider which makes it easy to control a [Menu](../Menu).
+ * The MenuController is a provider which makes it easy to control a [Menu](../../Menu/Menu/).
  * Its methods can be used to display the menu, enable the menu, toggle the menu, and more.
  * The controller will grab a reference to the menu by the `side`, `id`, or, if neither
  * of these are passed to it, it will grab the first menu it finds.
@@ -14,7 +14,7 @@ import { removeArrayItem, assert } from '../../util/util';
  *
  * @usage
  *
- * Add a basic menu component to start with. See the [Menu](../Menu) API docs
+ * Add a basic menu component to start with. See the [Menu](../../Menu/Menu/) API docs
  * for more information on adding menu components.
  *
  * ```html

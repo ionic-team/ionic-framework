@@ -17,7 +17,7 @@ $card-md-margin-bottom:               10px !default;
 // deprecated
 $card-md-margin-left:                 10px !default;
 /// @prop - Margin start of the card
-$card-md-margin-start:                $card-md-margin-left;
+$card-md-margin-start:                $card-md-margin-left !default;
 
 
 /// @prop - Padding top of the card
@@ -26,7 +26,7 @@ $card-md-padding-top:                 13px !default;
 // deprecated
 $card-md-padding-right:               16px !default;
 /// @prop - Padding right of the card
-$card-md-padding-end:                 $card-md-padding-right;
+$card-md-padding-end:                 $card-md-padding-right !default;
 
 /// @prop - Padding bottom of the card
 $card-md-padding-bottom:              13px !default;
@@ -34,7 +34,7 @@ $card-md-padding-bottom:              13px !default;
 // deprecated
 $card-md-padding-left:                16px !default;
 /// @prop - Padding start of the card
-$card-md-padding-start:               $card-md-padding-left;
+$card-md-padding-start:               $card-md-padding-left !default;
 
 /// @prop - Padding top of the media on the card
 $card-md-padding-media-top:           10px !default;
@@ -138,7 +138,7 @@ $card-md-header-color:                #222 !default;
 }
 
 .card-md ion-list {
-  margin-bottom: 0;
+  @include margin(null, null, 0, null);
 }
 
 .card-md > .item:last-child,
@@ -169,7 +169,7 @@ $card-md-header-color:                #222 !default;
 
 .card-header-md + .card-content-md,
 .card-md .item + .card-content-md {
-  padding-top: 0;
+  @include padding(0, null, null, null);
 }
 
 .card .note-md {
@@ -229,7 +229,7 @@ $card-md-header-color:                #222 !default;
 }
 
 .card-md + ion-card {
-  margin-top: 0;
+  @include margin(0, null, null, null);
 }
 
 

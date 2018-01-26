@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 
-import { isTrueProperty, assert } from '../../util/util';
+import { assert, isTrueProperty } from '../../util/util';
 
 /**
  * @name Scroll

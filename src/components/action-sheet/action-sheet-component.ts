@@ -1,11 +1,10 @@
 import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
 
-import { ActionSheetOptions, ActionSheetButton } from './action-sheet-options';
+import { ActionSheetButton, ActionSheetOptions } from './action-sheet-options';
 import { assert } from '../../util/util';
-import { BlockerDelegate, GestureController, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { BLOCK_ALL, BlockerDelegate, GestureController } from '../../gestures/gesture-controller';
 import { Config } from '../../config/config';
 import { KEY_ESCAPE } from '../../platform/key';
-import { Platform } from '../../platform/platform';
 import { NavParams } from '../../navigation/nav-params';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
@@ -22,13 +21,13 @@ import { ViewController } from '../../navigation/view-controller';
         '<div class="action-sheet-group">' +
           '<div class="action-sheet-title" id="{{hdrId}}" *ngIf="d.title">{{d.title}}</div>' +
           '<div class="action-sheet-sub-title" id="{{descId}}" *ngIf="d.subTitle">{{d.subTitle}}</div>' +
-          '<button ion-button="action-sheet-button" (click)="click(b)" *ngFor="let b of d.buttons" class="disable-hover" [attr.icon-left]="b.icon ? \'\' : null" [ngClass]="b.cssClass">' +
+          '<button ion-button="action-sheet-button" (click)="click(b)" *ngFor="let b of d.buttons" class="disable-hover" [attr.icon-start]="b.icon ? \'\' : null" [ngClass]="b.cssClass">' +
             '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon>' +
             '{{b.text}}' +
           '</button>' +
         '</div>' +
-        '<div class="action-sheet-group" *ngIf="cancelButton">' +
-          '<button ion-button="action-sheet-button" (click)="click(cancelButton)" class="action-sheet-cancel disable-hover" [attr.icon-left]="cancelButton.icon ? \'\' : null" [ngClass]="cancelButton.cssClass">' +
+        '<div class="action-sheet-group action-sheet-group-cancel" *ngIf="cancelButton">' +
+          '<button ion-button="action-sheet-button" (click)="click(cancelButton)" class="action-sheet-cancel disable-hover" [attr.icon-start]="cancelButton.icon ? \'\' : null" [ngClass]="cancelButton.cssClass">' +
             '<ion-icon [name]="cancelButton.icon" *ngIf="cancelButton.icon" class="action-sheet-icon"></ion-icon>' +
             '{{cancelButton.text}}' +
           '</button>' +
@@ -57,7 +56,6 @@ export class ActionSheetCmp {
   constructor(
     private _viewCtrl: ViewController,
     config: Config,
-    private _plt: Platform,
     private _elementRef: ElementRef,
     gestureCtrl: GestureController,
     params: NavParams,
@@ -117,8 +115,6 @@ export class ActionSheetCmp {
   }
 
   ionViewDidEnter() {
-    this._plt.focusOutActiveElement();
-
     const focusableEle = this._elementRef.nativeElement.querySelector('button');
     if (focusableEle) {
       focusableEle.focus();

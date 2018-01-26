@@ -1,5 +1,5 @@
 import { Slides } from '../slides';
-import { isHorizontal, round, transform, transition, maxTranslate, minTranslate } from './swiper-utils';
+import { isHorizontal, maxTranslate, minTranslate, round, transform, transition } from './swiper-utils';
 import { parallaxSetTransition, parallaxSetTranslate } from './swiper-parallax';
 import { Platform } from '../../../platform/platform';
 import { updateProgress } from './swiper-progress';
@@ -79,7 +79,7 @@ export function getTranslate(s: Slides, plt: Platform, el: HTMLElement, axis: st
   if (win.WebKitCSSMatrix) {
     curTransform = curStyle.transform || curStyle.webkitTransform;
     if (curTransform.split(',').length > 6) {
-      curTransform = curTransform.split(', ').map(function(a: any){
+      curTransform = curTransform.split(', ').map(function(a: any) {
         return a.replace(',', '.');
       }).join(', ');
     }

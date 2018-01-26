@@ -1,4 +1,4 @@
-import { Component, QueryList, ViewChildren, NgModule } from '@angular/core';
+import { Component, NgModule, QueryList, ViewChildren } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, Tab } from '../../../..';
 

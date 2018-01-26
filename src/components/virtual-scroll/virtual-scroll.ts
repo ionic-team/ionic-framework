@@ -1,10 +1,10 @@
-import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableChanges, IterableDiffer, IterableDiffers, NgZone, OnDestroy, Renderer, TrackByFn } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, ContentChild, Directive, DoCheck, ElementRef, Input, IterableDiffer, IterableDiffers, NgZone, OnChanges, OnDestroy, Renderer, SimpleChanges, TrackByFunction } from '@angular/core';
 
-import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, processRecords, populateNodeData, updateDimensions, updateNodeContext, writeToNodes } from './virtual-util';
+import { adjustRendered, calcDimensions, estimateHeight, initReadNodes, populateNodeData, processRecords, updateDimensions, updateNodeContext, writeToNodes } from './virtual-util';
 import { Config } from '../../config/config';
 import { Content, ScrollEvent } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
-import { isFunction, isPresent, assert } from '../../util/util';
+import { assert, isFunction, isPresent } from '../../util/util';
 import { Platform } from '../../platform/platform';
 import { ViewController } from '../../navigation/view-controller';
 import { VirtualCell, VirtualData, VirtualNode } from './virtual-util';
@@ -88,7 +88,7 @@ import { VirtualHeader } from './virtual-header';
  * ### Approximate Widths and Heights
  *
  * If the height of items in the virtual scroll are not close to the
- * default size of 40px, it is extremely important to provide an value for
+ * default size of 40px, it is extremely important to provide a value for
  * approxItemHeight height. An exact pixel-perfect size is not necessary,
  * but without an estimate the virtual scroll will not render correctly.
  *
@@ -214,7 +214,7 @@ import { VirtualHeader } from './virtual-header';
 @Directive({
   selector: '[virtualScroll]'
 })
-export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
+export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDestroy {
 
   _differ: IterableDiffer<any>;
   _scrollSub: any;
@@ -233,9 +233,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   _data: VirtualData = {
     scrollTop: 0,
   };
-  _queue: number = SCROLL_QUEUE_NO_CHANGES;
-
-  _virtualTrackBy: TrackByFn;
+  _queue: number = ScrollQueue.NoChanges;
 
   @ContentChild(VirtualItem) _itmTmp: VirtualItem;
   @ContentChild(VirtualHeader) _hdrTmp: VirtualHeader;
@@ -250,7 +248,10 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   @Input()
   set virtualScroll(val: any) {
     this._records = val;
-    this._updateDiffer();
+  }
+
+  get virtualScroll() {
+    return this._records;
   }
 
   /**
@@ -370,15 +371,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * @input {function} Same as `ngForTrackBy` which can be used on `ngFor`.
    */
   @Input()
-  set virtualTrackBy(val: TrackByFn) {
-    if (isPresent(val)) {
-      this._virtualTrackBy = val;
-      this._updateDiffer();
-    }
-  }
-  get virtualTrackBy(): TrackByFn {
-    return this._virtualTrackBy;
-  }
+  virtualTrackBy: TrackByFunction<any>;
 
   constructor(
     private _iterableDiffers: IterableDiffers,
@@ -429,6 +422,24 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   }
 
   /**
+  * @hidden
+  */
+  ngOnChanges(changes: SimpleChanges): void {
+    if ('virtualScroll' in changes) {
+      // React on virtualScroll changes only once all inputs have been initialized
+      const value = changes['virtualScroll'].currentValue;
+      if (!isPresent(this._differ) && isPresent(value)) {
+        try {
+          this._differ = this._iterableDiffers.find(value).create(this.virtualTrackBy);
+        } catch (e) {
+          throw new Error(
+            `Cannot find a differ supporting object '${value}'. VirtualScroll only supports binding to Iterables such as Arrays.`);
+        }
+      }
+    }
+  }
+
+  /**
    * @hidden
    */
   ngDoCheck() {
@@ -438,34 +449,31 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     }
 
     // and if there actually are changes
-    const changes = this._changes();
+    const changes = isPresent(this._differ) ? this._differ.diff(this.virtualScroll) : null;
     if (!isPresent(changes)) {
       return;
     }
 
     let needClean = false;
-    if (changes) {
-      var lastRecord = this._recordSize;
+    var lastRecord = this._recordSize;
 
-      changes.forEachOperation((_, pindex, cindex) => {
+    changes.forEachOperation((_, pindex, cindex) => {
 
-        // add new record after current position
-        if (pindex === null && (cindex < lastRecord)) {
-          console.debug('adding record before current position, slow path');
-          needClean = true;
-          return;
-        }
-        // remove record after current position
-        if (pindex < lastRecord && cindex === null) {
-          console.debug('removing record before current position, slow path');
-          needClean = true;
-          return;
-        }
-      });
-    } else {
-      needClean = true;
-    }
-    this._recordSize = this._records.length;
+      // add new record after current position
+      if (pindex === null && (cindex < lastRecord)) {
+        console.debug('virtual-scroll', 'adding record before current position, slow path');
+        needClean = true;
+        return;
+      }
+      // remove record after current position
+      if (pindex < lastRecord && cindex === null) {
+        console.debug('virtual-scroll', 'removing record before current position, slow path');
+        needClean = true;
+        return;
+      }
+    });
+
+    this._recordSize = this._records ? this._records.length : 0;
 
     this.readUpdate(needClean);
     this.writeUpdate(needClean);
@@ -477,15 +485,15 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   readUpdate(needClean: boolean) {
     if (needClean) {
       // reset everything
-      console.debug('virtual-scroll, readUpdate: slow path');
+      console.debug('virtual-scroll', 'readUpdate: slow path');
       this._cells.length = 0;
-      this._nodes.length = 0;
-      this._itmTmp.viewContainer.clear();
+      // this._nodes.length = 0;
+      // this._itmTmp.viewContainer.clear();
 
       // ******** DOM READ ****************
       this.calcDimensions();
     } else {
-      console.debug(`virtual-scroll, readUpdate: fast path`);
+      console.debug('virtual-scroll', 'readUpdate: fast path');
     }
   }
 
@@ -493,7 +501,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
    * @hidden
    */
   writeUpdate(needClean: boolean) {
-    console.debug('virtual-scroll, writeUpdate need clean:', needClean);
+    console.debug('virtual-scroll', 'writeUpdate need clean:', needClean);
     const data = this._data;
     const stopAtHeight = (data.scrollTop + data.renderHeight);
     data.scrollDiff = SCROLL_DIFFERENCE_MINIMUM + 1;
@@ -520,19 +528,6 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       this.bufferRatio);
   }
 
-  private _changes(): IterableChanges<any> {
-    if (isPresent(this._records) && isPresent(this._differ)) {
-      return this._differ.diff(this._records);
-    }
-    return null;
-  }
-
-  private _updateDiffer() {
-    if (isPresent(this._records)) {
-      this._differ = this._iterableDiffers.find(this._records).create(this._virtualTrackBy);
-    }
-  }
-
   /**
    * @hidden
    * DOM WRITE
@@ -552,16 +547,15 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       }
 
       adjustRendered(cells, data);
-
       this._zone.run(() => {
         populateNodeData(
           data.topCell, data.bottomCell,
-          data.viewWidth, true,
+          true,
           cells, records, nodes,
           this._itmTmp.viewContainer,
           this._itmTmp.templateRef,
           this._hdrTmp && this._hdrTmp.templateRef,
-          this._ftrTmp && this._ftrTmp.templateRef, needClean
+          this._ftrTmp && this._ftrTmp.templateRef
         );
       });
 
@@ -602,7 +596,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
           // ******** DOM WRITE ****************
           this.setElementClass('virtual-loading', false);
         }
-        assert(this._queue === SCROLL_QUEUE_NO_CHANGES, 'queue value should be NO_CHANGES');
+        assert(this._queue === ScrollQueue.NoChanges, 'queue value should be NO_CHANGES');
       });
     });
   }
@@ -616,7 +610,12 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       return;
     }
 
-    console.debug('virtual-list: resized window');
+    // check if component is rendered in the dom currently
+    if (this._elementRef.nativeElement.offsetParent === null) {
+      return;
+    }
+
+    console.debug('virtual-scroll', 'resized window');
     this.calcDimensions();
     this.writeUpdate(false);
   }
@@ -627,18 +626,17 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
   private _stepDOMWrite() {
     const cells = this._cells;
     const nodes = this._nodes;
-    const recordsLength = this._records.length;
 
     // ******** DOM WRITE ****************
-    writeToNodes(this._plt, nodes, cells, recordsLength);
+    writeToNodes(this._plt, nodes, cells, this._recordSize);
 
     // ******** DOM WRITE ****************
     this._setHeight(
-      estimateHeight(recordsLength, cells[cells.length - 1], this._vHeight, 0.25)
+      estimateHeight(this._recordSize, cells[cells.length - 1], this._vHeight, 0.25)
     );
 
     // we're done here, good work
-    this._queue = SCROLL_QUEUE_NO_CHANGES;
+    this._queue = ScrollQueue.NoChanges;
   }
 
   /**
@@ -657,7 +655,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     }
 
     // on the next frame we need write to the dom nodes manually
-    this._queue = SCROLL_QUEUE_DOM_WRITE;
+    this._queue = ScrollQueue.DomWrite;
   }
 
   /**
@@ -691,20 +689,19 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     updateDimensions(this._plt, nodes, cells, data, false);
 
     adjustRendered(cells, data);
-
     var hasChanges = populateNodeData(
       data.topCell, data.bottomCell,
-      data.viewWidth, diff > 0,
+      diff > 0,
       cells, records, nodes,
       this._itmTmp.viewContainer,
       this._itmTmp.templateRef,
       this._hdrTmp && this._hdrTmp.templateRef,
-      this._ftrTmp && this._ftrTmp.templateRef, false
+      this._ftrTmp && this._ftrTmp.templateRef
     );
 
     if (hasChanges) {
       // queue making updates in the next frame
-      this._queue = SCROLL_QUEUE_CHANGE_DETECTION;
+      this._queue = ScrollQueue.ChangeDetection;
 
       // update the bound context for each node
       updateNodeContext(nodes, cells, data);
@@ -721,13 +718,13 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     // there is a queue system so that we can
     // spread out the work over multiple frames
     const queue = this._queue;
-    if (queue === SCROLL_QUEUE_NO_CHANGES) {
+    if (queue === ScrollQueue.NoChanges) {
       // no dom writes or change detection to take care of
       this._stepNoChanges();
-    } else if (queue === SCROLL_QUEUE_CHANGE_DETECTION) {
+    } else if (queue === ScrollQueue.ChangeDetection) {
       this._dom.write(() => this._stepChangeDetection());
     } else {
-      assert(queue === SCROLL_QUEUE_DOM_WRITE, 'queue value unexpected');
+      assert(queue === ScrollQueue.DomWrite, 'queue value unexpected');
       // there are DOM writes we need to take care of in this frame
       this._dom.write(() => this._stepDOMWrite());
     }
@@ -741,6 +738,15 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
     // ******** DOM READ ****************
     updateDimensions(this._plt, this._nodes, this._cells, this._data, false);
     adjustRendered(this._cells, this._data);
+    populateNodeData(
+      this._data.topCell, this._data.bottomCell,
+      true,
+      this._cells, this._records, this._nodes,
+      this._itmTmp.viewContainer,
+      this._itmTmp.templateRef,
+      this._hdrTmp && this._hdrTmp.templateRef,
+      this._ftrTmp && this._ftrTmp.templateRef
+    );
 
     // ******** DOM WRITE ***************
     this._dom.write(() => {
@@ -785,7 +791,7 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
       this._renderer.setElementStyle(this._elementRef.nativeElement, 'height', newVirtualHeight > 0 ? newVirtualHeight + 'px' : '');
 
       this._vHeight = newVirtualHeight;
-      console.debug('VirtualScroll, height', newVirtualHeight);
+      console.debug('virtual-scroll', 'height', newVirtualHeight);
     }
   }
 
@@ -821,6 +827,9 @@ export class VirtualScroll implements DoCheck, AfterContentInit, OnDestroy {
 }
 
 const SCROLL_DIFFERENCE_MINIMUM = 40;
-const SCROLL_QUEUE_NO_CHANGES = 1;
-const SCROLL_QUEUE_CHANGE_DETECTION = 2;
-const SCROLL_QUEUE_DOM_WRITE = 3;
+
+const enum ScrollQueue {
+  NoChanges = 1,
+  ChangeDetection = 2,
+  DomWrite = 3
+}

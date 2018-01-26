@@ -1,8 +1,8 @@
-import { spawn } from 'child_process';
+import { spawn } from 'cross-spawn';
 import { NODE_MODULES_ROOT, SRC_ROOT } from './constants';
-import { src, dest } from 'gulp';
-import { dirname, join } from 'path';
-import { ensureDirSync, readdirSync, readFile, readFileSync, statSync, writeFile, writeFileSync } from 'fs-extra';
+import { dest, src } from 'gulp';
+import { dirname, join, resolve } from 'path';
+import { ensureDirSync, readFile, readFileSync, readdirSync, statSync, writeFile, writeFileSync } from 'fs-extra';
 import { rollup } from 'rollup';
 import { Replacer } from 'strip-function';
 import * as commonjs from 'rollup-plugin-commonjs';
@@ -25,10 +25,10 @@ export function mergeObjects(obj1: any, obj2: any ) {
     obj2 = {};
   }
   var obj3 = {};
-  for (var attrname in obj1) {
+  for (let attrname in obj1) {
     (<any>obj3)[attrname] = obj1[attrname];
   }
-  for (var attrname in obj2) {
+  for (let attrname in obj2) {
     (<any>obj3)[attrname] = obj2[attrname];
   }
   return obj3;
@@ -50,6 +50,15 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
   if (config.compilerOptions && config.compilerOptions.outDir) {
     delete config.compilerOptions.outDir;
   }
+
+  // remove linting checks that we do not want in dist
+  if (config.compilerOptions.noUnusedLocals) {
+    delete config.compilerOptions.noUnusedLocals;
+  }
+  if (config.compilerOptions.noUnusedParameters) {
+    delete config.compilerOptions.noUnusedParameters;
+  }
+
   if (config.compilerOptions) {
     config.compilerOptions.module = moduleType;
     config.compilerOptions.target = target;
@@ -60,7 +69,9 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
     config.compilerOptions = Object.assign(config.compilerOptions, overrideCompileOptions);
   }
 
+  // TS represents paths internally with '/' and expects the tsconfig path to be in this format
   let json = JSON.stringify(config, null, 2);
+  json = json.replace(/\\\\/g, '/');
 
   const dirToCreate = dirname(pathToWriteFile);
   ensureDirSync(dirToCreate);
@@ -188,7 +199,7 @@ export function runWebpack(pathToWebpackConfig: string, done: Function) {
   });
 }
 
-export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, watchConfigPath: string) {
+export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, watchConfigPath: string, devApp: boolean) {
   console.log('Running ionic-app-scripts serve with', testOrDemoName);
   const deepLinksDir = dirname(dirname(appNgModulePath));
   let scriptArgs = [
@@ -203,8 +214,12 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
     '--ionicAngularDir', ionicAngularDir,
     '--sass', sassConfigPath,
     '--copy', copyConfigPath,
-    '--enableLint', 'false'
+    '--enableLint', 'false',
+    '--skipIonicAngularVersion', 'true'
   ];
+  if (devApp) {
+    scriptArgs.push('--bonjour');
+  }
 
   if (watchConfigPath) {
     scriptArgs.push('--watch');
@@ -217,9 +232,11 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
   }
 
   return new Promise((resolve, reject) => {
-    const args = ['./node_modules/.bin/ionic-app-scripts'].concat(scriptArgs);
-    console.log(`node ${args.join(' ')}`);
-    const spawnedCommand = spawn('node', args, {stdio: 'inherit'});
+    let pathToAppScripts = join(NODE_MODULES_ROOT, '.bin', 'ionic-app-scripts');
+    pathToAppScripts = process.platform === 'win32' ? pathToAppScripts + '.cmd' : pathToAppScripts;
+
+    const spawnedCommand = spawn(pathToAppScripts, scriptArgs, {stdio: 'inherit'});
+    console.log(`${pathToAppScripts} ${scriptArgs.join(' ')}`);
 
     spawnedCommand.on('close', (code: number) => {
       if (code === 0) {
@@ -230,10 +247,10 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
   });
 }
 
-export function runAppScriptsBuild(appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, isDev: boolean = false) {
+export function runAppScriptsBuild(appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, isDev: boolean = false, minifyCss: boolean = true, minifyJs: boolean = true, optimizeJs: boolean = true) {
   const pathToAppScripts = join(NODE_MODULES_ROOT, '.bin', 'ionic-app-scripts');
   const debug: boolean = argv.debug;
-  return runWorker(pathToAppScripts, debug, appEntryPoint, appNgModulePath, srcDir, distDir, tsConfig, ionicAngularDir, sassConfigPath, copyConfigPath, isDev);
+  return runWorker(pathToAppScripts, debug, appEntryPoint, appNgModulePath, srcDir, distDir, tsConfig, ionicAngularDir, sassConfigPath, copyConfigPath, isDev, minifyCss, minifyJs, optimizeJs);
 }
 
 /** Resolves the path for a node package executable. */
@@ -309,7 +326,7 @@ export function writePolyfills(outputDirectory: string) {
   promises.push(bundlePolyfill(NG_ENTRIES, join(outputDirectory, 'polyfills.ng.js')));
 
   return Promise.all(promises);
-};
+}
 
 function bundlePolyfill(pathsToIncludeInPolyfill: string[], outputPath: string) {
   return rollup({
@@ -333,6 +350,8 @@ function bundlePolyfill(pathsToIncludeInPolyfill: string[], outputPath: string) 
       moduleName: 'MyBundle',
       dest: outputPath
     });
+  }).catch(err => {
+    console.log('caught rollup error: ', err);
   });
 }
 
@@ -345,9 +364,11 @@ export function getFolderInfo() {
     componentName = folderSplit[0];
     componentTest = (folderSplit.length > 1 ? folderSplit[1] : 'basic');
   }
+  const devApp = argv.devapp !== undefined;
   return {
     componentName: componentName,
-    componentTest: componentTest
+    componentTest: componentTest,
+    devApp: devApp
   };
 }
 

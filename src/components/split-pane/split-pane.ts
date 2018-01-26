@@ -1,6 +1,6 @@
-import { ContentChildren, Directive, ElementRef, EventEmitter, forwardRef, Input, Output, QueryList, NgZone, Renderer } from '@angular/core';
+import { ContentChildren, Directive, ElementRef, EventEmitter, Input, NgZone, Output, QueryList, Renderer, forwardRef } from '@angular/core';
 import { Ion } from '../ion';
-import { isTrueProperty, assert } from '../../util/util';
+import { assert, isTrueProperty } from '../../util/util';
 import { Config } from '../../config/config';
 import { Platform } from '../../platform/platform';
 

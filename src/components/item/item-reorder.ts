@@ -1,9 +1,9 @@
-import { Directive, ElementRef, EventEmitter, Input, NgZone, Renderer, Optional, Output } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, NgZone, Optional, Output, Renderer } from '@angular/core';
 
 import { Content } from '../content/content';
 import { DomController } from '../../platform/dom-controller';
 import { isTrueProperty, reorderArray } from '../../util/util';
-import { ItemReorderGestureDelegate, ItemReorderGesture } from './item-reorder-gesture';
+import { ItemReorderGesture, ItemReorderGestureDelegate } from './item-reorder-gesture';
 import { Platform } from '../../platform/platform';
 
 
@@ -142,12 +142,14 @@ export class ReorderIndexes {
   host: {
     '[class.reorder-enabled]': '_enableReorder',
     '[class.reorder-visible]': '_visibleReorder',
+    '[class.reorder-side-start]': '_isStart'
   }
 })
 export class ItemReorder implements ItemReorderGestureDelegate {
 
   _enableReorder: boolean = false;
   _visibleReorder: boolean = false;
+  _isStart: boolean = false;
   _reorderGesture: ItemReorderGesture;
   _lastToIndex: number = -1;
   _element: HTMLElement;
@@ -157,6 +159,14 @@ export class ItemReorder implements ItemReorderGestureDelegate {
    * with `from` and `to` properties.
    */
   @Output() ionItemReorder: EventEmitter<ReorderIndexes> = new EventEmitter<ReorderIndexes>();
+
+  /**
+   * @input {string} Which side of the view the ion-reorder should be placed. Default `"end"`.
+   */
+  @Input('side')
+  set side(side: 'start' | 'end') {
+    this._isStart = side === 'start';
+  }
 
   constructor(
     private _plt: Platform,
@@ -268,7 +278,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
     /********* DOM WRITE ********* */
     let transform = this._plt.Css.transform;
     if (toIndex >= lastToIndex) {
-      for (var i = lastToIndex; i <= toIndex; i++) {
+      for (let i = lastToIndex; i <= toIndex; i++) {
         if (i !== fromIndex) {
           (<any>children[i]).style[transform] = (i > fromIndex)
             ? `translateY(${-itemHeight}px)` : '';
@@ -277,7 +287,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
     }
 
     if (toIndex <= lastToIndex) {
-      for (var i = toIndex; i <= lastToIndex; i++) {
+      for (let i = toIndex; i <= lastToIndex; i++) {
         if (i !== fromIndex) {
           (<any>children[i]).style[transform] = (i < fromIndex)
             ? `translateY(${itemHeight}px)` : '';

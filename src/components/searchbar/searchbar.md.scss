@@ -78,7 +78,7 @@ $searchbar-md-input-clear-icon-size:     22px !default;
 
 .searchbar-md .searchbar-search-icon {
   @include position(11px, null, null, 16px);
-  @include svg-background-image($searchbar-md-input-search-icon-svg);
+  @include svg-background-image($searchbar-md-input-search-icon-svg, true);
 
   width: $searchbar-md-input-search-icon-size + 1;
   height: $searchbar-md-input-search-icon-size + 1;
@@ -122,6 +122,7 @@ $searchbar-md-input-clear-icon-size:     22px !default;
   @include placeholder($searchbar-md-input-placeholder-color);
   @include padding(6px, 55px);
   @include border-radius($searchbar-md-input-border-radius);
+  @include background-position(start, 8px, center);
 
   height: $searchbar-md-input-height;
 
@@ -132,7 +133,6 @@ $searchbar-md-input-clear-icon-size:     22px !default;
   color: $searchbar-md-input-text-color;
 
   background-color: $searchbar-md-input-background-color;
-  background-position: 8px center;
   box-shadow: $searchbar-md-input-box-shadow;
 }
 
@@ -144,6 +144,7 @@ $searchbar-md-input-clear-icon-size:     22px !default;
   @include position(0, 13px, null, null);
   @include svg-background-image($searchbar-md-input-clear-icon-svg);
   @include padding(0);
+  @include background-position(center);
 
   position: absolute;
 
@@ -151,7 +152,6 @@ $searchbar-md-input-clear-icon-size:     22px !default;
   height: 100%;
 
   background-repeat: no-repeat;
-  background-position: center;
   background-size: $searchbar-md-input-clear-icon-size;
 }
 

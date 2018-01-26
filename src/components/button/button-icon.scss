@@ -11,13 +11,15 @@
   pointer-events: none;
 }
 
-[icon-left] ion-icon {
+[icon-left] ion-icon, // deprecated
+[icon-start] ion-icon {
   @include button-icon;
 
   @include padding-horizontal(null, .3em);
 }
 
-[icon-right] ion-icon {
+[icon-right] ion-icon, // deprecated
+[icon-end] ion-icon {
   @include button-icon;
 
   @include padding-horizontal(.4em, null);

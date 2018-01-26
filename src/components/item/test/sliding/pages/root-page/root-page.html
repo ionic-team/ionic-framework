@@ -139,13 +139,13 @@
         <h2>RIGHT/LEFT side - icons (item-start)</h2>
         <p>I think I figured out how to get more Mountain Dew</p>
       </ion-item>
-      <ion-item-options side="left" icon-left (ionSwipe)="unread($event)" *ngIf="slidingEnabled">
+      <ion-item-options side="left" icon-start (ionSwipe)="unread($event)" *ngIf="slidingEnabled">
         <button ion-button color="secondary" expandable (click)="unread(item3)">
           <ion-icon name="ios-checkmark"></ion-icon>Unread
         </button>
       </ion-item-options>
 
-      <ion-item-options icon-left (ionSwipe)="del(item3)">
+      <ion-item-options icon-start (ionSwipe)="del(item3)">
         <button ion-button color="primary" (click)="archive(item3)">
           <ion-icon name="mail"></ion-icon>Archive
         </button>
@@ -161,7 +161,7 @@
         <ion-icon name="mail" item-start></ion-icon>
         One Line w/ Icon, div only text
       </ion-item>
-      <ion-item-options icon-left (ionSwipe)="archive($event)">
+      <ion-item-options icon-start (ionSwipe)="archive($event)">
         <button ion-button color="primary" (click)="archive(item4)" expandable *ngIf="slidingEnabled">
           <ion-icon name="archive"></ion-icon>Archive
         </button>
@@ -192,9 +192,9 @@
 
     <ion-item-sliding #item7>
       <ion-item>
-        One Line, dynamic icon-left option
+        One Line, dynamic icon-start option
       </ion-item>
-      <ion-item-options icon-left>
+      <ion-item-options icon-start>
         <button ion-button color="primary">
           <ion-icon name="more"></ion-icon>
           {{ moreText }}

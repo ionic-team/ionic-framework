@@ -1,4 +1,4 @@
-import { ContentChildren, Directive, ElementRef, forwardRef, Optional, Inject, Renderer } from '@angular/core';
+import { ContentChildren, Directive, ElementRef, Inject, Optional, Renderer, forwardRef } from '@angular/core';
 
 import { Button } from '../button/button';
 import { Config } from '../../config/config';

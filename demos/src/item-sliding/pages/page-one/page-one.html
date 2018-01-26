@@ -67,7 +67,7 @@
           <ion-icon name="trash"></ion-icon>
         </button>
       </ion-item-options>
-      <ion-item-options (ionSwipe)="download(item)" icon-left>
+      <ion-item-options (ionSwipe)="download(item)" icon-start>
         <button ion-button color="dark" (click)="more(item)">
           <ion-icon name="volume-off"></ion-icon>
           Mute
@@ -85,7 +85,7 @@
 </ion-content>
 
 <style>
-  /* TODO: spinner is dropping classes so we have to use ids: https://github.com/driftyco/ionic/issues/7087 */
+  /* TODO: spinner is dropping classes so we have to use ids: https://github.com/ionic-team/ionic/issues/7087 */
   #archive-spinner,
   #download-spinner,
   .archiving .expand-hide,
@@ -93,7 +93,7 @@
     display: none;
   }
 
-  /* TODO: spinner doesn't have a good way to do this yet: https://github.com/driftyco/ionic/issues/7087 */
+  /* TODO: spinner doesn't have a good way to do this yet: https://github.com/ionic-team/ionic/issues/7087 */
   #archive-spinner.spinner-ios line,
   #archive-spinner.spinner-crescent circle {
     stroke: #fff;

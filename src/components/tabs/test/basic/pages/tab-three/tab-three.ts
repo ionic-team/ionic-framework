@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { App, AlertController, IonicPage, ModalController, Tabs } from '../../../../../..';
+import { AlertController, App, IonicPage, ModalController, Tabs } from '../../../../../..';
 
 @IonicPage()
 @Component({

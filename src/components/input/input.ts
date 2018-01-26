@@ -1,19 +1,29 @@
-import { Component, Optional, ElementRef, EventEmitter, Input, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Optional,
+  Output,
+  Renderer,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import { NgControl } from '@angular/forms';
+
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/takeUntil';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { Content, ContentDimensions, ScrollEvent } from '../content/content';
-import { copyInputAttributes, PointerCoordinates, hasPointerMoved, pointerCoord }  from '../../util/dom';
+import { Content, ContentDimensions } from '../content/content';
+import { copyInputAttributes, hasPointerMoved, pointerCoord }  from '../../util/dom';
 import { DomController } from '../../platform/dom-controller';
 import { Form, IonicFormInput } from '../../util/form';
-import { Ion } from '../ion';
-import { isString, isTrueProperty } from '../../util/util';
+import { BaseInput } from '../../util/base-input';
+import { assert, isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
-import { NativeInput } from './native-input';
-import { NextInput } from './next-input';
-import { NavController } from '../../navigation/nav-controller';
-import { NavControllerBase } from '../../navigation/nav-controller-base';
 import { Platform } from '../../platform/platform';
 
 
@@ -84,92 +94,69 @@ import { Platform } from '../../platform/platform';
 @Component({
   selector: 'ion-input,ion-textarea',
   template:
-    '<input [(ngModel)]="_value" [type]="type" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" [disabled]="disabled" [readonly]="readonly" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type!==\'textarea\'"  #input>' +
-    '<textarea [(ngModel)]="_value" (blur)="inputBlurred($event)" (focus)="inputFocused($event)" [placeholder]="placeholder" [disabled]="disabled" [readonly]="readonly" class="text-input" [ngClass]="\'text-input-\' + _mode" *ngIf="_type===\'textarea\'" #textarea></textarea>' +
-    '<input [type]="type" aria-hidden="true" next-input *ngIf="_useAssist">' +
-    '<button ion-button clear [hidden]="!clearInput" type="button" class="text-input-clear-icon" (click)="clearTextInput()" (mousedown)="clearTextInput()"></button>' +
-    '<div (touchstart)="pointerStart($event)" (touchend)="pointerEnd($event)" (mousedown)="pointerStart($event)" (mouseup)="pointerEnd($event)" class="input-cover" tappable *ngIf="_useAssist"></div>',
+  '<input #textInput *ngIf="!_isTextarea" class="text-input" ' +
+    '[ngClass]="\'text-input-\' + _mode"' +
+    '(input)="onInput($event)" ' +
+    '(blur)="onBlur($event)" ' +
+    '(focus)="onFocus($event)" ' +
+    '(keydown)="onKeydown($event)" ' +
+    '[type]="_type" ' +
+    'dir="auto" ' +
+    '[attr.aria-labelledby]="_labelId" ' +
+    '[attr.min]="min" ' +
+    '[attr.max]="max" ' +
+    '[attr.step]="step" ' +
+    '[attr.autocomplete]="autocomplete" ' +
+    '[attr.autocorrect]="autocorrect" ' +
+    '[placeholder]="placeholder" ' +
+    '[disabled]="_disabled" ' +
+    '[readonly]="_readonly">' +
+
+  '<textarea #textInput *ngIf="_isTextarea" class="text-input" ' +
+    '[ngClass]="\'text-input-\' + _mode"' +
+    '(input)="onInput($event)" ' +
+    '(blur)="onBlur($event)" ' +
+    '(focus)="onFocus($event)" ' +
+    '(keydown)="onKeydown($event)" ' +
+    '[attr.aria-labelledby]="_labelId" ' +
+    '[attr.autocomplete]="autocomplete" ' +
+    '[attr.autocorrect]="autocorrect" ' +
+    '[placeholder]="placeholder" ' +
+    '[disabled]="_disabled" ' +
+    '[readonly]="_readonly"></textarea>' +
+
+  '<button ion-button *ngIf="_clearInput" clear class="text-input-clear-icon" ' +
+    'type="button" ' +
+    '(click)="clearTextInput($event)" ' +
+    '(mousedown)="clearTextInput($event)" ' +
+    'tabindex="-1"></button>' +
+
+  '<div class="input-cover" *ngIf="_useAssist" ' +
+    '(touchstart)="_pointerStart($event)" ' +
+    '(touchend)="_pointerEnd($event)" ' +
+    '(mousedown)="_pointerStart($event)" ' +
+    '(mouseup)="_pointerEnd($event)"></div>',
+
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  inputs: ['value']
 })
-export class TextInput extends Ion implements IonicFormInput {
-  _autoComplete: string;
-  _autoCorrect: string;
+export class TextInput extends BaseInput<string> implements IonicFormInput {
+
   _autoFocusAssist: string;
   _clearInput: boolean = false;
   _clearOnEdit: boolean;
-  _coord: PointerCoordinates;
   _didBlurAfterEdit: boolean;
-  _disabled: boolean = false;
   _readonly: boolean = false;
-  _isTouch: boolean;
   _keyboardHeight: number;
-  _min: any;
-  _max: any;
-  _step: any;
-  _native: NativeInput;
-  _nav: NavControllerBase;
-  _scrollStart: any;
-  _scrollEnd: any;
   _type: string = 'text';
-  _useAssist: boolean;
-  _usePadding: boolean;
-  _value: any = '';
-
-  /** @hidden */
-  inputControl: NgControl;
-
-  constructor(
-    config: Config,
-    private _plt: Platform,
-    private _form: Form,
-    private _app: App,
-    elementRef: ElementRef,
-    renderer: Renderer,
-    @Optional() private _content: Content,
-    @Optional() private _item: Item,
-    @Optional() nav: NavController,
-    @Optional() public ngControl: NgControl,
-    private _dom: DomController
-  ) {
-    super(config, elementRef, renderer, 'input');
-
-    this._nav = <NavControllerBase>nav;
-
-    this._autoFocusAssist = config.get('autoFocusAssist', 'delay');
-    this._autoComplete = config.get('autocomplete', 'off');
-    this._autoCorrect = config.get('autocorrect', 'off');
-    this._keyboardHeight = config.getNumber('keyboardHeight');
-    this._useAssist = config.getBoolean('scrollAssist', false);
-    this._usePadding = config.getBoolean('scrollPadding', this._useAssist);
-
-    if (elementRef.nativeElement.tagName === 'ION-TEXTAREA') {
-      this._type = TEXTAREA;
-    }
-
-    if (ngControl) {
-      ngControl.valueAccessor = this;
-      this.inputControl = ngControl;
-    }
-
-    _form.register(this);
-
-    // only listen to content scroll events if there is content
-    if (_content) {
-      this._scrollStart = _content.ionScrollStart.subscribe((ev: ScrollEvent) => {
-        this.scrollHideFocus(ev, true);
-      });
-      this._scrollEnd = _content.ionScrollEnd.subscribe((ev: ScrollEvent) => {
-        this.scrollHideFocus(ev, false);
-      });
-    }
-
-    this.mode = config.get('mode');
-  }
-
-  /**
-   * @input {string} Instructional text that shows before the input has a value.
-   */
-  @Input() placeholder: string = '';
+  _scrollData: ScrollData;
+  _isTextarea: boolean = false;
+  _onDestroy = new Subject<void>();
+  _coord: any;
+  _isTouch: boolean;
+  _useAssist = false;
+  _relocated: boolean = false;
 
   /**
    * @input {boolean} If true, a clear icon will appear in the input when there is a value. Clicking it clears the input.
@@ -179,67 +166,21 @@ export class TextInput extends Ion implements IonicFormInput {
     return this._clearInput;
   }
   set clearInput(val: any) {
-    this._clearInput = (this._type !== TEXTAREA && isTrueProperty(val));
+    this._clearInput = (!this._isTextarea && isTrueProperty(val));
   }
 
   /**
-   * @input {string} The text value of the input.
-   */
-  @Input()
-  get value() {
-    return this._value;
-  }
-  set value(val: any) {
-    this._value = val;
-    this.checkHasValue(val);
-  }
-
-  /**
-   * @input {string} The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
+   * @input {string} The type of control to display. The default type is text.
+   * Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
    */
   @Input()
   get type() {
-    return this._type;
+    return (this._isTextarea)
+      ? 'text'
+      : this._type;
   }
   set type(val: any) {
-    if (this._type !== TEXTAREA) {
-      this._type = 'text';
-
-      if (isString(val)) {
-        val = val.toLowerCase();
-
-        if (TEXT_TYPE_REGEX.test(val)) {
-          this._type = val;
-        }
-      }
-    }
-  }
-
-  /**
-   * @input {boolean} If true, the user cannot interact with this element.
-   */
-  @Input()
-  get disabled(): boolean {
-    return this._disabled;
-  }
-  set disabled(val: boolean) {
-    this.setDisabled(this._disabled = isTrueProperty(val));
-  }
-
-  /**
-   * @hidden
-   */
-  setDisabled(val: boolean) {
-    this._renderer.setElementAttribute(this._elementRef.nativeElement, 'disabled', val ? '' : null);
-    this._item && this._item.setElementClass('item-input-disabled', val);
-    this._native && this._native.isDisabled(val);
-  }
-
-  /**
-   * @hidden
-   */
-  setDisabledState(isDisabled: boolean) {
-    this.disabled = isDisabled;
+    this._type = val;
   }
 
   /**
@@ -254,7 +195,8 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {boolean} If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+   * @input {boolean} If true, the value will be cleared after focus upon edit.
+   * Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
   @Input()
   get clearOnEdit() {
@@ -265,367 +207,217 @@ export class TextInput extends Ion implements IonicFormInput {
   }
 
   /**
-   * @input {any} The minimum value, which must not be greater than its maximum (max attribute) value.
-   */
-  @Input()
-  get min() {
-    return this._min;
-  }
-  set min(val: any) {
-    this.setMin(this._min = val);
-  }
-
-  /**
    * @hidden
    */
-  setMin(val: any) {
-    this._native && this._native.setMin(val);
-  }
+  @ViewChild('textInput', { read: ElementRef }) _native: ElementRef;
+
+  /**
+   * @input {string} Set the input's autocomplete property. Values: `"on"`, `"off"`. Default `"off"`.
+   */
+  @Input() autocomplete: string = '';
+
+  /**
+   * @input {string} Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
+   */
+  @Input() autocorrect: string = '';
+
+  /**
+   * @input {string} Instructional text that shows before the input has a value.
+   */
+  @Input() placeholder: string = '';
+
+  /**
+   * @input {any} The minimum value, which must not be greater than its maximum (max attribute) value.
+   */
+  @Input() min: number | string = null;
 
   /**
    * @input {any} The maximum value, which must not be less than its minimum (min attribute) value.
    */
-  @Input()
-  get max() {
-    return this._max;
-  }
-  set max(val: any) {
-    this.setMax(this._max = val);
-  }
-
-  /**
-   * @hidden
-   */
-  setMax(val: any) {
-    this._native && this._native.setMax(val);
-  }
+  @Input() max: number | string = null;
 
   /**
    * @input {any} Works with the min and max attributes to limit the increments at which a value can be set.
    */
-  @Input()
-  get step() {
-    return this._step;
-  }
-  set step(val: any) {
-    this.setStep(this._step = val);
-  }
+  @Input() step: number | string = null;
 
   /**
    * @hidden
    */
-  setStep(val: any) {
-    this._native && this._native.setStep(val);
-  }
+  @Output() input = new EventEmitter<UIEvent>();
 
   /**
    * @hidden
    */
-  @ViewChild('input', { read: NativeInput })
-  set _nativeInput(nativeInput: NativeInput) {
-    if (this.type !== TEXTAREA) {
-      this.setNativeInput(nativeInput);
+  @Output() blur = new EventEmitter<UIEvent>();
+
+  /**
+   * @hidden
+   */
+  @Output() focus = new EventEmitter<UIEvent>();
+
+  constructor(
+    config: Config,
+    private _plt: Platform,
+    _form: Form,
+    private _app: App,
+    elementRef: ElementRef,
+    renderer: Renderer,
+    @Optional() private _content: Content,
+    @Optional() _item: Item,
+    @Optional() public ngControl: NgControl,
+    private _dom: DomController
+  ) {
+    super(config, elementRef, renderer, 'input', '', _form, _item, ngControl);
+
+    this.autocomplete = config.get('autocomplete', 'off');
+    this.autocorrect = config.get('autocorrect', 'off');
+    this._autoFocusAssist = config.get('autoFocusAssist', 'delay');
+    this._keyboardHeight = config.getNumber('keyboardHeight');
+    this._isTextarea = !!(elementRef.nativeElement.tagName === 'ION-TEXTAREA');
+
+    if (this._isTextarea && _item) {
+      _item.setElementClass('item-textarea', true);
     }
-  }
-
-  /**
-   * @hidden
-   */
-  @ViewChild('textarea', { read: NativeInput })
-  set _nativeTextarea(nativeInput: NativeInput) {
-    if (this.type === TEXTAREA) {
-      this.setNativeInput(nativeInput);
-    }
-  }
-
-  /**
-   * @hidden
-   */
-  @ViewChild(NextInput)
-  set _nextInput(nextInput: NextInput) {
-    if (nextInput) {
-      nextInput.focused.subscribe(() => {
-        this._form.tabFocus(this);
-      });
-    }
-  }
-
-  /**
-   * @output {event} Emitted when the input no longer has focus.
-   */
-  @Output() blur: EventEmitter<Event> = new EventEmitter<Event>();
-
-  /**
-   * @output {event} Emitted when the input has focus.
-   */
-  @Output() focus: EventEmitter<Event> = new EventEmitter<Event>();
-
-  /**
-   * @hidden
-   */
-  setNativeInput(nativeInput: NativeInput) {
-    this._native = nativeInput;
-    nativeInput.setValue(this._value);
-    nativeInput.setMin(this._min);
-    nativeInput.setMax(this._max);
-    nativeInput.setStep(this._step);
-    nativeInput.isDisabled(this.disabled);
-
-    if (this._item && this._item.labelId !== null) {
-      nativeInput.labelledBy(this._item.labelId);
+    // If not inside content, let's disable all the hacks
+    if (!_content) {
+      return;
     }
 
-    nativeInput.valueChange.subscribe((inputValue: any) => {
-      this.onChange(inputValue);
-      this.checkHasValue(inputValue);
-    });
-
-    nativeInput.keydown.subscribe((inputValue: any) => {
-      this.onKeydown(inputValue);
-    });
-
-    this.focusChange(this.hasFocus());
-    nativeInput.focusChange.subscribe((textInputHasFocus: any) => {
-      this.focusChange(textInputHasFocus);
-      this.checkHasValue(nativeInput.getValue());
-      if (!textInputHasFocus) {
-        this.onTouched(textInputHasFocus);
+    const hideCaretOnScroll = config.getBoolean('hideCaretOnScroll', false);
+    if (hideCaretOnScroll) {
+      this._enableHideCaretOnScroll();
+    }
+    const win = _plt.win() as any;
+    const keyboardPlugin = win.Ionic && win.Ionic.keyboardPlugin;
+    if (keyboardPlugin) {
+      const keyboardResizes = config.getBoolean('keyboardResizes', false);
+      if (keyboardResizes) {
+        this._keyboardHeight = config.getNumber('keyboardSafeArea', 60);
+        this._enableScrollMove();
+      } else {
+        this._enableScrollPadding();
+        this._enableScrollMove();
       }
-    });
 
-    this.checkHasValue(nativeInput.getValue());
+    } else {
+      this._useAssist = config.getBoolean('scrollAssist', false);
+      const usePadding = config.getBoolean('scrollPadding', this._useAssist);
+      if (usePadding) {
+        this._enableScrollPadding();
+      }
+    }
+  }
 
-    var ionInputEle: HTMLElement = this._elementRef.nativeElement;
-    var nativeInputEle: HTMLElement = nativeInput.element();
+  ngAfterContentInit() { }
 
-    // copy ion-input attributes to the native input element
+  /**
+   * @hidden
+   */
+  ngAfterViewInit() {
+    assert(this._native && this._native.nativeElement, 'input element must be valid');
+    // By default, password inputs clear after focus when they have content
+    if (this.clearOnEdit !== false && this.type === 'password') {
+      this.clearOnEdit = true;
+    }
+    const ionInputEle: HTMLElement = this._elementRef.nativeElement;
+    const nativeInputEle: HTMLElement = this._native.nativeElement;
+
+    // Copy remaining attributes, not handled by ionic/angular
     copyInputAttributes(ionInputEle, nativeInputEle);
 
+    // prevent having tabIndex duplicated
+    if (ionInputEle.hasAttribute('tabIndex')) {
+      ionInputEle.removeAttribute('tabIndex');
+    }
+
+    // handle the autofocus attribute
     if (ionInputEle.hasAttribute('autofocus')) {
-      // the ion-input element has the autofocus attributes
       ionInputEle.removeAttribute('autofocus');
-
-      if (this._autoFocusAssist === 'immediate') {
-        // config says to immediate focus on the input
-        // works best on android devices
-        nativeInputEle.focus();
-
-      } else if (this._autoFocusAssist === 'delay') {
-        // config says to chill out a bit and focus on the input after transitions
-        // works best on desktop
-        this._plt.timeout(() => {
+      switch (this._autoFocusAssist) {
+        case 'immediate':
+          // config says to immediate focus on the input
+          // works best on android devices
           nativeInputEle.focus();
-        }, 650);
+          break;
+        case 'delay':
+          // config says to chill out a bit and focus on the input after transitions
+          // works best on desktop
+          this._plt.timeout(() => nativeInputEle.focus(), 800);
+          break;
       }
-
       // traditionally iOS has big issues with autofocus on actual devices
       // autoFocus is disabled by default with the iOS mode config
     }
 
-    // by default set autocomplete="off" unless specified by the input
-    if (ionInputEle.hasAttribute('autocomplete')) {
-      this._autoComplete = ionInputEle.getAttribute('autocomplete');
-    }
-    nativeInputEle.setAttribute('autocomplete', this._autoComplete);
+    // Initialize the input (can start emitting events)
+    this._initialize();
 
-    // by default set autocorrect="off" unless specified by the input
-    if (ionInputEle.hasAttribute('autocorrect')) {
-      this._autoCorrect = ionInputEle.getAttribute('autocorrect');
+    if (this.focus.observers.length > 0) {
+      console.warn('(focus) is deprecated in ion-input, use (ionFocus) instead');
     }
-    nativeInputEle.setAttribute('autocorrect', this._autoCorrect);
+    if (this.blur.observers.length > 0) {
+      console.warn('(blur) is deprecated in ion-input, use (ionBlur) instead');
+    }
+  }
+
+  /**
+   * @hidden
+   */
+  ngOnDestroy() {
+    super.ngOnDestroy();
+    this._onDestroy.next();
+    this._onDestroy = null;
   }
 
   /**
    * @hidden
    */
   initFocus() {
-    // begin the process of setting focus to the inner input element
-    const app = this._app;
-    const content = this._content;
-    const nav = this._nav;
-    const nativeInput = this._native;
-
-    console.debug(`input-base, initFocus(), scrollView: ${!!content}`);
-
-    if (content) {
-      // this input is inside of a scroll view
-      // find out if text input should be manually scrolled into view
-
-      // get container of this input, probably an ion-item a few nodes up
-      var ele: HTMLElement = this._elementRef.nativeElement;
-      ele = <HTMLElement>ele.closest('ion-item,[ion-item]') || ele;
-
-      var scrollData = getScrollData(ele.offsetTop, ele.offsetHeight, content.getContentDimensions(), this._keyboardHeight, this._plt.height());
-      if (Math.abs(scrollData.scrollAmount) < 4) {
-        // the text input is in a safe position that doesn't
-        // require it to be scrolled into view, just set focus now
-        this.setFocus();
-
-        // all good, allow clicks again
-        app.setEnabled(true);
-        nav && nav.setTransitioning(false);
-
-        if (this._usePadding) {
-          content.clearScrollPaddingFocusOut();
-        }
-        return;
-      }
-
-      if (this._usePadding) {
-        // add padding to the bottom of the scroll view (if needed)
-        content.addScrollPadding(scrollData.scrollPadding);
-      }
-
-      // manually scroll the text input to the top
-      // do not allow any clicks while it's scrolling
-      var scrollDuration = getScrollAssistDuration(scrollData.scrollAmount);
-      app.setEnabled(false, scrollDuration);
-      nav && nav.setTransitioning(true);
-
-      // temporarily move the focus to the focus holder so the browser
-      // doesn't freak out while it's trying to get the input in place
-      // at this point the native text input still does not have focus
-      nativeInput.beginFocus(true, scrollData.inputSafeY);
-
-      // scroll the input into place
-      content.scrollTo(0, scrollData.scrollTo, scrollDuration, () => {
-        console.debug(`input-base, scrollTo completed, scrollTo: ${scrollData.scrollTo}, scrollDuration: ${scrollDuration}`);
-        // the scroll view is in the correct position now
-        // give the native text input focus
-        nativeInput.beginFocus(false, 0);
-
-        // ensure this is the focused input
-        this.setFocus();
-
-        // all good, allow clicks again
-        app.setEnabled(true);
-        nav && nav.setTransitioning(false);
-
-        if (this._usePadding) {
-          content.clearScrollPaddingFocusOut();
-        }
-      });
-
-    } else {
-      // not inside of a scroll view, just focus it
-      this.setFocus();
-    }
+    this.setFocus();
   }
 
   /**
    * @hidden
    */
   setFocus() {
-    // immediately set focus
-    this._form.setAsFocused(this);
-
-    // set focus on the actual input element
-    console.debug(`input-base, setFocus ${this._native.element().value}`);
-    this._native.setFocus();
-
-    // ensure the body hasn't scrolled down
-    this._dom.write(() => {
-      this._plt.doc().body.scrollTop = 0;
-    });
-  }
-
-  /**
-   * @hidden
-   */
-  scrollHideFocus(ev: ScrollEvent, shouldHideFocus: boolean) {
-    // do not continue if there's no nav, or it's transitioning
-    if (this._nav && this.hasFocus()) {
-      // if it does have focus, then do the dom write
-      this._dom.write(() => {
-        this._native.hideFocus(shouldHideFocus);
-      });
+    // let's set focus to the element
+    // but only if it does not already have focus
+    if (!this.isFocus()) {
+      this._native.nativeElement.focus();
     }
   }
 
   /**
    * @hidden
    */
-  inputBlurred(ev: UIEvent) {
+  setBlur() {
+    if (this.isFocus()) {
+      this._native.nativeElement.blur();
+    }
+  }
+
+  /**
+   * @hidden
+   */
+  onInput(ev: any) {
+    this.value = ev.target.value;
+
+    // TODO: deprecate this
+    this.input.emit(ev);
+  }
+
+  /**
+   * @hidden
+   */
+  onBlur(ev: UIEvent) {
+    this._fireBlur();
+
+    // TODO: deprecate this (06/07/2017)
     this.blur.emit(ev);
-  }
 
-  /**
-   * @hidden
-   */
-  inputFocused(ev: UIEvent) {
-    this.focus.emit(ev);
-  }
-
-  /**
-   * @hidden
-   */
-  writeValue(val: any) {
-    this._value = val;
-    this.checkHasValue(val);
-  }
-
-  /**
-   * @hidden
-   */
-  onChange(val: any) {
-    this.checkHasValue(val);
-  }
-
-  /**
-   * @hidden
-   */
-  onKeydown(val: any) {
-    if (this._clearOnEdit) {
-      this.checkClearOnEdit(val);
-    }
-  }
-
-  /**
-   * @hidden
-   */
-  onTouched(val: any) {}
-
-  /**
-   * @hidden
-   */
-  hasFocus(): boolean {
-    // check if an input has focus or not
-    return this._plt.hasFocus(this._native.element());
-  }
-
-  /**
-   * @hidden
-   */
-  hasValue(): boolean {
-    const inputValue = this._value;
-    return (inputValue !== null && inputValue !== undefined && inputValue !== '');
-  }
-
-  /**
-   * @hidden
-   */
-  checkHasValue(inputValue: any) {
-    if (this._item) {
-      var hasValue = (inputValue !== null && inputValue !== undefined && inputValue !== '');
-      // TODO remove all uses of input-has-value in v4
-      this._item.setElementClass('input-has-value', hasValue);
-      this._item.setElementClass('item-input-has-value', hasValue);
-    }
-  }
-
-  /**
-   * @hidden
-   */
-  focusChange(inputHasFocus: boolean) {
-    if (this._item) {
-      console.debug(`input-base, focusChange, inputHasFocus: ${inputHasFocus}, ${this._item.getNativeElement().nodeName}.${this._item.getNativeElement().className}`);
-      // TODO remove input-has-focus for v4
-      this._item.setElementClass('input-has-focus', inputHasFocus);
-      this._item.setElementClass('item-input-has-focus', inputHasFocus);
-    }
-
-    // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this._clearOnEdit && !inputHasFocus && this.hasValue()) {
+    this._scrollData = null;
+    if (this._clearOnEdit && this.hasValue()) {
       this._didBlurAfterEdit = true;
     }
   }
@@ -633,105 +425,31 @@ export class TextInput extends Ion implements IonicFormInput {
   /**
    * @hidden
    */
-  pointerStart(ev: UIEvent) {
-    // input cover touchstart
-    if (ev.type === 'touchstart') {
-      this._isTouch = true;
-    }
+  onFocus(ev: UIEvent) {
+    this._fireFocus();
 
-    if ((this._isTouch || (!this._isTouch && ev.type === 'mousedown')) && this._app.isEnabled()) {
-      // remember where the touchstart/mousedown started
-      this._coord = pointerCoord(ev);
-    }
-
-    console.debug(`input-base, pointerStart, type: ${ev.type}`);
+    // TODO: deprecate this (06/07/2017)
+    this.focus.emit(ev);
   }
 
   /**
    * @hidden
    */
-  pointerEnd(ev: UIEvent) {
-    // input cover touchend/mouseup
-    console.debug(`input-base, pointerEnd, type: ${ev.type}`);
-
-    if ((this._isTouch && ev.type === 'mouseup') || !this._app.isEnabled()) {
-      // the app is actively doing something right now
-      // don't try to scroll in the input
-      ev.preventDefault();
-      ev.stopPropagation();
-
-    } else if (this._coord) {
-      // get where the touchend/mouseup ended
-      let endCoord = pointerCoord(ev);
-
-      // focus this input if the pointer hasn't moved XX pixels
-      // and the input doesn't already have focus
-      if (!hasPointerMoved(8, this._coord, endCoord) && !this.hasFocus()) {
-        ev.preventDefault();
-        ev.stopPropagation();
-
-        // begin the input focus process
-        this.initFocus();
-      }
-    }
-
-    this._coord = null;
-  }
-  /**
-   * @hidden
-   */
-  setItemInputControlCss() {
-    let item = this._item;
-    let nativeInput = this._native;
-    let inputControl = this.inputControl;
-
-    // Set the control classes on the item
-    if (item && inputControl) {
-      setControlCss(item, inputControl);
-    }
-
-    // Set the control classes on the native input
-    if (nativeInput && inputControl) {
-      setControlCss(nativeInput, inputControl);
+  onKeydown(ev: any) {
+    if (ev && this._clearOnEdit) {
+      this.checkClearOnEdit(ev.target.value);
     }
   }
 
   /**
    * @hidden
    */
-  ngOnInit() {
-    const item = this._item;
-    if (item) {
-      if (this.type === TEXTAREA) {
-        item.setElementClass('item-textarea', true);
-      }
-      item.setElementClass('item-input', true);
-      item.registerInput(this.type);
-    }
-
-    // By default, password inputs clear after focus when they have content
-    if (this.type === 'password' && this.clearOnEdit !== false) {
-      this.clearOnEdit = true;
-    }
-  }
-
-  /**
-   * @hidden
-   */
-  ngAfterContentChecked() {
-    this.setItemInputControlCss();
-  }
-
-  /**
-   * @hidden
-   */
-  ngOnDestroy() {
-    this._form.deregister(this);
-
-    // only stop listening to content scroll events if there is content
-    if (this._content) {
-      this._scrollStart.unsubscribe();
-      this._scrollEnd.unsubscribe();
+  _inputUpdated() {
+    super._inputUpdated();
+    const inputEle = this._native.nativeElement;
+    const value = this._value;
+    if (inputEle.value !== value) {
+      inputEle.value = value;
     }
   }
 
@@ -739,17 +457,14 @@ export class TextInput extends Ion implements IonicFormInput {
    * @hidden
    */
   clearTextInput() {
-    console.debug('Should clear input');
-    this._value = '';
-    this.onChange(this._value);
-    this.writeValue(this._value);
+    this.value = '';
   }
 
   /**
   * Check if we need to clear the text input if clearOnEdit is enabled
   * @hidden
   */
-  checkClearOnEdit(inputValue: string) {
+  checkClearOnEdit(_: string) {
     if (!this._clearOnEdit) {
       return;
     }
@@ -764,28 +479,183 @@ export class TextInput extends Ion implements IonicFormInput {
     this._didBlurAfterEdit = false;
   }
 
-  /**
-   * @hidden
-   * Angular2 Forms API method called by the view (formControlName) to register the
-   * onChange event handler that updates the model (Control).
-   * @param {Function} fn  the onChange event handler.
-   */
-  registerOnChange(fn: any) { this.onChange = fn; }
+  _getScrollData(): ScrollData {
+    if (!this._content) {
+      return newScrollData();
+    }
 
-  /**
-   * @hidden
-   * Angular2 Forms API method called by the view (formControlName) to register
-   * the onTouched event handler that marks model (Control) as touched.
-   * @param {Function} fn  onTouched event handler.
-   */
-  registerOnTouched(fn: any) { this.onTouched = fn; }
+    // get container of this input, probably an ion-item a few nodes up
+    if (this._scrollData) {
+      return this._scrollData;
+    }
+    let ele: HTMLElement = this._elementRef.nativeElement;
+    ele = <HTMLElement>ele.closest('ion-item,[ion-item]') || ele;
+    return this._scrollData = getScrollData(
+      ele.offsetTop, ele.offsetHeight,
+      this._content.getContentDimensions(), this._keyboardHeight, this._plt.height());
+  }
 
+  _relocateInput(shouldRelocate: boolean) {
+    if (this._relocated === shouldRelocate) {
+      return;
+    }
+    const platform = this._plt;
+    const componentEle = this.getNativeElement();
+    const focusedInputEle = this._native.nativeElement;
+    console.debug(`native-input, hideCaret, shouldHideCaret: ${shouldRelocate}, input value: ${focusedInputEle.value}`);
+    if (shouldRelocate) {
+      // this allows for the actual input to receive the focus from
+      // the user's touch event, but before it receives focus, it
+      // moves the actual input to a location that will not screw
+      // up the app's layout, and does not allow the native browser
+      // to attempt to scroll the input into place (messing up headers/footers)
+      // the cloned input fills the area of where native input should be
+      // while the native input fakes out the browser by relocating itself
+      // before it receives the actual focus event
+      // We hide the focused input (with the visible caret) invisiable by making it scale(0),
+      cloneInputComponent(platform, componentEle, focusedInputEle);
+      const inputRelativeY = this._getScrollData().inputSafeY;
+      // fix for #11817
+      const tx = this._plt.isRTL ? 9999 : -9999;
+      focusedInputEle.style[platform.Css.transform] = `translate3d(${tx}px,${inputRelativeY}px,0)`;
+      focusedInputEle.style.opacity = '0';
 
-  /**
-   * @hidden
-   */
-  focusNext() {
-    this._form.tabFocus(this);
+    } else {
+      removeClone(platform, componentEle, focusedInputEle);
+    }
+    this._relocated = shouldRelocate;
+  }
+
+  _enableScrollPadding() {
+    assert(this._content, 'content is undefined');
+
+    console.debug('Input: enableScrollPadding');
+
+    this.ionFocus.subscribe(() => {
+      const content = this._content;
+      const scrollPadding = this._getScrollData().scrollPadding;
+      content.addScrollPadding(scrollPadding);
+      content.clearScrollPaddingFocusOut();
+    });
+  }
+
+  _enableHideCaretOnScroll() {
+    assert(this._content, 'content is undefined');
+
+    const content = this._content;
+    console.debug('Input: enableHideCaretOnScroll');
+
+    content.ionScrollStart
+      .takeUntil(this._onDestroy)
+      .subscribe(() => scrollHideCaret(true));
+
+    content.ionScrollEnd
+      .takeUntil(this._onDestroy)
+      .subscribe(() => scrollHideCaret(false));
+
+    this.ionBlur.subscribe(() => this._relocateInput(false));
+
+    const self = this;
+    function scrollHideCaret(shouldHideCaret: boolean) {
+      // if it does have focus, then do the dom write
+      if (self.isFocus()) {
+        self._dom.write(() => self._relocateInput(shouldHideCaret));
+      }
+    }
+  }
+
+  _enableScrollMove() {
+    assert(this._content, 'content is undefined');
+
+    console.debug('Input: enableAutoScroll');
+    this.ionFocus.subscribe(() => {
+      const scrollData = this._getScrollData();
+      if (Math.abs(scrollData.scrollAmount) > 4) {
+        this._content.scrollTo(0, scrollData.scrollTo, scrollData.scrollDuration);
+      }
+    });
+  }
+
+  _pointerStart(ev: UIEvent) {
+    assert(this._content, 'content is undefined');
+
+    // input cover touchstart
+    if (ev.type === 'touchstart') {
+      this._isTouch = true;
+    }
+
+    if ((this._isTouch || (!this._isTouch && ev.type === 'mousedown')) && this._app.isEnabled()) {
+      // remember where the touchstart/mousedown started
+      this._coord = pointerCoord(ev);
+    }
+
+    console.debug(`input-base, pointerStart, type: ${ev.type}`);
+  }
+
+  _pointerEnd(ev: UIEvent) {
+    assert(this._content, 'content is undefined');
+
+    // input cover touchend/mouseup
+    console.debug(`input-base, pointerEnd, type: ${ev.type}`);
+
+    if ((this._isTouch && ev.type === 'mouseup') || !this._app.isEnabled()) {
+      // the app is actively doing something right now
+      // don't try to scroll in the input
+      ev.preventDefault();
+      ev.stopPropagation();
+
+    } else if (this._coord) {
+      // get where the touchend/mouseup ended
+      var endCoord = pointerCoord(ev);
+
+      // focus this input if the pointer hasn't moved XX pixels
+      // and the input doesn't already have focus
+      if (!hasPointerMoved(8, this._coord, endCoord) && !this.isFocus()) {
+        ev.preventDefault();
+        ev.stopPropagation();
+
+        // begin the input focus process
+        this._jsSetFocus();
+      }
+    }
+
+    this._coord = null;
+  }
+
+  _jsSetFocus() {
+    assert(this._content, 'content is undefined');
+
+    // begin the process of setting focus to the inner input element
+    const content = this._content;
+    console.debug(`input-base, initFocus(), scrollView: ${!!content}`);
+    if (!content) {
+      // not inside of a scroll view, just focus it
+      this.setFocus();
+    }
+
+    var scrollData = this._getScrollData();
+    if (Math.abs(scrollData.scrollAmount) < 4) {
+      // the text input is in a safe position that doesn't
+      // require it to be scrolled into view, just set focus now
+      this.setFocus();
+      return;
+    }
+
+    // temporarily move the focus to the focus holder so the browser
+    // doesn't freak out while it's trying to get the input in place
+    // at this point the native text input still does not have focus
+    this._relocateInput(true);
+    this.setFocus();
+
+    // scroll the input into place
+    content.scrollTo(0, scrollData.scrollTo, scrollData.scrollDuration, () => {
+      // the scroll view is in the correct position now
+      // give the native text input focus
+      this._relocateInput(false);
+
+      // ensure this is the focused input
+      this.setFocus();
+    });
   }
 
 }
@@ -837,29 +707,42 @@ export class TextInput extends Ion implements IonicFormInput {
 
 
 const SCROLL_ASSIST_SPEED = 0.3;
-const TEXTAREA = 'textarea';
-const TEXT_TYPE_REGEX = /password|email|number|search|tel|url|date|month|time|week/;
 
+function newScrollData(): ScrollData {
+  return {
+    scrollAmount: 0,
+    scrollTo: 0,
+    scrollPadding: 0,
+    scrollDuration: 0,
+    inputSafeY: 0
+  };
+}
 
 /**
  * @hidden
  */
-export function getScrollData(inputOffsetTop: number, inputOffsetHeight: number, scrollViewDimensions: ContentDimensions, keyboardHeight: number, plaformHeight: number) {
+export function getScrollData(
+  inputOffsetTop: number,
+  inputOffsetHeight: number,
+  scrollViewDimensions: ContentDimensions,
+  keyboardHeight: number,
+  plaformHeight: number
+): ScrollData {
   // compute input's Y values relative to the body
-  let inputTop = (inputOffsetTop + scrollViewDimensions.contentTop - scrollViewDimensions.scrollTop);
-  let inputBottom = (inputTop + inputOffsetHeight);
+  const inputTop = (inputOffsetTop + scrollViewDimensions.contentTop - scrollViewDimensions.scrollTop);
+  const inputBottom = (inputTop + inputOffsetHeight);
 
   // compute the safe area which is the viewable content area when the soft keyboard is up
-  let safeAreaTop = scrollViewDimensions.contentTop;
-  let safeAreaHeight = (plaformHeight - keyboardHeight - safeAreaTop) / 2;
-  let safeAreaBottom = safeAreaTop + safeAreaHeight;
+  const safeAreaTop = scrollViewDimensions.contentTop;
+  const safeAreaHeight = (plaformHeight - keyboardHeight - safeAreaTop) / 2;
+  const safeAreaBottom = safeAreaTop + safeAreaHeight;
 
   // figure out if each edge of teh input is within the safe area
-  let inputTopWithinSafeArea = (inputTop >= safeAreaTop && inputTop <= safeAreaBottom);
-  let inputTopAboveSafeArea = (inputTop < safeAreaTop);
-  let inputTopBelowSafeArea = (inputTop > safeAreaBottom);
-  let inputBottomWithinSafeArea = (inputBottom >= safeAreaTop && inputBottom <= safeAreaBottom);
-  let inputBottomBelowSafeArea = (inputBottom > safeAreaBottom);
+  const inputTopWithinSafeArea = (inputTop >= safeAreaTop && inputTop <= safeAreaBottom);
+  const inputTopAboveSafeArea = (inputTop < safeAreaTop);
+  const inputTopBelowSafeArea = (inputTop > safeAreaBottom);
+  const inputBottomWithinSafeArea = (inputBottom >= safeAreaTop && inputBottom <= safeAreaBottom);
+  const inputBottomBelowSafeArea = (inputBottom > safeAreaBottom);
 
   /*
   Text Input Scroll To Scenarios
@@ -873,12 +756,16 @@ export function getScrollData(inputOffsetTop: number, inputOffsetHeight: number,
   7) Input top below safe area, no room to scroll, input larger than safe area
   */
 
-  const scrollData: ScrollData = {
-    scrollAmount: 0,
-    scrollTo: 0,
-    scrollPadding: 0,
-    inputSafeY: 0
-  };
+  const scrollData: ScrollData = newScrollData();
+
+  // when auto-scrolling, there also needs to be enough
+  // content padding at the bottom of the scroll view
+  // always add scroll padding when a text input has focus
+  // this allows for the content to scroll above of the keyboard
+  // content behind the keyboard would be blank
+  // some cases may not need it, but when jumping around it's best
+  // to have the padding already rendered so there's no jank
+  scrollData.scrollPadding = keyboardHeight;
 
   if (inputTopWithinSafeArea && inputBottomWithinSafeArea) {
     // Input top within safe area, bottom within safe area
@@ -915,55 +802,73 @@ export function getScrollData(inputOffsetTop: number, inputOffsetHeight: number,
   // figure out where it should scroll to for the best position to the input
   scrollData.scrollTo = (scrollViewDimensions.scrollTop - scrollData.scrollAmount);
 
-  // when auto-scrolling, there also needs to be enough
-  // content padding at the bottom of the scroll view
-  // always add scroll padding when a text input has focus
-  // this allows for the content to scroll above of the keyboard
-  // content behind the keyboard would be blank
-  // some cases may not need it, but when jumping around it's best
-  // to have the padding already rendered so there's no jank
-  scrollData.scrollPadding = keyboardHeight;
-
-  // var safeAreaEle: HTMLElement = (<any>window).safeAreaEle;
-  // if (!safeAreaEle) {
-  //   safeAreaEle = (<any>window).safeAreaEle  = document.createElement('div');
-  //   safeAreaEle.style.cssText = 'position:absolute; padding:1px 5px; left:0; right:0; font-weight:bold; font-size:10px; font-family:Courier; text-align:right; background:rgba(0, 128, 0, 0.8); text-shadow:1px 1px white; pointer-events:none;';
-  //   document.body.appendChild(safeAreaEle);
-  // }
-  // safeAreaEle.style.top = safeAreaTop + 'px';
-  // safeAreaEle.style.height = safeAreaHeight + 'px';
-  // safeAreaEle.innerHTML = `
-  //   <div>scrollTo: ${scrollData.scrollTo}</div>
-  //   <div>scrollAmount: ${scrollData.scrollAmount}</div>
-  //   <div>scrollPadding: ${scrollData.scrollPadding}</div>
-  //   <div>inputSafeY: ${scrollData.inputSafeY}</div>
-  //   <div>scrollHeight: ${scrollViewDimensions.scrollHeight}</div>
-  //   <div>scrollTop: ${scrollViewDimensions.scrollTop}</div>
-  //   <div>contentHeight: ${scrollViewDimensions.contentHeight}</div>
-  //   <div>plaformHeight: ${plaformHeight}</div>
-  // `;
+  // calculate animation duration
+  const distance = Math.abs(scrollData.scrollAmount);
+  const duration = distance / SCROLL_ASSIST_SPEED;
+  scrollData.scrollDuration = Math.min(400, Math.max(150, duration));
 
   return scrollData;
 }
 
-function setControlCss(element: any, control: NgControl) {
-  element.setElementClass('ng-untouched', control.untouched);
-  element.setElementClass('ng-touched', control.touched);
-  element.setElementClass('ng-pristine', control.pristine);
-  element.setElementClass('ng-dirty', control.dirty);
-  element.setElementClass('ng-valid', control.valid);
-  element.setElementClass('ng-invalid', !control.valid);
+function cloneInputComponent(plt: Platform, srcComponentEle: HTMLInputElement, srcNativeInputEle: HTMLInputElement) {
+  // Make sure we kill all the clones before creating new ones
+  // It is a defensive, removeClone() should do nothing
+  // removeClone(plt, srcComponentEle, srcNativeInputEle);
+  assert(srcComponentEle.parentElement.querySelector('.cloned-input') === null, 'leaked cloned input');
+  // given a native <input> or <textarea> element
+  // find its parent wrapping component like <ion-input> or <ion-textarea>
+  // then clone the entire component
+  if (srcComponentEle) {
+    // DOM READ
+    var srcTop = srcComponentEle.offsetTop;
+    var srcLeft = srcComponentEle.offsetLeft;
+    var srcWidth = srcComponentEle.offsetWidth;
+    var srcHeight = srcComponentEle.offsetHeight;
+
+    // DOM WRITE
+    // not using deep clone so we don't pull in unnecessary nodes
+    var clonedComponentEle = <HTMLElement>srcComponentEle.cloneNode(false);
+    var clonedStyle = clonedComponentEle.style;
+    clonedComponentEle.classList.add('cloned-input');
+    clonedComponentEle.setAttribute('aria-hidden', 'true');
+    clonedStyle.pointerEvents = 'none';
+    clonedStyle.position = 'absolute';
+    clonedStyle.top = srcTop + 'px';
+    clonedStyle.left = srcLeft + 'px';
+    clonedStyle.width = srcWidth + 'px';
+    clonedStyle.height = srcHeight + 'px';
+
+    var clonedNativeInputEle = <HTMLInputElement>srcNativeInputEle.cloneNode(false);
+    clonedNativeInputEle.value = srcNativeInputEle.value;
+    clonedNativeInputEle.tabIndex = -1;
+
+    clonedComponentEle.appendChild(clonedNativeInputEle);
+    srcComponentEle.parentNode.appendChild(clonedComponentEle);
+
+    srcComponentEle.style.pointerEvents = 'none';
+  }
+
+  (<any>srcNativeInputEle.style)[plt.Css.transform] = 'scale(0)';
 }
 
-function getScrollAssistDuration(distanceToScroll: number) {
-  distanceToScroll = Math.abs(distanceToScroll);
-  let duration = distanceToScroll / SCROLL_ASSIST_SPEED;
-  return Math.min(400, Math.max(150, duration));
+function removeClone(plt: Platform, srcComponentEle: HTMLElement, srcNativeInputEle: HTMLElement) {
+  if (srcComponentEle && srcComponentEle.parentElement) {
+    var clonedInputEles = srcComponentEle.parentElement.querySelectorAll('.cloned-input');
+    for (var i = 0; i < clonedInputEles.length; i++) {
+      clonedInputEles[i].parentNode.removeChild(clonedInputEles[i]);
+    }
+
+    srcComponentEle.style.pointerEvents = '';
+  }
+  (<any>srcNativeInputEle.style)[plt.Css.transform] = '';
+  srcNativeInputEle.style.opacity = '';
 }
+
 
 export interface ScrollData {
   scrollAmount: number;
   scrollTo: number;
   scrollPadding: number;
+  scrollDuration: number;
   inputSafeY: number;
 }

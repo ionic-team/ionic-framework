@@ -8,8 +8,8 @@ import { Config } from '../config/config';
 import { DomController } from '../platform/dom-controller';
 import { GestureController } from '../gestures/gesture-controller';
 import { Platform } from '../platform/platform';
-import { pointerCoord, hasPointerMoved } from '../util/dom';
-import { PointerEvents, POINTER_EVENT_TYPE_TOUCH } from '../gestures/pointer-events';
+import { hasPointerMoved, pointerCoord } from '../util/dom';
+import { POINTER_EVENT_TYPE_TOUCH, PointerEvents } from '../gestures/pointer-events';
 import { RippleActivator } from './ripple';
 import { UIEventManager } from '../gestures/ui-event-manager';
 
@@ -23,6 +23,7 @@ export class TapClick {
   private usePolyfill: boolean;
   private activator: ActivatorBase;
   private startCoord: any;
+  private activatableEle: HTMLElement;
   private events: UIEventManager;
   private pointerEvents: PointerEvents;
   private lastTouchEnd: number;
@@ -77,14 +78,14 @@ export class TapClick {
       return true;
     }
 
-    let activatableEle = getActivatableTarget(ev.target);
-    if (!activatableEle) {
+    this.activatableEle = getActivatableTarget(ev.target);
+    if (!this.activatableEle) {
       this.startCoord = null;
       return false;
     }
 
     this.startCoord = pointerCoord(ev);
-    this.activator && this.activator.downAction(ev, activatableEle, this.startCoord);
+    this.activator && this.activator.downAction(ev, this.activatableEle, this.startCoord);
     return true;
   }
 
@@ -103,7 +104,7 @@ export class TapClick {
       return;
     }
     if (this.activator && ev.target !== this.plt.doc()) {
-      let activatableEle = getActivatableTarget(ev.target);
+      let activatableEle = getActivatableTarget(ev.target) || this.activatableEle;
       if (activatableEle) {
         this.activator.upAction(ev, activatableEle, this.startCoord);
       }
@@ -112,12 +113,14 @@ export class TapClick {
       this.handleTapPolyfill(ev);
     }
     this.startCoord = null;
+    this.activatableEle = null;
   }
 
   pointerCancel(ev: UIEvent) {
     console.debug(`pointerCancel from ${ev.type} ${Date.now()}`);
 
     this.startCoord = null;
+    this.activatableEle = null;
     this.dispatchClick = false;
     this.activator && this.activator.clearState(false);
     this.pointerEvents.stop();
@@ -247,7 +250,7 @@ export function isActivatable(ele: HTMLElement) {
     }
   }
   return false;
-};
+}
 
 const ACTIVATABLE_ELEMENTS = ['A', 'BUTTON'];
 const ACTIVATABLE_ATTRIBUTES = ['tappable', 'ion-button'];

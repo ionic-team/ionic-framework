@@ -1,10 +1,10 @@
 import { EventEmitter } from '@angular/core';
 
 import { Config } from '../config/config';
-import { NavOptions } from './nav-util';
+import { NavOptions, TransitionDoneFn } from './nav-util';
 import { Page } from './nav-util';
 import { ViewController } from './view-controller';
-
+import { NavigationContainer } from './navigation-container';
 
 /**
  * @name NavController
@@ -92,7 +92,7 @@ import { ViewController } from './view-controller';
  * })
  * export class MyApp {
  *    @ViewChild('myNav') nav: NavController
- *    public rootPage = TabsPage;
+ *    public rootPage: any = TabsPage;
  *
  *    // Wait for the components in MyApp's template to be initialized
  *    // In this case, we are waiting for the Nav with reference variable of "#myNav"
@@ -266,11 +266,12 @@ import { ViewController } from './view-controller';
  *  | `ionViewCanEnter`   | boolean/Promise&lt;void&gt; | Runs before the view can enter. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can enter                                                                                                     |
  *  | `ionViewCanLeave`   | boolean/Promise&lt;void&gt; | Runs before the view can leave. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can leave                                                                                                     |
  *
+ * Those events are only fired on IonicPage, for classic Angular Component, use [Angular Lifecycle Hooks](https://angular.io/guide/lifecycle-hooks).
  *
  * ## Nav Guards
  *
  * In some cases, a developer should be able to control views leaving and entering. To allow for this, NavController has the `ionViewCanEnter` and `ionViewCanLeave` methods.
- * Similar to Angular 2 route guards, but are more integrated with NavController. For example, if you wanted to prevent a user from leaving a view:
+ * Similar to Angular route guards, but are more integrated with NavController. For example, if you wanted to prevent a user from leaving a view:
  *
  * ```ts
  * export class MyClass{
@@ -315,7 +316,7 @@ import { ViewController } from './view-controller';
  *   ){}
  *   ionViewCanEnter(): boolean{
  *    // here we can either return true or false
- *    // depending on if we want to leave this view
+ *    // depending on if we want to enter this view
  *    if(isValid(randomValue)){
  *       return true;
  *     } else {
@@ -346,7 +347,7 @@ import { ViewController } from './view-controller';
  *
  * @see {@link /docs/components#navigation Navigation Component Docs}
  */
-export abstract class NavController {
+export abstract class NavController implements NavigationContainer {
 
   /**
    * Observable to be subscribed to when a component is loaded.
@@ -390,6 +391,11 @@ export abstract class NavController {
   id: string;
 
   /**
+   * @hidden
+   */
+  name: string;
+
+  /**
    * The parent navigation instance. If this is the root nav, then
    * it'll be `null`. A `Tab` instance's parent is `Tabs`, otherwise
    * the parent would be another nav, if it's not already the root nav.
@@ -415,7 +421,7 @@ export abstract class NavController {
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract push(page: Page | string, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract push(page: Page | string, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * Inserts a component into the nav stack at the specified index. This is useful if
@@ -428,7 +434,7 @@ export abstract class NavController {
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract insert(insertIndex: number, page: Page | string, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract insert(insertIndex: number, page: Page | string, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * Inserts an array of components into the nav stack at the specified index.
@@ -440,7 +446,7 @@ export abstract class NavController {
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract insertPages(insertIndex: number, insertPages: Array<{page: Page | string, params?: any}>, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract insertPages(insertIndex: number, insertPages: Array<{page: Page | string, params?: any}>, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * Call to navigate back from a current component. Similar to `push()`, you
@@ -449,7 +455,7 @@ export abstract class NavController {
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract pop(opts?: NavOptions, done?: Function): Promise<any>;
+  abstract pop(opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * Navigate back to the root of the stack, no matter how far back that is.
@@ -457,7 +463,7 @@ export abstract class NavController {
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract popToRoot(opts?: NavOptions, done?: Function): Promise<any>;
+  abstract popToRoot(opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * @hidden
@@ -470,11 +476,10 @@ export abstract class NavController {
    * when a new instance needs to be created.
    *
    * @param {Page|string|ViewController} page The component class or deeplink name you want to push onto the navigation stack.
-   * @param {object} [params={}] Any NavParams to be used when a new view instance is created at the root.
    * @param {object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract popTo(page: Page | string | ViewController, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract popTo(page: Page | string | ViewController, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * @hidden
@@ -492,7 +497,7 @@ export abstract class NavController {
    * @param {object} [opts={}] Any options you want to use pass to transtion.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract remove(startIndex: number, removeCount?: number, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract remove(startIndex: number, removeCount?: number, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * Removes the specified view controller from the nav stack.
@@ -501,7 +506,7 @@ export abstract class NavController {
    * @param {object} [opts={}] Any options you want to use pass to transtion.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract removeView(viewController: ViewController, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract removeView(viewController: ViewController, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * Set the root for the current navigation stack.
@@ -511,7 +516,8 @@ export abstract class NavController {
    * @param {Function} done Callback function on done.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract setRoot(pageOrViewCtrl: Page | string | ViewController, params?: any, opts?: NavOptions, done?: Function): Promise<any>;
+  abstract setRoot(pageOrViewCtrl: Page | string | ViewController, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
+  abstract goToRoot(options: NavOptions): Promise<any>;
 
   /**
    * Set the views of the current navigation stack and navigate to the
@@ -523,7 +529,7 @@ export abstract class NavController {
    * @param {Object} [opts={}] Nav options to go with this transition.
    * @returns {Promise} Returns a promise which is resolved when the transition has completed.
    */
-  abstract setPages(pages: ({page: Page | string, params?: any} | ViewController)[], opts?: NavOptions, done?: Function): Promise<any>;
+  abstract setPages(pages: ({page: Page | string, params?: any} | ViewController)[], opts?: NavOptions, done?: TransitionDoneFn): Promise<any>;
 
   /**
    * @param {number} index The index of the page to get.
@@ -576,7 +582,6 @@ export abstract class NavController {
    */
   abstract length(): number;
 
-
   /**
    * Returns the current stack of views in this nav controller.
    * @returns {Array<ViewController>} the stack of view controllers in this nav controller.
@@ -584,15 +589,26 @@ export abstract class NavController {
   abstract getViews(): Array<ViewController>;
 
   /**
+   * Returns a list of the active child navigation.
+   */
+  abstract getActiveChildNavs(): any[];
+
+  /**
    * Returns the active child navigation.
    */
   abstract getActiveChildNav(): any;
 
   /**
+   * Returns a list of all child navigation containers
+   */
+  abstract getAllChildNavs(): any[];
+
+
+  /**
    * Returns if the nav controller is actively transitioning or not.
    * @return {boolean}
    */
-  abstract isTransitioning(includeAncestors?: boolean): boolean
+  abstract isTransitioning(includeAncestors?: boolean): boolean;
 
   /**
    * If it's possible to use swipe back or not. If it's not possible
@@ -619,4 +635,17 @@ export abstract class NavController {
    * @hidden
    */
   abstract resize(): void;
+
+
+
+  /*
+   * @hidden
+   */
+  abstract getType(): string;
+
+  /*
+   * @hidden
+   */
+  abstract getSecondaryIdentifier(): string;
+
 }

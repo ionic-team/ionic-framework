@@ -77,7 +77,9 @@ function protractor(callback, args, testId: string) {
 
   console.log(`Serving ${process.cwd()} on http://localhost:${buildConfig.protractorPort}`);
 
-  const child = spawn('protractor', args, {
+  let spawnCommand = process.platform === 'win32' ? 'protractor.cmd' : 'protractor';
+
+  const child = spawn(spawnCommand, args, {
     stdio: [process.stdin, process.stdout, 'pipe']
   });
 

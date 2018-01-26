@@ -81,7 +81,7 @@ ion-spinner.spinner-paused svg {
 }
 
 .spinner-dots svg {
-  transform-origin: center;
+  @include transform-origin(center);
 
   animation: spinner-dots 1s linear infinite;
 }

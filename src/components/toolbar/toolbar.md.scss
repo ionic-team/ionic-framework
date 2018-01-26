@@ -13,7 +13,7 @@ $toolbar-order-md: (
   buttons-end: 5,
   buttons-right: 6,
   menu-toggle-end: 7,
-);
+) !default;
 
 /// @prop - Font size of the toolbar title
 $toolbar-md-title-font-size:             2rem !default;
@@ -66,6 +66,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
   // rather than using `box-shadow: 0 2px 5px rgba(0,0,0,0.26);`
   // noticable performance difference on older Android devices
   @include position(null, null, -5px, 0);
+  @include background-position(start, 0, top, -2px);
 
   position: absolute;
 
@@ -74,7 +75,6 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAHBAMAAADzDtBxAAAAD1BMVEUAAAAAAAAAAAAAAAAAAABPDueNAAAABXRSTlMUCS0gBIh/TXEAAAAaSURBVAjXYxCEAgY4UIICBmMogMsgFLtAAQCNSwXZKOdPxgAAAABJRU5ErkJggg==);
   background-repeat: repeat-x;
-  background-position: 0 -2px;
 
   content: "";
 }
@@ -82,10 +82,9 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 .footer-md::before,
 .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
   @include position(-2px, null, auto, null);
+  @include background-position(start, 0, top, 0);
 
   height: 2px;
-
-  background-position: 0 0;
 }
 
 .header-md[no-border]::after,
@@ -116,7 +115,6 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 
 @mixin md-toolbar-theme($color-name, $color-base, $color-contrast) {
   .toolbar-md-#{$color-name} {
-    $fg-color: color-contrast($colors-md, $color-base, md);
 
     .toolbar-background-md {
       background: $color-base;
@@ -126,22 +124,22 @@ $toolbar-button-md-strong-font-weight:   bold !default;
     .bar-button-default-md,
     .bar-button-outline-md,
     .toolbar-title-md {
-      color: $fg-color;
+      color: $color-contrast;
     }
 
     .bar-button-clear-md,
     .bar-button-default-md,
     .bar-button-outline-md {
       .button-effect {
-        background-color: $fg-color;
+        background-color: $color-contrast;
       }
     }
 
     .bar-button-outline-md {
-      border-color: $fg-color;
+      border-color: $color-contrast;
     }
 
-    @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-md, md) {
       @include md-bar-button-default($color-name, $color-base, $color-contrast);
       @include md-bar-button-outline($color-name, $color-base, $color-contrast);
       @include md-bar-button-solid($color-name, $color-base, $color-contrast);
@@ -296,7 +294,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 // Material Design Toolbar Button Icon
 // --------------------------------------------------
 
-.bar-button-md.bar-button-icon-left ion-icon {
+.bar-button-md.bar-button-icon-start ion-icon {
   @include padding-horizontal(null, .3em);
 
   font-size: 1.4em;
@@ -305,7 +303,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
   pointer-events: none;
 }
 
-.bar-button-md.bar-button-icon-right ion-icon {
+.bar-button-md.bar-button-icon-end ion-icon {
   @include padding-horizontal(.4em, null);
 
   font-size: 1.4em;
@@ -385,7 +383,7 @@ $toolbar-button-md-strong-font-weight:   bold !default;
 @include md-bar-button-default(default, $toolbar-md-button-color, color-contrast($colors-md, $toolbar-md-button-color, md));
 @include md-bar-button-default(clear, $toolbar-md-button-color, color-contrast($colors-md, $toolbar-md-button-color, md));
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md, md) {
   @include md-toolbar-theme($color-name, $color-base, $color-contrast);
   @include md-bar-button-default($color-name, $color-base, $color-contrast);
   @include md-bar-button-outline($color-name, $color-base, $color-contrast);

@@ -2,7 +2,8 @@ import { AfterContentInit, ElementRef, EventEmitter, Input, NgZone, Output, Rend
 import { ControlValueAccessor } from '@angular/forms';
 import { NgControl } from '@angular/forms';
 
-import { isPresent, isUndefined, isArray, isTrueProperty, deepCopy, assert } from './util';
+import { assert, deepCopy, isArray, isPresent, isString, isTrueProperty, isUndefined } from './util';
+import { IonicFormInput } from './form';
 import { Ion } from '../components/ion';
 import { Config } from '../config/config';
 import { Item } from '../components/item/item';
@@ -10,7 +11,7 @@ import { Form } from './form';
 import { TimeoutDebouncer } from './debouncer';
 
 
-export interface CommonInput<T> extends ControlValueAccessor, AfterContentInit {
+export interface CommonInput<T> extends ControlValueAccessor, AfterContentInit, IonicFormInput {
 
   id: string;
   disabled: boolean;
@@ -76,21 +77,22 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     private _defaultValue: T,
     public _form: Form,
     public _item: Item,
-    ngControl: NgControl
+    public _ngControl: NgControl
   ) {
     super(config, elementRef, renderer, name);
     _form && _form.register(this);
     this._value = deepCopy(this._defaultValue);
 
     if (_item) {
+      assert('lbl-' + _item.id === _item.labelId, 'labelId was not calculated correctly');
       this.id = name + '-' + _item.registerInput(name);
-      this._labelId = 'lbl-' + _item.id;
+      this._labelId = _item.labelId;
       this._item.setElementClass('item-' + name, true);
     }
 
     // If the user passed a ngControl we need to set the valueAccessor
-    if (ngControl) {
-      ngControl.valueAccessor = this;
+    if (_ngControl) {
+      _ngControl.valueAccessor = this;
     }
   }
 
@@ -143,12 +145,9 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (isUndefined(val)) {
       return false;
     }
-    let normalized;
-    if (val === null) {
-      normalized = deepCopy(this._defaultValue);
-    } else {
-      normalized = this._inputNormalize(val);
-    }
+    const normalized = (val === null)
+      ? deepCopy(this._defaultValue)
+      : this._inputNormalize(val);
 
     const notUpdate = isUndefined(normalized) || !this._inputShouldChange(normalized);
     if (notUpdate) {
@@ -157,7 +156,6 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
 
     console.debug('BaseInput: value changed:', normalized, this);
     this._value = normalized;
-    this._inputCheckHasValue(normalized);
     if (this._init) {
       this._inputUpdated();
     }
@@ -212,12 +210,11 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (this._isFocus) {
       return;
     }
-    assert(this._init, 'component was not initialized');
-    assert(NgZone.isInAngularZone(), '_fireFocus: should be zoned');
+    console.debug('BaseInput: focused:', this);
 
-    this._isFocus = true;
+    this._form && this._form.setAsFocused(this);
+    this._setFocus(true);
     this.ionFocus.emit(this);
-    this._inputUpdated();
   }
 
   /**
@@ -227,11 +224,35 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
     if (!this._isFocus) {
       return;
     }
-    assert(this._init, 'component was not initialized');
-    assert(NgZone.isInAngularZone(), '_fireBlur: should be zoned');
+    console.debug('BaseInput: blurred:', this);
 
-    this._isFocus = false;
+    this._form && this._form.unsetAsFocused(this);
+    this._setFocus(false);
+    this._fireTouched();
     this.ionBlur.emit(this);
+  }
+
+  /**
+   * @hidden
+   */
+  _fireTouched() {
+    this._onTouched && this._onTouched();
+  }
+
+  /**
+   * @hidden
+   */
+  private _setFocus(isFocused: boolean) {
+    assert(this._init, 'component was not initialized');
+    assert(NgZone.isInAngularZone(), '_fireFocus: should be zoned');
+    assert(isFocused !== this._isFocus, 'bad internal state');
+
+    this._isFocus = isFocused;
+    const item = this._item;
+    if (item) {
+      item.setElementClass('input-has-focus', isFocused);
+      item.setElementClass('item-input-has-focus', isFocused);
+    }
     this._inputUpdated();
   }
 
@@ -240,7 +261,6 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    */
   private onChange() {
     this._onChanged && this._onChanged(this._inputNgModelEvent());
-    this._onTouched && this._onTouched();
   }
 
   /**
@@ -255,16 +275,30 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    */
   hasValue(): boolean {
     const val = this._value;
-    return isArray(val)
-      ? val.length > 0
-      : isPresent(val);
+    if (!isPresent(val)) {
+      return false;
+    }
+    if (isArray(val) || isString(val)) {
+      return val.length > 0;
+    }
+    return true;
+  }
+
+  /**
+   * @hidden
+   */
+  focusNext() {
+    this._form && this._form.tabFocus(this);
   }
 
   /**
    * @hidden
    */
   ngOnDestroy() {
-    this._form && this._form.deregister(this);
+    assert(this._init, 'input was destroed without being initialized');
+
+    const form = this._form;
+    form && form.deregister(this);
     this._init = false;
   }
 
@@ -278,19 +312,10 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   /**
    * @hidden
    */
-  _inputCheckHasValue(val: T) {
-    if (!this._item) {
-      return;
-    }
-    // TODO remove all uses of input-has-value in v4
-    this._item.setElementClass('input-has-value', this.hasValue());
-    this._item.setElementClass('item-input-has-value', this.hasValue());
+  initFocus() {
+    const ele = this._elementRef.nativeElement.querySelector('button');
+    ele && ele.focus();
   }
-
-  /**
-   * @hidden
-   */
-  initFocus() { }
 
   /**
    * @hidden
@@ -326,5 +351,25 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
    */
   _inputUpdated() {
     assert(this._init, 'component should be initialized');
+    const item = this._item;
+    if (item) {
+      setControlCss(item, this._ngControl);
+      // TODO remove all uses of input-has-value in v4
+      let hasValue = this.hasValue();
+      item.setElementClass('input-has-value', hasValue);
+      item.setElementClass('item-input-has-value', hasValue);
+    }
   }
+}
+
+function setControlCss(element: Ion, control: NgControl) {
+  if (!control) {
+    return;
+  }
+  element.setElementClass('ng-untouched', control.untouched);
+  element.setElementClass('ng-touched', control.touched);
+  element.setElementClass('ng-pristine', control.pristine);
+  element.setElementClass('ng-dirty', control.dirty);
+  element.setElementClass('ng-valid', control.valid);
+  element.setElementClass('ng-invalid', !control.valid);
 }

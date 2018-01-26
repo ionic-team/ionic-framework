@@ -198,8 +198,11 @@ export interface IonicPageMetadata {
  * be used if the history doesn't already exist, meaning if you navigate to the page the history will
  * be the pages that were navigated from.
  *
- * The `defaultHistory` property takes an array of strings. For example, setting the history of the
- * detail page to the list page where the `name` is `list`:
+ * The `defaultHistory` property takes an array of page names. The page names are specified as statically
+ * analyzable strings (which means you must use strings and not variables or delared constants). If the
+ * parent page does not have a `name` specified in its `IonicPage` decorator its name is its class name.
+ *
+ * For example, setting the history of the detail page to the list page where the `name` is `list`:
  *
  * ```ts
  * @IonicPage({
@@ -212,6 +215,23 @@ export interface IonicPageMetadata {
  * In this example, if the app is launched at `http://localhost:8101/#/detail/my-detail` the displayed page
  * will be the `'detail-page'` with an id of `my-detail` and it will show a back button that goes back to
  * the `'list'` page.
+ *
+ * For a deeper example:
+ *
+ * ```ts
+ * @IonicPage({
+ *   segment: 'contact-more-info',
+ *   defaultHistory: ['ContactDetailPage', 'Contact']
+ * })
+ * ...
+ * export class ContactMoreInfoPage {
+ *   ...
+ * }
+ * ```
+ *
+ * In this example, if the app is launched at `http://localhost:8101/#/contact/contact-more-info` the displayed page
+ * will be the `'ContactMoreInfoPage'`. It will show a back button that will go to the `'ContactDetailPage'` which
+ * will also show a back button which will go to the `'Constact'` page.
  *
  * An example of an application with a set history stack is the Instagram application. Opening a link
  * to an image on Instagram will show the details for that image with a back button to the user's profile
@@ -263,7 +283,7 @@ export interface IonicPageMetadata {
  * the application.
  *
  */
-export function IonicPage(config?: IonicPageMetadata): ClassDecorator {
+export function IonicPage(_config?: IonicPageMetadata): ClassDecorator {
   return function(clazz: any) {
     return clazz;
   };

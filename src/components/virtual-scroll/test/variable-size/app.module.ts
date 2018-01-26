@@ -22,7 +22,7 @@ export class E2EPage {
     }
   }
 
-  headerFn(record: any, recordIndex: number) {
+  headerFn(_record: any, recordIndex: number) {
     if (recordIndex > 0 && recordIndex % 100 === 0) {
       return recordIndex;
     }

@@ -79,14 +79,13 @@ ion-fab {
 
   &[center] {
     @include position(null, null, null, 50%);
-
     @include margin-horizontal(-$fab-size / 2, null);
   }
 
   &[middle] {
-    top: 50%;
+    @include margin(-$fab-size / 2, null, null, null);
 
-    margin-top: -$fab-size / 2;
+    top: 50%;
   }
 
   &[top] {
@@ -95,11 +94,19 @@ ion-fab {
 
   &[right] {
     // scss-lint:disable PropertySpelling
-    right: $fab-content-margin;
+    @include multi-dir() {
+      right: $fab-content-margin;
+    }
+
+    @include multi-dir() {
+      right: calc(#{$fab-content-margin} + constant(safe-area-inset-right));
+      right: calc(#{$fab-content-margin} + env(safe-area-inset-right));
+    }
   }
 
   &[end] {
     @include position-horizontal(null, $fab-content-margin);
+    @include safe-position-horizontal(null, $fab-content-margin);
   }
 
   &[bottom] {
@@ -108,11 +115,19 @@ ion-fab {
 
   &[left] {
     // scss-lint:disable PropertySpelling
-    left: $fab-content-margin;
+    @include multi-dir() {
+      left: $fab-content-margin;
+    }
+
+    @include multi-dir() {
+      left: calc(#{$fab-content-margin} + constant(safe-area-inset-left));
+      left: calc(#{$fab-content-margin} + env(safe-area-inset-left));
+    }
   }
 
   &[start] {
     @include position-horizontal($fab-content-margin, null);
+    @include safe-position-horizontal($fab-content-margin, null);
   }
 
   &[top][edge] {

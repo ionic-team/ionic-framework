@@ -1,6 +1,6 @@
-import { Component, ViewChild, NgModule } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, NgModule, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { Http } from '@angular/http';
 
 import { IonicApp, IonicModule, Slides } from '../../../..';
 
@@ -12,7 +12,7 @@ export class E2EPage {
   images: string[] = [];
   @ViewChild(Slides) slider: Slides;
 
-  constructor(private http: Http) {}
+  constructor(private http: HttpClient) {}
 
   ngAfterViewInit() {
     let tags = 'madison wisconsin';
@@ -22,8 +22,8 @@ export class E2EPage {
 
     this.http.get(baseUrl + '?method=flickr.groups.pools.getPhotos&group_id=1463451@N25&safe_search=1&api_key='
                   + FLICKR_API_KEY + '&nojsoncallback=1&format=json&tags=' + tags)
-      .subscribe(data => {
-        this.images = data.json().photos.photo.slice(0, 20);
+      .subscribe((data: any) => {
+        this.images = data.photos.photo.slice(0, 20);
         setTimeout(() => {
           this.slider.update();
         });

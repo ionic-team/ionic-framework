@@ -21,6 +21,13 @@
     </ion-item>
 
     <ion-item>
+      <ion-label>Hair Color</ion-label>
+      <ion-select [(ngModel)]="hairColor" okText="Okay" cancelText="Dismiss" [compareWith]="compareFn">
+        <ion-option *ngFor="let o of hairColorData" [value]="o">{{o.text}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
       <ion-label>Gaming</ion-label>
       <ion-select [(ngModel)]="gaming" okText="Okay" cancelText="Dismiss">
         <ion-option value="nes">NES</ion-option>
@@ -144,6 +151,13 @@
       <ion-label>Pets</ion-label>
       <ion-select [(ngModel)]="pets" multiple="true" [selectOptions]="petAlertOpts">
         <ion-option *ngFor="let o of petData" [value]="o.value">{{o.text}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Skittles</ion-label>
+      <ion-select [(ngModel)]="skittles" multiple="true" okText="Okay" cancelText="Dismiss" [compareWith]="compareFn">
+        <ion-option *ngFor="let o of skittlesData" [value]="o">{{o.text}}</ion-option>
       </ion-select>
     </ion-item>
 

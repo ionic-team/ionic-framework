@@ -13,14 +13,14 @@ task('e2e.watch', ['e2e.prepare'], (done: Function) => {
     return;
   }
 
-  serveTest(folderInfo).then(() => {
+  serveTest(folderInfo, folderInfo.devApp).then(() => {
     done();
   }).catch((err: Error) => {
     done(err);
   });
 });
 
-function serveTest(folderInfo: any) {
+function serveTest(folderInfo: any, devApp: boolean) {
 
   const ionicAngularDir = join(PROJECT_ROOT, 'src');
   const srcTestRoot = join(PROJECT_ROOT, 'src', 'components', folderInfo.componentName, 'test', folderInfo.componentTest);
@@ -47,5 +47,5 @@ function serveTest(folderInfo: any) {
   const appNgModulePath = join(dirname(appEntryPoint), 'app.module.ts');
   const distDir = join(distTestRoot, 'www');
 
-  return runAppScriptsServe(folderInfo.componentName + '/' + folderInfo.componentTest, appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, null);
+  return runAppScriptsServe(join(folderInfo.componentName, folderInfo.componentTest), appEntryPoint, appNgModulePath, ionicAngularDir, distDir, pathToWriteFile, ionicAngularDir, sassConfigPath, copyConfigPath, null, devApp);
 }
