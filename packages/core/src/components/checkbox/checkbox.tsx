@@ -73,7 +73,7 @@ export class Checkbox implements CheckboxInput {
   @Event() ionStyle: EventEmitter<StyleEvent>;
 
   componentWillLoad() {
-    this.inputId = 'ion-cb-' + (checkboxIds++);
+    this.inputId = `ion-cb-${checkboxIds++}`;
     if (this.value === undefined) {
       this.value = this.inputId;
     }
@@ -82,7 +82,6 @@ export class Checkbox implements CheckboxInput {
 
   componentDidLoad() {
     this.ionStyle.emit = debounce(this.ionStyle.emit.bind(this.ionStyle));
-    this.nativeInput.checked = this.checked;
     this.didLoad = true;
 
     const parentItem = this.nativeInput.closest('ion-item');
@@ -97,10 +96,6 @@ export class Checkbox implements CheckboxInput {
 
   @Watch('checked')
   checkedChanged(isChecked: boolean) {
-    if (this.nativeInput.checked !== isChecked) {
-      // keep the checked value and native input `nync
-      this.nativeInput.checked = isChecked;
-    }
     if (this.didLoad) {
       this.ionChange.emit({
         checked: isChecked,
@@ -111,11 +106,6 @@ export class Checkbox implements CheckboxInput {
   }
 
   @Watch('disabled')
-  disabledChanged(isDisabled: boolean) {
-    this.nativeInput.disabled = isDisabled;
-    this.emitStyle();
-  }
-
   emitStyle() {
     this.ionStyle.emit({
       'checkbox-disabled': this.disabled,
@@ -166,6 +156,7 @@ export class Checkbox implements CheckboxInput {
         onFocus={this.onFocus.bind(this)}
         onBlur={this.onBlur.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
+        checked={this.checked}
         id={this.inputId}
         name={this.name}
         value={this.value}
