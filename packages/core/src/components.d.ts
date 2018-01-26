@@ -1700,6 +1700,7 @@ declare global {
   namespace JSXElements {
     export interface IonNavAttributes extends HTMLAttributes {
       delegate?: FrameworkDelegate;
+      lazy?: boolean;
       mode?: string;
       root?: any;
       useUrls?: boolean;
