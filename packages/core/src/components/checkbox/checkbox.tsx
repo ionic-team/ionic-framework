@@ -35,7 +35,7 @@ export class Checkbox implements CheckboxInput {
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop() name: string;
+  @Prop({ mutable: true }) name: string;
 
   /**
    * If true, the checkbox is selected. Defaults to `false`.
@@ -50,7 +50,7 @@ export class Checkbox implements CheckboxInput {
   /**
    * the value of the checkbox.
    */
-  @Prop({ mutable: true }) value: string;
+  @Prop() value: string;
 
   /**
    * Emitted when the checked property has changed.
@@ -74,8 +74,8 @@ export class Checkbox implements CheckboxInput {
 
   componentWillLoad() {
     this.inputId = `ion-cb-${checkboxIds++}`;
-    if (this.value === undefined) {
-      this.value = this.inputId;
+    if (this.name === undefined) {
+      this.name = this.inputId;
     }
     this.emitStyle();
   }
