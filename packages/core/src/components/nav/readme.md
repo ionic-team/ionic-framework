@@ -12,6 +12,11 @@
 any
 
 
+#### lazy
+
+boolean
+
+
 #### mode
 
 string
@@ -32,6 +37,11 @@ boolean
 #### delegate
 
 any
+
+
+#### lazy
+
+boolean
 
 
 #### mode
@@ -65,6 +75,9 @@ boolean
 #### canSwipeBack()
 
 
+#### clearTransitionInfoForUrl()
+
+
 #### getActive()
 
 
@@ -84,6 +97,9 @@ boolean
 
 
 #### getState()
+
+
+#### getTransitionInfoForUrl()
 
 
 #### getViews()
