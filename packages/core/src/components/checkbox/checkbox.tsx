@@ -50,7 +50,7 @@ export class Checkbox implements CheckboxInput {
   /**
    * the value of the checkbox.
    */
-  @Prop() value: string;
+  @Prop() value = 'on';
 
   /**
    * Emitted when the checked property has changed.
