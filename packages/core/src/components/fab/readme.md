@@ -1,50 +1,94 @@
 # ion-fab
 
-The `<ion-fab>` element is a container element that places the FAB button (`<ion-fab-button>`) in a fixed position that does not scroll with the content. It is also used to display a list of FAB buttons. It accepts the following attributes to position the FAB button element with respect to the content:
+Fabs are container elements that contain one or more fab buttons. They should be placed in a fixed position that does not scroll with the content. The following attributes can be used to position the fab with respect to the content:
 
-```
-[top] - Places the container at the top of the content
-[bottom] - Places the container at the bottom of the content
-[left] - Places the container on the left
-[right] - Places the container on the right
-[middle] - Places the container in the middle vertically
-[center] - Places the container in the center horizontally
-[edge] - Used to place the container between the content and the header/footer
-```
+| Value        | Alignment  | Details                                                                   |
+|--------------|------------|---------------------------------------------------------------------------|
+| `top`        | vertical   | Places the container at the top of the content.                           |
+| `bottom`     | vertical   | Places the container at the bottom of the content.                        |
+| `middle`     | vertical   | Places the container in the middle vertically.                            |
+| `edge`       | vertical   | Used to place the container between the content and the header/footer.    |
+| `left`       | horizontal | Places the container on the left.                                         |
+| `right`      | horizontal | Places the container on the right.                                        |
+| `center`     | horizontal | Places the container in the center horizontally.                          |
 
-
-```html
-<!-- this fab is placed at the top right -->
-<ion-content>
-  <ion-fab top right>
-    <ion-fab-button>Button</ion-fab-button>
-  </ion-fab>
-
-  <!-- this fab is placed at the center of the content -->
-  <ion-fab center middle>
-    <ion-fab-button>Button</ion-fab-button>
-  </ion-fab>
-</ion-content>
-```
-
-Ionic's FAB also supports FAB lists. This is a list of related buttons that show when the main FAB button is clicked.
-
-The same `ion-fab` container can contain several `ion-fab-list` elements with different side values:
-`top`, `bottom`, `left` and `right`. If side is ommited, the default is `bottom`.
-
+The fab should have one main fab button. Fabs can also contain fab lists which contain related buttons that show when the main fab button is clicked. The same fab container can contain several [fab list](../../fab-list/FabList) elements with different side values.
 
 ```html
 <ion-content>
-  <!-- this fab is placed at bottom right -->
-  <ion-fab bottom right>
-    <ion-fab-button>Share</ion-fab-button>
+  <!-- fab placed to the top right -->
+  <ion-fab top right slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- fab placed to the bottom right -->
+  <ion-fab bottom right slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="arrow-dropleft"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- fab placed to the top left -->
+  <ion-fab top left slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="arrow-dropright"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- fab placed to the bottom left -->
+  <ion-fab bottom left slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="arrow-dropup"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- fab placed to the left and middle -->
+  <ion-fab left middle slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="share"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- fab placed to the right and middle -->
+  <ion-fab right middle slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- fab placed to the top and right and on the top edge of the content overlapping header -->
+  <ion-fab top right edge slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="person"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <!-- fab placed to the bottom and left and on the bottom edge of the content overlapping footer with a list to the right -->
+  <ion-fab bottom left edge slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="settings"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="right">
+      <ion-fab-button><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <!-- fab placed in the center of the content with a list on each side -->
+  <ion-fab center middle slot="fixed">
+    <ion-fab-button><ion-icon name="share"></ion-icon></ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button>Facebook</ion-fab-button>
-      <ion-fab-button>Twitter</ion-fab-button>
-      <ion-fab-button>Youtube</ion-fab-button>
+      <ion-fab-button><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+    <ion-fab-list side="bottom">
+      <ion-fab-button><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
     </ion-fab-list>
     <ion-fab-list side="left">
-      <ion-fab-button>Vimeo</ion-fab-button>
+      <ion-fab-button><ion-icon name="logo-googleplus"></ion-icon></ion-fab-button>
+    </ion-fab-list>
+    <ion-fab-list side="right">
+      <ion-fab-button><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
     </ion-fab-list>
   </ion-fab>
 </ion-content>
