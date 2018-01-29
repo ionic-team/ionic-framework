@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { DomController, ScrollDetail, StencilElement } from '../../index';
 
 const enum Position {
@@ -14,7 +14,7 @@ const enum Position {
 export class InfiniteScroll {
 
   private thrPx = 0;
-  private thrPc = 0.15;
+  private thrPc = 0;
   private scrollEl: HTMLIonScrollElement;
   private didFire = false;
   private isBusy = false;
@@ -24,7 +24,7 @@ export class InfiniteScroll {
   @State() isLoading = false;
 
   @Prop({ context: 'dom' }) dom: DomController;
-  @Prop({ context: 'enableListener' }) enableListener: any;
+  @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
 
   /**
    * @input {string} The threshold distance from the bottom
@@ -142,14 +142,6 @@ export class InfiniteScroll {
     return 4;
   }
 
-  private canStart(): boolean {
-    return (
-      !this.disabled &&
-      !this.isBusy &&
-      this.scrollEl &&
-      !this.isLoading);
-  }
-
   /**
    * Call `complete()` within the `infinite` output event handler when
    * your async operation has completed. For example, the `loading`
@@ -212,9 +204,18 @@ export class InfiniteScroll {
    * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to
    * change state of infiniteScroll to "complete"
    */
+  @Method()
   waitFor(action: Promise<any>) {
     const enable = this.complete.bind(this);
     action.then(enable, enable);
+  }
+
+  private canStart(): boolean {
+    return (
+      !this.disabled &&
+      !this.isBusy &&
+      this.scrollEl &&
+      !this.isLoading);
   }
 
   private enableScrollEvents(shouldListen: boolean) {

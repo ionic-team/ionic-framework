@@ -49,9 +49,6 @@ export class ReorderGroup {
 
   @Prop() disabled = true;
 
-  /**
-   * @input {string} Which side of the view the ion-reorder should be placed. Default `"end"`.
-   */
   @Watch('disabled')
   protected disabledChanged(disabled: boolean) {
     if (!disabled) {
