@@ -40,6 +40,13 @@ import {
 import {
   SelectPopoverOption,
 } from './components/select-popover/select-popover';
+import {
+  DomRenderFn,
+  HeaderFn,
+  ItemHeightFn,
+  ItemRenderFn,
+  NodeHeightFn,
+} from './components/virtual-scroll/virtual-scroll-utils';
 
 import {
   ActionSheetController as IonActionSheetController
@@ -1660,7 +1667,7 @@ declare global {
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
       modalId?: number;
-      mode?: string;
+      mode?: 'ios' | 'md';
       showBackdrop?: boolean;
       willAnimate?: boolean;
     }
@@ -1925,7 +1932,7 @@ declare global {
       enterAnimation?: AnimationBuilder;
       ev?: Event;
       leaveAnimation?: AnimationBuilder;
-      mode?: string;
+      mode?: 'ios' | 'md';
       popoverId?: string;
       showBackdrop?: boolean;
       translucent?: boolean;
@@ -3210,3 +3217,43 @@ declare global {
   }
 }
 
+
+import {
+  VirtualScroll as IonVirtualScroll
+} from './components/virtual-scroll/virtual-scroll';
+
+declare global {
+  interface HTMLIonVirtualScrollElement extends IonVirtualScroll, HTMLElement {
+  }
+  var HTMLIonVirtualScrollElement: {
+    prototype: HTMLIonVirtualScrollElement;
+    new (): HTMLIonVirtualScrollElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-virtual-scroll": HTMLIonVirtualScrollElement;
+  }
+  interface ElementTagNameMap {
+    "ion-virtual-scroll": HTMLIonVirtualScrollElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-virtual-scroll": JSXElements.IonVirtualScrollAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonVirtualScrollAttributes extends HTMLAttributes {
+      approxFooterHeight?: number;
+      approxHeaderHeight?: number;
+      approxItemHeight?: number;
+      domRender?: DomRenderFn;
+      footerFn?: HeaderFn;
+      headerFn?: HeaderFn;
+      itemHeight?: ItemHeightFn;
+      itemRender?: ItemRenderFn;
+      items?: any[];
+      nodeHeight?: NodeHeightFn;
+    }
+  }
+}
+
+declare global { namespace JSX { interface StencilJSX {} } }
