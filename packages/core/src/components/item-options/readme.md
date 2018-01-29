@@ -25,14 +25,14 @@ You can combine the `(ionSwipe)` event plus the `expandable` directive to create
 
 #### side
 
-any
+
 
 
 ## Attributes
 
 #### side
 
-any
+
 
 
 ## Events

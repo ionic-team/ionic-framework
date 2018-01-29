@@ -186,6 +186,12 @@ This method will change the infinite scroll's state from `loading`
 to `enabled`.
 
 
+#### waitFor()
+
+Pass a promise inside `waitFor()` within the `infinite` output event handler in order to
+change state of infiniteScroll to "complete"
+
+
 
 ----------------------------------------------
 

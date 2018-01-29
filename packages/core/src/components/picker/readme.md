@@ -9,12 +9,12 @@
 
 #### buttons
 
-any
+
 
 
 #### columns
 
-any
+
 
 
 #### content
@@ -44,12 +44,12 @@ boolean
 
 #### enterAnimation
 
-any
+
 
 
 #### leaveAnimation
 
-any
+
 
 
 #### pickerId
@@ -71,12 +71,12 @@ boolean
 
 #### buttons
 
-any
+
 
 
 #### columns
 
-any
+
 
 
 #### content
@@ -106,12 +106,12 @@ boolean
 
 #### enterAnimation
 
-any
+
 
 
 #### leaveAnimation
 
-any
+
 
 
 #### pickerId

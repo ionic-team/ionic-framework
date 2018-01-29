@@ -9,7 +9,7 @@
 
 #### mode
 
-any
+
 
 
 #### selected
@@ -19,14 +19,14 @@ boolean
 
 #### tab
 
-any
+
 
 
 ## Attributes
 
 #### mode
 
-any
+
 
 
 #### selected
@@ -36,7 +36,7 @@ boolean
 
 #### tab
 
-any
+
 
 
 ## Events

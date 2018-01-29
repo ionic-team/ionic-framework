@@ -14,7 +14,7 @@ string
 
 #### options
 
-any
+
 
 
 #### subTitle
@@ -36,7 +36,7 @@ string
 
 #### options
 
-any
+
 
 
 #### subTitle

@@ -9,7 +9,7 @@
 
 #### buttons
 
-any
+
 
 Array of buttons to be added to the alert. See AlertButton type for valid options
 
@@ -30,21 +30,21 @@ If true, the alert will be dismissed when the backdrop is clicked.
 
 #### enterAnimation
 
-any
+
 
 Animation to be used when the alert is shown
 
 
 #### inputs
 
-any
+
 
 Array of input to show in the alert. See AlertInput type for valid options
 
 
 #### leaveAnimation
 
-any
+
 
 Animation to be used when the alert is dismissed
 
@@ -88,7 +88,7 @@ Enable alert animations. If false, alert will not animate in
 
 #### buttons
 
-any
+
 
 Array of buttons to be added to the alert. See AlertButton type for valid options
 
@@ -109,21 +109,21 @@ If true, the alert will be dismissed when the backdrop is clicked.
 
 #### enterAnimation
 
-any
+
 
 Animation to be used when the alert is shown
 
 
 #### inputs
 
-any
+
 
 Array of input to show in the alert. See AlertInput type for valid options
 
 
 #### leaveAnimation
 
-any
+
 
 Animation to be used when the alert is dismissed
 

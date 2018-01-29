@@ -34,7 +34,7 @@ boolean
 
 #### side
 
-any
+
 
 
 #### swipeEnabled
@@ -76,7 +76,7 @@ boolean
 
 #### side
 
-any
+
 
 
 #### swipeEnabled

@@ -9,7 +9,7 @@
 
 #### buttons
 
-any
+
 
 An array of buttons for the action-sheet. See ActionsheetButton type for accepted values
 
@@ -30,14 +30,14 @@ If true, the action-sheet will be dismissed when the backdrop is clicked.
 
 #### enterAnimation
 
-any
+
 
 Animation to use when the action-sheet is created
 
 
 #### leaveAnimation
 
-any
+
 
 Animation to use when the action-sheet is dismissed
 
@@ -74,7 +74,7 @@ Enable action-sheet animations. If false, action-sheet will not animate in
 
 #### buttons
 
-any
+
 
 An array of buttons for the action-sheet. See ActionsheetButton type for accepted values
 
@@ -95,14 +95,14 @@ If true, the action-sheet will be dismissed when the backdrop is clicked.
 
 #### enterAnimation
 
-any
+
 
 Animation to use when the action-sheet is created
 
 
 #### leaveAnimation
 
-any
+
 
 Animation to use when the action-sheet is dismissed
 

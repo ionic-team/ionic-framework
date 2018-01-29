@@ -24,17 +24,17 @@ string
 
 #### scrollable
 
-any
+
 
 
 #### selectedTab
 
-any
+
 
 
 #### tabs
 
-any
+
 
 
 #### translucent
@@ -61,17 +61,17 @@ string
 
 #### scrollable
 
-any
+
 
 
 #### selectedTab
 
-any
+
 
 
 #### tabs
 
-any
+
 
 
 #### translucent

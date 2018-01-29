@@ -58,7 +58,7 @@ boolean
 
 #### mode
 
-any
+
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -100,7 +100,7 @@ boolean
 
 #### mode
 
-any
+
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
