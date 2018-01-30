@@ -5,9 +5,9 @@ export { MenuToggle } from './directives/menu-toggle';
 
 /* Nav */
 export { IonNav } from './nav/ion-nav';
+export { AsyncActivateRoutes } from './nav/router/async-activated-routes';
 export { OutletInjector } from './nav/router/outlet-injector';
-export { IonicRouteReuseStrategy } from './nav/router/reuse-strategy';
-
+export { ExtendedRouter } from './nav/router/router-extension';
 export { IonicRouterModule } from './nav/nav-module';
 
 /* Providers */

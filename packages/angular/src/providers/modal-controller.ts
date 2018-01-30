@@ -36,9 +36,9 @@ export class ModalController implements FrameworkDelegate {
     });
   }
 
-  attachViewToDom(elementOrContainerToMountTo: HTMLElement, elementOrComponentToMount: Type<any>, _propsOrDataObj?: any, classesToAdd?: string[]): Promise<AngularMountingData> {
+  attachViewToDom(elementOrContainerToMountTo: HTMLElement, elementOrComponentToMount: Type<any>, data?: any, classesToAdd?: string[]): Promise<AngularMountingData> {
 
-    return this.angularComponentMounter.attachViewToDom(elementOrContainerToMountTo, null, elementOrComponentToMount, this.componentResolveFactory, this.injector, _propsOrDataObj, classesToAdd);
+    return this.angularComponentMounter.attachViewToDom(elementOrContainerToMountTo, null, elementOrComponentToMount, this.componentResolveFactory, this.injector, data, classesToAdd);
   }
 
   removeViewFromDom(parentElement: HTMLElement, childElement: HTMLElement) {
