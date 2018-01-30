@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule } from '@danbucholtz/ng-router';
 
 import { PageTwo } from './page-two';
 import { PageTwoSectionOne } from './page-two-section-one';

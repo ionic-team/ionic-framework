@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule } from '@danbucholtz/ng-router';
 
 const routes: Routes = [
   { path: '', redirectTo: '/page-one', pathMatch: 'full' },
