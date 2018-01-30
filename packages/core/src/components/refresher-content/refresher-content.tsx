@@ -11,7 +11,7 @@ export class RefresherContent {
   /**
    * A static icon to display when you begin to pull down
    */
-  @Prop({mutable: true}) pullingIcon: string;
+  @Prop({ mutable: true }) pullingIcon: string;
 
   /**
    * The text you want to display when you begin to pull down
@@ -21,7 +21,7 @@ export class RefresherContent {
   /**
    * An animated SVG spinner that shows when refreshing begins
    */
-  @Prop({mutable: true}) refreshingSpinner: string;
+  @Prop({ mutable: true }) refreshingSpinner: string;
 
   /**
    * The text you want to display when performing a refresh

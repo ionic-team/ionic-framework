@@ -12,7 +12,7 @@ export class InfiniteScrollContent {
   /**
    * @input {string} An animated SVG spinner that shows while loading.
    */
-  @Prop({mutable: true}) loadingSpinner: string;
+  @Prop({ mutable: true }) loadingSpinner: string;
 
   /**
    * @input {string} Optional text to display while loading.

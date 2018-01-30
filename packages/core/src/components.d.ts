@@ -2470,6 +2470,7 @@ declare global {
       checked?: boolean;
       color?: string;
       disabled?: boolean;
+      href?: string;
       mode?: 'ios' | 'md';
       value?: string;
     }

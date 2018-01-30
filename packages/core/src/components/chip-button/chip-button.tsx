@@ -13,12 +13,6 @@ export class ChipButton {
   @Element() private el: HTMLElement;
 
   /**
-   * Contains a URL or a URL fragment that the hyperlink points to.
-   * If this property is set, an anchor tag will be rendered.
-   */
-  @Prop() href: string;
-
-  /**
    * The color to use.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
    */
@@ -31,14 +25,20 @@ export class ChipButton {
   @Prop() mode: 'ios' | 'md';
 
   /**
+   * If true, sets the button into a disabled state.
+   */
+  @Prop() disabled = false;
+
+  /**
    * Set to `"clear"` for a transparent button style.
    */
   @Prop() fill: string;
 
   /**
-   * If true, sets the button into a disabled state.
+   * Contains a URL or a URL fragment that the hyperlink points to.
+   * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() disabled = false;
+  @Prop() href: string;
 
   /**
    * Get the classes based on the button type
@@ -97,11 +97,14 @@ export class ChipButton {
     };
 
     return (
-      <TagType class={buttonClasses} disabled={this.disabled}>
-        <span class='button-inner'>
-          <slot></slot>
-        </span>
-        { this.mode === 'md' && <ion-ripple-effect useTapClick={true} /> }
+      <TagType
+        class={buttonClasses}
+        disabled={this.disabled}
+        href={this.href}>
+          <span class='button-inner'>
+            <slot></slot>
+          </span>
+          { this.mode === 'md' && <ion-ripple-effect useTapClick={true} /> }
       </TagType>
     );
   }
