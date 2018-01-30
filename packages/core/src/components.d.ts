@@ -1918,7 +1918,7 @@ declare global {
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
-      pickerId?: string;
+      pickerId?: number;
       showBackdrop?: boolean;
       willAnimate?: boolean;
     }
@@ -1990,7 +1990,7 @@ declare global {
       ev?: Event;
       leaveAnimation?: AnimationBuilder;
       mode?: string;
-      popoverId?: string;
+      popoverId?: number;
       showBackdrop?: boolean;
       translucent?: boolean;
       willAnimate?: boolean;
@@ -3073,7 +3073,7 @@ declare global {
       message?: string;
       position?: string;
       showCloseButton?: boolean;
-      toastId?: string;
+      toastId?: number;
       translucent?: boolean;
       willAnimate?: boolean;
     }

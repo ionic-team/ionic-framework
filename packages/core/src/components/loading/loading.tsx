@@ -30,7 +30,7 @@ import mdLeaveAnimation from './animations/md.leave';
 export class Loading {
   color: string;
   mode: string;
-  loadingId: string;
+  loadingId: number;
 
   private animation: Animation;
   private durationTimeout: any;
@@ -286,6 +286,7 @@ export interface LoadingOptions {
 }
 
 export interface LoadingEvent extends CustomEvent {
+  target: HTMLIonLoadingElement;
   detail: LoadingEventDetail;
 }
 

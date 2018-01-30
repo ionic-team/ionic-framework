@@ -76,7 +76,7 @@ export class Popover {
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
   @Prop() ev: Event;
-  @Prop() popoverId: string;
+  @Prop() popoverId: number;
   @Prop() showBackdrop = true;
   @Prop() translucent = false;
   @Prop() willAnimate = true;
@@ -115,7 +115,7 @@ export class Popover {
     return this.delegate.attachViewToDom(userComponentParent, this.component, this.data, cssClasses)
       .then((mountingData) => {
         this.usersComponentElement = mountingData.element;
-        return domControllerAsync(this.dom.raf, () => { })
+        return domControllerAsync(this.dom.raf, () => { return; })
         .then(() => this.animationCtrl.create(animationBuilder, this.el, this.ev));
       })
       .then((animation) => {
@@ -236,6 +236,7 @@ export interface PopoverOptions {
 }
 
 export interface PopoverEvent extends CustomEvent {
+  target: HTMLIonPopoverElement;
   detail: PopoverEventDetail;
 }
 

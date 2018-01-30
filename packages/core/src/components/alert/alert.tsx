@@ -24,7 +24,7 @@ import mdLeaveAnimation from './animations/md.leave';
 export class Alert {
   mode: string;
   color: string;
-  alertId: string;
+  alertId: number;
 
   private animation: Animation;
   private activeId: string;
@@ -519,11 +519,11 @@ export interface AlertButton {
 }
 
 export interface AlertEvent extends CustomEvent {
-  // keep this just for the sake of static types and potential future extensions
+  target: HTMLIonAlertElement;
+  detail: AlertEventDetail;
 }
 
 export interface AlertEventDetail {
-  detail: any;
 }
 
 export interface AlertDismissEventDetail extends OverlayDismissEventDetail {

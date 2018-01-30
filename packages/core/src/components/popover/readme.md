@@ -59,7 +59,7 @@ string
 
 #### popoverId
 
-string
+number
 
 
 #### showBackdrop
@@ -131,7 +131,7 @@ string
 
 #### popoverId
 
-string
+number
 
 
 #### showBackdrop

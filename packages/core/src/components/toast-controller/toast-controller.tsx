@@ -1,66 +1,70 @@
 import { Component, Listen, Method } from '@stencil/core';
 import { ToastEvent, ToastOptions } from '../../index';
 
+let ids = 0;
+const toasts = new Map<number, HTMLIonToastElement>();
+
 @Component({
   tag: 'ion-toast-controller'
 })
 export class ToastController {
-  private ids = 0;
-  private toastResolves: { [toastId: string]: Function } = {};
-  private toasts: HTMLIonToastElement[] = [];
 
   @Method()
   create(opts?: ToastOptions): Promise<HTMLIonToastElement> {
     // create ionic's wrapping ion-toast component
-    const toast = document.createElement('ion-toast');
-    const id = this.ids++;
+    const toastElement = document.createElement('ion-toast');
 
     // give this toast a unique id
-    toast.toastId = `toast-${id}`;
-    toast.style.zIndex = (10000 + id).toString();
+    toastElement.toastId = ids++;
 
     // convert the passed in toast options into props
     // that get passed down into the new toast
-    Object.assign(toast, opts);
+    Object.assign(toastElement, opts);
 
     // append the toast element to the document body
     const appRoot = document.querySelector('ion-app') || document.body;
-    appRoot.appendChild(toast as any);
+    appRoot.appendChild(toastElement);
 
-    // store the resolve function to be called later up when the toast loads
-    return new Promise<HTMLIonToastElement>(resolve => {
-      this.toastResolves[toast.toastId] = resolve;
-    });
+    return (toastElement as any).componentOnReady();
   }
 
-  @Listen('body:ionToastDidLoad')
-  protected didLoad(ev: ToastEvent) {
-    const toast = ev.target as HTMLIonToastElement;
-    const toastResolve = this.toastResolves[toast.toastId];
-    if (toastResolve) {
-      toastResolve(toast);
-      delete this.toastResolves[toast.toastId];
-    }
+  @Method()
+  dismiss(data?: any, role?: any, toastId = -1) {
+    toastId = toastId >= 0 ? toastId : getHighestId();
+    const toast = toasts.get(toastId);
+    return toast.dismiss(data, role);
   }
+
 
   @Listen('body:ionToastWillPresent')
-  protected willPresent(ev: ToastEvent) {
-    this.toasts.push(ev.target as HTMLIonToastElement);
+  protected toastWillPresent(ev: ToastEvent) {
+    toasts.set(ev.target.toastId, ev.target);
   }
 
+
   @Listen('body:ionToastWillDismiss, body:ionToastDidUnload')
-  protected willDismiss(ev: ToastEvent) {
-    const index = this.toasts.indexOf(ev.target as HTMLIonToastElement);
-    if (index > -1) {
-      this.toasts.splice(index, 1);
-    }
+  protected toastWillDismiss(ev: ToastEvent) {
+    toasts.delete(ev.target.toastId);
   }
+
 
   @Listen('body:keyup.escape')
   protected escapeKeyUp() {
-    const lastToast = this.toasts[this.toasts.length - 1];
-    if (lastToast) {
-      lastToast.dismiss();
-    }
+    removeLastToast();
   }
+}
+
+function getHighestId() {
+  let minimum = -1;
+  toasts.forEach((_toast: HTMLIonToastElement, id: number) => {
+    if (id > minimum) {
+      minimum = id;
+    }
+  });
+  return minimum;
+}
+
+function removeLastToast() {
+  const toRemove = toasts.get(getHighestId());
+  return toRemove ? toRemove.dismiss() : Promise.resolve();
 }

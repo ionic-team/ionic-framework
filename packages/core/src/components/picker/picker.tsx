@@ -75,7 +75,7 @@ export class Picker {
   @Prop() duration: number;
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
-  @Prop() pickerId: string;
+  @Prop() pickerId: number;
   @Prop() showBackdrop = true;
   @Prop() enableBackdropDismiss = true;
   @Prop() willAnimate = true;
@@ -414,6 +414,7 @@ export interface PickerColumnOption {
 }
 
 export interface PickerEvent extends CustomEvent {
+  target: HTMLIonPickerElement;
   detail: PickerEventDetail;
 }
 

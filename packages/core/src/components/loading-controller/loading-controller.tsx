@@ -1,75 +1,70 @@
 import { Component, Listen, Method } from '@stencil/core';
 import { LoadingEvent, LoadingOptions } from '../../index';
 
+let ids = 0;
+const loadings = new Map<number, HTMLIonLoadingElement>();
 
 @Component({
   tag: 'ion-loading-controller'
 })
 export class LoadingController {
-  private ids = 0;
-  private loadingResolves: {[loadingId: string]: Function} = {};
-  private loadings: HTMLIonLoadingElement[] = [];
 
-  /**
-   * Create a loading overlay and pass options to it
-   */
   @Method()
   create(opts?: LoadingOptions): Promise<HTMLIonLoadingElement> {
     // create ionic's wrapping ion-loading component
-    const loading = document.createElement('ion-loading');
-
-    const id = this.ids++;
+    const loadingElement = document.createElement('ion-loading');
 
     // give this loading a unique id
-    loading.loadingId = `loading-${id}`;
+    loadingElement.loadingId = ids++;
 
     // convert the passed in loading options into props
     // that get passed down into the new loading
-    Object.assign(loading, opts);
+    Object.assign(loadingElement, opts);
 
     // append the loading element to the document body
     const appRoot = document.querySelector('ion-app') || document.body;
-    appRoot.appendChild(loading as any);
+    appRoot.appendChild(loadingElement);
 
-    // store the resolve function to be called later up when the loading loads
-    return new Promise<HTMLIonLoadingElement>(resolve => {
-      this.loadingResolves[loading.loadingId] = resolve;
-    });
+    return (loadingElement as any).componentOnReady();
   }
 
-
-  @Listen('body:ionLoadingDidLoad')
-  protected didLoad(ev: LoadingEvent) {
-    const loading = ev.target as HTMLIonLoadingElement;
-    const loadingResolve = this.loadingResolves[loading.loadingId];
-    if (loadingResolve) {
-      loadingResolve(loading);
-      delete this.loadingResolves[loading.loadingId];
-    }
+  @Method()
+  dismiss(data?: any, role?: any, loadingId = -1) {
+    loadingId = loadingId >= 0 ? loadingId : getHighestId();
+    const loading = loadings.get(loadingId);
+    return loading.dismiss(data, role);
   }
 
 
   @Listen('body:ionLoadingWillPresent')
-  protected willPresent(ev: LoadingEvent) {
-    this.loadings.push(ev.target as HTMLIonLoadingElement);
+  protected loadingWillPresent(ev: LoadingEvent) {
+    loadings.set(ev.target.loadingId, ev.target);
   }
 
 
   @Listen('body:ionLoadingWillDismiss, body:ionLoadingDidUnload')
-  protected willDismiss(ev: LoadingEvent) {
-    const index = this.loadings.indexOf(ev.target as HTMLIonLoadingElement);
-    if (index > -1) {
-      this.loadings.splice(index, 1);
-    }
+  protected loadingWillDismiss(ev: LoadingEvent) {
+    loadings.delete(ev.target.loadingId);
   }
 
 
   @Listen('body:keyup.escape')
   protected escapeKeyUp() {
-    const lastLoading = this.loadings[this.loadings.length - 1];
-    if (lastLoading) {
-      lastLoading.dismiss();
-    }
+    removeLastLoading();
   }
+}
 
+function getHighestId() {
+  let minimum = -1;
+  loadings.forEach((_loading: HTMLIonLoadingElement, id: number) => {
+    if (id > minimum) {
+      minimum = id;
+    }
+  });
+  return minimum;
+}
+
+function removeLastLoading() {
+  const toRemove = loadings.get(getHighestId());
+  return toRemove ? toRemove.dismiss() : Promise.resolve();
 }
