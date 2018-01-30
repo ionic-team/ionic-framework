@@ -8,12 +8,6 @@
   font-family: $segment-md-font-family;
 }
 
-.segment-md ion-segment-button {
-  display: flex;
-
-  flex: 1;
-}
-
 .segment-md .segment-button {
   @include padding($segment-button-md-padding-top, $segment-button-md-padding-end, $segment-button-md-padding-bottom, $segment-button-md-padding-start);
 
