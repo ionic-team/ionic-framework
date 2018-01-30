@@ -2,6 +2,7 @@ import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEve
 import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { GestureDetail } from '../../index';
 import { hapticSelection } from '../../utils/haptic';
+import { debounce } from '../../utils/helpers';
 
 
 @Component({
@@ -20,7 +21,6 @@ export class Toggle implements CheckboxInput {
   private inputId: string;
   private nativeInput: HTMLInputElement;
   private pivotX: number;
-  private styleTmr: any;
 
 
   @State() activated = false;
@@ -97,6 +97,7 @@ export class Toggle implements CheckboxInput {
   }
 
   componentWillLoad() {
+    this.ionStyle.emit = debounce(this.ionStyle.emit.bind(this.ionStyle));
     this.inputId = 'ion-tg-' + (toggleIds++);
     if (this.value === undefined) {
       this.value = this.inputId;
@@ -140,14 +141,10 @@ export class Toggle implements CheckboxInput {
   }
 
   emitStyle() {
-    clearTimeout(this.styleTmr);
-
-    this.styleTmr = setTimeout(() => {
-      this.ionStyle.emit({
-        'toggle-disabled': this.disabled,
-        'toggle-checked': this.checked,
-        'toggle-activated': this.activated
-      });
+    this.ionStyle.emit({
+      'toggle-disabled': this.disabled,
+      'toggle-checked': this.checked,
+      'toggle-activated': this.activated
     });
   }
 
