@@ -24,7 +24,7 @@ import {
   RouteReuseStrategy,
   UrlHandlingStrategy,
   UrlSerializer
-} from '@angular/router';
+} from '@danbucholtz/ng-router';
 
 import { IonicAngularModule } from '../module';
 

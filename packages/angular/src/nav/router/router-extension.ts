@@ -18,7 +18,7 @@ import {
   createRouterState,
   isNavigationCancelingError,
   recognize
-} from '@angular/router';
+} from '@danbucholtz/ng-router';
 
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
