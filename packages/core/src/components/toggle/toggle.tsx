@@ -106,7 +106,6 @@ export class Toggle implements CheckboxInput {
   }
 
   componentDidLoad() {
-    this.nativeInput.checked = this.checked;
     this.didLoad = true;
 
     const parentItem = this.nativeInput.closest('ion-item');
@@ -121,10 +120,6 @@ export class Toggle implements CheckboxInput {
 
   @Watch('checked')
   checkedChanged(isChecked: boolean) {
-    if (this.nativeInput.checked !== isChecked) {
-      // keep the checked value and native input `nync
-      this.nativeInput.checked = isChecked;
-    }
     if (this.didLoad) {
       this.ionChange.emit({
         checked: isChecked,
@@ -135,11 +130,6 @@ export class Toggle implements CheckboxInput {
   }
 
   @Watch('disabled')
-  disabledChanged(isDisabled: boolean) {
-    this.nativeInput.disabled = isDisabled;
-    this.emitStyle();
-  }
-
   emitStyle() {
     this.ionStyle.emit({
       'toggle-disabled': this.disabled,
@@ -216,6 +206,7 @@ export class Toggle implements CheckboxInput {
         onFocus={this.onFocus.bind(this)}
         onBlur={this.onBlur.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
+        checked={this.checked}
         id={this.inputId}
         name={this.name}
         value={this.value}
