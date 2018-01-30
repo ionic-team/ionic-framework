@@ -31,7 +31,7 @@ import mdLeaveAnimation from './animations/md.leave';
 export class ActionSheet {
   mode: string;
   color: string;
-  actionSheetId: string;
+  actionSheetId: number;
 
   private animation: Animation;
 
@@ -342,6 +342,7 @@ export interface ActionSheetButton {
 }
 
 export interface ActionSheetEvent extends CustomEvent {
+  target: HTMLIonActionSheetElement;
   detail: ActionSheetEventDetail;
 }
 

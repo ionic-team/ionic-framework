@@ -54,7 +54,7 @@ boolean
 
 #### toastId
 
-string
+number
 
 
 #### translucent
@@ -116,7 +116,7 @@ boolean
 
 #### toastId
 
-string
+number
 
 
 #### translucent

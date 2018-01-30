@@ -72,7 +72,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonActionSheetControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -140,7 +140,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAlertControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -210,7 +210,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAnimationControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -240,7 +240,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAppAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -270,7 +270,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAvatarAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -300,7 +300,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonBackdropAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -400,7 +400,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonButtonsAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -686,7 +686,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonColAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -797,7 +797,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonEventsAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -894,7 +894,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonFabAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1002,7 +1002,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonGridAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1212,7 +1212,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonItemGroupAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1305,7 +1305,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonItemSlidingAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1367,7 +1367,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonKeyboardControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1462,7 +1462,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonListAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1492,7 +1492,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonLoadingControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1561,7 +1561,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonMenuControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1628,7 +1628,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonModalControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1764,7 +1764,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonPageAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1824,7 +1824,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonPickerControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1863,7 +1863,7 @@ declare global {
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
-      pickerId?: string;
+      pickerId?: number;
       showBackdrop?: boolean;
       willAnimate?: boolean;
     }
@@ -1895,7 +1895,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonPopoverControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1935,7 +1935,7 @@ declare global {
       ev?: Event;
       leaveAnimation?: AnimationBuilder;
       mode?: 'ios' | 'md';
-      popoverId?: string;
+      popoverId?: number;
       showBackdrop?: boolean;
       translucent?: boolean;
       willAnimate?: boolean;
@@ -2211,7 +2211,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonReorderAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -2334,7 +2334,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRouterControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -2364,7 +2364,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRowAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -2671,7 +2671,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSlideAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -2940,7 +2940,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTapClickAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -3047,7 +3047,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonThumbnailAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -3077,7 +3077,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTitleAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -3107,7 +3107,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonToastControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -3146,7 +3146,7 @@ declare global {
       message?: string;
       position?: string;
       showCloseButton?: boolean;
-      toastId?: string;
+      toastId?: number;
       translucent?: boolean;
       willAnimate?: boolean;
     }

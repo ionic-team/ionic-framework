@@ -59,7 +59,7 @@ boolean
 
 #### popoverId
 
-string
+number
 
 
 #### showBackdrop
@@ -131,7 +131,7 @@ boolean
 
 #### popoverId
 
-string
+number
 
 
 #### showBackdrop
