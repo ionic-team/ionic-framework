@@ -74,6 +74,8 @@ ion-fab-button[mini] .fab-button {
 .fab-button-close-icon {
   @include position(0, 0, null, 0);
 
+  display: flex;
+
   position: absolute;
 
   height: 100%;
@@ -84,6 +86,9 @@ ion-fab-button[mini] .fab-button {
   transition-property: transform, opacity;
 }
 
+.fab-button-close-icon .icon-inner {
+  @include margin(auto);
+}
 
 // FAB Animation
 // --------------------------------------------------
