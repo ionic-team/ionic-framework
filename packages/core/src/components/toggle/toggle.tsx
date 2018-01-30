@@ -44,7 +44,7 @@ export class Toggle implements CheckboxInput {
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop() name: string;
+  @Prop({ mutable: true }) name: string;
 
   /**
    * @input {boolean} If true, the toggle is selected. Defaults to `false`.
@@ -59,7 +59,7 @@ export class Toggle implements CheckboxInput {
   /**
    * @input {string} the value of the toggle.
    */
-  @Prop({ mutable: true }) value: string;
+  @Prop() value = 'on';
 
   /**
    * @output {Event} Emitted when the value property has changed.
@@ -98,9 +98,9 @@ export class Toggle implements CheckboxInput {
 
   componentWillLoad() {
     this.ionStyle.emit = debounce(this.ionStyle.emit.bind(this.ionStyle));
-    this.inputId = 'ion-tg-' + (toggleIds++);
-    if (this.value === undefined) {
-      this.value = this.inputId;
+    this.inputId = `ion-tg-${toggleIds++}`;
+    if (this.name === undefined) {
+      this.name = this.inputId;
     }
     this.emitStyle();
   }
