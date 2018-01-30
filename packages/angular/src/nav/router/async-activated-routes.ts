@@ -15,7 +15,7 @@ import {
   advanceActivatedRoute,
   forEach,
   nodeChildrenAsMap,
-} from '@angular/router';
+} from '@danbucholtz/ng-router';
 
 export class AsyncActivateRoutes {
   constructor(

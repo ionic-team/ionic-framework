@@ -20,7 +20,7 @@ import {
   ActivatedRoute,
   ChildrenOutletContexts,
   Router
-} from '@angular/router';
+} from '@danbucholtz/ng-router';
 
 
 import { FrameworkDelegate } from '@ionic/core';
