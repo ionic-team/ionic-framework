@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 @Component({
@@ -15,10 +15,11 @@ import { ModalController } from '@ionic/angular';
     <ul>
       <li>ngOnInit - {{ngOnInitDetection}}</li>
     </ul>
-    <ion-button (click)="dismiss()">Close Modal</ion-button>
+    <ion-button class="dismiss-btn" (click)="dismiss()">Close Modal</ion-button>
   </ion-content>
 </ion-page>
-  `
+  `,
+  encapsulation: ViewEncapsulation.None
 })
 export class ModalPageToPresent {
 
