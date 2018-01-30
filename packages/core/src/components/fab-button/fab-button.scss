@@ -16,7 +16,7 @@
   width: $fab-size;
   height: $fab-size;
 
-  border: none;
+  border: 0;
 
   font-size: 14px;
   line-height: $fab-size;
@@ -74,9 +74,9 @@ ion-fab-button[mini] .fab-button {
 .fab-button-close-icon {
   @include position(0, 0, null, 0);
 
-  display: flex;
-
   position: absolute;
+
+  display: flex;
 
   height: 100%;
 

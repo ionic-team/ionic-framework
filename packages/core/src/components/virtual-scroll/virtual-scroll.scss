@@ -1,8 +1,9 @@
 @import "../../themes/ionic.globals";
 
 ion-virtual-scroll {
-  display: block;
   position: relative;
+  display: block;
+
   width: 100%;
 
   // contain: strict;
@@ -15,7 +16,8 @@ ion-virtual-scroll {
 .virtual-item {
   @include position(0, 0, null, 0);
 
-  will-change: transform;
   position: absolute;
+
+  will-change: transform;
   // contain: strict;
 }

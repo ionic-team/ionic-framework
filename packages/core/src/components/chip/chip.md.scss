@@ -23,9 +23,9 @@
 }
 
 .chip-md > ion-icon {
-  background-color: $chip-md-icon-background-color;
-
   color: $chip-md-icon-fill-color;
+
+  background-color: $chip-md-icon-background-color;
 }
 
 .chip-md ion-avatar {
@@ -45,9 +45,8 @@
   }
 
   .chip-md .icon-md-#{$color-name} {
-    background-color: $color-base;
-
     color: $color-contrast;
+    background-color: $color-base;
   }
 
 }
