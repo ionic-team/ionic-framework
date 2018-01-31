@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'content', loadChildren: 'app/content/content.module#ContentModule' },
   { path: 'toast', loadChildren: 'app/toast/toast.module#ToastModule' },
   { path: 'loading', loadChildren: 'app/loading/loading.module#LoadingModule' },
-  { path: 'nav', loadChildren: 'app/nav/nav.module#NavModule' },
+  { path: 'no-routing-nav', loadChildren: 'app/no-routing-nav/no-routing-nav.module#NoRoutingNavModule' },
   { path: 'modal', loadChildren: 'app/modal/modal.module#ModalModule' },
   { path: 'popover', loadChildren: 'app/popover/popover.module#PopoverModule' },
 ];
