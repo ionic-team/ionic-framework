@@ -3,10 +3,10 @@
 /* tslint:disable:use-host-property-decorator */
 /* tslint:disable:no-input-rename */
 // export for convenience.
-export { ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router';
+export { ActivatedRoute, Router, RouterLink, RouterOutlet} from '@danbucholtz/ng-router';
 
 import { Component, Directive, Injectable, Input } from '@angular/core';
-import { NavigationExtras } from '@angular/router';
+import { NavigationExtras } from '@danbucholtz/ng-router';
 
 @Directive({
   selector: '[routerLink]',

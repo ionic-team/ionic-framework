@@ -26,6 +26,6 @@ export class PopoverPageToPresent {
   }
 
   dismiss() {
-    return this.controller.
+    // return this.controller.
   }
 }

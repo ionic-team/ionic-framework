@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule } from '@danbucholtz/ng-router';
 
 import { ModalPageComponent } from './modal-page.component';
 
