@@ -196,13 +196,13 @@ export class Modal {
   }
 
   render() {
-    const dialogClasses = createThemedClasses(this.mode, this.color, 'modal-wrapper');
+    const backdropClasses = createThemedClasses(this.mode, this.color, 'modal-backdrop'),
+      dialogClasses = createThemedClasses(this.mode, this.color, 'modal-wrapper');
     return [
       <div
         onClick={this.backdropClick.bind(this)}
         class={{
-          'modal-backdrop': true,
-          ['modal-backdrop-' + this.mode]: true,
+          ...backdropClasses,
           'hide-backdrop': !this.showBackdrop
         }}
       ></div>,

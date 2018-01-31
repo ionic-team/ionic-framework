@@ -6,25 +6,25 @@
 // --------------------------------------------------
 
 /// @prop - Padding top of the select
-$select-ios-padding-top:         $item-ios-padding-top !default;
+$select-ios-padding-top:            $item-ios-padding-top !default;
 
 /// @prop - Padding end of the select
-$select-ios-padding-end:         ($item-ios-padding-end / 2) !default;
+$select-ios-padding-end:            ($item-ios-padding-end / 2) !default;
 
 /// @prop - Padding bottom of the select
-$select-ios-padding-bottom:      $item-ios-padding-bottom !default;
+$select-ios-padding-bottom:         $item-ios-padding-bottom !default;
 
 /// @prop - Padding start of the select
-$select-ios-padding-start:       $item-ios-padding-start !default;
+$select-ios-padding-start:          $item-ios-padding-start !default;
 
 /// @prop - Font family of the select
-$select-ios-font-family:         $font-family-ios-base !default;
+$select-ios-font-family:            $font-family-ios-base !default;
 
 /// @prop - Color of the select icon
-$select-ios-icon-color: $text-ios-color-step-400 !default;
+$select-ios-icon-color:             $text-ios-color-step-400 !default;
 
 /// @prop - Color of the select placeholder
-$select-ios-placeholder-color:   $select-ios-icon-color !default;
+$select-ios-placeholder-color:      $select-ios-icon-color !default;
 
 /// @prop - Text Color of the selected item
-$select-ios-text-color:          $text-ios-color !default;
+$select-ios-text-color:             $text-ios-color !default;

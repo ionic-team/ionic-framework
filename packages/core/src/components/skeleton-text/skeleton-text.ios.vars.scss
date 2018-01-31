@@ -5,4 +5,6 @@
 
 /// @prop - Background color of the skeleton text bar
 $skeleton-text-ios-bar-background-color:    $text-ios-color !default;
+
+/// @prop - Opacity of the text bar for the skeleton text
 $skeleton-text-ios-bar-opacity:             .1 !default;

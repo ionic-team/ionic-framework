@@ -172,7 +172,7 @@
 @each $color-name, $color-value in $colors-md {
   $color-base: ion-color($colors-md, $color-name, base, md);
   $color-contrast: ion-color($colors-md, $color-name, contrast, md);
-  $color-shade: ion-color($colors-md, $color-name, tint, md);
+  $color-tint: ion-color($colors-md, $color-name, tint, md);
 
   // If there is text with a color it should use this color
   // and override whatever item sets it to
@@ -190,7 +190,7 @@
     }
 
     &.activated {
-      background-color: $color-shade;
+      background-color: $color-tint;
     }
   }
 }

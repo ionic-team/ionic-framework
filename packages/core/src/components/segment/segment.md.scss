@@ -43,7 +43,7 @@
 
   &.activated,
   &.segment-activated {
-    border-color: $segment-button-md-border-color-active;
+    border-color: $segment-button-md-border-color-activated;
     opacity: $segment-button-md-opacity-activated;
   }
 }

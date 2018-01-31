@@ -10,7 +10,7 @@ $segment-ios-font-family:                       $font-family-ios-base !default;
 // ---------------------------------------------
 
 /// @prop - Background of the segment button
-$segment-button-ios-background-color:           transparent !default;
+$segment-button-ios-background-color:                 transparent !default;
 
 /// @prop - Background of the activated segment button
 $segment-button-ios-background-color-activated:       ion-color($colors-ios, primary, base, ios) !default;
@@ -76,10 +76,10 @@ $segment-button-ios-toolbar-icon-size:                22px !default;
 $segment-button-ios-toolbar-icon-line-height:         24px !default;
 
 /// @prop - Opacity of the segment button on hover
-$segment-button-ios-opacity-hover:              .1 !default;
+$segment-button-ios-opacity-hover:                    .1 !default;
 
 /// @prop - Opacity of the segment button when pressed
-$segment-button-ios-opacity-active:             .16 !default;
+$segment-button-ios-opacity-active:                   .16 !default;
 
 /// @prop - Opacity of the disabled segment button
-$segment-button-ios-opacity-disabled:           .3 !default;
+$segment-button-ios-opacity-disabled:                 .3 !default;

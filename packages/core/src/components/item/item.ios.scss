@@ -167,7 +167,7 @@
 @each $color-name, $color-value in $colors-ios {
   $color-base: ion-color($colors-ios, $color-name, base, ios);
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-shade: ion-color($colors-ios, $color-name, tint, ios);
+  $color-tint: ion-color($colors-ios, $color-name, tint, ios);
 
   // If there is text with a color it should use this color
   // and override whatever item sets it to
@@ -185,7 +185,7 @@
     }
 
     &.activated {
-      background-color: $color-shade;
+      background-color: $color-tint;
     }
   }
 }

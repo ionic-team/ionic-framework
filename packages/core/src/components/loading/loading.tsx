@@ -235,6 +235,8 @@ export class Loading {
   }
 
   render() {
+    const themedClasses = createThemedClasses(this.mode, this.color, 'loading-backdrop');
+
     if (this.cssClass) {
       this.cssClass.split(' ').forEach(cssClass => {
         if (cssClass.trim() !== '') this.el.classList.add(cssClass);
@@ -264,8 +266,7 @@ export class Loading {
         attachTo='parent'
         autoBlockAll
         class={{
-          'loading-backdrop': true,
-          ['loading-backdrop-' + this.mode] : true,
+          ...themedClasses,
           'hide-backdrop': !this.showBackdrop
         }}
       ></ion-gesture>,

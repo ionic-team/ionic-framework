@@ -126,8 +126,6 @@
   $color-base: ion-color($colors-ios, $color-name, base, ios);
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
 
-  $color-base-value: ion-color($colors-ios, $color-name, base, ios, true);
-
   .segment-ios-#{$color-name} {
 
     .segment-button {
