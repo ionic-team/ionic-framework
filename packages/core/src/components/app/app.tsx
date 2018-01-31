@@ -40,16 +40,6 @@ export class App {
     rootNavs.set(event.target.getId(), event.target);
   }
 
-  @Listen('body:ionNavChanged')
-  protected navChanged(event: NavEvent) {
-    // TODO, make sure none of the navs are transitioning
-    if (event.detail.isPop && !event.target.isTransitioning()) {
-      // TODO, this is lazy but effective for short term stuff
-      (event.target.delegate as any)['forceBackOnNextRoute']();
-      window.history.back();
-    }
-  }
-
   /**
    * Returns an array of top level Navs
    */
