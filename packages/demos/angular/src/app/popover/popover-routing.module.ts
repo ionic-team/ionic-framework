@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@danbucholtz/ng-router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { PopoverPageComponent } from './popover-page.component';
 

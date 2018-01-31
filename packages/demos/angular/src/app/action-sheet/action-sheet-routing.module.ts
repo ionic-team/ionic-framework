@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@danbucholtz/ng-router';
+import { Routes, RouterModule } from '@angular/router';
 
 import { ActionSheetPageComponent } from './action-sheet-page.component';
 
