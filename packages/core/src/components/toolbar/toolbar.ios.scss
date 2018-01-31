@@ -61,7 +61,7 @@
 .header-translucent-ios .toolbar-background-ios,
 .footer-translucent-ios .toolbar-background-ios,
 .toolbar-translucent-ios .toolbar-background-ios {
-  // @color-mod in the future we will want to replace this with the following color-mod
+  // TODO: @color-mod in the future we will want to replace this with the following color-mod
   // background-color: color-mod($toolbar-ios-background-color, a($alpha-ios-highest));
   background: $toolbar-ios-translucent-background-color;
 }

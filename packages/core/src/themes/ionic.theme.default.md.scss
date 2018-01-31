@@ -33,7 +33,7 @@ $alpha-md-highest:                      css-var($alpha-highest, alpha-md-highest
 
 // Default Foreground and Background Colors values
 // Allows users to override an foreground / background colors
-// @color-mod: remove all this
+// TODO: @color-mod: remove all this
 $background-md-color-value:             $background-color-value !default;
 $text-md-color-value:                   $text-color-value !default;
 
@@ -47,7 +47,7 @@ $placeholder-text-md-color:             css-var($placeholder-text-color, placeho
 // These variables are not used, but we call this here in order to add these colors
 // to the global list of css variables for a theme. This is only used to get a dump of all
 // css variables that the theme uses.
-// @color-mod: remove all of this
+// TODO: @color-mod: remove all of this
 // --------------------------------------------------
 $background-color-rgb:                  css-var(color-to-rgb-list($background-md-color-value), background-md-color-rgb) !default;
 $text-color-rgb:                        css-var(color-to-rgb-list($text-md-color-value), text-md-color-rgb) !default;
@@ -73,8 +73,8 @@ $box-shadow-md-color:                   css-var($box-shadow-color, box-shadow-md
 // Material Design Tabs & Tab bar
 // --------------------------------------------------
 $tabbar-md-background-color:            css-var($tabbar-background-color, tabbar-md-background-color) !default;
-$tabbar-md-border-color:                css-var(rgba(0, 0, 0, .07), tabbar-md-border-color) !default; // @color-mod($border-md-color, a($alpha-ios-lowest))
-$tabbar-md-text-color:                  css-var($text-md-color-step-200, tabbar-md-text-color) !default; // @color-mod($text-md-color, a($alpha-ios-high))
+$tabbar-md-border-color:                css-var(rgba(0, 0, 0, .07), tabbar-md-border-color) !default; // TODO: @color-mod($border-md-color, a($alpha-ios-lowest))
+$tabbar-md-text-color:                  css-var($text-md-color-step-200, tabbar-md-text-color) !default; // TODO: @color-mod($text-md-color, a($alpha-ios-high))
 $tabbar-md-text-color-active:           css-var($tabbar-text-color-active, tabbar-md-text-color-active) !default;
 
 // Material Design Toolbar

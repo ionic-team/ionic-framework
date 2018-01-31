@@ -120,7 +120,7 @@ $font-size-base:                        14px !default; // TODO: remove
 
 // Default Foreground and Background Colors values
 // Allows users to override an foreground / background colors
-// @color-mod: remove all this
+// TODO: @color-mod: remove all this
 $background-color-value:                #fff !default;
 $text-color-value:                      #000 !default;
 
@@ -134,10 +134,10 @@ $placeholder-text-color:                css-var(#999, placeholder-text-color) !d
 // These variables are not used, but we call this here in order to add these colors
 // to the global list of css variables for a theme. This is only used to get a dump of all
 // css variables that the theme uses.
-// @color-mod: remove all of this
+// TODO: @color-mod: remove all of this
 // --------------------------------------------------
-$background-color-rgb:                  css-var(color-to-rgb-list($background-color-value), background-color-rgb) !default; //@color-mod: remove
-$text-color-rgb:                        css-var(color-to-rgb-list($text-color-value), text-color-rgb) !default; //@color-mod: remove
+$background-color-rgb:                  css-var(color-to-rgb-list($background-color-value), background-color-rgb) !default; // TODO: @color-mod: remove
+$text-color-rgb:                        css-var(color-to-rgb-list($text-color-value), text-color-rgb) !default; // TODO: @color-mod: remove
 
 // Default Background & Text Color Steps
 // Color Steps are used to provide variations in text and background colors of elements.

@@ -24,7 +24,7 @@ $alpha-ios-highest:                           css-var($alpha-highest, alpha-ios-
 
 // Default Foreground and Background Colors values
 // Allows users to override an foreground / background colors
-// @color-mod: remove all this
+// TODO: @color-mod: remove all this
 $background-ios-color-value:                  $background-color-value !default;
 $text-ios-color-value:                        $text-color-value !default;
 
@@ -38,10 +38,10 @@ $placeholder-text-ios-color:                  css-var($placeholder-text-color, p
 // These variables are not used, but we call this here in order to add these colors
 // to the global list of css variables for a theme. This is only used to get a dump of all
 // css variables that the theme uses.
-// @color-mod: remove all of this
+// TODO: @color-mod: remove all of this
 // --------------------------------------------------
-$background-color-rgb:                        css-var(color-to-rgb-list($background-ios-color-value), background-ios-color-rgb) !default; //@color-mod: remove
-$text-color-rgb:                              css-var(color-to-rgb-list($text-ios-color-value), text-ios-color-rgb) !default; //@color-mod: remove
+$background-color-rgb:                        css-var(color-to-rgb-list($background-ios-color-value), background-ios-color-rgb) !default; //TODO: @color-mod: remove
+$text-color-rgb:                              css-var(color-to-rgb-list($text-ios-color-value), text-ios-color-rgb) !default; //TODO: @color-mod: remove
 
 // Default iOS Background & Text Color Steps
 // --------------------------------------------------
@@ -64,8 +64,8 @@ $box-shadow-ios-color:                        css-var($box-shadow-color, box-sha
 // iOS Tabs & Tab bar
 // --------------------------------------------------
 $tabbar-ios-background-color:                 css-var($tabbar-background-color, tabbar-ios-background-color) !default;
-$tabbar-ios-translucent-background-color:     css-var(rgba(248, 248, 248, 0.8), tabbar-ios-translucent-background-color) !default; // @color-mod: remove
-$tabbar-ios-border-color:                     css-var(rgba(0, 0, 0, .2), tabbar-ios-border-color) !default; // @color-mod($border-ios-color, a($alpha-ios-low))
+$tabbar-ios-translucent-background-color:     css-var(rgba(248, 248, 248, 0.8), tabbar-ios-translucent-background-color) !default; // TODO: @color-mod: remove
+$tabbar-ios-border-color:                     css-var(rgba(0, 0, 0, .2), tabbar-ios-border-color) !default; // TODO: @color-mod($border-ios-color, a($alpha-ios-low))
 $tabbar-ios-text-color:                       css-var($tabbar-text-color, tabbar-ios-text-color) !default;
 $tabbar-ios-text-color-active:                css-var(ion-color($colors-ios, primary, base, ios), tabbar-ios-text-color-active) !default;
 
@@ -74,8 +74,8 @@ $tabbar-ios-text-color-active:                css-var(ion-color($colors-ios, pri
 $toolbar-ios-height:                          44px !default;
 $toolbar-ios-padding:                         4px !default;
 $toolbar-ios-background-color:                css-var($tabbar-background-color, toolbar-ios-background-color) !default;
-$toolbar-ios-translucent-background-color:    css-var(rgba(248, 248, 248, 0.8), toolbar-ios-background-color) !default; // @color-mod: remove
-$toolbar-ios-border-color:                    css-var(rgba(0, 0, 0, .2), toolbar-ios-border-color) !default; // @color-mod($border-ios-color, a($alpha-ios-low))
+$toolbar-ios-translucent-background-color:    css-var(rgba(248, 248, 248, 0.8), toolbar-ios-background-color) !default; // TODO: @color-mod: remove
+$toolbar-ios-border-color:                    css-var(rgba(0, 0, 0, .2), toolbar-ios-border-color) !default; // TODO: @color-mod($border-ios-color, a($alpha-ios-low))
 $toolbar-ios-color-active:                    css-var(ion-color($colors-ios, primary, base, ios), toolbar-ios-color-active) !default;
 $toolbar-ios-color-inactive:                  css-var($toolbar-color-inactive, toolbar-ios-color-inactive) !default;
 $toolbar-ios-text-color:                      css-var($toolbar-text-color, toolbar-ios-text-color) !default;

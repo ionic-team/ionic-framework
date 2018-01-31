@@ -104,7 +104,7 @@
 // --------------------------------------------------
 
 .tabbar-translucent-ios {
-  // @color-mod in the future we will want to replace this with the following color-mod
+  // TODO: @color-mod in the future we will want to replace this with the following color-mod
   // background-color: color-mod($tabbar-ios-background-color, a($alpha-ios-highest));
   background-color: $tabbar-ios-translucent-background-color;
 
