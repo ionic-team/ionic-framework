@@ -90,7 +90,7 @@ if (opts.errorHandler) {
 
 if (opts.enableTracing) {
   const dom = getDOM();
-  router.events.subscribe(e => {
+  router.events.subscribe((e: any) => {
     dom.logGroup(`Router Event: ${(<any>e.constructor).name}`);
     dom.log(e.toString());
     dom.log(e);
