@@ -10,7 +10,7 @@ import { PageOne } from './pages/page-one';
 </ion-app>
   `
 })
-export class NavPageComponent {
+export class NoRoutingNavPageComponent {
 
   pageOne: any = PageOne;
   constructor() {
