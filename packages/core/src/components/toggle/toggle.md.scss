@@ -120,10 +120,10 @@
 
 @mixin toggle-theme-md($color-name) {
   $color-base: ion-color($colors-md, $color-name, base, md);
-  $color-base-value: ion-color($colors-md, $color-name, base, md, true);
+  $color-tint: ion-color($colors-md, $color-name, tint, md);
 
   .toggle-md-#{$color-name}.toggle-checked .toggle-icon {
-    background-color: lighten($color-base-value, 25%);
+    background-color: $color-tint;
   }
 
   .toggle-md-#{$color-name}.toggle-checked .toggle-inner {

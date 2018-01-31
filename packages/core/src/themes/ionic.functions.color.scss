@@ -126,7 +126,7 @@ $modes:                     (ios,md);
   @return $color;
 }
 
-@function ion-color($colors, $name, $variation: null, $mode: null, $returnColorValue: false) {
+@function ion-color($colors, $name, $variation: null, $mode: null) {
 
   // If CSS variables are off or someone passed a raw color, we will be passed color values
   // we need to look up the map in order to provide variations
@@ -181,10 +181,6 @@ $modes:                     (ios,md);
     $name: "#{$default-color-prefix}#{if($mode, '#{$mode}-', '')}#{$name}";
     @if $variation != $default-color-variation {
       $name: "#{$name}-#{$variation}";
-    }
-
-    @if ($returnColorValue) {
-      @return $color;
     }
 
     @return css-var($color, $name);
