@@ -27,9 +27,9 @@
     "yargs": "^10.0.3"
   },
   "scripts": {
-    "build": "stencil build --docs",
+    "build": "stencil build --docs --dev",
     "clean": "rm -rf dist",
-    "deploy": "npm run build -- --dev && np --any-branch",
+    "deploy": "np --any-branch",
     "dev": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server\"",
     "e2e": "node ./scripts/e2e",
     "e2e-debug": "node --inspect --debug-brk ./scripts/e2e",
