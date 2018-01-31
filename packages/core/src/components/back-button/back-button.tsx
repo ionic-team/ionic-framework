@@ -44,14 +44,14 @@ export class BackButton {
 
     return (
       <button onClick={this.onClick.bind(this)}>
-      <ion-icon class={iconClass} name={iconName}></ion-icon>
-        <slot name='icon'>
-
-        </slot>
+        <span class={iconClass}>
+          <slot name='icon'>
+            <ion-icon name={iconName}></ion-icon>
+          </slot>
+        </span>
         <span class={textClass}>
-        <span>{text}</span>
           <slot name='text'>
-
+            {text}
           </slot>
         </span>
       </button>
