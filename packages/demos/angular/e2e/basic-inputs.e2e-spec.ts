@@ -1,4 +1,4 @@
-import { browser, ElementFinder, promise } from 'protractor/built';
+import { browser, ElementFinder } from 'protractor/built';
 
 import { BasicInputsPage } from './basic-inputs.po';
 

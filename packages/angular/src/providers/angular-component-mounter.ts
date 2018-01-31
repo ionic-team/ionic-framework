@@ -26,7 +26,7 @@ export class AngularComponentMounter {
 
         const crf = componentResolveFactory ? componentResolveFactory : this.defaultCfr;
 
-        const mountingData = attachViewToDom(crf, parentElement, hostElement, componentToMount, injector, this.appRef, data, classesToAdd);
+        const mountingData = this.attachViewToDomImpl(crf, parentElement, hostElement, componentToMount, injector, this.appRef, data, classesToAdd);
         resolve(mountingData);
       });
     });
@@ -41,6 +41,40 @@ export class AngularComponentMounter {
     });
   }
 
+  attachViewToDomImpl(crf: ComponentFactoryResolver, parentElement: HTMLElement, hostElement: HTMLElement, componentToMount: Type<any>, injector: Injector, appRef: ApplicationRef, data: any, classesToAdd: string[]): AngularMountingData {
+
+    const componentProviders = ReflectiveInjector.resolve(getProviders(parentElement, data));
+    const componentFactory = crf.resolveComponentFactory(componentToMount);
+    if (!hostElement) {
+      hostElement = document.createElement(componentFactory.selector);
+    }
+
+    const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, injector);
+    const componentRef = componentFactory.create(childInjector, [], hostElement);
+    for (const clazz of classesToAdd) {
+      hostElement.classList.add(clazz);
+    }
+
+    parentElement.appendChild(hostElement);
+
+    appRef.attachView(componentRef.hostView);
+
+    const mountingData = {
+      component: componentToMount,
+      componentFactory,
+      childInjector,
+      componentRef,
+      instance: componentRef.instance,
+      angularHostElement: componentRef.location.nativeElement,
+      element: hostElement,
+      data
+    };
+
+    elementToComponentRefMap.set(hostElement, mountingData);
+
+    return mountingData;
+  }
+
 }
 
 export function removeViewFromDom(_parentElement: HTMLElement, childElement: HTMLElement) {
@@ -48,36 +82,4 @@ export function removeViewFromDom(_parentElement: HTMLElement, childElement: HTM
   if (mountingData) {
     mountingData.componentRef.destroy();
   }
-}
-
-export function attachViewToDom(crf: ComponentFactoryResolver, parentElement: HTMLElement, hostElement: HTMLElement, componentToMount: Type<any>, injector: Injector, appRef: ApplicationRef, data: any, classesToAdd: string[]): AngularMountingData {
-
-  const componentProviders = ReflectiveInjector.resolve(getProviders(parentElement, data));
-  const componentFactory = crf.resolveComponentFactory(componentToMount);
-  if (!hostElement) {
-    hostElement = document.createElement(componentFactory.selector);
-  }
-
-  const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, injector);
-  const componentRef = componentFactory.create(childInjector, [], hostElement);
-  for (const clazz of classesToAdd) {
-    hostElement.classList.add(clazz);
-  }
-
-  parentElement.appendChild(hostElement);
-
-  appRef.attachView(componentRef.hostView);
-
-  const mountingData = {
-    componentFactory,
-    childInjector,
-    componentRef,
-    instance: componentRef.instance,
-    angularHostElement: componentRef.location.nativeElement,
-    element: hostElement,
-  };
-
-  elementToComponentRefMap.set(hostElement, mountingData);
-
-  return mountingData;
 }

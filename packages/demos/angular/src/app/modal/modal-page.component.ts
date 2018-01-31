@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 import { ModalController } from '@ionic/angular';
 import { ModalPageToPresent } from './modal-page-to-present';
@@ -17,8 +17,9 @@ import { ModalPageToPresent } from './modal-page-to-present';
         <ion-button (click)="clickMe()">Open Basic Modal</ion-button>
       </ion-content>
     </ion-page>
-</ion-app>
-  `
+</ion-app>,
+  `,
+  encapsulation: ViewEncapsulation.None
 })
 export class ModalPageComponent {
 
@@ -31,5 +32,4 @@ export class ModalPageComponent {
     });
     return modal.present();
   }
-
 }

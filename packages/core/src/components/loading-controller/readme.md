@@ -40,7 +40,8 @@ in the `usage` section below.
 
 #### create()
 
-Create a loading overlay and pass options to it
+
+#### dismiss()
 
 
 

@@ -12,6 +12,11 @@
 
 
 
+#### lazy
+
+boolean
+
+
 #### mode
 
 string
@@ -20,6 +25,11 @@ string
 #### root
 
 any
+
+
+#### useUrls
+
+boolean
 
 
 ## Attributes
@@ -29,6 +39,11 @@ any
 
 
 
+#### lazy
+
+boolean
+
+
 #### mode
 
 string
@@ -37,6 +52,11 @@ string
 #### root
 
 any
+
+
+#### useUrls
+
+boolean
 
 
 ## Events
@@ -55,6 +75,9 @@ any
 #### canSwipeBack()
 
 
+#### clearTransitionInfoForUrl()
+
+
 #### getActive()
 
 
@@ -62,6 +85,9 @@ any
 
 
 #### getFirstView()
+
+
+#### getId()
 
 
 #### getPrevious()
@@ -73,10 +99,19 @@ any
 #### getState()
 
 
+#### getTransitionInfoForUrl()
+
+
+#### getViews()
+
+
 #### insert()
 
 
 #### insertPages()
+
+
+#### isTransitioning()
 
 
 #### pop()
@@ -96,12 +131,11 @@ any
 
 #### removeView()
 
-
 #### setPages()
 
+#### setParent()
 
 #### setRoot()
-
 
 #### setRouteId()
 

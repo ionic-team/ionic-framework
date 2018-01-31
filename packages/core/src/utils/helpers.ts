@@ -298,3 +298,12 @@ export function debounce(func: Function, wait = 0) {
     timer = setTimeout(func, wait, ...args);
   };
 }
+
+export function getNavAsChildIfExists(element: HTMLElement): HTMLIonNavElement {
+  for (let i = 0; i < element.children.length; i++) {
+    if (element.children[i].tagName.toLowerCase() === 'ion-nav') {
+      return element.children[i] as HTMLIonNavElement;
+    }
+  }
+  return null;
+}

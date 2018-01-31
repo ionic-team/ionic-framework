@@ -32,7 +32,8 @@
 
 #### create()
 
-Open an action-sheet with a title, subTitle, and an array of buttons
+
+#### dismiss()
 
 
 

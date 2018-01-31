@@ -88,7 +88,7 @@ export class Popover {
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
   @Prop() ev: Event;
-  @Prop() popoverId: string;
+  @Prop() popoverId: number;
   @Prop() showBackdrop = true;
   @Prop() translucent = false;
   @Prop() willAnimate = true;
@@ -248,6 +248,7 @@ export interface PopoverOptions {
 }
 
 export interface PopoverEvent extends CustomEvent {
+  target: HTMLIonPopoverElement;
   detail: PopoverEventDetail;
 }
 

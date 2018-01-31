@@ -54,7 +54,7 @@ boolean
 
 #### pickerId
 
-string
+number
 
 
 #### showBackdrop
@@ -116,7 +116,7 @@ boolean
 
 #### pickerId
 
-string
+number
 
 
 #### showBackdrop
