@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+//  import { PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'page-one',
@@ -14,8 +14,7 @@ export class PopoverPageToPresent {
 
   ngOnInitDetection = 'initial';
 
-  constructor(private controller: PopoverController) {
-  }
+  // constructor(private controller: PopoverController) { }
 
 
   ngOnInit() {
