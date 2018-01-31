@@ -37,6 +37,18 @@ export class Item {
    */
   @Prop() href: string;
 
+  /**
+   * @input {any} Callback function.
+   * If this property is set, a button tag will be rendered.
+   */
+  @Prop() onclick: (this: HTMLElement, ev: MouseEvent) => any;
+
+  /**
+   * @input {boolean} Whether or not this item should be tappable.
+   * If true, a button tag will be rendered. Default `true`.
+   */
+  @Prop() tappable = false;
+
   @Listen('ionStyle')
   itemStyle(ev: UIEvent) {
     ev.stopPropagation();
@@ -87,8 +99,12 @@ export class Item {
 
     this.hasStyleChange = false;
 
-    // TODO add support for button items
-    const TagType = this.href ? 'a' : 'div';
+    const clickable = this.href || this.onclick || this.tappable;
+
+    let TagType = 'div';
+    if (clickable) {
+      TagType = this.href ? 'a' : 'button';
+    }
 
     return (
       <TagType class={themedClasses}>
@@ -99,7 +115,7 @@ export class Item {
           </div>
           <slot name='end'></slot>
         </div>
-        { this.href && this.mode === 'md' && <ion-ripple-effect useTapClick={true} /> }
+        { clickable && this.mode === 'md' && <ion-ripple-effect useTapClick={true} /> }
       </TagType>
     );
   }

@@ -22,6 +22,16 @@ string
 
 
 
+#### onclick
+
+
+
+
+#### tappable
+
+boolean
+
+
 ## Attributes
 
 #### color
@@ -37,6 +47,16 @@ string
 #### mode
 
 
+
+
+#### onclick
+
+
+
+
+#### tappable
+
+boolean
 
 
 

@@ -28,16 +28,20 @@
           a[ion-item] secondary
         </ion-item>
 
-        <ion-item onclick="testClick(event)">
-          button[ion-item]
+        <ion-item tappable id="attachClick">
+          button[ion-item] tappable click listener
         </ion-item>
 
-        <ion-item class="activated" onclick="testClick(event)">
-          button[ion-item].activated
+        <ion-item ONCLICK="testClick(event)">
+          button[ion-item] ONCLICK
+        </ion-item>
+
+        <ion-item class="activated" onClick="testClick(event)">
+          button[ion-item].activated onClick
         </ion-item>
 
         <ion-item color="danger" onclick="testClick(event)">
-          button[ion-item] danger
+          button[ion-item] danger onclick
         </ion-item>
 
         <ion-item onclick="testClickOutsize(event)">
@@ -134,6 +138,12 @@
   </ion-app>
 
   <script>
+    const attach = document.getElementById('attachClick');
+
+    attach.addEventListener('click', (ev) => {
+      console.log('clicked me!', ev);
+    });
+
     function testClick(ev) {
       console.log('CLICK!', ev.target.tagName, ev.target.textContent.trim());
     }
