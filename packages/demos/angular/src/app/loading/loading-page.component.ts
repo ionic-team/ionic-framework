@@ -27,7 +27,7 @@ export class LoadingPageComponent {
 
   clickMe() {
     const loading = this.loadingController.create({
-      duration: 2000,
+      duration: 1000,
       content: 'Ahem. Please wait.'
     });
     loading.present();

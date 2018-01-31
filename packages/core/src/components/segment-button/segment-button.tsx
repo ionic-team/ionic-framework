@@ -16,7 +16,7 @@ export class SegmentButton {
    */
   @Event() ionClick: EventEmitter<SegmentButtonEventDetail>;
 
-  @Prop({mutable: true}) activated = false;
+  @Prop({ mutable: true }) activated = false;
 
   /**
    * The color to use for the text color.
@@ -41,21 +41,20 @@ export class SegmentButton {
   @Prop({ mutable: true }) disabled = false;
 
   /**
+   * Contains a URL or a URL fragment that the hyperlink points to.
+   * If this property is set, an anchor tag will be rendered.
+   */
+  @Prop() href: string;
+
+  /**
    * The value of the segment button.
    */
   @Prop({ mutable: true }) value: string;
 
-  segmentButtonClick(ev: UIEvent) {
-    ev.preventDefault();
-    ev.stopPropagation();
-
-    this.emitClick();
-  }
-
   /**
    * Emit the click event to the parent segment
    */
-  private emitClick() {
+  private segmentButtonClick() {
     clearTimeout(this.styleTmr);
 
     this.styleTmr = setTimeout(() => {
@@ -94,10 +93,17 @@ export class SegmentButton {
       ...elementClasses
     };
 
+    const TagType = this.href ? 'a' : 'button';
+
     return [
-      <button onClick={this.segmentButtonClick.bind(this)} class={buttonClasses} aria-pressed={this.activated}>
-        <slot></slot>
-      </button>
+      <TagType
+        aria-pressed={this.activated}
+        class={buttonClasses}
+        disabled={this.disabled}
+        href={this.href}
+        onClick={this.segmentButtonClick.bind(this)}>
+          <slot></slot>
+      </TagType>
     ];
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "0.0.2-48",
+  "version": "0.0.2-52",
   "description": "Base components for Ionic",
   "main": "dist/ionic.js",
   "types": "dist/types/index.d.ts",
@@ -9,7 +9,7 @@
     "dist/"
   ],
   "devDependencies": {
-    "@stencil/core": "0.2.1",
+    "@stencil/core": "0.2.3",
     "@stencil/dev-server": "latest",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.6",
@@ -27,9 +27,9 @@
     "yargs": "^10.0.3"
   },
   "scripts": {
-    "build": "stencil build --docs",
+    "build": "stencil build --docs --dev",
     "clean": "rm -rf dist",
-    "deploy": "npm run build && np --any-branch",
+    "deploy": "np --any-branch",
     "dev": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server\"",
     "e2e": "node ./scripts/e2e",
     "e2e-debug": "node --inspect --debug-brk ./scripts/e2e",

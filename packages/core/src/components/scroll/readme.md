@@ -14,17 +14,17 @@ boolean
 
 #### onionScroll
 
-any
+
 
 
 #### onionScrollEnd
 
-any
+
 
 
 #### onionScrollStart
 
-any
+
 
 
 ## Attributes
@@ -36,17 +36,17 @@ boolean
 
 #### onionScroll
 
-any
+
 
 
 #### onionScrollEnd
 
-any
+
 
 
 #### onionScrollStart
 
-any
+
 
 
 ## Events

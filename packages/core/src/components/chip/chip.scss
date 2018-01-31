@@ -18,6 +18,7 @@ ion-chip > ion-icon {
   @include border-radius($chip-icon-border-radius);
 
   display: inline-flex;
+
   align-items: center;
   justify-content: center;
 

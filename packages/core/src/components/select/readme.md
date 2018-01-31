@@ -151,7 +151,7 @@ The text to display instead of the selected option's value.
 
 #### value
 
-any
+
 
 
 ## Attributes
@@ -225,7 +225,7 @@ The text to display instead of the selected option's value.
 
 #### value
 
-any
+
 
 
 ## Events

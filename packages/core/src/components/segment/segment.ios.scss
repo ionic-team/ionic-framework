@@ -9,12 +9,6 @@
 }
 
 .segment-ios ion-segment-button {
-  display: flex;
-
-  flex: 1;
-
-  width: 0;
-
   &:first-of-type .segment-button {
     @include border-radius($segment-button-ios-border-radius, 0, 0, $segment-button-ios-border-radius);
     @include margin-horizontal(null, 0);

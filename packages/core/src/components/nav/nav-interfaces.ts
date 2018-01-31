@@ -7,7 +7,8 @@ import {
   Nav,
   NavOptions,
   PublicViewController,
-  ViewController
+  ViewController,
+  FrameworkMountingData
 } from '../../index';
 
 export interface PublicNav {
@@ -42,14 +43,6 @@ export interface NavContainer {
   getSecondaryIdentifier?(): string;
 }
 
-export interface NavResult {
-  hasCompleted: boolean;
-  requiresTransition: boolean;
-  enteringName?: string;
-  leavingName?: string;
-  direction?: string;
-}
-
 export interface NavOptions {
   animate?: boolean;
   animation?: string;
@@ -66,15 +59,16 @@ export interface NavOptions {
 }
 
 export interface TransitionInstruction {
+  component: any;
   opts: NavOptions;
   insertStart?: number;
-  insertViews?: any[];
+  insertViews?: ComponentDataPair[];
+  viewControllers?: ViewController[];
   removeView?: any; // TODO make VC
   removeStart?: number;
   removeCount?: number;
-  resolve?: (hasCompleted: boolean) => void;
+  resolve?: (hasCompleted: NavResult) => void;
   reject?: (rejectReason: Error) => void;
-  done?: Function;
   leavingRequiresTransition?: boolean;
   enteringRequiresTransition?: boolean;
   requiresTransition?: boolean;
@@ -82,17 +76,19 @@ export interface TransitionInstruction {
   nav?: Nav;
   delegate?: FrameworkDelegate;
   animation?: Animation;
+  escapeHatch?: any;
+  method?: string;
+  mountingData?: any;
 }
 
 export interface NavResult {
-  hasCompleted: boolean;
-  requiresTransition: boolean;
-  direction?: string;
+  successful: boolean;
+  mountingData: FrameworkMountingData;
 }
 
 export interface ComponentDataPair {
-  page: any;
-  params: any;
+  component: any;
+  data: any;
 }
 
 export interface Transition extends Animation {

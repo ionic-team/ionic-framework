@@ -15,9 +15,8 @@ export class Scroll {
   private tmr: any;
   private queued = false;
   private app: HTMLIonAppElement;
-
-  isScrolling = false;
-  detail: ScrollDetail = {};
+  private isScrolling = false;
+  private detail: ScrollDetail = {};
 
   @Element() private el: HTMLElement;
 
@@ -197,6 +196,7 @@ export class Scroll {
     // ******** DOM READ ****************
     detail.scrollLeft = el.scrollLeft;
 
+
     if (!this.isScrolling) {
       // currently not scrolling, so this is a scroll start
       this.isScrolling = true;
@@ -214,34 +214,33 @@ export class Scroll {
       }
       this.ionScrollStart.emit(detail);
     }
+    detail.deltaY = (detail.scrollTop - detail.startY);
+    detail.deltaX = (detail.scrollLeft - detail.startX);
 
     // actively scrolling
     positions.push(detail.scrollTop, detail.scrollLeft, detail.timeStamp);
 
-    if (positions.length > 3) {
-      // we've gotten at least 2 scroll events so far
-      detail.deltaY = (detail.scrollTop - detail.startY);
-      detail.deltaX = (detail.scrollLeft - detail.startX);
+    // move pointer to position measured 100ms ago
+    const timeRange = timeStamp - 100;
+    let startPos = positions.length - 1;
 
-      const endPos = (positions.length - 1);
-      let startPos = endPos;
-      const timeRange = (detail.timeStamp - 100);
+    while (startPos > 0 && positions[startPos] > timeRange) {
+      startPos -= 3;
+    }
 
-      // move pointer to position measured 100ms ago
-      for (let i = endPos; i > 0 && positions[i] > timeRange; i -= 3) {
-        startPos = i;
-      }
+    if (startPos > 3) {
+      // compute relative movement between these two points
+      const frequency = 1 / (positions[startPos] - timeStamp);
+      const movedY = positions[startPos - 1] - detail.scrollLeft;
+      const movedX = positions[startPos - 2] - detail.scrollTop;
 
-      if (startPos !== endPos) {
-        // compute relative movement between these two points
-        const deltaY = (positions[startPos - 2] - positions[endPos - 2]);
-        const deltaX = (positions[startPos - 1] - positions[endPos - 1]);
-        const factor = 1 / (positions[startPos] - positions[endPos]);
-
-        // based on XXms compute the movement to apply for each render step
-        detail.velocityY = deltaY * factor;
-        detail.velocityX = deltaX * factor;
-      }
+      // based on XXms compute the movement to apply for each render step
+      // velocity = space/time = s*(1/t) = s*frequency
+      detail.velocityX = movedX * frequency;
+      detail.velocityY = movedY * frequency;
+    } else {
+      detail.velocityX = 0;
+      detail.velocityY = 0;
     }
 
     clearTimeout(this.tmr);

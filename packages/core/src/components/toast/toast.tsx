@@ -70,7 +70,7 @@ export class Toast {
   @Prop() dismissOnPageChange: boolean;
   @Prop() position: string;
   @Prop() translucent = false;
-  @Prop() toastId: string;
+  @Prop() toastId: number;
   @Prop() willAnimate = true;
 
   @Prop() enterAnimation: AnimationBuilder;
@@ -218,6 +218,7 @@ export interface ToastOptions {
 }
 
 export interface ToastEvent extends CustomEvent {
+  target: HTMLIonToastElement;
   detail: ToastEventDetail;
 }
 

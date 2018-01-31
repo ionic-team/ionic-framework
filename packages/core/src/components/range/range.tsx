@@ -135,6 +135,7 @@ export class Range implements BaseInputComponent {
   @Watch('value')
   protected valueChanged(val: boolean) {
     this.ionChange.emit({value: val});
+    this.inputUpdated();
     this.emitStyle();
   }
 

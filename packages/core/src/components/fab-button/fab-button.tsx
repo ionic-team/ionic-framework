@@ -134,7 +134,11 @@ export class FabButton {
     };
 
     return (
-      <TagType class={fabClasses} onClick={this.clickedFab.bind(this)} disabled={this.disabled}>
+      <TagType
+        class={fabClasses}
+        disabled={this.disabled}
+        href={this.href}
+        onClick={this.clickedFab.bind(this)}>
         <ion-icon name='close' class='fab-button-close-icon'></ion-icon>
         <span class='button-inner'>
           <slot></slot>

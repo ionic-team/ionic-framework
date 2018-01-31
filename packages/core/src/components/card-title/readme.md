@@ -18,7 +18,7 @@ Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"da
 
 #### mode
 
-any
+
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -36,7 +36,7 @@ Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"da
 
 #### mode
 
-any
+
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.

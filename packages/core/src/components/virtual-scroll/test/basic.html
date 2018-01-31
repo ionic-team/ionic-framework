@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Ionic Item Sliding</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-page>
+
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Ionic CDN demo</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-virtual-scroll id="virtual"></ion-virtual-scroll>
+      </ion-content>
+
+    </ion-page>
+
+  </ion-app>
+
+  <script>
+    async function init() {
+      const virtual = await document.getElementById('virtual').componentOnReady();
+      virtual.itemHeight = () => 45;
+      virtual.headerFn = (item, index) => {
+        if (index % 20 === 0) {
+          return 'Header ' + index;
+        }
+        return null;
+      }
+
+      function renderItem(el, item) {
+        if (!el) {
+          el = document.createElement('ion-item');
+        }
+        el.textContent = item;
+        return el;
+      }
+
+      function renderHeader(el, item) {
+        if (!el) {
+          el = document.createElement('ion-item-divider');
+        }
+        el.textContent = item;
+        return el;
+      }
+
+      virtual.itemRender = (el, item, type) => {
+        if (type === 0) return renderItem(el, item);
+        return renderHeader(el, item);
+      };
+      virtual.items = Array.from({length: 1000}, (x, i) => i);
+    };
+    setTimeout(init, 200);
+  </script>
+
+</body>
+</html>

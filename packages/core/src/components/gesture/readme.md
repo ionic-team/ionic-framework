@@ -9,7 +9,7 @@
 
 #### attachTo
 
-any
+
 
 
 #### autoBlockAll
@@ -24,7 +24,7 @@ string
 
 #### canStart
 
-any
+
 
 
 #### direction
@@ -59,32 +59,32 @@ number
 
 #### notCaptured
 
-any
+
 
 
 #### onEnd
 
-any
+
 
 
 #### onMove
 
-any
+
 
 
 #### onPress
 
-any
+
 
 
 #### onStart
 
-any
+
 
 
 #### onWillStart
 
-any
+
 
 
 #### passive
@@ -106,7 +106,7 @@ string
 
 #### attachTo
 
-any
+
 
 
 #### autoBlockAll
@@ -121,7 +121,7 @@ string
 
 #### canStart
 
-any
+
 
 
 #### direction
@@ -156,32 +156,32 @@ number
 
 #### notCaptured
 
-any
+
 
 
 #### onEnd
 
-any
+
 
 
 #### onMove
 
-any
+
 
 
 #### onPress
 
-any
+
 
 
 #### onStart
 
-any
+
 
 
 #### onWillStart
 
-any
+
 
 
 #### passive

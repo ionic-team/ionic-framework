@@ -27,21 +27,21 @@ to transparent.
 
 #### ionScroll
 
-any
+
 
 Emitted on every scroll event.
 
 
 #### ionScrollEnd
 
-any
+
 
 Emitted when scrolling ends.
 
 
 #### ionScrollStart
 
-any
+
 
 Emitted when the scrolling first starts.
 
@@ -59,21 +59,21 @@ to transparent.
 
 #### ionScroll
 
-any
+
 
 Emitted on every scroll event.
 
 
 #### ionScrollEnd
 
-any
+
 
 Emitted when scrolling ends.
 
 
 #### ionScrollStart
 
-any
+
 
 Emitted when the scrolling first starts.
 

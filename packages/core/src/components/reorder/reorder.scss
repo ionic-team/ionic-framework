@@ -4,23 +4,9 @@
 // --------------------------------------------------
 
 .reorder[slot] {
-  @include margin(auto, null);
+  display: none;
 
   line-height: 0;
-}
-
-.reorder[slot="start"] {
-  order: -1;
-}
-
-.reorder.no-hide {
-  display: block;
-
-  visibility: normal;
-}
-
-.reorder:not(.no-hide) {
-  display: none;
 }
 
 .reorder-enabled .reorder {
@@ -79,7 +65,7 @@
 // --------------------------------------------------
 
 .item .reorder[slot] {
-  @include margin(0);
+  @include margin(0, null);
 }
 
 .item .reorder-icon {

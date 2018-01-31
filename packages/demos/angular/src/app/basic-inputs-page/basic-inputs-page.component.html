@@ -43,8 +43,8 @@
       </ion-item>
     </ion-col>
     <ion-col>
-        Value:
-        <span id="searchOutput">{{searchValue}}</span>
+      Value:
+      <span id="searchOutput">{{searchValue}}</span>
     </ion-col>
   </ion-row>
 
@@ -189,21 +189,26 @@
 
   <ion-row>
     <ion-col>
-      <h2>Segment</h2>
+      <h2>Range</h2>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-segment [(ngModel)]="segmentValue" >
-        <ion-segment-button value="taco"></ion-segment-button>
-        <ion-segment-button value="burrito"></ion-segment-button>
-        <ion-segment-button value="enchilada"></ion-segment-button>
-      </ion-segment>
+      <label for="stdRangeInput">Range Value</label>
+      <input id="stdRangeInput" type="number" [(ngModel)]="rangeValue"/>
     </ion-col>
     <ion-col>
       Value:
-      <span >{{segmentValue}}</span>
+      <span>{{rangeValue}}</span>
+      <span>{{typeOf(rangeValue)}}</span>
     </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
+      <ion-range id="ionRangeInput" [(ngModel)]="rangeValue"></ion-range>
+    </ion-col>
+    <ion-col></ion-col>
   </ion-row>
 </ion-grid>
 

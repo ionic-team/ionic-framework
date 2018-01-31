@@ -5,7 +5,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 // https://github.com/angular/angular/blob/5.0.2/packages/forms/src/directives/select_control_value_accessor.ts#L28-L158
 @Directive({
   /* tslint:disable-next-line:directive-selector */
-  selector: 'ion-select, ion-radio-group, ion-segment, ion-datetime',
+  selector: 'ion-range, ion-select, ion-radio-group, ion-segment, ion-datetime',
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

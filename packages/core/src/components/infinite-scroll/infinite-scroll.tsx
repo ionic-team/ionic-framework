@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { DomController, ScrollDetail, StencilElement } from '../../index';
 
 const enum Position {
@@ -20,7 +20,7 @@ const enum Position {
 export class InfiniteScroll {
 
   private thrPx = 0;
-  private thrPc = 0.15;
+  private thrPc = 0;
   private scrollEl: HTMLIonScrollElement;
   private didFire = false;
   private isBusy = false;
@@ -30,7 +30,7 @@ export class InfiniteScroll {
   @State() isLoading = false;
 
   @Prop({ context: 'dom' }) dom: DomController;
-  @Prop({ context: 'enableListener' }) enableListener: any;
+  @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
 
   /**
    * @input {string} The threshold distance from the bottom
@@ -71,7 +71,7 @@ export class InfiniteScroll {
 
   @Watch('disabled')
   protected disabledChanged(val: boolean) {
-    this.enableScrollEvents(val);
+    this.enableScrollEvents(!val);
   }
 
   /**
@@ -90,7 +90,7 @@ export class InfiniteScroll {
   @Event() ionInfinite: EventEmitter;
 
   componentWillLoad() {
-    const scrollEl = this.el.closest('ion-scroll') as StencilElement;
+    const scrollEl = this.el.closest('ion-scroll') as any as StencilElement;
     return scrollEl.componentOnReady().then((el) => {
       this.scrollEl = el as HTMLIonScrollElement;
     });
@@ -103,14 +103,13 @@ export class InfiniteScroll {
     }
     this.init = true;
     this.thresholdChanged(this.threshold);
-    this.enableScrollEvents(this.disabled);
+    this.enableScrollEvents(!this.disabled);
     if (this.position === Position.Top) {
       this.dom.write(() => this.scrollEl.scrollToBottom(0));
     }
   }
 
   componentDidUnload() {
-    this.enableScrollEvents(false);
     this.scrollEl = null;
   }
 
@@ -147,14 +146,6 @@ export class InfiniteScroll {
     }
 
     return 4;
-  }
-
-  private canStart(): boolean {
-    return (
-      this.disabled &&
-      !this.isBusy &&
-      this.scrollEl &&
-      !this.isLoading);
   }
 
   /**
@@ -219,9 +210,18 @@ export class InfiniteScroll {
    * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to
    * change state of infiniteScroll to "complete"
    */
+  @Method()
   waitFor(action: Promise<any>) {
     const enable = this.complete.bind(this);
     action.then(enable, enable);
+  }
+
+  private canStart(): boolean {
+    return (
+      !this.disabled &&
+      !this.isBusy &&
+      this.scrollEl &&
+      !this.isLoading);
   }
 
   private enableScrollEvents(shouldListen: boolean) {

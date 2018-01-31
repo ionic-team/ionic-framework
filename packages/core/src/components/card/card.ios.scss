@@ -70,9 +70,9 @@
   color: $card-ios-text-color;
 }
 
-.card-ios + ion-card {
-  @include margin(0, null, null, null);
-}
+// .card-ios + ion-card {
+//   @include margin(0, null, null, null);
+// }
 
 // Generate iOS Card Colors
 // --------------------------------------------------

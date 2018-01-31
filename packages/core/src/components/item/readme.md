@@ -19,7 +19,17 @@ string
 
 #### mode
 
-any
+
+
+
+#### onclick
+
+
+
+
+#### tappable
+
+boolean
 
 
 ## Attributes
@@ -36,7 +46,17 @@ string
 
 #### mode
 
-any
+
+
+
+#### onclick
+
+
+
+
+#### tappable
+
+boolean
 
 
 

@@ -272,10 +272,8 @@ export class Gesture {
     let startPos = positions.length - 1;
 
     // move pointer to position measured 100ms ago
-    for (;
-      startPos > 0 && positions[startPos] > timeRange;
-      startPos -= 3) {
-        // TODO why is this empty?
+    while (startPos > 0 && positions[startPos] > timeRange) {
+      startPos -= 3;
     }
 
     if (startPos > 1) {

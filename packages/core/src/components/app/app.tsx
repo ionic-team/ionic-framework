@@ -1,9 +1,10 @@
 import { Component, Element, Listen, Method, Prop, State } from '@stencil/core';
-import { Config, Nav, NavContainer } from '../../index';
+import { Config, NavContainer, NavEvent } from '../../index';
 import { isReady } from '../../utils/helpers';
 
-const rootNavs = new Map<number, NavContainer>();
+const rootNavs = new Map<number, HTMLIonNavElement>();
 const ACTIVE_SCROLLING_TIME = 100;
+
 
 @Component({
   tag: 'ion-app',
@@ -35,8 +36,18 @@ export class App {
   }
 
   @Listen('body:navInit')
-  protected registerRootNav(event: CustomEvent) {
-    rootNavs.set((event.detail as Nav).navId, (event.detail as Nav));
+  protected registerRootNav(event: NavEvent) {
+    rootNavs.set(event.target.getId(), event.target);
+  }
+
+  @Listen('body:ionNavChanged')
+  protected navChanged(event: NavEvent) {
+    // TODO, make sure none of the navs are transitioning
+    if (event.detail.isPop && !event.target.isTransitioning()) {
+      // TODO, this is lazy but effective for short term stuff
+      (event.target.delegate as any)['forceBackOnNextRoute']();
+      window.history.back();
+    }
   }
 
   /**
@@ -44,11 +55,13 @@ export class App {
    */
   @Method()
   getRootNavs(): NavContainer[] {
-    const navs: NavContainer[] = [];
+    /*const navs: NavContainer[] = [];
     rootNavs.forEach((rootNav: NavContainer) => {
       navs.push(rootNav);
     });
     return navs;
+    */
+    return [];
   }
 
   @Method()
@@ -80,14 +93,14 @@ export class App {
   }
 
   @Method()
-  getActiveNavs(rootNavId?: number): NavContainer[] {
+  getActiveNavs(_rootNavId?: number): NavContainer[] {
     /*const portal = portals.get(PORTAL_MODAL);
     if (portal && portal.views && portal.views.length) {
       return findTopNavs(portal);
     }
     */
     // TODO - figure out if a modal is open, don't use portal
-    if (!rootNavs.size) {
+    /*if (!rootNavs.size) {
       return [];
     }
     if (rootNavId) {
@@ -102,17 +115,19 @@ export class App {
       activeNavs = activeNavs.concat(findTopNavs(nav));
     });
     return activeNavs;
+    */
+    return [];
   }
 
-  @Method()
-  getNavByIdOrName(nameOrId: number | string) {
-    const navs = Array.from(rootNavs.values());
+  @Method() getNavByIdOrName(_nameOrId: number | string): any {
+    /*const navs = Array.from(rootNavs.values());
     for (const navContainer of navs) {
       const match = getNavByIdOrNameImpl(navContainer, nameOrId);
       if (match) {
         return match;
       }
     }
+    */
     return null;
   }
 

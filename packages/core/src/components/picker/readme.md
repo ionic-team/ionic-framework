@@ -9,12 +9,12 @@
 
 #### buttons
 
-any
+
 
 
 #### columns
 
-any
+
 
 
 #### content
@@ -44,17 +44,17 @@ boolean
 
 #### enterAnimation
 
-any
+
 
 
 #### leaveAnimation
 
-any
+
 
 
 #### pickerId
 
-string
+number
 
 
 #### showBackdrop
@@ -71,12 +71,12 @@ boolean
 
 #### buttons
 
-any
+
 
 
 #### columns
 
-any
+
 
 
 #### content
@@ -106,17 +106,17 @@ boolean
 
 #### enterAnimation
 
-any
+
 
 
 #### leaveAnimation
 
-any
+
 
 
 #### pickerId
 
-string
+number
 
 
 #### showBackdrop

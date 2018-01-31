@@ -16,6 +16,8 @@
   width: $fab-size;
   height: $fab-size;
 
+  border: 0;
+
   font-size: 14px;
   line-height: $fab-size;
   text-overflow: ellipsis;
@@ -41,6 +43,19 @@
   line-height: 1;
 }
 
+.button-inner {
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+
 // FAB Mini
 // --------------------------------------------------
 
@@ -61,6 +76,8 @@ ion-fab-button[mini] .fab-button {
 
   position: absolute;
 
+  display: flex;
+
   height: 100%;
 
   opacity: 0;
@@ -69,6 +86,9 @@ ion-fab-button[mini] .fab-button {
   transition-property: transform, opacity;
 }
 
+.fab-button-close-icon .icon-inner {
+  @include margin(auto);
+}
 
 // FAB Animation
 // --------------------------------------------------

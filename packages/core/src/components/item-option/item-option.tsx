@@ -47,11 +47,17 @@ export class ItemOption {
   render() {
 
     const TagType = this.href ? 'a' : 'button';
+
+    // TODO TagType should wrap button-inner
     return [
-      <TagType class='item-option-button' onClick={this.clickedOptionButton.bind(this)} disabled={this.disabled}></TagType>,
+      <TagType
+        class='item-option-button'
+        disabled={this.disabled}
+        href={this.href}
+        onClick={this.clickedOptionButton.bind(this)}></TagType>,
       <span class='button-inner'>
         <slot></slot>
-       </span>
+      </span>
     ];
   }
 

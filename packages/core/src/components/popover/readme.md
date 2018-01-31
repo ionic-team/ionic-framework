@@ -29,7 +29,7 @@ any
 
 #### delegate
 
-any
+
 
 
 #### enableBackdropDismiss
@@ -39,27 +39,27 @@ boolean
 
 #### enterAnimation
 
-any
+
 
 
 #### ev
 
-any
+
 
 
 #### leaveAnimation
 
-any
+
 
 
 #### mode
 
-string
+
 
 
 #### popoverId
 
-string
+number
 
 
 #### showBackdrop
@@ -101,7 +101,7 @@ any
 
 #### delegate
 
-any
+
 
 
 #### enableBackdropDismiss
@@ -111,27 +111,27 @@ boolean
 
 #### enterAnimation
 
-any
+
 
 
 #### ev
 
-any
+
 
 
 #### leaveAnimation
 
-any
+
 
 
 #### mode
 
-string
+
 
 
 #### popoverId
 
-string
+number
 
 
 #### showBackdrop

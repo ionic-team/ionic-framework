@@ -10,18 +10,29 @@ import { Component, Element, State } from '@stencil/core';
 })
 export class Reorder {
 
-  @State() hasContent: boolean = null;
   @Element() private el: HTMLElement;
 
+  @State() custom: boolean;
+
   componentDidLoad() {
-    this.hasContent = this.el.childElementCount > 0;
+    this.custom = this.el.childElementCount > 0;
+  }
+
+  hostData() {
+    const hostClasses = {
+      'reorder-custom': this.custom
+    };
+
+    return {
+      class: hostClasses
+    };
   }
 
   render() {
     // TODO: https://github.com/ionic-team/stencil/issues/171
-    if (this.hasContent === true) {
+    if (this.custom === true) {
       return <slot></slot>;
-    } else if (this.hasContent === false) {
+    } else if (this.custom === false) {
       return <ion-icon class='reorder-icon' name='reorder'></ion-icon>;
     } else {
       return undefined;
