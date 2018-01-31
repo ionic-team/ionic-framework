@@ -1,36 +1,38 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button (click)="dismiss()">Cancel</ion-button>
-    </ion-buttons>
+<ion-page>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-button (click)="dismiss()">Cancel</ion-button>
+      </ion-buttons>
 
-    <ion-title>
-      Filter Sessions
-    </ion-title>
+      <ion-title>
+        Filter Sessions
+      </ion-title>
 
-    <ion-buttons slot="end">
-      <ion-button (click)="applyFilters()" strong>Done</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+      <ion-buttons slot="end">
+        <ion-button (click)="applyFilters()" strong>Done</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content class="outer-content">
+  <ion-content class="outer-content">
 
-  <ion-list>
-    <ion-list-header>Tracks</ion-list-header>
+    <ion-list>
+      <ion-list-header>Tracks</ion-list-header>
 
-    <ion-item *ngFor="let track of tracks" [attr.track]="track.name | lowercase">
-      <span slot="start" class="dot"></span>
-      <ion-label>{{track.name}}</ion-label>
-      <ion-toggle [(ngModel)]="track.isChecked" color="secondary"></ion-toggle>
-    </ion-item>
+      <ion-item *ngFor="let track of tracks" [attr.track]="track.name | lowercase">
+        <span slot="start" class="dot"></span>
+        <ion-label>{{track.name}}</ion-label>
+        <ion-toggle [(ngModel)]="track.isChecked" color="secondary"></ion-toggle>
+      </ion-item>
 
-  </ion-list>
+    </ion-list>
 
-  <ion-list>
-    <ion-item (click)="resetFilters()" detail-none class="reset-filters">
-      Reset All Filters
-    </ion-item>
-  </ion-list>
+    <ion-list>
+      <ion-item (click)="resetFilters()" detail-none class="reset-filters">
+        Reset All Filters
+      </ion-item>
+    </ion-list>
 
-</ion-content>
+  </ion-content>
+</ion-page>

@@ -4,7 +4,7 @@ import { CssClassMap } from '@stencil/core';
  * Create the mode and color classes for the component based on the classes passed in
  */
 export function createThemedClasses(mode: string, color: string, classes: string): CssClassMap {
-  let classObj: CssClassMap = {};
+  const classObj: CssClassMap = {};
 
   return classes.split(' ')
     .reduce((classObj: CssClassMap, classString: string): CssClassMap => {
@@ -27,9 +27,9 @@ export function createThemedClasses(mode: string, color: string, classes: string
  * Get the classes from a class list and return them as an object
  */
 export function getElementClassObject(classList: DOMTokenList | string[]): CssClassMap {
-  let classObj: CssClassMap = {};
+  const classObj: CssClassMap = {};
 
-  for (var i = 0; i < classList.length; i++) {
+  for (let i = 0; i < classList.length; i++) {
     classObj[classList[i]] = true;
   }
 

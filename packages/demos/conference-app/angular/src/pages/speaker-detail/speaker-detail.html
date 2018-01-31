@@ -1,23 +1,25 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>{{speaker?.name}}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-page>
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>{{speaker?.name}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content padding class="speaker-detail">
-  <div text-center *ngIf="speaker">
-    <img [src]="speaker.profilePic" [alt]="speaker.name"><br>
+  <ion-content padding class="speaker-detail">
+    <div text-center *ngIf="speaker">
+      <img [src]="speaker.profilePic" [alt]="speaker.name"><br>
 
-    <ion-button clear small color="twitter">
-      <ion-icon name="logo-twitter" slot="icon-only"></ion-icon>
-    </ion-button>
-    <ion-button clear small color="github">
-      <ion-icon name="logo-github" slot="icon-only"></ion-icon>
-    </ion-button>
-    <ion-button clear small color="instagram">
-      <ion-icon name="logo-instagram" slot="icon-only"></ion-icon>
-    </ion-button>
-  </div>
+      <ion-button fill="clear" size="small" color="twitter">
+        <ion-icon name="logo-twitter" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" size="small" color="github">
+        <ion-icon name="logo-github" slot="icon-only"></ion-icon>
+      </ion-button>
+      <ion-button fill="clear" size="small" color="instagram">
+        <ion-icon name="logo-instagram" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
 
-  <p>{{speaker?.about}}</p>
-</ion-content>
+    <p>{{speaker?.about}}</p>
+  </ion-content>
+</ion-page>

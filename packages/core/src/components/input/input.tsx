@@ -52,27 +52,27 @@ export class Input implements InputComponent {
   /**
    * @input {string} Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
    */
-  @Prop() autocapitalize: string = 'none';
+  @Prop() autocapitalize = 'none';
 
   /**
    * @input {string} Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
    */
-  @Prop() autocomplete: string = 'off';
+  @Prop() autocomplete = 'off';
 
   /**
    * @input {string} Whether autocorrection should be enabled when the user is entering/editing the text value. Defaults to `"off"`.
    */
-  @Prop() autocorrect: string = 'off';
+  @Prop() autocorrect = 'off';
 
   /**
    * @input {string} This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
    */
-  @Prop() autofocus: boolean = false;
+  @Prop() autofocus = false;
 
   /**
    * @input {boolean} If true and the type is `checkbox` or `radio`, the control is selected by default. Defaults to `false`.
    */
-  @Prop() checked: boolean = false;
+  @Prop() checked = false;
 
   @Watch('checked')
   protected checkedChanged() {
@@ -82,7 +82,7 @@ export class Input implements InputComponent {
   /**
    * @input {boolean} If true, a clear icon will appear in the input when there is a value. Clicking it clears the input. Defaults to `false`.
    */
-  @Prop() clearInput: boolean = false;
+  @Prop() clearInput = false;
 
   /**
    * @input {boolean} If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
@@ -92,7 +92,7 @@ export class Input implements InputComponent {
   /**
    * @input {number} Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
    */
-  @Prop() debounce: number = 0;
+  @Prop() debounce = 0;
 
   @Watch('debounce')
   private debounceInput() {
@@ -105,7 +105,7 @@ export class Input implements InputComponent {
   /**
    * @input {boolean} If true, the user cannot interact with the input. Defaults to `false`.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() disabled = false;
 
   @Watch('disabled')
   protected disabledChanged() {
@@ -160,12 +160,12 @@ export class Input implements InputComponent {
   /**
    * @input {boolean} If true, the user cannot modify the value. Defaults to `false`.
    */
-  @Prop() readonly: boolean = false;
+  @Prop() readonly = false;
 
   /**
    * @input {boolean} If true, the user must fill in a value before submitting a form.
    */
-  @Prop() required: boolean = false;
+  @Prop() required = false;
 
   /**
    * @input {number} This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.
@@ -175,7 +175,7 @@ export class Input implements InputComponent {
   /**
    * @input {string} If true, the element will have its spelling and grammar checked. Defaults to `false`.
    */
-  @Prop() spellcheck: boolean = false;
+  @Prop() spellcheck = false;
 
   /**
    * @input {string} Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.
@@ -190,7 +190,7 @@ export class Input implements InputComponent {
   /**
    * @input {string} The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
    */
-  @Prop() type: string = 'text';
+  @Prop() type = 'text';
 
   /**
    * @input {string} The value of the input.
@@ -223,7 +223,7 @@ export class Input implements InputComponent {
   private emitStyle() {
     clearTimeout(this.styleTmr);
 
-    let styles = {
+    const styles = {
       'input': true,
       'input-checked': this.checked,
       'input-disabled': this.disabled,
@@ -269,8 +269,8 @@ export class Input implements InputComponent {
 
 
   /**
-  * Check if we need to clear the text input if clearOnEdit is enabled
-  */
+   * Check if we need to clear the text input if clearOnEdit is enabled
+   */
   checkClearOnEdit(ev: any) {
     if (!this.clearOnEdit) {
       return;

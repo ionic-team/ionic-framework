@@ -45,7 +45,7 @@ export class ItemSliding {
   private tmr: any = null;
   private leftOptions: ItemOptions;
   private rightOptions: ItemOptions;
-  private optsDirty: boolean = true;
+  private optsDirty = true;
   private gestureOptions: any;
 
   @Element() private el: HTMLElement;
@@ -172,8 +172,8 @@ export class ItemSliding {
     // Reset left and right options in case they were removed
     this.leftOptions = this.rightOptions = null;
 
-    for (var i = 0; i < options.length; i++) {
-      let option = options.item(i);
+    for (let i = 0; i < options.length; i++) {
+      const option = options.item(i);
 
       if (option.isRightSide()) {
         this.rightOptions = option;

@@ -29,12 +29,12 @@ number
 
 #### enterAnimation
 
-any
+
 
 
 #### leaveAnimation
 
-any
+
 
 
 #### message
@@ -54,7 +54,7 @@ boolean
 
 #### toastId
 
-string
+number
 
 
 #### translucent
@@ -91,12 +91,12 @@ number
 
 #### enterAnimation
 
-any
+
 
 
 #### leaveAnimation
 
-any
+
 
 
 #### message
@@ -116,7 +116,7 @@ boolean
 
 #### toastId
 
-string
+number
 
 
 #### translucent

@@ -4,14 +4,14 @@ import { Animation } from '../../../index';
 /**
  * iOS Loading Enter Animation
  */
-export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLElement): Promise<Animation> {
+export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
-  backdropAnimation.addElement(baseElm.querySelector('.loading-backdrop'));
+  backdropAnimation.addElement(baseEl.querySelector('.loading-backdrop'));
 
   const wrapperAnimation = new Animation();
-  wrapperAnimation.addElement(baseElm.querySelector('.loading-wrapper'));
+  wrapperAnimation.addElement(baseEl.querySelector('.loading-wrapper'));
 
   backdropAnimation.fromTo('opacity', 0.01, 0.3);
 
@@ -19,7 +19,7 @@ export default function iosEnterAnimation(Animation: Animation, baseElm: HTMLEle
                   .fromTo('scale', 1.1, 1);
 
   return Promise.resolve(baseAnimation
-    .addElement(baseElm)
+    .addElement(baseEl)
     .easing('ease-in-out')
     .duration(200)
     .add(backdropAnimation)

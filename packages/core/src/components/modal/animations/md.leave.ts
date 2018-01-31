@@ -3,15 +3,15 @@ import { Animation } from '../../../index';
 /**
  * Md Modal Leave Animation
  */
-export default function mdLeaveAnimation(Animation: Animation, baseElm: HTMLElement): Promise<Animation> {
+export default function mdLeaveAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
-  backdropAnimation.addElement(baseElm.querySelector('.modal-backdrop'));
+  backdropAnimation.addElement(baseEl.querySelector('.modal-backdrop'));
 
   const wrapperAnimation = new Animation();
-  const wrapperElm = baseElm.querySelector('.modal-wrapper');
-  wrapperAnimation.addElement(wrapperElm);
+  const wrapperEl = baseEl.querySelector('.modal-wrapper');
+  wrapperAnimation.addElement(wrapperEl);
 
   wrapperAnimation
     .fromTo('opacity', 0.99, 0)
@@ -20,7 +20,7 @@ export default function mdLeaveAnimation(Animation: Animation, baseElm: HTMLElem
   backdropAnimation.fromTo('opacity', 0.4, 0.0);
 
   return Promise.resolve(baseAnimation
-    .addElement(baseElm)
+    .addElement(baseEl)
     .easing('cubic-bezier(0.47,0,0.745,0.715)')
     .duration(200)
     .add(backdropAnimation)

@@ -31,14 +31,24 @@ The child buttons of the `ion-segment` component. Each `ion-segment-button` must
 
 ## Properties
 
+#### activated
+
+boolean
+
+
 #### checked
 
 boolean
+
+If true, the segment button is selected. Defaults to `false`.
 
 
 #### color
 
 string
+
+The color to use for the text color.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
 
 
 #### disabled
@@ -46,26 +56,49 @@ string
 boolean
 
 
+#### href
+
+string
+
+Contains a URL or a URL fragment that the hyperlink points to.
+If this property is set, an anchor tag will be rendered.
+
+
 #### mode
 
-any
+
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
 
 
 #### value
 
 string
+
+The value of the segment button.
 
 
 ## Attributes
 
+#### activated
+
+boolean
+
+
 #### checked
 
 boolean
+
+If true, the segment button is selected. Defaults to `false`.
 
 
 #### color
 
 string
+
+The color to use for the text color.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
 
 
 #### disabled
@@ -73,19 +106,34 @@ string
 boolean
 
 
+#### href
+
+string
+
+Contains a URL or a URL fragment that the hyperlink points to.
+If this property is set, an anchor tag will be rendered.
+
+
 #### mode
 
-any
+
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
 
 
 #### value
 
 string
+
+The value of the segment button.
 
 
 ## Events
 
 #### ionClick
+
+Emitted when the segment button is clicked.
 
 
 

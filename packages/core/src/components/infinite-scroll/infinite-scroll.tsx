@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { DomController, ScrollDetail, StencilElement } from '../../index';
 
 const enum Position {
@@ -13,18 +13,18 @@ const enum Position {
 })
 export class InfiniteScroll {
 
-  private thrPx: number = 0;
-  private thrPc: number = 0.15;
+  private thrPx = 0;
+  private thrPc = 0;
   private scrollEl: HTMLIonScrollElement;
   private didFire = false;
   private isBusy = false;
   private init = false;
 
   @Element() private el: HTMLElement;
-  @State() isLoading: boolean = false;
+  @State() isLoading = false;
 
   @Prop({ context: 'dom' }) dom: DomController;
-  @Prop({ context: 'enableListener' }) enableListener: any;
+  @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
 
   /**
    * @input {string} The threshold distance from the bottom
@@ -34,9 +34,9 @@ export class InfiniteScroll {
    * output event to get called when the user has scrolled 10%
    * from the bottom of the page. Use the value `100px` when the
    * scroll is within 100 pixels from the bottom of the page.
-   * Default is `15%`.
+   * Defaults to `15%`.
    */
-  @Prop() threshold: string = '15%';
+  @Prop() threshold = '15%';
 
   @Watch('threshold')
   protected thresholdChanged(val: string) {
@@ -52,29 +52,26 @@ export class InfiniteScroll {
 
 
   /**
-   * @input {boolean} If true, Whether or not the infinite scroll should be
-   * enabled or not. Setting to `false` will remove scroll event listeners
+   * @input {boolean} If true, whether or not the infinite scroll should be
+   * disabled or not. Setting to `true` will remove scroll event listeners
    * and hide the display.
    *
    * Call `enable(false)` to disable the infinite scroll from actively
    * trying to receive new data while scrolling. This method is useful
    * when it is known that there is no more data that can be added, and
    * the infinite scroll is no longer needed.
-   * @param {boolean} shouldEnable  If the infinite scroll should be
-   * enabled or not. Setting to `false` will remove scroll event listeners
-   * and hide the display.
    */
-  @Prop() enabled: boolean = true;
+  @Prop() disabled = false;
 
-  @Watch('enabled')
-  protected enabledChanged(val: boolean) {
-    this.enableScrollEvents(val);
+  @Watch('disabled')
+  protected disabledChanged(val: boolean) {
+    this.enableScrollEvents(!val);
   }
 
   /**
    * @input {string} The position of the infinite scroll element.
    * The value can be either `top` or `bottom`.
-   * Default is `bottom`.
+   * Defaults to `bottom`.
    */
   @Prop() position: string = Position.Bottom;
 
@@ -87,7 +84,7 @@ export class InfiniteScroll {
   @Event() ionInfinite: EventEmitter;
 
   componentWillLoad() {
-    const scrollEl = this.el.closest('ion-scroll') as StencilElement;
+    const scrollEl = this.el.closest('ion-scroll') as any as StencilElement;
     return scrollEl.componentOnReady().then((el) => {
       this.scrollEl = el as HTMLIonScrollElement;
     });
@@ -100,14 +97,13 @@ export class InfiniteScroll {
     }
     this.init = true;
     this.thresholdChanged(this.threshold);
-    this.enableScrollEvents(this.enabled);
+    this.enableScrollEvents(!this.disabled);
     if (this.position === Position.Top) {
       this.dom.write(() => this.scrollEl.scrollToBottom(0));
     }
   }
 
   componentDidUnload() {
-    this.enableScrollEvents(false);
     this.scrollEl = null;
   }
 
@@ -128,16 +124,11 @@ export class InfiniteScroll {
     const height = this.scrollEl.offsetHeight;
     const threshold = this.thrPc ? (height * this.thrPc) : this.thrPx;
 
-    let distanceFromInfinite: number;
+    const distanceFromInfinite = (this.position === Position.Bottom)
+      ? scrollHeight - infiniteHeight - scrollTop - threshold - height
+      : scrollTop - infiniteHeight - threshold;
 
-    if (this.position === Position.Bottom) {
-      distanceFromInfinite = scrollHeight - infiniteHeight - scrollTop - threshold - height;
-    } else {
-      // assert(this.position === Position.Top, '_position should be top');
-      distanceFromInfinite = scrollTop - infiniteHeight - threshold;
-    }
-
-    if (distanceFromInfinite < 0) {
+      if (distanceFromInfinite < 0) {
       if (!this.didFire) {
         this.isLoading = true;
         this.didFire = true;
@@ -149,14 +140,6 @@ export class InfiniteScroll {
     }
 
     return 4;
-  }
-
-  private canStart(): boolean {
-    return (
-      this.enabled &&
-      !this.isBusy &&
-      this.scrollEl &&
-      !this.isLoading);
   }
 
   /**
@@ -177,7 +160,8 @@ export class InfiniteScroll {
     this.isLoading = false;
 
     if (this.position === Position.Top) {
-      /** New content is being added at the top, but the scrollTop position stays the same,
+      /**
+       * New content is being added at the top, but the scrollTop position stays the same,
        * which causes a scroll jump visually. This algorithm makes sure to prevent this.
        * (Frame 1)
        *    - complete() is called, but the UI hasn't had time to update yet.
@@ -217,12 +201,21 @@ export class InfiniteScroll {
   }
 
   /**
-  * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to
-  * change state of infiniteScroll to "complete"
-  */
+   * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to
+   * change state of infiniteScroll to "complete"
+   */
+  @Method()
   waitFor(action: Promise<any>) {
     const enable = this.complete.bind(this);
     action.then(enable, enable);
+  }
+
+  private canStart(): boolean {
+    return (
+      !this.disabled &&
+      !this.isBusy &&
+      this.scrollEl &&
+      !this.isLoading);
   }
 
   private enableScrollEvents(shouldListen: boolean) {
@@ -233,7 +226,7 @@ export class InfiniteScroll {
     return {
       class: {
         'infinite-scroll-loading': this.isLoading,
-        'infinite-scroll-enabled': this.enabled
+        'infinite-scroll-enabled': !this.disabled
       }
     };
   }

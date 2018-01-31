@@ -36,7 +36,7 @@
   fill: $tabs-ios-tab-icon-color;
 }
 
-.tabbar-ios ion-tab-button:hover:not(.disable-hover),
+.enable-hover .tabbar-ios ion-tab-button:hover,
 .tabbar-ios .tab-selected {
   color: $tabs-ios-tab-text-color-active;
 

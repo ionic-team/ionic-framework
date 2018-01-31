@@ -12,7 +12,7 @@
 string
 
 
-#### enabled
+#### disabled
 
 boolean
 
@@ -34,7 +34,7 @@ boolean
 
 #### side
 
-any
+
 
 
 #### swipeEnabled
@@ -54,7 +54,7 @@ string
 string
 
 
-#### enabled
+#### disabled
 
 boolean
 
@@ -76,7 +76,7 @@ boolean
 
 #### side
 
-any
+
 
 
 #### swipeEnabled

@@ -1,8 +1,8 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { Modal, ModalEvent, ModalOptions } from '../../index';
+import { ModalEvent, ModalOptions } from '../../index';
 
 let ids = 0;
-const modals = new Map<number, Modal>();
+const modals = new Map<number, HTMLIonModalElement>();
 
 @Component({
   tag: 'ion-modal-controller'
@@ -29,7 +29,7 @@ export class ModalController {
   }
 
   @Method()
-  dismiss(data?: any, role?: any, modalId: number = -1) {
+  dismiss(data?: any, role?: any, modalId = -1) {
     modalId = modalId >= 0 ? modalId : getHighestId();
     const modal = modals.get(modalId);
     return modal.dismiss(data, role);
@@ -38,14 +38,12 @@ export class ModalController {
 
   @Listen('body:ionModalWillPresent')
   protected modalWillPresent(ev: ModalEvent) {
-    console.log('modalWillPresent');
     modals.set(ev.target.modalId, ev.target);
   }
 
 
   @Listen('body:ionModalWillDismiss, body:ionModalDidUnload')
   protected modalWillDismiss(ev: ModalEvent) {
-    console.log('modalWillDismiss');
     modals.delete(ev.target.modalId);
   }
 
@@ -58,7 +56,7 @@ export class ModalController {
 
 function getHighestId() {
   let minimum = -1;
-  modals.forEach((_modal: Modal, id: number) => {
+  modals.forEach((_modal: HTMLIonModalElement, id: number) => {
     if (id > minimum) {
       minimum = id;
     }

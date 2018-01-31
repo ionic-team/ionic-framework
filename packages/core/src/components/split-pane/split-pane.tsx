@@ -27,13 +27,13 @@ export class SplitPane {
   private rmL: any;
 
   @Element() private el: HTMLElement;
-  @State() private visible: boolean = false;
+  @State() private visible = false;
 
   /**
    * @input {boolean} If `false`, the split-pane is disabled, ie. the side pane will
    * never be displayed. Default `true`.
    */
-  @Prop() enabled: boolean = true;
+  @Prop() disabled = false;
 
   /**
    * @input {string | boolean} When the split-pane should be shown.
@@ -66,9 +66,9 @@ export class SplitPane {
     const children = this.el.children;
     const nu = this.el.childElementCount;
     let foundMain = false;
-    for (var i = 0; i < nu; i++) {
-      var child = children[i] as HTMLElement;
-      var isMain = child.hasAttribute('main');
+    for (let i = 0; i < nu; i++) {
+      const child = children[i] as HTMLElement;
+      const isMain = child.hasAttribute('main');
       if (isMain) {
         if (foundMain) {
           console.warn('split pane can not have more than one main node');
@@ -89,7 +89,7 @@ export class SplitPane {
     this.rmL = null;
 
     // Check if the split-pane is disabled
-    if (!this.enabled) {
+    if (this.disabled) {
       this._setVisible(false);
       return;
     }

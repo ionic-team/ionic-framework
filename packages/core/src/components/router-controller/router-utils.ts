@@ -80,7 +80,7 @@ export function readNavState(node: HTMLElement) {
 function mustMatchRoute(segments: RouterSegments, routes: RouterEntries) {
   const r = matchRoute(segments, routes);
   if (!r) {
-    throw 'no route found';
+    throw new Error('no route found');
   }
   return r;
 }
@@ -121,7 +121,7 @@ export function matchRoute(segments: RouterSegments, routes: RouterEntries): Rou
 
 export function generateURL(stack: NavState[]): string {
   const segments: string[] = [];
-  for (let state of stack) {
+  for (const state of stack) {
     segments.push(...parseURL(state.path));
   }
   const path = segments

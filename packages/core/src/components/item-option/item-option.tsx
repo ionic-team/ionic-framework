@@ -31,7 +31,7 @@ export class ItemOption {
   /**
    * @input {boolean} If true, sets the button into a disabled state.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() disabled = false;
 
   notCaptured() {
     // if (!clickedOptionButton(ev)) {
@@ -40,18 +40,24 @@ export class ItemOption {
   }
 
   clickedOptionButton(ev: any): boolean {
-    let el = ev.target.closest('ion-item-option');
+    const el = ev.target.closest('ion-item-option');
     return !!el;
   }
 
   render() {
 
     const TagType = this.href ? 'a' : 'button';
+
+    // TODO TagType should wrap button-inner
     return [
-      <TagType class='item-option-button' onClick={this.clickedOptionButton.bind(this)} disabled={this.disabled}></TagType>,
+      <TagType
+        class='item-option-button'
+        disabled={this.disabled}
+        href={this.href}
+        onClick={this.clickedOptionButton.bind(this)}></TagType>,
       <span class='button-inner'>
         <slot></slot>
-       </span>
+      </span>
     ];
   }
 

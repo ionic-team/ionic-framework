@@ -38,6 +38,7 @@ exports.config = {
     { components: ['ion-spinner'] },
     { components: ['ion-split-pane'] },
     { components: ['ion-range', 'ion-range-knob']},
+    { components: ['ion-refresher', 'ion-refresher-content']},
     { components: ['ion-tabs', 'ion-tab', 'ion-tabbar', 'ion-tab-button'] },
     { components: ['ion-toggle'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
@@ -50,6 +51,7 @@ exports.config = {
   ],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',
+  enableCache: false,
   buildStats: true
 };
 

@@ -11,6 +11,10 @@ const CENTER = '0%';
 const OFF_OPACITY = 0.8;
 const SHOW_BACK_BTN_CSS = 'show-back-button';
 
+// TODO - make sure this uses the `ion-page` logic from the md transition
+// DO this later since the transition is broke as a joke anyway
+// Dan B 1/9/2018
+
 export function buildIOSTransition(rootTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Promise<Transition> {
 
   rootTransition.enteringView = enteringView;

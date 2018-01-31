@@ -1,28 +1,20 @@
 import { Component } from '@angular/core';
+//  import { PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'page-one',
   template: `
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Page One</ion-title>
-  </ion-toolbar>
-</ion-header>
-<ion-content>
-  Page One
-  <ul>
-    <li>ngOnInit - {{ngOnInitDetection}}</li>
-  </ul>
-</ion-content>
+    <div style="height: 200px; background-color: blue">
+      {{ngOnInitDetection}}
+      <ion-button (click)="dismiss()">Close Popover</ion-button>
+    </div>
   `
 })
 export class PopoverPageToPresent {
 
   ngOnInitDetection = 'initial';
 
-  constructor() {
-
-  }
+  // constructor(private controller: PopoverController) { }
 
 
   ngOnInit() {
@@ -32,4 +24,7 @@ export class PopoverPageToPresent {
     }, 500);
   }
 
+  dismiss() {
+    // return this.controller.
+  }
 }

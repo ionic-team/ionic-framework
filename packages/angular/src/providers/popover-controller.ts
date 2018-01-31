@@ -29,9 +29,16 @@ export class PopoverController implements FrameworkDelegate {
     return getPopoverProxy(opts);
   }
 
-  attachViewToDom(elementOrContainerToMountTo: HTMLElement, elementOrComponentToMount: Type<any>, _propsOrDataObj?: any, classesToAdd?: string[]): Promise<AngularMountingData> {
+  dismiss(data?: any, role?: string, id?: number) {
+    const popoverController = document.querySelector('ion-popover-controller');
+    return (popoverController as any).componentOnReady().then(() => {
+      return popoverController.dismiss(data, role, id);
+    });
+  }
 
-    return this.angularComponentMounter.attachViewToDom(elementOrContainerToMountTo, null, elementOrComponentToMount, this.componentResolveFactory, this.injector, _propsOrDataObj, classesToAdd, false);
+  attachViewToDom(elementOrContainerToMountTo: HTMLElement, elementOrComponentToMount: Type<any>, data?: any, classesToAdd?: string[]): Promise<AngularMountingData> {
+
+    return this.angularComponentMounter.attachViewToDom(elementOrContainerToMountTo, null, elementOrComponentToMount, this.componentResolveFactory, this.injector, data, classesToAdd);
   }
 
   removeViewFromDom(parentElement: HTMLElement, childElement: HTMLElement) {

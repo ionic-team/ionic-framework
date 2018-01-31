@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
+import { getNavAsChildIfExists } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-tab',
@@ -39,14 +40,14 @@ export class Tab {
   /**
    * @input {string} The badge color for the tab button.
    */
-  @Prop() badgeStyle: string = 'default';
+  @Prop() badgeStyle = 'default';
 
   /**
    * @input {boolean} If true, enable the tab. If false,
    * the user cannot interact with this element.
    * Default: `true`.
    */
-  @Prop() enabled = true;
+  @Prop() disabled = false;
 
   /**
    * @input {boolean} If true, the tab button is visible within the
@@ -77,6 +78,12 @@ export class Tab {
   @Method()
   setActive(active: boolean): Promise<any> {
     this.active = active;
+    const nav = getNavAsChildIfExists(this.el);
+    if (nav && nav.getViews().length === 0 && nav.root) {
+      // we need to initialize
+      return nav.setRoot(nav.root);
+    }
+    // it's already been initialized if it exists
     return Promise.resolve();
   }
 

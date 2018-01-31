@@ -13,24 +13,21 @@ export class ChipButton {
   @Element() private el: HTMLElement;
 
   /**
-   * @input {string} Contains a URL or a URL fragment that the hyperlink points to.
-   * If this property is set, an anchor tag will be rendered.
-   */
-  @Prop() href: string;
-
-  /**
-   * @input {string} The color to use from your Sass `$colors` map.
+   * The color to use.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
 
   /**
-   * @input {string} The mode determines which platform styles to use.
+   * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode: 'ios' | 'md';
+
+  /**
+   * If true, sets the button into a disabled state.
+   */
+  @Prop() disabled = false;
 
   /**
    * Set to `"clear"` for a transparent button style.
@@ -38,9 +35,10 @@ export class ChipButton {
   @Prop() fill: string;
 
   /**
-   * @input {boolean} If true, sets the button into a disabled state.
+   * Contains a URL or a URL fragment that the hyperlink points to.
+   * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() disabled: boolean = false;
+  @Prop() href: string;
 
   /**
    * Get the classes based on the button type
@@ -60,7 +58,7 @@ export class ChipButton {
    * Get the classes for the color
    */
   private getColorClassList(color: string, buttonType: string, style: string, mode: string): string[] {
-    let className = (style === 'default') ? `${buttonType}` : `${buttonType}-${style}`;
+    const className = (style === 'default') ? `${buttonType}` : `${buttonType}-${style}`;
 
     return [`${className}-${mode}`].concat(
         style !== 'default' ? `${className}` : [],
@@ -99,11 +97,14 @@ export class ChipButton {
     };
 
     return (
-      <TagType class={buttonClasses} disabled={this.disabled}>
-        <span class='button-inner'>
-          <slot></slot>
-        </span>
-        <div class='button-effect'></div>
+      <TagType
+        class={buttonClasses}
+        disabled={this.disabled}
+        href={this.href}>
+          <span class='button-inner'>
+            <slot></slot>
+          </span>
+          { this.mode === 'md' && <ion-ripple-effect useTapClick={true} /> }
       </TagType>
     );
   }

@@ -292,7 +292,7 @@ string
 
 #### pickerOptions
 
-any
+
 
 
 #### placeholder
@@ -389,7 +389,7 @@ string
 
 #### pickerOptions
 
-any
+
 
 
 #### placeholder

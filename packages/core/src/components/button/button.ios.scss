@@ -30,14 +30,9 @@
   background-color: $button-ios-background-color-focused;
 }
 
-.button-ios:hover:not(.disable-hover) {
+.enable-hover .button-ios:hover {
   opacity: $button-ios-opacity-hover;
 }
-
-.button-ios .icon {
-  fill: $button-ios-icon-fill-color;
-}
-
 
 // iOS Default Button Color Mixin
 // --------------------------------------------------
@@ -174,7 +169,7 @@
   background-color: $button-ios-clear-background-color-focused;
 }
 
-.button-clear-ios:hover:not(.disable-hover) {
+.enable-hover .button-clear-ios:hover {
   color: $button-ios-clear-text-color-hover;
   opacity: $button-ios-clear-opacity-hover;
 }
@@ -201,7 +196,7 @@
     background-color: $bg-color-focused;
   }
 
-  .button-clear-ios-#{$color-name}:hover:not(.disable-hover) {
+  .enable-hover .button-clear-ios-#{$color-name}:hover {
     color: $fg-color;
   }
 }

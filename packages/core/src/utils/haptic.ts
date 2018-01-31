@@ -1,4 +1,4 @@
-const _engine = (window as any).TapticEngine;
+const engine = (window as any).TapticEngine;
 
 /**
  * Check to see if the Haptic Plugin is available
@@ -6,7 +6,7 @@ const _engine = (window as any).TapticEngine;
  *
  */
 export function hapticAvailable() {
-  return !!_engine;
+  return !!engine;
 }
 
 /**
@@ -14,21 +14,21 @@ export function hapticAvailable() {
  * (not for gestures)
  */
 export function hapticSelection() {
-  _engine && _engine.selection();
+  engine && engine.selection();
 }
 
 /**
  * Tell the haptic engine that a gesture for a selection change is starting.
  */
 export function hapticSelectionStart() {
-  _engine && _engine.gestureSelectionStart();
+  engine && engine.gestureSelectionStart();
 }
 
 /**
  * Tell the haptic engine that a selection changed during a gesture.
  */
 export function hapticSelectionChanged() {
-  _engine && _engine.gestureSelectionChanged();
+  engine && engine.gestureSelectionChanged();
 }
 
 /**
@@ -36,7 +36,7 @@ export function hapticSelectionChanged() {
  * called lest resources are not properly recycled.
  */
 export function hapticSelectionEnd() {
-  _engine && _engine.gestureSelectionEnd();
+  engine && engine.gestureSelectionEnd();
 }
 
 /**
@@ -44,7 +44,7 @@ export function hapticSelectionEnd() {
  * options should be of the type `{ type: 'success' }` (or `warning`/`error`)
  */
 export function hapticNotification(options: { type: string }) {
-  _engine && _engine.notification(options);
+  engine && engine.notification(options);
 }
 
 /**
@@ -52,5 +52,5 @@ export function hapticNotification(options: { type: string }) {
  * options should be of the type `{ style: 'light' }` (or `medium`/`heavy`)
  */
 export function hapticImpact(options: { style: string }) {
-  _engine && _engine.impact(options);
+  engine && engine.impact(options);
 }

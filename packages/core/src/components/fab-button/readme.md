@@ -60,7 +60,7 @@ string
 
 #### mode
 
-any
+
 
 
 #### show
@@ -70,7 +70,7 @@ boolean
 
 #### toggleActive
 
-any
+
 
 
 #### translucent
@@ -102,7 +102,7 @@ string
 
 #### mode
 
-any
+
 
 
 #### show
@@ -112,7 +112,7 @@ boolean
 
 #### toggleActive
 
-any
+
 
 
 #### translucent

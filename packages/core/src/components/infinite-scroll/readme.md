@@ -135,7 +135,7 @@ You could replace our default content with custom SVG or CSS animations.
 
 ## Properties
 
-#### enabled
+#### disabled
 
 boolean
 
@@ -152,7 +152,7 @@ string
 
 ## Attributes
 
-#### enabled
+#### disabled
 
 boolean
 
@@ -184,6 +184,12 @@ to a data list. Once the data has been received and UI updated, you
 then call this method to signify that the loading has completed.
 This method will change the infinite scroll's state from `loading`
 to `enabled`.
+
+
+#### waitFor()
+
+Pass a promise inside `waitFor()` within the `infinite` output event handler in order to
+change state of infiniteScroll to "complete"
 
 
 

@@ -17,13 +17,13 @@ export class Menu {
   private gestureBlocker: string;
   private animation: Animation;
   private isPane = false;
-  private _isOpen: boolean = false;
+  private _isOpen = false;
   private lastOnEnd = 0;
 
   mode: string;
   color: string;
-  isAnimating: boolean = false;
-  isRightSide: boolean = false;
+  isAnimating = false;
+  isRightSide = false;
   width: number = null;
 
   backdropEl: HTMLElement;
@@ -52,7 +52,7 @@ export class Menu {
    * see the `menuType` in the [config](../../config/Config). Available options:
    * `"overlay"`, `"reveal"`, `"push"`.
    */
-  @Prop({ mutable: true }) type: string = 'overlay';
+  @Prop({ mutable: true }) type = 'overlay';
 
   @Watch('type')
   typeChanged(type: string) {
@@ -69,11 +69,11 @@ export class Menu {
   }
 
   /**
-   * @input {boolean} If true, the menu is enabled. Default `true`.
+   * @input {boolean} If true, the menu is disabled. Default `false`.
    */
-  @Prop({ mutable: true }) enabled: boolean;
+  @Prop({ mutable: true }) disabled = false;
 
-  @Watch('enabled')
+  @Watch('disabled')
   protected enabledChanged() {
     this.updateState();
   }
@@ -91,7 +91,7 @@ export class Menu {
   /**
    * @input {boolean} If true, swiping the menu is enabled. Default `true`.
    */
-  @Prop() swipeEnabled: boolean = true;
+  @Prop() swipeEnabled = true;
 
   @Watch('swipeEnabled')
   protected swipeEnabledChanged() {
@@ -101,9 +101,9 @@ export class Menu {
   /**
    * @input {boolean} If true, the menu will persist on child pages.
    */
-  @Prop() persistent: boolean = false;
+  @Prop() persistent = false;
 
-  @Prop() maxEdgeStart: number = 50;
+  @Prop() maxEdgeStart = 50;
 
   /**
    * @output {Event} Emitted when the sliding position changes.
@@ -149,18 +149,18 @@ export class Menu {
     this.typeChanged(this.type);
     this.sideChanged();
 
-    let isEnabled = this.enabled;
+    let isEnabled = !this.disabled;
     if (isEnabled === true || typeof isEnabled === 'undefined') {
       const menus = this.menuCtrl.getMenus();
       isEnabled = !menus.some(m => {
-        return m.side === this.side && m.enabled;
+        return m.side === this.side && !m.disabled;
       });
     }
     // register this menu with the app's menu controller
     this.menuCtrl._register(this);
 
     // mask it as enabled / disabled
-    this.enabled = isEnabled;
+    this.disabled = !isEnabled;
   }
 
   componentDidUnload() {
@@ -197,7 +197,7 @@ export class Menu {
   }
 
   @Method()
-  setOpen(shouldOpen: boolean, animated: boolean = true): Promise<boolean> {
+  setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
     // If the menu is disabled or it is currenly being animated, let's do nothing
     if (!this.isActive() || this.isAnimating || (shouldOpen === this._isOpen)) {
       return Promise.resolve(this._isOpen);
@@ -259,7 +259,7 @@ export class Menu {
   }
 
   private isActive(): boolean {
-    return this.enabled && !this.isPane;
+    return !this.disabled && !this.isPane;
   }
 
   private canSwipe(): boolean {
@@ -411,7 +411,7 @@ export class Menu {
       this.forceClosing();
     }
 
-    if (this.enabled && this.menuCtrl) {
+    if (!this.disabled && this.menuCtrl) {
       this.menuCtrl._setActiveMenu(this);
     }
     assert(!this.isAnimating, 'can not be animating');
@@ -430,7 +430,7 @@ export class Menu {
     return {
       role: 'complementary',
       class: {
-        'menu-enabled': this.enabled,
+        'menu-enabled': !this.disabled,
         'menu-side-right': this.isRightSide,
         'menu-side-left': !this.isRightSide,
         [typeClass]: true,
@@ -452,7 +452,7 @@ export class Menu {
         'onEnd': this.onDragEnd.bind(this),
         'maxEdgeStart': this.maxEdgeStart,
         'edge': this.side,
-        'enabled': this.isActive() && this.swipeEnabled,
+        'disabled': !this.isActive() || !this.swipeEnabled,
         'gestureName': 'menu-swipe',
         'gesturePriority': 10,
         'type': 'pan',

@@ -33,6 +33,11 @@ ion-action-sheet {
   width: $action-sheet-width;
 
   border: 0;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
 
 .action-sheet-container {

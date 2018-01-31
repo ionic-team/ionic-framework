@@ -11,16 +11,7 @@
     <ion-page>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Item - Buttons</ion-title>
-          <ion-buttons slot="end">
-            <ion-button color="secondary">
-              Default
-              <ion-icon name="star" slot="end"></ion-icon>
-            </ion-button>
-            <ion-button color="secondary">
-              <ion-icon slot="icon-only" name="home"></ion-icon>
-            </ion-button>
-          </ion-buttons>
+          <ion-title>Items as Links/Buttons</ion-title>
         </ion-toolbar>
       </ion-header>
 
@@ -37,16 +28,20 @@
           a[ion-item] secondary
         </ion-item>
 
-        <ion-item onclick="testClick(event)">
-          button[ion-item]
+        <ion-item tappable id="attachClick">
+          button[ion-item] tappable click listener
         </ion-item>
 
-        <ion-item class="activated" (click)="testClick(event)">
-          button[ion-item].activated
+        <ion-item ONCLICK="testClick(event)">
+          button[ion-item] ONCLICK
         </ion-item>
 
-        <ion-item color="danger" (click)="testClick(event)">
-          button[ion-item] danger
+        <ion-item class="activated" onClick="testClick(event)">
+          button[ion-item].activated onClick
+        </ion-item>
+
+        <ion-item color="danger" onclick="testClick(event)">
+          button[ion-item] danger onclick
         </ion-item>
 
         <ion-item onclick="testClickOutsize(event)">
@@ -68,14 +63,14 @@
         </ion-item>
 
         <ion-item>
-          <ion-button slot="start" icon-end onclick="testClick(event)">
+          <ion-button slot="start" onclick="testClick(event)">
             Right Icon
-            <ion-icon name="home"></ion-icon>
+            <ion-icon name="home" slot="end"></ion-icon>
           </ion-button>
           right icon buttons
-          <ion-button fill="outline" slot="end" icon-end onclick="testClick(event)">
+          <ion-button fill="outline" slot="end" onclick="testClick(event)">
             Right Icon
-            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star" slot="end"></ion-icon>
           </ion-button>
         </ion-item>
 
@@ -143,6 +138,12 @@
   </ion-app>
 
   <script>
+    const attach = document.getElementById('attachClick');
+
+    attach.addEventListener('click', (ev) => {
+      console.log('clicked me!', ev);
+    });
+
     function testClick(ev) {
       console.log('CLICK!', ev.target.tagName, ev.target.textContent.trim());
     }

@@ -62,7 +62,7 @@ export class ActionSheetPageComponent {
         }
       }]
     });
-    actionSheet.present();
+    return actionSheet.present();
   }
 
 }

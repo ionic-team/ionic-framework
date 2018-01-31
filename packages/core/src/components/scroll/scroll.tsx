@@ -12,13 +12,11 @@ export class Scroll {
 
   private gesture: GestureDelegate;
   private positions: number[] = [];
-  private _l: number;
-  private _t: number;
   private tmr: any;
   private queued = false;
-
-  isScrolling: boolean = false;
-  detail: ScrollDetail = {};
+  private app: HTMLIonAppElement;
+  private isScrolling = false;
+  private detail: ScrollDetail = {};
 
   @Element() private el: HTMLElement;
 
@@ -26,15 +24,7 @@ export class Scroll {
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop({ context: 'isServer' }) isServer: boolean;
 
-  @Prop() enabled: boolean = true;
-  @Prop() jsScroll: boolean = false;
-
-  @Watch('jsScroll')
-  jsScrollChanged(js: boolean) {
-    if (js) {
-      throw 'jsScroll: TODO!';
-    }
-  }
+  @Prop() disabled = false;
 
   @Prop() onionScrollStart: ScrollCallback;
   @Prop() onionScroll: ScrollCallback;
@@ -48,7 +38,7 @@ export class Scroll {
   /**
    * @output {ScrollEvent} Emitted while scrolling.
    */
-  @Event() ionScroll: EventEmitter;
+  @Event({bubbles: false}) ionScroll: EventEmitter;
 
   /**
    * @output {ScrollEvent} Emitted when the scroll has ended.
@@ -62,11 +52,26 @@ export class Scroll {
 
     const gestureCtrl = Ionic.gesture = Ionic.gesture || new GestureController();
     this.gesture = gestureCtrl.createGesture('scroll', 100, false);
+    this.app = this.el.closest('ion-app') as HTMLIonAppElement;
   }
 
   componentDidUnload() {
     this.gesture && this.gesture.destroy();
     this.gesture = this.detail = this.detail.event = null;
+  }
+
+  // Native Scroll *************************
+
+  @Listen('scroll', { passive: true })
+  onNativeScroll() {
+    if (!this.queued) {
+      this.queued = true;
+
+      this.dom.read(timeStamp => {
+        this.queued = false;
+        this.onScroll(timeStamp);
+      });
+    }
   }
 
   @Method()
@@ -106,8 +111,8 @@ export class Scroll {
     }
 
     if (duration < 32) {
-      self.setTop(y);
-      self.setLeft(x);
+      el.scrollTop = y;
+      el.scrollLeft = x;
       done();
       return promise;
     }
@@ -136,14 +141,14 @@ export class Scroll {
 
       // where .5 would be 50% of time on a linear scale easedT gives a
       // fraction based on the easing method
-      let easedT = (--time) * time * time + 1;
+      const easedT = (--time) * time * time + 1;
 
       if (fromY !== y) {
-        self.setTop((easedT * (y - fromY)) + fromY);
+        el.scrollTop = (easedT * (y - fromY)) + fromY;
       }
 
       if (fromX !== x) {
-        self.setLeft(Math.floor((easedT * (x - fromX)) + fromX));
+        el.scrollLeft = Math.floor((easedT * (x - fromX)) + fromX);
       }
 
       if (easedT < 1) {
@@ -173,33 +178,24 @@ export class Scroll {
     return promise;
   }
 
-  // Native Scroll *************************
-
-  @Listen('scroll', { passive: true })
-  protected onNativeScroll() {
-    if (!this.queued) {
-      this.queued = true;
-
-      this.dom.read(timeStamp => {
-        this.queued = false;
-        this.onScroll(timeStamp);
-      });
-    }
-  }
-
   private onScroll(timeStamp: number) {
     const detail = this.detail;
     const positions = this.positions;
+    const el = this.el;
+    if (this.app) {
+      this.app.setScrolling();
+    }
 
     detail.timeStamp = timeStamp;
 
     // get the current scrollTop
     // ******** DOM READ ****************
-    detail.scrollTop = this.getTop();
+    detail.scrollTop = el.scrollTop;
 
     // get the current scrollLeft
     // ******** DOM READ ****************
-    detail.scrollLeft = this.getLeft();
+    detail.scrollLeft = el.scrollLeft;
+
 
     if (!this.isScrolling) {
       // currently not scrolling, so this is a scroll start
@@ -215,38 +211,36 @@ export class Scroll {
       // emit only on the first scroll event
       if (this.onionScrollStart) {
         this.onionScrollStart(detail);
-      } else {
-        this.ionScrollStart.emit(detail);
       }
+      this.ionScrollStart.emit(detail);
     }
+    detail.deltaY = (detail.scrollTop - detail.startY);
+    detail.deltaX = (detail.scrollLeft - detail.startX);
 
     // actively scrolling
     positions.push(detail.scrollTop, detail.scrollLeft, detail.timeStamp);
 
-    if (positions.length > 3) {
-      // we've gotten at least 2 scroll events so far
-      detail.deltaY = (detail.scrollTop - detail.startY);
-      detail.deltaX = (detail.scrollLeft - detail.startX);
+    // move pointer to position measured 100ms ago
+    const timeRange = timeStamp - 100;
+    let startPos = positions.length - 1;
 
-      var endPos = (positions.length - 1);
-      var startPos = endPos;
-      var timeRange = (detail.timeStamp - 100);
+    while (startPos > 0 && positions[startPos] > timeRange) {
+      startPos -= 3;
+    }
 
-      // move pointer to position measured 100ms ago
-      for (var i = endPos; i > 0 && positions[i] > timeRange; i -= 3) {
-        startPos = i;
-      }
+    if (startPos > 3) {
+      // compute relative movement between these two points
+      const frequency = 1 / (positions[startPos] - timeStamp);
+      const movedY = positions[startPos - 1] - detail.scrollLeft;
+      const movedX = positions[startPos - 2] - detail.scrollTop;
 
-      if (startPos !== endPos) {
-        // compute relative movement between these two points
-        var deltaY = (positions[startPos - 2] - positions[endPos - 2]);
-        var deltaX = (positions[startPos - 1] - positions[endPos - 1]);
-        var factor = 1 / (positions[startPos] - positions[endPos]);
-
-        // based on XXms compute the movement to apply for each render step
-        detail.velocityY = deltaY * factor;
-        detail.velocityX = deltaX * factor;
-      }
+      // based on XXms compute the movement to apply for each render step
+      // velocity = space/time = s*(1/t) = s*frequency
+      detail.velocityX = movedX * frequency;
+      detail.velocityY = movedY * frequency;
+    } else {
+      detail.velocityX = 0;
+      detail.velocityY = 0;
     }
 
     clearTimeout(this.tmr);
@@ -270,7 +264,6 @@ export class Scroll {
     }
   }
 
-
   private onEnd(timeStamp: number) {
     const detail = this.detail;
 
@@ -279,49 +272,8 @@ export class Scroll {
     // emit that the scroll has ended
     if (this.onionScrollEnd) {
       this.onionScrollEnd(detail);
-    } else {
-      this.ionScrollEnd.emit(detail);
     }
-  }
-
-  /** DOM READ */
-  private getTop() {
-    if (this.jsScroll) {
-      return this._t;
-    }
-    return this._t = this.el.scrollTop;
-  }
-
-  /** DOM READ */
-  private getLeft() {
-    if (this.jsScroll) {
-      return 0;
-    }
-    return this._l = this.el.scrollLeft;
-  }
-
-  /** DOM WRITE */
-  private setTop(top: number) {
-    this._t = top;
-
-    if (this.jsScroll) {
-      this.el.style.transform = this.el.style.webkitTransform = `translate3d(${this._l * -1}px,${top * -1}px,0px)`;
-
-    } else {
-      this.el.scrollTop = top;
-    }
-  }
-
-  /** DOM WRITE */
-  private setLeft(left: number) {
-    this._l = left;
-
-    if (this.jsScroll) {
-      this.el.style.transform = this.el.style.webkitTransform = `translate3d(${left * -1}px,${this._t * -1}px,0px)`;
-
-    } else {
-      this.el.scrollLeft = left;
-    }
+    this.ionScrollEnd.emit(detail);
   }
 
   render() {

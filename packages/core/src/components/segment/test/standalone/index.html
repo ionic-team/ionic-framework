@@ -9,29 +9,45 @@
 </head>
 
 <body>
+  <ion-toolbar>
+    <ion-segment value="Free">
+      <ion-segment-button value="Paid">
+        Paid
+      </ion-segment-button>
+      <ion-segment-button value="Free">
+        Free
+      </ion-segment-button>
+      <ion-segment-button value="Top">
+        Top
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
   <ion-segment color="dark" value="Reading List">
     <ion-segment-button value="Bookmarks">
       <ion-icon name="book"></ion-icon>
     </ion-segment-button>
     <ion-segment-button value="Reading List">
-      <ion-icon ios="ios-glasses-outline" md="md-glasses"></ion-icon>
+      <ion-icon name="glasses"></ion-icon>
     </ion-segment-button>
     <ion-segment-button value="Shared Links">
-      <ion-icon ios="ios-at-outline" md="md-at"></ion-icon>
+      <ion-icon name="at"></ion-icon>
     </ion-segment-button>
   </ion-segment>
 
-  <ion-segment color="danger">
-    <ion-segment-button value="Bookmarks">
+  <ion-segment id="browserSegment" color="danger">
+    <ion-segment-button href="#bookmarks" value="bookmarks">
       Bookmarks
     </ion-segment-button>
-    <ion-segment-button value="Reading List">
+    <ion-segment-button href="#reading" value="reading">
       Reading List
     </ion-segment-button>
-    <ion-segment-button value="Shared Links">
+    <ion-segment-button href="#links" value="links">
       Shared Links
     </ion-segment-button>
   </ion-segment>
+
+  <pre><code><span id="browserResults"></span></code></pre>
 
   <ion-segment color="secondary" value="active">
     <ion-segment-button value="active">
@@ -45,4 +61,63 @@
     </ion-segment-button>
   </ion-segment>
 </body>
+
+<script>
+  var segment = document.getElementById('browserSegment');
+  var results = document.getElementById('browserResults');
+
+  checkUrl();
+
+  segment.addEventListener('ionChange', function() {
+    checkUrl();
+  });
+
+  function checkUrl() {
+    var url = window.location.href;
+
+    if (url.search('#bookmarks') > -1) {
+      setResults('bookmarks');
+    } else if (url.search('#reading') > -1) {
+      setResults('reading');
+    } else if (url.search('#links') > -1) {
+      setResults('links');
+    }
+  }
+
+  function setResults(value) {
+    results.innerHTML = value.charAt(0).toUpperCase() + value.slice(1);
+    segment.value = value;
+  }
+</script>
+
+<style>
+  body {
+    margin: 0;
+  }
+
+  ion-segment {
+    margin-bottom: 10px;
+  }
+
+  ion-toolbar ion-segment {
+    margin-bottom: 0;
+  }
+
+  pre {
+    border: 1px solid #e6e9ee;
+    background: white;
+    margin: 10px;
+    padding: 4px;
+    line-height: 24px;
+  }
+
+  code {
+    display: block;
+    padding: 0.5em;
+    background: #ffffff;
+    word-wrap: normal;
+    white-space: pre;
+    color: #314361;
+  }
+</style>
 </html>

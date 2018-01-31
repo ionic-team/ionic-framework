@@ -69,9 +69,9 @@ export class Toast {
   @Prop() closeButtonText: string;
   @Prop() dismissOnPageChange: boolean;
   @Prop() position: string;
-  @Prop() translucent: boolean = false;
-  @Prop() toastId: string;
-  @Prop() willAnimate: boolean = true;
+  @Prop() translucent = false;
+  @Prop() toastId: number;
+  @Prop() willAnimate = true;
 
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
@@ -158,7 +158,7 @@ export class Toast {
   }
 
   wrapperClass(): CssClassMap {
-    let wrapperClass: string[] = !this.position
+    const wrapperClass: string[] = !this.position
       ? ['toast-wrapper', 'toast-bottom']
       : [`toast-wrapper`, `toast-${this.position}`];
     return wrapperClass.reduce((prevValue: any, cssClass: any) => {
@@ -180,9 +180,10 @@ export class Toast {
   }
 
   render() {
-    let userCssClass = 'toast-content';
     if (this.cssClass) {
-      userCssClass += ' ' + this.cssClass;
+      this.cssClass.split(' ').forEach(cssClass => {
+        if (cssClass.trim() !== '') this.el.classList.add(cssClass);
+      });
     }
 
     return (
@@ -217,6 +218,7 @@ export interface ToastOptions {
 }
 
 export interface ToastEvent extends CustomEvent {
+  target: HTMLIonToastElement;
   detail: ToastEventDetail;
 }
 

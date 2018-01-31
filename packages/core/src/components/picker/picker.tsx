@@ -71,14 +71,14 @@ export class Picker {
 
   @Prop() cssClass: string;
   @Prop() content: string;
-  @Prop() dismissOnPageChange: boolean = false;
+  @Prop() dismissOnPageChange = false;
   @Prop() duration: number;
   @Prop() enterAnimation: AnimationBuilder;
   @Prop() leaveAnimation: AnimationBuilder;
-  @Prop() pickerId: string;
-  @Prop() showBackdrop: boolean = true;
-  @Prop() enableBackdropDismiss: boolean = true;
-  @Prop() willAnimate: boolean = true;
+  @Prop() pickerId: number;
+  @Prop() showBackdrop = true;
+  @Prop() enableBackdropDismiss = true;
+  @Prop() willAnimate = true;
 
   @Prop() buttons: PickerButton[] = [];
   @Prop() columns: PickerColumn[] = [];
@@ -188,7 +188,7 @@ export class Picker {
   }
 
   buttonClick(button: PickerButton) {
-    // if (!this.enabled) {
+    // if (this.disabled) {
     //   return;
     // }
 
@@ -210,9 +210,9 @@ export class Picker {
   }
 
   getSelected(): any {
-    let selected: {[k: string]: any} = {};
+    const selected: {[k: string]: any} = {};
     this.columns.forEach((col, index) => {
-      let selectedColumn = col.options[col.selectedIndex];
+      const selectedColumn = col.options[col.selectedIndex];
       selected[col.name] = {
         text: selectedColumn ? selectedColumn.text : null,
         value: selectedColumn ? selectedColumn.value : null,
@@ -249,9 +249,9 @@ export class Picker {
   }
 
   protected backdropClick() {
-    // TODO this.enabled
+    // TODO !this.disabled
     if (this.enableBackdropDismiss) {
-      let cancelBtn = this.buttons.find(b => b.role === 'cancel');
+      const cancelBtn = this.buttons.find(b => b.role === 'cancel');
       if (cancelBtn) {
         this.buttonClick(cancelBtn);
       } else {
@@ -263,7 +263,7 @@ export class Picker {
   render() {
     // TODO: cssClass
 
-    let buttons = this.buttons
+    const buttons = this.buttons
     .map(b => {
       if (typeof b === 'string') {
         b = { text: b };
@@ -275,7 +275,7 @@ export class Picker {
     })
     .filter(b => b !== null);
 
-    let columns = this.columns;
+    const columns = this.columns;
 
     // // clean up dat data
     // data.columns = data.columns.map(column => {
@@ -353,7 +353,7 @@ export class Picker {
   }
 
   buttonWrapperClass(button: PickerButton): CssClassMap {
-    let buttonClass: string[] = !button.role
+    const buttonClass: string[] = !button.role
       ? ['picker-toolbar-button']
       : [`picker-toolbar-button`, `picker-toolbar-${button.role}`];
     return buttonClass.reduce((prevValue: any, cssClass: any) => {
@@ -363,7 +363,7 @@ export class Picker {
   }
 
   buttonClass(button: PickerButton): CssClassMap {
-    let buttonClass: string[] = !button.cssClass
+    const buttonClass: string[] = !button.cssClass
       ? ['picker-button']
       : [`picker-button`, `${button.cssClass}`];
     return buttonClass.reduce((prevValue: any, cssClass: any) => {
@@ -414,6 +414,7 @@ export interface PickerColumnOption {
 }
 
 export interface PickerEvent extends CustomEvent {
+  target: HTMLIonPickerElement;
   detail: PickerEventDetail;
 }
 

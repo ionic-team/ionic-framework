@@ -24,6 +24,11 @@ ion-radio input {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
 
 ion-radio .radio-icon {

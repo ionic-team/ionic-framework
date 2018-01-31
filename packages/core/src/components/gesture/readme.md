@@ -9,7 +9,7 @@
 
 #### attachTo
 
-any
+
 
 
 #### autoBlockAll
@@ -24,7 +24,7 @@ string
 
 #### canStart
 
-any
+
 
 
 #### direction
@@ -37,7 +37,7 @@ string
 boolean
 
 
-#### enabled
+#### disabled
 
 boolean
 
@@ -59,32 +59,37 @@ number
 
 #### notCaptured
 
-any
+
 
 
 #### onEnd
 
-any
+
 
 
 #### onMove
 
-any
+
 
 
 #### onPress
 
-any
+
 
 
 #### onStart
 
-any
+
 
 
 #### onWillStart
 
-any
+
+
+
+#### passive
+
+boolean
 
 
 #### threshold
@@ -101,7 +106,7 @@ string
 
 #### attachTo
 
-any
+
 
 
 #### autoBlockAll
@@ -116,7 +121,7 @@ string
 
 #### canStart
 
-any
+
 
 
 #### direction
@@ -129,7 +134,7 @@ string
 boolean
 
 
-#### enabled
+#### disabled
 
 boolean
 
@@ -151,32 +156,37 @@ number
 
 #### notCaptured
 
-any
+
 
 
 #### onEnd
 
-any
+
 
 
 #### onMove
 
-any
+
 
 
 #### onPress
 
-any
+
 
 
 #### onStart
 
-any
+
 
 
 #### onWillStart
 
-any
+
+
+
+#### passive
+
+boolean
 
 
 #### threshold

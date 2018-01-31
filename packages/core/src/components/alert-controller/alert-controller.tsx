@@ -1,74 +1,70 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { AlertEvent, AlertOptions  } from '../../index';
+import { AlertEvent, AlertOptions } from '../../index';
 
+let ids = 0;
+const alerts = new Map<number, HTMLIonAlertElement>();
 
 @Component({
   tag: 'ion-alert-controller'
 })
 export class AlertController {
-  private ids = 0;
-  private alertResolves: { [alertId: string]: Function } = {};
-  private alerts: HTMLIonAlertElement[] = [];
 
-  /**
-   * Open an alert with a title, subTitle, and an array of buttons
-   * @param {AlertOptions} opts Action sheet options
-   */
   @Method()
   create(opts?: AlertOptions): Promise<HTMLIonAlertElement> {
     // create ionic's wrapping ion-alert component
-    const alert = document.createElement('ion-alert');
+    const alertElement = document.createElement('ion-alert');
 
-    const id = this.ids++;
+    // give this alert a unique id
+    alertElement.alertId = ids++;
 
-    // give this action sheet a unique id
-    alert.alertId = `alert-${id}`;
+    // convert the passed in alert options into props
+    // that get passed down into the new alert
+    Object.assign(alertElement, opts);
 
-    // convert the passed in action sheet options into props
-    // that get passed down into the new action sheet
-    Object.assign(alert, opts);
-
-    // append the action sheet element to the document body
+    // append the alert element to the document body
     const appRoot = document.querySelector('ion-app') || document.body;
-    appRoot.appendChild(alert as any);
+    appRoot.appendChild(alertElement);
 
-    // store the resolve function to be called later up when the action sheet loads
-    return new Promise((resolve) => {
-      this.alertResolves[alert.alertId] = resolve;
-    });
+    return (alertElement as any).componentOnReady();
   }
 
-  @Listen('body:ionAlertDidLoad')
-  protected didLoad(ev: AlertEvent) {
-    const alert = ev.target as HTMLIonAlertElement;
-    const alertResolve = this.alertResolves[alert.alertId];
-    if (alertResolve) {
-      alertResolve(alert);
-      delete this.alertResolves[alert.alertId];
-    }
+  @Method()
+  dismiss(data?: any, role?: any, alertId = -1) {
+    alertId = alertId >= 0 ? alertId : getHighestId();
+    const alert = alerts.get(alertId);
+    return alert.dismiss(data, role);
   }
+
 
   @Listen('body:ionAlertWillPresent')
-  protected willPresent(event: AlertEvent) {
-    console.log('willPresent: ', event);
-    this.alerts.push(event.target as HTMLIonAlertElement);
+  protected alertWillPresent(ev: AlertEvent) {
+    alerts.set(ev.target.alertId, ev.target);
   }
 
-  @Listen('body:ionAlertWillDismiss')
-  @Listen('body:ionAlertDidUnload')
-  protected willDismiss(event: AlertEvent) {
-    console.log('willDismiss: ', event);
-    const index = this.alerts.indexOf(event.target as HTMLIonAlertElement);
-    if (index > -1) {
-      this.alerts.splice(index, 1);
-    }
+
+  @Listen('body:ionAlertWillDismiss, body:ionAlertDidUnload')
+  protected alertWillDismiss(ev: AlertEvent) {
+    alerts.delete(ev.target.alertId);
   }
+
 
   @Listen('body:keyup.escape')
   protected escapeKeyUp() {
-    const lastAlert = this.alerts[this.alerts.length - 1];
-    if (lastAlert) {
-      lastAlert.dismiss();
-    }
+    removeLastAlert();
   }
+}
+
+function getHighestId() {
+  let minimum = -1;
+  alerts.forEach((_alert: HTMLIonAlertElement, id: number) => {
+    if (id > minimum) {
+      minimum = id;
+    }
+  });
+  return minimum;
+}
+
+function removeLastAlert() {
+  const toRemove = alerts.get(getHighestId());
+  return toRemove ? toRemove.dismiss() : Promise.resolve();
 }

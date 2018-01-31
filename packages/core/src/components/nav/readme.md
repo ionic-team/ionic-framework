@@ -9,7 +9,12 @@
 
 #### delegate
 
-any
+
+
+
+#### lazy
+
+boolean
 
 
 #### mode
@@ -20,13 +25,23 @@ string
 #### root
 
 any
+
+
+#### useUrls
+
+boolean
 
 
 ## Attributes
 
 #### delegate
 
-any
+
+
+
+#### lazy
+
+boolean
 
 
 #### mode
@@ -37,6 +52,11 @@ string
 #### root
 
 any
+
+
+#### useUrls
+
+boolean
 
 
 ## Events
@@ -55,6 +75,9 @@ any
 #### canSwipeBack()
 
 
+#### clearTransitionInfoForUrl()
+
+
 #### getActive()
 
 
@@ -62,6 +85,9 @@ any
 
 
 #### getFirstView()
+
+
+#### getId()
 
 
 #### getPrevious()
@@ -73,10 +99,19 @@ any
 #### getState()
 
 
+#### getTransitionInfoForUrl()
+
+
+#### getViews()
+
+
 #### insert()
 
 
 #### insertPages()
+
+
+#### isTransitioning()
 
 
 #### pop()
@@ -97,10 +132,10 @@ any
 #### removeView()
 
 
-#### resize()
-
-
 #### setPages()
+
+
+#### setParent()
 
 
 #### setRoot()

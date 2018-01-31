@@ -40,6 +40,13 @@ import {
 import {
   SelectPopoverOption,
 } from './components/select-popover/select-popover';
+import {
+  DomRenderFn,
+  HeaderFn,
+  ItemHeightFn,
+  ItemRenderFn,
+  NodeHeightFn,
+} from './components/virtual-scroll/virtual-scroll-utils';
 
 import {
   ActionSheetController as IonActionSheetController
@@ -65,7 +72,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonActionSheetControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -133,7 +140,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAlertControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -203,7 +210,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAnimationControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -233,7 +240,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAppAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -263,7 +270,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAvatarAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -293,7 +300,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonBackButtonAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -323,7 +330,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonBackdropAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -423,7 +430,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonButtonsAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -709,7 +716,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonColAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -820,7 +827,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonEventsAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -917,7 +924,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonFabAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -954,36 +961,6 @@ declare global {
 
 
 import {
-  GestureController as IonGestureController
-} from './components/gesture-controller/gesture-controller';
-
-declare global {
-  interface HTMLIonGestureControllerElement extends IonGestureController, HTMLElement {
-  }
-  var HTMLIonGestureControllerElement: {
-    prototype: HTMLIonGestureControllerElement;
-    new (): HTMLIonGestureControllerElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-gesture-controller": HTMLIonGestureControllerElement;
-  }
-  interface ElementTagNameMap {
-    "ion-gesture-controller": HTMLIonGestureControllerElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-gesture-controller": JSXElements.IonGestureControllerAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonGestureControllerAttributes extends HTMLAttributes {
-      
-    }
-  }
-}
-
-
-import {
   Gesture as IonGesture
 } from './components/gesture/gesture';
 
@@ -1012,8 +989,8 @@ declare global {
       block?: string;
       canStart?: GestureCallback;
       direction?: string;
+      disabled?: boolean;
       disableScroll?: boolean;
-      enabled?: boolean;
       gestureName?: string;
       gesturePriority?: number;
       maxAngle?: number;
@@ -1023,6 +1000,7 @@ declare global {
       onPress?: GestureCallback;
       onStart?: GestureCallback;
       onWillStart?: (_: GestureDetail) => Promise<void>;
+      passive?: boolean;
       threshold?: number;
       type?: string;
     }
@@ -1054,7 +1032,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonGridAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1145,7 +1123,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonInfiniteScrollAttributes extends HTMLAttributes {
-      enabled?: boolean;
+      disabled?: boolean;
       position?: string;
       threshold?: string;
     }
@@ -1264,7 +1242,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonItemGroupAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1357,7 +1335,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonItemSlidingAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1390,6 +1368,8 @@ declare global {
       color?: string;
       href?: string;
       mode?: 'ios' | 'md';
+      onclick?: (this: HTMLElement, ev: MouseEvent) => any;
+      tappable?: boolean;
     }
   }
 }
@@ -1419,7 +1399,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonKeyboardControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1514,7 +1494,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonListAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1544,7 +1524,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonLoadingControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1613,7 +1593,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonMenuControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1644,7 +1624,7 @@ declare global {
   namespace JSXElements {
     export interface IonMenuAttributes extends HTMLAttributes {
       content?: string;
-      enabled?: boolean;
+      disabled?: boolean;
       maxEdgeStart?: number;
       menuId?: string;
       persistent?: boolean;
@@ -1680,7 +1660,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonModalControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1719,7 +1699,7 @@ declare global {
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
       modalId?: number;
-      mode?: string;
+      mode?: 'ios' | 'md';
       showBackdrop?: boolean;
       willAnimate?: boolean;
     }
@@ -1752,8 +1732,10 @@ declare global {
   namespace JSXElements {
     export interface IonNavAttributes extends HTMLAttributes {
       delegate?: FrameworkDelegate;
+      lazy?: boolean;
       mode?: string;
       root?: any;
+      useUrls?: boolean;
     }
   }
 }
@@ -1814,7 +1796,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonPageAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1874,7 +1856,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonPickerControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1913,7 +1895,7 @@ declare global {
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
-      pickerId?: string;
+      pickerId?: number;
       showBackdrop?: boolean;
       willAnimate?: boolean;
     }
@@ -1945,7 +1927,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonPopoverControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1984,8 +1966,8 @@ declare global {
       enterAnimation?: AnimationBuilder;
       ev?: Event;
       leaveAnimation?: AnimationBuilder;
-      mode?: string;
-      popoverId?: string;
+      mode?: 'ios' | 'md';
+      popoverId?: number;
       showBackdrop?: boolean;
       translucent?: boolean;
       willAnimate?: boolean;
@@ -2141,6 +2123,73 @@ declare global {
 
 
 import {
+  RefresherContent as IonRefresherContent
+} from './components/refresher-content/refresher-content';
+
+declare global {
+  interface HTMLIonRefresherContentElement extends IonRefresherContent, HTMLElement {
+  }
+  var HTMLIonRefresherContentElement: {
+    prototype: HTMLIonRefresherContentElement;
+    new (): HTMLIonRefresherContentElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-refresher-content": HTMLIonRefresherContentElement;
+  }
+  interface ElementTagNameMap {
+    "ion-refresher-content": HTMLIonRefresherContentElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-refresher-content": JSXElements.IonRefresherContentAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonRefresherContentAttributes extends HTMLAttributes {
+      pullingIcon?: string;
+      pullingText?: string;
+      refreshingSpinner?: string;
+      refreshingText?: string;
+    }
+  }
+}
+
+
+import {
+  Refresher as IonRefresher
+} from './components/refresher/refresher';
+
+declare global {
+  interface HTMLIonRefresherElement extends IonRefresher, HTMLElement {
+  }
+  var HTMLIonRefresherElement: {
+    prototype: HTMLIonRefresherElement;
+    new (): HTMLIonRefresherElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-refresher": HTMLIonRefresherElement;
+  }
+  interface ElementTagNameMap {
+    "ion-refresher": HTMLIonRefresherElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-refresher": JSXElements.IonRefresherAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonRefresherAttributes extends HTMLAttributes {
+      closeDuration?: string;
+      disabled?: boolean;
+      pullMax?: any;
+      pullMin?: number;
+      snapbackDuration?: string;
+    }
+  }
+}
+
+
+import {
   ReorderGroup as IonReorderGroup
 } from './components/reorder-group/reorder-group';
 
@@ -2164,7 +2213,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonReorderGroupAttributes extends HTMLAttributes {
-      enabled?: boolean;
+      disabled?: boolean;
     }
   }
 }
@@ -2194,7 +2243,37 @@ declare global {
   }
   namespace JSXElements {
     export interface IonReorderAttributes extends HTMLAttributes {
-      
+
+    }
+  }
+}
+
+
+import {
+  RippleEffect as IonRippleEffect
+} from './components/ripple-effect/ripple-effect';
+
+declare global {
+  interface HTMLIonRippleEffectElement extends IonRippleEffect, HTMLElement {
+  }
+  var HTMLIonRippleEffectElement: {
+    prototype: HTMLIonRippleEffectElement;
+    new (): HTMLIonRippleEffectElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-ripple-effect": HTMLIonRippleEffectElement;
+  }
+  interface ElementTagNameMap {
+    "ion-ripple-effect": HTMLIonRippleEffectElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-ripple-effect": JSXElements.IonRippleEffectAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonRippleEffectAttributes extends HTMLAttributes {
+      useTapClick?: boolean;
     }
   }
 }
@@ -2287,7 +2366,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRouterControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -2317,7 +2396,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRowAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -2347,8 +2426,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonScrollAttributes extends HTMLAttributes {
-      enabled?: boolean;
-      jsScroll?: boolean;
+      disabled?: boolean;
       onionScroll?: ScrollCallback;
       onionScrollEnd?: ScrollCallback;
       onionScrollStart?: ScrollCallback;
@@ -2422,9 +2500,11 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSegmentButtonAttributes extends HTMLAttributes {
+      activated?: boolean;
       checked?: boolean;
       color?: string;
       disabled?: boolean;
+      href?: string;
       mode?: 'ios' | 'md';
       value?: string;
     }
@@ -2623,7 +2703,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSlideAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -2718,7 +2798,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSplitPaneAttributes extends HTMLAttributes {
-      enabled?: boolean;
+      disabled?: boolean;
       when?: string | boolean;
     }
   }
@@ -2749,6 +2829,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTabButtonAttributes extends HTMLAttributes {
+      mode?: 'ios' | 'md';
       selected?: boolean;
       tab?: HTMLIonTabElement;
     }
@@ -2783,7 +2864,7 @@ declare global {
       badge?: string;
       badgeStyle?: string;
       btnId?: string;
-      enabled?: boolean;
+      disabled?: boolean;
       icon?: string;
       path?: string;
       selected?: boolean;
@@ -2868,6 +2949,67 @@ declare global {
 
 
 import {
+  TapClick as IonTapClick
+} from './components/tap-click/tap-click';
+
+declare global {
+  interface HTMLIonTapClickElement extends IonTapClick, HTMLElement {
+  }
+  var HTMLIonTapClickElement: {
+    prototype: HTMLIonTapClickElement;
+    new (): HTMLIonTapClickElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-tap-click": HTMLIonTapClickElement;
+  }
+  interface ElementTagNameMap {
+    "ion-tap-click": HTMLIonTapClickElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-tap-click": JSXElements.IonTapClickAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonTapClickAttributes extends HTMLAttributes {
+
+    }
+  }
+}
+
+
+import {
+  Text as IonText
+} from './components/text/text';
+
+declare global {
+  interface HTMLIonTextElement extends IonText, HTMLElement {
+  }
+  var HTMLIonTextElement: {
+    prototype: HTMLIonTextElement;
+    new (): HTMLIonTextElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-text": HTMLIonTextElement;
+  }
+  interface ElementTagNameMap {
+    "ion-text": HTMLIonTextElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-text": JSXElements.IonTextAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonTextAttributes extends HTMLAttributes {
+      color?: string;
+      mode?: 'ios' | 'md';
+    }
+  }
+}
+
+
+import {
   Textarea as IonTextarea
 } from './components/textarea/textarea';
 
@@ -2937,7 +3079,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonThumbnailAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -2967,7 +3109,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTitleAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -2997,7 +3139,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonToastControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -3036,7 +3178,7 @@ declare global {
       message?: string;
       position?: string;
       showCloseButton?: boolean;
-      toastId?: string;
+      toastId?: number;
       translucent?: boolean;
       willAnimate?: boolean;
     }
@@ -3110,3 +3252,43 @@ declare global {
   }
 }
 
+
+import {
+  VirtualScroll as IonVirtualScroll
+} from './components/virtual-scroll/virtual-scroll';
+
+declare global {
+  interface HTMLIonVirtualScrollElement extends IonVirtualScroll, HTMLElement {
+  }
+  var HTMLIonVirtualScrollElement: {
+    prototype: HTMLIonVirtualScrollElement;
+    new (): HTMLIonVirtualScrollElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-virtual-scroll": HTMLIonVirtualScrollElement;
+  }
+  interface ElementTagNameMap {
+    "ion-virtual-scroll": HTMLIonVirtualScrollElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-virtual-scroll": JSXElements.IonVirtualScrollAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonVirtualScrollAttributes extends HTMLAttributes {
+      approxFooterHeight?: number;
+      approxHeaderHeight?: number;
+      approxItemHeight?: number;
+      domRender?: DomRenderFn;
+      footerFn?: HeaderFn;
+      headerFn?: HeaderFn;
+      itemHeight?: ItemHeightFn;
+      itemRender?: ItemRenderFn;
+      items?: any[];
+      nodeHeight?: NodeHeightFn;
+    }
+  }
+}
+
+declare global { namespace JSX { interface StencilJSX {} } }

@@ -29,7 +29,7 @@ any
 
 #### delegate
 
-any
+
 
 
 #### enableBackdropDismiss
@@ -39,12 +39,12 @@ boolean
 
 #### enterAnimation
 
-any
+
 
 
 #### leaveAnimation
 
-any
+
 
 
 #### modalId
@@ -54,7 +54,7 @@ number
 
 #### mode
 
-string
+
 
 
 #### showBackdrop
@@ -91,7 +91,7 @@ any
 
 #### delegate
 
-any
+
 
 
 #### enableBackdropDismiss
@@ -101,12 +101,12 @@ boolean
 
 #### enterAnimation
 
-any
+
 
 
 #### leaveAnimation
 
-any
+
 
 
 #### modalId
@@ -116,7 +116,7 @@ number
 
 #### mode
 
-string
+
 
 
 #### showBackdrop

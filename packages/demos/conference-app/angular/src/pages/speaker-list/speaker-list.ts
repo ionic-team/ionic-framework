@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 import {
   ActionSheetController,
@@ -15,7 +15,9 @@ import { SpeakerDetailPage } from '../speaker-detail/speaker-detail';
 
 @Component({
   selector: 'page-speaker-list',
-  templateUrl: 'speaker-list.html'
+  templateUrl: 'speaker-list.html',
+  styleUrls: ['./speaker-list.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class SpeakerListPage {
   speakers: any[] = [];

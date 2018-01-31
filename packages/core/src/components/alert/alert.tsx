@@ -24,7 +24,7 @@ import mdLeaveAnimation from './animations/md.leave';
 export class Alert {
   mode: string;
   color: string;
-  alertId: string;
+  alertId: number;
 
   private animation: Animation;
   private activeId: string;
@@ -34,32 +34,32 @@ export class Alert {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {AlertEvent} Emitted after the alert has loaded.
+   * Emitted after the alert has loaded.
    */
   @Event() ionAlertDidLoad: EventEmitter<AlertEventDetail>;
 
   /**
-   * @output {AlertEvent} Emitted after the alert has presented.
+   * Emitted after the alert has presented.
    */
   @Event() ionAlertDidPresent: EventEmitter<AlertEventDetail>;
 
   /**
-   * @output {AlertEvent} Emitted before the alert has presented.
+   * Emitted before the alert has presented.
    */
   @Event() ionAlertWillPresent: EventEmitter<AlertEventDetail>;
 
   /**
-   * @output {AlertEvent} Emitted before the alert has dismissed.
+   * Emitted before the alert has dismissed.
    */
   @Event() ionAlertWillDismiss: EventEmitter<AlertDismissEventDetail>;
 
   /**
-   * @output {AlertEvent} Emitted after the alert has dismissed.
+   * Emitted after the alert has dismissed.
    */
   @Event() ionAlertDidDismiss: EventEmitter<AlertDismissEventDetail>;
 
   /**
-   * @output {AlertEvent} Emitted after the alert has unloaded.
+   * Emitted after the alert has unloaded.
    */
   @Event() ionAlertDidUnload: EventEmitter<AlertEventDetail>;
 
@@ -100,17 +100,17 @@ export class Alert {
   /**
    * If true, the alert will be dismissed when the backdrop is clicked.
    */
-  @Prop() enableBackdropDismiss: boolean = true;
+  @Prop() enableBackdropDismiss = true;
 
   /**
    * If true, alert will become translucent. Requires support for backdrop-filters.
    */
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
 
   /**
    * Enable alert animations. If false, alert will not animate in
    */
-  @Prop() willAnimate: boolean = true;
+  @Prop() willAnimate = true;
 
   /**
    * Animation to be used when the alert is shown
@@ -158,7 +158,7 @@ export class Alert {
   }
 
   /**
-   * Dismiss the alert programatically
+   * Dismiss the alert
    */
   @Method() dismiss(data?: any, role?: string) {
     if (this.animation) {
@@ -286,10 +286,10 @@ export class Alert {
   }
 
   buttonClass(button: AlertButton): CssClassMap {
-    let buttonClass: string[] = ['alert-button'];
+    const buttonClass: string[] = ['alert-button'];
 
     if (button.cssClass) {
-      let customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
+      const customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
       buttonClass.push(customClass);
     }
 
@@ -412,7 +412,7 @@ export class Alert {
 
     this.inputs = this.inputs
       .map((i, index) => {
-        let r: AlertInput = {
+        const r: AlertInput = {
           type: i.type || 'text',
           name: i.name ? i.name : index + '',
           placeholder: i.placeholder ? i.placeholder : '',
@@ -519,11 +519,11 @@ export interface AlertButton {
 }
 
 export interface AlertEvent extends CustomEvent {
-  // keep this just for the sake of static types and potential future extensions
+  target: HTMLIonAlertElement;
+  detail: AlertEventDetail;
 }
 
 export interface AlertEventDetail {
-  detail: any;
 }
 
 export interface AlertDismissEventDetail extends OverlayDismissEventDetail {

@@ -87,9 +87,6 @@ $action-sheet-ios-button-padding:                       18px !default;
 /// @prop - Text color of the action sheet button
 $action-sheet-ios-button-text-color:                    #007aff !default;
 
-/// @prop - Fill color of the action sheet button icon
-$action-sheet-ios-button-icon-fill-color:               $action-sheet-ios-button-text-color !default;
-
 /// @prop - Font size of the action sheet button icon
 $action-sheet-ios-button-icon-font-size:                1.4em !default;
 
@@ -99,14 +96,8 @@ $action-sheet-ios-button-icon-padding-right:            .1em !default;
 /// @prop - Height of the action sheet button icon
 $action-sheet-ios-button-icon-height:                   .7em !default;
 
-/// @prop - Width of the icon in the action sheet button
-$action-sheet-ios-icon-width:                            23px !default;
-
 /// @prop - Margin top of the action sheet button icon
 $action-sheet-ios-button-icon-margin-top:               -10px !default;
-
-/// @prop - Vertical align of the icon in the action sheet button
-$action-sheet-ios-icon-vertical-align:                   middle !default;
 
 /// @prop - Font size of the action sheet button
 $action-sheet-ios-button-font-size:                     20px !default;
@@ -128,9 +119,6 @@ $action-sheet-ios-button-background-activated:          rgba(115, 115, 115, .1) 
 
 /// @prop - Destructive text color of the action sheet button
 $action-sheet-ios-button-destructive-text-color:        #f53d3d !default;
-
-/// @prop - Destructive fill color of the action sheet button icon
-$action-sheet-ios-button-destructive-icon-fill-color:   $action-sheet-ios-button-destructive-text-color !default;
 
 /// @prop - Background color of the action sheet cancel button
 $action-sheet-ios-button-cancel-background:             #fff !default;

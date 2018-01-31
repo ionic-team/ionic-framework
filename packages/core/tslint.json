@@ -1,3 +1,8 @@
 {
-  "extends": "tslint-ionic-rules"
+  "extends": "tslint-ionic-rules",
+  "rules": {
+    "no-conditional-assignment": false,
+    "no-unnecessary-type-assertion": false,
+    "prefer-for-of": false
+  }
 }

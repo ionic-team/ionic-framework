@@ -30,7 +30,7 @@ export class MenuController {
   open(menuId?: string): Promise<boolean> {
     const menu = this.get(menuId);
     if (menu && !this.isAnimating()) {
-      let openedMenu = this.getOpen();
+      const openedMenu = this.getOpen();
       if (openedMenu && menu !== openedMenu) {
         openedMenu.setOpen(false, false);
       }
@@ -69,7 +69,7 @@ export class MenuController {
   toggle(menuId?: string): Promise<boolean> {
     const menu = this.get(menuId);
     if (menu && !this.isAnimating()) {
-      var openedMenu = this.getOpen();
+      const openedMenu = this.getOpen();
       if (openedMenu && menu !== openedMenu) {
         openedMenu.setOpen(false, false);
       }
@@ -90,7 +90,7 @@ export class MenuController {
   enable(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement {
     const menu = this.get(menuId);
     if (menu) {
-      menu.enabled = shouldEnable;
+      menu.disabled = !shouldEnable;
     }
     return menu;
   }
@@ -118,7 +118,7 @@ export class MenuController {
   @Method()
   isOpen(menuId?: string): boolean {
     if (menuId) {
-      var menu = this.get(menuId);
+      const menu = this.get(menuId);
       return menu && menu.isOpen() || false;
     }
     return !!this.getOpen();
@@ -132,7 +132,7 @@ export class MenuController {
   isEnabled(menuId?: string): boolean {
     const menu = this.get(menuId);
     if (menu) {
-      return menu.enabled;
+      return !menu.disabled;
     }
     return false;
   }
@@ -148,12 +148,12 @@ export class MenuController {
    */
   @Method()
   get(menuId?: string): HTMLIonMenuElement {
-    var menu: Menu;
+    let menu: Menu;
 
     if (menuId === 'left' || menuId === 'right') {
       // there could be more than one menu on the same side
       // so first try to get the enabled one
-      menu = this.menus.find(m => m.side === menuId && m.enabled);
+      menu = this.menus.find(m => m.side === menuId && !m.disabled);
       if (menu) {
         return menu.getElement();
       }
@@ -169,7 +169,7 @@ export class MenuController {
     }
 
     // return the first enabled menu
-    menu = this.menus.find(m => m.enabled);
+    menu = this.menus.find(m => !m.disabled);
     if (menu) {
       return menu.getElement();
     }
@@ -235,7 +235,7 @@ export class MenuController {
     const side = menu.side;
     this.menus
       .filter(m => m.side === side && m !== menu)
-      .map(m => m.enabled = false);
+      .map(m => m.disabled = true);
   }
 
   /**

@@ -37,14 +37,14 @@ Number of milliseconds to wait before dismissing the loading indicator
 
 #### enterAnimation
 
-any
+
 
 Animation to use when loading indicator is presented
 
 
 #### leaveAnimation
 
-any
+
 
 Animation to use when a loading indicator is dismissed
 
@@ -107,14 +107,14 @@ Number of milliseconds to wait before dismissing the loading indicator
 
 #### enterAnimation
 
-any
+
 
 Animation to use when loading indicator is presented
 
 
 #### leaveAnimation
 
-any
+
 
 Animation to use when a loading indicator is dismissed
 

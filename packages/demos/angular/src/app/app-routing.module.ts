@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'actionSheet', loadChildren: 'app/action-sheet/action-sheet.module#ActionSheetModule' },
   { path: 'badge', loadChildren: 'app/badge/badge.module#BadgeModule' },
   { path: 'card', loadChildren: 'app/card/card.module#CardModule' },
+  { path: 'content', loadChildren: 'app/content/content.module#ContentModule' },
   { path: 'toast', loadChildren: 'app/toast/toast.module#ToastModule' },
   { path: 'loading', loadChildren: 'app/loading/loading.module#LoadingModule' },
   { path: 'nav', loadChildren: 'app/nav/nav.module#NavModule' },

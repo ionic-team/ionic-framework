@@ -9,7 +9,7 @@
 
 #### buttons
 
-any
+
 
 Array of buttons to be added to the alert. See AlertButton type for valid options
 
@@ -30,21 +30,21 @@ If true, the alert will be dismissed when the backdrop is clicked.
 
 #### enterAnimation
 
-any
+
 
 Animation to be used when the alert is shown
 
 
 #### inputs
 
-any
+
 
 Array of input to show in the alert. See AlertInput type for valid options
 
 
 #### leaveAnimation
 
-any
+
 
 Animation to be used when the alert is dismissed
 
@@ -88,7 +88,7 @@ Enable alert animations. If false, alert will not animate in
 
 #### buttons
 
-any
+
 
 Array of buttons to be added to the alert. See AlertButton type for valid options
 
@@ -109,21 +109,21 @@ If true, the alert will be dismissed when the backdrop is clicked.
 
 #### enterAnimation
 
-any
+
 
 Animation to be used when the alert is shown
 
 
 #### inputs
 
-any
+
 
 Array of input to show in the alert. See AlertInput type for valid options
 
 
 #### leaveAnimation
 
-any
+
 
 Animation to be used when the alert is dismissed
 
@@ -167,27 +167,39 @@ Enable alert animations. If false, alert will not animate in
 
 #### ionAlertDidDismiss
 
+Emitted after the alert has dismissed.
+
 
 #### ionAlertDidLoad
+
+Emitted after the alert has loaded.
 
 
 #### ionAlertDidPresent
 
+Emitted after the alert has presented.
+
 
 #### ionAlertDidUnload
+
+Emitted after the alert has unloaded.
 
 
 #### ionAlertWillDismiss
 
+Emitted before the alert has dismissed.
+
 
 #### ionAlertWillPresent
+
+Emitted before the alert has presented.
 
 
 ## Methods
 
 #### dismiss()
 
-Dismiss the alert programatically
+Dismiss the alert
 
 
 #### present()

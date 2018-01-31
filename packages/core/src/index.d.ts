@@ -65,7 +65,7 @@ export {
 } from './components/menu-controller/menu-controller';
 export * from './components/modal/modal';
 export { ModalController } from './components/modal-controller/modal-controller';
-export { Nav } from './components/nav/nav';
+export *  from './components/nav/nav';
 export * from './components/nav/nav-interfaces';
 export { ViewController } from './components/nav/view-controller';
 export { Note } from './components/note/note';
@@ -157,4 +157,6 @@ export interface FrameworkDelegate {
 
 export interface FrameworkMountingData {
   element: HTMLElement;
+  component: any;
+  data: any;
 }

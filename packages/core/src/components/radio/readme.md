@@ -1,41 +1,32 @@
 # ion-radio
 
-A radio button is a button that can be either checked or unchecked. A user can tap
-the button to check or uncheck it. It can also be checked programmatically by changing
-the `checked` property or `checked` attribute.
+Radios are generally used as a set of related options inside of a group, but they can also be used alone. Pressing on a radio will check it. They can also be checked programmatically by setting the `checked` property.
 
-Use an `ion-radio-group` component to group a set of radio buttons. When
-radio buttons are inside a [radio group](../radio-group), only one radio button
-in the group can be checked at any time. If a radio button is not placed in a group,
-then they will all have the ability to be checked at the same time.
+An `ion-radio-group` can be used to group a set of radios. When radios are inside of a [radio group](../radio-group), only one radio in the group will be checked at any time. Pressing a radio will check it and uncheck the previously selected radio, if there is one. If a radio is not in a group with another radio, then both radios will have the ability to be checked at the same time.
 
 
 ```html
 <ion-list>
-
   <ion-radio-group>
-
     <ion-list-header>
-      Name
+      <ion-label>Name</ion-label>
     </ion-list-header>
 
     <ion-item>
       <ion-label>Biff</ion-label>
-      <ion-radio value="biff" checked></ion-radio>
+      <ion-radio slot="start" value="biff" checked></ion-radio>
     </ion-item>
 
     <ion-item>
       <ion-label>Griff</ion-label>
-      <ion-radio value="griff"></ion-radio>
+      <ion-radio slot="start" value="griff"></ion-radio>
     </ion-item>
 
     <ion-item>
       <ion-label>Buford</ion-label>
-      <ion-radio value="buford"></ion-radio>
+      <ion-radio slot="start" value="buford"></ion-radio>
     </ion-item>
-
   </ion-radio-group>
-
 </ion-list>
 ```
 
@@ -62,7 +53,7 @@ boolean
 
 #### mode
 
-any
+
 
 
 #### name
@@ -96,7 +87,7 @@ boolean
 
 #### mode
 
-any
+
 
 
 #### name

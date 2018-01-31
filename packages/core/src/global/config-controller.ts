@@ -7,7 +7,7 @@ export function createConfigController(configObj: any, platforms: PlatformConfig
 
   function get(key: string, fallback?: any): any {
 
-    let queryValue = queryParam(window.location.href, `ionic${key}`);
+    const queryValue = queryParam(window.location.href, `ionic${key}`);
     if (isDef(queryValue)) {
       return configObj[key] = (queryValue === 'true' ? true : queryValue === 'false' ? false : queryValue);
     }

@@ -7,56 +7,46 @@
 
 ## Properties
 
-#### enabled
-
-boolean
-
-
-#### jsScroll
+#### disabled
 
 boolean
 
 
 #### onionScroll
 
-any
+
 
 
 #### onionScrollEnd
 
-any
+
 
 
 #### onionScrollStart
 
-any
+
 
 
 ## Attributes
 
-#### enabled
-
-boolean
-
-
-#### jsScroll
+#### disabled
 
 boolean
 
 
 #### onionScroll
 
-any
+
 
 
 #### onionScrollEnd
 
-any
+
 
 
 #### onionScrollStart
 
-any
+
 
 
 ## Events

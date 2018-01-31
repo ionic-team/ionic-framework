@@ -8,18 +8,18 @@
   <script src="/dist/ionic.js"></script>
 </head>
 
-<body>
+<body onload="listenForEvent()">
   <ion-app>
     <ion-page>
-      <ion-header>
+      <ion-header no-border>
         <ion-toolbar>
           <ion-title>Segment - Basic</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content>
-        <ion-toolbar no-border-top>
-          <ion-segment value="Free">
+        <ion-toolbar>
+          <ion-segment class="event-tester" value="Free">
             <ion-segment-button value="Paid">
               Paid
             </ion-segment-button>
@@ -32,7 +32,7 @@
           </ion-segment>
         </ion-toolbar>
 
-        <ion-toolbar no-border-top no-border-bottom>
+        <ion-toolbar>
           <ion-segment color="danger">
             <ion-segment-button value="sunny">
               Sunny
@@ -49,10 +49,10 @@
               <ion-icon name="book"></ion-icon>
             </ion-segment-button>
             <ion-segment-button value="Reading List">
-              <ion-icon ios="ios-glasses-outline" md="md-glasses"></ion-icon>
+              <ion-icon name="glasses"></ion-icon>
             </ion-segment-button>
             <ion-segment-button value="Shared Links">
-              <ion-icon ios="ios-at-outline" md="md-at"></ion-icon>
+              <ion-icon name="at"></ion-icon>
             </ion-segment-button>
           </ion-segment>
 
@@ -111,6 +111,16 @@
               dynamicAttrElem.setAttribute('value', 'active');
             }
           }
+
+          async function listenForEvent() {
+            const ionSegmentElement = document.querySelector('ion-segment.event-tester');
+            await ionSegmentElement.componentOnReady();
+            ionSegmentElement.addEventListener('ionChange', (event) => {
+              console.log('event.target: ', event.target.value);
+            });
+          }
+
+
         </script>
       </ion-content>
     </ion-page>

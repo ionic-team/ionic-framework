@@ -1,16 +1,11 @@
-import { Component } from '@stencil/core';
 
-
-@Component({
-  tag: 'ion-gesture-controller'
-})
 export class GestureController {
-  private gestureId: number = 0;
-  private requestedStart: { [eventId: number]: number } = {};
-  private disabledGestures: { [eventName: string]: Set<number> } = {};
-  private disabledScroll: Set<number> = new Set<number>();
-  private capturedId: number = null;
 
+  private gestureId = 0;
+  private requestedStart = new Map<number, number>();
+  private disabledGestures = new Map<string, Set<number>>();
+  private disabledScroll = new Set<number>();
+  private capturedId: number = null;
 
   createGesture(gestureName: string, gesturePriority: number, disableScroll: boolean): GestureDelegate {
     return new GestureDelegate(this, this.newID(), gestureName, gesturePriority, disableScroll);
@@ -29,11 +24,10 @@ export class GestureController {
 
   start(gestureName: string, id: number, priority: number): boolean {
     if (!this.canStart(gestureName)) {
-      delete this.requestedStart[id];
+      this.requestedStart.delete(id);
       return false;
     }
-
-    this.requestedStart[id] = priority;
+    this.requestedStart.set(id, priority);
     return true;
   }
 
@@ -41,24 +35,24 @@ export class GestureController {
     if (!this.start(gestureName, id, priority)) {
       return false;
     }
-    let requestedStart = this.requestedStart;
+    const requestedStart = this.requestedStart;
     let maxPriority = -10000;
-    for (let gestureID in requestedStart) {
-      maxPriority = Math.max(maxPriority, requestedStart[gestureID]);
+    for (const value of requestedStart.values()) {
+      maxPriority = Math.max(maxPriority, value);
     }
 
     if (maxPriority === priority) {
       this.capturedId = id;
-      this.requestedStart = {};
+      this.requestedStart.clear();
       return true;
     }
-    delete requestedStart[id];
+    requestedStart.delete(id);
 
     return false;
   }
 
   release(id: number) {
-    delete this.requestedStart[id];
+    this.requestedStart.delete(id);
 
     if (this.capturedId && id === this.capturedId) {
       this.capturedId = null;
@@ -66,16 +60,16 @@ export class GestureController {
   }
 
   disableGesture(gestureName: string, id: number) {
-    let set = this.disabledGestures[gestureName];
+    let set = this.disabledGestures.get(gestureName);
     if (!set) {
       set = new Set<number>();
-      this.disabledGestures[gestureName] = set;
+      this.disabledGestures.set(gestureName, set);
     }
     set.add(id);
   }
 
   enableGesture(gestureName: string, id: number) {
-    let set = this.disabledGestures[gestureName];
+    const set = this.disabledGestures.get(gestureName);
     if (set) {
       set.delete(id);
     }
@@ -121,7 +115,7 @@ export class GestureController {
   }
 
   isDisabled(gestureName: string): boolean {
-    let disabled = this.disabledGestures[gestureName];
+    const disabled = this.disabledGestures.get(gestureName);
     if (disabled && disabled.size > 0) {
       return true;
     }
@@ -162,7 +156,7 @@ export class GestureDelegate {
       return false;
     }
 
-    let captured = this.ctrl.capture(this.name, this.gestureDelegateId, this.priority);
+    const captured = this.ctrl.capture(this.name, this.gestureDelegateId, this.priority);
     if (captured && this.disableScroll) {
       this.ctrl.disableScroll(this.gestureDelegateId);
     }
@@ -190,7 +184,7 @@ export class GestureDelegate {
 
 export class BlockerDelegate {
 
-  blocked: boolean = false;
+  blocked = false;
 
   constructor(
     private blockerDelegateId: number,

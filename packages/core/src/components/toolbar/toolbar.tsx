@@ -38,11 +38,11 @@ export class Toolbar {
    * attribute needs to be set on the content.
    * Only affects `ios` mode. Defaults to `false`.
    */
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
 
   componentDidLoad() {
     const buttons = this.el.querySelectorAll('ion-button') as any;
-    for (var i = 0; i < buttons.length; i++) {
+    for (let i = 0; i < buttons.length; i++) {
       buttons[i].setAttribute('button-type', 'bar-button');
     }
   }

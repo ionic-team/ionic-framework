@@ -21,7 +21,7 @@ export let NAV_ID_START = 1000;
 export let VIEW_ID_START = 2000;
 
 let transitionIds = 0;
-let activeTransitions = new Map<number, any>();
+const activeTransitions = new Map<number, any>();
 
 let portalZindex = 9999;
 

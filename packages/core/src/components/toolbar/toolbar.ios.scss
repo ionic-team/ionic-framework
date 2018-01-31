@@ -159,13 +159,15 @@
     color: $color-base;
     background-color: transparent;
 
-    &:hover:not(.disable-hover) {
-      color: $color-base;
-    }
-
     &.activated {
       opacity: .4;
     }
+  }
+
+  .enable-hover .bar-button-#{$color-name}-ios:hover,
+  .enable-hover .bar-button-clear-ios-#{$color-name}:hover,
+  .enable-hover .bar-button-ios-#{$color-name}:hover {
+    color: $color-base;
   }
 
 }
@@ -188,14 +190,14 @@
   color: $toolbar-ios-button-color;
   background-color: transparent;
 
-  &:hover:not(.disable-hover) {
-    opacity: .4;
-  }
-
   &.activated {
     color: color-contrast($colors-ios, $toolbar-ios-button-color);
     background-color: $toolbar-ios-button-color;
   }
+}
+
+.enable-hover .bar-button-outline-ios:hover {
+  opacity: .4;
 }
 
 @mixin ios-bar-button-outline($color-name, $color-base, $color-contrast) {
@@ -222,16 +224,16 @@
   color: color-contrast($colors-ios, $toolbar-ios-button-color);
   background-color: $toolbar-ios-button-color;
 
-  &:hover:not(.disable-hover) {
-    color: color-contrast($colors-ios, $toolbar-ios-button-color);
-    opacity: .4;
-  }
-
   &.activated {
     color: color-contrast($colors-ios, $toolbar-ios-button-color);
     background-color: color-shade($toolbar-ios-button-color);
     opacity: .4;
   }
+}
+
+.enable-hover .bar-button-solid-ios:hover {
+  color: color-contrast($colors-ios, $toolbar-ios-button-color);
+  opacity: .4;
 }
 
 @mixin ios-bar-button-solid($color-name, $color-base, $color-contrast) {

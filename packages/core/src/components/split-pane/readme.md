@@ -115,26 +115,26 @@ SplitPane also provides some predefined media queries that can be used.
 
 ## Properties
 
-#### enabled
+#### disabled
 
 boolean
 
 
 #### when
 
-any
+
 
 
 ## Attributes
 
-#### enabled
+#### disabled
 
 boolean
 
 
 #### when
 
-any
+
 
 
 ## Events

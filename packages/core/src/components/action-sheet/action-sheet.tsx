@@ -31,39 +31,39 @@ import mdLeaveAnimation from './animations/md.leave';
 export class ActionSheet {
   mode: string;
   color: string;
-  actionSheetId: string;
+  actionSheetId: number;
 
   private animation: Animation;
 
   @Element() private el: HTMLElement;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has loaded.
+   * Emitted after the alert has loaded.
    */
   @Event() ionActionSheetDidLoad: EventEmitter<ActionSheetEventDetail>;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has presented.
+   * Emitted after the alert has presented.
    */
   @Event() ionActionSheetDidPresent: EventEmitter<ActionSheetEventDetail>;
 
   /**
-   * @output {ActionSheetEvent} Emitted before the alert has presented.
+   * Emitted before the alert has presented.
    */
   @Event() ionActionSheetWillPresent: EventEmitter<ActionSheetEventDetail>;
 
   /**
-   * @output {ActionSheetEvent} Emitted before the alert has dismissed.
+   * Emitted before the alert has dismissed.
    */
   @Event() ionActionSheetWillDismiss: EventEmitter<ActionSheetDismissEventDetail>;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has dismissed.
+   * Emitted after the alert has dismissed.
    */
   @Event() ionActionSheetDidDismiss: EventEmitter<ActionSheetDismissEventDetail>;
 
   /**
-   * @output {ActionSheetEvent} Emitted after the alert has unloaded.
+   * Emitted after the alert has unloaded.
    */
   @Event() ionActionSheetDidUnload: EventEmitter<ActionSheetEventDetail>;
 
@@ -94,17 +94,17 @@ export class ActionSheet {
   /**
    * If true, the action-sheet will be dismissed when the backdrop is clicked.
    */
-  @Prop() enableBackdropDismiss: boolean = true;
+  @Prop() enableBackdropDismiss = true;
 
   /**
    * If true, action-sheet will become translucent. Requires support for backdrop-filters.
    */
-  @Prop() translucent: boolean = false;
+  @Prop() translucent = false;
 
   /**
    * Enable action-sheet animations. If false, action-sheet will not animate in
    */
-  @Prop() willAnimate: boolean = true;
+  @Prop() willAnimate = true;
 
   /**
    * Animation to use when the action-sheet is created
@@ -151,7 +151,7 @@ export class ActionSheet {
   }
 
   /**
-   * Dismiss the action-sheet programatically
+   * Dismiss the action-sheet
    */
   @Method()
   dismiss(data?: any, role?: string) {
@@ -209,12 +209,12 @@ export class ActionSheet {
   }
 
   buttonClass(button: ActionSheetButton): CssClassMap {
-    let buttonClass: string[] = !button.role
+    const buttonClass: string[] = !button.role
       ? ['action-sheet-button']
       : [`action-sheet-button`, `action-sheet-${button.role}`];
 
     if (button.cssClass) {
-      let customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
+      const customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
       buttonClass.push(customClass);
     }
 
@@ -256,7 +256,7 @@ export class ActionSheet {
     }
 
     let cancelButton: ActionSheetButton;
-    let buttons = this.buttons
+    const buttons = this.buttons
       .map(b => {
         if (typeof b === 'string') {
           b = { text: b };
@@ -342,6 +342,7 @@ export interface ActionSheetButton {
 }
 
 export interface ActionSheetEvent extends CustomEvent {
+  target: HTMLIonActionSheetElement;
   detail: ActionSheetEventDetail;
 }
 

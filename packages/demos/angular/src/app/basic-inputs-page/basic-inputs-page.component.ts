@@ -15,6 +15,10 @@ export class BasicInputsPageComponent implements OnInit {
   checkboxValue = true;
   toggleValue = false;
 
+  rangeValue = 15;
+
+  searchValue: string;
+
   constructor() {}
 
   ngOnInit() {}

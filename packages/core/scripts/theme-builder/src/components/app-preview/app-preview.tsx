@@ -45,7 +45,7 @@ export class AppPreview {
 
     return [
       <div>
-        <iframe src={url} ref={elm => this.iframe = elm as any} onLoad={this.onIframeLoad.bind(this)}></iframe>
+        <iframe src={url} ref={el => this.iframe = el as any} onLoad={this.onIframeLoad.bind(this)}></iframe>
       </div>
     ];
   }

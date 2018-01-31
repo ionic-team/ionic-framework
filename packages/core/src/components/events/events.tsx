@@ -34,8 +34,8 @@ export class Events {
   }
 
   @Listen('window:statusTap')
-  statusTap(event: Event) {
-    console.log('TODO: Finish the status tap: ', event);
+  statusTap(_event: Event) {
+    // TODO - do status tap
     return Promise.resolve();
   }
 

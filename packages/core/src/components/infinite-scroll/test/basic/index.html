@@ -21,7 +21,7 @@
       <ion-content padding>
 
         <ion-button onclick="toggleInfiniteScroll()" block>
-          Toggle InfiniteScroll Enabled
+          Toggle InfiniteScroll
         </ion-button>
 
         <ion-list id="list">
@@ -49,7 +49,7 @@
     const infiniteScroll = document.getElementById('infinite-scroll');
 
     function toggleInfiniteScroll() {
-      infiniteScroll.enabled = !infiniteScroll.enabled;
+      infiniteScroll.disabled = !infiniteScroll.disabled;
     }
 
     infiniteScroll.addEventListener('ionInfinite', async function() {

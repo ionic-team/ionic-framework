@@ -39,35 +39,35 @@ export class ReorderGroup {
   private containerTop: number;
   private containerBottom: number;
 
-  @State() _enabled: boolean = false;
-  @State() _iconVisible: boolean = false;
-  @State() _actived: boolean = false;
+  @State() enabled = false;
+  @State() iconVisible = false;
+  @State() activated = false;
 
   @Element() private el: HTMLElement;
 
   @Prop({ context: 'dom' }) dom: DomController;
 
-  @Prop() enabled: boolean = false;
+  @Prop() disabled = true;
 
-  /**
-   * @input {string} Which side of the view the ion-reorder should be placed. Default `"end"`.
-   */
-  @Watch('enabled')
-  protected enabledChanged(enabled: boolean) {
-    if (enabled) {
-      this._enabled = true;
+  @Watch('disabled')
+  protected disabledChanged(disabled: boolean) {
+    if (!disabled) {
+      this.enabled = true;
       this.dom.raf(() => {
-        this._iconVisible = true;
+        this.iconVisible = true;
       });
     } else {
-      this._iconVisible = false;
-      setTimeout(() => this._enabled = false, 400);
+      this.iconVisible = false;
+      setTimeout(() => this.enabled = false, 400);
     }
   }
 
   componentDidLoad() {
     this.containerEl = this.el.querySelector('ion-gesture') as HTMLElement;
     this.scrollEl = this.el.closest('ion-scroll') as HTMLElement;
+    if (!this.disabled) {
+      this.disabledChanged(false);
+    }
   }
 
   componentDidUnload() {
@@ -93,11 +93,6 @@ export class ReorderGroup {
   }
 
   private onDragStart(ev: GestureDetail) {
-    if (ev.event) {
-      ev.event.preventDefault();
-      ev.event.stopPropagation();
-    }
-
     const item = this.selectedItemEl = ev.data;
     const heights = this.cachedHeights;
     heights.length = 0;
@@ -108,8 +103,8 @@ export class ReorderGroup {
     }
 
     let sum = 0;
-    for (var i = 0, ilen = children.length; i < ilen; i++) {
-      var child = children[i];
+    for (let i = 0; i < children.length; i++) {
+      const child = children[i];
       sum += child.offsetHeight;
       heights.push(sum);
       child.$ionIndex = i;
@@ -120,7 +115,7 @@ export class ReorderGroup {
     this.containerBottom = box.bottom;
 
     if (this.scrollEl) {
-      var scrollBox = this.scrollEl.getBoundingClientRect();
+      const scrollBox = this.scrollEl.getBoundingClientRect();
       this.scrollElInitial = this.scrollEl.scrollTop;
       this.scrollElTop = scrollBox.top + AUTO_SCROLL_MARGIN;
       this.scrollElBottom = scrollBox.bottom - AUTO_SCROLL_MARGIN;
@@ -132,7 +127,7 @@ export class ReorderGroup {
 
     this.lastToIndex = indexForItem(item);
     this.selectedItemHeight = item.offsetHeight;
-    this._actived = true;
+    this.activated = true;
 
     item.classList.add(ITEM_REORDER_SELECTED);
 
@@ -155,11 +150,11 @@ export class ReorderGroup {
     const normalizedY = currentY - top;
     const toIndex = this.itemIndexForTop(normalizedY);
     if (toIndex !== undefined && (toIndex !== this.lastToIndex)) {
-      let fromIndex = indexForItem(selectedItem);
+      const fromIndex = indexForItem(selectedItem);
       this.lastToIndex = toIndex;
 
       hapticSelectionChanged();
-      this._reorderMove(fromIndex, toIndex);
+      this.reorderMove(fromIndex, toIndex);
     }
 
     // Update selected item position
@@ -167,7 +162,7 @@ export class ReorderGroup {
   }
 
   private onDragEnd() {
-    this._actived = false;
+    this.activated = false;
     const selectedItem = this.selectedItemEl;
     if (!selectedItem) {
       return;
@@ -220,13 +215,13 @@ export class ReorderGroup {
   }
 
   /********* DOM WRITE ********* */
-  private _reorderMove(fromIndex: number, toIndex: number) {
+  private reorderMove(fromIndex: number, toIndex: number) {
     const itemHeight = this.selectedItemHeight;
     const children = this.containerEl.children;
     const transform = CSS_PROP.transformProp;
-    for (var i = 0; i < children.length; i++) {
-      var style = (children[i] as any).style;
-      var value = '';
+    for (let i = 0; i < children.length; i++) {
+      const style = (children[i] as any).style;
+      let value = '';
       if (i > fromIndex && i <= toIndex) {
         value = `translateY(${-itemHeight}px)`;
       } else if (i < fromIndex && i >= toIndex) {
@@ -256,9 +251,9 @@ export class ReorderGroup {
   hostData() {
     return {
       class: {
-        'reorder-enabled': this._enabled,
-        'reorder-list-active': this._actived,
-        'reorder-visible': this._iconVisible
+        'reorder-enabled': this.enabled,
+        'reorder-list-active': this.activated,
+        'reorder-visible': this.iconVisible
       }
     };
   }
@@ -266,12 +261,12 @@ export class ReorderGroup {
   render() {
     return (
       <ion-gesture {...{
-        disableScroll: true,
         canStart: this.canStart.bind(this),
         onStart: this.onDragStart.bind(this),
         onMove: this.onDragMove.bind(this),
         onEnd: this.onDragEnd.bind(this),
-        enabled: this.enabled,
+        disabled: this.disabled,
+        disableScroll: true,
         gestureName: 'reorder',
         gesturePriority: 30,
         type: 'pan',

@@ -7,6 +7,11 @@
 
 ## Properties
 
+#### mode
+
+
+
+
 #### selected
 
 boolean
@@ -14,11 +19,16 @@ boolean
 
 #### tab
 
-any
+
 
 
 ## Attributes
 
+#### mode
+
+
+
+
 #### selected
 
 boolean
@@ -26,7 +36,7 @@ boolean
 
 #### tab
 
-any
+
 
 
 ## Events

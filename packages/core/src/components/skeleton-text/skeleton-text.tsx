@@ -6,7 +6,7 @@ import { Component, Prop } from '@stencil/core';
   styleUrl: 'skeleton-text.scss'
 })
 export class SkeletonText {
-  @Prop() width: string = '100%';
+  @Prop() width = '100%';
 
   render() {
     return <span style={{width: this.width}}>&nbsp;</span>;

@@ -1,6 +1,6 @@
 # ion-card-header
 
-
+`ion-card-header` is a header component for `ion-card`.
 
 <!-- Auto Generated Below -->
 
@@ -11,15 +11,24 @@
 
 string
 
+The color to use for the background.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+
 
 #### mode
 
-any
+
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
 
 
 #### translucent
 
 boolean
+
+If true, adds transparency to the card header.
+Only affects `ios` mode. Defaults to `false`.
 
 
 ## Attributes
@@ -28,15 +37,24 @@ boolean
 
 string
 
+The color to use for the background.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+
 
 #### mode
 
-any
+
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
 
 
 #### translucent
 
 boolean
+
+If true, adds transparency to the card header.
+Only affects `ios` mode. Defaults to `false`.
 
 
 
