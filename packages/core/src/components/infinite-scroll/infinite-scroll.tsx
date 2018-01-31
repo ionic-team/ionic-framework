@@ -84,7 +84,7 @@ export class InfiniteScroll {
   @Event() ionInfinite: EventEmitter;
 
   componentWillLoad() {
-    const scrollEl = this.el.closest('ion-scroll') as StencilElement;
+    const scrollEl = this.el.closest('ion-scroll') as any as StencilElement;
     return scrollEl.componentOnReady().then((el) => {
       this.scrollEl = el as HTMLIonScrollElement;
     });
