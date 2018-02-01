@@ -8,16 +8,17 @@ module.exports = class E2ETestPage {
     this.driver = driver;
   }
 
-  navigate(tagName = '') {
+  async navigate(tagName = '') {
     this.driver.navigate().to(this.url);
-    this.driver.wait(until.elementLocated(By.css('.hydrated')));
-    return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css(`${tagName}.hydrated`))));
+    this.driver.manage().timeouts().implicitlyWait(10000);
+    await this.driver.wait(until.elementLocated(By.css(`${tagName}.hydrated`)));
+    return await this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css(`${tagName}.hydrated`))));
   }
 
-  present(clickTarget, options) {
-    this.navigate();
+  async present(clickTarget, options) {
+    await this.navigate();
     this.driver.findElement(By.css(clickTarget)).click();
-    this.driver.wait(until.elementLocated(By.css(options.waitFor)));
-    return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css(options.waitFor))));
+    await this.driver.wait(until.elementLocated(By.css(options.waitFor)));
+    return await this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css(options.waitFor))));
   }
 }

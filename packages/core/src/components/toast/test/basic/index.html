@@ -17,7 +17,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content padding>
+      <ion-content id="content" padding>
         <ion-button expand="block" id="showBottomToast" onclick="presentToast('bottom')">Show Toast Bottom</ion-button>
         <ion-button expand="block" onclick="presentToast('top')">Show Toast Top</ion-button>
         <ion-button expand="block" onclick="presentToast('middle')">Show Toast Middle</ion-button>
@@ -61,7 +61,7 @@
   <script>
     window.addEventListener('ionToastDidDismiss', function(e){console.log('didDismiss', e)})
     window.addEventListener('ionToastWillDismiss', function(e){console.log('willDismiss', e)})
-    
+
     async function presentToast(position) {
       const toastController = document.querySelector('ion-toast-controller');
       await toastController.componentOnReady();

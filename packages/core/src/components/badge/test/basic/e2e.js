@@ -13,7 +13,7 @@ platforms.forEach(platform => {
   describe('badge/basic', () => {
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
-      return page.navigate();
+      return page.navigate('#content');
     });
   });
 });

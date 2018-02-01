@@ -8,11 +8,11 @@ class E2ETestPage extends Page {
     super(driver, `http://localhost:3333/src/components/popover/test/basic?ionicplatform=${platform}`);
   }
 
-  present(buttonId) {
-    this.navigate();
+  async present(buttonId) {
+    await this.navigate('#content');
     this.driver.findElement(By.id(buttonId)).click();
-    this.driver.wait(until.elementLocated(By.css('.popover-wrapper')));
-    return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.popover-wrapper'))));
+    await this.driver.wait(until.elementLocated(By.css('.popover-wrapper')));
+    return await this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.popover-wrapper'))));
   }
 }
 
@@ -20,7 +20,7 @@ platforms.forEach(platform => {
   describe('popover/basic', () => {
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
-      return page.navigate();
+      return page.navigate('#content');
     });
   });
 });
