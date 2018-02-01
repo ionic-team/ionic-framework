@@ -104,12 +104,12 @@ string
 
 ## Attributes
 
-#### attachTo
+#### attach-to
 
 
 
 
-#### autoBlockAll
+#### auto-block-all
 
 boolean
 
@@ -119,7 +119,7 @@ boolean
 string
 
 
-#### canStart
+#### can-start
 
 
 
@@ -129,7 +129,7 @@ string
 string
 
 
-#### disableScroll
+#### disable-scroll
 
 boolean
 
@@ -139,47 +139,47 @@ boolean
 boolean
 
 
-#### gestureName
+#### gesture-name
 
 string
 
 
-#### gesturePriority
+#### gesture-priority
 
 number
 
 
-#### maxAngle
+#### max-angle
 
 number
 
 
-#### notCaptured
+#### not-captured
 
 
 
 
-#### onEnd
+#### on-end
 
 
 
 
-#### onMove
+#### on-move
 
 
 
 
-#### onPress
+#### on-press
 
 
 
 
-#### onStart
+#### on-start
 
 
 
 
-#### onWillStart
+#### on-will-start
 
 
 

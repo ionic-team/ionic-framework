@@ -110,7 +110,7 @@ string
 boolean
 
 
-#### toggleActive
+#### toggle-active
 
 
 

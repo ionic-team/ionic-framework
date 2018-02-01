@@ -49,6 +49,8 @@ Toggles change the state of a single option. Toggles can be switched on or off b
 
 boolean
 
+Returns / Sets the current state of the element when type is checkbox or radio.
+
 
 #### color
 
@@ -58,6 +60,8 @@ string
 #### disabled
 
 boolean
+
+Indicates that the user cannot interact with the control.
 
 
 #### mode
@@ -75,6 +79,8 @@ The name of the control, which is submitted with the form data.
 #### value
 
 string
+
+Reflects the value of the form control.
 
 
 ## Attributes
@@ -83,6 +89,8 @@ string
 
 boolean
 
+Returns / Sets the current state of the element when type is checkbox or radio.
+
 
 #### color
 
@@ -92,6 +100,8 @@ string
 #### disabled
 
 boolean
+
+Indicates that the user cannot interact with the control.
 
 
 #### mode
@@ -110,19 +120,32 @@ The name of the control, which is submitted with the form data.
 
 string
 
+Reflects the value of the form control.
+
 
 ## Events
 
 #### ionBlur
 
+Removes focus from input; keystrokes will subsequently go nowhere.
+
 
 #### ionChange
+
+The change event is fired when the value of has changed.
 
 
 #### ionFocus
 
+Focus on the input element; keystrokes will subsequently go to this element.
+
 
 #### ionStyle
+
+Emitted when the styles change. This is useful for parent
+components to know how to style themselves depending on the
+child input. For example, a disabled ion-toggle may give
+its wrapping ion-item a different style.
 
 
 

@@ -59,12 +59,12 @@ string
 boolean
 
 
-#### maxEdgeStart
+#### max-edge-start
 
 number
 
 
-#### menuId
+#### menu-id
 
 string
 
@@ -79,7 +79,7 @@ boolean
 
 
 
-#### swipeEnabled
+#### swipe-enabled
 
 boolean
 

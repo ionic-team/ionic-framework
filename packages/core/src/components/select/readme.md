@@ -156,7 +156,7 @@ The text to display instead of the selected option's value.
 
 ## Attributes
 
-#### cancelText
+#### cancel-text
 
 string
 
@@ -177,7 +177,7 @@ string
 The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
 
 
-#### interfaceOptions
+#### interface-options
 
 any
 
@@ -202,7 +202,7 @@ string
 The name of the control, which is submitted with the form data.
 
 
-#### okText
+#### ok-text
 
 string
 
@@ -216,7 +216,7 @@ string
 The text to display when the select is empty.
 
 
-#### selectedText
+#### selected-text
 
 string
 

@@ -93,7 +93,7 @@ string
 string
 
 
-#### cancelButtonText
+#### cancel-button-text
 
 string
 
@@ -118,7 +118,7 @@ number
 string
 
 
-#### showCancelButton
+#### show-cancel-button
 
 boolean
 

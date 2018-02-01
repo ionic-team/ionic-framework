@@ -79,7 +79,7 @@ string
 any
 
 
-#### cssClass
+#### css-class
 
 string
 
@@ -94,22 +94,22 @@ any
 
 
 
-#### enableBackdropDismiss
+#### enable-backdrop-dismiss
 
 boolean
 
 
-#### enterAnimation
+#### enter-animation
 
 
 
 
-#### leaveAnimation
+#### leave-animation
 
 
 
 
-#### modalId
+#### modal-id
 
 number
 
@@ -119,12 +119,12 @@ number
 
 
 
-#### showBackdrop
+#### show-backdrop
 
 boolean
 
 
-#### willAnimate
+#### will-animate
 
 boolean
 

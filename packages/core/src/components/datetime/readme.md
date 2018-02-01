@@ -312,22 +312,22 @@ any
 
 ## Attributes
 
-#### cancelText
+#### cancel-text
 
 string
 
 
-#### dayNames
+#### day-names
 
 any
 
 
-#### dayShortNames
+#### day-short-names
 
 any
 
 
-#### dayValues
+#### day-values
 
 any
 
@@ -337,17 +337,17 @@ any
 boolean
 
 
-#### displayFormat
+#### display-format
 
 string
 
 
-#### doneText
+#### done-text
 
 string
 
 
-#### hourValues
+#### hour-values
 
 any
 
@@ -362,32 +362,32 @@ string
 string
 
 
-#### minuteValues
+#### minute-values
 
 any
 
 
-#### monthNames
+#### month-names
 
 any
 
 
-#### monthShortNames
+#### month-short-names
 
 any
 
 
-#### monthValues
+#### month-values
 
 any
 
 
-#### pickerFormat
+#### picker-format
 
 string
 
 
-#### pickerOptions
+#### picker-options
 
 
 
@@ -402,7 +402,7 @@ string
 string
 
 
-#### yearValues
+#### year-values
 
 any
 

@@ -64,7 +64,7 @@ Time it takes the refresher to to snap back to the `refreshing` state. Defaults 
 
 ## Attributes
 
-#### closeDuration
+#### close-duration
 
 string
 
@@ -78,7 +78,7 @@ boolean
 If the refresher is disabled or not. Defaults to `true`.
 
 
-#### pullMax
+#### pull-max
 
 any
 
@@ -87,7 +87,7 @@ will automatically go into the `refreshing` state.
 Defaults to the result of `pullMin + 60`.
 
 
-#### pullMin
+#### pull-min
 
 number
 
@@ -95,7 +95,7 @@ The minimum distance the user must pull down until the
 refresher will go into the `refreshing` state. Defaults to `60`.
 
 
-#### snapbackDuration
+#### snapback-duration
 
 string
 

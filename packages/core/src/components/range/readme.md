@@ -79,7 +79,7 @@ number
 boolean
 
 
-#### dualKnobs
+#### dual-knobs
 
 boolean
 

@@ -19,12 +19,12 @@ string
 
 ## Attributes
 
-#### loadingSpinner
+#### loading-spinner
 
 string
 
 
-#### loadingText
+#### loading-text
 
 string
 
