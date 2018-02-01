@@ -40,12 +40,16 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 
 boolean
 
-Returns / Sets the current state of the element when type is checkbox or radio.
+If true, the radio is selected. Defaults to `false`.
 
 
 #### color
 
 string
+
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
 #### disabled
@@ -59,6 +63,10 @@ Indicates that the user cannot interact with the control.
 
 
 
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+
 
 #### name
 
@@ -71,7 +79,7 @@ The name of the control, which is submitted with the form data.
 
 string
 
-Reflects the value of the form control.
+the value of the radio.
 
 
 ## Attributes
@@ -80,12 +88,16 @@ Reflects the value of the form control.
 
 boolean
 
-Returns / Sets the current state of the element when type is checkbox or radio.
+If true, the radio is selected. Defaults to `false`.
 
 
 #### color
 
 string
+
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
 #### disabled
@@ -99,6 +111,10 @@ Indicates that the user cannot interact with the control.
 
 
 
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+
 
 #### name
 
@@ -111,35 +127,39 @@ The name of the control, which is submitted with the form data.
 
 string
 
-Reflects the value of the form control.
+the value of the radio.
 
 
 ## Events
 
 #### ionBlur
 
-Removes focus from input; keystrokes will subsequently go nowhere.
+Emitted when the radio button loses focus.
 
 
 #### ionFocus
 
-Focus on the input element; keystrokes will subsequently go to this element.
+Emitted when the radio button has focus.
 
 
 #### ionRadioDidLoad
 
+Emitted when the radio loads.
+
 
 #### ionRadioDidUnload
+
+Emitted when the radio unloads.
 
 
 #### ionSelect
 
-A single radio button fires an ionSelect event, whereas
-a radio group fires an ionChange event. It would be more common
-to attach listeners to the radio group, not individual radio buttons.
+Emitted when the radio button is selected.
 
 
 #### ionStyle
+
+Emitted when the styles change.
 
 
 

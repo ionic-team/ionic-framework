@@ -149,20 +149,32 @@ Toggles whether animation should occur or not
 
 #### ionLoadingDidDismiss
 
+Emitted after the loading has dismissed.
+
 
 #### ionLoadingDidLoad
+
+Emitted after the loading has loaded.
 
 
 #### ionLoadingDidPresent
 
+Emitted after the loading has presented.
+
 
 #### ionLoadingDidUnload
+
+Emitted after the loading has unloaded.
 
 
 #### ionLoadingWillDismiss
 
+Emitted before the loading has dismissed.
+
 
 #### ionLoadingWillPresent
+
+Emitted before the loading has presented.
 
 
 ## Methods

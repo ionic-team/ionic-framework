@@ -54,30 +54,44 @@ export class Tabs {
 
 string
 
+The badge for the tab button.
+
 
 #### badgeStyle
 
 string
+
+The badge color for the tab button.
 
 
 #### btnId
 
 string
 
+Set the root page for this tab.
+
 
 #### disabled
 
 boolean
+
+If true, enable the tab. If false,
+the user cannot interact with this element.
+Default: `true`.
 
 
 #### icon
 
 string
 
+The icon for the tab button.
+
 
 #### path
 
 string
+
+The URL path name to represent this tab within the URL.
 
 
 #### selected
@@ -89,15 +103,22 @@ boolean
 
 boolean
 
+If true, the tab button is visible within the
+tabbar. Default: `true`.
+
 
 #### tabsHideOnSubPages
 
 boolean
 
+If true, hide the tabs on child pages.
+
 
 #### title
 
 string
+
+The title of the tab button.
 
 
 ## Attributes
@@ -106,30 +127,44 @@ string
 
 string
 
+The badge for the tab button.
+
 
 #### badge-style
 
 string
+
+The badge color for the tab button.
 
 
 #### btn-id
 
 string
 
+Set the root page for this tab.
+
 
 #### disabled
 
 boolean
+
+If true, enable the tab. If false,
+the user cannot interact with this element.
+Default: `true`.
 
 
 #### icon
 
 string
 
+The icon for the tab button.
+
 
 #### path
 
 string
+
+The URL path name to represent this tab within the URL.
 
 
 #### selected
@@ -141,20 +176,29 @@ boolean
 
 boolean
 
+If true, the tab button is visible within the
+tabbar. Default: `true`.
+
 
 #### tabs-hide-on-sub-pages
 
 boolean
+
+If true, hide the tabs on child pages.
 
 
 #### title
 
 string
 
+The title of the tab button.
+
 
 ## Events
 
 #### ionSelect
+
+Emitted when the current tab is selected.
 
 
 ## Methods

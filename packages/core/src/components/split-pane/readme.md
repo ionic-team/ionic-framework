@@ -119,10 +119,17 @@ SplitPane also provides some predefined media queries that can be used.
 
 boolean
 
+If `false`, the split-pane is disabled, ie. the side pane will
+never be displayed. Default `true`.
+
 
 #### when
 
 
+
+When the split-pane should be shown.
+Can be a CSS media query expression, or a shortcut expression.
+Can also be a boolean expression.
 
 
 ## Attributes
@@ -131,18 +138,29 @@ boolean
 
 boolean
 
+If `false`, the split-pane is disabled, ie. the side pane will
+never be displayed. Default `true`.
+
 
 #### when
 
 
+
+When the split-pane should be shown.
+Can be a CSS media query expression, or a shortcut expression.
+Can also be a boolean expression.
 
 
 ## Events
 
 #### ionChange
 
+Emitted when the split pane is visible.
+
 
 #### ionSplitPaneDidChange
+
+Expression to be called when the split-pane visibility has changed
 
 
 ## Methods

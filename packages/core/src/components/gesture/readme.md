@@ -203,17 +203,27 @@ string
 
 #### ionGestureEnd
 
+Emitted when the gesture ends.
+
 
 #### ionGestureMove
+
+Emitted when the gesture moves.
 
 
 #### ionGestureNotCaptured
 
+Emitted when the gesture is not captured.
+
 
 #### ionGestureStart
 
+Emitted when the gesture starts.
+
 
 #### ionPress
+
+Emitted when press is detected.
 
 
 

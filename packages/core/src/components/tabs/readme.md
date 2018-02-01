@@ -94,6 +94,8 @@ components to switch to `TabsRoot3`:
 
 string
 
+A unique name for the tabs
+
 
 #### scrollable
 
@@ -104,25 +106,38 @@ boolean
 
 boolean
 
+If true, the tabbar
+
 
 #### tabbarHighlight
 
 boolean
+
+If true, show the tab highlight bar under the selected tab.
 
 
 #### tabbarLayout
 
 string
 
+Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
+
 
 #### tabbarPlacement
 
 string
 
+Set position of the tabbar: `top`, `bottom`.
+
 
 #### translucent
 
 boolean
+
+If true, adds transparency to the tabbar.
+Note: In order to scroll content behind the tabbar, the `fullscreen`
+attribute needs to be set on the content.
+Only affects `ios` mode. Defaults to `false`.
 
 
 ## Attributes
@@ -130,6 +145,8 @@ boolean
 #### name
 
 string
+
+A unique name for the tabs
 
 
 #### scrollable
@@ -141,30 +158,45 @@ boolean
 
 boolean
 
+If true, the tabbar
+
 
 #### tabbar-highlight
 
 boolean
+
+If true, show the tab highlight bar under the selected tab.
 
 
 #### tabbar-layout
 
 string
 
+Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
+
 
 #### tabbar-placement
 
 string
+
+Set position of the tabbar: `top`, `bottom`.
 
 
 #### translucent
 
 boolean
 
+If true, adds transparency to the tabbar.
+Note: In order to scroll content behind the tabbar, the `fullscreen`
+attribute needs to be set on the content.
+Only affects `ios` mode. Defaults to `false`.
+
 
 ## Events
 
 #### ionChange
+
+Emitted when the tab changes.
 
 
 ## Methods
