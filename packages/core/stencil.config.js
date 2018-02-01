@@ -42,6 +42,7 @@ exports.config = {
     { components: ['ion-tabs', 'ion-tab', 'ion-tabbar', 'ion-tab-button'] },
     { components: ['ion-toggle'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
+    { components: ['ion-tap-click', 'ion-status-tap'] },
   ],
   collections: [
     'ionicons'
