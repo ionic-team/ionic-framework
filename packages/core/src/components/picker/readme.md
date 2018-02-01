@@ -133,20 +133,32 @@ boolean
 
 #### ionPickerDidDismiss
 
+Emitted after the picker has dismissed.
+
 
 #### ionPickerDidLoad
+
+Emitted after the picker has loaded.
 
 
 #### ionPickerDidPresent
 
+Emitted after the picker has presented.
+
 
 #### ionPickerDidUnload
+
+Emitted after the picker has unloaded.
 
 
 #### ionPickerWillDismiss
 
+Emitted before the picker has dismissed.
+
 
 #### ionPickerWillPresent
+
+Emitted before the picker has presented.
 
 
 ## Methods

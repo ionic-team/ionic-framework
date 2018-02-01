@@ -74,7 +74,7 @@ The name of the control, which is submitted with the form data.
 
 string
 
-Reflects the value of the form control.
+the value of the radio group.
 
 
 ## Attributes
@@ -102,12 +102,14 @@ The name of the control, which is submitted with the form data.
 
 string
 
-Reflects the value of the form control.
+the value of the radio group.
 
 
 ## Events
 
 #### ionChange
+
+Emitted when the value has changed.
 
 
 

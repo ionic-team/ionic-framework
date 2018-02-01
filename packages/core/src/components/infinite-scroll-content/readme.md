@@ -11,10 +11,14 @@
 
 string
 
+An animated SVG spinner that shows while loading.
+
 
 #### loadingText
 
 string
+
+Optional text to display while loading.
 
 
 ## Attributes
@@ -23,10 +27,14 @@ string
 
 string
 
+An animated SVG spinner that shows while loading.
+
 
 #### loading-text
 
 string
+
+Optional text to display while loading.
 
 
 

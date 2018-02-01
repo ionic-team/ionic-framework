@@ -133,20 +133,32 @@ boolean
 
 #### ionToastDidDismiss
 
+Emitted after the toast has dismissed.
+
 
 #### ionToastDidLoad
+
+Emitted after the toast has loaded.
 
 
 #### ionToastDidPresent
 
+Emitted after the toast has presented.
+
 
 #### ionToastDidUnload
+
+Emitted after the toast has unloaded.
 
 
 #### ionToastWillDismiss
 
+Emitted before the toast has dismissed.
+
 
 #### ionToastWillPresent
+
+Emitted before the toast has presented.
 
 
 ## Methods

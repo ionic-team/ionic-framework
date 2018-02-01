@@ -11,6 +11,8 @@
 
 boolean
 
+If true, the user cannot interact with the select option.
+
 
 #### selected
 
@@ -31,6 +33,8 @@ The text value of the option.
 #### disabled
 
 boolean
+
+If true, the user cannot interact with the select option.
 
 
 #### selected

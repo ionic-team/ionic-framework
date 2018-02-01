@@ -153,6 +153,8 @@ The text to display instead of the selected option's value.
 
 
 
+the value of the select.
+
 
 ## Attributes
 
@@ -227,6 +229,8 @@ The text to display instead of the selected option's value.
 
 
 
+the value of the select.
+
 
 ## Events
 
@@ -251,6 +255,8 @@ Emitted when the select has focus.
 
 
 #### ionStyle
+
+Emitted when the styles change.
 
 
 

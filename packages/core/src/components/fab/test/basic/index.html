@@ -86,6 +86,9 @@
 
       <ion-footer>
         <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button onclick="closeLists()">Close</ion-button>
+          </ion-buttons>
           <ion-title>Footer</ion-title>
         </ion-toolbar>
       </ion-footer>
@@ -114,21 +117,32 @@
         let message = 'Clicked open social menu';
         insertLog(message);
 
-        openLists(container);
+        toggleLists(container);
       }
 
       function openSocial(network, container) {
         let message = 'Share in ' + network;
         insertLog(message);
 
-        openLists(container);
+        toggleLists(container);
       }
 
-      function openLists(container) {
+      function toggleLists(container) {
+        var fabButton = document.getElementById(container).querySelector('ion-fab-button');
         var fabLists = document.getElementById(container).querySelectorAll('ion-fab-list');
 
+        fabButton.activated = !fabButton.activated;
+
         for (var i = 0; i < fabLists.length; i++) {
-          fabLists[i].activated = true;
+          fabLists[i].activated = !fabLists[i].activated;
+        }
+      }
+
+      function closeLists() {
+        var fabs = document.querySelectorAll('ion-fab');
+
+        for (var i = 0; i < fabs.length; i++) {
+          fabs[i].activated = false;
         }
       }
     </script>

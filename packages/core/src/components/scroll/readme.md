@@ -53,11 +53,17 @@ boolean
 
 #### ionScroll
 
+Emitted while scrolling.
+
 
 #### ionScrollEnd
 
+Emitted when the scroll has ended.
+
 
 #### ionScrollStart
+
+Emitted when the scroll has started.
 
 
 ## Methods

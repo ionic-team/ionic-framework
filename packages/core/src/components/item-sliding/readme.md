@@ -106,6 +106,25 @@ We can call `delete` by either clicking the button, or by doing a full swipe on 
 
 #### ionDrag
 
+Emitted when the sliding position changes.
+It reports the relative position.
+
+```ts
+onDrag(slidingItem) {
+   let percent = slidingItem.getSlidingPercent();
+   if (percent > 0) {
+     // positive
+     console.log('right side');
+   } else {
+     // negative
+     console.log('left side');
+   }
+   if (Math.abs(percent) > 1) {
+     console.log('overscroll');
+   }
+}
+```
+
 
 ## Methods
 
