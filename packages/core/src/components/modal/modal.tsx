@@ -33,32 +33,32 @@ export class Modal {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {ModalEvent} Emitted after the modal has loaded.
+   * Emitted after the modal has loaded.
    */
   @Event() ionModalDidLoad: EventEmitter<ModalEventDetail>;
 
   /**
-   * @output {ModalEvent} Emitted after the modal has presented.
+   * Emitted after the modal has presented.
    */
   @Event() ionModalDidPresent: EventEmitter<ModalEventDetail>;
 
   /**
-   * @output {ModalEvent} Emitted before the modal has presented.
+   * Emitted before the modal has presented.
    */
   @Event() ionModalWillPresent: EventEmitter<ModalEventDetail>;
 
   /**
-   * @output {ModalEvent} Emitted before the modal has dismissed.
+   * Emitted before the modal has dismissed.
    */
   @Event() ionModalWillDismiss: EventEmitter<ModalDismissEventDetail>;
 
   /**
-   * @output {ModalEvent} Emitted after the modal has dismissed.
+   * Emitted after the modal has dismissed.
    */
   @Event() ionModalDidDismiss: EventEmitter<ModalDismissEventDetail>;
 
   /**
-   * @output {ModalEvent} Emitted after the modal has unloaded.
+   * Emitted after the modal has unloaded.
    */
   @Event() ionModalDidUnload: EventEmitter<ModalEventDetail>;
 

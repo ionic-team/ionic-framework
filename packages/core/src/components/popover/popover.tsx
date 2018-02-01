@@ -34,32 +34,32 @@ export class Popover {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {PopoverEvent} Emitted after the popover has loaded.
+   * Emitted after the popover has loaded.
    */
   @Event() ionPopoverDidLoad: EventEmitter<PopoverEventDetail>;
 
   /**
-   * @output {PopoverEvent} Emitted after the popover has presented.
+   * Emitted after the popover has presented.
    */
   @Event() ionPopoverDidPresent: EventEmitter<PopoverEventDetail>;
 
   /**
-   * @output {PopoverEvent} Emitted before the popover has presented.
+   * Emitted before the popover has presented.
    */
   @Event() ionPopoverWillPresent: EventEmitter<PopoverEventDetail>;
 
   /**
-   * @output {PopoverEvent} Emitted before the popover has dismissed.
+   * Emitted before the popover has dismissed.
    */
   @Event() ionPopoverWillDismiss: EventEmitter<PopoverDismissEventDetail>;
 
   /**
-   * @output {PopoverEvent} Emitted after the popover has dismissed.
+   * Emitted after the popover has dismissed.
    */
   @Event() ionPopoverDidDismiss: EventEmitter<PopoverDismissEventDetail>;
 
   /**
-   * @output {PopoverEvent} Emitted after the popover has unloaded.
+   * Emitted after the popover has unloaded.
    */
   @Event() ionPopoverDidUnload: EventEmitter<PopoverEventDetail>;
 

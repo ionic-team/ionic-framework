@@ -76,7 +76,7 @@ export class InfiniteScroll {
   @Prop() position: string = Position.Bottom;
 
   /**
-   * @output {Event} Emitted when the scroll reaches
+   * Emitted when the scroll reaches
    * the threshold distance. From within your infinite handler,
    * you must call the infinite scroll's `complete()` method when
    * your async operation has completed.

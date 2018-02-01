@@ -17,7 +17,7 @@ export class Label {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {Event} Emitted when the styles change.
+   * Emitted when the styles change.
    */
   @Event() ionStyle: EventEmitter;
 
@@ -36,17 +36,17 @@ export class Label {
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * @output {Event} If true, the label will sit alongside an input. Defaults to `false`.
+   * If true, the label will sit alongside an input. Defaults to `false`.
    */
   @Prop() fixed = false;
 
   /**
-   * @output {Event} If true, the label will float above an input when the value is empty or the input is focused. Defaults to `false`.
+   * If true, the label will float above an input when the value is empty or the input is focused. Defaults to `false`.
    */
   @Prop() floating = false;
 
   /**
-   * @output {Event} If true, the label will be stacked above an input. Defaults to `false`.
+   * If true, the label will be stacked above an input. Defaults to `false`.
    */
   @Prop() stacked = false;
 

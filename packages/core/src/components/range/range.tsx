@@ -37,22 +37,22 @@ export class Range implements BaseInputComponent {
   @State() pressedB: boolean;
 
   /**
-   * @output {Event} Emitted when the value property has changed.
+   * Emitted when the value property has changed.
    */
   @Event() ionChange: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the styles change.
+   * Emitted when the styles change.
    */
   @Event() ionStyle: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the range has focus.
+   * Emitted when the range has focus.
    */
   @Event() ionFocus: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the range loses focus.
+   * Emitted when the range loses focus.
    */
   @Event() ionBlur: EventEmitter;
 

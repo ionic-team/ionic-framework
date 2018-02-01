@@ -62,22 +62,22 @@ export class Toggle implements CheckboxInput {
   @Prop() value = 'on';
 
   /**
-   * @output {Event} Emitted when the value property has changed.
+   * Emitted when the value property has changed.
    */
   @Event() ionChange: EventEmitter<CheckedInputChangeEvent>;
 
   /**
-   * @output {Event} Emitted when the toggle has focus.
+   * Emitted when the toggle has focus.
    */
   @Event() ionFocus: EventEmitter<FocusEvent>;
 
   /**
-   * @output {Event} Emitted when the toggle loses focus.
+   * Emitted when the toggle loses focus.
    */
   @Event() ionBlur: EventEmitter<BlurEvent>;
 
   /**
-   * @output {Event} Emitted when the styles change.
+   * Emitted when the styles change.
    */
   @Event() ionStyle: EventEmitter<StyleEvent>;
 

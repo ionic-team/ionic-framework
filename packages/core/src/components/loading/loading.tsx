@@ -38,32 +38,32 @@ export class Loading {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {LoadingEvent} Emitted after the loading has loaded.
+   * Emitted after the loading has loaded.
    */
   @Event() ionLoadingDidLoad: EventEmitter<LoadingEventDetail>;
 
   /**
-   * @output {LoadingEvent} Emitted after the loading has presented.
+   * Emitted after the loading has presented.
    */
   @Event() ionLoadingDidPresent: EventEmitter<LoadingEventDetail>;
 
   /**
-   * @output {LoadingEvent} Emitted before the loading has presented.
+   * Emitted before the loading has presented.
    */
   @Event() ionLoadingWillPresent: EventEmitter<LoadingEventDetail>;
 
   /**
-   * @output {LoadingEvent} Emitted before the loading has dismissed.
+   * Emitted before the loading has dismissed.
    */
   @Event() ionLoadingWillDismiss: EventEmitter<LoadingDismissEventDetail>;
 
   /**
-   * @output {LoadingEvent} Emitted after the loading has dismissed.
+   * Emitted after the loading has dismissed.
    */
   @Event() ionLoadingDidDismiss: EventEmitter<LoadingDismissEventDetail>;
 
   /**
-   * @output {LoadingEvent} Emitted after the loading has unloaded.
+   * Emitted after the loading has unloaded.
    */
   @Event() ionLoadingDidUnload: EventEmitter<LoadingEventDetail>;
 

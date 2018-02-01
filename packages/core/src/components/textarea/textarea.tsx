@@ -30,22 +30,22 @@ export class Textarea implements TextareaComponent {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {Event} Emitted when the input value has changed.
+   * Emitted when the input value has changed.
    */
   @Event() ionInput: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the styles change.
+   * Emitted when the styles change.
    */
   @Event() ionStyle: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the input loses focus.
+   * Emitted when the input loses focus.
    */
   @Event() ionBlur: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the input has focus.
+   * Emitted when the input has focus.
    */
   @Event() ionFocus: EventEmitter;
 
