@@ -143,9 +143,9 @@ export class ItemReorderGesture {
 
   private scroll(posY: number): number {
     if (posY < AUTO_SCROLL_MARGIN) {
-      this.lastScrollPosition = this.reorderList._scrollContent(-SCROLL_JUMP);
+      this.lastScrollPosition += this.reorderList._scrollContent(-SCROLL_JUMP);
     } else if (posY > this.windowHeight) {
-      this.lastScrollPosition = this.reorderList._scrollContent(SCROLL_JUMP);
+      this.lastScrollPosition += this.reorderList._scrollContent(SCROLL_JUMP);
     }
     return this.lastScrollPosition;
   }
