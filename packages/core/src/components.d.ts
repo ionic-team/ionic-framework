@@ -2806,6 +2806,36 @@ declare global {
 
 
 import {
+  StatusTap as IonStatusTap
+} from './components/status-tap/status-tap';
+
+declare global {
+  interface HTMLIonStatusTapElement extends IonStatusTap, HTMLElement {
+  }
+  var HTMLIonStatusTapElement: {
+    prototype: HTMLIonStatusTapElement;
+    new (): HTMLIonStatusTapElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-status-tap": HTMLIonStatusTapElement;
+  }
+  interface ElementTagNameMap {
+    "ion-status-tap": HTMLIonStatusTapElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-status-tap": JSXElements.IonStatusTapAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonStatusTapAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
   TabButton as IonTabButton
 } from './components/tab-button/tab-button';
 

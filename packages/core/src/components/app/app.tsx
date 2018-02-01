@@ -131,12 +131,13 @@ export class App {
   }
 
   render() {
-    const dom = [<ion-tap-click />, <slot></slot>];
-    if (this.useRouter) {
-
-      // dom.push(<ion-router-controller></ion-router-controller>);
-    }
-    return dom;
+    const isDevice = true;
+    return [
+      isDevice && <ion-tap-click />,
+      isDevice && <ion-status-tap />,
+      // <ion-router-controller></ion-router-controller>
+      <slot></slot>
+    ];
   }
 }
 
