@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Menu - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-menu side="left" class="e2eLeftMenu">
+
+      <ion-header>
+        <ion-toolbar color="secondary">
+          <ion-title>Left Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-list>
+          <ion-item>Open Right Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item detail-none>Close Menu</ion-item>
+        </ion-list>
+      </ion-content>
+
+      <ion-footer>
+        <ion-toolbar color="secondary">
+          <ion-title>Footer</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+
+    </ion-menu>
+
+    <ion-menu side="right">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Hola</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content padding>
+        hola macho
+      </ion-content>
+    </ion-menu>
+
+    <ion-page main>
+
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Menu Button - Basic</ion-title>
+        </ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+      </ion-header>
+
+      <ion-content padding>
+          <div>
+              <ion-button onclick="openDefault()">Menu Button Will Open Default</ion-button>
+          </div>
+        <div>
+            <ion-button onclick="openLeft()">Menu Button Will Open Left</ion-button>
+        </div>
+        <div>
+            <ion-button onclick="openRight()">Menu Button Will Open Right</ion-button>
+        </div>
+      </ion-content>
+    </ion-page>
+
+  </ion-app>
+  <ion-menu-controller></ion-menu-controller>
+
+  <script>
+
+    async function openDefault() {
+      const menuButton = document.querySelector('ion-menu-button');
+      await menuButton.componentOnReady();
+      menuButton.menu = null;
+    }
+
+    async function openLeft() {
+      const menuButton = document.querySelector('ion-menu-button');
+      await menuButton.componentOnReady();
+      menuButton.menu = 'left';
+    }
+
+    async function openRight() {
+      const menuButton = document.querySelector('ion-menu-button');
+      await menuButton.componentOnReady();
+      menuButton.menu = 'right';
+    }
+  </script>
+  <style>
+  ion-menu-button {
+    height: 44px;
+    background-color: blue;
+    display: block !important;
+  }
+  </style>
+</body>
+</html>
