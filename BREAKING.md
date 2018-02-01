@@ -74,11 +74,11 @@ In addition, several sets of mutually exclusive boolean attributes have been com
 
 The `small` and `large` attributes are now combined under the `size` attribute. The `clear`, `outline`, and `solid` attributes have been combined under `fill`. And, lastly, the `full` and `block` attributes have been combined under `expand`.
 
-| Old Property | New Property | Property Behavior
-| - | - | - | - |
-| `small`, `large` | `size` |  Sets the button size.
-| `clear`, `outline`, `solid` | `fill` | Sets the button fill style.
-| `full`, `block` | `expand` | Sets the button width.
+| Old Property                | New Property | Property Behavior           |
+| --------------------------- | ------------ | --------------------------- |
+| `small`, `large`            | `size`       |  Sets the button size.      |
+| `clear`, `outline`, `solid` | `fill`       | Sets the button fill style. |
+| `full`, `block`             | `expand`     | Sets the button width.      |
 
 
 **Old Usage Example:**
