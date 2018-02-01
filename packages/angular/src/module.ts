@@ -18,6 +18,12 @@ import { TextValueAccessor } from './control-value-accessors/text-value-accessor
 /* Directives */
 import { MenuToggle } from './directives/menu-toggle';
 
+import { VirtualScroll } from './directives/virtual-scroll';
+import { VirtualItem } from './directives/virtual-item';
+import { VirtualHeader } from './directives/virtual-header';
+import { VirtualFooter } from './directives/virtual-footer';
+
+
 /* Providers */
 import { ActionSheetController } from './providers/action-sheet-controller';
 import { AlertController } from './providers/alert-controller';
@@ -37,7 +43,12 @@ import { ToastController } from './providers/toast-controller';
     NumericValueAccessor,
     RadioValueAccessor,
     SelectValueAccessor,
-    TextValueAccessor
+    TextValueAccessor,
+
+    VirtualScroll,
+    VirtualItem,
+    VirtualHeader,
+    VirtualFooter,
   ],
   exports: [
     BooleanValueAccessor,
@@ -45,7 +56,12 @@ import { ToastController } from './providers/toast-controller';
     NumericValueAccessor,
     RadioValueAccessor,
     SelectValueAccessor,
-    TextValueAccessor
+    TextValueAccessor,
+
+    VirtualScroll,
+    VirtualItem,
+    VirtualHeader,
+    VirtualFooter,
   ],
   imports: [
     CommonModule,
