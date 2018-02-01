@@ -30,9 +30,11 @@ export class StatusTap {
         return;
       }
       const scroll = el.closest('ion-scroll') as HTMLIonScrollElement;
-      (scroll as any).componentOnReady().then(() => {
-        this.dom.write(() => scroll.scrollToTop(this.duration));
-      });
+      if (scroll) {
+        (scroll as any).componentOnReady().then(() => {
+          this.dom.write(() => scroll.scrollToTop(this.duration));
+        });
+      }
     });
   }
 }
