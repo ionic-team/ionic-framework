@@ -1570,37 +1570,6 @@ declare global {
 
 
 import {
-  MenuButton as IonMenuButton
-} from './components/menu-button/menu-button';
-
-declare global {
-  interface HTMLIonMenuButtonElement extends IonMenuButton, HTMLElement {
-  }
-  var HTMLIonMenuButtonElement: {
-    prototype: HTMLIonMenuButtonElement;
-    new (): HTMLIonMenuButtonElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-menu-button": HTMLIonMenuButtonElement;
-  }
-  interface ElementTagNameMap {
-    "ion-menu-button": HTMLIonMenuButtonElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-menu-button": JSXElements.IonMenuButtonAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonMenuButtonAttributes extends HTMLAttributes {
-      iconName?: string;
-      menu?: string;
-    }
-  }
-}
-
-
-import {
   MenuController as IonMenuController
 } from './components/menu-controller/menu-controller';
 
@@ -1625,6 +1594,36 @@ declare global {
   namespace JSXElements {
     export interface IonMenuControllerAttributes extends HTMLAttributes {
 
+    }
+  }
+}
+
+
+import {
+  MenuToggle as IonMenuToggle
+} from './components/menu-toggle/menu-toggle';
+
+declare global {
+  interface HTMLIonMenuToggleElement extends IonMenuToggle, HTMLElement {
+  }
+  var HTMLIonMenuToggleElement: {
+    prototype: HTMLIonMenuToggleElement;
+    new (): HTMLIonMenuToggleElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-menu-toggle": HTMLIonMenuToggleElement;
+  }
+  interface ElementTagNameMap {
+    "ion-menu-toggle": HTMLIonMenuToggleElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-menu-toggle": JSXElements.IonMenuToggleAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonMenuToggleAttributes extends HTMLAttributes {
+      menu?: string;
     }
   }
 }
