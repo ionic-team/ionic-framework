@@ -2859,7 +2859,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonStatusTapAttributes extends HTMLAttributes {
-      
+      duration?: number;
     }
   }
 }
