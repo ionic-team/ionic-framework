@@ -8,11 +8,11 @@ class E2ETestPage extends Page {
     super(driver, `http://localhost:3333/src/components/modal/test/basic?ionicplatform=${platform}`);
   }
 
-  present(buttonId) {
-    this.navigate();
+  async present(buttonId) {
+    await this.navigate('#presentModal');
     this.driver.findElement(By.id(buttonId)).click();
-    this.driver.wait(until.elementLocated(By.css('.modal-wrapper')));
-    return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.modal-wrapper'))));
+    await this.driver.wait(until.elementLocated(By.css('.modal-wrapper')));
+    return await this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.modal-wrapper'))));
   }
 }
 
@@ -20,7 +20,7 @@ platforms.forEach(platform => {
   describe('modal/basic', () => {
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
-      return page.navigate();
+      return page.navigate('#presentModal');
     });
   });
 });

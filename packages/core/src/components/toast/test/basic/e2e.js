@@ -8,16 +8,16 @@ class E2ETestPage extends Page {
     super(driver, `http://localhost:3333/src/components/toast/test/basic?ionicplatform=${platform}`);
   }
 
-  present(buttonId) {
-    this.navigate();
+  async present(buttonId) {
+    await this.navigate('#content');
     this.driver.findElement(By.id(buttonId)).click();
-    this.driver.wait(until.elementLocated(By.css('.toast-wrapper')));
-    return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.toast-wrapper'))));
+    await this.driver.wait(until.elementLocated(By.css('.toast-wrapper')));
+    return await this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.toast-wrapper'))));
   }
 
-  closeWithBackdrop() {
+  async closeWithBackdrop() {
     this.driver.findElement(By.css('ion-backdrop')).click();
-    return this.driver.wait(until.elementIsNotVisible(this.driver.findElement(By.css('ion-backdrop'))));
+    return await this.driver.wait(until.elementIsNotVisible(this.driver.findElement(By.css('ion-backdrop'))));
   }
 }
 
@@ -25,7 +25,7 @@ platforms.forEach(platform => {
   describe('toast/basic', () => {
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
-      return page.navigate();
+      return page.navigate('#content');
     });
 
     register('shows bottom toast', driver => {

@@ -14,7 +14,7 @@ platforms.forEach(platform => {
   describe('select/basic', () => {
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
-      return page.navigate();
+      return page.navigate('#gender');
     });
 
     register('should open gender single select', driver => {

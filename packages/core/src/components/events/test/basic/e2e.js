@@ -11,11 +11,11 @@ class E2ETestPage extends Page {
 }
 
 platforms.forEach(platform => {
-  describe('events/basic', () => {
+  describe.skip('events/basic', () => {
 
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
-      return page.navigate();
+      return page.navigate('#content');
     });
 
     /*register('subscribers should receive event on or shortly after button click', async (driver, testContext) => {
