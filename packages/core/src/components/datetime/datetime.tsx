@@ -200,7 +200,7 @@ export class Datetime {
   }
 
   /**
-   * @output {Event} Emitted when the datetime selection was cancelled.
+   * Emitted when the datetime selection was cancelled.
    */
   @Event() ionCancel: EventEmitter;
 

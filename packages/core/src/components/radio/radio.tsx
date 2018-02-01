@@ -58,32 +58,32 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
   @Prop({ mutable: true }) value: string;
 
   /**
-   * @output {RadioEvent} Emitted when the radio loads.
+   * Emitted when the radio loads.
    */
   @Event() ionRadioDidLoad: EventEmitter;
 
   /**
-   * @output {RadioEvent} Emitted when the radio unloads.
+   * Emitted when the radio unloads.
    */
   @Event() ionRadioDidUnload: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the styles change.
+   * Emitted when the styles change.
    */
   @Event() ionStyle: EventEmitter<StyleEvent>;
 
   /**
-   * @output {Event} Emitted when the radio button is selected.
+   * Emitted when the radio button is selected.
    */
   @Event() ionSelect: EventEmitter<CheckedInputChangeEvent>;
 
   /**
-   * @output {Event} Emitted when the radio button has focus.
+   * Emitted when the radio button has focus.
    */
   @Event() ionFocus: EventEmitter<FocusEvent>;
 
   /**
-   * @output {Event} Emitted when the radio button loses focus.
+   * Emitted when the radio button loses focus.
    */
   @Event() ionBlur: EventEmitter<BlurEvent>;
 

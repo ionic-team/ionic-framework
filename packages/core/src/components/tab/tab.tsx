@@ -71,7 +71,7 @@ export class Tab {
   }
 
   /**
-   * @output {Tab} Emitted when the current tab is selected.
+   * Emitted when the current tab is selected.
    */
   @Event() ionSelect: EventEmitter<TabEventDetail>;
 

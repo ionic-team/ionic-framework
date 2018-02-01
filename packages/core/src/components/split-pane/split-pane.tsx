@@ -43,12 +43,12 @@ export class SplitPane {
   @Prop() when: string | boolean = QUERY['md'];
 
   /**
-   * @output {Event} Expression to be called when the split-pane visibility has changed
+   * Expression to be called when the split-pane visibility has changed
    */
   @Event() ionSplitPaneDidChange: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the split pane is visible.
+   * Emitted when the split pane is visible.
    */
   @Event() ionChange: EventEmitter;
 

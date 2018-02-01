@@ -52,27 +52,27 @@ export class Gesture {
   @Prop() notCaptured: GestureCallback;
 
   /**
-   * @output {Event} Emitted when the gesture moves.
+   * Emitted when the gesture moves.
    */
   @Event() ionGestureMove: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the gesture starts.
+   * Emitted when the gesture starts.
    */
   @Event() ionGestureStart: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the gesture ends.
+   * Emitted when the gesture ends.
    */
   @Event() ionGestureEnd: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the gesture is not captured.
+   * Emitted when the gesture is not captured.
    */
   @Event() ionGestureNotCaptured: EventEmitter;
 
   /**
-   * @output {Event} Emitted when press is detected.
+   * Emitted when press is detected.
    */
   @Event() ionPress: EventEmitter;
 

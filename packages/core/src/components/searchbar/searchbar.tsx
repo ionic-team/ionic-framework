@@ -25,27 +25,27 @@ export class Searchbar {
 
 
   /**
-   * @output {Event} Emitted when the Searchbar input has changed, including when it's cleared.
+   * Emitted when the Searchbar input has changed, including when it's cleared.
    */
   @Event() ionInput: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the cancel button is clicked.
+   * Emitted when the cancel button is clicked.
    */
   @Event() ionCancel: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the clear input button is clicked.
+   * Emitted when the clear input button is clicked.
    */
   @Event() ionClear: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the input loses focus.
+   * Emitted when the input loses focus.
    */
   @Event() ionBlur: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the input has focus.
+   * Emitted when the input has focus.
    */
   @Event() ionFocus: EventEmitter;
 

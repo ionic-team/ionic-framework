@@ -106,18 +106,18 @@ export class Menu {
   @Prop() maxEdgeStart = 50;
 
   /**
-   * @output {Event} Emitted when the sliding position changes.
+   * Emitted when the sliding position changes.
    * It reports the relative position.
    */
   @Event() ionDrag: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the menu is open.
+   * Emitted when the menu is open.
    */
   @Event() ionOpen: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the menu is closed.
+   * Emitted when the menu is closed.
    */
   @Event() ionClose: EventEmitter;
 

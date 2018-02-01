@@ -19,22 +19,22 @@ export class KeyboardController {
   @Prop({context: 'config'}) config: Config;
 
   /**
-   * @output {Event} Emitted before the keyboard has shown.
+   * Emitted before the keyboard has shown.
    */
   @Event() keyboardWillShow: EventEmitter;
 
   /**
-   * @output {Event} Emitted after the keyboard has shown.
+   * Emitted after the keyboard has shown.
    */
   @Event() keyboardDidShow: EventEmitter;
 
   /**
-   * @output {Event} Emitted before the keyboard has hidden.
+   * Emitted before the keyboard has hidden.
    */
   @Event() keyboardWillHide: EventEmitter;
 
   /**
-   * @output {Event} Emitted after the keyboard has hidden.
+   * Emitted after the keyboard has hidden.
    */
   @Event() keyboardDidHide: EventEmitter;
 

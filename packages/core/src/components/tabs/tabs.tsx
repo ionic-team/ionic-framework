@@ -56,7 +56,7 @@ export class Tabs {
   @Prop() scrollable = false;
 
   /**
-   * @output {any} Emitted when the tab changes.
+   * Emitted when the tab changes.
    */
   @Event() ionChange: EventEmitter;
 

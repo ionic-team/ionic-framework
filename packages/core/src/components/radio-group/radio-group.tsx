@@ -81,7 +81,7 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
   }
 
   /**
-   * @output {Event} Emitted when the value has changed.
+   * Emitted when the value has changed.
    */
   @Event() ionChange: EventEmitter<InputChangeEvent>;
 

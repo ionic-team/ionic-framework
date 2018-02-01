@@ -118,7 +118,7 @@ export class Select {
   @Event() ionBlur: EventEmitter<BlurEvent>;
 
   /**
-   * @output {Event} Emitted when the styles change.
+   * Emitted when the styles change.
    */
   @Event() ionStyle: EventEmitter<StyleEvent>;
 
