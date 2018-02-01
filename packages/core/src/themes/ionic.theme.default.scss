@@ -36,8 +36,6 @@ $ion-colors:  (
   primary: (
     base:             $primary,
     contrast:         #fff,
-    dark:             #2341a8,
-    light:            #c8cfff,
     rgb:              color-to-rgb-list($primary),
     shade:            #3f79e0,
     tint:             #427feb
@@ -45,8 +43,6 @@ $ion-colors:  (
   secondary: (
     base:             $secondary,
     contrast:         #fff,
-    dark:             #1c6f37,
-    light:            #a7ffb9,
     rgb:              color-to-rgb-list($secondary),
     shade:            #2cc158,
     tint:             #2ec95c
@@ -62,7 +58,7 @@ $ion-colors:  (
     base:             $success,
     contrast:         #fff,
     rgb:              color-to-rgb-list($success),
-    shade: #10cb60,
+    shade:            #10cb60,
     tint:             #23df6d
   ),
   warning: (
@@ -153,12 +149,10 @@ $text-color-step-100:                   css-var(#222, text-color-step-100) !defa
 $text-color-step-200:                   css-var(#666, text-color-step-200) !default;
 $text-color-step-300:                   css-var(#999, text-color-step-300) !default;
 $text-color-step-400:                   css-var(#c5c5c5, text-color-step-400) !default;
-$text-color-step-400:                   css-var(#c5c5c5, text-color-step-400) !default;
 
 // Default General Colors
 // --------------------------------------------------
 $backdrop-color:                        css-var(#000, backdrop-color) !default;
-$modal-background-color:                css-var(#f1f1f1, modal-background-color) !default;
 $border-color:                          css-var(#b2b2b2, border-color) !default;
 $box-shadow-color:                      css-var(#000, box-shadow-color) !default;
 

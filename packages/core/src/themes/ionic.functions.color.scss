@@ -1,7 +1,7 @@
 @import "./ionic.functions.list.scss";
 @import "./ionic.functions.string.scss";
 
-$css-variable-prefix:       "--";
+$css-variable-prefix:       "--ion-";
 $default-color-variation:   base;
 $default-color-prefix:      color-;
 $enable-css-variables:      true;
@@ -122,7 +122,7 @@ $modes:                     (ios,md);
     }
   }
 
-  $color: if(type-of($color) == color, $color, unquote($color));
+  $color: if(type-of($color) != string, $color, unquote($color));
   @return $color;
 }
 
