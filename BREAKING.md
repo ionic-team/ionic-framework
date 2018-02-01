@@ -70,6 +70,16 @@ These have been renamed to the following, and moved from the button element to t
 | `icon-left`, `icon-start` | `slot="start"` | Positions to the left of the button in LTR, and to the right in RTL.  |
 | `icon-right`, `icon-end`  | `slot="end"`   | Positions to the right of the button in LTR, and to the left in RTL.  |
 
+In addition, several sets of mutually exclusive boolean attributes have been combined into a single string attribute.
+
+The `small` and `large` attributes are now combined under the `size` attribute. The `clear`, `outline`, and `solid` attributes have been combined under `fill`. And, lastly, the `full` and `block` attributes have been combined under `expand`.
+
+| Old Property | New Property | Property Behavior
+| - | - | - | - |
+| `small`, `large` | `size` |  Sets the button size.
+| `clear`, `outline`, `solid` | `fill` | Sets the button fill style.
+| `full`, `block` | `expand` | Sets the button width.
+
 
 **Old Usage Example:**
 
@@ -93,6 +103,18 @@ These have been renamed to the following, and moved from the button element to t
   Icon Right on LTR, Left on RTL
   <ion-icon name="home"></ion-icon>
 </ion-button>
+
+<ion-button large>
+  Large Button
+</ion-button>
+
+<ion-button outline>
+  Outline Button
+</ion-button>
+
+<ion-button full>
+  Full-width Button
+</ion-button>
 ```
 
 **New Usage Example:**
@@ -106,6 +128,18 @@ These have been renamed to the following, and moved from the button element to t
 <ion-button>
   Icon Right on LTR, Left on RTL
   <ion-icon slot="end" name="home"></ion-icon>
+</ion-button>
+
+<ion-button size="large">
+  Large Button
+</ion-button>
+
+<ion-button fill="outline">
+  Outline Button
+</ion-button>
+
+<ion-button expand="full">
+  Full-width Button
 </ion-button>
 ```
 
