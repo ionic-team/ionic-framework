@@ -1540,6 +1540,37 @@ declare global {
 
 
 import {
+  MenuButton as IonMenuButton
+} from './components/menu-button/menu-button';
+
+declare global {
+  interface HTMLIonMenuButtonElement extends IonMenuButton, HTMLElement {
+  }
+  var HTMLIonMenuButtonElement: {
+    prototype: HTMLIonMenuButtonElement;
+    new (): HTMLIonMenuButtonElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-menu-button": HTMLIonMenuButtonElement;
+  }
+  interface ElementTagNameMap {
+    "ion-menu-button": HTMLIonMenuButtonElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-menu-button": JSXElements.IonMenuButtonAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonMenuButtonAttributes extends HTMLAttributes {
+      iconName?: string;
+      menu?: string;
+    }
+  }
+}
+
+
+import {
   MenuController as IonMenuController
 } from './components/menu-controller/menu-controller';
 
