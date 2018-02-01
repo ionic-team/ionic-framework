@@ -2,6 +2,10 @@ export { IonicAngularModule } from './module';
 
 /* Directives */
 export { MenuToggle } from './directives/menu-toggle';
+export { VirtualScroll } from './directives/virtual-scroll';
+export { VirtualItem } from './directives/virtual-item';
+export { VirtualHeader } from './directives/virtual-header';
+export { VirtualFooter } from './directives/virtual-footer';
 
 /* Nav */
 export { IonNav } from './nav/ion-nav';

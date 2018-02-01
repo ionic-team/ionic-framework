@@ -235,7 +235,7 @@ export class VirtualScroll {
   private updateState() {
     const shouldEnable = !!(
       this.scrollEl &&
-      this.items &&
+      this.cells &&
       (this.itemRender || this.domRender) &&
       this.viewportHeight > 1
     );
