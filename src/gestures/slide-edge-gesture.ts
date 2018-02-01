@@ -1,48 +1,65 @@
 import { SlideGesture } from './slide-gesture';
 import { defaults } from '../util/util';
-import { pointerCoord, windowDimensions } from '../util/dom';
+import { pointerCoord } from '../util/dom';
+import { Platform } from '../platform/platform';
 
 /**
- * @private
+ * @hidden
  */
 export class SlideEdgeGesture extends SlideGesture {
-  public edges: Array<string>;
+
+  public edges: string[];
   public maxEdgeStart: any;
   private _d: any;
 
-  constructor(element: HTMLElement, opts: any = {}) {
+  constructor(plt: Platform, element: HTMLElement, opts: any = {}) {
     defaults(opts, {
-      edge: 'left',
+      edge: 'start',
       maxEdgeStart: 50
     });
-    super(element, opts);
+    super(plt, element, opts);
     // Can check corners through use of eg 'left top'
-    this.edges = opts.edge.split(' ');
+    this.setEdges(opts.edge);
     this.maxEdgeStart = opts.maxEdgeStart;
   }
 
+  setEdges(edges: string) {
+    const isRTL = this.plt.isRTL;
+    this.edges = edges.split(' ').map((value) => {
+      switch (value) {
+        case 'start': return isRTL ? 'right' : 'left';
+        case 'end': return isRTL ? 'left' : 'right';
+        default: return value;
+      }
+    });
+  }
+
   canStart(ev: any): boolean {
-    let coord = pointerCoord(ev);
+    const coord = pointerCoord(ev);
     this._d = this.getContainerDimensions();
     return this.edges.every(edge => this._checkEdge(edge, coord));
   }
 
   getContainerDimensions() {
+    const plt = this.plt;
     return {
       left: 0,
       top: 0,
-      width: windowDimensions().width,
-      height: windowDimensions().height
+      width: plt.width(),
+      height: plt.height()
     };
   }
 
-  _checkEdge(edge: string, pos: any) {
+  _checkEdge(edge: string, pos: any): boolean {
+    const data = this._d;
+    const maxEdgeStart = this.maxEdgeStart;
     switch (edge) {
-      case 'left': return pos.x <= this._d.left + this.maxEdgeStart;
-      case 'right': return pos.x >= this._d.width - this.maxEdgeStart;
-      case 'top': return pos.y <= this._d.top + this.maxEdgeStart;
-      case 'bottom': return pos.y >= this._d.height - this.maxEdgeStart;
+      case 'left': return pos.x <= data.left + maxEdgeStart;
+      case 'right': return pos.x >= data.width - maxEdgeStart;
+      case 'top': return pos.y <= data.top + maxEdgeStart;
+      case 'bottom': return pos.y >= data.height - maxEdgeStart;
     }
+    return false;
   }
 
 }

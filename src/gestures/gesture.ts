@@ -1,8 +1,8 @@
-import { defaults, assign } from '../util/util';
-import { Hammer, DIRECTION_HORIZONTAL, DIRECTION_VERTICAL } from './hammer';
+import { defaults } from '../util/util';
+import { DIRECTION_HORIZONTAL, DIRECTION_VERTICAL, Hammer } from './hammer';
 
 /**
- * @private
+ * @hidden
  * A gesture recognizer class.
  *
  * TODO(mlynch): Re-enable the DOM event simulation that was causing issues (or verify hammer does this already, it might);
@@ -33,7 +33,7 @@ export class Gesture {
   }
 
   options(opts: any) {
-    assign(this._options, opts);
+    Object.assign(this._options, opts);
   }
 
   on(type: string, cb: Function) {

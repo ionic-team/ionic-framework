@@ -18,22 +18,34 @@ $toast-wp-title-color:                           #fff !default;
 /// @prop - Font size of the toast title
 $toast-wp-title-font-size:                       1.4rem !default;
 
-/// @prop - Padding of the toast title
-$toast-wp-title-padding:                         1.5rem !default;
+// deprecated
+$toast-wp-title-padding:                         null !default;
+
+/// @prop - Padding top of the toast title
+$toast-wp-title-padding-top:                     1.5rem !default;
+
+/// @prop - Padding end of the toast title
+$toast-wp-title-padding-end:                     $toast-wp-title-padding-top !default;
+
+/// @prop - Padding bottom of the toast title
+$toast-wp-title-padding-bottom:                  $toast-wp-title-padding-top !default;
+
+/// @prop - Padding start of the toast title
+$toast-wp-title-padding-start:                   $toast-wp-title-padding-end !default;
 
 
 .toast-wp .toast-wrapper {
+  @include position-horizontal(0, 0);
+  @include margin(auto);
+  @include border-radius($toast-wp-border-radius);
+
   position: absolute;
-  right: 0;
-  left: 0;
+
   z-index: $z-index-overlay-wrapper;
   display: block;
 
-  margin: auto;
-
   max-width: $toast-max-width;
 
-  border-radius: $toast-wp-border-radius;
   background: $toast-wp-background;
 }
 
@@ -54,11 +66,13 @@ $toast-wp-title-padding:                         1.5rem !default;
 }
 
 .toast-message {
-  padding: $toast-wp-title-padding;
-
   font-size: $toast-wp-title-font-size;
 
   color: $toast-wp-title-color;
+
+  @include deprecated-variable(padding, $toast-wp-title-padding) {
+    @include padding($toast-wp-title-padding-top, $toast-wp-title-padding-end, $toast-wp-title-padding-bottom, $toast-wp-title-padding-start);
+  }
 }
 
 .toast-button {

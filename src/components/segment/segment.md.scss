@@ -24,8 +24,20 @@ $segment-button-md-opacity-activated:          1 !default;
 /// @prop - Opacity of the disabled segment button
 $segment-button-md-opacity-disabled:           .3 !default;
 
-/// @prop - Padding of the segment button
-$segment-button-md-padding:                    0 6px !default;
+// deprecated
+$segment-button-md-padding:                    null !default;
+
+/// @prop - Padding top of the segment button
+$segment-button-md-padding-top:                0 !default;
+
+/// @prop - Padding end of the segment button
+$segment-button-md-padding-end:                6px !default;
+
+/// @prop - Padding bottom of the segment button
+$segment-button-md-padding-bottom:             $segment-button-md-padding-top !default;
+
+/// @prop - Padding start of the segment button
+$segment-button-md-padding-start:              $segment-button-md-padding-end !default;
 
 /// @prop - Height of the segment button
 $segment-button-md-height:                     4.2rem !default;
@@ -46,8 +58,6 @@ $segment-button-md-icon-line-height:           $segment-button-md-line-height !d
 .segment-md .segment-button {
   flex: 1;
 
-  padding: $segment-button-md-padding;
-
   width: 0;
   height: $segment-button-md-height;
 
@@ -65,6 +75,10 @@ $segment-button-md-icon-line-height:           $segment-button-md-line-height !d
   opacity: $segment-button-md-opacity;
   transition: 100ms all linear;
 
+  @include deprecated-variable(padding, $segment-button-md-padding) {
+    @include padding($segment-button-md-padding-top, $segment-button-md-padding-end, $segment-button-md-padding-bottom, $segment-button-md-padding-start);
+  }
+
   ion-icon {
     font-size: $segment-button-md-icon-size;
     line-height: $segment-button-md-icon-line-height;
@@ -77,6 +91,7 @@ $segment-button-md-icon-line-height:           $segment-button-md-line-height !d
   }
 }
 
+.segment-md.segment-disabled,
 .segment-md .segment-button-disabled {
   opacity: $segment-button-md-opacity-disabled;
 
@@ -86,7 +101,7 @@ $segment-button-md-icon-line-height:           $segment-button-md-line-height !d
 .toolbar {
 
   .segment-md {
-    margin: 0 auto;
+    @include margin(0, auto);
   }
 
   .segment-md .segment-button.activated,

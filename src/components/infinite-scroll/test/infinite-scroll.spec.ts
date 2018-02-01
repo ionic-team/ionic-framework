@@ -1,6 +1,7 @@
 import { Content, ScrollEvent } from '../../content/content';
+import { DomController } from '../../../platform/dom-controller';
 import { InfiniteScroll } from '../infinite-scroll';
-import { mockConfig, MockDomController, mockElementRef, mockRenderer, mockZone } from '../../../util/mock-providers';
+import { mockConfig, mockDomController, mockElementRef, mockElementRefEle, mockPlatform, mockRenderer, mockZone } from '../../../util/mock-providers';
 
 
 describe('Infinite Scroll', () => {
@@ -90,36 +91,60 @@ describe('Infinite Scroll', () => {
 
   });
 
+  describe('position', () => {
+
+    it('should default to bottom', () => {
+      expect(inf._position).toEqual('bottom');
+    });
+
+    it('should set to top', () => {
+      inf.position = 'top';
+      expect(inf._position).toEqual('top');
+    });
+
+    it('should set to bottom', () => {
+      inf.position = 'bottom';
+      expect(inf._position).toEqual('bottom');
+    });
+
+    it('should not set to anything else', () => {
+      inf.position = 'derp';
+      expect(inf._position).toEqual('bottom');
+    });
+
+  });
+
 
   let config = mockConfig();
   let inf: InfiniteScroll;
   let content: Content;
-  let contentElementRef;
-  let infiniteElementRef;
+  let contentElementRef: any;
+  let infiniteElementRef: any;
   let ev: ScrollEvent = (<any>{});
-  let dom: MockDomController;
+  let dom: DomController;
 
   beforeEach(() => {
     contentElementRef = mockElementRef();
-    content = new Content(config, contentElementRef, mockRenderer(), null, null, null, null, null, dom);
-    content._scrollEle = document.createElement('div');
-    content._scrollEle.className = 'scroll-content';
+    dom = mockDomController();
+    content = new Content(config, mockPlatform(), dom, contentElementRef, mockRenderer(), null, null, mockZone(), null, null);
+    let ele = document.createElement('div');
+    ele.className = 'scroll-content';
+    content._scrollContent = mockElementRefEle(ele);
 
     infiniteElementRef = mockElementRef();
-    dom = new MockDomController();
 
     inf = new InfiniteScroll(content, mockZone(), infiniteElementRef, dom);
   });
 
-  function setInfiniteScrollTop(scrollTop) {
+  function setInfiniteScrollTop(scrollTop: any) {
     infiniteElementRef.nativeElement.scrollTop = scrollTop;
   }
 
-  function setInfiniteScrollHeight(scrollHeight) {
+  function setInfiniteScrollHeight(scrollHeight: any) {
     infiniteElementRef.nativeElement.scrollHeight = scrollHeight;
   }
 
-  function mockGetContentDimensions(scrollHeight, scrollTop, contentHeight) {
+  function mockGetContentDimensions(scrollHeight: any, scrollTop: any, contentHeight: any): any {
     return {
           scrollHeight: scrollHeight,
           scrollTop: scrollTop,

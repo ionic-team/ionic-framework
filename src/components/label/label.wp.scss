@@ -3,10 +3,10 @@
 // Windows Label
 // --------------------------------------------------
 
-/// @prop - Text color of the label
+/// @prop - Text color of the label by an input, select, or datetime
 $label-wp-text-color:                 #999 !default;
 
-/// @prop - Text color of the label when it has focused
+/// @prop - Text color of the stacked/floating label when it is focused
 $label-wp-text-color-focused:         color($colors-wp, primary) !default;
 
 
@@ -14,7 +14,7 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
 // --------------------------------------------------
 
 .label-wp {
-  margin: $item-wp-padding-top ($item-wp-padding-right / 2) $item-wp-padding-bottom 0;
+  @include margin($item-wp-padding-top, ($item-wp-padding-end / 2), $item-wp-padding-bottom, 0);
 }
 
 
@@ -36,30 +36,36 @@ $label-wp-text-color-focused:         color($colors-wp, primary) !default;
 }
 
 .label-wp[floating] {
-  transform: translate3d(8px, 34px, 0);
-  transform-origin: left top;
+  @include transform(translate3d(8px, 34px, 0));
+  @include transform-origin(start, top);
 }
 
 .label-wp[stacked],
 .label-wp[floating] {
-  margin-bottom: 0;
-  margin-left: 0;
+  @include margin(null, null, 0, 0);
 }
 
+// TODO remove all uses of input-has-focus in v4
+// TODO remove all uses of input-has-value in v4
+.item-input-has-focus .label-wp[stacked],
 .input-has-focus .label-wp[stacked],
+.item-input-has-focus .label-wp[floating],
 .input-has-focus .label-wp[floating] {
   color: $label-wp-text-color-focused;
 }
 
+.item-input-has-focus .label-wp[floating],
 .input-has-focus .label-wp[floating],
+.item-input-has-value .label-wp[floating],
 .input-has-value .label-wp[floating] {
-  transform: translate3d(0, 0, 0) scale(.8);
+  @include transform(translate3d(0, 0, 0), scale(.8));
 }
 
-.item-wp.item-label-stacked [item-right],
-.item-wp.item-label-floating [item-right] {
-  margin-top: $item-wp-padding-media-top + 4;
-  margin-bottom: $item-wp-padding-media-top + 4;
+.item-wp.item-label-stacked [item-right], // deprecated
+.item-wp.item-label-floating [item-right], // deprecated
+.item-wp.item-label-stacked [item-end],
+.item-wp.item-label-floating [item-end] {
+  @include margin($item-wp-padding-media-top + 4, null, $item-wp-padding-media-top + 4, null);
 }
 
 

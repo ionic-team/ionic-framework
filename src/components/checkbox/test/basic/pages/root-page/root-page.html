@@ -1,0 +1,107 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Checkboxes</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <form (submit)="doSubmit($event)" [formGroup]="fruitsForm">
+
+    <ion-list>
+
+      <ion-item>
+        <ion-label>Apple, formControlName</ion-label>
+        <ion-checkbox formControlName="apple"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Banana, formControlName</ion-label>
+        <ion-checkbox formControlName="banana"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Cherry, formControlName, disabled</ion-label>
+        <ion-checkbox formControlName="cherry"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Grape, formControlName, checked, disabled</ion-label>
+        <ion-checkbox [checked]="grapeChecked" formControlName="grape"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Kiwi, (ionChange) Secondary color</ion-label>
+        <ion-checkbox color="secondary" (ionChange)="kiwiChange($event)"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Strawberry, (ionChange) [checked]="true"</ion-label>
+        <ion-checkbox color="light" (ionChange)="strawberryChange($event)" [checked]="true"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Checkbox right, checked, really long text that should ellipsis</ion-label>
+        <ion-checkbox item-end [color]="dangerColor" checked></ion-checkbox>
+      </ion-item>
+
+      <button ion-item detail-none>
+        <ion-label>Checkbox right side</ion-label>
+        <ion-checkbox item-end checked></ion-checkbox>
+      </button>
+
+      <button ion-item detail-none>
+        Button w/ right side default icon, really long text that should ellipsis
+        <ion-icon name="information-circle" item-end></ion-icon>
+      </button>
+
+    </ion-list>
+
+  </form>
+
+  <p aria-hidden="true" text-center>
+    <button ion-button (click)="toggleGrapeChecked()" outline small class="e2eGrapeChecked">Grape Checked</button>
+    <button ion-button (click)="toggleGrapeDisabled()" outline small class="e2eGrapeDisabled">Grape Disabled</button>
+    <button ion-button (click)="doSubmit($event)" outline small class="e2eSubmit">Submit</button>
+  </p>
+
+  <p>
+    <ion-checkbox [(ngModel)]="standAloneChecked"></ion-checkbox>
+    Stand-alone checkbox: {{standAloneChecked}}
+  </p>
+
+  <p aria-hidden="true" padding>
+    <code>appleCtrl.dirty: {{appleCtrl.dirty}}</code><br>
+    <code>appleCtrl.value: {{appleCtrl.value}}</code><br>
+    <code>bananaCtrl.dirty: {{bananaCtrl.dirty}}</code><br>
+    <code>bananaCtrl.value: {{bananaCtrl.value}}</code><br>
+    <code>cherry.dirty: {{cherryCtrl.dirty}}</code><br>
+    <code>cherry.value: {{cherryCtrl.value}}</code><br>
+    <code>grape.dirty: {{grapeCtrl.dirty}}</code><br>
+    <code>grape.value: {{grapeCtrl.value}}</code><br>
+    <code>kiwiValue: {{kiwiValue}}</code><br>
+    <code>strawberryValue: {{strawberryValue}}</code><br>
+  </p>
+
+  <pre aria-hidden="true" padding>{{formResults}}</pre>
+
+  <ion-item>
+    <ion-label>Checkbox / Toggle</ion-label>
+    <ion-checkbox [(ngModel)]="checked" [disabled]="disabled"></ion-checkbox>
+    <ion-toggle [(ngModel)]="checked" [disabled]="disabled"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-label>checked</ion-label>
+    <ion-checkbox [(ngModel)]="checked"></ion-checkbox>
+    <ion-toggle [(ngModel)]="checked"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-label>disabled</ion-label>
+    <ion-checkbox [(ngModel)]="disabled"></ion-checkbox>
+    <ion-toggle [(ngModel)]="disabled"></ion-toggle>
+  </ion-item>
+
+</ion-content>

@@ -1,0 +1,75 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Placeholder Label Text Input</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="toggleReadonly()">Toggle</button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <ion-list>
+
+    <ion-item>
+      <ion-input placeholder="Text Input Placeholder"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input placeholder="Text Input Placeholder" value="Text Input Value"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input placeholder="Text Input Readonly" [readonly]="isReadonly" value="Text Input Readonly"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="call" item-start></ion-icon>
+      <ion-input placeholder="Text Input Placeholder"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="call" item-start></ion-icon>
+      <ion-input placeholder="Text Input Placeholder" value="Text Input Value"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea placeholder="Textarea Placeholder"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea placeholder="ion-textarea Placeholder" value="Textarea value"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-textarea placeholder="ion-textarea Readonly" [readonly]="isReadonly" value="Textarea Readonly"></ion-textarea>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list inset>
+
+    <ion-item>
+      <ion-input placeholder="Inset List: Text Input Placeholder"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-input placeholder="Inset List: Text Input Placeholder" value="Inset List: Text Input Value"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="call" item-start></ion-icon>
+      <ion-input placeholder="Inset List: Text Input Placeholder"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="call" item-start></ion-icon>
+      <ion-input placeholder="Inset List: Text Input Placeholder" value="Inset List: Text Input Value"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

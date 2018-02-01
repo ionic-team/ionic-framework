@@ -18,11 +18,24 @@ $alert-md-box-shadow-color:                   rgba(0, 0, 0, .4) !default;
 /// @prop - Box shadow of the alert
 $alert-md-box-shadow:                         0 16px 20px $alert-md-box-shadow-color !default;
 
-/// @prop - Padding of the alert head
-$alert-md-head-padding:                       24px 24px 20px 24px !default;
+// deprecated
+$alert-md-head-padding:                       null !default;
+
+/// @prop - Padding top of the alert head
+$alert-md-head-padding-top:                   24px !default;
+
+/// @prop - Padding end of the alert head
+$alert-md-head-padding-end:                   24px !default;
+
+/// @prop - Padding bottom of the alert head
+$alert-md-head-padding-bottom:                20px !default;
+
+/// @prop - Padding start of the alert head
+$alert-md-head-padding-start:                 24px !default;
+
 
 /// @prop - Text align of the alert head
-$alert-md-head-text-align:                    left !default;
+$alert-md-head-text-align:                    start !default;
 
 /// @prop - Font size of the alert title
 $alert-md-title-font-size:                    22px !default;
@@ -30,8 +43,20 @@ $alert-md-title-font-size:                    22px !default;
 /// @prop - Font size of the alert sub title
 $alert-md-sub-title-font-size:                16px !default;
 
-/// @prop - Padding of the alert message
-$alert-md-message-padding:                    0 24px 24px 24px !default;
+// deprecated
+$alert-md-message-padding:                    null !default;
+
+/// @prop - Padding top of the alert message
+$alert-md-message-padding-top:                0 !default;
+
+/// @prop - Padding end of the alert message
+$alert-md-message-padding-end:                24px !default;
+
+/// @prop - Padding bottom of the alert message
+$alert-md-message-padding-bottom:             24px !default;
+
+/// @prop - Padding start of the alert message
+$alert-md-message-padding-start:              24px !default;
 
 /// @prop - Font size of the alert message
 $alert-md-message-font-size:                  15px !default;
@@ -39,8 +64,20 @@ $alert-md-message-font-size:                  15px !default;
 /// @prop - Text color of the alert message
 $alert-md-message-text-color:                 rgba(0, 0, 0, .5) !default;
 
-/// @prop - Padding of the alert empty message
-$alert-md-message-padding-empty:              0 !default;
+// deprecated
+$alert-md-message-padding-empty:              null !default;
+
+/// @prop - Padding top of the alert empty message
+$alert-md-message-empty-padding-top:          0 !default;
+
+/// @prop - Padding end of the alert empty message
+$alert-md-message-empty-padding-end:          $alert-md-message-empty-padding-top !default;
+
+/// @prop - Padding bottom of the alert empty message
+$alert-md-message-empty-padding-bottom:       $alert-md-message-empty-padding-top !default;
+
+/// @prop - Padding start of the alert empty message
+$alert-md-message-empty-padding-start:        $alert-md-message-empty-padding-end !default;
 
 /// @prop - Maximum height of the alert content
 $alert-md-content-max-height:                 240px !default;
@@ -69,29 +106,69 @@ $alert-md-input-border-color-focused:         color($colors-md, primary) !defaul
 /// @prop - Margin top of the alert input
 $alert-md-input-margin-top:                   5px !default;
 
-/// @prop - Margin right of the alert input
+// deprecated
 $alert-md-input-margin-right:                 0 !default;
+/// @prop - Margin end of the alert input
+$alert-md-input-margin-end:                   $alert-md-input-margin-right !default;
 
 /// @prop - Margin bottom of the alert input
 $alert-md-input-margin-bottom:                5px !default;
 
-/// @prop - Margin left of the alert input
+// deprecated
 $alert-md-input-margin-left:                  0 !default;
+/// @prop - Margin start of the alert input
+$alert-md-input-margin-start:                 $alert-md-input-margin-left !default;
 
 /// @prop - Flex wrap of the alert button group
 $alert-md-button-group-flex-wrap:             wrap-reverse !default;
 
-/// @prop - Padding of the alert button group
-$alert-md-button-group-padding:               8px 8px 8px 24px !default;
+// deprecated
+$alert-md-button-group-padding:               null !default;
+
+/// @prop - Padding top of the alert button group
+$alert-md-button-group-padding-top:           8px !default;
+
+/// @prop - Padding end of the alert button group
+$alert-md-button-group-padding-end:           8px !default;
+
+/// @prop - Padding bottom of the alert button group
+$alert-md-button-group-padding-bottom:        8px !default;
+
+/// @prop - Padding start of the alert button group
+$alert-md-button-group-padding-start:         24px !default;
 
 /// @prop - Justify content of the alert button group
 $alert-md-button-group-justify-content:       flex-end !default;
 
-/// @prop - Padding of the alert button
-$alert-md-button-padding:                     10px !default;
+// deprecated
+$alert-md-button-padding:                     null !default;
 
-/// @prop - Margin of the alert button
-$alert-md-button-margin:                      0 8px 0 0 !default;
+/// @prop - Padding top of the alert button
+$alert-md-button-padding-top:                 10px !default;
+
+/// @prop - Padding end of the alert button
+$alert-md-button-padding-end:                 $alert-md-button-padding-top !default;
+
+/// @prop - Padding bottom of the alert button
+$alert-md-button-padding-bottom:              $alert-md-button-padding-top !default;
+
+/// @prop - Padding start of the alert button
+$alert-md-button-padding-start:               $alert-md-button-padding-end !default;
+
+// deprecated
+$alert-md-button-margin:                      null !default;
+
+/// @prop - Margin top of the alert button
+$alert-md-button-margin-top:                  0 !default;
+
+/// @prop - Margin end of the alert button
+$alert-md-button-margin-end:                  8px !default;
+
+/// @prop - Margin bottom of the alert button
+$alert-md-button-margin-bottom:               0 !default;
+
+/// @prop - Margin start of the alert button
+$alert-md-button-margin-start:                0 !default;
 
 /// @prop - Font weight of the alert button
 $alert-md-button-font-weight:                 500 !default;
@@ -112,7 +189,7 @@ $alert-md-button-border-radius:               2px !default;
 $alert-md-button-text-transform:              uppercase !default;
 
 /// @prop - Text align of the alert button
-$alert-md-button-text-align:                  right !default;
+$alert-md-button-text-align:                  end !default;
 
 
 /// @prop - Border top of the alert list
@@ -121,8 +198,23 @@ $alert-md-list-border-top:                    1px solid $alert-md-input-border-c
 /// @prop - Border bottom of the alert list
 $alert-md-list-border-bottom:                 $alert-md-list-border-top !default;
 
-/// @prop - Padding on the label for the radio alert
-$alert-md-radio-label-padding:                13px 26px !default;
+// deprecated
+$alert-md-radio-label-padding:                null !default;
+
+/// @prop - Padding top on the label for the radio alert
+$alert-md-radio-label-padding-top:            13px !default;
+
+/// @prop - Padding end on the label for the radio alert
+$alert-md-radio-label-padding-end:            26px !default;
+
+/// @prop - Padding bottom on the label for the radio alert
+$alert-md-radio-label-padding-bottom:         $alert-md-radio-label-padding-top !default;
+
+/// @prop - Padding start on the label for the radio alert
+$alert-md-radio-label-padding-start:          $alert-md-radio-label-padding-end !default;
+
+/// @prop - Text color of the label for the radio alert
+$alert-md-radio-label-text-color:             initial !default;
 
 /// @prop - Text color of the label for the checked radio alert
 $alert-md-radio-label-text-color-checked:     $alert-md-button-text-color !default;
@@ -157,8 +249,10 @@ $alert-md-radio-border-color-on:              $alert-md-button-text-color !defau
 /// @prop - Top of the icon in the alert radio
 $alert-md-radio-icon-top:                     2px !default;
 
-/// @prop - Left of the icon in the alert radio
+// deprecated
 $alert-md-radio-icon-left:                    2px !default;
+/// @prop - Start of the icon in the radio alert
+$alert-md-radio-icon-start:                   $alert-md-radio-icon-left !default;
 
 /// @prop - Width of the icon in the alert radio
 $alert-md-radio-icon-width:                   8px !default;
@@ -178,10 +272,25 @@ $alert-md-radio-icon-transform-on:            scale3d(1, 1, 1) !default;
 /// @prop - Transition of the icon in the alert radio
 $alert-md-radio-icon-transition:              transform 280ms cubic-bezier(.4, 0, .2, 1) !default;
 
-/// @prop - Padding of the label for the checkbox in the alert
-$alert-md-checkbox-label-padding:             13px 26px !default;
+// deprecated
+$alert-md-checkbox-label-padding:             null !default;
 
-/// @prop - Text color of the label for the checked checkbox in the  alert
+/// @prop - Padding top of the label for the checkbox in the alert
+$alert-md-checkbox-label-padding-top:         13px !default;
+
+/// @prop - Padding end of the label for the checkbox in the alert
+$alert-md-checkbox-label-padding-end:         26px !default;
+
+/// @prop - Padding bottom of the label for the checkbox in the alert
+$alert-md-checkbox-label-padding-bottom:      $alert-md-checkbox-label-padding-top !default;
+
+/// @prop - Padding start of the label for the checkbox in the alert
+$alert-md-checkbox-label-padding-start:       $alert-md-checkbox-label-padding-end !default;
+
+/// @prop - Text color of the label for the checkbox in the alert
+$alert-md-checkbox-label-text-color:          initial !default;
+
+/// @prop - Text color of the label for the checked checkbox in the alert
 $alert-md-checkbox-label-text-color-checked:  initial !default;
 
 
@@ -216,8 +325,10 @@ $alert-md-checkbox-border-color-on:           $alert-md-button-text-color !defau
 /// @prop - Top of the icon in the checkbox alert
 $alert-md-checkbox-icon-top:                  0 !default;
 
-/// @prop - Left of the icon in the checkbox alert
+// deprecated
 $alert-md-checkbox-icon-left:                 3px !default;
+/// @prop - Start of the icon in the checkbox alert
+$alert-md-checkbox-icon-start:                $alert-md-checkbox-icon-left !default;
 
 /// @prop - Width of the icon in the checkbox alert
 $alert-md-checkbox-icon-width:                6px !default;
@@ -238,9 +349,10 @@ $alert-md-checkbox-icon-border-color:         color-contrast($colors-md, $alert-
 $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
 .alert-md .alert-wrapper {
+  @include border-radius($alert-md-border-radius);
+
   max-width: $alert-md-max-width;
 
-  border-radius: $alert-md-border-radius;
   background-color: $alert-md-background-color;
 
   box-shadow: $alert-md-box-shadow;
@@ -250,9 +362,11 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-md .alert-head {
-  padding: $alert-md-head-padding;
+  @include text-align($alert-md-head-text-align);
 
-  text-align: $alert-md-head-text-align;
+  @include deprecated-variable(padding, $alert-md-head-padding) {
+    @include padding($alert-md-head-padding-top, $alert-md-head-padding-end, $alert-md-head-padding-bottom, $alert-md-head-padding-start);
+  }
 }
 
 .alert-md .alert-title {
@@ -269,9 +383,11 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
 .alert-md .alert-message,
 .alert-md .alert-input-group {
-  padding: $alert-md-message-padding;
-
   color: $alert-md-message-text-color;
+
+  @include deprecated-variable(padding, $alert-md-message-padding) {
+    @include padding($alert-md-message-padding-top, $alert-md-message-padding-end, $alert-md-message-padding-bottom, $alert-md-message-padding-start);
+  }
 }
 
 .alert-md .alert-message {
@@ -281,7 +397,9 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 }
 
 .alert-md .alert-message:empty {
-  padding: $alert-md-message-padding-empty;
+  @include deprecated-variable(padding, $alert-md-message-padding-empty) {
+    @include padding($alert-md-message-empty-padding-top, $alert-md-message-empty-padding-end, $alert-md-message-empty-padding-bottom, $alert-md-message-empty-padding-start);
+  }
 }
 
 
@@ -289,14 +407,14 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-md .alert-input {
-  margin: $alert-md-input-margin-top $alert-md-input-margin-right $alert-md-input-margin-bottom $alert-md-input-margin-left;
+  @include margin($alert-md-input-margin-top, $alert-md-input-margin-end, $alert-md-input-margin-bottom, $alert-md-input-margin-start);
 
   border-bottom: $alert-md-input-border-width $alert-md-input-border-style $alert-md-input-border-color;
   color: $alert-md-input-text-color;
 }
 
 .alert-md .alert-input:focus {
-  margin-bottom: $alert-md-input-margin-bottom - 1;
+  @include margin(null, null, $alert-md-input-margin-bottom - 1, null);
 
   border-bottom: $alert-md-input-border-width-focused $alert-md-input-border-style-focused $alert-md-input-border-color-focused;
 }
@@ -335,19 +453,24 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
   flex: 1;
 
-  padding: $alert-md-radio-label-padding;
-
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  color: $alert-md-radio-label-text-color;
+
+  @include deprecated-variable(padding, $alert-md-radio-label-padding) {
+    @include padding($alert-md-radio-label-padding-top, $alert-md-radio-label-padding-end, $alert-md-radio-label-padding-bottom, $alert-md-radio-label-padding-start);
+  }
 }
 
 // Material Design Alert Radio Unchecked Circle
 // ---------------------------------------------------
 
 .alert-md .alert-radio-icon {
+  @include position($alert-md-radio-top, null, null, $alert-md-radio-left);
+  @include border-radius($alert-md-radio-border-radius);
+
   position: relative;
-  top: $alert-md-radio-top;
-  left: $alert-md-radio-left;
   display: block;
 
   width: $alert-md-radio-width;
@@ -355,7 +478,6 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
   border-width: $alert-md-radio-border-width;
   border-style: $alert-md-radio-border-style;
-  border-radius: $alert-md-radio-border-radius;
   border-color: $alert-md-radio-border-color-off;
 }
 
@@ -363,14 +485,14 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // ---------------------------------------------------
 
 .alert-md .alert-radio-inner {
+  @include position($alert-md-radio-icon-top, null, null, $alert-md-radio-icon-start);
+  @include border-radius($alert-md-radio-icon-border-radius);
+
   position: absolute;
-  top: $alert-md-radio-icon-top;
-  left: $alert-md-radio-icon-left;
 
   width: $alert-md-radio-icon-width;
   height: $alert-md-radio-icon-height;
 
-  border-radius: $alert-md-radio-icon-border-radius;
   background-color: $alert-md-radio-border-color-on;
   transform: $alert-md-radio-icon-transform-off;
   transition: $alert-md-radio-icon-transition;
@@ -401,10 +523,14 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
   flex: 1;
 
-  padding: $alert-md-checkbox-label-padding;
-
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  color: $alert-md-checkbox-label-text-color;
+
+  @include deprecated-variable(padding, $alert-md-checkbox-label-padding) {
+    @include padding($alert-md-checkbox-label-padding-top, $alert-md-checkbox-label-padding-end, $alert-md-checkbox-label-padding-bottom, $alert-md-checkbox-label-padding-start);
+  }
 }
 
 .alert-md [aria-checked=true] .alert-checkbox-label {
@@ -415,16 +541,16 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-md .alert-checkbox-icon {
+  @include position($alert-md-checkbox-top, null, null, $alert-md-checkbox-left);
+  @include border-radius($alert-md-checkbox-border-radius);
+
   position: relative;
-  top: $alert-md-checkbox-top;
-  left: $alert-md-checkbox-left;
 
   width: $alert-md-checkbox-width;
   height: $alert-md-checkbox-height;
 
   border-width: $alert-md-checkbox-border-width;
   border-style: $alert-md-checkbox-border-style;
-  border-radius: $alert-md-checkbox-border-radius;
   border-color: $alert-md-checkbox-border-color-off;
 }
 
@@ -437,9 +563,9 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 }
 
 .alert-md [aria-checked=true] .alert-checkbox-inner {
+  @include position($alert-md-checkbox-icon-top, null, null, $alert-md-checkbox-icon-start);
+
   position: absolute;
-  top: $alert-md-checkbox-icon-top;
-  left: $alert-md-checkbox-icon-left;
 
   width: $alert-md-checkbox-icon-width;
   height: $alert-md-checkbox-icon-height;
@@ -460,23 +586,31 @@ $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
   flex-wrap: $alert-md-button-group-flex-wrap;
   justify-content: $alert-md-button-group-justify-content;
 
-  padding: $alert-md-button-group-padding;
+  @include deprecated-variable(padding, $alert-md-button-group-padding) {
+    @include padding($alert-md-button-group-padding-top, $alert-md-button-group-padding-end, $alert-md-button-group-padding-bottom, $alert-md-button-group-padding-start);
+  }
 }
 
 .alert-md .alert-button {
+  @include text-align($alert-md-button-text-align);
+  @include border-radius($alert-md-button-border-radius);
+
   // necessary for ripple to work properly
   position: relative;
   overflow: hidden;
 
-  margin: $alert-md-button-margin;
-  padding: $alert-md-button-padding;
-
-  border-radius: $alert-md-button-border-radius;
   font-weight: $alert-md-button-font-weight;
-  text-align: $alert-md-button-text-align;
   text-transform: $alert-md-button-text-transform;
   color: $alert-md-button-text-color;
   background-color: $alert-md-button-background-color;
+
+  @include deprecated-variable(margin, $alert-md-button-margin) {
+    @include margin($alert-md-button-margin-top, $alert-md-button-margin-end, $alert-md-button-margin-bottom, $alert-md-button-margin-start);
+  }
+
+  @include deprecated-variable(padding, $alert-md-button-padding) {
+    @include padding($alert-md-button-padding-top, $alert-md-button-padding-end, $alert-md-button-padding-bottom, $alert-md-button-padding-start);
+  }
 }
 
 .alert-md .alert-button.activated {

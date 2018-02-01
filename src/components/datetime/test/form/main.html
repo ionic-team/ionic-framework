@@ -1,0 +1,42 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Datetime</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+  <form [formGroup]="datetimeForm">
+    <ion-item>
+      <ion-label stacked>Stacked</ion-label>
+      <ion-datetime formControlName="stacked"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Floating</ion-label>
+      <ion-datetime formControlName="floating" displayFormat="MMMM YY"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Floating</ion-label>
+      <ion-datetime formControlName="floating2" displayFormat="MMMM YY"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Fixed</ion-label>
+      <ion-datetime formControlName="fixed" displayFormat="MM/DD/YYYY"></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Inline</ion-label>
+      <ion-datetime formControlName="inline" displayFormat="MM/DD/YYYY"></ion-datetime>
+    </ion-item>
+  </form>
+
+  <ion-item>
+    <ion-label floating>Floating outside form</ion-label>
+    <ion-datetime displayFormat="MMMM YY"></ion-datetime>
+  </ion-item>
+</ion-content>

@@ -15,8 +15,20 @@ $alert-ios-background:                          #f8f8f8 !default;
 /// @prop - Box shadow of the alert
 $alert-ios-box-shadow:                          none !default;
 
-/// @prop - Padding of the alert head
-$alert-ios-head-padding:                        12px 16px 7px !default;
+// deprecated
+$alert-ios-head-padding:                        null !default;
+
+/// @prop - Padding top of the alert head
+$alert-ios-head-padding-top:                    12px !default;
+
+/// @prop - Padding end of the alert head
+$alert-ios-head-padding-end:                    16px !default;
+
+/// @prop - Padding bottom of the alert head
+$alert-ios-head-padding-bottom:                 7px !default;
+
+/// @prop - Padding start of the alert head
+$alert-ios-head-padding-start:                  $alert-ios-head-padding-end !default;
 
 /// @prop - Text align of the alert head
 $alert-ios-head-text-align:                     center !default;
@@ -36,8 +48,21 @@ $alert-ios-sub-title-font-size:                 14px !default;
 /// @prop - Text color of the alert sub title
 $alert-ios-sub-title-text-color:                #666 !default;
 
-/// @prop - Padding of the alert message
-$alert-ios-message-padding:                     0 16px 21px !default;
+// deprecated
+$alert-ios-message-padding:                     null !default;
+
+/// @prop - Padding top of the alert message
+$alert-ios-message-padding-top:                 0 !default;
+
+/// @prop - Padding end of the alert message
+$alert-ios-message-padding-end:                 16px !default;
+
+/// @prop - Padding bottom of the alert message
+$alert-ios-message-padding-bottom:              21px !default;
+
+/// @prop - Padding start of the alert message
+$alert-ios-message-padding-start:               $alert-ios-message-padding-end !default;
+
 
 /// @prop - Font size of the alert message
 $alert-ios-message-font-size:                   13px !default;
@@ -48,8 +73,20 @@ $alert-ios-message-text-align:                  center !default;
 /// @prop - Text color of the alert message
 $alert-ios-message-text-color:                  inherit !default;
 
-/// @prop - Padding of the alert empty message
-$alert-ios-message-padding-empty:               0 0 12px 0 !default;
+// deprecated
+$alert-ios-message-padding-empty:               null !default;
+
+/// @prop - Padding top of the alert empty message
+$alert-ios-message-empty-padding-top:           0 !default;
+
+/// @prop - Padding end of the alert empty message
+$alert-ios-message-empty-padding-end:           0 !default;
+
+/// @prop - Padding bottom of the alert empty message
+$alert-ios-message-empty-padding-bottom:        12px !default;
+
+/// @prop - Padding start of the alert empty message
+$alert-ios-message-empty-padding-start:         0 !default;
 
 /// @prop - Maximum height of the alert content
 $alert-ios-content-max-height:                  240px !default;
@@ -57,8 +94,20 @@ $alert-ios-content-max-height:                  240px !default;
 /// @prop - Margin top of the alert input
 $alert-ios-input-margin-top:                    10px !default;
 
-/// @prop - Padding on the alert input
-$alert-ios-input-padding:                       6px !default;
+// deprecated
+$alert-ios-input-padding:                       null !default;
+
+/// @prop - Padding top on the alert input
+$alert-ios-input-padding-top:                   6px !default;
+
+/// @prop - Padding end on the alert input
+$alert-ios-input-padding-end:                   $alert-ios-input-padding-top !default;
+
+/// @prop - Padding bottom on the alert input
+$alert-ios-input-padding-bottom:                $alert-ios-input-padding-top !default;
+
+/// @prop - Padding start on the alert input
+$alert-ios-input-padding-start:                 $alert-ios-input-padding-end !default;
 
 /// @prop - Border color of the alert input
 $alert-ios-input-border-color:                  #ccc !default;
@@ -117,8 +166,23 @@ $alert-ios-button-main-font-weight:             bold !default;
 /// @prop - Border top of the alert list
 $alert-ios-list-border-top:                     $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color !default;
 
-/// @prop - Padding on the label for the radio alert
-$alert-ios-radio-label-padding:                 13px !default;
+// deprecated
+$alert-ios-radio-label-padding:                 null !default;
+
+/// @prop - Padding top on the label for the radio alert
+$alert-ios-radio-label-padding-top:             13px !default;
+
+/// @prop - Padding end on the label for the radio alert
+$alert-ios-radio-label-padding-end:             $alert-ios-radio-label-padding-top !default;
+
+/// @prop - Padding bottom on the label for the radio alert
+$alert-ios-radio-label-padding-bottom:          $alert-ios-radio-label-padding-top !default;
+
+/// @prop - Padding start on the label for the radio alert
+$alert-ios-radio-label-padding-start:           $alert-ios-radio-label-padding-end !default;
+
+/// @prop - Text color of the label for the radio alert
+$alert-ios-radio-label-text-color:              initial !default;
 
 /// @prop - Text color of the label for the checked radio alert
 $alert-ios-radio-label-text-color-checked:      $alert-ios-button-text-color !default;
@@ -129,8 +193,10 @@ $alert-ios-radio-min-width:                     30px !default;
 /// @prop - Top of the icon in the radio alert
 $alert-ios-radio-icon-top:                      -7px !default;
 
-/// @prop - Left of the icon in the radio alert
+// deprecated
 $alert-ios-radio-icon-left:                     7px !default;
+/// @prop - Start of the icon in the radio alert
+$alert-ios-radio-icon-start:                    $alert-ios-radio-icon-left !default;
 
 /// @prop - Width of the icon in the radio alert
 $alert-ios-radio-icon-width:                    6px !default;
@@ -150,14 +216,41 @@ $alert-ios-radio-icon-border-color:             $alert-ios-button-text-color !de
 /// @prop - Transform of the icon in the radio alert
 $alert-ios-radio-icon-transform:                rotate(45deg) !default;
 
-/// @prop - Padding of the label for the checkbox in the alert
-$alert-ios-checkbox-label-padding:              13px !default;
+// deprecated
+$alert-ios-checkbox-label-padding:              null !default;
+
+/// @prop - Padding top of the label for the checkbox in the alert
+$alert-ios-checkbox-label-padding-top:          13px !default;
+
+/// @prop - Padding end of the label for the checkbox in the alert
+$alert-ios-checkbox-label-padding-end:          $alert-ios-checkbox-label-padding-top !default;
+
+/// @prop - Padding bottom of the label for the checkbox in the alert
+$alert-ios-checkbox-label-padding-bottom:       $alert-ios-checkbox-label-padding-top !default;
+
+/// @prop - Padding start of the label for the checkbox in the alert
+$alert-ios-checkbox-label-padding-start:        $alert-ios-checkbox-label-padding-end !default;
+
+/// @prop - Text color of the label for the checkbox in the alert
+$alert-ios-checkbox-label-text-color:           initial !default;
 
 /// @prop - Text color of the label for the checked checkbox in the alert
 $alert-ios-checkbox-label-text-color-checked:   initial !default;
 
-/// @prop - Margin of the checkbox in the alert
-$alert-ios-checkbox-margin:                     10px 6px 10px 16px !default;
+// deprecated
+$alert-ios-checkbox-margin:                     null !default;
+
+/// @prop - Margin top of the checkbox in the alert
+$alert-ios-checkbox-margin-top:                 10px !default;
+
+/// @prop - Margin end of the checkbox in the alert
+$alert-ios-checkbox-margin-end:                 6px !default;
+
+/// @prop - Margin bottom of the checkbox in the alert
+$alert-ios-checkbox-margin-bottom:              10px !default;
+
+/// @prop - Margin start of the checkbox in the alert
+$alert-ios-checkbox-margin-start:               16px !default;
 
 /// @prop - Size of the checkbox in the alert
 $alert-ios-checkbox-size:                       21px !default;
@@ -186,8 +279,10 @@ $alert-ios-checkbox-background-color-on:        color($colors-ios, primary) !def
 /// @prop - Top of the icon in the checkbox alert
 $alert-ios-checkbox-icon-top:                   4px !default;
 
-/// @prop - Left of the icon in the checkbox alert
+// deprecated
 $alert-ios-checkbox-icon-left:                  7px !default;
+/// @prop - Start of the icon in the checkbox alert
+$alert-ios-checkbox-icon-start:                 $alert-ios-checkbox-icon-left !default;
 
 /// @prop - Width of the icon in the checkbox alert
 $alert-ios-checkbox-icon-width:                 4px !default;
@@ -209,11 +304,12 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
 
 .alert-ios .alert-wrapper {
+  @include border-radius($alert-ios-border-radius);
+
   overflow: hidden;
 
   max-width: $alert-ios-max-width;
 
-  border-radius: $alert-ios-border-radius;
   background-color: $alert-ios-background;
 
   box-shadow: $alert-ios-box-shadow;
@@ -224,13 +320,15 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-ios .alert-head {
-  padding: $alert-ios-head-padding;
+  @include text-align($alert-ios-head-text-align);
 
-  text-align: $alert-ios-head-text-align;
+  @include deprecated-variable(padding, $alert-ios-head-padding) {
+    @include padding($alert-ios-head-padding-top, $alert-ios-head-padding-end, $alert-ios-head-padding-bottom, $alert-ios-head-padding-start);
+  }
 }
 
 .alert-ios .alert-title {
-  margin-top: $alert-ios-title-margin-top;
+  @include margin($alert-ios-title-margin-top, null, null, null);
 
   font-size: $alert-ios-title-font-size;
   font-weight: $alert-ios-title-font-weight;
@@ -247,11 +345,14 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-ios .alert-message,
 .alert-ios .alert-input-group {
-  padding: $alert-ios-message-padding;
+  @include text-align($alert-ios-message-text-align);
 
   font-size: $alert-ios-message-font-size;
-  text-align: $alert-ios-message-text-align;
   color: $alert-ios-message-text-color;
+
+  @include deprecated-variable(padding, $alert-ios-message-padding) {
+    @include padding($alert-ios-message-padding-top, $alert-ios-message-padding-end, $alert-ios-message-padding-bottom, $alert-ios-message-padding-start);
+  }
 }
 
 .alert-ios .alert-message {
@@ -259,7 +360,9 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 }
 
 .alert-ios .alert-message:empty {
-  padding: $alert-ios-message-padding-empty;
+  @include deprecated-variable(padding, $alert-ios-message-padding-empty) {
+    @include padding($alert-ios-message-empty-padding-top, $alert-ios-message-empty-padding-end, $alert-ios-message-empty-padding-bottom, $alert-ios-message-empty-padding-start);
+  }
 }
 
 
@@ -268,13 +371,15 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-ios .alert-input {
   @include appearance(none);
-
-  margin-top: $alert-ios-input-margin-top;
-  padding: $alert-ios-input-padding;
+  @include margin($alert-ios-input-margin-top, null, null, null);
+  @include border-radius($alert-ios-input-border-radius);
 
   border: $alert-ios-input-border;
-  border-radius: $alert-ios-input-border-radius;
   background-color: $alert-ios-input-background-color;
+
+  @include deprecated-variable(padding, $alert-ios-input-padding) {
+    @include padding($alert-ios-input-padding-top, $alert-ios-input-padding-end, $alert-ios-input-padding-bottom, $alert-ios-input-padding-start);
+  }
 }
 
 
@@ -310,10 +415,14 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
   order: 0;
 
-  padding: $alert-ios-radio-label-padding;
-
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  color: $alert-ios-radio-label-text-color;
+
+  @include deprecated-variable(padding, $alert-ios-radio-label-padding) {
+    @include padding($alert-ios-radio-label-padding-top, $alert-ios-radio-label-padding-end, $alert-ios-radio-label-padding-bottom, $alert-ios-radio-label-padding-start);
+  }
 }
 
 
@@ -341,9 +450,9 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 // -----------------------------------------
 
 .alert-ios [aria-checked=true] .alert-radio-inner {
+  @include position($alert-ios-radio-icon-top, null, null, $alert-ios-radio-icon-start);
+
   position: absolute;
-  top: $alert-ios-radio-icon-top;
-  left: $alert-ios-radio-icon-left;
 
   width: $alert-ios-radio-icon-width;
   height: $alert-ios-radio-icon-height;
@@ -365,10 +474,14 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 
   flex: 1;
 
-  padding: $alert-ios-checkbox-label-padding;
-
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  color: $alert-ios-checkbox-label-text-color;
+
+  @include deprecated-variable(padding, $alert-ios-checkbox-label-padding) {
+    @include padding($alert-ios-checkbox-label-padding-top, $alert-ios-checkbox-label-padding-end, $alert-ios-checkbox-label-padding-bottom, $alert-ios-checkbox-label-padding-start);
+  }
 }
 
 .alert-ios [aria-checked=true] .alert-checkbox-label {
@@ -379,18 +492,21 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 // -----------------------------------------
 
 .alert-ios .alert-checkbox-icon {
-  position: relative;
+  @include border-radius($alert-ios-checkbox-border-radius);
 
-  margin: $alert-ios-checkbox-margin;
+  position: relative;
 
   width: $alert-ios-checkbox-size;
   height: $alert-ios-checkbox-size;
 
   border-width: $alert-ios-checkbox-border-width;
   border-style: $alert-ios-checkbox-border-style;
-  border-radius: $alert-ios-checkbox-border-radius;
   border-color: $alert-ios-checkbox-border-color-off;
   background-color: $alert-ios-checkbox-background-color-off;
+
+  @include deprecated-variable(margin, $alert-ios-checkbox-margin) {
+    @include margin($alert-ios-checkbox-margin-top, $alert-ios-checkbox-margin-end, $alert-ios-checkbox-margin-bottom, $alert-ios-checkbox-margin-start);
+  }
 }
 
 
@@ -407,9 +523,9 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 // -----------------------------------------
 
 .alert-ios [aria-checked=true] .alert-checkbox-inner {
+  @include position($alert-ios-checkbox-icon-top, null, null, $alert-ios-checkbox-icon-start);
+
   position: absolute;
-  top: $alert-ios-checkbox-icon-top;
-  left: $alert-ios-checkbox-icon-left;
 
   width: $alert-ios-checkbox-icon-width;
   height: $alert-ios-checkbox-icon-height;
@@ -427,24 +543,24 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-ios .alert-button-group {
-  flex-wrap: $alert-ios-button-group-flex-wrap;
+  @include margin-horizontal(null, -$alert-ios-button-border-width);
 
-  margin-right: -$alert-ios-button-border-width;
+  flex-wrap: $alert-ios-button-group-flex-wrap;
 }
 
 .alert-ios .alert-button {
+  @include margin($alert-ios-button-margin);
+  @include border-radius($alert-ios-button-border-radius);
+
   overflow: hidden;
 
   flex: $alert-ios-button-flex;
-
-  margin: $alert-ios-button-margin;
 
   min-width: $alert-ios-button-min-width;
   height: $alert-ios-button-min-height;
 
   border-top: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
   border-right: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
-  border-radius: $alert-ios-button-border-radius;
   font-size: $alert-ios-button-font-size;
   color: $alert-ios-button-text-color;
   background-color: $alert-ios-button-background-color;

@@ -5,23 +5,29 @@ Thanks for your interest in contributing to the Ionic Framework! :tada:
 
 ## Contributing Etiquette
 
-Please see our [Contributor Code of Conduct](https://github.com/driftyco/ionic/blob/master/CODE_OF_CONDUCT.md) for information on our rules of conduct.
+Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic/blob/master/CODE_OF_CONDUCT.md) for information on our rules of conduct.
 
 
 ## Creating an Issue
 
-If you have a question about using the framework, please ask on the [Ionic Forum](http://forum.ionicframework.com/) or in the [Ionic Worldwide Slack](http://ionicworldwide.herokuapp.com/) group.
+* If you have a question about using the framework, please ask on the [Ionic Forum](http://forum.ionicframework.com/) or in the [Ionic Worldwide Slack](http://ionicworldwide.herokuapp.com/) group.
 
-If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/driftyco/ionic/issues?utf8=%E2%9C%93&q=is%3Aissue). You can search through existing issues to see if there is a similar one reported. Include closed issues as it may have been closed with a solution.
+* It is required that you clearly describe the steps necessary to reproduce the issue you are running into. Although we would love to help our users as much as possible, diagnosing issues without clear reproduction steps is extremely time-consuming and simply not sustainable.
 
-Next, [create a new issue](https://github.com/driftyco/ionic/issues/new) that thoroughly explains the problem. Please fill out the populated issue form before submitting the issue.
+* The issue list of this repository is exclusively for bug reports and feature requests. Non-conforming issues will be closed immediately.
+
+* Issues with no clear steps to reproduce will not be triaged. If an issue is labeled with "needs reply" and receives no further replies from the author of the issue for more than 5 days, it will be closed.
+
+* If you think you have found a bug, or have a new feature idea, please start by making sure it hasn't already been [reported](https://github.com/ionic-team/ionic/issues?utf8=%E2%9C%93&q=is%3Aissue). You can search through existing issues to see if there is a similar one reported. Include closed issues as it may have been closed with a solution.
+
+* Next, [create a new issue](https://github.com/ionic-team/ionic/issues/new) that thoroughly explains the problem. Please fill out the populated issue form before submitting the issue.
 
 
 ## Creating a Pull Request
 
-We appreciate you taking the time to contribute! Before submitting a pull request, we ask that you please [create an issue](#creating-an-issue) that explains the bug or feature request and let us know that you plan on creating a pull request for it. If an issue already exists, please comment on that issue letting us know you would like to submit a pull request for it. This helps us to keep track of the pull request and make sure there isn't duplicated effort.
+* We appreciate you taking the time to contribute! Before submitting a pull request, we ask that you please [create an issue](#creating-an-issue) that explains the bug or feature request and let us know that you plan on creating a pull request for it. If an issue already exists, please comment on that issue letting us know you would like to submit a pull request for it. This helps us to keep track of the pull request and make sure there isn't duplicated effort.
 
-Looking for an issue to fix? Make sure to look through our issues with the [help wanted](https://github.com/driftyco/ionic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label!
+* Looking for an issue to fix? Make sure to look through our issues with the [help wanted](https://github.com/ionic-team/ionic/issues?q=is%3Aopen+is%3Aissue+label%3A%22help+wanted%22) label!
 
 ### Setup
 
@@ -79,9 +85,9 @@ Looking for an issue to fix? Make sure to look through our issues with the [help
   ```
 
   where `@name` is the Class name, `@description` is the description displayed on the documentation page, `@see` links to any related pages, and `@demo` links to the API demo located in the `demos` folder.
-2. In order to run API documentation locally, you will need to clone the `ionic-site` repo as a sibling to the `ionic` repo and then run it: https://github.com/driftyco/ionic-site#local-build
+2. In order to run API documentation locally, you will need to clone the `ionic-site` repo as a sibling to the `ionic` repo and then run it: https://github.com/ionic-team/ionic-site#local-build
 3. Then, run `gulp docs` in the `ionic` repo every time you make a change and the site will update.
-4. If the change affects the component documentation, create an issue on the `ionic-site` repo: https://github.com/driftyco/ionic-site/issues
+4. If the change affects the component documentation, create an issue on the `ionic-site` repo: https://github.com/ionic-team/ionic-site/issues
 
 
 #### Adding Demos
@@ -100,12 +106,12 @@ Looking for an issue to fix? Make sure to look through our issues with the [help
   ```
 3. Run `gulp watch.demos` to watch for changes to the demo
 4. Navigate to `http://localhost:8000/dist/demos/` and then to your component's demo to view it.
-5. If the change affects the component demos, create an issue on the `ionic-site` repo: https://github.com/driftyco/ionic-site/issues
+5. If the change affects the component demos, create an issue on the `ionic-site` repo: https://github.com/ionic-team/ionic-site/issues
 
 
 ## Commit Message Format
 
-We have very precise rules over how our git commit messages should be formatted. This leads to readable messages that are easy to follow when looking through the project history. We also use the git commit messages to generate our [changelog](https://github.com/driftyco/ionic/blob/master/CHANGELOG.md). (Ok you got us, it's basically Angular's commit message format).
+We have very precise rules over how our git commit messages should be formatted. This leads to readable messages that are easy to follow when looking through the project history. We also use the git commit messages to generate our [changelog](https://github.com/ionic-team/ionic/blob/master/CHANGELOG.md). (Ok you got us, it's basically Angular's commit message format).
 
 `type(scope): subject`
 
@@ -137,4 +143,4 @@ The subject contains succinct description of the change:
 
 ## License
 
-By contributing your code to the driftyco/ionic GitHub Repository, you agree to license your contribution under the MIT license.
+By contributing your code to the ionic-team/ionic GitHub Repository, you agree to license your contribution under the MIT license.

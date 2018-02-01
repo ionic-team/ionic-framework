@@ -1,0 +1,36 @@
+
+<ion-slides style="background: black"
+            (ionSlideWillChange)="onSlideWillChange($event)"
+            (ionSlideDidChange)="onSlideDidChange($event)"
+            (ionSlideDrag)="onSlideDrag($event)"
+            pager="true"
+            effect="slide"
+            slidesPerView="2.1"
+            centeredSlides="true"
+            spaceBetween="40">
+
+  <ion-slide style="background: red; color: white;">
+    <h1>Slide 1</h1>
+  </ion-slide>
+
+  <ion-slide style="background: white; color: blue;">
+    <h1>Slide 2</h1>
+  </ion-slide>
+
+  <ion-slide style="background: blue; color: white;">
+    <h1>Slide 3</h1>
+  </ion-slide>
+
+  <ion-slide style="background: purple; color: white;">
+    <h1>Slide 4</h1>
+  </ion-slide>
+
+  <ion-slide style="background: aqua; color: black;">
+    <h1>Slide 5</h1>
+  </ion-slide>
+
+  <ion-slide style="background: goldenrod; color: white;">
+    <h1>Slide 6</h1>
+  </ion-slide>
+
+</ion-slides>

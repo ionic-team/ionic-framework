@@ -3,7 +3,7 @@ import { HammerGestureConfig } from '@angular/platform-browser';
 
 
 /**
- * @private
+ * @hidden
  * This class overrides the default Angular gesture config.
  */
 @Injectable()

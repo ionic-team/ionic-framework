@@ -13,7 +13,7 @@ $toolbar-order-md: (
   buttons-end: 5,
   buttons-right: 6,
   menu-toggle-end: 7,
-);
+) !default;
 
 /// @prop - Font size of the toolbar title
 $toolbar-md-title-font-size:             2rem !default;
@@ -30,12 +30,17 @@ $toolbar-md-button-color:                $toolbar-md-title-text-color !default;
 /// @prop - Border radius of the toolbar button
 $toolbar-md-button-border-radius:        2px !default;
 
+/// @prop - Font weight of the strong toolbar button
+$toolbar-md-button-strong-font-weight:   bold !default;
+
 /// @prop - Height of the navigation bar
 $navbar-md-height:                       $toolbar-md-height !default;
 
+$toolbar-button-md-strong-font-weight:   bold !default;
+
 
 .toolbar-md {
-  padding: $toolbar-md-padding;
+  @include padding($toolbar-md-padding);
 
   min-height: $toolbar-md-height;
 }
@@ -60,28 +65,26 @@ $navbar-md-height:                       $toolbar-md-height !default;
   // using datauri png background image for improved scroll performance
   // rather than using `box-shadow: 0 2px 5px rgba(0,0,0,0.26);`
   // noticable performance difference on older Android devices
+  @include position(null, null, -5px, 0);
+  @include background-position(start, 0, top, -2px);
+
   position: absolute;
-  bottom: -5px;
-  left: 0;
 
   width: 100%;
   height: 5px;
 
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAHBAMAAADzDtBxAAAAD1BMVEUAAAAAAAAAAAAAAAAAAABPDueNAAAABXRSTlMUCS0gBIh/TXEAAAAaSURBVAjXYxCEAgY4UIICBmMogMsgFLtAAQCNSwXZKOdPxgAAAABJRU5ErkJggg==);
   background-repeat: repeat-x;
-  background-position: 0 -2px;
 
   content: "";
 }
 
 .footer-md::before,
 .tabs-md[tabsPlacement="bottom"] > .tabbar::before {
-  top: -2px;
-  bottom: auto;
+  @include position(-2px, null, auto, null);
+  @include background-position(start, 0, top, 0);
 
   height: 2px;
-
-  background-position: 0 0;
 }
 
 .header-md[no-border]::after,
@@ -103,7 +106,7 @@ $navbar-md-height:                       $toolbar-md-height !default;
 }
 
 .toolbar-title-md {
-  padding: 0 12px;
+  @include padding(0, 12px);
 
   font-size: $toolbar-md-title-font-size;
   font-weight: 500;
@@ -112,7 +115,6 @@ $navbar-md-height:                       $toolbar-md-height !default;
 
 @mixin md-toolbar-theme($color-name, $color-base, $color-contrast) {
   .toolbar-md-#{$color-name} {
-    $fg-color: color-contrast($colors-md, $color-base, md);
 
     .toolbar-background-md {
       background: $color-base;
@@ -122,22 +124,22 @@ $navbar-md-height:                       $toolbar-md-height !default;
     .bar-button-default-md,
     .bar-button-outline-md,
     .toolbar-title-md {
-      color: $fg-color;
+      color: $color-contrast;
     }
 
     .bar-button-clear-md,
     .bar-button-default-md,
     .bar-button-outline-md {
       .button-effect {
-        background-color: $fg-color;
+        background-color: $color-contrast;
       }
     }
 
     .bar-button-outline-md {
-      border-color: $fg-color;
+      border-color: $color-contrast;
     }
 
-    @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+    @each $color-name, $color-base, $color-contrast in get-colors($colors-md, md) {
       @include md-bar-button-default($color-name, $color-base, $color-contrast);
       @include md-bar-button-outline($color-name, $color-base, $color-contrast);
       @include md-bar-button-solid($color-name, $color-base, $color-contrast);
@@ -160,19 +162,19 @@ $navbar-md-height:                       $toolbar-md-height !default;
 }
 
 .bar-button-md:first-child {
-  margin-left: 0;
+  @include margin-horizontal(0, null);
 }
 
 .bar-buttons-md[end] {
-  order: map-get($toolbar-order-md, buttons-end);
+  @include text-align(end);
 
-  text-align: right;
+  order: map-get($toolbar-order-md, buttons-end);
 }
 
 .bar-buttons-md[right] {
-  order: map-get($toolbar-order-md, buttons-right);
+  @include text-align(right);
 
-  text-align: right;
+  order: map-get($toolbar-order-md, buttons-right);
 }
 
 
@@ -180,16 +182,13 @@ $navbar-md-height:                       $toolbar-md-height !default;
 // --------------------------------------------------
 
 .bar-button-md {
-  margin-top: 0;
-  margin-right: .2rem;
-  margin-bottom: 0;
-  margin-left: .2rem;
-  padding: 0 5px;
+  @include margin(0, .2rem, 0, .2rem);
+  @include padding(0, 5px);
+  @include border-radius($toolbar-md-button-border-radius);
 
   height: 32px;
 
   border: 0;
-  border-radius: $toolbar-md-button-border-radius;
   font-size: $toolbar-md-button-font-size;
   font-weight: 500;
   text-transform: uppercase;
@@ -295,8 +294,8 @@ $navbar-md-height:                       $toolbar-md-height !default;
 // Material Design Toolbar Button Icon
 // --------------------------------------------------
 
-.bar-button-md.bar-button-icon-left ion-icon {
-  padding-right: .3em;
+.bar-button-md.bar-button-icon-start ion-icon {
+  @include padding-horizontal(null, .3em);
 
   font-size: 1.4em;
   line-height: .67;
@@ -304,8 +303,8 @@ $navbar-md-height:                       $toolbar-md-height !default;
   pointer-events: none;
 }
 
-.bar-button-md.bar-button-icon-right ion-icon {
-  padding-left: .4em;
+.bar-button-md.bar-button-icon-end ion-icon {
+  @include padding-horizontal(.4em, null);
 
   font-size: 1.4em;
   line-height: .67;
@@ -314,11 +313,11 @@ $navbar-md-height:                       $toolbar-md-height !default;
 }
 
 .bar-button-md[icon-only] {
-  padding: 0;
+  @include padding(0);
 }
 
 .bar-button-md[icon-only] ion-icon {
-  padding: 0 .1em;
+  @include padding(0, .1em);
 
   min-width: 28px;
 
@@ -333,7 +332,7 @@ $navbar-md-height:                       $toolbar-md-height !default;
 // --------------------------------------------------
 
 .back-button-md {
-  margin: 0 6px;
+  @include margin(0, 6px);
 
   min-width: 44px;
 
@@ -341,12 +340,12 @@ $navbar-md-height:                       $toolbar-md-height !default;
 }
 
 .back-button-icon-md {
-  margin: 0;
-  padding: 0 6px;
+  @include margin(0);
+  @include padding(0, 6px);
+  @include text-align(start);
 
   font-size: 2.4rem;
   font-weight: normal;
-  text-align: left;
 }
 
 
@@ -354,25 +353,25 @@ $navbar-md-height:                       $toolbar-md-height !default;
 // --------------------------------------------------
 
 .bar-button-menutoggle-md {
-  order: map-get($toolbar-order-md, menu-toggle-start);
+  @include margin(0, 6px);
+  @include padding(0, 2px);
 
-  margin: 0 6px;
-  padding: 0 2px;
+  order: map-get($toolbar-order-md, menu-toggle-start);
 
   min-width: 44px;
 }
 
 .bar-button-menutoggle-md ion-icon {
-  padding: 0 6px;
+  @include padding(0, 6px);
 
   font-size: 2.4rem;
 }
 
 .bar-button-menutoggle-md[end],
 .bar-button-menutoggle-md[right] {
-  order: map-get($toolbar-order-md, menu-toggle-end);
+  @include margin(0, 2px);
 
-  margin: 0 2px;
+  order: map-get($toolbar-order-md, menu-toggle-end);
 
   min-width: 28px;
 }
@@ -384,7 +383,7 @@ $navbar-md-height:                       $toolbar-md-height !default;
 @include md-bar-button-default(default, $toolbar-md-button-color, color-contrast($colors-md, $toolbar-md-button-color, md));
 @include md-bar-button-default(clear, $toolbar-md-button-color, color-contrast($colors-md, $toolbar-md-button-color, md));
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+@each $color-name, $color-base, $color-contrast in get-colors($colors-md, md) {
   @include md-toolbar-theme($color-name, $color-base, $color-contrast);
   @include md-bar-button-default($color-name, $color-base, $color-contrast);
   @include md-bar-button-outline($color-name, $color-base, $color-contrast);
@@ -396,5 +395,5 @@ $navbar-md-height:                       $toolbar-md-height !default;
 // --------------------------------------------------
 
 .bar-button-strong-md {
-  font-weight: $button-md-strong-font-weight;
+  font-weight: $toolbar-md-button-strong-font-weight;
 }

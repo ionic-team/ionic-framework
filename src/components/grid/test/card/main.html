@@ -1,0 +1,31 @@
+<ion-header>
+
+  <ion-toolbar color="primary">
+    <ion-title>Responsive Cards</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="gray-content">
+  <div ion-grid>
+    <div ion-row>
+      <div ion-col col-12 col-md-6 col-lg-4 *ngFor="let item of items">
+        <ion-card>
+          <ion-card-header>
+            Card {{ item }}
+          </ion-card-header>
+          <ion-card-content>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec scelerisque orci odio, vitae faucibus orci mollis eu. Donec tincidunt auctor iaculis. Maecenas in ante turpis. Mauris eget lacinia erat. Sed nulla urna, cursus sed ante eget, tincidunt facilisis nisl. In vulputate quam et augue egestas, vitae auctor elit commodo.
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<style>
+  .gray-content {
+    background-color: #eee;
+  }
+</style>

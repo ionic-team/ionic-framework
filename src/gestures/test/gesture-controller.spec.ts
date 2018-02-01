@@ -21,13 +21,13 @@ describe('gesture controller', () => {
     c.enableScroll(1);
     expect(c.isScrollDisabled()).toEqual(false);
 
-    for (var i = 0; i < 100; i++) {
-      for (var j = 0; j < 100; j++) {
+    for (let i = 0; i < 100; i++) {
+      for (let j = 0; j < 100; j++) {
         c.disableScroll(j);
       }
     }
 
-    for (var i = 0; i < 100; i++) {
+    for (let i = 0; i < 100; i++) {
       expect(c.isScrollDisabled()).toEqual(true);
       c.enableScroll(50 - i);
       c.enableScroll(i);
@@ -50,16 +50,16 @@ describe('gesture controller', () => {
     expect(c.isDisabled('swipe')).toEqual(false);
 
     // Disabling gestures multiple times
-    for (var gestureName = 0; gestureName < 10; gestureName++) {
-      for (var i = 0; i < 50; i++) {
-        for (var j = 0; j < 50; j++) {
+    for (let gestureName = 0; gestureName < 10; gestureName++) {
+      for (let i = 0; i < 50; i++) {
+        for (let j = 0; j < 50; j++) {
           c.disableGesture(gestureName.toString(), j);
         }
       }
     }
 
-    for (var gestureName = 0; gestureName < 10; gestureName++) {
-      for (var i = 0; i < 49; i++) {
+    for (let gestureName = 0; gestureName < 10; gestureName++) {
+      for (let i = 0; i < 49; i++) {
         c.enableGesture(gestureName.toString(), i);
       }
       expect(c.isDisabled(gestureName.toString())).toEqual(true);
@@ -126,7 +126,7 @@ describe('gesture controller', () => {
     let g2 = c.createGesture({name: 'swipe1', priority: 3});
     let g3 = c.createGesture({name: 'swipe2', priority: 4});
 
-    for (var i = 0; i < 10; i++) {
+    for (let i = 0; i < 10; i++) {
       expect(g1.start()).toEqual(true);
       expect(g2.start()).toEqual(true);
       expect(g3.start()).toEqual(true);

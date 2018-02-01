@@ -1,0 +1,175 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Select Item: Single Value</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <ion-item>
+    <ion-label stacked>Gender</ion-label>
+    <ion-select [(ngModel)]="gender" class="e2eSelectGender">
+      <ion-option value="f">Female</ion-option>
+      <ion-option value="m">Male</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Popover</ion-label>
+    <ion-select [(ngModel)]="interfaces" interface="popover">
+      <ion-option value="select">Select</ion-option>
+      <ion-option value="action">Action Sheet</ion-option>
+      <ion-option value="popover">Popover</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Gaming</ion-label>
+    <ion-select [(ngModel)]="gaming" (ionCancel)="gamingCancel()" (ionChange)="gamingChange($event)">
+      <ion-option value="nes">NES</ion-option>
+      <ion-option value="n64">Nintendo64</ion-option>
+      <ion-option value="ps">PlayStation</ion-option>
+      <ion-option value="genesis">Sega Genesis</ion-option>
+      <ion-option value="saturn">Sega Saturn</ion-option>
+      <ion-option value="snes">SNES</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label floating>Operating System</ion-label>
+    <ion-select [(ngModel)]="os" interface="alert" submitText="Okay" cancelText="Nah">
+      <ion-option value="dos">DOS</ion-option>
+      <ion-option value="lunix">Linux</ion-option>
+      <ion-option value="mac7">Mac OS 7</ion-option>
+      <ion-option value="mac8">Mac OS 8</ion-option>
+      <ion-option value="win3.1">Windows 3.1</ion-option>
+      <ion-option value="win95">Windows 95</ion-option>
+      <ion-option value="win98">Windows 98</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Notifications</ion-label>
+    <ion-select [(ngModel)]="notifications" [selectOptions]="notificationSelectOpts" interface="action-sheet" cancelText="Cancel!">
+      <ion-option value="enable">Enable</ion-option>
+      <ion-option value="mute">Mute</ion-option>
+      <ion-option value="mute_week">Mute for a week</ion-option>
+      <ion-option value="mute_year" (ionSelect)="notificationSelect($event)">Mute for a year</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Edit</ion-label>
+    <ion-select [(ngModel)]="edit" interface="action-sheet">
+      <ion-option value="add_reaction">Add Reaction</ion-option>
+      <ion-option value="copy_text">Copy Text</ion-option>
+      <ion-option value="share_text">Share Text</ion-option>
+      <ion-option value="copy_link">Copy Link to Message</ion-option>
+      <ion-option value="remind_me">Remind Me</ion-option>
+      <ion-option value="pin_file">Pin File</ion-option>
+      <ion-option value="star_file">Star File</ion-option>
+      <ion-option value="mark_unread">Mark Unread</ion-option>
+      <ion-option value="edit_title">Edit Title</ion-option>
+      <ion-option value="save_image">Save Image</ion-option>
+      <ion-option value="copy_image">Copy Image</ion-option>
+      <ion-option value="delete_file">Delete File</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Music</ion-label>
+    <ion-select [(ngModel)]="music" [selectOptions]="musicSelectOpts" placeholder="Select Music">
+      <ion-option>Alice in Chains</ion-option>
+      <ion-option>Green Day</ion-option>
+      <ion-option>Nirvana</ion-option>
+      <ion-option>Pearl Jam</ion-option>
+      <ion-option>Smashing Pumpkins</ion-option>
+      <ion-option>Soundgarden</ion-option>
+      <ion-option (ionSelect)="musicSelect($event)">Stone Temple Pilots</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Date</ion-label>
+    <ion-select [(ngModel)]="month">
+      <ion-option value="01">January</ion-option>
+      <ion-option value="02">February</ion-option>
+      <ion-option value="03">March</ion-option>
+      <ion-option value="04">April</ion-option>
+      <ion-option value="05">May</ion-option>
+      <ion-option value="06">June</ion-option>
+      <ion-option value="07">July</ion-option>
+      <ion-option value="08">August</ion-option>
+      <ion-option value="09">September</ion-option>
+      <ion-option value="10">October</ion-option>
+      <ion-option value="11">November</ion-option>
+      <ion-option value="12">December</ion-option>
+    </ion-select>
+    <ion-select [(ngModel)]="year">
+      <ion-option *ngFor="let yr of years">{{yr}}</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Statuses</ion-label>
+    <ion-select (ionChange)="statusChange($event)">
+      <ion-option value="selected" selected>Selected</ion-option>
+      <ion-option value="default">Default</ion-option>
+      <ion-option value="disabled" disabled="true">Disabled</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Currency</ion-label>
+    <ion-select [(ngModel)]="currency" [selectedText]="selectedText()">
+      <ion-option *ngFor="let cur of currencies" [value]="cur">
+        {{cur.symbol}} ({{cur.code}}) {{cur.name}}
+      </ion-option>
+    </ion-select>
+  </ion-item>
+
+  <button ion-button (click)="resetGender()">Reset Gender</button>
+
+  <p aria-hidden="true" padding>
+    <code>gender: {{gender}}</code>
+    <br>
+    <code>gaming: {{gaming}}</code>
+    <br>
+    <code>os: {{os}}</code>
+    <br>
+    <code>notifications: {{notifications}}</code>
+    <br>
+    <code>music: {{music}}</code>
+    <br>
+    <code>date: {{month}}/{{year}}</code>
+    <br>
+    <code>status: {{status | json}}</code>
+    <br>
+    <code>currency: {{currency | json}}</code>
+    <br>
+  </p>
+
+  <form [formGroup]="fruitsForm">
+    <ion-item>
+      <ion-label>formControlName, disabled</ion-label>
+      <ion-select formControlName="fruit">
+        <ion-option>Grape</ion-option>
+        <ion-option>Cherry</ion-option>
+        <ion-option>Strawberry</ion-option>
+        <ion-option>Mango</ion-option>
+      </ion-select>
+    </ion-item>
+  </form>
+
+  <ion-item>
+    <ion-label floating>Floating label</ion-label>
+    <ion-select>
+      <ion-option value="f">Female</ion-option>
+      <ion-option value="m">Male</ion-option>
+    </ion-select>
+  </ion-item>
+
+</ion-content>

@@ -23,10 +23,12 @@ $refresher-border-color:       #ddd !default;
 
 
 ion-refresher {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
+
   z-index: $z-index-refresher;
+
   display: none;
 
   width: 100%;
@@ -41,7 +43,7 @@ ion-refresher {
   // when the refresher is let go or has completed
   // this transition is what is used to put the
   // scroll content back into it's original location
-  margin-top: -1px;
+  @include margin(-1px, null, null, null);
 
   border-top: 1px solid $refresher-border-color;
   transition: transform 320ms cubic-bezier(.36, .66, .04, 1);
@@ -69,18 +71,32 @@ ion-refresher-content {
 
 .refresher-pulling-icon,
 .refresher-refreshing-icon {
+  @include text-align(center);
+  @include transform-origin(center);
+
   font-size: $refresher-icon-font-size;
-  text-align: center;
   color: $refresher-icon-color;
-  transform-origin: center;
   transition: 200ms;
 }
 
 .refresher-pulling-text,
 .refresher-refreshing-text {
+  @include text-align(center);
+
   font-size: $refresher-text-font-size;
-  text-align: center;
   color: $refresher-text-color;
+}
+
+.refresher-refreshing .spinner-ios line,
+.refresher-refreshing .spinner-ios-small line,
+.refresher-refreshing .spinner-crescent circle {
+  stroke: $refresher-icon-color;
+}
+
+.refresher-refreshing .spinner-bubbles circle,
+.refresher-refreshing .spinner-circles circle,
+.refresher-refreshing .spinner-dots circle {
+  fill: $refresher-icon-color;
 }
 
 

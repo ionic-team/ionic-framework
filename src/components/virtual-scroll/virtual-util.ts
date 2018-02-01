@@ -1,24 +1,32 @@
-import { ViewContainerRef, TemplateRef, EmbeddedViewRef, } from '@angular/core';
+import { EmbeddedViewRef, TemplateRef, ViewContainerRef } from '@angular/core';
+import { assert } from '../../util/util';
 
-import { CSS } from '../../util/dom';
+import { Platform } from '../../platform/platform';
 
-
+const PREVIOUS_CELL = {
+  row: 0,
+  width: 0,
+  height: 0,
+  top: 0,
+  left: 0,
+  tmpl: -1
+};
 /**
  * NO DOM
  */
 export function processRecords(stopAtHeight: number,
-                               records: any[], cells: VirtualCell[],
-                               headerFn: Function, footerFn: Function,
-                               data: VirtualData) {
+  records: any[], cells: VirtualCell[],
+  headerFn: Function, footerFn: Function,
+  data: VirtualData) {
   let record: any;
   let startRecordIndex: number;
   let previousCell: VirtualCell;
   let tmpData: any;
-  let lastRecordIndex = (records.length - 1);
+  let lastRecordIndex = records ? (records.length - 1) : -1;
 
   if (cells.length) {
     // we already have cells
-    previousCell = cells[ cells.length - 1];
+    previousCell = cells[cells.length - 1];
     if (previousCell.top + previousCell.height > stopAtHeight) {
       return;
     }
@@ -26,14 +34,7 @@ export function processRecords(stopAtHeight: number,
 
   } else {
     // no cells have been created yet
-    previousCell = {
-      row: 0,
-      width: 0,
-      height: 0,
-      top: 0,
-      left: 0,
-      tmpl: -1
-    };
+    previousCell = PREVIOUS_CELL;
     startRecordIndex = 0;
   }
 
@@ -47,15 +48,15 @@ export function processRecords(stopAtHeight: number,
 
       if (tmpData !== null) {
         // add header data
-        previousCell = addCell(previousCell, recordIndex, TEMPLATE_HEADER, tmpData,
-                                data.hdrWidth, data.hdrHeight, data.viewWidth);
+        previousCell = addCell(previousCell, recordIndex, TemplateType.Header, tmpData,
+          data.hdrWidth, data.hdrHeight, data.viewWidth);
         cells.push(previousCell);
       }
     }
 
     // add item data
-    previousCell = addCell(previousCell, recordIndex, TEMPLATE_ITEM, null,
-                            data.itmWidth, data.itmHeight, data.viewWidth);
+    previousCell = addCell(previousCell, recordIndex, TemplateType.Item, null,
+      data.itmWidth, data.itmHeight, data.viewWidth);
     cells.push(previousCell);
 
     if (footerFn) {
@@ -63,8 +64,8 @@ export function processRecords(stopAtHeight: number,
 
       if (tmpData !== null) {
         // add footer data
-        previousCell = addCell(previousCell, recordIndex, TEMPLATE_FOOTER, tmpData,
-                                data.ftrWidth, data.ftrHeight, data.viewWidth);
+        previousCell = addCell(previousCell, recordIndex, TemplateType.Footer, tmpData,
+          data.ftrWidth, data.ftrHeight, data.viewWidth);
         cells.push(previousCell);
       }
     }
@@ -79,41 +80,29 @@ export function processRecords(stopAtHeight: number,
     if (previousCell.top + previousCell.height + data.itmHeight > stopAtHeight && processedTotal > 3) {
       return;
     }
-
   }
-
 }
 
 
 function addCell(previousCell: VirtualCell, recordIndex: number, tmpl: number, tmplData: any,
-                 cellWidth: number, cellHeight: number, viewportWidth: number) {
-  let newCell: VirtualCell;
-
+  cellWidth: number, cellHeight: number, viewportWidth: number) {
+  const newCell: VirtualCell = {
+    record: recordIndex,
+    tmpl: tmpl,
+    width: cellWidth,
+    height: cellHeight,
+    reads: 0
+  };
   if (previousCell.left + previousCell.width + cellWidth > viewportWidth) {
-     // add a new cell in a new row
-    newCell = {
-      record: recordIndex,
-      tmpl: tmpl,
-      row: (previousCell.row + 1),
-      width: cellWidth,
-      height: cellHeight,
-      top: (previousCell.top + previousCell.height),
-      left: 0,
-      reads: 0,
-    };
-
+    // add a new cell in a new row
+    newCell.row = (previousCell.row + 1);
+    newCell.top = (previousCell.top + previousCell.height);
+    newCell.left = 0;
   } else {
     // add a new cell in the same row
-    newCell = {
-      record: recordIndex,
-      tmpl: tmpl,
-      row: previousCell.row,
-      width: cellWidth,
-      height: cellHeight,
-      top: previousCell.top,
-      left: (previousCell.left + previousCell.width),
-      reads: 0,
-    };
+    newCell.row = previousCell.row;
+    newCell.top = previousCell.top;
+    newCell.left = (previousCell.left + previousCell.width);
   }
 
   if (tmplData) {
@@ -127,36 +116,44 @@ function addCell(previousCell: VirtualCell, recordIndex: number, tmpl: number, t
 /**
  * NO DOM
  */
-export function populateNodeData(startCellIndex: number, endCellIndex: number, viewportWidth: number, scrollingDown: boolean,
-                                 cells: VirtualCell[], records: any[], nodes: VirtualNode[], viewContainer: ViewContainerRef,
-                                 itmTmp: TemplateRef<VirtualContext>, hdrTmp: TemplateRef<VirtualContext>, ftrTmp: TemplateRef<VirtualContext>,
-                                 initialLoad: boolean): boolean {
-  const recordsLength = records.length;
-  if (!recordsLength) {
+export function populateNodeData(startCellIndex: number, endCellIndex: number, scrollingDown: boolean,
+  cells: VirtualCell[], records: any[], nodes: VirtualNode[], viewContainer: ViewContainerRef,
+  itmTmp: TemplateRef<VirtualContext>, hdrTmp: TemplateRef<VirtualContext>, ftrTmp: TemplateRef<VirtualContext>): boolean {
+  if (!records || records.length === 0) {
     nodes.length = 0;
+    viewContainer.clear();
     return true;
   }
+  const recordsLength = records.length;
 
   let hasChanges = false;
-  let node: VirtualNode;
+  // let node: VirtualNode;
   let availableNode: VirtualNode;
   let cell: VirtualCell;
-  let isAlreadyRendered: boolean;
   let viewInsertIndex: number = null;
   let totalNodes = nodes.length;
   let templateRef: TemplateRef<VirtualContext>;
   startCellIndex = Math.max(startCellIndex, 0);
   endCellIndex = Math.min(endCellIndex, cells.length - 1);
 
+  const usedNodes: VirtualNode[] = [];
   for (var cellIndex = startCellIndex; cellIndex <= endCellIndex; cellIndex++) {
     cell = cells[cellIndex];
     availableNode = null;
-    isAlreadyRendered = false;
 
     // find the first one that's available
-    if (!initialLoad) {
+    const existingNode = nodes.find(n => n.cell === cellIndex && n.tmpl === cell.tmpl);
+    if (existingNode) {
+      if (existingNode.view.context.$implicit === records[cell.record]) {
+        usedNodes.push(existingNode);
+        continue; // optimization: node data is the same no need to update
+      }
+      console.debug('virtual-util', 'data is not the same, will need to update node. Setting as available node');
+      availableNode = existingNode; // update existing node
+    } else {
+      console.debug('virtual-util', 'cell was not rendered in current nodes, will now look for an available node');
       for (var i = 0; i < totalNodes; i++) {
-        node = nodes[i];
+        const node = nodes[i];
 
         if (cell.tmpl !== node.tmpl || i === 0 && cellIndex !== 0) {
           // the cell must use the correct template
@@ -165,44 +162,36 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
           continue;
         }
 
-        if (node.cell === cellIndex) {
-          isAlreadyRendered = true;
-          break;
-        }
-
         if (node.cell < startCellIndex || node.cell > endCellIndex) {
 
           if (!availableNode) {
             // havent gotten an available node yet
-            availableNode = nodes[i];
-
+            availableNode = node;
+            console.debug('virtual-util', 'found node to reuse', availableNode);
           } else if (scrollingDown) {
             // scrolling down
             if (node.cell < availableNode.cell) {
-              availableNode = nodes[i];
+              availableNode = node;
+              console.debug('virtual-util', 'scrolling-down found better node to reuse', availableNode);
             }
-
           } else {
             // scrolling up
             if (node.cell > availableNode.cell) {
-              availableNode = nodes[i];
+              availableNode = node;
+              console.debug('virtual-util', 'scrolling-up found better node to reuse', availableNode);
             }
           }
         }
-      }
-
-      if (isAlreadyRendered) {
-        continue;
       }
     }
 
     if (!availableNode) {
       // did not find an available node to put the cell data into
-      // insert a new node before the last record nodes
+      // insert a new node after existing ones
       if (viewInsertIndex === null) {
         viewInsertIndex = -1;
         for (var j = totalNodes - 1; j >= 0; j--) {
-          node = nodes[j];
+          const node = nodes[j];
           if (node) {
             viewInsertIndex = viewContainer.indexOf(node.view);
             break;
@@ -211,9 +200,9 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
       }
 
       // select which templateRef should be used for this cell
-      templateRef = cell.tmpl === TEMPLATE_HEADER ? hdrTmp : cell.tmpl === TEMPLATE_FOOTER ? ftrTmp : itmTmp;
+      templateRef = cell.tmpl === TemplateType.Header ? hdrTmp : cell.tmpl === TemplateType.Footer ? ftrTmp : itmTmp;
       if (!templateRef) {
-        console.error(`virtual${cell.tmpl === TEMPLATE_HEADER ? 'Header' : cell.tmpl === TEMPLATE_FOOTER ? 'Footer' : 'Item'} template required`);
+        console.error(`virtual${cell.tmpl === TemplateType.Header ? 'Header' : cell.tmpl === TemplateType.Footer ? 'Footer' : 'Item'} template required`);
         continue;
       }
 
@@ -233,13 +222,25 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
     availableNode.cell = cellIndex;
 
     // apply the cell's data to this node
-    availableNode.view.context.$implicit = cell.data || records[cell.record];
-    availableNode.view.context.index = cellIndex;
-    availableNode.view.context.count = recordsLength;
+    var context = availableNode.view.context;
+    context.$implicit = cell.data || records[cell.record];
+    context.index = cellIndex;
+    context.count = recordsLength;
     availableNode.hasChanges = true;
     availableNode.lastTransform = null;
     hasChanges = true;
+    usedNodes.push(availableNode);
   }
+
+  const unusedNodes = nodes.filter(n => usedNodes.indexOf(n) < 0);
+  unusedNodes.forEach(node => {
+    const index = viewContainer.indexOf(node.view);
+    viewContainer.remove(index);
+    const removeIndex = nodes.findIndex(n => n === node);
+    nodes.splice(removeIndex, 1);
+  });
+  usedNodes.length = 0;
+  unusedNodes.length = 0;
 
   return hasChanges;
 }
@@ -248,7 +249,7 @@ export function populateNodeData(startCellIndex: number, endCellIndex: number, v
 /**
  * DOM READ
  */
-export function initReadNodes(nodes: VirtualNode[], cells: VirtualCell[], data: VirtualData) {
+export function initReadNodes(plt: Platform, nodes: VirtualNode[], cells: VirtualCell[], data: VirtualData) {
   if (nodes.length && cells.length) {
     // first node
     // ******** DOM READ ****************
@@ -259,7 +260,7 @@ export function initReadNodes(nodes: VirtualNode[], cells: VirtualCell[], data: 
     firstCell.row = 0;
 
     // ******** DOM READ ****************
-    updateDimensions(nodes, cells, data, true);
+    updateDimensions(plt, nodes, cells, data, true);
   }
 }
 
@@ -267,7 +268,7 @@ export function initReadNodes(nodes: VirtualNode[], cells: VirtualCell[], data: 
 /**
  * DOM READ
  */
-export function updateDimensions(nodes: VirtualNode[], cells: VirtualCell[], data: VirtualData, initialUpdate: boolean) {
+export function updateDimensions(plt: Platform, nodes: VirtualNode[], cells: VirtualCell[], data: VirtualData, initialUpdate: boolean) {
   let node: VirtualNode;
   let element: VirtualHtmlElement;
   let cell: VirtualCell;
@@ -283,17 +284,17 @@ export function updateDimensions(nodes: VirtualNode[], cells: VirtualCell[], dat
       element = getElement(node);
 
       // ******** DOM READ ****************
-      readElements(cell, element);
+      readElements(plt, cell, element);
 
       if (initialUpdate) {
         // update estimated dimensions with more accurate dimensions
-        if (cell.tmpl === TEMPLATE_HEADER) {
+        if (cell.tmpl === TemplateType.Header) {
           data.hdrHeight = cell.height;
           if (cell.left === 0) {
             data.hdrWidth = cell.width;
           }
 
-        } else if (cell.tmpl === TEMPLATE_FOOTER) {
+        } else if (cell.tmpl === TemplateType.Footer) {
           data.ftrHeight = cell.height;
           if (cell.left === 0) {
             data.ftrWidth = cell.width;
@@ -317,33 +318,43 @@ export function updateDimensions(nodes: VirtualNode[], cells: VirtualCell[], dat
   data.topViewCell = totalCells;
   data.bottomViewCell = 0;
 
-  // completely realign position to ensure they're all accurately placed
-  for (var i = 1; i < totalCells; i++) {
-    cell = cells[i];
-    previousCell = cells[i - 1];
+  if (totalCells > 0) {
+    // completely realign position to ensure they're all accurately placed
+    cell = cells[0];
+    previousCell = {
+      row: 0,
+      width: 0,
+      height: 0,
+      top: cell.top,
+      left: 0,
+      tmpl: -1
+    };
 
-    if (previousCell.left + previousCell.width + cell.width > data.viewWidth) {
-      // new row
-      cell.row++;
-      cell.top = (previousCell.top + previousCell.height);
-      cell.left = 0;
+    for (let i = 0; i < totalCells; i++) {
+      cell = cells[i];
 
-    } else {
-      // same row
-      cell.row = previousCell.row;
-      cell.top = previousCell.top;
-      cell.left = (previousCell.left + previousCell.width);
-    }
+      if (previousCell.left + previousCell.width + cell.width > data.viewWidth) {
+        // new row
+        cell.row++;
+        cell.top = (previousCell.top + previousCell.height);
+        cell.left = 0;
+      } else {
+        // same row
+        cell.row = previousCell.row;
+        cell.top = previousCell.top;
+        cell.left = (previousCell.left + previousCell.width);
+      }
 
-    // figure out which cells are viewable within the viewport
-    if (cell.top + cell.height > data.scrollTop && i < data.topViewCell) {
-      data.topViewCell = i;
+      // figure out which cells are viewable within the viewport
+      if (cell.top + cell.height > data.scrollTop && i < data.topViewCell) {
+        data.topViewCell = i;
 
-    } else if (cell.top < viewableBottom && i > data.bottomViewCell) {
-      data.bottomViewCell = i;
+      } else if (cell.top < viewableBottom && i > data.bottomViewCell) {
+        data.bottomViewCell = i;
+      }
+      previousCell = cell;
     }
   }
-
 }
 
 
@@ -376,9 +387,9 @@ export function updateNodeContext(nodes: VirtualNode[], cells: VirtualCell[], da
 /**
  * DOM READ
  */
-function readElements(cell: VirtualCell, element: VirtualHtmlElement) {
+function readElements(plt: Platform, cell: VirtualCell, element: VirtualHtmlElement) {
   // ******** DOM READ ****************
-  const styles = window.getComputedStyle(<any>element);
+  const styles = plt.getElementComputedStyle(<any>element);
 
   // ******** DOM READ ****************
   cell.left = (element.clientLeft - parseFloat(styles.marginLeft));
@@ -394,7 +405,7 @@ function readElements(cell: VirtualCell, element: VirtualHtmlElement) {
 /**
  * DOM WRITE
  */
-export function writeToNodes(nodes: VirtualNode[], cells: VirtualCell[], totalRecords: number) {
+export function writeToNodes(plt: Platform, nodes: VirtualNode[], cells: VirtualCell[], totalRecords: number) {
   let node: VirtualNode;
   let element: VirtualHtmlElement;
   let cell: VirtualCell;
@@ -412,7 +423,7 @@ export function writeToNodes(nodes: VirtualNode[], cells: VirtualCell[], totalRe
 
       if (element) {
         // ******** DOM WRITE ****************
-        element.style[CSS.transform] = node.lastTransform = transform;
+        element.style[plt.Css.transform] = node.lastTransform = transform;
 
         // ******** DOM WRITE ****************
         element.classList.add('virtual-position');
@@ -429,63 +440,57 @@ export function writeToNodes(nodes: VirtualNode[], cells: VirtualCell[], totalRe
   }
 }
 
-
 /**
  * NO DOM
  */
 export function adjustRendered(cells: VirtualCell[], data: VirtualData) {
-  // figure out which cells should be rendered
-  let cell: VirtualCell;
-  let lastRow = -1;
-  let cellsRenderHeight = 0;
-  let maxRenderHeight = (data.renderHeight - data.itmHeight);
-  let totalCells = cells.length;
-  let viewableRenderedPadding = (data.itmHeight < 90 ? VIEWABLE_RENDERED_PADDING : 0);
+
+  const maxRenderHeight = (data.renderHeight - data.itmHeight);
+  const totalCells = cells.length;
+  const viewableRenderedPadding = (data.itmHeight < 90 ? VIEWABLE_RENDERED_PADDING : 0);
 
   if (data.scrollDiff > 0) {
     // scrolling down
     data.topCell = Math.max(data.topViewCell - viewableRenderedPadding, 0);
-    data.bottomCell = Math.min(data.topCell + 2, totalCells - 1);
+    data.bottomCell = data.topCell;
 
-    for (var i = data.topCell; i < totalCells; i++) {
-      cell = cells[i];
-      if (cell.row !== lastRow) {
-        cellsRenderHeight += cell.height;
-        lastRow = cell.row;
-      }
-
-      if (i > data.bottomCell) {
-        data.bottomCell = i;
-      }
-
-      if (cellsRenderHeight >= maxRenderHeight) {
-        break;
-      }
+    let cellsRenderHeight = 0;
+    for (let i = data.topCell; i < totalCells; i++) {
+      cellsRenderHeight += cells[i].height;
+      if (i > data.bottomCell) data.bottomCell = i;
+      if (cellsRenderHeight >= maxRenderHeight) break;
     }
 
+    if (cellsRenderHeight < maxRenderHeight) {
+      // there are no more cells at the bottom, so move topCell to a smaller index
+      for (let i = data.topCell - 1; i >= 0; i--) {
+        cellsRenderHeight += cells[i].height;
+        data.topCell = i;
+        if (cellsRenderHeight >= maxRenderHeight) break;
+      }
+    }
   } else {
     // scroll up
     data.bottomCell = Math.min(data.bottomViewCell + viewableRenderedPadding, totalCells - 1);
-    data.topCell = Math.max(data.bottomCell - 2, 0);
+    data.topCell = data.bottomCell;
 
-    for (var i = data.bottomCell; i >= 0; i--) {
-      cell = cells[i];
-      if (cell.row !== lastRow) {
-        cellsRenderHeight += cell.height;
-        lastRow = cell.row;
-      }
+    let cellsRenderHeight = 0;
+    assert(data.bottomCell > 0, 'bottomCell should be greater than 0');
+    for (let i = data.bottomCell; i >= 0; i--) {
+      cellsRenderHeight += cells[i].height;
+      if (i < data.topCell) data.topCell = i;
+      if (cellsRenderHeight >= maxRenderHeight) break;
+    }
 
-      if (i < data.topCell) {
-        data.topCell = i;
-      }
-
-      if (cellsRenderHeight >= maxRenderHeight) {
-        break;
+    if (cellsRenderHeight < maxRenderHeight) {
+      // there are no more cells at the top, so move bottomCell to a higher index
+      for (let i = data.bottomCell; i < totalCells; i++) {
+        cellsRenderHeight += cells[i].height;
+        data.bottomCell = i;
+        if (cellsRenderHeight >= maxRenderHeight) break;
       }
     }
   }
-
-  // console.log(`adjustRendered topCell: ${data.topCell}, bottomCell: ${data.bottomCell}, cellsRenderHeight: ${cellsRenderHeight}, data.renderHeight: ${data.renderHeight}`);
 }
 
 
@@ -500,7 +505,7 @@ export function getVirtualHeight(totalRecords: number, lastCell: VirtualCell): n
   let unknownRecords = (totalRecords - lastCell.record - 1);
   let knownHeight = (lastCell.top + lastCell.height);
 
-  return  Math.ceil(knownHeight + ((knownHeight / (totalRecords - unknownRecords)) * unknownRecords));
+  return Math.ceil(knownHeight + ((knownHeight / (totalRecords - unknownRecords)) * unknownRecords));
 }
 
 
@@ -518,7 +523,7 @@ export function estimateHeight(totalRecords: number, lastCell: VirtualCell, exis
   const diff = Math.abs(existingHeight - newHeight);
 
   if ((diff > (newHeight * difference)) ||
-      (percentToBottom > .995)) {
+    (percentToBottom > .995)) {
     return newHeight;
   }
 
@@ -530,11 +535,11 @@ export function estimateHeight(totalRecords: number, lastCell: VirtualCell, exis
  * DOM READ
  */
 export function calcDimensions(data: VirtualData,
-                               virtualScrollElement: HTMLElement,
-                               approxItemWidth: string, approxItemHeight: string,
-                               appoxHeaderWidth: string, approxHeaderHeight: string,
-                               approxFooterWidth: string, approxFooterHeight: string,
-                               bufferRatio: number) {
+  virtualScrollElement: HTMLElement,
+  approxItemWidth: string, approxItemHeight: string,
+  appoxHeaderWidth: string, approxHeaderHeight: string,
+  approxFooterWidth: string, approxFooterHeight: string,
+  bufferRatio: number) {
 
   // get the parent container's viewport bounds
   const viewportElement = virtualScrollElement.parentElement;
@@ -581,19 +586,19 @@ function calcWidth(viewportWidth: number, approxWidth: string): number {
     return parseFloat(approxWidth);
   }
 
-  throw 'virtual scroll width can only use "%" or "px" units';
+  throw new Error('virtual scroll width can only use "%" or "px" units');
 }
 
 
 /**
  * NO DOM
  */
-function calcHeight(viewportHeight: number, approxHeight: string): number {
+function calcHeight(_viewportHeight: number, approxHeight: string): number {
   if (approxHeight.indexOf('px') > 0) {
     return parseFloat(approxHeight);
   }
 
-  throw 'virtual scroll height must use "px" units';
+  throw new Error('virtual scroll height must use "px" units');
 }
 
 
@@ -620,10 +625,10 @@ export interface VirtualHtmlElement {
   offsetHeight: number;
   style: any;
   classList: {
-    add: {(name: string): void};
-    remove: {(name: string): void};
+    add: { (name: string): void };
+    remove: { (name: string): void };
   };
-  setAttribute: {(name: string, value: any): void};
+  setAttribute: { (name: string, value: any): void };
   parentElement: VirtualHtmlElement;
 }
 
@@ -654,7 +659,7 @@ export interface VirtualNode {
 export class VirtualContext {
   bounds: VirtualBounds = {};
 
-  constructor(public $implicit: any, public index: number, public count: number) {}
+  constructor(public $implicit: any, public index: number, public count: number) { }
 
   get first(): boolean { return this.index === 0; }
 
@@ -696,8 +701,11 @@ export interface VirtualData {
   ftrHeight?: number;
 }
 
-const TEMPLATE_ITEM = 0;
-const TEMPLATE_HEADER = 1;
-const TEMPLATE_FOOTER = 2;
+const enum TemplateType {
+  Item = 0,
+  Header = 1,
+  Footer = 2
+}
+
 const VIEWABLE_RENDERED_PADDING = 3;
 const REQUIRED_DOM_READS = 2;

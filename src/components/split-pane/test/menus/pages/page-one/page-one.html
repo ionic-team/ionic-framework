@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Navigation</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <h1>Page 1</h1>
+  <ion-list>
+    <button ion-item (click)="menuDefault()">Enable default</button>
+    <button ion-item (click)="menuStart()">Enable side="start"</button>
+    <button ion-item (click)="menuEnd()">Enable side="end"</button>
+    <button ion-item (click)="menuLeft()">Enable side="left"</button>
+    <button ion-item (click)="menuRight()">Enable side="right"</button>
+    <button ion-item (click)="disableAll()">Disable all</button>
+  </ion-list>
+
+  <button ion-button (click)="push()">Push</button>
+
+  <div f></div>
+  <div f></div>
+  <div f></div>
+  <div f></div>
+
+</ion-content>

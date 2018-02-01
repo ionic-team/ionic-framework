@@ -8,8 +8,8 @@ import { Transition } from '../../transitions/transition';
 export class LoadingPopIn extends Transition {
   init() {
     let ele = this.enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
+    let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    let wrapper = new Animation(this.plt, ele.querySelector('.loading-wrapper'));
 
     wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.1, 1);
     backdrop.fromTo('opacity', 0.01, 0.3);
@@ -26,8 +26,8 @@ export class LoadingPopIn extends Transition {
 export class LoadingPopOut extends Transition {
   init() {
     let ele = this.leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
+    let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    let wrapper = new Animation(this.plt, ele.querySelector('.loading-wrapper'));
 
     wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 0.9);
     backdrop.fromTo('opacity', 0.3, 0);
@@ -44,8 +44,8 @@ export class LoadingPopOut extends Transition {
 export class LoadingMdPopIn extends Transition {
   init() {
     let ele = this.enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
+    let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    let wrapper = new Animation(this.plt, ele.querySelector('.loading-wrapper'));
 
     wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.1, 1);
     backdrop.fromTo('opacity', 0.01, 0.5);
@@ -62,8 +62,8 @@ export class LoadingMdPopIn extends Transition {
 export class LoadingMdPopOut extends Transition {
   init() {
     let ele = this.leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
+    let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    let wrapper = new Animation(this.plt, ele.querySelector('.loading-wrapper'));
 
     wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 0.9);
     backdrop.fromTo('opacity', 0.5, 0);
@@ -80,8 +80,8 @@ export class LoadingMdPopOut extends Transition {
 export class LoadingWpPopIn extends Transition {
   init() {
     let ele = this.enteringView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
+    let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    let wrapper = new Animation(this.plt, ele.querySelector('.loading-wrapper'));
 
     wrapper.fromTo('opacity', 0.01, 1).fromTo('scale', 1.3, 1);
     backdrop.fromTo('opacity', 0.01, 0.16);
@@ -98,8 +98,8 @@ export class LoadingWpPopIn extends Transition {
 export class LoadingWpPopOut extends Transition {
   init() {
     let ele = this.leavingView.pageRef().nativeElement;
-    let backdrop = new Animation(ele.querySelector('ion-backdrop'));
-    let wrapper = new Animation(ele.querySelector('.loading-wrapper'));
+    let backdrop = new Animation(this.plt, ele.querySelector('ion-backdrop'));
+    let wrapper = new Animation(this.plt, ele.querySelector('.loading-wrapper'));
 
     wrapper.fromTo('opacity', 0.99, 0).fromTo('scale', 1, 1.3);
     backdrop.fromTo('opacity', 0.16, 0);

@@ -1,0 +1,37 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Alerts</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <button ion-button block class="e2eOpenAlert" (click)="doAlert()">Alert</button>
+  <button ion-button block class="e2eOpenAlertLongMessage" (click)="doAlertLongMessage()">Alert Long Message</button>
+  <button ion-button block class="e2eOpenMultipleButtons" (click)="doMultipleButtons()">Multiple Buttons (>2)</button>
+  <button ion-button block class="e2eOpenAlertNoMessage" (click)="doAlertNoMessage()">Alert No Message</button>
+  <button ion-button block class="e2eOpenConfirm" (click)="doConfirm()">Confirm</button>
+  <button ion-button block class="e2eOpenPrompt" (click)="doPrompt()">Prompt</button>
+  <button ion-button block class="e2eOpenRadio" (click)="doRadio()">Radio</button>
+  <button ion-button block class="e2eOpenCheckbox" (click)="doCheckbox()">Checkbox</button>
+  <button ion-button block class="e2eFastClose" (click)="doFastClose()">Fast Close</button>
+  <button ion-button block class="e2eDisabledBackdrop" (click)="doDisabledBackdropAlert()">Disabled Backdrop Click</button>
+  <button ion-button block class="e2eAlertMode" (click)="doAlertWithMode('md')">md Mode</button>
+  <button ion-button block class="e2eAlertMode" (click)="doAlertWithMode('ios')">ios Mode</button>
+  <button ion-button block class="e2eAlertMode" (click)="doAlertWithMode('wp')">wp Mode</button>
+
+  <pre>
+    Confirm Opened: {{testConfirmOpen}}
+    Confirm Result: {{testConfirmResult}}
+    Prompt Opened: {{testPromptOpen}}
+    Prompt Result: {{testPromptResult | json}}
+    Radio Opened: {{testRadioOpen}}
+    Radio Result: {{testRadioResult}}
+    Checkbox Opened: {{testCheckboxOpen}}
+    Checkbox Result: {{testCheckboxResult}}
+  </pre>
+
+</ion-content>

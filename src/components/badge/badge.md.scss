@@ -14,7 +14,8 @@ $badge-md-text-color:               color-contrast($colors-md, $badge-md-backgro
 
 
 .badge-md {
-  border-radius: $badge-md-border-radius;
+  @include border-radius($badge-md-border-radius);
+
   color: $badge-md-text-color;
   background-color: $badge-md-background-color;
 }

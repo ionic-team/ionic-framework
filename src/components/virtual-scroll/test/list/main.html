@@ -25,13 +25,13 @@
   <ion-list [virtualScroll]="items">
 
     <ion-item class="item-text-wrap" *virtualItem="let item; let itemBounds = bounds;">
-      <ion-thumbnail item-left>
+      <ion-thumbnail item-start>
         <ion-img [src]="item.url" [bounds]="itemBounds"></ion-img>
       </ion-thumbnail>
 
       <h2 class="text-wrap">{{item.id}}, top: {{itemBounds.top}}, bottom: {{itemBounds.bottom}}, height: {{itemBounds.height}}</h2>
 
-      <!--<ion-thumbnail item-right>
+      <!--<ion-thumbnail item-end>
         <ion-img [src]="item.gif" [bounds]="itemBounds"></ion-img>
       </ion-thumbnail>-->
     </ion-item>

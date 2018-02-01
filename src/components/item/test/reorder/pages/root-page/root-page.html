@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Item Reorder</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="toggle()">
+        Edit
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list [reorder]="isReordering" (ionItemReorder)="reorder($event)">
+    <button ion-item *ngFor="let item of items" (click)="clickedButton(item)"
+            [style.background]="'rgb('+(255-item*4)+','+(255-item*4)+','+(255-item*4)+')'"
+            [style.min-height]="item*2+35+'px'">
+      {{item}}
+    </button>
+  </ion-list>
+
+  <div *ngFor="let side of ['start', 'end']">
+    <ion-list>
+      <ion-list-header>{{side}}</ion-list-header>
+      <ion-item-group [reorder]="isReordering" (ionItemReorder)="$event.applyTo(items)" [side]="side">
+        <ion-item-sliding *ngFor="let item of items">
+          <button ion-item (click)="clickedButton(item)">
+            <h2>Sliding item {{item}}</h2>
+            <div item-end>right</div>
+          </button>
+          <ion-item-options side="right" icon-start>
+            <button ion-button color='danger'>
+              <ion-icon name="trash"></ion-icon>
+              Remove
+            </button>
+          </ion-item-options>
+        </ion-item-sliding>
+      </ion-item-group>
+    </ion-list>
+  </div>
+
+</ion-content>

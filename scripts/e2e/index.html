@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+  <title>Ionic E2E</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <link id="ionicLink" href="./build/main.css" rel="stylesheet">
+	<link href="build/e2e.shared.css" rel="stylesheet">
+
+  <script>
+    if (location.href.indexOf('snapshot=true') > -1) {
+      document.documentElement.classList.add('snapshot');
+    } else {
+      document.documentElement.classList.remove('snapshot');
+    }
+
+    if (location.href.indexOf('cordova=true') > -1) {
+      window.cordova = {};
+    }
+
+    if (location.href.indexOf('rtl=true') > -1) {
+      document.dir = 'rtl';
+    }
+
+    window.domCount = function domCount(ele) {
+      if(!ele) {
+        return 0;
+      }
+      var count = 1;
+      for(var i = 0; i < ele.children.length; i++) {
+        count += domCount(ele.children[i]);
+      }
+      return count;
+    }
+
+    if (location.href.indexOf('theme=dark') > -1) {
+      var link = document.getElementById('ionicLink');
+      link.setAttribute('href', link.getAttribute('href').replace('.css', '.dark.css'));
+    }
+  </script>
+</head>
+<body>
+
+  <ion-app></ion-app>
+
+  <script>
+    if (document.dir === 'rtl') {
+      document.body.classList.add('rtl');
+    } else {
+      document.body.classList.remove('rtl');
+    }
+  </script>
+  <script src="./build/polyfills.ng.js"></script>
+  <script src="./build/vendor.js"></script>
+  <script src="./build/main.js"></script>
+</body>
+</html>

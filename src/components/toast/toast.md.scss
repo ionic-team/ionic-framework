@@ -12,18 +12,30 @@ $toast-md-title-color:                           #fff !default;
 /// @prop - Font size of the toast title
 $toast-md-title-font-size:                       1.5rem !default;
 
-/// @prop - Padding of the toast title
-$toast-md-title-padding:                         19px 16px 17px !default;
+// deprecated
+$toast-md-title-padding:                         null !default;
+
+/// @prop - Padding top of the toast title
+$toast-md-title-padding-top:                     19px !default;
+
+/// @prop - Padding end of the toast title
+$toast-md-title-padding-end:                     16px !default;
+
+/// @prop - Padding bottom of the toast title
+$toast-md-title-padding-bottom:                  17px !default;
+
+/// @prop - Padding start of the toast title
+$toast-md-title-padding-start:                   $toast-md-title-padding-end !default;
 
 
 .toast-md .toast-wrapper {
+  @include position-horizontal(0, 0);
+  @include margin(auto);
+
   position: absolute;
-  right: 0;
-  left: 0;
+
   z-index: $z-index-overlay-wrapper;
   display: block;
-
-  margin: auto;
 
   width: $toast-width;
   max-width: $toast-max-width;
@@ -32,15 +44,15 @@ $toast-md-title-padding:                         19px 16px 17px !default;
 }
 
 .toast-md .toast-wrapper.toast-top {
-  top: 0;
+  @include transform(translate3d(0, -100%, 0));
 
-  transform: translate3d(0, -100%, 0);
+  top: 0;
 }
 
 .toast-md .toast-wrapper.toast-bottom {
-  bottom: 0;
+  @include transform(translate3d(0, 100%, 0));
 
-  transform: translate3d(0, 100%, 0);
+  bottom: 0;
 }
 
 .toast-md .toast-wrapper.toast-middle {
@@ -48,9 +60,11 @@ $toast-md-title-padding:                         19px 16px 17px !default;
 }
 
 .toast-md .toast-message {
-  padding: $toast-md-title-padding;
-
   font-size: $toast-md-title-font-size;
 
   color: $toast-md-title-color;
+
+  @include deprecated-variable(padding, $toast-md-title-padding) {
+    @include padding($toast-md-title-padding-top, $toast-md-title-padding-end, $toast-md-title-padding-bottom, $toast-md-title-padding-start);
+  }
 }

@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Settings</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      Tab 1
+    </ion-list-header>
+    <ion-item *ngFor="let i of items">Item {{i}} {{i}} {{i}} {{i}}</ion-item>
+  </ion-list>
+  <p>
+    <button ion-button (click)="selectPrevious()">Select Previous Tab</button>
+  </p>
+  <p>
+    <button ion-button (click)="appNavPop()">App Nav Pop</button>
+  </p>
+</ion-content>

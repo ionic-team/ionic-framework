@@ -39,11 +39,35 @@ $checkbox-ios-icon-checkmark-color:       color-contrast($colors-ios, $checkbox-
 /// @prop - Opacity of the disabled checkbox
 $checkbox-ios-disabled-opacity:           .3 !default;
 
-/// @prop - Margin of the left checkbox item
-$checkbox-ios-item-left-margin:           $item-ios-padding-media-top $item-ios-padding-right $item-ios-padding-media-bottom 2px !default;
+// deprecated
+$checkbox-ios-item-left-margin:           null !default;
 
-/// @prop - Margin of the right checkbox item
-$checkbox-ios-item-right-margin:          10px 8px 9px 0 !default;
+/// @prop - Margin top of the left checkbox item
+$checkbox-ios-item-start-margin-top:      $item-ios-padding-media-top !default;
+
+/// @prop - Margin end of the left checkbox item
+$checkbox-ios-item-start-margin-end:      $item-ios-padding-end !default;
+
+/// @prop - Margin bottom of the left checkbox item
+$checkbox-ios-item-start-margin-bottom:   $item-ios-padding-media-bottom !default;
+
+/// @prop - Margin start of the left checkbox item
+$checkbox-ios-item-start-margin-start:    2px !default;
+
+// deprecated
+$checkbox-ios-item-right-margin:          null !default;
+
+/// @prop - Margin top of the right checkbox item
+$checkbox-ios-item-end-margin-top:        10px !default;
+
+/// @prop - Margin end of the right checkbox item
+$checkbox-ios-item-end-margin-end:        8px !default;
+
+/// @prop - Margin bottom of the right checkbox item
+$checkbox-ios-item-end-margin-bottom:     9px !default;
+
+/// @prop - Margin start of the right checkbox item
+$checkbox-ios-item-end-margin-start:      0 !default;
 
 
 .checkbox-ios {
@@ -56,6 +80,8 @@ $checkbox-ios-item-right-margin:          10px 8px 9px 0 !default;
 // -----------------------------------------
 
 .checkbox-ios .checkbox-icon {
+  @include border-radius($checkbox-ios-icon-border-radius);
+
   position: relative;
 
   width: $checkbox-ios-icon-size;
@@ -63,7 +89,6 @@ $checkbox-ios-item-right-margin:          10px 8px 9px 0 !default;
 
   border-width: $checkbox-ios-icon-border-width;
   border-style: $checkbox-ios-icon-border-style;
-  border-radius: $checkbox-ios-icon-border-radius;
   border-color: $checkbox-ios-icon-border-color-off;
   background-color: $checkbox-ios-background-color-off;
 }
@@ -82,9 +107,9 @@ $checkbox-ios-item-right-margin:          10px 8px 9px 0 !default;
 // -----------------------------------------
 
 .checkbox-ios .checkbox-checked .checkbox-inner {
+  @include position(4px, null, null, 7px);
+
   position: absolute;
-  top: 4px;
-  left: 7px;
 
   width: 4px;
   height: 9px;
@@ -116,11 +141,16 @@ $checkbox-ios-item-right-margin:          10px 8px 9px 0 !default;
   position: static;
   display: block;
 
-  margin: $checkbox-ios-item-left-margin;
+  @include deprecated-variable(margin, $checkbox-ios-item-left-margin) {
+    @include margin($checkbox-ios-item-start-margin-top, $checkbox-ios-item-start-margin-end, $checkbox-ios-item-start-margin-bottom, $checkbox-ios-item-start-margin-start);
+  }
 }
 
-.item.item-ios .checkbox-ios[item-right] {
-  margin: $checkbox-ios-item-right-margin;
+.item.item-ios .checkbox-ios[item-right], // deprecated
+.item.item-ios .checkbox-ios[item-end] {
+  @include deprecated-variable(margin, $checkbox-ios-item-right-margin) {
+    @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-end-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
+  }
 }
 
 

@@ -59,9 +59,13 @@ $list-wp-activated-background-color:  #d9d9d9 !default;
 // --------------------------------------------------
 
 $item-wp-padding-top:                 13px !default;
+// deprecated
 $item-wp-padding-right:               16px !default;
+$item-wp-padding-end:                 $item-wp-padding-right !default;
 $item-wp-padding-bottom:              13px !default;
+// deprecated
 $item-wp-padding-left:                16px !default;
+$item-wp-padding-start:               $item-wp-padding-left !default;
 $item-wp-padding-media-top:           9px !default;
 $item-wp-padding-media-bottom:        9px !default;
 $item-wp-padding-icon-top:            11px !default;

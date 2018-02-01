@@ -3,11 +3,35 @@
 // iOS Button
 // --------------------------------------------------
 
-/// @prop - Margin of the button
-$button-ios-margin:                                 .4rem .2rem !default;
+// deprecated
+$button-ios-margin:                                 null !default;
 
-/// @prop - Padding of the button
-$button-ios-padding:                                0 1em !default;
+/// @prop - Margin top of the button
+$button-ios-margin-top:                             .4rem !default;
+
+/// @prop - Margin end of the button
+$button-ios-margin-end:                             .2rem !default;
+
+/// @prop - Margin bottom of the button
+$button-ios-margin-bottom:                          .4rem !default;
+
+/// @prop - Margin start of the button
+$button-ios-margin-start:                           .2rem !default;
+
+// deprecated
+$button-ios-padding:                                null !default;
+
+/// @prop - Padding top of the button
+$button-ios-padding-top:                            0 !default;
+
+/// @prop - Padding end of the button
+$button-ios-padding-end:                            1em !default;
+
+/// @prop - Padding bottom of the button
+$button-ios-padding-bottom:                         $button-ios-padding-top !default;
+
+/// @prop - Padding start of the button
+$button-ios-padding-start:                          $button-ios-padding-end !default;
 
 /// @prop - Height of the button
 $button-ios-height:                                 2.8em !default;
@@ -37,8 +61,20 @@ $button-ios-opacity-hover:                          .8 !default;
 // iOS Large Button
 // --------------------------------------------------
 
-/// @prop - Padding of the large button
-$button-ios-large-padding:                          0 1em !default;
+// deprecated
+$button-ios-large-padding:                          null !default;
+
+/// @prop - Padding top of the large button
+$button-ios-large-padding-top:                      0 !default;
+
+/// @prop - Padding end of the large button
+$button-ios-large-padding-end:                      1em !default;
+
+/// @prop - Padding bottom of the large button
+$button-ios-large-padding-bottom:                   $button-ios-large-padding-top !default;
+
+/// @prop - Padding start of the large button
+$button-ios-large-padding-start:                    $button-ios-large-padding-end !default;
 
 /// @prop - Height of the large button
 $button-ios-large-height:                           2.8em !default;
@@ -50,8 +86,20 @@ $button-ios-large-font-size:                        2rem !default;
 // iOS Small Button
 // --------------------------------------------------
 
-/// @prop - Padding of the small button
-$button-ios-small-padding:                          0 .9em !default;
+// deprecated
+$button-ios-small-padding:                          null !default;
+
+/// @prop - Padding top of the small button
+$button-ios-small-padding-top:                      0 !default;
+
+/// @prop - Padding end of the small button
+$button-ios-small-padding-end:                      .9em !default;
+
+/// @prop - Padding bottom of the small button
+$button-ios-small-padding-bottom:                   $button-ios-small-padding-top !default;
+
+/// @prop - Padding start of the small button
+$button-ios-small-padding-start:                    $button-ios-small-padding-end !default;
 
 /// @prop - Height of the small button
 $button-ios-small-height:                           2.1em !default;
@@ -119,8 +167,20 @@ $button-ios-clear-opacity-hover:                    .6 !default;
 // iOS Round Button
 // --------------------------------------------------
 
-/// @prop - Padding of the round button
-$button-ios-round-padding:                          $button-round-padding !default;
+// deprecated
+$button-ios-round-padding:                          null !default;
+
+/// @prop - Padding top of the round button
+$button-ios-round-padding-top:                      $button-round-padding-top !default;
+
+/// @prop - Padding end of the round button
+$button-ios-round-padding-end:                      $button-round-padding-end !default;
+
+/// @prop - Padding bottom of the round button
+$button-ios-round-padding-bottom:                   $button-round-padding-bottom !default;
+
+/// @prop - Padding start of the round button
+$button-ios-round-padding-start:                    $button-round-padding-start !default;
 
 /// @prop - Border radius of the round button
 $button-ios-round-border-radius:                    $button-round-border-radius !default;
@@ -137,16 +197,22 @@ $button-ios-strong-font-weight:                     600 !default;
 // --------------------------------------------------
 
 .button-ios {
-  margin: $button-ios-margin;
-  padding: $button-ios-padding;
+  @include border-radius($button-ios-border-radius);
 
   height: $button-ios-height;
 
-  border-radius: $button-ios-border-radius;
   font-size: $button-ios-font-size;
 
   color: $button-ios-text-color;
   background-color: $button-ios-background-color;
+
+  @include deprecated-variable(margin, $button-ios-margin) {
+    @include margin($button-ios-margin-top, $button-ios-margin-end, $button-ios-margin-bottom, $button-ios-margin-start);
+  }
+
+  @include deprecated-variable(padding, $button-ios-padding) {
+    @include padding($button-ios-padding-top, $button-ios-padding-end, $button-ios-padding-bottom, $button-ios-padding-start);
+  }
 }
 
 .button-ios.activated {
@@ -182,19 +248,23 @@ $button-ios-strong-font-weight:                     600 !default;
 // --------------------------------------------------
 
 .button-large-ios {
-  padding: $button-ios-large-padding;
-
   height: $button-ios-large-height;
 
   font-size: $button-ios-large-font-size;
+
+  @include deprecated-variable(padding, $button-ios-large-padding) {
+    @include padding($button-ios-large-padding-top, $button-ios-large-padding-end, $button-ios-large-padding-bottom, $button-ios-large-padding-start);
+  }
 }
 
 .button-small-ios {
-  padding: $button-ios-small-padding;
-
   height: $button-ios-small-height;
 
   font-size: $button-ios-small-font-size;
+
+  @include deprecated-variable(padding, $button-ios-small-padding) {
+    @include padding($button-ios-small-padding-top, $button-ios-small-padding-end, $button-ios-small-padding-bottom, $button-ios-small-padding-start);
+  }
 }
 
 .button-small-ios[icon-only] ion-icon {
@@ -205,29 +275,28 @@ $button-ios-strong-font-weight:                     600 !default;
 // --------------------------------------------------
 
 .button-block-ios {
-  margin-right: 0;
-  margin-left: 0;
+  @include margin-horizontal(0);
 }
 
 // iOS Full Button
 // --------------------------------------------------
 
 .button-full-ios {
-  margin-right: 0;
-  margin-left: 0;
+  @include margin-horizontal(0);
+  @include border-radius(0);
 
   border-right-width: 0;
   border-left-width: 0;
-  border-radius: 0;
 }
 
 // iOS Outline Button
 // --------------------------------------------------
 
 .button-outline-ios {
+  @include border-radius($button-ios-outline-border-radius);
+
   border-width: $button-ios-outline-border-width;
   border-style: $button-ios-outline-border-style;
-  border-radius: $button-ios-outline-border-radius;
   border-color: $button-ios-outline-border-color;
   color: $button-ios-outline-text-color;
   background-color: $button-ios-outline-background-color;
@@ -304,9 +373,11 @@ $button-ios-strong-font-weight:                     600 !default;
 // --------------------------------------------------
 
 .button-round-ios {
-  padding: $button-ios-round-padding;
+  @include border-radius($button-ios-round-border-radius);
 
-  border-radius: $button-ios-round-border-radius;
+  @include deprecated-variable(padding, $button-ios-round-padding) {
+    @include padding($button-ios-round-padding-top, $button-ios-round-padding-end, $button-ios-round-padding-bottom, $button-ios-round-padding-start);
+  }
 }
 
 

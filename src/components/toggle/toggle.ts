@@ -1,22 +1,17 @@
-import { AfterContentInit, Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AfterContentInit, Component, ElementRef, HostListener, Input, NgZone, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { Config } from '../../config/config';
-import { Ion } from '../ion';
-import { Item } from '../item/item';
-import { ToggleGesture } from './toggle-gesture';
-import { GestureController } from '../../gestures/gesture-controller';
-import { Key } from '../../util/key';
-import { Haptic } from '../../util/haptic';
+import { DomController } from '../../platform/dom-controller';
 import { Form, IonicTapInput } from '../../util/form';
-import { isTrueProperty, assert } from '../../util/util';
-import { DomController } from '../../util/dom-controller';
-
-export const TOGGLE_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => Toggle),
-  multi: true
-};
+import { GestureController } from '../../gestures/gesture-controller';
+import { Haptic } from '../../tap-click/haptic';
+import { assert, isTrueProperty } from '../../util/util';
+import { BaseInput } from '../../util/base-input';
+import { Item } from '../item/item';
+import { KEY_ENTER, KEY_SPACE } from '../../platform/key';
+import { Platform } from '../../platform/platform';
+import { ToggleGesture } from './toggle-gesture';
 
 /**
  * @name Toggle
@@ -26,7 +21,7 @@ export const TOGGLE_VALUE_ACCESSOR: any = {
  * Toggles can also have colors assigned to them, by adding any color
  * attribute.
  *
- * See the [Angular 2 Docs](https://angular.io/docs/ts/latest/guide/forms.html)
+ * See the [Angular Docs](https://angular.io/docs/ts/latest/guide/forms.html)
  * for more info on forms and inputs.
  *
  * @usage
@@ -52,108 +47,102 @@ export const TOGGLE_VALUE_ACCESSOR: any = {
  *  </ion-list>
  * ```
  *
- * @demo /docs/v2/demos/src/toggle/
- * @see {@link /docs/v2/components#toggle Toggle Component Docs}
+ * @demo /docs/demos/src/toggle/
+ * @see {@link /docs/components#toggle Toggle Component Docs}
  */
 @Component({
   selector: 'ion-toggle',
   template:
-    '<div class="toggle-icon" [class.toggle-checked]="_checked" [class.toggle-activated]="_activated">' +
+    '<div class="toggle-icon">' +
       '<div class="toggle-inner"></div>' +
     '</div>' +
     '<button role="checkbox" ' +
             'type="button" ' +
             'ion-button="item-cover" ' +
             '[id]="id" ' +
-            '[attr.aria-checked]="_checked" ' +
+            '[attr.aria-checked]="_value" ' +
             '[attr.aria-labelledby]="_labelId" ' +
             '[attr.aria-disabled]="_disabled" ' +
-            'class="item-cover">' +
+            'class="item-cover" disable-activated>' +
     '</button>',
   host: {
-    '[class.toggle-disabled]': '_disabled'
+    '[class.toggle-disabled]': '_disabled',
+    '[class.toggle-checked]': '_value',
+    '[class.toggle-activated]': '_activated',
   },
-  providers: [TOGGLE_VALUE_ACCESSOR],
+  providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: Toggle, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
-export class Toggle extends Ion implements IonicTapInput, AfterContentInit, ControlValueAccessor, OnDestroy  {
+export class Toggle extends BaseInput<boolean> implements IonicTapInput, AfterContentInit, OnDestroy  {
 
-  _checked: boolean = false;
-  _init: boolean = false;
-  _disabled: boolean = false;
-  _labelId: string;
   _activated: boolean = false;
   _startX: number;
-  _msPrv: number = 0;
-  _fn: Function = null;
   _gesture: ToggleGesture;
 
-  /** @private */
-  id: string;
-
   /**
-   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   * @input {boolean} If true, the element is selected.
    */
   @Input()
-  set color(val: string) {
-    this._setColor(val);
+  get checked(): boolean {
+    return this.value;
   }
 
-  /**
-   * @input {string} The mode to apply to this component.
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
+  set checked(val: boolean) {
+    this.value = val;
   }
-
-  /**
-   * @output {Toggle} expression to evaluate when the toggle value changes
-   */
-  @Output() ionChange: EventEmitter<Toggle> = new EventEmitter<Toggle>();
 
   constructor(
-    public _form: Form,
+    form: Form,
     config: Config,
+    private _plt: Platform,
     elementRef: ElementRef,
     renderer: Renderer,
     private _haptic: Haptic,
-    @Optional() public _item: Item,
+    @Optional() item: Item,
     private _gestureCtrl: GestureController,
-    private _domCtrl: DomController
+    private _domCtrl: DomController,
+    private _zone: NgZone,
   ) {
-    super(config, elementRef, renderer, 'toggle');
-    _form.register(this);
-
-    if (_item) {
-      this.id = 'tgl-' + _item.registerInput('toggle');
-      this._labelId = 'lbl-' + _item.id;
-      this._item.setElementClass('item-toggle', true);
-    }
+    super(config, elementRef, renderer, 'toggle', false, form, item, null);
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngAfterContentInit() {
-    this._init = true;
-    this._gesture = new ToggleGesture(this, this._gestureCtrl, this._domCtrl);
+    this._initialize();
+    this._gesture = new ToggleGesture(this._plt, this, this._gestureCtrl, this._domCtrl);
     this._gesture.listen();
   }
 
   /**
-   * @private
+   * @hidden
+   */
+  _inputUpdated() {}
+
+  /**
+   * @hidden
+   */
+  _inputNormalize(val: any): boolean {
+    return isTrueProperty(val);
+  }
+
+  /**
+   * @hidden
    */
   _onDragStart(startX: number) {
     assert(startX, 'startX must be valid');
     console.debug('toggle, _onDragStart', startX);
 
-    this._startX = startX;
-    this._activated = true;
+    this._zone.run(() => {
+      this._startX = startX;
+      this._fireFocus();
+      this._activated = true;
+    });
   }
 
   /**
-   * @private
+   * @hidden
    */
   _onDragMove(currentX: number) {
     if (!this._startX) {
@@ -161,26 +150,18 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
       return;
     }
 
-    console.debug('toggle, _onDragMove', currentX);
-
-    if (this._checked) {
-      if (currentX + 15 < this._startX) {
-        this.onChange(false);
-        this._haptic.selection();
+    if (this._shouldToggle(currentX, -15)) {
+      this._zone.run(() => {
+        this.value = !this.value;
         this._startX = currentX;
-        this._activated = true;
-      }
-
-    } else if (currentX - 15 > this._startX) {
-      this.onChange(true);
-      this._haptic.selection();
-      this._startX = currentX;
-      this._activated = (currentX < this._startX + 5);
+        this._haptic.selection();
+      });
     }
+
   }
 
   /**
-   * @private
+   * @hidden
    */
   _onDragEnd(endX: number) {
     if (!this._startX) {
@@ -189,123 +170,52 @@ export class Toggle extends Ion implements IonicTapInput, AfterContentInit, Cont
     }
     console.debug('toggle, _onDragEnd', endX);
 
-    if (this.checked) {
-      if (this._startX + 4 > endX) {
-        this.onChange(false);
+    this._zone.run(() => {
+      if (this._shouldToggle(endX, 4)) {
+        this.value = !this.value;
         this._haptic.selection();
       }
 
-    } else if (this._startX - 4 < endX) {
-      this.onChange(true);
-      this._haptic.selection();
-    }
-
-    this._activated = false;
-    this._startX = null;
+      this._activated = false;
+      this._fireBlur();
+      this._startX = null;
+    });
   }
 
   /**
-   * @input {boolean} whether the toggle it toggled or not
+   * @hidden
    */
-  @Input()
-  get checked(): boolean {
-    return this._checked;
-  }
-
-  set checked(val: boolean) {
-    this._setChecked(isTrueProperty(val));
-    this.onChange(this._checked);
-  }
-
-  /**
-   * @private
-   */
-  _setChecked(isChecked: boolean) {
-    if (!this._disabled && isChecked !== this._checked) {
-      this._checked = isChecked;
-      if (this._init) {
-        this.ionChange.emit(this);
-      }
-      this._item && this._item.setElementClass('item-toggle-checked', isChecked);
+  _shouldToggle(currentX: number, margin: number): boolean {
+    const isLTR = !this._plt.isRTL;
+    const startX = this._startX;
+    if (this._value) {
+      return (isLTR && (startX + margin > currentX)) ||
+        (!isLTR && (startX - margin < currentX));
+    } else {
+      return (isLTR && (startX - margin < currentX)) ||
+        (!isLTR && (startX + margin > currentX));
     }
   }
 
   /**
-   * @private
+   * @hidden
    */
-  writeValue(val: any) {
-    this._setChecked( isTrueProperty(val) );
-  }
-
-  /**
-   * @private
-   */
-  registerOnChange(fn: Function): void {
-    this._fn = fn;
-  }
-
-  /**
-   * @private
-   */
-  registerOnTouched(fn: any) {
-    this.onTouched = fn;
-  }
-
-  /**
-   * @input {boolean} whether the toggle is disabled or not
-   */
-  @Input()
-  get disabled(): boolean {
-    return this._disabled;
-  }
-
-  set disabled(val: boolean) {
-    this._disabled = isTrueProperty(val);
-    this._item && this._item.setElementClass('item-toggle-disabled', this._disabled);
-  }
-
-  /**
-   * @private
-   */
-  onChange(isChecked: boolean) {
-    // used when this input does not have an ngModel or formControlName
-    console.debug('toggle, onChange', isChecked);
-    this._fn && this._fn(isChecked);
-    this._setChecked(isChecked);
-    this.onTouched();
-  }
-
-  /**
-   * @private
-   */
-  onTouched() {}
-
-  /**
-   * @private
-   */
-  @HostListener('keyup', ['$event']) _keyup(ev: KeyboardEvent) {
-    if (ev.keyCode === Key.SPACE || ev.keyCode === Key.ENTER) {
+  @HostListener('keyup', ['$event'])
+  _keyup(ev: KeyboardEvent) {
+    if (ev.keyCode === KEY_SPACE || ev.keyCode === KEY_ENTER) {
       console.debug(`toggle, keyup: ${ev.keyCode}`);
       ev.preventDefault();
       ev.stopPropagation();
-      this.onChange(!this._checked);
+      this.value = !this.value;
     }
   }
 
   /**
-   * @private
-   */
-  initFocus() {
-    this._elementRef.nativeElement.querySelector('button').focus();
-  }
-
-  /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
-    this._form.deregister(this);
-    this._gesture.destroy();
-    this._fn = null;
+    super.ngOnDestroy();
+    this._gesture && this._gesture.destroy();
   }
 
 }

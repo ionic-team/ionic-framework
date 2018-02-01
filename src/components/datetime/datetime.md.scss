@@ -6,16 +6,27 @@
 /// @prop - Padding top of the DateTime component
 $datetime-md-padding-top:         $item-md-padding-top !default;
 
-/// @prop - Padding right of the DateTime component
-$datetime-md-padding-right:       ($item-md-padding-right / 2) !default;
+// deprecated
+$datetime-md-padding-right:       ($item-md-padding-end / 2) !default;
+/// @prop - Padding end of the DateTime component
+$datetime-md-padding-end:         $datetime-md-padding-right !default;
 
 /// @prop - Padding bottom of the DateTime component
 $datetime-md-padding-bottom:      $item-md-padding-bottom !default;
 
-/// @prop - Padding left of the DateTime component
-$datetime-md-padding-left:        $item-md-padding-left !default;
+// deprecated
+$datetime-md-padding-left:        $item-md-padding-start !default;
+/// @prop - Padding start of the DateTime component
+$datetime-md-padding-start:       $datetime-md-padding-left !default;
+
+/// @prop - Color of the DateTime placeholder
+$datetime-md-placeholder-color:   #999 !default;
 
 
 .datetime-md {
-  padding: $datetime-md-padding-top $datetime-md-padding-right $datetime-md-padding-bottom $datetime-md-padding-left;
+  @include padding($datetime-md-padding-top, $datetime-md-padding-end, $datetime-md-padding-bottom, $datetime-md-padding-start);
+}
+
+.datetime-md .datetime-placeholder {
+  color: $datetime-md-placeholder-color;
 }

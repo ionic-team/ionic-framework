@@ -1,15 +1,16 @@
-import { Component, Renderer, ElementRef, HostListener, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, HostListener, Renderer, ViewEncapsulation } from '@angular/core';
 
-import { Config } from '../../config/config';
-import { focusOutActiveElement } from '../../util/dom';
-import { Key } from '../../util/key';
-import { NavParams } from '../../navigation/nav-params';
-import { ViewController } from '../../navigation/view-controller';
-import { BlockerDelegate, GestureController, BLOCK_ALL } from '../../gestures/gesture-controller';
+import { ActionSheetButton, ActionSheetOptions } from './action-sheet-options';
 import { assert } from '../../util/util';
+import { BLOCK_ALL, BlockerDelegate, GestureController } from '../../gestures/gesture-controller';
+import { Config } from '../../config/config';
+import { KEY_ESCAPE } from '../../platform/key';
+import { NavParams } from '../../navigation/nav-params';
+import { NavOptions } from '../../navigation/nav-util';
+import { ViewController } from '../../navigation/view-controller';
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-action-sheet',
@@ -20,15 +21,15 @@ import { assert } from '../../util/util';
         '<div class="action-sheet-group">' +
           '<div class="action-sheet-title" id="{{hdrId}}" *ngIf="d.title">{{d.title}}</div>' +
           '<div class="action-sheet-sub-title" id="{{descId}}" *ngIf="d.subTitle">{{d.subTitle}}</div>' +
-          '<button ion-button="action-sheet-button" (click)="click(b)" *ngFor="let b of d.buttons" class="disable-hover" [attr.icon-left]="b.icon ? \'\' : null" [ngClass]="b.cssClass">' +
+          '<button ion-button="action-sheet-button" (click)="click(b)" *ngFor="let b of d.buttons" class="disable-hover" [attr.icon-start]="b.icon ? \'\' : null" [ngClass]="b.cssClass">' +
             '<ion-icon [name]="b.icon" *ngIf="b.icon" class="action-sheet-icon"></ion-icon>' +
             '{{b.text}}' +
           '</button>' +
         '</div>' +
-        '<div class="action-sheet-group" *ngIf="d.cancelButton">' +
-          '<button ion-button="action-sheet-button" (click)="click(d.cancelButton)" class="action-sheet-cancel disable-hover" [attr.icon-left]="d.cancelButton.icon ? \'\' : null" [ngClass]="d.cancelButton.cssClass">' +
-            '<ion-icon [name]="d.cancelButton.icon" *ngIf="d.cancelButton.icon" class="action-sheet-icon"></ion-icon>' +
-            '{{d.cancelButton.text}}' +
+        '<div class="action-sheet-group action-sheet-group-cancel" *ngIf="cancelButton">' +
+          '<button ion-button="action-sheet-button" (click)="click(cancelButton)" class="action-sheet-cancel disable-hover" [attr.icon-start]="cancelButton.icon ? \'\' : null" [ngClass]="cancelButton.cssClass">' +
+            '<ion-icon [name]="cancelButton.icon" *ngIf="cancelButton.icon" class="action-sheet-icon"></ion-icon>' +
+            '{{cancelButton.text}}' +
           '</button>' +
         '</div>' +
       '</div>' +
@@ -40,15 +41,11 @@ import { assert } from '../../util/util';
   },
   encapsulation: ViewEncapsulation.None,
 })
+
 export class ActionSheetCmp {
-  d: {
-    title?: string;
-    subTitle?: string;
-    cssClass?: string;
-    buttons?: Array<any>;
-    enableBackdropDismiss?: boolean;
-    cancelButton: any;
-  };
+
+  d: ActionSheetOptions;
+  cancelButton: ActionSheetButton;
   descId: string;
   enabled: boolean;
   hdrId: string;
@@ -87,30 +84,26 @@ export class ActionSheetCmp {
 
   ionViewDidLoad() {
     // normalize the data
-    let buttons: any[] = [];
-
-    this.d.buttons.forEach((button: any) => {
+    this.d.buttons = this.d.buttons.map(button => {
       if (typeof button === 'string') {
         button = { text: button };
       }
       if (!button.cssClass) {
         button.cssClass = '';
       }
-
-      if (button.role === 'cancel') {
-        this.d.cancelButton = button;
-
-      } else {
-        if (button.role === 'destructive') {
+      switch (button.role) {
+        case 'cancel':
+          this.cancelButton = button;
+          return null;
+        case 'destructive':
           button.cssClass = (button.cssClass + ' ' || '') + 'action-sheet-destructive';
-        } else if (button.role === 'selected') {
+          break;
+        case 'selected':
           button.cssClass = (button.cssClass + ' ' || '') + 'action-sheet-selected';
-        }
-        buttons.push(button);
+          break;
       }
-    });
-
-    this.d.buttons = buttons;
+      return button;
+    }).filter(button => button !== null);
   }
 
   ionViewWillEnter() {
@@ -122,9 +115,7 @@ export class ActionSheetCmp {
   }
 
   ionViewDidEnter() {
-    focusOutActiveElement();
-
-    let focusableEle = this._elementRef.nativeElement.querySelector('button');
+    const focusableEle = this._elementRef.nativeElement.querySelector('button');
     if (focusableEle) {
       focusableEle.focus();
     }
@@ -133,16 +124,14 @@ export class ActionSheetCmp {
 
   @HostListener('body:keyup', ['$event'])
   keyUp(ev: KeyboardEvent) {
-    if (this.enabled && this._viewCtrl.isLast()) {
-      if (ev.keyCode === Key.ESCAPE) {
-        console.debug('actionsheet, escape button');
-        this.bdClick();
-      }
+    if (this.enabled && ev.keyCode === KEY_ESCAPE && this._viewCtrl.isLast()) {
+      console.debug('actionsheet, escape button');
+      this.bdClick();
     }
   }
 
-  click(button: any) {
-    if (! this.enabled ) {
+  click(button: ActionSheetButton) {
+    if (!this.enabled) {
       return;
     }
 
@@ -163,8 +152,8 @@ export class ActionSheetCmp {
 
   bdClick() {
     if (this.enabled && this.d.enableBackdropDismiss) {
-      if (this.d.cancelButton) {
-        this.click(this.d.cancelButton);
+      if (this.cancelButton) {
+        this.click(this.cancelButton);
 
       } else {
         this.dismiss('backdrop');
@@ -172,12 +161,16 @@ export class ActionSheetCmp {
     }
   }
 
-  dismiss(role: any): Promise<any> {
-    return this._viewCtrl.dismiss(null, role);
+  dismiss(role: string): Promise<any> {
+    const opts: NavOptions = {
+      minClickBlockDuration: 400
+    };
+    return this._viewCtrl.dismiss(null, role, opts);
   }
 
   ngOnDestroy() {
     assert(this.gestureBlocker.blocked === false, 'gesture blocker must be already unblocked');
+    this.d = this.cancelButton = null;
     this.gestureBlocker.destroy();
   }
 }

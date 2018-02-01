@@ -259,6 +259,6 @@ function mockButton(config?: Config, ionButton?: string) {
   return b;
 }
 
-function hasClass(button, className) {
+function hasClass(button: any, className: string) {
   return button._elementRef.nativeElement.classList.contains(className);
 }

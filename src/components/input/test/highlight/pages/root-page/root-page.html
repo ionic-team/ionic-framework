@@ -1,0 +1,117 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Form Inputs</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+  <form [formGroup]="loginForm" #mf="ngForm" novalidate>
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Stacked</ion-label>
+        <ion-input clearInput [(ngModel)]="login.email" formControlName="email" type="email" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Floating</ion-label>
+        <ion-input clearInput [(ngModel)]="login.username" formControlName="username"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label fixed>Fixed</ion-label>
+        <ion-input clearInput [(ngModel)]="login.password" formControlName="password" type="password" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Inline</ion-label>
+        <ion-textarea clearInput [(ngModel)]="login.comments" formControlName="comments" required>Comment value</ion-textarea>
+      </ion-item>
+
+      <ion-item inset>
+        <ion-label>Inset</ion-label>
+        <ion-input clearInput [(ngModel)]="login.inset" formControlName="inset" required></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-list>
+      <ion-item>
+        <ion-icon item-start name="logo-buffer"></ion-icon>
+        <ion-label stacked>Stacked</ion-label>
+        <ion-input clearInput [(ngModel)]="login.email" formControlName="email" type="email" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon item-start name="apps"></ion-icon>
+        <ion-label floating>Floating</ion-label>
+        <ion-input clearInput [(ngModel)]="login.username" formControlName="username"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon item-start name="browsers"></ion-icon>
+        <ion-label fixed>Fixed</ion-label>
+        <ion-input clearInput [(ngModel)]="login.password" formControlName="password" type="password" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-icon item-start name="card"></ion-icon>
+        <ion-label>Inline</ion-label>
+        <ion-textarea clearInput [(ngModel)]="login.comments" formControlName="comments" required>Comment value</ion-textarea>
+      </ion-item>
+
+      <ion-item inset>
+        <ion-icon item-start name="checkmark-circle"></ion-icon>
+        <ion-label>Inset</ion-label>
+        <ion-input clearInput [(ngModel)]="login.inset" formControlName="inset" required></ion-input>
+      </ion-item>
+    </ion-list>
+
+    <ion-card>
+      <ion-list>
+        <ion-item>
+          <ion-icon item-start name="logo-buffer"></ion-icon>
+          <ion-label stacked>Stacked</ion-label>
+          <ion-input clearInput [(ngModel)]="login.email" formControlName="email" type="email" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon item-start name="apps"></ion-icon>
+          <ion-label floating>Floating</ion-label>
+          <ion-input clearInput [(ngModel)]="login.username" formControlName="username"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon item-start name="browsers"></ion-icon>
+          <ion-label fixed>Fixed</ion-label>
+          <ion-input clearInput [(ngModel)]="login.password" formControlName="password" type="password" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-icon item-start name="card"></ion-icon>
+          <ion-label>Inline</ion-label>
+          <ion-textarea clearInput [(ngModel)]="login.comments" formControlName="comments" required>Comment value</ion-textarea>
+        </ion-item>
+
+        <ion-item inset>
+          <ion-icon item-start name="checkmark-circle"></ion-icon>
+          <ion-label>Inset</ion-label>
+          <ion-input clearInput [(ngModel)]="login.inset" formControlName="inset" required></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+  </form>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+  <ion-input style="background: white;
+margin: 3px;
+padding: 0px 8px;
+border: 1px solid gray;
+border-radius: 5px;
+width: auto;
+transform: translateZ(0);" placeholder="chat here"></ion-input>
+  </ion-toolbar>
+</ion-footer>

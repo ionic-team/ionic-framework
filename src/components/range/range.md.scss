@@ -6,7 +6,7 @@
 /// @prop - Padding top/bottom of the range
 $range-md-padding-vertical:                  8px !default;
 
-/// @prop - Padding left/right of the range
+/// @prop - Padding start/end of the range
 $range-md-padding-horizontal:                8px !default;
 
 /// @prop - Height of the range slider
@@ -69,7 +69,7 @@ $range-md-pin-font-size:                     12px !default;
 /// @prop - Padding top/bottom of the range pin
 $range-md-pin-padding-vertical:              8px !default;
 
-/// @prop - Padding left/right of the range pin
+/// @prop - Padding start/end of the range pin
 $range-md-pin-padding-horizontal:            0 !default;
 
 /// @prop - Background of the range pin when the value is the minimum
@@ -77,19 +77,19 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 
 
 .range-md {
-  padding: $range-md-padding-vertical $range-md-padding-horizontal;
+  @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
 }
 
 .range-md [range-left] {
-  margin: 0 12px 0 0;
+  @include margin(0, 12px, 0, 0);
 }
 
 .range-md [range-right] {
-  margin: 0 0 0 12px;
+  @include margin(0, 0, 0, 12px);
 }
 
 .range-md.range-has-pin {
-  padding-top: $range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding-vertical;
+  @include padding($range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding-vertical, null, null, null);
 }
 
 .range-md .range-slider {
@@ -97,9 +97,9 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 }
 
 .range-md .range-bar {
+  @include position(($range-md-slider-height / 2), null, null, 0);
+
   position: absolute;
-  top: ($range-md-slider-height / 2);
-  left: 0;
 
   width: 100%;
   height: $range-md-bar-height;
@@ -126,31 +126,27 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 }
 
 .range-md .range-knob-handle {
-  position: absolute;
-  top: ($range-md-slider-height / 2);
-  left: 0%;
+  @include position(($range-md-slider-height / 2), null, null, 0);
+  @include margin(-($range-md-hit-height / 2), null, null, -($range-md-hit-width / 2));
+  @include text-align(center);
 
-  margin-top: -($range-md-hit-height / 2);
-  margin-left: -($range-md-hit-width / 2);
+  position: absolute;
 
   width: $range-md-hit-width;
   height: $range-md-hit-height;
-
-  text-align: center;
 }
 
 .range-md .range-knob {
-  position: absolute;
+  @include position(($range-md-hit-height / 2) - ($range-md-knob-height / 2) + ($range-md-bar-height / 2),
+          null, null, ($range-md-hit-width / 2) - ($range-md-knob-width / 2));
+  @include border-radius(50%);
 
-  top: ($range-md-hit-height / 2) - ($range-md-knob-height / 2) + ($range-md-bar-height / 2);
-  left: ($range-md-hit-width / 2) - ($range-md-knob-width / 2);
+  position: absolute;
 
   z-index: 2;
 
   width: $range-md-knob-width;
   height: $range-md-knob-height;
-
-  border-radius: 50%;
 
   background: $range-md-knob-background-color;
 
@@ -163,18 +159,17 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 }
 
 .range-md .range-tick {
+  @include margin-horizontal(-($range-md-tick-width / 2), null);
+  @include border-radius($range-md-tick-border-radius);
+
   position: absolute;
 
   top: ($range-md-hit-height / 2) - ($range-md-tick-height / 2) + ($range-md-bar-height / 2);
 
   z-index: 1;
 
-  margin-left: ($range-md-tick-width / 2) * -1;
-
   width: $range-md-tick-width;
   height: $range-md-tick-height;
-
-  border-radius: $range-md-tick-border-radius;
 
   background: $range-md-tick-background-color;
 
@@ -186,40 +181,38 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 }
 
 .range-md .range-pin {
+  @include padding($range-md-pin-padding-vertical, $range-md-pin-padding-horizontal);
+  @include text-align(center);
+  @include border-radius(50%);
+  @include transform(translate3d(0, 28px, 0), scale(.01));
+
   position: relative;
   top: -20px;
   display: inline-block;
 
-  padding: $range-md-pin-padding-vertical $range-md-pin-padding-horizontal;
-
   min-width: 28px;
   height: 28px;
 
-  border-radius: 50%;
-
   font-size: $range-md-pin-font-size;
-
-  text-align: center;
 
   color: $range-md-pin-color;
 
   background: $range-md-pin-background-color;
 
-  transform: translate3d(0, 28px, 0) scale(.01);
   transition: transform 120ms ease, background-color 120ms ease;
 
   &::before {
-    position: absolute;
-    top: 3px;
-    left: 50%;
-    z-index: -1;
+    @include position(3px, null, null, 50%);
+    @include border-radius(50%, 50%, 50%, 0);
+    @include margin-horizontal(-13px, null);
 
-    margin-left: -13px;
+    position: absolute;
+
+    z-index: -1;
 
     width: 26px;
     height: 26px;
 
-    border-radius: 50% 50% 50% 0;
     background: $range-md-pin-background-color;
 
     content: "";
@@ -229,7 +222,7 @@ $range-md-pin-min-background-color:          $range-md-bar-background-color !def
 }
 
 .range-md .range-knob-pressed .range-pin {
-  transform: translate3d(0, 0, 0) scale(1);
+  @include transform(translate3d(0, 0, 0), scale(1));
 }
 
 .range-md:not(.range-has-pin) .range-knob-pressed .range-knob {

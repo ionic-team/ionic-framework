@@ -12,9 +12,9 @@ ion-spinner {
 }
 
 ion-spinner svg {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
 
   width: 100%;
   height: 100%;
@@ -81,7 +81,7 @@ ion-spinner.spinner-paused svg {
 }
 
 .spinner-dots svg {
-  transform-origin: center;
+  @include transform-origin(center);
 
   animation: spinner-dots 1s linear infinite;
 }

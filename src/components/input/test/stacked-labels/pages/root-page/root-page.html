@@ -1,0 +1,77 @@
+
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Stacked Label Text Input</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label stacked>Label 1</ion-label>
+      <ion-input value="Text 1"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Label 2</ion-label>
+      <ion-input value="Text 2"></ion-input>
+      <button ion-button icon-only item-end clear><ion-icon name="heart-outline"></ion-icon></button>
+      <button ion-button icon-only item-end clear><ion-icon ios="ios-call-outline" md="md-call"></ion-icon></button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Label 3</ion-label>
+      <ion-input value="3" type="number"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Label 4</ion-label>
+      <ion-textarea value="Textarea 4"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Label 5</ion-label>
+      <ion-input value="http://url5.com/" type="url"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Stacked Label</ion-label>
+      <ion-label>Double Label</ion-label>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Label 6</ion-label>
+      <ion-select [(ngModel)]="gender">
+        <ion-option value="f" selected="true">Female</ion-option>
+        <ion-option value="m">Male</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Label 7</ion-label>
+      <ion-textarea value="Textarea 7"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Label 8</ion-label>
+      <ion-input value="Text 8"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Label 9</ion-label>
+      <ion-input value="9" type="number"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>Label 10</ion-label>
+      <ion-textarea value="Textarea 10"></ion-textarea>
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

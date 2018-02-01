@@ -1,9 +1,10 @@
-import { EventEmitter, NgZone, OpaqueToken } from '@angular/core';
+import { EventEmitter, NgZone } from '@angular/core';
 
+import { getCss, isTextInput } from '../util/dom';
 import { QueryParams } from './query-params';
-import { ready, windowDimensions, flushDimensionCache } from '../util/dom';
 import { removeArrayItem } from '../util/util';
 
+export type DocumentDirection = 'ltr' | 'rtl';
 
 /**
  * @name Platform
@@ -22,24 +23,25 @@ import { removeArrayItem } from '../util/util';
  *
  * @Component({...})
  * export MyPage {
- *   constructor(platform: Platform) {
- *     this.platform = platform;
+ *   constructor(public platform: Platform) {
+ *
  *   }
  * }
  * ```
- * @demo /docs/v2/demos/src/platform/
+ * @demo /docs/demos/src/platform/
  */
 export class Platform {
+
+  private _win: Window;
+  private _doc: HTMLDocument;
   private _versions: {[name: string]: PlatformVersion} = {};
-  private _dir: string;
+  private _dir: DocumentDirection;
   private _lang: string;
   private _ua: string;
-  private _qp: QueryParams;
-  private _bPlt: string;
-  private _onResizes: Array<Function> = [];
+  private _qp = new QueryParams();
+  private _nPlt: string;
   private _readyPromise: Promise<any>;
   private _readyResolve: any;
-  private _resizeTm: any;
   private _bbActions: BackButtonAction[] = [];
   private _registry: {[name: string]: PlatformConfig};
   private _default: string;
@@ -48,11 +50,25 @@ export class Platform {
   private _lW = 0;
   private _lH = 0;
   private _isPortrait: boolean = null;
+  private _uiEvtOpts = false;
 
-  /** @private */
+  /** @hidden */
   zone: NgZone;
 
-  /** @private */
+  /** @internal */
+  Css: {
+    transform?: string;
+    transition?: string;
+    transitionDuration?: string;
+    transitionDelay?: string;
+    transitionTimingFn?: string;
+    transitionStart?: string;
+    transitionEnd?: string;
+    transformOrigin?: string;
+    animationDelay?: string;
+  };
+
+  /** @internal */
   _platforms: string[] = [];
 
   constructor() {
@@ -68,10 +84,45 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
+   */
+  setWindow(win: Window) {
+    this._win = win;
+  }
+
+  /**
+   * @hidden
+   */
+  win() {
+    return this._win;
+  }
+
+  /**
+   * @hidden
+   */
+  setDocument(doc: HTMLDocument) {
+    this._doc = doc;
+  }
+
+  /**
+   * @hidden
+   */
+  doc() {
+    return this._doc;
+  }
+
+  /**
+   * @hidden
    */
   setZone(zone: NgZone) {
     this.zone = zone;
+  }
+
+  /**
+   * @hidden
+   */
+  setCssProps(docElement: HTMLElement) {
+    this.Css = getCss(docElement);
   }
 
 
@@ -94,12 +145,10 @@ export class Platform {
    *
    * @Component({...})
    * export MyPage {
-   *   constructor(platform: Platform) {
-   *     this.platform = platform;
-   *
+   *   constructor(public platform: Platform) {
    *     if (this.platform.is('ios')) {
    *       // This will only print when on iOS
-   *       console.log("I'm an iOS device!");
+   *       console.log('I am an iOS device!');
    *     }
    *   }
    * }
@@ -137,9 +186,7 @@ export class Platform {
    *
    * @Component({...})
    * export MyPage {
-   *   constructor(platform: Platform) {
-   *     this.platform = platform;
-   *
+   *   constructor(public platform: Platform) {
    *     // This will print an array of the current platforms
    *     console.log(this.platform.platforms());
    *   }
@@ -161,9 +208,7 @@ export class Platform {
    *
    * @Component({...})
    * export MyPage {
-   *   constructor(platform: Platform) {
-   *     this.platform = platform;
-   *
+   *   constructor(public platform: Platform) {
    *     // This will print an object containing
    *     // all of the platforms and their versions
    *     console.log(platform.versions());
@@ -179,7 +224,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   version(): PlatformVersion {
     for (var platformName in this._versions) {
@@ -210,8 +255,8 @@ export class Platform {
    *
    * @Component({...})
    * export MyApp {
-   *   constructor(platform: Platform) {
-   *     platform.ready().then((readySource) => {
+   *   constructor(public platform: Platform) {
+   *     this.platform.ready().then((readySource) => {
    *       console.log('Platform ready from', readySource);
    *       // Platform now ready, execute any required native code
    *     });
@@ -225,7 +270,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    * This should be triggered by the engine when the platform is
    * ready. If there was no custom prepareReady method from the engine,
    * such as Cordova or Electron, then it uses the default DOM ready.
@@ -237,7 +282,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    * This is the default prepareReady if it's not replaced by an engine,
    * such as Cordova or Electron. If there was no custom prepareReady
    * method from an engine then it uses the method below, which triggers
@@ -245,9 +290,21 @@ export class Platform {
    * value is `dom`.
    */
   prepareReady() {
-    ready(() => {
-      this.triggerReady('dom');
-    });
+    const self = this;
+
+    if (self._doc.readyState === 'complete' || self._doc.readyState === 'interactive') {
+      self.triggerReady('dom');
+
+    } else {
+      self._doc.addEventListener('DOMContentLoaded', completed, false);
+      self._win.addEventListener('load', completed, false);
+    }
+
+    function completed() {
+      self._doc.removeEventListener('DOMContentLoaded', completed, false);
+      self._win.removeEventListener('load', completed, false);
+      self.triggerReady('dom');
+    }
   }
 
   /**
@@ -257,12 +314,15 @@ export class Platform {
    * `<html dir="ltr">` or `<html dir="rtl">`. This method is useful if the
    * direction needs to be dynamically changed per user/session.
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
-   * @param {string} dir  Examples: `rtl`, `ltr`
+   * @param {DocumentDirection} dir  Examples: `rtl`, `ltr`
+   * @param {boolean} updateDocument
    */
-  setDir(dir: string, updateDocument: boolean) {
-    this._dir = (dir || '').toLowerCase();
+  setDir(dir: DocumentDirection, updateDocument: boolean) {
+    this._dir = dir;
+    this.isRTL = (dir === 'rtl');
+
     if (updateDocument !== false) {
-      document.documentElement.setAttribute('dir', dir);
+      this._doc['documentElement'].setAttribute('dir', dir);
     }
   }
 
@@ -271,9 +331,9 @@ export class Platform {
    * We recommend the app's `index.html` file already has the correct `dir`
    * attribute value set, such as `<html dir="ltr">` or `<html dir="rtl">`.
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
-   * @returns {string}
+   * @returns {DocumentDirection}
    */
-  dir(): string {
+  dir(): DocumentDirection {
     return this._dir;
   }
 
@@ -284,9 +344,7 @@ export class Platform {
    * [W3C: Structural markup and right-to-left text in HTML](http://www.w3.org/International/questions/qa-html-dir)
    * @returns {boolean}
    */
-  isRTL(): boolean {
-    return (this._dir === 'rtl');
-  }
+  isRTL: boolean;
 
   /**
    * Set the app's language and optionally the country code, which will update
@@ -296,11 +354,12 @@ export class Platform {
    * the language needs to be dynamically changed per user/session.
    * [W3C: Declaring language in HTML](http://www.w3.org/International/questions/qa-html-language-declarations)
    * @param {string} language  Examples: `en-US`, `en-GB`, `ar`, `de`, `zh`, `es-MX`
+   * @param {boolean} updateDocument  Specifies whether the `lang` attribute of `<html>` should be updated
    */
   setLang(language: string, updateDocument: boolean) {
     this._lang = language;
     if (updateDocument !== false) {
-      document.documentElement.setAttribute('lang', language);
+      this._doc['documentElement'].setAttribute('lang', language);
     }
   }
 
@@ -321,7 +380,7 @@ export class Platform {
   // called by engines (the browser)that do not provide them
 
   /**
-   * @private
+   * @hidden
    */
   exitApp() {}
 
@@ -329,7 +388,7 @@ export class Platform {
   // **********************************************
 
   /**
-   * @private
+   * @hidden
    */
   backButton: EventEmitter<Event> = new EventEmitter<Event>();
 
@@ -349,6 +408,13 @@ export class Platform {
   resume: EventEmitter<Event> = new EventEmitter<Event>();
 
   /**
+   * The resize event emits when the browser window has changed dimensions. This
+   * could be from a browser window being physically resized, or from a device
+   * changing orientation.
+   */
+  resize: EventEmitter<Event> = new EventEmitter<Event>();
+
+  /**
    * The back button event is triggered when the user presses the native
    * platform's back button, also referred to as the "hardware" back button.
    * This event is only used within Cordova apps running on Android and
@@ -361,11 +427,11 @@ export class Platform {
    * button is pressed. This method decides which of the registered back button
    * actions has the highest priority and should be called.
    *
-   * @param {Function} callback Called when the back button is pressed,
+   * @param {Function} fn Called when the back button is pressed,
    * if this registered action has the highest priority.
    * @param {number} priority Set the priority for this action. Only the highest priority will execute. Defaults to `0`.
    * @returns {Function} A function that, when called, will unregister
-   * the its back button action.
+   * the back button action.
    */
   registerBackButtonAction(fn: Function, priority: number = 0): Function {
     const action: BackButtonAction = {fn, priority};
@@ -379,7 +445,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   runBackButtonAction() {
     // decide which one back button action should run
@@ -399,38 +465,52 @@ export class Platform {
   // **********************************************
 
   /**
-   * @private
+   * @hidden
    */
   setUserAgent(userAgent: string) {
     this._ua = userAgent;
   }
 
   /**
-   * @private
+   * @hidden
    */
-  setQueryParams(queryParams: QueryParams) {
-    this._qp = queryParams;
+  setQueryParams(url: string) {
+    this._qp.parseUrl(url);
   }
 
   /**
-   * @private
+   * Get the query string parameter
+   */
+  getQueryParam(key: string) {
+    return this._qp.get(key);
+  }
+
+  /**
+   * Get the current url.
+   */
+  url() {
+    return this._win['location']['href'];
+  }
+
+  /**
+   * @hidden
    */
   userAgent(): string {
     return this._ua || '';
   }
 
   /**
-   * @private
+   * @hidden
    */
-  setNavigatorPlatform(navigatorPlatform: string) {
-    this._bPlt = navigatorPlatform;
+  setNavigatorPlatform(navigatorPlt: string) {
+    this._nPlt = navigatorPlt;
   }
 
   /**
-   * @private
+   * @hidden
    */
   navigatorPlatform(): string {
-    return this._bPlt || '';
+    return this._nPlt || '';
   }
 
   /**
@@ -454,6 +534,27 @@ export class Platform {
   }
 
   /**
+   * @hidden
+   */
+  getElementComputedStyle(ele: HTMLElement, pseudoEle?: string) {
+    return this._win['getComputedStyle'](ele, pseudoEle);
+  }
+
+  /**
+   * @hidden
+   */
+  getElementFromPoint(x: number, y: number) {
+    return <HTMLElement>this._doc['elementFromPoint'](x, y);
+  }
+
+  /**
+   * @hidden
+   */
+  getElementBoundingClientRect(ele: HTMLElement) {
+    return ele['getBoundingClientRect']();
+  }
+
+  /**
    * Returns `true` if the app is in portait mode.
    */
   isPortrait(): boolean {
@@ -468,66 +569,251 @@ export class Platform {
     return !this.isPortrait();
   }
 
-  /**
-   * @private
-   */
-  _calcDim() {
-    if (this._isPortrait === null) {
-      const winDimensions = windowDimensions();
-      const screenWidth = window.screen.width || winDimensions.width;
-      const screenHeight = window.screen.height || winDimensions.height;
+  private _calcDim() {
+    // we're caching window dimensions so that
+    // we're not forcing many layouts
+    // if _isPortrait is null then that means
+    // the dimensions needs to be looked up again
+    // this also has to cover an edge case that only
+    // happens on iOS 10 (not other versions of iOS)
+    // where window.innerWidth is always bigger than
+    // window.innerHeight when it is first measured,
+    // even when the device is in portrait but
+    // the second time it is measured it is correct.
+    // Hopefully this check will not be needed in the future
+    if (this._isPortrait === null || this._isPortrait === false && this._win['innerWidth'] < this._win['innerHeight']) {
+      var win = this._win;
 
-      if (screenWidth < screenHeight) {
-        this._isPortrait = true;
-        if (this._pW < winDimensions.width) {
-          this._pW = winDimensions.width;
-        }
-        if (this._pH < winDimensions.height) {
-          this._pH = winDimensions.height;
+      var innerWidth = win['innerWidth'];
+      var innerHeight = win['innerHeight'];
+
+      // we're keeping track of portrait and landscape dimensions
+      // separately because the virtual keyboard can really mess
+      // up accurate values when the keyboard is up
+      if (win.screen.width > 0 && win.screen.height > 0) {
+        if (innerWidth < innerHeight) {
+
+          // the device is in portrait
+          // we have to do fancier checking here
+          // because of the virtual keyboard resizing
+          // the window
+          if (this._pW <= innerWidth) {
+            console.debug('setting _isPortrait to true');
+            this._isPortrait = true;
+            this._pW = innerWidth;
+          }
+
+          if (this._pH <= innerHeight) {
+            console.debug('setting _isPortrait to true');
+            this._isPortrait = true;
+            this._pH = innerHeight;
+          }
+
+        } else {
+          // the device is in landscape
+          if (this._lW !== innerWidth) {
+            console.debug('setting _isPortrait to false');
+            this._isPortrait = false;
+            this._lW = innerWidth;
+          }
+
+          if (this._lH !== innerHeight) {
+            console.debug('setting _isPortrait to false');
+            this._isPortrait = false;
+            this._lH = innerHeight;
+          }
         }
 
-      } else {
-        this._isPortrait = false;
-        if (this._lW < winDimensions.width) {
-          this._lW = winDimensions.width;
-        }
-        if (this._lH < winDimensions.height) {
-          this._lH = winDimensions.height;
-        }
       }
     }
   }
 
   /**
-   * @private
+   * @hidden
+   * This requestAnimationFrame will NOT be wrapped by zone.
    */
-  windowResize() {
-    clearTimeout(this._resizeTm);
-
-    this._resizeTm = setTimeout(() => {
-      flushDimensionCache();
-      this._isPortrait = null;
-
-      for (let i = 0; i < this._onResizes.length; i++) {
-        try {
-          this._onResizes[i]();
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    }, 200);
+  raf(callback: {(timeStamp?: number): void}|Function): number {
+    const win: any = this._win;
+    return win['__zone_symbol__requestAnimationFrame'](callback);
   }
 
   /**
-   * @private
+   * @hidden
    */
-  onResize(cb: Function): Function {
-    const self = this;
-    self._onResizes.push(cb);
+  cancelRaf(rafId: number) {
+    const win: any = this._win;
+    return win['__zone_symbol__cancelAnimationFrame'](rafId);
+  }
 
-    return function() {
-      removeArrayItem(self._onResizes, cb);
-    };
+  /**
+   * @hidden
+   * This setTimeout will NOT be wrapped by zone.
+   */
+  timeout(callback: Function, timeout?: number): number {
+    const win: any = this._win;
+    return win['__zone_symbol__setTimeout'](callback, timeout);
+  }
+
+  /**
+   * @hidden
+   * This setTimeout will NOT be wrapped by zone.
+   */
+  cancelTimeout(timeoutId: number) {
+    const win: any = this._win;
+    win['__zone_symbol__clearTimeout'](timeoutId);
+  }
+
+  /**
+   * @hidden
+   * Built to use modern event listener options, like "passive".
+   * If options are not supported, then just return a boolean which
+   * represents "capture". Returns a method to remove the listener.
+   */
+  registerListener(ele: any, eventName: string, callback: {(ev?: UIEvent): void}, opts: EventListenerOptions, unregisterListenersCollection?: Function[]): Function {
+    // use event listener options when supported
+    // otherwise it's just a boolean for the "capture" arg
+    const listenerOpts: any = this._uiEvtOpts ? {
+        'capture': !!opts.capture,
+        'passive': !!opts.passive,
+      } : !!opts.capture;
+
+    let unReg: Function;
+    if (!opts.zone && ele['__zone_symbol__addEventListener']) {
+      // do not wrap this event in zone and we've verified we can use the raw addEventListener
+      ele['__zone_symbol__addEventListener'](eventName, callback, listenerOpts);
+      unReg = function unregisterListener() {
+        ele['__zone_symbol__removeEventListener'](eventName, callback, listenerOpts);
+      };
+
+    } else {
+      // use the native addEventListener, which is wrapped with zone
+      ele['addEventListener'](eventName, callback, listenerOpts);
+
+      unReg = function unregisterListener() {
+        ele['removeEventListener'](eventName, callback, listenerOpts);
+      };
+    }
+
+    if (unregisterListenersCollection) {
+      unregisterListenersCollection.push(unReg);
+    }
+
+    return unReg;
+  }
+
+  /**
+   * @hidden
+   */
+  transitionEnd(el: HTMLElement, callback: {(ev?: TransitionEvent): void}, zone = true) {
+    const unRegs: Function[] = [];
+
+    function unregister() {
+      unRegs.forEach(unReg => {
+        unReg();
+      });
+    }
+
+    function onTransitionEnd(ev: TransitionEvent) {
+      if (el === ev.target) {
+        unregister();
+        callback(ev);
+      }
+    }
+
+    if (el) {
+      this.registerListener(el, 'webkitTransitionEnd', <any>onTransitionEnd, { zone: zone }, unRegs);
+      this.registerListener(el, 'transitionend', <any>onTransitionEnd, { zone: zone }, unRegs);
+    }
+
+    return unregister;
+  }
+
+  /**
+   * @hidden
+   */
+  windowLoad(callback: Function) {
+    const win = this._win;
+    const doc = this._doc;
+    let unreg: Function;
+
+    if (doc.readyState === 'complete') {
+      callback(win, doc);
+
+    } else {
+      unreg = this.registerListener(win, 'load', () => {
+        unreg && unreg();
+        callback(win, doc);
+      }, { zone: false });
+    }
+  }
+
+  /**
+   * @hidden
+   */
+  isActiveElement(ele: HTMLElement) {
+    return !!(ele && (this.getActiveElement() === ele));
+  }
+
+  /**
+   * @hidden
+   */
+  getActiveElement() {
+    return this._doc['activeElement'];
+  }
+
+  /**
+   * @hidden
+   */
+  hasFocus(ele: HTMLElement) {
+    return !!((ele && (this.getActiveElement() === ele)) && (ele.parentElement.querySelector(':focus') === ele));
+  }
+
+  /**
+   * @hidden
+   */
+  hasFocusedTextInput() {
+    const ele = this.getActiveElement();
+    if (isTextInput(ele)) {
+      return (ele.parentElement.querySelector(':focus') === ele);
+    }
+    return false;
+  }
+
+  /**
+   * @hidden
+   */
+  focusOutActiveElement() {
+    const activeElement: any = this.getActiveElement();
+    activeElement && activeElement.blur && activeElement.blur();
+  }
+
+  private _initEvents() {
+    // Test via a getter in the options object to see if the passive property is accessed
+    try {
+      var opts = Object.defineProperty({}, 'passive', {
+        get: () => {
+          this._uiEvtOpts = true;
+        }
+      });
+      this._win.addEventListener('optsTest', null, opts);
+    } catch (e) { }
+
+    // add the window resize event listener XXms after
+    this.timeout(() => {
+      var timerId: any;
+      this.registerListener(this._win, 'resize', () => {
+        clearTimeout(timerId);
+
+        timerId = setTimeout(() => {
+          // setting _isPortrait to null means the
+          // dimensions will need to be looked up again
+          if (this.hasFocusedTextInput() === false) {
+            this._isPortrait = null;
+          }
+          this.zone.run(() => this.resize.emit());
+        }, 200);
+      }, { passive: true, zone: false });
+    }, 2000);
   }
 
 
@@ -535,35 +821,35 @@ export class Platform {
   // **********************************************
 
   /**
-   * @private
+   * @hidden
    */
   setPlatformConfigs(platformConfigs: {[key: string]: PlatformConfig}) {
     this._registry = platformConfigs || {};
   }
 
   /**
-   * @private
+   * @hidden
    */
   getPlatformConfig(platformName: string): PlatformConfig {
     return this._registry[platformName] || {};
   }
 
   /**
-   * @private
+   * @hidden
    */
   registry() {
     return this._registry;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setDefault(platformName: string) {
     this._default = platformName;
   }
 
   /**
-   * @private
+   * @hidden
    */
   testQuery(queryValue: string, queryTestValue: string): boolean {
     const valueSplit = queryValue.toLowerCase().split(';');
@@ -571,15 +857,15 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   testNavigatorPlatform(navigatorPlatformExpression: string): boolean {
     const rgx = new RegExp(navigatorPlatformExpression, 'i');
-    return rgx.test(this._bPlt);
+    return rgx.test(this._nPlt);
   }
 
   /**
-   * @private
+   * @hidden
    */
   matchUserAgentVersion(userAgentExpression: RegExp): any {
     if (this._ua && userAgentExpression) {
@@ -601,7 +887,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   isPlatformMatch(queryStringName: string, userAgentAtLeastHas?: string[], userAgentMustNotHave: string[] = []): boolean {
     const queryValue = this._qp.get('ionicplatform');
@@ -627,30 +913,32 @@ export class Platform {
     return false;
   }
 
-  /** @private */
+  /** @hidden */
   init() {
+    this._initEvents();
+
     let rootPlatformNode: PlatformNode;
     let enginePlatformNode: PlatformNode;
 
     // figure out the most specific platform and active engine
-    let tmpPlatform: PlatformNode;
+    let tmpPlt: PlatformNode;
     for (let platformName in this._registry) {
 
-      tmpPlatform = this.matchPlatform(platformName);
-      if (tmpPlatform) {
+      tmpPlt = this.matchPlatform(platformName);
+      if (tmpPlt) {
         // we found a platform match!
         // check if its more specific than the one we already have
 
-        if (tmpPlatform.isEngine) {
+        if (tmpPlt.isEngine) {
           // because it matched then this should be the active engine
           // you cannot have more than one active engine
-          enginePlatformNode = tmpPlatform;
+          enginePlatformNode = tmpPlt;
 
-        } else if (!rootPlatformNode || tmpPlatform.depth > rootPlatformNode.depth) {
+        } else if (!rootPlatformNode || tmpPlt.depth > rootPlatformNode.depth) {
           // only find the root node for platforms that are not engines
           // set this node as the root since we either don't already
           // have one, or this one is more specific that the current one
-          rootPlatformNode = tmpPlatform;
+          rootPlatformNode = tmpPlt;
         }
       }
     }
@@ -692,6 +980,16 @@ export class Platform {
       while (platformNode) {
         platformNode.initialize(this);
 
+        // extra check for ipad pro issue
+        // https://forums.developer.apple.com/thread/25948
+        if (platformNode.name === 'iphone' && this.navigatorPlatform() === 'iPad') {
+          // this is an ipad pro so push ipad and tablet to platforms
+          // and then return as we are done
+          this._platforms.push('tablet');
+          this._platforms.push('ipad');
+          return;
+        }
+
         // set the array of active platforms with
         // the last one in the array the most important
         this._platforms.push(platformNode.name);
@@ -710,7 +1008,7 @@ export class Platform {
   }
 
   /**
-   * @private
+   * @hidden
    */
   private matchPlatform(platformName: string): PlatformNode {
     // build a PlatformNode and assign config data to it
@@ -748,7 +1046,7 @@ function insertSuperset(registry: any, platformNode: PlatformNode) {
 }
 
 /**
- * @private
+ * @hidden
  */
 class PlatformNode {
   private c: PlatformConfig;
@@ -777,13 +1075,13 @@ class PlatformNode {
     return this.c.isMatch && this.c.isMatch(p) || false;
   }
 
-  initialize(platform: Platform) {
-    this.c.initialize && this.c.initialize(platform);
+  initialize(plt: Platform) {
+    this.c.initialize && this.c.initialize(plt);
   }
 
-  version(p: Platform): PlatformVersion {
+  version(plt: Platform): PlatformVersion {
     if (this.c.versionParser) {
-      const v = this.c.versionParser(p);
+      const v = this.c.versionParser(plt);
       if (v) {
         const str = v.major + '.' + v.minor;
         return {
@@ -796,8 +1094,8 @@ class PlatformNode {
     }
   }
 
-  getRoot(p: Platform): PlatformNode {
-    if (this.isMatch(p)) {
+  getRoot(plt: Platform): PlatformNode {
+    if (this.isMatch(plt)) {
 
       let parents = this.getSubsetParents(this.name);
 
@@ -812,7 +1110,7 @@ class PlatformNode {
         platformNode = new PlatformNode(this.registry, parents[i]);
         platformNode.child = this;
 
-        rootPlatformNode = platformNode.getRoot(p);
+        rootPlatformNode = platformNode.getRoot(plt);
         if (rootPlatformNode) {
           this.parent = platformNode;
           return rootPlatformNode;
@@ -825,12 +1123,12 @@ class PlatformNode {
 
   getSubsetParents(subsetPlatformName: string): string[] {
     const parentPlatformNames: string[] = [];
-    let platform: PlatformConfig = null;
+    let pltConfig: PlatformConfig = null;
 
     for (let platformName in this.registry) {
-      platform = this.registry[platformName];
+      pltConfig = this.registry[platformName];
 
-      if (platform.subsets && platform.subsets.indexOf(subsetPlatformName) > -1) {
+      if (pltConfig.subsets && pltConfig.subsets.indexOf(subsetPlatformName) > -1) {
         parentPlatformNames.push(platformName);
       }
     }
@@ -864,37 +1162,46 @@ interface BackButtonAction {
 }
 
 
-/**
- * @private
- */
-export function setupPlatform(platformConfigs: {[key: string]: PlatformConfig}, queryParams: QueryParams, userAgent: string, navigatorPlatform: string, docDirection: string, docLanguage: string, zone: NgZone): Platform {
-  const p = new Platform();
-  p.setDefault('core');
-  p.setPlatformConfigs(platformConfigs);
-  p.setUserAgent(userAgent);
-  p.setQueryParams(queryParams);
-  p.setNavigatorPlatform(navigatorPlatform);
-  p.setDir(docDirection, false);
-  p.setLang(docLanguage, false);
-  p.setZone(zone);
-  p.init();
-  return p;
+export interface EventListenerOptions {
+  capture?: boolean;
+  passive?: boolean;
+  zone?: boolean;
 }
 
 
 /**
- * @private
+ * @hidden
  */
-export const UserAgentToken = new OpaqueToken('USERAGENT');
-/**
- * @private
- */
-export const NavigatorPlatformToken = new OpaqueToken('NAVPLT');
-/**
- * @private
- */
-export const DocumentDirToken = new OpaqueToken('DOCDIR');
-/**
- * @private
- */
-export const DocLangToken = new OpaqueToken('DOCLANG');
+export function setupPlatform(doc: HTMLDocument, platformConfigs: {[key: string]: PlatformConfig}, zone: NgZone): Platform {
+  const plt = new Platform();
+  plt.setDefault('core');
+  plt.setPlatformConfigs(platformConfigs);
+  plt.setZone(zone);
+
+  // set values from "document"
+  const docElement = doc.documentElement;
+  plt.setDocument(doc);
+  const dir = docElement.dir;
+  plt.setDir(dir === 'rtl' ? 'rtl' : 'ltr', !dir);
+  plt.setLang(docElement.lang, false);
+
+  // set css properties
+  plt.setCssProps(docElement);
+
+  // set values from "window"
+  const win = doc.defaultView;
+  plt.setWindow(win);
+  plt.setNavigatorPlatform(win.navigator.platform);
+  plt.setUserAgent(win.navigator.userAgent);
+
+  // set location values
+  plt.setQueryParams(win.location.href);
+
+  plt.init();
+
+  // add the platform obj to the window
+  (<any>win)['Ionic'] = (<any>win)['Ionic'] || {};
+  (<any>win)['Ionic']['platform'] = plt;
+
+  return plt;
+}

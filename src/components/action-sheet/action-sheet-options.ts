@@ -3,6 +3,14 @@ export interface ActionSheetOptions {
   title?: string;
   subTitle?: string;
   cssClass?: string;
-  buttons?: Array<any>;
+  buttons?: (ActionSheetButton|string)[];
   enableBackdropDismiss?: boolean;
+}
+
+export interface ActionSheetButton {
+  text?: string;
+  role?: string;
+  icon?: string;
+  cssClass?: string;
+  handler?: () => boolean|void;
 }

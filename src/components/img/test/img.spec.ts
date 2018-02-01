@@ -1,8 +1,8 @@
 import { ElementRef, Renderer } from '@angular/core';
 import { Content } from '../../content/content';
+import { DomController } from '../../../platform/dom-controller';
 import { Img } from '../img';
-import { ImgLoader } from '../img-loader';
-import { mockConfig, mockContent, MockDomController, mockElementRef, mockPlatform, mockRenderer, mockZone } from '../../../util/mock-providers';
+import { mockConfig, mockDomController, mockElementRef, mockElementRefEle, mockPlatform, mockRenderer, mockZone } from '../../../util/mock-providers';
 import { Platform } from '../../../platform/platform';
 
 
@@ -18,35 +18,14 @@ describe('Img', () => {
       expect(img._renderedSrc).toEqual(null);
     });
 
-    it('should abort requesting src', () => {
-      spyOn(ldr, 'abort');
-      img._requestingSrc = '_requestingSrc.jpg';
-      img.reset();
-      expect(ldr.abort).toHaveBeenCalledWith('_requestingSrc.jpg');
-      expect(img._requestingSrc).toEqual(null);
-    });
-
   });
 
   describe('src setter', () => {
-
-    it('should abort request if already requesting', () => {
-      spyOn(img, 'reset');
-      img._requestingSrc = 'requesting.jpg';
-      img._tmpDataUri = 'tmpDatauri.jpg';
-
-      img.src = 'image.jpg';
-
-      expect(img.reset).toHaveBeenCalled();
-      expect(img.src).toEqual('image.jpg');
-      expect(img._tmpDataUri).toEqual(null);
-    });
 
     it('should set datauri src', () => {
       spyOn(img, 'update');
       img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==';
       expect(img.src).toEqual('data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==');
-      expect(img._tmpDataUri).toEqual(`data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==`);
       expect(img.update).toHaveBeenCalled();
     });
 
@@ -69,22 +48,27 @@ describe('Img', () => {
   });
 
 
+  let contentElementRef: any;
   let img: Img;
-  let ldr: ImgLoader;
   let elementRef: ElementRef;
   let renderer: Renderer;
-  let platform: Platform;
+  let plt: Platform;
   let content: Content;
-  let dom: MockDomController;
+  let dom: DomController;
 
   beforeEach(() => {
-    content = mockContent();
-    ldr = new ImgLoader(mockConfig());
+    contentElementRef = mockElementRef();
+    dom = mockDomController();
+    content = new Content(mockConfig(), mockPlatform(), dom, contentElementRef, mockRenderer(), null, null, mockZone(), null, null);
+    let ele = document.createElement('div');
+    ele.className = 'scroll-content';
+    content._scrollContent = mockElementRefEle(ele);
+
     elementRef = mockElementRef();
     renderer = mockRenderer();
-    platform = mockPlatform();
-    dom = new MockDomController();
-    img = new Img(ldr, elementRef, renderer, platform, mockZone(), content, dom);
+    plt = mockPlatform();
+    dom = mockDomController();
+    img = new Img(elementRef, renderer, plt, content, dom);
   });
 
 });

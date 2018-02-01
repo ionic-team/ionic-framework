@@ -32,8 +32,8 @@ import { Ion } from '../ion';
  * <ion-icon name="logo-twitter"></ion-icon>
  * ```
  *
- * @demo /docs/v2/demos/src/icon/
- * @see {@link /docs/v2/components#icons Icon Component Docs}
+ * @demo /docs/demos/src/icon/
+ * @see {@link /docs/components#icons Icon Component Docs}
  *
  */
 @Directive({
@@ -43,37 +43,18 @@ import { Ion } from '../ion';
   }
 })
 export class Icon extends Ion {
-  /** @private */
+  /** @hidden */
   _iconMode: string;
-  /** @private */
+  /** @hidden */
   _isActive: boolean = true;
-  /** @private */
+  /** @hidden */
   _name: string = '';
-  /** @private */
+  /** @hidden */
   _ios: string = '';
-  /** @private */
+  /** @hidden */
   _md: string = '';
-  /** @private */
+  /** @hidden */
   _css: string = '';
-
-  /**
-   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
-   */
-  @Input()
-  get color(): string {
-    return this._color;
-  }
-  set color(value: string) {
-    this._setColor(value);
-  }
-
-  /**
-   * @input {string} The mode to apply to this component.
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
 
   constructor(
     config: Config,
@@ -85,7 +66,7 @@ export class Icon extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   ngOnDestroy() {
     if (this._css) {
@@ -94,7 +75,8 @@ export class Icon extends Ion {
   }
 
   /**
-   * @input {string} Icon to use. Will load the appropriate icon for each mode
+   * @input {string} Specifies which icon to use. The appropriate icon will be used based on the mode.
+   * For more information, see [Ionicons](/docs/ionicons/).
    */
   @Input()
   get name(): string {
@@ -113,7 +95,7 @@ export class Icon extends Ion {
   }
 
   /**
-   * @input {string} Explicitly set the icon to use on iOS
+   * @input {string} Specifies which icon to use on `ios` mode.
    */
   @Input()
   get ios(): string {
@@ -126,7 +108,7 @@ export class Icon extends Ion {
   }
 
   /**
-   * @input {string} Explicitly set the icon to use on MD
+   * @input {string} Specifies which icon to use on `md` mode.
    */
   @Input()
   get md(): string {
@@ -140,7 +122,9 @@ export class Icon extends Ion {
 
 
   /**
-   * @input {bool} Whether or not the icon has an "active" appearance. On iOS an active icon is filled in or full appearance, and an inactive icon on iOS will use an outlined version of the icon same icon. Material Design icons do not change appearance depending if they're active or not. The `isActive` property is largely used by the tabbar.
+   * @input {boolean} If true, the icon is styled with an "active" appearance.
+   * An active icon is filled in, and an inactive icon is the outline of the icon.
+   * The `isActive` property is largely used by the tabbar. Only affects `ios` icons.
    */
   @Input()
   get isActive(): boolean {
@@ -153,37 +137,38 @@ export class Icon extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   @HostBinding('class.hide') _hidden: boolean = false;
 
   /**
-   * @private
+   * @hidden
    */
   update() {
-    let name;
+    let iconName: string;
+
     if (this._ios && this._iconMode === 'ios') {
-      name = this._ios;
+      iconName = this._ios;
     } else if (this._md && this._iconMode === 'md') {
-      name = this._md;
+      iconName = this._md;
     } else {
-      name = this._name;
+      iconName = this._name;
     }
-    let hidden = this._hidden = (name === null);
+    let hidden = this._hidden = (iconName === null);
     if (hidden) {
       return;
     }
 
-    let iconMode = name.split('-', 2)[0];
+    let iconMode = iconName.split('-', 2)[0];
     if (
       iconMode === 'ios' &&
       !this._isActive &&
-      name.indexOf('logo-') < 0 &&
-      name.indexOf('-outline') < 0) {
-      name += '-outline';
+      iconName.indexOf('logo-') < 0 &&
+      iconName.indexOf('-outline') < 0) {
+      iconName += '-outline';
     }
 
-    let css = 'ion-' + name;
+    let css = 'ion-' + iconName;
     if (this._css === css) {
       return;
     }
@@ -193,7 +178,7 @@ export class Icon extends Ion {
     this._css = css;
     this.setElementClass(css, true);
 
-    let label = name
+    let label = iconName
       .replace('ios-', '')
       .replace('md-', '')
       .replace('-', ' ');

@@ -1,0 +1,80 @@
+
+<ion-split-pane (ionChange)="splitPaneChanged($event)">
+  <ion-menu [content]="content" id="menu_default">
+
+    <ion-header>
+      <ion-toolbar color="secondary">
+        <ion-title>Menu DEFAULT</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item>Example</ion-item>
+      </ion-list>
+    </ion-content>
+
+  </ion-menu>
+
+
+  <ion-menu [content]="content" id="menu_start" side="start">
+
+    <ion-header>
+      <ion-toolbar color="danger">
+        <ion-title>Menu START</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item>Example</ion-item>
+      </ion-list>
+    </ion-content>
+
+  </ion-menu>
+
+  <ion-menu [content]="content" id="menu_end" side="end">
+
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Menu END</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item>Example</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-menu [content]="content" id="menu_left" side="left">
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-title>Menu LEFT</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item>Example</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-menu [content]="content" id="menu_right" side="right">
+    <ion-header>
+      <ion-toolbar color="dark">
+        <ion-title>Menu RIGHT</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <ion-item>Example</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-nav [root]="root" main #content></ion-nav>
+</ion-split-pane>

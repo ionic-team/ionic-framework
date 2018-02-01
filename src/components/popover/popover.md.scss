@@ -32,17 +32,17 @@ $popover-md-box-shadow:                0 3px 12px 2px $popover-md-box-shadow-col
 
 
 .popover-md .popover-content {
+  @include border-radius($popover-md-border-radius);
+  @include transform-origin(start, top);
+
   width: $popover-md-width;
   min-width: $popover-md-min-width;
   min-height: $popover-md-min-height;
   max-height: $popover-md-max-height;
 
-  border-radius: $popover-md-border-radius;
   color: $popover-md-text-color;
   background: $popover-md-background;
   box-shadow: $popover-md-box-shadow;
-
-  transform-origin: top left;
 }
 
 .popover-md .popover-viewport {

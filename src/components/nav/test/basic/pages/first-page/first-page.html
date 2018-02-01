@@ -1,0 +1,55 @@
+<ion-header>
+      <ion-navbar>
+        <ion-title>{{title}}</ion-title>
+        <ion-buttons start>
+          <button ion-button icon-only><ion-icon name="star"></ion-icon></button>
+        </ion-buttons>
+        <ion-buttons end>
+          <button ion-button>S1g</button>
+        </ion-buttons>
+      </ion-navbar>
+    </ion-header>
+    <ion-content>
+      <div padding>
+        <p>ionViewCanEnter ({{called.ionViewCanEnter}})</p>
+        <p>ionViewCanLeave ({{called.ionViewCanLeave}})</p>
+        <p>ionViewWillLoad ({{called.ionViewWillLoad}})</p>
+        <p>ionViewDidLoad ({{called.ionViewDidLoad}})</p>
+        <p>ionViewWillEnter ({{called.ionViewWillEnter}})</p>
+        <p>ionViewDidEnter ({{called.ionViewDidEnter}})</p>
+        <p>ionViewWillLeave ({{called.ionViewWillLeave}})</p>
+        <p>ionViewDidLeave ({{called.ionViewDidLeave}})</p>
+        <my-cmp></my-cmp>
+      </div>
+      <ion-list>
+        <ion-list-header>
+          {{title}}
+        </ion-list-header>
+        <ion-item class="e2eFrom1To2" (click)="pushFullPage()">Push to FullPage</ion-item>
+        <button ion-item (click)="pushPrimaryHeaderPage()">Push to PrimaryHeaderPage</button>
+        <button ion-item (click)="pushRedirect()">Push to Redirect</button>
+        <button ion-item (click)="pushTabsPage()">Push to Tabs Page</button>
+        <button ion-item (click)="pushAnother()">Push to AnotherPage</button>
+        <button ion-item navPush="full-page">Push FullPage w/ navPush="full-page"</button>
+        <button ion-item [navPush]="pushPage" [navParams]="{id:40}">Push w/ [navPush] and [navParams]</button>
+        <button ion-item navPush="first-page">Push w/ navPush="first-page"</button>
+        <button ion-item (click)="setPages()">setPages() (Go to PrimaryHeaderPage)</button>
+        <button ion-item (click)="setRoot()">setRoot(PrimaryHeaderPage) (Go to PrimaryHeaderPage)</button>
+        <button ion-item (click)="pop()">Pop</button>
+        <ion-item>
+          <ion-label>Text Input</ion-label>
+          <ion-textarea></ion-textarea>
+        </ion-item>
+        <ion-item>
+          <ion-label>Toggle Can Leave</ion-label>
+          <ion-toggle [(ngModel)]="canLeave"></ion-toggle>
+        </ion-item>
+        <button ion-item (click)="viewDismiss()">View Dismiss</button>
+        <button ion-item (click)="quickPush()">New push during transition</button>
+        <button ion-item (click)="quickPop()">New pop during transition</button>
+        <button ion-item (click)="reload()">Reload</button>
+        <button ion-item (click)="scrollToBottom()">Scroll to bottom</button>
+        <button ion-item *ngFor="let i of pages" (click)="pushPrimaryHeaderPage()">Page {{i}}</button>
+        <button ion-item (click)="content.scrollToTop()">Scroll to top</button>
+      </ion-list>
+    </ion-content>

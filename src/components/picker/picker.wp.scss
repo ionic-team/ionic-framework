@@ -27,11 +27,35 @@ $picker-wp-button-text-color:                 color($colors-wp, primary) !defaul
 /// @prop - Background of the picker button
 $picker-wp-button-background-color:           transparent !default;
 
-/// @prop - Padding of the picker column
-$picker-wp-column-padding:                    0 4px !default;
+// deprecated
+$picker-wp-column-padding:                    null !default;
 
-/// @prop - Padding of the picker option
-$picker-wp-option-padding:                    0 !default;
+/// @prop - Padding top of the picker column
+$picker-wp-column-padding-top:                0 !default;
+
+/// @prop - Padding end of the picker column
+$picker-wp-column-padding-end:                4px !default;
+
+/// @prop - Padding bottom of the picker column
+$picker-wp-column-padding-bottom:             $picker-wp-column-padding-top !default;
+
+/// @prop - Padding start of the picker column
+$picker-wp-column-padding-start:              $picker-wp-column-padding-end !default;
+
+// deprecated
+$picker-wp-option-padding:                    null !default;
+
+/// @prop - Padding top of the picker option
+$picker-wp-option-padding-top:                0 !default;
+
+/// @prop - Padding end of the picker option
+$picker-wp-option-padding-end:                $picker-wp-option-padding-top !default;
+
+/// @prop - Padding bottom of the picker option
+$picker-wp-option-padding-bottom:             $picker-wp-option-padding-top !default;
+
+/// @prop - Padding start of the picker option
+$picker-wp-option-padding-start:              $picker-wp-option-padding-end !default;
 
 /// @prop - Text color of the picker option
 $picker-wp-option-text-color:                 $list-wp-text-color !default;
@@ -70,20 +94,20 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
 }
 
 .picker-wp .picker-toolbar-button {
-  flex: 1;
+  @include text-align(end);
 
-  text-align: right;
+  flex: 1;
 }
 
 .picker-wp .picker-toolbar-cancel {
-  font-weight: normal;
+  @include text-align(start);
 
-  text-align: left;
+  font-weight: normal;
 }
 
 .picker-wp .picker-button,
 .picker-wp .picker-button.activated {
-  margin: 0;
+  @include margin(0);
 
   height: $picker-wp-button-height;
 
@@ -100,9 +124,11 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
 }
 
 .picker-wp .picker-col {
-  padding: $picker-wp-column-padding;
-
   transform-style: preserve-3d;
+
+  @include deprecated-variable(padding, $picker-wp-column-padding) {
+    @include padding($picker-wp-column-padding-top, $picker-wp-column-padding-end, $picker-wp-column-padding-bottom, $picker-wp-column-padding-start);
+  }
 }
 
 .picker-wp .picker-prefix,
@@ -120,8 +146,7 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
 }
 
 .picker-wp .picker-opt {
-  margin: 0;
-  padding: $picker-wp-option-padding;
+  @include margin(0);
 
   height: 4.2rem;
 
@@ -136,6 +161,10 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
   backface-visibility: hidden;
 
   pointer-events: auto;
+
+  @include deprecated-variable(padding, $picker-wp-option-padding) {
+    @include padding($picker-wp-option-padding-top, $picker-wp-option-padding-end, $picker-wp-option-padding-bottom, $picker-wp-option-padding-start);
+  }
 }
 
 .picker-wp .picker-prefix,
@@ -145,9 +174,11 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
 }
 
 .picker-wp .picker-above-highlight {
+  @include position(0, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
+
   position: absolute;
-  top: 0;
-  left: 0;
+
   z-index: 10;
 
   width: 100%;
@@ -158,14 +189,14 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
   background: linear-gradient(to bottom,
                             rgba($picker-wp-background-color, 1) 20%,
                             rgba($picker-wp-background-color, .7) 100%);
-
-  transform: translate3d(0, 0, 90px);
 }
 
 .picker-wp .picker-below-highlight {
+  @include position($picker-wp-option-offset-y + $picker-wp-option-height - 4, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
+
   position: absolute;
-  top: $picker-wp-option-offset-y + $picker-wp-option-height - 4;
-  left: 0;
+
   z-index: 11;
 
   width: 100%;
@@ -176,6 +207,4 @@ $picker-wp-option-selected-color:             color($colors-wp, primary) !defaul
   background: linear-gradient(to top,
                            rgba($picker-wp-background-color, 1) 30%,
                            rgba($picker-wp-background-color, .7) 100%);
-
-  transform: translate3d(0, 0, 90px);
 }

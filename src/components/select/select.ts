@@ -1,22 +1,19 @@
-import { AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, forwardRef, Input, HostListener, OnDestroy, Optional, Output, Renderer, QueryList, ViewEncapsulation } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, ContentChildren, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Optional, Output, QueryList, Renderer, ViewEncapsulation } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { ActionSheet } from '../action-sheet/action-sheet';
 import { Alert } from '../alert/alert';
+import { Popover } from '../popover/popover';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
+import { DeepLinker } from '../../navigation/deep-linker';
+import { Overlay } from '../../navigation/overlay';
 import { Form } from '../../util/form';
-import { Ion } from '../ion';
-import { isBlank, isCheckedProperty, isTrueProperty, merge } from '../../util/util';
+import { BaseInput } from '../../util/base-input';
+import { assert, deepCopy, deepEqual, isCheckedProperty, isTrueProperty } from '../../util/util';
 import { Item } from '../item/item';
-import { NavController } from '../../navigation/nav-controller';
 import { Option } from '../option/option';
-
-export const SELECT_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => Select),
-  multi: true
-};
+import { SelectPopover, SelectPopoverOption } from './select-popover-component';
 
 /**
  * @name Select
@@ -30,13 +27,18 @@ export const SELECT_VALUE_ACCESSOR: any = {
  * The select component takes child `ion-option` components. If `ion-option` is not
  * given a `value` attribute then it will use its text as the value.
  *
+ * If `ngModel` is bound to `ion-select`, the selected value will be based on the
+ * bound value of the model. Otherwise, the `selected` attribute can be used on
+ * `ion-option` components.
+ *
  * ### Interfaces
  *
  * By default, the `ion-select` uses the {@link ../../alert/AlertController AlertController API}
  * to open up the overlay of options in an alert. The interface can be changed to use the
- * {@link ../../action-sheet/ActionSheetController ActionSheetController API} by passing
- * `action-sheet` to the `interface` property. Read the other sections for the limitations of the
- * action sheet interface.
+ * {@link ../../action-sheet/ActionSheetController ActionSheetController API} or
+ * {@link ../../popover/PopoverController PopoverController API} by passing `action-sheet` or `popover`,
+ * respectively, to the `interface` property. Read on to the other sections for the limitations
+ * of the different interfaces.
  *
  * ### Single Value: Radio Buttons
  *
@@ -51,7 +53,7 @@ export const SELECT_VALUE_ACCESSOR: any = {
  * <ion-item>
  *   <ion-label>Gender</ion-label>
  *   <ion-select [(ngModel)]="gender">
- *     <ion-option value="f" selected="true">Female</ion-option>
+ *     <ion-option value="f">Female</ion-option>
  *     <ion-option value="m">Male</ion-option>
  *   </ion-select>
  * </ion-item>
@@ -66,7 +68,7 @@ export const SELECT_VALUE_ACCESSOR: any = {
  * selected option values. In the example below, because each option is not given
  * a `value`, then it'll use its text as the value instead.
  *
- * Note: the action sheet interface will not work with a multi-value select.
+ * Note: the `action-sheet` and `popover` interfaces will not work with a multi-value select.
  *
  * ```html
  * <ion-item>
@@ -92,18 +94,21 @@ export const SELECT_VALUE_ACCESSOR: any = {
  * </ion-select>
  * ```
  *
- * The action sheet interface does not have an `OK` button, clicking
+ * The `action-sheet` and `popover` interfaces do not have an `OK` button, clicking
  * on any of the options will automatically close the overlay and select
  * that value.
  *
  * ### Select Options
  *
- * Since `ion-select` uses the `Alert` and `Action Sheet` interfaces, options can be
+ * Since `ion-select` uses the `Alert`, `Action Sheet` and `Popover` interfaces, options can be
  * passed to these components through the `selectOptions` property. This can be used
  * to pass a custom title, subtitle, css class, and more. See the
- * {@link ../../alert/AlertController/#create AlertController API docs} and
- * {@link ../../action-sheet/ActionSheetController/#create ActionSheetController API docs}
+ * {@link ../../alert/AlertController/#create AlertController API docs},
+ * {@link ../../action-sheet/ActionSheetController/#create ActionSheetController API docs}, and
+ * {@link ../../popover/PopoverController/#create PopoverController API docs}
  * for the properties that each interface accepts.
+ *
+ * For example, to change the `mode` of the overlay, pass it into `selectOptions`.
  *
  * ```html
  * <ion-select [selectOptions]="selectOptions">
@@ -114,11 +119,37 @@ export const SELECT_VALUE_ACCESSOR: any = {
  * ```ts
  * this.selectOptions = {
  *   title: 'Pizza Toppings',
- *   subTitle: 'Select your toppings'
+ *   subTitle: 'Select your toppings',
+ *   mode: 'md'
  * };
  * ```
  *
- * @demo /docs/v2/demos/src/select/
+ * ### Object Value References
+ *
+ * When using objects for select values, it is possible for the identities of these objects to
+ * change if they are coming from a server or database, while the selected value's identity
+ * remains the same. For example, this can occur when an existing record with the desired object value
+ * is loaded into the select, but the newly retrieved select options now have different identities. This will
+ * result in the select appearing to have no value at all, even though the original selection in still intact.
+ *
+ * Using the `compareWith` `Input` is the solution to this problem
+ *
+ * ```html
+ * <ion-item>
+ *   <ion-label>Employee</ion-label>
+ *   <ion-select [(ngModel)]="employee" [compareWith]="compareFn">
+ *     <ion-option *ngFor="let employee of employees" [value]="employee">{{employee.name}}</ion-option>
+ *   </ion-select>
+ * </ion-item>
+ * ```
+ *
+ * ```ts
+ * compareFn(e1: Employee, e2: Employee): boolean {
+ *   return e1 && e2 ? e1.id === e2.id : e1 === e2;
+ * }
+ * ```
+ *
+ * @demo /docs/demos/src/select/
  */
 @Component({
   selector: 'ion-select',
@@ -129,6 +160,7 @@ export const SELECT_VALUE_ACCESSOR: any = {
       '<div class="select-icon-inner"></div>' +
     '</div>' +
     '<button aria-haspopup="true" ' +
+            'type="button" ' +
             '[id]="id" ' +
             'ion-button="item-cover" ' +
             '[attr.aria-labelledby]="_labelId" ' +
@@ -138,24 +170,17 @@ export const SELECT_VALUE_ACCESSOR: any = {
   host: {
     '[class.select-disabled]': '_disabled'
   },
-  providers: [SELECT_VALUE_ACCESSOR],
+  providers: [ { provide: NG_VALUE_ACCESSOR, useExisting: Select, multi: true } ],
   encapsulation: ViewEncapsulation.None,
 })
-export class Select extends Ion implements AfterContentInit, ControlValueAccessor, OnDestroy {
-  _disabled: any = false;
-  _labelId: string;
+export class Select extends BaseInput<any> implements OnDestroy {
+
   _multi: boolean = false;
   _options: QueryList<Option>;
-  _values: string[] = [];
+  _overlay: Overlay;
   _texts: string[] = [];
   _text: string = '';
-  _fn: Function;
-  _isOpen: boolean = false;
-
-  /**
-   * @private
-   */
-  id: string;
+  _compareWith: (o1: any, o2: any) => boolean = isCheckedProperty;
 
   /**
    * @input {string} The text to display on the cancel button. Default: `Cancel`.
@@ -181,7 +206,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   @Input() selectOptions: any = {};
 
   /**
-   * @input {string} The interface the select should use: `action-sheet` or `alert`. Default: `alert`.
+   * @input {string} The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
    */
   @Input() interface: string = '';
 
@@ -191,73 +216,67 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   @Input() selectedText: string = '';
 
   /**
-   * @input {string} The mode to apply to this component.
+   * @input {Function} The function that will be called to compare object values
    */
   @Input()
-  set mode(val: string) {
-    this._setMode(val);
+  set compareWith(fn: (o1: any, o2: any) => boolean) {
+    if (typeof fn !== 'function') {
+      throw new Error(`compareWith must be a function, but received ${JSON.stringify(fn)}`);
+    }
+    this._compareWith = fn;
   }
 
-  /**
-   * @output {any} Any expression you want to evaluate when the selection has changed.
-   */
-  @Output() ionChange: EventEmitter<any> = new EventEmitter();
 
   /**
-   * @output {any} Any expression you want to evaluate when the selection was cancelled.
+   * @output {any} Emitted when the selection was cancelled.
    */
-  @Output() ionCancel: EventEmitter<any> = new EventEmitter();
+  @Output() ionCancel: EventEmitter<Select> = new EventEmitter();
 
   constructor(
     private _app: App,
-    private _form: Form,
-    config: Config,
+    form: Form,
+    public config: Config,
     elementRef: ElementRef,
     renderer: Renderer,
-    @Optional() public _item: Item,
-    @Optional() private _nav: NavController
+    @Optional() item: Item,
+    public deepLinker: DeepLinker
   ) {
-    super(config, elementRef, renderer, 'select');
-
-    _form.register(this);
-
-    if (_item) {
-      this.id = 'sel-' + _item.registerInput('select');
-      this._labelId = 'lbl-' + _item.id;
-      this._item.setElementClass('item-select', true);
-    }
+    super(config, elementRef, renderer, 'select', [], form, item, null);
   }
 
   @HostListener('click', ['$event'])
   _click(ev: UIEvent) {
-    if (ev.detail === 0) {
-      // do not continue if the click event came from a form submit
-      return;
-    }
     ev.preventDefault();
     ev.stopPropagation();
-    this.open();
+    this.open(ev);
   }
 
   @HostListener('keyup.space')
   _keyup() {
-    if (!this._isOpen) {
-      this.open();
-    }
+    this.open();
+  }
+
+  /**
+   * @hidden
+   */
+  getValues(): any[] {
+    const values = Array.isArray(this._value) ? this._value : [this._value];
+    assert(this._multi || values.length <= 1, 'single only can have one value');
+    return values;
   }
 
   /**
    * Open the select interface.
    */
-  open() {
-    if (this._disabled) {
+  open(ev?: UIEvent) {
+    if (this.isFocus() || this._disabled) {
       return;
     }
 
     console.debug('select, open alert');
 
     // the user may have assigned some options specifically for the alert
-    let selectOptions = merge({}, this.selectOptions);
+    const selectOptions = deepCopy(this.selectOptions);
 
     // make sure their buttons array is removed from the options
     // and we create a new array for the alert's two buttons
@@ -265,7 +284,7 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
       text: this.cancelText,
       role: 'cancel',
       handler: () => {
-        this.ionCancel.emit(null);
+        this.ionCancel.emit(this);
       }
     }];
 
@@ -275,25 +294,26 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
     }
 
     let options = this._options.toArray();
-    if (this.interface === 'action-sheet' && options.length > 6) {
-      console.warn('Interface cannot be "action-sheet" with more than 6 options. Using the "alert" interface.');
+
+    if ((this.interface === 'action-sheet' || this.interface === 'popover') && this._multi) {
+      console.warn('Interface cannot be "' + this.interface + '" with a multi-value select. Using the "alert" interface.');
       this.interface = 'alert';
     }
 
-    if (this.interface === 'action-sheet' && this._multi) {
-      console.warn('Interface cannot be "action-sheet" with a multi-value select. Using the "alert" interface.');
+    if (this.interface === 'popover' && !ev) {
+      console.warn('Interface cannot be "popover" without UIEvent.');
       this.interface = 'alert';
     }
 
-    let overlay: any;
+    let overlay: Overlay;
+
     if (this.interface === 'action-sheet') {
       selectOptions.buttons = selectOptions.buttons.concat(options.map(input => {
         return {
           role: (input.selected ? 'selected' : ''),
           text: input.text,
           handler: () => {
-            this.onChange(input.value);
-            this.ionChange.emit(input.value);
+            this.value = input.value;
             input.ionSelect.emit(input.value);
           }
         };
@@ -304,7 +324,35 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
       selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
 
       selectOptions.cssClass = selectCssClass;
-      overlay = new ActionSheet(this._app, selectOptions);
+      overlay = new ActionSheet(this._app, selectOptions, this.config);
+
+    } else if (this.interface === 'popover') {
+      let popoverOptions: SelectPopoverOption[] = options.map(input => ({
+        text: input.text,
+        checked: input.selected,
+        disabled: input.disabled,
+        value: input.value,
+        handler: () => {
+          this.value = input.value;
+          input.ionSelect.emit(input.value);
+        }
+      }));
+
+      var popoverCssClass = 'select-popover';
+
+      // If the user passed a cssClass for the select, add it
+      popoverCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
+
+      overlay = new Popover(this._app, SelectPopover, {
+        options: popoverOptions
+      }, {
+        cssClass: popoverCssClass
+      }, this.config, this.deepLinker);
+
+      // ev.target is readonly.
+      // place popover regarding to ion-select instead of .button-inner
+      Object.defineProperty(ev, 'target', { value: ev.currentTarget });
+      selectOptions.ev = ev;
 
     } else {
       // default to use the alert interface
@@ -329,10 +377,10 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
         };
       });
 
-      var selectCssClass = 'select-alert';
+      let selectCssClass = 'select-alert';
 
       // create the alert instance from our built up selectOptions
-      overlay = new Alert(this._app, selectOptions);
+      overlay = new Alert(this._app, selectOptions, this.config);
 
       if (this._multi) {
         // use checkboxes
@@ -344,29 +392,40 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
 
       // If the user passed a cssClass for the select, add it
       selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
-      overlay.setCssClass(selectCssClass);
+      (overlay as Alert).setCssClass(selectCssClass);
 
-      overlay.addButton({
+      (overlay as Alert).addButton({
         text: this.okText,
-        handler: (selectedValues: any) => {
-          this.onChange(selectedValues);
-          this.ionChange.emit(selectedValues);
-        }
+        handler: (selectedValues: any) => this.value = selectedValues
       });
 
     }
 
     overlay.present(selectOptions);
 
-    this._isOpen = true;
+    this._fireFocus();
+
     overlay.onDidDismiss(() => {
-      this._isOpen = false;
+      this._fireBlur();
+      this._overlay = undefined;
     });
+
+    this._overlay = overlay;
   }
 
+  /**
+   * Close the select interface.
+   */
+  close(): Promise<any> {
+    if (!this._overlay || !this.isFocus()) {
+      return;
+    }
+
+    return this._overlay.dismiss();
+  }
 
   /**
-   * @input {boolean} Whether or not the select component can accept multiple values. Default: `false`.
+   * @input {boolean} If true, the element can accept multiple values.
    */
   @Input()
   get multiple(): any {
@@ -379,11 +438,12 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
 
 
   /**
-   * @private
+   * @hidden
    */
   get text() {
     return (this._multi ? this._texts : this._texts.join());
   }
+
 
   /**
    * @private
@@ -391,27 +451,40 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   @ContentChildren(Option)
   set options(val: QueryList<Option>) {
     this._options = val;
-
-    if (!this._values.length) {
+    const values = this.getValues();
+    if (values.length === 0) {
       // there are no values set at this point
       // so check to see who should be selected
-      this._values = val.filter(o => o.selected).map(o => o.value);
+      // we use writeValue() because we don't want to update ngModel
+      this.writeValue(val.filter(o => o.selected).map(o => o.value));
+    } else {
+      this._updateText();
     }
+  }
 
-    this._updOpts();
+  _inputShouldChange(val: string[]|string): boolean {
+    return !deepEqual(this._value, val);
   }
 
   /**
-   * @private
+   * TODO: REMOVE THIS
+   * @hidden
    */
-  _updOpts() {
-    this._texts = [];
+  _inputChangeEvent(): any {
+    return this.value;
+  }
+
+  /**
+   * @hidden
+   */
+  _updateText() {
+    this._texts.length = 0;
 
     if (this._options) {
       this._options.forEach(option => {
         // check this option if the option's value is in the values array
-        option.selected = this._values.some(selectValue => {
-          return isCheckedProperty(selectValue, option.value);
+        option.selected = this.getValues().some(selectValue => {
+          return this._compareWith(selectValue, option.value);
         });
 
         if (option.selected) {
@@ -424,73 +497,11 @@ export class Select extends Ion implements AfterContentInit, ControlValueAccesso
   }
 
   /**
-   * @input {boolean} Whether or not the select component is disabled. Default `false`.
+   * @hidden
    */
-  @Input()
-  get disabled() {
-    return this._disabled;
+  _inputUpdated() {
+    this._updateText();
+    super._inputUpdated();
   }
 
-  set disabled(val) {
-    this._disabled = isTrueProperty(val);
-    this._item && this._item.setElementClass('item-select-disabled', this._disabled);
-  }
-
-  /**
-   * @private
-   */
-  writeValue(val: any) {
-    console.debug('select, writeValue', val);
-    this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
-    this._updOpts();
-  }
-
-  /**
-   * @private
-   */
-  ngAfterContentInit() {
-    this._updOpts();
-  }
-
-  /**
-   * @private
-   */
-  registerOnChange(fn: Function): void {
-    this._fn = fn;
-    this.onChange = (val: any) => {
-      console.debug('select, onChange', val);
-      fn(val);
-      this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
-      this._updOpts();
-      this.onTouched();
-    };
-  }
-
-  /**
-   * @private
-   */
-  registerOnTouched(fn: any) { this.onTouched = fn; }
-
-  /**
-   * @private
-   */
-  onChange(val: any) {
-    // onChange used when there is not an formControlName
-    console.debug('select, onChange w/out formControlName', val);
-    this._values = (Array.isArray(val) ? val : isBlank(val) ? [] : [val]);
-    this._updOpts();
-    this.onTouched();
-  }
-
-  /**
-   * @private
-   */
-  onTouched() { }
-
-  /**
-   * @private
-   */
-  ngOnDestroy() {
-    this._form.deregister(this);
-  }
 }

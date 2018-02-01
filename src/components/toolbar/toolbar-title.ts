@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, ElementRef, forwardRef, Optional, Inject, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Inject, Optional, Renderer, ViewEncapsulation, forwardRef, } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Ion } from '../ion';
-import { Navbar } from '../navbar/navbar';
+import { Navbar } from './navbar';
 import { Toolbar } from './toolbar';
 
 
@@ -39,7 +39,7 @@ import { Toolbar } from './toolbar';
  * </ion-header>
  * ```
  *
- * @demo /docs/v2/demos/src/title/
+ * @demo /docs/demos/src/title/
  */
 @Component({
   selector: 'ion-title',
@@ -65,7 +65,7 @@ export class ToolbarTitle extends Ion {
   }
 
   /**
-   * @private
+   * @hidden
    */
   getTitleText() {
     return this._elementRef.nativeElement.textContent;

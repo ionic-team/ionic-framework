@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, OnDestroy, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
 
 import { Config } from '../../config/config';
 import { Form, IonicTapInput } from '../../util/form';
@@ -39,8 +39,8 @@ import { RadioGroup } from './radio-group';
  *   </ion-item>
  * </ion-list>
  * ```
- * @demo /docs/v2/demos/src/radio/
- * @see {@link /docs/v2/components#radio Radio Component Docs}
+ * @demo /docs/demos/src/radio/
+ * @see {@link /docs/components#radio Radio Component Docs}
  * @see {@link ../RadioGroup RadioGroup API Docs}
  */
 @Component({
@@ -91,7 +91,9 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   id: string;
 
   /**
-   * @input {string} The predefined color to use. For example: `"primary"`, `"secondary"`, `"danger"`.
+   * @input {string} The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Input()
   set color(val: string) {
@@ -103,15 +105,7 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   }
 
   /**
-   * @input {string} The mode to apply to this component.
-   */
-  @Input()
-  set mode(val: string) {
-    this._setMode(val);
-  }
-
-  /**
-   * @output {any} expression to be evaluated when selected
+   * @output {any} Emitted when the radio button is selected.
    */
   @Output() ionSelect: EventEmitter<any> = new EventEmitter();
 
@@ -153,15 +147,15 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   }
 
   /**
-   * @input {boolean} Whether the radio button should be checked or not. Default false.
+   * @input {boolean} If true, the element is selected, and other buttons in the group are unselected.
    */
   @Input()
   get checked(): boolean {
     return this._checked;
   }
 
-  set checked(isChecked: boolean) {
-    this._checked = isTrueProperty(isChecked);
+  set checked(val: boolean) {
+    this._checked = isTrueProperty(val);
 
     if (this._item) {
       this._item.setElementClass('item-radio-checked', this._checked);
@@ -169,11 +163,11 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   }
 
   /**
-   * @input {boolean} Whether the radio button should be disabled or not. Default false.
+   * @input {boolean} If true, the user cannot interact with this element.
    */
   @Input()
   get disabled(): boolean {
-    return this._disabled;
+    return this._disabled || (this._group != null && this._group.disabled);
   }
   set disabled(val: boolean) {
     this._disabled = isTrueProperty(val);
@@ -181,7 +175,7 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   }
 
   /**
-   * @private
+   * @hidden
    */
   initFocus() {
     this._elementRef.nativeElement.querySelector('button').focus();
@@ -206,6 +200,10 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
   ngOnInit() {
     if (this._group && isPresent(this._group.value)) {
       this.checked = isCheckedProperty(this._group.value, this.value);
+    }
+
+    if (this._group && this._group.disabled) {
+      this.disabled = this._group.disabled;
     }
   }
 

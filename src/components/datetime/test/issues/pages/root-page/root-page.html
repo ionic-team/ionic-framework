@@ -1,0 +1,118 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Datetime</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <ion-item>
+    <ion-label>
+      min="2017-07-01"
+      max="2017-12-01"
+    </ion-label>
+    <ion-datetime
+      min="2017-07-01"
+      max="2017-12-01"
+    ></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      min="2017-01-01"
+      max="2017-12-01"
+    </ion-label>
+    <ion-datetime
+      min="2017-01-01"
+      max="2017-12-01"
+    ></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      min="2017-01-15"
+      max="2017-01-30"
+    </ion-label>
+    <ion-datetime
+      min="2017-01-15"
+      max="2017-01-30"
+    ></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      monthValues="1,2,4,5,6,7,8,9,12"
+      dayValues="1,2,31"
+      yearValues="2014,2015,2017"
+    </ion-label>
+    <ion-datetime
+      monthValues="1,2,4,5,6,7,8,9,12"
+      dayValues="1,2,31"
+      yearValues="2014,2015,2017"
+    ></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      displayFormat="HH:mm"
+      min="01:20"
+      max="13:45"
+    </ion-label>
+    <ion-datetime
+      displayFormat="HH:mm"
+      min="01:20"
+      max="13:45"
+    ></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      displayFormat="D MMMM YYYY"
+      pickerFormat="D MMMM YYYY"
+      min="2017-03-08"
+      max="2020-12-31"
+    </ion-label>
+    <ion-datetime
+      displayFormat="D MMMM YYYY"
+      pickerFormat="D MMMM YYYY"
+      min="2017-03-08"
+      max="2020-12-31"
+      ></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>
+      displayFormat="DD-MM-YYYY"
+      pickerFormat="DD MM YYYY"
+      min="2017-03-20"
+    </ion-label>
+    <ion-datetime
+      displayFormat="DD-MM-YYYY"
+      pickerFormat="DD MM YYYY"
+      min="2017-03-20"
+      ></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Tokyo</ion-label>
+    <ion-datetime
+      displayFormat="hh:mm A"
+      [(ngModel)]="tokyoTime"
+      ></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Current year Date</ion-label>
+    <ion-datetime min="2017-03-20"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Last year Date</ion-label>
+    <ion-datetime min="2016-03-20"></ion-datetime>
+  </ion-item>
+
+
+</ion-content>

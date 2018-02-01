@@ -1,15 +1,15 @@
-import { Directive, Input, HostListener, Optional } from '@angular/core';
+import { Directive, HostListener, Input, Optional } from '@angular/core';
 
 import { Button } from '../button/button';
-import { MenuController } from './menu-controller';
-import { Navbar } from '../navbar/navbar';
+import { MenuController } from '../app/menu-controller';
+import { Navbar } from '../toolbar/navbar';
 import { ViewController } from '../../navigation/view-controller';
 
 /**
  * @name MenuToggle
  * @description
  * The `menuToggle` directive can be placed on any button to toggle a menu open or closed.
- * If it is added to the [NavBar](../../nav/NavBar) of a page, the button will only appear
+ * If it is added to the [NavBar](../../toolbar/Navbar) of a page, the button will only appear
  * when the page it's in is currently a root page. See the [Menu Navigation Bar Behavior](../Menu#navigation-bar-behavior)
  * docs for more information.
  *
@@ -80,8 +80,8 @@ import { ViewController } from '../../navigation/view-controller';
  * See the [Toolbar API docs](../../toolbar/Toolbar) for more information
  * on the different positions.
  *
- * @demo /docs/v2/demos/src/menu/
- * @see {@link /docs/v2/components#menus Menu Component Docs}
+ * @demo /docs/demos/src/menu/
+ * @see {@link /docs/components#menus Menu Component Docs}
  * @see {@link ../../menu/Menu Menu API Docs}
  */
 @Directive({
@@ -93,17 +93,17 @@ import { ViewController } from '../../navigation/view-controller';
 export class MenuToggle {
 
   /**
-   * @private
+   * @hidden
    */
   @Input() menuToggle: string;
 
   /**
-   * @private
+   * @hidden
    */
   private _isButton: boolean;
 
   /**
-   * @private
+   * @hidden
    */
   private _inNavbar: boolean;
 
@@ -111,7 +111,7 @@ export class MenuToggle {
     private _menu: MenuController,
     @Optional() private _viewCtrl: ViewController,
     @Optional() private _button: Button,
-    @Optional() private _navbar: Navbar
+    @Optional() _navbar: Navbar
   ) {
     this._isButton = !!_button;
     this._inNavbar = !!_navbar;
@@ -125,25 +125,29 @@ export class MenuToggle {
   }
 
   /**
-  * @private
+  * @hidden
   */
   @HostListener('click')
   toggle() {
-    let menu = this._menu.get(this.menuToggle);
+    const menu = this._menu.get(this.menuToggle);
     menu && menu.toggle();
   }
 
   /**
-  * @private
+  * @hidden
   */
   get isHidden() {
+    const menu = this._menu.get(this.menuToggle);
     if (this._inNavbar && this._viewCtrl) {
+      if (!menu || !menu._canOpen()) {
+        return true;
+      }
+
       if (this._viewCtrl.isFirst()) {
         // this is the first view, so it should always show
         return false;
       }
 
-      let menu = this._menu.get(this.menuToggle);
       if (menu) {
         // this is not the root view, so see if this menu
         // is configured to still be enabled if it's not the root view

@@ -3,8 +3,20 @@
 // iOS Loading Indicator
 // --------------------------------------------------
 
-/// @prop - Padding of the loading wrapper
-$loading-ios-padding:                   24px 34px !default;
+// deprecated
+$loading-ios-padding:                   null !default;
+
+/// @prop - Padding top of the loading wrapper
+$loading-ios-padding-top:               24px !default;
+
+/// @prop - Padding end of the loading wrapper
+$loading-ios-padding-end:               34px !default;
+
+/// @prop - Padding bottom of the loading wrapper
+$loading-ios-padding-bottom:            $loading-ios-padding-top !default;
+
+/// @prop - Padding start of the loading wrapper
+$loading-ios-padding-start:             $loading-ios-padding-end !default;
 
 /// @prop - Max width of the loading wrapper
 $loading-ios-max-width:                 270px !default;
@@ -23,6 +35,9 @@ $loading-ios-background:                #f8f8f8 !default;
 
 /// @prop - Font weight of the loading content
 $loading-ios-content-font-weight:       bold !default;
+
+/// @prop - Margin start of the loading content next to a spinner
+$loading-ios-content-margin-start:      $content-ios-margin !default;
 
 /// @prop - Color of the loading spinner
 $loading-ios-spinner-color:             #69717d !default;
@@ -44,14 +59,17 @@ $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 
 
 .loading-ios .loading-wrapper {
-  padding: $loading-ios-padding;
+  @include border-radius($loading-ios-border-radius);
 
   max-width: $loading-ios-max-width;
   max-height: $loading-ios-max-height;
 
-  border-radius: $loading-ios-border-radius;
   color: $loading-ios-text-color;
   background: $loading-ios-background;
+
+  @include deprecated-variable(padding, $loading-ios-padding) {
+    @include padding($loading-ios-padding-top, $loading-ios-padding-end, $loading-ios-padding-bottom, $loading-ios-padding-start);
+  }
 }
 
 
@@ -63,7 +81,7 @@ $loading-ios-spinner-dots-color:        $loading-ios-spinner-color !default;
 }
 
 .loading-ios .loading-spinner + .loading-content {
-  margin-left: 16px;
+  @include margin-horizontal($loading-ios-content-margin-start, null);
 }
 
 

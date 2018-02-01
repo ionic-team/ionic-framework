@@ -51,9 +51,13 @@ $list-ios-activated-background-color:  #d9d9d9 !default;
 // --------------------------------------------------
 
 $item-ios-padding-top:                11px !default;
+// deprecated
 $item-ios-padding-right:              16px !default;
+$item-ios-padding-end:                $item-ios-padding-right !default;
 $item-ios-padding-bottom:             11px !default;
+// deprecated
 $item-ios-padding-left:               16px !default;
+$item-ios-padding-start:              $item-ios-padding-left !default;
 $item-ios-padding-media-top:          8px !default;
 $item-ios-padding-media-bottom:       8px !default;
 $item-ios-padding-icon-top:           9px !default;

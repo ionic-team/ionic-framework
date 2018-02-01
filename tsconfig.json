@@ -7,15 +7,21 @@
     "lib": ["dom", "es2015"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "noImplicitAny": false,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "dist/tmp",
     "removeComments": false,
     "sourceMap": true,
-    "target": "es5",
-    "types": ["jasmine"]
+    "target": "es2015",
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "types": ["jasmine", "systemjs"]
   },
   "include": [
-    "./src/**/*.ts",
-    "./demos/src/**/*.ts"
+    "src/**/*.ts",
+    "demos/src/**/*.ts"
   ],
   "compileOnSave": false,
   "buildOnSave": false,

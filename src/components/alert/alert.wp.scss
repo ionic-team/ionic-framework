@@ -27,11 +27,23 @@ $alert-wp-border-radius:                       0 !default;
 /// @prop - Background color of the alert
 $alert-wp-background:                          #e6e6e6 !default;
 
-/// @prop - Padding of the alert head
-$alert-wp-head-padding:                        20px 22px 5px 22px !default;
+// deprecated
+$alert-wp-head-padding:                        null !default;
+
+/// @prop - Padding top of the alert head
+$alert-wp-head-padding-top:                    20px !default;
+
+/// @prop - Padding end of the alert head
+$alert-wp-head-padding-end:                    22px !default;
+
+/// @prop - Padding bottom of the alert head
+$alert-wp-head-padding-bottom:                 5px !default;
+
+/// @prop - Padding start of the alert head
+$alert-wp-head-padding-start:                  22px !default;
 
 /// @prop - Text align of the alert head
-$alert-wp-head-text-align:                     left !default;
+$alert-wp-head-text-align:                     start !default;
 
 /// @prop - Font size of the alert title
 $alert-wp-title-font-size:                     20px !default;
@@ -42,11 +54,35 @@ $alert-wp-title-font-weight:                   400 !default;
 /// @prop - Font size of the alert sub title
 $alert-wp-sub-title-font-size:                 16px !default;
 
-/// @prop - Padding of the alert message
-$alert-wp-message-padding:                     0 22px 8px 22px !default;
+// deprecated
+$alert-wp-message-padding:                     null !default;
 
-/// @prop - Padding of the alert empty message
-$alert-wp-message-padding-empty:               0 !default;
+/// @prop - Padding top of the alert message
+$alert-wp-message-padding-top:                 0 !default;
+
+/// @prop - Padding end of the alert message
+$alert-wp-message-padding-end:                 22px !default;
+
+/// @prop - Padding bottom of the alert message
+$alert-wp-message-padding-bottom:              8px !default;
+
+/// @prop - Padding start of the alert message
+$alert-wp-message-padding-start:               22px !default;
+
+// deprecated
+$alert-wp-message-padding-empty:               null !default;
+
+/// @prop - Padding top of the alert empty message
+$alert-wp-message-empty-padding-top:           0 !default;
+
+/// @prop - Padding end of the alert empty message
+$alert-wp-message-empty-padding-end:           $alert-wp-message-empty-padding-top !default;
+
+/// @prop - Padding bottom of the alert empty message
+$alert-wp-message-empty-padding-bottom:        $alert-wp-message-empty-padding-top !default;
+
+/// @prop - Padding start of the alert empty message
+$alert-wp-message-empty-padding-start:         $alert-wp-message-empty-padding-end !default;
 
 /// @prop - Text color of the alert message
 $alert-wp-message-text-color:                  #000 !default;
@@ -57,11 +93,35 @@ $alert-wp-message-font-size:                   13px !default;
 /// @prop - Maximum height of the alert content
 $alert-wp-content-max-height:                  240px !default;
 
-/// @prop - Margin of the alert input
-$alert-wp-input-margin:                        5px 0 5px 0 !default;
+// deprecated
+$alert-wp-input-margin:                        null !default;
 
-/// @prop - Padding on the alert input
-$alert-wp-input-padding:                       0 8px !default;
+/// @prop - Margin top of the alert input
+$alert-wp-input-margin-top:                    5px !default;
+
+/// @prop - Margin end of the alert input
+$alert-wp-input-margin-end:                    0 !default;
+
+/// @prop - Margin bottom of the alert input
+$alert-wp-input-margin-bottom:                 5px !default;
+
+/// @prop - Margin start of the alert input
+$alert-wp-input-margin-start:                  0 !default;
+
+// deprecated
+$alert-wp-input-padding:                       null !default;
+
+/// @prop - Padding top on the alert input
+$alert-wp-input-padding-top:                   0 !default;
+
+/// @prop - Padding end on the alert input
+$alert-wp-input-padding-end:                   8px !default;
+
+/// @prop - Padding bottom on the alert input
+$alert-wp-input-padding-bottom:                $alert-wp-input-padding-top !default;
+
+/// @prop - Padding start on the alert input
+$alert-wp-input-padding-start:                 $alert-wp-input-padding-end !default;
 
 /// @prop - Border width of the alert input
 $alert-wp-input-border-width:                  2px !default;
@@ -81,8 +141,20 @@ $alert-wp-input-line-height:                   3rem !default;
 /// @prop - Color of the text in the alert input
 $alert-wp-input-text-color:                    #000 !default;
 
-/// @prop - Padding of the alert button
-$alert-wp-button-padding:                      5px !default;
+// deprecated
+$alert-wp-button-padding:                      null !default;
+
+/// @prop - Padding top of the alert button
+$alert-wp-button-padding-top:                  5px !default;
+
+/// @prop - Padding end of the alert button
+$alert-wp-button-padding-end:                  $alert-wp-button-padding-top !default;
+
+/// @prop - Padding bottom of the alert button
+$alert-wp-button-padding-bottom:               $alert-wp-button-padding-top !default;
+
+/// @prop - Padding start of the alert button
+$alert-wp-button-padding-start:                $alert-wp-button-padding-end !default;
 
 /// @prop - Width of the alert button
 $alert-wp-button-width:                        49.5% !default;
@@ -102,11 +174,25 @@ $alert-wp-button-background:                   #b8b8b8 !default;
 /// @prop - Background color of the activated alert button
 $alert-wp-button-background-activated:         color-shade($alert-wp-button-background) !default;
 
-/// @prop - Margin right of the alert button
+// deprecated
 $alert-wp-button-margin-right:                 1% !default;
+/// @prop - Margin end of the alert button
+$alert-wp-button-margin-end:                   $alert-wp-button-margin-right !default;
 
-/// @prop - Padding of the alert button group
-$alert-wp-button-group-padding:                20px 22px 20px 22px !default;
+$alert-wp-button-group-padding:                null !default;
+
+/// @prop - Padding top of the alert button group
+$alert-wp-button-group-padding-top:            20px !default;
+
+/// @prop - Padding end of the alert button group
+$alert-wp-button-group-padding-end:            22px !default;
+
+/// @prop - Padding bottom of the alert button group
+$alert-wp-button-group-padding-bottom:         20px !default;
+
+/// @prop - Padding start of the alert button group
+$alert-wp-button-group-padding-start:          22px !default;
+
 
 /// @prop - Justify content of the alert button group
 $alert-wp-button-group-justify-content:        flex-end !default;
@@ -127,8 +213,24 @@ $alert-wp-radio-background:                    color($colors-wp, primary) !defau
 /// @prop - Border color of the radio alert
 $alert-wp-radio-border-color:                  $input-wp-border-color !default;
 
-/// @prop - Padding of the label for the radio alert
-$alert-wp-radio-label-padding:                 13px 26px !default;
+// deprecated
+$alert-wp-radio-label-padding:                 null !default;
+
+/// @prop - Padding top of the label for the radio alert
+$alert-wp-radio-label-padding-top:             13px !default;
+
+/// @prop - Padding end of the label for the radio alert
+$alert-wp-radio-label-padding-end:             26px !default;
+
+/// @prop - Padding bottom of the label for the radio alert
+$alert-wp-radio-label-padding-bottom:          $alert-wp-radio-label-padding-top !default;
+
+/// @prop - Padding start of the label for the radio alert
+$alert-wp-radio-label-padding-start:           $alert-wp-radio-label-padding-end !default;
+
+
+/// @prop - Text color of the label for the radio alert
+$alert-wp-radio-label-text-color:              initial !default;
 
 /// @prop - Text color of the label for the checked radio alert
 $alert-wp-radio-label-text-color-checked:      $alert-wp-button-text-color !default;
@@ -160,8 +262,10 @@ $alert-wp-radio-border-color:                  $input-wp-border-color !default;
 /// @prop - Top of the icon in the radio alert
 $alert-wp-radio-icon-top:                      2px !default;
 
-/// @prop - Left of the icon in the radio alert
+// deprecated
 $alert-wp-radio-icon-left:                     2px !default;
+/// @prop - Start of the icon in the radio alert
+$alert-wp-radio-icon-start:                    $alert-wp-radio-icon-left !default;
 
 /// @prop - Width of the icon in the radio alert
 $alert-wp-radio-icon-width:                    8px !default;
@@ -172,8 +276,23 @@ $alert-wp-radio-icon-height:                   8px !default;
 /// @prop - Border radius of the icon in the radio alert
 $alert-wp-radio-icon-border-radius:            $alert-wp-radio-border-radius !default;
 
-/// @prop - Padding of the label for the checkbox in the alert
-$alert-wp-checkbox-label-padding:              13px 26px !default;
+// deprecated
+$alert-wp-checkbox-label-padding:              null !default;
+
+/// @prop - Padding top of the label for the checkbox in the alert
+$alert-wp-checkbox-label-padding-top:          13px !default;
+
+/// @prop - Padding end of the label for the checkbox in the alert
+$alert-wp-checkbox-label-padding-end:          26px !default;
+
+/// @prop - Padding bottom of the label for the checkbox in the alert
+$alert-wp-checkbox-label-padding-bottom:       $alert-wp-checkbox-label-padding-top !default;
+
+/// @prop - Padding start of the label for the checkbox in the alert
+$alert-wp-checkbox-label-padding-start:        $alert-wp-checkbox-label-padding-end !default;
+
+/// @prop - Text color of the label for the checkbox in the alert
+$alert-wp-checkbox-label-text-color:           initial !default;
 
 /// @prop - Text color of the label for the checked checkbox in the alert
 $alert-wp-checkbox-label-text-color-checked:   initial !default;
@@ -211,8 +330,10 @@ $alert-wp-checkbox-background-on:              color($colors-wp, primary) !defau
 /// @prop - Top of the icon in the checkbox alert
 $alert-wp-checkbox-icon-top:                   -2px !default;
 
-/// @prop - Left of the icon in the checkbox alert
+// deprecated
 $alert-wp-checkbox-icon-left:                  3px !default;
+/// @prop - Start of the icon in the checkbox alert
+$alert-wp-checkbox-icon-start:                 $alert-wp-checkbox-icon-left !default;
 
 /// @prop - Width of the icon in the checkbox alert
 $alert-wp-checkbox-icon-width:                 6px !default;
@@ -238,11 +359,12 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 }
 
 .alert-wp .alert-wrapper {
+  @include border-radius($alert-wp-border-radius);
+
   width: $alert-wp-width;
   max-width: $alert-wp-max-width;
 
   border: $alert-wp-border-width $alert-wp-border-style $alert-wp-border-color;
-  border-radius: $alert-wp-border-radius;
   background: $alert-wp-background;
 }
 
@@ -250,9 +372,11 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-wp .alert-head {
-  padding: $alert-wp-head-padding;
+  @include text-align($alert-wp-head-text-align);
 
-  text-align: $alert-wp-head-text-align;
+  @include deprecated-variable(padding, $alert-wp-head-padding) {
+    @include padding($alert-wp-head-padding-top, $alert-wp-head-padding-end, $alert-wp-head-padding-bottom, $alert-wp-head-padding-start);
+  }
 }
 
 .alert-wp .alert-title {
@@ -270,9 +394,11 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 
 .alert-wp .alert-message,
 .alert-wp .alert-input-group {
-  padding: $alert-wp-message-padding;
-
   color: $alert-wp-message-text-color;
+
+  @include deprecated-variable(padding, $alert-wp-message-padding) {
+    @include padding($alert-wp-message-padding-top, $alert-wp-message-padding-end, $alert-wp-message-padding-bottom, $alert-wp-message-padding-start);
+  }
 }
 
 .alert-wp .alert-message {
@@ -282,7 +408,9 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 }
 
 .alert-wp .alert-message:empty {
-  padding: $alert-wp-message-padding-empty;
+  @include deprecated-variable(padding, $alert-wp-message-padding-empty) {
+    @include padding($alert-wp-message-empty-padding-top, $alert-wp-message-empty-padding-end, $alert-wp-message-empty-padding-bottom, $alert-wp-message-empty-padding-start);
+  }
 }
 
 
@@ -290,12 +418,17 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-wp .alert-input {
-  margin: $alert-wp-input-margin;
-  padding: $alert-wp-input-padding;
-
   border: $alert-wp-input-border-width $alert-wp-input-border-style $alert-wp-input-border-color;
   line-height: $alert-wp-input-line-height;
   color: $alert-wp-input-text-color;
+
+  @include deprecated-variable(margin, $alert-wp-input-margin) {
+    @include margin($alert-wp-input-margin-top, $alert-wp-input-margin-end, $alert-wp-input-margin-bottom, $alert-wp-input-margin-start);
+  }
+
+  @include deprecated-variable(padding, $alert-wp-input-padding) {
+    @include padding($alert-wp-input-padding-top, $alert-wp-input-padding-end, $alert-wp-input-padding-bottom, $alert-wp-input-padding-start);
+  }
 }
 
 .alert-wp .alert-input:focus {
@@ -333,29 +466,32 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 
   flex: 1;
 
-  padding: $alert-wp-radio-label-padding;
-
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  color: $alert-wp-radio-label-text-color;
+
+  @include deprecated-variable(padding, $alert-wp-radio-label-padding) {
+    @include padding($alert-wp-radio-label-padding-top, $alert-wp-radio-label-padding-end, $alert-wp-radio-label-padding-bottom, $alert-wp-radio-label-padding-start);
+  }
 }
 
 // Windows Alert Radio Unchecked Circle
 // ---------------------------------------------------
 
 .alert-wp .alert-radio-icon {
-  position: relative;
-  top: $alert-wp-radio-top;
-  left: $alert-wp-radio-left;
-  display: block;
+  @include position($alert-wp-radio-top, null, null, $alert-wp-radio-left);
+  @include margin(0);
+  @include border-radius($alert-wp-radio-border-radius);
 
-  margin: 0;
+  position: relative;
+  display: block;
 
   width: $alert-wp-radio-width;
   height: $alert-wp-radio-height;
 
   border-width: $alert-wp-radio-border-width;
   border-style: $alert-wp-radio-border-style;
-  border-radius: $alert-wp-radio-border-radius;
   border-color: $alert-wp-radio-border-color;
 }
 
@@ -363,15 +499,15 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // ---------------------------------------------------
 
 .alert-wp .alert-radio-inner {
+  @include position($alert-wp-radio-icon-top, null, null, $alert-wp-radio-icon-start);
+  @include border-radius($alert-wp-radio-icon-border-radius);
+
   position: absolute;
-  top: $alert-wp-radio-icon-top;
-  left: $alert-wp-radio-icon-left;
   display: none;
 
   width: $alert-wp-radio-icon-width;
   height: $alert-wp-radio-icon-height;
 
-  border-radius: $alert-wp-radio-icon-border-radius;
   background: $alert-wp-radio-background;
 }
 
@@ -399,10 +535,14 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 
   flex: 1;
 
-  padding: $alert-wp-checkbox-label-padding;
-
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  color: $alert-wp-checkbox-label-text-color;
+
+  @include deprecated-variable(padding, $alert-wp-checkbox-label-padding) {
+    @include padding($alert-wp-checkbox-label-padding-top, $alert-wp-checkbox-label-padding-end, $alert-wp-checkbox-label-padding-bottom, $alert-wp-checkbox-label-padding-start);
+  }
 }
 
 .alert-wp [aria-checked=true] .alert-checkbox-label {
@@ -413,16 +553,16 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-wp .alert-checkbox-icon {
+  @include position($alert-wp-checkbox-top, null, null, $alert-wp-checkbox-left);
+  @include border-radius($alert-wp-checkbox-border-radius);
+
   position: relative;
-  top: $alert-wp-checkbox-top;
-  left: $alert-wp-checkbox-left;
 
   width: $alert-wp-checkbox-width;
   height: $alert-wp-checkbox-height;
 
   border-width: $alert-wp-checkbox-border-width;
   border-style: $alert-wp-checkbox-border-style;
-  border-radius: $alert-wp-checkbox-border-radius;
   border-color: $alert-wp-checkbox-border-color;
   background: $alert-wp-checkbox-background-off;
 }
@@ -439,9 +579,9 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
 // --------------------------------------------------
 
 .alert-wp [aria-checked=true] .alert-checkbox-inner {
+  @include position($alert-wp-checkbox-icon-top, null, null, $alert-wp-checkbox-icon-start);
+
   position: absolute;
-  top: $alert-wp-checkbox-icon-top;
-  left: $alert-wp-checkbox-icon-left;
 
   width: $alert-wp-checkbox-icon-width;
   height: $alert-wp-checkbox-icon-height;
@@ -462,33 +602,37 @@ $alert-wp-checkbox-icon-transform:             rotate(45deg) !default;
   flex-wrap: $alert-wp-button-group-flex-wrap;
   justify-content: $alert-wp-button-group-justify-content;
 
-  padding: $alert-wp-button-group-padding;
+  @include deprecated-variable(padding, $alert-wp-button-group-padding) {
+    @include padding($alert-wp-button-group-padding-top, $alert-wp-button-group-padding-end, $alert-wp-button-group-padding-bottom, $alert-wp-button-group-padding-start);
+  }
 }
 
 .alert-wp .alert-button-group-vertical .alert-button {
-  margin-top: $alert-wp-button-group-vertical-margin-top;
+  @include margin($alert-wp-button-group-vertical-margin-top, null, null, null);
 
   width: $alert-wp-button-group-vertical-width;
 }
 
 .alert-wp .alert-button-group-vertical .alert-button:first-child:not(:only-child) {
-  margin-top: 0;
-  margin-right: 0;
+  @include margin(0, 0, null, null);
 }
 
 .alert-wp .alert-button {
-  padding: $alert-wp-button-padding;
+  @include border-radius($alert-wp-button-border-radius);
 
   width: $alert-wp-button-width;
 
-  border-radius: $alert-wp-button-border-radius;
   font-weight: $alert-wp-button-font-weight;
   color: $alert-wp-button-text-color;
   background: $alert-wp-button-background;
+
+  @include deprecated-variable(padding, $alert-wp-button-padding) {
+    @include padding($alert-wp-button-padding-top, $alert-wp-button-padding-end, $alert-wp-button-padding-bottom, $alert-wp-button-padding-start);
+  }
 }
 
 .alert-wp .alert-button:first-child:not(:only-child) {
-  margin-right: $alert-wp-button-margin-right;
+  @include margin-horizontal(null, $alert-wp-button-margin-end);
 }
 
 .alert-wp .alert-button.activated {

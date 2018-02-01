@@ -6,16 +6,27 @@
 /// @prop - Padding top of the DateTime component
 $datetime-ios-padding-top:         $item-ios-padding-top !default;
 
-/// @prop - Padding right of the DateTime component
-$datetime-ios-padding-right:       ($item-ios-padding-right / 2) !default;
+// deprecated
+$datetime-ios-padding-right:       ($item-ios-padding-end / 2) !default;
+/// @prop - Padding end of the DateTime component
+$datetime-ios-padding-end:         $datetime-ios-padding-right !default;
 
 /// @prop - Padding bottom of the DateTime component
 $datetime-ios-padding-bottom:      $item-ios-padding-bottom !default;
 
-/// @prop - Padding left of the DateTime component
-$datetime-ios-padding-left:        $item-ios-padding-left !default;
+// deprecated
+$datetime-ios-padding-left:        $item-ios-padding-start !default;
+/// @prop - Padding start of the DateTime component
+$datetime-ios-padding-start:       $datetime-ios-padding-left !default;
+
+/// @prop - Color of the DateTime placeholder
+$datetime-ios-placeholder-color:   #999 !default;
 
 
 .datetime-ios {
-  padding: $datetime-ios-padding-top $datetime-ios-padding-right $datetime-ios-padding-bottom $datetime-ios-padding-left;
+  @include padding($datetime-ios-padding-top, $datetime-ios-padding-end, $datetime-ios-padding-bottom, $datetime-ios-padding-start);
+}
+
+.datetime-ios .datetime-placeholder {
+  color: $datetime-ios-placeholder-color;
 }

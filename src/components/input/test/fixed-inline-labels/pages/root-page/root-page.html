@@ -1,0 +1,96 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Fixed Inline Label Text Input</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label fixed>To</ion-label>
+      <ion-input [(ngModel)]="input1"
+        (blur)="onEvent($event)"
+        (input)="onEvent($event)"
+        (focus)="onEvent($event)">
+      </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>CC</ion-label>
+      <ion-select>
+        <ion-option selected>Admin</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>From</ion-label>
+      <ion-input value="Text 3"></ion-input>
+      <button ion-button icon-only clear item-end>
+        <ion-icon name="power"></ion-icon>
+      </button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Comments</ion-label>
+      <ion-textarea value="Comment value"
+        (blur)="onEvent($event)"
+        (input)="onEvent($event)"
+        (focus)="onEvent($event)">
+      </ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="globe" item-start></ion-icon>
+      <ion-label fixed>Website</ion-label>
+      <ion-input value="http://ionic.io/" type="url"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="mail" item-start></ion-icon>
+      <ion-label fixed>Email</ion-label>
+      <ion-input value="email6@email.com" type="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="call" item-start></ion-icon>
+      <ion-label fixed>Phone</ion-label>
+      <ion-input value="867-5309" type="tel"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="contact" item-start></ion-icon>
+      <ion-input placeholder="Placeholder Text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Score</ion-label>
+      <ion-input value="10" type="number"></ion-input>
+      <button ion-button outline item-end>Update</button>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>First Name</ion-label>
+      <ion-input value="Buzz" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label fixed>Last Name</ion-label>
+      <ion-input value="Lightyear" type="text"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="create" item-start></ion-icon>
+      <ion-label fixed>Message</ion-label>
+      <ion-textarea value="To infinity and beyond"></ion-textarea>
+    </ion-item>
+
+  </ion-list>
+
+  <p>{{url}}</p>
+
+</ion-content>

@@ -3,8 +3,20 @@
 // Material Design Loading Indicator
 // --------------------------------------------------
 
-/// @prop - Padding of the loading wrapper
-$loading-md-padding:                   24px !default;
+// deprecated
+$loading-md-padding:                   null !default;
+
+/// @prop - Padding top of the loading wrapper
+$loading-md-padding-top:               24px !default;
+
+/// @prop - Padding end of the loading wrapper
+$loading-md-padding-end:               $loading-md-padding-top !default;
+
+/// @prop - Padding bottom of the loading wrapper
+$loading-md-padding-bottom:            $loading-md-padding-top !default;
+
+/// @prop - Padding start of the loading wrapper
+$loading-md-padding-start:             $loading-md-padding-end !default;
 
 /// @prop - Max width of the loading wrapper
 $loading-md-max-width:                 280px !default;
@@ -27,6 +39,9 @@ $loading-md-box-shadow-color:          rgba(0, 0, 0, .4) !default;
 /// @prop - Box shadow of the loading wrapper
 $loading-md-box-shadow:                0 16px 20px $loading-md-box-shadow-color !default;
 
+/// @prop - Margin start of the loading content next to a spinner
+$loading-md-content-margin-start:      $content-md-margin !default;
+
 /// @prop - Color of the loading spinner
 $loading-md-spinner-color:             color($colors-md, primary) !default;
 
@@ -47,16 +62,19 @@ $loading-md-spinner-dots-color:        $loading-md-spinner-color !default;
 
 
 .loading-md .loading-wrapper {
-  padding: $loading-md-padding;
+  @include border-radius($loading-md-border-radius);
 
   max-width: $loading-md-max-width;
   max-height: $loading-md-max-height;
 
-  border-radius: $loading-md-border-radius;
   color: $loading-md-text-color;
   background: $loading-md-background;
 
   box-shadow: $loading-md-box-shadow;
+
+  @include deprecated-variable(padding, $loading-md-padding) {
+    @include padding($loading-md-padding-top, $loading-md-padding-end, $loading-md-padding-bottom, $loading-md-padding-start);
+  }
 }
 
 
@@ -64,7 +82,7 @@ $loading-md-spinner-dots-color:        $loading-md-spinner-color !default;
 // -----------------------------------------
 
 .loading-md .loading-spinner + .loading-content {
-  margin-left: 16px;
+  @include margin-horizontal($loading-md-content-margin-start, null);
 }
 
 

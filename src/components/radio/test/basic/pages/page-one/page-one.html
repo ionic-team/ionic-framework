@@ -1,0 +1,171 @@
+
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Radio Group</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+  <form (submit)="doSubmit($event)" [formGroup]="fruitsForm">
+
+    <ion-list radio-group formControlName="fruitsCtrl">
+
+      <ion-list-header>
+        Fruits
+      </ion-list-header>
+
+      <ion-item>
+        Button w/ left side default icon, really long text that should ellipsis
+        <ion-icon name="information-circle" item-start></ion-icon>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Apple</ion-label>
+        <ion-radio item-start value="apple"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Banana</ion-label>
+        <ion-radio value="banana"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Cherry (secondary color)</ion-label>
+        <ion-radio value="cherry" color="secondary"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Disabled</ion-label>
+        <ion-radio value="disabled" disabled="true"></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>Radio right side</ion-label>
+        <ion-radio item-end checked></ion-radio>
+      </ion-item>
+
+      <ion-item>
+        Button w/ right side default icon, really long text that should ellipsis
+        <ion-icon name="information-circle" item-end></ion-icon>
+      </ion-item>
+
+    </ion-list>
+
+  </form>
+
+  <div aria-hidden="true" text-center>
+    <button ion-button (click)="setApple()" outline small>Select Apple</button>
+    <button ion-button (click)="setBanana()" outline small>Select Banana</button>
+    <button ion-button class="e2eCherry" (click)="setCherry()" outline small>Select Cherry</button>
+  </div>
+
+  <div padding>
+    <code><b>fruits.dirty:</b> {{fruitsCtrl.dirty}}</code><br>
+    <code><b>fruits.value:</b> {{fruitsCtrl.value}}</code><br>
+  </div>
+
+  <form (submit)="doSubmit($event)" [formGroup]="currencyForm">
+    <ion-list radio-group formControlName="currenciesControl">
+      <ion-list-header id="currencies">
+        Currencies
+      </ion-list-header>
+      <ion-item *ngFor="let currency of currencies">
+        <ion-label>{{currency}}</ion-label>
+        <ion-radio [value]="currency"></ion-radio>
+      </ion-item>
+    </ion-list>
+  </form>
+
+  <div padding>
+    <code><b>currenciesControl.value:</b> {{currenciesControl.value}}</code>
+  </div>
+
+  <ion-list radio-group [(ngModel)]="relationship">
+    <ion-item>
+      <ion-label>Friends</ion-label>
+      <ion-radio value="friends"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Enemies</ion-label>
+      <ion-radio value="enemies"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <div padding>
+    <code><b>relationship:</b> {{relationship}}</code>
+  </div>
+
+  <div radio-group (ionChange)="petChange($event)">
+    <p>
+      <ion-radio (ionSelect)="dogSelect($event)"></ion-radio>
+      Dogs
+    </p>
+    <p>
+      <ion-radio (ionSelect)="catSelect($event)"></ion-radio>
+      Cats
+    </p>
+    <p>
+      <ion-radio (ionSelect)="turtleSelect($event)"></ion-radio>
+      Turtles
+    </p>
+  </div>
+
+  <ion-list radio-group [(ngModel)]="someValue">
+    <ion-item *ngFor="let item of items">
+      <ion-label>
+        {{ item.description }}
+      </ion-label>
+​
+      <ion-radio [value]="item.value"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <div padding>
+    <code><b>someValue:</b> {{someValue}}</code>
+  </div>
+
+  <ion-list radio-group [(ngModel)]="selectedTime">
+    <ion-list-header>
+      Time
+    </ion-list-header>
+    <ion-item>
+      <ion-label>60 minutes</ion-label>
+      <ion-radio value="60"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>30 minutes</ion-label>
+      <ion-radio value="30"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-list radio-group disabled="true" [(ngModel)]="relationship">
+    <ion-list-header>Disabled radio-group</ion-list-header>
+    <ion-item>
+      <ion-label>Friends</ion-label>
+      <ion-radio value="friends"></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label>Enemies</ion-label>
+      <ion-radio value="enemies"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <form [formGroup]="friendsForm">
+    <ion-list radio-group formControlName="friendsCtrl">
+      <ion-list-header>Disabled formGroup</ion-list-header>
+      <ion-item>
+        <ion-label>Friends</ion-label>
+        <ion-radio value="friends"></ion-radio>
+      </ion-item>
+      <ion-item>
+        <ion-label>Enemies</ion-label>
+        <ion-radio value="enemies"></ion-radio>
+      </ion-item>
+    </ion-list>
+  </form>
+
+</ion-content>

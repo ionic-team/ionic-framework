@@ -1,3 +1,4 @@
+import { by, element } from 'protractor';
 
 it('should go from 1 to 2', function() {
   element(by.css('.e2eFrom1To2')).click();

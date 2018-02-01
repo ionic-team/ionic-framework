@@ -1,3 +1,4 @@
+import { by, element } from 'protractor';
 
 it('should check apple, enable/check grape, submit form', function() {
   element(by.css('[formControlName=apple]')).click();

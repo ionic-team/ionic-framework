@@ -1,0 +1,128 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Datetime</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <ion-item>
+    <ion-label>MMMM</ion-label>
+    <ion-datetime displayFormat="MMMM" [(ngModel)]="monthOnly"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>MM DD YY</ion-label>
+    <ion-datetime pickerFormat="YYYY-MM-DDThh:mm" [pickerOptions]="customOptions" [(ngModel)]="placeholderDate" placeholder="Select Date"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>MM DD YY</ion-label>
+    <ion-datetime displayFormat="MM DD YY" [(ngModel)]="placeholderDate" placeholder="Select Date" initialValue="1987-10-19"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>YYYY</ion-label>
+    <ion-datetime displayFormat="YYYY" min="1981" max="2002" [(ngModel)]="wwwInvented"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>MMMM YY</ion-label>
+    <ion-datetime displayFormat="MMMM YY" min="1989-06-04" max="2004-08-23" [(ngModel)]="netscapeReleased"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>MM/DD/YYYY</ion-label>
+    <ion-datetime displayFormat="MM/DD/YYYY" min="1994-03-14" max="2012-12-09" [(ngModel)]="firefoxReleased" class="e2eOpenMMDDYYYY"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>DDD. MMM DD, YY (custom locale)</ion-label>
+    <ion-datetime [(ngModel)]="operaReleased" min="1990-02" max="2000"
+      displayFormat="DDD. MMM DD, YY"
+      monthShortNames="jan, feb, mar, apr, mai, jun, jul, aug, sep, okt, nov, des"
+      [dayShortNames]="customShortDay"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>D MMM YYYY H:mm</ion-label>
+    <ion-datetime displayFormat="D MMM YYYY H:mm" min="1997" max="2010" [(ngModel)]="webkitOpenSourced"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>DDDD MMM D, YYYY</ion-label>
+    <ion-datetime displayFormat="DDDD MMM D, YYYY" min="2005" max="2016" [(ngModel)]="chromeReleased"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>HH:mm</ion-label>
+    <ion-datetime displayFormat="HH:mm" [(ngModel)]="time"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>h:mm a</ion-label>
+    <ion-datetime (ionChange)="onChange($event)" (ionCancel)="onCancel($event)" displayFormat="h:mm a" [(ngModel)]="time"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>hh:mm A (15 min steps)</ion-label>
+    <ion-datetime displayFormat="h:mm A" minuteValues="0,15,30,45"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Leap years, summer months</ion-label>
+    <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" [yearValues]="leapYearsArray" monthValues="6,7,8" [(ngModel)]="leapYearsSummerMonths"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Specific days/months/years</ion-label>
+    <ion-datetime monthValues="6,7,8" yearValues="2014,2015" dayValues="01,02,03,04,05,06,08,09,10, 11, 12, 13, 14" displayFormat="DD/MMM/YYYY" [(ngModel)]="specificDaysMonthsYears"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Default value</ion-label>
+    <ion-datetime max="2100" pickerDefault="2017-08-06" [(ngModel)]="defaultValue"></ion-datetime>
+  </ion-item>
+
+  <p aria-hidden="true" padding>
+    <code>monthOnly: {{monthOnly}}</code><br>
+    <code>wwwInvented: {{wwwInvented}}</code><br>
+    <code>netscapeReleased: {{netscapeReleased}}</code><br>
+    <code>operaReleased: {{operaReleased}}</code><br>
+    <code>firefoxReleased: {{firefoxReleased}}</code><br>
+    <code>webkitOpenSourced: {{webkitOpenSourced}}</code><br>
+    <code>chromeReleased: {{chromeReleased}}</code><br>
+    <code>time: {{time}}</code><br>
+    <code>Leap year, summer months: {{leapYearsSummerMonths}}</code><br>
+    <code>Specific days/months/years: {{specificDaysMonthsYears}}</code><br>
+    <code>Default value: {{defaultValue}}</code><br>
+  </p>
+
+  <p>
+    <button ion-button (click)="clearLeapYear()">Clear Leap Years</button>
+  </p>
+
+  <ion-item>
+    <ion-label>myDate: {{myDate}}</ion-label>
+    <ion-datetime displayFormat="MMM DD, YYYY HH:mm" [(ngModel)]="myDate"></ion-datetime>
+  </ion-item>
+
+  <p>
+    <button ion-button (click)="convertDate()">Convert myDate To Date</button>
+    {{convertedDate}}
+  </p>
+
+  <ion-item>
+    <ion-label>HH:mm:ss</ion-label>
+    <ion-datetime displayFormat="HH:mm:ss" [(ngModel)]="time"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>No displayFormat: {{noFormatDate}}</ion-label>
+    <ion-datetime [(ngModel)]="noFormatDate"></ion-datetime>
+  </ion-item>
+
+</ion-content>

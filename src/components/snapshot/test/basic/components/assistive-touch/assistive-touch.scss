@@ -1,0 +1,24 @@
+.app-root {
+  contain: none !important;
+  position: initial !important;
+}
+
+assistive-touch {
+  @include padding(10px);
+  @include border-radius(15px);
+
+  z-index: 9999999;
+
+  position: absolute;
+
+  display: block;
+  contain: strict;
+
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 60px;
+  height: 60px;
+
+  text-align: center;
+  font-size: 34px;
+  color: white;
+}

@@ -1,0 +1,71 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Item inputs</ion-title>
+    <ion-buttons end>
+      <button ion-button class="e2eDisableButton" (click)="disabled = !disabled">{{disabled ? 'Enable' : 'Disable' }}</button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item>
+      Simple item
+    </ion-item>
+
+    <button ion-item [disabled]='disabled'>
+      Item Button
+    </button>
+
+    <ion-item>
+      <ion-label floating>DateTime</ion-label>
+      <ion-datetime [(ngModel)]="datetime" min="1994-03-14" max="2017-12-09" displayFormat="MM/DD/YYYY" required [disabled]='disabled'></ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Select</ion-label>
+      <ion-select [(ngModel)]="select" [disabled]='strDisabled()'>
+        <ion-option value="">No Game Console</ion-option>
+        <ion-option value="nes">NES</ion-option>
+        <ion-option value="n64">Nintendo64</ion-option>
+        <ion-option value="ps">PlayStation</ion-option>
+        <ion-option value="genesis">Sega Genesis</ion-option>
+        <ion-option value="saturn">Sega Saturn</ion-option>
+        <ion-option value="snes">SNES</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Toggle</ion-label>
+      <ion-toggle name="Actually" [(ngModel)]="toggle" [disabled]='boolDisabled()'></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Input (text)</ion-label>
+      <ion-input [(ngModel)]="text" [disabled]='disabled'></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Input (placeholder)</ion-label>
+      <ion-input placeholder="Placeholder" [disabled]='strDisabled()'></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Checkbox</ion-label>
+      <ion-checkbox [(ngModel)]="checkbox" [disabled]='disabled'></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Toggle (left)</ion-label>
+      <ion-toggle [(ngModel)]="toggle" item-start [disabled]='disabled'></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Range</ion-label>
+      <ion-range [(ngModel)]="range" [disabled]='strDisabled()'></ion-range>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

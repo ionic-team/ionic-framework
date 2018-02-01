@@ -1,0 +1,100 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Item</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="outer-content">
+
+  <ion-list>
+    <ion-list-header>
+      Settings
+      <button ion-button icon-only item-end clear>
+        <ion-icon name="cog"></ion-icon>
+      </button>
+    </ion-list-header>
+
+    <ion-item-group>
+      <ion-item>
+        <ion-icon name="plane" item-start color="danger"></ion-icon>
+        <ion-label>Airplane Mode</ion-label>
+        <ion-toggle color="secondary"></ion-toggle>
+      </ion-item>
+
+      <button ion-item>
+        <ion-icon name="wifi" item-start color="primary"></ion-icon>
+        <ion-label>Wi-Fi</ion-label>
+        <ion-note item-end>The Interwebz</ion-note>
+      </button>
+
+      <button ion-item>
+        <ion-icon name="bluetooth" item-start color="primary"></ion-icon>
+        <ion-label>Bluetooth</ion-label>
+        <ion-note item-end>Off</ion-note>
+      </button>
+    </ion-item-group>
+
+    <ion-item-divider color="primary">
+      Other Settings
+      <button ion-button item-end outline color="light">Clear</button>
+    </ion-item-divider>
+
+    <button ion-item>
+      <ion-icon name="call" item-start color="secondary"></ion-icon>
+      <ion-label>Cellular</ion-label>
+    </button>
+
+    <button ion-item>
+      <ion-icon name="link" item-start color="secondary"></ion-icon>
+      <ion-label>Personal Hotspot</ion-label>
+      <ion-note item-end>Off</ion-note>
+    </button>
+  </ion-list>
+
+  <ion-list radio-group>
+    <ion-list-header>
+      <ion-icon item-start name="phone-portrait"></ion-icon>
+      Silence Phone
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label color="dark">Always</ion-label>
+      <ion-radio value="always" checked></ion-radio>
+    </ion-item>
+    <ion-item>
+      <ion-label color="dark">Only while phone is locked</ion-label>
+      <ion-radio value="locked"></ion-radio>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>
+      Apps Installed
+    </ion-list-header>
+
+    <ion-item>
+      <ion-icon name="ionic" item-start color="primary"></ion-icon>
+      <ion-label>Ionic View</ion-label>
+      <button ion-button outline item-end>Uninstall</button>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="brush" item-start color="primary"></ion-icon>
+      <ion-label>Ionic Creator</ion-label>
+      <button ion-button outline item-end>Uninstall</button>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="logo-octocat" item-start color="dark"></ion-icon>
+      <ion-label>Hubstruck</ion-label>
+      <button ion-button outline item-end>Uninstall</button>
+    </ion-item>
+    <ion-item>
+      <ion-icon name="paw" item-start color="danger"></ion-icon>
+      <ion-label>Barkpark</ion-label>
+      <button ion-button outline item-end>Uninstall</button>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

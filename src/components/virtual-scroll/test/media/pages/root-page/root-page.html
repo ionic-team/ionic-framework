@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Virtual Scroll{{webview}}</ion-title>
+    <ion-buttons end>
+      <button ion-button (click)="reload()">
+        Reload
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content>
+  <ion-list radio-group [virtualScroll]="items">
+    <ion-item *virtualItem="let item" [ngClass]="item.class">
+      <ion-label>{{item.type}}-{{item.value}}</ion-label>
+      <ion-checkbox *ngIf="item.type === 'checkbox'" item-start></ion-checkbox>
+      <ion-toggle *ngIf="item.type === 'toggle'" item-start></ion-toggle>
+      <ion-radio *ngIf="item.type === 'radio'" item-start></ion-radio>
+      <ion-range *ngIf="item.type === 'range'"></ion-range>
+    </ion-item>
+  </ion-list>
+</ion-content>

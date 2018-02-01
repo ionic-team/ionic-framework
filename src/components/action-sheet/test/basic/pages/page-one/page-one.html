@@ -1,0 +1,23 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Action Sheet</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <button ion-button block class="e2eOpenActionSheet" (click)="presentBasic()">Basic</button>
+  <button ion-button block (click)="presentNoBackdropDismiss()">No Backdrop Dismiss</button>
+  <button ion-button block (click)="presentAlert()">Alert from Action Sheet</button>
+  <button ion-button block (click)="presentScroll()">Scrollable Options</button>
+  <button ion-button block (click)="presentScrollNoCancel()">Scroll Without Cancel</button>
+  <button ion-button block (click)="presentCancelOnly()">Cancel Only</button>
+
+  <pre>
+    Result: {{result}}
+  </pre>
+
+</ion-content>

@@ -2,8 +2,20 @@
 // Material Design Chip
 // --------------------------------------------------
 
-/// @prop - Margin of the chip
-$chip-md-margin:                     2px 0 !default;
+// deprecated
+$chip-md-margin:                     null !default;
+
+/// @prop - Margin top of the chip
+$chip-md-margin-top:                 2px !default;
+
+/// @prop - Margin end of the chip
+$chip-md-margin-end:                 0 !default;
+
+/// @prop - Margin bottom of the chip
+$chip-md-margin-bottom:              $chip-md-margin-top !default;
+
+/// @prop - Margin start of the chip
+$chip-md-margin-start:               $chip-md-margin-end !default;
 
 /// @prop - Height of the chip
 $chip-md-height:                     32px !default;
@@ -20,8 +32,20 @@ $chip-md-text-color:                 rgba(0, 0, 0, .87) !default;
 /// @prop - Background color of the chip
 $chip-md-background-color:           rgba(0, 0, 0, .12) !default;
 
-/// @prop - Margin of the label in the chip
-$chip-md-label-margin:               0 10px !default;
+// deprecated
+$chip-md-label-margin:               null !default;
+
+/// @prop - Margin top of the label in the chip
+$chip-md-label-margin-top:           0 !default;
+
+/// @prop - Margin end of the label in the chip
+$chip-md-label-margin-end:           10px !default;
+
+/// @prop - Margin bottom of the label in the chip
+$chip-md-label-margin-bottom:        $chip-md-label-margin-top !default;
+
+/// @prop - Margin start of the label in the chip
+$chip-md-label-margin-start:         $chip-md-label-margin-end !default;
 
 /// @prop - Background color of the icon in the chip
 $chip-md-icon-background-color:      color($colors-md, primary) !default;
@@ -31,19 +55,24 @@ $chip-md-icon-text-color:            color-contrast($colors-md, $chip-md-icon-ba
 
 
 .chip-md {
-  margin: $chip-md-margin;
+  @include border-radius($chip-md-border-radius);
 
   height: $chip-md-height;
 
-  border-radius: $chip-md-border-radius;
   font-size: $chip-md-font-size;
   line-height: $chip-md-height;
   color: $chip-md-text-color;
   background: $chip-md-background-color;
+
+  @include deprecated-variable(margin, $chip-md-margin) {
+    @include margin($chip-md-margin-top, $chip-md-margin-end, $chip-md-margin-bottom, $chip-md-margin-start);
+  }
 }
 
 .chip-md > ion-label {
-  margin: $chip-md-label-margin;
+  @include deprecated-variable(margin, $chip-md-label-margin) {
+    @include margin($chip-md-label-margin-top, $chip-md-label-margin-end, $chip-md-label-margin-bottom, $chip-md-label-margin-start);
+  }
 }
 
 .chip-md > ion-icon {

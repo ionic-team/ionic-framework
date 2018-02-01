@@ -27,11 +27,35 @@ $picker-md-button-text-color:                 color($colors-md, primary) !defaul
 /// @prop - Background of the picker button
 $picker-md-button-background-color:           transparent !default;
 
-/// @prop - Padding of the picker column
-$picker-md-column-padding:                    0 8px !default;
+// deprecated
+$picker-md-column-padding:                    null !default;
 
-/// @prop - Padding of the picker option
-$picker-md-option-padding:                    0 !default;
+/// @prop - Padding top of the picker column
+$picker-md-column-padding-top:                0 !default;
+
+/// @prop - Padding end of the picker column
+$picker-md-column-padding-end:                8px !default;
+
+/// @prop - Padding bottom of the picker column
+$picker-md-column-padding-bottom:             $picker-md-column-padding-top !default;
+
+/// @prop - Padding start of the picker column
+$picker-md-column-padding-start:              $picker-md-column-padding-end !default;
+
+// deprecated
+$picker-md-option-padding:                    null !default;
+
+/// @prop - Padding top of the picker option
+$picker-md-option-padding-top:                0 !default;
+
+/// @prop - Padding end of the picker option
+$picker-md-option-padding-end:                $picker-md-option-padding-top !default;
+
+/// @prop - Padding bottom of the picker option
+$picker-md-option-padding-bottom:             $picker-md-option-padding-top !default;
+
+/// @prop - Padding start of the picker option
+$picker-md-option-padding-start:              $picker-md-option-padding-end !default;
 
 /// @prop - Text color of the picker option
 $picker-md-option-text-color:                 $list-md-text-color !default;
@@ -69,7 +93,7 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
 
 .picker-md .picker-button,
 .picker-md .picker-button.activated {
-  margin: 0;
+  @include margin(0);
 
   height: $picker-md-button-height;
 
@@ -86,9 +110,11 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
 }
 
 .picker-md .picker-col {
-  padding: $picker-md-column-padding;
-
   transform-style: preserve-3d;
+
+  @include deprecated-variable(padding, $picker-md-column-padding) {
+    @include padding($picker-md-column-padding-top, $picker-md-column-padding-end, $picker-md-column-padding-bottom, $picker-md-column-padding-start);
+  }
 }
 
 .picker-md .picker-prefix,
@@ -107,8 +133,7 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
 
 
 .picker-md .picker-opt {
-  margin: 0;
-  padding: $picker-md-option-padding;
+  @include margin(0);
 
   height: 4.3rem;
 
@@ -123,6 +148,10 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
   backface-visibility: hidden;
 
   pointer-events: auto;
+
+  @include deprecated-variable(padding, $picker-md-option-padding) {
+    @include padding($picker-md-option-padding-top, $picker-md-option-padding-end, $picker-md-option-padding-bottom, $picker-md-option-padding-start);
+  }
 }
 
 .picker-md .picker-prefix,
@@ -133,9 +162,10 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
 }
 
 .picker-md .picker-above-highlight {
+  @include position(0, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
+
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: 10;
 
   width: 100%;
@@ -146,14 +176,13 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
   background: linear-gradient(to bottom,
                             rgba($picker-md-background-color, 1) 20%,
                             rgba($picker-md-background-color, .7) 100%);
-
-  transform: translate3d(0, 0, 90px);
 }
 
 .picker-md .picker-below-highlight {
+  @include position($picker-md-option-offset-y + $picker-md-option-height - 4, null, null, 0);
+  @include transform(translate3d(0, 0, 90px));
+
   position: absolute;
-  top: $picker-md-option-offset-y + $picker-md-option-height - 4;
-  left: 0;
   z-index: 11;
 
   width: 100%;
@@ -164,6 +193,4 @@ $picker-md-option-selected-color:             color($colors-md, primary) !defaul
   background: linear-gradient(to top,
                            rgba($picker-md-background-color, 1) 30%,
                            rgba($picker-md-background-color, .7) 100%);
-
-  transform: translate3d(0, 0, 90px);
 }

@@ -1,13 +1,15 @@
-import { Component, ComponentFactoryResolver, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
 
-import { Key } from '../../util/key';
+import { KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
+import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
-import { GestureController, BlockerDelegate, GESTURE_MENU_SWIPE, GESTURE_GO_BACK_SWIPE } from '../../gestures/gesture-controller';
+import { BlockerDelegate, GESTURE_GO_BACK_SWIPE, GESTURE_MENU_SWIPE,  GestureController } from '../../gestures/gesture-controller';
+import { ModuleLoader } from '../../util/module-loader';
 import { assert } from '../../util/util';
 
 /**
- * @private
+ * @hidden
  */
 @Component({
   selector: 'ion-modal',
@@ -28,9 +30,12 @@ export class ModalCmp {
   constructor(
     public _cfr: ComponentFactoryResolver,
     public _renderer: Renderer,
+    public _elementRef: ElementRef,
     public _navParams: NavParams,
     public _viewCtrl: ViewController,
-    gestureCtrl: GestureController
+    gestureCtrl: GestureController,
+    public moduleLoader: ModuleLoader
+
   ) {
     let opts = _navParams.get('opts');
     assert(opts, 'modal data must be valid');
@@ -39,28 +44,42 @@ export class ModalCmp {
       disable: [GESTURE_MENU_SWIPE, GESTURE_GO_BACK_SWIPE]
     });
     this._bdDismiss = opts.enableBackdropDismiss;
+
+    if (opts.cssClass) {
+      opts.cssClass.split(' ').forEach((cssClass: string) => {
+        // Make sure the class isn't whitespace, otherwise it throws exceptions
+        if (cssClass.trim() !== '') _renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+      });
+    }
   }
 
   ionViewPreLoad() {
-    this._load(this._navParams.data.component);
-  }
-
-  /** @private */
-  _load(component: any) {
-    if (component) {
-      const componentFactory = this._cfr.resolveComponentFactory(component);
-
-      // ******** DOM WRITE ****************
-      const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, this._viewport.parentInjector, []);
-      this._viewCtrl._setInstance(componentRef.instance);
-
-      this._setCssClass(componentRef, 'ion-page');
-      this._setCssClass(componentRef, 'show-page');
-      this._enabled = true;
-
-      this._viewCtrl.willEnter.subscribe(this._viewWillEnter.bind(this));
-      this._viewCtrl.didLeave.subscribe(this._viewDidLeave.bind(this));
+    const component = this._navParams.data.component;
+    if (!component) {
+      console.warn('modal\'s page was not defined');
+      return;
     }
+
+    let cfr = this.moduleLoader.getComponentFactoryResolver(component);
+    if (!cfr) {
+      cfr = this._cfr;
+    }
+    const componentFactory = cfr.resolveComponentFactory(component);
+
+    // ******** DOM WRITE ****************
+    const componentRef = this._viewport.createComponent(componentFactory, this._viewport.length, this._viewport.parentInjector, []);
+
+    this._setCssClass(componentRef, 'ion-page');
+    this._setCssClass(componentRef, 'show-page');
+
+    // Change the viewcontroller's instance to point the user provided page
+    // Lifecycle events will be sent to the new instance, instead of the modal's component
+    // we need to manually subscribe to them
+    this._viewCtrl._setInstance(componentRef.instance);
+    this._viewCtrl.willEnter.subscribe(this._viewWillEnter.bind(this));
+    this._viewCtrl.didLeave.subscribe(this._viewDidLeave.bind(this));
+
+    this._enabled = true;
   }
 
   _viewWillEnter() {
@@ -71,22 +90,22 @@ export class ModalCmp {
     this._gestureBlocker.unblock();
   }
 
-  /** @private */
   _setCssClass(componentRef: any, className: string) {
     this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
   }
 
   _bdClick() {
     if (this._enabled && this._bdDismiss) {
-      return this._viewCtrl.dismiss(null, 'backdrop').catch(() => {
-        console.debug('Dismiss modal by clicking backdrop was cancelled');
-      });
+      const opts: NavOptions = {
+        minClickBlockDuration: 400
+      };
+      return this._viewCtrl.dismiss(null, 'backdrop', opts);
     }
   }
 
   @HostListener('body:keyup', ['$event'])
   _keyUp(ev: KeyboardEvent) {
-    if (this._enabled && this._viewCtrl.isLast() && ev.keyCode === Key.ESCAPE) {
+    if (this._enabled && this._viewCtrl.isLast() && ev.keyCode === KEY_ESCAPE) {
       this._bdClick();
     }
   }

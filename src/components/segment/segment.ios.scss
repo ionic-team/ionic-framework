@@ -113,9 +113,8 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
   }
 
   &:first-of-type {
-    margin-right: 0;
-
-    border-radius: $segment-button-ios-border-radius 0 0 $segment-button-ios-border-radius;
+    @include border-radius($segment-button-ios-border-radius, 0, 0, $segment-button-ios-border-radius);
+    @include margin-horizontal(null, 0);
   }
 
   &:not(:first-of-type) {
@@ -123,11 +122,28 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
   }
 
   &:last-of-type {
-    margin-left: 0;
+    @include border-radius(0, $segment-button-ios-border-radius, $segment-button-ios-border-radius, 0);
+    @include margin-horizontal(0, null);
 
     border-left-width: 0;
-    border-radius: 0 $segment-button-ios-border-radius $segment-button-ios-border-radius 0;
   }
+}
+
+[dir="rtl"] .segment-ios .segment-button {
+  &:first-of-type {
+    border-left-width: 0;
+  }
+
+  &:last-of-type {
+    border-left-width: $segment-button-ios-border-width;
+  }
+}
+
+
+.segment-ios.segment-disabled {
+  opacity: .4;
+
+  pointer-events: none;
 }
 
 .segment-ios .segment-button-disabled {
@@ -141,11 +157,9 @@ $segment-button-ios-toolbar-icon-line-height:   2.4rem !default;
 // --------------------------------------------------
 
 .toolbar-ios .segment-ios {
+  @include position(0, 0, 0, 0);
+
   position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
 }
 
 .toolbar-ios .segment-button {

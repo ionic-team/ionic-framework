@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 
-import { isTrueProperty } from '../../util/util';
+import { assert, isTrueProperty } from '../../util/util';
 
 /**
  * @name Scroll
@@ -17,12 +17,12 @@ import { isTrueProperty } from '../../util/util';
  * <ion-scroll scrollX="true" scrollY="true">
  * </ion-scroll>
  * ```
- * @demo /docs/v2/demos/src/scroll/
+ * @demo /docs/demos/src/scroll/
  */
 @Component({
   selector: 'ion-scroll',
   template:
-    '<div class="scroll-content">' +
+    '<div class="scroll-content" #scrollContent>' +
       '<div class="scroll-zoom-wrapper">' +
         '<ng-content></ng-content>' +
       '</div>' +
@@ -35,13 +35,14 @@ import { isTrueProperty } from '../../util/util';
   encapsulation: ViewEncapsulation.None,
 })
 export class Scroll {
+
   _scrollX: boolean = false;
   _scrollY: boolean = false;
   _zoom: boolean = false;
   _maxZoom: number = 1;
 
   /**
-   * @input {boolean} whether to enable scrolling along the X axis
+   * @input {boolean} If true, scrolling along the X axis is enabled.
    */
   @Input()
   get scrollX() {
@@ -52,7 +53,7 @@ export class Scroll {
   }
 
   /**
-   * @input {boolean} whether to enable scrolling along the Y axis; requires the following CSS declaration: ion-scroll { white-space: nowrap; }
+   * @input {boolean} If true, scrolling along the Y axis is enabled; requires the following CSS declaration: ion-scroll { white-space: nowrap; }
    */
   @Input()
   get scrollY() {
@@ -63,7 +64,7 @@ export class Scroll {
   }
 
   /**
-   * @input {boolean} whether to enable zooming
+   * @input {boolean} If true, zooming is enabled.
    */
   @Input()
   get zoom() {
@@ -74,7 +75,7 @@ export class Scroll {
   }
 
   /**
-   * @input {number} set the max zoom amount for ion-scroll
+   * @input {number} Set the max zoom amount.
    */
   @Input()
   get maxZoom() {
@@ -85,41 +86,34 @@ export class Scroll {
   }
 
   /**
-   * @private
+   * @hidden
    */
   maxScale: number = 3;
   /**
-   * @private
+   * @hidden
    */
   zoomDuration: number = 250;
-  /**
-   * @private
-   */
-  scrollElement: HTMLElement;
 
-  constructor(private _elementRef: ElementRef) {}
+  /** @internal */
+  @ViewChild('scrollContent', { read: ElementRef }) _scrollContent: ElementRef;
 
-  /**
-   * @private
-   */
-  ngOnInit() {
-    this.scrollElement = this._elementRef.nativeElement.children[0];
-  }
+  constructor() { }
 
   /**
-   * @private
+   * @hidden
    * Add a scroll event handler to the scroll element if it exists.
    * @param {Function} handler  The scroll handler to add to the scroll element.
    * @returns {?Function} a function to remove the specified handler, otherwise
    * undefined if the scroll element doesn't exist.
    */
   addScrollEventListener(handler: any) {
-    if (!this.scrollElement) { return; }
+    assert(this._scrollContent, 'scroll element is missing');
 
-    this.scrollElement.addEventListener('scroll', handler);
+    const ele = this._scrollContent.nativeElement;
+    ele.addEventListener('scroll', handler);
 
     return () => {
-      this.scrollElement.removeEventListener('scroll', handler);
+      ele.removeEventListener('scroll', handler);
     };
   }
 

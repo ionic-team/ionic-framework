@@ -1,48 +1,53 @@
-import { GestureController, GesturePriority, GESTURE_TOGGLE } from '../../gestures/gesture-controller';
-import { PanGesture } from '../../gestures/drag-gesture';
+import { GESTURE_PRIORITY_TOGGLE, GESTURE_TOGGLE, GestureController } from '../../gestures/gesture-controller';
+import { DomController } from '../../platform/dom-controller';
+import { PanGesture } from '../../gestures/pan-gesture';
+import { Platform } from '../../platform/platform';
 import { pointerCoord } from '../../util/dom';
-import { DomController } from '../../util/dom-controller';
 import { Toggle } from './toggle';
 
 /**
- * @private
+ * @hidden
  */
 export class ToggleGesture extends PanGesture {
 
   constructor(
-    public toogle: Toggle,
+    plt: Platform,
+    public toggle: Toggle,
     gestureCtrl: GestureController,
     domCtrl: DomController
   ) {
-    super(toogle.getNativeElement(), {
+    super(
+      plt,
+      toggle.getNativeElement(), {
       threshold: 0,
+      zone: false,
       domController: domCtrl,
       gesture: gestureCtrl.createGesture({
         name: GESTURE_TOGGLE,
-        priority: GesturePriority.Toggle,
+        priority: GESTURE_PRIORITY_TOGGLE
       })
     });
   }
 
-  canStart(ev: any): boolean {
+  canStart(): boolean {
     return true;
   }
 
   onDragStart(ev: any) {
     ev.preventDefault();
 
-    this.toogle._onDragStart(pointerCoord(ev).x);
+    this.toggle._onDragStart(pointerCoord(ev).x);
   }
 
   onDragMove(ev: any) {
     ev.preventDefault();
 
-    this.toogle._onDragMove(pointerCoord(ev).x);
+    this.toggle._onDragMove(pointerCoord(ev).x);
   }
 
   onDragEnd(ev: any) {
     ev.preventDefault();
 
-    this.toogle._onDragEnd(pointerCoord(ev).x);
+    this.toggle._onDragEnd(pointerCoord(ev).x);
   }
 }

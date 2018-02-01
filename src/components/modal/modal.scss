@@ -23,9 +23,9 @@ $modal-inset-height-large:      600px !default;
 
 
 ion-modal {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
 
   display: block;
 
@@ -49,18 +49,18 @@ ion-modal ion-backdrop {
   contain: strict;
 
   @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+    @include position(calc(50% - (#{$modal-inset-height-small}/2)), null, null, calc(50% - (#{$modal-inset-width}/2)));
+
     position: absolute;
-    top: calc(50% - (#{$modal-inset-height-small}/2));
-    left: calc(50% - (#{$modal-inset-width}/2));
 
     width: $modal-inset-width;
     height: $modal-inset-height-small;
   }
 
   @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-large) {
+    @include position(calc(50% - (#{$modal-inset-height-large}/2)), null, null, calc(50% - (#{$modal-inset-width}/2)));
+
     position: absolute;
-    top: calc(50% - (#{$modal-inset-height-large}/2));
-    left: calc(50% - (#{$modal-inset-width}/2));
 
     width: $modal-inset-width;
     height: $modal-inset-height-large;

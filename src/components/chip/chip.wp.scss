@@ -2,8 +2,20 @@
 // Windows Chip
 // --------------------------------------------------
 
-/// @prop - Margin of the chip
-$chip-wp-margin:                     2px 0 !default;
+// deprecated
+$chip-wp-margin:                     null !default;
+
+/// @prop - Margin top of the chip
+$chip-wp-margin-top:                 2px !default;
+
+/// @prop - Margin end of the chip
+$chip-wp-margin-end:                 0 !default;
+
+/// @prop - Margin bottom of the chip
+$chip-wp-margin-bottom:              $chip-wp-margin-top !default;
+
+/// @prop - Margin start of the chip
+$chip-wp-margin-start:               $chip-wp-margin-end !default;
 
 /// @prop - Height of the chip
 $chip-wp-height:                     32px !default;
@@ -20,8 +32,20 @@ $chip-wp-text-color:                 rgba(0, 0, 0, .87) !default;
 /// @prop - Background color of the chip
 $chip-wp-background-color:           rgba(0, 0, 0, .12) !default;
 
-/// @prop - Margin of the label in the chip
-$chip-wp-label-margin:               0 10px !default;
+// deprecated
+$chip-wp-label-margin:               null !default;
+
+/// @prop - Margin top of the label in the chip
+$chip-wp-label-margin-top:           0 !default;
+
+/// @prop - Margin end of the label in the chip
+$chip-wp-label-margin-end:           10px !default;
+
+/// @prop - Margin bottom of the label in the chip
+$chip-wp-label-margin-bottom:        $chip-wp-label-margin-top !default;
+
+/// @prop - Margin start of the label in the chip
+$chip-wp-label-margin-start:         $chip-wp-label-margin-end !default;
 
 /// @prop - Background color of the icon in the chip
 $chip-wp-icon-background-color:      color($colors-wp, primary) !default;
@@ -31,19 +55,24 @@ $chip-wp-icon-text-color:            color-contrast($colors-wp, $chip-wp-icon-ba
 
 
 .chip-wp {
-  margin: $chip-wp-margin;
+  @include border-radius($chip-wp-border-radius);
 
   height: $chip-wp-height;
 
-  border-radius: $chip-wp-border-radius;
   font-size: $chip-wp-font-size;
   line-height: $chip-wp-height;
   color: $chip-wp-text-color;
   background: $chip-wp-background-color;
+
+  @include deprecated-variable(margin, $chip-wp-margin) {
+    @include margin($chip-wp-margin-top, $chip-wp-margin-end, $chip-wp-margin-bottom, $chip-wp-margin-start);
+  }
 }
 
 .chip-wp > ion-label {
-  margin: $chip-wp-label-margin;
+  @include deprecated-variable(margin, $chip-wp-label-margin) {
+    @include margin($chip-wp-label-margin-top, $chip-wp-label-margin-end, $chip-wp-label-margin-bottom, $chip-wp-label-margin-start);
+  }
 }
 
 .chip-wp > ion-icon {

@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component, ElementRef, Input, NgZone, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnDestroy, Optional, Renderer, ViewEncapsulation } from '@angular/core';
 
+import { Img as IImg } from './img-interface';
 import { Content } from '../content/content';
-import { DomController } from '../../util/dom-controller';
-import { ImgLoader, ImgResponseMessage } from './img-loader';
+import { DomController } from '../../platform/dom-controller';
 import { isPresent, isTrueProperty } from '../../util/util';
 import { Platform } from '../../platform/platform';
 
@@ -28,6 +28,8 @@ import { Platform } from '../../platform/platform';
  * best. However, if a page has the potential for hundreds or even thousands
  * of images within a scrollable area, then `ion-img` would be better suited
  * for the job.
+ *
+ * > Note: `ion-img` is only meant to be used inside of [virtual-scroll](/docs/api/components/virtual-scroll/VirtualScroll/)
  *
  *
  * ### Lazy Loading
@@ -80,40 +82,12 @@ import { Platform } from '../../platform/platform';
  * Its concrete object size is resolved as a cover constraint against the
  * element’s used width and height.
  *
+ * ### Future Optimizations
  *
- * ### Web Worker and XHR Requests
- *
- * Another big cause of scroll jank is kicking off a new HTTP request,
- * which is exactly what images do. Normally, this isn't a problem for
- * something like a blog since all image HTTP requests are started immediately
- * as HTML parses. However, Ionic has the ability to include hundreds, or even
- * thousands of images within one page, but its not actually loading all of
- * the images at the same time.
- *
- * Imagine an app where users can scroll slowly, or very quickly, through
- * thousands of images. If they're scrolling extremely fast, ideally the app
- * wouldn't want to start all of those image requests, but if they're scrolling
- * slowly they would. Additionally, most browsers can only have six requests at
- * one time for the same domain, so it's extemely important that we're managing
- * exacctly which images we should downloading. Basically we want to ensure
- * that the app is requesting the most important images, and aborting
- * unnecessary requests, which is another benefit of using `ion-img`.
- *
- * Next, by running the image request within a web worker, we're able to pass
- * off the heavy lifting to another thread. Not only are able to take the load
- * of the main thread, but we're also able to accurately control exactly which
- * images should be downloading, along with the ability to abort unnecessary
- * requests. Aborting requets is just as important so that Ionic can free up
- * connections for the most important images which are visible.
- *
- * One restriction however, is that all image requests must work with
- * [cross-origin HTTP requests (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS).
- * Traditionally, the `img` element does not have this issue, but because
- * `ion-img` uses `XMLHttpRequest` within a web worker, then requests for
- * images must be served from the same domain, or the image server's response
- * must set the `Access-Control-Allow-Origin` HTTP header. Again, if your app
- * does not have the same problems which `ion-img` is solving, then it's
- * recommended to just use the standard `img` HTML element instead.
+ * Future goals are to place image requests within web workers, and cache
+ * images in-memory as datauris. This method has proven to be effective,
+ * however there are some current limitations with Cordova which we are
+ * currently working on.
  *
  */
 @Component({
@@ -122,7 +96,7 @@ import { Platform } from '../../platform/platform';
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class Img implements OnDestroy {
+export class Img implements OnDestroy, IImg {
   /** @internal */
   _src: string;
   /** @internal */
@@ -130,11 +104,9 @@ export class Img implements OnDestroy {
   /** @internal */
   _renderedSrc: string;
   /** @internal */
-  _tmpDataUri: string;
+  _hasLoaded: boolean;
   /** @internal */
   _cache: boolean = true;
-  /** @internal */
-  _cb: Function;
   /** @internal */
   _bounds: any;
   /** @internal */
@@ -147,19 +119,21 @@ export class Img implements OnDestroy {
   _wQ: string = '';
   /** @internal */
   _hQ: string = '';
+  /** @internal */
+  _img: HTMLImageElement;
+  /** @internal */
+  _unreg: Function;
 
-  /** @private */
+  /** @hidden */
   canRequest: boolean;
-  /** @private */
+  /** @hidden */
   canRender: boolean;
 
 
   constructor(
-    private _ldr: ImgLoader,
     private _elementRef: ElementRef,
     private _renderer: Renderer,
-    private _platform: Platform,
-    private _zone: NgZone,
+    private _plt: Platform,
     @Optional() private _content: Content,
     private _dom: DomController
   ) {
@@ -172,7 +146,7 @@ export class Img implements OnDestroy {
   }
 
   /**
-   * @input {string} Image src.
+   * @input {string} The source of the image.
    */
   @Input()
   get src(): string {
@@ -189,14 +163,9 @@ export class Img implements OnDestroy {
       // update to the new src
       this._src = newSrc;
 
-      if (newSrc.indexOf('data:') === 0) {
-        // they're using an actual datauri already
-        this._tmpDataUri = newSrc;
-
-      } else {
-        // reset any existing datauri we might be holding onto
-        this._tmpDataUri = null;
-      }
+      // Are they using an actual datauri already,
+      // or reset any existing datauri we might be holding onto
+      this._hasLoaded = newSrc.indexOf('data:') === 0;
 
       // run update to kick off requests or render if everything is good
       this.update();
@@ -204,13 +173,13 @@ export class Img implements OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   reset() {
     if (this._requestingSrc) {
       // abort any active requests
       console.debug(`abortRequest ${this._requestingSrc} ${Date.now()}`);
-      this._ldr.abort(this._requestingSrc);
+      this._srcAttr('');
       this._requestingSrc = null;
     }
     if (this._renderedSrc) {
@@ -222,64 +191,38 @@ export class Img implements OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   update() {
     // only attempt an update if there is an active src
     // and the content containing the image considers it updatable
     if (this._src && this._content.isImgsUpdatable()) {
-      if (this.canRequest && (this._src !== this._renderedSrc && this._src !== this._requestingSrc) && !this._tmpDataUri) {
+      if (this.canRequest && (this._src !== this._renderedSrc && this._src !== this._requestingSrc) && !this._hasLoaded) {
         // only begin the request if we "can" request
         // begin the image request if the src is different from the rendered src
         // and if we don't already has a tmpDataUri
         console.debug(`request ${this._src} ${Date.now()}`);
         this._requestingSrc = this._src;
 
-        // create a callback for when we get data back from the web worker
-        this._cb = (msg: ImgResponseMessage) => {
-          this._loadResponse(msg);
-        };
-
-        // post the message to the web worker
-        this._ldr.load(this._src, this._cache, this._cb);
+        this._isLoaded(false);
+        this._srcAttr(this._src);
 
         // set the dimensions of the image if we do have different data
         this._setDims();
       }
 
-      if (this.canRender && this._tmpDataUri && this._src !== this._renderedSrc) {
+      if (this.canRender && this._hasLoaded && this._src !== this._renderedSrc) {
         // we can render and we have a datauri to render
         this._renderedSrc = this._src;
         this._setDims();
         this._dom.write(() => {
-          if (this._tmpDataUri) {
+          if (this._hasLoaded) {
             console.debug(`render ${this._src} ${Date.now()}`);
             this._isLoaded(true);
-            this._srcAttr(this._tmpDataUri);
-            this._tmpDataUri = null;
+            this._srcAttr(this._src);
           }
         });
       }
-    }
-  }
-
-  private _loadResponse(msg: ImgResponseMessage) {
-    this._requestingSrc = null;
-
-    if (msg.status === 200) {
-      // success :)
-      this._tmpDataUri = msg.data;
-      this.update();
-
-    } else {
-      // error :(
-      if (msg.status) {
-        console.error(`img, status: ${msg.status} ${msg.msg}`);
-      }
-      this._renderedSrc = this._tmpDataUri = null;
-      this._dom.write(() => {
-        this._isLoaded(false);
-      });
     }
   }
 
@@ -297,15 +240,17 @@ export class Img implements OnDestroy {
    * @internal
    */
   _srcAttr(srcAttr: string) {
-    const imgEle = this._elementRef.nativeElement.firstChild;
+    const imgEle = this._img;
     const renderer = this._renderer;
 
-    renderer.setElementAttribute(imgEle, 'src', srcAttr);
-    renderer.setElementAttribute(imgEle, 'alt', this.alt);
+    if (imgEle && imgEle.src !== srcAttr) {
+      renderer.setElementAttribute(this._img, 'src', srcAttr);
+      renderer.setElementAttribute(this._img, 'alt', this.alt);
+    }
   }
 
   /**
-   * @private
+   * @hidden
    */
   get top(): number {
     const bounds = this._getBounds();
@@ -313,7 +258,7 @@ export class Img implements OnDestroy {
   }
 
   /**
-   * @private
+   * @hidden
    */
   get bottom(): number {
     const bounds = this._getBounds();
@@ -410,11 +355,22 @@ export class Img implements OnDestroy {
   @Input() alt: string = '';
 
   /**
-   * @private
+   * @hidden
+   */
+  ngAfterContentInit() {
+    this._img = this._elementRef.nativeElement.firstChild;
+
+    this._unreg = this._plt.registerListener(this._img, 'load', () => {
+      this._hasLoaded = true;
+      this.update();
+    }, { passive: true });
+  }
+
+  /**
+   * @hidden
    */
   ngOnDestroy() {
-    this._ldr.cancelLoad(this._cb);
-    this._cb = null;
+    this._unreg && this._unreg();
     this._content && this._content.removeImg(this);
   }
 

@@ -10,13 +10,13 @@ import { ErrorHandler } from '@angular/core';
  * ### IonicErrorHandler Example
  *
  * ```typescript
- * import { NgModule, ErrorHandler } from '@angular/core';
+ * import { ErrorHandler, NgModule } from '@angular/core';
  * import { IonicErrorHandler } from 'ionic-angular';
  *
  * @NgModule({
  *   providers: [{ provide: ErrorHandler, useClass: IonicErrorHandler }]
  * })
- * class AppModule {}
+ * class AppModule { }
  * ```
  *
  *
@@ -35,14 +35,14 @@ import { ErrorHandler } from '@angular/core';
  * @NgModule({
  *   providers: [{ provide: ErrorHandler, useClass: MyErrorHandler }]
  * })
- * class AppModule {}
+ * class AppModule { }
  * ```
  *
  * More information about Angular's [`ErrorHandler`](https://angular.io/docs/ts/latest/api/core/index/ErrorHandler-class.html).
  */
 export class IonicErrorHandler extends ErrorHandler {
   constructor() {
-    super(false);
+    super();
   }
   /**
    * @internal
@@ -50,10 +50,14 @@ export class IonicErrorHandler extends ErrorHandler {
   handleError(err: any): void {
     super.handleError(err);
     try {
-      const devServer = window['IonicDevServer'];
-      if (devServer) {
-        devServer.handleError(err);
-      }
+      const win: any = window;
+      let monitor: any;
+
+      monitor = win['IonicDevServer'];
+      monitor && monitor.handleError && monitor.handleError(err);
+
+      monitor = (win['Ionic'] = win['Ionic'] || {}).Monitor;
+      monitor && monitor.handleError && monitor.handleError(err);
     } catch (e) {}
   }
 }

@@ -6,20 +6,24 @@
 /// @prop - Padding top and bottom of the select
 $select-wp-padding-vertical:    0 !default;
 
-/// @prop - Padding left and right of the select
-$select-wp-padding-horizontal:  ($item-wp-padding-right / 2) !default;
+/// @prop - Padding start/end of the select
+$select-wp-padding-horizontal:  ($item-wp-padding-end / 2) !default;
 
 /// @prop - Margin top of the select
 $select-wp-margin-top:          $item-wp-padding-top !default;
 
-/// @prop - Margin right of the select
-$select-wp-margin-right:        ($item-wp-padding-right / 2) !default;
+// deprecated
+$select-wp-margin-right:        ($item-wp-padding-end / 2) !default;
+/// @prop - Margin end of the select
+$select-wp-margin-end:          $select-wp-margin-right !default;
 
 /// @prop - Margin bottom of the select
 $select-wp-margin-bottom:       $item-wp-padding-bottom !default;
 
-/// @prop - Margin left of the select
-$select-wp-margin-left:         ($item-wp-padding-left / 2) !default;
+// deprecated
+$select-wp-margin-left:         ($item-wp-padding-start / 2) !default;
+/// @prop - Margin start of the select
+$select-wp-margin-start:        $select-wp-margin-left !default;
 
 /// @prop - Border width of the select
 $select-wp-border-width:        2px !default;
@@ -41,10 +45,10 @@ $select-wp-placeholder-color:   $select-wp-icon-color !default;
 
 
 .select-wp {
-  flex: 1;
+  @include margin($select-wp-margin-top, $select-wp-margin-end, $select-wp-margin-bottom, $select-wp-margin-start);
+  @include padding($select-wp-padding-vertical, $select-wp-padding-horizontal);
 
-  margin: $select-wp-margin-top $select-wp-margin-right $select-wp-margin-bottom $select-wp-margin-left;
-  padding: $select-wp-padding-vertical $select-wp-padding-horizontal;
+  flex: 1;
 
   max-width: 100%;
 
@@ -57,7 +61,7 @@ $select-wp-placeholder-color:   $select-wp-icon-color !default;
 }
 
 .item-wp.item-select ion-label {
-  margin-left: 0;
+  @include margin-horizontal(0, null);
 }
 
 .select-wp .select-icon {
@@ -70,9 +74,10 @@ $select-wp-placeholder-color:   $select-wp-icon-color !default;
 }
 
 .select-wp .select-icon .select-icon-inner {
+  @include position(3px, null, null, 5px);
+
   position: absolute;
-  top: 3px;
-  left: 5px;
+
   display: block;
 
   width: ($select-wp-icon-width / 2);

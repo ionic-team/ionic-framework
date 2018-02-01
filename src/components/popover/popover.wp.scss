@@ -29,17 +29,17 @@ $popover-wp-background:                $background-wp-color !default;
 
 
 .popover-wp .popover-content {
+  @include border-radius($popover-wp-border-radius);
+  @include transform-origin(start, top);
+
   width: $popover-wp-width;
   min-width: $popover-wp-min-width;
   min-height: $popover-wp-min-height;
   max-height: $popover-wp-max-height;
 
   border: $popover-wp-border;
-  border-radius: $popover-wp-border-radius;
   color: $popover-wp-text-color;
   background: $popover-wp-background;
-
-  transform-origin: top left;
 }
 
 .popover-wp .popover-viewport {

@@ -1,3 +1,5 @@
+import { InjectionToken } from '@angular/core';
+
 /**
 * @ngdoc service
 * @name Config
@@ -5,14 +7,12 @@
 * @description
 * Config allows you to set the modes of your components
 */
-import { OpaqueToken } from '@angular/core';
 import { Platform } from '../platform/platform';
-import { QueryParams } from '../platform/query-params';
-import { isObject, isDefined, isFunction, isArray } from '../util/util';
+import { isArray, isDefined, isFunction, isObject } from '../util/util';
 
 /**
  * @name Config
- * @demo /docs/v2/demos/src/config/
+ * @demo /docs/demos/src/config/
  * @description
  * The Config lets you configure your entire app or specific platforms.
  * You can set the tab placement, icon mode, animations, and more here.
@@ -23,13 +23,14 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * @NgModule({
  *   declarations: [ MyApp ],
  *   imports: [
+ *     BrowserModule,
  *     IonicModule.forRoot(MyApp, {
  *       backButtonText: 'Go Back',
  *       iconMode: 'ios',
  *       modalEnter: 'modal-slide-in',
  *       modalLeave: 'modal-slide-out',
  *       tabsPlacement: 'bottom',
- *       pageTransition: 'ios'
+ *       pageTransition: 'ios-transition'
  *     }, {}
  *   )],
  *   bootstrap: [IonicApp],
@@ -48,6 +49,7 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * @NgModule({
  *   ...
  *   imports: [
+ *     BrowserModule,
  *     IonicModule.forRoot(MyApp, {
  *       tabsPlacement: 'bottom',
  *       platforms: {
@@ -103,21 +105,25 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
  * | `backButtonText`         | `string`            | The text to display by the back button icon in the navbar.                                                                                       |
  * | `backButtonIcon`         | `string`            | The icon to use as the back button icon.                                                                                                         |
  * | `iconMode`               | `string`            | The mode to use for all icons throughout the application. Available options: `"ios"`, `"md"`                                                     |
+ * | `locationStrategy`       | `string`            | Set to 'path' to remove hashbangs when using Deeplinking.                                                                                        |
  * | `loadingEnter`           | `string`            | The name of the transition to use while a loading indicator is presented.                                                                        |
  * | `loadingLeave`           | `string`            | The name of the transition to use while a loading indicator is dismissed.                                                                        |
  * | `menuType`               | `string`            | Type of menu to display. Available options: `"overlay"`, `"reveal"`, `"push"`.                                                                   |
  * | `modalEnter`             | `string`            | The name of the transition to use while a modal is presented.                                                                                    |
  * | `modalLeave`             | `string`            | The name of the transition to use while a modal is dismiss.                                                                                      |
  * | `mode`                   | `string`            | The mode to use throughout the application.                                                                                                      |
- * | `pageTransition`         | `string`            | The name of the transition to use while changing pages.                                                                                          |
+ * | `pageTransition`         | `string`            | The name of the transition to use while changing pages. Available options: `"ios-transition"`, `"md-transition"`, `"wp-transition"`.             |
  * | `pickerEnter`            | `string`            | The name of the transition to use while a picker is presented.                                                                                   |
  * | `pickerLeave`            | `string`            | The name of the transition to use while a picker is dismissed.                                                                                   |
  * | `popoverEnter`           | `string`            | The name of the transition to use while a popover is presented.                                                                                  |
- * | `popoverLeave`           | `string`            | The name of the transition to use while a popover is dismissed.                                                                                  |
+ * | `popoverLeave`           | `string`            | The name of the transition to use while a popover is dismissed.
+ * | `scrollAssist`           | `boolean`           | Used to avoid the input to be hidden by the keyboard if it's near the bottom of the page.
+ * | `scrollPadding`          | `boolean`           | Used to remove the extra padding on ion-content when keyboard is displayed.
  * | `spinner`                | `string`            | The default spinner to use when a name is not defined.                                                                                           |
+ * | `statusbarPadding`       | `boolean`           | Whether to hide extra padding for statusbar.                                                                                                     |
  * | `swipeBackEnabled`       | `boolean`           | Whether native iOS swipe to go back functionality is enabled.                                                                                    |
  * | `tabsHighlight`          | `boolean`           | Whether to show a highlight line under the tab when it is selected.                                                                              |
- * | `tabsLayout`             | `string`            | The layout to use for all tabs. Available options: `"icon-top"`, `"icon-left"`, `"icon-right"`, `"icon-bottom"`, `"icon-hide"`, `"title-hide"`.  |
+ * | `tabsLayout`             | `string`            | The layout to use for all tabs. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"title-hide"`.   |
  * | `tabsPlacement`          | `string`            | The position of the tabs relative to the content. Available options: `"top"`, `"bottom"`                                                         |
  * | `tabsHideOnSubPages`     | `boolean`           | Whether to hide the tabs on child pages or not. If `true` it will not show the tabs on child pages.                                              |
  * | `toastEnter`             | `string`            | The name of the transition to use while a toast is presented.                                                                                    |
@@ -127,22 +133,20 @@ import { isObject, isDefined, isFunction, isArray } from '../util/util';
 export class Config {
   private _c: any = {};
   private _s: any = {};
-  private _qp: QueryParams;
   private _modes: any = {};
   private _trns: any = {};
 
   /**
-   * @private
+   * @hidden
    */
-  platform: Platform;
+  plt: Platform;
 
   /**
-   * @private
+   * @hidden
    */
-  init(config: any, queryParams: QueryParams, platform: Platform) {
+  init(config: any, plt: Platform) {
     this._s = config && isObject(config) && !isArray(config) ? config : {};
-    this._qp = queryParams;
-    this.platform = platform;
+    this.plt = plt;
   }
 
 
@@ -157,6 +161,7 @@ export class Config {
    *  defaults to `null`.
    */
   get(key: string, fallbackValue: any = null): any {
+    const platform = this.plt;
 
     if (!isDefined(this._c[key])) {
       if (!isDefined(key)) {
@@ -168,16 +173,16 @@ export class Config {
       // the user config's platforms, which already contains
       // settings from default platform configs
 
-      let userPlatformValue: any = undefined;
-      let userDefaultValue: any = this._s[key];
-      let userPlatformModeValue: any = undefined;
-      let userDefaultModeValue: any = undefined;
-      let platformValue: any = undefined;
-      let platformModeValue: any = undefined;
-      let configObj: any = null;
+      var userPlatformValue: any = undefined;
+      var userDefaultValue: any = this._s[key];
+      var userPlatformModeValue: any = undefined;
+      var userDefaultModeValue: any = undefined;
+      var platformValue: any = undefined;
+      var platformModeValue: any = undefined;
+      var configObj: any = null;
 
-      if (this.platform) {
-        const queryStringValue = this._qp.get('ionic' + key);
+      if (platform) {
+        var queryStringValue = platform.getQueryParam('ionic' + key);
         if (isDefined(queryStringValue)) {
           return this._c[key] = (queryStringValue === 'true' ? true : queryStringValue === 'false' ? false : queryStringValue);
         }
@@ -187,7 +192,7 @@ export class Config {
 
         // array of active platforms, which also knows the hierarchy,
         // with the last one the most important
-        const activePlatformKeys = this.platform.platforms();
+        var activePlatformKeys = platform.platforms();
 
         // loop through all of the active platforms we're on
         for (var i = 0, ilen = activePlatformKeys.length; i < ilen; i++) {
@@ -207,7 +212,7 @@ export class Config {
           }
 
           // get default platform's setting
-          configObj = this.platform.getPlatformConfig(activePlatformKeys[i]);
+          configObj = platform.getPlatformConfig(activePlatformKeys[i]);
           if (configObj && configObj.settings) {
 
             if (isDefined(configObj.settings[key])) {
@@ -247,9 +252,9 @@ export class Config {
     // or it was from the users platform configs
     // or it was from the default platform configs
     // in that order
-    let rtnVal: any = this._c[key];
+    var rtnVal: any = this._c[key];
     if (isFunction(rtnVal)) {
-      rtnVal = rtnVal(this.platform);
+      rtnVal = rtnVal(platform);
     }
 
     return (rtnVal !== null ? rtnVal : fallbackValue);
@@ -336,7 +341,7 @@ export class Config {
   }
 
   /**
-   * @private
+   * @hidden
    * @name settings()
    * @description
    */
@@ -364,28 +369,28 @@ export class Config {
   }
 
   /**
-   * @private
+   * @hidden
    */
   setModeConfig(modeName: string, modeConfig: any) {
     this._modes[modeName] = modeConfig;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getModeConfig(modeName: string): any {
     return this._modes[modeName] || null;
   }
 
   /**
-   * @private
+   * @hidden
    */
   setTransition(trnsName: string, trnsClass: any) {
     this._trns[trnsName] = trnsClass;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getTransition(trnsName: string): any {
     return this._trns[trnsName] || null;
@@ -394,15 +399,21 @@ export class Config {
 }
 
 /**
- * @private
+ * @hidden
  */
-export const ConfigToken = new OpaqueToken('USERCONFIG');
-
-/**
- * @private
- */
-export function setupConfig(userConfig: any, queryParams: QueryParams, platform: Platform): Config {
+export function setupConfig(userConfig: any, plt: Platform): Config {
   const config = new Config();
-  config.init(userConfig, queryParams, platform);
+  config.init(userConfig, plt);
+
+  // add the config obj to the window
+  const win: any = plt.win();
+  win['Ionic'] = win['Ionic'] || {};
+  win['Ionic']['config'] = config;
+
   return config;
 }
+
+/**
+ * @hidden
+ */
+export const ConfigToken = new InjectionToken<any>('USERCONFIG');

@@ -1,4 +1,5 @@
 import * as gulp from 'gulp';
+import * as runSequence from 'run-sequence';
 
 gulp.task('default', help);
 
@@ -13,4 +14,6 @@ function help() {
   console.log(taskList.join('\n'));
 }
 
-gulp.task('validate', ['lint', 'test']);
+gulp.task('validate', (done: (err: any) => void) => {
+  runSequence('clean', ['lint', 'test'], done);
+});

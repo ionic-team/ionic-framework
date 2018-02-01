@@ -4,9 +4,10 @@
 // --------------------------------------------------
 
 .tabbar {
+  @include position(null, null, 0, 0);
+
   position: absolute;
-  bottom: 0;
-  left: 0;
+
   z-index: $z-index-toolbar;
   display: flex;
 
@@ -14,6 +15,10 @@
 
   // default to hidden until ready
   opacity: 0;
+}
+
+.tabbar-hidden .tabbar {
+  display: none;
 }
 
 .tabbar.show-tabbar {
@@ -26,6 +31,10 @@
 }
 
 .tab-button {
+  @include margin(0);
+  @include text-align(center);
+  @include border-radius(0);
+
   position: relative;
   z-index: 0;
   display: flex;
@@ -37,12 +46,8 @@
   align-self: center;
   justify-content: center;
 
-  margin: 0;
-
   border: 0;
-  border-radius: 0;
 
-  text-align: center;
   text-decoration: none;
   background: none;
   cursor: pointer;
@@ -61,8 +66,7 @@
 }
 
 .tab-button-text {
-  margin-top: 3px;
-  margin-bottom: 2px;
+  @include margin(3px, null, 2px, null);
 }
 
 .tab-button-text,
@@ -92,23 +96,25 @@
   order: 10;
 }
 
-[tabsLayout=icon-left] .tab-button,
-[tabsLayout=icon-right] .tab-button {
+[tabsLayout=icon-left] .tab-button, // deprecated
+[tabsLayout=icon-right] .tab-button, // deprecated
+[tabsLayout=icon-start] .tab-button,
+[tabsLayout=icon-end] .tab-button {
   flex-direction: row;
 }
 
-[tabsLayout=icon-left] .tab-button .tab-button-icon {
-  padding-right: 8px;
-
-  text-align: right;
+[tabsLayout=icon-left] .tab-button .tab-button-icon, // deprecated
+[tabsLayout=icon-start] .tab-button .tab-button-icon {
+  @include padding-horizontal(null, 8px);
+  @include text-align(end);
 }
 
-[tabsLayout=icon-right] .tab-button .tab-button-icon {
+[tabsLayout=icon-right] .tab-button .tab-button-icon, // deprecated
+[tabsLayout=icon-end] .tab-button .tab-button-icon {
+  @include padding-horizontal(8px, null);
+  @include text-align(start);
+
   order: 10;
-
-  padding-left: 8px;
-
-  text-align: left;
 }
 
 .tab-hidden,
@@ -122,12 +128,11 @@
 // --------------------------------------------------
 
 .tab-badge {
-  position: absolute;
-  top: 6%;
-  right: 4%;
-  right: calc(50% - 50px);
+  @include position(6%, 4%, null, null); // 4% fallback
+  @include position(null, calc(50% - 50px), null, null);
+  @include padding(1px, 6px);
 
-  padding: 1px 6px;
+  position: absolute;
 
   height: auto;
 
@@ -136,11 +141,13 @@
 }
 
 .has-icon .tab-badge {
-  right: calc(50% - 30px);
+  @include position(null, calc(50% - 30px), null, null);
 }
 
 [tabsLayout=icon-bottom] .tab-badge,
-[tabsLayout=icon-left] .tab-badge,
-[tabsLayout=icon-right] .tab-badge {
-  right: calc(50% - 50px);
+[tabsLayout=icon-left] .tab-badge, // deprecated
+[tabsLayout=icon-right] .tab-badge, // deprecated
+[tabsLayout=icon-start] .tab-badge,
+[tabsLayout=icon-end] .tab-badge {
+  @include position(null, calc(50% - 50px), null, null);
 }

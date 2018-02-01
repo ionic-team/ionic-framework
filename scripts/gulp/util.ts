@@ -1,7 +1,8 @@
-import { UMD_MODULE, ES_2015, NODE_MODULES_ROOT, PROJECT_ROOT, SRC_ROOT, SRC_COMPONENTS_ROOT } from './constants';
-import { src, dest } from 'gulp';
-import { join } from 'path';
-import * as fs from 'fs';
+import { spawn } from 'cross-spawn';
+import { NODE_MODULES_ROOT, SRC_ROOT } from './constants';
+import { dest, src } from 'gulp';
+import { dirname, join, resolve } from 'path';
+import { ensureDirSync, readFile, readFileSync, readdirSync, statSync, writeFile, writeFileSync } from 'fs-extra';
 import { rollup } from 'rollup';
 import { Replacer } from 'strip-function';
 import * as commonjs from 'rollup-plugin-commonjs';
@@ -9,6 +10,12 @@ import * as multiEntry from 'rollup-plugin-multi-entry';
 import * as nodeResolve from 'rollup-plugin-node-resolve';
 import * as through from 'through2';
 import * as uglifyPlugin from 'rollup-plugin-uglify';
+import { argv } from 'yargs';
+
+import { runWorker } from './utils/app-scripts-worker-client';
+
+// These packages lack of types.
+const resolveBin = require('resolve-bin');
 
 export function mergeObjects(obj1: any, obj2: any ) {
   if (! obj1) {
@@ -18,24 +25,24 @@ export function mergeObjects(obj1: any, obj2: any ) {
     obj2 = {};
   }
   var obj3 = {};
-  for (var attrname in obj1) {
+  for (let attrname in obj1) {
     (<any>obj3)[attrname] = obj1[attrname];
   }
-  for (var attrname in obj2) {
+  for (let attrname in obj2) {
     (<any>obj3)[attrname] = obj2[attrname];
   }
   return obj3;
 }
 
-function getRootTsConfig(): any {
-  const json = fs.readFileSync(`${PROJECT_ROOT}/tsconfig.json`);
+function getRootTsConfig(pathToReadFile): any {
+  const json = readFileSync(pathToReadFile);
 
   let tsConfig = JSON.parse(json.toString());
   return tsConfig;
 }
 
-export function createTempTsConfig(includeGlob: string[], target: string, moduleType: string, pathToWriteFile: string): any {
-  let config = getRootTsConfig();
+export function createTempTsConfig(includeGlob: string[], target: string, moduleType: string, pathToReadFile: string, pathToWriteFile: string, overrideCompileOptions: any = null): any {
+  let config = getRootTsConfig(pathToReadFile);
   if (!config.compilerOptions) {
     config.compilerOptions = {};
   }
@@ -43,17 +50,36 @@ export function createTempTsConfig(includeGlob: string[], target: string, module
   if (config.compilerOptions && config.compilerOptions.outDir) {
     delete config.compilerOptions.outDir;
   }
+
+  // remove linting checks that we do not want in dist
+  if (config.compilerOptions.noUnusedLocals) {
+    delete config.compilerOptions.noUnusedLocals;
+  }
+  if (config.compilerOptions.noUnusedParameters) {
+    delete config.compilerOptions.noUnusedParameters;
+  }
+
   if (config.compilerOptions) {
     config.compilerOptions.module = moduleType;
     config.compilerOptions.target = target;
   }
   config.include = includeGlob;
+
+  if (overrideCompileOptions) {
+    config.compilerOptions = Object.assign(config.compilerOptions, overrideCompileOptions);
+  }
+
+  // TS represents paths internally with '/' and expects the tsconfig path to be in this format
   let json = JSON.stringify(config, null, 2);
-  fs.writeFileSync(pathToWriteFile, json);
+  json = json.replace(/\\\\/g, '/');
+
+  const dirToCreate = dirname(pathToWriteFile);
+  ensureDirSync(dirToCreate);
+  writeFileSync(pathToWriteFile, json);
 }
 
 function removeDebugStatements() {
-  let replacer = new Replacer(['console.debug', 'assert', 'runInDev']);
+  let replacer = new Replacer(['console.debug', 'console.time', 'console.timeEnd', 'assert', 'runInDev']);
   return through.obj(function (file, encoding, callback) {
     const content = file.contents.toString();
     const cleanedJs = replacer.replace(content);
@@ -70,7 +96,7 @@ export function copySourceToDest(destinationPath: string, excludeSpecs: boolean,
     glob.push(`${SRC_ROOT}/**/*.spec.ts`);
   }
   if (excludeE2e) {
-    glob.push(`!${SRC_ROOT}/components/*/test/*/*.ts`);
+    glob.push(`!${SRC_ROOT}/components/*/test/*/**/*.ts`);
   }
   let stream = src(glob);
   if (stripDebug) {
@@ -129,56 +155,107 @@ export function compileSass(destinationPath: string) {
 }
 
 export function setSassIonicVersion(version: string) {
-  fs.writeFileSync(join(SRC_ROOT, 'themes/version.scss'), `$ionic-version: "${version}";`);
+  writeFileSync(join(SRC_ROOT, 'themes/version.scss'), `$ionic-version: "${version}";`);
 }
 
 export function copyFile(srcPath: string, destPath: string) {
-  const sourceData = fs.readFileSync(srcPath);
-  fs.writeFileSync(destPath, sourceData);
-}
-
-export function copySwiperToPath(distPath: string, moduleType: string) {
-  copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.d.ts`, `${distPath}/swiper-widget.d.ts`);
-  if (!moduleType || moduleType === UMD_MODULE) {
-    copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.js`, `${distPath}/swiper-widget.js`);
-  } else if (moduleType === ES_2015) {
-    copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.es2015.js`, `${distPath}/swiper-widget.js`);
-  } else {
-    copyFile(`${SRC_COMPONENTS_ROOT}/slides/swiper-widget.system.js`, `${distPath}/swiper-widget.system.js`);
-  }
+  const sourceData = readFileSync(srcPath);
+  writeFileSync(destPath, sourceData);
 }
 
 export function runNgc(pathToConfigFile: string, done: Function) {
   let exec = require('child_process').exec;
-  var shellCommand = `node --max_old_space_size=8096 ${PROJECT_ROOT}/node_modules/.bin/ngc -p ${pathToConfigFile}`;
+  let ngcPath = getBinaryPath('@angular/compiler-cli', 'ngc');
+  let shellCommand = `node --max_old_space_size=8096 ${ngcPath} -p ${pathToConfigFile}`;
 
   exec(shellCommand, function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
+    process.stdout.write(stdout);
+    process.stderr.write(stderr);
     done(err);
   });
 }
 
 export function runTsc(pathToConfigFile: string, done: Function) {
   let exec = require('child_process').exec;
-  var shellCommand = `node --max_old_space_size=8096 ${PROJECT_ROOT}/node_modules/.bin/tsc -p ${pathToConfigFile}`;
+  let tscPath = getBinaryPath('typescript', 'tsc');
+  let shellCommand = `node --max_old_space_size=8096 ${tscPath} -p ${pathToConfigFile}`;
 
-  exec(shellCommand, function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
+  exec(shellCommand, function (err, stdout, stderr) {
+    process.stdout.write(stdout);
+    process.stderr.write(stderr);
     done(err);
   });
 }
 
 export function runWebpack(pathToWebpackConfig: string, done: Function) {
   let exec = require('child_process').exec;
-  let shellCommand = `node --max_old_space_size=8096 ./node_modules/.bin/webpack --config ${pathToWebpackConfig} --display-error-details`;
+  let webpackPath = getBinaryPath('webpack');
+  let shellCommand = `node --max_old_space_size=8096 ${webpackPath} --config ${pathToWebpackConfig} --display-error-details`;
 
   exec(shellCommand, function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
+    process.stdout.write(stdout);
+    process.stderr.write(stderr);
     done(err);
   });
+}
+
+export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, watchConfigPath: string, devApp: boolean) {
+  console.log('Running ionic-app-scripts serve with', testOrDemoName);
+  const deepLinksDir = dirname(dirname(appNgModulePath));
+  let scriptArgs = [
+    'serve',
+    '--appEntryPoint', appEntryPoint,
+    '--appNgModulePath', appNgModulePath,
+    '--deepLinksDir', deepLinksDir,
+    '--srcDir', srcDir,
+    '--wwwDir', distDir,
+    '--tsconfig', tsConfig,
+    '--readConfigJson', 'false',
+    '--ionicAngularDir', ionicAngularDir,
+    '--sass', sassConfigPath,
+    '--copy', copyConfigPath,
+    '--enableLint', 'false',
+    '--skipIonicAngularVersion', 'true'
+  ];
+  if (devApp) {
+    scriptArgs.push('--bonjour');
+  }
+
+  if (watchConfigPath) {
+    scriptArgs.push('--watch');
+    scriptArgs.push(watchConfigPath);
+  }
+
+  const debug: boolean = argv.debug;
+  if (debug) {
+    scriptArgs.push('--debug');
+  }
+
+  return new Promise((resolve, reject) => {
+    let pathToAppScripts = join(NODE_MODULES_ROOT, '.bin', 'ionic-app-scripts');
+    pathToAppScripts = process.platform === 'win32' ? pathToAppScripts + '.cmd' : pathToAppScripts;
+
+    const spawnedCommand = spawn(pathToAppScripts, scriptArgs, {stdio: 'inherit'});
+    console.log(`${pathToAppScripts} ${scriptArgs.join(' ')}`);
+
+    spawnedCommand.on('close', (code: number) => {
+      if (code === 0) {
+        return resolve();
+      }
+      reject(new Error('App-scripts failed with non-zero status code'));
+    });
+  });
+}
+
+export function runAppScriptsBuild(appEntryPoint: string, appNgModulePath: string, srcDir: string, distDir: string, tsConfig: string, ionicAngularDir: string, sassConfigPath: string, copyConfigPath: string, isDev: boolean = false, minifyCss: boolean = true, minifyJs: boolean = true, optimizeJs: boolean = true) {
+  const pathToAppScripts = join(NODE_MODULES_ROOT, '.bin', 'ionic-app-scripts');
+  const debug: boolean = argv.debug;
+  return runWorker(pathToAppScripts, debug, appEntryPoint, appNgModulePath, srcDir, distDir, tsConfig, ionicAngularDir, sassConfigPath, copyConfigPath, isDev, minifyCss, minifyJs, optimizeJs);
+}
+
+/** Resolves the path for a node package executable. */
+export function getBinaryPath(packageName: string, executable = packageName): string {
+  return resolveBin.sync(packageName, {executable});
 }
 
 export function deleteFiles(glob: string[], done: Function) {
@@ -249,7 +326,7 @@ export function writePolyfills(outputDirectory: string) {
   promises.push(bundlePolyfill(NG_ENTRIES, join(outputDirectory, 'polyfills.ng.js')));
 
   return Promise.all(promises);
-};
+}
 
 function bundlePolyfill(pathsToIncludeInPolyfill: string[], outputPath: string) {
   return rollup({
@@ -263,12 +340,63 @@ function bundlePolyfill(pathsToIncludeInPolyfill: string[], outputPath: string) 
       }),
       commonjs(),
       uglifyPlugin()
-    ]
+    ],
+    onwarn: () => {
+      return () => {};
+    }
   }).then((bundle) => {
     return bundle.write({
       format: 'iife',
       moduleName: 'MyBundle',
       dest: outputPath
+    });
+  }).catch(err => {
+    console.log('caught rollup error: ', err);
+  });
+}
+
+export function getFolderInfo() {
+  let componentName: string = null;
+  let componentTest: string = null;
+  const folder: string = argv.folder || argv.f;
+  if (folder && folder.length) {
+    const folderSplit = folder.split('/');
+    componentName = folderSplit[0];
+    componentTest = (folderSplit.length > 1 ? folderSplit[1] : 'basic');
+  }
+  const devApp = argv.devapp !== undefined;
+  return {
+    componentName: componentName,
+    componentTest: componentTest,
+    devApp: devApp
+  };
+}
+
+export function getFolders(dir) {
+  return readdirSync(dir)
+    .filter(function(file) {
+      return statSync(join(dir, file)).isDirectory();
+    });
+}
+
+export function readFileAsync(filePath: string) {
+  return new Promise((resolve, reject) => {
+    readFile(filePath, (err: Error, buffer: Buffer) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve(buffer.toString());
+    });
+  });
+}
+
+export function writeFileAsync(filePath: string, fileContent: string) {
+  return new Promise((resolve, reject) => {
+    writeFile(filePath, fileContent, (err: Error) => {
+      if (err) {
+        return reject(err);
+      }
+      return resolve();
     });
   });
 }

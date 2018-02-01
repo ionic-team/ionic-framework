@@ -3,14 +3,17 @@
 // Action Sheet
 // --------------------------------------------------
 
+/// @prop - Width of the action sheet
 $action-sheet-width:                             100% !default;
+
+/// @prop - Maximum width of the action sheet
 $action-sheet-max-width:                         500px !default;
 
 
 ion-action-sheet {
+  @include position(0, null, null, 0);
+
   position: absolute;
-  top: 0;
-  left: 0;
   z-index: $z-index-overlay;
   display: block;
 
@@ -19,21 +22,45 @@ ion-action-sheet {
 }
 
 .action-sheet-wrapper {
+  @include position(0, 0, 0, 0);
+  @include margin(auto);
+  @include transform(translate3d(0, 100%, 0));
+
   position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
   z-index: $z-index-overlay-wrapper;
   display: block;
-
-  margin: auto;
 
   width: $action-sheet-width;
   max-width: $action-sheet-max-width;
 
-  transform: translate3d(0, 100%, 0);
+  pointer-events: none;
 }
 
 .action-sheet-button {
   width: $action-sheet-width;
+}
+
+.action-sheet-container {
+  display: flex;
+
+  flex-flow: column;
+
+  justify-content: flex-end;
+
+  height: 100%;
+  max-height: 100%;
+}
+
+.action-sheet-group {
+  overflow: scroll;
+
+  flex-shrink: 2;
+
+  pointer-events: all;
+}
+
+.action-sheet-group-cancel {
+  overflow: hidden;
+
+  flex-shrink: 0;
 }

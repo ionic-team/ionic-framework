@@ -4,12 +4,12 @@
 // --------------------------------------------------
 
 ion-label {
+  @include margin(0);
+
   display: block;
   overflow: hidden;
 
   flex: 1;
-
-  margin: 0;
 
   font-size: inherit;
   text-overflow: ellipsis;
@@ -50,7 +50,7 @@ ion-label[fixed] {
 
 ion-label[stacked],
 ion-label[floating] {
-  margin-bottom: 0;
+  @include margin(null, null, 0, null);
 }
 
 .item-label-stacked .input-wrapper,
@@ -64,8 +64,4 @@ ion-label[floating] {
   align-self: stretch;
 
   max-width: 100%;
-}
-
-.item-select ion-label[floating] {
-  transform: translate3d(0, 0, 0) scale(.8);
 }

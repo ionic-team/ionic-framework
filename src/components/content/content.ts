@@ -1,25 +1,38 @@
-import { ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Optional, Output, Renderer, ViewEncapsulation } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, Optional, Output, Renderer, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
-import { DomController } from '../../util/dom-controller';
-import { Img } from '../img/img';
+import { DomController } from '../../platform/dom-controller';
+import { Img } from '../img/img-interface';
 import { Ion } from '../ion';
-import { isTrueProperty, assert, removeArrayItem } from '../../util/util';
-import { Keyboard } from '../../util/keyboard';
-import { ScrollView, ScrollEvent } from '../../util/scroll-view';
-import { Tabs } from '../tabs/tabs';
-import { transitionEnd } from '../../util/dom';
+import { isTabs } from '../../navigation/nav-util';
+import { assert, isTrueProperty, removeArrayItem } from '../../util/util';
+import { Keyboard } from '../../platform/keyboard';
+import { NavController } from '../../navigation/nav-controller';
+import { Content as IContent, Tabs } from '../../navigation/nav-interfaces';
+import { Platform } from '../../platform/platform';
+import { ScrollEvent, ScrollView } from '../../util/scroll-view';
 import { ViewController } from '../../navigation/view-controller';
 
 export { ScrollEvent } from '../../util/scroll-view';
 
 
+export class EventEmitterProxy<T> extends EventEmitter<T> {
+  onSubscribe: Function;
+  subscribe(generatorOrNext?: any, error?: any, complete?: any): any {
+    this.onSubscribe();
+    return super.subscribe(generatorOrNext, error, complete);
+  }
+}
+
 /**
  * @name Content
  * @description
  * The Content component provides an easy to use content area with
- * some useful methods to control the scrollable area.
+ * some useful methods to control the scrollable area. There should
+ * only be one content in a single view component. If additional scrollable
+ * elements are needed, use [ionScroll](../../scroll/Scroll).
+ *
  *
  * The content area can also implement pull-to-refresh with the
  * [Refresher](../../refresher/Refresher) component.
@@ -50,7 +63,46 @@ export { ScrollEvent } from '../../util/scroll-view';
  *
  * @advanced
  *
- * Resizing the content
+ * ### Scroll Events
+ *
+ * Scroll events happen outside of Angular's Zones. This is for performance reasons. So
+ * if you're trying to bind a value to any scroll event, it will need to be wrapped in
+ * a `zone.run()`
+ *
+ * ```ts
+ * import { Component, NgZone } from '@angular/core';
+ * @Component({
+ *   template: `
+ *     <ion-header>
+ *       <ion-navbar>
+ *         <ion-title>{{scrollAmount}}</ion-title>
+ *       </ion-navbar>
+ *     </ion-header>
+ *     <ion-content (ionScroll)="scrollHandler($event)">
+ *        <p> Some realllllllly long content </p>
+ *     </ion-content>
+ * `})
+ * class E2EPage {
+ *  public scrollAmount = 0;
+ *  constructor( public zone: NgZone){}
+ *  scrollHandler(event) {
+ *    console.log(`ScrollEvent: ${event}`)
+ *    this.zone.run(()=>{
+ *      // since scrollAmount is data-binded,
+ *      // the update needs to happen in zone
+ *      this.scrollAmount++
+ *    })
+ *  }
+ * }
+ * ```
+ *
+ * This goes for any scroll event, not just `ionScroll`.
+ *
+ * ### Resizing the content
+ *
+ * If the height of `ion-header`, `ion-footer` or `ion-tabbar`
+ * changes dynamically, `content.resize()` has to be called in order to update the
+ * layout of `Content`.
  *
  *
  * ```ts
@@ -107,20 +159,21 @@ export { ScrollEvent } from '../../util/scroll-view';
 @Component({
   selector: 'ion-content',
   template:
-    '<div class="fixed-content">' +
+    '<div class="fixed-content" #fixedContent>' +
       '<ng-content select="[ion-fixed],ion-fab"></ng-content>' +
     '</div>' +
-    '<div class="scroll-content">' +
+    '<div class="scroll-content" #scrollContent>' +
       '<ng-content></ng-content>' +
     '</div>' +
     '<ng-content select="ion-refresher"></ng-content>',
   host: {
-    '[class.statusbar-padding]': 'statusbarPadding'
+    '[class.statusbar-padding]': 'statusbarPadding',
+    '[class.has-refresher]': '_hasRefresher'
   },
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None
 })
-export class Content extends Ion implements OnDestroy, OnInit {
+export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
   /** @internal */
   _cTop: number;
   /** @internal */
@@ -140,6 +193,8 @@ export class Content extends Ion implements OnDestroy, OnInit {
   /** @internal */
   _ftrHeight: number;
   /** @internal */
+  _tabs: Tabs;
+  /** @internal */
   _tabbarHeight: number;
   /** @internal */
   _tabsPlacement: string;
@@ -158,18 +213,34 @@ export class Content extends Ion implements OnDestroy, OnInit {
   /** @internal */
   _fullscreen: boolean;
   /** @internal */
-  _imgs: Img[] = [];
+  _hasRefresher: boolean = false;
   /** @internal */
   _footerEle: HTMLElement;
   /** @internal */
   _dirty: boolean;
   /** @internal */
-  _scrollEle: HTMLElement;
+  _imgs: Img[] = [];
   /** @internal */
-  _fixedEle: HTMLElement;
+  _viewCtrlReadSub: any;
+  /** @internal */
+  _viewCtrlWriteSub: any;
+  /** @internal */
+  _scrollDownOnLoad: boolean = false;
 
-  /** @private */
+  _viewCtrl: any;
+
+  private _imgReqBfr: number;
+  private _imgRndBfr: number;
+  private _imgVelMax: number;
+
+  /** @hidden */
   statusbarPadding: boolean;
+
+  /** @internal */
+  @ViewChild('fixedContent', { read: ElementRef }) _fixedContent: ElementRef;
+
+  /** @internal */
+  @ViewChild('scrollContent', { read: ElementRef }) _scrollContent: ElementRef;
 
   /**
    * Content height of the viewable area. This does not include content
@@ -238,6 +309,9 @@ export class Content extends Ion implements OnDestroy, OnInit {
   get scrollTop(): number {
     return this._scroll.ev.scrollTop;
   }
+  /**
+   * @param {number} top
+   */
   set scrollTop(top: number) {
     this._scroll.setTop(top);
   }
@@ -250,6 +324,10 @@ export class Content extends Ion implements OnDestroy, OnInit {
   get scrollLeft(): number {
     return this._scroll.ev.scrollLeft;
   }
+
+  /**
+   * @param {number} top
+   */
   set scrollLeft(top: number) {
     this._scroll.setLeft(top);
   }
@@ -261,24 +339,6 @@ export class Content extends Ion implements OnDestroy, OnInit {
    */
   get isScrolling(): boolean {
     return this._scroll.isScrolling;
-  }
-
-  /**
-   * The current vertical scroll velocity.
-   *
-   * @return {number}
-   */
-  get velocityY(): number {
-    return this._scroll.ev.velocityY;
-  }
-
-  /**
-   * The current horizontal scroll velocity.
-   *
-   * @return {number}
-   */
-  get velocityX(): number {
-    return this._scroll.ev.velocityX;
   }
 
   /**
@@ -304,111 +364,147 @@ export class Content extends Ion implements OnDestroy, OnInit {
   /**
    * @output {ScrollEvent} Emitted when the scrolling first starts.
    */
-  @Output() ionScrollStart: EventEmitter<ScrollEvent> = new EventEmitter<ScrollEvent>();
+  @Output() ionScrollStart: EventEmitterProxy<ScrollEvent> = new EventEmitterProxy<ScrollEvent>();
 
   /**
    * @output {ScrollEvent} Emitted on every scroll event.
    */
-  @Output() ionScroll: EventEmitter<ScrollEvent> = new EventEmitter<ScrollEvent>();
+  @Output() ionScroll: EventEmitterProxy<ScrollEvent> = new EventEmitterProxy<ScrollEvent>();
 
   /**
    * @output {ScrollEvent} Emitted when scrolling ends.
    */
-  @Output() ionScrollEnd: EventEmitter<ScrollEvent> = new EventEmitter<ScrollEvent>();
-
-  /**
-   * @private
-   */
-  @Output() readReady: EventEmitter<any> = new EventEmitter<any>();
-
-  /**
-   * @private
-   */
-  @Output() writeReady: EventEmitter<any> = new EventEmitter<any>();
+  @Output() ionScrollEnd: EventEmitterProxy<ScrollEvent> = new EventEmitterProxy<ScrollEvent>();
 
 
   constructor(
     config: Config,
+    private _plt: Platform,
+    private _dom: DomController,
     elementRef: ElementRef,
     renderer: Renderer,
     public _app: App,
     public _keyboard: Keyboard,
     public _zone: NgZone,
     @Optional() viewCtrl: ViewController,
-    @Optional() public _tabs: Tabs,
-    private _dom: DomController
+    @Optional() navCtrl: NavController
   ) {
     super(config, elementRef, renderer, 'content');
 
-    this.statusbarPadding = config.getBoolean('statusbarPadding', false);
+    const enableScrollListener = () => this._scroll.enableEvents();
+    this.ionScroll.onSubscribe = enableScrollListener;
+    this.ionScrollStart.onSubscribe = enableScrollListener;
+    this.ionScrollEnd.onSubscribe = enableScrollListener;
 
-    if (viewCtrl) {
-      viewCtrl._setIONContent(this);
-      viewCtrl._setIONContentRef(elementRef);
+    this.statusbarPadding = config.getBoolean('statusbarPadding', false);
+    this._imgReqBfr = config.getNumber('imgRequestBuffer', 1400);
+    this._imgRndBfr = config.getNumber('imgRenderBuffer', 400);
+    this._imgVelMax = config.getNumber('imgVelocityMax', 3);
+
+    this._scroll = new ScrollView(_app, _plt, _dom);
+
+    while (navCtrl) {
+      if (isTabs(<any>navCtrl)) {
+        this._tabs = <any>navCtrl;
+        break;
+      }
+      navCtrl = navCtrl.parent;
     }
 
-    this._scroll = new ScrollView(_dom);
+    if (viewCtrl) {
+      this._viewCtrl = viewCtrl;
+
+      // content has a view controller
+      viewCtrl._setIONContent(this);
+      viewCtrl._setIONContentRef(elementRef);
+
+      this._viewCtrlReadSub = viewCtrl.readReady.subscribe(() => {
+        this._viewCtrlReadSub.unsubscribe();
+        this._readDimensions();
+      });
+
+      this._viewCtrlWriteSub = viewCtrl.writeReady.subscribe(() => {
+        this._viewCtrlWriteSub.unsubscribe();
+        this._writeDimensions();
+      });
+
+    } else {
+      // content does not have a view controller
+      _dom.read(this._readDimensions.bind(this));
+      _dom.write(this._writeDimensions.bind(this));
+    }
   }
 
   /**
-   * @private
+   * @hidden
    */
-  ngOnInit() {
-    if (this._scrollEle) return;
-
-    const children = this._elementRef.nativeElement.children;
-    assert(children && children.length >= 2, 'content needs at least two children');
+  ngAfterViewInit() {
+    assert(this.getFixedElement(), 'fixed element was not found');
+    assert(this.getScrollElement(), 'scroll element was not found');
 
     const scroll = this._scroll;
-
-    scroll.ev.fixedElement = this._fixedEle = children[0];
-    scroll.ev.scrollElement = this._scrollEle = children[1];
+    scroll.ev.fixedElement = this.getFixedElement();
+    scroll.ev.scrollElement = this.getScrollElement();
 
     // subscribe to the scroll start
-    scroll.scrollStart.subscribe(ev => {
+    scroll.onScrollStart = (ev) => {
       this.ionScrollStart.emit(ev);
-    });
+    };
 
     // subscribe to every scroll move
-    scroll.scroll.subscribe(ev => {
-      // remind the app that it's currently scrolling
-      this._app.setScrolling();
-
+    scroll.onScroll = (ev) => {
       // emit to all of our other friends things be scrolling
       this.ionScroll.emit(ev);
 
       this.imgsUpdate();
-    });
+    };
 
     // subscribe to the scroll end
-    scroll.scrollEnd.subscribe(ev => {
+    scroll.onScrollEnd = (ev) => {
       this.ionScrollEnd.emit(ev);
 
       this.imgsUpdate();
-    });
+    };
   }
 
   /**
-   * @private
+   * @hidden
+   */
+  enableJsScroll() {
+    this._scroll.enableJsScroll(this._cTop, this._cBottom);
+  }
+
+  /**
+   * @hidden
    */
   ngOnDestroy() {
     this._scLsn && this._scLsn();
+    this._viewCtrlReadSub && this._viewCtrlReadSub.unsubscribe();
+    this._viewCtrlWriteSub && this._viewCtrlWriteSub.unsubscribe();
+    this._viewCtrlReadSub = this._viewCtrlWriteSub = null;
     this._scroll && this._scroll.destroy();
-    this._scrollEle = this._fixedEle = this._footerEle = this._scLsn = this._scroll = null;
+    this._footerEle = this._scLsn = this._scroll = null;
   }
 
   /**
-   * @private
+   * @hidden
    */
   getScrollElement(): HTMLElement {
-    return this._scrollEle;
+    return this._scrollContent.nativeElement;
   }
 
   /**
    * @private
    */
-  onScrollElementTransitionEnd(callback: Function) {
-    transitionEnd(this._scrollEle, callback);
+  getFixedElement(): HTMLElement {
+    return this._fixedContent.nativeElement;
+  }
+
+  /**
+   * @hidden
+   */
+  onScrollElementTransitionEnd(callback: {(ev: TransitionEvent): void}) {
+    this._plt.transitionEnd(this.getScrollElement(), callback);
   }
 
   /**
@@ -447,28 +543,29 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
-   */
-  enableJsScroll() {
-    this._scroll.enableJsScroll(this._cTop, this._cBottom);
-  }
-
-  /**
-   * @input {boolean} By default, content is positioned between the headers
-   * and footers. However, using `fullscreen="true"`, the content will be
-   * able to scroll "under" the headers and footers. At first glance the
-   * fullscreen option may not look any different than the default, however,
-   * by adding a transparency effect to a header then the content can be
-   * seen under the header as the user scrolls.
-   *
-   * @returns {boolean}
+   * @input {boolean} If true, the content will scroll behind the headers
+   * and footers. This effect can easily be seen by setting the toolbar
+   * to transparent.
    */
   @Input()
   get fullscreen(): boolean {
-    return !!this._fullscreen;
+    return this._fullscreen;
   }
+
   set fullscreen(val: boolean) {
     this._fullscreen = isTrueProperty(val);
+  }
+
+  /**
+   * @input {boolean} If true, the content will scroll down on load.
+   */
+  @Input()
+  get scrollDownOnLoad(): boolean {
+    return this._scrollDownOnLoad;
+  }
+
+  set scrollDownOnLoad(val: boolean) {
+    this._scrollDownOnLoad = isTrueProperty(val);
   }
 
   /**
@@ -479,20 +576,23 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @hidden
    */
   removeImg(img: Img) {
     removeArrayItem(this._imgs, img);
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   setScrollElementStyle(prop: string, val: any) {
-    this._dom.write(() => {
-      (<any>this._scrollEle.style)[prop] = val;
-    });
+    const scrollEle = this.getScrollElement();
+    if (scrollEle) {
+      this._dom.write(() => {
+        (<any>scrollEle.style)[prop] = val;
+      });
+    }
   }
 
   /**
@@ -512,7 +612,7 @@ export class Content extends Ion implements OnDestroy, OnInit {
    * {number} dimensions.scrollRight  scroll scrollLeft + scrollWidth
    */
   getContentDimensions(): ContentDimensions {
-    const scrollEle = this._scrollEle;
+    const scrollEle = this.getScrollElement();
     const parentElement = scrollEle.parentElement;
 
     return {
@@ -532,29 +632,32 @@ export class Content extends Ion implements OnDestroy, OnInit {
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    * Adds padding to the bottom of the scroll element when the keyboard is open
    * so content below the keyboard can be scrolled into view.
    */
   addScrollPadding(newPadding: number) {
     assert(typeof this._scrollPadding === 'number', '_scrollPadding must be a number');
+    if (newPadding === 0) {
+      this._inputPolling = false;
+      this._scrollPadding = -1;
+    }
     if (newPadding > this._scrollPadding) {
       console.debug(`content, addScrollPadding, newPadding: ${newPadding}, this._scrollPadding: ${this._scrollPadding}`);
 
       this._scrollPadding = newPadding;
-      if (this._scrollEle) {
+      var scrollEle = this.getScrollElement();
+      if (scrollEle) {
         this._dom.write(() => {
-          if (this._scrollEle) {
-            this._scrollEle.style.paddingBottom = (newPadding > 0) ? newPadding + 'px' : '';
-          }
+          scrollEle.style.paddingBottom = (newPadding > 0) ? newPadding + 'px' : '';
         });
       }
     }
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
   clearScrollPaddingFocusOut() {
@@ -564,35 +667,36 @@ export class Content extends Ion implements OnDestroy, OnInit {
 
       this._keyboard.onClose(() => {
         console.debug(`content, clearScrollPaddingFocusOut _keyboard.onClose`);
-        this._inputPolling = false;
-        this._scrollPadding = -1;
         this.addScrollPadding(0);
       }, 200, 3000);
     }
   }
 
+
+
   /**
    * Tell the content to recalculate its dimensions. This should be called
-   * after dynamically adding headers, footers, or tabs.
+   * after dynamically adding/removing headers, footers, or tabs.
    */
   resize() {
-    this._dom.read(this.readDimensions, this);
-    this._dom.write(this.writeDimensions, this);
+    this._dom.read(this._readDimensions.bind(this));
+    this._dom.write(this._writeDimensions.bind(this));
   }
 
   /**
-   * @private
+   * @hidden
    * DOM READ
    */
-  readDimensions() {
-    let cachePaddingTop = this._pTop;
-    let cachePaddingRight = this._pRight;
-    let cachePaddingBottom = this._pBottom;
-    let cachePaddingLeft = this._pLeft;
-    let cacheHeaderHeight = this._hdrHeight;
-    let cacheFooterHeight = this._ftrHeight;
-    let cacheTabsPlacement = this._tabsPlacement;
+  private _readDimensions() {
+    const cachePaddingTop = this._pTop;
+    const cachePaddingRight = this._pRight;
+    const cachePaddingBottom = this._pBottom;
+    const cachePaddingLeft = this._pLeft;
+    const cacheHeaderHeight = this._hdrHeight;
+    const cacheFooterHeight = this._ftrHeight;
+    const cacheTabsPlacement = this._tabsPlacement;
     let tabsTop = 0;
+    let scrollEvent: ScrollEvent;
     this._pTop = 0;
     this._pRight = 0;
     this._pBottom = 0;
@@ -604,9 +708,15 @@ export class Content extends Ion implements OnDestroy, OnInit {
     this._fTop = 0;
     this._fBottom = 0;
 
-    const scrollEvent = this._scroll.ev;
+    // In certain cases this._scroll is undefined
+    // if that is the case then we should just return
+    if (!this._scroll) {
+      return;
+    }
 
-    let ele: HTMLElement = this._elementRef.nativeElement;
+    scrollEvent = this._scroll.ev;
+
+    let ele: HTMLElement = this.getNativeElement();
     if (!ele) {
       assert(false, 'ele should be valid');
       return;
@@ -683,6 +793,11 @@ export class Content extends Ion implements OnDestroy, OnInit {
       this._cBottom += this._tabbarHeight;
     }
 
+    // Refresher uses a border which should be hidden unless pulled
+    if (this._hasRefresher) {
+      this._cTop -= 1;
+    }
+
     // Fixed content shouldn't include content padding
     this._fTop = this._cTop;
     this._fBottom = this._cBottom;
@@ -715,31 +830,29 @@ export class Content extends Ion implements OnDestroy, OnInit {
       this._cBottom !== this.contentBottom
     );
 
-    this._scroll.init(this._scrollEle, this._cTop, this._cBottom);
+    this._scroll.init(this.getScrollElement(), this._cTop, this._cBottom);
 
     // initial imgs refresh
     this.imgsUpdate();
-
-    this.readReady.emit();
   }
 
   /**
-   * @private
+   * @hidden
    * DOM WRITE
    */
-  writeDimensions() {
+  private _writeDimensions() {
     if (!this._dirty) {
       console.debug('Skipping writeDimensions');
       return;
     }
 
-    const scrollEle = this._scrollEle;
+    const scrollEle = this.getScrollElement();
     if (!scrollEle) {
-      assert(false, 'this._scrollEle should be valid');
+      assert(false, 'this.getScrollElement() should be valid');
       return;
     }
 
-    const fixedEle = this._fixedEle;
+    const fixedEle = this.getFixedElement();
     if (!fixedEle) {
       assert(false, 'this._fixedEle should be valid');
       return;
@@ -810,25 +923,32 @@ export class Content extends Ion implements OnDestroy, OnInit {
       }
     }
 
-    this.writeReady.emit();
-  }
-
-  /**
-   * @private
-   */
-  imgsUpdate() {
-    if (this._scroll.initialized && this._imgs.length && this.isImgsUpdatable()) {
-      updateImgs(this._imgs, this.scrollTop, this.contentHeight, this.directionY, IMG_REQUESTABLE_BUFFER, IMG_RENDERABLE_BUFFER);
+    // Scroll the page all the way down after setting dimensions
+    if (this._scrollDownOnLoad) {
+      this.scrollToBottom(0);
+      this._scrollDownOnLoad = false;
     }
   }
 
   /**
-   * @private
+   * @hidden
+   */
+  imgsUpdate() {
+    if (this._scroll.initialized && this._imgs.length && this.isImgsUpdatable()) {
+      updateImgs(this._imgs, this.scrollTop, this.contentHeight, this.directionY, this._imgReqBfr, this._imgRndBfr);
+    }
+  }
+
+  /**
+   * @hidden
    */
   isImgsUpdatable() {
-    // an image is only "updatable" if the content
-    // isn't scrolling too fast
-    return Math.abs(this.velocityY) < 3;
+    // an image is only "updatable" if the content isn't scrolling too fast
+    // if scroll speed is above the maximum velocity, then let current
+    // requests finish, but do not start new requets or render anything
+    // if scroll speed is below the maximum velocity, then it's ok
+    // to start new requests and render images
+    return Math.abs(this._scroll.ev.velocityY) < this._imgVelMax;
   }
 
 }
@@ -919,9 +1039,6 @@ export function updateImgs(imgs: Img[], viewableTop: number, contentHeight: numb
     priority2.sort(sortTopToBottom).forEach(i => i.update());
   }
 }
-
-const IMG_REQUESTABLE_BUFFER = 1200;
-const IMG_RENDERABLE_BUFFER = 300;
 
 
 function sortTopToBottom(a: Img, b: Img) {

@@ -27,4 +27,33 @@
     };
   }
 
+
+  // requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
+  // MIT license
+  var win = window;
+  if (!win.requestAnimationFrame) {
+    win.requestAnimationFrame = win.webkitRequestAnimationFrame;
+    win.cancelAnimationFrame = win.webkitCancelAnimationFrame || win.webkitCancelRequestAnimationFrame;
+
+    if (!win.requestAnimationFrame) {
+      win.requestAnimationFrame = function(callback, element) {
+        var currTime = new Date().getTime();
+        var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+
+        var id = win.setTimeout(function() {
+          callback(currTime + timeToCall);
+        }, timeToCall);
+
+        lastTime = currTime + timeToCall;
+        return id;
+      };
+    }
+
+    if (!win.cancelAnimationFrame) {
+      win.cancelAnimationFrame = function(id) {
+        clearTimeout(id);
+      };
+    }
+  }
+
 })();
