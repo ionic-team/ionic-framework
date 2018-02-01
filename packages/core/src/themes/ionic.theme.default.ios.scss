@@ -63,7 +63,7 @@ $box-shadow-ios-color:                        css-var($box-shadow-color, box-sha
 // iOS Tabs & Tab bar
 // --------------------------------------------------
 $tabbar-ios-background-color:                 css-var($tabbar-background-color, tabbar-ios-background-color) !default;
-$tabbar-ios-translucent-background-color:     css-var(rgba(248, 248, 248, 0.8), tabbar-ios-translucent-background-color) !default; // TODO: @color-mod: remove
+$tabbar-ios-translucent-background-color:     css-var(rgba(248, 248, 248, .8), tabbar-ios-translucent-background-color) !default; // TODO: @color-mod: remove
 $tabbar-ios-border-color:                     css-var(rgba(0, 0, 0, .2), tabbar-ios-border-color) !default; // TODO: @color-mod($border-ios-color, a($alpha-ios-low))
 $tabbar-ios-text-color:                       css-var($tabbar-text-color, tabbar-ios-text-color) !default;
 $tabbar-ios-text-color-active:                css-var(ion-color($colors-ios, primary, base, ios), tabbar-ios-text-color-active) !default;
@@ -73,7 +73,7 @@ $tabbar-ios-text-color-active:                css-var(ion-color($colors-ios, pri
 $toolbar-ios-height:                          44px !default;
 $toolbar-ios-padding:                         4px !default;
 $toolbar-ios-background-color:                css-var($toolbar-background-color, toolbar-ios-background-color) !default;
-$toolbar-ios-translucent-background-color:    css-var(rgba(248, 248, 248, 0.8), toolbar-ios-background-color) !default; // TODO: @color-mod: remove
+$toolbar-ios-translucent-background-color:    css-var(rgba(248, 248, 248, .8), toolbar-ios-background-color) !default; // TODO: @color-mod: remove
 $toolbar-ios-border-color:                    css-var(rgba(0, 0, 0, .2), toolbar-ios-border-color) !default; // TODO: @color-mod($border-ios-color, a($alpha-ios-low))
 $toolbar-ios-color-active:                    css-var(ion-color($colors-ios, primary, base, ios), toolbar-ios-color-active) !default;
 $toolbar-ios-color-inactive:                  css-var($toolbar-color-inactive, toolbar-ios-color-inactive) !default;

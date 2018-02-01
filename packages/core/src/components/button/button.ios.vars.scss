@@ -133,7 +133,7 @@ $button-ios-outline-background-color-activated:     $button-ios-background-color
 $button-ios-outline-opacity-activated:              1 !default;
 
 /// @prop - Background color of the focused outline button
-$button-ios-outline-background-color-focused:       ion-color-alpha($colors-ios, primary, $alpha-ios-low, ios) !default
+$button-ios-outline-background-color-focused:       ion-color-alpha($colors-ios, primary, $alpha-ios-low, ios) !default;
 
 // iOS Clear Button
 // --------------------------------------------------

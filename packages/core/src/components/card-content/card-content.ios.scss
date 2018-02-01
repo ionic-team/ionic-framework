@@ -26,6 +26,7 @@
 
     @each $color-name, $color-value in $colors-ios {
       $color-base: ion-color($colors-ios, $color-name, base, ios);
+
       .card-content-ios-#{$color-name} {
         color: $color-base;
       }

@@ -7,8 +7,8 @@
 .select-md {
   @include padding($select-md-padding-top, $select-md-padding-end, $select-md-padding-bottom, $select-md-padding-start);
 
-  color: $select-md-text-color;
   font-family: $select-md-font-family;
+  color: $select-md-text-color;
 }
 
 .select-md .select-placeholder {

@@ -24,7 +24,7 @@
   $color-contrast: ion-color($colors-md, $color-name, contrast, md);
 
   .list-header-md-#{$color-name} {
-    background-color: $color-base;
     color: $color-contrast;
+    background-color: $color-base;
   }
 }

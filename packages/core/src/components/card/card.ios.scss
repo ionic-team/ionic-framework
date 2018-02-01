@@ -11,11 +11,9 @@
   width: calc(100% - #{($card-ios-margin-end + $card-ios-margin-start)});
 
   font-family: $card-ios-font-family;
-
   font-size: $card-ios-font-size;
-
-  background-color: $card-ios-background-color;
   color: $card-ios-text-color;
+  background-color: $card-ios-background-color;
   box-shadow: $card-ios-box-shadow;
 
   transform: translateZ(0);
@@ -95,6 +93,7 @@
 
     @each $color-name, $color-value in $colors-ios {
       $color-base: ion-color($colors-ios, $color-name, base, ios);
+
       .text-ios-#{$color-name} {
         color: $color-base;
       }

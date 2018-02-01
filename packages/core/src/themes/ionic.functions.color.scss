@@ -1,12 +1,12 @@
-@import "./ionic.functions.list.scss";
-@import "./ionic.functions.string.scss";
+@import "./ionic.functions.list";
+@import "./ionic.functions.string";
 
-$css-variable-prefix:       "--ion-";
-$default-color-variation:   base;
-$default-color-prefix:      color-;
-$enable-css-variables:      true;
-$css-variables:             ();
-$modes:                     (ios,md);
+$css-variable-prefix: "--ion-";
+$default-color-variation: base;
+$default-color-prefix: color-;
+$enable-css-variables: true;
+$css-variables: ();
+$modes: (ios, md);
 
 @mixin css-variables-to-root {
   :root {
@@ -26,10 +26,8 @@ $modes:                     (ios,md);
   @return null;
 }
 
-/**
-  Parses a color into its name/variation pairs from the color map
-  @private
- */
+// Parses a color into its name/variation pairs from the color map
+// @private
 @function color-to-name-variation($colors, $color, $variation: null) {
   $results: ();
   $found: false;
@@ -39,7 +37,7 @@ $modes:                     (ios,md);
         @if ($color == $color-variation-value) {
           $variation: if($variation == $color-variation-name, $default-color-variation, $variation);
           @if ($variation) {
-            $results: map-merge($results, (variation: $variation))
+            $results: map-merge($results, (variation: $variation));
           }
           $results: map-merge($results, (name: $color-name));
           $found: true;
@@ -54,15 +52,12 @@ $modes:                     (ios,md);
   @return $results;
 }
 
-
 @function color-to-rgb-list($color) {
   @return #{red($color)},#{green($color)},#{blue($color)};
 }
 
-/**
-  Parses a css variable string into its original name/variation pair
-  @private
- */
+// Parses a css variable string into its original name/variation pair
+// @private
 @function css-variable-to-name-variation($variable) {
   // Determine the name of this color from the CSS Variable
   $prefix: #{$css-variable-prefix}#{$default-color-prefix};
@@ -100,8 +95,6 @@ $modes:                     (ios,md);
   @return (name: $name, variation: $variation, mode: $mode);
 }
 
-
-
 @function css-var($color, $name) {
   @if ($enable-css-variables) {
     $is-reference: str-contains($color, $css-variable-prefix);
@@ -114,7 +107,7 @@ $modes:                     (ios,md);
       $global-css-variable: str-replace($mode-css-variable, $mode, "-");
 
       $css-variables: map-merge($css-variables, ($mode-css-variable: $color)) !global;
-      $color: #{if($is-reference,"#{$color}","var(#{$global-css-variable}, #{$color})")};
+      $color: #{if($is-reference, "#{$color}", "var(#{$global-css-variable}, #{$color})")};
       $color: "var(#{$mode-css-variable}, #{$color})";
     } @else {
       $css-variables: map-merge($css-variables, ($global-css-variable: $color)) !global;

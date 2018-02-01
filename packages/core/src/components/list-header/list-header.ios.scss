@@ -27,7 +27,7 @@
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
 
   .list-header-ios-#{$color-name} {
-    background-color: $color-base;
     color: $color-contrast;
+    background-color: $color-base;
   }
 }

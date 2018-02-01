@@ -7,8 +7,8 @@
 .label-ios {
   @include margin($label-ios-margin-top, $label-ios-margin-end, $label-ios-margin-bottom, $label-ios-margin-start);
 
-  color: $label-ios-text-color;
   font-family: $label-ios-font-family;
+  color: $label-ios-text-color;
 }
 
 

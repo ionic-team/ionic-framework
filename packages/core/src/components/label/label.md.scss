@@ -7,8 +7,8 @@
 .label-md {
   @include margin($label-md-margin-top, $label-md-margin-end, $label-md-margin-bottom, $label-md-margin-start);
 
-  color: $label-md-text-color;
   font-family: $label-md-font-family;
+  color: $label-md-text-color;
 }
 
 [text-wrap] .label-md {

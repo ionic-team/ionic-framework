@@ -24,14 +24,12 @@ $alpha-medium:        .4 !default;
 $alpha-high:          .75 !default;
 $alpha-highest:       .9 !default;
 
-/**
-  Primary color map should provide
-    - base: main color to be used.
-    - rgb: a R,G,B list version of the base color. Used for alpha processing
-    - contrast: Color that will provide readable text against the base color
-    - shade: slightly darker version of the base color (mix with black)
-    - tint: slightly lighter version of the base color (mix with white)
- */
+// Primary color map should provide
+//   - base: main color to be used.
+//   - rgb: a R,G,B list version of the base color. Used for alpha processing
+//   - contrast: Color that will provide readable text against the base color
+//   - shade: slightly darker version of the base color (mix with black)
+//   - tint: slightly lighter version of the base color (mix with white)
 $ion-colors:  (
   primary: (
     base:             $primary,

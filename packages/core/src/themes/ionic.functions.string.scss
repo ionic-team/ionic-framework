@@ -11,7 +11,6 @@
   @return $string;
 }
 
-
 // String Split Function
 // --------------------------------------------------
 
@@ -41,9 +40,9 @@
   $split: str-split($str, $search);
   $len: length($split);
 
-  @if ( $len > 1) {
+  @if ($len > 1) {
     $count: 0;
-    @for $i from 1 through ($len - 1)  {
+    @for $i from 1 through ($len - 1) {
       $item: nth($split, $i);
       $count: $count + str-length($item);
     }

@@ -30,6 +30,7 @@
 
     @each $color-name, $color-value in $colors-ios {
       $color-base: ion-color($colors-ios, $color-name, base, ios);
+
       .card-subtitle-ios-#{$color-name} {
         color: $color-base;
       }
