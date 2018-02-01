@@ -89,7 +89,7 @@ string
 string
 
 
-#### cssClass
+#### css-class
 
 string
 
@@ -104,12 +104,12 @@ any
 
 
 
-#### enableBackdropDismiss
+#### enable-backdrop-dismiss
 
 boolean
 
 
-#### enterAnimation
+#### enter-animation
 
 
 
@@ -119,7 +119,7 @@ boolean
 
 
 
-#### leaveAnimation
+#### leave-animation
 
 
 
@@ -129,12 +129,12 @@ boolean
 
 
 
-#### popoverId
+#### popover-id
 
 number
 
 
-#### showBackdrop
+#### show-backdrop
 
 boolean
 
@@ -144,7 +144,7 @@ boolean
 boolean
 
 
-#### willAnimate
+#### will-animate
 
 boolean
 

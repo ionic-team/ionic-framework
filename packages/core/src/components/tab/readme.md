@@ -107,12 +107,12 @@ string
 string
 
 
-#### badgeStyle
+#### badge-style
 
 string
 
 
-#### btnId
+#### btn-id
 
 string
 
@@ -142,7 +142,7 @@ boolean
 boolean
 
 
-#### tabsHideOnSubPages
+#### tabs-hide-on-sub-pages
 
 boolean
 

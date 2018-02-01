@@ -40,6 +40,8 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 
 boolean
 
+Returns / Sets the current state of the element when type is checkbox or radio.
+
 
 #### color
 
@@ -49,6 +51,8 @@ string
 #### disabled
 
 boolean
+
+Indicates that the user cannot interact with the control.
 
 
 #### mode
@@ -66,6 +70,8 @@ The name of the control, which is submitted with the form data.
 #### value
 
 string
+
+Reflects the value of the form control.
 
 
 ## Attributes
@@ -74,6 +80,8 @@ string
 
 boolean
 
+Returns / Sets the current state of the element when type is checkbox or radio.
+
 
 #### color
 
@@ -83,6 +91,8 @@ string
 #### disabled
 
 boolean
+
+Indicates that the user cannot interact with the control.
 
 
 #### mode
@@ -101,13 +111,19 @@ The name of the control, which is submitted with the form data.
 
 string
 
+Reflects the value of the form control.
+
 
 ## Events
 
 #### ionBlur
 
+Removes focus from input; keystrokes will subsequently go nowhere.
+
 
 #### ionFocus
+
+Focus on the input element; keystrokes will subsequently go to this element.
 
 
 #### ionRadioDidLoad
@@ -117,6 +133,10 @@ string
 
 
 #### ionSelect
+
+A single radio button fires an ionSelect event, whereas
+a radio group fires an ionChange event. It would be more common
+to attach listeners to the radio group, not individual radio buttons.
 
 
 #### ionStyle

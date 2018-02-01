@@ -137,22 +137,22 @@ string
 boolean
 
 
-#### tabbarHidden
+#### tabbar-hidden
 
 boolean
 
 
-#### tabbarHighlight
+#### tabbar-highlight
 
 boolean
 
 
-#### tabbarLayout
+#### tabbar-layout
 
 string
 
 
-#### tabbarPlacement
+#### tabbar-placement
 
 string
 

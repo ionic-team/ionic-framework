@@ -143,7 +143,7 @@ string
 boolean
 
 
-#### clearOnEdit
+#### clear-on-edit
 
 boolean
 

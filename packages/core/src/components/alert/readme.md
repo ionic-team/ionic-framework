@@ -93,21 +93,21 @@ Enable alert animations. If false, alert will not animate in
 Array of buttons to be added to the alert. See AlertButton type for valid options
 
 
-#### cssClass
+#### css-class
 
 string
 
 Additional class or classes to apply to the alert
 
 
-#### enableBackdropDismiss
+#### enable-backdrop-dismiss
 
 boolean
 
 If true, the alert will be dismissed when the backdrop is clicked.
 
 
-#### enterAnimation
+#### enter-animation
 
 
 
@@ -121,7 +121,7 @@ Animation to be used when the alert is shown
 Array of input to show in the alert. See AlertInput type for valid options
 
 
-#### leaveAnimation
+#### leave-animation
 
 
 
@@ -135,7 +135,7 @@ string
 Message to be shown in the alert
 
 
-#### subTitle
+#### sub-title
 
 string
 
@@ -156,7 +156,7 @@ boolean
 If true, alert will become translucent. Requires support for backdrop-filters.
 
 
-#### willAnimate
+#### will-animate
 
 boolean
 

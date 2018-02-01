@@ -84,12 +84,12 @@ boolean
 string
 
 
-#### cssClass
+#### css-class
 
 string
 
 
-#### dismissOnPageChange
+#### dismiss-on-page-change
 
 boolean
 
@@ -99,32 +99,32 @@ boolean
 number
 
 
-#### enableBackdropDismiss
+#### enable-backdrop-dismiss
 
 boolean
 
 
-#### enterAnimation
+#### enter-animation
 
 
 
 
-#### leaveAnimation
+#### leave-animation
 
 
 
 
-#### pickerId
+#### picker-id
 
 number
 
 
-#### showBackdrop
+#### show-backdrop
 
 boolean
 
 
-#### willAnimate
+#### will-animate
 
 boolean
 

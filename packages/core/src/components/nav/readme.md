@@ -54,7 +54,7 @@ string
 any
 
 
-#### useUrls
+#### use-urls
 
 boolean
 

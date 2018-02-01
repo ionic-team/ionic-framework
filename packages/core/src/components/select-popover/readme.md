@@ -39,7 +39,7 @@ string
 
 
 
-#### subTitle
+#### sub-title
 
 string
 

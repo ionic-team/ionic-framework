@@ -60,6 +60,8 @@ boolean
 
 boolean
 
+Indicates that the user cannot interact with the control.
+
 
 #### name
 
@@ -72,10 +74,12 @@ The name of the control, which is submitted with the form data.
 
 string
 
+Reflects the value of the form control.
+
 
 ## Attributes
 
-#### allowEmptySelection
+#### allow-empty-selection
 
 boolean
 
@@ -84,6 +88,8 @@ boolean
 
 boolean
 
+Indicates that the user cannot interact with the control.
+
 
 #### name
 
@@ -95,6 +101,8 @@ The name of the control, which is submitted with the form data.
 #### value
 
 string
+
+Reflects the value of the form control.
 
 
 ## Events

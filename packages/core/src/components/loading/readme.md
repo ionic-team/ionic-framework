@@ -84,14 +84,14 @@ string
 Optional text content to display in the loading indicator
 
 
-#### cssClass
+#### css-class
 
 string
 
 Additional classes to apply for custom CSS
 
 
-#### dismissOnPageChange
+#### dismiss-on-page-change
 
 boolean
 
@@ -105,21 +105,21 @@ number
 Number of milliseconds to wait before dismissing the loading indicator
 
 
-#### enterAnimation
+#### enter-animation
 
 
 
 Animation to use when loading indicator is presented
 
 
-#### leaveAnimation
+#### leave-animation
 
 
 
 Animation to use when a loading indicator is dismissed
 
 
-#### showBackdrop
+#### show-backdrop
 
 boolean
 
@@ -138,7 +138,7 @@ boolean
 If true, the background will be translucent. Browser support for backdrop-filter is required for the full effect
 
 
-#### willAnimate
+#### will-animate
 
 boolean
 

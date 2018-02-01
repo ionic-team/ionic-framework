@@ -64,7 +64,7 @@ string
 
 
 
-#### selectedTab
+#### selected-tab
 
 
 

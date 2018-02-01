@@ -64,7 +64,7 @@ boolean
 string
 
 
-#### labelId
+#### label-id
 
 string
 

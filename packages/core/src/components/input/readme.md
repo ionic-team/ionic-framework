@@ -174,12 +174,12 @@ boolean
 boolean
 
 
-#### clearInput
+#### clear-input
 
 boolean
 
 
-#### clearOnEdit
+#### clear-on-edit
 
 boolean
 

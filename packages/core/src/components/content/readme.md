@@ -57,21 +57,21 @@ and footers. This effect can easily be seen by setting the toolbar
 to transparent.
 
 
-#### ionScroll
+#### ion-scroll
 
 
 
 Emitted on every scroll event.
 
 
-#### ionScrollEnd
+#### ion-scroll-end
 
 
 
 Emitted when scrolling ends.
 
 
-#### ionScrollStart
+#### ion-scroll-start
 
 
 
