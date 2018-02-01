@@ -15,6 +15,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Item](#item)
 - [Item Divider](#item-divider)
 - [List Header](#list-header)
+- [Menu Toggle](#menu-toggle)
 - [Nav](#nav)
 - [Option](#option)
 - [Radio](#radio)
@@ -442,6 +443,60 @@ Previously an `ion-label` would automatically get added to an `ion-list-header` 
 </ion-list-header>
 ```
 
+## Menu Toggle
+
+### Markup Changed
+
+The `menuToggle` attribute should not be added to an element anymore. Elements that should toggle a menu should be wrapped in an `ion-menu-toggle` element.
+
+**Old Usage Example:**
+
+```html
+<button ion-button menuToggle>
+  Toggle Menu
+</button>
+```
+
+**New Usage Example:**
+
+```html
+<ion-menu-toggle>
+  <ion-button>
+    Toggle Menu
+  </ion-button>
+</ion-menu-toggle>
+```
+
+#### Toolbar
+
+Previously if a `menuToggle` directive was added to an Ionic `button` in a toolbar, it would be positioned outside of the `ion-buttons` element. Since menu toggle is simply a wrapper to a button now, it should be placed inside of the `ion-buttons` element.
+
+**Old Usage Example:**
+
+```html
+<ion-toolbar>
+  <button ion-button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>Left side menu toggle</ion-title>
+</ion-toolbar>
+```
+
+**New Usage Example:**
+
+```html
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-menu-toggle>
+      <ion-button>
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </ion-menu-toggle>
+  </ion-buttons>
+  <ion-title>Left side menu toggle</ion-title>
+</ion-toolbar>
+```
+
 ## Nav
 
 ### Method renamed
@@ -571,10 +626,6 @@ Radio group has been changed to an element. It should now be wrapped around any 
   </ion-radio-group>
 </ion-list>
 ```
-
-### Windows Mode Order
-
-Previously a radio inside of an item in Windows Platform mode would align itself to the start of the item. This has been removed, `slot` should always be used to align a radio inside of an item now.
 
 
 ## Range
