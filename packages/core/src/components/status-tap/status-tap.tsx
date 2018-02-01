@@ -1,6 +1,6 @@
 import { Component, Listen, Method, Prop } from '@stencil/core';
 import { DomController } from '../..';
-
+import { domControllerAsync } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-status-tap'
@@ -13,28 +13,29 @@ export class StatusTap {
 
   @Listen('window:statusTap')
   statusTap() {
-    this.tap();
+    return this.tap();
   }
 
   @Method()
   mockTap() {
-    this.tap();
+    return this.tap();
   }
 
   private tap() {
-    this.dom.read(() => {
+    return domControllerAsync(this.dom.read, () => {
       const width = window.innerWidth;
       const height = window.innerWidth;
       const el = document.elementFromPoint(width / 2, height / 2);
       if (!el) {
-        return;
+        return null;
       }
-      const scroll = el.closest('ion-scroll') as HTMLIonScrollElement;
-      if (scroll) {
-        (scroll as any).componentOnReady().then(() => {
-          this.dom.write(() => scroll.scrollToTop(this.duration));
-        });
-      }
+      return el.closest('ion-scroll');
+    }).then(([scroll]: HTMLIonScrollElement[]) => {
+      return (scroll as any).componentOnReady();
+    }).then((scroll: HTMLIonScrollElement) => {
+      return domControllerAsync(this.dom.write, () => {
+        return scroll.scrollToTop(this.duration);
+      });
     });
   }
 }

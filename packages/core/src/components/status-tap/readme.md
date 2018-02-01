@@ -5,6 +5,20 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+#### duration
+
+number
+
+
+## Attributes
+
+#### duration
+
+number
+
+
 ## Methods
 
 #### mockTap()
