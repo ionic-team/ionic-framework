@@ -13,7 +13,7 @@ export class SelectOption {
   @Element() el: HTMLElement;
 
   /**
-   * @input {boolean} If true, the user cannot interact with the select option.
+   * If true, the user cannot interact with the select option.
    */
   @Prop() disabled = false;
 

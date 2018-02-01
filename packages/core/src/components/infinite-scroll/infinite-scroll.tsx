@@ -27,7 +27,7 @@ export class InfiniteScroll {
   @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
 
   /**
-   * @input {string} The threshold distance from the bottom
+   * The threshold distance from the bottom
    * of the content to call the `infinite` output event when scrolled.
    * The threshold value can be either a percent, or
    * in pixels. For example, use the value of `10%` for the `infinite`
@@ -52,7 +52,7 @@ export class InfiniteScroll {
 
 
   /**
-   * @input {boolean} If true, whether or not the infinite scroll should be
+   * If true, whether or not the infinite scroll should be
    * disabled or not. Setting to `true` will remove scroll event listeners
    * and hide the display.
    *
@@ -69,7 +69,7 @@ export class InfiniteScroll {
   }
 
   /**
-   * @input {string} The position of the infinite scroll element.
+   * The position of the infinite scroll element.
    * The value can be either `top` or `bottom`.
    * Defaults to `bottom`.
    */

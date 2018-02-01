@@ -50,41 +50,41 @@ export class Searchbar {
   @Event() ionFocus: EventEmitter;
 
   /**
-   * @input {string} The color to use from your Sass `$colors` map.
+   * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
 
   /**
-   * @input {string} The mode determines which platform styles to use.
+   * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * @input {boolean} If true, enable searchbar animation. Default `false`.
+   * If true, enable searchbar animation. Default `false`.
    */
   @Prop({ mutable: true }) animated = false;
 
   /**
-   * @input {string} Set the input's autocomplete property. Values: `"on"`, `"off"`. Default `"off"`.
+   * Set the input's autocomplete property. Values: `"on"`, `"off"`. Default `"off"`.
    */
   @Prop({ mutable: true }) autocomplete = 'off';
 
   /**
-   * @input {string} Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
+   * Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
    */
   @Prop({ mutable: true }) autocorrect = 'off';
 
   /**
-   * @input {string} Set the the cancel button text. Default: `"Cancel"`.
+   * Set the the cancel button text. Default: `"Cancel"`.
    */
   @Prop({ mutable: true }) cancelButtonText = 'Cancel';
 
   /**
-   * @input {number} Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
    */
   @Prop({ mutable: true }) debounce = 250;
 
@@ -97,27 +97,27 @@ export class Searchbar {
   }
 
   /**
-   * @input {string} Set the input's placeholder. Default `"Search"`.
+   * Set the input's placeholder. Default `"Search"`.
    */
   @Prop({ mutable: true }) placeholder = 'Search';
 
   /**
-   * @input {boolean} If true, show the cancel button. Default `false`.
+   * If true, show the cancel button. Default `false`.
    */
   @Prop({ mutable: true }) showCancelButton = false;
 
   /**
-   * @input {boolean} If true, enable spellcheck on the input. Default `false`.
+   * If true, enable spellcheck on the input. Default `false`.
    */
   @Prop({ mutable: true }) spellcheck = false;
 
   /**
-   * @input {string} Set the type of the input. Values: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, `"url"`. Default `"search"`.
+   * Set the type of the input. Values: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, `"url"`. Default `"search"`.
    */
   @Prop({ mutable: true }) type = 'search';
 
   /**
-   * @input {string} the value of the searchbar.
+   * the value of the searchbar.
    */
   @Prop({ mutable: true }) value: string;
 

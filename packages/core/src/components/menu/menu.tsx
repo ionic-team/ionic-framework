@@ -38,17 +38,17 @@ export class Menu {
   @Prop({ context: 'enableListener' }) enableListener: any;
 
   /**
-   * @input {string} The content's id the menu should use.
+   * The content's id the menu should use.
    */
   @Prop() content: string;
 
   /**
-   * @input {string} An id for the menu.
+   * An id for the menu.
    */
   @Prop() menuId: string;
 
   /**
-   * @input {string} The display type of the menu. Default varies based on the mode,
+   * The display type of the menu. Default varies based on the mode,
    * see the `menuType` in the [config](../../config/Config). Available options:
    * `"overlay"`, `"reveal"`, `"push"`.
    */
@@ -69,7 +69,7 @@ export class Menu {
   }
 
   /**
-   * @input {boolean} If true, the menu is disabled. Default `false`.
+   * If true, the menu is disabled. Default `false`.
    */
   @Prop({ mutable: true }) disabled = false;
 
@@ -79,7 +79,7 @@ export class Menu {
   }
 
   /**
-   * @input {string} Which side of the view the menu should be placed. Default `"start"`.
+   * Which side of the view the menu should be placed. Default `"start"`.
    */
   @Prop() side: Side = 'start';
 
@@ -89,7 +89,7 @@ export class Menu {
   }
 
   /**
-   * @input {boolean} If true, swiping the menu is enabled. Default `true`.
+   * If true, swiping the menu is enabled. Default `true`.
    */
   @Prop() swipeEnabled = true;
 
@@ -99,7 +99,7 @@ export class Menu {
   }
 
   /**
-   * @input {boolean} If true, the menu will persist on child pages.
+   * If true, the menu will persist on child pages.
    */
   @Prop() persistent = false;
 

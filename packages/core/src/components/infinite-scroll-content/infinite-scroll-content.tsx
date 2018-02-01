@@ -10,12 +10,12 @@ export class InfiniteScrollContent {
   @Prop({ context: 'config' }) config: Config;
 
   /**
-   * @input {string} An animated SVG spinner that shows while loading.
+   * An animated SVG spinner that shows while loading.
    */
   @Prop({ mutable: true }) loadingSpinner: string;
 
   /**
-   * @input {string} Optional text to display while loading.
+   * Optional text to display while loading.
    */
   @Prop() loadingText: string;
 

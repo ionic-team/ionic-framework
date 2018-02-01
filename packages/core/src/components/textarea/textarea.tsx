@@ -50,27 +50,27 @@ export class Textarea implements TextareaComponent {
   @Event() ionFocus: EventEmitter;
 
   /**
-   * @input {string} Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
+   * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
    */
   @Prop() autocapitalize = 'none';
 
   /**
-   * @input {string} Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
+   * Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
    */
   @Prop() autocomplete = 'off';
 
   /**
-   * @input {string} This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
+   * This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
    */
   @Prop() autofocus = false;
 
   /**
-   * @input {boolean} If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+   * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
   @Prop({ mutable: true }) clearOnEdit: boolean;
 
   /**
-   * @input {number} Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
    */
   @Prop() debounce = 0;
 
@@ -83,7 +83,7 @@ export class Textarea implements TextareaComponent {
   }
 
   /**
-   * @input {boolean} If true, the user cannot interact with the textarea. Defaults to `false`.
+   * If true, the user cannot interact with the textarea. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -93,57 +93,57 @@ export class Textarea implements TextareaComponent {
   }
 
   /**
-   * @input {number} If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+   * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
    */
   @Prop() maxlength: number;
 
   /**
-   * @input {number} If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+   * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
    */
   @Prop() minlength: number;
 
   /**
-   * @input {string} The name of the control, which is submitted with the form data.
+   * The name of the control, which is submitted with the form data.
    */
   @Prop() name: string;
 
   /**
-   * @input {string} Instructional text that shows before the input has a value.
+   * Instructional text that shows before the input has a value.
    */
   @Prop() placeholder: string;
 
   /**
-   * @input {boolean} If true, the user cannot modify the value. Defaults to `false`.
+   * If true, the user cannot modify the value. Defaults to `false`.
    */
   @Prop() readonly = false;
 
   /**
-   * @input {boolean} If true, the user must fill in a value before submitting a form.
+   * If true, the user must fill in a value before submitting a form.
    */
   @Prop() required = false;
 
   /**
-   * @input {string} If true, the element will have its spelling and grammar checked. Defaults to `false`.
+   * If true, the element will have its spelling and grammar checked. Defaults to `false`.
    */
   @Prop() spellcheck = false;
 
   /**
-   * @input {number} The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
+   * The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
    */
   @Prop() cols: number;
 
   /**
-   * @input {number} The number of visible text lines for the control.
+   * The number of visible text lines for the control.
    */
   @Prop() rows: number;
 
   /**
-   * @input {string} Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `"off"`.
+   * Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `"off"`.
    */
   @Prop() wrap: string;
 
   /**
-   * @input {string} The value of the textarea.
+   * The value of the textarea.
    */
   @Prop({ mutable: true }) value: string;
 

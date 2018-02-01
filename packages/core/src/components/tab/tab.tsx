@@ -13,50 +13,50 @@ export class Tab {
   @State() active = false;
 
   /**
-   * @input {string} Set the root page for this tab.
+   * Set the root page for this tab.
    */
   @Prop() btnId: string;
 
   /**
-   * @input {string} The URL path name to represent this tab within the URL.
+   * The URL path name to represent this tab within the URL.
    */
   @Prop() path: string;
 
   /**
-   * @input {string} The title of the tab button.
+   * The title of the tab button.
    */
   @Prop() title: string;
 
   /**
-   * @input {string} The icon for the tab button.
+   * The icon for the tab button.
    */
   @Prop() icon: string;
 
   /**
-   * @input {string} The badge for the tab button.
+   * The badge for the tab button.
    */
   @Prop() badge: string;
 
   /**
-   * @input {string} The badge color for the tab button.
+   * The badge color for the tab button.
    */
   @Prop() badgeStyle = 'default';
 
   /**
-   * @input {boolean} If true, enable the tab. If false,
+   * If true, enable the tab. If false,
    * the user cannot interact with this element.
    * Default: `true`.
    */
   @Prop() disabled = false;
 
   /**
-   * @input {boolean} If true, the tab button is visible within the
+   * If true, the tab button is visible within the
    * tabbar. Default: `true`.
    */
   @Prop() show = true;
 
   /**
-   * @input {boolean} If true, hide the tabs on child pages.
+   * If true, hide the tabs on child pages.
    */
   @Prop() tabsHideOnSubPages = false;
 

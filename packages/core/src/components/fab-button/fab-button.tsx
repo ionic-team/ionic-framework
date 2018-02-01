@@ -13,27 +13,27 @@ export class FabButton {
   @Element() private el: HTMLElement;
 
   /**
-   * @input {string} The color to use from your Sass `$colors` map.
+   * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
 
   /**
-   * @input {string} The mode determines which platform styles to use.
+   * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * @input {string} Contains a URL or a URL fragment that the hyperlink points to.
+   * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
   @Prop() href: string;
 
   /**
-   * @input {boolean} If true, adds transparency to the fab.
+   * If true, adds transparency to the fab.
    * Only affects `ios` mode. Defaults to `false`.
    */
   @Prop() translucent = false;
@@ -47,7 +47,7 @@ export class FabButton {
   @State() private inList = false;
 
   /**
-   * @input {boolean} If true, sets the button into a disabled state.
+   * If true, sets the button into a disabled state.
    */
   @Prop() disabled = false;
 
