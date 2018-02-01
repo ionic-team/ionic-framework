@@ -93,7 +93,7 @@ export class Select {
   @Prop() interfaceOptions: any = {};
 
   /**
-   * @input {string} the value of the select.
+   * the value of the select.
    */
   @Prop({ mutable: true }) value: string | string[];
 

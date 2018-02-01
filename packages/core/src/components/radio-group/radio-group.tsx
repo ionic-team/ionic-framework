@@ -15,12 +15,12 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
   @State() labelId: string;
 
   /*
-   * @input {boolean} If true, the radios can be deselected. Default false.
+   * If true, the radios can be deselected. Default false.
    */
   @Prop() allowEmptySelection = false;
 
   /*
-   * @input {boolean} If true, the user cannot interact with the radio group. Default false.
+   * If true, the user cannot interact with the radio group. Default false.
    */
   @Prop({ mutable: true }) disabled = false;
 
@@ -30,7 +30,7 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
   @Prop({ mutable: true }) name: string;
 
   /**
-   * @input {string} the value of the radio group.
+   * the value of the radio group.
    */
   @Prop({ mutable: true }) value: string;
 

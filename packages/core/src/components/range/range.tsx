@@ -57,21 +57,21 @@ export class Range implements BaseInputComponent {
   @Event() ionBlur: EventEmitter;
 
   /**
-   * @input {string} The color to use from your Sass `$colors` map.
+   * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
 
   /**
-   * @input {string} The mode determines which platform styles to use.
+   * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * @input {number} How long, in milliseconds, to wait to trigger the
+   * How long, in milliseconds, to wait to trigger the
    * `ionChange` event after each change in the range value. Default `0`.
    */
   @Prop() debounce = 0;
@@ -85,44 +85,44 @@ export class Range implements BaseInputComponent {
   }
 
   /*
-   * @input {boolean} If true, the user cannot interact with the range. Default false.
+   * If true, the user cannot interact with the range. Default false.
    */
   @Prop() disabled = false;
 
   /**
-   * @input {boolean} Show two knobs. Defaults to `false`.
+   * Show two knobs. Defaults to `false`.
    */
   @Prop() dualKnobs = false;
 
   /**
-   * @input {number} Maximum integer value of the range. Defaults to `100`.
+   * Maximum integer value of the range. Defaults to `100`.
    */
   @Prop() max = 100;
 
   /**
-   * @input {number} Minimum integer value of the range. Defaults to `0`.
+   * Minimum integer value of the range. Defaults to `0`.
    */
   @Prop() min = 0;
 
   /**
-   * @input {boolean} If true, a pin with integer value is shown when the knob
+   * If true, a pin with integer value is shown when the knob
    * is pressed. Defaults to `false`.
    */
   @Prop() pin = false;
 
   /**
-   * @input {boolean} If true, the knob snaps to tick marks evenly spaced based
+   * If true, the knob snaps to tick marks evenly spaced based
    * on the step property value. Defaults to `false`.
    */
   @Prop() snaps = false;
 
   /**
-   * @input {number} Specifies the value granularity. Defaults to `1`.
+   * Specifies the value granularity. Defaults to `1`.
    */
   @Prop() step = 1;
 
   /**
-   * @input {string} the value of the range.
+   * the value of the range.
    */
   @Prop({ mutable: true }) value: any;
 
