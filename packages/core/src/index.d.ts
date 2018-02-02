@@ -89,7 +89,7 @@ export { Row } from './components/row/row';
 export { Reorder } from './components/reorder/reorder';
 export { Scroll, ScrollCallback, ScrollDetail } from './components/scroll/scroll';
 export { Searchbar } from './components/searchbar/searchbar';
-export { Segment, SegmentEvent } from './components/segment/segment';
+export { Segment } from './components/segment/segment';
 export { SegmentButton, SegmentButtonEvent } from './components/segment-button/segment-button';
 export { SelectPopoverOption, SelectPopover } from './components/select-popover/select-popover';
 export { Select } from './components/select/select';
