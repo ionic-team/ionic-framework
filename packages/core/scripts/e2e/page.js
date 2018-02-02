@@ -16,7 +16,7 @@ module.exports = class E2ETestPage {
   }
 
   async present(clickTarget, options) {
-    await this.navigate();
+    await this.navigate(clickTarget);
     this.driver.findElement(By.css(clickTarget)).click();
     await this.driver.wait(until.elementLocated(By.css(options.waitFor)));
     return await this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css(options.waitFor))));
