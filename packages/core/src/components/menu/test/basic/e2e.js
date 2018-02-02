@@ -17,7 +17,7 @@ class E2ETestPage extends Page {
 }
 
 platforms.forEach(platform => {
-  describe.skip('menu/basic', () => {
+  describe('menu/basic', () => {
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
       return page.navigate('#left');
