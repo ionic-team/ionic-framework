@@ -1,38 +1,47 @@
 # ion-textarea
 
-`ion-textarea` is used for multi-line text inputs. Ionic still
-uses an actual `<textarea>` HTML element within the component;
-however, with Ionic wrapping the native HTML text area element, Ionic
-is able to better handle the user experience and interactivity.
+The textarea component is used for multi-line text input. A native textarea element is rendered inside of the component. The user experience and interactivity of the textarea component is improved by having control over the native textarea.
 
-Note that `<ion-textarea>` must load its value from the `value` or
-`[(ngModel)]` attribute. Unlike the native `<textarea>` element,
-`<ion-textarea>` does not support loading its value from the
-textarea's inner content.
+Unlike the native textarea element, the Ionic textarea does not support loading its value from the inner content. The textarea value should be set in the `value` attribute.
 
-When requiring only a single-line text input, we recommend using
-`<ion-input>` instead.
+The textarea component accepts the [native textarea attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea) in addition to the Ionic properties.
 
 ```html
- <ion-item>
-   <ion-label>Comments</ion-label>
-   <ion-textarea></ion-textarea>
- </ion-item>
+<!-- Default textarea -->
+<ion-textarea></ion-textarea>
 
- <ion-item>
-   <ion-label stacked>Message</ion-label>
-   <ion-textarea [(ngModel)]="msg"></ion-textarea>
- </ion-item>
-
- <ion-item>
-   <ion-label floating>Description</ion-label>
-   <ion-textarea></ion-textarea>
- </ion-item>
-
+<!-- Textarea in an item with a placeholder -->
 <ion-item>
-   <ion-label>Long Description</ion-label>
-   <ion-textarea rows="6" placeholder="enter long description here..."></ion-textarea>
- </ion-item>
+  <ion-textarea placeholder="Enter more information here..."></ion-textarea>
+</ion-item>
+
+<!-- Textarea in an item with a floating label -->
+<ion-item>
+  <ion-label floating>Description</ion-label>
+  <ion-textarea></ion-textarea>
+</ion-item>
+
+<!-- Disabled and readonly textarea in an item with a stacked label -->
+<ion-item>
+  <ion-label stacked>Summary</ion-label>
+  <ion-textarea
+    disabled
+    readonly
+    value="Ionic enables developers to build performant, high-quality mobile apps.">
+  </ion-textarea>
+</ion-item>
+
+<!-- Textarea that clears the value on edit -->
+<ion-item>
+  <ion-label>Comment</ion-label>
+  <ion-textarea clear-on-edit="true"></ion-textarea>
+</ion-item>
+
+<!-- Textarea with custom number of rows and cols -->
+<ion-item>
+  <ion-label>Notes</ion-label>
+  <ion-textarea rows="6" cols="20" placeholder="Enter any notes here..."></ion-textarea>
+</ion-item>
 ```
 
 
