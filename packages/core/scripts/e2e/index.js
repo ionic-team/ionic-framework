@@ -5,7 +5,7 @@ const glob = require('glob');
 const Mocha = require('mocha');
 const path = require('path');
 const webdriver = require('selenium-webdriver');
-const argv = require('yargs').argv
+const argv = require('yargs').argv;
 
 const Page = require('./page');
 const Snapshot = require('./snapshot');
@@ -20,7 +20,11 @@ let folder = null;
 
 function startDevServer() {
   const server = require('@stencil/dev-server/dist'); // TODO: fix after stencil-dev-server PR #16 is merged
-  const cmdArgs = ['--config', path.join(__dirname, '../../stencil.config.js'), '--no-open'];
+  const cmdArgs = [
+    '--config',
+    path.join(__dirname, '../../stencil.config.js'),
+    '--no-open'
+  ];
 
   return server.run(cmdArgs);
 }
@@ -61,11 +65,10 @@ function startDriver() {
   };
   chromeCapabilities.set('chromeOptions', chromeOptions);
 
-  return new webdriver.Builder().withCapabilities(chromeCapabilities).forBrowser('chrome').build();
-}
-
-async function stopDriver() {
-  await driver.quit();
+  return new webdriver.Builder()
+    .withCapabilities(chromeCapabilities)
+    .forBrowser('chrome')
+    .build();
 }
 
 function processCommandLine() {
@@ -80,19 +83,14 @@ function processCommandLine() {
 
 function registerE2ETest(desc, tst) {
   // NOTE: Do not use an arrow function here because: https://mochajs.org/#arrow-functions
-  it(desc, function(done) {
-    // const driver = startDriver();
-    (async function() {
-      await tst(driver, this);
-      if (takeScreenshots) {
-        await snapshot.takeScreenshot(driver, {
-          name: this.test.fullTitle().replace(/(^[\w-]+\/[\w-]+)/, '$1:'),
-          specIndex: specIndex++
-        });
-      }
-      // await driver.quit();
-      done();
-    })();
+  it(desc, async function() {
+    await tst(driver, this);
+    if (takeScreenshots) {
+      await snapshot.takeScreenshot(driver, {
+        name: this.test.fullTitle().replace(/(^[\w-]+\/[\w-]+)/, '$1:'),
+        specIndex: specIndex++
+      });
+    }
   });
 }
 
@@ -124,7 +122,7 @@ async function run() {
   }
 
   devServer.close();
-  stopDriver();
+  await driver.quit();
 
   if (failures) {
     throw new Error(failures);
@@ -170,7 +168,6 @@ function mochaLoadFiles(mocha) {
   });
 }
 
-
 function parseSemver(str) {
   return /(\d+)\.(\d+)\.(\d+)/
     .exec(str)
@@ -182,19 +179,22 @@ function validateNodeVersion(version) {
   const [major, minor] = parseSemver(version);
 
   if (major < 7 || (major === 7 && minor < 6)) {
-    throw new Error('Running the end-to-end tests requires Node version 7.6.0 or higher.');
+    throw new Error(
+      'Running the end-to-end tests requires Node version 7.6.0 or higher.'
+    );
   }
 }
 
 // Invoke run() only if executed directly i.e. `node ./scripts/e2e`
 if (require.main === module) {
   validateNodeVersion(process.version);
-  run().then(() => {
-  }).catch((err) => {
-    console.log(err);
-    // fail with non-zero status code
-    process.exit(1);
-  });
+  run()
+    .then(() => {})
+    .catch(err => {
+      console.log(err);
+      // fail with non-zero status code
+      process.exit(1);
+    });
 }
 
 module.exports = {

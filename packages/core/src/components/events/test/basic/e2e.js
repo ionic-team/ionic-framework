@@ -18,8 +18,7 @@ platforms.forEach(platform => {
       return page.navigate('#content');
     });
 
-    /*register('subscribers should receive event on or shortly after button click', async (driver, testContext) => {
-
+    register('subscribers should receive event on or shortly after button click', async (driver, testContext) => {
       testContext.timeout(1000);
       const page = new E2ETestPage(driver, platform);
       await wait(300);
@@ -38,7 +37,6 @@ platforms.forEach(platform => {
       const secretTwoText = await secretTwoElement.getText();
       expect(secretTwoText).to.equal('Burrito');
     });
-    */
   });
 });
 
