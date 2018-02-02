@@ -19,7 +19,7 @@ platforms.forEach(platform => {
     });
 
     register('subscribers should receive event on or shortly after button click', async (driver, testContext) => {
-      testContext.timeout(1000);
+      testContext.timeout(2000);
       const page = new E2ETestPage(driver, platform);
       await wait(300);
 
