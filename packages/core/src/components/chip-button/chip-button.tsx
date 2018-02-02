@@ -25,7 +25,7 @@ export class ChipButton {
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * If true, sets the button into a disabled state.
+   * If true, the user cannot interact with the chip button. Defaults to `false`.
    */
   @Prop() disabled = false;
 

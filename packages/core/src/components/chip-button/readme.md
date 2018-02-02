@@ -50,7 +50,7 @@ Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"da
 
 boolean
 
-If true, sets the button into a disabled state.
+If true, the user cannot interact with the chip button. Defaults to `false`.
 
 
 #### fill
@@ -90,7 +90,7 @@ Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"da
 
 boolean
 
-If true, sets the button into a disabled state.
+If true, the user cannot interact with the chip button. Defaults to `false`.
 
 
 #### fill

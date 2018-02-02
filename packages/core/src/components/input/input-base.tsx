@@ -38,7 +38,6 @@ export interface InputComponent extends InputBaseComponent {
   // Input Attributes
   accept: string;
   autocorrect: string;
-  inputmode: string;
   min: string;
   max: string;
   multiple: boolean;

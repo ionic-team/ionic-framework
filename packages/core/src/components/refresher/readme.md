@@ -35,7 +35,7 @@ Time it takes to close the refresher. Defaults to `280ms`.
 
 boolean
 
-If the refresher is disabled or not. Defaults to `true`.
+If true, the refresher will be hidden. Defaults to `true`.
 
 
 #### pullMax
@@ -75,7 +75,7 @@ Time it takes to close the refresher. Defaults to `280ms`.
 
 boolean
 
-If the refresher is disabled or not. Defaults to `true`.
+If true, the refresher will be hidden. Defaults to `true`.
 
 
 #### pull-max

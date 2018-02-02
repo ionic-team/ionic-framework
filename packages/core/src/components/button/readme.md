@@ -99,7 +99,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 boolean
 
-If true, sets the button into a disabled state.
+If true, the user cannot interact with the button. Defaults to `false`.
 
 
 #### expand
@@ -181,7 +181,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 boolean
 
-If true, sets the button into a disabled state.
+If true, the user cannot interact with the button. Defaults to `false`.
 
 
 #### expand

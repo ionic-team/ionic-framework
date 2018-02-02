@@ -43,7 +43,7 @@ export class Checkbox implements CheckboxInput {
   @Prop({ mutable: true }) checked = false;
 
   /**
-   * If true, the user cannot interact with the checkbox. Default false.
+   * If true, the user cannot interact with the checkbox. Defaults to `false`.
    */
   @Prop() disabled = false;
 

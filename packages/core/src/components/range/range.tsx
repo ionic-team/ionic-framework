@@ -85,7 +85,7 @@ export class Range implements BaseInputComponent {
   }
 
   /*
-   * If true, the user cannot interact with the range. Default false.
+   * If true, the user cannot interact with the range. Defaults to `false`.
    */
   @Prop() disabled = false;
 

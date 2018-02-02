@@ -34,7 +34,7 @@ export class Button {
   @Prop() size: 'small' | 'default' | 'large';
 
   /**
-   * If true, sets the button into a disabled state.
+   * If true, the user cannot interact with the button. Defaults to `false`.
    */
   @Prop() disabled = false;
 
