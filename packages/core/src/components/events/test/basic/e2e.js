@@ -11,7 +11,7 @@ class E2ETestPage extends Page {
 }
 
 platforms.forEach(platform => {
-  describe.skip('events/basic', () => {
+  describe('events/basic', () => {
 
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
