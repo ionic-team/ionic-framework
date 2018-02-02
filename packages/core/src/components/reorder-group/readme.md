@@ -125,12 +125,16 @@ Alternatevely you can execute helper function inside template:
 
 boolean
 
+If true, the reorder will be hidden. Defaults to `true`.
+
 
 ## Attributes
 
 #### disabled
 
 boolean
+
+If true, the reorder will be hidden. Defaults to `true`.
 
 
 

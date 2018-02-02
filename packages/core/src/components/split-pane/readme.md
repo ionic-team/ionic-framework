@@ -119,8 +119,7 @@ SplitPane also provides some predefined media queries that can be used.
 
 boolean
 
-If `false`, the split-pane is disabled, ie. the side pane will
-never be displayed. Default `true`.
+If true, the split pane will be hidden. Defaults to `false`.
 
 
 #### when
@@ -138,8 +137,7 @@ Can also be a boolean expression.
 
 boolean
 
-If `false`, the split-pane is disabled, ie. the side pane will
-never be displayed. Default `true`.
+If true, the split pane will be hidden. Defaults to `false`.
 
 
 #### when

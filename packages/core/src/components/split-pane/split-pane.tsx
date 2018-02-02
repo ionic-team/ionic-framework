@@ -30,8 +30,7 @@ export class SplitPane {
   @State() private visible = false;
 
   /**
-   * If `false`, the split-pane is disabled, ie. the side pane will
-   * never be displayed. Default `true`.
+   * If true, the split pane will be hidden. Defaults to `false`.
    */
   @Prop() disabled = false;
 

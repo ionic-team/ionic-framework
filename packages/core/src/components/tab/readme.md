@@ -75,9 +75,7 @@ Set the root page for this tab.
 
 boolean
 
-If true, enable the tab. If false,
-the user cannot interact with this element.
-Default: `true`.
+If true, the user cannot interact with the tab. Defaults to `false`.
 
 
 #### icon
@@ -148,9 +146,7 @@ Set the root page for this tab.
 
 boolean
 
-If true, enable the tab. If false,
-the user cannot interact with this element.
-Default: `true`.
+If true, the user cannot interact with the tab. Defaults to `false`.
 
 
 #### icon

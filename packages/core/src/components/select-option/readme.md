@@ -11,7 +11,7 @@
 
 boolean
 
-If true, the user cannot interact with the select option.
+If true, the user cannot interact with the select option. Defaults to `false`.
 
 
 #### selected
@@ -34,7 +34,7 @@ The text value of the option.
 
 boolean
 
-If true, the user cannot interact with the select option.
+If true, the user cannot interact with the select option. Defaults to `false`.
 
 
 #### selected

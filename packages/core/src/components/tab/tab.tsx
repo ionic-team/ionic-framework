@@ -43,9 +43,7 @@ export class Tab {
   @Prop() badgeStyle = 'default';
 
   /**
-   * If true, enable the tab. If false,
-   * the user cannot interact with this element.
-   * Default: `true`.
+   * If true, the user cannot interact with the tab. Defaults to `false`.
    */
   @Prop() disabled = false;
 

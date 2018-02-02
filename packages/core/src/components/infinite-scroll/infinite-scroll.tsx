@@ -52,9 +52,8 @@ export class InfiniteScroll {
 
 
   /**
-   * If true, whether or not the infinite scroll should be
-   * disabled or not. Setting to `true` will remove scroll event listeners
-   * and hide the display.
+   * If true, the infinite scroll will be hidden and scroll event listeners
+   * will be removed.
    *
    * Call `enable(false)` to disable the infinite scroll from actively
    * trying to receive new data while scrolling. This method is useful

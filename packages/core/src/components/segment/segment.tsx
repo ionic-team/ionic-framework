@@ -35,9 +35,9 @@ export class Segment {
   @Prop() mode: 'ios' | 'md';
 
   /*
-   * If true, the user cannot interact with the segment. Default false.
+   * If true, the user cannot interact with the segment. Defaults to `false`.
    */
-  @Prop({ mutable: true }) disabled = false;
+  @Prop() disabled = false;
 
   /**
    * the value of the segment.

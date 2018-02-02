@@ -43,7 +43,7 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
   @Prop() name: string;
 
   /*
-   * If true, the user cannot interact with the radio. Default false.
+   * If true, the user cannot interact with the radio. Defaults to `false`.
    */
   @Prop() disabled = false;
 

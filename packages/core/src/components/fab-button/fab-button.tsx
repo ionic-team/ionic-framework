@@ -47,7 +47,7 @@ export class FabButton {
   @State() private inList = false;
 
   /**
-   * If true, sets the button into a disabled state.
+   * If true, the user cannot interact with the fab button. Defaults to `false`.
    */
   @Prop() disabled = false;
 

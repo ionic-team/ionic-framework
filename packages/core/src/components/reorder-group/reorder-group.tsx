@@ -47,6 +47,9 @@ export class ReorderGroup {
 
   @Prop({ context: 'dom' }) dom: DomController;
 
+  /**
+   * If true, the reorder will be hidden. Defaults to `true`.
+   */
   @Prop() disabled = true;
 
   @Watch('disabled')
