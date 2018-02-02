@@ -8,7 +8,7 @@
   <script src="/dist/ionic.js"></script>
 </head>
 
-<body onload="init()">
+<body onload="runTest()">
   <ion-events></ion-events>
   <ion-app>
     <ion-page>
@@ -18,7 +18,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content padding>
+      <ion-content id="content" padding>
 
         <div class="container">
           <div>
@@ -50,15 +50,11 @@
         span.textContent = secretTwo;
       });
 
-      const publishButton = document.querySelector('ion-button .publish');
+      const publishButton = document.querySelector('ion-button');
       publishButton.addEventListener('click', async () => {
-        await ionEvents.publish('secretOne', 'Taco');
-        await ionEvents.publish('secretTwo', 'Burrito');
+        ionEvents.publish('secretOne', 'Taco');
+        ionEvents.publish('secretTwo', 'Burrito');
       });
-    }
-
-    function init() {
-      setTimeout(runTest(), 100);
     }
   </script>
 </body>

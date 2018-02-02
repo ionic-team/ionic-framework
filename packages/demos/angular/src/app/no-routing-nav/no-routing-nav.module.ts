@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { NoRoutingNavPageComponent } from './no-routing-nav.component';
 import { NoRoutingNavRoutingModule } from './no-routing-nav-routing.module';
-import { IonicAngularModule, IonicRouterModule} from '@ionic/angular';
+import { IonicAngularModule} from '@ionic/angular';
 
 import { PageOne } from './pages/page-one';
 import { PageTwo } from './pages/page-two';
@@ -14,7 +14,6 @@ import { PageThree } from './pages/page-three';
     CommonModule,
     NoRoutingNavRoutingModule,
     IonicAngularModule,
-    IonicRouterModule
   ],
   declarations: [
     NoRoutingNavPageComponent,

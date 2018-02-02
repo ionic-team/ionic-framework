@@ -33,32 +33,32 @@ export class Modal {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {ModalEvent} Emitted after the modal has loaded.
+   * Emitted after the modal has loaded.
    */
   @Event() ionModalDidLoad: EventEmitter<ModalEventDetail>;
 
   /**
-   * @output {ModalEvent} Emitted after the modal has presented.
+   * Emitted after the modal has presented.
    */
   @Event() ionModalDidPresent: EventEmitter<ModalEventDetail>;
 
   /**
-   * @output {ModalEvent} Emitted before the modal has presented.
+   * Emitted before the modal has presented.
    */
   @Event() ionModalWillPresent: EventEmitter<ModalEventDetail>;
 
   /**
-   * @output {ModalEvent} Emitted before the modal has dismissed.
+   * Emitted before the modal has dismissed.
    */
   @Event() ionModalWillDismiss: EventEmitter<ModalDismissEventDetail>;
 
   /**
-   * @output {ModalEvent} Emitted after the modal has dismissed.
+   * Emitted after the modal has dismissed.
    */
   @Event() ionModalDidDismiss: EventEmitter<ModalDismissEventDetail>;
 
   /**
-   * @output {ModalEvent} Emitted after the modal has unloaded.
+   * Emitted after the modal has unloaded.
    */
   @Event() ionModalDidUnload: EventEmitter<ModalEventDetail>;
 
@@ -67,14 +67,14 @@ export class Modal {
   @Prop({ context: 'dom' }) dom: DomController;
 
   /**
-   * @input {string} The color to use from your Sass `$colors` map.
+   * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
 
   /**
-   * @input {string} The mode determines which platform styles to use.
+   * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */

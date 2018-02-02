@@ -11,6 +11,10 @@
 
 string
 
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
+
 
 #### component
 
@@ -55,6 +59,10 @@ number
 #### mode
 
 
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### showBackdrop
@@ -73,13 +81,17 @@ boolean
 
 string
 
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
+
 
 #### component
 
 any
 
 
-#### cssClass
+#### css-class
 
 string
 
@@ -94,22 +106,22 @@ any
 
 
 
-#### enableBackdropDismiss
+#### enable-backdrop-dismiss
 
 boolean
 
 
-#### enterAnimation
+#### enter-animation
 
 
 
 
-#### leaveAnimation
+#### leave-animation
 
 
 
 
-#### modalId
+#### modal-id
 
 number
 
@@ -118,13 +130,17 @@ number
 
 
 
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
-#### showBackdrop
+
+#### show-backdrop
 
 boolean
 
 
-#### willAnimate
+#### will-animate
 
 boolean
 
@@ -133,20 +149,32 @@ boolean
 
 #### ionModalDidDismiss
 
+Emitted after the modal has dismissed.
+
 
 #### ionModalDidLoad
+
+Emitted after the modal has loaded.
 
 
 #### ionModalDidPresent
 
+Emitted after the modal has presented.
+
 
 #### ionModalDidUnload
+
+Emitted after the modal has unloaded.
 
 
 #### ionModalWillDismiss
 
+Emitted before the modal has dismissed.
+
 
 #### ionModalWillPresent
+
+Emitted before the modal has presented.
 
 
 ## Methods

@@ -24,14 +24,14 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
   @State() keyFocus: boolean;
 
   /**
-   * @input {string} The color to use from your Sass `$colors` map.
+   * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
 
   /**
-   * @input {string} The mode determines which platform styles to use.
+   * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
@@ -43,47 +43,47 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
   @Prop() name: string;
 
   /*
-   * @input {boolean} If true, the user cannot interact with the radio. Default false.
+   * If true, the user cannot interact with the radio. Default false.
    */
   @Prop() disabled = false;
 
   /**
-   * @input {boolean} If true, the radio is selected. Defaults to `false`.
+   * If true, the radio is selected. Defaults to `false`.
    */
   @Prop({ mutable: true }) checked = false;
 
   /**
-   * @input {string} the value of the radio.
+   * the value of the radio.
    */
   @Prop({ mutable: true }) value: string;
 
   /**
-   * @output {RadioEvent} Emitted when the radio loads.
+   * Emitted when the radio loads.
    */
   @Event() ionRadioDidLoad: EventEmitter;
 
   /**
-   * @output {RadioEvent} Emitted when the radio unloads.
+   * Emitted when the radio unloads.
    */
   @Event() ionRadioDidUnload: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the styles change.
+   * Emitted when the styles change.
    */
   @Event() ionStyle: EventEmitter<StyleEvent>;
 
   /**
-   * @output {Event} Emitted when the radio button is selected.
+   * Emitted when the radio button is selected.
    */
   @Event() ionSelect: EventEmitter<CheckedInputChangeEvent>;
 
   /**
-   * @output {Event} Emitted when the radio button has focus.
+   * Emitted when the radio button has focus.
    */
   @Event() ionFocus: EventEmitter<FocusEvent>;
 
   /**
-   * @output {Event} Emitted when the radio button loses focus.
+   * Emitted when the radio button loses focus.
    */
   @Event() ionBlur: EventEmitter<BlurEvent>;
 

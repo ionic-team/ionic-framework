@@ -79,35 +79,35 @@ Enable action-sheet animations. If false, action-sheet will not animate in
 An array of buttons for the action-sheet. See ActionsheetButton type for accepted values
 
 
-#### cssClass
+#### css-class
 
 string
 
 Additional class or classes to apply to the action-sheet
 
 
-#### enableBackdropDismiss
+#### enable-backdrop-dismiss
 
 boolean
 
 If true, the action-sheet will be dismissed when the backdrop is clicked.
 
 
-#### enterAnimation
+#### enter-animation
 
 
 
 Animation to use when the action-sheet is created
 
 
-#### leaveAnimation
+#### leave-animation
 
 
 
 Animation to use when the action-sheet is dismissed
 
 
-#### subTitle
+#### sub-title
 
 string
 
@@ -128,7 +128,7 @@ boolean
 If true, action-sheet will become translucent. Requires support for backdrop-filters.
 
 
-#### willAnimate
+#### will-animate
 
 boolean
 

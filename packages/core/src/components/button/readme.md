@@ -160,7 +160,7 @@ If true, activates a button with a heavier font weight.
 
 ## Attributes
 
-#### buttonType
+#### button-type
 
 string
 

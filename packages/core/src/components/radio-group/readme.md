@@ -60,6 +60,8 @@ boolean
 
 boolean
 
+Indicates that the user cannot interact with the control.
+
 
 #### name
 
@@ -72,10 +74,12 @@ The name of the control, which is submitted with the form data.
 
 string
 
+the value of the radio group.
+
 
 ## Attributes
 
-#### allowEmptySelection
+#### allow-empty-selection
 
 boolean
 
@@ -84,6 +88,8 @@ boolean
 
 boolean
 
+Indicates that the user cannot interact with the control.
+
 
 #### name
 
@@ -96,10 +102,14 @@ The name of the control, which is submitted with the form data.
 
 string
 
+the value of the radio group.
+
 
 ## Events
 
 #### ionChange
+
+Emitted when the value has changed.
 
 
 

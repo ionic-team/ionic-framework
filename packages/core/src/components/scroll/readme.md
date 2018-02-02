@@ -34,17 +34,17 @@ boolean
 boolean
 
 
-#### onionScroll
+#### onion-scroll
 
 
 
 
-#### onionScrollEnd
+#### onion-scroll-end
 
 
 
 
-#### onionScrollStart
+#### onion-scroll-start
 
 
 
@@ -53,11 +53,17 @@ boolean
 
 #### ionScroll
 
+Emitted while scrolling.
+
 
 #### ionScrollEnd
 
+Emitted when the scroll has ended.
+
 
 #### ionScrollStart
+
+Emitted when the scroll has started.
 
 
 ## Methods

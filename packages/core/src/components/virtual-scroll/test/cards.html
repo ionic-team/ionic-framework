@@ -61,9 +61,9 @@
         return el;
       }
 
-      virtual.itemRender = (el, item, type) => {
-        if (type === 0) return renderItem(el, item);
-        return renderHeader(el, item);
+      virtual.itemRender = (el, cell) => {
+        if (cell.type === 0) return renderItem(el, cell.value);
+        return renderHeader(el, cell.value);
       };
 
 

@@ -31,17 +31,17 @@ export class Scroll {
   @Prop() onionScrollEnd: ScrollCallback;
 
   /**
-   * @output {ScrollEvent} Emitted when the scroll has started.
+   * Emitted when the scroll has started.
    */
   @Event() ionScrollStart: EventEmitter;
 
   /**
-   * @output {ScrollEvent} Emitted while scrolling.
+   * Emitted while scrolling.
    */
   @Event({bubbles: false}) ionScroll: EventEmitter;
 
   /**
-   * @output {ScrollEvent} Emitted when the scroll has ended.
+   * Emitted when the scroll has ended.
    */
   @Event() ionScrollEnd: EventEmitter;
 

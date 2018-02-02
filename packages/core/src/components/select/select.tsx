@@ -93,7 +93,7 @@ export class Select {
   @Prop() interfaceOptions: any = {};
 
   /**
-   * @input {string} the value of the select.
+   * the value of the select.
    */
   @Prop({ mutable: true }) value: string | string[];
 
@@ -118,7 +118,7 @@ export class Select {
   @Event() ionBlur: EventEmitter<BlurEvent>;
 
   /**
-   * @output {Event} Emitted when the styles change.
+   * Emitted when the styles change.
    */
   @Event() ionStyle: EventEmitter<StyleEvent>;
 

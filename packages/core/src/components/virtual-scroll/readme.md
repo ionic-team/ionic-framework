@@ -282,7 +282,7 @@ which is an expensive operation and should be avoided if possible.
 
 ## Attributes
 
-#### approxFooterHeight
+#### approx-footer-height
 
 number
 
@@ -295,7 +295,7 @@ app's CSS, whereas this approximation is used to help calculate
 initial dimensions before the item has been rendered. Default is `100%`.
 
 
-#### approxHeaderHeight
+#### approx-header-height
 
 number
 
@@ -308,7 +308,7 @@ app's CSS, whereas this approximation is used to help calculate
 initial dimensions before the item has been rendered. Default is `40px`.
 
 
-#### approxItemHeight
+#### approx-item-height
 
 number
 
@@ -324,12 +324,12 @@ initial dimensions before the item has been rendered. Default is
 `45`.
 
 
-#### domRender
+#### dom-render
 
 
 
 
-#### footerFn
+#### footer-fn
 
 
 
@@ -340,7 +340,7 @@ should be used, and what data to give to the footer template. The function
 must return `null` if a footer cell shouldn't be created.
 
 
-#### headerFn
+#### header-fn
 
 
 
@@ -354,12 +354,12 @@ and what data to give to the header template. The function must return
 `null` if a header cell shouldn't be created.
 
 
-#### itemHeight
+#### item-height
 
 
 
 
-#### itemRender
+#### item-render
 
 
 
@@ -374,7 +374,7 @@ that when this data has changed, then the entire virtual scroll is reset,
 which is an expensive operation and should be avoided if possible.
 
 
-#### nodeHeight
+#### node-height
 
 
 

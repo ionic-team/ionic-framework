@@ -9,13 +9,13 @@ export class ItemOptions {
   @Element() private el: HTMLElement;
 
   /**
-   * @input {string} The side the option button should be on. Defaults to `"right"`.
+   * The side the option button should be on. Defaults to `"right"`.
    * If you have multiple `ion-item-options`, a side must be provided for each.
    */
   @Prop() side: Side = 'right';
 
   /**
-   * @output {Event} Emitted when the item has been fully swiped.
+   * Emitted when the item has been fully swiped.
    */
   @Event() ionSwipe: EventEmitter;
 

@@ -19,21 +19,21 @@ export class Toolbar {
   @Prop({ context: 'config' }) config: Config;
 
   /**
-   * @input {string} The color to use from your Sass `$colors` map.
+   * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
 
   /**
-   * @input {string} The mode determines which platform styles to use.
+   * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * @input {boolean} If true, adds transparency to the header.
+   * If true, adds transparency to the header.
    * Note: In order to scroll content behind the header, the `fullscreen`
    * attribute needs to be set on the content.
    * Only affects `ios` mode. Defaults to `false`.
@@ -41,7 +41,7 @@ export class Toolbar {
   @Prop() translucent = false;
 
   componentDidLoad() {
-    const buttons = this.el.querySelectorAll('ion-button') as any;
+    const buttons = this.el.querySelectorAll('ion-button');
     for (let i = 0; i < buttons.length; i++) {
       buttons[i].setAttribute('button-type', 'bar-button');
     }

@@ -33,32 +33,32 @@ export class Picker {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {PickerEvent} Emitted after the picker has loaded.
+   * Emitted after the picker has loaded.
    */
   @Event() ionPickerDidLoad: EventEmitter<PickerEventDetail>;
 
   /**
-   * @output {PickerEvent} Emitted after the picker has presented.
+   * Emitted after the picker has presented.
    */
   @Event() ionPickerDidPresent: EventEmitter<PickerEventDetail>;
 
   /**
-   * @output {PickerEvent} Emitted before the picker has presented.
+   * Emitted before the picker has presented.
    */
   @Event() ionPickerWillPresent: EventEmitter<PickerEventDetail>;
 
   /**
-   * @output {PickerEvent} Emitted before the picker has dismissed.
+   * Emitted before the picker has dismissed.
    */
   @Event() ionPickerWillDismiss: EventEmitter<PickerDismissEventDetail>;
 
   /**
-   * @output {PickerEvent} Emitted after the picker has dismissed.
+   * Emitted after the picker has dismissed.
    */
   @Event() ionPickerDidDismiss: EventEmitter<PickerDismissEventDetail>;
 
   /**
-   * @output {PickerEvent} Emitted after the picker has unloaded.
+   * Emitted after the picker has unloaded.
    */
   @Event() ionPickerDidUnload: EventEmitter<PickerEventDetail>;
 

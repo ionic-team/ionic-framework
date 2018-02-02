@@ -49,20 +49,32 @@ Toggles change the state of a single option. Toggles can be switched on or off b
 
 boolean
 
+If true, the toggle is selected. Defaults to `false`.
+
 
 #### color
 
 string
+
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
 #### disabled
 
 boolean
 
+Indicates that the user cannot interact with the control.
+
 
 #### mode
 
 
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### name
@@ -75,6 +87,8 @@ The name of the control, which is submitted with the form data.
 #### value
 
 string
+
+the value of the toggle.
 
 
 ## Attributes
@@ -83,20 +97,32 @@ string
 
 boolean
 
+If true, the toggle is selected. Defaults to `false`.
+
 
 #### color
 
 string
+
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
 #### disabled
 
 boolean
 
+Indicates that the user cannot interact with the control.
+
 
 #### mode
 
 
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### name
@@ -110,19 +136,29 @@ The name of the control, which is submitted with the form data.
 
 string
 
+the value of the toggle.
+
 
 ## Events
 
 #### ionBlur
 
+Emitted when the toggle loses focus.
+
 
 #### ionChange
+
+Emitted when the value property has changed.
 
 
 #### ionFocus
 
+Emitted when the toggle has focus.
+
 
 #### ionStyle
+
+Emitted when the styles change.
 
 
 

@@ -30,25 +30,25 @@ export class SplitPane {
   @State() private visible = false;
 
   /**
-   * @input {boolean} If `false`, the split-pane is disabled, ie. the side pane will
+   * If `false`, the split-pane is disabled, ie. the side pane will
    * never be displayed. Default `true`.
    */
   @Prop() disabled = false;
 
   /**
-   * @input {string | boolean} When the split-pane should be shown.
+   * When the split-pane should be shown.
    * Can be a CSS media query expression, or a shortcut expression.
    * Can also be a boolean expression.
    */
   @Prop() when: string | boolean = QUERY['md'];
 
   /**
-   * @output {Event} Expression to be called when the split-pane visibility has changed
+   * Expression to be called when the split-pane visibility has changed
    */
   @Event() ionSplitPaneDidChange: EventEmitter;
 
   /**
-   * @output {Event} Emitted when the split pane is visible.
+   * Emitted when the split pane is visible.
    */
   @Event() ionChange: EventEmitter;
 

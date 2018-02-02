@@ -14,7 +14,7 @@ platforms.forEach(platform => {
   describe('select/multiple-value', () => {
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
-      return page.navigate();
+      return page.navigate('#toppings');
     });
 
     register('should open toppings multiple select', driver => {

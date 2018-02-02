@@ -53,6 +53,21 @@ function getTestFiles() {
   });
 }
 
+function startDriver() {
+  // setting chrome options to start the browser without an info bar
+  let chromeCapabilities = webdriver.Capabilities.chrome();
+  const chromeOptions = {
+    // 'args': ['--disable-infobars']
+  };
+  chromeCapabilities.set('chromeOptions', chromeOptions);
+
+  return new webdriver.Builder().withCapabilities(chromeCapabilities).forBrowser('chrome').build();
+}
+
+async function stopDriver() {
+  await driver.quit();
+}
+
 function processCommandLine() {
   if (argv.snapshot) {
     takeScreenshots = true;
@@ -65,15 +80,19 @@ function processCommandLine() {
 
 function registerE2ETest(desc, tst) {
   // NOTE: Do not use an arrow function here because: https://mochajs.org/#arrow-functions
-  it(desc, async function() {
-    await tst(driver, this);
-    if (takeScreenshots) {
-      await snapshot.takeScreenshot(driver, {
-        name: this.test.fullTitle().replace(/(^[\w-]+\/[\w-]+)/, '$1:'),
-        specIndex: specIndex++
-      });
-    }
-    return Promise.resolve(true);
+  it(desc, function(done) {
+    // const driver = startDriver();
+    (async function() {
+      await tst(driver, this);
+      if (takeScreenshots) {
+        await snapshot.takeScreenshot(driver, {
+          name: this.test.fullTitle().replace(/(^[\w-]+\/[\w-]+)/, '$1:'),
+          specIndex: specIndex++
+        });
+      }
+      // await driver.quit();
+      done();
+    })();
   });
 }
 
@@ -90,15 +109,7 @@ async function run() {
     slow: 2000
   });
 
-  // setting chrome options to start the browser without an info bar
-  let chromeCapabilities = webdriver.Capabilities.chrome();
-  let chromeOptions = {
-    // 'args': ['--disable-infobars']
-  };
-  chromeCapabilities.set('chromeOptions', chromeOptions);
-
-  driver = new webdriver.Builder().withCapabilities(chromeCapabilities).forBrowser('chrome').build();
-
+  driver = startDriver();
   processCommandLine();
 
   const devServer = await startDevServer();
@@ -113,7 +124,7 @@ async function run() {
   }
 
   devServer.close();
-  await driver.quit();
+  stopDriver();
 
   if (failures) {
     throw new Error(failures);
@@ -188,8 +199,7 @@ if (require.main === module) {
 
 module.exports = {
   Page,
-  navigate: (url, tagName) => driver => new Page(driver, url).navigate(tagName),
+  platforms: platforms,
   register: registerE2ETest,
-  run: run,
-  platforms: platforms
+  run: run
 };

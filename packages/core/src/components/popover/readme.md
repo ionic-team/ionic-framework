@@ -11,6 +11,10 @@
 
 string
 
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
+
 
 #### component
 
@@ -55,6 +59,10 @@ boolean
 #### mode
 
 
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### popoverId
@@ -83,13 +91,17 @@ boolean
 
 string
 
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
+
 
 #### component
 
 string
 
 
-#### cssClass
+#### css-class
 
 string
 
@@ -104,12 +116,12 @@ any
 
 
 
-#### enableBackdropDismiss
+#### enable-backdrop-dismiss
 
 boolean
 
 
-#### enterAnimation
+#### enter-animation
 
 
 
@@ -119,7 +131,7 @@ boolean
 
 
 
-#### leaveAnimation
+#### leave-animation
 
 
 
@@ -128,13 +140,17 @@ boolean
 
 
 
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
-#### popoverId
+
+#### popover-id
 
 number
 
 
-#### showBackdrop
+#### show-backdrop
 
 boolean
 
@@ -144,7 +160,7 @@ boolean
 boolean
 
 
-#### willAnimate
+#### will-animate
 
 boolean
 
@@ -153,20 +169,32 @@ boolean
 
 #### ionPopoverDidDismiss
 
+Emitted after the popover has dismissed.
+
 
 #### ionPopoverDidLoad
+
+Emitted after the popover has loaded.
 
 
 #### ionPopoverDidPresent
 
+Emitted after the popover has presented.
+
 
 #### ionPopoverDidUnload
+
+Emitted after the popover has unloaded.
 
 
 #### ionPopoverWillDismiss
 
+Emitted before the popover has dismissed.
+
 
 #### ionPopoverWillPresent
+
+Emitted before the popover has presented.
 
 
 ## Methods

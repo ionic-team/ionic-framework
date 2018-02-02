@@ -34,9 +34,8 @@ export class Events {
   }
 
   @Listen('window:statusTap')
-  statusTap(_event: Event) {
-    // TODO - do status tap
-    return Promise.resolve();
+  statusTap(event: Event) {
+    return publishImpl(`app:${event.type}`, event);
   }
 
 }

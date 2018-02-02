@@ -28,32 +28,32 @@ export class Tabs {
   @Prop() color: string;
 
   /**
-   * @input {string} A unique name for the tabs
+   * A unique name for the tabs
    */
   @Prop() name: string;
 
   /**
-   * @input {boolean} If true, the tabbar
+   * If true, the tabbar
    */
   @Prop() tabbarHidden = false;
 
   /**
-   * @input {string} Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
+   * Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
    */
   @Prop({ mutable: true }) tabbarLayout: string;
 
   /**
-   * @input {string} Set position of the tabbar: `top`, `bottom`.
+   * Set position of the tabbar: `top`, `bottom`.
    */
   @Prop({ mutable: true }) tabbarPlacement: string;
 
   /**
-   * @input {boolean} If true, show the tab highlight bar under the selected tab.
+   * If true, show the tab highlight bar under the selected tab.
    */
   @Prop({ mutable: true }) tabbarHighlight: boolean;
 
   /**
-   * @input {boolean} If true, adds transparency to the tabbar.
+   * If true, adds transparency to the tabbar.
    * Note: In order to scroll content behind the tabbar, the `fullscreen`
    * attribute needs to be set on the content.
    * Only affects `ios` mode. Defaults to `false`.
@@ -63,7 +63,7 @@ export class Tabs {
   @Prop() scrollable = false;
 
   /**
-   * @output {any} Emitted when the tab changes.
+   * Emitted when the tab changes.
    */
   @Event() ionChange: EventEmitter;
 

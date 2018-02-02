@@ -29,32 +29,32 @@ export class Toast {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {ToastEvent} Emitted after the toast has loaded.
+   * Emitted after the toast has loaded.
    */
   @Event() ionToastDidLoad: EventEmitter<ToastEventDetail>;
 
   /**
-   * @output {ToastEvent} Emitted after the toast has presented.
+   * Emitted after the toast has presented.
    */
   @Event() ionToastDidPresent: EventEmitter<ToastEventDetail>;
 
   /**
-   * @output {ToastEvent} Emitted before the toast has presented.
+   * Emitted before the toast has presented.
    */
   @Event() ionToastWillPresent: EventEmitter<ToastEventDetail>;
 
   /**
-   * @output {ToastEvent} Emitted before the toast has dismissed.
+   * Emitted before the toast has dismissed.
    */
   @Event() ionToastWillDismiss: EventEmitter<ToastDismissEventDetail>;
 
   /**
-   * @output {ToastEvent} Emitted after the toast has dismissed.
+   * Emitted after the toast has dismissed.
    */
   @Event() ionToastDidDismiss: EventEmitter<ToastDismissEventDetail>;
 
   /**
-   * @output {ToastEvent} Emitted after the toast has unloaded.
+   * Emitted after the toast has unloaded.
    */
   @Event() ionToastDidUnload: EventEmitter<ToastEventDetail>;
 

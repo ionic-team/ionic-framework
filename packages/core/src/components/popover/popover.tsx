@@ -34,32 +34,32 @@ export class Popover {
   @Element() private el: HTMLElement;
 
   /**
-   * @output {PopoverEvent} Emitted after the popover has loaded.
+   * Emitted after the popover has loaded.
    */
   @Event() ionPopoverDidLoad: EventEmitter<PopoverEventDetail>;
 
   /**
-   * @output {PopoverEvent} Emitted after the popover has presented.
+   * Emitted after the popover has presented.
    */
   @Event() ionPopoverDidPresent: EventEmitter<PopoverEventDetail>;
 
   /**
-   * @output {PopoverEvent} Emitted before the popover has presented.
+   * Emitted before the popover has presented.
    */
   @Event() ionPopoverWillPresent: EventEmitter<PopoverEventDetail>;
 
   /**
-   * @output {PopoverEvent} Emitted before the popover has dismissed.
+   * Emitted before the popover has dismissed.
    */
   @Event() ionPopoverWillDismiss: EventEmitter<PopoverDismissEventDetail>;
 
   /**
-   * @output {PopoverEvent} Emitted after the popover has dismissed.
+   * Emitted after the popover has dismissed.
    */
   @Event() ionPopoverDidDismiss: EventEmitter<PopoverDismissEventDetail>;
 
   /**
-   * @output {PopoverEvent} Emitted after the popover has unloaded.
+   * Emitted after the popover has unloaded.
    */
   @Event() ionPopoverDidUnload: EventEmitter<PopoverEventDetail>;
 
@@ -68,14 +68,14 @@ export class Popover {
   @Prop({ context: 'dom' }) dom: DomController;
 
   /**
-   * @input {string} The color to use from your Sass `$colors` map.
+   * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
 
   /**
-   * @input {string} The mode determines which platform styles to use.
+   * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */

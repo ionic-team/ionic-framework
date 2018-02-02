@@ -14,7 +14,7 @@ boolean
 
 ## Attributes
 
-#### useTapClick
+#### use-tap-click
 
 boolean
 

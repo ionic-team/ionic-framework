@@ -8,11 +8,11 @@ class E2ETestPage extends Page {
     super(driver, `http://localhost:3333/src/components/loading/test/basic?ionicplatform=${platform}`);
   }
 
-  present(buttonId) {
-    this.navigate();
+  async present(buttonId) {
+    await this.navigate('#basic');
     this.driver.findElement(By.id(buttonId)).click();
-    this.driver.wait(until.elementLocated(By.css('.loading-wrapper')));
-    return this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.loading-wrapper'))));
+    await this.driver.wait(until.elementLocated(By.css('.loading-wrapper')));
+    return await this.driver.wait(until.elementIsVisible(this.driver.findElement(By.css('.loading-wrapper'))));
   }
 }
 
@@ -20,7 +20,7 @@ platforms.forEach(platform => {
   describe('loading/basic', () => {
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
-      return page.navigate();
+      return page.navigate('#basic');
     });
 
     register('should open loading', driver => {

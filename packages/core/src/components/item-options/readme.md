@@ -27,6 +27,9 @@ You can combine the `(ionSwipe)` event plus the `expandable` directive to create
 
 
 
+The side the option button should be on. Defaults to `"right"`.
+If you have multiple `ion-item-options`, a side must be provided for each.
+
 
 ## Attributes
 
@@ -34,10 +37,15 @@ You can combine the `(ionSwipe)` event plus the `expandable` directive to create
 
 
 
+The side the option button should be on. Defaults to `"right"`.
+If you have multiple `ion-item-options`, a side must be provided for each.
+
 
 ## Events
 
 #### ionSwipe
+
+Emitted when the item has been fully swiped.
 
 
 ## Methods

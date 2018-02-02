@@ -84,12 +84,12 @@ boolean
 string
 
 
-#### cssClass
+#### css-class
 
 string
 
 
-#### dismissOnPageChange
+#### dismiss-on-page-change
 
 boolean
 
@@ -99,32 +99,32 @@ boolean
 number
 
 
-#### enableBackdropDismiss
+#### enable-backdrop-dismiss
 
 boolean
 
 
-#### enterAnimation
+#### enter-animation
 
 
 
 
-#### leaveAnimation
+#### leave-animation
 
 
 
 
-#### pickerId
+#### picker-id
 
 number
 
 
-#### showBackdrop
+#### show-backdrop
 
 boolean
 
 
-#### willAnimate
+#### will-animate
 
 boolean
 
@@ -133,20 +133,32 @@ boolean
 
 #### ionPickerDidDismiss
 
+Emitted after the picker has dismissed.
+
 
 #### ionPickerDidLoad
+
+Emitted after the picker has loaded.
 
 
 #### ionPickerDidPresent
 
+Emitted after the picker has presented.
+
 
 #### ionPickerDidUnload
+
+Emitted after the picker has unloaded.
 
 
 #### ionPickerWillDismiss
 
+Emitted before the picker has dismissed.
+
 
 #### ionPickerWillPresent
+
+Emitted before the picker has presented.
 
 
 ## Methods

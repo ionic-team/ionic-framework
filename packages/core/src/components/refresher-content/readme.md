@@ -51,28 +51,28 @@ The text you want to display when performing a refresh
 
 ## Attributes
 
-#### pullingIcon
+#### pulling-icon
 
 string
 
 A static icon to display when you begin to pull down
 
 
-#### pullingText
+#### pulling-text
 
 string
 
 The text you want to display when you begin to pull down
 
 
-#### refreshingSpinner
+#### refreshing-spinner
 
 string
 
 An animated SVG spinner that shows when refreshing begins
 
 
-#### refreshingText
+#### refreshing-text
 
 string
 

@@ -11,6 +11,10 @@
 
 
 
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+
 
 #### selected
 
@@ -27,6 +31,10 @@ boolean
 #### mode
 
 
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### selected

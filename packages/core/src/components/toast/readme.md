@@ -69,17 +69,17 @@ boolean
 
 ## Attributes
 
-#### closeButtonText
+#### close-button-text
 
 string
 
 
-#### cssClass
+#### css-class
 
 string
 
 
-#### dismissOnPageChange
+#### dismiss-on-page-change
 
 boolean
 
@@ -89,12 +89,12 @@ boolean
 number
 
 
-#### enterAnimation
+#### enter-animation
 
 
 
 
-#### leaveAnimation
+#### leave-animation
 
 
 
@@ -109,12 +109,12 @@ string
 string
 
 
-#### showCloseButton
+#### show-close-button
 
 boolean
 
 
-#### toastId
+#### toast-id
 
 number
 
@@ -124,7 +124,7 @@ number
 boolean
 
 
-#### willAnimate
+#### will-animate
 
 boolean
 
@@ -133,20 +133,32 @@ boolean
 
 #### ionToastDidDismiss
 
+Emitted after the toast has dismissed.
+
 
 #### ionToastDidLoad
+
+Emitted after the toast has loaded.
 
 
 #### ionToastDidPresent
 
+Emitted after the toast has presented.
+
 
 #### ionToastDidUnload
+
+Emitted after the toast has unloaded.
 
 
 #### ionToastWillDismiss
 
+Emitted before the toast has dismissed.
+
 
 #### ionToastWillPresent
+
+Emitted before the toast has presented.
 
 
 ## Methods

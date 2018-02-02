@@ -40,20 +40,32 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 
 boolean
 
+If true, the radio is selected. Defaults to `false`.
+
 
 #### color
 
 string
+
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
 #### disabled
 
 boolean
 
+Indicates that the user cannot interact with the control.
+
 
 #### mode
 
 
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### name
@@ -66,6 +78,8 @@ The name of the control, which is submitted with the form data.
 #### value
 
 string
+
+the value of the radio.
 
 
 ## Attributes
@@ -74,20 +88,32 @@ string
 
 boolean
 
+If true, the radio is selected. Defaults to `false`.
+
 
 #### color
 
 string
+
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
 #### disabled
 
 boolean
 
+Indicates that the user cannot interact with the control.
+
 
 #### mode
 
 
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### name
@@ -101,25 +127,39 @@ The name of the control, which is submitted with the form data.
 
 string
 
+the value of the radio.
+
 
 ## Events
 
 #### ionBlur
 
+Emitted when the radio button loses focus.
+
 
 #### ionFocus
+
+Emitted when the radio button has focus.
 
 
 #### ionRadioDidLoad
 
+Emitted when the radio loads.
+
 
 #### ionRadioDidUnload
+
+Emitted when the radio unloads.
 
 
 #### ionSelect
 
+Emitted when the radio button is selected.
+
 
 #### ionStyle
+
+Emitted when the styles change.
 
 
 

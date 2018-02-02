@@ -9,14 +9,22 @@
 
 #### keyboardDidHide
 
+Emitted after the keyboard has hidden.
+
 
 #### keyboardDidShow
+
+Emitted after the keyboard has shown.
 
 
 #### keyboardWillHide
 
+Emitted before the keyboard has hidden.
+
 
 #### keyboardWillShow
+
+Emitted before the keyboard has shown.
 
 
 
