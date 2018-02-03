@@ -180,18 +180,16 @@ export class VirtualScroll {
         this.virtualDom,
         heightIndex,
         this.cells,
-        range);
+        range
+      );
 
-      this.fireDomUpdate();
+      // write DOM
+      if (this.itemRender) {
+        doRender(this.el, this.itemRender, this.virtualDom, this.updateCellHeight.bind(this), this.totalHeight);
+      } else if (this.domRender) {
+        this.domRender(this.virtualDom, this.totalHeight);
+      }
     });
-  }
-
-  private fireDomUpdate() {
-    if (this.itemRender) {
-      doRender(this.el, this.itemRender, this.virtualDom, this.updateCellHeight.bind(this), this.totalHeight);
-    } else if (this.domRender) {
-      this.domRender(this.virtualDom, this.totalHeight);
-    }
   }
 
   private updateCellHeight(cell: Cell, node: HTMLElement) {
@@ -219,8 +217,8 @@ export class VirtualScroll {
       console.debug(`[${cell.reads}] cell size ${cell.height} -> ${height}`);
       cell.height = height;
       clearTimeout(this.timerUpdate);
-      this.indexDirty = Math.min(this.indexDirty, index);
       this.timerUpdate = setTimeout(() => this.updateVirtualScroll(), 100);
+      this.indexDirty = Math.min(this.indexDirty, index);
     }
   }
 
