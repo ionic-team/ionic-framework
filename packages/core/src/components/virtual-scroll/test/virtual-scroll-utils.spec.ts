@@ -1,4 +1,4 @@
-import { CellType, HeaderFn, ItemHeightFn, VirtualNode, calcCells, calcHeightIndex, getRange, getViewport, resizeBuffer, updateVDom, ItemRenderFn, Range, getShouldUpdate } from '../virtual-scroll-utils';
+import { CellType, HeaderFn, ItemHeightFn, VirtualNode, calcCells, calcHeightIndex, getRange, getViewport, resizeBuffer, updateVDom, ItemRenderFn, Range, getShouldUpdate, positionForIndex } from '../virtual-scroll-utils';
 
 
 describe('getViewport', () => {
@@ -351,6 +351,21 @@ describe('getShouldUpdate', () => {
   });
 });
 
+describe('positionForIndex', () => {
+  it('should return the correct position', () => {
+    const items = [1, 2, 3, 4];
+    const {cells, heightIndex} = mockVirtualScroll(items,
+      () => 40,
+      (_, i) => i === 1 ? 'hola' : null,
+      (_, i) => i === 2 ? 'hola' : null
+    );
+    expect(positionForIndex(0, cells, heightIndex)).toEqual(0);
+    expect(positionForIndex(1, cells, heightIndex)).toEqual(50);
+    expect(positionForIndex(2, cells, heightIndex)).toEqual(90);
+    expect(positionForIndex(3, cells, heightIndex)).toEqual(140);
+  });
+});
+
 describe('updateVDom', () => {
   it('should initialize empty VDOM', () => {
     const vdom: VirtualNode[] = [];
@@ -491,7 +506,7 @@ function mockVirtualScroll(
   headerFn: HeaderFn = null,
   footerFn: HeaderFn = null
 ) {
-  const cells = calcCells(items, itemHeight, headerFn, footerFn, 10, 20, 30);
+  const cells = calcCells(items, itemHeight, headerFn, footerFn, 10, 10, 30);
   const heightIndex = resizeBuffer(null, cells.length);
   calcHeightIndex(heightIndex, cells, 0);
   return { items, heightIndex, cells };
