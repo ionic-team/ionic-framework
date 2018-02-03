@@ -1,6 +1,6 @@
 import { Component, Element, Listen, Method, Prop } from '@stencil/core';
 import { Config, DomController } from '../../index';
-import { createThemedClasses, getElementClassObject } from '../../utils/theme';
+import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 import { getPageElement } from '../../utils/helpers';
 
 @Component({
@@ -128,7 +128,7 @@ export class Content {
 
   render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'content');
-    const hostClasses = getElementClassObject(this.el.classList);
+    const hostClasses = getElementClassMap(this.el.classList);
 
     const scrollClasses = {
       ...themedClasses,

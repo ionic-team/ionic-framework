@@ -1,5 +1,5 @@
 import { Component, CssClassMap, Element, Prop, State } from '@stencil/core';
-import { createThemedClasses, getElementClassObject } from '../../utils/theme';
+import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 
 
 @Component({
@@ -68,69 +68,30 @@ export class FabButton {
   /**
    * Get the classes for fab buttons in lists
    */
-  getFabListClassList() {
-    if (!this.inList) {
-      return [];
-    }
-    const listClasses = [
-      `fab-button-in-list`,
-      `fab-button-${this.mode}-in-list`
-    ];
+  getFabClassMap(): CssClassMap {
+    return {
+      'fab-button-in-list': this.inList,
+      [`fab-button-${this.mode}-in-list`]: this.inList,
+      [`fab-button-translucent-${this.mode}-in-list`]: (this.inList && this.translucent),
 
-    if (this.translucent) {
-      listClasses.push(`fab-button-translucent-${this.mode}-in-list`);
-    }
-
-    return listClasses;
-  }
-
-  /**
-   * Get the close active class for fab buttons
-   */
-  getFabActiveClassList() {
-    if (!this.activated) {
-      return [];
-    }
-    return [
-      `fab-button-close-active`
-    ];
-  }
-
-  /**
-   * Get the show class for fab buttons
-   */
-  getFabShowClassList() {
-    if (!this.show) {
-      return [];
-    }
-    return [
-      `fab-button-show`
-    ];
+      'fab-button-close-active': this.activated,
+      'fab-button-show': this.show,
+    };
   }
 
   render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'fab-button');
     const translucentClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'fab-button-translucent') : {};
-    const hostClasses = getElementClassObject(this.el.classList);
+    const hostClasses = getElementClassMap(this.el.classList);
 
-    const elementClasses: CssClassMap = []
-      .concat(
-        this.getFabListClassList(),
-        this.getFabActiveClassList(),
-        this.getFabShowClassList()
-      )
-      .reduce((prevValue, cssClass) => {
-        prevValue[cssClass] = true;
-        return prevValue;
-      }, {});
 
     const TagType = this.href ? 'a' : 'button';
 
     const fabClasses = {
+      ...this.getFabClassMap(),
       ...themedClasses,
       ...translucentClasses,
       ...hostClasses,
-      ...elementClasses
     };
 
     return (

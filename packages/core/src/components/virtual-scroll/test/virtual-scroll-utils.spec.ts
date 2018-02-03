@@ -1,4 +1,4 @@
-import { CellType, HeaderFn, ItemHeightFn, VirtualNode, calcCells, calcHeightIndex, getRange, getViewport, resizeBuffer, updateVDom, ItemRenderFn, Range, getShouldUpdate, positionForIndex } from '../virtual-scroll-utils';
+import { CellType, HeaderFn, ItemHeightFn, Range, VirtualNode, calcCells, calcHeightIndex, getRange, getShouldUpdate, getViewport, positionForIndex, resizeBuffer, updateVDom } from '../virtual-scroll-utils';
 
 
 describe('getViewport', () => {

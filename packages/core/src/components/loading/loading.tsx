@@ -9,7 +9,7 @@ import {
   OverlayDismissEventDetail
 } from '../../index';
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
+import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 
 import iosEnterAnimation from './animations/ios.enter';
@@ -225,22 +225,15 @@ export class Loading {
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'loading-translucent') : {};
 
-    const hostClasses = {
-      ...themedClasses
-    };
-
     return {
-      class: hostClasses
+      class: {
+        ...themedClasses,
+        ...getClassMap(this.cssClass)
+      }
     };
   }
 
   render() {
-    if (this.cssClass) {
-      this.cssClass.split(' ').forEach(cssClass => {
-        if (cssClass.trim() !== '') this.el.classList.add(cssClass);
-      });
-    }
-
     const loadingInner: any[] = [];
 
     if (this.spinner !== 'hide') {

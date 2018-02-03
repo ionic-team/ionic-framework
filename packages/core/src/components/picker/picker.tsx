@@ -14,6 +14,7 @@ import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
+import { getClassMap } from '../../utils/theme';
 
 @Component({
   tag: 'ion-picker',
@@ -334,8 +335,8 @@ export class Picker {
       <div class='picker-wrapper' role='dialog'>
         <div class='picker-toolbar'>
           {buttons.map(b =>
-            <div class={this.buttonWrapperClass(b)}>
-              <button onClick={() => this.buttonClick(b)} class={this.buttonClass(b)}>
+            <div class={buttonWrapperClass(b)}>
+              <button onClick={() => this.buttonClick(b)} class={buttonClass(b)}>
                 {b.text}
               </button>
             </div>
@@ -351,28 +352,24 @@ export class Picker {
       </div>
     ];
   }
-
-  buttonWrapperClass(button: PickerButton): CssClassMap {
-    const buttonClass: string[] = !button.role
-      ? ['picker-toolbar-button']
-      : [`picker-toolbar-button`, `picker-toolbar-${button.role}`];
-    return buttonClass.reduce((prevValue: any, cssClass: any) => {
-      prevValue[cssClass] = true;
-      return prevValue;
-    }, {});
-  }
-
-  buttonClass(button: PickerButton): CssClassMap {
-    const buttonClass: string[] = !button.cssClass
-      ? ['picker-button']
-      : [`picker-button`, `${button.cssClass}`];
-    return buttonClass.reduce((prevValue: any, cssClass: any) => {
-      prevValue[cssClass] = true;
-      return prevValue;
-    }, {});
-  }
 }
 
+function buttonWrapperClass(button: PickerButton): CssClassMap {
+  const buttonClass: CssClassMap = {
+    'picker-toolbar-button': true,
+  };
+  if (button.role) {
+    buttonClass[`picker-toolbar-${button.role}`] = true;
+  }
+  return buttonClass;
+}
+
+function buttonClass(button: PickerButton): CssClassMap {
+  return {
+    'picker-button': true,
+    ...getClassMap(button.cssClass)
+  };
+}
 
 export interface PickerButton {
   text?: string;

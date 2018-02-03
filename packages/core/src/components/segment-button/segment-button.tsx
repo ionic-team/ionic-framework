@@ -1,6 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
-import { CssClassMap } from '../../index';
-import { createThemedClasses, getElementClassObject } from '../../utils/theme';
+import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 
 
 @Component({
@@ -62,35 +61,16 @@ export class SegmentButton {
     });
   }
 
-  /**
-   * Get the classes for the segment button state
-   */
-  getElementClassList() {
-    const classList = [].concat(
-      this.disabled ? 'segment-button-disabled' : [],
-      this.activated ? 'segment-activated' : [],
-    );
-
-    return classList;
-  }
 
   render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'segment-button');
-    const hostClasses = getElementClassObject(this.el.classList);
-
-    const elementClasses: CssClassMap = []
-      .concat(
-        this.getElementClassList()
-      )
-      .reduce((prevValue, cssClass) => {
-        prevValue[cssClass] = true;
-        return prevValue;
-      }, {});
+    const hostClasses = getElementClassMap(this.el.classList);
 
     const buttonClasses = {
+      'segment-button-disabled': this.disabled,
+      'segment-activated': this.activated,
       ...themedClasses,
       ...hostClasses,
-      ...elementClasses
     };
 
     const TagType = this.href ? 'a' : 'button';
