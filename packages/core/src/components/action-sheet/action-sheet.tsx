@@ -10,7 +10,7 @@ import {
 } from '../../index';
 
 import { domControllerAsync, isDef, playAnimationAsync } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
+import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -208,22 +208,6 @@ export class ActionSheet {
     }
   }
 
-  buttonClass(button: ActionSheetButton): CssClassMap {
-    const buttonClass: string[] = !button.role
-      ? ['action-sheet-button']
-      : [`action-sheet-button`, `action-sheet-${button.role}`];
-
-    if (button.cssClass) {
-      const customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
-      buttonClass.push(customClass);
-    }
-
-    return buttonClass.reduce((prevValue: any, cssClass: any) => {
-      prevValue[cssClass] = true;
-      return prevValue;
-    }, {});
-  }
-
   protected buttonClick(button: ActionSheetButton) {
     let shouldDismiss = true;
     if (button.handler) {
@@ -239,22 +223,15 @@ export class ActionSheet {
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'action-sheet-translucent') : {};
 
-    const hostClasses = {
-      ...themedClasses
-    };
-
     return {
-      class: hostClasses
+      class: {
+        ...themedClasses,
+        ...getClassMap(this.cssClass)
+      }
     };
   }
 
   render() {
-    if (this.cssClass) {
-      this.cssClass.split(' ').forEach(cssClass => {
-        if (cssClass.trim() !== '') this.el.classList.add(cssClass);
-      });
-    }
-
     let cancelButton: ActionSheetButton;
     const buttons = this.buttons
       .map(b => {
@@ -289,7 +266,7 @@ export class ActionSheet {
               </div>
               : null}
             {buttons.map(b =>
-              <button class={this.buttonClass(b)} onClick={() => this.buttonClick(b)}>
+              <button class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
                 <span class='button-inner'>
                   {b.icon
                     ? <ion-icon name={b.icon} class='action-sheet-icon' />
@@ -302,7 +279,7 @@ export class ActionSheet {
           {cancelButton
             ? <div class='action-sheet-group action-sheet-group-cancel'>
                 <button
-                  class={this.buttonClass(cancelButton)}
+                  class={buttonClass(cancelButton)}
                   onClick={() => this.buttonClick(cancelButton)}
                 >
                   <span class='button-inner'>
@@ -322,6 +299,17 @@ export class ActionSheet {
       </div>
     ];
   }
+}
+
+function buttonClass(button: ActionSheetButton): CssClassMap {
+  const buttonClasses: any = {
+    'action-sheet-button': true,
+    ...getClassMap(button.cssClass),
+  };
+  if (button.role) {
+    buttonClasses[`action-sheet-${button.role}`] = true;
+  }
+  return buttonClasses;
 }
 
 export interface ActionSheetOptions {

@@ -3,7 +3,7 @@ import { Animation, AnimationBuilder, AnimationController, Config, DomController
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 
 import { BACKDROP } from '../../utils/overlay-constants';
-import { createThemedClasses } from '../../utils/theme';
+import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -285,19 +285,6 @@ export class Alert {
     return values;
   }
 
-  buttonClass(button: AlertButton): CssClassMap {
-    const buttonClass: string[] = ['alert-button'];
-
-    if (button.cssClass) {
-      const customClass = button.cssClass.split(' ').filter(b => b.trim() !== '').join(' ');
-      buttonClass.push(customClass);
-    }
-
-    return buttonClass.reduce((prevValue: any, cssClass: any) => {
-      prevValue[cssClass] = true;
-      return prevValue;
-    }, {});
-  }
 
   renderCheckbox(inputs: AlertInput[]) {
     if (inputs.length === 0) return null;
@@ -363,12 +350,11 @@ export class Alert {
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'alert-translucent') : {};
 
-    const hostClasses = {
-      ...themedClasses
-    };
-
     return {
-      class: hostClasses,
+      class: {
+        ...themedClasses,
+        ...getClassMap(this.cssClass)
+      },
       id: this.alertId
     };
   }
@@ -377,13 +363,6 @@ export class Alert {
     const hdrId = `${this.alertId}-hdr`;
     const subHdrId = `${this.alertId}-sub-hdr`;
     const msgId = `${this.alertId}-msg`;
-
-    if (this.cssClass) {
-      this.cssClass.split(' ').forEach(cssClass => {
-        if (cssClass.trim() !== '') this.el.classList.add(cssClass);
-      });
-    }
-
 
     if (this.title || !this.subTitle) {
       this.hdrId = hdrId;
@@ -472,7 +451,7 @@ export class Alert {
 
         <div class={alertButtonGroupClass}>
           {buttons.map(b =>
-            <button class={this.buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)}>
+            <button class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)}>
               <span class='button-inner'>
                 {b.text}
               </span>
@@ -482,7 +461,13 @@ export class Alert {
       </div>
     ];
   }
+}
 
+function buttonClass(button: AlertButton): CssClassMap {
+  return {
+    'alert-button': true,
+    ...getClassMap(button.cssClass)
+  };
 }
 
 export interface AlertOptions {
