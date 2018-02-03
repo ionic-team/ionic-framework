@@ -1,4 +1,4 @@
-#ion-virtual-scroll
+# ion-virtual-scroll
 
 Virtual Scroll displays a virtual, "infinite" list. An array of records
 is passed to the virtual scroll containing the data to create templates
