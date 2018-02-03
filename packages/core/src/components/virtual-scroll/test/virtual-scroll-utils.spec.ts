@@ -1,4 +1,4 @@
-import { CellType, HeaderFn, ItemHeightFn, VirtualNode, calcCells, calcHeightIndex, getRange, getViewport, resizeBuffer, updateVDom, ItemRenderFn, Range } from '../virtual-scroll-utils';
+import { CellType, HeaderFn, ItemHeightFn, VirtualNode, calcCells, calcHeightIndex, getRange, getViewport, resizeBuffer, updateVDom, ItemRenderFn, Range, getShouldUpdate } from '../virtual-scroll-utils';
 
 
 describe('getViewport', () => {
@@ -332,6 +332,25 @@ describe('calcHeightIndex', () => {
   });
 });
 
+describe('getShouldUpdate', () => {
+  it('should return true if the range does not match', () => {
+    expect(getShouldUpdate(Infinity, {offset: 1, length: 2}, {offset: 1, length: 3})).toBeTruthy();
+    expect(getShouldUpdate(Infinity, {offset: 1, length: 2}, {offset: 0, length: 2})).toBeTruthy();
+  });
+
+  it('should return true if the dirty index <= bottom', () => {
+    expect(getShouldUpdate(9, {offset: 1, length: 8}, {offset: 1, length: 8})).toBeTruthy();
+  });
+
+  it('should return false if the dirty index > bottom', () => {
+    expect(getShouldUpdate(10, {offset: 1, length: 8}, {offset: 1, length: 8})).toBeFalsy();
+  });
+
+  it('should return false if the range matches', () => {
+    expect(getShouldUpdate(Infinity, {offset: 1, length: 2}, {offset: 1, length: 2})).toBeFalsy();
+  });
+});
+
 describe('updateVDom', () => {
   it('should initialize empty VDOM', () => {
     const vdom: VirtualNode[] = [];
@@ -341,30 +360,126 @@ describe('updateVDom', () => {
 
     updateVDom(vdom, heightIndex, cells, range);
     expect(vdom).toEqual([
-      {
-        cell: cells[1],
-        change: 2,
-        d: false,
-        top: 20,
-      },
-      {
-        cell: cells[2],
-        change: 2,
-        d: false,
-        top: 40,
-      },
-      {
-        cell: cells[3],
-        change: 2,
-        d: false,
-        top: 60,
-      },
-      {
-        cell: cells[4],
-        change: 2,
-        d: false,
-        top: 80,
-      }
+      { cell: cells[1], change: 2, d: false, top: 20 },
+      { cell: cells[2], change: 2, d: false, top: 40 },
+      { cell: cells[3], change: 2, d: false, top: 60 },
+      { cell: cells[4], change: 2, d: false, top: 80 }
+    ]);
+  });
+
+  it('should simulate real scrolling', () => {
+    const vdom: VirtualNode[] = [];
+    const items = Array.from({length: 100}, (_, i) => i + '');
+    const {heightIndex, cells} = mockVirtualScroll(items, () => 20);
+    updateVDom(vdom, heightIndex, cells, {offset: 0, length: 4});
+    updateVDom(vdom, heightIndex, cells, {offset: 0, length: 4});
+    expect(vdom).toEqual([
+      { cell: cells[0], change: 0, d: false, top: 0 },
+      { cell: cells[1], change: 0, d: false, top: 20 },
+      { cell: cells[2], change: 0, d: false, top: 40 },
+      { cell: cells[3], change: 0, d: false, top: 60 }
+    ]);
+
+    updateVDom(vdom, heightIndex, cells, {offset: 0, length: 5});
+    expect(vdom).toEqual([
+      { cell: cells[0], change: 0, d: false, top: 0 },
+      { cell: cells[1], change: 0, d: false, top: 20 },
+      { cell: cells[2], change: 0, d: false, top: 40 },
+      { cell: cells[3], change: 0, d: false, top: 60 },
+      { cell: cells[4], change: 2, d: false, top: 80 }
+    ]);
+
+    updateVDom(vdom, heightIndex, cells, {offset: 1, length: 4});
+    expect(vdom).toEqual([
+      { cell: cells[0], change: 1, d: true, top: -9999 },
+      { cell: cells[1], change: 0, d: false, top: 20 },
+      { cell: cells[2], change: 0, d: false, top: 40 },
+      { cell: cells[3], change: 0, d: false, top: 60 },
+      { cell: cells[4], change: 0, d: false, top: 80 }
+    ]);
+
+    updateVDom(vdom, heightIndex, cells, {offset: 1, length: 5});
+    expect(vdom).toEqual([
+      { cell: cells[5], change: 2, d: false, top: 100 },
+      { cell: cells[1], change: 0, d: false, top: 20 },
+      { cell: cells[2], change: 0, d: false, top: 40 },
+      { cell: cells[3], change: 0, d: false, top: 60 },
+      { cell: cells[4], change: 0, d: false, top: 80 }
+    ]);
+
+    updateVDom(vdom, heightIndex, cells, {offset: 2, length: 5});
+    expect(vdom).toEqual([
+      { cell: cells[5], change: 0, d: false, top: 100 },
+      { cell: cells[6], change: 2, d: false, top: 120 },
+      { cell: cells[2], change: 0, d: false, top: 40 },
+      { cell: cells[3], change: 0, d: false, top: 60 },
+      { cell: cells[4], change: 0, d: false, top: 80 }
+    ]);
+
+    updateVDom(vdom, heightIndex, cells, {offset: 10, length: 6});
+    expect(vdom).toEqual([
+      { cell: cells[10], change: 2, d: false, top: 200 },
+      { cell: cells[11], change: 2, d: false, top: 220 },
+      { cell: cells[12], change: 2, d: false, top: 240 },
+      { cell: cells[13], change: 2, d: false, top: 260 },
+      { cell: cells[14], change: 2, d: false, top: 280 },
+      { cell: cells[15], change: 2, d: false, top: 300 }
+    ]);
+
+    updateVDom(vdom, heightIndex, cells, {offset: 13, length: 10});
+    expect(vdom).toEqual([
+      { cell: cells[16], change: 2, d: false, top: 320 },
+      { cell: cells[17], change: 2, d: false, top: 340 },
+      { cell: cells[18], change: 2, d: false, top: 360 },
+      { cell: cells[13], change: 0, d: false, top: 260 },
+      { cell: cells[14], change: 0, d: false, top: 280 },
+      { cell: cells[15], change: 0, d: false, top: 300 },
+      { cell: cells[19], change: 2, d: false, top: 380 },
+      { cell: cells[20], change: 2, d: false, top: 400 },
+      { cell: cells[21], change: 2, d: false, top: 420 },
+      { cell: cells[22], change: 2, d: false, top: 440 },
+    ]);
+
+    updateVDom(vdom, heightIndex, cells, {offset: 13, length: 1});
+    expect(vdom).toEqual([
+      { cell: cells[16], change: 1, d: true, top: -9999 },
+      { cell: cells[17], change: 1, d: true, top: -9999 },
+      { cell: cells[18], change: 1, d: true, top: -9999 },
+      { cell: cells[13], change: 0, d: false, top: 260 },
+      { cell: cells[14], change: 1, d: true, top: -9999 },
+      { cell: cells[15], change: 1, d: true, top: -9999 },
+      { cell: cells[19], change: 1, d: true, top: -9999 },
+      { cell: cells[20], change: 1, d: true, top: -9999 },
+      { cell: cells[21], change: 1, d: true, top: -9999 },
+      { cell: cells[22], change: 1, d: true, top: -9999 },
+    ]);
+
+    updateVDom(vdom, heightIndex, cells, {offset: 13, length: 1});
+    expect(vdom).toEqual([
+      { cell: cells[16], change: 0, d: true, top: -9999 },
+      { cell: cells[17], change: 0, d: true, top: -9999 },
+      { cell: cells[18], change: 0, d: true, top: -9999 },
+      { cell: cells[13], change: 0, d: false, top: 260 },
+      { cell: cells[14], change: 0, d: true, top: -9999 },
+      { cell: cells[15], change: 0, d: true, top: -9999 },
+      { cell: cells[19], change: 0, d: true, top: -9999 },
+      { cell: cells[20], change: 0, d: true, top: -9999 },
+      { cell: cells[21], change: 0, d: true, top: -9999 },
+      { cell: cells[22], change: 0, d: true, top: -9999 },
+    ]);
+
+    updateVDom(vdom, heightIndex, cells, {offset: 0, length: 1});
+    expect(vdom).toEqual([
+      { cell: cells[0], change: 2, d: false, top: 0 },
+      { cell: cells[17], change: 0, d: true, top: -9999 },
+      { cell: cells[18], change: 0, d: true, top: -9999 },
+      { cell: cells[13], change: 1, d: true, top: -9999 },
+      { cell: cells[14], change: 0, d: true, top: -9999 },
+      { cell: cells[15], change: 0, d: true, top: -9999 },
+      { cell: cells[19], change: 0, d: true, top: -9999 },
+      { cell: cells[20], change: 0, d: true, top: -9999 },
+      { cell: cells[21], change: 0, d: true, top: -9999 },
+      { cell: cells[22], change: 0, d: true, top: -9999 },
     ]);
   });
 });
