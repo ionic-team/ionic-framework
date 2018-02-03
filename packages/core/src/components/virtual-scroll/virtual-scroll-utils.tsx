@@ -93,7 +93,14 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
       });
     }
   }
+  dom
+  .filter((n) => n.d && n.top !== -9999)
+  .forEach((n) => {
+    n.change = NodeChange.Position;
+    n.top = -9999;
+  });
 }
+
 
 export function doRender(el: HTMLElement, itemRender: ItemRenderFn, dom: VirtualNode[], updateCellHeight: Function, total: number) {
   const children = el.children;
@@ -133,10 +140,6 @@ export function doRender(el: HTMLElement, itemRender: ItemRenderFn, dom: Virtual
   el.style.height = total + 'px';
 }
 
-export function getTotalHeight(heightIndex: Uint32Array) {
-  return heightIndex[heightIndex.length - 1];
-}
-
 export function getViewport(scrollTop: number, vierportHeight: number, margin: number): Viewport {
   return {
     top: Math.max(scrollTop - margin, 0),
@@ -171,7 +174,7 @@ export function getRange(heightIndex: Uint32Array, viewport: Viewport, buffer: n
 export function getShouldUpdate(dirtyIndex: number, currentRange: Range, range: Range) {
   const end = range.offset + range.length;
   return (
-    dirtyIndex < end ||
+    dirtyIndex <= end ||
     currentRange.offset !== range.offset ||
     currentRange.length !== range.length
   );
