@@ -65,27 +65,12 @@
         if (cell.type === 0) return renderItem(el, cell.value);
         return renderHeader(el, cell.value);
       };
-
-
-      function getImgSrc() {
-        let src = images[rotateImg];
-        rotateImg++;
-        if (rotateImg === images.length) rotateImg = 0;
-        return src;
-      }
-
-      let rotateImg = 0;
-
+      const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
       const items = [];
       for (var i = 0; i < 1000; i++) {
         items.push({
-          name: i + ' - ' + images[rotateImg],
-          imgSrc: getImgSrc(),
-          avatarSrc: getImgSrc(),
-          imgHeight: Math.floor((Math.random() * 50) + 150),
           content: lorem.substring(0, (Math.random() * (lorem.length - 100)) + 100)
         });
-        rotateImg++;
       }
       virtual.items = items;
     };

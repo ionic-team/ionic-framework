@@ -12,7 +12,7 @@ import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, NodeHeightFn, 
 export class VirtualScroll {
 
   private scrollEl: HTMLElement;
-  private range: Range;
+  private range: Range = {offset: 0, length: 0};
   private timerUpdate: any;
   private heightIndex: Uint32Array;
   private viewportHeight: number;
