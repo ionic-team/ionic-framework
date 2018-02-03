@@ -1,10 +1,9 @@
 import { Component, Element, EventListenerEnable, Listen, Method, Prop, Watch } from '@stencil/core';
 import { DomController } from '../../index';
-import { Cell, CellType, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, NodeHeightFn,
-  Viewport, VirtualNode, calcHeightIndex, doRender, getBounds, getShouldUpdate, getViewport, updateVDom } from './virtual-scroll-utils';
+import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, NodeHeightFn, Range,
+  Viewport, VirtualNode, calcCells, calcHeightIndex, doRender, getRange,
+  getShouldUpdate, getViewport, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
 
-
-const MIN_READS = 2;
 
 @Component({
   tag: 'ion-virtual-scroll',
@@ -13,8 +12,7 @@ const MIN_READS = 2;
 export class VirtualScroll {
 
   private scrollEl: HTMLElement;
-  private topIndex = -100;
-  private bottomIndex = -100;
+  private range: Range;
   private timerUpdate: any;
   private heightIndex: Uint32Array;
   private viewportHeight: number;
@@ -141,11 +139,7 @@ export class VirtualScroll {
 
   @Method()
   positionForItem(index: number): number {
-    const cell = this.cells.find(cell => cell.type === CellType.Item && cell.index === index);
-    if (cell) {
-      return this.heightIndex[cell.i];
-    }
-    return -1;
+    return positionForIndex(index, this.cells, this.heightIndex);
   }
 
   private updateVirtualScroll() {
@@ -172,23 +166,21 @@ export class VirtualScroll {
       const heightIndex = this.getHeightIndex(viewport);
 
       // get array bounds of visible cells base in the viewport
-      const {top, bottom} = getBounds(heightIndex, viewport, 2);
+      const range = getRange(heightIndex, viewport, 2);
 
       // fast path, do nothing
-      const shouldUpdate = getShouldUpdate(dirtyIndex, this.topIndex, this.bottomIndex, top, bottom);
+      const shouldUpdate = getShouldUpdate(dirtyIndex, this.range, range);
       if (!shouldUpdate) {
         return;
       }
-      this.topIndex = top;
-      this.bottomIndex = bottom;
+      this.range = range;
 
       // in place mutation of the virtual DOM
       updateVDom(
         this.virtualDom,
         heightIndex,
         this.cells,
-        top,
-        bottom);
+        range);
 
       this.fireDomUpdate();
     });
@@ -202,7 +194,7 @@ export class VirtualScroll {
     }
   }
 
-  updateCellHeight(cell: Cell, node: HTMLElement) {
+  private updateCellHeight(cell: Cell, node: HTMLElement) {
     (node as any).componentOnReady(() => {
       // let's give some additional time to read the height size
       setTimeout(() => this.dom.read(() => {
@@ -215,7 +207,7 @@ export class VirtualScroll {
     });
   }
 
-  setCellHeight(cell: Cell, height: number) {
+  private setCellHeight(cell: Cell, height: number) {
     const index = cell.i;
     // the cell might changed since the height update was scheduled
     if (cell !== this.cells[index]) {
@@ -247,74 +239,32 @@ export class VirtualScroll {
     }
   }
 
-
   private calcCells() {
     if (!this.items) {
       return;
     }
-    const items = this.items;
-    const cells = this.cells;
-    const headerFn = this.headerFn;
-    const footerFn = this.footerFn;
-
-    cells.length = 0;
+    this.cells = calcCells(
+      this.items,
+      this.itemHeight,
+      this.headerFn,
+      this.footerFn,
+      this.approxHeaderHeight,
+      this.approxFooterHeight,
+      this.approxItemHeight
+    );
     this.indexDirty = 0;
-    let j = 0;
-
-    for (let i = 0; i < items.length; i++) {
-      const item = items[i];
-      if (headerFn) {
-        const value = headerFn(item, i, this.items);
-        if (value != null) {
-          cells.push({
-            i: j++,
-            type: CellType.Header,
-            value: value,
-            index: i,
-            height: this.approxHeaderHeight,
-            reads: MIN_READS,
-            visible: false,
-          });
-        }
-      }
-
-      cells.push({
-        i: j++,
-        type: CellType.Item,
-        value: item,
-        index: i,
-        height: this.itemHeight ? this.itemHeight(item, i) : this.approxItemHeight,
-        reads: this.itemHeight ? 0 : MIN_READS,
-        visible: !!this.itemHeight,
-      });
-
-      if (footerFn) {
-        const value = footerFn(item, i, this.items);
-        if (value != null) {
-          cells.push({
-            i: j++,
-            type: CellType.Footer,
-            value: value,
-            index: i,
-            height: this.approxFooterHeight,
-            reads: 2,
-            visible: false,
-          });
-        }
-      }
-    }
   }
 
-  private getHeightIndex(viewport: Viewport): Uint32Array {
+  private getHeightIndex(_: Viewport): Uint32Array {
     if (this.indexDirty !== Infinity) {
-      this.calcHeightIndex(this.indexDirty, viewport.bottom);
+      this.calcHeightIndex(this.indexDirty);
     }
     return this.heightIndex;
   }
 
-  private calcHeightIndex(index = 0, bottom = Infinity) {
-    this.heightIndex = calcHeightIndex(this.heightIndex, this.cells, index, bottom);
-    this.totalHeight = this.heightIndex[this.heightIndex.length - 1];
+  private calcHeightIndex(index = 0) {
+    this.heightIndex = resizeBuffer(this.heightIndex, this.cells.length);
+    this.totalHeight = calcHeightIndex(this.heightIndex, this.cells, index);
     this.indexDirty = Infinity;
   }
 
