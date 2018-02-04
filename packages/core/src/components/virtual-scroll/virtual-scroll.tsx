@@ -19,6 +19,7 @@ export class VirtualScroll {
   private cells: Cell[] = [];
   private virtualDom: VirtualNode[] = [];
   private isEnabled = false;
+  private viewportOffset = 0;
   private currentScrollTop = 0;
   private indexDirty = 0;
   private totalHeight = 0;
@@ -153,6 +154,13 @@ export class VirtualScroll {
     }
 
     this.dom.read(() => {
+      let topOffset = 0;
+      let node = this.el;
+      while (node !== this.scrollEl) {
+        topOffset += node.offsetTop;
+        node = node.parentElement;
+      }
+      this.viewportOffset = topOffset;
       this.currentScrollTop = this.scrollEl.scrollTop;
     });
 
@@ -160,7 +168,8 @@ export class VirtualScroll {
       const dirtyIndex = this.indexDirty;
 
       // get visible viewport
-      const viewport = getViewport(this.currentScrollTop, this.viewportHeight, 100);
+      const scrollTop = this.currentScrollTop - this.viewportOffset;
+      const viewport = getViewport(scrollTop, this.viewportHeight, 100);
 
       // compute lazily the height index
       const heightIndex = this.getHeightIndex(viewport);
