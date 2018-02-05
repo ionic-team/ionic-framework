@@ -32,6 +32,9 @@ export class ModalController {
   dismiss(data?: any, role?: any, modalId = -1) {
     modalId = modalId >= 0 ? modalId : getHighestId();
     const modal = modals.get(modalId);
+    if (!modal) {
+      return Promise.reject('modal does not exist');
+    }
     return modal.dismiss(data, role);
   }
 

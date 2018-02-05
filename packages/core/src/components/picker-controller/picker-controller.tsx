@@ -32,6 +32,9 @@ export class PickerController {
   dismiss(data?: any, role?: any, pickerId = -1) {
     pickerId = pickerId >= 0 ? pickerId : getHighestId();
     const picker = pickers.get(pickerId);
+    if (!picker) {
+      return Promise.reject('picker does not exist');
+    }
     return picker.dismiss(data, role);
   }
 

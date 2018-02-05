@@ -345,14 +345,14 @@ export class Select {
   openActionSheet() {
     const interfaceOptions = {...this.interfaceOptions};
 
-    const actionSheetButtons: ActionSheetButton[] = this.childOpts.map(option => {
+    const actionSheetButtons = this.childOpts.map(option => {
       return {
         role: (option.selected ? 'selected' : ''),
         text: option.textContent,
         handler: () => {
           this.value = option.value;
         }
-      };
+      } as ActionSheetButton;
     });
 
     actionSheetButtons.push({
@@ -382,10 +382,7 @@ export class Select {
     const interfaceOptions = {...this.interfaceOptions};
 
     const label = this.getLabel();
-    let labelText: string = null;
-    if (label) {
-      labelText = label.textContent;
-    }
+    const labelText = (label) ? label.textContent : null;
 
     const alertOpts: AlertOptions = Object.assign(interfaceOptions, {
       title: interfaceOptions.title ? interfaceOptions.title : labelText,

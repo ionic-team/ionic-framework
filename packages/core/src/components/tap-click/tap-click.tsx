@@ -17,7 +17,7 @@ export class TapClick {
 
   private gestureCtrl: GestureController;
 
-  private activatableEle: HTMLElement;
+  private activatableEle: HTMLElement | null;
   private activeDefer: any;
 
   private clearDefers = new WeakMap<HTMLElement, any>();
@@ -104,7 +104,7 @@ export class TapClick {
     this.setActivatedElement(null, ev);
   }
 
-  private setActivatedElement(el: HTMLElement, ev: UIEvent) {
+  private setActivatedElement(el: HTMLElement | null, ev: UIEvent) {
     // do nothing
     const activatableEle = this.activatableEle;
     if (el && el === activatableEle) {
@@ -157,7 +157,9 @@ export class TapClick {
 
   private removeActivated(smooth: boolean) {
     const activatableEle = this.activatableEle;
-
+    if (!activatableEle) {
+      return;
+    }
     const time = CLEAR_STATE_DEFERS - Date.now() + this.lastActivated;
     if (smooth && time > 0) {
       const deferId = setTimeout(() => {

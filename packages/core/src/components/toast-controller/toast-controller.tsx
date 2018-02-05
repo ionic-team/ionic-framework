@@ -32,6 +32,9 @@ export class ToastController {
   dismiss(data?: any, role?: any, toastId = -1) {
     toastId = toastId >= 0 ? toastId : getHighestId();
     const toast = toasts.get(toastId);
+    if (!toast) {
+      return Promise.reject('toast does not exist');
+    }
     return toast.dismiss(data, role);
   }
 

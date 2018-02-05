@@ -62,11 +62,11 @@ export class Tabbar {
   }
 
   protected analyzeTabs() {
-    const tabs: HTMLIonTabButtonElement[] = Array.from(document.querySelectorAll('ion-tab-button')),
-      scrollLeft: number = this.scrollEl.scrollLeft,
-      tabsWidth: number = this.scrollEl.clientWidth;
-    let previous: {tab: HTMLIonTabButtonElement, amount: number},
-      next: {tab: HTMLIonTabButtonElement, amount: number};
+    const tabs: HTMLIonTabButtonElement[] = Array.from(document.querySelectorAll('ion-tab-button'));
+    const scrollLeft = this.scrollEl.scrollLeft;
+    const tabsWidth = this.scrollEl.clientWidth;
+    let previous: {tab: HTMLIonTabButtonElement, amount: number};
+    let next: {tab: HTMLIonTabButtonElement, amount: number};
 
     tabs.forEach((tab: HTMLIonTabButtonElement) => {
       const left: number = tab.offsetLeft,
@@ -85,9 +85,68 @@ export class Tabbar {
     return {previous, next};
   }
 
-  private getSelectedButton(): HTMLIonTabButtonElement {
+  private getSelectedButton(): HTMLIonTabButtonElement | undefined {
     return Array.from(this.el.querySelectorAll('ion-tab-button'))
       .find(btn => btn.selected);
+  }
+
+  protected scrollToSelectedButton() {
+    this.dom.read(() => {
+      const activeTabButton = this.getSelectedButton();
+
+      if (activeTabButton) {
+        const scrollLeft: number = this.scrollEl.scrollLeft,
+          tabsWidth: number = this.scrollEl.clientWidth,
+          left: number = activeTabButton.offsetLeft,
+          right: number = left + activeTabButton.offsetWidth;
+
+        let amount;
+
+        if (right > (tabsWidth + scrollLeft)) {
+          amount = right - tabsWidth;
+        } else if (left < scrollLeft) {
+          amount = left;
+        }
+
+        if (amount !== undefined) {
+          this.scrollEl.scrollToPoint(amount, 0, 250).then(() => {
+            this.updateBoundaries();
+          });
+        }
+      }
+    });
+  }
+
+  private scrollByTab(direction: 'left' | 'right') {
+    this.dom.read(() => {
+      const {previous, next} = this.analyzeTabs(),
+        info = direction === 'right' ? next : previous,
+        amount = info && info.amount;
+
+      if (info) {
+        this.scrollEl.scrollToPoint(amount, 0, 250).then(() => {
+          this.updateBoundaries();
+        });
+      }
+    });
+  }
+
+  private updateBoundaries() {
+    this.canScrollLeft = this.scrollEl.scrollLeft !== 0;
+    this.canScrollRight = this.scrollEl.scrollLeft < (this.scrollEl.scrollWidth - this.scrollEl.offsetWidth);
+  }
+
+  private updateHighlight() {
+    if (!this.highlight) {
+      return;
+    }
+    this.dom.read(() => {
+      const btn = this.getSelectedButton();
+      const highlight = this.el.querySelector('div.tabbar-highlight') as HTMLElement;
+      if (btn && highlight) {
+        highlight.style.transform = `translate3d(${btn.offsetLeft}px,0,0) scaleX(${btn.offsetWidth})`;
+      }
+    });
   }
 
   hostData() {
@@ -138,62 +197,5 @@ export class Tabbar {
         ionTabbarHighlight
       ];
     }
-  }
-
-  protected scrollToSelectedButton() {
-    this.dom.read(() => {
-      const activeTabButton: HTMLIonTabButtonElement = this.getSelectedButton();
-
-      if (activeTabButton) {
-        const scrollLeft: number = this.scrollEl.scrollLeft,
-          tabsWidth: number = this.scrollEl.clientWidth,
-          left: number = activeTabButton.offsetLeft,
-          right: number = left + activeTabButton.offsetWidth;
-
-        let amount;
-
-        if (right > (tabsWidth + scrollLeft)) {
-          amount = right - tabsWidth;
-        } else if (left < scrollLeft) {
-          amount = left;
-        }
-
-        if (amount !== undefined) {
-          this.scrollEl.scrollToPoint(amount, 0, 250).then(() => {
-            this.updateBoundaries();
-          });
-        }
-      }
-    });
-  }
-
-  scrollByTab(direction: 'left' | 'right') {
-    this.dom.read(() => {
-      const {previous, next} = this.analyzeTabs(),
-        info = direction === 'right' ? next : previous,
-        amount = info && info.amount;
-
-      if (info) {
-        this.scrollEl.scrollToPoint(amount, 0, 250).then(() => {
-          this.updateBoundaries();
-        });
-      }
-    });
-  }
-
-  updateBoundaries() {
-    this.canScrollLeft = this.scrollEl.scrollLeft !== 0;
-    this.canScrollRight = this.scrollEl.scrollLeft < (this.scrollEl.scrollWidth - this.scrollEl.offsetWidth);
-  }
-
-  updateHighlight() {
-    this.dom.read(() => {
-      const btn = this.getSelectedButton(),
-        ionTabbarHighlight: HTMLElement = this.highlight && this.el.querySelector('div.tabbar-highlight');
-
-      if (btn && ionTabbarHighlight) {
-        ionTabbarHighlight.style.transform = `translate3d(${btn.offsetLeft}px,0,0) scaleX(${btn.offsetWidth})`;
-      }
-    });
   }
 }

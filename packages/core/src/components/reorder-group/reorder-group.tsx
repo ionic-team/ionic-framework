@@ -25,7 +25,7 @@ export class ReorderIndexes {
   }
 })
 export class ReorderGroup {
-  private selectedItemEl: HTMLElement = null;
+  private selectedItemEl: HTMLElement|null = null;
   private selectedItemHeight: number;
   private lastToIndex: number;
   private cachedHeights: number[] = [];
@@ -179,7 +179,7 @@ export class ReorderGroup {
       ? children[toIndex + 1]
       : children[toIndex];
 
-    this.containerEl.insertBefore(this.selectedItemEl, ref);
+    this.containerEl.insertBefore(selectedItem, ref);
 
     const len = children.length;
     const transform = CSS_PROP.transformProp;
@@ -188,9 +188,11 @@ export class ReorderGroup {
     }
 
     const reorderInactive = () => {
-      this.selectedItemEl.style.transition = '';
-      this.selectedItemEl.classList.remove(ITEM_REORDER_SELECTED);
-      this.selectedItemEl = null;
+      if (this.selectedItemEl) {
+        this.selectedItemEl.style.transition = '';
+        this.selectedItemEl.classList.remove(ITEM_REORDER_SELECTED);
+        this.selectedItemEl = null;
+      }
     };
     if (toIndex === fromIndex) {
       selectedItem.style.transition = 'transform 200ms ease-in-out';
@@ -287,7 +289,7 @@ function indexForItem(element: any): number {
   return element['$ionIndex'];
 }
 
-function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement {
+function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement|null {
   let nested = 0;
   let parent;
   while (node && nested < 6) {

@@ -33,7 +33,7 @@ export class ActionSheet {
   color: string;
   actionSheetId: number;
 
-  private animation: Animation;
+  private animation: Animation | null = null;
 
   @Element() private el: HTMLElement;
 
@@ -232,22 +232,17 @@ export class ActionSheet {
   }
 
   render() {
-    let cancelButton: ActionSheetButton;
-    const buttons = this.buttons
-      .map(b => {
-        if (typeof b === 'string') {
-          b = { text: b };
-        }
-        if (!b.cssClass) {
-          b.cssClass = '';
-        }
-        if (b.role === 'cancel') {
-          cancelButton = b;
-          return null;
-        }
-        return b;
-      })
-      .filter(b => b !== null);
+    const allButtons = this.buttons.map(b => {
+      if (typeof b === 'string') {
+        b = { text: b };
+      }
+      if (!b.cssClass) {
+        b.cssClass = '';
+      }
+      return b;
+    });
+    const cancelButton = allButtons.find(b => b.role === 'cancel');
+    const buttons = allButtons.filter(b => b.role !== 'cancel');
 
     return [
       <ion-backdrop

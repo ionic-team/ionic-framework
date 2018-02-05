@@ -1,11 +1,10 @@
-
 export class GestureController {
 
   private gestureId = 0;
   private requestedStart = new Map<number, number>();
   private disabledGestures = new Map<string, Set<number>>();
   private disabledScroll = new Set<number>();
-  private capturedId: number = null;
+  private capturedId: number|null = null;
 
   createGesture(gestureName: string, gesturePriority: number, disableScroll: boolean): GestureDelegate {
     return new GestureDelegate(this, this.newID(), gestureName, gesturePriority, disableScroll);

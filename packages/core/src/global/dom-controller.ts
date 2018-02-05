@@ -10,7 +10,7 @@ export interface DomController {
 }
 
 export interface RafCallback {
-  (timeStamp?: number): void;
+  (timeStamp: number): void;
 }
 
 export interface DomControllerCallback {

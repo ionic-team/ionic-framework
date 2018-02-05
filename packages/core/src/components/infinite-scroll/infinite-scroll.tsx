@@ -21,7 +21,7 @@ export class InfiniteScroll {
 
   private thrPx = 0;
   private thrPc = 0;
-  private scrollEl: HTMLIonScrollElement;
+  private scrollEl: HTMLIonScrollElement|null = null;
   private didFire = false;
   private isBusy = false;
   private init = false;
@@ -219,7 +219,7 @@ export class InfiniteScroll {
     return (
       !this.disabled &&
       !this.isBusy &&
-      this.scrollEl &&
+      !!this.scrollEl &&
       !this.isLoading);
   }
 

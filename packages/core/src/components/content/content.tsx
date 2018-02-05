@@ -15,7 +15,7 @@ export class Content {
   private cTop = 0;
   private cBottom = 0;
   private dirty = false;
-  private scrollEl: HTMLIonScrollElement;
+  private scrollEl: HTMLIonScrollElement|null;
 
   mode: string;
   color: string;

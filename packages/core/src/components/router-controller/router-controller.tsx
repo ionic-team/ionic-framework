@@ -21,7 +21,7 @@ export class RouterController {
       const base = document.querySelector('head > base');
       if (base) {
         const baseURL = base.getAttribute('href');
-        if (baseURL.length > 0) {
+        if (baseURL && baseURL.length > 0) {
           this.basePrefix = baseURL;
         }
       }

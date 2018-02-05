@@ -24,13 +24,9 @@ export class DomFrameworkDelegate implements FrameworkDelegate {
     });
   }
 
-  removeViewFromDom(parentElement: HTMLElement, childElement: HTMLElement): Promise<FrameworkMountingData> {
+  removeViewFromDom(parentElement: HTMLElement, childElement: HTMLElement): Promise<void> {
     parentElement.removeChild(childElement);
-    return Promise.resolve({
-      element: null,
-      data: null,
-      component: null
-    });
+    return Promise.resolve();
   }
 
   shouldDeferToRouter(_elementOrComponentToMount: any): Promise<boolean> {

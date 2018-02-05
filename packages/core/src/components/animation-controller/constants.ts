@@ -1,42 +1,27 @@
 
 export let CSS_PROP = function(docEle: HTMLElement) {
-  const css: {
-    transformProp?: string;
-    transitionProp?: string;
-    transitionDurationProp?: string;
-    transitionTimingFnProp?: string;
-  } = {};
-
   // transform
-  let i: number;
-  let keys = ['webkitTransform', '-webkit-transform', 'webkit-transform', 'transform'];
+  const transformProp = [
+    'webkitTransform',
+    '-webkit-transform',
+    'webkit-transform',
+    'transform'
+  ].find(key => (docEle.style as any)[key] !== undefined) || 'transform';
 
-  for (i = 0; i < keys.length; i++) {
-    if ((docEle.style as any)[keys[i]] !== undefined) {
-      css.transformProp = keys[i];
-      break;
-    }
-  }
-
-  // transition
-  keys = ['webkitTransition', 'transition'];
-  for (i = 0; i < keys.length; i++) {
-    if ((docEle.style as any)[keys[i]] !== undefined) {
-      css.transitionProp = keys[i];
-      break;
-    }
-  }
+  const transitionProp = [
+    'webkitTransition',
+    'transition'
+  ].find(key => (docEle.style as any)[key] !== undefined) || 'transition';
 
   // The only prefix we care about is webkit for transitions.
-  const prefix = css.transitionProp.indexOf('webkit') > -1 ? '-webkit-' : '';
+  const prefix = transitionProp.indexOf('webkit') > -1 ? '-webkit-' : '';
 
-  // transition duration
-  css.transitionDurationProp = prefix + 'transition-duration';
-
-  // transition timing function
-  css.transitionTimingFnProp = prefix + 'transition-timing-function';
-
-  return css;
+  return {
+    transitionDurationProp: prefix + 'transition-duration',
+    transitionTimingFnProp: prefix + 'transition-timing-function',
+    transformProp,
+    transitionProp
+  };
 
 }(document.documentElement);
 

@@ -74,6 +74,6 @@ export interface EffectProperty {
 
 export interface EffectState {
   val: any;
-  num: number;
+  num: number|null;
   effectUnit: string;
 }

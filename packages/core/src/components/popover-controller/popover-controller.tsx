@@ -32,6 +32,9 @@ export class PopoverController {
   dismiss(data?: any, role?: any, popoverId = -1) {
     popoverId = popoverId >= 0 ? popoverId : getHighestId();
     const popover = popovers.get(popoverId);
+    if (!popover) {
+      return Promise.reject('popover does not exist');
+    }
     return popover.dismiss(data, role);
   }
 

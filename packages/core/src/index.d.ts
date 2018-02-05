@@ -152,7 +152,7 @@ export interface OverlayController {
 
 export interface FrameworkDelegate {
   attachViewToDom(elementOrContainerToMountTo: any, elementOrComponentToMount: any, propsOrDataObj?: any, classesToAdd?: string[], escapeHatch?: any): Promise<FrameworkMountingData>;
-  removeViewFromDom(elementOrContainerToUnmountFrom: any, elementOrComponentToUnmount: any, escapeHatch?: any): Promise<FrameworkMountingData>;
+  removeViewFromDom(elementOrContainerToUnmountFrom: any, elementOrComponentToUnmount: any, escapeHatch?: any): Promise<void>;
 }
 
 export interface FrameworkMountingData {

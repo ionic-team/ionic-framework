@@ -32,6 +32,9 @@ export class AlertController {
   dismiss(data?: any, role?: any, alertId = -1) {
     alertId = alertId >= 0 ? alertId : getHighestId();
     const alert = alerts.get(alertId);
+    if (!alert) {
+      return Promise.reject('alert does not exist');
+    }
     return alert.dismiss(data, role);
   }
 
