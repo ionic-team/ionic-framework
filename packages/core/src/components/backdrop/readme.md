@@ -14,7 +14,7 @@ Backdrops are full screen components that overlay other components. They are use
 
 #### mode
 
-any
+
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -24,7 +24,7 @@ Possible values are: `"ios"` or `"md"`.
 
 #### mode
 
-any
+
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
