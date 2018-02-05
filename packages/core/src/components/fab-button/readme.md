@@ -56,7 +56,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 boolean
 
-If true, sets the button into a disabled state.
+If true, the user cannot interact with the fab button. Defaults to `false`.
 
 
 #### href
@@ -114,7 +114,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 boolean
 
-If true, sets the button into a disabled state.
+If true, the user cannot interact with the fab button. Defaults to `false`.
 
 
 #### href

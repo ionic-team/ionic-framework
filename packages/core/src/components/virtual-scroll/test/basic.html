@@ -40,16 +40,24 @@
       function renderItem(el, item) {
         if (!el) {
           el = document.createElement('ion-item');
+          const text = document.createTextNode(item);
+          el['$content'] = text;
+          el.appendChild(text);
+        } else {
+          el['$content'].nodeValue = item;
         }
-        el.textContent = item;
         return el;
       }
 
       function renderHeader(el, item) {
         if (!el) {
           el = document.createElement('ion-item-divider');
+          const text = document.createTextNode(item);
+          el['$content'] = text;
+          el.appendChild(text);
+        } else {
+          el['$content'].nodeValue = item;
         }
-        el.textContent = item;
         return el;
       }
 

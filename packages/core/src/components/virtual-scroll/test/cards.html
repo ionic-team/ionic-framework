@@ -65,36 +65,12 @@
         if (cell.type === 0) return renderItem(el, cell.value);
         return renderHeader(el, cell.value);
       };
-
-
       const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-
-      const images = [
-        "http://images.all-free-download.com/images/graphiclarge/travel_icons_6813629.jpg",
-        "https://images.unsplash.com/photo-1500531279542-fc8490c8ea4d?auto=format&fit=crop&w=1502&q=60&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D",
-        "https://images.unsplash.com/photo-1483354483454-4cd359948304?dpr=1&auto=format&fit=crop&w=1000&q=80&cs=tinysrgb&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D",
-      ];
-
-      function getImgSrc() {
-        let src = images[rotateImg];
-        rotateImg++;
-        if (rotateImg === images.length) rotateImg = 0;
-        return src;
-      }
-
-      let rotateImg = 0;
-
       const items = [];
       for (var i = 0; i < 1000; i++) {
         items.push({
-          name: i + ' - ' + images[rotateImg],
-          imgSrc: getImgSrc(),
-          avatarSrc: getImgSrc(),
-          imgHeight: Math.floor((Math.random() * 50) + 150),
           content: lorem.substring(0, (Math.random() * (lorem.length - 100)) + 100)
         });
-        rotateImg++;
-        if (rotateImg === images.length) rotateImg = 0;
       }
       virtual.items = items;
     };

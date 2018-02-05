@@ -64,7 +64,7 @@ Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"da
 
 boolean
 
-If true, the user cannot interact with the checkbox. Default false.
+If true, the user cannot interact with the checkbox. Defaults to `false`.
 
 
 #### mode
@@ -110,7 +110,7 @@ Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"da
 
 boolean
 
-If true, the user cannot interact with the checkbox. Default false.
+If true, the user cannot interact with the checkbox. Defaults to `false`.
 
 
 #### mode

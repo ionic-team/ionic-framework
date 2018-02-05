@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'no-routing-nav', loadChildren: 'app/no-routing-nav/no-routing-nav.module#NoRoutingNavModule' },
   { path: 'modal', loadChildren: 'app/modal/modal.module#ModalModule' },
   { path: 'popover', loadChildren: 'app/popover/popover.module#PopoverModule' },
+  { path: 'segment', loadChildren: 'app/segment/segment.module#SegmentModule' },
   { path: 'virtual-scroll', loadChildren: 'app/virtual-scroll/virtual-scroll.module#VirtualScrollModule' },
 
 ];

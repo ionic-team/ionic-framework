@@ -13,7 +13,7 @@ platforms.forEach(platform => {
   describe('item/groups', () => {
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
-      return page.navigate('#content');
+      return page.navigate('.item-group');
     });
   });
 });

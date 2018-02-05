@@ -1,51 +1,64 @@
 # ion-segment
 
-A Segment is a group of buttons, sometimes known as Segmented Controls, that allow the user to interact with a compact group of a number of controls.
+Segments display a group of related buttons, sometimes known as segmented controls, in a horizontal row. They can be displayed inside of a toolbar or the main content.
 
-Segments provide functionality similar to tabs, selecting one will unselect all others. You should use a tab bar instead of a segmented control when you want to let the user move back and forth between distinct pages in your app.
-
+Their functionality is similar to tabs, where selecting one will deselect all others. Segments are useful for toggling between different views inside of the content. Tabs should be used instead of a segment when clicking on a control should navigate between pages.
 
 ```html
-<!-- Segment in a header -->
-<ion-header>
-  <ion-toolbar>
-    <ion-segment [(ngModel)]="icons" color="secondary">
-      <ion-segment-button value="camera">
-        <ion-icon name="camera"></ion-icon>
-      </ion-segment-button>
-      <ion-segment-button value="bookmark">
-        <ion-icon name="bookmark"></ion-icon>
-      </ion-segment-button>
-    </ion-segment>
-  </ion-toolbar>
-</ion-header>
+<!-- Default Segment -->
+<ion-segment>
+  <ion-segment-button value="friends">
+    Friends
+  </ion-segment-button>
+  <ion-segment-button value="enemies">
+    Enemies
+  </ion-segment-button>
+</ion-segment>
 
-<ion-content>
-  <!-- Segment in content -->
-  <ion-segment [(ngModel)]="relationship" color="primary" (ionChange)="segmentChanged($event)">
-    <ion-segment-button value="friends">
-      Friends
+<!-- Disabled Segment -->
+<ion-segment disabled>
+  <ion-segment-button value="sunny" checked>
+    Sunny
+  </ion-segment-button>
+  <ion-segment-button value="rainy">
+    Rainy
+  </ion-segment-button>
+</ion-segment>
+
+<!-- Segment with anchors -->
+<ion-segment>
+  <ion-segment-button href="#dogs" value="dogs">
+    Dogs
+  </ion-segment-button>
+  <ion-segment-button href="#cats" value="cats">
+    Cats
+  </ion-segment-button>
+</ion-segment>
+
+<!-- Segment with secondary color -->
+<ion-segment color="secondary">
+  <ion-segment-button value="standard">
+    Standard
+  </ion-segment-button>
+  <ion-segment-button value="hybrid">
+    Hybrid
+  </ion-segment-button>
+  <ion-segment-button value="sat">
+    Satellite
+  </ion-segment-button>
+</ion-segment>
+
+<!-- Segment in a toolbar -->
+<ion-toolbar>
+  <ion-segment>
+    <ion-segment-button value="camera">
+      <ion-icon name="camera"></ion-icon>
     </ion-segment-button>
-    <ion-segment-button value="enemies">
-      Enemies
+    <ion-segment-button value="bookmark">
+      <ion-icon name="bookmark"></ion-icon>
     </ion-segment-button>
   </ion-segment>
-
-  <!-- Segment in a form -->
-  <form [formGroup]="myForm">
-    <ion-segment formControlName="mapStyle" color="danger">
-      <ion-segment-button value="standard">
-        Standard
-      </ion-segment-button>
-      <ion-segment-button value="hybrid">
-        Hybrid
-      </ion-segment-button>
-      <ion-segment-button value="sat">
-        Satellite
-      </ion-segment-button>
-    </ion-segment>
-  </form>
-</ion-content>
+</ion-toolbar>
 ```
 
 

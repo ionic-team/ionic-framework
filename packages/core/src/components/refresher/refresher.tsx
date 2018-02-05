@@ -73,7 +73,7 @@ export class Refresher {
   @Prop() snapbackDuration = '280ms';
 
   /**
-   * If the refresher is disabled or not. Defaults to `true`.
+   * If true, the refresher will be hidden. Defaults to `true`.
    */
   @Prop() disabled = true;
 

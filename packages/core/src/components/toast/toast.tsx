@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@
 import { Animation, AnimationBuilder, AnimationController, Config, CssClassMap, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 
-import { createThemedClasses } from '../../utils/theme';
+import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -157,35 +157,26 @@ export class Toast {
     this.dismiss();
   }
 
-  wrapperClass(): CssClassMap {
-    const wrapperClass: string[] = !this.position
-      ? ['toast-wrapper', 'toast-bottom']
-      : [`toast-wrapper`, `toast-${this.position}`];
-    return wrapperClass.reduce((prevValue: any, cssClass: any) => {
-      prevValue[cssClass] = true;
-      return prevValue;
-    }, {});
+  private wrapperClass(): CssClassMap {
+    const position = this.position ? this.position : 'bottom';
+    return {
+      'toast-wrapper': true,
+      [`toast-${position}`]: true
+    };
   }
 
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'toast-translucent') : {};
 
-    const hostClasses = {
-      ...themedClasses
-    };
-
     return {
-      class: hostClasses
+      class: {
+        ...themedClasses,
+        ...getClassMap(this.cssClass)
+      }
     };
   }
 
   render() {
-    if (this.cssClass) {
-      this.cssClass.split(' ').forEach(cssClass => {
-        if (cssClass.trim() !== '') this.el.classList.add(cssClass);
-      });
-    }
-
     return (
       <div class={this.wrapperClass()}>
         <div class='toast-container'>

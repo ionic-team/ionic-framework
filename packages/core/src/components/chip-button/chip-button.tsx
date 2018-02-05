@@ -1,6 +1,5 @@
 import { Component, CssClassMap, Element, Prop } from '@stencil/core';
-
-import { getElementClassObject } from '../../utils/theme';
+import { getButtonClassMap, getElementClassMap } from '../../utils/theme';
 
 @Component({
   tag: 'ion-chip-button',
@@ -25,7 +24,7 @@ export class ChipButton {
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * If true, sets the button into a disabled state.
+   * If true, the user cannot interact with the chip button. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -41,59 +40,23 @@ export class ChipButton {
   @Prop() href: string;
 
   /**
-   * Get the classes based on the button type
-   * e.g. alert-button, action-sheet-button
-   */
-  private getButtonClassList(buttonType: string, mode: string): string[] {
-    if (!buttonType) {
-      return [];
-    }
-    return [
-      buttonType,
-      `${buttonType}-${mode}`
-    ];
-  }
-
-  /**
-   * Get the classes for the color
-   */
-  private getColorClassList(color: string, buttonType: string, style: string, mode: string): string[] {
-    const className = (style === 'default') ? `${buttonType}` : `${buttonType}-${style}`;
-
-    return [`${className}-${mode}`].concat(
-        style !== 'default' ? `${className}` : [],
-        color ? `${className}-${mode}-${color}` : []
-      );
-  }
-
-  /**
    * Get the classes for the style
    * Chip buttons can only be clear or default (solid)
    */
-  private getStyleClassList(buttonType: string): string[] {
-    return this.getColorClassList(this.color, buttonType, this.fill || 'default', this.mode);
+  private getStyleClassMap(buttonType: string): CssClassMap {
+    return getColorClassMap(this.color, buttonType, this.fill || 'default', this.mode);
   }
 
   render() {
     const buttonType = 'chip-button';
 
-    const hostClasses = getElementClassObject(this.el.classList);
-
-    const elementClasses: CssClassMap = []
-      .concat(
-        this.getButtonClassList(buttonType, this.mode),
-        this.getStyleClassList(buttonType)
-      )
-      .reduce((prevValue, cssClass) => {
-        prevValue[cssClass] = true;
-        return prevValue;
-      }, {});
-
+    const hostClasses = getElementClassMap(this.el.classList);
     const TagType = this.href ? 'a' : 'button';
 
     const buttonClasses = {
       ...hostClasses,
-      ...elementClasses
+      ...getButtonClassMap(buttonType, this.mode),
+      ...this.getStyleClassMap(buttonType),
     };
 
     return (
@@ -108,4 +71,20 @@ export class ChipButton {
       </TagType>
     );
   }
+}
+
+/**
+ * Get the classes for the color
+ */
+function getColorClassMap(color: string, buttonType: string, style: string, mode: string): CssClassMap {
+  const className = (style === 'default') ? `${buttonType}` : `${buttonType}-${style}`;
+
+  const map: CssClassMap = {
+    [className]: true,
+    [`${className}-${mode}`]: true
+  };
+  if (color) {
+    map[`${className}-${mode}-${color}`] = true;
+  }
+  return map;
 }

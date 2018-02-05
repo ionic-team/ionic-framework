@@ -1,14 +1,39 @@
 # ion-searchbar
 
-Manages the display of a Searchbar which can be used to search or filter items.
+Searchbars represent a text field that can be used to search through a collection. They can be displayed inside of a toolbar or the main content.
+
+A searchbar should be used instead of an input to search lists. A clear button is displayed on input in the searchbar's text field. Clicking on the clear button will erase the text field and remain focused in the input. A cancel button can be enabled which will clear the input and remove focus.
+
 
 ```html
-<ion-searchbar
-  [(ngModel)]="myInput"
-  [showCancelButton]="shouldShowCancel"
-  (ionInput)="onInput($event)"
-  (ionCancel)="onCancel($event)">
-</ion-searchbar>
+<!-- Default Searchbar -->
+<ion-searchbar></ion-searchbar>
+
+<!-- Searchbar with danger color -->
+<ion-searchbar color="danger"></ion-searchbar>
+
+<!-- Searchbar with value -->
+<ion-searchbar value="Ionic"></ion-searchbar>
+
+<!-- Searchbar with telephone type -->
+<ion-searchbar type="tel"></ion-searchbar>
+
+<!-- Searchbar with a cancel button and custom cancel button text -->
+<ion-searchbar show-cancel-button cancel-button-text="Custom Cancel"></ion-searchbar>
+
+<!-- Searchbar with a custom debounce -->
+<ion-searchbar debounce="500"></ion-searchbar>
+
+<!-- Animated Searchbar -->
+<ion-searchbar animated></ion-searchbar>
+
+<!-- Searchbar with a placeholder -->
+<ion-searchbar placeholder="Filter Schedules"></ion-searchbar>
+
+<!-- Searchbar in a Toolbar -->
+<ion-toolbar>
+  <ion-searchbar></ion-searchbar>
+</ion-toolbar>
 ```
 
 <!-- Auto Generated Below -->

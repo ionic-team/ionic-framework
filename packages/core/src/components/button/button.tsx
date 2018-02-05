@@ -1,6 +1,6 @@
+import { Component, CssClassMap, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 import { BlurEvent, FocusEvent } from '../../utils/input-interfaces';
-import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
-import { getElementClassObject } from '../../utils/theme';
+import { getButtonClassMap, getElementClassMap } from '../../utils/theme';
 
 
 @Component({
@@ -34,7 +34,7 @@ export class Button {
   @Prop() size: 'small' | 'default' | 'large';
 
   /**
-   * If true, sets the button into a disabled state.
+   * If true, the user cannot interact with the button. Defaults to `false`.
    */
   @Prop() disabled = false;
 
@@ -111,19 +111,15 @@ export class Button {
       strong
     } = this;
 
-    const elementClasses = [
-      ...getButtonClassList(buttonType, mode),
-      ...getClassList(buttonType, expand, mode),
-      ...getClassList(buttonType, size, mode),
-      ...getClassList(buttonType, round ? 'round' : null, mode),
-      ...getClassList(buttonType, strong ? 'strong' : null, mode),
-      ...getColorClassList(buttonType, color, fill, mode),
-    ];
-
     const TagType = this.href ? 'a' : 'button';
     const buttonClasses = {
-      ...getElementClassObject(this.el.classList),
-      ...getElementClassObject(elementClasses),
+      ...getButtonClassMap(buttonType, mode),
+      ...getButtonTypeClassMap(buttonType, expand, mode),
+      ...getButtonTypeClassMap(buttonType, size, mode),
+      ...getButtonTypeClassMap(buttonType, round ? 'round' : null, mode),
+      ...getButtonTypeClassMap(buttonType, strong ? 'strong' : null, mode),
+      ...getColorClassMap(buttonType, color, fill, mode),
+      ...getElementClassMap(this.el.classList),
       'focused': this.keyFocus
     };
 
@@ -147,37 +143,23 @@ export class Button {
   }
 }
 
-/**
- * Get the classes based on the button type
- * e.g. alert-button, action-sheet-button
- */
-function getButtonClassList(buttonType: string, mode: string): string[] {
-  if (!buttonType) {
-    return [];
-  }
-  return [
-    buttonType,
-    `${buttonType}-${mode}`
-  ];
-}
-
 
 /**
  * Get the classes based on the type
  * e.g. block, full, round, large
  */
-function getClassList(buttonType: string, type: string, mode: string): string[] {
+function getButtonTypeClassMap(buttonType: string, type: string, mode: string): CssClassMap {
   if (!type) {
-    return [];
+    return {};
   }
   type = type.toLocaleLowerCase();
-  return [
-    `${buttonType}-${type}`,
-    `${buttonType}-${type}-${mode}`
-  ];
+  return {
+    [`${buttonType}-${type}`]: true,
+    [`${buttonType}-${type}-${mode}`]: true
+  };
 }
 
-function getColorClassList(buttonType: string, color: string, fill: string, mode: string): string[] {
+function getColorClassMap(buttonType: string, color: string, fill: string, mode: string): CssClassMap {
   let className = buttonType;
 
   if (buttonType !== 'bar-button' && fill === 'solid') {
@@ -197,9 +179,12 @@ function getColorClassList(buttonType: string, color: string, fill: string, mode
       className += '-' + fill.toLowerCase();
     }
   }
-
-  return [`${className}-${mode}`].concat(
-      fill !== 'default' ? `${className}` : [],
-      color ? `${className}-${mode}-${color}` : []
-    );
+  const map: CssClassMap = {
+    [className]: true,
+    [`${className}-${mode}`]: true,
+  };
+  if (color) {
+    map[`${className}-${mode}-${color}`] = true;
+  }
+  return map;
 }

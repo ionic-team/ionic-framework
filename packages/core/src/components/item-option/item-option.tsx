@@ -29,7 +29,7 @@ export class ItemOption {
   @Prop() href: string;
 
   /**
-   * If true, sets the button into a disabled state.
+   * If true, the user cannot interact with the item option. Defaults to `false`.
    */
   @Prop() disabled = false;
 

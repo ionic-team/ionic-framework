@@ -11,16 +11,15 @@ class E2ETestPage extends Page {
 }
 
 platforms.forEach(platform => {
-  describe.skip('events/basic', () => {
+  describe('events/basic', () => {
 
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
       return page.navigate('#content');
     });
 
-    /*register('subscribers should receive event on or shortly after button click', async (driver, testContext) => {
-
-      testContext.timeout(1000);
+    register('subscribers should receive event on or shortly after button click', async (driver, testContext) => {
+      testContext.timeout(2000);
       const page = new E2ETestPage(driver, platform);
       await wait(300);
 
@@ -38,7 +37,6 @@ platforms.forEach(platform => {
       const secretTwoText = await secretTwoElement.getText();
       expect(secretTwoText).to.equal('Burrito');
     });
-    */
   });
 });
 

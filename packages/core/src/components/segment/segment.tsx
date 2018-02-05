@@ -12,15 +12,7 @@ import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@s
   }
 })
 export class Segment {
-  // TODO typing
-  buttons: any;
-
   @Element() private el: HTMLElement;
-
-  /**
-   * Emitted when the value property has changed.
-   */
-  @Event() ionChange: EventEmitter<SegmentEventDetail>;
 
   /**
    * The color to use for the text color.
@@ -35,9 +27,9 @@ export class Segment {
   @Prop() mode: 'ios' | 'md';
 
   /*
-   * If true, the user cannot interact with the segment. Default false.
+   * If true, the user cannot interact with the segment. Defaults to `false`.
    */
-  @Prop({ mutable: true }) disabled = false;
+  @Prop() disabled = false;
 
   /**
    * the value of the segment.
@@ -47,22 +39,17 @@ export class Segment {
   @Watch('value')
   protected valueChanged(val: string) {
     this.selectButton(val);
+    this.ionChange.emit();
   }
 
+  /**
+   * Emitted when the value property has changed.
+   */
+  @Event() ionChange: EventEmitter;
+
+
   componentDidLoad() {
-    this.buttons = this.el.querySelectorAll('ion-segment-button');
-
-    for (let i = 0; i < this.buttons.length; i++) {
-      const button = this.buttons[i];
-
-      button.activated = (button.value === this.value);
-
-      // If there is no value set on the segment and a button
-      // is checked we should activate it
-      if (!this.value && button.checked) {
-        button.activated = button.checked;
-      }
-    }
+    this.selectButton(this.value);
   }
 
   @Listen('ionClick')
@@ -70,20 +57,22 @@ export class Segment {
     const selectedButton = ev.target as HTMLIonSegmentButtonElement;
 
     this.value = selectedButton.value;
-    this.selectButton(this.value);
-
-    // TODO should this move to valueChanged
-    this.ionChange.emit();
   }
 
   selectButton(val: string) {
-    for (let i = 0; i < this.buttons.length; i++) {
-      const button = this.buttons[i];
-      button.activated = (button.value === val);
-    }
+    const buttons = this.el.querySelectorAll('ion-segment-button');
 
-    // returning true tells the renderer to queue an update
-    return true;
+    for (let i = 0; i < buttons.length; i++) {
+      const button = buttons[i];
+
+      button.activated = (button.value === val);
+
+      // If there is no value set on the segment and a button
+      // is checked we should activate it
+      if (!val && button.checked) {
+        button.activated = button.checked;
+      }
+    }
   }
 
   hostData() {
@@ -97,11 +86,4 @@ export class Segment {
   render() {
     return <slot></slot>;
   }
-}
-
-export interface SegmentEvent extends CustomEvent {
-  detail: SegmentEventDetail;
-}
-
-export interface SegmentEventDetail {
 }

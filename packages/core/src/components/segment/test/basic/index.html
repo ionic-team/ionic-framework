@@ -79,6 +79,9 @@
               Inactive
             </ion-segment-button>
           </ion-segment>
+
+          <!-- Dynamic Buttons -->
+          <ion-segment id="dynamicButtons" color="dark"></ion-segment>
         </div>
 
         <div padding-horizontal>
@@ -120,6 +123,23 @@
             });
           }
 
+          var dynamicButtons = document.getElementById('dynamicButtons');
+          updateSegmentButtons(2);
+
+          setTimeout(function() {
+            updateSegmentButtons(4);
+          }, 4000);
+
+          function updateSegmentButtons(length) {
+            dynamicButtons.innerHTML = '';
+
+            for (var i = 0; i < length; i++) {
+              dynamicButtons.innerHTML += `
+                <ion-segment-button value="segment-${i}">
+                  Btn ${i}
+                </ion-segment-button>`;
+            }
+          }
 
         </script>
       </ion-content>
