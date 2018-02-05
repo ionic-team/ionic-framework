@@ -21,6 +21,13 @@ export class Tabs {
   @Prop({ context: 'config' }) config: Config;
 
   /**
+   * The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   */
+  @Prop() color: string;
+
+  /**
    * A unique name for the tabs
    */
   @Prop() name: string;
@@ -214,6 +221,7 @@ export class Tabs {
       dom.push(
         <ion-tabbar
           tabs={this.tabs}
+          color={this.color}
           selectedTab={this.selectedTab}
           highlight={this.tabbarHighlight}
           placement={this.tabbarPlacement}

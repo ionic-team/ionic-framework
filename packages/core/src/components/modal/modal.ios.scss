@@ -1,6 +1,10 @@
 @import "./modal";
 @import "./modal.ios.vars";
 
+.modal-backdrop-ios {
+  background-color: $modal-backdrop-ios-color;
+}
+
 // iOS Modals
 // --------------------------------------------------
 

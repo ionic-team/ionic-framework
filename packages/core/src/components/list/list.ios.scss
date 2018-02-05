@@ -9,12 +9,12 @@
 }
 
 .list-ios > .item-block:first-child {
-  border-top: $hairlines-width solid $list-ios-border-color;
+  border-top: $hairlines-width solid $item-ios-border-color;
 }
 
 .list-ios > .item-block:last-child,
 .list-ios > .item-wrapper:last-child .item-block {
-  border-bottom: $hairlines-width solid $list-ios-border-color;
+  border-bottom: $hairlines-width solid $item-ios-border-color;
 }
 
 .list-ios > .item-block:last-child .item-inner,
@@ -23,7 +23,7 @@
 }
 
 .list-ios .item-block .item-inner {
-  border-bottom: $hairlines-width solid $list-ios-border-color;
+  border-bottom: $hairlines-width solid $item-ios-border-color;
 }
 
 // If the item has the no-lines attribute remove the bottom border from:
@@ -49,11 +49,11 @@
 }
 
 .list-ios[inset] ion-list-header {
-  background-color: $list-ios-background-color;
+  background-color: $item-ios-background-color;
 }
 
 .list-ios[inset] .item {
-  border-bottom: 1px solid $list-ios-border-color;
+  border-bottom: 1px solid $item-ios-border-color;
 }
 
 .list-ios[inset] .item-inner {

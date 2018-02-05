@@ -15,7 +15,9 @@
 // Generate Material Design Card subtitle Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+@each $color-name, $color-value in $colors-md {
+  $color-base: ion-color($colors-md, $color-name, base, md);
+  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
 
   .card-md-#{$color-name} {
 
@@ -23,7 +25,9 @@
       color: $color-contrast;
     }
 
-    @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+    @each $color-name, $color-value in $colors-md {
+      $color-base: ion-color($colors-md, $color-name, base, md);
+
       .card-subtitle-md-#{$color-name} {
         color: $color-base;
       }
@@ -33,5 +37,4 @@
   .card-subtitle-md-#{$color-name} {
     color: $color-base;
   }
-
 }

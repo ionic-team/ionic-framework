@@ -216,12 +216,15 @@ export class Popover {
   }
 
   render() {
-    const wrapperClasses = createThemedClasses(this.mode, this.color, 'popover-wrapper');
+    const backdropClasses = createThemedClasses(this.mode, this.color, 'popover-backdrop'),
+      wrapperClasses = createThemedClasses(this.mode, this.color, 'popover-wrapper');
 
     return [
       <ion-backdrop
         onClick={this.backdropClick.bind(this)}
-        class='popover-backdrop'
+        class={{
+          ...backdropClasses
+        }}
       />,
       <div class={wrapperClasses}>
         <div class='popover-arrow' />

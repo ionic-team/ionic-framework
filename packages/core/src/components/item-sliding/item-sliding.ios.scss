@@ -9,7 +9,7 @@
 }
 
 .list-ios ion-item-options {
-  border-bottom: $hairlines-width solid $list-ios-border-color;
+  border-bottom: $hairlines-width solid $item-ios-border-color;
 }
 
 .list-ios .item-options-right ion-item-option:last-child {
@@ -43,7 +43,10 @@
 // Generate iOS Option Button Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+@each $color-name, $color-value in $colors-ios {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
+  $color-shade: ion-color($colors-ios, $color-name, tint, ios);
 
   .item-option-ios-#{$color-name} {
     color: $color-contrast;
@@ -53,5 +56,4 @@
   .item-option-ios-#{$color-name} .icon {
     fill: $color-contrast;
   }
-
 }

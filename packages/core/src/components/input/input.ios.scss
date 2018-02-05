@@ -5,6 +5,7 @@
 // --------------------------------------------------
 
 .native-input-ios {
+  @include placeholder($input-ios-placeholder-color);
   @include margin($input-ios-margin-top, $input-ios-margin-end, $input-ios-margin-bottom, $input-ios-margin-start);
   @include padding(0);
 

@@ -1,6 +1,10 @@
 @import "./popover";
 @import "./popover.md.vars";
 
+.popover-backdrop-md {
+  background-color: $popover-backdrop-md-color;
+}
+
 // Material Design Popover
 // --------------------------------------------------
 

@@ -2,14 +2,23 @@
 // Ionic Version
 @import "./version";
 
+// Global String Functions
+@import "./ionic.functions.string";
 
-// Global Functions
-@import "./ionic.functions";
+// Global List Functions
+@import "./ionic.functions.list";
 
+// Global Map Functions
+@import "./ionic.functions.map";
+
+// Global URL Functions
+@import "./ionic.functions.url";
+
+// Global Color Functions
+@import "./ionic.functions.color";
 
 // Global Mixins
 @import "./ionic.mixins";
-
 
 // Global app direction
 $app-direction: ltr !default;

@@ -27,7 +27,6 @@ ion-textarea {
 // --------------------------------------------------
 
 .native-textarea {
-  @include placeholder($textarea-placeholder-color);
   @include appearance(none);
   @include border-radius(0);
 

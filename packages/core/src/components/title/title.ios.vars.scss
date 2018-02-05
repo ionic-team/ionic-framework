@@ -13,4 +13,4 @@ $toolbar-ios-title-font-weight:             600 !default;
 $toolbar-ios-title-text-align:              center !default;
 
 /// @prop - Text color of the toolbar title
-$toolbar-ios-title-text-color:              color-contrast($colors-ios, $toolbar-ios-background) !default;
+$toolbar-ios-title-text-color:              $toolbar-ios-text-color !default;

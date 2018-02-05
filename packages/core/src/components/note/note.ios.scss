@@ -13,10 +13,10 @@
 // Generate iOS Note Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+@each $color-name, $color-value in $colors-ios {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
 
   .note-ios-#{$color-name} {
     color: $color-base;
   }
-
 }

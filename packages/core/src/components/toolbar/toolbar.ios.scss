@@ -25,7 +25,7 @@
 // --------------------------------------------------
 
 .toolbar-background-ios {
-  background: $toolbar-ios-background;
+  background: $toolbar-ios-background-color;
 }
 
 
@@ -61,7 +61,9 @@
 .header-translucent-ios .toolbar-background-ios,
 .footer-translucent-ios .toolbar-background-ios,
 .toolbar-translucent-ios .toolbar-background-ios {
-  background: rgba($toolbar-ios-background, $toolbar-ios-translucent-opacity);
+  // TODO: @color-mod in the future we will want to replace this with the following color-mod
+  // background-color: color-mod($toolbar-ios-background-color, a($alpha-ios-highest));
+  background: $toolbar-ios-translucent-background-color;
 }
 
 .toolbar-translucent-ios .toolbar-background-ios {
@@ -80,7 +82,11 @@
   min-width: 0;
 }
 
-@mixin ios-toolbar-theme($color-name, $color-base, $color-contrast) {
+@mixin ios-toolbar-theme($color-name) {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
+  $color-translucent: ion-color-alpha($colors-ios, $color-name, alpha-highest, ios);
+
   .toolbar-ios-#{$color-name} {
 
     .toolbar-background-ios {
@@ -92,10 +98,10 @@
       color: $color-contrast;
     }
 
-    @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-      @include ios-bar-button-default($color-name, $color-base, $color-contrast);
-      @include ios-bar-button-outline($color-name, $color-base, $color-contrast);
-      @include ios-bar-button-solid($color-name, $color-base, $color-contrast);
+    @each $color-name, $color-value in $colors-ios {
+      @include ios-bar-button-default($color-name);
+      @include ios-bar-button-outline($color-name);
+      @include ios-bar-button-solid($color-name);
     }
   }
 
@@ -105,9 +111,8 @@
   .toolbar-translucent-ios-#{$color-name} {
 
     .toolbar-background-ios {
-      background: rgba($color-base, $toolbar-ios-translucent-opacity);
+      background: $color-translucent;
     }
-
   }
 }
 
@@ -151,7 +156,10 @@
   font-size: $toolbar-ios-button-font-size;
 }
 
-@mixin ios-bar-button-default($color-name, $color-base, $color-contrast) {
+@mixin ios-bar-button-default($color-name, $color-base: null) {
+  @if ($color-base == null) {
+    $color-base: ion-color($colors-ios, $color-name, base, ios);
+  }
 
   .bar-button-#{$color-name}-ios,
   .bar-button-clear-ios-#{$color-name},
@@ -191,7 +199,7 @@
   background-color: transparent;
 
   &.activated {
-    color: color-contrast($colors-ios, $toolbar-ios-button-color);
+    color: $toolbar-ios-text-color;
     background-color: $toolbar-ios-button-color;
   }
 }
@@ -200,20 +208,20 @@
   opacity: .4;
 }
 
-@mixin ios-bar-button-outline($color-name, $color-base, $color-contrast) {
+@mixin ios-bar-button-outline($color-name) {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
 
   .bar-button-outline-ios-#{$color-name} {
-    $fg-color: $color-base;
-    border-color: $fg-color;
-    color: $fg-color;
+    border-color: $color-base;
+    color: $color-base;
     background-color: transparent;
 
     &.activated {
       color: $color-contrast;
-      background-color: $fg-color;
+      background-color: $color-base;
     }
   }
-
 }
 
 
@@ -221,22 +229,29 @@
 // --------------------------------------------------
 
 .bar-button-solid-ios {
-  color: color-contrast($colors-ios, $toolbar-ios-button-color);
+  color: $toolbar-ios-button-background-color;
   background-color: $toolbar-ios-button-color;
 
+  &:hover:not(.disable-hover) {
+    color: $toolbar-ios-button-background-color;
+    opacity: .4;
+  }
+
   &.activated {
-    color: color-contrast($colors-ios, $toolbar-ios-button-color);
-    background-color: color-shade($toolbar-ios-button-color);
+    color: $toolbar-ios-button-background-color;
+    background-color: $toolbar-ios-button-background-color-activated;
     opacity: .4;
   }
 }
 
 .enable-hover .bar-button-solid-ios:hover {
-  color: color-contrast($colors-ios, $toolbar-ios-button-color);
   opacity: .4;
 }
 
-@mixin ios-bar-button-solid($color-name, $color-base, $color-contrast) {
+@mixin ios-bar-button-solid($color-name) {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
+  $color-shade: ion-color($colors-ios, $color-name, tint, ios);
 
   .bar-button-solid-ios-#{$color-name} {
     color: $color-contrast;
@@ -244,10 +259,9 @@
 
     &.activated {
       color: $color-contrast;
-      background-color: color-shade($color-base);
+      background-color: $color-shade;
     }
   }
-
 }
 
 
@@ -341,14 +355,14 @@
 // iOS Toolbar Color Generation
 // --------------------------------------------------
 
-@include ios-bar-button-default(default, $toolbar-ios-button-color, color-contrast($colors-ios, $toolbar-ios-button-color, ios));
-@include ios-bar-button-default(clear, $toolbar-ios-button-color, color-contrast($colors-ios, $toolbar-ios-button-color, ios));
+@include ios-bar-button-default(default, $toolbar-ios-button-color);
+@include ios-bar-button-default(clear, $toolbar-ios-button-color);
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-  @include ios-toolbar-theme($color-name, $color-base, $color-contrast);
-  @include ios-bar-button-default($color-name, $color-base, $color-contrast);
-  @include ios-bar-button-outline($color-name, $color-base, $color-contrast);
-  @include ios-bar-button-solid($color-name, $color-base, $color-contrast);
+@each $color-name, $color-value in $colors-ios {
+  @include ios-toolbar-theme($color-name);
+  @include ios-bar-button-default($color-name);
+  @include ios-bar-button-outline($color-name);
+  @include ios-bar-button-solid($color-name);
 }
 
 

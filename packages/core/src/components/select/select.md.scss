@@ -8,6 +8,7 @@
   @include padding($select-md-padding-top, $select-md-padding-end, $select-md-padding-bottom, $select-md-padding-start);
 
   font-family: $select-md-font-family;
+  color: $select-md-text-color;
 }
 
 .select-md .select-placeholder {
@@ -60,7 +61,7 @@
 }
 
 .select-popover-md .item-radio-checked {
-  background-color: #dcdcdc;
+  background-color: $background-md-color-step-200;
 }
 
 .select-popover-md .item-radio-checked ion-label {

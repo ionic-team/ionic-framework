@@ -37,7 +37,9 @@
 // Generate iOS Chip Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+@each $color-name, $color-value in $colors-ios {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
 
   .chip-ios-#{$color-name} {
     color: $color-contrast;
@@ -48,5 +50,4 @@
     color: $color-contrast;
     background-color: $color-base;
   }
-
 }

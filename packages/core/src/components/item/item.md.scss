@@ -14,14 +14,14 @@
   font-weight: normal;
   text-transform: none;
 
-  color: $list-md-text-color;
-  background-color: $list-md-background-color;
+  color: $item-md-text-color;
+  background-color: $item-md-background-color;
   box-shadow: none;
   transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
 }
 
 .item-md.activated {
-  background-color: $list-md-activated-background-color;
+  background-color: $item-md-background-color-active;
 }
 
 .item-md[no-lines] {
@@ -67,7 +67,7 @@
 .item-md.item-block .item-inner {
   @include padding-horizontal(null, ($item-md-padding-end / 2));
 
-  border-bottom: 1px solid $list-md-border-color;
+  border-bottom: 1px solid $item-md-border-color;
 }
 
 
@@ -169,8 +169,19 @@
 // Generate Material Design Item and Item Divider Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
-  .item-md-#{$color-name} {
+@each $color-name, $color-value in $colors-md {
+  $color-base: ion-color($colors-md, $color-name, base, md);
+  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
+  $color-tint: ion-color($colors-md, $color-name, tint, md);
+
+  // If there is text with a color it should use this color
+  // and override whatever item sets it to
+  .item-md .text-md-#{$color-name} {
+    color: $color-base;
+  }
+
+  .item-md-#{$color-name},
+  .item-divider-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
 
@@ -179,7 +190,7 @@
     }
 
     &.activated {
-      background-color: color-shade($color-base);
+      background-color: $color-tint;
     }
   }
 }

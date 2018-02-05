@@ -12,10 +12,10 @@
   color: $toolbar-md-title-text-color;
 }
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+@each $color-name, $color-value in $colors-md {
+  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
 
   .toolbar-#{$color-name} .toolbar-title-md {
     color: $color-contrast;
   }
-
 }

@@ -40,25 +40,24 @@
 // --------------------------------------------------
 
 .fab-translucent-ios {
-  background-color: rgba($fab-ios-background-color, $fab-ios-translucent-opacity);
+  background-color: $fab-ios-translucent-background-color;
 
   -webkit-backdrop-filter: $fab-ios-translucent-filter;
   backdrop-filter: $fab-ios-translucent-filter;
 }
 
 .fab-translucent-ios-in-list {
-  background-color: rgba($fab-ios-list-button-background-color, $fab-ios-translucent-opacity);
+  background-color: $fab-ios-list-button-translucent-background-color;
 }
 
 
 // Generate iOS FAB colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-
-  $bg-color: $color-base;
-  $bg-color-activated: color-shade($bg-color);
-  $fg-color: $color-contrast;
+@each $color-name, $color-value in $colors-ios {
+  $bg-color: ion-color($colors-ios, $color-name, base, ios);
+  $bg-color-activated: ion-color($colors-ios, $color-name, tint, ios);
+  $fg-color: ion-color($colors-ios, $color-name, contrast, ios);
 
   .fab-button-ios-#{$color-name} {
     color: $fg-color;
@@ -74,11 +73,12 @@
   }
 
   .fab-translucent-ios-#{$color-name} {
-    background-color: rgba($bg-color, $fab-ios-translucent-opacity);
+    background-color: ion-color-alpha($colors-ios, $color-name, $alpha-ios-highest);
+    opacity: .8;
   }
 
   .fab-translucent-ios-#{$color-name}.activated {
-    background-color: rgba($bg-color-activated, $fab-ios-translucent-opacity);
+    opacity: 1;
   }
 }
 

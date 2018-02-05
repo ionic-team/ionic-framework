@@ -6,10 +6,10 @@
 // --------------------------------------------------
 
 /// @prop - Color for the divider
-$item-md-divider-color:              #858585 !default;
+$item-md-divider-color:              $text-md-color-step-300 !default;
 
 /// @prop - Background for the divider
-$item-md-divider-background:         #fff !default;
+$item-md-divider-background:         $background-md-color !default;
 
 /// @prop - Font family for the divider
 $item-md-divider-font-family:        $font-family-md-base !default;
@@ -18,7 +18,7 @@ $item-md-divider-font-family:        $font-family-md-base !default;
 $item-md-divider-font-size:          14px !default;
 
 /// @prop - Border bottom for the divider
-$item-md-divider-border-bottom:      1px solid $list-md-border-color !default;
+$item-md-divider-border-bottom:      1px solid $item-md-border-color !default;
 
 /// @prop - Padding start for the divider
 $item-md-divider-padding-start:      $item-md-padding-start !default;

@@ -10,7 +10,7 @@
   height: $tabs-ios-tab-height;
 
   border-top: $tabs-ios-border;
-  background: $tabs-ios-background;
+  background-color: $tabbar-ios-background-color;
 
   contain: strict;
 }
@@ -21,7 +21,7 @@
 }
 
 .tabbar-ios .tabbar-highlight {
-  background: $tabs-ios-tab-color-active;
+  background: $tabbar-ios-text-color-active;
 }
 
 .tabbar-ios > ion-tab-button {
@@ -90,6 +90,7 @@
 .tabbar-ios.layout-title-hide ion-icon {
   @include margin(0);
 }
+
 // .tabs-ios[tabsLayout=icon-hide] ion-tab-button,
 // .tabs-ios ion-tab-button.has-title-only {
 //   min-height: $tabs-ios-tab-min-height - 8;
@@ -104,41 +105,52 @@
 // --------------------------------------------------
 
 .tabbar-translucent-ios {
-  background-color: rgba($tabs-ios-background, $tabbar-ios-translucent-opacity);
+  // TODO: @color-mod in the future we will want to replace this with the following color-mod
+  // background-color: color-mod($tabbar-ios-background-color, a($alpha-ios-highest));
+  background-color: $tabbar-ios-translucent-background-color;
 
   -webkit-backdrop-filter: $tabbar-ios-translucent-filter;
   backdrop-filter: $tabbar-ios-translucent-filter;
 }
 
-
 // iOS Tabbar Color Mixin
 // --------------------------------------------------
 
-@mixin tabbar-ios($color-name, $color-base, $color-contrast) {
+@mixin tabbar-ios($color-name) {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
+  $color-shade: ion-color($colors-ios, $color-name, tint, ios);
+
+  $translucent-background-color: ion-color-alpha($colors-ios, $color-name, $alpha-ios-high, ios);
 
   .tabbar-ios-#{$color-name} {
-    border-color: darken($color-base, 10%);
-    color: rgba($color-contrast, .7);
+    border-color: $background-ios-color-step-300;
+    color: $color-contrast;
     background-color: $color-base;
 
-    fill: rgba($color-contrast, .7);
+    fill: $color-contrast;
   }
 
-  .tabbar-ios-#{$color-name} .tab-selected {
+  .tabbar-ios-#{$color-name} ion-tab-button {
+    color: $color-contrast;
+  }
+
+  .tabbar-ios-#{$color-name} ion-tab-button:hover:not(.disable-hover), .tabbar-ios-#{$color-name} .tab-selected {
+    font-weight: bold;
+
     color: $color-contrast;
 
     fill: $color-contrast;
   }
 
   .tabbar-translucent-ios-#{$color-name} {
-    background-color: rgba($color-base, $tabbar-ios-translucent-opacity);
+    background-color: $translucent-background-color;
   }
-
 }
 
 // iOS Tabbar Color Generation
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-  @include tabbar-ios($color-name, $color-base, $color-contrast);
+@each $color-name, $color-value in $colors-ios {
+  @include tabbar-ios($color-name);
 }

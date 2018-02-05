@@ -9,7 +9,7 @@
 }
 
 .card-header-translucent-ios {
-  background-color: rgba($card-ios-header-translucent-background, $card-ios-header-translucent-opacity);
+  background-color: $card-ios-header-translucent-background-color;
 
   -webkit-backdrop-filter: $card-ios-header-translucent-filter;
   backdrop-filter: $card-ios-header-translucent-filter;

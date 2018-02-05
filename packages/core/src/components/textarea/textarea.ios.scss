@@ -5,6 +5,7 @@
 // --------------------------------------------------
 
 .native-textarea-ios {
+  @include placeholder($textarea-ios-placeholder-color);
   @include margin($textarea-ios-margin-top, $textarea-ios-margin-end, $textarea-ios-margin-bottom, $textarea-ios-margin-start);
   @include padding(0);
 

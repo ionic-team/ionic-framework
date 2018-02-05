@@ -136,7 +136,8 @@
 // Generate iOS Range Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+@each $color-name, $color-value in $colors-ios {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
 
   .range-ios-#{$color-name} {
     .range-bar-active,
@@ -144,5 +145,4 @@
       background: $color-base;
     }
   }
-
 }

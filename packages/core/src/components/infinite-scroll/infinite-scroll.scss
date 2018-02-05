@@ -39,21 +39,8 @@ ion-infinite-scroll-content {
 
 .infinite-loading-text {
   @include margin($infinite-scroll-loading-text-margin-top, $infinite-scroll-loading-text-margin-end, $infinite-scroll-loading-text-margin-bottom, $infinite-scroll-loading-text-margin-start);
-
-  color: $infinite-scroll-loading-text-color;
 }
 
-.infinite-loading-spinner .spinner-ios line,
-.infinite-loading-spinner .spinner-ios-small line,
-.infinite-loading-spinner .spinner-crescent circle {
-  stroke: $infinite-scroll-loading-color;
-}
-
-.infinite-loading-spinner .spinner-bubbles circle,
-.infinite-loading-spinner .spinner-circles circle,
-.infinite-loading-spinner .spinner-dots circle {
-  fill: $infinite-scroll-loading-color;
-}
 
 
 // Infinite Scroll Content States

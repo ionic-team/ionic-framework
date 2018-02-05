@@ -7,10 +7,10 @@
 $segment-md-font-family:                       $font-family-md-base !default;
 
 /// @prop - Text color of the activated segment button
-$segment-button-md-text-color-activated:       $toolbar-md-active-color !default;
+$segment-button-md-text-color-active:         $toolbar-md-color-active !default;
 
 /// @prop - Border color of the activated segment button
-$segment-button-md-border-color-activated:     $toolbar-md-active-color !default;
+$segment-button-md-border-color-activated:    $toolbar-md-color-active !default;
 
 /// @prop - Width of the bottom border on the segment button
 $segment-button-md-border-bottom-width:        2px !default;

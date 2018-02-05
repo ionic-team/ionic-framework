@@ -31,7 +31,7 @@
   @include border-radius($action-sheet-ios-border-radius);
   @include margin(null, null, $action-sheet-ios-group-margin-bottom - 2, null);
 
-  background: $action-sheet-ios-background;
+  background: $action-sheet-ios-background-color;
 }
 
 .action-sheet-ios .action-sheet-group:first-child {
@@ -47,7 +47,7 @@
 // -----------------------------------------
 
 .action-sheet-translucent-ios .action-sheet-group {
-  background: rgba($action-sheet-ios-background, $action-sheet-ios-translucent-opacity);
+  background: $action-sheet-ios-translucent-background-color;
 
   backdrop-filter: $action-sheet-ios-translucent-filter;
   -webkit-backdrop-filter: $action-sheet-ios-translucent-filter;
@@ -117,7 +117,7 @@
 
 .action-sheet-ios .action-sheet-selected {
   font-weight: bold;
-  background: #fff;
+  background: $action-sheet-ios-button-background-selected;
 }
 
 .action-sheet-ios .action-sheet-destructive {

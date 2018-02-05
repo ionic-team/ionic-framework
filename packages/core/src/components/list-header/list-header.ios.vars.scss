@@ -9,7 +9,7 @@
 $list-ios-header-padding-start:       $item-ios-padding-start !default;
 
 /// @prop - Border bottom of the header in a list
-$list-ios-header-border-bottom:       $hairlines-width solid $list-ios-border-color !default;
+$list-ios-header-border-bottom:       $hairlines-width solid $item-ios-border-color !default;
 
 /// @prop - Font size of the header in a list
 $list-ios-header-font-size:           12px !default;
@@ -24,7 +24,7 @@ $list-ios-header-letter-spacing:      1px !default;
 $list-ios-header-text-transform:      uppercase !default;
 
 /// @prop - Text color of the header in a list
-$list-ios-header-color:               #333 !default;
+$list-ios-header-color:               $text-ios-color-step-100 !default;
 
 /// @prop - Background color of the header in a list
 $list-ios-header-background-color:    transparent !default;

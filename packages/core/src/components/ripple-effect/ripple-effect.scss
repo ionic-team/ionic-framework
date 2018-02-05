@@ -17,7 +17,6 @@ ion-ripple-effect {
   @include border-radius(50%);
   position: absolute;
 
-  background: #000;
   opacity: 0;
 
   will-change: transform, opacity;

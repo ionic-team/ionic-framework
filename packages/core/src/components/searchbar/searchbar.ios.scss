@@ -142,35 +142,39 @@
 // Generate Default Search Bar Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-  $fg-color: rgba($color-contrast, .5);
+@each $color-name, $color-value in $colors-ios {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
+  $color-shade: ion-color($colors-ios, $color-name, shade, ios);
+  $color-tint: ion-color($colors-ios, $color-name, tint, ios);
 
   .searchbar-ios-#{$color-name} .searchbar-ios-cancel {
     color: $color-base;
   }
 
   .enable-hover .searchbar-ios-#{$color-name} .searchbar-ios-cancel:hover {
-    color: color-shade($color-base);
+    color: $color-tint;
   }
 
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-search-icon {
-    @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $fg-color);
+    @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $color-contrast);
+    opacity: .5;
   }
 
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-input {
-    @include placeholder($fg-color);
+    @include placeholder($color-contrast, $opacity: .5);
     color: $color-contrast;
-    background: rgba($color-contrast, .1);
+    background: $color-shade;
   }
 
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-clear-icon {
-    @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $fg-color);
+    @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $color-contrast);
+    opacity: .5;
   }
 
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-ios-cancel {
-    color: color-contrast($colors-ios, $color-base, ios);
+    color: $color-contrast;
   }
-
 }
 
 // Searchbar animation

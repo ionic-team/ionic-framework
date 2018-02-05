@@ -37,11 +37,11 @@
 // iOS Default Button Color Mixin
 // --------------------------------------------------
 
-@mixin ios-button-default($color-name, $color-base, $color-contrast) {
-  $bg-color: $color-base;
-  $bg-color-activated: color-shade($bg-color);
-  $bg-color-focused: color-shade($color-base, 12%);
-  $fg-color: $color-contrast;
+@mixin ios-button-default($color-name) {
+  $bg-color: ion-color($colors-ios, $color-name, base, ios);
+  $bg-color-activated: ion-color($colors-ios, $color-name, tint, ios);
+  $bg-color-focused: ion-color($colors-ios, $color-name, shade, ios);
+  $fg-color: ion-color($colors-ios, $color-name, contrast, ios);
 
   .button-ios-#{$color-name} {
     color: $fg-color;
@@ -119,15 +119,18 @@
 }
 
 .button-outline-ios.activated.focused {
-  border-color: color-shade($button-ios-background-color, 12%);
-  background-color: color-shade($button-ios-background-color, 12%);
+  border-color: ion-color($colors-ios, $button-ios-background-color, shade, ios);
+  background-color: ion-color($colors-ios, $button-ios-background-color, shade, ios);
 }
 
 // iOS Outline Button Color Mixin
 // --------------------------------------------------
 
-@mixin ios-button-outline($color-name, $color-base, $color-contrast) {
-  $bg-color-focused: rgba($color-base, .12);
+@mixin ios-button-outline($color-name) {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
+  $color-tint: ion-color($colors-ios, $color-name, shade, ios);
+  $bg-color-focused: ion-color-alpha($colors-ios, $color-name, $alpha-ios-low, ios);
 
   .button-outline-ios-#{$color-name} {
     border-color: $color-base;
@@ -145,8 +148,8 @@
   }
 
   .button-outline-ios-#{$color-name}.activated.focused {
-    border-color: color-shade($color-base, 12%);
-    background-color: color-shade($color-base, 12%);
+    border-color: $color-tint;
+    background-color: $color-tint;
   }
 }
 
@@ -178,9 +181,9 @@
 // iOS Clear Button Color Mixin
 // --------------------------------------------------
 
-@mixin ios-button-clear($color-name, $color-base, $color-contrast) {
-  $fg-color: $color-base;
-  $bg-color-focused: rgba($color-base, .12);
+@mixin ios-button-clear($color-name) {
+  $fg-color: ion-color($colors-ios, $color-name, base, ios);
+  $bg-color-focused: ion-color-alpha($colors-ios, $color-name, $alpha-ios-low, ios);
 
   .button-clear-ios-#{$color-name} {
     border-color: $button-ios-clear-border-color;
@@ -215,10 +218,10 @@
 // Generate iOS Button Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-  @include ios-button-default($color-name, $color-base, $color-contrast);
-  @include ios-button-outline($color-name, $color-base, $color-contrast);
-  @include ios-button-clear($color-name, $color-base, $color-contrast);
+@each $color-name, $color-value in $colors-ios {
+  @include ios-button-default($color-name);
+  @include ios-button-outline($color-name);
+  @include ios-button-clear($color-name);
 }
 
 

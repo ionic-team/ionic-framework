@@ -54,7 +54,7 @@ $input-ios-inset-margin-start:            0 !default;
 $input-ios-input-clear-icon-width:        30px !default;
 
 /// @prop - Color of the icon used to clear the input
-$input-ios-input-clear-icon-color:        rgba(0, 0, 0, .5) !default;
+$input-ios-input-clear-icon-color:        $text-ios-color-step-200 !default;
 
 /// @prop - Icon used to clear the input
 $input-ios-input-clear-icon-svg:          "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path fill='" + $input-ios-input-clear-icon-color + "' d='M403.1,108.9c-81.2-81.2-212.9-81.2-294.2,0s-81.2,212.9,0,294.2c81.2,81.2,212.9,81.2,294.2,0S484.3,190.1,403.1,108.9z M352,340.2L340.2,352l-84.4-84.2l-84,83.8L160,339.8l84-83.8l-84-83.8l11.8-11.8l84,83.8l84.4-84.2l11.8,11.8L267.6,256L352,340.2z'/></svg>" !default;
@@ -64,6 +64,9 @@ $input-ios-input-clear-icon-size:         18px !default;
 
 /// @prop - Padding end of the input with clear input
 $input-ios-input-clear-padding-end:       ($input-ios-input-clear-icon-width + $item-ios-padding-end) !default;
+
+/// @prop - Placeholder Text color of the input
+$input-ios-placeholder-color:              $placeholder-text-ios-color !default;
 
 /// @prop - Show the focus highlight when the input has focus
 $input-ios-show-focus-highlight:          false !default;
@@ -75,10 +78,10 @@ $input-ios-show-valid-highlight:          $input-ios-show-focus-highlight !defau
 $input-ios-show-invalid-highlight:        $input-ios-show-focus-highlight !default;
 
 /// @prop - Color of the input highlight
-$input-ios-highlight-color:               color($colors-ios, primary) !default;
+$input-ios-highlight-color:               ion-color($colors-ios, primary, base, ios) !default;
 
 /// @prop - Color of the input highlight when valid
-$input-ios-highlight-color-valid:         $input-highlight-color-valid !default;
+$input-ios-highlight-color-valid:         ion-color($colors-ios, success, base, ios) !default;
 
 /// @prop - Color of the input highlight when invalid
-$input-ios-highlight-color-invalid:       $input-highlight-color-invalid !default;
+$input-ios-highlight-color-invalid:       ion-color($colors-ios, danger, base, ios) !default;

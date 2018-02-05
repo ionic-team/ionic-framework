@@ -1,6 +1,10 @@
 @import "./popover";
 @import "./popover.ios.vars";
 
+.popover-backdrop-ios {
+  background-color: $popover-backdrop-ios-color;
+}
+
 // iOS Popover
 // --------------------------------------------------
 
@@ -13,7 +17,7 @@
   max-height: $popover-ios-max-height;
 
   color: $popover-ios-text-color;
-  background: $popover-ios-background;
+  background-color: $popover-ios-background-color;
 }
 
 
@@ -41,7 +45,7 @@
   width: 14px;
   height: 14px;
 
-  background-color: $popover-ios-arrow-background;
+  background-color: $popover-ios-arrow-background-color;
   content: "";
   transform: rotate(45deg);
 }
@@ -60,7 +64,7 @@
 
 .popover-translucent-ios .popover-content,
 .popover-translucent-ios .popover-arrow::after {
-  background: rgba($popover-ios-background, $popover-ios-translucent-opacity);
+  background: $popover-ios-translucent-background-color;
 
   -webkit-backdrop-filter: $popover-ios-translucent-filter;
   backdrop-filter: $popover-ios-translucent-filter;

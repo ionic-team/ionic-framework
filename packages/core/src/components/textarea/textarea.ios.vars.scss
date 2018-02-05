@@ -5,6 +5,15 @@
 // iOS Textarea
 // --------------------------------------------------
 
+/// @prop - Margin start of the textarea when it is after a label
+$textarea-ios-by-label-margin-start:         $item-ios-padding-start !default;
+
+/// @prop - Font family of the textarea
+$textarea-ios-font-family:                   $font-family-ios-base !default;
+
+/// @prop - Font size of the textarea
+$textarea-ios-font-size:                     inherit !default;
+
 /// @prop - Margin top of the textarea
 $textarea-ios-margin-top:                    $item-ios-padding-top !default;
 
@@ -17,11 +26,5 @@ $textarea-ios-margin-bottom:                 $item-ios-padding-bottom !default;
 /// @prop - Margin start of the textarea
 $textarea-ios-margin-start:                  0 !default;
 
-/// @prop - Font family of the textarea
-$textarea-ios-font-family:                   $font-family-ios-base !default;
-
-/// @prop - Font size of the textarea
-$textarea-ios-font-size:                     inherit !default;
-
-/// @prop - Margin start of the textarea when it is after a label
-$textarea-ios-by-label-margin-start:         $item-ios-padding-start !default;
+/// @prop - Placeholder text color of the textarea
+$textarea-ios-placeholder-color:            $placeholder-text-ios-color !default;

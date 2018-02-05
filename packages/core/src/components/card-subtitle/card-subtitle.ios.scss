@@ -18,7 +18,9 @@
 // Generate iOS Card subtitle Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+@each $color-name, $color-value in $colors-ios {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
 
   .card-ios-#{$color-name} {
 
@@ -26,7 +28,9 @@
       color: $color-contrast;
     }
 
-    @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+    @each $color-name, $color-value in $colors-ios {
+      $color-base: ion-color($colors-ios, $color-name, base, ios);
+
       .card-subtitle-ios-#{$color-name} {
         color: $color-base;
       }
@@ -36,5 +40,4 @@
   .card-subtitle-ios-#{$color-name} {
     color: $color-base;
   }
-
 }

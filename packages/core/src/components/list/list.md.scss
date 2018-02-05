@@ -9,7 +9,7 @@
 }
 
 .list-md .item-block .item-inner {
-  border-bottom: 1px solid $list-md-border-color;
+  border-bottom: 1px solid $item-md-border-color;
 }
 
 .list-md > .item-block:last-child,
@@ -66,7 +66,7 @@
 }
 
 .list-md[inset] ion-list-header {
-  background-color: $list-md-background-color;
+  background-color: $item-md-background-color;
 }
 
 
@@ -83,5 +83,5 @@
 // --------------------------------------------------
 
 .list-md .item-input:last-child {
-  border-bottom: 1px solid $list-md-border-color;
+  border-bottom: 1px solid $item-md-border-color;
 }

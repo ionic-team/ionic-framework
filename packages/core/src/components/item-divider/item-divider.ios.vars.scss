@@ -12,10 +12,10 @@ $item-ios-divider-font-family:            $font-family-ios-base !default;
 $item-ios-divider-font-size:              17px !default;
 
 /// @prop - Background for the divider
-$item-ios-divider-background:             #f7f7f7 !default;
+$item-ios-divider-background:             $background-ios-color-step-100 !default;
 
 /// @prop - Color for the divider
-$item-ios-divider-color:                  #222 !default;
+$item-ios-divider-color:                  $text-ios-color-step-100 !default;
 
 /// @prop - Padding start for the divider
 $item-ios-divider-padding-start:          $item-ios-padding-start !default;

@@ -28,10 +28,10 @@
   pointer-events: auto;
 }
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+@each $color-name, $color-value in $colors-ios {
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
 
   .toolbar-#{$color-name} .toolbar-title-ios {
     color: $color-contrast;
   }
-
 }
