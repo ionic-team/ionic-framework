@@ -22,8 +22,8 @@
   $contrast-color: ion-color($colors-md, $color-name, contrast, md);
 
   .badge-md-#{$color-name} {
-    color: $base-color;
-    background-color: $contrast-color;
+    color: $contrast-color;
+    background-color: $base-color;
   }
 }
 
