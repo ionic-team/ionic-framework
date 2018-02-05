@@ -29,7 +29,8 @@
 // Generate iOS Spinner Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+@each $color-name, $color-value in $colors-ios {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
 
   .spinner-ios-#{$color-name} {
 
@@ -44,7 +45,5 @@
     &.spinner-dots circle {
       fill: $color-base;
     }
-
   }
-
 }

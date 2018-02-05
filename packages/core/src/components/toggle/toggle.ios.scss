@@ -151,18 +151,18 @@
 // iOS Toggle Color Mixin
 // --------------------------------------------------
 
-@mixin ios-toggle-theme($color-name, $color-base) {
+@mixin ios-toggle-theme($color-name) {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
 
   .toggle-ios-#{$color-name}.toggle-checked .toggle-icon {
     background-color: $color-base;
   }
-
 }
 
 
 // Generate iOS Toggle Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-  @include ios-toggle-theme($color-name, $color-base);
+@each $color-name, $color-value in $colors-ios {
+  @include ios-toggle-theme($color-name);
 }

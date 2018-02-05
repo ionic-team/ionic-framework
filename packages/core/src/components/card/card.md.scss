@@ -11,10 +11,9 @@
   width: calc(100% - #{($card-md-margin-end + $card-md-margin-start)});
 
   font-family: $card-md-font-family;
-
   font-size: $card-md-font-size;
-
-  background: $card-md-background-color;
+  color: $card-md-text-color;
+  background-color: $card-md-background-color;
   box-shadow: $card-md-box-shadow;
 }
 
@@ -80,7 +79,9 @@
 // Generate Material Design Card Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+@each $color-name, $color-value in $colors-md {
+  $color-base: ion-color($colors-md, $color-name, base, md);
+  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
 
   .card-md .text-md-#{$color-name} {
     color: $color-base;
@@ -100,7 +101,9 @@
       color: $color-contrast;
     }
 
-    @each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+    @each $color-name, $color-value in $colors-md {
+      $color-base: ion-color($colors-md, $color-name, base, md);
+
       .text-md-#{$color-name} {
         color: $color-base;
       }

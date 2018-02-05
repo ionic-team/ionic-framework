@@ -7,7 +7,7 @@
 $content-ios-font-family:               $font-family-ios-base !default;
 
 /// @prop - Background color of the outer content
-$content-ios-outer-background:          #efeff4 !default;
+$content-ios-outer-background:          $background-ios-color-step-100 !default;
 
 /// @prop - Background color of the content when making transition
 $content-ios-transition-background:     #000 !default;

@@ -7,13 +7,18 @@
 
   <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
+  <style>
+    ion-slide {
+      height: 200px !important;
+    }
+  </style>
 </head>
 
 <body>
   <ion-app>
     <ion-page>
       <ion-content id="content">
-        <ion-slides style="background: black" id="slides">
+        <ion-slides style="background: black" id="slides" pager>
           <ion-slide style="background: red; color: white;">
             <h1>Slide 1</h1>
           </ion-slide>

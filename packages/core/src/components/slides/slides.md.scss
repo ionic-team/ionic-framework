@@ -1,0 +1,26 @@
+@import "./slides-vendor";
+@import "./slides.md.vars";
+
+.slides-md .swiper-pagination-bullet {
+  background-color: $slides-md-bullet-background-color;
+}
+
+.slides-md .swiper-pagination-bullet-active {
+  background-color: $slides-md-bullet-background-color-active;
+}
+
+.slides-md .swiper-pagination-progress {
+  background-color: $slides-md-progress-background-color;
+}
+
+.slides-md .swiper-pagination-progress .swiper-pagination-progressbar {
+  background-color: $slides-md-progress-bar-background-color;
+}
+
+.slides-md .swiper-scrollbar {
+  background-color: $slides-md-scroll-bar-background-color;
+}
+
+.slides-md .swiper-scrollbar-drag {
+  background-color: $slides-md-scroll-bar-drag-background-color;
+}

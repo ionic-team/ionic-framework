@@ -24,20 +24,17 @@ $tabs-md-tab-font-size:                       12px !default;
 /// @prop - Font weight of the tab button text
 $tabs-md-tab-font-weight:                     normal !default;
 
-/// @prop - Opacity of the inactive tab button
-$tabs-md-tab-opacity:                         .7 !default;
-
 /// @prop - Text color of the inactive tab button
-$tabs-md-tab-text-color:                      rgba($tabs-md-tab-color-inactive, $tabs-md-tab-opacity) !default;
+$tabs-md-tab-text-color:                      $tabbar-md-text-color !default;
 
 /// @prop - Text color of the active tab button
-$tabs-md-tab-text-color-active:               $tabs-md-tab-color-active !default;
+$tabs-md-tab-text-color-active:               $tabbar-md-text-color-active !default;
 
 /// @prop - Icon color of the inactive tab button
-$tabs-md-tab-icon-color:                      rgba($tabs-md-tab-color-inactive, $tabs-md-tab-opacity) !default;
+$tabs-md-tab-icon-color:                      $tabbar-md-text-color !default;
 
 /// @prop - Icon color of the active tab button
-$tabs-md-tab-icon-color-active:               $tabs-md-tab-color-active !default;
+$tabs-md-tab-icon-color-active:               $tabbar-md-text-color-active !default;
 
 /// @prop - Font size of the active tab button text
 $tabs-md-tab-font-size-active:                14px !default;
@@ -104,3 +101,6 @@ $tabs-md-tab-icon-transition:                 transform .3s ease-in-out !default
 
 /// @prop - Size of the tab button icon
 $tabs-md-tab-icon-size:                       24px !default;
+
+/// @prop - Opacity of the inactive tab button
+$tabs-md-tab-opacity:                         .7 !default;

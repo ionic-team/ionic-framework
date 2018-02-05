@@ -5,6 +5,7 @@
 // --------------------------------------------------
 
 .native-input-md {
+  @include placeholder($input-md-placeholder-color);
   @include margin($input-md-margin-top, $input-md-margin-end, $input-md-margin-bottom, $input-md-margin-start);
   @include padding(0);
 

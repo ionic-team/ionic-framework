@@ -168,7 +168,7 @@
 
     .range-pin,
     .range-pin::before {
-      color: color-contrast($colors-md, $range-md-pin-min-background-color);
+      color: ion-color($colors-md, primary, contrast, md);
       background: $range-md-pin-min-background-color;
     }
   }
@@ -186,14 +186,14 @@
     background-color: $range-md-bar-background-color;
     transform: scale(.55);
   }
-
 }
 
 
 // Generate Material Design Range Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-md) {
+@each $color-name, $color-value in $colors-md {
+  $color-base: ion-color($colors-md, $color-name, base, md);
 
   .range-md-#{$color-name} {
     @include md-range-min();
@@ -205,5 +205,4 @@
       background: $color-base;
     }
   }
-
 }

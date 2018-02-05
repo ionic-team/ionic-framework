@@ -14,13 +14,13 @@
   font-family: $item-ios-font-family;
 
   font-size: $item-ios-font-size;
-  color: $list-ios-text-color;
-  background-color: $list-ios-background-color;
+  color: $item-ios-text-color;
+  background-color: $item-ios-background-color;
   transition: background-color 200ms linear;
 }
 
 .item-ios.activated {
-  background-color: $list-ios-activated-background-color;
+  background-color: $item-ios-background-color-active;
   transition-duration: 0ms;
 }
 
@@ -76,7 +76,7 @@
     @include safe-area-padding-horizontal(null, $item-ios-padding-end / 2);
   }
 
-  border-bottom: $hairlines-width solid $list-ios-border-color;
+  border-bottom: $hairlines-width solid $item-ios-border-color;
 }
 
 
@@ -164,8 +164,19 @@
 // Generate iOS Item and Item Divider Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
-  .item-ios-#{$color-name} {
+@each $color-name, $color-value in $colors-ios {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
+  $color-tint: ion-color($colors-ios, $color-name, tint, ios);
+
+  // If there is text with a color it should use this color
+  // and override whatever item sets it to
+  .item-ios .text-ios-#{$color-name} {
+    color: $color-base;
+  }
+
+  .item-ios-#{$color-name},
+  .item-divider-ios-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
 
@@ -174,7 +185,7 @@
     }
 
     &.activated {
-      background-color: color-shade($color-base);
+      background-color: $color-tint;
     }
   }
 }

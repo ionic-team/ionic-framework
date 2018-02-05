@@ -47,7 +47,11 @@
 // Generate iOS Item Divider Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+@each $color-name, $color-value in $colors-ios {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
+  $color-shade: ion-color($colors-ios, $color-name, tint, ios);
+
   .item-divider-ios-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
@@ -57,7 +61,7 @@
     }
 
     &.activated {
-      background-color: color-shade($color-base);
+      background-color: $color-shade;
     }
   }
 }

@@ -16,25 +16,31 @@ $toolbar-order-ios: (
 );
 
 /// @prop - Font family of the toolbar
-$toolbar-ios-font-family:                   $font-family-ios-base !default;
+$toolbar-ios-font-family:                           $font-family-ios-base !default;
 
 /// @prop - Font size of the toolbar button
-$toolbar-ios-button-font-size:              17px !default;
+$toolbar-ios-button-font-size:                      17px !default;
 
 /// @prop - Text color of the toolbar button
-$toolbar-ios-button-color:                  color-contrast($colors-ios, $toolbar-ios-background, ios) !default;
+$toolbar-ios-button-color:                          $toolbar-ios-text-color !default;
+
+/// @prop - Background color of the toolbar button
+$toolbar-ios-button-background-color:               $toolbar-ios-background-color !default;
+
+/// @prop - Background color of the toolbar button when activated
+$toolbar-ios-button-background-color-activated:     ion-color($colors-ios, primary, tint, ios);
 
 /// @prop - Border radius of the toolbar button
-$toolbar-ios-button-border-radius:          4px !default;
+$toolbar-ios-button-border-radius:                  4px !default;
 
 /// @prop - Font weight of the strong toolbar button
-$toolbar-ios-button-strong-font-weight:     600 !default;
+$toolbar-ios-button-strong-font-weight:             600 !default;
 
 /// @prop - Fill color of the toolbar button icon
-$toolbar-ios-button-icon-fill-color:        currentColor !default;
+$toolbar-ios-button-icon-fill-color:                currentColor !default;
 
 /// @prop - Filter of the translucent toolbar
-$toolbar-ios-translucent-filter:            saturate(180%) blur(20px) !default;
+$toolbar-ios-translucent-filter:                    saturate(180%) blur(20px) !default;
 
 /// @prop - Opacity of the translucent toolbar
-$toolbar-ios-translucent-opacity:           .88 !default;
+$toolbar-ios-translucent-opacity:                   .88 !default;

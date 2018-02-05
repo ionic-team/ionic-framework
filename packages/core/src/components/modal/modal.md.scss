@@ -1,6 +1,10 @@
 @import "./modal";
 @import "./modal.md.vars";
 
+.modal-backdrop-md {
+  background-color: $modal-backdrop-md-color;
+}
+
 // Material Design Modals
 // --------------------------------------------------
 

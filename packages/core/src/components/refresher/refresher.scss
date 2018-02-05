@@ -1,26 +1,5 @@
 @import "../../themes/ionic.globals";
-
-// Refresher
-// --------------------------------------------------
-
-/// @prop - Height of the refresher
-$refresher-height:             60px !default;
-
-/// @prop - Color of the refresher icon
-$refresher-icon-color:         #000 !default;
-
-/// @prop - Font size of the refresher icon
-$refresher-icon-font-size:     30px !default;
-
-/// @prop - Text color of the refresher content
-$refresher-text-color:         #000 !default;
-
-/// @prop - Font size of the refresher content
-$refresher-text-font-size:     16px !default;
-
-/// @prop - Border color of the refresher
-$refresher-border-color:       #ddd !default;
-
+@import "./refresher.vars";
 
 ion-refresher {
   @include position(0, null, null, 0);
@@ -38,17 +17,6 @@ ion-refresher {
     display: block;
   }
 }
-
-.has-refresher > .scroll-content {
-  // when the refresher is let go or has completed
-  // this transition is what is used to put the
-  // scroll content back into it's original location
-  @include margin(-1px, null, null, null);
-
-  border-top: 1px solid $refresher-border-color;
-  transition: transform 320ms cubic-bezier(.36, .66, .04, 1);
-}
-
 
 // Refresher Content
 // --------------------------------------------------
@@ -75,7 +43,6 @@ ion-refresher-content {
   @include transform-origin(center);
 
   font-size: $refresher-icon-font-size;
-  color: $refresher-icon-color;
   transition: 200ms;
 }
 
@@ -84,21 +51,7 @@ ion-refresher-content {
   @include text-align(center);
 
   font-size: $refresher-text-font-size;
-  color: $refresher-text-color;
 }
-
-.refresher-refreshing .spinner-ios line,
-.refresher-refreshing .spinner-ios-small line,
-.refresher-refreshing .spinner-crescent circle {
-  stroke: $refresher-icon-color;
-}
-
-.refresher-refreshing .spinner-bubbles circle,
-.refresher-refreshing .spinner-circles circle,
-.refresher-refreshing .spinner-dots circle {
-  fill: $refresher-icon-color;
-}
-
 
 // Refresher Content States
 // --------------------------------------------------

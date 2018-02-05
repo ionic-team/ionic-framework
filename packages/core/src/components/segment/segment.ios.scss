@@ -49,17 +49,16 @@
   &.segment-activated {
     color: $segment-button-ios-text-color;
     background-color: $segment-button-ios-background-color-activated;
-    opacity: $segment-button-ios-opacity-activated;
     transition: $segment-button-ios-transition-activated;
   }
 
   &:hover:not(.segment-activated) {
-    background-color: rgba($segment-button-ios-background-color-activated, $segment-button-ios-opacity-hover);
+    background-color: $segment-button-ios-background-color-hover;
     transition: $segment-button-ios-transition-hover;
   }
 
   &:active:not(.segment-activated) {
-    background-color: rgba($segment-button-ios-background-color-activated, $segment-button-ios-opacity-active);
+    background-color: $segment-button-ios-background-color-active;
     transition: $segment-button-ios-transition-active;
   }
 }
@@ -82,7 +81,7 @@
 }
 
 .segment-ios .segment-button-disabled {
-  color: rgba($segment-button-ios-background-color-activated, $segment-button-ios-opacity-disabled);
+  color: $segment-button-ios-background-color-disabled;
 
   pointer-events: none;
 }
@@ -117,7 +116,9 @@
 // iOS Segment Button Mixin
 // --------------------------------------------------
 
-@mixin ios-segment-button($color-name, $color-base, $color-contrast) {
+@mixin ios-segment-button($color-name) {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
 
   .segment-ios-#{$color-name} {
 
@@ -125,12 +126,13 @@
       border-color: $color-base;
       color: $color-base;
 
+
       &:hover:not(.segment-activated) {
-        background-color: rgba($color-base, $segment-button-ios-opacity-hover);
+        background-color: ion-color-alpha($colors-ios, $color-base, $alpha-ios-lowest);
       }
 
       &:active:not(.segment-activated) {
-        background-color: rgba($color-base, $segment-button-ios-opacity-active);
+        background-color: ion-color-alpha($colors-ios, $color-base, $alpha-ios-lowest);
       }
 
       &.segment-activated {
@@ -140,20 +142,19 @@
     }
 
     .segment-button-disabled {
-      color: rgba($color-base, $segment-button-ios-opacity-disabled);
+      color: ion-color-alpha($colors-ios, $color-base, $alpha-ios-medium);
     }
-
   }
-
 }
 
 
 // iOS Segment Color Generation
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+@each $color-name, $color-value in $colors-ios {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
 
-  @include ios-segment-button($color-name, $color-base, $color-contrast);
+  @include ios-segment-button($color-name);
 
   .toolbar-ios-#{$color-name} .segment-ios .segment-button.segment-activated {
     color: $color-base;

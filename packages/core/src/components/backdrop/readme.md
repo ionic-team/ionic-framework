@@ -10,6 +10,26 @@ Backdrops are full screen components that overlay other components. They are use
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+#### mode
+
+any
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+
+
+## Attributes
+
+#### mode
+
+any
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+
+
 
 ----------------------------------------------
 

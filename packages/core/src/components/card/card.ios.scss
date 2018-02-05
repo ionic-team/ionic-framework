@@ -11,10 +11,9 @@
   width: calc(100% - #{($card-ios-margin-end + $card-ios-margin-start)});
 
   font-family: $card-ios-font-family;
-
   font-size: $card-ios-font-size;
-
-  background: $card-ios-background-color;
+  color: $card-ios-text-color;
+  background-color: $card-ios-background-color;
   box-shadow: $card-ios-box-shadow;
 
   transform: translateZ(0);
@@ -73,11 +72,12 @@
 //   @include margin(0, null, null, null);
 // }
 
-
 // Generate iOS Card Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+@each $color-name, $color-value in $colors-ios {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
 
   .card-ios .text-ios-#{$color-name} {
     color: $color-base;
@@ -91,11 +91,12 @@
       color: $color-contrast;
     }
 
-    @each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+    @each $color-name, $color-value in $colors-ios {
+      $color-base: ion-color($colors-ios, $color-name, base, ios);
+
       .text-ios-#{$color-name} {
         color: $color-base;
       }
     }
   }
-
 }

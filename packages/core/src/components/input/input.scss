@@ -24,7 +24,6 @@ ion-input {
 // --------------------------------------------------
 
 .native-input {
-  @include placeholder($input-placeholder-color);
   @include appearance(none);
   @include border-radius(0);
 
