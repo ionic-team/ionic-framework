@@ -330,7 +330,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonBackdropAttributes extends HTMLAttributes {
-
+      mode?: 'ios' | 'md';
     }
   }
 }
@@ -2996,6 +2996,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTabsAttributes extends HTMLAttributes {
+      color?: string;
       name?: string;
       scrollable?: boolean;
       tabbarHidden?: boolean;

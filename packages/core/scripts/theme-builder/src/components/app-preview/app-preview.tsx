@@ -1,4 +1,4 @@
-import { Component, Prop, PropDidChange } from '@stencil/core';
+import { Component, Prop, Watch } from '@stencil/core';
 
 
 @Component({
@@ -13,7 +13,7 @@ export class AppPreview {
   @Prop() cssText: string;
   iframe: HTMLIFrameElement;
 
-  @PropDidChange('cssText')
+  @Watch('cssText')
   onCssTextChange() {
     console.log('AppPreview onCssTextChange');
 
