@@ -11,7 +11,7 @@ import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, NodeHeightFn, 
 })
 export class VirtualScroll {
 
-  private scrollEl: HTMLElement;
+  private scrollEl: HTMLElement | null;
   private range: Range = {offset: 0, length: 0};
   private timerUpdate: any;
   private heightIndex: Uint32Array;
@@ -145,7 +145,7 @@ export class VirtualScroll {
 
   private updateVirtualScroll() {
     // do nothing if there is a scheduled update
-    if (!this.isEnabled) {
+    if (!this.isEnabled || !this.scrollEl) {
       return;
     }
     if (this.timerUpdate) {
@@ -155,13 +155,15 @@ export class VirtualScroll {
 
     this.dom.read(() => {
       let topOffset = 0;
-      let node = this.el;
-      while (node !== this.scrollEl) {
+      let node: HTMLElement | null = this.el;
+      while (node && node !== this.scrollEl) {
         topOffset += node.offsetTop;
         node = node.parentElement;
       }
       this.viewportOffset = topOffset;
-      this.currentScrollTop = this.scrollEl.scrollTop;
+      if (this.scrollEl) {
+        this.currentScrollTop = this.scrollEl.scrollTop;
+      }
     });
 
     this.dom.write(() => {
@@ -276,11 +278,15 @@ export class VirtualScroll {
   }
 
   private calcDimensions() {
-    this.viewportHeight = this.scrollEl.offsetHeight;
+    if (this.scrollEl) {
+      this.viewportHeight = this.scrollEl.offsetHeight;
+    }
   }
 
   private enableScrollEvents(shouldListen: boolean) {
-    this.isEnabled = shouldListen;
-    this.enableListener(this, 'scroll', shouldListen, this.scrollEl);
+    if (this.scrollEl) {
+      this.isEnabled = shouldListen;
+      this.enableListener(this, 'scroll', shouldListen, this.scrollEl);
+    }
   }
 }

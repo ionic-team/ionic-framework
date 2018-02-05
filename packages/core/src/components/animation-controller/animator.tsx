@@ -14,25 +14,25 @@ export class Animator {
   private _beforeStyles: { [property: string]: any; };
   private _childAnimations: Animator[];
   private _childAnimationTotal: number;
-  private _duration: number = null;
-  private _easingName: string = null;
-  private _elements: HTMLElement[] = null;
+  private _duration: number|null = null;
+  private _easingName: string|null = null;
+  private _elements: HTMLElement[]|null = null;
   private _elementTotal: number;
   private _fxProperties: EffectProperty[];
   private _hasDur: boolean;
   private _hasTweenEffect: boolean;
   private _isAsync: boolean;
   private _isReverse: boolean;
-  private _onFinishCallbacks: Function[];
-  private _onFinishOneTimeCallbacks: Function[];
+  private _onFinishCallbacks: Function[] | undefined;
+  private _onFinishOneTimeCallbacks: Function[] | undefined;
   private _readCallbacks: Function[];
-  private _reversedEasingName: string = null;
+  private _reversedEasingName: string|undefined;
   private _timerId: any;
-  private _unregisterTrnsEnd: Function;
+  private _unregisterTrnsEnd: Function | undefined;
   private _writeCallbacks: Function[];
   private _destroyed = false;
 
-  parent: Animator;
+  parent: Animator|undefined;
   opts: AnimationOptions;
   hasChildren = false;
   isPlaying = false;
@@ -106,7 +106,7 @@ export class Animator {
    * Get the easing of this animation. If this animation does
    * not have an easing, then it'll get the easing from its parent.
    */
-  getEasing(): string {
+  getEasing(): string|null {
     if (this._isReverse && this._reversedEasingName) {
       return this._reversedEasingName;
     }
@@ -163,14 +163,14 @@ export class Animator {
    * NO DOM
    */
 
-  private _getProp(name: string): EffectProperty {
+  private _getProp(name: string): EffectProperty | undefined {
     if (this._fxProperties) {
-      return this._fxProperties.find(function(prop) { return prop.effectName === name; });
+      return this._fxProperties.find(prop => prop.effectName === name);
 
     } else {
       this._fxProperties = [];
     }
-    return null;
+    return undefined;
   }
 
   private _addProp(state: string, prop: string, val: any): EffectProperty {
@@ -361,7 +361,7 @@ export class Animator {
    * DOM WRITE
    * RECURSION
    */
-  _playInit(opts: PlayOptions) {
+  _playInit(opts: PlayOptions|undefined) {
     // always default that an animation does not tween
     // a tween requires that an Animation class has an element
     // and that it has at least one FROM/TO effect
@@ -393,7 +393,7 @@ export class Animator {
    * NO RECURSION
    * ROOT ANIMATION
    */
-  _playDomInspect(opts: PlayOptions) {
+  _playDomInspect(opts: PlayOptions|undefined) {
     const self = this;
     // fire off all the "before" function that have DOM READS in them
     // elements will be in the DOM, however visibily hidden
@@ -426,7 +426,7 @@ export class Animator {
    * DOM WRITE
    * RECURSION
    */
-  _playProgress(opts: PlayOptions) {
+  _playProgress(opts: PlayOptions|undefined) {
     const children = this._childAnimations;
     for (let i = 0; i < this._childAnimationTotal; i++) {
       // ******** DOM WRITE ****************
@@ -558,7 +558,7 @@ export class Animator {
    * NO DOM
    * RECURSION
    */
-  _hasDuration(opts: PlayOptions) {
+  _hasDuration(opts: PlayOptions|undefined) {
     if (this.getDuration(opts) > DURATION_MIN) {
       return true;
     }
@@ -620,10 +620,11 @@ export class Animator {
   _progress(stepValue: number) {
     // bread 'n butter
     let val: any;
+    const elements = this._elements;
     const effects = this._fxProperties;
     const nuElements = this._elementTotal;
 
-    if (!effects || !nuElements || this._destroyed) {
+    if (!elements || !effects || !nuElements || this._destroyed) {
       return;
     }
 
@@ -634,7 +635,6 @@ export class Animator {
     let i = 0;
     let j = 0;
     let finalTransform = '';
-    const elements = this._elements;
     let fx: EffectProperty;
 
     for (i = 0; i < effects.length; i++) {
@@ -701,12 +701,13 @@ export class Animator {
    */
   _setTrans(dur: number, forcedLinearEasing: boolean) {
     // Transition is not enabled if there are not effects
-    if (!this._fxProperties) {
+    const elements = this._elements;
+    const nuElements = this._elementTotal;
+    if (!elements || !this._fxProperties || nuElements === 0) {
       return;
     }
 
     // set the TRANSITION properties inline on the element
-    const elements = this._elements;
     const easing = (forcedLinearEasing ? 'linear' : this.getEasing());
     const durString = dur + 'ms';
     const cssTransform = CSS_PROP.transitionProp;
@@ -714,7 +715,7 @@ export class Animator {
     const cssTransitionTimingFn = CSS_PROP.transitionTimingFnProp;
 
     let eleStyle: any;
-    for (let i = 0; i < this._elementTotal; i++) {
+    for (let i = 0; i < nuElements; i++) {
       eleStyle = elements[i].style;
       if (dur > 0) {
         // ******** DOM WRITE ****************
@@ -760,26 +761,27 @@ export class Animator {
    * RECURSION
    */
   _setBeforeStyles() {
-    let i: number, j: number;
+    let j: number;
     const children = this._childAnimations;
-    for (i = 0; i < this._childAnimationTotal; i++) {
+
+    for (let i = 0; i < this._childAnimationTotal; i++) {
       children[i]._setBeforeStyles();
     }
 
+    const elements = this._elements;
+    const nuElements = this._elementTotal;
     // before the animations have started
     // only set before styles if animation is not reversed
-    if (this._isReverse) {
+    if (!elements || nuElements === 0 || this._isReverse) {
       return;
     }
     const addClasses = this._beforeAddClasses;
     const removeClasses = this._beforeRemoveClasses;
 
-    let el: HTMLElement;
-    let elementClassList: DOMTokenList;
     let prop: string;
-    for (i = 0; i < this._elementTotal; i++) {
-      el = this._elements[i];
-      elementClassList = el.classList;
+    for (let i = 0; i < nuElements; i++) {
+      const el = elements[i];
+      const elementClassList = el.classList;
 
       // css classes to add before the animation
       if (addClasses) {
@@ -859,6 +861,9 @@ export class Animator {
     let el: HTMLElement;
     let elementClassList: DOMTokenList;
     const elements = this._elements;
+    if (!elements) {
+      return;
+    }
     let prop: string;
 
     for (i = 0; i < this._elementTotal; i++) {
@@ -1012,13 +1017,8 @@ export class Animator {
   /**
    * End the progress animation.
    */
-  progressEnd(shouldComplete: boolean, currentStepValue: number, dur: number) {
-    const self = this;
-    if (dur === undefined) {
-      dur = -1;
-    }
-
-    if (self._isReverse) {
+  progressEnd(shouldComplete: boolean, currentStepValue: number, dur?: number) {
+    if (this._isReverse) {
       // if the animation is going in reverse then
       // flip the step value: 0 becomes 1, 1 becomes 0
       currentStepValue = ((currentStepValue * -1) + 1);
@@ -1026,28 +1026,31 @@ export class Animator {
     const stepValue = shouldComplete ? 1 : 0;
 
     const diff = Math.abs(currentStepValue - stepValue);
+    if (dur === undefined) {
+      dur = -1;
+    }
     if (diff < 0.05) {
       dur = 0;
     } else if (dur < 0) {
-      dur = self._duration;
+      dur = this._duration;
     }
 
-    self._isAsync = (dur > 30);
+    this._isAsync = (dur > 30);
 
-    self._progressEnd(shouldComplete, stepValue, dur, self._isAsync);
+    this._progressEnd(shouldComplete, stepValue, dur, this._isAsync);
 
-    if (self._isAsync) {
+    if (this._isAsync) {
       // for the root animation only
       // set the async TRANSITION END event
       // and run onFinishes when the transition ends
       // ******** DOM WRITE ****************
-      self._asyncEnd(dur, shouldComplete);
+      this._asyncEnd(dur, shouldComplete);
 
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      if (!self._destroyed) {
-        window.requestAnimationFrame(function() {
-          self._playToStep(stepValue);
+      if (!this._destroyed) {
+        window.requestAnimationFrame(() => {
+          this._playToStep(stepValue);
         });
       }
     }
@@ -1182,7 +1185,7 @@ export class Animator {
       this._writeCallbacks.length = 0;
     }
 
-    this.parent = null;
+    this.parent = undefined;
 
     if (this._childAnimations) {
       this._childAnimations.length = this._childAnimationTotal = 0;
@@ -1198,18 +1201,16 @@ export class Animator {
   /**
    * NO DOM
    */
-  _transEl(): HTMLElement {
+  _transEl(): HTMLElement|null {
     // get the lowest level element that has an Animation
-    let targetEl: HTMLElement;
-
     for (let i = 0; i < this._childAnimationTotal; i++) {
-      targetEl = this._childAnimations[i]._transEl();
+      const targetEl = this._childAnimations[i]._transEl();
       if (targetEl) {
         return targetEl;
       }
     }
 
-    return (this._hasTweenEffect && this._hasDur && this._elementTotal ? this._elements[0] : null);
+    return (this._hasTweenEffect && this._hasDur && this._elements && this._elementTotal > 0 ? this._elements[0] : null);
   }
 
   create() {

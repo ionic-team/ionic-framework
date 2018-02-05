@@ -51,7 +51,7 @@ export function getButtonClassMap(buttonType: string, mode: string): CssClassMap
 }
 
 
-export function getClassMap(classes: string): CssClassMap {
+export function getClassMap(classes: string | undefined): CssClassMap {
   const map: CssClassMap = {};
   if (classes) {
     classes

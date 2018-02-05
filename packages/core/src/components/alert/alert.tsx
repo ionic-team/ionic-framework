@@ -26,9 +26,9 @@ export class Alert {
   color: string;
   alertId: number;
 
-  private animation: Animation;
+  private animation: Animation | null = null;
   private activeId: string;
-  private inputType: string;
+  private inputType: string | null = null;
   private hdrId: string;
 
   @Element() private el: HTMLElement;
@@ -376,39 +376,34 @@ export class Alert {
       'alert-button-group-vertical': this.buttons.length > 2
     };
 
-    const buttons = this.buttons
-      .map(b => {
-        if (typeof b === 'string') {
-          b = { text: b };
-        }
-        return b;
-      })
-      .filter(b => b !== null);
+    const buttons = this.buttons.map(b => {
+      if (typeof b === 'string') {
+        return { text: b } as AlertButton;
+      }
+      return b;
+    })
+    .filter(b => b !== null);
+
+    this.inputs = this.inputs.map((i, index) => {
+      return {
+        type: i.type || 'text',
+        name: i.name ? i.name : index + '',
+        placeholder: i.placeholder ? i.placeholder : '',
+        value: i.value ? i.value : '',
+        label: i.label,
+        checked: !!i.checked,
+        disabled: !!i.disabled,
+        id: i.id ? i.id : `alert-input-${this.alertId}-${index}`,
+        handler: i.handler ? i.handler : null,
+        min: i.min ? i.min : null,
+        max: i.max ? i.max : null
+      } as AlertInput;
+    }).filter(i => i !== null);
 
     // An alert can be created with several different inputs. Radios,
     // checkboxes and inputs are all accepted, but they cannot be mixed.
     const inputTypes: string[] = [];
-
-    this.inputs = this.inputs
-      .map((i, index) => {
-        const r: AlertInput = {
-          type: i.type || 'text',
-          name: i.name ? i.name : index + '',
-          placeholder: i.placeholder ? i.placeholder : '',
-          value: i.value ? i.value : '',
-          label: i.label,
-          checked: !!i.checked,
-          disabled: !!i.disabled,
-          id: i.id ? i.id : `alert-input-${this.alertId}-${index}`,
-          handler: i.handler ? i.handler : null,
-          min: i.min ? i.min : null,
-          max: i.max ? i.max : null
-        };
-        return r;
-      })
-      .filter(i => i !== null);
-
-      this.inputs.forEach(i => {
+    this.inputs.forEach(i => {
       if (inputTypes.indexOf(i.type) < 0) {
         inputTypes.push(i.type);
       }
@@ -418,7 +413,7 @@ export class Alert {
       console.warn(`Alert cannot mix input types: ${(inputTypes.join('/'))}. Please see alert docs for more info.`);
     }
 
-    this.inputType = inputTypes.length ? inputTypes[0] : null;
+    this.inputType = inputTypes.length > 0 ? inputTypes[0] : null;
 
     return [
       <ion-backdrop
@@ -428,24 +423,19 @@ export class Alert {
       <div class='alert-wrapper'>
         <div class='alert-head'>
           {this.title
-              ? <h2 id={hdrId} class='alert-title'>{this.title}</h2>
-              : null}
+            ? <h2 id={hdrId} class='alert-title'>{this.title}</h2>
+            : null}
           {this.subTitle
-              ? <h2 id={subHdrId} class='alert-sub-title'>{this.subTitle}</h2>
-              : null}
+            ? <h2 id={subHdrId} class='alert-sub-title'>{this.subTitle}</h2>
+            : null}
         </div>
-        <div id={msgId} class='alert-message' innerHTML={this.message}></div>
 
+        <div id={msgId} class='alert-message' innerHTML={this.message}></div>
         {(() => {
           switch (this.inputType) {
-            case 'checkbox':
-              return this.renderCheckbox(this.inputs);
-
-            case 'radio':
-              return this.renderRadio(this.inputs);
-
-            default:
-              return this.renderInput(this.inputs);
+            case 'checkbox': return this.renderCheckbox(this.inputs);
+            case 'radio': return this.renderRadio(this.inputs);
+            default: return this.renderInput(this.inputs);
           }
         })()}
 
@@ -457,7 +447,7 @@ export class Alert {
               </span>
             </button>
           )}
-       </div>
+        </div>
       </div>
     ];
   }
@@ -483,8 +473,8 @@ export interface AlertOptions {
 }
 
 export interface AlertInput {
-  type?: string;
-  name?: string | number;
+  type: string;
+  name: string | number;
   placeholder?: string;
   value?: string;
   label?: string;
@@ -497,7 +487,7 @@ export interface AlertInput {
 }
 
 export interface AlertButton {
-  text?: string;
+  text: string;
   role?: string;
   cssClass?: string;
   handler?: (value: any) => boolean|void;

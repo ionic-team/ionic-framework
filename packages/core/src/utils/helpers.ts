@@ -253,7 +253,7 @@ export const NON_TEXT_INPUT_REGEX = /^(radio|checkbox|range|file|submit|reset|co
 
 export function hasFocusedTextInput() {
   const activeElement = getActiveElement();
-  if (isTextInput(activeElement)) {
+  if (isTextInput(activeElement) && activeElement.parentElement) {
     return activeElement.parentElement.querySelector(':focus') === activeElement;
   }
   return false;
@@ -271,7 +271,7 @@ export function reorderArray(array: any[], indexes: {from: number, to: number}):
 
 export function playAnimationAsync(animation: Animation): Promise<Animation> {
   return new Promise((resolve) => {
-    animation.onFinish((ani: Animation) => {
+    animation.onFinish((ani) => {
       resolve(ani);
     });
     animation.play();
@@ -299,7 +299,7 @@ export function debounce(func: Function, wait = 0) {
   };
 }
 
-export function getNavAsChildIfExists(element: HTMLElement): HTMLIonNavElement {
+export function getNavAsChildIfExists(element: HTMLElement): HTMLIonNavElement|null {
   for (let i = 0; i < element.children.length; i++) {
     if (element.children[i].tagName.toLowerCase() === 'ion-nav') {
       return element.children[i] as HTMLIonNavElement;

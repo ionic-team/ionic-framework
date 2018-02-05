@@ -28,7 +28,7 @@ export function createConfigController(configObj: any, platforms: PlatformConfig
     return fallback !== undefined ? fallback : null;
   }
 
-  function getBoolean(key: string, fallback: boolean): boolean {
+  function getBoolean(key: string, fallback?: boolean): boolean {
     const val = get(key);
     if (val === null) {
       return fallback !== undefined ? fallback : false;
@@ -39,7 +39,7 @@ export function createConfigController(configObj: any, platforms: PlatformConfig
     return !!val;
   }
 
-  function getNumber(key: string, fallback: number): number {
+  function getNumber(key: string, fallback?: number): number {
     const val = parseFloat(get(key));
     return isNaN(val) ? (fallback !== undefined ? fallback : NaN) : val;
   }

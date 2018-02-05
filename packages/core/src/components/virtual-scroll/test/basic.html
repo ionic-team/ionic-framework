@@ -15,10 +15,17 @@
       <ion-header>
         <ion-toolbar>
           <ion-title>Ionic CDN demo</ion-title>
+          <ion-buttons slot="end">
+            <ion-button onclick="addItems()">Add Items</ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
 
       <ion-content>
+        <p>
+          <ion-button onclick="addItems()">Add Items</ion-button>
+
+        </p>
         <ion-virtual-scroll id="virtual"></ion-virtual-scroll>
       </ion-content>
 
@@ -27,6 +34,10 @@
   </ion-app>
 
   <script>
+    function addItems() {
+      const virtual = document.getElementById('virtual');
+      virtual.addItems()
+    }
     async function init() {
       const virtual = await document.getElementById('virtual').componentOnReady();
       virtual.itemHeight = () => 45;

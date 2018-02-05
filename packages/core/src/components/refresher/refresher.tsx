@@ -28,8 +28,7 @@ export class Refresher {
   private didStart = false;
   private gestureConfig: any;
   private progress = 0;
-
-  scrollEl: HTMLElement;
+  private scrollEl: HTMLElement | null = null;
 
   @Prop({ context: 'dom' }) dom: DomController;
 
@@ -116,7 +115,12 @@ export class Refresher {
       console.error('Make sure you use: <ion-refresher slot="fixed">');
       return;
     }
-    this.scrollEl = this.el.parentElement.querySelector('ion-scroll') as HTMLElement;
+    const parentElement = this.el.parentElement;
+    if (!parentElement) {
+      console.error('ion-refresher is not attached');
+      return;
+    }
+    this.scrollEl = parentElement.querySelector('ion-scroll') as HTMLElement;
     if (!this.scrollEl) {
       console.error('ion-refresher didn\'t attached, make sure if parent is a ion-content');
     }
@@ -183,6 +187,9 @@ export class Refresher {
   }
 
   private onMove(detail: GestureDetail) {
+    if (!this.scrollEl) {
+      return 0;
+    }
     // this method can get called like a bazillion times per second,
     // so it's built to be as efficient as possible, and does its
     // best to do any DOM read/writes only when absolutely necessary
@@ -309,26 +316,14 @@ export class Refresher {
   }
 
   private close(state: RefresherState, delay: string) {
-    let timer: number;
 
-    function close(ev: TransitionEvent) {
-      // closing is done, return to inactive state
-      if (ev) {
-        clearTimeout(timer);
-      }
-
+    // create fallback timer incase something goes wrong with transitionEnd event
+    setTimeout(() => {
       this.state = RefresherState.Inactive;
       this.progress = 0;
       this.didStart = false;
       this.setCss(0, '0ms', false, '');
-    }
-
-    // create fallback timer incase something goes wrong with transitionEnd event
-    timer = setTimeout(close.bind(this), 600);
-
-    // create transition end event on the content's scroll element
-    // TODO: what is this?
-    // this.scrollEl.onScrollElementTransitionEnd(close.bind(this));
+    }, 600);
 
     // reset set the styles on the scroll element
     // set that the refresh is actively cancelling/completing
@@ -336,9 +331,6 @@ export class Refresher {
     this.setCss(0, '', true, delay);
 
     // TODO: stop gesture
-    // if (this._pointerEvents) {
-    //   this._pointerEvents.stop();
-    // }
   }
 
   private setCss(y: number, duration: string, overflowVisible: boolean, delay: string) {

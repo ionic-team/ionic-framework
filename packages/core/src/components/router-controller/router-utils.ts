@@ -11,7 +11,7 @@ export interface NavElement extends HTMLElement {
 export interface RouterEntry {
   path: string;
   id: any;
-  segments?: string[];
+  segments: string[];
   props?: any;
 }
 
@@ -29,7 +29,7 @@ export class RouterSegments {
 
   next(): string {
     if (this.segments.length > 0) {
-      return this.segments.shift();
+      return this.segments.shift() as string;
     }
     return '';
   }
@@ -55,7 +55,7 @@ export function writeNavState(root: HTMLElement, segments: RouterSegments): Prom
 
 export function readNavState(node: HTMLElement) {
   const stack = [];
-  let pivot: NavElement;
+  let pivot: NavElement | null = null;
   let state: NavState;
   while (true) {
     pivot = breadthFirstSearch(node);
@@ -85,13 +85,13 @@ function mustMatchRoute(segments: RouterSegments, routes: RouterEntries) {
   return r;
 }
 
-export function matchRoute(segments: RouterSegments, routes: RouterEntries): RouterEntry {
+export function matchRoute(segments: RouterSegments, routes: RouterEntries): RouterEntry | null {
   if (!routes) {
     return null;
   }
   let index = 0;
   routes = routes.map(initRoute);
-  let selectedRoute: RouterEntry = null;
+  let selectedRoute: RouterEntry|null = null;
   let ambiguous = false;
   let segment: string;
   let l: number;
@@ -154,7 +154,7 @@ export function parseURL(url: string): string[] {
 }
 
 const navs = ['ION-NAV', 'ION-TABS'];
-export function breadthFirstSearch(root: HTMLElement): NavElement {
+export function breadthFirstSearch(root: HTMLElement): NavElement | null {
   if (!root) {
     console.error('search root is null');
     return null;
@@ -166,8 +166,8 @@ export function breadthFirstSearch(root: HTMLElement): NavElement {
   // first, before moving to the next level neighbours.
 
   const queue = [root];
-  while (queue.length > 0) {
-    const node = queue.shift();
+  let node: HTMLElement | undefined;
+  while (node = queue.shift()) {
     // visit node
     if (navs.indexOf(node.tagName) >= 0) {
       return node as NavElement;

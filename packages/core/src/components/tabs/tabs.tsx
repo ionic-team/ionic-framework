@@ -16,7 +16,7 @@ export class Tabs {
   @Element() el: HTMLElement;
 
   @State() tabs: HTMLIonTabElement[] = [];
-  @State() selectedTab: HTMLIonTabElement;
+  @State() selectedTab: HTMLIonTabElement | undefined;
 
   @Prop({ context: 'config' }) config: Config;
 
@@ -77,7 +77,8 @@ export class Tabs {
   }
 
   componentDidUnload() {
-    this.tabs = this.selectedTab = null;
+    this.tabs.length = 0;
+    this.selectedTab = undefined;
   }
 
   @Listen('ionTabbarClick')
@@ -132,7 +133,7 @@ export class Tabs {
    * @return {HTMLIonTabElement} Returns the currently selected tab
    */
   @Method()
-  getSelected(): HTMLIonTabElement {
+  getSelected(): HTMLIonTabElement | undefined {
     return this.tabs.find((tab) => tab.selected);
   }
 
@@ -190,7 +191,8 @@ export class Tabs {
 
   private initSelect() {
     // find pre-selected tabs
-    const selectedTab = this.tabs.find(t => t.selected) || this.tabs.find(t => t.show && !t.disabled);
+    const selectedTab = this.tabs.find(t => t.selected) ||
+      this.tabs.find(t => t.show && !t.disabled);
 
     // reset all tabs none is selected
     for (const tab of this.tabs) {
@@ -198,8 +200,9 @@ export class Tabs {
         tab.selected = false;
       }
     }
-
-    selectedTab.setActive(true);
+    if (selectedTab) {
+      selectedTab.setActive(true);
+    }
     this.selectedTab = selectedTab;
   }
 

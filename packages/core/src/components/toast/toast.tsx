@@ -24,7 +24,7 @@ export class Toast {
   mode: string;
   color: string;
 
-  private animation: Animation;
+  private animation: Animation | null;
 
   @Element() private el: HTMLElement;
 

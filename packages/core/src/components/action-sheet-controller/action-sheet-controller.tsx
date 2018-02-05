@@ -32,6 +32,9 @@ export class ActionSheetController {
   dismiss(data?: any, role?: any, actionSheetId = -1) {
     actionSheetId = actionSheetId >= 0 ? actionSheetId : getHighestId();
     const actionSheet = actionSheets.get(actionSheetId);
+    if (!actionSheet) {
+      return Promise.reject('action-sheet does not exist');
+    }
     return actionSheet.dismiss(data, role);
   }
 

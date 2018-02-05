@@ -148,7 +148,7 @@ export class Button {
  * Get the classes based on the type
  * e.g. block, full, round, large
  */
-function getButtonTypeClassMap(buttonType: string, type: string, mode: string): CssClassMap {
+function getButtonTypeClassMap(buttonType: string, type: string|null, mode: string): CssClassMap {
   if (!type) {
     return {};
   }

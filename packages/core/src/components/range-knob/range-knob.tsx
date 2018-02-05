@@ -4,6 +4,7 @@ import { Component, Event, EventEmitter, Listen, Prop } from '@stencil/core';
   tag: `ion-range-knob`
 })
 export class RangeKnob {
+
   @Prop() pressed: boolean;
   @Prop() pin: boolean;
   @Prop() min: number;
