@@ -160,3 +160,30 @@ export interface FrameworkMountingData {
   component: any;
   data: any;
 }
+
+
+declare global {
+
+  namespace JSXElements {
+
+    export interface DOMAttributes {
+      padding?: boolean;
+      ['padding-top']?: boolean;
+      ['padding-bottom']?: boolean;
+      ['padding-left']?: boolean;
+      ['padding-right']?: boolean;
+      ['padding-horizontal']?: boolean;
+      ['padding-vertical']?: boolean;
+
+      margin?: boolean;
+      ['margin-top']?: boolean;
+      ['margin-bottom']?: boolean;
+      ['margin-left']?: boolean;
+      ['margin-right']?: boolean;
+      ['margin-horizontal']?: boolean;
+      ['margin-vertical']?: boolean;
+
+      ['no-padding']?: boolean;
+    }
+  }
+}
