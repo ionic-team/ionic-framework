@@ -178,6 +178,7 @@ declare global {
       ['margin-vertical']?: boolean;
 
       ['no-padding']?: boolean;
+      ['no-margin']?: boolean;
     }
   }
 }
