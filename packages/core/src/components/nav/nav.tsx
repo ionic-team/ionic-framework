@@ -6,7 +6,6 @@ import {
   ComponentDataPair,
   Config,
   FrameworkDelegate,
-  NavContainer,
   NavOptions,
   NavResult,
   NavState,
@@ -29,6 +28,7 @@ import {
   getActiveImpl,
   getFirstView,
   getHydratedTransition,
+  getLastView,
   getNextNavId,
   getNextTransitionId,
   getParentTransitionId,
@@ -62,7 +62,7 @@ const urlMap = new Map<string, TransitionInstruction>();
   tag: 'ion-nav',
   styleUrl: 'nav.scss'
 })
-export class Nav implements PublicNav, NavContainer {
+export class Nav implements PublicNav {
 
   @Element() element: HTMLElement;
   @Event() navInit: EventEmitter<NavEventDetail>;
@@ -97,7 +97,6 @@ export class Nav implements PublicNav, NavContainer {
   componentWillLoad() {
     this.routes = Array.from(this.element.querySelectorAll('ion-route'))
       .map(child => child.getRoute());
-    //this.useRouter = false; // this.config.getBoolean('useRouter', false);
   }
 
   componentDidLoad() {
@@ -193,8 +192,13 @@ export class Nav implements PublicNav, NavContainer {
   }
 
   @Method()
-  getFirstView(): PublicViewController {
+  first(): PublicViewController {
     return getFirstView(this);
+  }
+
+  @Method()
+  last(): PublicViewController {
+    return getLastView(this);
   }
 
   @Method()
@@ -340,7 +344,7 @@ export function canGoBackImpl(nav: Nav) {
 }
 
 export function navInitializedImpl(potentialParent: Nav, event: NavEvent) {
-  if (potentialParent.element !== event.target) {
+  if ((potentialParent.element as any as HTMLIonNavElement) !== event.target) {
     // set the parent on the child nav that dispatched the event
     event.target.setParent(potentialParent);
     if (!potentialParent.childNavs) {
