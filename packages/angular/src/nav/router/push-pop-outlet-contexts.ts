@@ -8,7 +8,7 @@ import {
   ChildrenOutletContexts,
   OutletContext,
   RouterOutlet
-} from '@danbucholtz/ng-router';
+} from '@angular/router';
 
 export class PushPopOutletContexts extends ChildrenOutletContexts {
 

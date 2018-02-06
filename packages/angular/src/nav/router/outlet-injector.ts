@@ -2,7 +2,7 @@ import { Injector } from '@angular/core';
 import {
   ActivatedRoute,
   ChildrenOutletContexts
-} from '@danbucholtz/ng-router';
+} from '@angular/router';
 
 export class OutletInjector implements Injector {
 

@@ -6,7 +6,6 @@ import {
   IonicRouterModule
 } from '@ionic/angular';
 
-// import { IonicRouterModule } from '../custom/ionic-router.module';
 import { PageTwo } from './page-two';
 import { PageTwoSectionOne } from './page-two-section-one';
 import { PageTwoSectionTwo } from './page-two-section-two';

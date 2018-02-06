@@ -24,12 +24,12 @@ import {
   RouteReuseStrategy,
   UrlHandlingStrategy,
   UrlSerializer
-} from '@danbucholtz/ng-router';
+} from '@angular/router';
 
 import { IonicAngularModule } from '../module';
 
 import { PushPopOutletContexts } from './router/push-pop-outlet-contexts';
-import { ExtendedRouter } from './router/router-extension';
+import { CustomRouter } from './router/router';
 import { IonNav  } from './ion-nav';
 import { flatten } from '../util/util';
 
@@ -73,7 +73,7 @@ export function setupRouter(
   config: Route[][], opts: ExtraOptions = {}, urlHandlingStrategy?: UrlHandlingStrategy,
   routeReuseStrategy?: RouteReuseStrategy) {
 
-const router = new ExtendedRouter(
+const router = new CustomRouter(
     null, urlSerializer, contexts, location, injector, loader, compiler, flatten(config));
 
 if (urlHandlingStrategy) {

@@ -4,7 +4,7 @@ import {
   ComponentRef,
   Injector
 } from '@angular/core';
-import { ActivatedRoute } from '@danbucholtz/ng-router';
+import { ActivatedRoute } from '@angular/router';
 
 import { FrameworkMountingData } from '@ionic/core';
 
