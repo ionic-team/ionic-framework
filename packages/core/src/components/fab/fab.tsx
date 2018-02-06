@@ -23,7 +23,7 @@ export class Fab {
   }
 
   render() {
-    const fab: any = this.el.querySelector('ion-fab-button');
+    const fab = this.el.querySelector('ion-fab-button');
     fab.toggleActive = this.toggleActive;
     fab.activated = this.activated;
 

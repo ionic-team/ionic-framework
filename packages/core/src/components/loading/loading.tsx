@@ -242,7 +242,7 @@ export class Loading {
       });
     }
 
-    const loadingInner: any[] = [];
+    const loadingInner: JSX.Element[] = [];
 
     if (this.spinner !== 'hide') {
       loadingInner.push(

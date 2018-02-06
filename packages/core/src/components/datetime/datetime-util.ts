@@ -394,7 +394,7 @@ export function convertDataToISO(data: DatetimeData): string {
  * Use to convert a string of comma separated strings or
  * an array of strings, and clean up any user input
  */
-export function convertToArrayOfStrings(input: any, type: string): string[] {
+export function convertToArrayOfStrings(input: string | string[] | undefined | null, type: string): string[] {
   if (!input) {
     return null;
   }
@@ -408,7 +408,7 @@ export function convertToArrayOfStrings(input: any, type: string): string[] {
   let values: string[];
   if (isArray(input)) {
     // trim up each string value
-    values = input.map((val: string) => val.trim());
+    values = input.map(val => val.toString().trim());
   }
 
   if (!values || !values.length) {
@@ -423,7 +423,7 @@ export function convertToArrayOfStrings(input: any, type: string): string[] {
  * Use to convert a string of comma separated numbers or
  * an array of numbers, and clean up any user input
  */
-export function convertToArrayOfNumbers(input: any, type: string): number[] {
+export function convertToArrayOfNumbers(input: any[] | string | number, type: string): number[] {
   if (isString(input)) {
     // convert the string to an array of strings
     // auto remove any whitespace and [] characters
@@ -436,6 +436,8 @@ export function convertToArrayOfNumbers(input: any, type: string): number[] {
     values = input
       .map((num: any) => parseInt(num, 10))
       .filter(isFinite);
+  } else {
+    values = [input];
   }
 
   if (!values || !values.length) {

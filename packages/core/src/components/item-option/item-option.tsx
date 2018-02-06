@@ -39,8 +39,8 @@ export class ItemOption {
     // }
   }
 
-  clickedOptionButton(ev: any): boolean {
-    const el = ev.target.closest('ion-item-option');
+  clickedOptionButton(ev: Event): boolean {
+    const el = (ev.target as HTMLElement).closest('ion-item-option');
     return !!el;
   }
 

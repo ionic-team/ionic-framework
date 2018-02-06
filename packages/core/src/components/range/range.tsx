@@ -2,6 +2,12 @@ import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, W
 import { BaseInputComponent, GestureDetail } from '../../index';
 import { clamp, debounce } from '../../utils/helpers';
 
+interface Tick {
+  ratio: number | (() => number);
+  left: string;
+  active?: boolean;
+}
+
 @Component({
   tag: 'ion-range',
   styleUrls: {
@@ -28,7 +34,7 @@ export class Range implements BaseInputComponent {
   @State() valB = 0;
   @State() ratioA = 0;
   @State() ratioB = 0;
-  @State() ticks: any[] = [];
+  @State() ticks: Tick[] = [];
   @State() activeB: boolean;
   @State() rect: ClientRect;
 

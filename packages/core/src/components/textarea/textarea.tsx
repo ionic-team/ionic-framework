@@ -179,39 +179,39 @@ export class Textarea implements TextareaComponent {
     });
   }
 
-  clearTextInput(ev: any) {
+  clearTextInput(ev: Event) {
     this.value = '';
     this.ionInput.emit(ev);
   }
 
-  inputBlurred(ev: any) {
+  inputBlurred(ev: Event) {
     this.ionBlur.emit(ev);
 
     this.focusChange(this.hasFocus());
     this.emitStyle();
   }
 
-  inputChanged(ev: any) {
-    this.value = ev.target && ev.target.value;
+  inputChanged(ev: Event) {
+    this.value = ev.target && (ev.target as HTMLInputElement).value;
     this.ionInput.emit(ev);
     this.emitStyle();
   }
 
-  inputFocused(ev: any) {
+  inputFocused(ev: Event) {
     this.ionFocus.emit(ev);
 
     this.focusChange(this.hasFocus());
     this.emitStyle();
   }
 
-  inputKeydown(ev: any) {
+  inputKeydown(ev: Event) {
     this.checkClearOnEdit(ev);
   }
 
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  checkClearOnEdit(ev: any) {
+  checkClearOnEdit(ev: Event) {
     if (!this.clearOnEdit) {
       return;
     }

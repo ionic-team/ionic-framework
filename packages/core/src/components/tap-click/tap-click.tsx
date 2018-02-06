@@ -40,7 +40,7 @@ export class TapClick {
   }
 
   @Listen('document:click', {passive: false, capture: true})
-  onBodyClick(ev: any) {
+  onBodyClick(ev: Event) {
     if (this.shouldCancel()) {
       ev.preventDefault();
       ev.stopPropagation();

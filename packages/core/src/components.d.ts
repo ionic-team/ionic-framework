@@ -780,24 +780,24 @@ declare global {
   namespace JSXElements {
     export interface IonDatetimeAttributes extends HTMLAttributes {
       cancelText?: string;
-      dayNames?: any;
-      dayShortNames?: any;
-      dayValues?: any;
+      dayNames?: string[] | string;
+      dayShortNames?: string[] | string;
+      dayValues?: number[] | number | string;
       disabled?: boolean;
       displayFormat?: string;
       doneText?: string;
-      hourValues?: any;
+      hourValues?: number[] | number | string;
       max?: string;
       min?: string;
-      minuteValues?: any;
-      monthNames?: any;
-      monthShortNames?: any;
-      monthValues?: any;
+      minuteValues?: number[] | number | string;
+      monthNames?: string[] | string;
+      monthShortNames?: string[] | string;
+      monthValues?: number[] | number | string;
       pickerFormat?: string;
       pickerOptions?: PickerOptions;
       placeholder?: string;
       value?: string;
-      yearValues?: any;
+      yearValues?: number[] | number | string;
     }
   }
 }
