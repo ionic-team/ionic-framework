@@ -24,7 +24,6 @@
       <ion-content>
         <p>
           <ion-button onclick="addItems()">Add Items</ion-button>
-
         </p>
         <ion-virtual-scroll id="virtual"></ion-virtual-scroll>
       </ion-content>
@@ -38,48 +37,45 @@
       const virtual = document.getElementById('virtual');
       virtual.addItems()
     }
-    async function init() {
-      const virtual = await document.getElementById('virtual').componentOnReady();
-      virtual.itemHeight = () => 45;
-      virtual.headerFn = (item, index) => {
-        if (index % 20 === 0) {
-          return 'Header ' + index;
-        }
-        return null;
-      }
 
-      function renderItem(el, item) {
-        if (!el) {
-          el = document.createElement('ion-item');
-          const text = document.createTextNode(item);
-          el['$content'] = text;
-          el.appendChild(text);
-        } else {
-          el['$content'].nodeValue = item;
-        }
-        return el;
+    const virtual = document.getElementById('virtual');
+    virtual.itemHeight = () => 45;
+    virtual.headerFn = (item, index) => {
+      if (index % 20 === 0) {
+        return 'Header ' + index;
       }
+      return null;
+    }
 
-      function renderHeader(el, item) {
-        if (!el) {
-          el = document.createElement('ion-item-divider');
-          const text = document.createTextNode(item);
-          el['$content'] = text;
-          el.appendChild(text);
-        } else {
-          el['$content'].nodeValue = item;
-        }
-        return el;
+    function renderItem(el, item) {
+      if (!el) {
+        el = document.createElement('ion-item');
+        const text = document.createTextNode(item);
+        el['$content'] = text;
+        el.appendChild(text);
+      } else {
+        el['$content'].nodeValue = item;
       }
+      return el;
+    }
 
-      virtual.itemRender = (el, cell) => {
-        if (cell.type === 0) return renderItem(el, cell.value);
-        return renderHeader(el, cell.value);
-      };
-      virtual.items = Array.from({length: 1000}, (x, i) => i);
+    function renderHeader(el, item) {
+      if (!el) {
+        el = document.createElement('ion-item-divider');
+        const text = document.createTextNode(item);
+        el['$content'] = text;
+        el.appendChild(text);
+      } else {
+        el['$content'].nodeValue = item;
+      }
+      return el;
+    }
+
+    virtual.itemRender = (el, cell) => {
+      if (cell.type === 0) return renderItem(el, cell.value);
+      return renderHeader(el, cell.value);
     };
-    setTimeout(init, 200);
+    virtual.items = Array.from({length: 1000}, (x, i) => i);
   </script>
-
 </body>
 </html>
