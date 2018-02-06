@@ -1,6 +1,7 @@
 import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
 import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 
+let ids = 0;
 
 @Component({
   tag: 'ion-segment-button'
@@ -9,11 +10,6 @@ export class SegmentButton {
   styleTmr: any;
 
   @Element() private el: HTMLElement;
-
-  /**
-   * Emitted when the segment button is clicked.
-   */
-  @Event() ionClick: EventEmitter<SegmentButtonEventDetail>;
 
   @Prop({ mutable: true }) activated = false;
 
@@ -32,12 +28,12 @@ export class SegmentButton {
   /**
    * If true, the segment button is selected. Defaults to `false`.
    */
-  @Prop({ mutable: true }) checked = false;
+  @Prop() checked = false;
 
   /*
    * If true, the user cannot interact with the segment button. Default false.
    */
-  @Prop({ mutable: true }) disabled = false;
+  @Prop() disabled = false;
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -49,6 +45,17 @@ export class SegmentButton {
    * The value of the segment button.
    */
   @Prop({ mutable: true }) value: string;
+
+  /**
+   * Emitted when the segment button is clicked.
+   */
+  @Event() ionClick: EventEmitter;
+
+  componentWillLoad() {
+    if (!this.value) {
+      this.value = `ion-sb-${ids++}`;
+    }
+  }
 
   /**
    * Emit the click event to the parent segment
@@ -86,12 +93,4 @@ export class SegmentButton {
       </TagType>
     ];
   }
-}
-
-export interface SegmentButtonEvent extends CustomEvent {
-  detail: SegmentButtonEventDetail;
-}
-
-export interface SegmentButtonEventDetail {
-
 }

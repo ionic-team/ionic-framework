@@ -1,11 +1,11 @@
 # ion-segment-button
 
-The child buttons of the `ion-segment` component. Each `ion-segment-button` must have a value.
+Segment buttons are a group of related buttons inside of a [Segment](../../segment/Segment). They are displayed in a horizontal row. Only one segment button can be selected at a time.
 
 ```html
 <ion-content>
   <!-- Segment buttons with icons -->
-  <ion-segment [(ngModel)]="icons" color="secondary">
+  <ion-segment>
     <ion-segment-button value="camera">
       <ion-icon name="camera"></ion-icon>
     </ion-segment-button>
@@ -15,11 +15,11 @@ The child buttons of the `ion-segment` component. Each `ion-segment-button` must
   </ion-segment>
 
   <!-- Segment buttons with text -->
-  <ion-segment [(ngModel)]="relationship" color="primary">
-    <ion-segment-button value="friends" (ionSelect)="selectedFriends()">
+  <ion-segment>
+    <ion-segment-button value="friends">
       Friends
     </ion-segment-button>
-    <ion-segment-button value="enemies" (ionSelect)="selectedEnemies()">
+    <ion-segment-button value="enemies">
       Enemies
     </ion-segment-button>
   </ion-segment>
