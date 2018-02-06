@@ -12,6 +12,7 @@ export {
 } from './components/animation-controller/animation-interface';
 export { App } from './components/app/app';
 export { Avatar } from './components/avatar/avatar';
+export { BackButton } from './components/back-button/back-button';
 export { Backdrop } from './components/backdrop/backdrop';
 export { Badge } from './components/badge/badge';
 export { Button } from './components/button/button';

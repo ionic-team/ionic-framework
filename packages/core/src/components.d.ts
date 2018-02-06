@@ -277,6 +277,36 @@ declare global {
 
 
 import {
+  BackButton as IonBackButton
+} from './components/back-button/back-button';
+
+declare global {
+  interface HTMLIonBackButtonElement extends IonBackButton, HTMLElement {
+  }
+  var HTMLIonBackButtonElement: {
+    prototype: HTMLIonBackButtonElement;
+    new (): HTMLIonBackButtonElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-back-button": HTMLIonBackButtonElement;
+  }
+  interface ElementTagNameMap {
+    "ion-back-button": HTMLIonBackButtonElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-back-button": JSXElements.IonBackButtonAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonBackButtonAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
   Backdrop as IonBackdrop
 } from './components/backdrop/backdrop';
 
@@ -749,7 +779,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonCordovaPlatformAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
@@ -1732,6 +1762,36 @@ declare global {
       mode?: 'ios' | 'md';
       showBackdrop?: boolean;
       willAnimate?: boolean;
+    }
+  }
+}
+
+
+import {
+  NavPop as IonNavPop
+} from './components/nav-pop/nav-pop';
+
+declare global {
+  interface HTMLIonNavPopElement extends IonNavPop, HTMLElement {
+  }
+  var HTMLIonNavPopElement: {
+    prototype: HTMLIonNavPopElement;
+    new (): HTMLIonNavPopElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-nav-pop": HTMLIonNavPopElement;
+  }
+  interface ElementTagNameMap {
+    "ion-nav-pop": HTMLIonNavPopElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-nav-pop": JSXElements.IonNavPopAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonNavPopAttributes extends HTMLAttributes {
+      
     }
   }
 }
