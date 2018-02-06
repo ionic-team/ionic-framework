@@ -169,4 +169,4 @@ Expression to be called when the split-pane visibility has changed
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

@@ -96,4 +96,4 @@ If true, a button tag will be rendered. Default `true`.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

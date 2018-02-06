@@ -249,4 +249,4 @@ Emitted when the Searchbar input has changed, including when it's cleared.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*
