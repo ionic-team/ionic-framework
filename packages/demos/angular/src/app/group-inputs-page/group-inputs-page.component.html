@@ -5,6 +5,15 @@
 <ion-grid>
   <ion-row>
     <ion-col>
+      <ion-item>
+        <ion-label>Disable Inputs</ion-label>
+        <ion-checkbox id="disableCheckbox" name="disableCheckbox" [(ngModel)]="disableInputs"></ion-checkbox>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
       <h2>Radio Buttons</h2>
     </ion-col>
   </ion-row>
@@ -15,15 +24,15 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <input id="stdBeef" type="radio" value="beef" [(ngModel)]="radioValue" />
+      <input id="stdBeef" type="radio" value="beef" [(ngModel)]="radioValue" [disabled]="disableInputs" />
       <label for="stdBeef">Carne Asada</label>
-      <input id="stdTongue" type="radio" value="tongue" [(ngModel)]="radioValue" />
+      <input id="stdTongue" type="radio" value="tongue" [(ngModel)]="radioValue" [disabled]="disableInputs" />
       <label for="stdTongue">Lengua</label>
-      <input id="stdBrains" type="radio" value="brains" [(ngModel)]="radioValue" />
+      <input id="stdBrains" type="radio" value="brains" [(ngModel)]="radioValue" [disabled]="disableInputs" />
       <label for="stdBrains">Sesos</label>
-      <input id="stdTripe" type="radio" value="tripe" [(ngModel)]="radioValue" />
+      <input id="stdTripe" type="radio" value="tripe" [(ngModel)]="radioValue" [disabled]="disableInputs" />
       <label for="stdTripe">Tripa</label>
-      <input id="stdChicken" type="radio" value="chicken" [(ngModel)]="radioValue" />
+      <input id="stdChicken" type="radio" value="chicken" [(ngModel)]="radioValue" [disabled]="disableInputs" />
       <label for="stdChicken">Pollo</label>
     </ion-col>
     <ion-col>
@@ -39,7 +48,7 @@
   <ion-row>
     <ion-col>
       <ion-list>
-        <ion-radio-group id="radio-group" [(ngModel)]="radioValue">
+        <ion-radio-group id="radio-group" [(ngModel)]="radioValue" [disabled]="disableInputs">
           <ion-item>
             <ion-label>Crarne Asada</ion-label>
             <ion-radio id="ion-grp-beef" value="beef"></ion-radio>
@@ -75,23 +84,23 @@
       <ion-list>
         <ion-item>
           <ion-label>Crarne Asada</ion-label>
-          <ion-radio value="beef" id="ion-beef" name="tacos" [(ngModel)]="radioValue"></ion-radio>
+          <ion-radio value="beef" id="ion-beef" name="tacos" [(ngModel)]="radioValue" [disabled]="disableInputs"></ion-radio>
         </ion-item>
         <ion-item>
           <ion-label>Lengua</ion-label>
-          <ion-radio value="tongue" id="ion-tongue" name="tacos" [(ngModel)]="radioValue"></ion-radio>
+          <ion-radio value="tongue" id="ion-tongue" name="tacos" [(ngModel)]="radioValue" [disabled]="disableInputs"></ion-radio>
         </ion-item>
         <ion-item>
           <ion-label>Sesos</ion-label>
-          <ion-radio value="brains" id="ion-brains" name="tacos" [(ngModel)]="radioValue"></ion-radio>
+          <ion-radio value="brains" id="ion-brains" name="tacos" [(ngModel)]="radioValue" [disabled]="disableInputs"></ion-radio>
         </ion-item>
         <ion-item>
           <ion-label>Tripa</ion-label>
-          <ion-radio value="tripe" id="ion-tripe" name="tacos" [(ngModel)]="radioValue"></ion-radio>
+          <ion-radio value="tripe" id="ion-tripe" name="tacos" [(ngModel)]="radioValue" [disabled]="disableInputs"></ion-radio>
         </ion-item>
         <ion-item>
           <ion-label>Pollo</ion-label>
-          <ion-radio value="chicken" id="ion-chicken" name="tacos" [(ngModel)]="radioValue"></ion-radio>
+          <ion-radio value="chicken" id="ion-chicken" name="tacos" [(ngModel)]="radioValue" [disabled]="disableInputs"></ion-radio>
         </ion-item>
       </ion-list>
     </ion-col>
@@ -105,7 +114,7 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <ion-segment id="segment" color="primary" [(ngModel)]="radioValue">
+      <ion-segment id="segment" color="primary" [(ngModel)]="radioValue" [disabled]="disableInputs">
         <ion-segment-button value="beef" id="ion-seg-beef">Carne Asada</ion-segment-button>
         <ion-segment-button value="tongue" id="ion-seg-tongue">Lengua</ion-segment-button>
         <ion-segment-button value="brains" id="ion-seg-brains">Sesos</ion-segment-button>
@@ -124,7 +133,7 @@
   <ion-row>
     <ion-col>
       <label for="stdSelect">Standard Select (for tacos)</label>
-      <select id="stdSelect" name="stdSelect" [(ngModel)]="selectValue">
+      <select id="stdSelect" name="stdSelect" [(ngModel)]="selectValue" [disabled]="disableInputs">
         <option value="beef">Carne Asada</option>
         <option value="tongue">Lengua</option>
         <option value="brains">Sesos</option>
@@ -141,7 +150,7 @@
     <ion-col>
       <ion-item>
         <ion-label>Ionic Select (for tacos)</ion-label>
-        <ion-select id="ionSelect" name="ionSelect" [(ngModel)]="selectValue">
+        <ion-select id="ionSelect" name="ionSelect" [(ngModel)]="selectValue" [disabled]="disableInputs">
           <ion-select-option value="beef">Carne Asada</ion-select-option>
           <ion-select-option value="tongue">Lengua</ion-select-option>
           <ion-select-option value="brains">Sesos</ion-select-option>
