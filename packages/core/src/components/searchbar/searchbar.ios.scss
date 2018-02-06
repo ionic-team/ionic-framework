@@ -26,7 +26,7 @@
 // Searchbar Search Icon
 // -----------------------------------------
 
-.searchbar-ios .searchbar-search-icon {
+.searchbar-search-icon-ios {
   @include background-position(center);
   @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $searchbar-ios-input-search-icon-color);
   @include margin-horizontal(calc(50% - 60px), null);
@@ -63,7 +63,7 @@
 // Searchbar Clear Input Icon
 // -----------------------------------------
 
-.searchbar-ios ion-button.searchbar-clear-icon {
+.searchbar-ios .searchbar-clear-icon {
   @include position(0, 0, null, null);
   @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $searchbar-ios-input-clear-icon-color);
   @include background-position(center);
@@ -73,36 +73,35 @@
   width: 30px;
   height: 100%;
 
+  background-color: transparent;
   background-repeat: no-repeat;
   background-size: $searchbar-ios-input-clear-icon-size;
 }
 
 
-// Searchbar Cancel (iOS only)
+// Searchbar Cancel
 // -----------------------------------------
 
-.searchbar-ios .searchbar-ios-cancel {
-  @include margin-horizontal(0, null);
+.searchbar-cancel-button-ios {
+  @include padding(0, 0, 0, 8px);
+
+  font-size: $searchbar-ios-cancel-button-font-size;
 
   display: none;
 
   flex-shrink: 0;
 
-  height: 30px;
+  color: $searchbar-ios-cancel-button-color;
+  background-color: $searchbar-ios-cancel-button-background-color;
 
   cursor: pointer;
 }
 
-.searchbar-ios button.searchbar-ios-cancel {
-  @include padding(0, 0, 0, 8px);
-  @include margin(0);
-}
 
-
-// Searchbar Left Aligned (iOS only)
+// Searchbar Left Aligned (iOS Only)
 // -----------------------------------------
 
-.searchbar-ios.searchbar-left-aligned .searchbar-search-icon {
+.searchbar-left-aligned .searchbar-search-icon-ios {
   @include margin-horizontal(0, null);
 }
 
@@ -111,31 +110,33 @@
 }
 
 
-// Searchbar Has Focus
+// Searchbar Has Focus & Animated
 // -----------------------------------------
 
-.searchbar-ios.searchbar-show-cancel.searchbar-has-focus .searchbar-ios-cancel {
+.searchbar-show-cancel.searchbar-has-focus .searchbar-cancel-button-ios,
+.searchbar-show-cancel.searchbar-animated .searchbar-cancel-button-ios {
   display: block;
 }
 
-
-// Searchbar in Toolbar
-// -----------------------------------------
-
-.toolbar .searchbar-ios .searchbar-ios-cancel {
-  @include padding(0);
+.searchbar-animated .searchbar-search-icon-ios,
+.searchbar-ios.searchbar-animated .searchbar-input {
+  transition: $searchbar-ios-input-transition;
 }
 
-.toolbar .searchbar-ios.searchbar-has-focus .searchbar-ios-cancel {
-  @include padding-horizontal(8px, null);
+.searchbar-animated.searchbar-has-focus .searchbar-cancel-button-ios {
+  opacity: 1;
+
+  pointer-events: auto;
 }
 
+.searchbar-animated .searchbar-cancel-button-ios {
+  @include margin-horizontal(null, -100%);
+  @include transform(translate3d(0, 0, 0));
 
-// Searchbar Cancel (MD only)
-// -----------------------------------------
+  opacity: 0;
+  transition: $searchbar-ios-cancel-transition;
 
-.searchbar-ios .searchbar-md-cancel {
-  display: none;
+  pointer-events: none;
 }
 
 
@@ -148,15 +149,15 @@
   $color-shade: ion-color($colors-ios, $color-name, shade, ios);
   $color-tint: ion-color($colors-ios, $color-name, tint, ios);
 
-  .searchbar-ios-#{$color-name} .searchbar-ios-cancel {
+  .searchbar-ios-#{$color-name} .searchbar-cancel-button-ios {
     color: $color-base;
   }
 
-  .enable-hover .searchbar-ios-#{$color-name} .searchbar-ios-cancel:hover {
+  .enable-hover .searchbar-ios-#{$color-name} .searchbar-cancel-button-ios:hover {
     color: $color-tint;
   }
 
-  .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-search-icon {
+  .toolbar-ios-#{$color-name} .searchbar-search-icon-ios {
     @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $color-contrast);
     opacity: .5;
   }
@@ -172,35 +173,7 @@
     opacity: .5;
   }
 
-  .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-ios-cancel {
+  .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-cancel-button-ios {
     color: $color-contrast;
   }
-}
-
-// Searchbar animation
-// -----------------------------------------
-
-.searchbar-ios.searchbar-animated.searchbar-show-cancel .searchbar-ios-cancel {
-  display: block;
-}
-
-.searchbar-ios.searchbar-animated .searchbar-search-icon,
-.searchbar-ios.searchbar-animated .searchbar-input {
-  transition: $searchbar-ios-input-transition;
-}
-
-.searchbar-animated.searchbar-has-focus .searchbar-ios-cancel {
-  opacity: 1;
-
-  pointer-events: auto;
-}
-
-.searchbar-animated .searchbar-ios-cancel {
-  @include margin-horizontal(null, -100%);
-  @include transform(translate3d(0, 0, 0));
-
-  opacity: 0;
-  transition: $searchbar-ios-cancel-transition;
-
-  pointer-events: none;
 }

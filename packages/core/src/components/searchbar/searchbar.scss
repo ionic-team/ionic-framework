@@ -37,6 +37,8 @@ ion-searchbar {
   border: 0;
   font-family: inherit;
 
+  box-sizing: border-box;
+
   &:active,
   &:focus {
     outline: none;
