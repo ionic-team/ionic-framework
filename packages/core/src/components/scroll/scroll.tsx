@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Config, DomController, GestureDetail } from '../../index';
 import { GestureController, GestureDelegate } from '../gesture-controller/gesture-controller';
 
