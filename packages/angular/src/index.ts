@@ -1,18 +1,18 @@
 export { IonicAngularModule } from './module';
 
 /* Directives */
-export { MenuToggle } from './directives/menu-toggle';
+export { IonNav } from './directives/ion-nav';
 export { VirtualScroll } from './directives/virtual-scroll';
 export { VirtualItem } from './directives/virtual-item';
 export { VirtualHeader } from './directives/virtual-header';
 export { VirtualFooter } from './directives/virtual-footer';
 
-/* Nav */
-export { IonNav } from './nav/ion-nav';
-export { AsyncActivateRoutes } from './nav/router/async-activated-routes';
-export { OutletInjector } from './nav/router/outlet-injector';
-export { CustomRouter } from './nav/router/router';
-export { IonicRouterModule } from './nav/nav-module';
+/* Router */
+export { RouterOutlet } from './router/outlet';
+export { AsyncActivateRoutes } from './router/async-activated-routes';
+export { OutletInjector } from './router/outlet-injector';
+export { CustomRouter } from './router/router';
+export { IonicRouterModule } from './router/router-module';
 
 /* Providers */
 export { ActionSheetController, ActionSheetProxy } from './providers/action-sheet-controller';

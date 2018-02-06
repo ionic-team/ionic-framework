@@ -23,17 +23,15 @@ import {
 } from '@angular/router';
 
 
-import { FrameworkDelegate } from '@ionic/core';
-
 import { AngularComponentMounter, AngularEscapeHatch } from '..';
-import { OutletInjector } from './router/outlet-injector';
+import { OutletInjector } from './outlet-injector';
 
 let id = 0;
 
 @Directive({
   selector: 'ion-nav',
 })
-export class IonNav implements FrameworkDelegate, OnDestroy, OnInit {
+export class RouterOutlet implements OnDestroy, OnInit {
 
   public name: string;
   public activationStatus = NOT_ACTIVATED;
@@ -43,7 +41,6 @@ export class IonNav implements FrameworkDelegate, OnDestroy, OnInit {
   public activatedRouteData: any = {};
   public activeComponentRef: ComponentRef<any> = null;
   private id: number = id++;
-  private parent: HTMLElement;
 
   @Output('activate') activateEvents = new EventEmitter<any>();
   @Output('deactivate') deactivateEvents = new EventEmitter<any>();
@@ -58,8 +55,6 @@ export class IonNav implements FrameworkDelegate, OnDestroy, OnInit {
     protected injector: Injector,
     @Attribute('name') name: string) {
 
-    this.parent = this.elementRef.nativeElement.parentElement;
-    this.elementRef.nativeElement.delegate = this;
     this.name = name || PRIMARY_OUTLET;
     parentContexts.onChildOutletCreated(this.name, this as any);
   }
@@ -116,24 +111,6 @@ export class IonNav implements FrameworkDelegate, OnDestroy, OnInit {
       this.activationStatus = ACTIVATED;
     });
   }
-
-  attachViewToDom(elementOrContainerToMountTo: HTMLIonNavElement,
-    elementOrComponentToMount: Type<any>,
-    data?: any,
-    classesToAdd?: string[],
-    escapeHatch: AngularEscapeHatch = {}): Promise<any> {
-
-    // wrap whatever the user provides in an ion-page
-    const cfr = escapeHatch.cfr || this.cfr;
-    const injector = escapeHatch.injector || this.injector;
-    return this.angularComponentMounter.attachViewToDom(elementOrContainerToMountTo,
-      null, elementOrComponentToMount, cfr, injector, data, classesToAdd);
-  }
-
-  removeViewFromDom(parentElement: HTMLElement, childElement: HTMLElement) {
-    return this.angularComponentMounter.removeViewFromDom(parentElement, childElement);
-  }
-
 }
 
 export function activateRoute(navElement: HTMLIonNavElement,

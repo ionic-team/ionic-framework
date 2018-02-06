@@ -28,20 +28,20 @@ import {
 
 import { IonicAngularModule } from '../module';
 
-import { PushPopOutletContexts } from './router/push-pop-outlet-contexts';
-import { CustomRouter } from './router/router';
-import { IonNav  } from './ion-nav';
-import { flatten } from '../util/util';
+import { PushPopOutletContexts } from './push-pop-outlet-contexts';
+import { CustomRouter } from './router';
+import { RouterOutlet  } from './outlet';
+import { flatten } from './router-utils';
 
 @NgModule({
   declarations: [
-    IonNav
+    RouterOutlet
   ],
   imports: [
     IonicAngularModule
   ],
   exports: [
-    IonNav
+    RouterOutlet
   ]
 })
 export class IonicRouterModule {

@@ -25,10 +25,3 @@ export function removeAllNodeChildren(element: HTMLElement) {
 export function isString(something: any) {
   return typeof something === 'string' ? true : false;
 }
-
-/**
- * Flattens single-level nested arrays.
- */
-export function flatten<T>(arr: T[][]): T[] {
-  return Array.prototype.concat.apply([], arr);
-}
