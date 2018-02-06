@@ -11,18 +11,12 @@ import { RadioValueAccessor } from './control-value-accessors/radio-value-access
 import { SelectValueAccessor } from './control-value-accessors/select-value-accessor';
 import { TextValueAccessor } from './control-value-accessors/text-value-accessor';
 
-
-/* Components */
-
-
 /* Directives */
-import { MenuToggle } from './directives/menu-toggle';
-
+import { IonNav } from './directives/ion-nav';
 import { VirtualScroll } from './directives/virtual-scroll';
 import { VirtualItem } from './directives/virtual-item';
 import { VirtualHeader } from './directives/virtual-header';
 import { VirtualFooter } from './directives/virtual-footer';
-
 
 /* Providers */
 import { ActionSheetController } from './providers/action-sheet-controller';
@@ -39,12 +33,11 @@ import { ToastController } from './providers/toast-controller';
 @NgModule({
   declarations: [
     BooleanValueAccessor,
-    MenuToggle,
+    IonNav,
     NumericValueAccessor,
     RadioValueAccessor,
     SelectValueAccessor,
     TextValueAccessor,
-
     VirtualScroll,
     VirtualItem,
     VirtualHeader,
@@ -52,7 +45,7 @@ import { ToastController } from './providers/toast-controller';
   ],
   exports: [
     BooleanValueAccessor,
-    MenuToggle,
+    IonNav,
     NumericValueAccessor,
     RadioValueAccessor,
     SelectValueAccessor,
@@ -61,7 +54,7 @@ import { ToastController } from './providers/toast-controller';
     VirtualScroll,
     VirtualItem,
     VirtualHeader,
-    VirtualFooter,
+    VirtualFooter
   ],
   imports: [
     CommonModule,
