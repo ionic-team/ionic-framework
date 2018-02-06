@@ -6,13 +6,22 @@
 
   <ion-row>
     <ion-col>
+      <ion-item>
+        <ion-label>Disable Inputs</ion-label>
+        <ion-checkbox id="disableCheckbox" name="disableCheckbox" [(ngModel)]="disableInputs"></ion-checkbox>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col>
       <h2>Text Input</h2>
     </ion-col>
   </ion-row>
   <ion-row>
     <ion-col>
       <label for="stdTextInput">Standard Input</label>
-      <input id="stdTextInput" name="stdTextInput" [(ngModel)]="textValue" minlength="10" />
+      <input id="stdTextInput" name="stdTextInput" [(ngModel)]="textValue" minlength="10" [disabled]="disableInputs" />
     </ion-col>
     <ion-col>
       Value:
@@ -23,7 +32,7 @@
     <ion-col>
       <ion-item>
         <ion-label>Ionic Text Input</ion-label>
-        <ion-input id="ionTextInput" name="ionTextInput" [(ngModel)]="textValue" minlength="10"></ion-input>
+        <ion-input id="ionTextInput" name="ionTextInput" [(ngModel)]="textValue" minlength="10" [disabled]="disableInputs"></ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
@@ -39,7 +48,7 @@
     <ion-col>
       <ion-item>
         <ion-label>Ionic Text Input</ion-label>
-        <ion-searchbar id="ionSearchInput" name="ionSearchInput" [(ngModel)]="searchValue" minlength="10"></ion-searchbar>
+        <ion-searchbar id="ionSearchInput" name="ionSearchInput" [(ngModel)]="searchValue" minlength="10" [disabled]="disableInputs"></ion-searchbar>
       </ion-item>
     </ion-col>
     <ion-col>
@@ -57,7 +66,7 @@
     <ion-col>
       <ion-item>
         <ion-label>Ionic Numeric Input</ion-label>
-        <ion-input type="number" id="ionNumericInput" name="ionNumericInput" [(ngModel)]="numericValue"></ion-input>
+        <ion-input type="number" id="ionNumericInput" name="ionNumericInput" [(ngModel)]="numericValue" [disabled]="disableInputs"></ion-input>
       </ion-item>
     </ion-col>
     <ion-col>
@@ -80,7 +89,7 @@
   <ion-row>
     <ion-col>
       <label for="stdTextareaInput">Standard Textarea Input</label>
-      <textarea id="stdTextareaInput" name="stdTextareaInput" [(ngModel)]="textareaValue" minlength="10"></textarea>
+      <textarea id="stdTextareaInput" name="stdTextareaInput" [(ngModel)]="textareaValue" minlength="10" [disabled]="disableInputs"></textarea>
     </ion-col>
     <ion-col>
       Value:
@@ -91,7 +100,7 @@
     <ion-col>
       <ion-item>
         <ion-label>Ionic Textarea Input</ion-label>
-        <ion-textarea id="ionTextareaInput" name="ionTextareaInput" [(ngModel)]="textareaValue" minlength="10"></ion-textarea>
+        <ion-textarea id="ionTextareaInput" name="ionTextareaInput" [(ngModel)]="textareaValue" minlength="10" [disabled]="disableInputs"></ion-textarea>
       </ion-item>
     </ion-col>
     <ion-col>
@@ -106,7 +115,7 @@
   <ion-row>
     <ion-col>
       <label for="stdCheckbox">Standard Checkbox</label>
-      <input type="checkbox" id="stdCheckbox" name="stdCheckbox" [(ngModel)]="checkboxValue" />
+      <input type="checkbox" id="stdCheckbox" name="stdCheckbox" [(ngModel)]="checkboxValue" [disabled]="disableInputs" />
     </ion-col>
     <ion-col>
       Value:
@@ -117,7 +126,7 @@
     <ion-col>
       <ion-item>
         <ion-label>Ionic Checkbox</ion-label>
-        <ion-checkbox id="ionCheckbox" name="ionCheckbox" [(ngModel)]="checkboxValue"></ion-checkbox>
+        <ion-checkbox id="ionCheckbox" name="ionCheckbox" [(ngModel)]="checkboxValue" [disabled]="disableInputs"></ion-checkbox>
       </ion-item>
     </ion-col>
     <ion-col>
@@ -127,7 +136,8 @@
     <ion-col>
       <ion-item>
         <ion-label>Ionic Checkbox No ngModel</ion-label>
-        <ion-checkbox id="ionCheckboxNoModel" name="ionCheckboxNoModel" [checked]="checkboxValue" (ionChange)="checkboxValue=$event.target.checked"></ion-checkbox>
+        <ion-checkbox id="ionCheckboxNoModel" name="ionCheckboxNoModel" [checked]="checkboxValue" (ionChange)="checkboxValue=$event.target.checked"
+          [disabled]="disableInputs"></ion-checkbox>
       </ion-item>
     </ion-col>
     <ion-col>
@@ -142,7 +152,7 @@
   <ion-row>
     <ion-col>
       <label for="stdToggle">Standard Toggle</label>
-      <input type="checkbox" id="stdToggle" name="stdToggle" [(ngModel)]="toggleValue" />
+      <input type="checkbox" id="stdToggle" name="stdToggle" [(ngModel)]="toggleValue" [disabled]="disableInputs" />
     </ion-col>
     <ion-col>
       Value:
@@ -153,7 +163,7 @@
     <ion-col>
       <ion-item>
         <ion-label>Ionic Toggle</ion-label>
-        <ion-toggle id="ionToggle" name="ionToggle" [(ngModel)]="toggleValue"></ion-toggle>
+        <ion-toggle id="ionToggle" name="ionToggle" [(ngModel)]="toggleValue" [disabled]="disableInputs"></ion-toggle>
       </ion-item>
     </ion-col>
     <ion-col>
@@ -168,7 +178,8 @@
   <ion-row>
     <ion-col>
       <label for="stdToggle">ISO Formatted Date</label>
-      <input id="stdDatetimeInput" name="stdDatetimeInput" [(ngModel)]="datetimeValue" placeholder="YYYY-MM-DDTHH:mm:ssZ" />
+      <input id="stdDatetimeInput" name="stdDatetimeInput" [(ngModel)]="datetimeValue" placeholder="YYYY-MM-DDTHH:mm:ssZ" [disabled]="disableInputs"
+      />
     </ion-col>
     <ion-col>
       Value:
@@ -180,7 +191,7 @@
       <ion-item>
         <ion-label>Ionic Date</ion-label>
         <ion-datetime id="ionDatetimeInput" pickerFormat="YYYY-MM-DD HH:mm:ss" displayFormat="MM/DD/YYYY HH:mm:ss" name="ionDatetimeInput"
-          [(ngModel)]="datetimeValue"></ion-datetime>
+          [(ngModel)]="datetimeValue" [disabled]="disableInputs"></ion-datetime>
       </ion-item>
     </ion-col>
     <ion-col>
@@ -195,7 +206,7 @@
   <ion-row>
     <ion-col>
       <label for="stdRangeInput">Range Value</label>
-      <input id="stdRangeInput" type="number" [(ngModel)]="rangeValue"/>
+      <input id="stdRangeInput" type="number" [(ngModel)]="rangeValue"  [disabled]="disableInputs" />
     </ion-col>
     <ion-col>
       Value:
@@ -206,7 +217,7 @@
 
   <ion-row>
     <ion-col>
-      <ion-range id="ionRangeInput" [(ngModel)]="rangeValue"></ion-range>
+      <ion-range id="ionRangeInput" [(ngModel)]="rangeValue" [disabled]="disableInputs"></ion-range>
     </ion-col>
     <ion-col></ion-col>
   </ion-row>

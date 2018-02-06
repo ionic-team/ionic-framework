@@ -46,6 +46,19 @@ export class BasicInputsPage {
     return element(by.id('textareaOutput')).getText();
   }
 
+  getIonicSearchInput() {
+    return element(by.id('ionSearchInput'));
+  }
+
+  getIonicSearchInputEditable() {
+    const parent = this.getIonicSearchInput();
+    return parent.all(by.css('input')).first();
+  }
+
+  getSearchOutput() {
+    return element(by.id('searchOutput')).getText();
+  }
+
   getIonicTextInput() {
     return element(by.id('ionTextInput'));
   }
@@ -70,5 +83,9 @@ export class BasicInputsPage {
 
   getNumericOutputType() {
     return element(by.id('numericOutputType')).getText();
+  }
+
+  getDisableButton() {
+    return element(by.id('disableCheckbox'));
   }
 }

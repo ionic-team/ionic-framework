@@ -14,6 +14,30 @@ describe('Basic Inputs Page', () => {
     expect(page.getTitleText()).toEqual('Ionic Core Basic Inputs Demo');
   });
 
+  describe('search input', () => {
+    it('should display the starting text', () => {
+      page.navigateTo();
+      const el = page.getIonicSearchInput();
+      expect(el.getAttribute('value')).toEqual(null);
+    });
+
+    it('should reflect back the entered data', () => {
+      page.navigateTo();
+      const el = page.getIonicSearchInputEditable();
+      el.clear();
+      el.sendKeys('I am new text');
+      expect(page.getSearchOutput()).toEqual('I am new text');
+    });
+
+    // it('should disable', () => {
+    //   page.navigateTo();
+    //   const inp = page.getIonicSearchInputEditable();
+    //   const cb = page.getDisableButton();
+    //   cb.click();
+    //   expect(inp.isEnabled()).toEqual(false);
+    // });
+  });
+
   describe('text input', () => {
     it('should display the starting text', () => {
       page.navigateTo();
@@ -40,6 +64,14 @@ describe('Basic Inputs Page', () => {
       inp.sendKeys('X');
       expect(hasClass(el, 'ng-invalid')).toEqual(false);
     });
+
+    it('should disable', () => {
+      page.navigateTo();
+      const inp = page.getIonicTextInputEditable();
+      const cb = page.getDisableButton();
+      cb.click();
+      expect(inp.isEnabled()).toEqual(false);
+    });
   });
 
   describe('numeric input', () => {
@@ -55,6 +87,14 @@ describe('Basic Inputs Page', () => {
       expect(page.getNumericOutputType()).toEqual('number');
       inp.sendKeys('.48859');
       expect(page.getNumericOutputType()).toEqual('number');
+    });
+
+    it('should disable', () => {
+      page.navigateTo();
+      const inp = page.getIonicNumericInputEditable();
+      const cb = page.getDisableButton();
+      cb.click();
+      expect(inp.isEnabled()).toEqual(false);
     });
   });
 
@@ -83,6 +123,14 @@ describe('Basic Inputs Page', () => {
       expect(hasClass(el, 'ng-invalid')).toEqual(true);
       inp.sendKeys('X');
       expect(hasClass(el, 'ng-invalid')).toEqual(false);
+    });
+
+    it('should disable', () => {
+      page.navigateTo();
+      const inp = page.getIonicTextareaInputEditable();
+      const cb = page.getDisableButton();
+      cb.click();
+      expect(inp.isEnabled()).toEqual(false);
     });
   });
 
