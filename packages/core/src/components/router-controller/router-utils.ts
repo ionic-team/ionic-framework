@@ -11,7 +11,7 @@ export interface NavElement extends HTMLElement {
 export interface RouterEntry {
   path: string;
   id: any;
-  segments: string[];
+  segments?: string[];
   props?: any;
 }
 

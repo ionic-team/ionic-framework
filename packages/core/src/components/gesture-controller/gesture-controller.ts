@@ -125,14 +125,17 @@ export class GestureController {
 
 
 export class GestureDelegate {
+  private ctrl: GestureController|null;
 
   constructor(
-    private ctrl: GestureController,
+    ctrl: GestureController,
     private gestureDelegateId: number,
     private name: string,
     private priority: number,
     private disableScroll: boolean
-  ) { }
+  ) {
+    this.ctrl = ctrl;
+  }
 
   canStart(): boolean {
     if (!this.ctrl) {
@@ -185,47 +188,51 @@ export class BlockerDelegate {
 
   blocked = false;
 
+  private ctrl: GestureController|null;
+
   constructor(
     private blockerDelegateId: number,
-    private controller: GestureController,
-    private disable: string[],
+    ctrl: GestureController,
+    private disable: string[] | undefined,
     private disableScroll: boolean
-  ) { }
+  ) {
+    this.ctrl = ctrl;
+  }
 
   block() {
-    if (!this.controller) {
+    if (!this.ctrl) {
       return;
     }
     if (this.disable) {
-      this.disable.forEach(gesture => {
-        this.controller.disableGesture(gesture, this.blockerDelegateId);
-      });
+      for (const gesture of this.disable) {
+        this.ctrl.disableGesture(gesture, this.blockerDelegateId);
+      }
     }
 
     if (this.disableScroll) {
-      this.controller.disableScroll(this.blockerDelegateId);
+      this.ctrl.disableScroll(this.blockerDelegateId);
     }
     this.blocked = true;
   }
 
   unblock() {
-    if (!this.controller) {
+    if (!this.ctrl) {
       return;
     }
     if (this.disable) {
-      this.disable.forEach(gesture => {
-        this.controller.enableGesture(gesture, this.blockerDelegateId);
-      });
+      for (const gesture of this.disable) {
+        this.ctrl.enableGesture(gesture, this.blockerDelegateId);
+      }
     }
     if (this.disableScroll) {
-      this.controller.enableScroll(this.blockerDelegateId);
+      this.ctrl.enableScroll(this.blockerDelegateId);
     }
     this.blocked = false;
   }
 
   destroy() {
     this.unblock();
-    this.controller = null;
+    this.ctrl = null;
   }
 }
 

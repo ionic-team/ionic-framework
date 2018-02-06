@@ -52,10 +52,11 @@ export class FabButton {
   @Prop() disabled = false;
 
   componentDidLoad() {
-    const parentNode = this.el.parentNode.nodeName;
+    const parentNode = this.el.parentNode;
+    const parentTag = parentNode ? parentNode.nodeName : null;
 
-    this.inList = (parentNode === 'ION-FAB-LIST');
-    this.inContainer = (parentNode === 'ION-FAB');
+    this.inList = (parentTag === 'ION-FAB-LIST');
+    this.inContainer = (parentTag === 'ION-FAB');
   }
 
 

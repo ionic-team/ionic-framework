@@ -232,15 +232,18 @@ export class Datetime {
 
     // If the user has not passed in picker buttons,
     // add a cancel and ok button to the picker
-    if (pickerOptions.buttons.length === 0) {
-      pickerOptions.buttons = [{
-        text: this.cancelText,
-        role: 'cancel',
-        handler: () => this.ionCancel.emit(this)
-      }, {
-        text: this.doneText,
-        handler: (data: any) => this.value = data,
-      }];
+    const buttons = pickerOptions.buttons;
+    if (!buttons || buttons.length === 0) {
+      pickerOptions.buttons = [
+        {
+          text: this.cancelText,
+          role: 'cancel',
+          handler: () => this.ionCancel.emit(this)
+        },
+        {
+          text: this.doneText,
+          handler: (data: any) => this.value = data,
+        }];
     }
 
     pickerOptions.columns = this.generateColumns();

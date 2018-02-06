@@ -204,7 +204,7 @@ export class Input implements InputComponent {
   @Watch('value')
   protected valueChanged() {
     const inputEl = this.el.querySelector('input');
-    if (inputEl.value !== this.value) {
+    if (inputEl && inputEl.value !== this.value) {
       inputEl.value = this.value;
     }
   }
