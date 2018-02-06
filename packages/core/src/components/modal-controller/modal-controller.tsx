@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { ModalEvent, ModalOptions } from '../../index';
+import { ModalEvent, ModalOptions, OverlayController } from '../../index';
 
 let ids = 0;
 const modals = new Map<number, HTMLIonModalElement>();
@@ -7,7 +7,7 @@ const modals = new Map<number, HTMLIonModalElement>();
 @Component({
   tag: 'ion-modal-controller'
 })
-export class ModalController {
+export class ModalController implements OverlayController {
 
   @Method()
   create(opts?: ModalOptions): Promise<HTMLIonModalElement> {
@@ -35,6 +35,10 @@ export class ModalController {
     return modal.dismiss(data, role);
   }
 
+  @Method()
+  getTop() {
+    return modals.get(getHighestId());
+  }
 
   @Listen('body:ionModalWillPresent')
   protected modalWillPresent(ev: ModalEvent) {
@@ -46,7 +50,6 @@ export class ModalController {
   protected modalWillDismiss(ev: ModalEvent) {
     modals.delete(ev.target.modalId);
   }
-
 
   @Listen('body:keyup.escape')
   protected escapeKeyUp() {

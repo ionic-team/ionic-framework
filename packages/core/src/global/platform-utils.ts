@@ -1,4 +1,4 @@
 
 export function isCordova(): boolean {
-  return !!(window['cordova'] || window['PhoneGap'] || window['phonegap']);
+  return !!(window as any)['cordova'] || (window as any)['PhoneGap'] || (window as any)['phonegap'];
 }

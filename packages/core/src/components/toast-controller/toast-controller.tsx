@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { ToastEvent, ToastOptions } from '../../index';
+import { OverlayController, ToastEvent, ToastOptions } from '../../index';
 
 let ids = 0;
 const toasts = new Map<number, HTMLIonToastElement>();
@@ -7,7 +7,7 @@ const toasts = new Map<number, HTMLIonToastElement>();
 @Component({
   tag: 'ion-toast-controller'
 })
-export class ToastController {
+export class ToastController implements OverlayController {
 
   @Method()
   create(opts?: ToastOptions): Promise<HTMLIonToastElement> {
@@ -35,6 +35,10 @@ export class ToastController {
     return toast.dismiss(data, role);
   }
 
+  @Method()
+  getTop() {
+    return toasts.get(getHighestId());
+  }
 
   @Listen('body:ionToastWillPresent')
   protected toastWillPresent(ev: ToastEvent) {

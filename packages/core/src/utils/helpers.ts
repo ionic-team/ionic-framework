@@ -302,7 +302,7 @@ export function debounce(func: Function, wait = 0) {
 export function getNavAsChildIfExists(element: HTMLElement): HTMLIonNavElement {
   for (let i = 0; i < element.children.length; i++) {
     if (element.children[i].tagName.toLowerCase() === 'ion-nav') {
-      return element.children[i] as HTMLIonNavElement;
+      return element.children[i] as any as HTMLIonNavElement;
     }
   }
   return null;

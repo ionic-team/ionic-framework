@@ -145,10 +145,6 @@ export interface OverlayDismissEventDetail {
   role?: string;
 }
 
-export interface OverlayController {
-  create(): HTMLElement;
-}
-
 export interface FrameworkDelegate {
   attachViewToDom(elementOrContainerToMountTo: any, elementOrComponentToMount: any, propsOrDataObj?: any, classesToAdd?: string[], escapeHatch?: any): Promise<FrameworkMountingData>;
   removeViewFromDom(elementOrContainerToUnmountFrom: any, elementOrComponentToUnmount: any, escapeHatch?: any): Promise<FrameworkMountingData>;
@@ -158,4 +154,8 @@ export interface FrameworkMountingData {
   element: HTMLElement;
   component: any;
   data: any;
+}
+
+export interface OverlayController {
+  getTop(): HTMLElement;
 }
