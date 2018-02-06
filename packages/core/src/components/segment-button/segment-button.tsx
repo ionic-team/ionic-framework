@@ -4,7 +4,11 @@ import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 let ids = 0;
 
 @Component({
-  tag: 'ion-segment-button'
+  tag: 'ion-segment-button',
+  styleUrls: {
+    ios: 'segment-button.ios.scss',
+    md: 'segment-button.md.scss'
+  }
 })
 export class SegmentButton {
   styleTmr: any;

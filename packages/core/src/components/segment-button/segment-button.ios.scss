@@ -1,0 +1,151 @@
+@import "./segment-button";
+@import "./segment-button.ios.vars";
+
+// iOS Segment Button
+// --------------------------------------------------
+
+ion-segment-button {
+  &:first-of-type .segment-button-ios {
+    @include border-radius($segment-button-ios-border-radius, 0, 0, $segment-button-ios-border-radius);
+    @include margin-horizontal(null, 0);
+  }
+
+  &:not(:first-of-type) .segment-button-ios {
+    border-left-width: 0;
+  }
+
+  &:last-of-type .segment-button-ios {
+    @include border-radius(0, $segment-button-ios-border-radius, $segment-button-ios-border-radius, 0);
+    @include margin-horizontal(0, null);
+
+    border-left-width: 0;
+  }
+}
+
+.segment-button-ios {
+  flex: 1;
+
+  height: $segment-button-ios-height;
+
+  border-width: $segment-button-ios-border-width;
+  border-style: solid;
+  border-color: $segment-button-ios-background-color-activated;
+
+  font-size: $segment-button-ios-font-size;
+  line-height: $segment-button-ios-line-height;
+
+  color: $segment-button-ios-background-color-activated;
+  background-color: $segment-button-ios-background-color;
+
+  ion-icon {
+    font-size: $segment-button-ios-icon-size;
+    line-height: $segment-button-ios-icon-line-height;
+  }
+
+  &.segment-activated {
+    color: $segment-button-ios-text-color;
+    background-color: $segment-button-ios-background-color-activated;
+    transition: $segment-button-ios-transition-activated;
+  }
+
+  &:hover:not(.segment-activated) {
+    background-color: $segment-button-ios-background-color-hover;
+    transition: $segment-button-ios-transition-hover;
+  }
+
+  &:active:not(.segment-activated) {
+    background-color: $segment-button-ios-background-color-active;
+    transition: $segment-button-ios-transition-active;
+  }
+}
+
+// iOS Segment Button RTL
+// --------------------------------------------------
+
+[dir="rtl"] ion-segment-button {
+  &:first-of-type .segment-button-ios {
+    border-left-width: 0;
+  }
+
+  &:last-of-type .segment-button-ios {
+    border-left-width: $segment-button-ios-border-width;
+  }
+}
+
+
+// iOS Segment Button Disabled
+// --------------------------------------------------
+
+.segment-ios .segment-button-disabled {
+  color: $segment-button-ios-background-color-disabled;
+
+  pointer-events: none;
+}
+
+
+// iOS Segment Button in Toolbar
+// --------------------------------------------------
+
+.toolbar-ios ion-segment-button {
+  max-width: $segment-button-ios-toolbar-button-max-width;
+}
+
+.toolbar-ios .segment-button-ios {
+  height: $segment-button-ios-toolbar-button-height;
+
+  font-size: $segment-button-ios-toolbar-font-size;
+  line-height: $segment-button-ios-toolbar-line-height;
+
+  ion-icon {
+    font-size: $segment-button-ios-toolbar-icon-size;
+    line-height: $segment-button-ios-toolbar-icon-line-height;
+  }
+}
+
+
+// iOS Segment Button Mixin
+// --------------------------------------------------
+
+@mixin ios-segment-button($color-name) {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
+
+  .segment-ios-#{$color-name} {
+
+    .segment-button {
+      border-color: $color-base;
+      color: $color-base;
+
+      &:hover:not(.segment-activated) {
+        background-color: ion-color-alpha($colors-ios, $color-base, $alpha-ios-lowest);
+      }
+
+      &:active:not(.segment-activated) {
+        background-color: ion-color-alpha($colors-ios, $color-base, $alpha-ios-lowest);
+      }
+
+      &.segment-activated {
+        color: $color-contrast;
+        background-color: $color-base;
+      }
+    }
+
+    .segment-button-disabled {
+      color: ion-color-alpha($colors-ios, $color-base, $alpha-ios-medium);
+    }
+  }
+}
+
+
+// iOS Segment Color Generation
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-ios {
+  $color-base: ion-color($colors-ios, $color-name, base, ios);
+
+  @include ios-segment-button($color-name);
+
+  .toolbar-ios-#{$color-name} .segment-button-ios.segment-activated {
+    color: $color-base;
+  }
+}
