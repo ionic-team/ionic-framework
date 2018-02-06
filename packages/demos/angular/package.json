@@ -4,11 +4,12 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "test": "ng test",
+    "start": "npm run override-router && ng serve",
+    "build": "npm run override-router && ng build",
+    "test": "npm run override-router && ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "npm run override-router && ng e2e",
+    "override-router": "rm -rf ./node_modules/@angular/router && mkdir ./node_modules/@angular/router && cp -R ./scripts/router ./node_modules/@angular"
   },
   "private": true,
   "dependencies": {
@@ -21,7 +22,6 @@
     "@angular/platform-browser": "latest",
     "@angular/platform-browser-dynamic": "latest",
     "@angular/router": "latest",
-    "@danbucholtz/ng-router": "6.0.0-beta.1-20a6848be",
     "@ionic/angular": "next",
     "@ionic/core": "next",
     "core-js": "^2.4.1",
