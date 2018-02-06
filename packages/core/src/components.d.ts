@@ -756,6 +756,36 @@ declare global {
 
 
 import {
+  CordovaPlatform as IonCordovaPlatform
+} from './components/cordova-platform/cordova-platform';
+
+declare global {
+  interface HTMLIonCordovaPlatformElement extends IonCordovaPlatform, HTMLElement {
+  }
+  var HTMLIonCordovaPlatformElement: {
+    prototype: HTMLIonCordovaPlatformElement;
+    new (): HTMLIonCordovaPlatformElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-cordova-platform": HTMLIonCordovaPlatformElement;
+  }
+  interface ElementTagNameMap {
+    "ion-cordova-platform": HTMLIonCordovaPlatformElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-cordova-platform": JSXElements.IonCordovaPlatformAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonCordovaPlatformAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
   Datetime as IonDatetime
 } from './components/datetime/datetime';
 

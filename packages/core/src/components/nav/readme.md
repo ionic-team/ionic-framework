@@ -78,13 +78,13 @@ boolean
 #### clearTransitionInfoForUrl()
 
 
+#### first()
+
+
 #### getActive()
 
 
 #### getChildNavs()
-
-
-#### getFirstView()
 
 
 #### getId()
@@ -112,6 +112,9 @@ boolean
 
 
 #### isTransitioning()
+
+
+#### last()
 
 
 #### pop()

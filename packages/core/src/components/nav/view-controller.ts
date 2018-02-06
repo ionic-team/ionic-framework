@@ -14,6 +14,7 @@ export class ViewController implements PublicViewController {
   overlay: boolean;
   zIndex: number;
   dismissProxy: any;
+  timestamp: number;
 
 
   onDidDismiss: (data: any, role: string) => void;
@@ -159,6 +160,7 @@ export function didLoadImpl(viewController: ViewController) {
 }
 
 export function initializeNewViewController(viewController: ViewController, data: any) {
+  viewController.timestamp = Date.now();
   viewController.state = STATE_NEW;
   viewController.data = data || {};
 }

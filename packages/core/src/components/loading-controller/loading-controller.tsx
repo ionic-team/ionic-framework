@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { LoadingEvent, LoadingOptions } from '../../index';
+import { LoadingEvent, LoadingOptions, OverlayController } from '../../index';
 
 let ids = 0;
 const loadings = new Map<number, HTMLIonLoadingElement>();
@@ -7,7 +7,7 @@ const loadings = new Map<number, HTMLIonLoadingElement>();
 @Component({
   tag: 'ion-loading-controller'
 })
-export class LoadingController {
+export class LoadingController implements OverlayController {
 
   @Method()
   create(opts?: LoadingOptions): Promise<HTMLIonLoadingElement> {
@@ -35,6 +35,10 @@ export class LoadingController {
     return loading.dismiss(data, role);
   }
 
+  @Method()
+  getTop() {
+    return loadings.get(getHighestId());
+  }
 
   @Listen('body:ionLoadingWillPresent')
   protected loadingWillPresent(ev: LoadingEvent) {

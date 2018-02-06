@@ -159,7 +159,11 @@ export function canSwipeBack(_nav: Nav) {
 }
 
 export function getFirstView(nav: Nav): ViewController {
-  return nav.views && nav.views.length > 0 ? nav.views[0] : null;
+  return nav.views && nav.views.length ? nav.views[0] : null;
+}
+
+export function getLastView(nav: Nav): ViewController {
+  return nav.views && nav.views.length ? nav.views[nav.views.length - 1] : null;
 }
 
 export function getActiveChildNavs(nav: Nav): Nav[] {

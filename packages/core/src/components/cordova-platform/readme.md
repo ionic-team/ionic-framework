@@ -1,4 +1,4 @@
-# ion-picker-controller
+# ion-cordova-platform
 
 
 
@@ -7,13 +7,7 @@
 
 ## Methods
 
-#### create()
-
-
-#### dismiss()
-
-
-#### getTop()
+#### ready()
 
 
 

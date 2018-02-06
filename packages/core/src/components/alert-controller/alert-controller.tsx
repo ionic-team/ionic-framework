@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { AlertEvent, AlertOptions } from '../../index';
+import { AlertEvent, AlertOptions, OverlayController } from '../../index';
 
 let ids = 0;
 const alerts = new Map<number, HTMLIonAlertElement>();
@@ -7,7 +7,7 @@ const alerts = new Map<number, HTMLIonAlertElement>();
 @Component({
   tag: 'ion-alert-controller'
 })
-export class AlertController {
+export class AlertController implements OverlayController {
 
   @Method()
   create(opts?: AlertOptions): Promise<HTMLIonAlertElement> {
@@ -38,6 +38,10 @@ export class AlertController {
     return alert.dismiss(data, role);
   }
 
+  @Method()
+  getTop() {
+    return alerts.get(getHighestId());
+  }
 
   @Listen('body:ionAlertWillPresent')
   protected alertWillPresent(ev: AlertEvent) {
