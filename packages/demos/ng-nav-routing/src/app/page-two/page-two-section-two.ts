@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { Router } from '@danbucholtz/ng-router';
+import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 
 @Component({

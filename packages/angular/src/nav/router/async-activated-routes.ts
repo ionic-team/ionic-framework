@@ -11,11 +11,14 @@ import {
   Event,
   RouteReuseStrategy,
   RouterState,
-  TreeNode,
+} from '@angular/router';
+
+import {
   advanceActivatedRoute,
   forEach,
   nodeChildrenAsMap,
-} from '@danbucholtz/ng-router';
+  TreeNode
+} from './router-utils';
 
 export class AsyncActivateRoutes {
   constructor(
@@ -44,7 +47,7 @@ export class AsyncActivateRoutes {
 
     const children: {[outletName: string]: TreeNode<ActivatedRoute>} = nodeChildrenAsMap(currNode);
 
-    const promises = futureNode.children.map(futureChild => {
+    const promises = futureNode.children.map((futureChild: TreeNode<ActivatedRoute>) => {
       const childOutletName = futureChild.value.outlet;
       const promise = this.deactivateRoutes(futureChild, children[childOutletName], contexts);
       promise
@@ -164,7 +167,7 @@ export class AsyncActivateRoutes {
     const children: {[outlet: string]: any} = nodeChildrenAsMap(currNode);
 
 
-    const promises = futureNode.children.map(c => {
+    const promises = futureNode.children.map((c: TreeNode<ActivatedRoute>) => {
       const promise = this.activateRoutes(c, children[c.value.outlet], contexts);
       promise
         .then(

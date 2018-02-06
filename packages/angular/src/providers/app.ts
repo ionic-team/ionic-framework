@@ -1,4 +1,4 @@
-import { NavContainer } from '@ionic/core';
+import { PublicNav } from '@ionic/core';
 
 export class App {
 
@@ -15,15 +15,15 @@ export class App {
     return isScrollingImpl(this);
   }
 
-  getRootNavs(): NavContainer[] {
+  getRootNavs(): PublicNav[] {
     return getRootNavsImpl(this);
   }
 
-  getActiveNavs(rootNavId?: number): NavContainer[] {
-    return getActiveNavsImpl(this, rootNavId);
+  getTopNavs(rootNavId?: number): PublicNav[] {
+    return getTopNavsImpl(this, rootNavId);
   }
 
-  getNavByIdOrName(nameOrId: number | string): NavContainer {
+  getNavByIdOrName(nameOrId: number | string): PublicNav {
     return getNavByIdOrNameImpl(this, nameOrId);
   }
 }
@@ -42,14 +42,14 @@ export function getRootNavsImpl(app: App) {
   return [];
 }
 
-export function getActiveNavsImpl(app: App, rootNavId?: number): NavContainer[] {
-  if (app._element && app._element.getActiveNavs) {
-    return app._element.getActiveNavs(rootNavId);
+export function getTopNavsImpl(app: App, rootNavId?: number): PublicNav[] {
+  if (app._element && app._element.getTopNavs) {
+    return app._element.getTopNavs(rootNavId);
   }
   return [];
 }
 
-export function getNavByIdOrNameImpl(app: App, nameOrId: number | string): NavContainer {
+export function getNavByIdOrNameImpl(app: App, nameOrId: number | string): PublicNav {
   if (app._element && app._element.getNavByIdOrName) {
     return app._element.getNavByIdOrName(nameOrId);
   }

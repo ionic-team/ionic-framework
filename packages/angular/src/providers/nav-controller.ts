@@ -93,11 +93,25 @@ export class NavController implements PublicNav {
     return false;
   }
 
-  getFirstView(): PublicViewController {
-    if (this.element.getFirstView) {
-      return this.element.getFirstView();
+  first(): PublicViewController {
+    if (this.element.first) {
+      return this.element.first();
     }
     return null;
+  }
+
+  last(): PublicViewController {
+    if (this.element.last) {
+      return this.element.last();
+    }
+    return null;
+  }
+
+  getViews(): PublicViewController[] {
+    if (this.element.getViews) {
+      return this.element.getViews();
+    }
+    return [];
   }
 
   getChildNavs(): PublicNav[] {
