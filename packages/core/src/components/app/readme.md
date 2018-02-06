@@ -5,9 +5,17 @@
 <!-- Auto Generated Below -->
 
 
+## Events
+
+#### exitApp
+
+
 ## Methods
 
-#### getActiveNavs()
+#### appPaused()
+
+
+#### appResume()
 
 
 #### getNavByIdOrName()
@@ -18,7 +26,15 @@
 Returns an array of top level Navs
 
 
+#### getTopNavs()
+
+
+#### hardwareBackButtonPressed()
+
+
 #### isEnabled()
+
+Returns whether the application is enabled or not
 
 
 #### isScrolling()

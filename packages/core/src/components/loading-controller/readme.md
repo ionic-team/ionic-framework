@@ -44,6 +44,9 @@ in the `usage` section below.
 #### dismiss()
 
 
+#### getTop()
+
+
 
 ----------------------------------------------
 

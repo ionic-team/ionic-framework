@@ -4,11 +4,11 @@ import {
   Animation,
   AnimationOptions,
   FrameworkDelegate,
+  FrameworkMountingData,
   Nav,
   NavOptions,
   PublicViewController,
   ViewController,
-  FrameworkMountingData
 } from '../../index';
 
 export interface PublicNav {
@@ -27,20 +27,15 @@ export interface PublicNav {
   getPrevious(view?: PublicViewController): PublicViewController;
   canGoBack(): boolean;
   canSwipeBack(): boolean;
-  getFirstView(): PublicViewController;
+  first(): PublicViewController;
+  last(): PublicViewController;
   getChildNavs(): PublicNav[];
+  getViews(): PublicViewController[];
 
-  element?: HTMLElement;
-}
-
-export interface NavContainer {
-  id?: number;
+  navId?: number;
   name?: string;
-  parent?: Nav;
-  getChildNavs?(): NavContainer[];
-  getAllChildNavs?(): NavContainer[];
-  getType?(): string;
-  getSecondaryIdentifier?(): string;
+  element?: HTMLElement;
+  parent?: PublicNav;
 }
 
 export interface NavOptions {
@@ -110,4 +105,5 @@ export interface PublicViewController {
   component?: any;
   instance?: any;
   element?: HTMLElement;
+  timestamp?: number;
 }

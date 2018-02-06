@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { PickerEvent, PickerOptions } from '../../index';
+import { PickerEvent, PickerOptions, OverlayController } from '../../index';
 
 let ids = 0;
 const pickers = new Map<number, HTMLIonPickerElement>();
@@ -7,7 +7,7 @@ const pickers = new Map<number, HTMLIonPickerElement>();
 @Component({
   tag: 'ion-picker-controller'
 })
-export class PickerController {
+export class PickerController implements OverlayController {
 
   @Method()
   create(opts?: PickerOptions): Promise<HTMLIonPickerElement> {
@@ -38,6 +38,10 @@ export class PickerController {
     return picker.dismiss(data, role);
   }
 
+  @Method()
+  getTop() {
+    return pickers.get(getHighestId());
+  }
 
   @Listen('body:ionPickerWillPresent')
   protected pickerWillPresent(ev: PickerEvent) {

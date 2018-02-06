@@ -32,6 +32,9 @@ view. See the [usage](#usage) section for an example of passing this event.
 #### dismiss()
 
 
+#### getTop()
+
+
 
 ----------------------------------------------
 

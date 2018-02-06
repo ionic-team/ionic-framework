@@ -145,10 +145,6 @@ export interface OverlayDismissEventDetail {
   role?: string;
 }
 
-export interface OverlayController {
-  create(): HTMLElement;
-}
-
 export interface FrameworkDelegate {
   attachViewToDom(elementOrContainerToMountTo: any, elementOrComponentToMount: any, propsOrDataObj?: any, classesToAdd?: string[], escapeHatch?: any): Promise<FrameworkMountingData>;
   removeViewFromDom(elementOrContainerToUnmountFrom: any, elementOrComponentToUnmount: any, escapeHatch?: any): Promise<void>;
@@ -159,7 +155,6 @@ export interface FrameworkMountingData {
   component: any;
   data: any;
 }
-
 
 declare global {
 
@@ -185,4 +180,8 @@ declare global {
       ['no-padding']?: boolean;
     }
   }
+}
+
+export interface OverlayController {
+  getTop(): HTMLElement;
 }
