@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 import { Config } from '../../index';
 
 
@@ -16,15 +16,6 @@ export class BackButton {
   private mode: string;
 
   @Prop({ context: 'config' }) config: Config;
-
-  @Event() ionNavPop: EventEmitter;
-
-  onClick(ev: UIEvent) {
-    ev.preventDefault();
-    ev.stopPropagation();
-
-    this.ionNavPop.emit();
-  }
 
   render() {
     const iconName = this.config.get('backButtonIcon', this.mode + '-arrow-back');
@@ -45,16 +36,17 @@ export class BackButton {
     return (
       <ion-nav-pop>
         <button>
-          <ion-icon class={iconClass} name={iconName}></ion-icon>
-        <slot name='icon'>
-
-        </slot>
-        <span class={textClass}>
-        <span>{text}</span>
-          <slot name='text'>
-          </slot>
-        </span>
-      </button>
+          <span class={iconClass}>
+            <slot name='icon'>
+              <ion-icon name={iconName}></ion-icon>
+            </slot>
+          </span>
+          <span class={textClass}>
+            <slot name='text'>
+              {text}
+            </slot>
+          </span>
+        </button>
       </ion-nav-pop>
     );
   }
