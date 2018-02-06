@@ -779,7 +779,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonCordovaPlatformAttributes extends HTMLAttributes {
-
+      
     }
   }
 }
