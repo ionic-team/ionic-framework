@@ -231,7 +231,7 @@ export interface IonicPageMetadata {
  *
  * In this example, if the app is launched at `http://localhost:8101/#/contact/contact-more-info` the displayed page
  * will be the `'ContactMoreInfoPage'`. It will show a back button that will go to the `'ContactDetailPage'` which
- * will also show a back button which will go to the `'Constact'` page.
+ * will also show a back button which will go to the `'Contact'` page.
  *
  * An example of an application with a set history stack is the Instagram application. Opening a link
  * to an image on Instagram will show the details for that image with a back button to the user's profile
