@@ -34,6 +34,13 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
    */
   @Prop({ mutable: true }) value: string;
 
+  @Watch('disabled')
+  disabledChanged() {
+    this.radios.forEach(radio => {
+      radio.disabled = this.disabled;
+    });
+  }
+
   @Watch('value')
   valueChanged() {
     // this radio group's value just changed
