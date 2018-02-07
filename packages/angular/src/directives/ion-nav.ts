@@ -3,10 +3,11 @@ import {
   Directive,
   ElementRef,
   Injector,
+  Optional,
   Type,
 } from '@angular/core';
 
-
+import { Router } from '@angular/router';
 import { FrameworkDelegate } from '@ionic/core';
 
 import { AngularComponentMounter, AngularEscapeHatch } from '..';
@@ -22,10 +23,19 @@ export class IonNav implements FrameworkDelegate {
     public elementRef: ElementRef,
     protected angularComponentMounter: AngularComponentMounter,
     protected cfr: ComponentFactoryResolver,
-    protected injector: Injector) {
+    protected injector: Injector,
+    @Optional() protected router: Router
+  ) {
 
     this.elementRef.nativeElement.delegate = this;
 
+  }
+
+  updateUrlState(urlSegment: string): Promise<any> {
+    if (this.router) {
+      return this.router.navigateByUrl(urlSegment);
+    }
+    return Promise.reject(new Error('Angular Router is unavailable'));
   }
 
   attachViewToDom(elementOrContainerToMountTo: HTMLIonNavElement,

@@ -56,7 +56,6 @@ import { buildMdTransition } from './transitions/transition.md';
 
 const transitionQueue = new Map<number, TransitionInstruction[]>();
 const allTransitionsCompleteHandlerQueue = new Map<number, Function[]>();
-const urlMap = new Map<string, TransitionInstruction>();
 
 /* it is very important to keep this class in sync with ./nav-interface interface */
 @Component({
@@ -123,52 +122,57 @@ export class Nav implements PublicNav {
   }
 
   @Method()
-  push(component: any, data?: any, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  push(component: any, data?: any, opts?: NavOptions, escapeHatch: any = {}): Promise<NavResult> {
     return pushImpl(this, component, data, opts, escapeHatch);
   }
 
   @Method()
-  pop(opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  pop(opts?: NavOptions, escapeHatch: any = {}): Promise<NavResult> {
     return popImpl(this, opts, escapeHatch);
   }
 
   @Method()
-  setRoot(component: any, data?: any, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  setRoot(component: any, data?: any, opts?: NavOptions, escapeHatch: any = {}): Promise<NavResult> {
     return setRootImpl(this, component, data, opts, escapeHatch);
   }
 
   @Method()
-  insert(insertIndex: number, page: any, params?: any, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  updateUrl(url: string, _opts?: NavOptions): Promise<any> {
+    return updateUrlImpl(this, url, _opts);
+  }
+
+  @Method()
+  insert(insertIndex: number, page: any, params?: any, opts?: NavOptions, escapeHatch: any = {}): Promise<NavResult> {
     return insertImpl(this, insertIndex, page, params, opts, escapeHatch);
   }
 
   @Method()
-  insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions, escapeHatch: any = {}): Promise<NavResult> {
     return insertPagesImpl(this, insertIndex, insertPages, opts, escapeHatch);
   }
 
   @Method()
-  popToRoot(opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  popToRoot(opts?: NavOptions, escapeHatch: any = {}): Promise<NavResult> {
     return popToRootImpl(this, opts, escapeHatch);
   }
 
   @Method()
-  popTo(indexOrViewCtrl: any, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  popTo(indexOrViewCtrl: any, opts?: NavOptions, escapeHatch: any = {}): Promise<NavResult> {
     return popToImpl(this, indexOrViewCtrl, opts, escapeHatch);
   }
 
   @Method()
-  removeIndex(startIndex: number, removeCount?: number, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  removeIndex(startIndex: number, removeCount?: number, opts?: NavOptions, escapeHatch: any = {}): Promise<NavResult> {
     return removeImpl(this, startIndex, removeCount, opts, escapeHatch);
   }
 
   @Method()
-  removeView(viewController: PublicViewController, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  removeView(viewController: PublicViewController, opts?: NavOptions, escapeHatch: any = {}): Promise<NavResult> {
     return removeViewImpl(this, viewController, opts, escapeHatch);
   }
 
   @Method()
-  setPages(componentDataPairs: ComponentDataPair[], opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  setPages(componentDataPairs: ComponentDataPair[], opts?: NavOptions, escapeHatch: any = {}): Promise<NavResult> {
     return setPagesImpl(this, componentDataPairs, opts, escapeHatch);
   }
 
@@ -209,11 +213,11 @@ export class Nav implements PublicNav {
   }
 
   @Method()
-  setRouteId(id: string, _: any = {}): Promise<void> {
+  setRouteId(id: string, _: any = {}): Promise<NavResult> {
     assert(this.useRouter, 'routing is disabled');
     const active = this.getActive();
     if (active && active.component === id) {
-      return Promise.resolve();
+      return Promise.resolve(null);
     }
     return this.setRoot(id);
   }
@@ -246,16 +250,6 @@ export class Nav implements PublicNav {
   }
 
   @Method()
-  getTransitionInfoForUrl(url: string): TransitionInstruction {
-    return urlMap.get(url);
-  }
-
-  @Method()
-  clearTransitionInfoForUrl(url: string) {
-    urlMap.delete(url);
-  }
-
-  @Method()
   onAllTransitionsComplete() {
     return allTransitionsCompleteImpl(this);
   }
@@ -268,6 +262,16 @@ export class Nav implements PublicNav {
   render() {
     return <slot></slot>;
   }
+}
+
+export function updateUrlImpl(nav: Nav, url: string, _opts?: NavOptions) {
+  if (!nav.delegate) {
+    nav.delegate = new DomFrameworkDelegate();
+  }
+  if (nav.delegate.updateUrlState) {
+    return nav.delegate.updateUrlState(url, null, null);
+  }
+  return Promise.reject(new Error('Delegate does not implement the updateUrlState method'));
 }
 
 export function getState(nav: Nav): NavState {
@@ -369,8 +373,8 @@ export function hydrateAnimationController(animationController: AnimationControl
 
 // public api
 
-export function push(nav: Nav, delegate: FrameworkDelegate, animation: Animation, component: any, data: any, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueOrNavigate({
+export function push(nav: Nav, delegate: FrameworkDelegate, animation: Animation, component: any, data: any, opts: NavOptions, escapeHatch: any): Promise<NavResult> {
+  return queueTransaction({
     component: component,
     insertStart: -1,
     insertViews: [{component, data}],
@@ -384,8 +388,8 @@ export function push(nav: Nav, delegate: FrameworkDelegate, animation: Animation
   });
 }
 
-export function insert(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, component: any, data: any, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueOrNavigate({
+export function insert(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, component: any, data: any, opts: NavOptions, escapeHatch: any): Promise<NavResult> {
+  return queueTransaction({
     component: component,
     insertStart: insertIndex,
     insertViews: [{ component, data }],
@@ -399,8 +403,8 @@ export function insert(nav: Nav, delegate: FrameworkDelegate, animation: Animati
   });
 }
 
-export function insertPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, insertPages: any[], opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueOrNavigate({
+export function insertPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, insertPages: any[], opts: NavOptions, escapeHatch: any): Promise<NavResult> {
+  return queueTransaction({
     component: null,
     insertStart: insertIndex,
     insertViews: insertPages,
@@ -414,8 +418,8 @@ export function insertPages(nav: Nav, delegate: FrameworkDelegate, animation: An
   });
 }
 
-export function pop(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueOrNavigate({
+export function pop(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts: NavOptions, escapeHatch: any): Promise<NavResult> {
+  return queueTransaction({
     component: null,
     removeStart: -1,
     removeCount: 1,
@@ -429,8 +433,8 @@ export function pop(nav: Nav, delegate: FrameworkDelegate, animation: Animation,
   });
 }
 
-export function popToRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueOrNavigate({
+export function popToRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts: NavOptions, escapeHatch: any): Promise<NavResult> {
+  return queueTransaction({
     component: null,
     removeStart: 1,
     removeCount: -1,
@@ -444,7 +448,7 @@ export function popToRoot(nav: Nav, delegate: FrameworkDelegate, animation: Anim
   });
 }
 
-export function popTo(nav: Nav, delegate: FrameworkDelegate, animation: Animation, indexOrViewCtrl: any, opts: NavOptions, escapeHatch: any): Promise<any> {
+export function popTo(nav: Nav, delegate: FrameworkDelegate, animation: Animation, indexOrViewCtrl: any, opts: NavOptions, escapeHatch: any): Promise<NavResult> {
   const config: TransitionInstruction = {
     component: null,
     removeStart: -1,
@@ -463,11 +467,11 @@ export function popTo(nav: Nav, delegate: FrameworkDelegate, animation: Animatio
   } else if (isNumber(indexOrViewCtrl)) {
     config.removeStart = indexOrViewCtrl + 1;
   }
-  return queueOrNavigate(config);
+  return queueTransaction(config);
 }
 
-export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animation, startIndex: number, removeCount = 1, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueOrNavigate({
+export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animation, startIndex: number, removeCount = 1, opts: NavOptions, escapeHatch: any): Promise<NavResult> {
+  return queueTransaction({
     component: null,
     removeStart: startIndex,
     removeCount: removeCount,
@@ -481,8 +485,8 @@ export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animati
   });
 }
 
-export function removeView(nav: Nav, delegate: FrameworkDelegate, animation: Animation, viewController: ViewController, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueOrNavigate({
+export function removeView(nav: Nav, delegate: FrameworkDelegate, animation: Animation, viewController: ViewController, opts: NavOptions, escapeHatch: any): Promise<NavResult> {
+  return queueTransaction({
     component: null,
     removeView: viewController,
     removeStart: 0,
@@ -497,18 +501,18 @@ export function removeView(nav: Nav, delegate: FrameworkDelegate, animation: Ani
   });
 }
 
-export function setRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animation, component: any, data: any, opts: NavOptions, escapeHatch: any): Promise<any> {
+export function setRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animation, component: any, data: any, opts: NavOptions, escapeHatch: any): Promise<NavResult> {
   return setPages(nav, delegate, animation, [{ component, data }], opts, escapeHatch);
 }
 
-export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, componentDataPairs: ComponentDataPair[], opts: NavOptions, escapeHatch: any): Promise<any> {
+export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, componentDataPairs: ComponentDataPair[], opts: NavOptions, escapeHatch: any): Promise<NavResult> {
   if (!isDef(opts)) {
     opts = {};
   }
   if (opts.animate !== true) {
     opts.animate = false;
   }
-  return queueOrNavigate({
+  return queueTransaction({
     component: componentDataPairs.length === 1 ? componentDataPairs[0].component : null,
     insertStart: 0,
     insertViews: componentDataPairs,
@@ -522,24 +526,6 @@ export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Anima
     escapeHatch,
     method: 'setPages'
   });
-}
-
-// private api, exported for testing
-
-export function queueOrNavigate(ti: TransitionInstruction): Promise<NavResult> {
-  if (isComponentUrl(ti.component)) {
-    urlMap.set(ti.component as string, ti);
-    // window.location.href = ti.component;
-    return Promise.resolve({
-      successful: true,
-      mountingData: null
-    });
-  }
-  return queueTransaction(ti);
-}
-
-export function isComponentUrl(component: any) {
-  return component && typeof component === 'string' && component.charAt(0) === '/';
 }
 
 export function queueTransaction(ti: TransitionInstruction): Promise<NavResult> {

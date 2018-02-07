@@ -25,7 +25,7 @@ import { PageTwo } from '../page-two/page-two';
 export class PageOne {
 
   ts: number;
-  constructor(private router: Router) {
+  constructor(private router: Router, private navController: NavController) {
     setInterval(() => {
       this.ts = Date.now();
     }, 500);
@@ -33,7 +33,8 @@ export class PageOne {
 
 
   pushPageTwoComponent() {
-    this.router.navigateByUrl('/simple-nav/page-two');
+    //this.router.navigateByUrl('/simple-nav/page-two');
+    this.navController.push('/simple-nav/page-two');
   }
 
 

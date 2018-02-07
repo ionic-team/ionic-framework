@@ -75,9 +75,6 @@ boolean
 #### canSwipeBack()
 
 
-#### clearTransitionInfoForUrl()
-
-
 #### first()
 
 
@@ -97,9 +94,6 @@ boolean
 
 
 #### getState()
-
-
-#### getTransitionInfoForUrl()
 
 
 #### getViews()
@@ -148,6 +142,9 @@ boolean
 
 
 #### setRouteId()
+
+
+#### updateUrl()
 
 
 

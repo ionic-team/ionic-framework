@@ -27,11 +27,11 @@ import { NavController } from '@ionic/angular';
 })
 export class PageTwo {
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private navController: NavController) {
   }
 
   pushPageThreeComponent() {
-    this.router.navigateByUrl('/simple-nav/page-three');
+    this.navController.push('/simple-nav/page-three');
   }
 
   goBack() {

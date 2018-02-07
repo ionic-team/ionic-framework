@@ -147,6 +147,7 @@ export interface OverlayDismissEventDetail {
 }
 
 export interface FrameworkDelegate {
+  updateUrlState?(urlSegment: string, stateObject?: any, title?: string): Promise<any>;
   attachViewToDom(elementOrContainerToMountTo: any, elementOrComponentToMount: any, propsOrDataObj?: any, classesToAdd?: string[], escapeHatch?: any): Promise<FrameworkMountingData>;
   removeViewFromDom(elementOrContainerToUnmountFrom: any, elementOrComponentToUnmount: any, escapeHatch?: any): Promise<void>;
 }
