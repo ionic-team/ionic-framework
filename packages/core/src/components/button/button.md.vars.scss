@@ -70,7 +70,7 @@ $button-md-background-color-activated:     ion-color($colors-md, $button-md-back
 $button-md-opacity-activated:              1 !default;
 
 /// @prop - Box shadow of the activated button
-$button-md-box-shadow-activated:           0 3px 5px rgba(0, 0, 0, .14), 0 3px 5px rgba(0, 0, 0, .21), 0 0 0 0 transparent !default;
+$button-md-box-shadow-activated:           0 3px 5px rgba(0, 0, 0, .14), 0 3px 5px rgba(0, 0, 0, .21) !default;
 
 /// @prop - Background color of the ripple on the button
 $button-md-ripple-background-color:       $text-md-color-step-200 !default;
