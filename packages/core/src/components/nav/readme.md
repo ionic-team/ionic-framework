@@ -117,6 +117,9 @@ boolean
 #### last()
 
 
+#### onAllTransitionsComplete()
+
+
 #### pop()
 
 

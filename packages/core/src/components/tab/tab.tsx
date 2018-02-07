@@ -77,9 +77,15 @@ export class Tab {
   setActive(active: boolean): Promise<any> {
     this.active = active;
     const nav = getNavAsChildIfExists(this.el);
-    if (nav && nav.getViews().length === 0 && nav.root) {
-      // we need to initialize
-      return nav.setRoot(nav.root);
+    if (nav) {
+      return (nav as any).componentOnReady().then(() => {
+        return nav.onAllTransitionsComplete();
+      }).then(() => {
+        if (!nav.getViews().length && nav.root) {
+          return nav.setRoot(nav.root);
+        }
+        return Promise.resolve();
+      });
     }
     // it's already been initialized if it exists
     return Promise.resolve();

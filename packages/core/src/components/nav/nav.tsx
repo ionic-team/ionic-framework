@@ -54,7 +54,8 @@ import {
 import { buildIOSTransition } from './transitions/transition.ios';
 import { buildMdTransition } from './transitions/transition.md';
 
-const queueMap = new Map<number, TransitionInstruction[]>();
+const transitionQueue = new Map<number, TransitionInstruction[]>();
+const allTransitionsCompleteHandlerQueue = new Map<number, Function[]>();
 const urlMap = new Map<string, TransitionInstruction>();
 
 /* it is very important to keep this class in sync with ./nav-interface interface */
@@ -254,6 +255,11 @@ export class Nav implements PublicNav {
     urlMap.delete(url);
   }
 
+  @Method()
+  onAllTransitionsComplete() {
+    return allTransitionsCompleteImpl(this);
+  }
+
   @Listen('navInit')
   navInitialized(event: NavEvent) {
     navInitializedImpl(this, event);
@@ -284,7 +290,7 @@ export function getState(nav: Nav): NavState {
 
 export function componentDidLoadImpl(nav: Nav) {
   nav.navInit.emit();
-  if (nav.root && !this.lazy) {
+  if (nav.root && !nav.lazy) {
     nav.setRoot(nav.root);
   }
 }
@@ -364,7 +370,7 @@ export function hydrateAnimationController(animationController: AnimationControl
 // public api
 
 export function push(nav: Nav, delegate: FrameworkDelegate, animation: Animation, component: any, data: any, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueTransaction({
+  return queueOrNavigate({
     component: component,
     insertStart: -1,
     insertViews: [{component, data}],
@@ -379,7 +385,7 @@ export function push(nav: Nav, delegate: FrameworkDelegate, animation: Animation
 }
 
 export function insert(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, component: any, data: any, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueTransaction({
+  return queueOrNavigate({
     component: component,
     insertStart: insertIndex,
     insertViews: [{ component, data }],
@@ -394,7 +400,7 @@ export function insert(nav: Nav, delegate: FrameworkDelegate, animation: Animati
 }
 
 export function insertPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, insertPages: any[], opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueTransaction({
+  return queueOrNavigate({
     component: null,
     insertStart: insertIndex,
     insertViews: insertPages,
@@ -409,7 +415,7 @@ export function insertPages(nav: Nav, delegate: FrameworkDelegate, animation: An
 }
 
 export function pop(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueTransaction({
+  return queueOrNavigate({
     component: null,
     removeStart: -1,
     removeCount: 1,
@@ -424,7 +430,7 @@ export function pop(nav: Nav, delegate: FrameworkDelegate, animation: Animation,
 }
 
 export function popToRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueTransaction({
+  return queueOrNavigate({
     component: null,
     removeStart: 1,
     removeCount: -1,
@@ -457,11 +463,11 @@ export function popTo(nav: Nav, delegate: FrameworkDelegate, animation: Animatio
   } else if (isNumber(indexOrViewCtrl)) {
     config.removeStart = indexOrViewCtrl + 1;
   }
-  return queueTransaction(config);
+  return queueOrNavigate(config);
 }
 
 export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animation, startIndex: number, removeCount = 1, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueTransaction({
+  return queueOrNavigate({
     component: null,
     removeStart: startIndex,
     removeCount: removeCount,
@@ -476,7 +482,7 @@ export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animati
 }
 
 export function removeView(nav: Nav, delegate: FrameworkDelegate, animation: Animation, viewController: ViewController, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueTransaction({
+  return queueOrNavigate({
     component: null,
     removeView: viewController,
     removeStart: 0,
@@ -502,7 +508,7 @@ export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Anima
   if (opts.animate !== true) {
     opts.animate = false;
   }
-  return queueTransaction({
+  return queueOrNavigate({
     component: componentDataPairs.length === 1 ? componentDataPairs[0].component : null,
     insertStart: 0,
     insertViews: componentDataPairs,
@@ -520,10 +526,14 @@ export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Anima
 
 // private api, exported for testing
 
-export function queueOrNavigate(ti: TransitionInstruction): void | Promise<NavResult> {
+export function queueOrNavigate(ti: TransitionInstruction): Promise<NavResult> {
   if (isComponentUrl(ti.component)) {
     urlMap.set(ti.component as string, ti);
-    window.location.href = ti.component;
+    // window.location.href = ti.component;
+    return Promise.resolve({
+      successful: true,
+      mountingData: null
+    });
   }
   return queueTransaction(ti);
 }
@@ -570,10 +580,34 @@ export function nextTransaction(nav: Nav): Promise<any> {
 
   const topTransaction = getTopTransaction(nav.navId);
   if (!topTransaction) {
+    // cool, there are no transitions going for this nav
+    processAllTransitionCompleteQueue(nav.navId);
     return Promise.resolve();
   }
 
   return doNav(nav, topTransaction);
+}
+
+export function processAllTransitionCompleteQueue(navId: number) {
+  const queue = allTransitionsCompleteHandlerQueue.get(navId) || [];
+  for (const callback of queue) {
+    callback();
+  }
+  allTransitionsCompleteHandlerQueue.set(navId, []);
+}
+
+export function allTransitionsCompleteImpl(nav: Nav) {
+  return new Promise((resolve) => {
+    const queue = transitionQueue.get(nav.navId) || [];
+    if (queue.length) {
+      // there are pending transitions, so queue it up and we'll be notified when it's done
+      const handlers = allTransitionsCompleteHandlerQueue.get(nav.navId) || [];
+      handlers.push(resolve);
+      return allTransitionsCompleteHandlerQueue.set(nav.navId, handlers);
+    }
+    // there are no pending transitions, so just resolve right away
+    return resolve();
+  });
 }
 
 export function doNav(nav: Nav, ti: TransitionInstruction) {
@@ -1103,17 +1137,17 @@ export function convertComponentToViewController(nav: Nav, ti: TransitionInstruc
 }
 
 export function addToQueue(ti: TransitionInstruction) {
-  const list = queueMap.get(ti.id) || [];
+  const list = transitionQueue.get(ti.id) || [];
   list.push(ti);
-  queueMap.set(ti.id, list);
+  transitionQueue.set(ti.id, list);
 }
 
 export function getQueue(id: number) {
-  return queueMap.get(id) || [];
+  return transitionQueue.get(id) || [];
 }
 
 export function resetQueue(id: number) {
-  queueMap.set(id, []);
+  transitionQueue.set(id, []);
 }
 
 export function getTopTransaction(id: number) {
@@ -1123,7 +1157,7 @@ export function getTopTransaction(id: number) {
   }
   const tmp = queue.concat();
   const toReturn = tmp.shift();
-  queueMap.set(id, tmp);
+  transitionQueue.set(id, tmp);
   return toReturn;
 }
 
