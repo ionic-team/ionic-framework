@@ -7,6 +7,10 @@
   @include border-radius($chip-button-border-radius);
   @include margin($chip-button-margin-top, $chip-button-margin-end, $chip-button-margin-bottom, $chip-button-margin-start);
 
+  position: relative;
+
+  border: 0;
+
   width: $chip-button-size;
   height: $chip-button-size;
 
@@ -14,4 +18,16 @@
   &:focus {
     outline: none;
   }
+}
+
+.chip-button-inner {
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
 }
