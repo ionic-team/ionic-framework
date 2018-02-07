@@ -6,9 +6,9 @@ import { NavController } from '@ionic/angular';
 @Component({
   selector: 'tabs-page',
   template: `
-  <ion-tabs (ionChange)="tabChanged($event)">
+  <ion-tabs>
     <ion-tab title="Tab One" icon="star" #tabOne>
-      <ion-nav [root]="tabOnePageOne" name="tab-one"></ion-nav>
+      <ion-nav [root]="tabOnePageOne" name="tab-one" lazy="true"></ion-nav>
     </ion-tab>
     <ion-tab title="Tab Two" icon="globe" #tabTwo>
       <ion-nav [root]="tabTwoPageOne" name="tab-two" lazy="true"></ion-nav>
