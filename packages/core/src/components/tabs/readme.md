@@ -222,7 +222,13 @@ Emitted when the tab changes.
 #### getByIndex()
 
 
+#### getContentElement()
+
+
 #### getIndex()
+
+
+#### getRouteId()
 
 
 #### getSelected()
@@ -232,6 +238,9 @@ Emitted when the tab changes.
 
 
 #### select()
+
+
+#### setRouteId()
 
 
 

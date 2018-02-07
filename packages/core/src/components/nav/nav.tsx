@@ -7,11 +7,10 @@ import {
   Config,
   FrameworkDelegate,
   NavOptions,
+  NavOutlet,
   NavResult,
-  NavState,
   PublicNav,
   PublicViewController,
-  RouterEntries,
   Transition,
   TransitionInstruction,
 } from '../../index';
@@ -35,7 +34,6 @@ import {
   getPreviousImpl,
   getViews,
   isViewController,
-  resolveRoute,
   setZIndex,
   toggleHidden,
   transitionFactory
@@ -63,16 +61,14 @@ const urlMap = new Map<string, TransitionInstruction>();
   tag: 'ion-nav',
   styleUrl: 'nav.scss'
 })
-export class Nav implements PublicNav {
+export class Nav implements PublicNav, NavOutlet {
 
   @Element() element: HTMLElement;
   @Event() navInit: EventEmitter<NavEventDetail>;
   @Event() ionNavChanged: EventEmitter<NavEventDetail>;
 
-  useRouter: boolean;
   navId: number;
   init = false;
-  routes: RouterEntries = [];
   parent: Nav;
   views: ViewController[] = [];
   transitioning?: boolean;
@@ -96,17 +92,12 @@ export class Nav implements PublicNav {
     this.navId = getNextNavId();
   }
 
-  componentWillLoad() {
-    this.routes = Array.from(this.element.querySelectorAll('ion-route'))
-      .map(child => child.getRoute());
-  }
-
   componentDidLoad() {
     if (this.init) {
       return;
     }
     this.init = true;
-    if (!this.useRouter || !this.lazy) {
+    if (!this.lazy) {
       componentDidLoadImpl(this);
     }
   }
@@ -199,14 +190,7 @@ export class Nav implements PublicNav {
   }
 
   @Method()
-  getState(): NavState {
-    assert(this.useRouter, 'routing is disabled');
-    return getState(this);
-  }
-
-  @Method()
   setRouteId(id: string, _: any = {}): Promise<void> {
-    assert(this.useRouter, 'routing is disabled');
     const active = this.getActive();
     if (active && active.component === id) {
       return Promise.resolve();
@@ -215,9 +199,21 @@ export class Nav implements PublicNav {
   }
 
   @Method()
-  getRoutes(): RouterEntries {
-    assert(this.useRouter, 'routing is disabled');
-    return this.routes;
+  getRouteId(): string | null {
+    const element = this.getContentElement();
+    if (element) {
+      return element.tagName;
+    }
+    return null;
+  }
+
+  @Method()
+  getContentElement(): HTMLElement {
+    const active = getActiveImpl(this);
+    if (active) {
+      active.element;
+    }
+    return null;
   }
 
   @Method()
@@ -331,23 +327,6 @@ export class Nav implements PublicNav {
     dom.push(<slot></slot>);
     return dom;
   }
-}
-
-export function getState(nav: Nav): NavState {
-  const active = getActiveImpl(nav);
-  if (!active) {
-    return null;
-  }
-  const component = active.component;
-  const route = resolveRoute(nav, component);
-  if (!route) {
-    console.error('cant reverse route by component', component);
-    return null;
-  }
-  return {
-    path: route.path,
-    focusNode: active.element
-  };
 }
 
 export function componentDidLoadImpl(nav: Nav) {
@@ -1145,7 +1124,7 @@ export function convertViewsToViewControllers(pairs: ComponentDataPair[]): ViewC
     });
 }
 
-export function convertComponentToViewController(nav: Nav, ti: TransitionInstruction): ViewController[] {
+export function convertComponentToViewController(_: Nav, ti: TransitionInstruction): ViewController[] {
   if (ti.insertViews) {
     assert(ti.insertViews.length > 0, 'length can not be zero');
     const viewControllers = convertViewsToViewControllers(ti.insertViews);
@@ -1160,9 +1139,6 @@ export function convertComponentToViewController(nav: Nav, ti: TransitionInstruc
       }
       if (viewController.state === STATE_DESTROYED) {
         throw new Error('The view has already been destroyed');
-      }
-      if (nav.useRouter && !resolveRoute(nav, viewController.component)) {
-        throw new Error('Route not specified for ' + viewController.component);
       }
     }
     return viewControllers;

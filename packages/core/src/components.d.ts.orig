@@ -2447,7 +2447,11 @@ import {
 } from './components/router/router';
 
 declare global {
-  interface HTMLIonRouterElement extends IonRouter, HTMLStencilElement {
+<<<<<<< Updated upstream
+  interface HTMLIonRouterControllerElement extends IonRouterController, HTMLStencilElement {
+=======
+  interface HTMLIonRouterElement extends IonRouter, HTMLElement {
+>>>>>>> Stashed changes
   }
   var HTMLIonRouterElement: {
     prototype: HTMLIonRouterElement;

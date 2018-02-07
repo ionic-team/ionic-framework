@@ -1,7 +1,7 @@
 import {
-  RouterEntries, RouterEntry, RouterSegments, breadthFirstSearch,
-  generateURL, initRoute, matchRoute, parseURL
-} from '../../router-controller/router-utils';
+  RouterEntries, RouterSegments, breadthFirstSearch,
+  generatePath, matchRoute, parsePath
+} from '../router-utils';
 
 describe('RouterSegments', () => {
   it ('should initialize with empty array', () => {
@@ -26,74 +26,74 @@ describe('RouterSegments', () => {
 
 describe('parseURL', () => {
   it('should parse empty path', () => {
-    expect(parseURL('')).toEqual(['']);
+    expect(parsePath('')).toEqual(['']);
   });
 
   it('should parse empty path (2)', () => {
-    expect(parseURL('   ')).toEqual(['']);
+    expect(parsePath('   ')).toEqual(['']);
   });
 
   it('should parse null path', () => {
-    expect(parseURL(null)).toEqual(['']);
+    expect(parsePath(null)).toEqual(['']);
   });
 
   it('should parse undefined path', () => {
-    expect(parseURL(undefined)).toEqual(['']);
+    expect(parsePath(undefined)).toEqual(['']);
   });
 
   it('should parse relative path', () => {
-    expect(parseURL('path/to/file.js')).toEqual(['path', 'to', 'file.js']);
+    expect(parsePath('path/to/file.js')).toEqual(['path', 'to', 'file.js']);
   });
 
   it('should parse absolute path', () => {
-    expect(parseURL('/path/to/file.js')).toEqual(['path', 'to', 'file.js']);
+    expect(parsePath('/path/to/file.js')).toEqual(['path', 'to', 'file.js']);
   });
   it('should parse relative path', () => {
-    expect(parseURL('/PATH///to//file.js//')).toEqual(['PATH', 'to', 'file.js']);
+    expect(parsePath('/PATH///to//file.js//')).toEqual(['PATH', 'to', 'file.js']);
   });
 });
 
-describe('initRoute', () => {
-  it('should initialize empty segments', () => {
-    const route: RouterEntry = {
-      id: 'cmp',
-      path: 'path/to/cmp'
-    };
-    initRoute(route);
-    expect(route.segments).toEqual(['path', 'to', 'cmp']);
-  });
+// describe('readRoutes', () => {
+//   it('should read URL', () => {
+//     const node = (<div>
+//       <ion-route path='/' component='main-page'/>
+//       <ion-route path='/one-page' component='one-page'/>
+//       <ion-route path='secondpage' component='second-page'/>
+//       <ion-route path='/5/hola' component='4'/>
+//       <ion-route path='path/to/five' component='5'/>
+//     </div>) as any;
+//     node.children = node.vchildren;
 
-  it('should not initialize valid segments', () => {
-    const route: RouterEntry = {
-      id: 'cmp',
-      path: 'path/to/cmp',
-      segments: ['']
-    };
-    initRoute(route);
-    expect(route.segments).toEqual(['']);
-  });
-});
+//     expect(readRoutes(node)).toEqual([
+//       { path: [''], id: 'hola', subroutes: [] },
+//       { path: ['one-page'], id: 'one-page', subroutes: [] },
+//       { path: ['secondpage'], id: 'second-page', subroutes: [] },
+//       { path: ['5', 'hola'], id: '4', subroutes: [] },
+//       { path: ['path', 'to', 'five'], id: '5', subroutes: [] }
+//     ]);
+//   });
+// });
 
 describe('matchRoute', () => {
   it('should match simple route', () => {
     const seg = new RouterSegments(['path', 'to', 'component']);
-    const routes = [
-      { id: 2, path: 'to' },
-      { id: 1, path: 'path' },
-      { id: 3, path: 'segment' },
-      { id: 4, path: '' },
+    const routes: RouterEntries = [
+      { id: 2, path: ['to'], subroutes: [] },
+      { id: 1, path: ['path'], subroutes: [] },
+      { id: 3, path: ['segment'], subroutes: [] },
+      { id: 4, path: [''], subroutes: [] },
     ];
     const match = matchRoute(seg, routes);
-    expect(match).toEqual({ id: 1, path: 'path', segments: ['path'] });
+    expect(match).toEqual({ id: 1, path: ['path'], subroutes: [] });
     expect(seg.next()).toEqual('to');
   });
 
   it('should match default route', () => {
-    const routes = [
-      { id: 2, path: 'to' },
-      { id: 1, path: 'path' },
-      { id: 3, path: 'segment' },
-      { id: 4, path: '' },
+    const routes: RouterEntries = [
+      { id: 2, path: ['to'], subroutes: [] },
+      { id: 1, path: ['path'], subroutes: [] },
+      { id: 3, path: ['segment'], subroutes: [] },
+      { id: 4, path: [''], subroutes: [] },
     ];
     const seg = new RouterSegments(['hola', 'path']);
     let match = matchRoute(seg, routes);
@@ -108,13 +108,12 @@ describe('matchRoute', () => {
     }
   });
 
-
   it('should not match any route', () => {
-    const routes = [
-      { id: 2, path: 'to/to/to' },
-      { id: 1, path: 'adam/manu' },
-      { id: 3, path: 'hola/adam' },
-      { id: 4, path: '' },
+    const routes: RouterEntries = [
+      { id: 2, path: ['to', 'to', 'to'], subroutes: [] },
+      { id: 1, path: ['adam', 'manu'], subroutes: [] },
+      { id: 3, path: ['hola', 'adam'], subroutes: [] },
+      { id: 4, path: [''], subroutes: [] },
     ];
     const seg = new RouterSegments(['hola', 'manu', 'adam']);
     const match = matchRoute(seg, routes);
@@ -130,9 +129,9 @@ describe('matchRoute', () => {
   });
 
   it('should not match any route (2)', () => {
-    const routes = [
-      { id: 1, path: 'adam/manu' },
-      { id: 3, path: 'hola/adam' },
+    const routes: RouterEntries = [
+      { id: 1, path: ['adam', 'manu'], subroutes: [] },
+      { id: 3, path: ['hola', 'adam'], subroutes: [] },
     ];
     const seg = new RouterSegments(['adam']);
     expect(matchRoute(seg, routes)).toBeNull();
@@ -141,11 +140,11 @@ describe('matchRoute', () => {
   });
 
   it ('should match multiple segments', () => {
-    const routes = [
-      { id: 1, path: 'adam/manu' },
-      { id: 2, path: 'manu/hello' },
-      { id: 3, path: 'hello' },
-      { id: 4, path: '' },
+    const routes: RouterEntries = [
+      { id: 1, path: ['adam', 'manu'], subroutes: [] },
+      { id: 2, path: ['manu', 'hello'], subroutes: [] },
+      { id: 3, path: ['hello'], subroutes: [] },
+      { id: 4, path: [''], subroutes: [] },
     ];
     const seg = new RouterSegments(['adam', 'manu', 'hello', 'manu', 'hello']);
     let match = matchRoute(seg, routes);
@@ -165,10 +164,10 @@ describe('matchRoute', () => {
   });
 
   it('should match long multi segments', () => {
-    const routes = [
-      { id: 1, path: 'adam/manu/hello/menu/hello' },
-      { id: 2, path: 'adam/manu/hello/menu' },
-      { id: 3, path: 'adam/manu' },
+    const routes: RouterEntries = [
+      { id: 1, path: ['adam', 'manu', 'hello', 'menu', 'hello'], subroutes: [] },
+      { id: 2, path: ['adam', 'manu', 'hello', 'menu'], subroutes: [] },
+      { id: 3, path: ['adam', 'manu'], subroutes: [] },
     ];
     const seg = new RouterSegments(['adam', 'manu', 'hello', 'menu', 'hello']);
     const match = matchRoute(seg, routes);
@@ -186,26 +185,26 @@ describe('matchRoute', () => {
 });
 
 
-describe('generateURL', () => {
+describe('generatePath', () => {
   it('should generate an empty URL', () => {
-    expect(generateURL([])).toEqual('/');
-    expect(generateURL([{ path: '' } as any])).toEqual('/');
-    expect(generateURL([{ path: '/' } as any])).toEqual('/');
-    expect(generateURL([{ path: '//' } as any])).toEqual('/');
-    expect(generateURL([{ path: '  ' } as any])).toEqual('/');
+    expect(generatePath([])).toEqual('/');
+    expect(generatePath([{ path: '' } as any])).toEqual('/');
+    expect(generatePath([{ path: '/' } as any])).toEqual('/');
+    expect(generatePath([{ path: '//' } as any])).toEqual('/');
+    expect(generatePath([{ path: '  ' } as any])).toEqual('/');
   });
 
   it('should genenerate a basic url', () => {
-    const state = [
-      { path: '/' },
-      { path: '/ ' },
-      { path: '' },
-      { path: '/path// to/' },
-      { path: '/page  ' },
-      { path: 'number-TWO/' },
-      { path: '   / ' }
+    const stack = [
+      '',
+      '',
+      '',
+      'path/to',
+      'page',
+      'number-TWO',
+      ''
     ];
-    expect(generateURL(state as any)).toEqual('/path/to/page/number-TWO');
+    expect(generatePath(stack)).toEqual('/path/to/page/number-TWO');
 
   });
 });
@@ -234,8 +233,3 @@ describe('breadthFirstSearch', () => {
   });
 });
 
-// describe('readNavState', () => {
-//   it('should read state', () => {
-
-//   });
-// });
