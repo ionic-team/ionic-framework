@@ -290,7 +290,7 @@ export function getState(nav: Nav): NavState {
 
 export function componentDidLoadImpl(nav: Nav) {
   nav.navInit.emit();
-  if (nav.root && !this.lazy) {
+  if (nav.root && !nav.lazy) {
     nav.setRoot(nav.root);
   }
 }
