@@ -104,7 +104,7 @@ export class Nav implements PublicNav {
       return;
     }
     this.init = true;
-    if (!this.useRouter || !this.lazy) {
+    if (!this.useRouter) {
       componentDidLoadImpl(this);
     }
   }
@@ -284,7 +284,7 @@ export function getState(nav: Nav): NavState {
 
 export function componentDidLoadImpl(nav: Nav) {
   nav.navInit.emit();
-  if (nav.root) {
+  if (nav.root && !this.lazy) {
     nav.setRoot(nav.root);
   }
 }
