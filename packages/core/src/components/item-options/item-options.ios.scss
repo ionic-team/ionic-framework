@@ -1,0 +1,17 @@
+@import "./item-options";
+@import "./item-options.ios.vars";
+
+// iOS Item Options
+// --------------------------------------------------
+
+.list-ios ion-item-options {
+  border-bottom: $hairlines-width solid $item-ios-border-color;
+}
+
+
+// iOS No Lines List
+// --------------------------------------------------
+
+.list-ios[no-lines] ion-item-options {
+  border-width: 0;
+}

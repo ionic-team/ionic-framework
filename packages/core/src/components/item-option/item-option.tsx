@@ -5,6 +5,10 @@ import { Component, Prop } from '@stencil/core';
   tag: 'ion-item-option',
   host: {
     theme: 'item-option'
+  },
+  styleUrls: {
+    ios: 'item-option.ios.scss',
+    md: 'item-option.md.scss'
   }
 })
 export class ItemOption {
@@ -55,7 +59,7 @@ export class ItemOption {
         disabled={this.disabled}
         href={this.href}
         onClick={this.clickedOptionButton.bind(this)}></TagType>,
-      <span class='button-inner'>
+      <span class='item-option-button-inner'>
         <slot></slot>
       </span>
     ];
