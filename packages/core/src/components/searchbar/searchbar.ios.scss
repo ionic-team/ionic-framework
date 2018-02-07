@@ -85,11 +85,11 @@
 .searchbar-cancel-button-ios {
   @include padding(0, 0, 0, 8px);
 
-  font-size: $searchbar-ios-cancel-button-font-size;
-
   display: none;
 
   flex-shrink: 0;
+
+  font-size: $searchbar-ios-cancel-button-font-size;
 
   color: $searchbar-ios-cancel-button-color;
   background-color: $searchbar-ios-cancel-button-background-color;

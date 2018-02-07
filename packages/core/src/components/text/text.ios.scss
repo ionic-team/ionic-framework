@@ -11,6 +11,7 @@
   .text-ios-#{$color-name},
   .text-ios-#{$color-name} a,
   .text-ios-#{$color-name} p {
+    // scss-lint:disable ImportantRule
     color: $color-base !important;
   }
 
