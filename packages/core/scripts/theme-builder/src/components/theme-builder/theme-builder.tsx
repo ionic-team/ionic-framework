@@ -15,6 +15,8 @@ export class ThemeBuilder {
   @State() demoUrl: string;
   @State() demoMode: string;
   @State() cssText: string = '';
+  @State() hoverProperty: string;
+  @State() propertiesUsed: string[];
   @State() themeName: string = '';
 
   componentWillLoad() {
@@ -60,17 +62,31 @@ export class ThemeBuilder {
     console.log('ThemeBuilder themeCssChange', this.themeName);
   }
 
+  @Listen('propertyHoverStart')
+  onPropertyHoverStart(ev) {
+    this.hoverProperty = ev.detail.property;
+  }
+
+  @Listen('propertyHoverStop')
+  onPropertyHoverStop() {
+    this.hoverProperty = undefined;
+  }
+
+  @Listen('propertiesUsed')
+  onPropertiesUsed(ev) {
+    this.propertiesUsed = ev.detail.properties;
+  }
+
   render() {
     return [
       <main>
-
         <section class='preview-column'>
           <demo-selection demoData={this.demoData} demoUrl={this.demoUrl} demoMode={this.demoMode}></demo-selection>
-          <app-preview demoUrl={this.demoUrl} demoMode={this.demoMode} cssText={this.cssText}></app-preview>
+          <app-preview demoUrl={this.demoUrl} demoMode={this.demoMode} cssText={this.cssText} hoverProperty={this.hoverProperty}></app-preview>
         </section>
 
         <section class='selector-column'>
-          <theme-selector themeData={this.themeData}></theme-selector>
+          <theme-selector themeData={this.themeData} propertiesUsed={this.propertiesUsed}></theme-selector>
         </section>
 
         <section>

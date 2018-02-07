@@ -46,6 +46,11 @@
   background-color: $button-md-text-color;
 }
 
+a[disabled],
+button[disabled],
+.button[disabled] {
+  opacity: $button-md-opacity-disabled;
+}
 
 // Material Design Default Button Color Mixin
 // --------------------------------------------------

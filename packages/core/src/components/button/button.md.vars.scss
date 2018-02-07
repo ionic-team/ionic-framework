@@ -78,6 +78,9 @@ $button-md-ripple-background-color:       $text-md-color-step-200 !default;
 /// @prop - Background color of the focused button
 $button-md-background-color-focused:       ion-color($colors-md, $button-md-background-color, shade, md) !default;
 
+/// @prop - Opacity of the button when disabled
+$button-md-opacity-disabled:               $alpha-md-medium !default;
+
 
 // Material Design Large Button
 // --------------------------------------------------

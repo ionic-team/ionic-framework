@@ -57,6 +57,9 @@ $button-ios-opacity-hover:                          .8 !default;
 /// @prop - Background color of the focused button
 $button-ios-background-color-focused:               ion-color($colors-ios, $button-ios-background-color, shade, ios) !default;
 
+/// @prop - Opacity of the button when disabled
+$button-ios-opacity-disabled:                       $alpha-ios-medium !default;
+
 
 // iOS Large Button
 // --------------------------------------------------
