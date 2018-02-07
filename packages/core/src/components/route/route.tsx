@@ -1,5 +1,4 @@
-import { Component, Method, Prop } from '@stencil/core';
-import { RouterEntry, parseURL } from '../router-controller/router-utils';
+import { Component, Prop } from '@stencil/core';
 
 
 @Component({
@@ -11,13 +10,4 @@ export class Route {
   @Prop() component: string;
   @Prop() props: any = {};
 
-  @Method()
-  getRoute(): RouterEntry {
-    return {
-      path: this.path,
-      segments: parseURL(this.path),
-      id: this.component,
-      props: this.props
-    };
-  }
 }

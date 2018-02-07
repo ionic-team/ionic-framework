@@ -7,11 +7,10 @@ import {
   Config,
   FrameworkDelegate,
   NavOptions,
+  NavOutlet,
   NavResult,
-  NavState,
   PublicNav,
   PublicViewController,
-  RouterEntries,
   Transition,
   TransitionInstruction,
 } from '../../index';
@@ -35,7 +34,6 @@ import {
   getPreviousImpl,
   getViews,
   isViewController,
-  resolveRoute,
   setZIndex,
   toggleHidden,
   transitionFactory
@@ -53,6 +51,7 @@ import {
 
 import { buildIOSTransition } from './transitions/transition.ios';
 import { buildMdTransition } from './transitions/transition.md';
+import { GestureDetail } from '../gesture/gesture';
 
 const queueMap = new Map<number, TransitionInstruction[]>();
 const urlMap = new Map<string, TransitionInstruction>();
@@ -62,16 +61,14 @@ const urlMap = new Map<string, TransitionInstruction>();
   tag: 'ion-nav',
   styleUrl: 'nav.scss'
 })
-export class Nav implements PublicNav {
+export class Nav implements PublicNav, NavOutlet {
 
   @Element() element: HTMLElement;
   @Event() navInit: EventEmitter<NavEventDetail>;
   @Event() ionNavChanged: EventEmitter<NavEventDetail>;
 
-  useRouter: boolean;
   navId: number;
   init = false;
-  routes: RouterEntries = [];
   parent: Nav;
   views: ViewController[] = [];
   transitioning?: boolean;
@@ -79,7 +76,7 @@ export class Nav implements PublicNav {
   transitionId?: number;
   isViewInitialized?: boolean;
   isPortal: boolean;
-  swipeToGoBackTransition: any; // TODO Transition
+  sbTrns: any; // TODO Transition
   childNavs?: Nav[];
 
   @Prop() mode: string;
@@ -89,14 +86,10 @@ export class Nav implements PublicNav {
   @Prop({ context: 'config' }) config: Config;
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop() lazy = false;
+  @Prop() swipeBackEnabled = true;
 
   constructor() {
     this.navId = getNextNavId();
-  }
-
-  componentWillLoad() {
-    this.routes = Array.from(this.element.querySelectorAll('ion-route'))
-      .map(child => child.getRoute());
   }
 
   componentDidLoad() {
@@ -104,7 +97,7 @@ export class Nav implements PublicNav {
       return;
     }
     this.init = true;
-    if (!this.useRouter || !this.lazy) {
+    if (!this.lazy) {
       componentDidLoadImpl(this);
     }
   }
@@ -187,11 +180,6 @@ export class Nav implements PublicNav {
   }
 
   @Method()
-  canSwipeBack(): boolean {
-    return true; // TODO, implement this for real
-  }
-
-  @Method()
   first(): PublicViewController {
     return getFirstView(this);
   }
@@ -202,14 +190,7 @@ export class Nav implements PublicNav {
   }
 
   @Method()
-  getState(): NavState {
-    assert(this.useRouter, 'routing is disabled');
-    return getState(this);
-  }
-
-  @Method()
   setRouteId(id: string, _: any = {}): Promise<void> {
-    assert(this.useRouter, 'routing is disabled');
     const active = this.getActive();
     if (active && active.component === id) {
       return Promise.resolve();
@@ -218,9 +199,21 @@ export class Nav implements PublicNav {
   }
 
   @Method()
-  getRoutes(): RouterEntries {
-    assert(this.useRouter, 'routing is disabled');
-    return this.routes;
+  getRouteId(): string | null {
+    const element = this.getContentElement();
+    if (element) {
+      return element.tagName;
+    }
+    return null;
+  }
+
+  @Method()
+  getContentElement(): HTMLElement {
+    const active = getActiveImpl(this);
+    if (active) {
+      active.element;
+    }
+    return null;
   }
 
   @Method()
@@ -254,32 +247,86 @@ export class Nav implements PublicNav {
     urlMap.delete(url);
   }
 
+  canSwipeBack(): boolean {
+    return (this.swipeBackEnabled &&
+      // this.childNavs.length === 0 &&
+      !this.isTransitioning() &&
+      // this._app.isEnabled() &&
+      this.canGoBack());
+  }
+
+  swipeBackStart() {
+    // default the direction to "back";
+    const opts: NavOptions = {
+      direction: DIRECTION_BACK,
+      progressAnimation: true
+    };
+
+    return popImpl(this, opts, {});
+  }
+
+  swipeBackProgress(detail: GestureDetail) {
+    if (!this.sbTrns) {
+      return;
+    }
+    // continue to disable the app while actively dragging
+    // this._app.setEnabled(false, ACTIVE_TRANSITION_DEFAULT);
+    // this.setTransitioning(true);
+
+    const delta = detail.deltaX;
+    const stepValue = delta / window.innerWidth;
+    // set the transition animation's progress
+    this.sbTrns.progressStep(stepValue);
+  }
+
+  swipeBackEnd(detail: GestureDetail) {
+    if (!this.sbTrns) {
+      return;
+    }
+    // the swipe back gesture has ended
+    const delta = detail.deltaX;
+    const width = window.innerWidth;
+    const stepValue = delta / width;
+    const velocity = detail.velocityX;
+    const z = width / 2.0;
+    const shouldComplete = (velocity >= 0)
+      && (velocity > 0.2 || detail.deltaX > z);
+
+    const missing = shouldComplete ? 1 - stepValue : stepValue;
+    const missingDistance = missing * width;
+    let realDur = 0;
+    if (missingDistance > 5) {
+      const dur = missingDistance / Math.abs(velocity);
+      realDur = Math.min(dur, 300);
+    }
+
+    this.sbTrns.progressEnd(shouldComplete, stepValue, realDur);
+  }
+
   @Listen('navInit')
   navInitialized(event: NavEvent) {
     navInitializedImpl(this, event);
   }
 
   render() {
-    return <slot></slot>;
+    const dom = [];
+    if (this.swipeBackEnabled) {
+      dom.push(<ion-gesture
+        canStart={this.canSwipeBack.bind(this)}
+        onStart={this.swipeBackStart.bind(this)}
+        onMove={this.swipeBackProgress.bind(this)}
+        onEnd={this.swipeBackEnd.bind(this)}
+        gestureName='goback-swipe'
+        gesturePriority={10}
+        type='pan'
+        direction='x'
+        threshold={10}
+        attachTo='body'
+      ></ion-gesture>);
+    }
+    dom.push(<slot></slot>);
+    return dom;
   }
-}
-
-export function getState(nav: Nav): NavState {
-  const active = getActiveImpl(nav);
-  if (!active) {
-    return null;
-  }
-  const component = active.component;
-  const route = resolveRoute(nav, component);
-  if (!route) {
-    console.error('cant reverse route by component', component);
-    return null;
-  }
-
-  return {
-    path: route.path,
-    focusNode: active.element
-  };
 }
 
 export function componentDidLoadImpl(nav: Nav) {
@@ -340,7 +387,7 @@ export async function setPagesImpl(nav: Nav, componentDataPairs: ComponentDataPa
 }
 
 export function canGoBackImpl(nav: Nav) {
-  return nav.views && nav.views.length > 0;
+  return nav.views && nav.views.length > 1;
 }
 
 export function navInitializedImpl(potentialParent: Nav, event: NavEvent) {
@@ -674,14 +721,14 @@ export function loadViewAndTransition(nav: Nav, enteringView: ViewController, le
   const emptyTransition = transitionFactory(ti.animation);
   return getHydratedTransition(animationOpts.animation, nav.config, nav.transitionId, emptyTransition, enteringView, leavingView, animationOpts, getDefaultTransition(nav.config)).then((transition) => {
 
-    if (nav.swipeToGoBackTransition) {
-      nav.swipeToGoBackTransition.destroy();
-      nav.swipeToGoBackTransition = null;
+    if (nav.sbTrns) {
+      nav.sbTrns.destroy();
+      nav.sbTrns = null;
     }
 
     // it's a swipe to go back transition
     if (transition.isRoot() && ti.opts.progressAnimation) {
-      nav.swipeToGoBackTransition = transition;
+      nav.sbTrns = transition;
     }
 
     transition.start();
@@ -733,8 +780,8 @@ export function executeAsyncTransition(nav: Nav, transition: Transition, enterin
       // if this transition has a duration and this is the root transition
       // then set that the app is actively disabled
       // this._app.setEnabled(false, duration + ACTIVE_TRANSITION_OFFSET, opts.minClickBlockDuration);
-
-      // TODO - figure out how to disable the app
+    } else {
+      console.debug('transition is running but app has not been disabled');
     }
 
     if (opts.progressAnimation) {
@@ -1077,7 +1124,7 @@ export function convertViewsToViewControllers(pairs: ComponentDataPair[]): ViewC
     });
 }
 
-export function convertComponentToViewController(nav: Nav, ti: TransitionInstruction): ViewController[] {
+export function convertComponentToViewController(_: Nav, ti: TransitionInstruction): ViewController[] {
   if (ti.insertViews) {
     assert(ti.insertViews.length > 0, 'length can not be zero');
     const viewControllers = convertViewsToViewControllers(ti.insertViews);
@@ -1092,9 +1139,6 @@ export function convertComponentToViewController(nav: Nav, ti: TransitionInstruc
       }
       if (viewController.state === STATE_DESTROYED) {
         throw new Error('The view has already been destroyed');
-      }
-      if (nav.useRouter && !resolveRoute(nav, viewController.component)) {
-        throw new Error('Route not specified for ' + viewController.component);
       }
     }
     return viewControllers;

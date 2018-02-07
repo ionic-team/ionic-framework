@@ -38,6 +38,7 @@
     "snapshot": "node ./scripts/e2e --snapshot",
     "test": "jest --no-cache",
     "test.watch": "jest --watch --no-cache",
+    "build-test-cmp": "stencil build --dev --config scripts/test-components/stencil.config.js",
     "theme-app-build": "stencil build --dev --config scripts/theme-builder/stencil.config.js",
     "theme-builder": "npm run theme-app-build && sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
     "theme-server": "node scripts/theme-builder/server.js",

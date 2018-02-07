@@ -1,7 +1,13 @@
 import { Transition } from './nav-interfaces';
-import { Animation, AnimationOptions, Config, Nav, RouterEntry, TransitionBuilder, ViewController } from '../../index';
+import { Animation, AnimationOptions, Config, Nav, TransitionBuilder, ViewController } from '../../index';
 import { isDef } from '../../utils/helpers';
 
+export enum State {
+  New,
+  INITIALIZED,
+  ATTACHED,
+  DESTROYED,
+}
 export const STATE_NEW = 1;
 export const STATE_INITIALIZED = 2;
 export const STATE_ATTACHED = 3;
@@ -187,10 +193,6 @@ export function getPreviousImpl(nav: Nav, viewController: ViewController): ViewC
 
 export function getNextNavId() {
   return navControllerIds++;
-}
-
-export function resolveRoute(nav: Nav, component: string): RouterEntry {
-  return nav.routes.find(r => r.id === component);
 }
 
 let navControllerIds = NAV_ID_START;
