@@ -51,18 +51,36 @@
 
     <ion-content padding>
       <p>
-        <ion-button class="e2eOpenLeftMenu" onclick="openLeft()">Open left menu</ion-button>
-        <ion-button onclick="openRight()">Open right menu</ion-button>
+        <button class="e2eOpenLeftMenu" onclick="openLeft()">Open left menu</button>
+        <button onclick="openRight()">Open right menu</button>
       </p>
       <p>
-        <ion-button onclick="setPush()">Set Push</ion-button>
-        <ion-button onclick="setOverlay()">Set Overlay</ion-button>
-        <ion-button onclick="setReveal()">Set Reveal</ion-button>
+        <button onclick="setPush()">Set Push</button>
+        <button onclick="setOverlay()">Set Overlay</button>
+        <button onclick="setReveal()">Set Reveal</button>
 
-        <ion-button onclick="setEnabled()">Set Swipe Enabled False</ion-button>
+        <button onclick="setEnabled()">Set Swipe Enabled False</button>
       </p>
     </ion-content>
 
   </ion-page>
+
+  <style>
+    body {
+      margin: 0;
+    }
+
+    p > button {
+      display: block;
+      clear: both;
+      width: 100%;
+      padding: 12px 8px;
+      font-size: 1em;
+      background: #f8f8f8;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+  </style>
 </body>
 </html>
