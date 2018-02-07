@@ -53,6 +53,7 @@ import {
 
 import { buildIOSTransition } from './transitions/transition.ios';
 import { buildMdTransition } from './transitions/transition.md';
+import { GestureDetail } from '../gesture/gesture';
 
 const queueMap = new Map<number, TransitionInstruction[]>();
 const urlMap = new Map<string, TransitionInstruction>();
@@ -79,7 +80,7 @@ export class Nav implements PublicNav {
   transitionId?: number;
   isViewInitialized?: boolean;
   isPortal: boolean;
-  swipeToGoBackTransition: any; // TODO Transition
+  sbTrns: any; // TODO Transition
   childNavs?: Nav[];
 
   @Prop() mode: string;
@@ -89,6 +90,7 @@ export class Nav implements PublicNav {
   @Prop({ context: 'config' }) config: Config;
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop() lazy = false;
+  @Prop() swipeBackEnabled = true;
 
   constructor() {
     this.navId = getNextNavId();
@@ -187,11 +189,6 @@ export class Nav implements PublicNav {
   }
 
   @Method()
-  canSwipeBack(): boolean {
-    return true; // TODO, implement this for real
-  }
-
-  @Method()
   first(): PublicViewController {
     return getFirstView(this);
   }
@@ -254,13 +251,85 @@ export class Nav implements PublicNav {
     urlMap.delete(url);
   }
 
+  canSwipeBack(): boolean {
+    return (this.swipeBackEnabled &&
+      // this.childNavs.length === 0 &&
+      !this.isTransitioning() &&
+      // this._app.isEnabled() &&
+      this.canGoBack());
+  }
+
+  swipeBackStart() {
+    // default the direction to "back";
+    const opts: NavOptions = {
+      direction: DIRECTION_BACK,
+      progressAnimation: true
+    };
+
+    return popImpl(this, opts, {});
+  }
+
+  swipeBackProgress(detail: GestureDetail) {
+    if (!this.sbTrns) {
+      return;
+    }
+    // continue to disable the app while actively dragging
+    // this._app.setEnabled(false, ACTIVE_TRANSITION_DEFAULT);
+    // this.setTransitioning(true);
+
+    const delta = detail.deltaX;
+    const stepValue = delta / window.innerWidth;
+    // set the transition animation's progress
+    this.sbTrns.progressStep(stepValue);
+  }
+
+  swipeBackEnd(detail: GestureDetail) {
+    if (!this.sbTrns) {
+      return;
+    }
+    // the swipe back gesture has ended
+    const delta = detail.deltaX;
+    const width = window.innerWidth;
+    const stepValue = delta / width;
+    const velocity = detail.velocityX;
+    const z = width / 2.0;
+    const shouldComplete = (velocity >= 0)
+      && (velocity > 0.2 || detail.deltaX > z);
+
+    const missing = shouldComplete ? 1 - stepValue : stepValue;
+    const missingDistance = missing * width;
+    let realDur = 0;
+    if (missingDistance > 5) {
+      const dur = missingDistance / Math.abs(velocity);
+      realDur = Math.min(dur, 300);
+    }
+
+    this.sbTrns.progressEnd(shouldComplete, stepValue, realDur);
+  }
+
   @Listen('navInit')
   navInitialized(event: NavEvent) {
     navInitializedImpl(this, event);
   }
 
   render() {
-    return <slot></slot>;
+    const dom = [];
+    if (this.swipeBackEnabled) {
+      dom.push(<ion-gesture
+        canStart={this.canSwipeBack.bind(this)}
+        onStart={this.swipeBackStart.bind(this)}
+        onMove={this.swipeBackProgress.bind(this)}
+        onEnd={this.swipeBackEnd.bind(this)}
+        gestureName='goback-swipe'
+        gesturePriority={10}
+        type='pan'
+        direction='x'
+        threshold={10}
+        attachTo='body'
+      ></ion-gesture>);
+    }
+    dom.push(<slot></slot>);
+    return dom;
   }
 }
 
@@ -275,7 +344,6 @@ export function getState(nav: Nav): NavState {
     console.error('cant reverse route by component', component);
     return null;
   }
-
   return {
     path: route.path,
     focusNode: active.element
@@ -340,7 +408,7 @@ export async function setPagesImpl(nav: Nav, componentDataPairs: ComponentDataPa
 }
 
 export function canGoBackImpl(nav: Nav) {
-  return nav.views && nav.views.length > 0;
+  return nav.views && nav.views.length > 1;
 }
 
 export function navInitializedImpl(potentialParent: Nav, event: NavEvent) {
@@ -674,14 +742,14 @@ export function loadViewAndTransition(nav: Nav, enteringView: ViewController, le
   const emptyTransition = transitionFactory(ti.animation);
   return getHydratedTransition(animationOpts.animation, nav.config, nav.transitionId, emptyTransition, enteringView, leavingView, animationOpts, getDefaultTransition(nav.config)).then((transition) => {
 
-    if (nav.swipeToGoBackTransition) {
-      nav.swipeToGoBackTransition.destroy();
-      nav.swipeToGoBackTransition = null;
+    if (nav.sbTrns) {
+      nav.sbTrns.destroy();
+      nav.sbTrns = null;
     }
 
     // it's a swipe to go back transition
     if (transition.isRoot() && ti.opts.progressAnimation) {
-      nav.swipeToGoBackTransition = transition;
+      nav.sbTrns = transition;
     }
 
     transition.start();
@@ -733,8 +801,8 @@ export function executeAsyncTransition(nav: Nav, transition: Transition, enterin
       // if this transition has a duration and this is the root transition
       // then set that the app is actively disabled
       // this._app.setEnabled(false, duration + ACTIVE_TRANSITION_OFFSET, opts.minClickBlockDuration);
-
-      // TODO - figure out how to disable the app
+    } else {
+      console.debug('transition is running but app has not been disabled');
     }
 
     if (opts.progressAnimation) {
