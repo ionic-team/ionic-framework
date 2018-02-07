@@ -82,4 +82,4 @@ The text you want to display when performing a refresh
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

@@ -387,4 +387,4 @@ which is an expensive operation and should be avoided if possible.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

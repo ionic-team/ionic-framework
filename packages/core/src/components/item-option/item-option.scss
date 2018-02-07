@@ -1,0 +1,93 @@
+@import "./item-option.vars";
+
+// Item Option
+// --------------------------------------------------
+
+ion-item-option {
+  @include padding(0, .7em);
+
+  position: relative;
+  display: flex;
+
+  align-items: center;
+
+  min-width: 60px;
+}
+
+.item-option-button {
+  @include position(0, 0, 0, 0);
+  @include margin(0);
+  @include padding(0);
+  @include border-radius(0);
+
+  position: absolute;
+
+  border: 0;
+  background: none;
+}
+
+ion-item-options:not([icon-start]) ion-item-option:not([icon-only]) {
+  .item-option-button-inner {
+    flex-direction: column;
+  }
+}
+
+.item-option-button-inner {
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
+
+// Item Expandable Animation
+// --------------------------------------------------
+
+ion-item-option[expandable] {
+  flex-shrink: 0;
+
+  transition-duration: 0;
+  transition-property: none;
+  transition-timing-function: cubic-bezier(.65, .05, .36, 1);
+}
+
+ion-item-sliding.active-swipe-right ion-item-option[expandable] {
+  transition-duration: .6s;
+  transition-property: padding-left;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    padding-left: 90%;
+  }
+
+  @include ltr() {
+    order: 1;
+  }
+
+  @include rtl() {
+    order: -1;
+  }
+}
+
+ion-item-sliding.active-swipe-left ion-item-option[expandable] {
+  transition-duration: .6s;
+  transition-property: padding-right;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    padding-right: 90%;
+  }
+
+  @include ltr() {
+    order: -1;
+  }
+
+  @include rtl() {
+    order: 1;
+  }
+}

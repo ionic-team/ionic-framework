@@ -6,7 +6,7 @@ ion-virtual-scroll {
 
   width: 100%;
 
-  // contain: strict;
+  contain: content;
 }
 
 .virtual-loading {
@@ -18,6 +18,8 @@ ion-virtual-scroll {
 
   position: absolute;
 
+  transition-duration: 0ms;
+
   will-change: transform;
-  // contain: strict;
+  contain: content;
 }

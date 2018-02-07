@@ -48,12 +48,21 @@ import {
   NodeHeightFn,
 } from './components/virtual-scroll/virtual-scroll-utils';
 
+declare global {
+  interface HTMLStencilElement extends HTMLElement {
+    componentOnReady(): Promise<this>;
+    componentOnReady(done: (ele?: this) => void): void;
+  }
+}
+
+
+
 import {
   ActionSheetController as IonActionSheetController
 } from './components/action-sheet-controller/action-sheet-controller';
 
 declare global {
-  interface HTMLIonActionSheetControllerElement extends IonActionSheetController, HTMLElement {
+  interface HTMLIonActionSheetControllerElement extends IonActionSheetController, HTMLStencilElement {
   }
   var HTMLIonActionSheetControllerElement: {
     prototype: HTMLIonActionSheetControllerElement;
@@ -83,7 +92,7 @@ import {
 } from './components/action-sheet/action-sheet';
 
 declare global {
-  interface HTMLIonActionSheetElement extends IonActionSheet, HTMLElement {
+  interface HTMLIonActionSheetElement extends IonActionSheet, HTMLStencilElement {
   }
   var HTMLIonActionSheetElement: {
     prototype: HTMLIonActionSheetElement;
@@ -121,7 +130,7 @@ import {
 } from './components/alert-controller/alert-controller';
 
 declare global {
-  interface HTMLIonAlertControllerElement extends IonAlertController, HTMLElement {
+  interface HTMLIonAlertControllerElement extends IonAlertController, HTMLStencilElement {
   }
   var HTMLIonAlertControllerElement: {
     prototype: HTMLIonAlertControllerElement;
@@ -151,7 +160,7 @@ import {
 } from './components/alert/alert';
 
 declare global {
-  interface HTMLIonAlertElement extends IonAlert, HTMLElement {
+  interface HTMLIonAlertElement extends IonAlert, HTMLStencilElement {
   }
   var HTMLIonAlertElement: {
     prototype: HTMLIonAlertElement;
@@ -191,7 +200,7 @@ import {
 } from './components/animation-controller/animation-controller';
 
 declare global {
-  interface HTMLIonAnimationControllerElement extends IonAnimationController, HTMLElement {
+  interface HTMLIonAnimationControllerElement extends IonAnimationController, HTMLStencilElement {
   }
   var HTMLIonAnimationControllerElement: {
     prototype: HTMLIonAnimationControllerElement;
@@ -221,7 +230,7 @@ import {
 } from './components/app/app';
 
 declare global {
-  interface HTMLIonAppElement extends IonApp, HTMLElement {
+  interface HTMLIonAppElement extends IonApp, HTMLStencilElement {
   }
   var HTMLIonAppElement: {
     prototype: HTMLIonAppElement;
@@ -251,7 +260,7 @@ import {
 } from './components/avatar/avatar';
 
 declare global {
-  interface HTMLIonAvatarElement extends IonAvatar, HTMLElement {
+  interface HTMLIonAvatarElement extends IonAvatar, HTMLStencilElement {
   }
   var HTMLIonAvatarElement: {
     prototype: HTMLIonAvatarElement;
@@ -281,7 +290,7 @@ import {
 } from './components/back-button/back-button';
 
 declare global {
-  interface HTMLIonBackButtonElement extends IonBackButton, HTMLElement {
+  interface HTMLIonBackButtonElement extends IonBackButton, HTMLStencilElement {
   }
   var HTMLIonBackButtonElement: {
     prototype: HTMLIonBackButtonElement;
@@ -311,7 +320,7 @@ import {
 } from './components/backdrop/backdrop';
 
 declare global {
-  interface HTMLIonBackdropElement extends IonBackdrop, HTMLElement {
+  interface HTMLIonBackdropElement extends IonBackdrop, HTMLStencilElement {
   }
   var HTMLIonBackdropElement: {
     prototype: HTMLIonBackdropElement;
@@ -341,7 +350,7 @@ import {
 } from './components/badge/badge';
 
 declare global {
-  interface HTMLIonBadgeElement extends IonBadge, HTMLElement {
+  interface HTMLIonBadgeElement extends IonBadge, HTMLStencilElement {
   }
   var HTMLIonBadgeElement: {
     prototype: HTMLIonBadgeElement;
@@ -372,7 +381,7 @@ import {
 } from './components/button/button';
 
 declare global {
-  interface HTMLIonButtonElement extends IonButton, HTMLElement {
+  interface HTMLIonButtonElement extends IonButton, HTMLStencilElement {
   }
   var HTMLIonButtonElement: {
     prototype: HTMLIonButtonElement;
@@ -411,7 +420,7 @@ import {
 } from './components/buttons/buttons';
 
 declare global {
-  interface HTMLIonButtonsElement extends IonButtons, HTMLElement {
+  interface HTMLIonButtonsElement extends IonButtons, HTMLStencilElement {
   }
   var HTMLIonButtonsElement: {
     prototype: HTMLIonButtonsElement;
@@ -441,7 +450,7 @@ import {
 } from './components/card-content/card-content';
 
 declare global {
-  interface HTMLIonCardContentElement extends IonCardContent, HTMLElement {
+  interface HTMLIonCardContentElement extends IonCardContent, HTMLStencilElement {
   }
   var HTMLIonCardContentElement: {
     prototype: HTMLIonCardContentElement;
@@ -472,7 +481,7 @@ import {
 } from './components/card-header/card-header';
 
 declare global {
-  interface HTMLIonCardHeaderElement extends IonCardHeader, HTMLElement {
+  interface HTMLIonCardHeaderElement extends IonCardHeader, HTMLStencilElement {
   }
   var HTMLIonCardHeaderElement: {
     prototype: HTMLIonCardHeaderElement;
@@ -504,7 +513,7 @@ import {
 } from './components/card-subtitle/card-subtitle';
 
 declare global {
-  interface HTMLIonCardSubtitleElement extends IonCardSubtitle, HTMLElement {
+  interface HTMLIonCardSubtitleElement extends IonCardSubtitle, HTMLStencilElement {
   }
   var HTMLIonCardSubtitleElement: {
     prototype: HTMLIonCardSubtitleElement;
@@ -535,7 +544,7 @@ import {
 } from './components/card-title/card-title';
 
 declare global {
-  interface HTMLIonCardTitleElement extends IonCardTitle, HTMLElement {
+  interface HTMLIonCardTitleElement extends IonCardTitle, HTMLStencilElement {
   }
   var HTMLIonCardTitleElement: {
     prototype: HTMLIonCardTitleElement;
@@ -566,7 +575,7 @@ import {
 } from './components/card/card';
 
 declare global {
-  interface HTMLIonCardElement extends IonCard, HTMLElement {
+  interface HTMLIonCardElement extends IonCard, HTMLStencilElement {
   }
   var HTMLIonCardElement: {
     prototype: HTMLIonCardElement;
@@ -597,7 +606,7 @@ import {
 } from './components/checkbox/checkbox';
 
 declare global {
-  interface HTMLIonCheckboxElement extends IonCheckbox, HTMLElement {
+  interface HTMLIonCheckboxElement extends IonCheckbox, HTMLStencilElement {
   }
   var HTMLIonCheckboxElement: {
     prototype: HTMLIonCheckboxElement;
@@ -632,7 +641,7 @@ import {
 } from './components/chip-button/chip-button';
 
 declare global {
-  interface HTMLIonChipButtonElement extends IonChipButton, HTMLElement {
+  interface HTMLIonChipButtonElement extends IonChipButton, HTMLStencilElement {
   }
   var HTMLIonChipButtonElement: {
     prototype: HTMLIonChipButtonElement;
@@ -666,7 +675,7 @@ import {
 } from './components/chip/chip';
 
 declare global {
-  interface HTMLIonChipElement extends IonChip, HTMLElement {
+  interface HTMLIonChipElement extends IonChip, HTMLStencilElement {
   }
   var HTMLIonChipElement: {
     prototype: HTMLIonChipElement;
@@ -697,7 +706,7 @@ import {
 } from './components/col/col';
 
 declare global {
-  interface HTMLIonColElement extends IonCol, HTMLElement {
+  interface HTMLIonColElement extends IonCol, HTMLStencilElement {
   }
   var HTMLIonColElement: {
     prototype: HTMLIonColElement;
@@ -727,7 +736,7 @@ import {
 } from './components/content/content';
 
 declare global {
-  interface HTMLIonContentElement extends IonContent, HTMLElement {
+  interface HTMLIonContentElement extends IonContent, HTMLStencilElement {
   }
   var HTMLIonContentElement: {
     prototype: HTMLIonContentElement;
@@ -760,7 +769,7 @@ import {
 } from './components/cordova-platform/cordova-platform';
 
 declare global {
-  interface HTMLIonCordovaPlatformElement extends IonCordovaPlatform, HTMLElement {
+  interface HTMLIonCordovaPlatformElement extends IonCordovaPlatform, HTMLStencilElement {
   }
   var HTMLIonCordovaPlatformElement: {
     prototype: HTMLIonCordovaPlatformElement;
@@ -790,7 +799,7 @@ import {
 } from './components/datetime/datetime';
 
 declare global {
-  interface HTMLIonDatetimeElement extends IonDatetime, HTMLElement {
+  interface HTMLIonDatetimeElement extends IonDatetime, HTMLStencilElement {
   }
   var HTMLIonDatetimeElement: {
     prototype: HTMLIonDatetimeElement;
@@ -838,7 +847,7 @@ import {
 } from './components/events/events';
 
 declare global {
-  interface HTMLIonEventsElement extends IonEvents, HTMLElement {
+  interface HTMLIonEventsElement extends IonEvents, HTMLStencilElement {
   }
   var HTMLIonEventsElement: {
     prototype: HTMLIonEventsElement;
@@ -868,7 +877,7 @@ import {
 } from './components/fab-button/fab-button';
 
 declare global {
-  interface HTMLIonFabButtonElement extends IonFabButton, HTMLElement {
+  interface HTMLIonFabButtonElement extends IonFabButton, HTMLStencilElement {
   }
   var HTMLIonFabButtonElement: {
     prototype: HTMLIonFabButtonElement;
@@ -905,7 +914,7 @@ import {
 } from './components/fab-list/fab-list';
 
 declare global {
-  interface HTMLIonFabListElement extends IonFabList, HTMLElement {
+  interface HTMLIonFabListElement extends IonFabList, HTMLStencilElement {
   }
   var HTMLIonFabListElement: {
     prototype: HTMLIonFabListElement;
@@ -935,7 +944,7 @@ import {
 } from './components/fab/fab';
 
 declare global {
-  interface HTMLIonFabElement extends IonFab, HTMLElement {
+  interface HTMLIonFabElement extends IonFab, HTMLStencilElement {
   }
   var HTMLIonFabElement: {
     prototype: HTMLIonFabElement;
@@ -965,7 +974,7 @@ import {
 } from './components/footer/footer';
 
 declare global {
-  interface HTMLIonFooterElement extends IonFooter, HTMLElement {
+  interface HTMLIonFooterElement extends IonFooter, HTMLStencilElement {
   }
   var HTMLIonFooterElement: {
     prototype: HTMLIonFooterElement;
@@ -995,7 +1004,7 @@ import {
 } from './components/gesture/gesture';
 
 declare global {
-  interface HTMLIonGestureElement extends IonGesture, HTMLElement {
+  interface HTMLIonGestureElement extends IonGesture, HTMLStencilElement {
   }
   var HTMLIonGestureElement: {
     prototype: HTMLIonGestureElement;
@@ -1043,7 +1052,7 @@ import {
 } from './components/grid/grid';
 
 declare global {
-  interface HTMLIonGridElement extends IonGrid, HTMLElement {
+  interface HTMLIonGridElement extends IonGrid, HTMLStencilElement {
   }
   var HTMLIonGridElement: {
     prototype: HTMLIonGridElement;
@@ -1073,7 +1082,7 @@ import {
 } from './components/header/header';
 
 declare global {
-  interface HTMLIonHeaderElement extends IonHeader, HTMLElement {
+  interface HTMLIonHeaderElement extends IonHeader, HTMLStencilElement {
   }
   var HTMLIonHeaderElement: {
     prototype: HTMLIonHeaderElement;
@@ -1103,7 +1112,7 @@ import {
 } from './components/infinite-scroll-content/infinite-scroll-content';
 
 declare global {
-  interface HTMLIonInfiniteScrollContentElement extends IonInfiniteScrollContent, HTMLElement {
+  interface HTMLIonInfiniteScrollContentElement extends IonInfiniteScrollContent, HTMLStencilElement {
   }
   var HTMLIonInfiniteScrollContentElement: {
     prototype: HTMLIonInfiniteScrollContentElement;
@@ -1134,7 +1143,7 @@ import {
 } from './components/infinite-scroll/infinite-scroll';
 
 declare global {
-  interface HTMLIonInfiniteScrollElement extends IonInfiniteScroll, HTMLElement {
+  interface HTMLIonInfiniteScrollElement extends IonInfiniteScroll, HTMLStencilElement {
   }
   var HTMLIonInfiniteScrollElement: {
     prototype: HTMLIonInfiniteScrollElement;
@@ -1166,7 +1175,7 @@ import {
 } from './components/input/input';
 
 declare global {
-  interface HTMLIonInputElement extends IonInput, HTMLElement {
+  interface HTMLIonInputElement extends IonInput, HTMLStencilElement {
   }
   var HTMLIonInputElement: {
     prototype: HTMLIonInputElement;
@@ -1222,7 +1231,7 @@ import {
 } from './components/item-divider/item-divider';
 
 declare global {
-  interface HTMLIonItemDividerElement extends IonItemDivider, HTMLElement {
+  interface HTMLIonItemDividerElement extends IonItemDivider, HTMLStencilElement {
   }
   var HTMLIonItemDividerElement: {
     prototype: HTMLIonItemDividerElement;
@@ -1253,7 +1262,7 @@ import {
 } from './components/item-group/item-group';
 
 declare global {
-  interface HTMLIonItemGroupElement extends IonItemGroup, HTMLElement {
+  interface HTMLIonItemGroupElement extends IonItemGroup, HTMLStencilElement {
   }
   var HTMLIonItemGroupElement: {
     prototype: HTMLIonItemGroupElement;
@@ -1283,7 +1292,7 @@ import {
 } from './components/item-option/item-option';
 
 declare global {
-  interface HTMLIonItemOptionElement extends IonItemOption, HTMLElement {
+  interface HTMLIonItemOptionElement extends IonItemOption, HTMLStencilElement {
   }
   var HTMLIonItemOptionElement: {
     prototype: HTMLIonItemOptionElement;
@@ -1316,7 +1325,7 @@ import {
 } from './components/item-options/item-options';
 
 declare global {
-  interface HTMLIonItemOptionsElement extends IonItemOptions, HTMLElement {
+  interface HTMLIonItemOptionsElement extends IonItemOptions, HTMLStencilElement {
   }
   var HTMLIonItemOptionsElement: {
     prototype: HTMLIonItemOptionsElement;
@@ -1346,7 +1355,7 @@ import {
 } from './components/item-sliding/item-sliding';
 
 declare global {
-  interface HTMLIonItemSlidingElement extends IonItemSliding, HTMLElement {
+  interface HTMLIonItemSlidingElement extends IonItemSliding, HTMLStencilElement {
   }
   var HTMLIonItemSlidingElement: {
     prototype: HTMLIonItemSlidingElement;
@@ -1376,7 +1385,7 @@ import {
 } from './components/item/item';
 
 declare global {
-  interface HTMLIonItemElement extends IonItem, HTMLElement {
+  interface HTMLIonItemElement extends IonItem, HTMLStencilElement {
   }
   var HTMLIonItemElement: {
     prototype: HTMLIonItemElement;
@@ -1410,7 +1419,7 @@ import {
 } from './components/keyboard-controller/keyboard-controller';
 
 declare global {
-  interface HTMLIonKeyboardControllerElement extends IonKeyboardController, HTMLElement {
+  interface HTMLIonKeyboardControllerElement extends IonKeyboardController, HTMLStencilElement {
   }
   var HTMLIonKeyboardControllerElement: {
     prototype: HTMLIonKeyboardControllerElement;
@@ -1440,7 +1449,7 @@ import {
 } from './components/label/label';
 
 declare global {
-  interface HTMLIonLabelElement extends IonLabel, HTMLElement {
+  interface HTMLIonLabelElement extends IonLabel, HTMLStencilElement {
   }
   var HTMLIonLabelElement: {
     prototype: HTMLIonLabelElement;
@@ -1474,7 +1483,7 @@ import {
 } from './components/list-header/list-header';
 
 declare global {
-  interface HTMLIonListHeaderElement extends IonListHeader, HTMLElement {
+  interface HTMLIonListHeaderElement extends IonListHeader, HTMLStencilElement {
   }
   var HTMLIonListHeaderElement: {
     prototype: HTMLIonListHeaderElement;
@@ -1505,7 +1514,7 @@ import {
 } from './components/list/list';
 
 declare global {
-  interface HTMLIonListElement extends IonList, HTMLElement {
+  interface HTMLIonListElement extends IonList, HTMLStencilElement {
   }
   var HTMLIonListElement: {
     prototype: HTMLIonListElement;
@@ -1535,7 +1544,7 @@ import {
 } from './components/loading-controller/loading-controller';
 
 declare global {
-  interface HTMLIonLoadingControllerElement extends IonLoadingController, HTMLElement {
+  interface HTMLIonLoadingControllerElement extends IonLoadingController, HTMLStencilElement {
   }
   var HTMLIonLoadingControllerElement: {
     prototype: HTMLIonLoadingControllerElement;
@@ -1565,7 +1574,7 @@ import {
 } from './components/loading/loading';
 
 declare global {
-  interface HTMLIonLoadingElement extends IonLoading, HTMLElement {
+  interface HTMLIonLoadingElement extends IonLoading, HTMLStencilElement {
   }
   var HTMLIonLoadingElement: {
     prototype: HTMLIonLoadingElement;
@@ -1604,7 +1613,7 @@ import {
 } from './components/menu-controller/menu-controller';
 
 declare global {
-  interface HTMLIonMenuControllerElement extends IonMenuController, HTMLElement {
+  interface HTMLIonMenuControllerElement extends IonMenuController, HTMLStencilElement {
   }
   var HTMLIonMenuControllerElement: {
     prototype: HTMLIonMenuControllerElement;
@@ -1634,7 +1643,7 @@ import {
 } from './components/menu-toggle/menu-toggle';
 
 declare global {
-  interface HTMLIonMenuToggleElement extends IonMenuToggle, HTMLElement {
+  interface HTMLIonMenuToggleElement extends IonMenuToggle, HTMLStencilElement {
   }
   var HTMLIonMenuToggleElement: {
     prototype: HTMLIonMenuToggleElement;
@@ -1664,7 +1673,7 @@ import {
 } from './components/menu/menu';
 
 declare global {
-  interface HTMLIonMenuElement extends IonMenu, HTMLElement {
+  interface HTMLIonMenuElement extends IonMenu, HTMLStencilElement {
   }
   var HTMLIonMenuElement: {
     prototype: HTMLIonMenuElement;
@@ -1701,7 +1710,7 @@ import {
 } from './components/modal-controller/modal-controller';
 
 declare global {
-  interface HTMLIonModalControllerElement extends IonModalController, HTMLElement {
+  interface HTMLIonModalControllerElement extends IonModalController, HTMLStencilElement {
   }
   var HTMLIonModalControllerElement: {
     prototype: HTMLIonModalControllerElement;
@@ -1731,7 +1740,7 @@ import {
 } from './components/modal/modal';
 
 declare global {
-  interface HTMLIonModalElement extends IonModal, HTMLElement {
+  interface HTMLIonModalElement extends IonModal, HTMLStencilElement {
   }
   var HTMLIonModalElement: {
     prototype: HTMLIonModalElement;
@@ -1772,7 +1781,7 @@ import {
 } from './components/nav-pop/nav-pop';
 
 declare global {
-  interface HTMLIonNavPopElement extends IonNavPop, HTMLElement {
+  interface HTMLIonNavPopElement extends IonNavPop, HTMLStencilElement {
   }
   var HTMLIonNavPopElement: {
     prototype: HTMLIonNavPopElement;
@@ -1802,7 +1811,7 @@ import {
 } from './components/nav/nav';
 
 declare global {
-  interface HTMLIonNavElement extends IonNav, HTMLElement {
+  interface HTMLIonNavElement extends IonNav, HTMLStencilElement {
   }
   var HTMLIonNavElement: {
     prototype: HTMLIonNavElement;
@@ -1825,6 +1834,7 @@ declare global {
       lazy?: boolean;
       mode?: string;
       root?: any;
+      swipeBackEnabled?: boolean;
       useUrls?: boolean;
     }
   }
@@ -1836,7 +1846,7 @@ import {
 } from './components/note/note';
 
 declare global {
-  interface HTMLIonNoteElement extends IonNote, HTMLElement {
+  interface HTMLIonNoteElement extends IonNote, HTMLStencilElement {
   }
   var HTMLIonNoteElement: {
     prototype: HTMLIonNoteElement;
@@ -1867,7 +1877,7 @@ import {
 } from './components/page/page';
 
 declare global {
-  interface HTMLIonPageElement extends IonPage, HTMLElement {
+  interface HTMLIonPageElement extends IonPage, HTMLStencilElement {
   }
   var HTMLIonPageElement: {
     prototype: HTMLIonPageElement;
@@ -1897,7 +1907,7 @@ import {
 } from './components/picker-column/picker-column';
 
 declare global {
-  interface HTMLIonPickerColumnElement extends IonPickerColumn, HTMLElement {
+  interface HTMLIonPickerColumnElement extends IonPickerColumn, HTMLStencilElement {
   }
   var HTMLIonPickerColumnElement: {
     prototype: HTMLIonPickerColumnElement;
@@ -1927,7 +1937,7 @@ import {
 } from './components/picker-controller/picker-controller';
 
 declare global {
-  interface HTMLIonPickerControllerElement extends IonPickerController, HTMLElement {
+  interface HTMLIonPickerControllerElement extends IonPickerController, HTMLStencilElement {
   }
   var HTMLIonPickerControllerElement: {
     prototype: HTMLIonPickerControllerElement;
@@ -1957,7 +1967,7 @@ import {
 } from './components/picker/picker';
 
 declare global {
-  interface HTMLIonPickerElement extends IonPicker, HTMLElement {
+  interface HTMLIonPickerElement extends IonPicker, HTMLStencilElement {
   }
   var HTMLIonPickerElement: {
     prototype: HTMLIonPickerElement;
@@ -1998,7 +2008,7 @@ import {
 } from './components/popover-controller/popover-controller';
 
 declare global {
-  interface HTMLIonPopoverControllerElement extends IonPopoverController, HTMLElement {
+  interface HTMLIonPopoverControllerElement extends IonPopoverController, HTMLStencilElement {
   }
   var HTMLIonPopoverControllerElement: {
     prototype: HTMLIonPopoverControllerElement;
@@ -2028,7 +2038,7 @@ import {
 } from './components/popover/popover';
 
 declare global {
-  interface HTMLIonPopoverElement extends IonPopover, HTMLElement {
+  interface HTMLIonPopoverElement extends IonPopover, HTMLStencilElement {
   }
   var HTMLIonPopoverElement: {
     prototype: HTMLIonPopoverElement;
@@ -2071,7 +2081,7 @@ import {
 } from './components/radio-group/radio-group';
 
 declare global {
-  interface HTMLIonRadioGroupElement extends IonRadioGroup, HTMLElement {
+  interface HTMLIonRadioGroupElement extends IonRadioGroup, HTMLStencilElement {
   }
   var HTMLIonRadioGroupElement: {
     prototype: HTMLIonRadioGroupElement;
@@ -2104,7 +2114,7 @@ import {
 } from './components/radio/radio';
 
 declare global {
-  interface HTMLIonRadioElement extends IonRadio, HTMLElement {
+  interface HTMLIonRadioElement extends IonRadio, HTMLStencilElement {
   }
   var HTMLIonRadioElement: {
     prototype: HTMLIonRadioElement;
@@ -2139,7 +2149,7 @@ import {
 } from './components/range-knob/range-knob';
 
 declare global {
-  interface HTMLIonRangeKnobElement extends IonRangeKnob, HTMLElement {
+  interface HTMLIonRangeKnobElement extends IonRangeKnob, HTMLStencilElement {
   }
   var HTMLIonRangeKnobElement: {
     prototype: HTMLIonRangeKnobElement;
@@ -2177,7 +2187,7 @@ import {
 } from './components/range/range';
 
 declare global {
-  interface HTMLIonRangeElement extends IonRange, HTMLElement {
+  interface HTMLIonRangeElement extends IonRange, HTMLStencilElement {
   }
   var HTMLIonRangeElement: {
     prototype: HTMLIonRangeElement;
@@ -2217,7 +2227,7 @@ import {
 } from './components/refresher-content/refresher-content';
 
 declare global {
-  interface HTMLIonRefresherContentElement extends IonRefresherContent, HTMLElement {
+  interface HTMLIonRefresherContentElement extends IonRefresherContent, HTMLStencilElement {
   }
   var HTMLIonRefresherContentElement: {
     prototype: HTMLIonRefresherContentElement;
@@ -2250,7 +2260,7 @@ import {
 } from './components/refresher/refresher';
 
 declare global {
-  interface HTMLIonRefresherElement extends IonRefresher, HTMLElement {
+  interface HTMLIonRefresherElement extends IonRefresher, HTMLStencilElement {
   }
   var HTMLIonRefresherElement: {
     prototype: HTMLIonRefresherElement;
@@ -2284,7 +2294,7 @@ import {
 } from './components/reorder-group/reorder-group';
 
 declare global {
-  interface HTMLIonReorderGroupElement extends IonReorderGroup, HTMLElement {
+  interface HTMLIonReorderGroupElement extends IonReorderGroup, HTMLStencilElement {
   }
   var HTMLIonReorderGroupElement: {
     prototype: HTMLIonReorderGroupElement;
@@ -2314,7 +2324,7 @@ import {
 } from './components/reorder/reorder';
 
 declare global {
-  interface HTMLIonReorderElement extends IonReorder, HTMLElement {
+  interface HTMLIonReorderElement extends IonReorder, HTMLStencilElement {
   }
   var HTMLIonReorderElement: {
     prototype: HTMLIonReorderElement;
@@ -2344,7 +2354,7 @@ import {
 } from './components/ripple-effect/ripple-effect';
 
 declare global {
-  interface HTMLIonRippleEffectElement extends IonRippleEffect, HTMLElement {
+  interface HTMLIonRippleEffectElement extends IonRippleEffect, HTMLStencilElement {
   }
   var HTMLIonRippleEffectElement: {
     prototype: HTMLIonRippleEffectElement;
@@ -2374,7 +2384,7 @@ import {
 } from './components/route-link/route-link';
 
 declare global {
-  interface HTMLIonRouteLinkElement extends IonRouteLink, HTMLElement {
+  interface HTMLIonRouteLinkElement extends IonRouteLink, HTMLStencilElement {
   }
   var HTMLIonRouteLinkElement: {
     prototype: HTMLIonRouteLinkElement;
@@ -2405,7 +2415,7 @@ import {
 } from './components/route/route';
 
 declare global {
-  interface HTMLIonRouteElement extends IonRoute, HTMLElement {
+  interface HTMLIonRouteElement extends IonRoute, HTMLStencilElement {
   }
   var HTMLIonRouteElement: {
     prototype: HTMLIonRouteElement;
@@ -2433,30 +2443,31 @@ declare global {
 
 
 import {
-  RouterController as IonRouterController
-} from './components/router-controller/router-controller';
+  Router as IonRouter
+} from './components/router/router';
 
 declare global {
-  interface HTMLIonRouterControllerElement extends IonRouterController, HTMLElement {
+  interface HTMLIonRouterElement extends IonRouter, HTMLStencilElement {
   }
-  var HTMLIonRouterControllerElement: {
-    prototype: HTMLIonRouterControllerElement;
-    new (): HTMLIonRouterControllerElement;
+  var HTMLIonRouterElement: {
+    prototype: HTMLIonRouterElement;
+    new (): HTMLIonRouterElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-router-controller": HTMLIonRouterControllerElement;
+    "ion-router": HTMLIonRouterElement;
   }
   interface ElementTagNameMap {
-    "ion-router-controller": HTMLIonRouterControllerElement;
+    "ion-router": HTMLIonRouterElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-router-controller": JSXElements.IonRouterControllerAttributes;
+      "ion-router": JSXElements.IonRouterAttributes;
     }
   }
   namespace JSXElements {
-    export interface IonRouterControllerAttributes extends HTMLAttributes {
-      
+    export interface IonRouterAttributes extends HTMLAttributes {
+      base?: string;
+      useHash?: boolean;
     }
   }
 }
@@ -2467,7 +2478,7 @@ import {
 } from './components/row/row';
 
 declare global {
-  interface HTMLIonRowElement extends IonRow, HTMLElement {
+  interface HTMLIonRowElement extends IonRow, HTMLStencilElement {
   }
   var HTMLIonRowElement: {
     prototype: HTMLIonRowElement;
@@ -2497,7 +2508,7 @@ import {
 } from './components/scroll/scroll';
 
 declare global {
-  interface HTMLIonScrollElement extends IonScroll, HTMLElement {
+  interface HTMLIonScrollElement extends IonScroll, HTMLStencilElement {
   }
   var HTMLIonScrollElement: {
     prototype: HTMLIonScrollElement;
@@ -2530,7 +2541,7 @@ import {
 } from './components/searchbar/searchbar';
 
 declare global {
-  interface HTMLIonSearchbarElement extends IonSearchbar, HTMLElement {
+  interface HTMLIonSearchbarElement extends IonSearchbar, HTMLStencilElement {
   }
   var HTMLIonSearchbarElement: {
     prototype: HTMLIonSearchbarElement;
@@ -2571,7 +2582,7 @@ import {
 } from './components/segment-button/segment-button';
 
 declare global {
-  interface HTMLIonSegmentButtonElement extends IonSegmentButton, HTMLElement {
+  interface HTMLIonSegmentButtonElement extends IonSegmentButton, HTMLStencilElement {
   }
   var HTMLIonSegmentButtonElement: {
     prototype: HTMLIonSegmentButtonElement;
@@ -2607,7 +2618,7 @@ import {
 } from './components/segment/segment';
 
 declare global {
-  interface HTMLIonSegmentElement extends IonSegment, HTMLElement {
+  interface HTMLIonSegmentElement extends IonSegment, HTMLStencilElement {
   }
   var HTMLIonSegmentElement: {
     prototype: HTMLIonSegmentElement;
@@ -2640,7 +2651,7 @@ import {
 } from './components/select-option/select-option';
 
 declare global {
-  interface HTMLIonSelectOptionElement extends IonSelectOption, HTMLElement {
+  interface HTMLIonSelectOptionElement extends IonSelectOption, HTMLStencilElement {
   }
   var HTMLIonSelectOptionElement: {
     prototype: HTMLIonSelectOptionElement;
@@ -2672,7 +2683,7 @@ import {
 } from './components/select-popover/select-popover';
 
 declare global {
-  interface HTMLIonSelectPopoverElement extends IonSelectPopover, HTMLElement {
+  interface HTMLIonSelectPopoverElement extends IonSelectPopover, HTMLStencilElement {
   }
   var HTMLIonSelectPopoverElement: {
     prototype: HTMLIonSelectPopoverElement;
@@ -2705,7 +2716,7 @@ import {
 } from './components/select/select';
 
 declare global {
-  interface HTMLIonSelectElement extends IonSelect, HTMLElement {
+  interface HTMLIonSelectElement extends IonSelect, HTMLStencilElement {
   }
   var HTMLIonSelectElement: {
     prototype: HTMLIonSelectElement;
@@ -2744,7 +2755,7 @@ import {
 } from './components/skeleton-text/skeleton-text';
 
 declare global {
-  interface HTMLIonSkeletonTextElement extends IonSkeletonText, HTMLElement {
+  interface HTMLIonSkeletonTextElement extends IonSkeletonText, HTMLStencilElement {
   }
   var HTMLIonSkeletonTextElement: {
     prototype: HTMLIonSkeletonTextElement;
@@ -2774,7 +2785,7 @@ import {
 } from './components/slide/slide';
 
 declare global {
-  interface HTMLIonSlideElement extends IonSlide, HTMLElement {
+  interface HTMLIonSlideElement extends IonSlide, HTMLStencilElement {
   }
   var HTMLIonSlideElement: {
     prototype: HTMLIonSlideElement;
@@ -2804,7 +2815,7 @@ import {
 } from './components/slides/slides';
 
 declare global {
-  interface HTMLIonSlidesElement extends IonSlides, HTMLElement {
+  interface HTMLIonSlidesElement extends IonSlides, HTMLStencilElement {
   }
   var HTMLIonSlidesElement: {
     prototype: HTMLIonSlidesElement;
@@ -2835,7 +2846,7 @@ import {
 } from './components/spinner/spinner';
 
 declare global {
-  interface HTMLIonSpinnerElement extends IonSpinner, HTMLElement {
+  interface HTMLIonSpinnerElement extends IonSpinner, HTMLStencilElement {
   }
   var HTMLIonSpinnerElement: {
     prototype: HTMLIonSpinnerElement;
@@ -2869,7 +2880,7 @@ import {
 } from './components/split-pane/split-pane';
 
 declare global {
-  interface HTMLIonSplitPaneElement extends IonSplitPane, HTMLElement {
+  interface HTMLIonSplitPaneElement extends IonSplitPane, HTMLStencilElement {
   }
   var HTMLIonSplitPaneElement: {
     prototype: HTMLIonSplitPaneElement;
@@ -2900,7 +2911,7 @@ import {
 } from './components/status-tap/status-tap';
 
 declare global {
-  interface HTMLIonStatusTapElement extends IonStatusTap, HTMLElement {
+  interface HTMLIonStatusTapElement extends IonStatusTap, HTMLStencilElement {
   }
   var HTMLIonStatusTapElement: {
     prototype: HTMLIonStatusTapElement;
@@ -2930,7 +2941,7 @@ import {
 } from './components/tab-button/tab-button';
 
 declare global {
-  interface HTMLIonTabButtonElement extends IonTabButton, HTMLElement {
+  interface HTMLIonTabButtonElement extends IonTabButton, HTMLStencilElement {
   }
   var HTMLIonTabButtonElement: {
     prototype: HTMLIonTabButtonElement;
@@ -2962,7 +2973,7 @@ import {
 } from './components/tab/tab';
 
 declare global {
-  interface HTMLIonTabElement extends IonTab, HTMLElement {
+  interface HTMLIonTabElement extends IonTab, HTMLStencilElement {
   }
   var HTMLIonTabElement: {
     prototype: HTMLIonTabElement;
@@ -3001,7 +3012,7 @@ import {
 } from './components/tabbar/tabbar';
 
 declare global {
-  interface HTMLIonTabbarElement extends IonTabbar, HTMLElement {
+  interface HTMLIonTabbarElement extends IonTabbar, HTMLStencilElement {
   }
   var HTMLIonTabbarElement: {
     prototype: HTMLIonTabbarElement;
@@ -3037,7 +3048,7 @@ import {
 } from './components/tabs/tabs';
 
 declare global {
-  interface HTMLIonTabsElement extends IonTabs, HTMLElement {
+  interface HTMLIonTabsElement extends IonTabs, HTMLStencilElement {
   }
   var HTMLIonTabsElement: {
     prototype: HTMLIonTabsElement;
@@ -3074,7 +3085,7 @@ import {
 } from './components/tap-click/tap-click';
 
 declare global {
-  interface HTMLIonTapClickElement extends IonTapClick, HTMLElement {
+  interface HTMLIonTapClickElement extends IonTapClick, HTMLStencilElement {
   }
   var HTMLIonTapClickElement: {
     prototype: HTMLIonTapClickElement;
@@ -3104,7 +3115,7 @@ import {
 } from './components/text/text';
 
 declare global {
-  interface HTMLIonTextElement extends IonText, HTMLElement {
+  interface HTMLIonTextElement extends IonText, HTMLStencilElement {
   }
   var HTMLIonTextElement: {
     prototype: HTMLIonTextElement;
@@ -3135,7 +3146,7 @@ import {
 } from './components/textarea/textarea';
 
 declare global {
-  interface HTMLIonTextareaElement extends IonTextarea, HTMLElement {
+  interface HTMLIonTextareaElement extends IonTextarea, HTMLStencilElement {
   }
   var HTMLIonTextareaElement: {
     prototype: HTMLIonTextareaElement;
@@ -3181,7 +3192,7 @@ import {
 } from './components/thumbnail/thumbnail';
 
 declare global {
-  interface HTMLIonThumbnailElement extends IonThumbnail, HTMLElement {
+  interface HTMLIonThumbnailElement extends IonThumbnail, HTMLStencilElement {
   }
   var HTMLIonThumbnailElement: {
     prototype: HTMLIonThumbnailElement;
@@ -3211,7 +3222,7 @@ import {
 } from './components/title/title';
 
 declare global {
-  interface HTMLIonTitleElement extends IonTitle, HTMLElement {
+  interface HTMLIonTitleElement extends IonTitle, HTMLStencilElement {
   }
   var HTMLIonTitleElement: {
     prototype: HTMLIonTitleElement;
@@ -3241,7 +3252,7 @@ import {
 } from './components/toast-controller/toast-controller';
 
 declare global {
-  interface HTMLIonToastControllerElement extends IonToastController, HTMLElement {
+  interface HTMLIonToastControllerElement extends IonToastController, HTMLStencilElement {
   }
   var HTMLIonToastControllerElement: {
     prototype: HTMLIonToastControllerElement;
@@ -3271,7 +3282,7 @@ import {
 } from './components/toast/toast';
 
 declare global {
-  interface HTMLIonToastElement extends IonToast, HTMLElement {
+  interface HTMLIonToastElement extends IonToast, HTMLStencilElement {
   }
   var HTMLIonToastElement: {
     prototype: HTMLIonToastElement;
@@ -3312,7 +3323,7 @@ import {
 } from './components/toggle/toggle';
 
 declare global {
-  interface HTMLIonToggleElement extends IonToggle, HTMLElement {
+  interface HTMLIonToggleElement extends IonToggle, HTMLStencilElement {
   }
   var HTMLIonToggleElement: {
     prototype: HTMLIonToggleElement;
@@ -3347,7 +3358,7 @@ import {
 } from './components/toolbar/toolbar';
 
 declare global {
-  interface HTMLIonToolbarElement extends IonToolbar, HTMLElement {
+  interface HTMLIonToolbarElement extends IonToolbar, HTMLStencilElement {
   }
   var HTMLIonToolbarElement: {
     prototype: HTMLIonToolbarElement;
@@ -3379,7 +3390,7 @@ import {
 } from './components/virtual-scroll/virtual-scroll';
 
 declare global {
-  interface HTMLIonVirtualScrollElement extends IonVirtualScroll, HTMLElement {
+  interface HTMLIonVirtualScrollElement extends IonVirtualScroll, HTMLStencilElement {
   }
   var HTMLIonVirtualScrollElement: {
     prototype: HTMLIonVirtualScrollElement;

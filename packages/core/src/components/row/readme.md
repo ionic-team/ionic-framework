@@ -31,4 +31,4 @@ There are several attributes that can be added to a row to customize this behavi
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

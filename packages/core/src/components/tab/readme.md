@@ -208,4 +208,4 @@ Emitted when the current tab is selected.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

@@ -62,4 +62,4 @@ Emitted when the item has been fully swiped.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

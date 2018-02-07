@@ -7,6 +7,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class GroupInputsPageComponent implements OnInit {
+  disableInputs = false;
+
   radioValue = 'tripe';
   selectValue = 'brains';
 

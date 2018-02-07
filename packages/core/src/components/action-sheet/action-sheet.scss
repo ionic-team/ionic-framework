@@ -12,6 +12,9 @@ ion-action-sheet {
 
   width: $action-sheet-width;
   height: $action-sheet-width;
+
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
 }
 
 .action-sheet-wrapper {
@@ -34,10 +37,24 @@ ion-action-sheet {
 
   border: 0;
 
+  font-family: inherit;
+
   &:active,
   &:focus {
     outline: none;
   }
+}
+
+.action-sheet-button-inner {
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
 }
 
 .action-sheet-container {

@@ -64,7 +64,7 @@ export class ChipButton {
         class={buttonClasses}
         disabled={this.disabled}
         href={this.href}>
-          <span class='button-inner'>
+          <span class='chip-button-inner'>
             <slot></slot>
           </span>
           { this.mode === 'md' && <ion-ripple-effect useTapClick={true} /> }

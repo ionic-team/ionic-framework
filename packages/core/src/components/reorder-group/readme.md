@@ -140,4 +140,4 @@ If true, the reorder will be hidden. Defaults to `true`.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

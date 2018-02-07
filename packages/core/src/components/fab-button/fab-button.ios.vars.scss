@@ -19,7 +19,7 @@ $fab-ios-icon-fill-color:                               $fab-ios-text-color !def
 $fab-ios-background-color-activated:                    ion-color($colors-ios, $fab-ios-background-color, tint, ios) !default;
 
 /// @prop - Background color of the button in a list
-$fab-ios-list-button-background-color:                  ion-color($colors-ios, tertiary, base, ios) !default;
+$fab-ios-list-button-background-color:                  ion-color($colors-ios, light, base, ios) !default;
 
 /// @prop - Background color of the button in a list
 $fab-ios-list-button-translucent-background-color:      ion-color-alpha($background-ios-color-value, background-ios-color, $alpha-ios-high) !default;

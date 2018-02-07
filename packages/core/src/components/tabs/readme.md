@@ -222,7 +222,13 @@ Emitted when the tab changes.
 #### getByIndex()
 
 
+#### getContentElement()
+
+
 #### getIndex()
+
+
+#### getRouteId()
 
 
 #### getSelected()
@@ -234,7 +240,10 @@ Emitted when the tab changes.
 #### select()
 
 
+#### setRouteId()
+
+
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

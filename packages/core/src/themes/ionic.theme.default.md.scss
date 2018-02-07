@@ -2,19 +2,9 @@
 
 // Material Design Default Theme
 // ----------------------------------
-$colors-md:       () !default;
-
-$light-md: #e3e3e3;
-$ion-colors-md:   (
-  light: (
-    base:             $light-md,
-    contrast:         #000,
-    rgb:              color-to-rgb-list($light-md),
-    shade:            #d0d0d0,
-    tint:             #f0f0f0
-  )
-);
-$colors-md:                             ion-extend-colors($colors, $ion-colors-md, $colors-md);
+$colors-md:      () !default;
+$ion-colors-md:  ();
+$colors-md:                                  ion-extend-colors($colors, $ion-colors-md, $colors-md);
 
 // Material Design General
 // --------------------------------------------------
