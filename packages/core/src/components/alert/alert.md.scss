@@ -6,6 +6,7 @@
 
 .alert-md {
   font-family: $alert-md-font-family;
+  font-size: $alert-md-font-size;
 }
 
 .alert-md .alert-wrapper {
@@ -29,6 +30,7 @@
 
 .alert-md .alert-title {
   font-size: $alert-md-title-font-size;
+  font-weight: $alert-md-title-font-weight;
 }
 
 .alert-md .alert-sub-title {
@@ -264,6 +266,6 @@
   background-color: $alert-md-button-background-color-activated;
 }
 
-.alert-md .alert-button .button-inner {
+.alert-md .alert-button-inner {
   justify-content: $alert-md-button-group-justify-content;
 }

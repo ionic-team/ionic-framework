@@ -8,6 +8,9 @@
 /// @prop - Font family of the alert
 $alert-md-font-family:                        $font-family-md-base !default;
 
+/// @prop - Font size of the alert
+$alert-md-font-size:                          $font-size-md-base !default;
+
 /// @prop - Max width of the alert
 $alert-md-max-width:                          280px !default;
 
@@ -40,6 +43,9 @@ $alert-md-head-text-align:                    start !default;
 
 /// @prop - Font size of the alert title
 $alert-md-title-font-size:                    22px !default;
+
+/// @prop - Font weight of the alert title
+$alert-md-title-font-weight:                  500 !default;
 
 /// @prop - Font size of the alert sub title
 $alert-md-sub-title-font-size:                16px !default;

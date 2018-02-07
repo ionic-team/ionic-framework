@@ -16,16 +16,15 @@ ion-alert {
   justify-content: center;
 
   contain: strict;
+
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
 }
 
 ion-alert.alert-top {
   @include padding(50px, null, null, null);
 
   align-items: flex-start;
-}
-
-ion-alert input {
-  width: 100%;
 }
 
 .alert-wrapper {
@@ -58,13 +57,21 @@ ion-alert input {
   overflow-y: scroll;
 
   -webkit-overflow-scrolling: touch;
+
+  box-sizing: border-box;
 }
 
 .alert-input {
   @include padding(10px, 0);
 
+  width: 100%;
+
   border: 0;
   background: inherit;
+
+  font: inherit;
+
+  box-sizing: border-box;
 }
 
 .alert-button-group {
@@ -92,11 +99,25 @@ ion-alert input {
   line-height: $alert-button-line-height;
 }
 
+.alert-button-inner {
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
 .alert-tappable {
   @include text-align(start);
   @include appearance(none);
   @include margin(0);
   @include padding(0);
+
+  border: 0;
 
   width: 100%;
 
@@ -114,4 +135,10 @@ ion-alert input {
   &:focus {
     outline: none;
   }
+}
+
+.alert-radio-icon,
+.alert-checkbox-icon,
+.alert-checkbox-inner {
+  box-sizing: border-box;
 }
