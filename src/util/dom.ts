@@ -108,6 +108,15 @@ export function copyInputAttributes(srcElement: HTMLElement, destElement: HTMLEl
   }
 }
 
+export function isSameOrDescendantOf(descendant: Element, ancestor: Element) {
+  return !!ancestor && !!descendant &&
+    (ancestor === descendant || (ancestor.compareDocumentPosition(descendant) & 16) === 16);
+}
+
+export function closestExcludeSelf(element: Element, selector: string) {
+  return element && element.parentElement && element.parentElement.closest(selector);
+}
+
 
 export interface PointerCoordinates {
   x?: number;

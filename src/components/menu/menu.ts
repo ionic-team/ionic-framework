@@ -654,6 +654,7 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
    */
   swipeEnable(shouldEnable: boolean): Menu {
     this._isSwipeEnabled = shouldEnable;
+    this.setElementAttribute('swipe-enabled', shouldEnable ? 'true' : 'false');
     this._updateState();
     return this;
   }

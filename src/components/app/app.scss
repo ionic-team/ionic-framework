@@ -250,6 +250,11 @@ ion-tab {
 
 ion-tab.show-tab {
   display: block;
+  z-index: 1;
+}
+
+ion-tab.minor-show-tab {
+  display: block;
 }
 
 ion-app,
