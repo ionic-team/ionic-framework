@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, W
 import { BaseInputComponent, GestureDetail } from '../../index';
 import { clamp, debounce } from '../../utils/helpers';
 
-interface Tick {
+export interface Tick {
   ratio: number | (() => number);
   left: string;
   active?: boolean;
