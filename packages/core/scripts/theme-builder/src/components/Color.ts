@@ -173,7 +173,6 @@ export class Color {
   }
 
   contrast (threshold: number = 128): Color {
-    console.log(this.yiq);
     return new Color((this.yiq >= threshold ? '#000' : '#fff'));
   }
 

@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
 import { THEME_VARIABLES }                                              from '../../theme-variables';
 import { Color, ColorStep }                                             from '../Color';
-import { getThemeUrl, STORED_THEME_KEY }                                from '../helpers';
+import { COLOR_URL, getThemeUrl, STORED_THEME_KEY }                     from '../helpers';
 
 interface ThemeVariable {
   property: string;
@@ -21,6 +21,8 @@ export class ThemeSelector {
   @Element() el: HTMLThemeSelectorElement;
   @State() themeName: string;
   @State() themeVariables: ThemeVariable[] = [];
+  @State() searchMode: boolean;
+  @State() palettes: any[];
   @Prop() propertiesUsed: string[] = [];
   @Prop() themeData: { name: string }[];
   @Event() themeCssChange: EventEmitter;
@@ -120,10 +122,12 @@ export class ThemeSelector {
   @Listen('colorChange')
   onColorChange (ev) {
     console.log('ThemeSelector colorChange');
+    this.changeColor(ev.detail.property, ev.detail.value);
+  }
 
+  changeColor (property: string, value: Color | string) {
     this.themeVariables = this.themeVariables.map(themeVariable => {
-      if (ev.detail.property === themeVariable.property) {
-        const value = ev.detail.value;
+      if (property === themeVariable.property) {
         return Object.assign({}, themeVariable, {
           value: value instanceof Color ? value : themeVariable.value instanceof Color ? new Color(value) : value
         });
@@ -198,22 +202,95 @@ export class ThemeSelector {
     }
   }
 
+  onSearchInput (ev: KeyboardEvent) {
+    if (ev.keyCode == 13) {
+      this.search();
+    }
+  }
+
+  toggleSearchMode () {
+    this.searchMode = !this.searchMode;
+  }
+
+  async search () {
+    const input: HTMLInputElement = this.el.querySelector('#searchInput') as HTMLInputElement,
+      value = input.value;
+
+    input.value = '';
+
+    try {
+      this.palettes = await fetch(`${COLOR_URL}?search=${value}&stuff=poop`).then(r => r.json()) || [];
+    } catch (e) {
+      this.palettes = [];
+    }
+  }
+
+  onColorClick (ev: MouseEvent) {
+    console.log(ev);
+    let target: HTMLElement = ev.currentTarget as HTMLElement;
+    const property = target.getAttribute('data-property');
+
+    while (target && !target.classList.contains('color')) {
+      target = target.parentElement as HTMLElement;
+    }
+
+    const color = target.getAttribute('data-color');
+    this.changeColor(property, color);
+  }
+
   render () {
+    const
+      onColorClick = this.onColorClick.bind(this),
+      variables = <section>
+        {
+          this.themeVariables
+            .filter(d => !d.computed)
+            .map(d => <variable-selector class={this.propertiesUsed.indexOf(d.property) >= 0 ? 'used' : ''}
+                                         property={d.property} value={d.value}></variable-selector>)
+        }
+      </section>,
+      search = <section>
+        <div>
+          <input type="text" id="searchInput" onKeyUp={this.onSearchInput.bind(this)}/>
+          <button class="search-button" onClick={this.search.bind(this)}>Search</button>
+        </div>
+        <div class="palettes">
+          {
+            (this.palettes || []).map((d: any) => <div class="palette" data-title={d.title}>
+              {(d.colors || []).map((c: string) => <div class="color" data-color={`#${c}`}
+                                                        style={{backgroundColor: `#${c}`}}>
+                <div class="color-buttons">
+                  <button onClick={onColorClick} data-property="--ion-color-primary" class="primary">p</button>
+                  <button onClick={onColorClick} data-property="--ion-color-secondary" class="secondary">s</button>
+                  <button onClick={onColorClick} data-property="--ion-color-tertiary" class="tertiary">t</button>
+                  <button onClick={onColorClick} data-property="--ion-color-success" class="success">ss</button>
+                  <button onClick={onColorClick} data-property="--ion-color-warning" class="warning">w</button>
+                  <button onClick={onColorClick} data-property="--ion-color-danger" class="danger">d</button>
+                  <button onClick={onColorClick} data-property="--ion-color-light" class="light">l</button>
+                  <button onClick={onColorClick} data-property="--ion-color-medium" class="medium">m</button>
+                  <button onClick={onColorClick} data-property="--ion-color-dark" class="dark">dk</button>
+                  <button onClick={onColorClick} data-property="--ion-background-color" class="background">bg</button>
+                  <button onClick={onColorClick} data-property="--ion-text-color" class="text">txt</button>
+                </div>
+              </div>)}
+            </div>)
+          }
+        </div>
+
+      </section>;
+
     return [
       <div>
-        <select onChange={this.onChangeUrl.bind(this)}>
-          {this.themeData.map(d => <option value={d.name} selected={this.themeName === d.name}>{d.name}</option>)}
-        </select>
-
-        <section>
-          {
-            this.themeVariables
-              .filter(d => !d.computed)
-              .map(d => <variable-selector class={this.propertiesUsed.indexOf(d.property) >= 0 ? 'used' : ''}
-                                           property={d.property} value={d.value}></variable-selector>)
-          }
-        </section>
+        <div class="top-bar">
+          <select onChange={this.onChangeUrl.bind(this)}>
+            {this.themeData.map(d => <option value={d.name} selected={this.themeName === d.name}>{d.name}</option>)}
+          </select>
+          <button type="button" class="search-toggle"
+                  onClick={this.toggleSearchMode.bind(this)}>{this.searchMode ? 'Close' : 'Open'} Search
+          </button>
+        </div>
+        {this.searchMode ? search : variables}
       </div>
     ];
   }
-}
+};
