@@ -43,7 +43,7 @@
   line-height: 1;
 }
 
-.button-inner {
+.fab-button-inner {
   display: flex;
 
   flex-flow: row nowrap;
@@ -93,7 +93,7 @@ ion-fab-button[mini] .fab-button {
 // FAB Animation
 // --------------------------------------------------
 
-.fab-button .button-inner {
+.fab-button-inner {
   transition: all ease-in-out 300ms;
   transition-property: transform, opacity;
 }
@@ -103,7 +103,7 @@ ion-fab-button[mini] .fab-button {
   transform: scale(1) rotateZ(0deg);
 }
 
-.fab-button-close-active .button-inner {
+.fab-button-close-active .fab-button-inner {
   opacity: 0;
   transform: scale(.4) rotateZ(45deg);
 }
