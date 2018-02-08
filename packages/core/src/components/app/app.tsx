@@ -100,7 +100,7 @@ export class App {
     return null;
   }
 
-  @Method()
+  @Listen('document:backbutton')
   hardwareBackButtonPressed() {
     // check if menu exists and is open
     return checkIfMenuIsOpen().then((done: boolean) => {
@@ -134,12 +134,12 @@ export class App {
     });
   }
 
-  @Method()
+  @Listen('document:paused')
   appResume(): void {
     return null;
   }
 
-  @Method()
+  @Listen('document:resume')
   appPaused(): void {
     return null;
   }

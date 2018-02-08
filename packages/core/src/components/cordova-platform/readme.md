@@ -7,6 +7,9 @@
 
 ## Methods
 
+#### exitCordovaApp()
+
+
 #### ready()
 
 
