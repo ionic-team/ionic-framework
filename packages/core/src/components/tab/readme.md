@@ -97,11 +97,9 @@ string
 The icon for the tab button.
 
 
-#### path
+#### name
 
 string
-
-The URL path name to represent this tab within the URL.
 
 
 #### selected
@@ -180,11 +178,9 @@ string
 The icon for the tab button.
 
 
-#### path
+#### name
 
 string
-
-The URL path name to represent this tab within the URL.
 
 
 #### selected
@@ -223,7 +219,7 @@ Emitted when the current tab is selected.
 
 ## Methods
 
-#### getPath()
+#### getRouteId()
 
 
 #### setActive()

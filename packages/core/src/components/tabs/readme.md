@@ -217,6 +217,9 @@ Only affects `ios` mode. Defaults to `false`.
 Emitted when the tab changes.
 
 
+#### ionNavChanged
+
+
 ## Methods
 
 #### getByIndex()

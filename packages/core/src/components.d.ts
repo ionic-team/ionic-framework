@@ -2437,9 +2437,9 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRouteAttributes extends HTMLAttributes {
-      component?: string;
       path?: string;
       props?: any;
+      sel?: string;
     }
   }
 }
@@ -3002,7 +3002,7 @@ declare global {
       delegate?: FrameworkDelegate;
       disabled?: boolean;
       icon?: string;
-      path?: string;
+      name?: string;
       selected?: boolean;
       show?: boolean;
       tabsHideOnSubPages?: boolean;

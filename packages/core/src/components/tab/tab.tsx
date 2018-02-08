@@ -20,11 +20,6 @@ export class Tab {
   @Prop() btnId: string;
 
   /**
-   * The URL path name to represent this tab within the URL.
-   */
-  @Prop() path: string;
-
-  /**
    * The title of the tab button.
    */
   @Prop() title: string;
@@ -43,6 +38,7 @@ export class Tab {
    * The badge for the tab button.
    */
   @Prop() component: any;
+  @Prop() name: string;
 
   /**
    * The badge color for the tab button.
@@ -102,7 +98,18 @@ export class Tab {
     return promise.then(() => this.fireChildren());
   }
 
-  fireChildren() {
+  @Method()
+  getRouteId(): string|null {
+    if (this.name) {
+      return this.name;
+    }
+    if (typeof this.component === 'string') {
+      return this.component;
+    }
+    return null;
+  }
+
+  private fireChildren() {
     const nav = getNavAsChildIfExists(this.el);
     if (nav && nav.getViews().length === 0 && nav.root) {
       // we need to initialize
@@ -110,17 +117,6 @@ export class Tab {
     }
     // it's already been initialized if it exists
     return Promise.resolve();
-  }
-
-  @Method()
-  getPath(): string {
-    if (this.path != null) {
-      return this.path;
-    }
-    if (this.title) {
-      return this.title.toLowerCase();
-    }
-    return '';
   }
 
   hostData() {

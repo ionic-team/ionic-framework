@@ -70,11 +70,11 @@ export function readNavState(node: HTMLElement) {
   }
   return {
     stack: stack,
-    pivot: pivot
+    pivot: pivot,
   };
 }
 
-export function matchPath(stack: string[], routes: RouterEntries): string[] {
+export function matchPath(stack: string[], routes: RouterEntries) {
   const path: string[] = [];
   for (const id of stack) {
     const route = routes.find(r => r.id === id);
@@ -85,7 +85,10 @@ export function matchPath(stack: string[], routes: RouterEntries): string[] {
       break;
     }
   }
-  return path;
+  return {
+    path: path,
+    routes: routes,
+  };
 }
 
 export function matchRouteChain(path: string[], routes: RouterEntries): RouterEntries {
@@ -140,7 +143,7 @@ export function readRoutes(root: Element): RouterEntries {
     .filter(el => el.tagName === 'ION-ROUTE')
     .map(el => ({
       path: parsePath(el.path),
-      id: el.component,
+      id: el.sel,
       props: el.props,
       subroutes: readRoutes(el)
     }));

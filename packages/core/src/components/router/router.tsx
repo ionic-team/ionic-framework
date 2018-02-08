@@ -46,15 +46,15 @@ export class Router {
 
     console.debug('[IN] nav changed -> update URL');
     const { stack, pivot } = this.readNavState();
+    const { path, routes} = matchPath(stack, this.routes);
     if (pivot) {
       // readNavState() found a pivot that is not initialized
       console.debug('[IN] pivot uninitialized -> write partial nav state');
-      this.writeNavState(pivot, []);
+      this.writeNavState(pivot, [], routes);
     }
 
     const isPop = ev.detail.isPop === true;
-    const segments = matchPath(stack, this.routes);
-    this.writePath(segments, isPop);
+    this.writePath(path, isPop);
   }
 
 
@@ -62,13 +62,13 @@ export class Router {
     const node = document.querySelector('ion-app') as HTMLElement;
     const currentPath = this.readPath();
     if (currentPath) {
-      return this.writeNavState(node, currentPath);
+      return this.writeNavState(node, currentPath, this.routes);
     }
     return Promise.resolve();
   }
 
-  private writeNavState(node: any, path: string[]): Promise<any> {
-    const chain = matchRouteChain(path, this.routes);
+  private writeNavState(node: any, path: string[], routes: RouterEntries): Promise<any> {
+    const chain = matchRouteChain(path, routes);
 
     this.busy = true;
     return writeNavState(node, chain)
