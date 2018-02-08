@@ -3,10 +3,7 @@ import { Config } from '../../index';
 
 @Component({
   tag: 'ion-back-button',
-  styleUrls: {
-    ios: 'back-button.ios.scss',
-    md: 'back-button.md.scss'
-  },
+  styleUrl: 'back-button.scss',
   host: {
     theme: 'back-button'
   }

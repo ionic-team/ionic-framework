@@ -58,22 +58,30 @@ Or no button text at all:
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 #### mode
 
-The mode determines which platform styles to use. Possible values are: `"ios"`
-or `"md"`. For more information, see [Platform
-Styles](/docs/theming/platform-specific-styles).
+
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+
 
 ## Attributes
 
 #### mode
 
-The mode determines which platform styles to use. Possible values are: `"ios"`
-or `"md"`. For more information, see [Platform
-Styles](/docs/theming/platform-specific-styles).
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+
+
+
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*
