@@ -181,6 +181,7 @@ export class Select {
       value: this.value,
       text: this.text
     });
+    this.emitStyle();
   }
 
   @Listen('ionSelectOptionDidLoad')
@@ -240,7 +241,6 @@ export class Select {
       this.value = this.multiple ? [] : undefined;
     }
     this.name = this.name || this.selectId;
-    this.emitStyle();
   }
 
   componentDidLoad() {
@@ -269,6 +269,7 @@ export class Select {
         this.text = checked.textContent;
       }
     }
+    this.emitStyle();
   }
 
   getLabel() {

@@ -69,3 +69,12 @@ ion-select {
 .select-key button {
   border: 2px solid #5e9ed6;
 }
+
+
+// Stacked & Floating Select
+// --------------------------------------------------
+
+.item-label-stacked .select,
+.item-label-floating .select {
+  max-width: 100%;
+}
