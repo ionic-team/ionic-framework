@@ -6,3 +6,147 @@ select {
 section {
   margin: 10px;
 }
+
+.palettes {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.palette {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 75px;
+  padding: 8px 0;
+}
+
+.palette:after {
+  content: attr(data-title);
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 28px;
+  opacity: .2;
+}
+
+.palette .color {
+  position: relative;
+  flex: 1;
+  padding: 0 8px;
+}
+
+.color:after {
+  position: absolute;
+  top: 0;
+  content: "#" attr(data-color);
+  pointer-events: none;
+  font-size: 12px;
+  text-shadow: rgba(255, 255, 255, .5) 1px 1px;
+}
+
+.color-buttons {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  display: none;
+}
+
+.color:hover .color-buttons {
+  display: flex;
+}
+
+.color-buttons button {
+  outline: none;
+  border: none;
+  font-size: 12px;
+  margin: 1px;
+  padding: 4px;
+  cursor: pointer;
+  opacity: .5;
+  text-shadow: rgba(255, 255, 255, .5) 1px 1px;
+}
+
+.color-buttons button.primary {
+  background-color: var(--ion-color-primary);
+}
+
+.color-buttons button.secondary {
+  background-color: var(--ion-color-secondary);
+}
+
+.color-buttons button.tertiary {
+  background-color: var(--ion-color-tertiary);
+}
+
+.color-buttons button.success {
+  background-color: var(--ion-color-success);
+}
+
+.color-buttons button.warning {
+  background-color: var(--ion-color-warning);
+}
+
+.color-buttons button.danger {
+  background-color: var(--ion-color-danger);
+}
+
+.color-buttons button.light {
+  background-color: var(--ion-color-light);
+}
+
+.color-buttons button.medium {
+  background-color: var(--ion-color-medium);
+}
+
+.color-buttons button.dark {
+  background-color: var(--ion-color-dark);
+}
+
+.color-buttons button.background {
+  background-color: var(--ion-background-color);
+}
+
+.color-buttons button.text {
+  background-color: var(--ion-text-color);
+}
+
+.color-buttons button:hover {
+  background-color: rgba(161, 60, 68, 0.53);
+}
+
+.top-bar {
+  display: flex;
+  padding: 8px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.search-button {
+  margin-left: 6px;
+}
+
+.search-toggle, .search-button {
+  background-color: rgb(89, 124, 155);
+  border: none;
+  color: white;
+  padding: 4px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 11px;
+}

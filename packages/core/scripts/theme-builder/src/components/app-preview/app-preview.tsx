@@ -1,4 +1,5 @@
-import { Component, Prop, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
+import { Color }                                               from '../Color';
 
 
 @Component({
@@ -11,16 +12,36 @@ export class AppPreview {
   @Prop() demoUrl: string;
   @Prop() demoMode: string;
   @Prop() cssText: string;
+  @Prop() hoverProperty: string;
+  @Event() propertiesUsed: EventEmitter;
+
   iframe: HTMLIFrameElement;
+  hasIframeListener: boolean = false;
 
   @Watch('cssText')
-  onCssTextChange() {
+  onCssTextChange () {
     console.log('AppPreview onCssTextChange');
 
     this.applyStyles();
   }
 
-  applyStyles() {
+  @Watch('hoverProperty')
+  onHoverPropertyChange () {
+    const el = this.iframe.contentDocument.documentElement;
+    el.style.cssText = '';
+    if (this.hoverProperty) {
+      const computed = window.getComputedStyle(el),
+        value = computed.getPropertyValue(this.hoverProperty);
+
+      if (Color.isColor(value)) {
+        el.style.setProperty(this.hoverProperty, '#ff0000');
+      } else {
+        el.style.setProperty(this.hoverProperty, parseFloat(value) > .5 ? '.1': '1');
+      }
+    }
+  }
+
+  applyStyles () {
     if (this.iframe && this.iframe.contentDocument && this.iframe.contentDocument.documentElement) {
       const iframeDoc = this.iframe.contentDocument;
       const themerStyleId = 'themer-style';
@@ -30,17 +51,69 @@ export class AppPreview {
         themerStyle = iframeDoc.createElement('style');
         themerStyle.id = themerStyleId;
         iframeDoc.documentElement.appendChild(themerStyle);
+
+        const applicationStyle = iframeDoc.createElement('style');
+        iframeDoc.documentElement.appendChild(applicationStyle);
+        applicationStyle.innerHTML = 'html.theme-property-searching body * { pointer-events: auto !important}'
       }
 
       themerStyle.innerHTML = this.cssText;
     }
   }
 
-  onIframeLoad() {
-    this.applyStyles();
+  onIframeMouseMove (ev) {
+    if (ev.ctrlKey) {
+      const el: HTMLElement = this.iframe.contentDocument.documentElement;
+
+      if (!el.classList.contains('theme-property-searching')) {
+        el.classList.add('theme-property-searching');
+      }
+      const sheets = (this.iframe.contentDocument.styleSheets),
+        items: Element[] = Array.from(ev.currentTarget.querySelectorAll(':hover')),
+        properties = [];
+
+      items.forEach(item => {
+        for (let i in sheets) {
+          const sheet: CSSStyleSheet = sheets[i] as CSSStyleSheet,
+            rules = sheet.rules || sheet.cssRules;
+          for (let r in rules) {
+            const rule: CSSStyleRule = rules[r] as CSSStyleRule;
+            if (item.matches(rule.selectorText)) {
+              const matches = rule.cssText.match(/(--ion.+?),/mgi);
+              if (matches) {
+                properties.push(...matches.map(match => match.replace(',', '')));
+              }
+            }
+          }
+        }
+      });
+
+      this.propertiesUsed.emit({
+        properties: Array.from(new Set(properties)).filter(prop => !/(-ios-|-md-)/.test(prop))
+      })
+    }
   }
 
-  render() {
+  @Listen('body:keyup', {capture: true})
+  onKeyUp (ev: KeyboardEvent) {
+    if (!ev.ctrlKey) {
+      const el: HTMLElement = this.iframe.contentDocument.documentElement;
+      el.classList.remove('theme-property-searching');
+
+      this.propertiesUsed.emit({
+        properties: []
+      })
+    }
+  }
+
+
+  onIframeLoad () {
+    this.applyStyles();
+
+    this.iframe.contentDocument.documentElement.addEventListener('mousemove', this.onIframeMouseMove.bind(this));
+  }
+
+  render () {
     const url = `${this.demoUrl}?ionicplatform=${this.demoMode}`;
 
     return [

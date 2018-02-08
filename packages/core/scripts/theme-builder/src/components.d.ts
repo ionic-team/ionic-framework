@@ -4,6 +4,9 @@
  * and imports for stencil collections that might be configured in your stencil.config.js file
  */
 
+import {
+  Color,
+} from './components/Color';
 
 import {
   AppPreview as AppPreview
@@ -32,38 +35,7 @@ declare global {
       cssText?: string;
       demoMode?: string;
       demoUrl?: string;
-    }
-  }
-}
-
-
-import {
-  ColorSelector as ColorSelector
-} from './components/color-selector/color-selector';
-
-declare global {
-  interface HTMLColorSelectorElement extends ColorSelector, HTMLElement {
-  }
-  var HTMLColorSelectorElement: {
-    prototype: HTMLColorSelectorElement;
-    new (): HTMLColorSelectorElement;
-  };
-  interface HTMLElementTagNameMap {
-    "color-selector": HTMLColorSelectorElement;
-  }
-  interface ElementTagNameMap {
-    "color-selector": HTMLColorSelectorElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "color-selector": JSXElements.ColorSelectorAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface ColorSelectorAttributes extends HTMLAttributes {
-      isRgb?: boolean;
-      property?: string;
-      value?: string;
+      hoverProperty?: string;
     }
   }
 }
@@ -186,7 +158,41 @@ declare global {
   }
   namespace JSXElements {
     export interface ThemeSelectorAttributes extends HTMLAttributes {
+      propertiesUsed?: string[];
       themeData?: { name: string }[];
+    }
+  }
+}
+
+
+import {
+  VariableSelector as VariableSelector
+} from './components/variable-selector/variable-selector';
+
+declare global {
+  interface HTMLVariableSelectorElement extends VariableSelector, HTMLElement {
+  }
+  var HTMLVariableSelectorElement: {
+    prototype: HTMLVariableSelectorElement;
+    new (): HTMLVariableSelectorElement;
+  };
+  interface HTMLElementTagNameMap {
+    "variable-selector": HTMLVariableSelectorElement;
+  }
+  interface ElementTagNameMap {
+    "variable-selector": HTMLVariableSelectorElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "variable-selector": JSXElements.VariableSelectorAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface VariableSelectorAttributes extends HTMLAttributes {
+      isRgb?: boolean;
+      property?: string;
+      type?: 'color' | 'percent';
+      value?: Color | string | number;
     }
   }
 }
