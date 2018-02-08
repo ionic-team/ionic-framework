@@ -12,6 +12,11 @@
       <ion-header>
         <ion-toolbar>
           <ion-title>Datetime - Basic</ion-title>
+          <ion-buttons slot="end">
+            <ion-button onclick="toggleBoolean('dynamicDisabled', 'disabled')">
+            (disabled)
+            </ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
 
@@ -29,7 +34,7 @@
 
           <ion-item>
             <ion-label>Disabled</ion-label>
-            <ion-datetime display-format="MM DD YY" disabled value="1994-12-15"></ion-datetime>
+            <ion-datetime id="dynamicDisabled" display-format="MM DD YY" disabled value="1994-12-15"></ion-datetime>
           </ion-item>
 
           <ion-item>
@@ -114,12 +119,6 @@
           </ion-item>
 
         </ion-list>
-
-        <div text-center>
-          <ion-button onclick="toggleBoolean('dynamicDisabled', 'disabled')">
-            Toggle Disabled
-          </ion-button>
-        </div>
 
       </ion-content>
     </ion-page>
