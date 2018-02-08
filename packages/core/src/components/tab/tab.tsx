@@ -1,12 +1,14 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { getNavAsChildIfExists } from '../../utils/helpers';
+import { FrameworkDelegate } from '../..';
 
 @Component({
   tag: 'ion-tab',
 })
 export class Tab {
 
+  private loaded = false;
   @Element() el: HTMLElement;
 
   @State() init = false;
@@ -38,6 +40,11 @@ export class Tab {
   @Prop() badge: string;
 
   /**
+   * The badge for the tab button.
+   */
+  @Prop() component: any;
+
+  /**
    * The badge color for the tab button.
    */
   @Prop() badgeStyle = 'default';
@@ -58,6 +65,7 @@ export class Tab {
    */
   @Prop() tabsHideOnSubPages = false;
 
+  @Prop() delegate: FrameworkDelegate;
 
   @Prop({ mutable: true }) selected = false;
 
@@ -76,6 +84,25 @@ export class Tab {
   @Method()
   setActive(active: boolean): Promise<any> {
     this.active = active;
+    if (this.loaded || !active) {
+      return Promise.resolve();
+    }
+
+    this.loaded = true;
+
+    let promise: Promise<any>;
+    if (this.component) {
+      promise = (this.delegate)
+       ? this.delegate.attachViewToDom(this.el, this.component)
+       : attachViewToDom(this.el, this.component);
+
+    } else {
+      promise = Promise.resolve();
+    }
+    return promise.then(() => this.fireChildren());
+  }
+
+  fireChildren() {
     const nav = getNavAsChildIfExists(this.el);
     if (nav && nav.getViews().length === 0 && nav.root) {
       // we need to initialize
@@ -99,7 +126,7 @@ export class Tab {
   hostData() {
     const visible = this.active && this.selected;
     return {
-      'aria-hidden': !visible ? 'true' : null,
+      'aria-hidden': !visible,
       'aria-labelledby': this.btnId,
       'role': 'tabpanel',
       class: {
@@ -109,8 +136,17 @@ export class Tab {
   }
 
   render() {
-    return <slot></slot>;
+    return <slot/>;
   }
+}
+
+function attachViewToDom(container: HTMLElement, cmp: string): Promise<any> {
+  const el = document.createElement(cmp) as HTMLStencilElement;
+  container.appendChild(el);
+  if (el.componentOnReady ) {
+    return el.componentOnReady();
+  }
+  return Promise.resolve();
 }
 
 export interface TabEvent extends CustomEvent {

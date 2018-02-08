@@ -12,7 +12,7 @@ const srcComponentsDir = path.join(__dirname, '../../', componentsPath);
 const srcCssDir = path.join(__dirname, '../../', cssPath);
 
 
-function requestHandler(request, response) {
+function requestHandler (request, response) {
   const parsedUrl = url.parse(request.url, true);
 
   response.setHeader('Access-Control-Allow-Origin', '*');
@@ -20,7 +20,8 @@ function requestHandler(request, response) {
 
   if (parsedUrl.pathname === '/data') {
     requestDataHandler(response);
-
+  } else if (parsedUrl.pathname === '/color') {
+    requestColorHandler(request, response);
   } else if (parsedUrl.pathname === '/save-css') {
     requestSaveCssHandler(parsedUrl, response);
 
@@ -33,7 +34,7 @@ function requestHandler(request, response) {
 }
 
 
-function requestDataHandler(response) {
+function requestDataHandler (response) {
   try {
     const demoPaths = glob.sync('**/index.html', {
       cwd: srcComponentsDir
@@ -42,10 +43,10 @@ function requestDataHandler(response) {
     const demos = demoPaths.map(demo => {
       return {
         name: demo.toLowerCase()
-                  .replace(/\\/g, ' ')
-                  .replace(/\//g, ' ')
-                  .replace(/ test/g, '')
-                  .replace(/ index.html/g, ''),
+          .replace(/\\/g, ' ')
+          .replace(/\//g, ' ')
+          .replace(/ test/g, '')
+          .replace(/ index.html/g, ''),
         url: componentsPath + demo.replace(/\\/g, '/')
       };
     }).sort((a, b) => {
@@ -82,8 +83,31 @@ function requestDataHandler(response) {
   }
 }
 
+function requestColorHandler (req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  const params = {} = req.url.split('?').filter((e,i) => i > 0)[0].split('&').map(e => {let [name, value]=e.split('='); return {[name]:value}})[0],
+  url = `http://www.colourlovers.com/api/palettes?format=json&keywords=${params.search}`;
 
-function requestSaveCssHandler(parsedUrl, response) {
+  // console.log (`Proxy: ${url}`, params);
+  http.get(url, (resp) => {
+    let data = '';
+
+    resp.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    // The whole response has been received. Print out the result.
+    resp.on('end', () => {
+      res.end(data);
+    });
+
+  }).on("error", (err) => {
+    console.log("Error: " + err.message);
+    res.end('{success: false}');
+  });
+}
+
+function requestSaveCssHandler (parsedUrl, response) {
   try {
     const theme = (parsedUrl.query.theme || '').toLowerCase().trim();
     if (!theme) {
@@ -94,7 +118,7 @@ function requestSaveCssHandler(parsedUrl, response) {
     const filePath = path.join(srcCssDir, theme + '.css');
     const css = parsedUrl.query.css || '';
 
-    fs.writeFileSync(filePath, css, { encoding: 'utf8' });
+    fs.writeFileSync(filePath, css, {encoding: 'utf8'});
 
     console.log('css saved!', filePath);
 
@@ -107,7 +131,7 @@ function requestSaveCssHandler(parsedUrl, response) {
 }
 
 
-function requestDeleteCssHandler(parsedUrl, response) {
+function requestDeleteCssHandler (parsedUrl, response) {
   try {
     const theme = (parsedUrl.query.theme || '').toLowerCase().trim();
     if (!theme) {

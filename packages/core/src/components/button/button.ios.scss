@@ -34,6 +34,13 @@
   opacity: $button-ios-opacity-hover;
 }
 
+a[disabled],
+button[disabled],
+.button[disabled] {
+  opacity: $button-ios-opacity-disabled;
+}
+
+
 // iOS Default Button Color Mixin
 // --------------------------------------------------
 

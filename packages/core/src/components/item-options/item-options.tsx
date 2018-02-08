@@ -3,7 +3,11 @@ import { Side, isRightSide } from '../../utils/helpers';
 
 
 @Component({
-  tag: 'ion-item-options'
+  tag: 'ion-item-options',
+  styleUrls: {
+    ios: 'item-options.ios.scss',
+    md: 'item-options.md.scss'
+  }
 })
 export class ItemOptions {
   @Element() private el: HTMLElement;

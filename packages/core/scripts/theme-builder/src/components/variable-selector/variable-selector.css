@@ -10,6 +10,7 @@ section {
 .property-label {
   font-family: Courier New, Courier, monospace;
   white-space: nowrap;
+  cursor: pointer;
 
   flex: 1;
   padding-left: 10px;
@@ -36,4 +37,8 @@ input[type="color"]::-webkit-color-swatch-wrapper {
 
 input[type="color"]::-webkit-color-swatch {
 	border: 1px solid black;
+}
+
+:host(.used) section {
+  background-color: var(--variable-selector-color, rgba(255, 149, 243, 0.91));
 }

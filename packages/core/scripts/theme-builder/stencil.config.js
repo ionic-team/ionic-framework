@@ -8,4 +8,4 @@ exports.devServer = {
   root: '../../',
   watchGlob: 'src/**',
   openUrl: '/theme-builder'
-}
+};

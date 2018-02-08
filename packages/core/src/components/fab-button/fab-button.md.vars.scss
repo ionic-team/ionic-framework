@@ -22,7 +22,7 @@ $fab-md-icon-fill-color:                          $fab-md-text-color !default;
 $fab-md-background-color-activated:               ion-color($colors-md, $fab-md-background-color, tint, md) !default;
 
 /// @prop - Background color of the button in a list
-$fab-md-list-button-background-color:             ion-color($colors-md, tertiary, base, md) !default;
+$fab-md-list-button-background-color:             ion-color($colors-md, light, base, md) !default;
 
 /// @prop - Text color of the button in a list
 $fab-md-list-button-text-color:                   ion-color($colors-md, $fab-md-list-button-background-color, contrast, md) !default;

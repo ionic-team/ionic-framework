@@ -262,7 +262,7 @@ export class ActionSheet {
               : null}
             {buttons.map(b =>
               <button class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
-                <span class='button-inner'>
+                <span class='action-sheet-button-inner'>
                   {b.icon
                     ? <ion-icon name={b.icon} class='action-sheet-icon' />
                     : null}
@@ -277,7 +277,7 @@ export class ActionSheet {
                   class={buttonClass(cancelButton)}
                   onClick={() => this.buttonClick(cancelButton)}
                 >
-                  <span class='button-inner'>
+                  <span class='action-sheet-button-inner'>
                     {cancelButton.icon
                       ? <ion-icon
                           name={cancelButton.icon}

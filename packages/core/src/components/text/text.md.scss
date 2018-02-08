@@ -11,6 +11,7 @@
   .text-md-#{$color-name},
   .text-md-#{$color-name} a,
   .text-md-#{$color-name} p {
+    // scss-lint:disable ImportantRule
     color: $color-base !important;
   }
 

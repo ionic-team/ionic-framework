@@ -71,6 +71,18 @@ string
 Set the root page for this tab.
 
 
+#### component
+
+any
+
+The badge for the tab button.
+
+
+#### delegate
+
+
+
+
 #### disabled
 
 boolean
@@ -140,6 +152,18 @@ The badge color for the tab button.
 string
 
 Set the root page for this tab.
+
+
+#### component
+
+any
+
+The badge for the tab button.
+
+
+#### delegate
+
+
 
 
 #### disabled

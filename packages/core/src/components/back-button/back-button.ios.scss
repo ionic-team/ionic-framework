@@ -4,17 +4,14 @@
 // iOS Back Button
 // --------------------------------------------------
 
-// .back-button-ios {
-//   @include margin(0);
-//
-//   z-index: 99;
-//   overflow: visible;
-//
-//   order: 0;
-//
-//   line-height: 1;
-//   transform: translateZ(0);
-// }
-// .back-button-ios .bar-button-ios {
-//   color: $back-button-ios-text-color !important;
-// }
+.back-button-ios {
+  @include margin(0);
+
+  z-index: 99;
+  overflow: visible;
+
+  order: 0;
+
+  line-height: 1;
+  transform: translateZ(0);
+}

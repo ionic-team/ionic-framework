@@ -34,12 +34,12 @@
 
   display: none;
 
-  background-color: $searchbar-md-cancel-button-background-color;
-  color: $searchbar-md-cancel-button-color;
+  height: 100%;
 
   font-size: $searchbar-md-cancel-button-font-size;
 
-  height: 100%;
+  color: $searchbar-md-cancel-button-color;
+  background-color: $searchbar-md-cancel-button-background-color;
 }
 
 // Searchbar Search & Cancel Icon
