@@ -3,11 +3,6 @@ import { isString } from './helpers';
 
 export class DomFrameworkDelegate implements FrameworkDelegate {
 
-  updateUrlState(urlSegment: string, stateObject: any = null, title = ''): Promise<any> {
-    history.pushState(stateObject, title, urlSegment);
-    return Promise.resolve();
-  }
-
   attachViewToDom(parentElement: HTMLElement, tagOrElement: string | HTMLElement, data: any = {}, classesToAdd: string[] = []): Promise<FrameworkMountingData> {
     return new Promise((resolve) => {
       const usersElement = (isString(tagOrElement) ? document.createElement(tagOrElement) : tagOrElement);

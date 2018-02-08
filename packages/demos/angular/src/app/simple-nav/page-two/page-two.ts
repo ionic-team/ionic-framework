@@ -31,7 +31,7 @@ export class PageTwo {
   }
 
   pushPageThreeComponent() {
-    this.navController.push('/simple-nav/page-three');
+    this.navController.element.updateUrl('/simple-nav/page-three');
   }
 
   goBack() {

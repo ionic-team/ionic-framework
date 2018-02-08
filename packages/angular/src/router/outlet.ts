@@ -22,6 +22,8 @@ import {
   Router
 } from '@angular/router';
 
+import { NavResult, RouterDelegate } from '@ionic/core';
+
 
 import { AngularComponentMounter, AngularEscapeHatch } from '..';
 import { OutletInjector } from './outlet-injector';
@@ -31,7 +33,7 @@ let id = 0;
 @Directive({
   selector: 'ion-nav',
 })
-export class RouterOutlet implements OnDestroy, OnInit {
+export class RouterOutlet implements OnDestroy, OnInit, RouterDelegate {
 
   public name: string;
   public activationStatus = NOT_ACTIVATED;
@@ -53,10 +55,19 @@ export class RouterOutlet implements OnDestroy, OnInit {
     protected parentContexts: ChildrenOutletContexts,
     protected cfr: ComponentFactoryResolver,
     protected injector: Injector,
+    protected router: Router,
     @Attribute('name') name: string) {
 
+    (this.elementRef.nativeElement as HTMLIonNavElement).routerDelegate = this;
     this.name = name || PRIMARY_OUTLET;
     parentContexts.onChildOutletCreated(this.name, this as any);
+  }
+
+  updateUrlState(urlSegment: string): Promise<any> {
+    if (this.router) {
+      return this.router.navigateByUrl(urlSegment);
+    }
+    return Promise.reject(new Error('Angular Router is unavailable'));
   }
 
   ngOnDestroy(): void {
@@ -168,7 +179,7 @@ function updateTab(navElement: HTMLIonNavElement,
 }
 
 function updateNav(navElement: HTMLIonNavElement,
-  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector) {
+  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector): Promise<NavResult>{
 
   // check if the component is the top view
   const activeViews = navElement.getViews();
@@ -183,7 +194,7 @@ function updateNav(navElement: HTMLIonNavElement,
   const currentView = activeViews[activeViews.length - 1];
   if (currentView.component === component) {
     // the top view is already the component being activated, so there is no change needed
-    return Promise.resolve();
+    return Promise.resolve(null);
   }
 
   // check if the component is the previous view, if so, pop back to it

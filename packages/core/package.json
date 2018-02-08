@@ -9,7 +9,7 @@
     "dist/"
   ],
   "devDependencies": {
-    "@stencil/core": "next",
+    "@stencil/core": "0.3.0",
     "@stencil/dev-server": "latest",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.6",
@@ -29,7 +29,7 @@
   "scripts": {
     "build": "stencil build --docs --dev",
     "clean": "rm -rf dist",
-    "deploy": "np --any-branch",
+    "deploy": "npm run tsc && np --any-branch",
     "dev": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server\"",
     "e2e": "node ./scripts/e2e",
     "e2e-debug": "node --inspect --debug-brk ./scripts/e2e",

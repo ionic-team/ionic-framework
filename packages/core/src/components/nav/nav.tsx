@@ -11,6 +11,7 @@ import {
   NavState,
   PublicNav,
   PublicViewController,
+  RouterDelegate,
   RouterEntries,
   Transition,
   TransitionInstruction,
@@ -85,6 +86,7 @@ export class Nav implements PublicNav {
   @Prop() mode: string;
   @Prop() root: any;
   @Prop() delegate: FrameworkDelegate;
+  @Prop() routerDelegate: RouterDelegate;
   @Prop() useUrls = false;
   @Prop({ context: 'config' }) config: Config;
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
@@ -268,8 +270,8 @@ export function updateUrlImpl(nav: Nav, url: string, _opts?: NavOptions) {
   if (!nav.delegate) {
     nav.delegate = new DomFrameworkDelegate();
   }
-  if (nav.delegate.updateUrlState) {
-    return nav.delegate.updateUrlState(url, null, null);
+  if (nav.routerDelegate) {
+    return nav.routerDelegate.updateUrlState(url, null, null);
   }
   return Promise.reject(new Error('Delegate does not implement the updateUrlState method'));
 }

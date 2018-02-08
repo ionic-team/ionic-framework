@@ -27,6 +27,11 @@ string
 any
 
 
+#### routerDelegate
+
+
+
+
 #### useUrls
 
 boolean
@@ -52,6 +57,11 @@ string
 #### root
 
 any
+
+
+#### router-delegate
+
+
 
 
 #### use-urls
