@@ -88,4 +88,8 @@ export class Router {
   private readPath(): string[] | null {
     return readPath(window.location, this.base, this.useHash);
   }
+
+  render() {
+    return <slot/>;
+  }
 }

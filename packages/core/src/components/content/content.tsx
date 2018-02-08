@@ -102,7 +102,7 @@ export class Content {
       });
     } else {
       this.cTop = this.cBottom = null;
-      this.dom.write(() => this.scrollEl.removeAttribute('style'));
+      this.dom.write(() => this.scrollEl && this.scrollEl.removeAttribute('style'));
     }
   }
 
