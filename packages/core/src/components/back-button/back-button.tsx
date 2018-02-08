@@ -1,6 +1,5 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Element, Prop, State } from '@stencil/core';
 import { Config } from '../../index';
-
 
 @Component({
   tag: 'ion-back-button',
@@ -13,41 +12,45 @@ import { Config } from '../../index';
   }
 })
 export class BackButton {
-  private mode: string;
+
+  @State() custom: boolean;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @Prop() mode: 'ios' | 'md';
 
   @Prop({ context: 'config' }) config: Config;
 
+  @Element() el: HTMLElement;
+
+  componentWillLoad() {
+    this.custom = this.el.childElementCount > 0;
+  }
   render() {
-    const iconName = this.config.get('backButtonIcon', this.mode + '-arrow-back');
-    const text = this.config.get('backButtonText', 'Back');
+    const backButtonIcon = this.config.get('backButtonIcon', 'arrow-back');
+    const backButtonText = this.config.get('backButtonText', 'Back');
+    const buttonColor = this.mode === 'ios' ? 'primary' : '';
 
-    const iconClass: any = {
-      'back-button-icon': true
-    };
-    const textClass: any = {
-      'back-button-text': true
-    };
-
-    if (this.mode) {
-      iconClass['back-button-icon-' + this.mode] = true;
-      iconClass['back-button-text-' + this.mode] = true;
+    if (this.custom) {
+      return (
+        <ion-nav-pop>
+          <slot />
+        </ion-nav-pop>
+      );
+    } else if (!this.custom) {
+      return (
+        <ion-nav-pop>
+          <ion-button color={buttonColor}>
+            <ion-icon name={backButtonIcon} slot='start' />
+            {backButtonText}
+          </ion-button>
+        </ion-nav-pop>
+      );
+    } else {
+      return undefined;
     }
-
-    return (
-      <ion-nav-pop>
-        <button>
-          <span class={iconClass}>
-            <slot name='icon'>
-              <ion-icon name={iconName}></ion-icon>
-            </slot>
-          </span>
-          <span class={textClass}>
-            <slot name='text'>
-              {text}
-            </slot>
-          </span>
-        </button>
-      </ion-nav-pop>
-    );
   }
 }

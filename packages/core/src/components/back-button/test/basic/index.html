@@ -60,14 +60,14 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-back-button>
-            </ion-back-button>
+            <ion-back-button></ion-back-button>
           </ion-buttons>
           <ion-title>Page Two</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content padding>
         <h1>Page Two</h1>
+        <p>Just an empty <code>ion-back-button</code></p>
         <ion-button class="next">Go to Page Three</ion-button>
       </ion-content>
     `;
@@ -89,6 +89,9 @@
         <ion-toolbar>
           <ion-buttons slot="start">
             <ion-back-button>
+            <ion-button>
+              <ion-icon name="add" slot="icon-only"></ion-icon>
+            </ion-button>
             </ion-back-button>
           </ion-buttons>
           <ion-title>Page Three</ion-title>
@@ -96,6 +99,7 @@
       </ion-header>
       <ion-content padding>
         <h1>Page Three</h1>
+        <p>Custom back button</p>
       </ion-content>
     `;
 
@@ -103,10 +107,10 @@
     await nav.push(thirdPage);
   }
 </script>
-<style>
-  ion-back-button {
-    height: 50px;
-    background-color: blue;
-  }
-</style>
+<!-- <style> -->
+<!--   ion&#45;back&#45;button { -->
+<!--     height: 50px; -->
+<!--     background&#45;color: blue; -->
+<!--   } -->
+<!-- </style> -->
 </html>

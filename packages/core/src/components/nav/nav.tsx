@@ -737,7 +737,6 @@ export function loadViewAndTransition(nav: Nav, enteringView: ViewController, le
   });
 }
 
-
 export function executeAsyncTransition(nav: Nav, transition: Transition, enteringView: ViewController, leavingView: ViewController, delegate: FrameworkDelegate, opts: NavOptions, configShouldAnimate: boolean): Promise<void> {
   assert(nav.transitioning, 'must be transitioning');
   nav.transitionId = null;
@@ -746,11 +745,11 @@ export function executeAsyncTransition(nav: Nav, transition: Transition, enterin
   // always ensure the entering view is viewable
   // ******** DOM WRITE ****************
   // TODO, figure out where we want to read this data from
-  enteringView && toggleHidden(enteringView.element, true, true);
+  enteringView && toggleHidden(enteringView.element, false);
 
   // always ensure the leaving view is viewable
   // ******** DOM WRITE ****************
-  leavingView && toggleHidden(leavingView.element, true, true);
+  leavingView && toggleHidden(leavingView.element, false);
 
   const isFirstPage = !nav.isViewInitialized && nav.views.length === 1;
   const shouldNotAnimate = isFirstPage && !nav.isPortal;
@@ -834,15 +833,16 @@ export function transitionFinish(nav: Nav, transition: Transition, delegate: Fra
 }
 
 export function cleanUpView(nav: Nav, delegate: FrameworkDelegate, activeViewController: ViewController): Promise<any> {
-
   if (nav.destroyed) {
     return Promise.resolve();
   }
 
   const activeIndex = nav.views.indexOf(activeViewController);
   const promises: Promise<any>[] = [];
+
   for (let i  = nav.views.length - 1; i >= 0; i--) {
     const inactiveViewController = nav.views[i];
+
     if (i > activeIndex) {
       // this view comes after the active view
       inactiveViewController.willUnload();
@@ -850,13 +850,13 @@ export function cleanUpView(nav: Nav, delegate: FrameworkDelegate, activeViewCon
     } else if ( i < activeIndex && !nav.isPortal) {
       // this view comes before the active view
       // and it is not a portal then ensure it is hidden
-      toggleHidden(inactiveViewController.element, true, false);
+      toggleHidden(inactiveViewController.element, true);
     }
+
     // TODO - review existing z index code!
   }
   return Promise.all(promises);
 }
-
 
 export function fireViewWillLifecycles(enteringView: ViewController, leavingView: ViewController) {
   leavingView && leavingView.willLeave(!enteringView);

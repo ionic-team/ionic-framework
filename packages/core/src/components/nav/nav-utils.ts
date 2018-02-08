@@ -70,10 +70,8 @@ export function updateZIndex(viewController: ViewController, newZIndex: number) 
   }
 }
 
-export function toggleHidden(element: HTMLElement, isVisible: Boolean, shouldBeVisible: boolean) {
-  if (isVisible !== shouldBeVisible) {
-    element.hidden = shouldBeVisible;
-  }
+export function toggleHidden(element: HTMLElement, shouldBeHidden: boolean) {
+    element.hidden = shouldBeHidden;
 }
 
 export function canNavGoBack(nav: Nav) {
