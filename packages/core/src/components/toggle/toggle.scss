@@ -43,6 +43,7 @@ ion-toggle ion-gesture {
 
 ion-toggle input {
   @include position(0, null, null, 0);
+  @include margin(0);
 
   position: absolute;
 
