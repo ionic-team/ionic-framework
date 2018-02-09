@@ -71,31 +71,28 @@ export class Nav implements PublicNav {
   @Event() ionNavChanged: EventEmitter<NavEventDetail>;
 
   useRouter = false;
-  navId = -1;
+  navId = getNextNavId();
   init = false;
   routes: RouterEntries = [];
   parent: Nav = null;
   views: ViewController[] = [];
   transitioning = false;
   destroyed = false;
-  transitionId = -1;
-  isViewInitialized = false;
+  transitionId = NOT_TRANSITIONING_TRANSITION_ID;
+  initialized = false;
   swipeToGoBackTransition: any; // TODO Transition
   childNavs?: Nav[];
   postTransitionUrlStack: string[] = [];
 
   @Prop() mode: string;
   @Prop() root: any;
+  @Prop() rootUrl: string;
   @Prop() delegate: FrameworkDelegate;
   @Prop() routerDelegate: RouterDelegate;
   @Prop() useUrls = false;
   @Prop({ context: 'config' }) config: Config;
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop() lazy = false;
-
-  constructor() {
-    this.navId = getNextNavId();
-  }
 
   componentWillLoad() {
     this.routes = Array.from(this.element.querySelectorAll('ion-route'))
@@ -113,11 +110,20 @@ export class Nav implements PublicNav {
   }
 
   @Watch('root')
-  updateRootComponent(): any {
+  updateRootComponent(): Promise<NavResult> {
     if (this.init) {
       return this.setRoot(this.root);
     }
+    return Promise.resolve(null);
   }
+
+  /*@Watch('rootUrl')
+  updateRootUrl(): any {
+    if (this.init) {
+      return this.setRootUrl(this.rootUrl);
+    }
+  }*/
+
 
   @Method()
   getViews(): PublicViewController[] {
@@ -244,7 +250,7 @@ export class Nav implements PublicNav {
 
   @Method()
   isTransitioning() {
-    return !!this.transitionId;
+    return this.transitionId >= 0;
   }
 
   @Method()
@@ -667,8 +673,8 @@ export function successfullyTransitioned(ti: TransitionInstruction) {
     return fireError(new Error('Queue is null, the nav must have been destroyed'), ti);
   }
 
-  ti.nav.isViewInitialized = true;
-  ti.nav.transitionId = null;
+  ti.nav.initialized = true;
+  ti.nav.transitionId = NOT_TRANSITIONING_TRANSITION_ID;
   ti.nav.transitioning = false;
 
   // TODO - check if it's a swipe back
@@ -760,7 +766,7 @@ export function loadViewAndTransition(nav: Nav, enteringView: ViewController, le
 
 export function executeAsyncTransition(nav: Nav, transition: Transition, enteringView: ViewController, leavingView: ViewController, delegate: FrameworkDelegate, opts: NavOptions, configShouldAnimate: boolean): Promise<void> {
   assert(nav.transitioning, 'must be transitioning');
-  nav.transitionId = null;
+  nav.transitionId = NOT_TRANSITIONING_TRANSITION_ID;
   setZIndex(nav, enteringView, leavingView, opts.direction);
 
   // always ensure the entering view is viewable
@@ -772,7 +778,7 @@ export function executeAsyncTransition(nav: Nav, transition: Transition, enterin
   // ******** DOM WRITE ****************
   leavingView && toggleHidden(leavingView.element, true, true);
 
-  const isFirstPage = !nav.isViewInitialized && nav.views.length === 1;
+  const isFirstPage = !nav.initialized && nav.views.length === 1;
   const shouldNotAnimate = isFirstPage;
   if (configShouldAnimate || shouldNotAnimate) {
     opts.animate = false;
@@ -1200,6 +1206,7 @@ export function getDefaultTransition(config: Config) {
 
 let viewIds = VIEW_ID_START;
 const DISABLE_APP_MINIMUM_DURATION = 64;
+const NOT_TRANSITIONING_TRANSITION_ID = -1;
 
 export interface NavEvent extends CustomEvent {
   target: HTMLIonNavElement;

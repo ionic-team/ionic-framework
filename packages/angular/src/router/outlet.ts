@@ -164,13 +164,19 @@ function updateTab(navElement: HTMLIonNavElement,
   component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector) {
 
   const tab = navElement.parentElement as HTMLIonTabElement;
+  tab.externalNav = true;
+
+  (tab.parentElement as HTMLIonTabsElement).externalInitialize = true;
   // yeah yeah, I know this is kind of ugly but oh well, I know the internal structure of <ion-tabs>
   const tabs = tab.parentElement.parentElement as HTMLIonTabsElement;
+  tabs.externalInitialize = true;
   return isTabSelected(tabs, tab).then((isSelected: boolean) => {
     if (!isSelected) {
+      const promise = updateNav(navElement, component, cfr, injector);
+      tab.externalNavInitialize = promise
       // okay, the tab is not selected, so we need to do a "switch" transition
       // basically, we should update the nav, and then swap the tabs
-      return updateNav(navElement, component, cfr, injector).then(() => {
+      return promise.then(() => {
         return tabs.select(tab);
       });
     }

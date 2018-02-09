@@ -36,6 +36,7 @@ export interface PublicNav {
   name?: string;
   element?: HTMLElement;
   parent?: PublicNav;
+  initialized?: boolean;
 }
 
 export interface NavOptions {

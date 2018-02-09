@@ -42,6 +42,9 @@ import {
   SelectPopoverOption,
 } from './components/select-popover/select-popover';
 import {
+  NavResult,
+} from '.';
+import {
   DomRenderFn,
   HeaderFn,
   ItemHeightFn,
@@ -1826,6 +1829,7 @@ declare global {
       lazy?: boolean;
       mode?: string;
       root?: any;
+      rootUrl?: string;
       routerDelegate?: RouterDelegate;
       useUrls?: boolean;
     }
@@ -2987,6 +2991,8 @@ declare global {
       badgeStyle?: string;
       btnId?: string;
       disabled?: boolean;
+      externalNav?: boolean;
+      externalNavInitialize?: Promise<NavResult> | null;
       icon?: string;
       path?: string;
       selected?: boolean;
@@ -3059,6 +3065,7 @@ declare global {
   namespace JSXElements {
     export interface IonTabsAttributes extends HTMLAttributes {
       color?: string;
+      externalInitialize?: boolean;
       name?: string;
       scrollable?: boolean;
       tabbarHidden?: boolean;

@@ -12,6 +12,7 @@ import { Config } from '../../index';
 export class Tabs {
   private ids = -1;
   private tabsId: number = (++tabIds);
+  initialized = false;
 
   @Element() el: HTMLElement;
 
@@ -67,13 +68,22 @@ export class Tabs {
    */
   @Event() ionChange: EventEmitter;
 
+
+  @Prop() externalInitialize = false;
+
   componentDidLoad() {
     this.loadConfig('tabsPlacement', 'bottom');
     this.loadConfig('tabsLayout', 'icon-top');
     this.loadConfig('tabsHighlight', true);
 
-    this.initTabs();
-    this.initSelect();
+    return this.initTabs().then(() => {
+      if (! this.externalInitialize) {
+        return this.initSelect();
+      }
+      return null;
+    }).then(() => {
+      this.initialized = true;
+    });
   }
 
   componentDidUnload() {
@@ -182,11 +192,14 @@ export class Tabs {
 
   private initTabs() {
     const tabs = this.tabs = Array.from(this.el.querySelectorAll('ion-tab'));
+    const tabPromises: Promise<any>[] = [];
     for (const tab of tabs) {
       const id = `t-${this.tabsId}-${++this.ids}`;
       tab.btnId = 'tab-' + id;
       tab.id = 'tabpanel-' + id;
+      tabPromises.push((tab as any).componentOnReady());
     }
+    return Promise.all(tabPromises);
   }
 
   private initSelect() {
@@ -200,10 +213,10 @@ export class Tabs {
         tab.selected = false;
       }
     }
-    if (selectedTab) {
-      selectedTab.setActive(true);
-    }
-    this.selectedTab = selectedTab;
+    const promise = selectedTab ? selectedTab.setActive(true) : Promise.resolve();
+    return promise.then(() => {
+      this.selectedTab = selectedTab;
+    });
   }
 
   private loadConfig(attrKey: string, fallback: any) {
