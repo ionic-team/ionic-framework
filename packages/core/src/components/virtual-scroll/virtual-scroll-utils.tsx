@@ -102,7 +102,11 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
 }
 
 
-export function doRender(el: HTMLElement, itemRender: ItemRenderFn, dom: VirtualNode[], updateCellHeight: Function, total: number) {
+export function doRender(
+  el: HTMLElement,
+  itemRender: ItemRenderFn,
+  dom: VirtualNode[],
+  updateCellHeight: Function) {
   const children = el.children;
   let child: HTMLElement;
   for (let i = 0; i < dom.length; i++) {
@@ -137,7 +141,6 @@ export function doRender(el: HTMLElement, itemRender: ItemRenderFn, dom: Virtual
       updateCellHeight(cell, child);
     }
   }
-  el.style.height = total + 'px';
 }
 
 export function getViewport(scrollTop: number, vierportHeight: number, margin: number): Viewport {
