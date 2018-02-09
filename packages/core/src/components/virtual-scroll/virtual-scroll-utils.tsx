@@ -148,7 +148,7 @@ export function doRender(
       node.visible = visible;
     }
 
-    // dynamic height inference
+    // dynamic height
     if (cell.reads > 0) {
       updateCellHeight(cell, child);
       cell.reads--;
@@ -182,7 +182,8 @@ export function getRange(heightIndex: Uint32Array, viewport: Viewport, buffer: n
       break;
     }
   }
-  const end = Math.min(i + buffer, heightIndex.length - 1);
+
+  const end = Math.min(i + buffer, heightIndex.length);
   const length = end - offset;
   return { offset, length };
 }
@@ -197,6 +198,23 @@ export function getShouldUpdate(dirtyIndex: number, currentRange: Range, range: 
 }
 
 
+export function findCellIndex(cells: Cell[], index: number): number {
+  if (index === 0) {
+    return 0;
+  }
+  return cells.findIndex(c => c.index === index);
+}
+
+export function inplaceUpdate(dst: Cell[], src: Cell[], offset: number) {
+  if (offset === 0 && src.length >= dst.length) {
+    return src;
+  }
+  for (let i = 0; i < src.length; i++) {
+    dst[i + offset] = src[i];
+  }
+  return dst;
+}
+
 export function calcCells(
   items: any[],
 
@@ -206,12 +224,15 @@ export function calcCells(
 
   approxHeaderHeight: number,
   approxFooterHeight: number,
-  approxItemHeight: number
+  approxItemHeight: number,
+
+  j: number,
+  offset: number,
+  len: number
 ): Cell[] {
   const cells = [];
-  let j = 0;
-
-  for (let i = 0; i < items.length; i++) {
+  const end = len + offset;
+  for (let i = offset; i < end; i++) {
     const item = items[i];
     if (headerFn) {
       const value = headerFn(item, i, items);

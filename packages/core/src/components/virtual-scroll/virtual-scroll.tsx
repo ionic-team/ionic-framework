@@ -2,7 +2,7 @@ import { Component, Element, EventListenerEnable, Listen, Method, Prop, Watch } 
 import { DomController } from '../../index';
 import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, NodeHeightFn, Range,
   Viewport, VirtualNode, calcCells, calcHeightIndex, doRender, getRange,
-  getShouldUpdate, getViewport, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
+  getShouldUpdate, getViewport, positionForIndex, resizeBuffer, updateVDom, findCellIndex, inplaceUpdate } from './virtual-scroll-utils';
 
 
 @Component({
@@ -24,6 +24,7 @@ export class VirtualScroll {
   private indexDirty = 0;
   private totalHeight = 0;
   private heightChanged = false;
+  private lastItemLen = 0;
 
   @Element() el: HTMLElement;
 
@@ -144,6 +145,52 @@ export class VirtualScroll {
     return positionForIndex(index, this.cells, this.heightIndex);
   }
 
+  @Method()
+  markDirty(offset: number, len = -1) {
+    // TODO: kind of hacky how we do in-place updated of the cells
+    // array. this part needs a complete refactor
+    if (!this.items) {
+      return;
+    }
+    if (len === -1) {
+      len = this.items.length - offset;
+    }
+    const max = this.lastItemLen;
+    let j = 0;
+    if (offset > 0 && offset < max) {
+      j = findCellIndex(this.cells, offset);
+    } else if (offset === 0) {
+      j = 0;
+    } else if (offset === max) {
+      j = this.cells.length;
+    } else {
+      console.warn('bad values for markDirty');
+      return;
+    }
+    const cells = calcCells(
+      this.items,
+      this.itemHeight,
+      this.headerFn,
+      this.footerFn,
+      this.approxHeaderHeight,
+      this.approxFooterHeight,
+      this.approxItemHeight,
+      j, offset, len
+    );
+    console.debug('[virtual] cells recalculated', cells.length);
+    this.cells = inplaceUpdate(this.cells, cells, offset);
+    this.lastItemLen = this.items.length;
+    this.indexDirty = Math.max(offset - 1, 0);
+
+    this.scheduleUpdate();
+  }
+
+  @Method()
+  markDirtyTail() {
+    const offset = this.lastItemLen;
+    this.markDirty(offset, this.items.length - offset);
+  }
+
   private updateVirtualScroll() {
     // do nothing if there is a scheduled update
     if (!this.isEnabled || !this.scrollEl) {
@@ -229,12 +276,16 @@ export class VirtualScroll {
     }
     cell.visible = true;
     if (cell.height !== height) {
-      console.debug(`[${cell.reads}] cell size ${cell.height} -> ${height}`);
+      console.debug(`[virtual] cell height changed ${cell.height}px -> ${height}px`);
       cell.height = height;
-      clearTimeout(this.timerUpdate);
-      this.timerUpdate = setTimeout(() => this.updateVirtualScroll(), 100);
       this.indexDirty = Math.min(this.indexDirty, index);
+      this.scheduleUpdate();
     }
+  }
+
+  private scheduleUpdate() {
+    clearTimeout(this.timerUpdate);
+    this.timerUpdate = setTimeout(() => this.updateVirtualScroll(), 100);
   }
 
   private updateState() {
@@ -252,10 +303,12 @@ export class VirtualScroll {
     }
   }
 
+
   private calcCells() {
     if (!this.items) {
       return;
     }
+    this.lastItemLen = this.items.length;
     this.cells = calcCells(
       this.items,
       this.itemHeight,
@@ -263,8 +316,10 @@ export class VirtualScroll {
       this.footerFn,
       this.approxHeaderHeight,
       this.approxFooterHeight,
-      this.approxItemHeight
+      this.approxItemHeight,
+      0, 0, this.lastItemLen
     );
+    console.debug('[virtual] cells recalculated', this.cells.length);
     this.indexDirty = 0;
   }
 
@@ -279,9 +334,11 @@ export class VirtualScroll {
     this.heightIndex = resizeBuffer(this.heightIndex, this.cells.length);
     const totalHeight = calcHeightIndex(this.heightIndex, this.cells, index);
     if (totalHeight !== this.totalHeight) {
+      console.debug(`[virtual] total height changed: ${this.totalHeight}px -> ${totalHeight}px`);
       this.totalHeight = totalHeight;
       this.heightChanged = true;
     }
+    console.debug('[virtual] height index recalculated', this.heightIndex.length - index);
     this.indexDirty = Infinity;
   }
 

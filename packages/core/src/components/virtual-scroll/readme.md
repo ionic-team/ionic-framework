@@ -381,6 +381,12 @@ which is an expensive operation and should be avoided if possible.
 
 ## Methods
 
+#### markDirty()
+
+
+#### markDirtyTail()
+
+
 #### positionForItem()
 
 
