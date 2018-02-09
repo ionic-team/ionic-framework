@@ -333,6 +333,7 @@ export class VirtualScroll {
   }
 
   private calcHeightIndex(index = 0) {
+    // TODO: optimize, we don't need to calculate all the cells
     this.heightIndex = resizeBuffer(this.heightIndex, this.cells.length);
     const totalHeight = calcHeightIndex(this.heightIndex, this.cells, index);
     if (totalHeight !== this.totalHeight) {

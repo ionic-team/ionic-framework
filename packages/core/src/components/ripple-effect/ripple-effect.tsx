@@ -1,4 +1,4 @@
-import { Component, Element, EventListenerEnable, Listen, Method, Prop } from '@stencil/core';
+import { Component, Element, EventListenerEnable, Listen, Method, Prop, Watch } from '@stencil/core';
 import { now } from '../../utils/helpers';
 import { DomController } from '../../global/dom-controller';
 
@@ -20,7 +20,13 @@ export class RippleEffect {
   @Prop({context: 'dom'}) dom: DomController;
   @Prop({context: 'enableListener'}) enableListener: EventListenerEnable;
 
-  @Prop() useTapClick = false;
+  @Prop({mutable: true}) useTapClick: boolean;
+  @Watch('useTapClick')
+  tapClickChanged(useTapClick: boolean) {
+    this.enableListener(this, 'parent:ionActivated', useTapClick);
+    this.enableListener(this, 'touchstart', !useTapClick);
+    this.enableListener(this, 'mousedown', !useTapClick);
+  }
 
   @Listen('parent:ionActivated', {enabled: false})
   ionActivated(ev: CustomEvent) {
@@ -43,12 +49,10 @@ export class RippleEffect {
   }
 
   componentDidLoad() {
-    if (this.useTapClick) {
-      this.enableListener(this, 'parent:ionActivated', true);
-    } else {
-      this.enableListener(this, 'touchstart', true);
-      this.enableListener(this, 'mousedown', true);
+    if (this.useTapClick === undefined) {
+      this.useTapClick = !!document.querySelector('ion-tap-click');
     }
+    this.tapClickChanged(this.useTapClick);
   }
 
   @Method()

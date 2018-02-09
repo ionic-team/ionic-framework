@@ -9,16 +9,18 @@
 </head>
 
 <body>
-  <ion-list id="list">
 
-  </ion-list>
 
-  <ion-infinite-scroll threshold="100px" id="infinite-scroll">
-    <ion-infinite-scroll-content
-      loadingSpinner="bubbles"
-      loadingText="Loading more data...">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  <ion-scroll>
+    <ion-list id="list"> </ion-list>
+
+    <ion-infinite-scroll threshold="100px" id="infinite-scroll">
+      <ion-infinite-scroll-content
+        loadingSpinner="bubbles"
+        loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-scroll>
 
   <script>
     let items = [];
@@ -27,10 +29,6 @@
     }
     const list = document.getElementById('list');
     const infiniteScroll = document.getElementById('infinite-scroll');
-
-    function toggleInfiniteScroll() {
-      infiniteScroll.disabled = !infiniteScroll.disabled;
-    }
 
     infiniteScroll.addEventListener('ionInfinite', async function() {
       console.log('Loading data...');
