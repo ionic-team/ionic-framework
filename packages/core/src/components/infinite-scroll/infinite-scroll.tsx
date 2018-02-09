@@ -9,13 +9,7 @@ const enum Position {
 
 @Component({
   tag: 'ion-infinite-scroll',
-  styleUrls: {
-    ios: 'infinite-scroll.ios.scss',
-    md: 'infinite-scroll.md.scss'
-  },
-  host: {
-    theme: 'infinite-scroll'
-  }
+  styleUrl: 'infinite-scroll.scss'
 })
 export class InfiniteScroll {
 
