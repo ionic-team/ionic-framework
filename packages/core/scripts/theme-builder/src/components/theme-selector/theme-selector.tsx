@@ -1,13 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
-import { THEME_VARIABLES }                                              from '../../theme-variables';
-import { Color, ColorStep }                                             from '../Color';
+import { ComputedType, THEME_VARIABLES, ThemeVariable }                 from '../../theme-variables';
+import { Color }                                                        from '../Color';
 import { COLOR_URL, getThemeUrl, STORED_THEME_KEY }                     from '../helpers';
-
-interface ThemeVariable {
-  property: string;
-  value?: Color | number | string;
-  computed?: string;
-}
 
 const PLACEHOLDER_COLOR = '#ff00ff';
 
@@ -19,60 +13,47 @@ const PLACEHOLDER_COLOR = '#ff00ff';
 export class ThemeSelector {
 
   @Element() el: HTMLThemeSelectorElement;
-  @State() themeName: string;
-  @State() themeVariables: ThemeVariable[] = [];
-  @State() searchMode: boolean;
+  @State() generateContrast: boolean = false;
+  @State() generateSteps: boolean = true;
+  @State() generateVariations: boolean = true;
   @State() palettes: any[];
   @Prop() propertiesUsed: string[] = [];
-  @Prop() themeData: { name: string }[];
-  @Event() themeCssChange: EventEmitter;
   @Event() propertyHoverStart: EventEmitter;
   @Event() propertyHoverStop: EventEmitter;
-
+  @State() searchMode: boolean;
+  @State() showSteps: boolean = true;
+  @Event() themeCssChange: EventEmitter;
+  @Prop() themeData: { name: string }[];
+  @State() themeName: string;
+  @State() themeVariables: ThemeVariable[] = [];
   private currentHoveredProperty: string;
+  private cssHolder: HTMLStyleElement;
+  private proxyElement: HTMLElement;
 
-  async onChangeUrl (ev) {
-    this.themeName = ev.currentTarget.value;
-    localStorage.setItem(STORED_THEME_KEY, this.themeName);
+  changeColor (property: string, value: Color | string) {
+    this.themeVariables = this.themeVariables.map(themeVariable => {
+      if (property === themeVariable.property) {
+        return Object.assign({}, themeVariable, {
+          value: value instanceof Color ? value : themeVariable.value instanceof Color ? new Color(value) : value
+        });
+      }
+      return themeVariable;
+    });
 
-    await this.loadThemeCss();
+    this.updateComputed(property);
+    this.generateCss();
   }
 
-  async componentWillLoad () {
+  async componentDidLoad () {
     const storedThemeName = localStorage.getItem(STORED_THEME_KEY);
     const defaultThemeName = this.themeData[0].name;
+
+    this.cssHolder = document.createElement('style');
+    this.el.insertBefore(this.cssHolder, this.el.firstChild);
 
     this.themeName = storedThemeName || defaultThemeName;
 
     await this.loadThemeCss();
-  }
-
-  async loadThemeCss () {
-    console.log('ThemeSelector loadThemeCss');
-
-    const themeUrl = getThemeUrl(this.themeName);
-
-    const css = await fetch(themeUrl).then(r => r.text());
-    this.parseCss(css);
-    this.generateCss();
-  }
-
-  parseCss (css: string) {
-    console.log('ThemeSelector parseCss');
-
-    const themer = document.getElementById('themer') as HTMLStyleElement;
-    themer.innerHTML = css;
-
-    const computed = window.getComputedStyle(document.body);
-
-    this.themeVariables = THEME_VARIABLES.map(themeVariable => {
-      const value = (computed.getPropertyValue(themeVariable.property) || PLACEHOLDER_COLOR);
-
-      return Object.assign({}, themeVariable, {
-        property: themeVariable.property.trim(),
-        value: themeVariable.computed ? value : (!Color.isColor(value) ? parseFloat(value) : new Color(value))
-      });
-    });
   }
 
   generateCss () {
@@ -84,8 +65,11 @@ export class ThemeSelector {
     c.push(':root {');
 
     this.themeVariables.forEach(themeVariable => {
-      const value = themeVariable.value;
-      c.push(`  ${themeVariable.property}: ${value instanceof Color ? value.hex : value};`);
+      const variableValue = themeVariable.value,
+        value = variableValue instanceof Color ? variableValue.hex : variableValue;
+      c.push(`  ${themeVariable.property}: ${value};`);
+
+      this.el.style.setProperty(themeVariable.property, value.toString());
     });
 
     c.push('}');
@@ -119,34 +103,45 @@ export class ThemeSelector {
     }
   }
 
+  isVariableDependentOn (property: string, variable: ThemeVariable) {
+    const params = (variable.computed && variable.computed && variable.computed.params) || {};
+    if (!property) return true;
+    return (variable.property === property || params.from === property || params.property === property);
+  }
+
+  async loadThemeCss () {
+    console.log('ThemeSelector loadThemeCss');
+
+    const themeUrl = getThemeUrl(this.themeName);
+
+    const css = await fetch(themeUrl).then(r => r.text());
+    this.parseCss(css);
+    this.generateCss();
+  }
+
+  async onChangeUrl (ev) {
+    this.themeName = ev.currentTarget.value;
+    localStorage.setItem(STORED_THEME_KEY, this.themeName);
+
+    await this.loadThemeCss();
+  }
+
   @Listen('colorChange')
   onColorChange (ev) {
     console.log('ThemeSelector colorChange');
     this.changeColor(ev.detail.property, ev.detail.value);
   }
 
-  changeColor (property: string, value: Color | string) {
-    this.themeVariables = this.themeVariables.map(themeVariable => {
-      if (property === themeVariable.property) {
-        return Object.assign({}, themeVariable, {
-          value: value instanceof Color ? value : themeVariable.value instanceof Color ? new Color(value) : value
-        });
-      }
-      return themeVariable;
-    });
+  onColorClick (ev: MouseEvent) {
+    let target: HTMLElement = ev.currentTarget as HTMLElement;
+    const property = target.getAttribute('data-property');
 
-    this.themeVariables
-      .filter(themeVariable => !!themeVariable.computed)
-      .forEach(themeVariable => {
-        const computed = themeVariable.computed,
-          referenceVariable = this.themeVariables.find(themeVariable => themeVariable.property === computed),
-          value = referenceVariable.value;
-        if (value instanceof Color) {
-          themeVariable.value = value.toList();
-        }
-      });
+    while (target && !target.classList.contains('color')) {
+      target = target.parentElement as HTMLElement;
+    }
 
-    this.generateCss();
+    const color = target.getAttribute('data-color');
+    this.changeColor(property, color.toLowerCase());
   }
 
   @Listen('generateColors')
@@ -157,23 +152,27 @@ export class ThemeSelector {
 
     if (color && property) {
       if (steps) {
-        const steps: ColorStep[] = color.steps();
-        steps.forEach((step: ColorStep) => {
-          const themeVariable: ThemeVariable = this.themeVariables.find((variable: ThemeVariable) => variable.property === `${property}-step-${step.id}`);
-          themeVariable && (themeVariable.value = step.color);
+        this.themeVariables.filter((variable: ThemeVariable) => {
+          const type: ComputedType = variable.computed && variable.computed.type,
+            params = (variable.computed && variable.computed.params) || {};
+
+          if (type === ComputedType.step && params.property === property) {
+            return variable;
+          }
+        }).forEach((variable: ThemeVariable) => {
+          const params: any = variable.computed.params || {},
+            stepFromVariable: ThemeVariable = this.themeVariables.find(themeVariable => themeVariable.property === params.from),
+            stepFromValue = stepFromVariable && stepFromVariable.value;
+
+          if (stepFromValue instanceof Color) {
+            variable.value = color.mix(stepFromValue, params.amount);
+          }
         });
       } else {
-        const tint: ThemeVariable = this.themeVariables.find((variable: ThemeVariable) => variable.property === `${property}-tint`),
-          shade: ThemeVariable = this.themeVariables.find((variable: ThemeVariable) => variable.property === `${property}-shade`),
-          contrast: ThemeVariable = this.themeVariables.find((variable: ThemeVariable) => variable.property === `${property}-contrast`);
-
-        tint && (tint.value = color.tint());
-        shade && (shade.value = color.shade());
-        contrast && (contrast.value = color.contrast());
+        this.updateVariations(property, color);
       }
 
       this.generateCss();
-      //TODO: Figure out why we need this typed to any
       (this.el as any).forceUpdate();
     }
   }
@@ -208,34 +207,21 @@ export class ThemeSelector {
     }
   }
 
-  toggleSearchMode () {
-    this.searchMode = !this.searchMode;
-  }
+  parseCss (css: string) {
+    console.log('ThemeSelector parseCss');
 
-  async search () {
-    const input: HTMLInputElement = this.el.querySelector('#searchInput') as HTMLInputElement,
-      value = input.value;
+    this.cssHolder.innerHTML = css.replace(':root', `#${this.proxyElement.id}`);
+    const computed = window.getComputedStyle(this.proxyElement);
 
-    input.value = '';
+    this.themeVariables = THEME_VARIABLES.map(themeVariable => {
+      const value = (computed.getPropertyValue(themeVariable.property) || PLACEHOLDER_COLOR),
+        type: string = (themeVariable.computed && themeVariable.computed.type) || (!Color.isColor(value) ? 'percent' : 'color');
 
-    try {
-      this.palettes = await fetch(`${COLOR_URL}?search=${value}&stuff=poop`).then(r => r.json()) || [];
-    } catch (e) {
-      this.palettes = [];
-    }
-  }
-
-  onColorClick (ev: MouseEvent) {
-    console.log(ev);
-    let target: HTMLElement = ev.currentTarget as HTMLElement;
-    const property = target.getAttribute('data-property');
-
-    while (target && !target.classList.contains('color')) {
-      target = target.parentElement as HTMLElement;
-    }
-
-    const color = target.getAttribute('data-color');
-    this.changeColor(property, color);
+      return Object.assign({}, themeVariable, {
+        property: themeVariable.property.trim(),
+        value: type === 'color' || type === ComputedType.step ? new Color(value) : type === 'percent' ? parseFloat(value) : value
+      });
+    });
   }
 
   render () {
@@ -244,9 +230,17 @@ export class ThemeSelector {
       variables = <section>
         {
           this.themeVariables
-            .filter(d => !d.computed)
-            .map(d => <variable-selector class={this.propertiesUsed.indexOf(d.property) >= 0 ? 'used' : ''}
-                                         property={d.property} value={d.value}></variable-selector>)
+            .filter(d => !(d.computed && (d.computed.type === ComputedType.rgblist || (d.computed.type === ComputedType.step && !this.showSteps))))
+            .map(d => {
+              const computedReferences: ComputedType[] = this.themeVariables
+                .filter(variable => variable.computed && variable.computed.params && variable.computed.params.property === d.property)
+                .map(variable => variable.computed.type);
+
+              return <variable-selector
+                class={{'is-primary': !!computedReferences.length, used: this.propertiesUsed.indexOf(d.property) >= 0}}
+                property={d.property} value={d.value}
+                usedWith={Array.from(new Set(computedReferences))}></variable-selector>;
+            })
         }
       </section>,
       search = <section>
@@ -260,17 +254,12 @@ export class ThemeSelector {
               {(d.colors || []).map((c: string) => <div class="color" data-color={`#${c}`}
                                                         style={{backgroundColor: `#${c}`}}>
                 <div class="color-buttons">
-                  <button onClick={onColorClick} data-property="--ion-color-primary" class="primary">p</button>
-                  <button onClick={onColorClick} data-property="--ion-color-secondary" class="secondary">s</button>
-                  <button onClick={onColorClick} data-property="--ion-color-tertiary" class="tertiary">t</button>
-                  <button onClick={onColorClick} data-property="--ion-color-success" class="success">ss</button>
-                  <button onClick={onColorClick} data-property="--ion-color-warning" class="warning">w</button>
-                  <button onClick={onColorClick} data-property="--ion-color-danger" class="danger">d</button>
-                  <button onClick={onColorClick} data-property="--ion-color-light" class="light">l</button>
-                  <button onClick={onColorClick} data-property="--ion-color-medium" class="medium">m</button>
-                  <button onClick={onColorClick} data-property="--ion-color-dark" class="dark">dk</button>
-                  <button onClick={onColorClick} data-property="--ion-background-color" class="background">bg</button>
-                  <button onClick={onColorClick} data-property="--ion-text-color" class="text">txt</button>
+                  {this.themeVariables
+                    .filter(variable => !!variable.quickPick)
+                    .map(variable => <button onClick={onColorClick}
+                                             data-property={variable.property}
+                                             style={{backgroundColor: `var(${variable.property})`}}>{variable.quickPick.text}</button>)
+                  }
                 </div>
               </div>)}
             </div>)
@@ -280,17 +269,118 @@ export class ThemeSelector {
       </section>;
 
     return [
+      <div id="css-proxy" ref={el => this.proxyElement = el}></div>,
       <div>
         <div class="top-bar">
           <select onChange={this.onChangeUrl.bind(this)}>
             {this.themeData.map(d => <option value={d.name} selected={this.themeName === d.name}>{d.name}</option>)}
           </select>
-          <button type="button" class="search-toggle"
-                  onClick={this.toggleSearchMode.bind(this)}>{this.searchMode ? 'Close' : 'Open'} Search
-          </button>
+          <div class="right">
+            <button type="button" class="search-toggle"
+                    onClick={this.toggleSearchMode.bind(this)}>{this.searchMode ? 'Close' : 'Open'} Search
+            </button>
+            <div class="settings">
+              <div class="row">
+                <div class="checkbox">
+                  <input type="checkbox" id="generateContrast" checked={this.generateContrast}
+                         onChange={this.toggleCheck.bind(this, 'generateContrast')}></input>
+                  <label>Auto Contrast</label>
+                </div>
+                <div class="checkbox">
+                  <input type="checkbox" id="generateVariations" checked={this.generateVariations}
+                         onChange={this.toggleCheck.bind(this, 'generateVariations')}></input>
+                  <label>Auto Shade/Tint</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="checkbox">
+                  <input type="checkbox" id="generateSteps" checked={this.generateSteps}
+                         onChange={this.toggleCheck.bind(this, 'generateSteps')}></input>
+                  <label>Auto Steps</label>
+                </div>
+                <div class="checkbox">
+                  <input type="checkbox" id="showSteps" checked={this.showSteps}
+                         onChange={this.toggleCheck.bind(this, 'showSteps')}></input>
+                  <label>Show Steps</label>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         {this.searchMode ? search : variables}
       </div>
     ];
+  }
+
+  async search () {
+    const input: HTMLInputElement = this.el.querySelector('#searchInput') as HTMLInputElement,
+      value = input.value;
+
+    input.value = '';
+
+    try {
+      this.palettes = await fetch(`${COLOR_URL}?search=${value}`).then(r => r.json()) || [];
+    } catch (e) {
+      this.palettes = [];
+    }
+  }
+
+  toggleCheck (param: string, ev: Event) {
+    this[param] = (ev.target as HTMLInputElement).checked;
+  }
+
+  toggleSearchMode () {
+    this.searchMode = !this.searchMode;
+  }
+
+  updateComputed (property?: string) {
+    this.themeVariables
+      .filter(themeVariable => !!themeVariable.computed && this.isVariableDependentOn(property, themeVariable))
+      .forEach(themeVariable => {
+        const computed = themeVariable.computed,
+          type: ComputedType = computed.type,
+          params = computed.params || {};
+
+        if (type === ComputedType.rgblist) {
+          const referenceVariable: ThemeVariable = this.themeVariables.find(themeVariable => themeVariable.property === params.property),
+            value = referenceVariable && referenceVariable.value;
+
+          if (value instanceof Color) {
+            themeVariable.value = value.toList();
+          }
+        } else if (this.generateSteps && type === ComputedType.step) {
+          const referenceVariable: ThemeVariable = this.themeVariables.find(themeVariable => themeVariable.property === params.property),
+            stepFromVariable: ThemeVariable = this.themeVariables.find(themeVariable => themeVariable.property === params.from),
+            referenceValue = referenceVariable && referenceVariable.value,
+            fromValue = stepFromVariable && stepFromVariable.value;
+
+          if (referenceValue instanceof Color && (typeof(fromValue) === 'string' || fromValue instanceof Color)) {
+            themeVariable.value = referenceValue.mix(fromValue, params.amount);
+          }
+        }
+      });
+
+    if (this.generateVariations) {
+      this.themeVariables
+        .filter(themeVariable => !themeVariable.computed && this.isVariableDependentOn(property, themeVariable))
+        .forEach(themeVariable => {
+          const property: string = themeVariable.property,
+            color: Color = themeVariable.value as Color;
+          this.updateVariations(property, color);
+        });
+    }
+  }
+
+  updateVariations (property: string, color: Color) {
+    const tint: ThemeVariable = this.themeVariables.find((variable: ThemeVariable) => variable.property === `${property}-tint`),
+      shade: ThemeVariable = this.themeVariables.find((variable: ThemeVariable) => variable.property === `${property}-shade`);
+
+    tint && (tint.value = color.tint());
+    shade && (shade.value = color.shade());
+
+    if (this.generateContrast) {
+      const contrast: ThemeVariable = this.themeVariables.find((variable: ThemeVariable) => variable.property === `${property}-contrast`);
+      contrast && (contrast.value = color.contrast());
+    }
   }
 };

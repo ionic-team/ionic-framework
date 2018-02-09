@@ -9,14 +9,33 @@ import { Color }                                               from '../Color';
 })
 export class AppPreview {
 
-  @Prop() demoUrl: string;
-  @Prop() demoMode: string;
   @Prop() cssText: string;
+  @Prop() demoMode: string;
+  @Prop() demoUrl: string;
+  hasIframeListener: boolean = false;
   @Prop() hoverProperty: string;
+  iframe: HTMLIFrameElement;
   @Event() propertiesUsed: EventEmitter;
 
-  iframe: HTMLIFrameElement;
-  hasIframeListener: boolean = false;
+  applyStyles () {
+    if (this.iframe && this.iframe.contentDocument && this.iframe.contentDocument.documentElement) {
+      const iframeDoc = this.iframe.contentDocument;
+      const themerStyleId = 'themer-style';
+
+      let themerStyle: HTMLStyleElement = iframeDoc.getElementById(themerStyleId) as any;
+      if (!themerStyle) {
+        themerStyle = iframeDoc.createElement('style');
+        themerStyle.id = themerStyleId;
+        iframeDoc.documentElement.appendChild(themerStyle);
+
+        const applicationStyle = iframeDoc.createElement('style');
+        iframeDoc.documentElement.appendChild(applicationStyle);
+        applicationStyle.innerHTML = 'html.theme-property-searching body * { pointer-events: auto !important}';
+      }
+
+      themerStyle.innerHTML = this.cssText;
+    }
+  }
 
   @Watch('cssText')
   onCssTextChange () {
@@ -36,29 +55,15 @@ export class AppPreview {
       if (Color.isColor(value)) {
         el.style.setProperty(this.hoverProperty, '#ff0000');
       } else {
-        el.style.setProperty(this.hoverProperty, parseFloat(value) > .5 ? '.1': '1');
+        el.style.setProperty(this.hoverProperty, parseFloat(value) > .5 ? '.1' : '1');
       }
     }
   }
 
-  applyStyles () {
-    if (this.iframe && this.iframe.contentDocument && this.iframe.contentDocument.documentElement) {
-      const iframeDoc = this.iframe.contentDocument;
-      const themerStyleId = 'themer-style';
+  onIframeLoad () {
+    this.applyStyles();
 
-      let themerStyle: HTMLStyleElement = iframeDoc.getElementById(themerStyleId) as any;
-      if (!themerStyle) {
-        themerStyle = iframeDoc.createElement('style');
-        themerStyle.id = themerStyleId;
-        iframeDoc.documentElement.appendChild(themerStyle);
-
-        const applicationStyle = iframeDoc.createElement('style');
-        iframeDoc.documentElement.appendChild(applicationStyle);
-        applicationStyle.innerHTML = 'html.theme-property-searching body * { pointer-events: auto !important}'
-      }
-
-      themerStyle.innerHTML = this.cssText;
-    }
+    this.iframe.contentDocument.documentElement.addEventListener('mousemove', this.onIframeMouseMove.bind(this));
   }
 
   onIframeMouseMove (ev) {
@@ -90,27 +95,20 @@ export class AppPreview {
 
       this.propertiesUsed.emit({
         properties: Array.from(new Set(properties)).filter(prop => !/(-ios-|-md-)/.test(prop))
-      })
+      });
     }
   }
 
   @Listen('body:keyup', {capture: true})
   onKeyUp (ev: KeyboardEvent) {
-    if (!ev.ctrlKey) {
+    if (ev.keyCode === 17) {
       const el: HTMLElement = this.iframe.contentDocument.documentElement;
       el.classList.remove('theme-property-searching');
 
       this.propertiesUsed.emit({
         properties: []
-      })
+      });
     }
-  }
-
-
-  onIframeLoad () {
-    this.applyStyles();
-
-    this.iframe.contentDocument.documentElement.addEventListener('mousemove', this.onIframeMouseMove.bind(this));
   }
 
   render () {

@@ -23,22 +23,30 @@ input[type="text"] {
 }
 
 input[type="color"] {
-	-webkit-appearance: none;
-	border: none;
-	width: 64px;
+  -webkit-appearance: none;
+  border: none;
+  width: 64px;
   height: 20px;
   outline: none;
   background: transparent;
 }
 
 input[type="color"]::-webkit-color-swatch-wrapper {
-	padding: 0;
+  padding: 0;
 }
 
 input[type="color"]::-webkit-color-swatch {
-	border: 1px solid black;
+  border: 1px solid black;
 }
 
 :host(.used) section {
   background-color: var(--variable-selector-color, rgba(255, 149, 243, 0.91));
+}
+
+:host(.used) section .property-label {
+  outline: 1px solid rgba(0, 0, 0, .5);
+}
+
+:host(.is-primary) .property-label:hover {
+  background-color: rgba(255, 75, 24, 0.16);
 }

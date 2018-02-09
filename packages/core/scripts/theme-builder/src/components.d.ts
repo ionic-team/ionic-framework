@@ -8,12 +8,21 @@ import {
   Color,
 } from './components/Color';
 
+declare global {
+  interface HTMLStencilElement extends HTMLElement {
+    componentOnReady(): Promise<this>;
+    componentOnReady(done: (ele?: this) => void): void;
+  }
+}
+
+
+
 import {
   AppPreview as AppPreview
 } from './components/app-preview/app-preview';
 
 declare global {
-  interface HTMLAppPreviewElement extends AppPreview, HTMLElement {
+  interface HTMLAppPreviewElement extends AppPreview, HTMLStencilElement {
   }
   var HTMLAppPreviewElement: {
     prototype: HTMLAppPreviewElement;
@@ -46,7 +55,7 @@ import {
 } from './components/css-text/css-text';
 
 declare global {
-  interface HTMLCssTextElement extends CssText, HTMLElement {
+  interface HTMLCssTextElement extends CssText, HTMLStencilElement {
   }
   var HTMLCssTextElement: {
     prototype: HTMLCssTextElement;
@@ -77,7 +86,7 @@ import {
 } from './components/demo-selection/demo-selection';
 
 declare global {
-  interface HTMLDemoSelectionElement extends DemoSelection, HTMLElement {
+  interface HTMLDemoSelectionElement extends DemoSelection, HTMLStencilElement {
   }
   var HTMLDemoSelectionElement: {
     prototype: HTMLDemoSelectionElement;
@@ -109,7 +118,7 @@ import {
 } from './components/theme-builder/theme-builder';
 
 declare global {
-  interface HTMLThemeBuilderElement extends ThemeBuilder, HTMLElement {
+  interface HTMLThemeBuilderElement extends ThemeBuilder, HTMLStencilElement {
   }
   var HTMLThemeBuilderElement: {
     prototype: HTMLThemeBuilderElement;
@@ -139,7 +148,7 @@ import {
 } from './components/theme-selector/theme-selector';
 
 declare global {
-  interface HTMLThemeSelectorElement extends ThemeSelector, HTMLElement {
+  interface HTMLThemeSelectorElement extends ThemeSelector, HTMLStencilElement {
   }
   var HTMLThemeSelectorElement: {
     prototype: HTMLThemeSelectorElement;
@@ -170,7 +179,7 @@ import {
 } from './components/variable-selector/variable-selector';
 
 declare global {
-  interface HTMLVariableSelectorElement extends VariableSelector, HTMLElement {
+  interface HTMLVariableSelectorElement extends VariableSelector, HTMLStencilElement {
   }
   var HTMLVariableSelectorElement: {
     prototype: HTMLVariableSelectorElement;
@@ -192,6 +201,7 @@ declare global {
       isRgb?: boolean;
       property?: string;
       type?: 'color' | 'percent';
+      usedWith?: string[];
       value?: Color | string | number;
     }
   }

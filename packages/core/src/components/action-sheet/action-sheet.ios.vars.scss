@@ -28,7 +28,7 @@ $action-sheet-ios-group-margin-top:                     10px !default;
 $action-sheet-ios-group-margin-bottom:                  10px !default;
 
 /// @prop - Background color of the action sheet
-$action-sheet-ios-background-color:                     $background-ios-color-step-100 !default;
+$action-sheet-ios-background-color:                     $background-ios-color-step-50 !default;
 
 /// @prop - Background color of the action sheet when translucent
 $action-sheet-ios-translucent-background-color:         ion-color-alpha($background-ios-color-value, background-ios-color, $alpha-ios-high) !default;
@@ -49,7 +49,7 @@ $action-sheet-ios-title-padding-bottom:                 $action-sheet-ios-title-
 $action-sheet-ios-title-padding-start:                  $action-sheet-ios-title-padding-end !default;
 
 /// @prop - Color of the action sheet title
-$action-sheet-ios-title-color:                          $text-ios-color-step-300 !default;
+$action-sheet-ios-title-color:                          $text-ios-color-step-600 !default;
 
 /// @prop - Font size of the action sheet title
 $action-sheet-ios-title-font-size:                      13px !default;
@@ -64,7 +64,7 @@ $action-sheet-ios-title-border-width:                   $hairlines-width !defaul
 $action-sheet-ios-title-border-style:                   solid !default;
 
 /// @prop - Border color of the action sheet title
-$action-sheet-ios-title-border-color:                   $background-ios-color-step-100 !default;
+$action-sheet-ios-title-border-color:                   $background-ios-color-step-50 !default;
 
 /// @prop - Font size of the action sheet sub title
 $action-sheet-ios-sub-title-font-size:                  12px !default;
@@ -112,7 +112,7 @@ $action-sheet-ios-button-border-width:                  $hairlines-width !defaul
 $action-sheet-ios-button-border-style:                  solid !default;
 
 /// @prop - Border color of the action sheet button
-$action-sheet-ios-button-border-color:                  $background-ios-color-step-100 !default;
+$action-sheet-ios-button-border-color:                  $background-ios-color-step-50 !default;
 
 /// @prop - Background color of the action sheet button
 $action-sheet-ios-button-background:                    transparent !default;

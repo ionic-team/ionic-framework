@@ -18,7 +18,7 @@ $alert-md-max-width:                          280px !default;
 $alert-md-border-radius:                      2px !default;
 
 /// @prop - Background color of the alert
-$alert-md-background-color:                   $background-md-color-step-100 !default;
+$alert-md-background-color:                   $background-md-color-step-50 !default;
 
 /// @prop - Box shadow color of the alert
 $alert-md-box-shadow-color:                   rgba(0, 0, 0, .4) !default;
@@ -66,7 +66,7 @@ $alert-md-message-padding-start:              24px !default;
 $alert-md-message-font-size:                  15px !default;
 
 /// @prop - Text color of the alert message
-$alert-md-message-text-color:                 $text-md-color-step-300 !default;
+$alert-md-message-text-color:                 $text-md-color-step-600 !default;
 
 /// @prop - Padding top of the alert empty message
 $alert-md-message-empty-padding-top:          0 !default;
@@ -171,7 +171,7 @@ $alert-md-button-text-color:                  ion-color($colors-md, primary, bas
 $alert-md-button-background-color:            transparent !default;
 
 /// @prop - Background color of the alert activated button
-$alert-md-button-background-color-activated:  $background-color-step-200 !default;
+$alert-md-button-background-color-activated:  $background-md-color-step-400 !default;
 
 /// @prop - Border radius of the alert button
 $alert-md-button-border-radius:               2px !default;
@@ -228,7 +228,7 @@ $alert-md-radio-border-style:                 solid !default;
 $alert-md-radio-border-radius:                50% !default;
 
 /// @prop - Border color of the alert radio when off
-$alert-md-radio-border-color-off:             $text-md-color-step-300 !default;
+$alert-md-radio-border-color-off:             $text-md-color-step-600 !default;
 
 /// @prop - Border color of the alert radio when on
 $alert-md-radio-border-color-on:              $alert-md-button-text-color !default;
