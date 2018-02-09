@@ -85,9 +85,13 @@ export class SegmentButton {
     };
 
     const TagType = this.href ? 'a' : 'button';
+    const attrs = (TagType === 'button')
+      ? {type: 'button'}
+      : {};
 
     return [
       <TagType
+       {...attrs}
         aria-pressed={this.activated}
         class={buttonClasses}
         disabled={this.disabled}

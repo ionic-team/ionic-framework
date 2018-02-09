@@ -324,6 +324,7 @@ export class Searchbar {
     const cancelButton =
       this.showCancelButton
         ? <button
+          type='button'
           tabindex={this.mode === 'ios' && !this.activated ? -1 : null}
           onClick={this.cancelSearchbar.bind(this)}
           onMouseDown={this.cancelSearchbar.bind(this)}
@@ -350,6 +351,7 @@ export class Searchbar {
           autoCorrect={this.autocorrect}
           spellCheck={this.spellcheck}/>
         <button
+          type='button'
           class='searchbar-clear-icon'
           onClick={this.clearInput.bind(this)}
           onMouseDown={this.clearInput.bind(this)}>

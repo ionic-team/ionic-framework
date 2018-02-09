@@ -105,9 +105,12 @@ export class Item {
     if (clickable) {
       TagType = this.href ? 'a' : 'button';
     }
+    const attrs = (TagType === 'button')
+      ? {type: 'button'}
+      : {};
 
     return (
-      <TagType class={themedClasses}>
+      <TagType class={themedClasses} {...attrs}>
         <slot name='start'></slot>
         <div class='item-inner'>
           <div class='input-wrapper'>

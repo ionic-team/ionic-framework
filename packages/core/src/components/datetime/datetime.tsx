@@ -619,6 +619,7 @@ export class Datetime {
     return [
       <div class={ datetimeTextClasses }>{ datetimeText }</div>,
       <button
+        type='button'
         aria-haspopup='true'
         id={this.datetimeId}
         aria-labelledby={this.labelId}

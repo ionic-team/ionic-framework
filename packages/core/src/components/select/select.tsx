@@ -508,6 +508,7 @@ export class Select {
         <div class='select-icon-inner'></div>
       </div>,
       <button
+        type='button'
         role='combobox'
         aria-haspopup='dialog'
         aria-expanded={this.isExpanded}
