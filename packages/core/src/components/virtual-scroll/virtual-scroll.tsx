@@ -23,6 +23,7 @@ export class VirtualScroll {
   private currentScrollTop = 0;
   private indexDirty = 0;
   private totalHeight = 0;
+  private heightChanged = false;
 
   @Element() el: HTMLElement;
 
@@ -196,7 +197,11 @@ export class VirtualScroll {
 
       // write DOM
       if (this.itemRender) {
-        doRender(this.el, this.itemRender, this.virtualDom, this.updateCellHeight.bind(this), this.totalHeight);
+        doRender(this.el, this.itemRender, this.virtualDom, this.updateCellHeight.bind(this));
+        if (this.heightChanged) {
+          this.el.style.height = this.totalHeight + 'px';
+          this.heightChanged = false;
+        }
       } else if (this.domRender) {
         this.domRender(this.virtualDom, this.totalHeight);
       }
@@ -223,7 +228,6 @@ export class VirtualScroll {
       return;
     }
     cell.visible = true;
-    cell.reads--;
     if (cell.height !== height) {
       console.debug(`[${cell.reads}] cell size ${cell.height} -> ${height}`);
       cell.height = height;
@@ -273,7 +277,11 @@ export class VirtualScroll {
 
   private calcHeightIndex(index = 0) {
     this.heightIndex = resizeBuffer(this.heightIndex, this.cells.length);
-    this.totalHeight = calcHeightIndex(this.heightIndex, this.cells, index);
+    const totalHeight = calcHeightIndex(this.heightIndex, this.cells, index);
+    if (totalHeight !== this.totalHeight) {
+      this.totalHeight = totalHeight;
+      this.heightChanged = true;
+    }
     this.indexDirty = Infinity;
   }
 

@@ -3,7 +3,14 @@ import { Config } from '../../index';
 
 
 @Component({
-  tag: 'ion-infinite-scroll-content'
+  tag: 'ion-infinite-scroll-content',
+  styleUrls: {
+    ios: 'infinite-scroll-content.ios.scss',
+    md: 'infinite-scroll-content.md.scss'
+  },
+  host: {
+    theme: 'infinite-scroll-content'
+  }
 })
 export class InfiniteScrollContent {
 

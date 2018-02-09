@@ -7,11 +7,6 @@
 
 ## Properties
 
-#### disabled
-
-boolean
-
-
 #### onionScroll
 
 
@@ -27,12 +22,12 @@ boolean
 
 
 
-## Attributes
-
-#### disabled
+#### scrollEvents
 
 boolean
 
+
+## Attributes
 
 #### onion-scroll
 
@@ -47,6 +42,11 @@ boolean
 #### onion-scroll-start
 
 
+
+
+#### scroll-events
+
+boolean
 
 
 ## Events

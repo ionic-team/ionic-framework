@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, Watch } from '@stencil/core';
 import { Config, DomController, GestureDetail } from '../../index';
 import { GestureController, GestureDelegate } from '../gesture-controller/gesture-controller';
 
@@ -21,10 +21,9 @@ export class Scroll {
   @Element() private el: HTMLElement;
 
   @Prop({ context: 'config'}) config: Config;
+  @Prop({ context: 'enableListener'}) enableListener: EventListenerEnable;
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop({ context: 'isServer' }) isServer: boolean;
-
-  @Prop() disabled = false;
 
   @Prop() onionScrollStart: ScrollCallback;
   @Prop() onionScroll: ScrollCallback;
@@ -45,6 +44,13 @@ export class Scroll {
    */
   @Event() ionScrollEnd: EventEmitter;
 
+
+  @Prop() scrollEvents = false;
+  @Watch('scrollEvents')
+  scrollChanged(enabled: boolean) {
+    this.enableListener(this, 'scroll', enabled);
+  }
+
   componentDidLoad() {
     if (this.isServer) {
       return;
@@ -53,6 +59,7 @@ export class Scroll {
     const gestureCtrl = Ionic.gesture = Ionic.gesture || new GestureController();
     this.gesture = gestureCtrl.createGesture('scroll', 100, false);
     this.app = this.el.closest('ion-app') as HTMLIonAppElement;
+    this.scrollChanged(this.scrollEvents);
   }
 
   componentDidUnload() {
@@ -62,7 +69,7 @@ export class Scroll {
 
   // Native Scroll *************************
 
-  @Listen('scroll', { passive: true })
+  @Listen('scroll', { passive: true, enabled: false })
   onNativeScroll() {
     if (!this.queued) {
       this.queued = true;

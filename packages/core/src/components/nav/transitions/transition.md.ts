@@ -9,6 +9,15 @@ const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 export function buildMdTransition(rootTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Promise<Transition> {
 
+  const componentReadyPromise: Promise<any>[] = [];
+  if (enteringView) {
+    componentReadyPromise.push((enteringView.element as any).componentOnReady());
+  }
+  if (leavingView) {
+    componentReadyPromise.push((leavingView.element as any).componentOnReady());
+  }
+
+  return Promise.all(componentReadyPromise).then(() => {
   rootTransition.enteringView = enteringView;
   rootTransition.leavingView = leavingView;
 
@@ -19,9 +28,12 @@ export function buildMdTransition(rootTransition: Transition, enteringView: View
 
   const backDirection = (opts.direction === 'back');
   if (enteringView) {
+
+    // animate the component itself
     if (backDirection) {
       rootTransition.duration(isDef(opts.duration) ? opts.duration : 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
-    } else {
+    }
+    else {
       rootTransition.duration(isDef(opts.duration) ? opts.duration : 280).easing('cubic-bezier(0.36,0.66,0.04,1)');
 
       rootTransition
@@ -29,8 +41,10 @@ export function buildMdTransition(rootTransition: Transition, enteringView: View
       .fromTo('opacity', 0.01, 1, true);
     }
 
+    // Animate toolbar if it's there
     const enteringToolbarEle = ionPageElement.querySelector('ion-toolbar');
     if (enteringToolbarEle) {
+
       const enteringToolBar = rootTransition.create();
       enteringToolBar.addElement(enteringToolbarEle);
       rootTransition.add(enteringToolBar);
@@ -38,8 +52,7 @@ export function buildMdTransition(rootTransition: Transition, enteringView: View
       const enteringBackButton = rootTransition.create();
       enteringBackButton.addElement(enteringToolbarEle.querySelector('.back-button'));
       rootTransition.add(enteringBackButton);
-
-      if (canNavGoBack(enteringView.nav)) {
+      if (canNavGoBack(enteringView.nav, enteringView)) {
         enteringBackButton.beforeAddClass(SHOW_BACK_BTN_CSS);
       } else {
         enteringBackButton.beforeRemoveClass(SHOW_BACK_BTN_CSS);
@@ -56,7 +69,10 @@ export function buildMdTransition(rootTransition: Transition, enteringView: View
     rootTransition.add(leavingPage.fromTo(TRANSLATEY, CENTER, OFF_BOTTOM).fromTo('opacity', 1, 0));
   }
 
-  return Promise.resolve(rootTransition);
+  return rootTransition;
+
+  });
+
 }
 
 function getIonPageElement(element: HTMLElement) {

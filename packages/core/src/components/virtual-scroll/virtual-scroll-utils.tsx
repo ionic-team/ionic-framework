@@ -21,10 +21,10 @@ export const enum NodeChange {
 }
 
 export interface Cell {
-  type: CellType;
-  value: any;
   i: number;
   index: number;
+  value: any;
+  type: CellType;
   height: number;
   reads: number;
   visible: boolean;
@@ -35,6 +35,7 @@ export interface VirtualNode {
   top: number;
   change: NodeChange;
   d: boolean;
+  visible: boolean;
 }
 const MIN_READS = 2;
 
@@ -88,6 +89,7 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
       dom.push({
         d: false,
         cell: cell,
+        visible: true,
         change: NodeChange.Cell,
         top: heightIndex[index],
       });
@@ -102,8 +104,14 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
 }
 
 
-export function doRender(el: HTMLElement, itemRender: ItemRenderFn, dom: VirtualNode[], updateCellHeight: Function, total: number) {
+export function doRender(
+  el: HTMLElement,
+  itemRender: ItemRenderFn,
+  dom: VirtualNode[],
+  updateCellHeight: Function
+) {
   const children = el.children;
+  const childrenNu = children.length;
   let child: HTMLElement;
   for (let i = 0; i < dom.length; i++) {
     const node = dom[i];
@@ -111,7 +119,7 @@ export function doRender(el: HTMLElement, itemRender: ItemRenderFn, dom: Virtual
 
     // the cell change, the content must be updated
     if (node.change === NodeChange.Cell) {
-      if (i < children.length) {
+      if (i < childrenNu) {
         child = children[i] as HTMLElement;
         itemRender(child, cell, i);
       } else {
@@ -128,16 +136,24 @@ export function doRender(el: HTMLElement, itemRender: ItemRenderFn, dom: Virtual
     if (node.change !== NodeChange.NoChange) {
       child.style.transform = `translate3d(0,${node.top}px,0)`;
     }
-    if (cell.visible) {
-      child.classList.remove('virtual-loading');
-    } else {
-      child.classList.add('virtual-loading');
+
+    // update visibility
+    const visible = cell.visible;
+    if (node.visible !== visible) {
+      if (visible) {
+        child.classList.remove('virtual-loading');
+      } else {
+        child.classList.add('virtual-loading');
+      }
+      node.visible = visible;
     }
+
+    // dynamic height inference
     if (cell.reads > 0) {
       updateCellHeight(cell, child);
+      cell.reads--;
     }
   }
-  el.style.height = total + 'px';
 }
 
 export function getViewport(scrollTop: number, vierportHeight: number, margin: number): Viewport {

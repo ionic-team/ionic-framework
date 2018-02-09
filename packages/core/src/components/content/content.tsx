@@ -26,21 +26,6 @@ export class Content {
   @Prop({ context: 'dom' }) dom: DomController;
 
   /**
-   * Emitted when the scrolling first starts.
-   */
-  @Prop() ionScrollStart: Function;
-
-  /**
-   * Emitted on every scroll event.
-   */
-  @Prop() ionScroll: Function;
-
-  /**
-   * Emitted when scrolling ends.
-   */
-  @Prop() ionScrollEnd: Function;
-
-  /**
    * If true, the content will scroll behind the headers
    * and footers. This effect can easily be seen by setting the toolbar
    * to transparent.
