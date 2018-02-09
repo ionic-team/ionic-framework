@@ -16,6 +16,13 @@ export class Button {
   @State() keyFocus: boolean;
 
   /**
+   * The type of the button.
+   * Possible values are: `"submit"`, `"reset"` and `"button"`.
+   * Default value is: `"button"`
+   */
+  @Prop() type = 'button';
+
+  /**
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
@@ -123,8 +130,13 @@ export class Button {
       'focused': this.keyFocus
     };
 
+    const attrs = (TagType === 'button')
+      ? {type: 'button'}
+      : {};
+
     return (
       <TagType
+        {...attrs}
         class={buttonClasses}
         disabled={this.disabled}
         href={this.href}

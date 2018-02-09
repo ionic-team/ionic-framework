@@ -413,6 +413,7 @@ declare global {
       round?: boolean;
       size?: 'small' | 'default' | 'large';
       strong?: boolean;
+      type?: string;
     }
   }
 }
