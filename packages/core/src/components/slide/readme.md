@@ -13,4 +13,4 @@ See the [Slides API Docs](../Slides) for more usage information.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

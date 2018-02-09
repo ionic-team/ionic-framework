@@ -57,4 +57,4 @@ Returns a promise which is resolved when the scroll has completed.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

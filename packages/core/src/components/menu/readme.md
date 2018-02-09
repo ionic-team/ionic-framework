@@ -159,4 +159,4 @@ Emitted when the menu is open.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

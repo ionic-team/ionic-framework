@@ -39,4 +39,4 @@ Boolean if the app is actively scrolling or not.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

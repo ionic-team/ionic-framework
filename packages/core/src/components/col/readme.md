@@ -24,4 +24,4 @@ There are several attributes that can be added to a column to customize this beh
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*
