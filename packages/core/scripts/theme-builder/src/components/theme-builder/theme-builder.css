@@ -18,3 +18,7 @@ main > section {
   height: 100%;
   overflow-y: scroll;
 }
+
+#css-proxy {
+  display: none;
+}

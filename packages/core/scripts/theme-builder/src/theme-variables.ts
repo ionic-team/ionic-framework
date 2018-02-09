@@ -1,4 +1,17 @@
-export const THEME_VARIABLES: {property: string, type?: 'percent' | 'color', computed?: string}[] = [
+import { Color } from './components/Color';
+export interface ThemeVariable {
+  property: string;
+  quickPick?: {text: string},
+  value?: Color | number | string;
+  computed?: {type: ComputedType, params: any}
+}
+
+export enum ComputedType {
+  rgblist = 'computed-rgblist',
+  step = 'computed-step'
+}
+
+export const THEME_VARIABLES: ThemeVariable[] = [
   {
     property: '--ion-alpha-lowest'
   },
@@ -15,14 +28,18 @@ export const THEME_VARIABLES: {property: string, type?: 'percent' | 'color', com
     property: '--ion-alpha-highest'
   },
   {
-    property: '--ion-color-primary'
+    property: '--ion-color-primary',
+    quickPick: {text: 'p'}
   },
   {
     property: '--ion-color-primary-contrast'
   },
   {
     property: '--ion-color-primary-rgb',
-    computed: '--ion-color-primary'
+    computed: {
+      type: ComputedType.rgblist,
+      params: {property: '--ion-color-primary'}
+    }
   },
   {
     property: '--ion-color-primary-shade'
@@ -31,14 +48,18 @@ export const THEME_VARIABLES: {property: string, type?: 'percent' | 'color', com
     property: '--ion-color-primary-tint'
   },
   {
-    property: '--ion-color-secondary'
+    property: '--ion-color-secondary',
+    quickPick: {text: 's'}
   },
   {
     property: '--ion-color-secondary-contrast'
   },
   {
     property: '--ion-color-secondary-rgb',
-    computed: '--ion-color-secondary'
+    computed: {
+      type: ComputedType.rgblist,
+      params: {property: '--ion-color-secondary'}
+    }
   },
   {
     property: '--ion-color-secondary-shade'
@@ -47,14 +68,18 @@ export const THEME_VARIABLES: {property: string, type?: 'percent' | 'color', com
     property: '--ion-color-secondary-tint'
   },
   {
-    property: '--ion-color-tertiary'
+    property: '--ion-color-tertiary',
+    quickPick: {text: 't'}
   },
   {
     property: '--ion-color-tertiary-contrast'
   },
   {
     property: '--ion-color-tertiary-rgb',
-    computed: '--ion-color-tertiary'
+    computed: {
+      type: ComputedType.rgblist,
+      params: {property: '--ion-color-tertiary'}
+    }
   },
   {
     property: '--ion-color-tertiary-shade'
@@ -63,14 +88,18 @@ export const THEME_VARIABLES: {property: string, type?: 'percent' | 'color', com
     property: '--ion-color-tertiary-tint'
   },
   {
-    property: '--ion-color-success'
+    property: '--ion-color-success',
+    quickPick: {text: 'ss'}
   },
   {
     property: '--ion-color-success-contrast'
   },
   {
     property: '--ion-color-success-rgb',
-    computed: '--ion-color-success'
+    computed: {
+      type: ComputedType.rgblist,
+      params: {property: '--ion-color-success'}
+    }
   },
   {
     property: '--ion-color-success-shade'
@@ -79,14 +108,18 @@ export const THEME_VARIABLES: {property: string, type?: 'percent' | 'color', com
     property: '--ion-color-success-tint'
   },
   {
-    property: '--ion-color-warning'
+    property: '--ion-color-warning',
+    quickPick: {text: 'w'}
   },
   {
     property: '--ion-color-warning-contrast'
   },
   {
     property: '--ion-color-warning-rgb',
-    computed: '--ion-color-warning'
+    computed: {
+      type: ComputedType.rgblist,
+      params: {property: '--ion-color-warning'}
+    }
   },
   {
     property: '--ion-color-warning-shade'
@@ -95,14 +128,18 @@ export const THEME_VARIABLES: {property: string, type?: 'percent' | 'color', com
     property: '--ion-color-warning-tint'
   },
   {
-    property: '--ion-color-danger'
+    property: '--ion-color-danger',
+    quickPick: {text: 'd'}
   },
   {
     property: '--ion-color-danger-contrast'
   },
   {
     property: '--ion-color-danger-rgb',
-    computed: '--ion-color-danger'
+    computed: {
+      type: ComputedType.rgblist,
+      params: {property: '--ion-color-danger'}
+    }
   },
   {
     property: '--ion-color-danger-shade'
@@ -111,14 +148,18 @@ export const THEME_VARIABLES: {property: string, type?: 'percent' | 'color', com
     property: '--ion-color-danger-tint'
   },
   {
-    property: '--ion-color-light'
+    property: '--ion-color-light',
+    quickPick: {text: 'l'}
   },
   {
     property: '--ion-color-light-contrast'
   },
   {
     property: '--ion-color-light-rgb',
-    computed: '--ion-color-light'
+    computed: {
+      type: ComputedType.rgblist,
+      params: {property: '--ion-color-light'}
+    }
   },
   {
     property: '--ion-color-light-shade'
@@ -127,14 +168,18 @@ export const THEME_VARIABLES: {property: string, type?: 'percent' | 'color', com
     property: '--ion-color-light-tint'
   },
   {
-    property: '--ion-color-medium'
+    property: '--ion-color-medium',
+    quickPick: {text: 'm'}
   },
   {
     property: '--ion-color-medium-contrast'
   },
   {
     property: '--ion-color-medium-rgb',
-    computed: '--ion-color-medium'
+    computed: {
+      type: ComputedType.rgblist,
+      params: {property: '--ion-color-medium'}
+    }
   },
   {
     property: '--ion-color-medium-shade'
@@ -143,14 +188,18 @@ export const THEME_VARIABLES: {property: string, type?: 'percent' | 'color', com
     property: '--ion-color-medium-tint'
   },
   {
-    property: '--ion-color-dark'
+    property: '--ion-color-dark',
+    quickPick: {text: 'd'}
   },
   {
     property: '--ion-color-dark-contrast'
   },
   {
     property: '--ion-color-dark-rgb',
-    computed: '--ion-color-dark'
+    computed: {
+      type: ComputedType.rgblist,
+      params: {property: '--ion-color-dark'}
+    }
   },
   {
     property: '--ion-color-dark-shade'
@@ -162,23 +211,157 @@ export const THEME_VARIABLES: {property: string, type?: 'percent' | 'color', com
     property: '--ion-backdrop-color'
   },
   {
-    property: '--ion-background-color'
+    property: '--ion-background-color',
+    quickPick: {
+      text: 'bg'
+    }
   },
   {
     property: '--ion-background-color-rgb',
-    computed: '--ion-background-color'
+    computed: {
+      type: ComputedType.rgblist,
+      params: {property: '--ion-background-color'}
+    }
   },
   {
-    property: '--ion-background-color-step-100'
+    property: '--ion-background-color-step-50',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .050, from: '--ion-text-color' }
+    }
   },
   {
-    property: '--ion-background-color-step-200'
+    property: '--ion-background-color-step-100',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .100, from: '--ion-text-color' }
+    }
   },
   {
-    property: '--ion-background-color-step-300'
+    property: '--ion-background-color-step-150',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .150, from: '--ion-text-color' }
+    }
   },
   {
-    property: '--ion-background-color-step-400'
+    property: '--ion-background-color-step-200',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .200, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-250',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .250, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-300',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .300, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-350',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .350, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-400',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .400, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-450',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .450, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-500',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .500, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-550',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .550, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-600',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .600, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-650',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .650, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-700',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .700, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-750',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .750, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-800',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .800, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-850',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .850, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-900',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .900, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-950',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: .950, from: '--ion-text-color' }
+    }
+  },
+  {
+    property: '--ion-background-color-step-1000',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-background-color', amount: 1, from: '--ion-text-color' }
+    }
   },
   {
     property: '--ion-border-color'
@@ -187,23 +370,157 @@ export const THEME_VARIABLES: {property: string, type?: 'percent' | 'color', com
     property: '--ion-box-shadow-color'
   },
   {
-    property: '--ion-text-color'
+    property: '--ion-text-color',
+    quickPick: {
+      text: 'txt'
+    }
   },
   {
     property: '--ion-text-color-rgb',
-    computed: '--ion-text-color'
+    computed: {
+      type: ComputedType.rgblist,
+      params: {property: '--ion-text-color'}
+    }
   },
   {
-    property: '--ion-text-color-step-100'
+    property: '--ion-text-color-step-50',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .050, from: '--ion-background-color' }
+    }
   },
   {
-    property: '--ion-text-color-step-200'
+    property: '--ion-text-color-step-100',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .100, from: '--ion-background-color' }
+    }
   },
   {
-    property: '--ion-text-color-step-300'
+    property: '--ion-text-color-step-150',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .150, from: '--ion-background-color' }
+    }
   },
   {
-    property: '--ion-text-color-step-400'
+    property: '--ion-text-color-step-200',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .200, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-250',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .250, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-300',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .300, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-350',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .350, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-400',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .400, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-450',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .450, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-500',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .500, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-550',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .550, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-600',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .600, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-650',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .650, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-700',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .700, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-750',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .750, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-800',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .800, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-850',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .850, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-900',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .900, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-950',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: .950, from: '--ion-background-color' }
+    }
+  },
+  {
+    property: '--ion-text-color-step-1000',
+    computed: {
+      type: ComputedType.step,
+      params: {property: '--ion-text-color', amount: 1, from: '--ion-background-color' }
+    }
   },
   {
     property: '--ion-tabbar-background-color'

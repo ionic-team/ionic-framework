@@ -1,24 +1,13 @@
 interface RGB {
-  r: number,
-  g: number,
   b: number
+  g: number,
+  r: number,
 }
 
 interface HSL {
   h: number,
-  s: number,
   l: number
-}
-
-
-export declare interface ColorStep {
-  id: string,
-  color: Color
-}
-
-export declare interface ColorStepDefinition {
-  color?: Color,
-  increments: number[]
+  s: number,
 }
 
 function componentToHex (c) {
@@ -52,6 +41,7 @@ function hslToRGB ({h, s, l}: HSL): RGB {
   s = s / 100;
   l = l / 100;
   if (s == 0) {
+    l = Math.round(l * 255);
     return {
       r: l,
       g: l,
@@ -102,7 +92,7 @@ function rgbToHSL ({r, g, b}: RGB): HSL {
   b = Math.max(Math.min(b / 255, 1), 0);
   const max = Math.max(r, g, b),
     min = Math.min(r, g, b),
-    l = (max + min) / 2;
+    l = Math.min(1, Math.max(0, (max + min) / 2));
   let d, h, s;
 
   if (max !== min) {
@@ -132,15 +122,9 @@ function rgbToYIQ ({r, g, b}: RGB): number {
 
 export class Color {
   readonly hex: string;
-  readonly rgb: RGB;
   readonly hsl: HSL;
+  readonly rgb: RGB;
   readonly yiq: number;
-
-  public static isColor (value: string): Boolean {
-    if (/rgb\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)/.test(value)) return true;
-
-    return /(^#[0-9a-fA-F]+)/.test(value.trim());
-  }
 
   constructor (value: string | RGB | HSL) {
     if (typeof(value) === 'string' && /rgb\(/.test(value)) {
@@ -172,41 +156,27 @@ export class Color {
     this.yiq = rgbToYIQ(this.rgb);
   }
 
+  public static isColor (value: string): Boolean {
+    if (/rgb\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)/.test(value)) return true;
+
+    return /(^#[0-9a-fA-F]+)/.test(value.trim());
+  }
+
   contrast (threshold: number = 128): Color {
     return new Color((this.yiq >= threshold ? '#000' : '#fff'));
   }
 
-  shiftLightness (percent: number): Color {
-    const hsl: HSL = Object.assign({}, this.hsl, {
-      l: this.hsl.l * percent
-    });
-
-    return new Color(hsl);
+  mix (from: string | RGB | HSL | Color, amount: number = .5): Color {
+    const base: Color = from instanceof Color ? from : new Color(from);
+    return new Color(mixColors(this, base, amount));
   }
 
-  tint (percent: number = .1): Color {
-    percent = 1 + percent;
-    return this.shiftLightness(percent);
+  shade (weight: number = .12): Color {
+    return this.mix({r: 0, g: 0, b: 0}, weight);
   }
 
-  shade (percent: number = .1): Color {
-    percent = 1 - percent;
-    return this.shiftLightness(percent);
-  }
-
-  steps (from: ColorStepDefinition = {increments: [.2, .3, .5, .75]}): ColorStep[] {
-    const steps: ColorStep[] = [],
-      mixColor: Color = from.color || new Color((this.yiq > 128 ? '#000' : '#fff'));
-
-    for (let i = 1; i <= from.increments.length; i++) {
-      const {r, g, b} = mixColors(this, mixColor, from.increments[i - 1]);
-      steps.push({
-        id: (i * 100).toString(),
-        color: new Color({r,g,b})
-      });
-    }
-
-    return steps;
+  tint (weight: number = .1): Color {
+    return this.mix({r: 255, g: 255, b: 255}, weight);
   }
 
   toList (): string {

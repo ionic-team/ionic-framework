@@ -192,6 +192,7 @@ declare global {
       isRgb?: boolean;
       property?: string;
       type?: 'color' | 'percent';
+      usedWith?: string[];
       value?: Color | string | number;
     }
   }

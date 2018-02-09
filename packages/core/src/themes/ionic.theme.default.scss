@@ -28,71 +28,71 @@ $alpha-highest:       .9 !default;
 //   - base: main color to be used.
 //   - rgb: a R,G,B list version of the base color. Used for alpha processing
 //   - contrast: Color that will provide readable text against the base color
-//   - shade: slightly darker version of the base color (mix with black)
-//   - tint: slightly lighter version of the base color (mix with white)
+//   - shade: 12% darker version of the base color (mix with black)
+//   - tint: 10% lighter version of the base color (mix with white)
 $ion-colors:  (
   primary: (
     base:             $primary,
     contrast:         #fff,
     rgb:              color-to-rgb-list($primary),
-    shade:            #3f79e0,
-    tint:             #427feb
+    shade:            mix(#000, $primary, 12%),
+    tint:             mix(#fff, $primary, 10%)
   ),
   secondary: (
     base:             $secondary,
     contrast:         #fff,
     rgb:              color-to-rgb-list($secondary),
-    shade:            #2cc158,
-    tint:             #2ec95c
+    shade:            mix(#000, $secondary, 12%),
+    tint:             mix(#fff, $secondary, 10%)
   ),
   tertiary: (
     base:             $tertiary,
     contrast:         #fff,
     rgb:              color-to-rgb-list($tertiary),
-    shade:            #d6903d,
-    tint:             #ffa529
+    shade:            mix(#000, $tertiary, 12%),
+    tint:             mix(#fff, $tertiary, 10%)
   ),
   success: (
     base:             $success,
     contrast:         #fff,
     rgb:              color-to-rgb-list($success),
-    shade:            #10cb60,
-    tint:             #23df6d
+    shade:            mix(#000, $success, 12%),
+    tint:             mix(#fff, $success, 10%)
   ),
   warning: (
     base:             $warning,
     contrast:         #000,
     rgb:              color-to-rgb-list($warning),
-    shade:            #f1c100,
-    tint:             #ffd214
+    shade:            mix(#000, $warning, 12%),
+    tint:             mix(#fff, $warning, 10%)
   ),
   danger: (
     base:             $danger,
     contrast:         #fff,
     rgb:              color-to-rgb-list($danger),
-    shade:            #d83636,
-    tint:             #e13838
+    shade:            mix(#000, $danger, 12%),
+    tint:             mix(#fff, $danger, 10%)
   ),
   light: (
     base:             $light,
     contrast:         #000,
     rgb:              color-to-rgb-list($light),
-    shade:            #d7d7d7,
-    tint:             #e0e0e0
+    shade:            mix(#000, $light, 12%),
+    tint:             mix(#fff, $light, 10%)
   ),
   medium: (
     base:             $medium,
     contrast:         #000,
     rgb:              color-to-rgb-list($medium),
-    shade:            #8c8e95,
-    tint:             #86888f
+    shade:            mix(#000, $medium, 12%),
+    tint:             mix(#fff, $medium, 10%)
   ),
   dark: (
     base:             $dark,
     contrast:         #fff,
     rgb:              color-to-rgb-list($dark),
-    shade:            #343434,
-    tint:             #3d3d3d
+    shade:            mix(#000, $dark, 12%),
+    tint:             mix(#fff, $dark, 10%)
   )
 );
 $colors:                                ion-extend-colors($ion-colors, $colors);
@@ -139,14 +139,46 @@ $text-color-rgb:                        css-var(color-to-rgb-list($text-color-va
 // For example a $text-color of white would generally step towards black,
 // but a $text-color of black would step towards white.
 // --------------------------------------------------
-$background-color-step-100:             css-var(#f2f2f2, background-color-step-100) !default;
-$background-color-step-200:             css-var(#dcdcdc, background-color-step-200) !default;
-$background-color-step-300:             css-var(#bdbdbd, background-color-step-300) !default;
-$background-color-step-400:             css-var(#444, background-color-step-400) !default;
-$text-color-step-100:                   css-var(#222, text-color-step-100) !default;
-$text-color-step-200:                   css-var(#666, text-color-step-200) !default;
-$text-color-step-300:                   css-var(#999, text-color-step-300) !default;
-$text-color-step-400:                   css-var(#c5c5c5, text-color-step-400) !default;
+$background-color-step-50:              css-var(mix($text-color-value, $background-color-value, 5%), background-color-step-50) !default;
+$background-color-step-100:             css-var(mix($text-color-value, $background-color-value, 10%), background-color-step-100) !default;
+$background-color-step-150:             css-var(mix($text-color-value, $background-color-value, 15%), background-color-step-150) !default;
+$background-color-step-200:             css-var(mix($text-color-value, $background-color-value, 20%), background-color-step-200) !default;
+$background-color-step-250:             css-var(mix($text-color-value, $background-color-value, 25%), background-color-step-250) !default;
+$background-color-step-300:             css-var(mix($text-color-value, $background-color-value, 30%), background-color-step-300) !default;
+$background-color-step-350:             css-var(mix($text-color-value, $background-color-value, 35%), background-color-step-350) !default;
+$background-color-step-400:             css-var(mix($text-color-value, $background-color-value, 40%), background-color-step-400) !default;
+$background-color-step-450:             css-var(mix($text-color-value, $background-color-value, 45%), background-color-step-450) !default;
+$background-color-step-500:             css-var(mix($text-color-value, $background-color-value, 50%), background-color-step-500) !default;
+$background-color-step-550:             css-var(mix($text-color-value, $background-color-value, 55%), background-color-step-550) !default;
+$background-color-step-600:             css-var(mix($text-color-value, $background-color-value, 60%), background-color-step-600) !default;
+$background-color-step-650:             css-var(mix($text-color-value, $background-color-value, 65%), background-color-step-650) !default;
+$background-color-step-700:             css-var(mix($text-color-value, $background-color-value, 70%), background-color-step-700) !default;
+$background-color-step-750:             css-var(mix($text-color-value, $background-color-value, 75%), background-color-step-750) !default;
+$background-color-step-800:             css-var(mix($text-color-value, $background-color-value, 80%), background-color-step-800) !default;
+$background-color-step-850:             css-var(mix($text-color-value, $background-color-value, 85%), background-color-step-850) !default;
+$background-color-step-900:             css-var(mix($text-color-value, $background-color-value, 90%), background-color-step-900) !default;
+$background-color-step-950:             css-var(mix($text-color-value, $background-color-value, 95%), background-color-step-950) !default;
+$background-color-step-1000:            css-var(mix($text-color-value, $background-color-value, 100%), background-color-step-1000) !default;
+$text-color-step-50:                    css-var(mix($background-color-value, $text-color-value, 5%), text-color-step-50) !default;
+$text-color-step-100:                   css-var(mix($background-color-value, $text-color-value, 10%), text-color-step-100) !default;
+$text-color-step-150:                   css-var(mix($background-color-value, $text-color-value, 15%), text-color-step-150) !default;
+$text-color-step-200:                   css-var(mix($background-color-value, $text-color-value, 20%), text-color-step-200) !default;
+$text-color-step-250:                   css-var(mix($background-color-value, $text-color-value, 25%), text-color-step-250) !default;
+$text-color-step-300:                   css-var(mix($background-color-value, $text-color-value, 30%), text-color-step-300) !default;
+$text-color-step-350:                   css-var(mix($background-color-value, $text-color-value, 35%), text-color-step-350) !default;
+$text-color-step-400:                   css-var(mix($background-color-value, $text-color-value, 40%), text-color-step-400) !default;
+$text-color-step-450:                   css-var(mix($background-color-value, $text-color-value, 45%), text-color-step-450) !default;
+$text-color-step-500:                   css-var(mix($background-color-value, $text-color-value, 50%), text-color-step-500) !default;
+$text-color-step-550:                   css-var(mix($background-color-value, $text-color-value, 55%), text-color-step-550) !default;
+$text-color-step-600:                   css-var(mix($background-color-value, $text-color-value, 60%), text-color-step-600) !default;
+$text-color-step-650:                   css-var(mix($background-color-value, $text-color-value, 65%), text-color-step-650) !default;
+$text-color-step-700:                   css-var(mix($background-color-value, $text-color-value, 70%), text-color-step-700) !default;
+$text-color-step-750:                   css-var(mix($background-color-value, $text-color-value, 75%), text-color-step-750) !default;
+$text-color-step-800:                   css-var(mix($background-color-value, $text-color-value, 80%), text-color-step-800) !default;
+$text-color-step-850:                   css-var(mix($background-color-value, $text-color-value, 85%), text-color-step-850) !default;
+$text-color-step-900:                   css-var(mix($background-color-value, $text-color-value, 90%), text-color-step-900) !default;
+$text-color-step-950:                   css-var(mix($background-color-value, $text-color-value, 95%), text-color-step-950) !default;
+$text-color-step-1000:                  css-var(mix($background-color-value, $text-color-value, 100%), text-color-step-1000) !default;
 
 // Default General Colors
 // --------------------------------------------------

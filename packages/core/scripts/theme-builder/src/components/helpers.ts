@@ -1,4 +1,3 @@
-
 export const SERVER_DOMAIN = `http://localhost:5454`;
 export const DATA_URL = `${SERVER_DOMAIN}/data`;
 export const COLOR_URL = `${SERVER_DOMAIN}/color`;
@@ -6,16 +5,16 @@ export const SAVE_CSS_URL = `${SERVER_DOMAIN}/save-css`;
 export const DELETE_CSS_URL = `${SERVER_DOMAIN}/delete-css`;
 export const CSS_THEME_FILE_PATH = `/src/themes/css`;
 
-export function saveCssUrl(themeName: string, cssText: string) {
+export function saveCssUrl (themeName: string, cssText: string) {
   cssText = encodeURIComponent(cssText);
   return `${SAVE_CSS_URL}?theme=${themeName}&css=${cssText}`;
 }
 
-export function deleteCssUrl(themeName: string) {
+export function deleteCssUrl (themeName: string) {
   return `${DELETE_CSS_URL}?theme=${themeName}`;
 }
 
-export function getThemeUrl(themeName: string) {
+export function getThemeUrl (themeName: string) {
   return `${CSS_THEME_FILE_PATH}/${themeName}.css`;
 }
 
