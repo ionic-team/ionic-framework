@@ -228,7 +228,6 @@ export class VirtualScroll {
       return;
     }
     cell.visible = true;
-    cell.reads--;
     if (cell.height !== height) {
       console.debug(`[${cell.reads}] cell size ${cell.height} -> ${height}`);
       cell.height = height;

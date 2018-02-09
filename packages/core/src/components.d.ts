@@ -759,9 +759,6 @@ declare global {
   namespace JSXElements {
     export interface IonContentAttributes extends HTMLAttributes {
       fullscreen?: boolean;
-      ionScroll?: Function;
-      ionScrollEnd?: Function;
-      ionScrollStart?: Function;
     }
   }
 }
@@ -2530,10 +2527,10 @@ declare global {
   }
   namespace JSXElements {
     export interface IonScrollAttributes extends HTMLAttributes {
-      disabled?: boolean;
       onionScroll?: ScrollCallback;
       onionScrollEnd?: ScrollCallback;
       onionScrollStart?: ScrollCallback;
+      scrollEvents?: boolean;
     }
   }
 }

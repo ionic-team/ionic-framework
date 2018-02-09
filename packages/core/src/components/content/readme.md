@@ -25,27 +25,6 @@ and footers. This effect can easily be seen by setting the toolbar
 to transparent.
 
 
-#### ionScroll
-
-
-
-Emitted on every scroll event.
-
-
-#### ionScrollEnd
-
-
-
-Emitted when scrolling ends.
-
-
-#### ionScrollStart
-
-
-
-Emitted when the scrolling first starts.
-
-
 ## Attributes
 
 #### fullscreen
@@ -55,27 +34,6 @@ boolean
 If true, the content will scroll behind the headers
 and footers. This effect can easily be seen by setting the toolbar
 to transparent.
-
-
-#### ion-scroll
-
-
-
-Emitted on every scroll event.
-
-
-#### ion-scroll-end
-
-
-
-Emitted when scrolling ends.
-
-
-#### ion-scroll-start
-
-
-
-Emitted when the scrolling first starts.
 
 
 ## Methods
