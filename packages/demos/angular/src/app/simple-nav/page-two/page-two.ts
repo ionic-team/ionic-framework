@@ -1,6 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 
 
@@ -27,14 +26,14 @@ import { NavController } from '@ionic/angular';
 })
 export class PageTwo {
 
-  constructor(private router: Router, private navController: NavController) {
+  constructor(private navController: NavController) {
   }
 
   pushPageThreeComponent() {
-    this.navController.element.updateUrl('/simple-nav/page-three');
+    this.navController.element.pushUrl('/simple-nav/page-three');
   }
 
   goBack() {
-    window.history.back();
+    this.navController.element.popUrl();
   }
 }

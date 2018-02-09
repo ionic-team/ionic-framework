@@ -49,6 +49,7 @@ import {
   focusOutActiveElement,
   isDef,
   isNumber,
+  normalizeUrl,
 } from '../../utils/helpers';
 
 
@@ -69,19 +70,19 @@ export class Nav implements PublicNav {
   @Event() navInit: EventEmitter<NavEventDetail>;
   @Event() ionNavChanged: EventEmitter<NavEventDetail>;
 
-  useRouter: boolean;
-  navId: number;
+  useRouter = false;
+  navId = -1;
   init = false;
   routes: RouterEntries = [];
-  parent: Nav;
+  parent: Nav = null;
   views: ViewController[] = [];
-  transitioning?: boolean;
-  destroyed?: boolean;
-  transitionId?: number;
-  isViewInitialized?: boolean;
-  isPortal: boolean;
+  transitioning = false;
+  destroyed = false;
+  transitionId = -1;
+  isViewInitialized = false;
   swipeToGoBackTransition: any; // TODO Transition
   childNavs?: Nav[];
+  postTransitionUrlStack: string[] = [];
 
   @Prop() mode: string;
   @Prop() root: any;
@@ -139,8 +140,13 @@ export class Nav implements PublicNav {
   }
 
   @Method()
-  updateUrl(url: string, _opts?: NavOptions): Promise<any> {
-    return updateUrlImpl(this, url, _opts);
+  pushUrl(url: string, opts?: NavOptions): Promise<any> {
+    return pushUrlImpl(this, url, opts);
+  }
+
+  @Method()
+  popUrl(opts?: NavOptions): Promise<any> {
+    return popUrlImpl(this, opts);
   }
 
   @Method()
@@ -266,12 +272,27 @@ export class Nav implements PublicNav {
   }
 }
 
-export function updateUrlImpl(nav: Nav, url: string, _opts?: NavOptions) {
+export function pushUrlImpl(nav: Nav, url: string, _opts?: NavOptions) {
   if (!nav.delegate) {
     nav.delegate = new DomFrameworkDelegate();
   }
   if (nav.routerDelegate) {
-    return nav.routerDelegate.updateUrlState(url, null, null);
+    return nav.routerDelegate.pushUrlState(url, null, null);
+  }
+  return Promise.reject(new Error('Delegate does not implement the updateUrlState method'));
+}
+
+export function popUrlImpl(nav: Nav, _opts?: NavOptions) {
+  if (!nav.delegate) {
+    nav.delegate = new DomFrameworkDelegate();
+  }
+  if (nav.routerDelegate) {
+    // rather than using the browser history stack, we should go back to the previous url in this stack
+    if (nav.postTransitionUrlStack.length > 1) {
+      const newUrl = nav.postTransitionUrlStack[nav.postTransitionUrlStack.length - 2];
+      return nav.routerDelegate.pushUrlState(newUrl, null, null);
+    }
+    return Promise.reject(new Error('There is no URL associated with this nav to pop'));
   }
   return Promise.reject(new Error('Delegate does not implement the updateUrlState method'));
 }
@@ -301,19 +322,43 @@ export function componentDidLoadImpl(nav: Nav) {
   }
 }
 
+export function addToUrlCache(nav: Nav) {
+  const normalizedUrl = normalizeUrl(window.location.pathname);
+  if (!nav.postTransitionUrlStack.length
+    || nav.postTransitionUrlStack[nav.postTransitionUrlStack.length - 1] !== normalizedUrl) {
+    nav.postTransitionUrlStack.push(normalizedUrl);
+  }
+}
+
+export function popUrlFromCache(nav: Nav) {
+  const newStack = nav.postTransitionUrlStack.concat([]);
+  newStack.pop();
+  return newStack;
+}
+
+
 export async function pushImpl(nav: Nav, component: any, data: any, opts: NavOptions, escapeHatch: any) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return push(nav, nav.delegate, animation, component, data, opts, escapeHatch);
+  return push(nav, nav.delegate, animation, component, data, opts, escapeHatch).then((navResult) => {
+    addToUrlCache(nav);
+    return navResult;
+  });
 }
 
 export async function popImpl(nav: Nav, opts: NavOptions, escapeHatch: any) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return pop(nav, nav.delegate, animation, opts, escapeHatch);
+  return pop(nav, nav.delegate, animation, opts, escapeHatch).then((navResult) => {
+    nav.postTransitionUrlStack = popUrlFromCache(nav);
+    return navResult;
+  });
 }
 
 export async function setRootImpl(nav: Nav, component: any, data: any, opts: NavOptions, escapeHatch: any) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return setRoot(nav, nav.delegate, animation, component, data, opts, escapeHatch);
+  return setRoot(nav, nav.delegate, animation, component, data, opts, escapeHatch).then((navResult) => {
+    nav.postTransitionUrlStack = [normalizeUrl(window.location.pathname)];
+    return navResult;
+  });
 }
 
 export async function insertImpl(nav: Nav, insertIndex: number, page: any, params: any, opts: NavOptions, escapeHatch: any) {
@@ -728,7 +773,7 @@ export function executeAsyncTransition(nav: Nav, transition: Transition, enterin
   leavingView && toggleHidden(leavingView.element, true, true);
 
   const isFirstPage = !nav.isViewInitialized && nav.views.length === 1;
-  const shouldNotAnimate = isFirstPage && !nav.isPortal;
+  const shouldNotAnimate = isFirstPage;
   if (configShouldAnimate || shouldNotAnimate) {
     opts.animate = false;
   }
@@ -822,7 +867,7 @@ export function cleanUpView(nav: Nav, delegate: FrameworkDelegate, activeViewCon
       // this view comes after the active view
       inactiveViewController.willUnload();
       promises.push(destroyView(nav, delegate, inactiveViewController));
-    } else if ( i < activeIndex && !nav.isPortal) {
+    } else if ( i < activeIndex) {
       // this view comes before the active view
       // and it is not a portal then ensure it is hidden
       toggleHidden(inactiveViewController.element, true, false);
@@ -900,7 +945,7 @@ export function updateNavStacks(enteringView: ViewController, leavingView: ViewC
 
     const finalBalance = ti.nav.views.length + (ti.insertViews ? ti.insertViews.length : 0) - (ti.removeCount ? ti.removeCount : 0);
     assert(finalBalance >= 0, 'final balance can not be negative');
-    if (finalBalance === 0 && !ti.nav.isPortal) {
+    if (finalBalance === 0) {
       console.warn(`You can't remove all the pages in the navigation stack. nav.pop() is probably called too many times.`);
       throw new Error('Navigation stack needs at least one root page');
     }
@@ -976,7 +1021,7 @@ export function insertViewIntoNav(nav: Nav, view: ViewController, index: number)
     assert(view.nav === nav, 'view is not part of the nav');
     nav.views.splice(index, 0, nav.views.splice(existingIndex, 1)[0]);
   } else {
-    assert(!view.nav || (nav.isPortal && view.nav === nav), 'nav is used');
+    assert(!view.nav, 'nav is used');
     // this is a new view to add to the stack
     // create the new entering view
     view.nav = nav;

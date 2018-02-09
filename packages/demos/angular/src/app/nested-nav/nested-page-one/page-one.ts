@@ -23,7 +23,7 @@ import { NavController } from '@ionic/angular';
 export class PageOne {
 
   ts: number;
-  constructor(private router: Router) {
+  constructor(private navController: NavController) {
     setInterval(() => {
       this.ts = Date.now();
     }, 500);
@@ -31,6 +31,6 @@ export class PageOne {
 
 
   pushPageTwoComponent() {
-    this.router.navigateByUrl('/nested-nav/nested-page-two/section-one');
+    this.navController.element.pushUrl('/nested-nav/nested-page-two/section-one');
   }
 }

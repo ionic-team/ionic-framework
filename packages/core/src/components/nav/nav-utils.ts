@@ -23,22 +23,12 @@ export let VIEW_ID_START = 2000;
 let transitionIds = 0;
 const activeTransitions = new Map<number, any>();
 
-let portalZindex = 9999;
-
 export function isViewController(object: any): boolean {
   return !!(object && object.didLoad && object.willUnload);
 }
 
 export function setZIndex(nav: Nav, enteringView: ViewController, leavingView: ViewController, direction: string) {
   if (enteringView) {
-    if (nav.isPortal) {
-      if (direction === DIRECTION_FORWARD) {
-        // TODO - fix typing
-        updateZIndex(enteringView, (nav as any).zIndexOffset + portalZindex);
-      }
-      portalZindex++;
-      return;
-    }
 
     leavingView = leavingView || nav.getPrevious(enteringView) as ViewController;
 

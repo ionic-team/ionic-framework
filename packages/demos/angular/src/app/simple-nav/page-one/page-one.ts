@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 
 import { PageTwo } from '../page-two/page-two';
@@ -25,7 +24,7 @@ import { PageTwo } from '../page-two/page-two';
 export class PageOne {
 
   ts: number;
-  constructor(private router: Router, private navController: NavController) {
+  constructor(private navController: NavController) {
     setInterval(() => {
       this.ts = Date.now();
     }, 500);
@@ -33,8 +32,7 @@ export class PageOne {
 
 
   pushPageTwoComponent() {
-    //this.router.navigateByUrl('/simple-nav/page-two');
-    this.navController.element.updateUrl('/simple-nav/page-two');
+    this.navController.element.pushUrl('/simple-nav/page-two');
   }
 
 

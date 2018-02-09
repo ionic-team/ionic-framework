@@ -133,7 +133,13 @@ boolean
 #### popToRoot()
 
 
+#### popUrl()
+
+
 #### push()
+
+
+#### pushUrl()
 
 
 #### removeIndex()
@@ -152,9 +158,6 @@ boolean
 
 
 #### setRouteId()
-
-
-#### updateUrl()
 
 
 

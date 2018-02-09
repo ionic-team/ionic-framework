@@ -82,7 +82,7 @@ export class Tab {
         return (nav as any).componentOnReady().then(() => {
           return nav.onAllTransitionsComplete();
         }).then(() => {
-          if (!nav.getViews().length && nav.root) {
+          if (!nav.getViews().length && nav.root && !nav.isTransitioning()) {
             return nav.setRoot(nav.root);
           }
           return Promise.resolve();

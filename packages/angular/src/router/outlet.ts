@@ -63,11 +63,13 @@ export class RouterOutlet implements OnDestroy, OnInit, RouterDelegate {
     parentContexts.onChildOutletCreated(this.name, this as any);
   }
 
-  updateUrlState(urlSegment: string): Promise<any> {
-    if (this.router) {
-      return this.router.navigateByUrl(urlSegment);
-    }
-    return Promise.reject(new Error('Angular Router is unavailable'));
+  pushUrlState(urlSegment: string): Promise<any> {
+    return this.router.navigateByUrl(urlSegment);
+  }
+
+  popUrlState(): Promise<any> {
+    window.history.back();
+    return Promise.resolve();
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -23,7 +22,7 @@ import { NavController } from '@ionic/angular';
 export class LoginPage {
 
   ts: number;
-  constructor(private router: Router) {
+  constructor(private navController: NavController) {
     setInterval(() => {
       this.ts = Date.now();
     }, 500);
@@ -31,7 +30,7 @@ export class LoginPage {
 
 
   pushPageTwoComponent() {
-    this.router.navigateByUrl('/nav-then-tabs/app/tabs/(tab-one:one)');
+    this.navController.element.pushUrl('/nav-then-tabs/app/tabs/(tab-one:one)');
   }
 
 

@@ -307,3 +307,16 @@ export function getNavAsChildIfExists(element: HTMLElement): HTMLIonNavElement|n
   }
   return null;
 }
+
+export function normalizeUrl(url: string) {
+  url = url.trim();
+  if (url.charAt(0) !== '/') {
+    // ensure first char is a /
+    url = '/' + url;
+  }
+  if (url.length > 1 && url.charAt(url.length - 1) === '/') {
+    // ensure last char is not a /
+    url = url.substr(0, url.length - 1);
+  }
+  return url;
+}

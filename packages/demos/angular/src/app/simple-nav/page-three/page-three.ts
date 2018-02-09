@@ -1,6 +1,4 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
 
 @Component({
@@ -24,7 +22,7 @@ import { NavController } from '@ionic/angular';
 export class PageThree {
 
   ts: number;
-  constructor(private router: Router, private location: Location) {
+  constructor(private navController: NavController) {
 
     setInterval(() => {
       this.ts = Date.now();
@@ -33,7 +31,7 @@ export class PageThree {
 
 
   navPop() {
-    window.history.back();
+    this.navController.element.popUrl();
   }
 
 }

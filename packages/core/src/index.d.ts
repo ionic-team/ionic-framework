@@ -152,7 +152,8 @@ export interface FrameworkDelegate {
 }
 
 export interface RouterDelegate {
-  updateUrlState(urlSegment: string, stateObject?: any, title?: string): Promise<any>;
+  pushUrlState(urlSegment: string, stateObject?: any, title?: string): Promise<any>;
+  popUrlState(): Promise<any>;
 }
 
 export interface FrameworkMountingData {

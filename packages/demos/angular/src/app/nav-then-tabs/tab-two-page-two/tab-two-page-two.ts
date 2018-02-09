@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'tab-two-page-two',
@@ -25,17 +25,17 @@ import { Router } from '@angular/router';
 export class TabTwoPageTwo {
 
   ts: number;
-  constructor(private router: Router) {
+  constructor(private navController: NavController) {
     setInterval(() => {
       this.ts = Date.now();
     }, 500);
   }
 
   next() {
-    this.router.navigateByUrl('/nav-then-tabs/app/tabs/(tab-two:three)');
+    this.navController.element.pushUrl('/nav-then-tabs/app/tabs/(tab-two:three)');
   }
 
   back() {
-    this.router.navigateByUrl('/nav-then-tabs/app/tabs/(tab-two:one)');
+    this.navController.element.popUrl();
   }
 }
