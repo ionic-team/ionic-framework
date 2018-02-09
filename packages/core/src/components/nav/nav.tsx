@@ -43,6 +43,7 @@ import {
 } from './nav-utils';
 
 import { DomFrameworkDelegate } from '../../utils/dom-framework-delegate';
+import { DomRouterDelegate } from '../../utils/dom-router-delegate';
 
 import {
   assert,
@@ -72,7 +73,6 @@ export class Nav implements PublicNav {
 
   useRouter = false;
   navId = getNextNavId();
-  init = false;
   routes: RouterEntries = [];
   parent: Nav = null;
   views: ViewController[] = [];
@@ -100,29 +100,23 @@ export class Nav implements PublicNav {
   }
 
   componentDidLoad() {
-    if (this.init) {
-      return;
-    }
-    this.init = true;
-    if (!this.useRouter) {
-      componentDidLoadImpl(this);
-    }
+    return componentDidLoadImpl(this);
   }
 
   @Watch('root')
   updateRootComponent(): Promise<NavResult> {
-    if (this.init) {
+    if (this.initialized) {
       return this.setRoot(this.root);
     }
     return Promise.resolve(null);
   }
 
-  /*@Watch('rootUrl')
+  @Watch('rootUrl')
   updateRootUrl(): any {
-    if (this.init) {
+    if (this.initialized) {
       return this.setRootUrl(this.rootUrl);
     }
-  }*/
+  }
 
 
   @Method()
@@ -153,6 +147,11 @@ export class Nav implements PublicNav {
   @Method()
   popUrl(opts?: NavOptions): Promise<any> {
     return popUrlImpl(this, opts);
+  }
+
+  @Method()
+  setRootUrl(url: string, opts?: NavOptions): Promise<any> {
+    return setRootUrlImpl(this, url, opts);
   }
 
   @Method()
@@ -279,18 +278,18 @@ export class Nav implements PublicNav {
 }
 
 export function pushUrlImpl(nav: Nav, url: string, _opts?: NavOptions) {
-  if (!nav.delegate) {
-    nav.delegate = new DomFrameworkDelegate();
+  if (!nav.routerDelegate) {
+    nav.routerDelegate = new DomRouterDelegate();
   }
   if (nav.routerDelegate) {
     return nav.routerDelegate.pushUrlState(url, null, null);
   }
-  return Promise.reject(new Error('Delegate does not implement the updateUrlState method'));
+  return Promise.reject(new Error('RouterDelegate not set'));
 }
 
 export function popUrlImpl(nav: Nav, _opts?: NavOptions) {
-  if (!nav.delegate) {
-    nav.delegate = new DomFrameworkDelegate();
+  if (!nav.routerDelegate) {
+    nav.routerDelegate = new DomRouterDelegate();
   }
   if (nav.routerDelegate) {
     // rather than using the browser history stack, we should go back to the previous url in this stack
@@ -300,7 +299,18 @@ export function popUrlImpl(nav: Nav, _opts?: NavOptions) {
     }
     return Promise.reject(new Error('There is no URL associated with this nav to pop'));
   }
-  return Promise.reject(new Error('Delegate does not implement the updateUrlState method'));
+  return Promise.reject(new Error('RouterDelegate not set'));
+}
+
+export function setRootUrlImpl(nav: Nav, url: string, _opts: NavOptions) {
+  if (!nav.routerDelegate) {
+    nav.routerDelegate = new DomRouterDelegate();
+  }
+  if (nav.routerDelegate) {
+    nav.postTransitionUrlStack = [];
+    return nav.routerDelegate.pushUrlState(url, null, null);
+  }
+  return Promise.reject(new Error('RouterDelegate not set'));
 }
 
 export function getState(nav: Nav): NavState {
@@ -322,9 +332,20 @@ export function getState(nav: Nav): NavState {
 }
 
 export function componentDidLoadImpl(nav: Nav) {
+  if (nav.initialized) {
+    return;
+  }
+  nav.initialized = true;
   nav.navInit.emit();
-  if (nav.root && !nav.lazy) {
-    nav.setRoot(nav.root);
+  if (!nav.useRouter) {
+
+    if (nav.rootUrl && !nav.lazy) {
+      nav.setRootUrl(nav.root);
+    }
+
+    if (nav.root && !nav.lazy) {
+      nav.setRoot(nav.root);
+    }
   }
 }
 

@@ -99,11 +99,6 @@ Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"da
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
-#### externalInitialize
-
-boolean
-
-
 #### name
 
 string
@@ -163,11 +158,6 @@ string
 The color to use from your Sass `$colors` map.
 Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
-
-
-#### external-initialize
-
-boolean
 
 
 #### name

@@ -24,9 +24,10 @@ import {
 
 import { NavResult, RouterDelegate } from '@ionic/core';
 
+import { OutletInjector } from './outlet-injector';
+import { RouteEventHandler } from './route-event-handler';
 
 import { AngularComponentMounter, AngularEscapeHatch } from '..';
-import { OutletInjector } from './outlet-injector';
 
 let id = 0;
 
@@ -56,6 +57,7 @@ export class RouterOutlet implements OnDestroy, OnInit, RouterDelegate {
     protected cfr: ComponentFactoryResolver,
     protected injector: Injector,
     protected router: Router,
+    private routeEventHandler: RouteEventHandler,
     @Attribute('name') name: string) {
 
     (this.elementRef.nativeElement as HTMLIonNavElement).routerDelegate = this;
@@ -106,6 +108,7 @@ export class RouterOutlet implements OnDestroy, OnInit, RouterDelegate {
   }
 
   activateWith(activatedRoute: ActivatedRoute, cfr: ComponentFactoryResolver): Promise<void> {
+    this.routeEventHandler.externalNavStart();
     if (this.activationStatus !== NOT_ACTIVATED) {
       return Promise.resolve();
     }
@@ -118,7 +121,8 @@ export class RouterOutlet implements OnDestroy, OnInit, RouterDelegate {
     const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
     const injector = new OutletInjector(activatedRoute, childContexts, this.location.injector);
 
-    return activateRoute(this.elementRef.nativeElement, component, cfr, injector).then(() => {
+    const isTopLevel = !hasChildComponent(activatedRoute);
+    return activateRoute(this.elementRef.nativeElement, component, cfr, injector, isTopLevel).then(() => {
       this.changeDetector.markForCheck();
       this.activateEvents.emit(null);
       this.activationStatus = ACTIVATED;
@@ -127,16 +131,16 @@ export class RouterOutlet implements OnDestroy, OnInit, RouterDelegate {
 }
 
 export function activateRoute(navElement: HTMLIonNavElement,
-  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector): Promise<void> {
+  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector, isTopLevel: boolean): Promise<void> {
 
   return (navElement as any).componentOnReady().then(() => {
 
     // check if the nav has an `<ion-tab>` as a parent
     if (isParentTab(navElement)) {
       // check if the tab is selected
-      return updateTab(navElement, component, cfr, injector);
+      return updateTab(navElement, component, cfr, injector, isTopLevel);
     } else {
-      return updateNav(navElement, component, cfr, injector);
+      return updateNav(navElement, component, cfr, injector, isTopLevel);
     }
   });
 }
@@ -161,19 +165,19 @@ function getSelected(tabsElement: HTMLIonTabsElement) {
 }
 
 function updateTab(navElement: HTMLIonNavElement,
-  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector) {
+  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector, isTopLevel: boolean) {
 
   const tab = navElement.parentElement as HTMLIonTabElement;
-  tab.externalNav = true;
+  // tab.externalNav = true;
 
-  (tab.parentElement as HTMLIonTabsElement).externalInitialize = true;
+  // (tab.parentElement as HTMLIonTabsElement).externalInitialize = true;
   // yeah yeah, I know this is kind of ugly but oh well, I know the internal structure of <ion-tabs>
   const tabs = tab.parentElement.parentElement as HTMLIonTabsElement;
-  tabs.externalInitialize = true;
+  // tabs.externalInitialize = true;
   return isTabSelected(tabs, tab).then((isSelected: boolean) => {
     if (!isSelected) {
-      const promise = updateNav(navElement, component, cfr, injector);
-      tab.externalNavInitialize = promise
+      const promise = updateNav(navElement, component, cfr, injector, isTopLevel);
+      (window as any).externalNavPromise = promise
       // okay, the tab is not selected, so we need to do a "switch" transition
       // basically, we should update the nav, and then swap the tabs
       return promise.then(() => {
@@ -182,18 +186,18 @@ function updateTab(navElement: HTMLIonNavElement,
     }
 
     // okay cool, the tab is already selected, so we want to see a transition
-    return updateNav(navElement, component, cfr, injector);
+    return updateNav(navElement, component, cfr, injector, isTopLevel);
   })
 }
 
 function updateNav(navElement: HTMLIonNavElement,
-  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector): Promise<NavResult>{
+  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector, isTopLevel: boolean): Promise<NavResult>{
 
   // check if the component is the top view
   const activeViews = navElement.getViews();
   if (activeViews.length === 0) {
     // there isn't a view in the stack, so push one
-    return navElement.push(component, {}, {}, {
+    return navElement.setRoot(component, {}, {}, {
       cfr,
       injector
     });
@@ -223,13 +227,30 @@ function updateNav(navElement: HTMLIonNavElement,
     }
   }
 
-  // since it's none of those things, we should probably just push that bad boy and call it a day
-  return navElement.push(component, {}, {}, {
+  // it's the top level nav, and it's not one of those other behaviors, so do a push so the user gets a chill animation
+  const start = Date.now();
+  console.log('Starting default');
+  return navElement.push(component, {}, { animate: isTopLevel }, {
     cfr,
     injector
+  }).then((result) => {
+    const end = Date.now();
+    const totalTime = end - start;
+    console.log(`Ending default - took ${totalTime} millis`);
+    return result;
   });
 }
 
 export const NOT_ACTIVATED = 0;
 export const ACTIVATION_IN_PROGRESS = 1;
 export const ACTIVATED = 2;
+
+export function hasChildComponent(activatedRoute: ActivatedRoute): boolean {
+  // don't worry about recursion for now, that's a future problem that may or may not manifest itself
+  for (const childRoute of activatedRoute.children) {
+    if (childRoute.component) {
+      return true;
+    }
+  }
+  return false;
+}

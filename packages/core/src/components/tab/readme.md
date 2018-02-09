@@ -78,24 +78,6 @@ boolean
 If true, the user cannot interact with the tab. Defaults to `false`.
 
 
-#### externalNav
-
-boolean
-
-`externalNav` is exposed so Ionic internals have access to it.
-This is not a part of the public API and is subject to change/break
-at any time.
-
-
-#### externalNavInitialize
-
-
-
-`externalNavInitialize` is exposed so Ionic internals have access to it.
-This is not a part of the public API and is subject to change/break
-at any time.
-
-
 #### icon
 
 string
@@ -165,24 +147,6 @@ Set the root page for this tab.
 boolean
 
 If true, the user cannot interact with the tab. Defaults to `false`.
-
-
-#### external-nav
-
-boolean
-
-`externalNav` is exposed so Ionic internals have access to it.
-This is not a part of the public API and is subject to change/break
-at any time.
-
-
-#### external-nav-initialize
-
-
-
-`externalNavInitialize` is exposed so Ionic internals have access to it.
-This is not a part of the public API and is subject to change/break
-at any time.
 
 
 #### icon

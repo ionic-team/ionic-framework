@@ -61,18 +61,6 @@ export class Tab {
 
   @Prop({ mutable: true }) selected = false;
 
-  /**
-   * `externalNav` is exposed so Ionic internals have access to it.
-   * This is not a part of the public API and is subject to change/break
-   * at any time.
-   */
-  @Prop({mutable: true}) externalNav = false;
-  /**
-   * `externalNavInitialize` is exposed so Ionic internals have access to it.
-   * This is not a part of the public API and is subject to change/break
-   * at any time.
-   */
-  @Prop({ mutable: true}) externalNavInitialize: Promise<NavResult> | null;
 
   @Watch('selected')
   selectedChanged(selected: boolean) {
@@ -93,24 +81,32 @@ export class Tab {
       const nav = getNavAsChildIfExists(this.el);
       if (nav) {
         // the tab's nav has been initialized externally
-        if (this.externalNavInitialize) {
+
+        /*if (this.externalNavInitialize) {
           return this.externalNavInitialize.then(() => {
             this.externalNavInitialize = null;
           });
         }
-        // the tab's nav has not been initialized externally, so
-        // check if we need to initiailize it
-        return (nav as any).componentOnReady().then(() => {
-          if (this.externalNavInitialize) {
-            return this.externalNavInitialize;
-          }
-          return nav.onAllTransitionsComplete();
-        }).then(() => {
-          if (!nav.getViews().length && nav.root && !nav.isTransitioning() && !nav.initialized) {
-            return nav.setRoot(nav.root);
-          }
-          return Promise.resolve();
-        });
+        */
+        if ((window as any).externalNavPromise) {
+          return (window as any).externalNavPromise.then(() => {
+            (window as any).externalNavPromise = null;
+          });
+        } else {
+          // the tab's nav has not been initialized externally, so
+          // check if we need to initiailize it
+          return (nav as any).componentOnReady().then(() => {
+            return nav.onAllTransitionsComplete();
+          }).then(() => {
+            if (!nav.getViews().length && !nav.isTransitioning() && !nav.initialized) {
+              if (nav.rootUrl) {
+                return nav.setRootUrl(nav.rootUrl);
+              }
+              return nav.setRoot(nav.root);
+            }
+            return Promise.resolve();
+          });
+        }
       }
     }
     // it's already been initialized if it exists

@@ -30,6 +30,7 @@ import { IonicAngularModule } from '../module';
 
 import { PushPopOutletContexts } from './push-pop-outlet-contexts';
 import { CustomRouter } from './router';
+import { RouteEventHandler } from './route-event-handler';
 import { RouterOutlet  } from './outlet';
 import { flatten } from './router-utils';
 
@@ -62,6 +63,7 @@ export class IonicRouterModule {
             [UrlHandlingStrategy, new Optional()], [RouteReuseStrategy, new Optional()]
           ]
         },
+        RouteEventHandler
       ]
     };
   }

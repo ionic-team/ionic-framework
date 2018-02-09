@@ -68,16 +68,13 @@ export class Tabs {
    */
   @Event() ionChange: EventEmitter;
 
-
-  @Prop() externalInitialize = false;
-
   componentDidLoad() {
     this.loadConfig('tabsPlacement', 'bottom');
     this.loadConfig('tabsLayout', 'icon-top');
     this.loadConfig('tabsHighlight', true);
 
     return this.initTabs().then(() => {
-      if (! this.externalInitialize) {
+      if (! (window as any).externalNav) {
         return this.initSelect();
       }
       return null;
