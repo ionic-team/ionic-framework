@@ -35,6 +35,9 @@
     firstPage.innerHTML = `
       <ion-header>
         <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+          </ion-buttons>
           <ion-title>Page One</ion-title>
         </ion-toolbar>
       </ion-header>
@@ -47,7 +50,7 @@
     await nav.push(firstPage);
 
     // okay cool, we're in the DOM now
-    const button = firstPage.querySelector('ion-button');
+    const button = firstPage.querySelector('.next');
     button.addEventListener('click', async () => {
       await goToPageTwo(nav);
     });

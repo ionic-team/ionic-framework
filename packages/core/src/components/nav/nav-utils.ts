@@ -74,11 +74,11 @@ export function toggleHidden(element: HTMLElement, shouldBeHidden: boolean) {
     element.hidden = shouldBeHidden;
 }
 
-export function canNavGoBack(nav: Nav) {
+export function canNavGoBack(nav: Nav, view?: ViewController) {
   if (!nav) {
     return false;
   }
-  return !!nav.getPrevious();
+  return nav.getPrevious(view);
 }
 
 export function transitionFactory(animation: Animation): Transition {

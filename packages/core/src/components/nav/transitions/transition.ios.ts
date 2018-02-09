@@ -90,7 +90,7 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
         if (backDirection) {
           enteringTitle.fromTo(TRANSLATEX, OFF_LEFT, CENTER, true);
 
-          if (canNavGoBack(enteringView.nav)) {
+          if (canNavGoBack(enteringView.nav, enteringView)) {
             // back direction, entering page has a back button
             enteringBackButton.beforeAddClass(SHOW_BACK_BTN_CSS).fromTo(OPACITY, 0.01, 1, true);
           }
@@ -98,11 +98,16 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
           // entering toolbar, forward direction
           enteringTitle.fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
 
-          enteringToolBarBg.beforeClearStyles([OPACITY]).fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
+          enteringToolBarBg
+            .beforeClearStyles([OPACITY])
+            .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
 
-          if (canNavGoBack(enteringView.nav)) {
+          if (canNavGoBack(enteringView.nav, enteringView)) {
+
             // forward direction, entering page has a back button
-            enteringBackButton.beforeAddClass(SHOW_BACK_BTN_CSS).fromTo(OPACITY, 0.01, 1, true);
+            enteringBackButton
+              .beforeAddClass(SHOW_BACK_BTN_CSS)
+              .fromTo(OPACITY, 0.01, 1, true);
 
 
             const enteringBackBtnText = rootTransition.create();
