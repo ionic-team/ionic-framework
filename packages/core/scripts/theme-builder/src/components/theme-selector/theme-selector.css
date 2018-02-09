@@ -47,7 +47,7 @@ section {
 .color:after {
   position: absolute;
   top: 0;
-  content: "#" attr(data-color);
+  content: attr(data-color);
   pointer-events: none;
   font-size: 12px;
   text-shadow: rgba(255, 255, 255, .5) 1px 1px;
@@ -79,54 +79,11 @@ section {
   cursor: pointer;
   opacity: .5;
   text-shadow: rgba(255, 255, 255, .5) 1px 1px;
-}
-
-.color-buttons button.primary {
-  background-color: var(--ion-color-primary);
-}
-
-.color-buttons button.secondary {
-  background-color: var(--ion-color-secondary);
-}
-
-.color-buttons button.tertiary {
-  background-color: var(--ion-color-tertiary);
-}
-
-.color-buttons button.success {
-  background-color: var(--ion-color-success);
-}
-
-.color-buttons button.warning {
-  background-color: var(--ion-color-warning);
-}
-
-.color-buttons button.danger {
-  background-color: var(--ion-color-danger);
-}
-
-.color-buttons button.light {
-  background-color: var(--ion-color-light);
-}
-
-.color-buttons button.medium {
-  background-color: var(--ion-color-medium);
-}
-
-.color-buttons button.dark {
-  background-color: var(--ion-color-dark);
-}
-
-.color-buttons button.background {
-  background-color: var(--ion-background-color);
-}
-
-.color-buttons button.text {
-  background-color: var(--ion-text-color);
+  box-shadow: rgba(0, 0, 0, .5) 1px 1px;
 }
 
 .color-buttons button:hover {
-  background-color: rgba(161, 60, 68, 0.53);
+  opacity: .8;
 }
 
 .top-bar {
@@ -149,4 +106,28 @@ section {
   text-decoration: none;
   display: inline-block;
   font-size: 11px;
+}
+
+.checkbox {
+  padding: 8px 8px 0 0;
+  font-size: 10px;
+  color: #333333;
+  width: 100px;
+}
+
+.settings {
+  display: flex;
+  flex-direction: column;
+}
+
+.settings .row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }

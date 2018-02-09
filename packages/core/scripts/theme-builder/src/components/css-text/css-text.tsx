@@ -8,28 +8,9 @@ import { deleteCssUrl, getThemeUrl, saveCssUrl, STORED_THEME_KEY } from '../help
 })
 export class CssText {
 
+  @Prop() cssText: string;
   @Element() el: HTMLElement;
   @Prop() themeName: string;
-  @Prop() cssText: string;
-
-  submitUpdate (ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.saveCss(this.themeName, this.cssText);
-  }
-
-  saveCss (themeName: string, cssText: string) {
-    const url = saveCssUrl(themeName, cssText);
-
-    fetch(url).then(rsp => {
-      return rsp.text().then(txt => {
-        console.log('theme server response:', txt);
-      });
-    }).catch(err => {
-      console.log(err);
-    });
-  }
 
   createNew (ev: UIEvent) {
     ev.stopPropagation();
@@ -82,7 +63,34 @@ export class CssText {
         <button type="button" onClick={this.submitUpdate.bind(this)}>Save Theme</button>
         <button type="button" onClick={this.createNew.bind(this)}>Create</button>
         <button type="button" onClick={this.deleteTheme.bind(this)}>Delete</button>
+      </div>,
+      <div class="instructions">
+        <h2>Instructions</h2>
+        <p>Primary CSS Properties will highlight on hover.</p>
+        <p><b>CTRL + Hover: Property</b><br/> Will visibly toggle color in preview.</p>
+        <p><b>CTRL + Hover: Preview</b><br/>Will visibly highlight properties used under the mouse.</p>
+        <p><b>ALT + Double Click: Primary Property</b><br/>Auto generate steps or shade/tint/contrast
+          variations.</p>
       </div>
     ];
+  }
+
+  saveCss (themeName: string, cssText: string) {
+    const url = saveCssUrl(themeName, cssText);
+
+    fetch(url).then(rsp => {
+      return rsp.text().then(txt => {
+        console.log('theme server response:', txt);
+      });
+    }).catch(err => {
+      console.log(err);
+    });
+  }
+
+  submitUpdate (ev: UIEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.saveCss(this.themeName, this.cssText);
   }
 }

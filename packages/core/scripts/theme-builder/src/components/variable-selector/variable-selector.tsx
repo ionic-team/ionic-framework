@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { ComputedType }                                                  from '../../theme-variables';
 import { Color }                                                         from '../Color';
 
 
@@ -9,13 +10,14 @@ import { Color }                                                         from '.
 })
 export class VariableSelector {
 
+  @Event() colorChange: EventEmitter;
   @Element() el: HTMLElement;
+  @Event() generateColors: EventEmitter;
+  @Prop() isRgb: boolean;
   @Prop() property: string;
   @Prop() type: 'color' | 'percent';
+  @Prop() usedWith: string[];
   @Prop({mutable: true}) value: Color | string | number;
-  @Prop() isRgb: boolean;
-  @Event() colorChange: EventEmitter;
-  @Event() generateColors: EventEmitter;
 
   @Method()
   getProperty () {
@@ -25,7 +27,6 @@ export class VariableSelector {
   onChange (ev) {
     const input: HTMLInputElement = ev.currentTarget,
       value = ev.currentTarget.value;
-
     if (input.type === 'color') {
       this.value = new Color(value);
     } else if (input.type === 'text') {
@@ -44,20 +45,15 @@ export class VariableSelector {
     });
   }
 
-
   @Listen('dblclick')
   onMouseUp (ev) {
     if (ev.altKey) {
       const color = this.value as Color;
-      if (/(primary|secondary|tertiary|success|warning|danger|light|medium|dark)$/.test(this.property)) {
+
+      if (this.usedWith) {
         this.generateColors.emit({
           color,
-          property: this.property
-        });
-      } else if (/(^--ion-background-color$|^--ion-text-color$)/.test(this.property)) {
-        this.generateColors.emit({
-          color,
-          steps: true,
+          steps: this.usedWith.indexOf(ComputedType.step) >= 0,
           property: this.property
         });
       }
@@ -68,6 +64,7 @@ export class VariableSelector {
     if (this.value instanceof Color || this.value == null) {
       const color = this.value && this.value as Color,
         value = color.hex, {r, g, b} = color.rgb;
+
       this.el.style.setProperty('--variable-selector-color', `rgba(${r}, ${g}, ${b}, .5`);
       return [
         <section class={value ? 'valid' : 'invalid'}>

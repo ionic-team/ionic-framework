@@ -1,7 +1,7 @@
 @import "../../themes/ionic.globals.ios";
 
 /// @prop - Slides Bullet Background color
-$slides-ios-bullet-background-color:              text-ios-color-step-200 !default;
+$slides-ios-bullet-background-color:              $text-ios-color-step-400 !default;
 
 /// @prop - Slides Bullet Background color when Active
 $slides-ios-bullet-background-color-active:       ion-color($colors-ios, primary, base, ios) !default;

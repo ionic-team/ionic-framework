@@ -31,7 +31,7 @@ $loading-ios-border-radius:                 8px !default;
 $loading-ios-text-color:                    $text-ios-color !default;
 
 /// @prop - Background of the loading wrapper
-$loading-ios-background-color:              $background-ios-color-step-100 !default;
+$loading-ios-background-color:              $background-ios-color-step-50 !default;
 
 /// @prop - Background of the loading wrapper
 $loading-ios-translucent-background-color:  ion-color-alpha($background-ios-color-value, background-ios-color, $alpha-ios-high) !default;
@@ -40,7 +40,7 @@ $loading-ios-translucent-background-color:  ion-color-alpha($background-ios-colo
 $loading-ios-content-font-weight:           bold !default;
 
 /// @prop - Color of the loading spinner
-$loading-ios-spinner-color:                 $text-ios-color-step-200 !default;
+$loading-ios-spinner-color:                 $text-ios-color-step-400 !default;
 
 /// @prop - Color of the ios loading spinner
 $loading-ios-spinner-ios-color:             $loading-ios-spinner-color !default;

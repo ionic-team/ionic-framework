@@ -9,20 +9,20 @@ import { Component, Event, EventEmitter, Prop } from '@stencil/core';
 export class DemoSelection {
 
   @Prop() demoData: { name: string, url: string }[];
-  @Prop() demoUrl: string;
   @Prop() demoMode: string;
-  @Event() demoUrlChange: EventEmitter;
   @Event() demoModeChange: EventEmitter;
+  @Prop() demoUrl: string;
+  @Event() demoUrlChange: EventEmitter;
 
-  onChangeUrl(ev) {
-    this.demoUrlChange.emit(ev.currentTarget.value);
-  }
-
-  onChangeMode(ev) {
+  onChangeMode (ev) {
     this.demoModeChange.emit(ev.currentTarget.value);
   }
 
-  render() {
+  onChangeUrl (ev) {
+    this.demoUrlChange.emit(ev.currentTarget.value);
+  }
+
+  render () {
     return [
       <div>
 
@@ -31,8 +31,8 @@ export class DemoSelection {
         </select>
 
         <select onChange={this.onChangeMode.bind(this)}>
-          <option value='md' selected={'md' === this.demoMode}>md</option>
-          <option value='ios' selected={'ios' === this.demoMode}>ios</option>
+          <option value="md" selected={'md' === this.demoMode}>md</option>
+          <option value="ios" selected={'ios' === this.demoMode}>ios</option>
         </select>
 
       </div>
