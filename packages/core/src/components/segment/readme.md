@@ -135,4 +135,4 @@ Emitted when the value property has changed.
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+*Built by [StencilJS](https://stenciljs.com/)*

@@ -208,4 +208,4 @@ Emitted before the popover has presented.
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+*Built by [StencilJS](https://stenciljs.com/)*

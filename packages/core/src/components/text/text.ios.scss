@@ -6,12 +6,14 @@
 // Generate iOS Text Colors
 // --------------------------------------------------
 
-@each $color-name, $color-base, $color-contrast in get-colors($colors-ios) {
+@each $color-name, $color-value in $colors-ios {
+  $base-color: ion-color($colors-ios, $color-name, base, ios);
 
   .text-ios-#{$color-name},
   .text-ios-#{$color-name} a,
   .text-ios-#{$color-name} p {
-    color: $color-base !important;
+    // scss-lint:disable ImportantRule
+    color: $base-color !important;
   }
 
 }

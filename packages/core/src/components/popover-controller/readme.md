@@ -38,4 +38,4 @@ view. See the [usage](#usage) section for an example of passing this event.
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+*Built by [StencilJS](https://stenciljs.com/)*

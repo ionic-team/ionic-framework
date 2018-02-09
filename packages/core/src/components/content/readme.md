@@ -99,4 +99,4 @@ Returns a promise which is resolved when the scroll has completed.
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+*Built by [StencilJS](https://stenciljs.com/)*

@@ -31,4 +31,4 @@ Avatars can be used by themselves or inside of any element. If placed inside of 
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+*Built by [StencilJS](https://stenciljs.com/)*

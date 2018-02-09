@@ -7,7 +7,7 @@ import { Component, Prop } from '@stencil/core';
 export class Route {
 
   @Prop() path: string;
-  @Prop() component: string;
+  @Prop() sel: string;
   @Prop() props: any = {};
 
 }

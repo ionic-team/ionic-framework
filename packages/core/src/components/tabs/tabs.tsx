@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Config, NavOutlet } from '../../index';
+import { Config, NavOutlet, NavEventDetail } from '../../index';
 
 
 @Component({
@@ -66,6 +66,7 @@ export class Tabs implements NavOutlet {
    * Emitted when the tab changes.
    */
   @Event() ionChange: EventEmitter;
+  @Event() ionNavChanged: EventEmitter<NavEventDetail>;
 
   componentDidLoad() {
     this.loadConfig('tabsPlacement', 'bottom');
@@ -116,9 +117,9 @@ export class Tabs implements NavOutlet {
 
     return promise.then(() => {
       this.ionChange.emit(selectedTab);
+      this.ionNavChanged.emit({isPop: false});
     });
   }
-
 
   /**
    * @param {number} index Index of the tab you want to get
@@ -152,14 +153,15 @@ export class Tabs implements NavOutlet {
     if (this.selectedTab === id) {
       return Promise.resolve();
     }
-    return this.select(id);
+    const tab = this.tabs.find(t => id === t.getRouteId());
+    return this.select(tab);
   }
 
 
   @Method()
   getRouteId(): string|null {
     if (this.selectedTab) {
-      return this.selectedTab.tagName;
+      return this.selectedTab.getRouteId();
     }
     return null;
   }
@@ -180,6 +182,9 @@ export class Tabs implements NavOutlet {
   }
 
   private initSelect() {
+    if (document.querySelector('ion-router')) {
+      return;
+    }
     // find pre-selected tabs
     const selectedTab = this.tabs.find(t => t.selected) ||
       this.tabs.find(t => t.show && !t.disabled);

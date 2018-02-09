@@ -106,4 +106,4 @@ They can also be used to group sliding items:
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+*Built by [StencilJS](https://stenciljs.com/)*

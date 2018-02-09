@@ -192,4 +192,4 @@ Present a loading overlay after it has been created
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+*Built by [StencilJS](https://stenciljs.com/)*

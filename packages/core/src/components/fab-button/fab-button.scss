@@ -53,6 +53,9 @@
 
   width: 100%;
   height: 100%;
+
+  transition: all ease-in-out 300ms;
+  transition-property: transform, opacity;
 }
 
 
@@ -92,11 +95,6 @@ ion-fab-button[mini] .fab-button {
 
 // FAB Animation
 // --------------------------------------------------
-
-.fab-button-inner {
-  transition: all ease-in-out 300ms;
-  transition-property: transform, opacity;
-}
 
 .fab-button-close-active .fab-button-close-icon {
   opacity: 1;

@@ -9,10 +9,10 @@
 
   position: relative;
 
-  border: 0;
-
   width: $chip-button-size;
   height: $chip-button-size;
+
+  border: 0;
 
   &:active,
   &:focus {

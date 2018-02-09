@@ -182,4 +182,4 @@ Present the action-sheet after is has been created
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+*Built by [StencilJS](https://stenciljs.com/)*

@@ -12,12 +12,6 @@
 
 ## Methods
 
-#### appPaused()
-
-
-#### appResume()
-
-
 #### getNavByIdOrName()
 
 
@@ -27,9 +21,6 @@ Returns an array of top level Navs
 
 
 #### getTopNavs()
-
-
-#### hardwareBackButtonPressed()
 
 
 #### isEnabled()
@@ -48,4 +39,4 @@ Boolean if the app is actively scrolling or not.
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+*Built by [StencilJS](https://stenciljs.com/)*

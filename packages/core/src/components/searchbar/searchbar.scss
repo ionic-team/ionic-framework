@@ -30,14 +30,15 @@ ion-searchbar {
 
 .searchbar-input {
   @include appearance(none);
+
+  box-sizing: border-box;
+
   display: block;
 
   width: 100%;
 
   border: 0;
   font-family: inherit;
-
-  box-sizing: border-box;
 
   &:active,
   &:focus {

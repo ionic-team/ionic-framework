@@ -5,9 +5,7 @@
   <title>Tab - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
-  <script type="text/javascript">
-    window.Ionic.config = {useRouter: true};
-  </script>
+  <script src="/test-components/build/app.js"></script>
 </head>
 <body>
 
@@ -52,17 +50,11 @@
         </ion-page>
       </ion-tab>
 
-      <ion-tab title="Messages" icon="chatboxes" path="tab4">
-        <ion-page>
-          <ion-header>
-            <ion-toolbar>
-              <ion-title>Tab Four</ion-title>
-            </ion-toolbar>
-          </ion-header>
-          <ion-content padding>
-            Tab Four
-          </ion-content>
-        </ion-page>
+      <ion-tab
+        title="Messages"
+        icon="chatboxes"
+        component="page-one"
+        path="tab4">
       </ion-tab>
     </ion-tabs>
   </ion-app>

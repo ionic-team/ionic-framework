@@ -166,4 +166,4 @@ import { ItemSliding } from 'ionic-angular';
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+*Built by [StencilJS](https://stenciljs.com/)*

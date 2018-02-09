@@ -41,6 +41,9 @@ import {
   SelectPopoverOption,
 } from './components/select-popover/select-popover';
 import {
+  FrameworkDelegate as FrameworkDelegate2,
+} from '.';
+import {
   DomRenderFn,
   HeaderFn,
   ItemHeightFn,
@@ -2425,9 +2428,9 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRouteAttributes extends HTMLAttributes {
-      component?: string;
       path?: string;
       props?: any;
+      sel?: string;
     }
   }
 }
@@ -2986,9 +2989,11 @@ declare global {
       badge?: string;
       badgeStyle?: string;
       btnId?: string;
+      component?: any;
+      delegate?: FrameworkDelegate;
       disabled?: boolean;
       icon?: string;
-      path?: string;
+      name?: string;
       selected?: boolean;
       show?: boolean;
       tabsHideOnSubPages?: boolean;

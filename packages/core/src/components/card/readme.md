@@ -48,4 +48,4 @@ Possible values are: `"ios"` or `"md"`.
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+*Built by [StencilJS](https://stenciljs.com/)*

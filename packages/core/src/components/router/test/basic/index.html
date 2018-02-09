@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Nav</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+  <script src="/test-components/build/app.js"></script>
+
+</head>
+<body>
+
+  <ion-app>
+
+    <ion-router>
+      <ion-route path="/" sel="tab1"> </ion-route>
+      <ion-route path="/two" sel="tab2">
+        <ion-route path="/" sel="page-one"> </ion-route>
+        <ion-route path="/second-page" sel="page-two"> </ion-route>
+      </ion-route>
+      <ion-route path="/three" sel="tab-three"> </ion-route>
+      <ion-route path="/four" sel="tab4"> </ion-route>
+    </ion-router>
+
+    <ion-tabs>
+
+      <ion-tab name="tab1"
+        title="Plain List"
+        icon="star"
+        component="tab-one"></ion-tab>
+
+      <ion-tab name="tab2"
+        title="Schedule"
+        icon="globe"
+        component="tab-two"></ion-tab>
+
+      <ion-tab
+        title="Stopwatch"
+        icon="logo-facebook"
+        component="tab-three"></ion-tab>
+
+      <ion-tab name="tab4"
+        title="Messages"
+        icon="chatboxes"
+        name="tab-four">
+        INLINE CONTENT
+      </ion-tab>
+    </ion-tabs>
+
+  </ion-app>
+
+  <style>
+    f {
+      display: block;
+      margin: 15px auto;
+      max-width: 150px;
+      height: 150px;
+      background: blue;
+    }
+
+    f:last-of-type {
+      background: yellow;
+    }
+  </style>
+</body>
+
+<script>
+
+</script>
+</html>

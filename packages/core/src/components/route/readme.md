@@ -7,11 +7,6 @@
 
 ## Properties
 
-#### component
-
-string
-
-
 #### path
 
 string
@@ -20,15 +15,15 @@ string
 #### props
 
 any
+
+
+#### sel
+
+string
 
 
 ## Attributes
 
-#### component
-
-string
-
-
 #### path
 
 string
@@ -37,9 +32,14 @@ string
 #### props
 
 any
+
+
+#### sel
+
+string
 
 
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+*Built by [StencilJS](https://stenciljs.com/)*

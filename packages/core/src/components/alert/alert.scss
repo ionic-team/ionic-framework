@@ -54,24 +54,24 @@ ion-alert.alert-top {
 }
 
 .alert-message {
-  overflow-y: scroll;
+  box-sizing: border-box;
 
   -webkit-overflow-scrolling: touch;
 
-  box-sizing: border-box;
+  overflow-y: scroll;
 }
 
 .alert-input {
   @include padding(10px, 0);
 
+  box-sizing: border-box;
+
   width: 100%;
 
   border: 0;
-  background: inherit;
-
   font: inherit;
 
-  box-sizing: border-box;
+  background: inherit;
 }
 
 .alert-button-group {
@@ -117,15 +117,14 @@ ion-alert.alert-top {
   @include margin(0);
   @include padding(0);
 
-  border: 0;
-
   width: 100%;
+
+  border: 0;
 
   font-size: inherit;
   line-height: initial;
   background: transparent;
 }
-
 
 .alert-button,
 .alert-checkbox,

@@ -48,4 +48,4 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 ----------------------------------------------
 
-*Built with [StencilJS](https://stenciljs.com/)*
+*Built by [StencilJS](https://stenciljs.com/)*
