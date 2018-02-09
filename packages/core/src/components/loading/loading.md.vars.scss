@@ -3,14 +3,14 @@
 // Material Design Loading Indicator
 // --------------------------------------------------
 
-/// @prop - Font family of the alert
-$loading-md-font-family:               $font-family-md-base !default;
-
-/// @prop - Font size of the alert
-$loading-md-font-size:                 $font-size-md-base !default;
-
 /// @prop - Color of backdrop
 $loading-backdrop-md-color:            $backdrop-md-color !default;
+
+/// @prop - Font family of the loading wrapper
+$loading-md-font-family:               $font-family-md-base !default;
+
+/// @prop - Font size of the loading wrapper
+$loading-md-font-size:                 $font-size-md-base !default;
 
 /// @prop - Padding top of the loading wrapper
 $loading-md-padding-top:               24px !default;
