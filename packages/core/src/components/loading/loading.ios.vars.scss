@@ -3,6 +3,12 @@
 // iOS Loading Indicator
 // --------------------------------------------------
 
+/// @prop - Font family of the alert
+$loading-ios-font-family:                   $font-family-ios-base !default;
+
+/// @prop - Font size of the alert
+$loading-ios-font-size:                     $font-size-ios-base !default;
+
 /// @prop - Color of backdrop
 $loading-backdrop-ios-color:                $backdrop-ios-color !default;
 
