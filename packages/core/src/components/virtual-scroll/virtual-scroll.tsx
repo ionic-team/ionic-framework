@@ -1,8 +1,10 @@
 import { Component, Element, EventListenerEnable, Listen, Method, Prop, Watch } from '@stencil/core';
 import { DomController } from '../../index';
-import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, NodeHeightFn, Range,
-  Viewport, VirtualNode, calcCells, calcHeightIndex, doRender, getRange,
-  getShouldUpdate, getViewport, positionForIndex, resizeBuffer, updateVDom, findCellIndex, inplaceUpdate } from './virtual-scroll-utils';
+import { Cell, DomRenderFn, HeaderFn, ItemHeightFn,
+  ItemRenderFn, NodeHeightFn, Range, Viewport,
+  VirtualNode, calcCells, calcHeightIndex, doRender,
+  findCellIndex, getRange, getShouldUpdate, getViewport,
+  inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
 
 
 @Component({
