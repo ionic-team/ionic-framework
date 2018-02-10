@@ -26,6 +26,13 @@ boolean
 If true, the user cannot interact with the item option. Defaults to `false`.
 
 
+#### expandable
+
+boolean
+
+If true, the option will expand to take up the available width and cover any other options. Defaults to `false`.
+
+
 #### href
 
 string
@@ -59,6 +66,13 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 boolean
 
 If true, the user cannot interact with the item option. Defaults to `false`.
+
+
+#### expandable
+
+boolean
+
+If true, the option will expand to take up the available width and cover any other options. Defaults to `false`.
 
 
 #### href

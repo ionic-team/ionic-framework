@@ -14,6 +14,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Input](#Input)
 - [Item](#item)
 - [Item Divider](#item-divider)
+- [Item Sliding](#item-sliding)
 - [List Header](#list-header)
 - [Menu Toggle](#menu-toggle)
 - [Nav](#nav)
@@ -467,7 +468,48 @@ The `menuToggle` attribute should not be added to an element anymore. Elements t
 </ion-menu-toggle>
 ```
 
-#### Toolbar
+## Item Sliding
+
+### Markup Changed
+
+The option component should not be written as a `button` with an `ion-button` directive anymore. It should be written as an `ion-item-option`. This will render a native button element inside of it.
+
+**Old Usage Example:**
+
+```html
+<ion-item-sliding>
+  <ion-item>
+    Item 1
+  </ion-item>
+  <ion-item-options side="right">
+    <button ion-button expandable>
+      <ion-icon name="star"></ion-icon>
+    </button>
+  </ion-item-options>
+</ion-item-sliding>
+```
+
+**New Usage Example:**
+
+```html
+<ion-item-sliding>
+  <ion-item>
+    <ion-label>Item 1</ion-label>
+  </ion-item>
+  <ion-item-options side="right">
+    <ion-item-option expandable>
+      <ion-icon name="star"></ion-icon>
+    </ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>
+```
+
+### Method Renamed
+
+The `getSlidingPercent` method has been renamed to `getSlidingRatio` since the function is returning a ratio of the open amount of the item compared to the width of the options.
+
+
+## Toolbar
 
 Previously if a `menuToggle` directive was added to an Ionic `button` in a toolbar, it would be positioned outside of the `ion-buttons` element. Since menu toggle is simply a wrapper to a button now, it should be placed inside of the `ion-buttons` element.
 

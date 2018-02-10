@@ -10,8 +10,9 @@
   background-color: $item-option-button-md-background-color;
 }
 
-.item-option-md .icon {
-  fill: $item-option-button-md-icon-color;
+.item-option-md .item-option-button {
+  font-weight: 500;
+  text-transform: uppercase;
 }
 
 
@@ -26,9 +27,5 @@
   .item-option-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
-  }
-
-  .item-option-md-#{$color-name} .icon {
-    fill: $color-contrast;
   }
 }

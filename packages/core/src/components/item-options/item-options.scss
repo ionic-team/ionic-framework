@@ -11,7 +11,10 @@ ion-item-options {
   height: 100%;
 
   font-size: 14px;
-  visibility: hidden;
+
+  &.hydrated {
+    visibility: hidden;
+  }
 
   @include multi-dir() {
     // scss-lint:disable PropertySpelling
@@ -53,21 +56,21 @@ ion-item-options[side=left] {
   }
 }
 
-ion-item-sliding.active-slide {
+.item-sliding-active-slide {
   @include rtl() {
-    &.active-options-left ion-item-options:not([side=right]) {
+    &.item-sliding-active-options-left ion-item-options:not([side=right]) {
       width: 100%;
 
       visibility: visible;
-     }
+    }
   }
 
   ion-item-options {
     display: flex;
   }
 
-  &.active-options-left ion-item-options[side=left],
-  &.active-options-right ion-item-options:not([side=left]) {
+  &.item-sliding-active-options-left ion-item-options[side=left],
+  &.item-sliding-active-options-right ion-item-options:not([side=left]) {
     width: 100%;
 
     visibility: visible;

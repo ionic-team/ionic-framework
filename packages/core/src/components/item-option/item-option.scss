@@ -3,33 +3,21 @@
 // Item Option
 // --------------------------------------------------
 
-ion-item-option {
-  @include padding(0, .7em);
-
-  position: relative;
-  display: flex;
-
-  align-items: center;
-
-  min-width: 60px;
-}
-
 .item-option-button {
-  @include position(0, 0, 0, 0);
-  @include margin(0);
-  @include padding(0);
-  @include border-radius(0);
-
-  position: absolute;
+  @include padding(0, .7em);
 
   border: 0;
   background: none;
+  color: inherit;
+
+  height: 100%;
+  width: 100%;
+
+  font-size: 1em;
 }
 
-ion-item-options:not([icon-start]) ion-item-option:not([icon-only]) {
-  .item-option-button-inner {
-    flex-direction: column;
-  }
+ion-item-options .item-option-button-inner {
+  flex-direction: column;
 }
 
 .item-option-button-inner {
@@ -44,11 +32,18 @@ ion-item-options:not([icon-start]) ion-item-option:not([icon-only]) {
   height: 100%;
 }
 
+.item-option-button [slot="icon-only"] {
+  padding: 0;
+  min-width: .9em;
+
+  font-size: 1.8em;
+}
+
 
 // Item Expandable Animation
 // --------------------------------------------------
 
-ion-item-option[expandable] {
+.item-option-expandable {
   flex-shrink: 0;
 
   transition-duration: 0;
@@ -56,7 +51,7 @@ ion-item-option[expandable] {
   transition-timing-function: cubic-bezier(.65, .05, .36, 1);
 }
 
-ion-item-sliding.active-swipe-right ion-item-option[expandable] {
+.item-sliding-active-swipe-right .item-options-right .item-option-expandable {
   transition-duration: .6s;
   transition-property: padding-left;
 
@@ -74,7 +69,7 @@ ion-item-sliding.active-swipe-right ion-item-option[expandable] {
   }
 }
 
-ion-item-sliding.active-swipe-left ion-item-option[expandable] {
+.item-sliding-active-swipe-left .item-options-left .item-option-expandable {
   transition-duration: .6s;
   transition-property: padding-right;
 
