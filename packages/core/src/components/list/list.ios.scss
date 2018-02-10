@@ -13,12 +13,12 @@
 }
 
 .list-ios > .item-block:last-child,
-.list-ios > .item-wrapper:last-child .item-block {
+.list-ios > .item-sliding:last-child .item-block {
   border-bottom: $hairlines-width solid $item-ios-border-color;
 }
 
 .list-ios > .item-block:last-child .item-inner,
-.list-ios > .item-wrapper:last-child .item-block .item-inner {
+.list-ios > .item-sliding:last-child .item-block .item-inner {
   border-bottom: 0;
 }
 
@@ -61,12 +61,12 @@
 }
 
 .list-ios[inset] > .item:first-child,
-.list-ios[inset] > .item-wrapper:first-child .item {
+.list-ios[inset] > .item-sliding:first-child .item {
   border-top: 0;
 }
 
 .list-ios[inset] > .item:last-child,
-.list-ios[inset] > .item-wrapper:last-child .item {
+.list-ios[inset] > .item-sliding:last-child .item {
   border-bottom: 0;
 }
 
