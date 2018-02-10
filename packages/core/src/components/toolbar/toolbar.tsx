@@ -43,7 +43,7 @@ export class Toolbar {
   componentDidLoad() {
     const buttons = this.el.querySelectorAll('ion-button');
     for (let i = 0; i < buttons.length; i++) {
-      buttons[i].setAttribute('button-type', 'bar-button');
+      buttons[i].buttonType = 'bar-button';
     }
   }
 
