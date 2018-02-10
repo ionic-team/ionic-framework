@@ -10,10 +10,10 @@ const SHOW_BACK_BTN_CSS = 'show-back-button';
 export function buildMdTransition(rootTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Promise<Transition> {
 
   const componentReadyPromise: Promise<any>[] = [];
-  if (enteringView) {
+  if (enteringView && (enteringView.element as any).componentOnReady) {
     componentReadyPromise.push((enteringView.element as any).componentOnReady());
   }
-  if (leavingView) {
+  if (leavingView && (leavingView.element as any).componentOnReady) {
     componentReadyPromise.push((leavingView.element as any).componentOnReady());
   }
 
@@ -32,8 +32,7 @@ export function buildMdTransition(rootTransition: Transition, enteringView: View
     // animate the component itself
     if (backDirection) {
       rootTransition.duration(isDef(opts.duration) ? opts.duration : 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
-    }
-    else {
+    } else {
       rootTransition.duration(isDef(opts.duration) ? opts.duration : 280).easing('cubic-bezier(0.36,0.66,0.04,1)');
 
       rootTransition
