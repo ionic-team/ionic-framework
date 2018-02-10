@@ -33,17 +33,20 @@
   </ion-app>
 
   <script>
+    const virtual = document.getElementById('virtual');
+    const items = Array.from({length: 100}, (x, i) => i);
+
     function addItems() {
-      const virtual = document.getElementById('virtual');
-      virtual.addItems()
+      const append = Array.from({length: 10}, (x, i) => "append" + i);
+      items.push(...append);
+      virtual.markDirtyTail(append.length)
     }
 
-    const virtual = document.getElementById('virtual');
     virtual.itemHeight = () => 45;
     virtual.headerFn = (item, index) => {
-      if (index % 20 === 0) {
-        return 'Header ' + index;
-      }
+      // if (index % 20 === 0) {
+      //   return 'Header ' + index;
+      // }
       return null;
     }
 
@@ -75,7 +78,7 @@
       if (cell.type === 0) return renderItem(el, cell.value);
       return renderHeader(el, cell.value);
     };
-    virtual.items = Array.from({length: 1000}, (x, i) => i);
+    virtual.items = items;
   </script>
 </body>
 </html>

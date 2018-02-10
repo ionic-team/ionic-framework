@@ -3,13 +3,6 @@ import { Component, Element, Listen } from '@stencil/core';
 import { NavResult } from '../..';
 @Component({
   tag: 'ion-nav-pop',
-  styleUrls: {
-    ios: 'nav-pop.ios.scss',
-    md: 'nav-pop.md.scss'
-  },
-  host: {
-    theme: 'nav-pop'
-  }
 })
 export class NavPop {
 

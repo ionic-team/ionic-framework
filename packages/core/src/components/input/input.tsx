@@ -337,6 +337,7 @@ export class Input implements InputComponent {
         onKeyDown={this.inputKeydown.bind(this)}
       />,
       <button
+        type='button'
         hidden={this.clearInput !== true}
         class='input-clear-icon'
         onClick={this.clearTextInput.bind(this)}

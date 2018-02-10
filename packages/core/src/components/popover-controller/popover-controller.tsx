@@ -25,7 +25,7 @@ export class PopoverController implements OverlayController {
     const appRoot = document.querySelector('ion-app') || document.body;
     appRoot.appendChild(popoverElement);
 
-    return (popoverElement as any).componentOnReady();
+    return popoverElement.componentOnReady();
   }
 
   @Method()

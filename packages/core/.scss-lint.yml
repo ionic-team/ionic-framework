@@ -13,7 +13,7 @@ exclude:
   - 'src/themes/util.scss'
   - 'src/themes/version.scss'
   - 'src/platform/cordova.*.scss'
-  - 'src/components/slides/slides-import.scss'
+  - 'src/components/slides/slides-vendor.scss'
 
 
 linters:

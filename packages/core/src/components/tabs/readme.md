@@ -217,12 +217,21 @@ Only affects `ios` mode. Defaults to `false`.
 Emitted when the tab changes.
 
 
+#### ionNavChanged
+
+
 ## Methods
 
 #### getByIndex()
 
 
+#### getContentElement()
+
+
 #### getIndex()
+
+
+#### getRouteId()
 
 
 #### getSelected()
@@ -232,6 +241,9 @@ Emitted when the tab changes.
 
 
 #### select()
+
+
+#### setRouteId()
 
 
 

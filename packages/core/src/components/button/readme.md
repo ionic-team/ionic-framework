@@ -158,6 +158,15 @@ boolean
 If true, activates a button with a heavier font weight.
 
 
+#### type
+
+string
+
+The type of the button.
+Possible values are: `"submit"`, `"reset"` and `"button"`.
+Default value is: `"button"`
+
+
 ## Attributes
 
 #### button-type
@@ -238,6 +247,15 @@ Possible values are: `"small"`, `"default"`, `"large"`.
 boolean
 
 If true, activates a button with a heavier font weight.
+
+
+#### type
+
+string
+
+The type of the button.
+Possible values are: `"submit"`, `"reset"` and `"button"`.
+Default value is: `"button"`
 
 
 ## Events

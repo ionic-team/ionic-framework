@@ -7,7 +7,7 @@ h1 {
 
 textarea {
   margin: 12px 0 0 0;
-  min-width: 300px;
+  min-width: 360px;
   height: 680px;
   font-family: Courier New, Courier, monospace;
 }
@@ -17,4 +17,13 @@ button {
   padding: 10px 15px;
   font-size: 14px;
   cursor: pointer;
+}
+
+.instructions {
+  font-size: 12px;
+  width: 300px;
+}
+
+.instructions p {
+  padding-left: 8px;
 }

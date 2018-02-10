@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { PickerEvent, PickerOptions, OverlayController } from '../../index';
+import { OverlayController, PickerEvent, PickerOptions } from '../../index';
 
 let ids = 0;
 const pickers = new Map<number, HTMLIonPickerElement>();
@@ -25,7 +25,7 @@ export class PickerController implements OverlayController {
     const appRoot = document.querySelector('ion-app') || document.body;
     appRoot.appendChild(pickerElement);
 
-    return (pickerElement as any).componentOnReady();
+    return pickerElement.componentOnReady();
   }
 
   @Method()

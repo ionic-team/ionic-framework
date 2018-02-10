@@ -71,6 +71,18 @@ string
 Set the root page for this tab.
 
 
+#### component
+
+any
+
+The badge for the tab button.
+
+
+#### delegate
+
+
+
+
 #### disabled
 
 boolean
@@ -85,11 +97,9 @@ string
 The icon for the tab button.
 
 
-#### path
+#### name
 
 string
-
-The URL path name to represent this tab within the URL.
 
 
 #### selected
@@ -142,6 +152,18 @@ string
 Set the root page for this tab.
 
 
+#### component
+
+any
+
+The badge for the tab button.
+
+
+#### delegate
+
+
+
+
 #### disabled
 
 boolean
@@ -156,11 +178,9 @@ string
 The icon for the tab button.
 
 
-#### path
+#### name
 
 string
-
-The URL path name to represent this tab within the URL.
 
 
 #### selected
@@ -199,7 +219,7 @@ Emitted when the current tab is selected.
 
 ## Methods
 
-#### getPath()
+#### getRouteId()
 
 
 #### setActive()

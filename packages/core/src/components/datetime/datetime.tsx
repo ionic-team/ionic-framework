@@ -52,6 +52,11 @@ export class Datetime {
    */
   @Prop() disabled = false;
 
+  @Watch('disabled')
+  protected disabledChanged() {
+    this.emitStyle();
+  }
+
   /**
    * The minimum datetime allowed. Value must be a date string
    * following the
@@ -197,12 +202,19 @@ export class Datetime {
   @Watch('value')
   protected valueChanged() {
     this.updateValue();
+    this.emitStyle();
   }
 
   /**
    * Emitted when the datetime selection was cancelled.
    */
   @Event() ionCancel: EventEmitter;
+
+  /**
+   * Emitted when the styles change.
+   */
+  @Event() ionStyle: EventEmitter;
+
 
   componentWillLoad() {
     // first see if locale names were provided in the inputs
@@ -217,6 +229,22 @@ export class Datetime {
     };
 
     this.updateValue();
+  }
+
+  componentDidLoad() {
+    this.emitStyle();
+  }
+
+  emitStyle() {
+    clearTimeout(this.styleTmr);
+
+    this.styleTmr = setTimeout(() => {
+      this.ionStyle.emit({
+        'datetime': true,
+        'datetime-disabled': this.disabled,
+        'input-has-value': this.hasValue()
+      });
+    });
   }
 
   /**
@@ -591,6 +619,7 @@ export class Datetime {
     return [
       <div class={ datetimeTextClasses }>{ datetimeText }</div>,
       <button
+        type='button'
         aria-haspopup='true'
         id={this.datetimeId}
         aria-labelledby={this.labelId}

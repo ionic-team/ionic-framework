@@ -28,7 +28,7 @@ $chip-md-font-family:                      $font-family-md-base !default;
 $chip-md-font-size:                        13px !default;
 
 /// @prop - Text color of the chip
-$chip-md-text-color:                       $text-md-color-step-100 !default;
+$chip-md-text-color:                       $text-md-color-step-150 !default;
 
 /// @prop - Background color of the chip
 $chip-md-background-color:                 ion-color-alpha($text-md-color-value, text-md-color, $alpha-md-low) !default;

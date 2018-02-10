@@ -31,7 +31,7 @@ export class PopoverController implements FrameworkDelegate {
 
   dismiss(data?: any, role?: string, id?: number) {
     const popoverController = document.querySelector('ion-popover-controller');
-    return (popoverController as any).componentOnReady().then(() => {
+    return popoverController.componentOnReady().then(() => {
       return popoverController.dismiss(data, role, id);
     });
   }

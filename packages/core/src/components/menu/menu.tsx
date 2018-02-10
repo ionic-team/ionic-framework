@@ -1,5 +1,5 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
-import { Animation, Config, GestureDetail, SplitPaneAlert, StencilElement } from '../../index';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Animation, Config, GestureDetail, SplitPaneAlert } from '../../index';
 import { Side, assert, checkEdgeSide, isRightSide } from '../../utils/helpers';
 
 @Component({
@@ -23,7 +23,6 @@ export class Menu {
   mode: string;
   color: string;
   isAnimating = false;
-  isRightSide = false;
   width: number = null;
 
   backdropEl: HTMLElement;
@@ -33,8 +32,10 @@ export class Menu {
 
   @Element() private el: HTMLIonMenuElement;
 
+  @State() isRightSide = false;
+
   @Prop({ context: 'config' }) config: Config;
-  @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl: StencilElement;
+  @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl: HTMLIonMenuControllerElement;
   @Prop({ context: 'enableListener' }) enableListener: any;
 
   /**
@@ -426,13 +427,14 @@ export class Menu {
   }
 
   hostData() {
+    const isRightSide = this.isRightSide;
     const typeClass = 'menu-type-' + this.type;
     return {
       role: 'complementary',
       class: {
         'menu-enabled': !this.disabled,
-        'menu-side-right': this.isRightSide,
-        'menu-side-left': !this.isRightSide,
+        'menu-side-right': isRightSide,
+        'menu-side-left': !isRightSide,
         [typeClass]: true,
       }
     };

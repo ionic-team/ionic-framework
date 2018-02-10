@@ -133,7 +133,7 @@ export class RouterOutlet implements OnDestroy, OnInit, RouterDelegate {
 export function activateRoute(navElement: HTMLIonNavElement,
   component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector, isTopLevel: boolean): Promise<void> {
 
-  return (navElement as any).componentOnReady().then(() => {
+  return navElement.componentOnReady().then(() => {
 
     // check if the nav has an `<ion-tab>` as a parent
     if (isParentTab(navElement)) {
@@ -153,8 +153,8 @@ function isParentTab(navElement: HTMLIonNavElement) {
 
 function isTabSelected(tabsElement: HTMLIonTabsElement, tabElement: HTMLIonTabElement ): Promise<boolean> {
   const promises: Promise<any>[] = [];
-  promises.push((tabsElement as any).componentOnReady());
-  promises.push((tabElement as any).componentOnReady());
+  promises.push(tabsElement.componentOnReady());
+  promises.push(tabElement.componentOnReady());
   return Promise.all(promises).then(() => {
     return tabsElement.getSelected() === tabElement;
   });

@@ -37,6 +37,11 @@ string
 
 
 
+#### swipeBackEnabled
+
+boolean
+
+
 #### useUrls
 
 boolean
@@ -74,6 +79,11 @@ string
 
 
 
+#### swipe-back-enabled
+
+boolean
+
+
 #### use-urls
 
 boolean
@@ -92,9 +102,6 @@ boolean
 #### canGoBack()
 
 
-#### canSwipeBack()
-
-
 #### first()
 
 
@@ -104,16 +111,16 @@ boolean
 #### getChildNavs()
 
 
+#### getContentElement()
+
+
 #### getId()
 
 
 #### getPrevious()
 
 
-#### getRoutes()
-
-
-#### getState()
+#### getRouteId()
 
 
 #### getViews()

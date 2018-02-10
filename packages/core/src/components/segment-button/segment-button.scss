@@ -19,6 +19,8 @@ ion-segment-button {
 
   overflow: hidden;
 
+  border: 0;
+
   text-decoration: none;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -27,8 +29,6 @@ ion-segment-button {
   font-kerning: none;
   user-select: none;
   contain: content;
-  font-smoothing: antialiased;
-  -webkit-font-smoothing: antialiased;
 
   &:active,
   &:focus {

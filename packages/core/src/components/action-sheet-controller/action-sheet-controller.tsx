@@ -25,7 +25,7 @@ export class ActionSheetController implements OverlayController {
     const appRoot = document.querySelector('ion-app') || document.body;
     appRoot.appendChild(actionSheetElement);
 
-    return (actionSheetElement as any).componentOnReady();
+    return actionSheetElement.componentOnReady();
   }
 
   @Method()

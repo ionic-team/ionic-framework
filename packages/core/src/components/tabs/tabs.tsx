@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Config } from '../../index';
+import { Config, NavEventDetail, NavOutlet } from '../../index';
 
 
 @Component({
@@ -9,7 +9,7 @@ import { Config } from '../../index';
     md: 'tabs.md.scss'
   }
 })
-export class Tabs {
+export class Tabs implements NavOutlet {
   private ids = -1;
   private tabsId: number = (++tabIds);
   initialized = false;
@@ -67,6 +67,7 @@ export class Tabs {
    * Emitted when the tab changes.
    */
   @Event() ionChange: EventEmitter;
+  @Event() ionNavChanged: EventEmitter<NavEventDetail>;
 
   componentDidLoad() {
     this.loadConfig('tabsPlacement', 'bottom');
@@ -123,9 +124,9 @@ export class Tabs {
 
     return promise.then(() => {
       this.ionChange.emit(selectedTab);
+      this.ionNavChanged.emit({isPop: false});
     });
   }
-
 
   /**
    * @param {number} index Index of the tab you want to get
@@ -141,7 +142,7 @@ export class Tabs {
    */
   @Method()
   getSelected(): HTMLIonTabElement | undefined {
-    return this.tabs.find((tab) => tab.selected);
+    return this.selectedTab;
   }
 
   @Method()
@@ -154,38 +155,29 @@ export class Tabs {
     return this.tabs;
   }
 
- /*@Method()
-  getState(): NavState {
-    const selectedTab = this.getSelected();
-    if (!selectedTab) {
-      return null;
-    }
-    return {
-      path: selectedTab.getPath(),
-      focusNode: selectedTab
-    };
-  }
-
-  @Method()
-  getRoutes(): RouterEntries {
-    const a = this.tabs.map(t => {
-      return {
-        path: t.getPath(),
-        id: t
-      };
-    });
-    return a;
-  }
-
-
   @Method()
   setRouteId(id: any, _: any = {}): Promise<void> {
     if (this.selectedTab === id) {
       return Promise.resolve();
     }
-    return this.select(id);
+    const tab = this.tabs.find(t => id === t.getRouteId());
+    return this.select(tab);
   }
-  */
+
+
+  @Method()
+  getRouteId(): string|null {
+    if (this.selectedTab) {
+      return this.selectedTab.getRouteId();
+    }
+    return null;
+  }
+
+
+  @Method()
+  getContentElement(): HTMLElement {
+    return this.selectedTab;
+  }
 
   private initTabs() {
     const tabs = this.tabs = Array.from(this.el.querySelectorAll('ion-tab'));
@@ -200,6 +192,9 @@ export class Tabs {
   }
 
   private initSelect() {
+    if (document.querySelector('ion-router')) {
+      return Promise.resolve();
+    }
     // find pre-selected tabs
     const selectedTab = this.tabs.find(t => t.selected) ||
       this.tabs.find(t => t.show && !t.disabled);

@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { DomController, ScrollDetail, StencilElement } from '../../index';
+import { DomController, ScrollDetail } from '../../index';
 
 const enum Position {
   Top = 'top',
@@ -9,13 +9,7 @@ const enum Position {
 
 @Component({
   tag: 'ion-infinite-scroll',
-  styleUrls: {
-    ios: 'infinite-scroll.ios.scss',
-    md: 'infinite-scroll.md.scss'
-  },
-  host: {
-    theme: 'infinite-scroll'
-  }
+  styleUrl: 'infinite-scroll.scss'
 })
 export class InfiniteScroll {
 
@@ -89,7 +83,7 @@ export class InfiniteScroll {
   @Event() ionInfinite: EventEmitter;
 
   componentWillLoad() {
-    const scrollEl = this.el.closest('ion-scroll') as any as StencilElement;
+    const scrollEl = this.el.closest('ion-scroll');
     return scrollEl.componentOnReady().then((el) => {
       this.scrollEl = el as HTMLIonScrollElement;
     });
@@ -227,6 +221,9 @@ export class InfiniteScroll {
 
   private enableScrollEvents(shouldListen: boolean) {
     if (this.scrollEl) {
+      if (shouldListen) {
+        this.scrollEl.scrollEvents = true;
+      }
       this.enableListener(this, 'ionScroll', shouldListen, this.scrollEl);
     }
   }

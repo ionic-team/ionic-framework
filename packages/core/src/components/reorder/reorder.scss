@@ -67,11 +67,3 @@
 .item .reorder[slot] {
   @include margin(0, null);
 }
-
-.item .reorder-icon {
-  font-size: 2em;
-
-  opacity: .4;
-
-  fill: currentColor;
-}

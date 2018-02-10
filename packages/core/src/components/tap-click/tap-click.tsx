@@ -7,7 +7,6 @@ declare const Ionic: { gesture: GestureController };
 
 @Component({
   tag: 'ion-tap-click',
-  styleUrl: 'tap-click.scss'
 })
 export class TapClick {
 

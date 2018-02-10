@@ -12,12 +12,6 @@
 
 ## Methods
 
-#### appPaused()
-
-
-#### appResume()
-
-
 #### getNavByIdOrName()
 
 
@@ -27,9 +21,6 @@ Returns an array of top level Navs
 
 
 #### getTopNavs()
-
-
-#### hardwareBackButtonPressed()
 
 
 #### isEnabled()

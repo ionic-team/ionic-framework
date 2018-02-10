@@ -5,15 +5,3 @@
 
 /// @prop - Background for the sliding content
 $item-ios-sliding-content-background:        $item-ios-background-color !default;
-
-/// @prop - Font size of the sliding option button
-$item-ios-sliding-button-font-size:          16px !default;
-
-/// @prop - Background color of the sliding option button
-$item-ios-sliding-button-background-color:   ion-color($colors-ios, primary, base, ios) !default;
-
-/// @prop - Text color of the sliding option button
-$item-ios-sliding-button-text-color:         ion-color($colors-ios, $item-ios-sliding-button-background-color, contrast, ios) !default;
-
-/// @prop - color of the sliding option button icon
-$item-ios-sliding-button-icon-color:         ion-color($colors-ios, $item-ios-sliding-button-background-color, contrast, ios) !default;

@@ -22,7 +22,7 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
   /*
    * If true, the user cannot interact with the radio group. Default false.
    */
-  @Prop({ mutable: true }) disabled = false;
+  @Prop() disabled = false;
 
   /**
    * The name of the control, which is submitted with the form data.
@@ -33,6 +33,11 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
    * the value of the radio group.
    */
   @Prop({ mutable: true }) value: string;
+
+  @Watch('disabled')
+  disabledChanged() {
+    this.setDisabled();
+  }
 
   @Watch('value')
   valueChanged() {
@@ -150,7 +155,14 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
       }
     }
 
+    this.setDisabled();
     this.didLoad = true;
+  }
+
+  setDisabled() {
+    this.radios.forEach(radio => {
+      radio.disabled = this.disabled;
+    });
   }
 
   hostData() {

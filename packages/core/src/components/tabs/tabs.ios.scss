@@ -124,7 +124,7 @@
   $translucent-background-color: ion-color-alpha($colors-ios, $color-name, $alpha-ios-high, ios);
 
   .tabbar-ios-#{$color-name} {
-    border-color: $background-ios-color-step-300;
+    border-color: $background-ios-color-step-400;
     color: $color-contrast;
     background-color: $color-base;
 

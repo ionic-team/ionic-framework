@@ -293,7 +293,7 @@ export class Alert {
       <div class='alert-checkbox-group'>
         { inputs.map((i, index) => (
           <button onClick={() => this.cbClick(index)} aria-checked={i.checked} id={i.id} disabled={i.disabled} tabIndex={0} role='checkbox' class='alert-tappable alert-checkbox alert-checkbox-button'>
-            <div class='button-inner'>
+            <div class='alert-button-inner'>
               <div class='alert-checkbox-icon'><div class='alert-checkbox-inner'></div></div>
               <div class='alert-checkbox-label'>
                 {i.label}
@@ -312,7 +312,7 @@ export class Alert {
       <div class='alert-radio-group' role='radiogroup' aria-labelledby={this.hdrId} aria-activedescendant={this.activeId}>
         { inputs.map((i, index) => (
           <button onClick={() => this.rbClick(index)} aria-checked={i.checked} disabled={i.disabled} id={i.id} tabIndex={0} class='alert-radio-button alert-tappable alert-radio' role='radio'>
-            <div class='button-inner'>
+            <div class='alert-button-inner'>
               <div class='alert-radio-icon'><div class='alert-radio-inner'></div></div>
               <div class='alert-radio-label'>
                 {i.label}
@@ -442,7 +442,7 @@ export class Alert {
         <div class={alertButtonGroupClass}>
           {buttons.map(b =>
             <button class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)}>
-              <span class='button-inner'>
+              <span class='alert-button-inner'>
                 {b.text}
               </span>
             </button>

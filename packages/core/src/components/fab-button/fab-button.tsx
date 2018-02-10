@@ -102,10 +102,10 @@ export class FabButton {
         href={this.href}
         onClick={this.clickedFab.bind(this)}>
         <ion-icon name='close' class='fab-button-close-icon'></ion-icon>
-        <span class='button-inner'>
+        <span class='fab-button-inner'>
           <slot></slot>
         </span>
-        { this.mode === 'md' && <ion-ripple-effect useTapClick={true} /> }
+        { this.mode === 'md' && <ion-ripple-effect/> }
       </TagType>
     );
   }

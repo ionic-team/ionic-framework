@@ -4,13 +4,25 @@
  * and imports for stencil collections that might be configured in your stencil.config.js file
  */
 
+import {
+  Color,
+} from './components/Color';
+
+declare global {
+  interface HTMLStencilElement extends HTMLElement {
+    componentOnReady(): Promise<this>;
+    componentOnReady(done: (ele?: this) => void): void;
+  }
+}
+
+
 
 import {
   AppPreview as AppPreview
 } from './components/app-preview/app-preview';
 
 declare global {
-  interface HTMLAppPreviewElement extends AppPreview, HTMLElement {
+  interface HTMLAppPreviewElement extends AppPreview, HTMLStencilElement {
   }
   var HTMLAppPreviewElement: {
     prototype: HTMLAppPreviewElement;
@@ -32,38 +44,7 @@ declare global {
       cssText?: string;
       demoMode?: string;
       demoUrl?: string;
-    }
-  }
-}
-
-
-import {
-  ColorSelector as ColorSelector
-} from './components/color-selector/color-selector';
-
-declare global {
-  interface HTMLColorSelectorElement extends ColorSelector, HTMLElement {
-  }
-  var HTMLColorSelectorElement: {
-    prototype: HTMLColorSelectorElement;
-    new (): HTMLColorSelectorElement;
-  };
-  interface HTMLElementTagNameMap {
-    "color-selector": HTMLColorSelectorElement;
-  }
-  interface ElementTagNameMap {
-    "color-selector": HTMLColorSelectorElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "color-selector": JSXElements.ColorSelectorAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface ColorSelectorAttributes extends HTMLAttributes {
-      isRgb?: boolean;
-      property?: string;
-      value?: string;
+      hoverProperty?: string;
     }
   }
 }
@@ -74,7 +55,7 @@ import {
 } from './components/css-text/css-text';
 
 declare global {
-  interface HTMLCssTextElement extends CssText, HTMLElement {
+  interface HTMLCssTextElement extends CssText, HTMLStencilElement {
   }
   var HTMLCssTextElement: {
     prototype: HTMLCssTextElement;
@@ -105,7 +86,7 @@ import {
 } from './components/demo-selection/demo-selection';
 
 declare global {
-  interface HTMLDemoSelectionElement extends DemoSelection, HTMLElement {
+  interface HTMLDemoSelectionElement extends DemoSelection, HTMLStencilElement {
   }
   var HTMLDemoSelectionElement: {
     prototype: HTMLDemoSelectionElement;
@@ -137,7 +118,7 @@ import {
 } from './components/theme-builder/theme-builder';
 
 declare global {
-  interface HTMLThemeBuilderElement extends ThemeBuilder, HTMLElement {
+  interface HTMLThemeBuilderElement extends ThemeBuilder, HTMLStencilElement {
   }
   var HTMLThemeBuilderElement: {
     prototype: HTMLThemeBuilderElement;
@@ -167,7 +148,7 @@ import {
 } from './components/theme-selector/theme-selector';
 
 declare global {
-  interface HTMLThemeSelectorElement extends ThemeSelector, HTMLElement {
+  interface HTMLThemeSelectorElement extends ThemeSelector, HTMLStencilElement {
   }
   var HTMLThemeSelectorElement: {
     prototype: HTMLThemeSelectorElement;
@@ -186,7 +167,42 @@ declare global {
   }
   namespace JSXElements {
     export interface ThemeSelectorAttributes extends HTMLAttributes {
+      propertiesUsed?: string[];
       themeData?: { name: string }[];
+    }
+  }
+}
+
+
+import {
+  VariableSelector as VariableSelector
+} from './components/variable-selector/variable-selector';
+
+declare global {
+  interface HTMLVariableSelectorElement extends VariableSelector, HTMLStencilElement {
+  }
+  var HTMLVariableSelectorElement: {
+    prototype: HTMLVariableSelectorElement;
+    new (): HTMLVariableSelectorElement;
+  };
+  interface HTMLElementTagNameMap {
+    "variable-selector": HTMLVariableSelectorElement;
+  }
+  interface ElementTagNameMap {
+    "variable-selector": HTMLVariableSelectorElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "variable-selector": JSXElements.VariableSelectorAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface VariableSelectorAttributes extends HTMLAttributes {
+      isRgb?: boolean;
+      property?: string;
+      type?: 'color' | 'percent';
+      usedWith?: string[];
+      value?: Color | string | number;
     }
   }
 }

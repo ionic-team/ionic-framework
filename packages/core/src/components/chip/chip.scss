@@ -12,6 +12,9 @@ ion-chip {
 
   font-weight: normal;
   vertical-align: middle;
+
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
 }
 
 ion-chip > ion-icon {

@@ -83,8 +83,8 @@ export { ReorderGroup } from './components/reorder-group/reorder-group';
 export {
   RouterEntry,
   RouterEntries,
-  NavState,
-} from './components/router-controller/router-utils';
+  NavOutlet
+} from './components/router/router-utils';
 export { Row } from './components/row/row';
 export { Reorder } from './components/reorder/reorder';
 export { Scroll, ScrollCallback, ScrollDetail } from './components/scroll/scroll';
@@ -132,11 +132,6 @@ export interface BaseInputComponent {
   fireBlur: () => void;
 }
 
-export interface StencilElement extends HTMLElement {
-  componentOnReady(): Promise<HTMLElement>;
-  componentOnReady(done: (cmp?: HTMLElement) => void): void;
-}
-
 export interface OverlayDismissEvent extends CustomEvent {
   detail: OverlayDismissEventDetail;
 }
@@ -167,6 +162,9 @@ declare global {
   namespace JSXElements {
 
     export interface DOMAttributes {
+      // for ion-menu and ion-split-pane
+      main?: boolean;
+
       padding?: boolean;
       ['padding-top']?: boolean;
       ['padding-bottom']?: boolean;

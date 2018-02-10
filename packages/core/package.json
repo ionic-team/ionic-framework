@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "0.0.2-55",
+  "version": "0.0.2-59",
   "description": "Base components for Ionic",
   "main": "dist/ionic.js",
   "types": "dist/types/index.d.ts",
@@ -9,7 +9,7 @@
     "dist/"
   ],
   "devDependencies": {
-    "@stencil/core": "0.3.0",
+    "@stencil/core": "next",
     "@stencil/dev-server": "latest",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.6",
@@ -27,7 +27,7 @@
     "yargs": "^10.0.3"
   },
   "scripts": {
-    "build": "stencil build --docs --dev",
+    "build": "stencil build --docs",
     "clean": "rm -rf dist",
     "deploy": "npm run tsc && np --any-branch",
     "dev": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server\"",
@@ -38,8 +38,10 @@
     "snapshot": "node ./scripts/e2e --snapshot",
     "test": "jest --no-cache",
     "test.watch": "jest --watch --no-cache",
+    "build-test-cmp": "stencil build --dev --config scripts/test-components/stencil.config.js",
     "theme-app-build": "stencil build --dev --config scripts/theme-builder/stencil.config.js",
-    "theme-builder": "npm run theme-app-build && sd concurrent \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
+    "theme-builder": "sd concurrent \"npm run theme-app-build\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
+    "theme-builder:dev": "sd concurrent \"npm run theme-app-build -- --watch\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
     "theme-server": "node scripts/theme-builder/server.js",
     "tslint": "tslint --project .",
     "tslint-fix": "tslint --project . --fix",

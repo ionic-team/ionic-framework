@@ -25,7 +25,7 @@ export class LoadingController implements OverlayController {
     const appRoot = document.querySelector('ion-app') || document.body;
     appRoot.appendChild(loadingElement);
 
-    return (loadingElement as any).componentOnReady();
+    return loadingElement.componentOnReady();
   }
 
   @Method()

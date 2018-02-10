@@ -10,6 +10,7 @@ ion-checkbox {
 
 ion-checkbox input {
   @include position(0, null, null, 0);
+  @include margin(0);
 
   position: absolute;
 
@@ -23,3 +24,4 @@ ion-checkbox input {
   -moz-appearance: none;
   appearance: none;
 }
+

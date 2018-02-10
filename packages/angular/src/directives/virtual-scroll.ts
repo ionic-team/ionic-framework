@@ -1,4 +1,4 @@
-import { EmbeddedViewRef, AfterContentInit, ContentChild, Directive, ElementRef, Input, IterableDiffers, TrackByFunction } from '@angular/core';
+import { EmbeddedViewRef, AfterContentInit, ContentChild, Directive, ElementRef, Input, IterableDiffers, TrackByFunction, ChangeDetectorRef } from '@angular/core';
 import { VirtualItem } from './virtual-item';
 import { VirtualHeader } from './virtual-header';
 import { VirtualFooter } from './virtual-footer';
@@ -13,7 +13,10 @@ export class VirtualScroll {
   @ContentChild(VirtualHeader) hdrTmp: VirtualHeader;
   @ContentChild(VirtualFooter) ftrTmp: VirtualFooter;
 
-  constructor(private el: ElementRef) {
+  constructor(
+    private el: ElementRef,
+    private cd: ChangeDetectorRef,
+  ) {
     this.el.nativeElement.itemRender = this.itemRender.bind(this);
   }
 
@@ -27,9 +30,11 @@ export class VirtualScroll {
       el = getElement(node);
       (el as any)['$ionView'] = node;
     }
-    const ctx = (el as any)['$ionView'].context;
+    const node = (el as any)['$ionView'];
+    const ctx = node.context;
     ctx.$implicit = cell.value;
     ctx.index = cell.index;
+    node.detectChanges();
     return el;
   }
 
