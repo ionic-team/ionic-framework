@@ -25,7 +25,7 @@ export class ToastController implements OverlayController {
     const appRoot = document.querySelector('ion-app') || document.body;
     appRoot.appendChild(toastElement);
 
-    return (toastElement as any).componentOnReady();
+    return toastElement.componentOnReady();
   }
 
   @Method()

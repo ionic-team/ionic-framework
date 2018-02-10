@@ -9,7 +9,7 @@ export class MenuController {
   }
 
   close(menuId?: string) {
-    return (element as any).componentOnReady().then(() => {
+    return element.componentOnReady().then(() => {
       return element.close(menuId);
     });
   }
@@ -24,7 +24,7 @@ export class MenuController {
   }
 
   enableAsync(menuId?: string): Promise<HTMLIonMenuElement> {
-    return (element as any).componentOnReady().then(() => {
+    return element.componentOnReady().then(() => {
       return element.enable(true, menuId);
     });
   }
@@ -38,7 +38,7 @@ export class MenuController {
   }
 
   getAsync(menuId?: string): Promise<HTMLIonMenuElement> {
-    return (element as any).componentOnReady().then(() => {
+    return element.componentOnReady().then(() => {
       return element.get(menuId);
     });
   }
@@ -52,7 +52,7 @@ export class MenuController {
   }
 
   getMenusAsync(): Promise<HTMLIonMenuElement[]> {
-    return (element as any).componentOnReady().then(() => {
+    return element.componentOnReady().then(() => {
       return element.getMenus();
     });
   }
@@ -65,8 +65,8 @@ export class MenuController {
     return null;
   }
 
-  getOpenAsync(): Promise<HTMLIonMenuElement[]> {
-    return (element as any).componentOnReady().then(() => {
+  getOpenAsync(): Promise<HTMLIonMenuElement> {
+    return element.componentOnReady().then(() => {
       return element.getOpen();
     });
   }
@@ -80,7 +80,7 @@ export class MenuController {
   }
 
   isEnabledAsync(menuId?: string): Promise<boolean> {
-    return (element as any).componentOnReady().then(() => {
+    return element.componentOnReady().then(() => {
       return element.isEnabled(menuId);
     });
   }
@@ -94,13 +94,13 @@ export class MenuController {
   }
 
   isOpenAsync(menuId?: string): Promise<boolean>{
-    return (element as any).componentOnReady().then(() => {
+    return element.componentOnReady().then(() => {
       return element.isOpen(menuId);
     });
   }
 
   open(menuId?: string): Promise<boolean> {
-    return (element as any).componentOnReady().then(() => {
+    return element.componentOnReady().then(() => {
       return element.open(menuId);
     });
   }
@@ -114,13 +114,13 @@ export class MenuController {
   }
 
   swipeEnableAsync(shouldEnable: boolean, menuId?: string): Promise<HTMLIonMenuElement> {
-    return (element as any).componentOnReady().then(() => {
+    return element.componentOnReady().then(() => {
       return element.swipeEnable(shouldEnable, menuId);
     });
   }
 
   toggle(menuId?: string): Promise<boolean> {
-    return (element as any).componentOnReady().then(() => {
+    return element.componentOnReady().then(() => {
       return element.toggle(menuId);
     });
   }

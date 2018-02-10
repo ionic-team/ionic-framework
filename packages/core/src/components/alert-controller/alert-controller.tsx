@@ -25,7 +25,7 @@ export class AlertController implements OverlayController {
     const appRoot = document.querySelector('ion-app') || document.body;
     appRoot.appendChild(alertElement);
 
-    return (alertElement as any).componentOnReady();
+    return alertElement.componentOnReady();
   }
 
   @Method()

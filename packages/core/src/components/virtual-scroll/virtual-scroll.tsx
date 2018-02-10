@@ -257,17 +257,19 @@ export class VirtualScroll {
     });
   }
 
-  private updateCellHeight(cell: Cell, node: HTMLElement) {
-    (node as any).componentOnReady(() => {
-      // let's give some additional time to read the height size
-      setTimeout(() => this.dom.read(() => {
-        if ((node as any)['$ionCell'] === cell) {
-          const style = window.getComputedStyle(node);
-          const height = node.offsetHeight + parseFloat(style.getPropertyValue('margin-bottom'));
-          this.setCellHeight(cell, height);
-        }
-      }));
-    });
+  private updateCellHeight(cell: Cell, node: HTMLStencilElement | HTMLElement) {
+    const update = () => {
+      if ((node as any)['$ionCell'] === cell) {
+        const style = window.getComputedStyle(node);
+        const height = node.offsetHeight + parseFloat(style.getPropertyValue('margin-bottom'));
+        this.setCellHeight(cell, height);
+      }
+    };
+    if ('componentOnReady' in node) {
+      node.componentOnReady(update);
+    } else {
+      update();
+    }
   }
 
   private setCellHeight(cell: Cell, height: number) {

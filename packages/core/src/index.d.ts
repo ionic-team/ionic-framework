@@ -132,11 +132,6 @@ export interface BaseInputComponent {
   fireBlur: () => void;
 }
 
-export interface StencilElement extends HTMLElement {
-  componentOnReady(): Promise<HTMLElement>;
-  componentOnReady(done: (cmp?: HTMLElement) => void): void;
-}
-
 export interface OverlayDismissEvent extends CustomEvent {
   detail: OverlayDismissEventDetail;
 }

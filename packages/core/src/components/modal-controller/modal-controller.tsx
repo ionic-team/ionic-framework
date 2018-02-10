@@ -25,7 +25,7 @@ export class ModalController implements OverlayController {
     const appRoot = document.querySelector('ion-app') || document.body;
     appRoot.appendChild(modalElement);
 
-    return (modalElement as any).componentOnReady();
+    return modalElement.componentOnReady();
   }
 
   @Method()

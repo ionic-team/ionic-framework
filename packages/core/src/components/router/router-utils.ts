@@ -1,12 +1,10 @@
-import { StencilElement } from '../../index';
-
 export interface NavOutlet {
   setRouteId(id: any, data?: any): Promise<void>;
   getRouteId(): string;
   getContentElement(): HTMLElement | null;
 }
 
-export type NavOutletElement = NavOutlet & StencilElement;
+export type NavOutletElement = NavOutlet & HTMLStencilElement;
 
 export interface RouterEntry {
   id: any;

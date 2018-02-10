@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { Animation, Config, GestureDetail, SplitPaneAlert, StencilElement } from '../../index';
+import { Animation, Config, GestureDetail, SplitPaneAlert } from '../../index';
 import { Side, assert, checkEdgeSide, isRightSide } from '../../utils/helpers';
 
 @Component({
@@ -35,7 +35,7 @@ export class Menu {
   @State() isRightSide = false;
 
   @Prop({ context: 'config' }) config: Config;
-  @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl: StencilElement;
+  @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl: HTMLIonMenuControllerElement;
   @Prop({ context: 'enableListener' }) enableListener: any;
 
   /**
