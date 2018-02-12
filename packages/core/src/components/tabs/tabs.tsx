@@ -1,13 +1,10 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Config, NavOutlet, NavEventDetail } from '../../index';
+import { Config, NavEventDetail, NavOutlet } from '../../index';
 
 
 @Component({
   tag: 'ion-tabs',
-  styleUrls: {
-    ios: 'tabs.ios.scss',
-    md: 'tabs.md.scss'
-  }
+  styleUrl: 'tabs.scss'
 })
 export class Tabs implements NavOutlet {
   private ids = -1;
