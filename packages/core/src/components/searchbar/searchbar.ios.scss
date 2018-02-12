@@ -73,6 +73,7 @@
   width: 30px;
   height: 100%;
 
+  border: 0;
   background-color: transparent;
   background-repeat: no-repeat;
   background-size: $searchbar-ios-input-clear-icon-size;
@@ -89,6 +90,7 @@
 
   flex-shrink: 0;
 
+  border: 0;
   font-size: $searchbar-ios-cancel-button-font-size;
 
   color: $searchbar-ios-cancel-button-color;
