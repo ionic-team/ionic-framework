@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { Animation, Config, GestureDetail, SplitPaneAlert } from '../../index';
 import { Side, assert, checkEdgeSide, isRightSide } from '../../utils/helpers';
 
@@ -36,7 +36,7 @@ export class Menu {
 
   @Prop({ context: 'config' }) config: Config;
   @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl: HTMLIonMenuControllerElement;
-  @Prop({ context: 'enableListener' }) enableListener: any;
+  @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
 
   /**
    * The content's id the menu should use.
@@ -386,7 +386,7 @@ export class Menu {
       this.contentEl.classList.add(MENU_CONTENT_OPEN);
 
       // emit open event
-      this.ionOpen.emit({ menu: this });
+      this.ionOpen.emit({ menu: this.el });
 
     } else {
       // enable swipe to go back gesture
@@ -398,7 +398,7 @@ export class Menu {
       this.backdropEl.classList.remove(SHOW_BACKDROP);
 
       // emit close event
-      this.ionClose.emit({ menu: this });
+      this.ionClose.emit({ menu: this.el });
     }
     return isOpen;
   }
