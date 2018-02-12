@@ -296,38 +296,6 @@
 }
 
 
-// iOS Toolbar Back Button
-// --------------------------------------------------
-
-// .back-button-ios {
-//   @include margin(0);
-//
-//   z-index: $z-index-toolbar-buttons;
-//   overflow: visible;
-//
-//   order: map-get($toolbar-order-ios, back-button);
-//
-//   min-height: 32px;
-//
-//   line-height: 1;
-//   transform: translateZ(0);
-// }
-//
-// .back-button-icon-ios {
-//   @include margin(-1px, 0, 0, 0);
-//
-//   display: inherit;
-//
-//   min-width: 18px;
-//
-//   font-size: 34px;
-// }
-//
-// .back-button-text-ios {
-//   letter-spacing: -.01em;
-// }
-
-
 // iOS Toolbar Menu Toggle
 // --------------------------------------------------
 
