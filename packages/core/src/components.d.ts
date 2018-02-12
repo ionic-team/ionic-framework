@@ -1664,6 +1664,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonMenuToggleAttributes extends HTMLAttributes {
+      autoHide?: boolean;
       menu?: string;
     }
   }

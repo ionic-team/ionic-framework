@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { Animation, Config, GestureDetail, SplitPaneAlert } from '../../index';
+import { Animation, Config, GestureDetail } from '../../index';
 import { Side, assert, checkEdgeSide, isRightSide } from '../../utils/helpers';
 
 @Component({
@@ -76,8 +76,9 @@ export class Menu {
   @Prop({ mutable: true }) disabled = false;
 
   @Watch('disabled')
-  protected enabledChanged() {
+  protected disabledChanged(disabled: boolean) {
     this.updateState();
+    this.ionMenuDisable.emit({disabled});
   }
 
   /**
@@ -122,6 +123,9 @@ export class Menu {
    * Emitted when the menu is closed.
    */
   @Event() ionClose: EventEmitter;
+
+
+  @Event() protected ionMenuDisable: EventEmitter;
 
   componentWillLoad() {
     return this.lazyMenuCtrl.componentOnReady().then(menu => {
@@ -170,9 +174,9 @@ export class Menu {
     this.contentEl = this.backdropEl = this.menuInnerEl = null;
   }
 
-  @Listen('body:ionSplitPaneDidChange')
-  splitPaneChanged(ev: SplitPaneAlert) {
-    this.isPane = ev.detail.splitPane.isPane(this.el);
+  @Listen('body:ionSplitPaneVisible')
+  splitPaneChanged(ev: CustomEvent) {
+    this.isPane = (ev.target as any).isPane(this.el);
     this.updateState();
   }
 

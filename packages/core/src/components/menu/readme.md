@@ -134,6 +134,9 @@ Emitted when the sliding position changes.
 It reports the relative position.
 
 
+#### ionMenuDisable
+
+
 #### ionOpen
 
 Emitted when the menu is open.
