@@ -1694,7 +1694,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonMenuAttributes extends HTMLAttributes {
-      content?: string;
+      contentId?: string;
       disabled?: boolean;
       maxEdgeStart?: number;
       menuId?: string;
