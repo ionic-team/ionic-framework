@@ -299,27 +299,6 @@
 }
 
 
-// Material Design Toolbar Back Button
-// --------------------------------------------------
-
-.back-button-md {
-  @include margin(0, 6px);
-
-  min-width: 44px;
-
-  box-shadow: none;
-}
-
-.back-button-icon-md {
-  @include margin(0);
-  @include padding(0, 6px);
-  @include text-align(start);
-
-  font-size: 24px;
-  font-weight: normal;
-}
-
-
 // Material Design Toolbar Menu Toggle
 // --------------------------------------------------
 
