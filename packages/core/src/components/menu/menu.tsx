@@ -30,7 +30,7 @@ export class Menu {
   contentEl: HTMLElement;
   menuCtrl: HTMLIonMenuControllerElement;
 
-  @Element() private el: HTMLIonMenuElement;
+  @Element() el: HTMLIonMenuElement;
 
   @State() isRightSide = false;
 
@@ -41,7 +41,7 @@ export class Menu {
   /**
    * The content's id the menu should use.
    */
-  @Prop() content: string;
+  @Prop() contentId: string;
 
   /**
    * An id for the menu.
@@ -56,11 +56,12 @@ export class Menu {
   @Prop({ mutable: true }) type = 'overlay';
 
   @Watch('type')
-  typeChanged(type: string) {
-    if (this.contentEl) {
-      this.contentEl.classList.remove('menu-content-' + this.type);
-      this.contentEl.classList.add('menu-content-' + type);
-      this.contentEl.removeAttribute('style');
+  typeChanged(type: string, oldType: string | null) {
+    const contentEl = this.contentEl;
+    if (contentEl && oldType) {
+      contentEl.classList.remove(`menu-content-${oldType}`);
+      contentEl.classList.add(`menu-content-${type}`);
+      contentEl.removeAttribute('style');
     }
     if (this.menuInnerEl) {
       // Remove effects of previous animations
@@ -132,8 +133,8 @@ export class Menu {
     assert(!!this.menuCtrl, 'menucontroller was not initialized');
 
     const el = this.el;
-    const contentQuery = (this.content)
-      ? '#' + this.content
+    const contentQuery = (this.contentId)
+      ? '#' + this.contentId
       : '[main]';
     const parent = el.parentElement;
     const content = this.contentEl = parent.querySelector(contentQuery) as HTMLElement;
@@ -141,13 +142,10 @@ export class Menu {
       // requires content element
       return console.error('Menu: must have a "content" element to listen for drag events on.');
     }
-    this.menuInnerEl = el.querySelector('.menu-inner') as HTMLElement;
-    this.backdropEl = el.querySelector('.menu-backdrop') as HTMLElement;
-
     // add menu's content classes
     content.classList.add('menu-content');
 
-    this.typeChanged(this.type);
+    this.typeChanged(this.type, null);
     this.sideChanged();
 
     let isEnabled = !this.disabled;
@@ -188,17 +186,32 @@ export class Menu {
     }
   }
 
-  getElement(): HTMLIonMenuElement {
-    return this.el;
-  }
-
   @Method()
   isOpen(): boolean {
     return this._isOpen;
   }
 
   @Method()
+  open(animated = true): Promise<boolean> {
+    return this.setOpen(true, animated);
+  }
+
+  @Method()
+  close(animated = true): Promise<boolean> {
+    return this.setOpen(false, animated);
+  }
+
+  @Method()
+  toggle(animated = true): Promise<boolean> {
+    return this.setOpen(!this._isOpen, animated);
+  }
+
+  @Method()
   setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
+    return this.menuCtrl._setOpen(this, shouldOpen, animated);
+  }
+
+  _setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
     // If the menu is disabled or it is currenly being animated, let's do nothing
     if (!this.isActive() || this.isAnimating || (shouldOpen === this._isOpen)) {
       return Promise.resolve(this._isOpen);
@@ -211,18 +224,8 @@ export class Menu {
   }
 
   @Method()
-  open(): Promise<boolean> {
-    return this.setOpen(true);
-  }
-
-  @Method()
-  close(): Promise<boolean> {
-    return this.setOpen(false);
-  }
-
-  @Method()
-  toggle(): Promise<boolean> {
-    return this.setOpen(!this._isOpen);
+  isActive(): boolean {
+    return !this.disabled && !this.isPane;
   }
 
   private loadAnimation(): Promise<void> {
@@ -257,10 +260,6 @@ export class Menu {
     }
 
     return promise;
-  }
-
-  private isActive(): boolean {
-    return !this.disabled && !this.isPane;
   }
 
   private canSwipe(): boolean {
@@ -428,24 +427,23 @@ export class Menu {
 
   hostData() {
     const isRightSide = this.isRightSide;
-    const typeClass = 'menu-type-' + this.type;
     return {
       role: 'complementary',
       class: {
+        [`menu-type-${this.type}`]: true,
         'menu-enabled': !this.disabled,
         'menu-side-right': isRightSide,
         'menu-side-left': !isRightSide,
-        [typeClass]: true,
       }
     };
   }
 
   render() {
     return ([
-      <div class='menu-inner page-inner'>
+      <div class='menu-inner page-inner' ref={el => this.menuInnerEl = el}>
         <slot></slot>
       </div>,
-      <ion-backdrop class='menu-backdrop'></ion-backdrop> ,
+      <ion-backdrop class='menu-backdrop' ref={el => this.backdropEl = el}></ion-backdrop> ,
       <ion-gesture {...{
         'canStart': this.canStart.bind(this),
         'onWillStart': this.onWillStart.bind(this),

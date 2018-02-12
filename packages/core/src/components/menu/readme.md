@@ -7,7 +7,7 @@
 
 ## Properties
 
-#### content
+#### contentId
 
 string
 
@@ -65,7 +65,7 @@ see the `menuType` in the [config](../../config/Config). Available options:
 
 ## Attributes
 
-#### content
+#### content-id
 
 string
 
@@ -142,6 +142,9 @@ Emitted when the menu is open.
 ## Methods
 
 #### close()
+
+
+#### isActive()
 
 
 #### isOpen()
