@@ -5,6 +5,15 @@
 // --------------------------------------------------
 
 .tab-button-md {
+  max-width: 168px;
+
+  font-weight: $tab-button-md-font-weight;
+  color: $tab-button-md-text-color;
+
+  fill: $tab-button-md-icon-color;
+}
+
+.tab-button-md .tab-cover {
   @include padding(
     $tab-button-md-padding-top,
     $tab-button-md-padding-end,
@@ -12,14 +21,6 @@
     $tab-button-md-padding-start);
 
   display: flex;
-
-  max-width: 168px;
-  height: 100%;
-
-  font-weight: $tab-button-md-font-weight;
-  color: $tab-button-md-text-color;
-
-  fill: $tab-button-md-icon-color;
 }
 
 .scrollable .tab-button-md {

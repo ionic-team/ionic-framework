@@ -2,15 +2,20 @@
 @import "./tab-button.ios.vars";
 
 .tab-button-ios {
-  @include padding($tab-button-ios-padding-top, $tab-button-ios-padding-end, $tab-button-ios-padding-bottom, $tab-button-ios-padding-start);
-
   max-width: $tab-button-ios-max-width;
-  min-height: 100%;
 
   font-size: $tab-button-ios-font-size;
   color: $tab-button-ios-text-color;
 
   fill: $tab-button-ios-icon-color;
+}
+
+.tab-button-ios .tab-cover {
+  @include padding(
+    $tab-button-ios-padding-top,
+    $tab-button-ios-padding-end,
+    $tab-button-ios-padding-bottom,
+    $tab-button-ios-padding-start);
 }
 
 .enable-hover .tab-button-ios:hover,
