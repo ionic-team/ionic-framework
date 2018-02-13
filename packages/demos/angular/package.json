@@ -24,7 +24,9 @@
     "@angular/router": "latest",
     "@ionic/angular": "next",
     "@ionic/core": "next",
+    "body-parser": "^1.18.2",
     "core-js": "^2.4.1",
+    "express": "^4.16.2",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"
   },
@@ -46,7 +48,7 @@
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.1.2",
-    "ts-node": "~3.2.0",
+    "ts-node": "^3.2.2",
     "tslint": "~5.7.0",
     "typescript": "^2.5.2"
   }

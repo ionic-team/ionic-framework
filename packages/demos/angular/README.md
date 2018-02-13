@@ -12,6 +12,7 @@ To use _this_ application perform the following commands from this directory:
 - `npm start` - to serve the application
 - `npm test` - to run the unit tests
 - `npm run e2e` - to run the end to end tests
+- `npx ts-node server/server.ts` - run the server required by any page that does a test post
 
 See the `package.json` file for a complete list of scripts. The above are just the most common.
 

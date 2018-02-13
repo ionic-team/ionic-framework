@@ -82,7 +82,7 @@
         </ion-list>
       </ion-content>
       <ion-footer>
-        <ion-button expand="block" [disabled]="myForm.invalid" (click)="save()">
+        <ion-button expand="block" [disabled]="myForm.invalid" (click)="save(myForm.value)">
           <ion-icon name="save" slot="start"></ion-icon>Looks Good to Me</ion-button>
       </ion-footer>
     </ion-page>

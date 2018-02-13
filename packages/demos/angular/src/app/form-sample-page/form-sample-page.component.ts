@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { HomePageComponent } from '../home-page/home-page.component';
-import { HomePage } from '../../../e2e/home.po';
+import { PostTestService } from '../post-test/post-test.service';
 
 @Component({
   selector: 'app-form-sample-page',
@@ -22,24 +21,12 @@ export class FormSamplePageComponent implements OnInit {
   desiredSalary: number;
   levelOfHappy: number;
 
-  constructor(private router: Router) { }
+  constructor(private postman: PostTestService, private router: Router) { }
 
   ngOnInit() { }
 
-  save() {
-    const data = {
-      firstName: this.firstName,
-      lastName: this.lastName,
-      title: this.jobTitle,
-      beer: this.drinkBeers,
-      tea: this.drinkTeas,
-      coffee: this.makeCoffee,
-      feed: this.feedEngineers,
-      description: this.selfDescription,
-      salary: this.desiredSalary,
-      happy: this.levelOfHappy
-    };
-    console.log('I would submit: ', data);
+  save(data: any) {
+    this.postman.post(data).subscribe(res => console.log(res));
     this.router.navigate(['home']);
   }
 }
