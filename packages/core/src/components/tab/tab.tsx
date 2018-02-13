@@ -76,7 +76,7 @@ export class Tab {
   /**
    * Emitted when the current tab is selected.
    */
-  @Event() ionSelect: EventEmitter<TabEventDetail>;
+  @Event() ionSelect: EventEmitter<void>;
 
   @Method()
   setActive(active: boolean): Promise<any> {
@@ -175,11 +175,3 @@ export class Tab {
   return Promise.resolve();
 }
 */
-
-export interface TabEvent extends CustomEvent {
-  detail: TabEventDetail;
-}
-
-export interface TabEventDetail {
-
-}
