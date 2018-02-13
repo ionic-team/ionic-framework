@@ -9,7 +9,7 @@ ion-tab-button {
 
   position: relative;
   z-index: 0;
-  display: flex;
+  display: block;
   overflow: hidden;
 
   flex: 1;
@@ -21,18 +21,33 @@ ion-tab-button {
 
   text-decoration: none;
   background: none;
-  cursor: pointer;
 
   user-select: none;
 }
 
+.tab-cover {
+  display: flex;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  outline: none;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+}
 
 .tab-disabled {
   pointer-events: none;
-}
 
-.tab-disabled > * {
-  opacity: .4;
+  >.tab-cover {
+    opacity: .4;
+  }
 }
 
 .tab-button-text,

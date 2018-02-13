@@ -17,9 +17,9 @@ export class TabButton {
   @Prop() selected = false;
   @Prop() tab: HTMLIonTabElement;
 
-  @Event() ionTabbarClick: EventEmitter<TabButtonEventDetail>;
-  @Event() ionTabButtonDidLoad: EventEmitter<TabButtonEventDetail>;
-  @Event() ionTabButtonDidUnload: EventEmitter<TabButtonEventDetail>;
+  @Event() ionTabbarClick: EventEmitter<HTMLIonTabElement>;
+  @Event() ionTabButtonDidLoad: EventEmitter<void>;
+  @Event() ionTabButtonDidUnload: EventEmitter<void>;
 
   componentDidLoad() {
     this.ionTabButtonDidLoad.emit();
@@ -63,18 +63,12 @@ export class TabButton {
   render() {
     const tab = this.tab;
     return [
-        tab.icon && <ion-icon class='tab-button-icon' name={tab.icon}></ion-icon>,
-        tab.title && <span class='tab-button-text'>{tab.title}</span>,
-        tab.badge && <ion-badge class='tab-badge' color={tab.badgeStyle}>{tab.badge}</ion-badge>,
-        this.mode === 'md' && <ion-ripple-effect useTapClick={false} />
+      <button type='button' class='tab-cover' disabled={tab.disabled}>
+        { tab.icon && <ion-icon class='tab-button-icon' name={tab.icon}></ion-icon> }
+        { tab.title && <span class='tab-button-text'>{tab.title}</span> }
+        { tab.badge && <ion-badge class='tab-badge' color={tab.badgeStyle}>{tab.badge}</ion-badge> }
+        { this.mode === 'md' && <ion-ripple-effect/> }
+      </button>
     ];
   }
-}
-
-export interface TabButtonEvent extends CustomEvent<TabButtonEventDetail> {
-  detail: TabButtonEventDetail;
-}
-
-export interface TabButtonEventDetail extends HTMLIonTabElement {
-
 }
