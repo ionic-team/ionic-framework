@@ -227,9 +227,6 @@ $alert-ios-checkbox-label-padding-start:        $alert-ios-checkbox-label-paddin
 /// @prop - Text color of the label for the checkbox in the alert
 $alert-ios-checkbox-label-text-color:           $text-ios-color !default;
 
-/// @prop - Text color of the label for the checked checkbox in the alert
-$alert-ios-checkbox-label-text-color-checked:   ion-color($colors-ios, primary, base, ios) !default;
-
 /// @prop - Margin top of the checkbox in the alert
 $alert-ios-checkbox-margin-top:                 10px !default;
 

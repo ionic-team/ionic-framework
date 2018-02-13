@@ -272,9 +272,6 @@ $alert-md-checkbox-label-padding-start:       $alert-md-checkbox-label-padding-e
 /// @prop - Text color of the label for the checkbox in the alert
 $alert-md-checkbox-label-text-color:          $text-md-color !default;
 
-/// @prop - Text color of the label for the checked checkbox in the alert
-$alert-md-checkbox-label-text-color-checked:  ion-color($colors-md, primary, base, md) !default;
-
 /// @prop - Top of the checkbox in the alert
 $alert-md-checkbox-top:                       0 !default;
 
