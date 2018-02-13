@@ -29,7 +29,6 @@ import { RouteEventHandler } from './route-event-handler';
 
 import { AngularComponentMounter, AngularEscapeHatch } from '..';
 import { ensureExternalRounterController } from '../util/util';
-import { ExternalRouterController } from '../../../core/dist/types/components/external-router-controller/external-router-controller';
 
 let id = 0;
 

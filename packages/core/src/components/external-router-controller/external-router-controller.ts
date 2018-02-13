@@ -6,8 +6,8 @@ import { EscapeHatch, NavResult } from '../../index';
 })
 export class ExternalRouterController {
 
-  private externalNavPromise: void | Promise<any> = null;
-  private externalNavOccuring = false;
+  externalNavPromise: void | Promise<any> = null;
+  externalNavOccuring = false;
 
   @Method()
   getExternalNavPromise(): void | Promise<any> {
@@ -35,7 +35,7 @@ export class ExternalRouterController {
       // check if the nav has an `<ion-tab>` as a parent
       if (isParentTab(nav)) {
         // check if the tab is selected
-        return updateTab(nav, component, escapeHatch, isTopLevel);
+        return updateTab(this, nav, component, escapeHatch, isTopLevel);
       } else {
         return updateNav(nav, component, escapeHatch, isTopLevel);
       }
@@ -47,7 +47,7 @@ function isParentTab(navElement: HTMLIonNavElement) {
   return navElement.parentElement.tagName.toLowerCase() === 'ion-tab';
 }
 
-function updateTab(navElement: HTMLIonNavElement, component: any, escapeHatch: EscapeHatch, isTopLevel: boolean) {
+function updateTab(externalRouterController: ExternalRouterController, navElement: HTMLIonNavElement, component: any, escapeHatch: EscapeHatch, isTopLevel: boolean) {
 
   const tab = navElement.parentElement as HTMLIonTabElement;
 
@@ -57,7 +57,7 @@ function updateTab(navElement: HTMLIonNavElement, component: any, escapeHatch: E
   return isTabSelected(tabs, tab).then((isSelected: boolean) => {
     if (!isSelected) {
       const promise = updateNav(navElement, component, escapeHatch, isTopLevel);
-      this.externalNavPromise = promise;
+      externalRouterController.externalNavPromise = promise;
       // okay, the tab is not selected, so we need to do a "switch" transition
       // basically, we should update the nav, and then swap the tabs
       return promise.then(() => {
