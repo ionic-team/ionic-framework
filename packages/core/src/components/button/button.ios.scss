@@ -46,7 +46,7 @@ button[disabled],
 
 @mixin ios-button-default($color-name) {
   $bg-color: ion-color($colors-ios, $color-name, base, ios);
-  $bg-color-activated: ion-color($colors-ios, $color-name, tint, ios);
+  $bg-color-activated: ion-color($colors-ios, $color-name, shade, ios);
   $bg-color-focused: ion-color($colors-ios, $color-name, shade, ios);
   $fg-color: ion-color($colors-ios, $color-name, contrast, ios);
 

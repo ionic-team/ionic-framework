@@ -64,7 +64,7 @@ $button-md-transition-timing-function:     cubic-bezier(.4, 0, .2, 1) !default;
 $button-md-background-color-hover:         $button-md-background-color !default;
 
 /// @prop - Background color of the activated button
-$button-md-background-color-activated:     ion-color($colors-md, $button-md-background-color, tint, md) !default;
+$button-md-background-color-activated:     ion-color($colors-md, $button-md-background-color, shade, md) !default;
 
 /// @prop - Opacity of the activated button
 $button-md-opacity-activated:              1 !default;
