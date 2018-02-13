@@ -212,6 +212,9 @@ export class Tabs implements NavOutlet {
     const promise = selectedTab ? selectedTab.setActive(true) : Promise.resolve();
     return promise.then(() => {
       this.selectedTab = selectedTab;
+      if (selectedTab) {
+        selectedTab.selected = true;
+      }
     });
   }
 
