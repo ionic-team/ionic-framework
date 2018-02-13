@@ -87,6 +87,13 @@ export interface ComponentDataPair {
   data: any;
 }
 
+export interface ExternalNavData {
+  url: string;
+  method: string;
+  resolve: Function;
+  reject: Function;
+}
+
 export interface Transition extends Animation {
   enteringView?: ViewController;
   leavingView?: ViewController;

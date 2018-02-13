@@ -1,7 +1,10 @@
 import { FrameworkDelegate, Nav, PublicViewController } from '../../index';
 import { STATE_ATTACHED, STATE_DESTROYED, STATE_INITIALIZED, STATE_NEW } from './nav-utils';
 
-import { assert } from '../../utils/helpers';
+import {
+  assert,
+  normalizeUrl
+} from '../../utils/helpers';
 
 export class ViewController implements PublicViewController {
 
@@ -15,6 +18,7 @@ export class ViewController implements PublicViewController {
   zIndex: number;
   dismissProxy: any;
   timestamp: number;
+  url: string;
 
 
   onDidDismiss: (data: any, role: string) => void;
@@ -163,4 +167,5 @@ export function initializeNewViewController(viewController: ViewController, data
   viewController.timestamp = Date.now();
   viewController.state = STATE_NEW;
   viewController.data = data || {};
+  viewController.url = normalizeUrl(location.pathname);
 }
