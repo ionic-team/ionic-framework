@@ -4,7 +4,7 @@
 // Split Pane
 // --------------------------------------------------
 
-.split-pane-md.split-pane-visible >.split-pane-side {
+.split-pane-md.split-pane-visible > .split-pane-side {
   min-width: $split-pane-md-side-min-width;
   max-width: $split-pane-md-side-max-width;
 

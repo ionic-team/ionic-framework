@@ -38,7 +38,6 @@ ion-tab-button {
   height: 100%;
 
   border: 0;
-  //outline: none;
   color: inherit;
   background: transparent;
   cursor: pointer;
@@ -47,7 +46,7 @@ ion-tab-button {
 .tab-disabled {
   pointer-events: none;
 
-  >.tab-cover {
+  > .tab-cover {
     opacity: .4;
   }
 }
