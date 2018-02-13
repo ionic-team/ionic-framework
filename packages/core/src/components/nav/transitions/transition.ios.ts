@@ -14,10 +14,10 @@ const SHOW_BACK_BTN_CSS = 'show-back-button';
 export function buildIOSTransition(rootTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Promise<Transition> {
   const componentReadyPromise: Promise<any>[] = [];
   // Let makes sure everything is hydrated and ready to animate
-  if (enteringView) {
+  if (enteringView && (enteringView.element as any).componentOnReady) {
     componentReadyPromise.push((enteringView.element as any).componentOnReady());
   }
-  if (leavingView) {
+  if (leavingView && (leavingView.element as any).componentOnReady) {
     componentReadyPromise.push((leavingView.element as any).componentOnReady());
   }
 

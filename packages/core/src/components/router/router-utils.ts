@@ -1,5 +1,5 @@
 export interface NavOutlet {
-  setRouteId(id: any, data?: any): Promise<void>;
+  setRouteId(id: any, data?: any): Promise<any>;
   getRouteId(): string;
   getContentElement(): HTMLElement | null;
 }

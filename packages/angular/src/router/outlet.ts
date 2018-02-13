@@ -22,16 +22,19 @@ import {
   Router
 } from '@angular/router';
 
+import { NavResult, RouterDelegate } from '@ionic/core';
+
+import { OutletInjector } from './outlet-injector';
+import { RouteEventHandler } from './route-event-handler';
 
 import { AngularComponentMounter, AngularEscapeHatch } from '..';
-import { OutletInjector } from './outlet-injector';
 
 let id = 0;
 
 @Directive({
   selector: 'ion-nav',
 })
-export class RouterOutlet implements OnDestroy, OnInit {
+export class RouterOutlet implements OnDestroy, OnInit, RouterDelegate {
 
   public name: string;
   public activationStatus = NOT_ACTIVATED;
@@ -53,10 +56,22 @@ export class RouterOutlet implements OnDestroy, OnInit {
     protected parentContexts: ChildrenOutletContexts,
     protected cfr: ComponentFactoryResolver,
     protected injector: Injector,
+    protected router: Router,
+    private routeEventHandler: RouteEventHandler,
     @Attribute('name') name: string) {
 
+    (this.elementRef.nativeElement as HTMLIonNavElement).routerDelegate = this;
     this.name = name || PRIMARY_OUTLET;
     parentContexts.onChildOutletCreated(this.name, this as any);
+  }
+
+  pushUrlState(urlSegment: string): Promise<any> {
+    return this.router.navigateByUrl(urlSegment);
+  }
+
+  popUrlState(): Promise<any> {
+    window.history.back();
+    return Promise.resolve();
   }
 
   ngOnDestroy(): void {
@@ -93,6 +108,7 @@ export class RouterOutlet implements OnDestroy, OnInit {
   }
 
   activateWith(activatedRoute: ActivatedRoute, cfr: ComponentFactoryResolver): Promise<void> {
+    this.routeEventHandler.externalNavStart();
     if (this.activationStatus !== NOT_ACTIVATED) {
       return Promise.resolve();
     }
@@ -105,7 +121,8 @@ export class RouterOutlet implements OnDestroy, OnInit {
     const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
     const injector = new OutletInjector(activatedRoute, childContexts, this.location.injector);
 
-    return activateRoute(this.elementRef.nativeElement, component, cfr, injector).then(() => {
+    const isTopLevel = !hasChildComponent(activatedRoute);
+    return activateRoute(this.elementRef.nativeElement, component, cfr, injector, isTopLevel).then(() => {
       this.changeDetector.markForCheck();
       this.activateEvents.emit(null);
       this.activationStatus = ACTIVATED;
@@ -114,16 +131,16 @@ export class RouterOutlet implements OnDestroy, OnInit {
 }
 
 export function activateRoute(navElement: HTMLIonNavElement,
-  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector): Promise<void> {
+  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector, isTopLevel: boolean): Promise<void> {
 
   return navElement.componentOnReady().then(() => {
 
     // check if the nav has an `<ion-tab>` as a parent
     if (isParentTab(navElement)) {
       // check if the tab is selected
-      return updateTab(navElement, component, cfr, injector);
+      return updateTab(navElement, component, cfr, injector, isTopLevel);
     } else {
-      return updateNav(navElement, component, cfr, injector);
+      return updateNav(navElement, component, cfr, injector, isTopLevel);
     }
   });
 }
@@ -148,42 +165,47 @@ function getSelected(tabsElement: HTMLIonTabsElement) {
 }
 
 function updateTab(navElement: HTMLIonNavElement,
-  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector) {
+  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector, isTopLevel: boolean) {
 
   const tab = navElement.parentElement as HTMLIonTabElement;
+  // tab.externalNav = true;
+
+  // (tab.parentElement as HTMLIonTabsElement).externalInitialize = true;
   // yeah yeah, I know this is kind of ugly but oh well, I know the internal structure of <ion-tabs>
   const tabs = tab.parentElement.parentElement as HTMLIonTabsElement;
+  // tabs.externalInitialize = true;
   return isTabSelected(tabs, tab).then((isSelected: boolean) => {
     if (!isSelected) {
+      const promise = updateNav(navElement, component, cfr, injector, isTopLevel);
+      (window as any).externalNavPromise = promise
       // okay, the tab is not selected, so we need to do a "switch" transition
       // basically, we should update the nav, and then swap the tabs
-      return updateNav(navElement, component, cfr, injector).then(() => {
+      return promise.then(() => {
         return tabs.select(tab);
       });
     }
 
     // okay cool, the tab is already selected, so we want to see a transition
-    return updateNav(navElement, component, cfr, injector);
+    return updateNav(navElement, component, cfr, injector, isTopLevel);
   })
 }
 
 function updateNav(navElement: HTMLIonNavElement,
-  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector) {
+  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector, isTopLevel: boolean): Promise<NavResult> {
+
+  const escapeHatch = getEscapeHatch(cfr, injector);
 
   // check if the component is the top view
   const activeViews = navElement.getViews();
   if (activeViews.length === 0) {
     // there isn't a view in the stack, so push one
-    return navElement.push(component, {}, {}, {
-      cfr,
-      injector
-    });
+    return navElement.setRoot(component, {}, {}, escapeHatch);
   }
 
   const currentView = activeViews[activeViews.length - 1];
   if (currentView.component === component) {
     // the top view is already the component being activated, so there is no change needed
-    return Promise.resolve();
+    return Promise.resolve(null);
   }
 
   // check if the component is the previous view, if so, pop back to it
@@ -192,7 +214,7 @@ function updateNav(navElement: HTMLIonNavElement,
     const previousView = activeViews[activeViews.length - 2];
     if (previousView.component === component) {
       // cool, we match the previous view, so pop it
-      return navElement.pop();
+      return navElement.pop(null, escapeHatch);
     }
   }
 
@@ -200,17 +222,33 @@ function updateNav(navElement: HTMLIonNavElement,
   for (const view of activeViews) {
     if (view.component === component) {
       // cool, we found the match, pop back to that bad boy
-      return navElement.popTo(view);
+      return navElement.popTo(view, null, escapeHatch);
     }
   }
 
-  // since it's none of those things, we should probably just push that bad boy and call it a day
-  return navElement.push(component, {}, {}, {
-    cfr,
-    injector
-  });
+  // it's the top level nav, and it's not one of those other behaviors, so do a push so the user gets a chill animation
+  return navElement.push(component, {}, { animate: isTopLevel }, escapeHatch);
 }
 
 export const NOT_ACTIVATED = 0;
 export const ACTIVATION_IN_PROGRESS = 1;
 export const ACTIVATED = 2;
+
+export function hasChildComponent(activatedRoute: ActivatedRoute): boolean {
+  // don't worry about recursion for now, that's a future problem that may or may not manifest itself
+  for (const childRoute of activatedRoute.children) {
+    if (childRoute.component) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function getEscapeHatch(cfr: ComponentFactoryResolver, injector: Injector): AngularEscapeHatch {
+  return {
+    cfr,
+    injector,
+    fromExternalRouter: true,
+    url: location.pathname
+  };
+}

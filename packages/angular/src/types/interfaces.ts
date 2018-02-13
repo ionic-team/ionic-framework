@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { FrameworkMountingData } from '@ionic/core';
+import { EscapeHatch, FrameworkMountingData} from '@ionic/core';
 
 export interface AngularMountingData extends FrameworkMountingData {
   componentFactory?: ComponentFactory<any>;
@@ -16,7 +16,7 @@ export interface AngularMountingData extends FrameworkMountingData {
   angularHostElement?: HTMLElement;
 }
 
-export interface AngularEscapeHatch {
+export interface AngularEscapeHatch extends EscapeHatch {
   activatedRoute?: ActivatedRoute;
   cfr?: ComponentFactoryResolver;
   injector?: Injector;

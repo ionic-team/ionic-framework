@@ -27,6 +27,11 @@ string
 any
 
 
+#### routerDelegate
+
+
+
+
 #### swipeBackEnabled
 
 boolean
@@ -59,6 +64,11 @@ string
 any
 
 
+#### router-delegate
+
+
+
+
 #### swipe-back-enabled
 
 boolean
@@ -82,9 +92,6 @@ boolean
 #### canGoBack()
 
 
-#### clearTransitionInfoForUrl()
-
-
 #### first()
 
 
@@ -106,9 +113,6 @@ boolean
 #### getRouteId()
 
 
-#### getTransitionInfoForUrl()
-
-
 #### getViews()
 
 
@@ -122,6 +126,9 @@ boolean
 
 
 #### last()
+
+
+#### onAllTransitionsComplete()
 
 
 #### pop()

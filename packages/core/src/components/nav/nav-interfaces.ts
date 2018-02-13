@@ -36,6 +36,7 @@ export interface PublicNav {
   name?: string;
   element?: HTMLElement;
   parent?: PublicNav;
+  initialized?: boolean;
 }
 
 export interface NavOptions {
@@ -71,9 +72,9 @@ export interface TransitionInstruction {
   nav?: Nav;
   delegate?: FrameworkDelegate;
   animation?: Animation;
-  escapeHatch?: any;
+  escapeHatch?: EscapeHatch;
   method?: string;
-  mountingData?: any;
+  mountingData?: FrameworkMountingData;
 }
 
 export interface NavResult {
@@ -84,6 +85,18 @@ export interface NavResult {
 export interface ComponentDataPair {
   component: any;
   data: any;
+}
+
+export interface ExternalNavData {
+  url: string;
+  method: string;
+  resolve: Function;
+  reject: Function;
+}
+
+export interface EscapeHatch {
+  fromExternalRouter?: boolean;
+  url?: string;
 }
 
 export interface Transition extends Animation {

@@ -146,6 +146,11 @@ export interface FrameworkDelegate {
   removeViewFromDom(elementOrContainerToUnmountFrom: any, elementOrComponentToUnmount: any, escapeHatch?: any): Promise<void>;
 }
 
+export interface RouterDelegate {
+  pushUrlState(urlSegment: string, stateObject?: any, title?: string): Promise<any>;
+  popUrlState(): Promise<any>;
+}
+
 export interface FrameworkMountingData {
   element: HTMLElement;
   component: any;

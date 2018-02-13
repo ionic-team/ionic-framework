@@ -9,6 +9,7 @@ import { Config, NavEventDetail, NavOutlet } from '../../index';
 export class Tabs implements NavOutlet {
   private ids = -1;
   private tabsId: number = (++tabIds);
+  initialized = false;
 
   @Element() el: HTMLElement;
 
@@ -70,8 +71,14 @@ export class Tabs implements NavOutlet {
     this.loadConfig('tabsLayout', 'icon-top');
     this.loadConfig('tabsHighlight', true);
 
-    this.initTabs();
-    this.initSelect();
+    return this.initTabs().then(() => {
+      if (! (window as any).externalNav) {
+        return this.initSelect();
+      }
+      return null;
+    }).then(() => {
+      this.initialized = true;
+    });
   }
 
   componentDidUnload() {
@@ -171,16 +178,19 @@ export class Tabs implements NavOutlet {
 
   private initTabs() {
     const tabs = this.tabs = Array.from(this.el.querySelectorAll('ion-tab'));
+    const tabPromises: Promise<any>[] = [];
     for (const tab of tabs) {
       const id = `t-${this.tabsId}-${++this.ids}`;
       tab.btnId = 'tab-' + id;
       tab.id = 'tabpanel-' + id;
+      tabPromises.push((tab as any).componentOnReady());
     }
+    return Promise.all(tabPromises);
   }
 
   private initSelect() {
     if (document.querySelector('ion-router')) {
-      return;
+      return Promise.resolve();
     }
     // find pre-selected tabs
     const selectedTab = this.tabs.find(t => t.selected) ||
@@ -192,10 +202,10 @@ export class Tabs implements NavOutlet {
         tab.selected = false;
       }
     }
-    if (selectedTab) {
-      selectedTab.setActive(true);
-    }
-    this.selectedTab = selectedTab;
+    const promise = selectedTab ? selectedTab.setActive(true) : Promise.resolve();
+    return promise.then(() => {
+      this.selectedTab = selectedTab;
+    });
   }
 
   private loadConfig(attrKey: string, fallback: any) {

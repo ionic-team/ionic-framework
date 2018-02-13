@@ -14,12 +14,15 @@ const routes: Routes = [
   { path: 'content', loadChildren: 'app/content/content.module#ContentModule' },
   { path: 'toast', loadChildren: 'app/toast/toast.module#ToastModule' },
   { path: 'loading', loadChildren: 'app/loading/loading.module#LoadingModule' },
-  { path: 'no-routing-nav', loadChildren: 'app/no-routing-nav/no-routing-nav.module#NoRoutingNavModule' },
   { path: 'modal', loadChildren: 'app/modal/modal.module#ModalModule' },
   { path: 'popover', loadChildren: 'app/popover/popover.module#PopoverModule' },
   { path: 'segment', loadChildren: 'app/segment/segment.module#SegmentModule' },
   { path: 'virtual-scroll', loadChildren: 'app/virtual-scroll/virtual-scroll.module#VirtualScrollModule' },
 
+  { path: 'no-routing-nav', loadChildren: 'app/no-routing-nav/no-routing-nav.module#NoRoutingNavModule' },
+  { path: 'simple-nav', loadChildren: 'app/simple-nav/simple-nav.module#SimpleNavModule' },
+  { path: 'nested-nav', loadChildren: 'app/nested-nav/nested-nav.module#NestedNavModule' },
+  { path: 'nav-then-tabs', loadChildren: 'app/nav-then-tabs/nav-then-tabs.module#NavThenTabsModule' },
 ];
 
 @NgModule({

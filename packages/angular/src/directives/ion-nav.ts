@@ -3,9 +3,9 @@ import {
   Directive,
   ElementRef,
   Injector,
+  Optional,
   Type,
 } from '@angular/core';
-
 
 import { FrameworkDelegate } from '@ionic/core';
 
@@ -22,10 +22,10 @@ export class IonNav implements FrameworkDelegate {
     public elementRef: ElementRef,
     protected angularComponentMounter: AngularComponentMounter,
     protected cfr: ComponentFactoryResolver,
-    protected injector: Injector) {
+    protected injector: Injector
+  ) {
 
     this.elementRef.nativeElement.delegate = this;
-
   }
 
   attachViewToDom(elementOrContainerToMountTo: HTMLIonNavElement,

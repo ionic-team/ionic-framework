@@ -14,6 +14,7 @@ import {
   FrameworkDelegate,
   PickerColumn,
   PickerOptions,
+  RouterDelegate,
 } from './index';
 import {
   AlertButton,
@@ -1837,6 +1838,7 @@ declare global {
       lazy?: boolean;
       mode?: string;
       root?: any;
+      routerDelegate?: RouterDelegate;
       swipeBackEnabled?: boolean;
       useUrls?: boolean;
     }

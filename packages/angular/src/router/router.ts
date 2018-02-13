@@ -20,8 +20,6 @@ export class CustomRouter extends Router {
   protected activateRoutes(state: Observable<{appliedUrl: string, state: RouterState, shouldActivate: boolean}>, storedState: RouterState,
     storedUrl: UrlTree, id: number, url: UrlTree, rawUrl: UrlTree, skipLocationChange: boolean, replaceUrl: boolean, resolvePromise: any, rejectPromise: any) {
 
-      console.log('custom activateRoutes!!!!1');
-
       // applied the new router state
     // this operation has side effects
     let navigationIsSuccessful: boolean;

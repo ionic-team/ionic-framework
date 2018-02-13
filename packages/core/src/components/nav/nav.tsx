@@ -5,12 +5,16 @@ import {
   AnimationOptions,
   ComponentDataPair,
   Config,
+  EscapeHatch,
+  ExternalNavData,
   FrameworkDelegate,
   NavOptions,
   NavOutlet,
   NavResult,
   PublicNav,
   PublicViewController,
+  RouterDelegate,
+  RouterEntries,
   Transition,
   TransitionInstruction,
 } from '../../index';
@@ -40,12 +44,14 @@ import {
 } from './nav-utils';
 
 import { DomFrameworkDelegate } from '../../utils/dom-framework-delegate';
+import { DomRouterDelegate } from '../../utils/dom-router-delegate';
 
 import {
   assert,
   focusOutActiveElement,
   isDef,
   isNumber,
+  normalizeUrl,
 } from '../../utils/helpers';
 
 
@@ -53,8 +59,8 @@ import { buildIOSTransition } from './transitions/transition.ios';
 import { buildMdTransition } from './transitions/transition.md';
 import { GestureDetail } from '../gesture/gesture';
 
-const queueMap = new Map<number, TransitionInstruction[]>();
-const urlMap = new Map<string, TransitionInstruction>();
+const transitionQueue = new Map<number, TransitionInstruction[]>();
+const allTransitionsCompleteHandlerQueue = new Map<number, Function[]>();
 
 /* it is very important to keep this class in sync with ./nav-interface interface */
 @Component({
@@ -67,21 +73,23 @@ export class Nav implements PublicNav, NavOutlet {
   @Event() navInit: EventEmitter<NavEventDetail>;
   @Event() ionNavChanged: EventEmitter<NavEventDetail>;
 
-  navId: number;
-  init = false;
-  parent: Nav;
+  useRouter = false;
+  navId = getNextNavId();
+  routes: RouterEntries = [];
+  parent: Nav = null;
   views: ViewController[] = [];
-  transitioning?: boolean;
-  destroyed?: boolean;
-  transitionId?: number;
-  isViewInitialized?: boolean;
-  isPortal: boolean;
+  transitioning = false;
+  destroyed = false;
+  transitionId = NOT_TRANSITIONING_TRANSITION_ID;
+  initialized = false;
   sbTrns: any; // TODO Transition
   childNavs?: Nav[];
+  urlExternalNavMap = new Map<string, ExternalNavData>();
 
   @Prop() mode: string;
   @Prop() root: any;
   @Prop() delegate: FrameworkDelegate;
+  @Prop() routerDelegate: RouterDelegate;
   @Prop() useUrls = false;
   @Prop({ context: 'config' }) config: Config;
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
@@ -93,20 +101,15 @@ export class Nav implements PublicNav, NavOutlet {
   }
 
   componentDidLoad() {
-    if (this.init) {
-      return;
-    }
-    this.init = true;
-    if (!this.lazy) {
-      componentDidLoadImpl(this);
-    }
+    return componentDidLoadImpl(this);
   }
 
   @Watch('root')
-  updateRootComponent(): any {
-    if (this.init) {
+  updateRootComponent(): Promise<NavResult> {
+    if (this.initialized) {
       return this.setRoot(this.root);
     }
+    return Promise.resolve(null);
   }
 
   @Method()
@@ -115,52 +118,52 @@ export class Nav implements PublicNav, NavOutlet {
   }
 
   @Method()
-  push(component: any, data?: any, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  push(component: any, data?: any, opts?: NavOptions, escapeHatch: EscapeHatch = getDefaultEscapeHatch()): Promise<NavResult> {
     return pushImpl(this, component, data, opts, escapeHatch);
   }
 
   @Method()
-  pop(opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  pop(opts?: NavOptions, escapeHatch: EscapeHatch = getDefaultEscapeHatch()): Promise<NavResult> {
     return popImpl(this, opts, escapeHatch);
   }
 
   @Method()
-  setRoot(component: any, data?: any, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  setRoot(component: any, data?: any, opts?: NavOptions, escapeHatch: EscapeHatch = getDefaultEscapeHatch()): Promise<NavResult> {
     return setRootImpl(this, component, data, opts, escapeHatch);
   }
 
   @Method()
-  insert(insertIndex: number, page: any, params?: any, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  insert(insertIndex: number, page: any, params?: any, opts?: NavOptions, escapeHatch: EscapeHatch = getDefaultEscapeHatch()): Promise<NavResult> {
     return insertImpl(this, insertIndex, page, params, opts, escapeHatch);
   }
 
   @Method()
-  insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions, escapeHatch: EscapeHatch = getDefaultEscapeHatch()): Promise<NavResult> {
     return insertPagesImpl(this, insertIndex, insertPages, opts, escapeHatch);
   }
 
   @Method()
-  popToRoot(opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  popToRoot(opts?: NavOptions, escapeHatch: EscapeHatch = getDefaultEscapeHatch()): Promise<NavResult> {
     return popToRootImpl(this, opts, escapeHatch);
   }
 
   @Method()
-  popTo(indexOrViewCtrl: any, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  popTo(indexOrViewCtrl: any, opts?: NavOptions, escapeHatch: EscapeHatch = getDefaultEscapeHatch()): Promise<NavResult> {
     return popToImpl(this, indexOrViewCtrl, opts, escapeHatch);
   }
 
   @Method()
-  removeIndex(startIndex: number, removeCount?: number, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  removeIndex(startIndex: number, removeCount?: number, opts?: NavOptions, escapeHatch: EscapeHatch = getDefaultEscapeHatch()): Promise<NavResult> {
     return removeImpl(this, startIndex, removeCount, opts, escapeHatch);
   }
 
   @Method()
-  removeView(viewController: PublicViewController, opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  removeView(viewController: PublicViewController, opts?: NavOptions, escapeHatch: EscapeHatch = getDefaultEscapeHatch()): Promise<NavResult> {
     return removeViewImpl(this, viewController, opts, escapeHatch);
   }
 
   @Method()
-  setPages(componentDataPairs: ComponentDataPair[], opts?: NavOptions, escapeHatch: any = {}): Promise<any> {
+  setPages(componentDataPairs: ComponentDataPair[], opts?: NavOptions, escapeHatch: EscapeHatch = getDefaultEscapeHatch()): Promise<NavResult> {
     return setPagesImpl(this, componentDataPairs, opts, escapeHatch);
   }
 
@@ -190,10 +193,11 @@ export class Nav implements PublicNav, NavOutlet {
   }
 
   @Method()
-  setRouteId(id: string, _: any = {}): Promise<void> {
+  setRouteId(id: string, _: any = {}): Promise<any> {
+    assert(this.useRouter, 'routing is disabled');
     const active = this.getActive();
     if (active && active.component === id) {
-      return Promise.resolve();
+      return Promise.resolve(null);
     }
     return this.setRoot(id);
   }
@@ -224,7 +228,7 @@ export class Nav implements PublicNav, NavOutlet {
 
   @Method()
   isTransitioning() {
-    return !!this.transitionId;
+    return this.transitionId >= 0;
   }
 
   @Method()
@@ -238,13 +242,8 @@ export class Nav implements PublicNav, NavOutlet {
   }
 
   @Method()
-  getTransitionInfoForUrl(url: string): TransitionInstruction {
-    return urlMap.get(url);
-  }
-
-  @Method()
-  clearTransitionInfoForUrl(url: string) {
-    urlMap.delete(url);
+  onAllTransitionsComplete() {
+    return allTransitionsCompleteImpl(this);
   }
 
   canSwipeBack(): boolean {
@@ -330,48 +329,60 @@ export class Nav implements PublicNav, NavOutlet {
 }
 
 export function componentDidLoadImpl(nav: Nav) {
+  if (nav.initialized) {
+    return;
+  }
+  nav.initialized = true;
   nav.navInit.emit();
-  if (nav.root) {
-    nav.setRoot(nav.root);
+  if (!nav.useRouter) {
+    if (nav.root && !nav.lazy) {
+      nav.setRoot(nav.root);
+    }
   }
 }
 
-export async function pushImpl(nav: Nav, component: any, data: any, opts: NavOptions, escapeHatch: any) {
+export async function pushImpl(nav: Nav, component: any, data: any, opts: NavOptions, escapeHatch: EscapeHatch) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return push(nav, nav.delegate, animation, component, data, opts, escapeHatch);
+  return push(nav, nav.delegate, animation, component, data, opts, escapeHatch).then((navResult) => {
+    return navResult;
+  });
 }
 
-export async function popImpl(nav: Nav, opts: NavOptions, escapeHatch: any) {
+export async function popImpl(nav: Nav, opts: NavOptions, escapeHatch: EscapeHatch) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return pop(nav, nav.delegate, animation, opts, escapeHatch);
+  return pop(nav, nav.delegate, animation, opts, escapeHatch).then((navResult) => {
+    return navResult;
+  });
 }
 
-export async function setRootImpl(nav: Nav, component: any, data: any, opts: NavOptions, escapeHatch: any) {
+export async function setRootImpl(nav: Nav, component: any, data: any, opts: NavOptions, escapeHatch: EscapeHatch) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return setRoot(nav, nav.delegate, animation, component, data, opts, escapeHatch);
+  return setRoot(nav, nav.delegate, animation, component, data, opts, escapeHatch).then((navResult) => {
+    return navResult;
+  });
 }
 
-export async function insertImpl(nav: Nav, insertIndex: number, page: any, params: any, opts: NavOptions, escapeHatch: any) {
+export async function insertImpl(nav: Nav, insertIndex: number, page: any, params: any, opts: NavOptions, escapeHatch: EscapeHatch) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
   return insert(nav, nav.delegate, animation, insertIndex, page, params, opts, escapeHatch);
 }
 
-export async function insertPagesImpl(nav: Nav, insertIndex: number, pagesToInsert: any[], opts: NavOptions, escapeHatch: any) {
+export async function insertPagesImpl(nav: Nav, insertIndex: number, pagesToInsert: any[], opts: NavOptions, escapeHatch: EscapeHatch) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
   return insertPages(nav, nav.delegate, animation, insertIndex, pagesToInsert, opts, escapeHatch);
 }
 
-export async function popToRootImpl(nav: Nav, opts: NavOptions, escapeHatch: any) {
+export async function popToRootImpl(nav: Nav, opts: NavOptions, escapeHatch: EscapeHatch) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
   return popToRoot(nav, nav.delegate, animation, opts, escapeHatch);
 }
 
-export async function popToImpl(nav: Nav, indexOrViewCtrl: any, opts: NavOptions, escapeHatch: any) {
+export async function popToImpl(nav: Nav, indexOrViewCtrl: any, opts: NavOptions, escapeHatch: EscapeHatch) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
   return popTo(nav, nav.delegate, animation, indexOrViewCtrl, opts, escapeHatch);
 }
 
-export async function removeImpl(nav: Nav, startIndex: number, removeCount: number, opts: NavOptions, escapeHatch: any) {
+export async function removeImpl(nav: Nav, startIndex: number, removeCount: number, opts: NavOptions, escapeHatch: EscapeHatch) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
   return remove(nav, nav.delegate, animation, startIndex, removeCount, opts, escapeHatch);
 }
@@ -381,9 +392,9 @@ export async function removeViewImpl(nav: Nav, viewController: PublicViewControl
   return removeView(nav, nav.delegate, animation, viewController as ViewController, opts, escapeHatch);
 }
 
-export async function setPagesImpl(nav: Nav, componentDataPairs: ComponentDataPair[], opts: NavOptions, escapeHatch: any) {
+export async function setPagesImpl(nav: Nav, componentDataPairs: ComponentDataPair[], opts: NavOptions, escapeHatch: EscapeHatch) {
   const animation = await hydrateAnimationController(nav.animationCtrl);
-  return setPages(nav, nav.delegate, animation, componentDataPairs, opts, escapeHatch);
+  return setPages(nav, nav.delegate, animation, componentDataPairs, opts, escapeHatch, null);
 }
 
 export function canGoBackImpl(nav: Nav) {
@@ -407,11 +418,10 @@ export function hydrateAnimationController(animationController: AnimationControl
   return animationController.create();
 }
 
-
 // public api
 
-export function push(nav: Nav, delegate: FrameworkDelegate, animation: Animation, component: any, data: any, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueTransaction({
+export function push(nav: Nav, delegate: FrameworkDelegate, animation: Animation, component: any, data: any, opts: NavOptions, escapeHatch: EscapeHatch): Promise<NavResult> {
+  return preprocessTransaction({
     component: component,
     insertStart: -1,
     insertViews: [{component, data}],
@@ -421,12 +431,12 @@ export function push(nav: Nav, delegate: FrameworkDelegate, animation: Animation
     id: nav.navId,
     animation,
     escapeHatch,
-    method: 'push'
+    method: PUSH
   });
 }
 
-export function insert(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, component: any, data: any, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueTransaction({
+export function insert(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, component: any, data: any, opts: NavOptions, escapeHatch: EscapeHatch): Promise<NavResult> {
+  return preprocessTransaction({
     component: component,
     insertStart: insertIndex,
     insertViews: [{ component, data }],
@@ -440,8 +450,8 @@ export function insert(nav: Nav, delegate: FrameworkDelegate, animation: Animati
   });
 }
 
-export function insertPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, insertPages: any[], opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueTransaction({
+export function insertPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, insertIndex: number, insertPages: any[], opts: NavOptions, escapeHatch: EscapeHatch): Promise<NavResult> {
+  return preprocessTransaction({
     component: null,
     insertStart: insertIndex,
     insertViews: insertPages,
@@ -455,8 +465,8 @@ export function insertPages(nav: Nav, delegate: FrameworkDelegate, animation: An
   });
 }
 
-export function pop(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueTransaction({
+export function pop(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts: NavOptions, escapeHatch: EscapeHatch): Promise<NavResult> {
+  return preprocessTransaction({
     component: null,
     removeStart: -1,
     removeCount: 1,
@@ -466,12 +476,12 @@ export function pop(nav: Nav, delegate: FrameworkDelegate, animation: Animation,
     id: nav.navId,
     animation,
     escapeHatch,
-    method: 'pop'
+    method: POP
   });
 }
 
-export function popToRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueTransaction({
+export function popToRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animation, opts: NavOptions, escapeHatch: EscapeHatch): Promise<NavResult> {
+  return preprocessTransaction({
     component: null,
     removeStart: 1,
     removeCount: -1,
@@ -485,7 +495,7 @@ export function popToRoot(nav: Nav, delegate: FrameworkDelegate, animation: Anim
   });
 }
 
-export function popTo(nav: Nav, delegate: FrameworkDelegate, animation: Animation, indexOrViewCtrl: any, opts: NavOptions, escapeHatch: any): Promise<any> {
+export function popTo(nav: Nav, delegate: FrameworkDelegate, animation: Animation, indexOrViewCtrl: any, opts: NavOptions, escapeHatch: EscapeHatch): Promise<NavResult> {
   const config: TransitionInstruction = {
     component: null,
     removeStart: -1,
@@ -504,11 +514,11 @@ export function popTo(nav: Nav, delegate: FrameworkDelegate, animation: Animatio
   } else if (isNumber(indexOrViewCtrl)) {
     config.removeStart = indexOrViewCtrl + 1;
   }
-  return queueTransaction(config);
+  return preprocessTransaction(config);
 }
 
-export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animation, startIndex: number, removeCount = 1, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueTransaction({
+export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animation, startIndex: number, removeCount = 1, opts: NavOptions, escapeHatch: EscapeHatch): Promise<NavResult> {
+  return preprocessTransaction({
     component: null,
     removeStart: startIndex,
     removeCount: removeCount,
@@ -522,8 +532,8 @@ export function remove(nav: Nav, delegate: FrameworkDelegate, animation: Animati
   });
 }
 
-export function removeView(nav: Nav, delegate: FrameworkDelegate, animation: Animation, viewController: ViewController, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return queueTransaction({
+export function removeView(nav: Nav, delegate: FrameworkDelegate, animation: Animation, viewController: ViewController, opts: NavOptions, escapeHatch: EscapeHatch): Promise<NavResult> {
+  return preprocessTransaction({
     component: null,
     removeView: viewController,
     removeStart: 0,
@@ -538,18 +548,18 @@ export function removeView(nav: Nav, delegate: FrameworkDelegate, animation: Ani
   });
 }
 
-export function setRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animation, component: any, data: any, opts: NavOptions, escapeHatch: any): Promise<any> {
-  return setPages(nav, delegate, animation, [{ component, data }], opts, escapeHatch);
+export function setRoot(nav: Nav, delegate: FrameworkDelegate, animation: Animation, component: any, data: any, opts: NavOptions, escapeHatch: EscapeHatch): Promise<NavResult> {
+  return setPages(nav, delegate, animation, [{ component, data }], opts, escapeHatch, SET_ROOT);
 }
 
-export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, componentDataPairs: ComponentDataPair[], opts: NavOptions, escapeHatch: any): Promise<any> {
+export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Animation, componentDataPairs: ComponentDataPair[], opts: NavOptions, escapeHatch: EscapeHatch, methodName: string): Promise<NavResult> {
   if (!isDef(opts)) {
     opts = {};
   }
   if (opts.animate !== true) {
     opts.animate = false;
   }
-  return queueTransaction({
+  return preprocessTransaction({
     component: componentDataPairs.length === 1 ? componentDataPairs[0].component : null,
     insertStart: 0,
     insertViews: componentDataPairs,
@@ -561,22 +571,49 @@ export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Anima
     id: nav.navId,
     animation,
     escapeHatch,
-    method: 'setPages'
+    method: methodName ? methodName : 'setPages'
   });
 }
 
-// private api, exported for testing
-
-export function queueOrNavigate(ti: TransitionInstruction): void | Promise<NavResult> {
-  if (isComponentUrl(ti.component)) {
-    urlMap.set(ti.component as string, ti);
-    window.location.href = ti.component;
+export function preprocessTransaction(ti: TransitionInstruction): Promise<NavResult> {
+  if (isUrl(ti.component)) {
+    if (ti.method === PUSH || ti.method === POP || ti.method === SET_ROOT) {
+      return navigateToUrl(ti.nav, normalizeUrl(ti.component) as string, ti.method);
+    } else {
+      return Promise.reject(new Error('only push, pop, and setRoot methods support urls'));
+    }
   }
+
+  const response = checkIfPopRedirectRequired(ti);
+  if (response.required) {
+    return navigateToUrl(ti.nav, response.url, POP);
+  }
+
   return queueTransaction(ti);
 }
 
-export function isComponentUrl(component: any) {
-  return component && typeof component === 'string' && component.charAt(0) === '/';
+export function isUrl(component: any): boolean {
+  return typeof component === 'string' && component.charAt(0) === '/';
+}
+
+export function navigateToUrl(nav: Nav, url: string, method: string): Promise<NavResult> {
+  let routingPromise: Promise<any> = null;
+  return new Promise((resolve, reject) => {
+    nav.urlExternalNavMap.set(url, {
+      url,
+      method,
+      resolve,
+      reject
+    });
+    if (!nav.routerDelegate) {
+      nav.routerDelegate = new DomRouterDelegate();
+    }
+    routingPromise = nav.routerDelegate.pushUrlState(url);
+  }).then((navResult: NavResult) => {
+    return routingPromise.then(() => {
+      return navResult;
+    });
+  });
 }
 
 export function queueTransaction(ti: TransitionInstruction): Promise<NavResult> {
@@ -617,16 +654,68 @@ export function nextTransaction(nav: Nav): Promise<any> {
 
   const topTransaction = getTopTransaction(nav.navId);
   if (!topTransaction) {
+    // cool, there are no transitions going for this nav
+    processAllTransitionCompleteQueue(nav.navId);
     return Promise.resolve();
   }
 
   return doNav(nav, topTransaction);
 }
 
+export function checkIfPopRedirectRequired(ti: TransitionInstruction): IsRedirectRequired {
+  if (ti.method === POP) {
+
+    if (ti.escapeHatch.fromExternalRouter) {
+      // if the pop method is called from a router, that means the redirect already happened
+      // so just do a normal pop because the url is in a good place. Basically, the router is telling us to
+      // pop
+      return {
+        required: false
+      };
+    }
+
+    // check if we need to redirect to a url for the pop operation
+    const popToIndex = ti.nav.views.length - 2;
+    if (popToIndex >= 0) {
+      const viewController = ti.nav.views[popToIndex];
+      return {
+        required: viewController.fromExternalRouter,
+        url: viewController.url
+      };
+    }
+  }
+
+  return {
+    required: false,
+  };
+}
+
+export function processAllTransitionCompleteQueue(navId: number) {
+  const queue = allTransitionsCompleteHandlerQueue.get(navId) || [];
+  for (const callback of queue) {
+    callback();
+  }
+  allTransitionsCompleteHandlerQueue.set(navId, []);
+}
+
+export function allTransitionsCompleteImpl(nav: Nav) {
+  return new Promise((resolve) => {
+    const queue = transitionQueue.get(nav.navId) || [];
+    if (queue.length) {
+      // there are pending transitions, so queue it up and we'll be notified when it's done
+      const handlers = allTransitionsCompleteHandlerQueue.get(nav.navId) || [];
+      handlers.push(resolve);
+      return allTransitionsCompleteHandlerQueue.set(nav.navId, handlers);
+    }
+    // there are no pending transitions, so just resolve right away
+    return resolve();
+  });
+}
+
 export function doNav(nav: Nav, ti: TransitionInstruction) {
   let enteringView: ViewController;
   let leavingView: ViewController;
-  return initializeViewBeforeTransition(nav, ti).then(([_enteringView, _leavingView]) => {
+  return initializeViewBeforeTransition(ti).then(([_enteringView, _leavingView]) => {
     enteringView = _enteringView;
     leavingView = _leavingView;
     return attachViewToDom(nav, enteringView, ti);
@@ -647,8 +736,8 @@ export function successfullyTransitioned(ti: TransitionInstruction) {
     return fireError(new Error('Queue is null, the nav must have been destroyed'), ti);
   }
 
-  ti.nav.isViewInitialized = true;
-  ti.nav.transitionId = null;
+  ti.nav.initialized = true;
+  ti.nav.transitionId = NOT_TRANSITIONING_TRANSITION_ID;
   ti.nav.transitioning = false;
 
   // TODO - check if it's a swipe back
@@ -739,7 +828,7 @@ export function loadViewAndTransition(nav: Nav, enteringView: ViewController, le
 
 export function executeAsyncTransition(nav: Nav, transition: Transition, enteringView: ViewController, leavingView: ViewController, delegate: FrameworkDelegate, opts: NavOptions, configShouldAnimate: boolean): Promise<void> {
   assert(nav.transitioning, 'must be transitioning');
-  nav.transitionId = null;
+  nav.transitionId = NOT_TRANSITIONING_TRANSITION_ID;
   setZIndex(nav, enteringView, leavingView, opts.direction);
 
   // always ensure the entering view is viewable
@@ -751,8 +840,8 @@ export function executeAsyncTransition(nav: Nav, transition: Transition, enterin
   // ******** DOM WRITE ****************
   leavingView && toggleHidden(leavingView.element, false);
 
-  const isFirstPage = !nav.isViewInitialized && nav.views.length === 1;
-  const shouldNotAnimate = isFirstPage && !nav.isPortal;
+  const isFirstPage = !nav.initialized && nav.views.length === 1;
+  const shouldNotAnimate = isFirstPage;
   if (configShouldAnimate || shouldNotAnimate) {
     opts.animate = false;
   }
@@ -847,7 +936,7 @@ export function cleanUpView(nav: Nav, delegate: FrameworkDelegate, activeViewCon
       // this view comes after the active view
       inactiveViewController.willUnload();
       promises.push(destroyView(nav, delegate, inactiveViewController));
-    } else if ( i < activeIndex && !nav.isPortal) {
+    } else if ( i < activeIndex) {
       // this view comes before the active view
       // and it is not a portal then ensure it is hidden
       toggleHidden(inactiveViewController.element, true);
@@ -875,11 +964,11 @@ export function attachViewToDom(nav: Nav, enteringView: ViewController, ti: Tran
   return Promise.resolve();
 }
 
-export function initializeViewBeforeTransition(nav: Nav, ti: TransitionInstruction): Promise<ViewController[]> {
+export function initializeViewBeforeTransition(ti: TransitionInstruction): Promise<ViewController[]> {
   let leavingView: ViewController = null;
   let enteringView: ViewController = null;
   return startTransaction(ti).then(() => {
-    const viewControllers = convertComponentToViewController(nav, ti);
+    const viewControllers = convertComponentToViewController(ti);
     ti.viewControllers = viewControllers;
     leavingView = ti.nav.getActive() as ViewController;
     enteringView = getEnteringView(ti, ti.nav, leavingView);
@@ -925,7 +1014,7 @@ export function updateNavStacks(enteringView: ViewController, leavingView: ViewC
 
     const finalBalance = ti.nav.views.length + (ti.insertViews ? ti.insertViews.length : 0) - (ti.removeCount ? ti.removeCount : 0);
     assert(finalBalance >= 0, 'final balance can not be negative');
-    if (finalBalance === 0 && !ti.nav.isPortal) {
+    if (finalBalance === 0) {
       console.warn(`You can't remove all the pages in the navigation stack. nav.pop() is probably called too many times.`);
       throw new Error('Navigation stack needs at least one root page');
     }
@@ -1001,7 +1090,7 @@ export function insertViewIntoNav(nav: Nav, view: ViewController, index: number)
     assert(view.nav === nav, 'view is not part of the nav');
     nav.views.splice(index, 0, nav.views.splice(existingIndex, 1)[0]);
   } else {
-    assert(!view.nav || (nav.isPortal && view.nav === nav), 'nav is used');
+    assert(!view.nav, 'nav is used');
     // this is a new view to add to the stack
     // create the new entering view
     view.nav = nav;
@@ -1117,17 +1206,18 @@ export function getEnteringView(ti: TransitionInstruction, nav: Nav, leavingView
   return null;
 }
 
-export function convertViewsToViewControllers(pairs: ComponentDataPair[]): ViewController[] {
+export function convertViewsToViewControllers(pairs: ComponentDataPair[], escapeHatch: EscapeHatch): ViewController[] {
   return pairs.filter(pair => !!pair)
     .map(pair => {
-      return new ViewController(pair.component, pair.data);
+      const applyEscapeHatch = pair === pairs[pairs.length - 1];
+      return new ViewController(pair.component, pair.data, applyEscapeHatch ? escapeHatch.fromExternalRouter : false, applyEscapeHatch ? escapeHatch.url : null);
     });
 }
 
-export function convertComponentToViewController(_: Nav, ti: TransitionInstruction): ViewController[] {
+export function convertComponentToViewController(ti: TransitionInstruction): ViewController[] {
   if (ti.insertViews) {
     assert(ti.insertViews.length > 0, 'length can not be zero');
-    const viewControllers = convertViewsToViewControllers(ti.insertViews);
+    const viewControllers = convertViewsToViewControllers(ti.insertViews, ti.escapeHatch);
     assert(ti.insertViews.length === viewControllers.length, 'lengths does not match');
     if (viewControllers.length === 0) {
       throw new Error('No views to insert');
@@ -1147,17 +1237,17 @@ export function convertComponentToViewController(_: Nav, ti: TransitionInstructi
 }
 
 export function addToQueue(ti: TransitionInstruction) {
-  const list = queueMap.get(ti.id) || [];
+  const list = transitionQueue.get(ti.id) || [];
   list.push(ti);
-  queueMap.set(ti.id, list);
+  transitionQueue.set(ti.id, list);
 }
 
 export function getQueue(id: number) {
-  return queueMap.get(id) || [];
+  return transitionQueue.get(id) || [];
 }
 
 export function resetQueue(id: number) {
-  queueMap.set(id, []);
+  transitionQueue.set(id, []);
 }
 
 export function getTopTransaction(id: number) {
@@ -1167,7 +1257,7 @@ export function getTopTransaction(id: number) {
   }
   const tmp = queue.concat();
   const toReturn = tmp.shift();
-  queueMap.set(id, tmp);
+  transitionQueue.set(id, tmp);
   return toReturn;
 }
 
@@ -1177,6 +1267,7 @@ export function getDefaultTransition(config: Config) {
 
 let viewIds = VIEW_ID_START;
 const DISABLE_APP_MINIMUM_DURATION = 64;
+const NOT_TRANSITIONING_TRANSITION_ID = -1;
 
 export interface NavEvent extends CustomEvent {
   target: HTMLIonNavElement;
@@ -1186,3 +1277,18 @@ export interface NavEvent extends CustomEvent {
 export interface NavEventDetail {
   isPop?: boolean;
 }
+
+export function getDefaultEscapeHatch(): EscapeHatch {
+  return {
+    fromExternalRouter: false,
+  };
+}
+
+export interface IsRedirectRequired {
+  required: boolean;
+  url?: string;
+}
+
+export const POP = 'pop';
+export const PUSH = 'push';
+export const SET_ROOT = 'setRoot';

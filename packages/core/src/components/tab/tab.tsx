@@ -1,5 +1,4 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
-
 import { getNavAsChildIfExists } from '../../utils/helpers';
 import { FrameworkDelegate } from '../..';
 
@@ -9,7 +8,7 @@ import { FrameworkDelegate } from '../..';
 })
 export class Tab {
 
-  private loaded = false;
+  // private loaded = false;
   @Element() el: HTMLElement;
 
   @State() init = false;
@@ -66,6 +65,7 @@ export class Tab {
 
   @Prop({ mutable: true }) selected = false;
 
+
   @Watch('selected')
   selectedChanged(selected: boolean) {
     if (selected) {
@@ -81,7 +81,30 @@ export class Tab {
   @Method()
   setActive(active: boolean): Promise<any> {
     this.active = active;
-    if (this.loaded || !active) {
+    if (active) {
+      const nav = getNavAsChildIfExists(this.el);
+      if (nav) {
+        // the tab's nav has been initialized externally
+        if ((window as any).externalNavPromise) {
+          return (window as any).externalNavPromise.then(() => {
+            (window as any).externalNavPromise = null;
+          });
+        } else {
+          // the tab's nav has not been initialized externally, so
+          // check if we need to initiailize it
+          return (nav as any).componentOnReady().then(() => {
+            return nav.onAllTransitionsComplete();
+          }).then(() => {
+            if (!nav.getViews().length && !nav.isTransitioning() && !nav.initialized) {
+              return nav.setRoot(nav.root);
+            }
+            return Promise.resolve();
+          });
+        }
+      }
+    }
+
+    /*if (this.loaded || !active) {
       return Promise.resolve();
     }
 
@@ -97,6 +120,8 @@ export class Tab {
       promise = Promise.resolve();
     }
     return promise.then(() => this.fireChildren());
+    */
+    return Promise.resolve();
   }
 
   @Method()
@@ -110,7 +135,7 @@ export class Tab {
     return null;
   }
 
-  private fireChildren() {
+  /*private fireChildren() {
     const nav = getNavAsChildIfExists(this.el);
     if (nav && nav.getViews().length === 0 && nav.root) {
       // we need to initialize
@@ -119,6 +144,7 @@ export class Tab {
     // it's already been initialized if it exists
     return Promise.resolve();
   }
+  */
 
   hostData() {
     const visible = this.active && this.selected;
@@ -127,7 +153,7 @@ export class Tab {
       'aria-labelledby': this.btnId,
       'role': 'tabpanel',
       class: {
-        'show-tab': this.active
+        'show-tab': visible
       }
     };
   }
@@ -137,14 +163,15 @@ export class Tab {
   }
 }
 
-function attachViewToDom(container: HTMLElement, cmp: string): Promise<any> {
+/*function attachViewToDom(container: HTMLElement, cmp: string): Promise<any> {
   const el = document.createElement(cmp) as HTMLStencilElement;
   container.appendChild(el);
-  if (el.componentOnReady ) {
+  if (el.componentOnReady) {
     return el.componentOnReady();
   }
   return Promise.resolve();
 }
+*/
 
 export interface TabEvent extends CustomEvent {
   detail: TabEventDetail;
