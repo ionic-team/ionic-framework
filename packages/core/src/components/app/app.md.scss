@@ -6,7 +6,10 @@
 
 .app-md {
 
-  @include footer-safe-area($toolbar-md-height, $toolbar-md-padding, $tabs-md-tab-height);
+  @include footer-safe-area(
+    $toolbar-md-height,
+    $toolbar-md-padding,
+    $tabbar-md-height);
 
   font-family: $font-family-md-base;
   font-size: $font-size-md-base;

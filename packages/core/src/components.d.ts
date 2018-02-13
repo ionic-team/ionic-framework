@@ -2995,7 +2995,6 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTabButtonAttributes extends HTMLAttributes {
-      mode?: 'ios' | 'md';
       selected?: boolean;
       tab?: HTMLIonTabElement;
     }

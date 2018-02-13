@@ -2,18 +2,17 @@ import {Component, Element, Event, EventEmitter, Listen, Prop} from '@stencil/co
 
 
 @Component({
-  tag: 'ion-tab-button'
+  tag: 'ion-tab-button',
+  styleUrls: {
+    ios: 'tab-button.ios.scss',
+    md: 'tab-button.md.scss'
+  }
 })
 export class TabButton {
 
   @Element() el: HTMLElement;
 
-  /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-   */
-  @Prop() mode: 'ios' | 'md';
+  mode: string;
 
   @Prop() selected = false;
   @Prop() tab: HTMLIonTabElement;
@@ -62,26 +61,17 @@ export class TabButton {
   }
 
   render() {
-    const items = [];
     const tab = this.tab;
-
-    if (tab.icon) {
-      items.push(<ion-icon class='tab-button-icon' name={tab.icon}></ion-icon>);
-    }
-    if (tab.title) {
-      items.push(<span class='tab-button-text'>{tab.title}</span>);
-    }
-    if (tab.badge) {
-      items.push(<ion-badge class='tab-badge' color={tab.badgeStyle}>{tab.badge}</ion-badge>);
-    }
-    if (this.mode === 'md') {
-      items.push(<ion-ripple-effect />);
-    }
-    return items;
+    return [
+        tab.icon && <ion-icon class='tab-button-icon' name={tab.icon}></ion-icon>,
+        tab.title && <span class='tab-button-text'>{tab.title}</span>,
+        tab.badge && <ion-badge class='tab-badge' color={tab.badgeStyle}>{tab.badge}</ion-badge>,
+        this.mode === 'md' && <ion-ripple-effect useTapClick={false} />
+    ];
   }
 }
 
-export interface TabButtonEvent extends CustomEvent {
+export interface TabButtonEvent extends CustomEvent<TabButtonEventDetail> {
   detail: TabButtonEventDetail;
 }
 

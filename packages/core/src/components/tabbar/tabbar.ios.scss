@@ -7,9 +7,9 @@
 .tabbar-ios {
   justify-content: center;
 
-  height: $tabs-ios-tab-height;
+  height: $tabbar-ios-height;
 
-  border-top: $tabs-ios-border;
+  border-top: $tabbar-ios-border;
   background-color: $tabbar-ios-background-color;
 
   contain: strict;
@@ -17,89 +17,12 @@
 
 .tabbar-ios.placement-top {
   border-top: 0;
-  border-bottom: $tabs-ios-border;
+  border-bottom: $tabbar-ios-border;
 }
 
 .tabbar-ios .tabbar-highlight {
   background: $tabbar-ios-text-color-active;
 }
-
-.tabbar-ios > ion-tab-button {
-  @include padding($tabs-ios-tab-padding-top, $tabs-ios-tab-padding-end, $tabs-ios-tab-padding-bottom, $tabs-ios-tab-padding-start);
-
-  max-width: $tabs-ios-tab-max-width;
-  min-height: 100%;
-
-  font-size: $tabs-ios-tab-font-size;
-  color: $tabs-ios-tab-text-color;
-
-  fill: $tabs-ios-tab-icon-color;
-}
-
-.enable-hover .tabbar-ios ion-tab-button:hover,
-.tabbar-ios .tab-selected {
-  color: $tabs-ios-tab-text-color-active;
-
-  fill: $tabs-ios-tab-icon-color-active;
-}
-
-.tabbar-ios .tab-button-text {
-  @include margin(0, null, 1px, null);
-
-  min-height: $tabs-ios-tab-font-size + 1;
-}
-
-.tabbar-ios .has-title-only .tab-button-text {
-  font-size: $tabs-ios-tab-font-size + 2;
-}
-
-.tabbar-ios .tab-button-icon {
-  @include margin(4px, null, 1px, null);
-
-  min-width: $tabs-ios-tab-icon-size + 5;
-  height: $tabs-ios-tab-icon-size;
-
-  font-size: $tabs-ios-tab-icon-size;
-}
-
-.tabbar-ios .tab-button-icon::before {
-  vertical-align: top;
-}
-
-.tabbar-ios.layout-icon-end .tab-button-text,
-.tabbar-ios.layout-icon-start .tab-button-text,
-.tabbar-ios.layout-icon-hide .tab-button-text,
-.tabbar-ios .has-title-only .tab-button-text {
-
-  @include margin(2px, 0);
-
-  font-size: 14px;
-  line-height: 1.1;
-}
-
-.tabbar-ios.layout-icon-end ion-icon,
-.tabbar-ios.layout-icon-start ion-icon {
-  @include margin(2px, null, 1px, null);
-
-  min-width: 24px;
-  height: 26px;
-
-  font-size: 24px;
-}
-
-.tabbar-ios.layout-title-hide ion-icon {
-  @include margin(0);
-}
-
-// .tabs-ios[tabsLayout=icon-hide] ion-tab-button,
-// .tabs-ios ion-tab-button.has-title-only {
-//   min-height: $tabs-ios-tab-min-height - 8;
-// }
-
-// .tabs-ios[tabsLayout=title-hide] ion-tab-button,
-// .tabs-ios ion-tab-button.icon-only {
-//   min-height: $tabs-ios-tab-min-height - 8;
-// }
 
 // iOS Translucent Tabbar
 // --------------------------------------------------
@@ -131,11 +54,12 @@
     fill: $color-contrast;
   }
 
-  .tabbar-ios-#{$color-name} ion-tab-button {
+  .tabbar-ios-#{$color-name} .tab-button {
     color: $color-contrast;
   }
 
-  .tabbar-ios-#{$color-name} ion-tab-button:hover:not(.disable-hover), .tabbar-ios-#{$color-name} .tab-selected {
+  .tabbar-ios-#{$color-name} .tab-button:hover:not(.disable-hover),
+  .tabbar-ios-#{$color-name} .tab-selected {
     font-weight: bold;
 
     color: $color-contrast;

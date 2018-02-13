@@ -6,7 +6,10 @@
 
 .app-ios {
 
-  @include footer-safe-area($toolbar-ios-height, $toolbar-ios-padding, $tabs-ios-tab-height);
+  @include footer-safe-area(
+    $toolbar-ios-height,
+    $toolbar-ios-padding,
+    $tabbar-ios-height);
 
   font-family: $font-family-ios-base;
   font-size: $font-size-ios-base;

@@ -1,0 +1,113 @@
+@import "../../themes/ionic.globals";
+
+ion-tab-button {
+  @include margin(0);
+  @include text-align(center);
+  @include border-radius(0);
+
+  box-sizing: border-box;
+
+  position: relative;
+  z-index: 0;
+  display: flex;
+  overflow: hidden;
+
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 0;
+
+  text-decoration: none;
+  background: none;
+  cursor: pointer;
+
+  user-select: none;
+}
+
+
+.tab-disabled {
+  pointer-events: none;
+}
+
+.tab-disabled > * {
+  opacity: .4;
+}
+
+.tab-button-text,
+.tab-button-icon {
+  display: none;
+  overflow: hidden;
+
+  align-self: center;
+
+  min-width: 26px;
+  max-width: 100%;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.has-icon .tab-button-icon,
+.has-title .tab-button-text {
+  display: block;
+}
+
+.has-title-only .tab-button-text {
+  white-space: normal;
+}
+
+// Tab Badges
+// --------------------------------------------------
+
+.layout-icon-start .tab-button {
+  flex-direction: row;
+}
+
+.layout-icon-end .tab-button {
+  flex-direction: row-reverse;
+}
+
+.layout-icon-bottom .tab-button {
+  flex-direction: column-reverse;
+}
+
+.layout-icon-start .tab-button,
+.layout-icon-end .tab-button,
+.layout-icon-hide .tab-button,
+.layout-title-hide .tab-button {
+  justify-content: center;
+}
+
+.tab-hidden,
+.layout-icon-hide .tab-button-icon,
+.layout-title-hide .tab-button-text {
+  display: none;
+}
+
+// Tab Badges
+// --------------------------------------------------
+
+.tab-badge {
+  @include position(6%, 4%, null, null); // 4% fallback
+  @include position(null, calc(50% - 50px), null, null);
+  @include padding(1px, 6px);
+
+  position: absolute;
+
+  height: auto;
+
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.has-icon .tab-badge {
+  @include position(null, calc(50% - 30px), null, null);
+}
+
+.layout-icon-bottom .tab-badge,
+.layout-icon-start .tab-badge,
+.layout-icon-end .tab-badge {
+  @include position(null, calc(50% - 50px), null, null);
+}

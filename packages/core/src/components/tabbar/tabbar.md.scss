@@ -2,9 +2,9 @@
 @import "./tabbar.md.vars";
 
 .tabbar-md {
-  height: $tabs-md-tab-height;
+  height: $tabbar-md-height;
 
-  border-top: 1px solid $tabbar-md-border-color;
+  border-top: $tabbar-md-border;
   background: $tabbar-md-background-color;
 
   contain: strict;
@@ -14,123 +14,10 @@
   background: $tabbar-md-text-color-active;
 }
 
-// Material Design Tab Button
-// --------------------------------------------------
-
-.tabbar-md ion-tab-button {
-  @include padding($tabs-md-tab-padding-top, $tabs-md-tab-padding-end, $tabs-md-tab-padding-bottom, $tabs-md-tab-padding-start);
-
-  // min-height: $tabs-md-tab-min-height;
-  display: flex;
-
-  max-width: 168px;
-  // min-width: 80px;
-  // Maximum: 168dp
-  // Minimum: 96dp
-  // max-width: 96px;
-  // min-width: 56px;
-  height: 100%;
-
-  font-weight: $tabs-md-tab-font-weight;
-  color: $tabs-md-tab-text-color;
-
-  fill: $tabs-md-tab-icon-color;
-}
-
 .tabbar-md.scrollable ion-scroll {
   @include margin(0, 8px);
 
   max-width: 650px;
-}
-
-.tabbar-md.scrollable ion-tab-button {
-  overflow: hidden;
-
-  flex: 1 0 auto;
-}
-
-.tabbar-md .tab-selected {
-  color: $tabs-md-tab-text-color-active;
-
-  fill: $tabs-md-tab-icon-color-active;
-}
-
-// Material Design Tab Button Text
-// --------------------------------------------------
-
-.tabbar-md.placement-top .tab-selected .tab-button-icon,
-.tabbar-md.placement-top .tab-selected .tab-button-text {
-  transform: inherit;
-}
-
-.tabbar-md .tab-button-text {
-  @include margin($tabs-md-tab-text-margin-top, $tabs-md-tab-text-margin-end, $tabs-md-tab-text-margin-bottom, $tabs-md-tab-text-margin-start);
-
-  @include transform-origin(center, bottom);
-
-  font-size: $tabs-md-tab-font-size;
-
-  text-transform: $tabs-md-tab-text-capitalization;
-  transition: $tabs-md-tab-text-transition;
-}
-
-.tabbar-md .tab-selected .tab-button-text {
-  transform: $tabs-md-tab-text-transform-active;
-  transition: $tabs-md-tab-text-transition;
-}
-
-.tabbar-md.layout-icon-top .has-icon .tab-button-text {
-  @include margin(null, null, -2px, null);
-}
-
-.tabbar-md.layout-icon-bottom .tab-button-text {
-  @include transform-origin(center, top);
-
-  @include margin(-2px, null, null, null);
-}
-
-// Material Design Tab Button Icon
-// --------------------------------------------------
-
-.tabbar-md .tab-button-icon {
-  @include transform-origin(center, center);
-
-  width: $tabs-md-tab-icon-size;
-  height: $tabs-md-tab-icon-size;
-
-  font-size: $tabs-md-tab-icon-size;
-
-  transition: $tabs-md-tab-icon-transition;
-}
-
-// Tab layout: icon-top, icon-only, title-only
-.tabbar-md .tab-selected .tab-button-icon {
-  @include transform(translate3d($tabs-md-tab-icon-transform-x-active, $tabs-md-tab-icon-transform-y-active, $tabs-md-tab-icon-transform-z-active));
-}
-
-// Tab layout: icon-end
-.tabbar-md.layout-icon-end .tab-selected .tab-button-icon {
-  @include transform(translate3d($tabs-md-tab-icon-right-transform-x-active, $tabs-md-tab-icon-right-transform-y-active, $tabs-md-tab-icon-right-transform-z-active));
-}
-
-// Tab layout: icon-bottom
-.tabbar-md.layout-icon-bottom .tab-selected .tab-button-icon {
-  @include transform(translate3d($tabs-md-tab-icon-bottom-transform-x-active, $tabs-md-tab-icon-bottom-transform-y-active, $tabs-md-tab-icon-bottom-transform-z-active));
-}
-
-// Tab layout: icon-start
-.tabbar-md.layout-icon-start .tab-selected .tab-button-icon {
-  @include transform(translate3d($tabs-md-tab-icon-left-transform-x-active, $tabs-md-tab-icon-left-transform-y-active, $tabs-md-tab-icon-left-transform-z-active));
-}
-
-// Material Design Tab with Icon or Title only
-// --------------------------------------------------
-
-.tabbar-md.layout-icon-hide ion-tab-button,
-.tabbar-md.layout-title-hide ion-tab-button,
-.tabbar-md ion-tab-button.icon-only,
-.tabbar-md ion-tab-button.has-title-only {
-  justify-content: center;
 }
 
 // Material Design Tabs Color Mixin
@@ -147,8 +34,8 @@
     fill: $color-contrast;
   }
 
-  .enable-hover .tabbar-md-#{$color-name} ion-tab-button:hover,
-  .tabbar-md-#{$color-name} ion-tab-button.tab-selected {
+  .enable-hover .tabbar-md-#{$color-name} .tab-button:hover,
+  .tabbar-md-#{$color-name} .tab-button.tab-selected {
     color: $color-contrast;
 
     fill: $color-contrast;
