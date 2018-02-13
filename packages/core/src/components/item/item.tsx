@@ -1,5 +1,5 @@
 import { Component, Element, Listen, Prop, State } from '@stencil/core';
-import { createThemedClasses } from '../../utils/theme';
+import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 import { CssClassMap } from '../../index';
 
 
@@ -94,6 +94,7 @@ export class Item {
     const themedClasses = {
       ...childStyles,
       ...createThemedClasses(this.mode, this.color, 'item'),
+      ...getElementClassMap(this.el.classList),
       'item-block': true
     };
 
