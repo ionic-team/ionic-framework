@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
-import { getNavAsChildIfExists } from '../../utils/helpers';
+import { ensureExternalRounterController, getNavAsChildIfExists } from '../../utils/helpers';
 import { FrameworkDelegate } from '../..';
 
 @Component({
@@ -85,11 +85,14 @@ export class Tab {
       const nav = getNavAsChildIfExists(this.el);
       if (nav) {
         // the tab's nav has been initialized externally
-        if ((window as any).externalNavPromise) {
-          return (window as any).externalNavPromise.then(() => {
-            (window as any).externalNavPromise = null;
-          });
-        } else {
+
+        return ensureExternalRounterController().then((externalRouterController) => {
+          if (externalRouterController.getExternalNavPromise()) {
+            return (externalRouterController.getExternalNavPromise() as Promise<any>).then(() => {
+              externalRouterController.clearExternalNavPromise();
+            });
+          }
+
           // the tab's nav has not been initialized externally, so
           // check if we need to initiailize it
           return (nav as any).componentOnReady().then(() => {
@@ -100,7 +103,7 @@ export class Tab {
             }
             return Promise.resolve();
           });
-        }
+        });
       }
     }
 

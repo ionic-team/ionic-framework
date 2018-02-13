@@ -316,3 +316,13 @@ export function normalizeUrl(url: string) {
   }
   return url;
 }
+
+export function ensureExternalRounterController(): Promise<HTMLIonExternalRouterControllerElement> {
+  const element = document.querySelector('ion-external-router-controller');
+  if (element) {
+    return (element as any).componentOnReady();
+  }
+  const toCreate = document.createElement('ion-external-router-controller');
+  document.body.appendChild(toCreate);
+  return (toCreate as any).componentOnReady();
+}

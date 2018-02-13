@@ -2,26 +2,29 @@ import { Injectable } from '@angular/core';
 import {
   Event,
   NavigationEnd,
-  NavigationStart,
   Router
 } from '@angular/router';
 
-let initialized = false;
+import { ensureExternalRounterController } from '../util/util';
 
 @Injectable()
 export class RouteEventHandler {
 
   constructor(private router: Router) {
-    (window as any).externalNav = false;
 
     router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        (window as any).externalNav = false;
+        ensureExternalRounterController().then((element) => {
+          element.updateExternalNavOccuring(false);
+        });
       }
     });
   }
 
   externalNavStart() {
-    (window as any).externalNav = true;
+    return ensureExternalRounterController().then((element) => {
+      element.updateExternalNavOccuring(true);
+    });
   }
 }
+

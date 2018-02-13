@@ -1,6 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 import { Config, NavEventDetail, NavOutlet } from '../../index';
 
+import { ensureExternalRounterController } from '../../utils/helpers';
+
 
 @Component({
   tag: 'ion-tabs',
@@ -71,8 +73,13 @@ export class Tabs implements NavOutlet {
     this.loadConfig('tabsLayout', 'icon-top');
     this.loadConfig('tabsHighlight', true);
 
-    return this.initTabs().then(() => {
-      if (! (window as any).externalNav) {
+    const promises: Promise<any>[] = [];
+    promises.push(this.initTabs());
+    promises.push(ensureExternalRounterController());
+    return Promise.all(promises).then(([_, externalRouterController]) => {
+      return (externalRouterController as HTMLIonExternalRouterControllerElement).getExternalNavOccuring();
+    }).then((externalNavOccuring) => {
+      if (!externalNavOccuring) {
         return this.initSelect();
       }
       return null;
