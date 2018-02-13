@@ -12,10 +12,6 @@ ion-item-options {
 
   font-size: 14px;
 
-  &.hydrated {
-    visibility: hidden;
-  }
-
   @include multi-dir() {
     // scss-lint:disable PropertySpelling
     top: 0;
@@ -37,6 +33,10 @@ ion-item-options {
 
       justify-content: flex-end;
     }
+  }
+
+  &.hydrated {
+    visibility: hidden;
   }
 }
 
