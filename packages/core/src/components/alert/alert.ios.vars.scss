@@ -18,7 +18,7 @@ $alert-ios-max-width:                           270px !default;
 $alert-ios-border-radius:                       13px !default;
 
 /// @prop - Background color of the alert
-$alert-ios-background-color:                    $background-ios-color-step-50 !default;
+$alert-ios-background-color:                    $overlay-ios-background-color !default;
 
 /// @prop - Background color of the alert when translucent
 $alert-ios-translucent-background-color:        ion-color-alpha($background-ios-color-value, background-ios-color, $alpha-ios-highest) !default;

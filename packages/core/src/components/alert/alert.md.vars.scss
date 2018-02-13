@@ -18,7 +18,7 @@ $alert-md-max-width:                          280px !default;
 $alert-md-border-radius:                      2px !default;
 
 /// @prop - Background color of the alert
-$alert-md-background-color:                   $background-md-color-step-50 !default;
+$alert-md-background-color:                   $overlay-md-background-color !default;
 
 /// @prop - Box shadow color of the alert
 $alert-md-box-shadow-color:                   rgba(0, 0, 0, .4) !default;

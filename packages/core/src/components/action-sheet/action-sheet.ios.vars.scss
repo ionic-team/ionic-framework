@@ -28,7 +28,7 @@ $action-sheet-ios-group-margin-top:                     10px !default;
 $action-sheet-ios-group-margin-bottom:                  10px !default;
 
 /// @prop - Background color of the action sheet
-$action-sheet-ios-background-color:                     $background-ios-color-step-50 !default;
+$action-sheet-ios-background-color:                     $overlay-ios-background-color !default;
 
 /// @prop - Background color of the action sheet when translucent
 $action-sheet-ios-translucent-background-color:         ion-color-alpha($background-ios-color-value, background-ios-color, $alpha-ios-high) !default;
