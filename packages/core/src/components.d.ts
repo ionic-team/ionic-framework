@@ -1841,6 +1841,38 @@ declare global {
 
 
 import {
+  NavPop as IonNavPush
+} from './components/nav-push/nav-push';
+
+declare global {
+  interface HTMLIonNavPushElement extends IonNavPush, HTMLStencilElement {
+  }
+  var HTMLIonNavPushElement: {
+    prototype: HTMLIonNavPushElement;
+    new (): HTMLIonNavPushElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-nav-push": HTMLIonNavPushElement;
+  }
+  interface ElementTagNameMap {
+    "ion-nav-push": HTMLIonNavPushElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-nav-push": JSXElements.IonNavPushAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonNavPushAttributes extends HTMLAttributes {
+      component?: any;
+      data?: any;
+      url?: string;
+    }
+  }
+}
+
+
+import {
   Nav as IonNav
 } from './components/nav/nav';
 
