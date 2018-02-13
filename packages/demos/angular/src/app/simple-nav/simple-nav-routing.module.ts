@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       { path: 'page-one', loadChildren: './page-one/page-one.module#PageOneModule' },
       { path: 'page-two', loadChildren: './page-two/page-two.module#PageTwoModule' },
-      { path: 'page-three', loadChildren: './page-three/page-three.module#PageThreeModule' }
+      { path: 'page-three/:paramOne/:paramTwo', loadChildren: './page-three/page-three.module#PageThreeModule', data: { isProd: true} }
     ]
   },
 ];

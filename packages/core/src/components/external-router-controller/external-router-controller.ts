@@ -30,14 +30,14 @@ export class ExternalRouterController {
   }
 
   @Method()
-  reconcileNav(nav: HTMLIonNavElement, component: any, escapeHatch: EscapeHatch, isTopLevel: boolean) {
+  reconcileNav(nav: HTMLIonNavElement, component: any, data: any = {}, escapeHatch: EscapeHatch, isTopLevel: boolean) {
     return nav.componentOnReady().then(() => {
       // check if the nav has an `<ion-tab>` as a parent
       if (isParentTab(nav)) {
         // check if the tab is selected
-        return updateTab(this, nav, component, escapeHatch, isTopLevel);
+        return updateTab(this, nav, component, data, escapeHatch, isTopLevel);
       } else {
-        return updateNav(nav, component, escapeHatch, isTopLevel);
+        return updateNav(nav, component, data, escapeHatch, isTopLevel);
       }
     });
   }
@@ -47,7 +47,7 @@ function isParentTab(navElement: HTMLIonNavElement) {
   return navElement.parentElement.tagName.toLowerCase() === 'ion-tab';
 }
 
-function updateTab(externalRouterController: ExternalRouterController, navElement: HTMLIonNavElement, component: any, escapeHatch: EscapeHatch, isTopLevel: boolean) {
+function updateTab(externalRouterController: ExternalRouterController, navElement: HTMLIonNavElement, component: any, data: any, escapeHatch: EscapeHatch, isTopLevel: boolean) {
 
   const tab = navElement.parentElement as HTMLIonTabElement;
 
@@ -56,7 +56,7 @@ function updateTab(externalRouterController: ExternalRouterController, navElemen
 
   return isTabSelected(tabs, tab).then((isSelected: boolean) => {
     if (!isSelected) {
-      const promise = updateNav(navElement, component, escapeHatch, isTopLevel);
+      const promise = updateNav(navElement, component, data, escapeHatch, isTopLevel);
       externalRouterController.externalNavPromise = promise;
       // okay, the tab is not selected, so we need to do a "switch" transition
       // basically, we should update the nav, and then swap the tabs
@@ -66,7 +66,7 @@ function updateTab(externalRouterController: ExternalRouterController, navElemen
     }
 
     // okay cool, the tab is already selected, so we want to see a transition
-    return updateNav(navElement, component, escapeHatch, isTopLevel);
+    return updateNav(navElement, component, data, escapeHatch, isTopLevel);
   });
 }
 
@@ -80,14 +80,14 @@ function isTabSelected(tabsElement: HTMLIonTabsElement, tabElement: HTMLIonTabEl
 }
 
 function updateNav(navElement: HTMLIonNavElement,
-  component: any, escapeHatch: EscapeHatch, isTopLevel: boolean): Promise<NavResult> {
+  component: any, data: any, escapeHatch: EscapeHatch, isTopLevel: boolean): Promise<NavResult> {
 
 
   // check if the component is the top view
   const activeViews = navElement.getViews();
   if (activeViews.length === 0) {
     // there isn't a view in the stack, so push one
-    return navElement.setRoot(component, {}, {}, escapeHatch);
+    return navElement.setRoot(component, data, {}, escapeHatch);
   }
 
   const currentView = activeViews[activeViews.length - 1];
@@ -115,5 +115,5 @@ function updateNav(navElement: HTMLIonNavElement,
   }
 
   // it's the top level nav, and it's not one of those other behaviors, so do a push so the user gets a chill animation
-  return navElement.push(component, {}, { animate: isTopLevel }, escapeHatch);
+  return navElement.push(component, data, { animate: isTopLevel }, escapeHatch);
 }

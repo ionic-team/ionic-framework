@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'page-three',
@@ -12,6 +12,9 @@ import { NavController } from '@ionic/angular';
     </ion-header>
     <ion-content padding>
       Page Three {{ts}}
+      <div>isProd: {{isProd}}</div>
+      <div>paramOne: {{paramOne}}</div>
+      <div>paramTwo: {{paramTwo}}</div>
       <div>
         <ion-button (click)="navPop()">Go Back</ion-button>
       </div>
@@ -22,7 +25,14 @@ import { NavController } from '@ionic/angular';
 export class PageThree {
 
   ts: number;
-  constructor(private navController: NavController) {
+  isProd = false;
+  paramOne: any = null;
+  paramTwo: any = null;
+  constructor(private navController: NavController, private navParams: NavParams) {
+
+    this.isProd = navParams.get('isProd');
+    this.paramOne = navParams.get('paramOne');
+    this.paramTwo = navParams.get('paramTwo');
 
     setInterval(() => {
       this.ts = Date.now();

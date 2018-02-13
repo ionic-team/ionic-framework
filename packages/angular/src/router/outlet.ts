@@ -125,7 +125,9 @@ export class RouterOutlet implements OnDestroy, OnInit, RouterDelegate {
     const isTopLevel = !hasChildComponent(activatedRoute);
 
     return this.routeEventHandler.externalNavStart().then(() => {
-      return activateRoute(this.elementRef.nativeElement, component, cfr, injector, isTopLevel).then(() => {
+      return getDataFromRoute(activatedRoute);
+    }).then((dataObj: any) => {
+      return activateRoute(this.elementRef.nativeElement, component, dataObj, cfr, injector, isTopLevel).then(() => {
         this.changeDetector.markForCheck();
         this.activateEvents.emit(null);
         this.activationStatus = ACTIVATED;
@@ -135,11 +137,11 @@ export class RouterOutlet implements OnDestroy, OnInit, RouterDelegate {
 }
 
 export function activateRoute(navElement: HTMLIonNavElement,
-  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector, isTopLevel: boolean): Promise<void> {
+  component: Type<any>, data: any = {}, cfr: ComponentFactoryResolver, injector: Injector, isTopLevel: boolean): Promise<void> {
 
   return ensureExternalRounterController().then((externalRouterController) => {
     const escapeHatch = getEscapeHatch(cfr, injector);
-    return externalRouterController.reconcileNav(navElement, component, escapeHatch, isTopLevel);
+    return externalRouterController.reconcileNav(navElement, component, data, escapeHatch, isTopLevel);
   });
 }
 
@@ -164,4 +166,33 @@ export function getEscapeHatch(cfr: ComponentFactoryResolver, injector: Injector
     fromExternalRouter: true,
     url: location.pathname
   };
+}
+
+export function getDataFromRoute(activatedRoute: ActivatedRoute): Promise<any> {
+  const promises: Promise<any>[] = [];
+
+  promises.push(getDataFromObservable(activatedRoute));
+  promises.push(getDataFromParams(activatedRoute));
+  return Promise.all(promises).then(([data, params]: any[]) => {
+    let combined = {};
+    Object.assign(combined, data, params);
+    return combined;
+  });
+}
+
+export function getDataFromObservable(activatedRoute: ActivatedRoute) {
+  return new Promise((resolve) => {
+    activatedRoute.data.subscribe((data: any) => {
+      resolve(data || {});
+    });
+  });
+}
+
+export function getDataFromParams(activatedRoute: ActivatedRoute) {
+  return new Promise((resolve) => {
+    activatedRoute.params.subscribe((data: any) => {
+      console.log('data: ', data);
+      resolve(data || {});
+    });
+  });
 }

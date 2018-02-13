@@ -30,7 +30,7 @@ export class PageTwo {
   }
 
   pushPageThreeComponent() {
-    this.navController.push('/simple-nav/page-three');
+    this.navController.push('/simple-nav/page-three/jim/halpert');
   }
 
   goBack() {
