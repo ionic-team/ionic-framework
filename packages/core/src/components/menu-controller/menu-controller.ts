@@ -1,5 +1,5 @@
-import { Animation, AnimationBuilder, AnimationController, Menu } from '../../index';
 import { Component, Method, Prop } from '@stencil/core';
+import { Animation, AnimationBuilder, Menu } from '../../index';
 
 import MenuOverlayAnimation from './animations/overlay';
 import MenuPushAnimation from './animations/push';
@@ -11,9 +11,9 @@ import MenuRevealAnimation from './animations/reveal';
 export class MenuController {
 
   private menus: Menu[] = [];
-  private menuAnimations: { [name: string]: AnimationBuilder } = {};
+  private menuAnimations = new Map<string, AnimationBuilder>();
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
 
   constructor() {
     this.registerAnimation('reveal', MenuRevealAnimation);
@@ -29,11 +29,7 @@ export class MenuController {
   @Method()
   open(menuId?: string): Promise<boolean> {
     const menu = this.get(menuId);
-    if (menu && !this.isAnimating()) {
-      const openedMenu = this.getOpen();
-      if (openedMenu && menu !== openedMenu) {
-        openedMenu.setOpen(false, false);
-      }
+    if (menu) {
       return menu.open();
     }
     return Promise.resolve(false);
@@ -58,7 +54,6 @@ export class MenuController {
     return Promise.resolve(false);
   }
 
-
   /**
    * Toggle the menu. If it's closed, it will open, and if opened, it
    * will close.
@@ -68,11 +63,7 @@ export class MenuController {
   @Method()
   toggle(menuId?: string): Promise<boolean> {
     const menu = this.get(menuId);
-    if (menu && !this.isAnimating()) {
-      const openedMenu = this.getOpen();
-      if (openedMenu && menu !== openedMenu) {
-        openedMenu.setOpen(false, false);
-      }
+    if (menu) {
       return menu.toggle();
     }
     return Promise.resolve(false);
@@ -148,14 +139,12 @@ export class MenuController {
    */
   @Method()
   get(menuId?: string): HTMLIonMenuElement {
-    let menu: Menu;
-
     if (menuId === 'left' || menuId === 'right') {
       // there could be more than one menu on the same side
       // so first try to get the enabled one
-      menu = this.menus.find(m => m.side === menuId && !m.disabled);
+      const menu = this.find(m => m.side === menuId && !m.disabled);
       if (menu) {
-        return menu.getElement();
+        return menu;
       }
 
       // didn't find a menu side that is enabled
@@ -169,13 +158,13 @@ export class MenuController {
     }
 
     // return the first enabled menu
-    menu = this.menus.find(m => !m.disabled);
+    const menu = this.find(m => !m.disabled);
     if (menu) {
-      return menu.getElement();
+      return menu;
     }
 
     // get the first menu in the array, if one exists
-    return (this.menus.length > 0 ? this.menus[0].getElement() : null);
+    return (this.menus.length > 0 ? this.menus[0].el : null);
   }
 
   /**
@@ -191,7 +180,7 @@ export class MenuController {
    */
   @Method()
   getMenus(): HTMLIonMenuElement[] {
-    return this.menus.map(menu => menu.getElement());
+    return this.menus.map(menu => menu.el);
   }
 
   /**
@@ -242,19 +231,39 @@ export class MenuController {
    * @hidden
    */
   @Method()
+  _setOpen(menu: Menu, shouldOpen: boolean, animated: boolean): Promise<boolean> {
+    if (this.isAnimating()) {
+      return Promise.resolve(false);
+    }
+    if (shouldOpen) {
+      const openedMenu = this.getOpen();
+      if (openedMenu && menu !== openedMenu) {
+        openedMenu.setOpen(false, false);
+      }
+    }
+    return menu._setOpen(shouldOpen, animated);
+  }
+
+  /**
+   * @hidden
+   */
+  @Method()
   createAnimation(type: string, menuCmp: Menu): Promise<Animation> {
-    const animationBuilder = this.menuAnimations[type];
+    const animationBuilder = this.menuAnimations.get(type);
+    if (!animationBuilder) {
+      return Promise.reject('animation not registered');
+    }
     return this.animationCtrl.create(animationBuilder, null, menuCmp);
   }
 
-  private registerAnimation(name: string, cls: AnimationBuilder) {
-    this.menuAnimations[name] = cls;
+  private registerAnimation(name: string, animation: AnimationBuilder) {
+    this.menuAnimations.set(name, animation);
   }
 
   private find(predicate: (menu: Menu) => boolean): HTMLIonMenuElement {
     const instance = this.menus.find(predicate);
     if (instance) {
-      return instance.getElement();
+      return instance.el;
     }
     return null;
   }

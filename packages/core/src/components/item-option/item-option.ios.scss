@@ -10,10 +10,6 @@
   background-color: $item-option-button-ios-background-color;
 }
 
-.item-option-ios .icon {
-  fill: $item-option-button-ios-icon-color;
-}
-
 .list-ios .item-options-right ion-item-option:last-child {
   @include safe-area-padding-horizontal(null, .7em);
 }
@@ -34,9 +30,5 @@
   .item-option-ios-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
-  }
-
-  .item-option-ios-#{$color-name} .icon {
-    fill: $color-contrast;
   }
 }

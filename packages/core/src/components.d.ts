@@ -1315,6 +1315,7 @@ declare global {
     export interface IonItemOptionAttributes extends HTMLAttributes {
       color?: string;
       disabled?: boolean;
+      expandable?: boolean;
       href?: string;
       mode?: 'ios' | 'md';
     }
@@ -1664,6 +1665,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonMenuToggleAttributes extends HTMLAttributes {
+      autoHide?: boolean;
       menu?: string;
     }
   }
@@ -1694,7 +1696,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonMenuAttributes extends HTMLAttributes {
-      content?: string;
+      contentId?: string;
       disabled?: boolean;
       maxEdgeStart?: number;
       menuId?: string;

@@ -99,7 +99,7 @@
                 </ion-item-option>
               </ion-item-options>
               <ion-item-options side="right">
-                <ion-item-option color="light" onclick="unread('item100')">
+                <ion-item-option color="danger" onclick="unread('item100')">
                   <ion-icon slot="icon-only" name="trash"></ion-icon>
                 </ion-item-option>
                 <ion-item-option onclick="unread('item100')">
@@ -380,7 +380,24 @@
             window.location.reload();
           }
           document.addEventListener('ionSwipe', (ev)=> console.log('SWIPE!!', ev.detail));
-          document.addEventListener('ionDrag', (ev)=> console.log('DRAG!!', ev.detail.getOpenAmount()));
+          document.addEventListener('ionDrag', (ev) => {
+            // console.log('DRAG!!', ev.detail);
+
+            let slidingRatio = ev.target.getSlidingRatio();
+            console.log('sliding', slidingRatio);
+
+            if (slidingRatio > 0) {
+              // positive
+              console.log('right side');
+            } else {
+              // negative
+              console.log('left side');
+            }
+            if (Math.abs(slidingRatio) > 1) {
+              console.log('overscroll');
+            }
+          });
+
 
         </script>
         <style>

@@ -7,7 +7,7 @@
 
 ## Properties
 
-#### content
+#### contentId
 
 string
 
@@ -65,7 +65,7 @@ see the `menuType` in the [config](../../config/Config). Available options:
 
 ## Attributes
 
-#### content
+#### content-id
 
 string
 
@@ -134,6 +134,9 @@ Emitted when the sliding position changes.
 It reports the relative position.
 
 
+#### ionMenuDisable
+
+
 #### ionOpen
 
 Emitted when the menu is open.
@@ -142,6 +145,9 @@ Emitted when the menu is open.
 ## Methods
 
 #### close()
+
+
+#### isActive()
 
 
 #### isOpen()

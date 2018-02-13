@@ -99,7 +99,7 @@ export { Slide } from './components/slide/slide';
 export { Slides } from './components/slides/slides';
 export * from './components/spinner/spinner-configs';
 export { Spinner } from './components/spinner/spinner';
-export { SplitPane, SplitPaneAlert } from './components/split-pane/split-pane';
+export { SplitPane } from './components/split-pane/split-pane';
 export { Tab } from './components/tab/tab';
 export { TabButton } from './components/tab-button/tab-button';
 export { Tabs } from './components/tabs/tabs';

@@ -7,6 +7,11 @@
 
 ## Properties
 
+#### autoHide
+
+boolean
+
+
 #### menu
 
 string
@@ -15,6 +20,11 @@ Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `ri
 
 
 ## Attributes
+
+#### auto-hide
+
+boolean
+
 
 #### menu
 

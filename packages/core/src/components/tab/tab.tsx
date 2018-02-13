@@ -4,6 +4,7 @@ import { FrameworkDelegate } from '../..';
 
 @Component({
   tag: 'ion-tab',
+  styleUrl: 'tab.scss'
 })
 export class Tab {
 

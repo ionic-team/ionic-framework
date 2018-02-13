@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "0.0.2-59",
+  "version": "0.0.2-63",
   "description": "Base components for Ionic",
   "main": "dist/ionic.js",
   "types": "dist/types/index.d.ts",
@@ -29,7 +29,7 @@
   "scripts": {
     "build": "stencil build --docs --dev",
     "clean": "rm -rf dist",
-    "deploy": "npm run tsc && np --any-branch",
+    "deploy": "stencil build --docs && np --any-branch",
     "dev": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server\"",
     "e2e": "node ./scripts/e2e",
     "e2e-debug": "node --inspect --debug-brk ./scripts/e2e",
@@ -46,8 +46,7 @@
     "tslint": "tslint --project .",
     "tslint-fix": "tslint --project . --fix",
     "validate": "npm run clean && npm run lint && npm run test && npm run build",
-    "tsc": "./node_modules/.bin/tsc -p .",
-    "version": "npm run build"
+    "tsc": "./node_modules/.bin/tsc -p ."
   },
   "author": "Ionic Team",
   "license": "MIT",

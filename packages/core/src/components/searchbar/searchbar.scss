@@ -44,6 +44,10 @@ ion-searchbar {
   &:focus {
     outline: none;
   }
+
+  &::-webkit-search-cancel-button {
+    display: none;
+  }
 }
 
 .searchbar-clear-icon {

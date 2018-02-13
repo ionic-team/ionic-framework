@@ -9,6 +9,8 @@
 
 #### closeSlidingItems()
 
+Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding).
+
 
 #### getOpenedItem()
 
