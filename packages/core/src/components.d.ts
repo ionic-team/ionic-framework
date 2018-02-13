@@ -1838,7 +1838,6 @@ declare global {
       lazy?: boolean;
       mode?: string;
       root?: any;
-      rootUrl?: string;
       routerDelegate?: RouterDelegate;
       swipeBackEnabled?: boolean;
       useUrls?: boolean;

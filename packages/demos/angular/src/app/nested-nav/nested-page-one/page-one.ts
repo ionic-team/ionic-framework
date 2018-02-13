@@ -31,6 +31,6 @@ export class PageOne {
 
 
   pushPageTwoComponent() {
-    this.navController.element.pushUrl('/nested-nav/nested-page-two/section-one');
+    this.navController.push('/nested-nav/nested-page-two/section-one');
   }
 }

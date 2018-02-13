@@ -30,7 +30,7 @@ export class LoginPage {
 
 
   pushPageTwoComponent() {
-    this.navController.element.pushUrl('/nav-then-tabs/app/tabs/(tab-one:one)');
+    this.navController.push('/nav-then-tabs/app/tabs/(tab-one:one)');
   }
 
 

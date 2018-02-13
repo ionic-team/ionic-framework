@@ -32,10 +32,10 @@ export class TabOnePageTwo {
   }
 
   next() {
-    this.navController.element.pushUrl('/nav-then-tabs/app/tabs/(tab-one:three)');
+    this.navController.push('/nav-then-tabs/app/tabs/(tab-one:three)');
   }
 
   back() {
-    this.navController.element.popUrl();
+    this.navController.pop();
   }
 }

@@ -96,9 +96,6 @@ export class Tab {
             return nav.onAllTransitionsComplete();
           }).then(() => {
             if (!nav.getViews().length && !nav.isTransitioning() && !nav.initialized) {
-              if (nav.rootUrl) {
-                return nav.setRootUrl(nav.rootUrl);
-              }
               return nav.setRoot(nav.root);
             }
             return Promise.resolve();
@@ -156,7 +153,7 @@ export class Tab {
       'aria-labelledby': this.btnId,
       'role': 'tabpanel',
       class: {
-        'show-tab': this.active
+        'show-tab': visible
       }
     };
   }

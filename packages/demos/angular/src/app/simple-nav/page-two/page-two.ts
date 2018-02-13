@@ -30,10 +30,10 @@ export class PageTwo {
   }
 
   pushPageThreeComponent() {
-    this.navController.element.pushUrl('/simple-nav/page-three');
+    this.navController.push('/simple-nav/page-three');
   }
 
   goBack() {
-    this.navController.element.popUrl();
+    this.navController.pop();
   }
 }

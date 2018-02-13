@@ -72,9 +72,9 @@ export interface TransitionInstruction {
   nav?: Nav;
   delegate?: FrameworkDelegate;
   animation?: Animation;
-  escapeHatch?: any;
+  escapeHatch?: EscapeHatch;
   method?: string;
-  mountingData?: any;
+  mountingData?: FrameworkMountingData;
 }
 
 export interface NavResult {
@@ -92,6 +92,11 @@ export interface ExternalNavData {
   method: string;
   resolve: Function;
   reject: Function;
+}
+
+export interface EscapeHatch {
+  fromExternalRouter?: boolean;
+  url?: string;
 }
 
 export interface Transition extends Animation {

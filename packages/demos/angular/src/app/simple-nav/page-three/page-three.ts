@@ -31,7 +31,7 @@ export class PageThree {
 
 
   navPop() {
-    this.navController.element.popUrl();
+    this.navController.pop();
   }
 
 }

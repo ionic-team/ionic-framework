@@ -18,14 +18,15 @@ export class ViewController implements PublicViewController {
   zIndex: number;
   dismissProxy: any;
   timestamp: number;
+  fromExternalRouter: boolean;
   url: string;
 
 
   onDidDismiss: (data: any, role: string) => void;
   onWillDismiss: (data: any, role: string) => void;
 
-  constructor(public component: any, data?: any) {
-    initializeNewViewController(this, data);
+  constructor(public component: any, data: any, fromExternalRouter: boolean, url: string) {
+    initializeNewViewController(this, data, fromExternalRouter, url);
   }
 
   /**
@@ -163,9 +164,10 @@ export function didLoadImpl(viewController: ViewController) {
   callLifeCycleFunction(viewController.instance, 'ionViewDidLoad');
 }
 
-export function initializeNewViewController(viewController: ViewController, data: any) {
+export function initializeNewViewController(viewController: ViewController, data: any, fromExternalRouter: boolean, url: string) {
   viewController.timestamp = Date.now();
   viewController.state = STATE_NEW;
   viewController.data = data || {};
-  viewController.url = normalizeUrl(location.pathname);
+  viewController.fromExternalRouter = fromExternalRouter;
+  viewController.url = url && normalizeUrl(url);
 }

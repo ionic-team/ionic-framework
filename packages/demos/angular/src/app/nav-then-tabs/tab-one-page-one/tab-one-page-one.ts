@@ -29,6 +29,6 @@ export class TabOnePageOne {
   }
 
   next() {
-    this.navController.element.pushUrl('/nav-then-tabs/app/tabs/(tab-one:two)');
+    this.navController.push('/nav-then-tabs/app/tabs/(tab-one:two)');
   }
 }

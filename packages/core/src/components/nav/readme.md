@@ -27,11 +27,6 @@ string
 any
 
 
-#### rootUrl
-
-string
-
-
 #### routerDelegate
 
 
@@ -67,11 +62,6 @@ string
 #### root
 
 any
-
-
-#### root-url
-
-string
 
 
 #### router-delegate
@@ -150,13 +140,7 @@ boolean
 #### popToRoot()
 
 
-#### popUrl()
-
-
 #### push()
-
-
-#### pushUrl()
 
 
 #### removeIndex()
@@ -172,9 +156,6 @@ boolean
 
 
 #### setRoot()
-
-
-#### setRootUrl()
 
 
 #### setRouteId()

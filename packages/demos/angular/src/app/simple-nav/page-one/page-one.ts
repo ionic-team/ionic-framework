@@ -32,7 +32,7 @@ export class PageOne {
 
 
   pushPageTwoComponent() {
-    this.navController.element.pushUrl('/simple-nav/page-two');
+    this.navController.push('/simple-nav/page-two');
   }
 
 

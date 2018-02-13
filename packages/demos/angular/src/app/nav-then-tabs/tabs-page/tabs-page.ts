@@ -8,13 +8,13 @@ import { NavController } from '@ionic/angular';
   template: `
   <ion-tabs>
     <ion-tab title="Tab One" icon="star" #tabOne>
-      <ion-nav [rootUrl]="tabOnePageOne" name="tab-one" lazy="true"></ion-nav>
+      <ion-nav [root]="tabOnePageOne" name="tab-one" lazy="true"></ion-nav>
     </ion-tab>
     <ion-tab title="Tab Two" icon="globe" #tabTwo>
-      <ion-nav [rootUrl]="tabTwoPageOne" name="tab-two" lazy="true"></ion-nav>
+      <ion-nav [root]="tabTwoPageOne" name="tab-two" lazy="true"></ion-nav>
     </ion-tab>
     <ion-tab title="Tab Three" icon="logo-facebook" #tabThree>
-      <ion-nav [rootUrl]="tabThreePageOne" name="tab-three" lazy="true"></ion-nav>
+      <ion-nav [root]="tabThreePageOne" name="tab-three" lazy="true"></ion-nav>
     </ion-tab>
   </ion-tabs>
   `

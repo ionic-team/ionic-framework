@@ -191,16 +191,15 @@ function updateTab(navElement: HTMLIonNavElement,
 }
 
 function updateNav(navElement: HTMLIonNavElement,
-  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector, isTopLevel: boolean): Promise<NavResult>{
+  component: Type<any>, cfr: ComponentFactoryResolver, injector: Injector, isTopLevel: boolean): Promise<NavResult> {
+
+  const escapeHatch = getEscapeHatch(cfr, injector);
 
   // check if the component is the top view
   const activeViews = navElement.getViews();
   if (activeViews.length === 0) {
     // there isn't a view in the stack, so push one
-    return navElement.setRoot(component, {}, {}, {
-      cfr,
-      injector
-    });
+    return navElement.setRoot(component, {}, {}, escapeHatch);
   }
 
   const currentView = activeViews[activeViews.length - 1];
@@ -215,7 +214,7 @@ function updateNav(navElement: HTMLIonNavElement,
     const previousView = activeViews[activeViews.length - 2];
     if (previousView.component === component) {
       // cool, we match the previous view, so pop it
-      return navElement.pop();
+      return navElement.pop(null, escapeHatch);
     }
   }
 
@@ -223,22 +222,12 @@ function updateNav(navElement: HTMLIonNavElement,
   for (const view of activeViews) {
     if (view.component === component) {
       // cool, we found the match, pop back to that bad boy
-      return navElement.popTo(view);
+      return navElement.popTo(view, null, escapeHatch);
     }
   }
 
   // it's the top level nav, and it's not one of those other behaviors, so do a push so the user gets a chill animation
-  const start = Date.now();
-  console.log('Starting default');
-  return navElement.push(component, {}, { animate: isTopLevel }, {
-    cfr,
-    injector
-  }).then((result) => {
-    const end = Date.now();
-    const totalTime = end - start;
-    console.log(`Ending default - took ${totalTime} millis`);
-    return result;
-  });
+  return navElement.push(component, {}, { animate: isTopLevel }, escapeHatch);
 }
 
 export const NOT_ACTIVATED = 0;
@@ -253,4 +242,13 @@ export function hasChildComponent(activatedRoute: ActivatedRoute): boolean {
     }
   }
   return false;
+}
+
+export function getEscapeHatch(cfr: ComponentFactoryResolver, injector: Injector): AngularEscapeHatch {
+  return {
+    cfr,
+    injector,
+    fromExternalRouter: true,
+    url: location.pathname
+  };
 }

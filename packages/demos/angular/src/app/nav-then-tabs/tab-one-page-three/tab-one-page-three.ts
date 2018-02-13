@@ -29,6 +29,6 @@ export class TabOnePageThree {
   }
 
   back() {
-    this.navController.element.popUrl();
+    this.navController.pop();
   }
 }

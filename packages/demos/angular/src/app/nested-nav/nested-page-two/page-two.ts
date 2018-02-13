@@ -15,7 +15,7 @@ export class PageTwo {
   }
 
   pushPageThree() {
-    this.navController.element.pushUrl('/nested-nav/nested-page-three');
+    this.navController.push('/nested-nav/nested-page-three');
   }
 
   goBack() {

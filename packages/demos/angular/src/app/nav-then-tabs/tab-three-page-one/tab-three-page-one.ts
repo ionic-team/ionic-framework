@@ -29,6 +29,6 @@ export class TabThreePageOne {
   }
 
   next() {
-    this.navController.element.pushUrl('/nav-then-tabs/app/tabs/(tab-three:two)');
+    this.navController.push('/nav-then-tabs/app/tabs/(tab-three:two)');
   }
 }

@@ -29,6 +29,6 @@ export class TabTwoPageThree {
   }
 
   back() {
-    this.navController.element.popUrl();
+    this.navController.pop();
   }
 }
