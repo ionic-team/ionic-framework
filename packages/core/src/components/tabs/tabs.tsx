@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 import { Config, NavEventDetail, NavOutlet } from '../../index';
 
-import { ensureExternalRounterController } from '../../utils/helpers';
+import { asyncRaf, ensureExternalRounterController } from '../../utils/helpers';
 
 
 @Component({
@@ -121,15 +121,17 @@ export class Tabs implements NavOutlet {
     const leavingTab = this.selectedTab;
     this.selectedTab = selectedTab;
 
-    let promise = selectedTab.setActive(true);
-    if (leavingTab && leavingTab !== selectedTab) {
-      promise = promise.then(() => leavingTab.setActive(false));
-    }
 
-    return promise.then(() => {
-      this.ionChange.emit(selectedTab);
-      this.ionNavChanged.emit({isPop: false});
-    });
+    return selectedTab.prepareActive()
+      .then(() => selectedTab.active = true)
+      .then(() => asyncRaf())
+      .then(() => {
+        if (leavingTab) {
+          leavingTab.active = false;
+        }
+        this.ionChange.emit(selectedTab);
+        this.ionNavChanged.emit({isPop: false});
+      });
   }
 
   /**
@@ -209,7 +211,7 @@ export class Tabs implements NavOutlet {
         tab.selected = false;
       }
     }
-    const promise = selectedTab ? selectedTab.setActive(true) : Promise.resolve();
+    const promise = selectedTab ? selectedTab.prepareActive() : Promise.resolve();
     return promise.then(() => {
       this.selectedTab = selectedTab;
       if (selectedTab) {

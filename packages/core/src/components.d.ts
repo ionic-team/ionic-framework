@@ -3059,6 +3059,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTabAttributes extends HTMLAttributes {
+      active?: boolean;
       badge?: string;
       badgeStyle?: string;
       btnId?: string;

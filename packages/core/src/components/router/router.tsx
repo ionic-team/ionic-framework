@@ -32,7 +32,7 @@ export class Router {
   }
 
   @Listen('window:popstate')
-  protected onURLHashChanged() {
+  protected onPopState() {
     if (window.history.state === null) {
       this.state++;
       window.history.replaceState(this.state, document.title, document.location.href);

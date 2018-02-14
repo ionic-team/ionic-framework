@@ -295,6 +295,10 @@ export function debounce(func: Function, wait = 0) {
   };
 }
 
+export function asyncRaf(): Promise<number> {
+  return new Promise(resolve => requestAnimationFrame(resolve));
+}
+
 export function getNavAsChildIfExists(element: HTMLElement): HTMLIonNavElement|null {
   for (let i = 0; i < element.children.length; i++) {
     if (element.children[i].tagName.toLowerCase() === 'ion-nav') {

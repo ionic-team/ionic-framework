@@ -232,6 +232,15 @@ export class Animator {
   }
 
   /**
+   * Sets a CSS class during the duration of the animation.
+   */
+  duringAddClass(className: string): Animator {
+    this.beforeAddClass(className);
+    this.afterRemoveClass(className);
+    return this;
+  }
+
+  /**
    * Set CSS inline styles to this animation's elements
    * before the animation begins.
    */

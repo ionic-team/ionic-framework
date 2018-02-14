@@ -68,7 +68,7 @@ export function canNavGoBack(nav: Nav, view?: ViewController) {
   if (!nav) {
     return false;
   }
-  return nav.getPrevious(view);
+  return !!nav.getPrevious(view);
 }
 
 export function transitionFactory(animation: Animation): Transition {
@@ -127,20 +127,28 @@ export function destroyTransition(transitionId: number) {
 }
 
 export function getHydratedTransition(name: string, config: Config, transitionId: number, emptyTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions, defaultTransitionFactory: TransitionBuilder): Promise<Transition> {
-
+  // Let makes sure everything is hydrated and ready to animate
+  const componentReadyPromise: Promise<any>[] = [];
+  if (enteringView && (enteringView.element as any).componentOnReady) {
+    componentReadyPromise.push((enteringView.element as any).componentOnReady());
+  }
+  if (leavingView && (leavingView.element as any).componentOnReady) {
+    componentReadyPromise.push((leavingView.element as any).componentOnReady());
+  }
   const transitionFactory = config.get(name) as TransitionBuilder || defaultTransitionFactory;
-
-  return transitionFactory(emptyTransition, enteringView, leavingView, opts).then((hydratedTransition) => {
-    hydratedTransition.transitionId = transitionId;
-    if (!activeTransitions.has(transitionId)) {
-      // sweet, this is the root transition
-      activeTransitions.set(transitionId, hydratedTransition);
-    } else {
-      // we've got a parent transition going
-      // just append this transition to the existing one
-      activeTransitions.get(transitionId).add(hydratedTransition);
-    }
-    return hydratedTransition;
+  return Promise.all(componentReadyPromise)
+    .then(() => transitionFactory(emptyTransition, enteringView, leavingView, opts))
+    .then((hydratedTransition) => {
+      hydratedTransition.transitionId = transitionId;
+      if (!activeTransitions.has(transitionId)) {
+        // sweet, this is the root transition
+        activeTransitions.set(transitionId, hydratedTransition);
+      } else {
+        // we've got a parent transition going
+        // just append this transition to the existing one
+        activeTransitions.get(transitionId).add(hydratedTransition);
+      }
+      return hydratedTransition;
   });
 }
 

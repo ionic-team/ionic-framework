@@ -9,15 +9,6 @@ const SHOW_BACK_BTN_CSS = 'show-back-button';
 
 export function buildMdTransition(rootTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions): Promise<Transition> {
 
-  const componentReadyPromise: Promise<any>[] = [];
-  if (enteringView && (enteringView.element as any).componentOnReady) {
-    componentReadyPromise.push((enteringView.element as any).componentOnReady());
-  }
-  if (leavingView && (leavingView.element as any).componentOnReady) {
-    componentReadyPromise.push((leavingView.element as any).componentOnReady());
-  }
-
-  return Promise.all(componentReadyPromise).then(() => {
   rootTransition.enteringView = enteringView;
   rootTransition.leavingView = leavingView;
 
@@ -68,10 +59,7 @@ export function buildMdTransition(rootTransition: Transition, enteringView: View
     rootTransition.add(leavingPage.fromTo(TRANSLATEY, CENTER, OFF_BOTTOM).fromTo('opacity', 1, 0));
   }
 
-  return rootTransition;
-
-  });
-
+  return Promise.resolve(rootTransition);
 }
 
 function getIonPageElement(element: HTMLElement) {

@@ -335,6 +335,9 @@ export class Nav implements PublicNav, NavOutlet {
         attachTo='body'
       ></ion-gesture>);
     }
+    if (this.mode === 'ios') {
+      dom.push(<div class='nav-decor'/>);
+    }
     dom.push(<slot></slot>);
     return dom;
   }
@@ -820,7 +823,8 @@ export function loadViewAndTransition(nav: Nav, enteringView: ViewController, le
 
 
   const emptyTransition = transitionFactory(ti.animation);
-  return getHydratedTransition(animationOpts.animation, nav.config, nav.transitionId, emptyTransition, enteringView, leavingView, animationOpts, getDefaultTransition(nav.config)).then((transition) => {
+  return getHydratedTransition(animationOpts.animation, nav.config, nav.transitionId, emptyTransition, enteringView, leavingView, animationOpts, getDefaultTransition(nav.config))
+  .then((transition) => {
 
     if (nav.sbTrns) {
       nav.sbTrns.destroy();
@@ -967,6 +971,7 @@ export function fireViewWillLifecycles(enteringView: ViewController, leavingView
 export function attachViewToDom(nav: Nav, enteringView: ViewController, ti: TransitionInstruction) {
   if (enteringView && enteringView.state === STATE_NEW) {
     return ti.delegate.attachViewToDom(nav.element, enteringView.component, enteringView.data, [], ti.escapeHatch).then((mountingData) => {
+      mountingData.element.classList.add('nav-page');
       ti.mountingData = mountingData;
       Object.assign(enteringView, mountingData);
       enteringView.state = STATE_ATTACHED;

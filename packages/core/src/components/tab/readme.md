@@ -50,6 +50,11 @@ export class Tabs {
 
 ## Properties
 
+#### active
+
+boolean
+
+
 #### badge
 
 string
@@ -130,6 +135,11 @@ The title of the tab button.
 
 
 ## Attributes
+
+#### active
+
+boolean
+
 
 #### badge
 
@@ -222,7 +232,7 @@ Emitted when the current tab is selected.
 #### getRouteId()
 
 
-#### setActive()
+#### prepareActive()
 
 
 

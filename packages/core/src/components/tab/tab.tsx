@@ -12,7 +12,7 @@ export class Tab {
   @Element() el: HTMLElement;
 
   @State() init = false;
-  @State() active = false;
+  @Prop() active = false;
 
   /**
    * Set the root page for this tab.
@@ -79,11 +79,7 @@ export class Tab {
   @Event() ionSelect: EventEmitter<void>;
 
   @Method()
-  setActive(active: boolean): Promise<any> {
-    this.active = active;
-    if (!active) {
-      return Promise.resolve();
-    }
+  prepareActive(): Promise<any> {
     if (this.loaded) {
       return this.configChildgNav();
     }
@@ -140,13 +136,13 @@ export class Tab {
   }
 
   hostData() {
-    const visible = this.active && this.selected;
+    const hidden = !this.active || !this.selected;
     return {
-      'aria-hidden': !visible,
+      'aria-hidden': hidden,
       'aria-labelledby': this.btnId,
       'role': 'tabpanel',
       class: {
-        'show-tab': visible
+        'show-tab': this.active
       }
     };
   }

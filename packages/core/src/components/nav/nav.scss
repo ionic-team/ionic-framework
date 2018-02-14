@@ -1,7 +1,6 @@
-// Util
-// --------------------------------------------------
 @import "../../themes/util";
 
+$navigation-ios-transition-background: #000 !default;
 
 ion-nav {
   @include position(0);
@@ -13,10 +12,7 @@ ion-nav {
   width: 100%;
   height: 100%;
 
-  background-color: #000;
-
   contain: layout size style;
-
 }
 
 .ion-page {
@@ -30,4 +26,25 @@ ion-nav {
   height: 100%;
 
   contain: layout size style;
+}
+
+.nav-decor {
+  display: none;
+}
+
+.show-decor > .nav-decor {
+  @include position(0, null, null, 0);
+
+  // when ios pages transition, the leaving page grays out
+  // this is the black square behind all pages so they gray out
+  position: absolute;
+  z-index: 0;
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  background: $navigation-ios-transition-background;
+
+  pointer-events: none;
 }
