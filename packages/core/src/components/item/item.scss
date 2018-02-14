@@ -101,3 +101,7 @@ ion-input.item {
 .item-inner > ion-icon {
   font-size: 1.6em;
 }
+
+.item .button {
+  @include margin(0);
+}

@@ -97,13 +97,13 @@
   @include margin($item-md-slot-margin-top, $item-md-slot-margin-end, $item-md-slot-margin-bottom, $item-md-slot-margin-start);
 }
 
-.item-md ion-icon[slot="start"],
-.item-md ion-icon[slot="end"] {
+.item-md > ion-icon[slot="start"],
+.item-md > ion-icon[slot="end"] {
   @include margin($item-md-icon-slot-margin-top, $item-md-icon-slot-margin-end, $item-md-icon-slot-margin-bottom, $item-md-icon-slot-margin-start);
 }
 
-.item-md ion-icon[slot="start"] + .item-inner,
-.item-md ion-icon[slot="start"] + .item-input {
+.item-md > ion-icon[slot="start"] + .item-inner,
+.item-md > ion-icon[slot="start"] + .item-input {
   @include margin-horizontal($item-md-padding-start + ($item-md-padding-start / 2), null);
 }
 
@@ -126,7 +126,7 @@
 // TODO Material Design Item Button
 // --------------------------------------------------
 
-.item-md .item-button {
+.item-md .button-small-md {
   @include padding(0, .6em);
 
   height: 25px;
@@ -134,7 +134,7 @@
   font-size: 12px;
 }
 
-.item-md .item-button ion-icon[slot="icon-only"] {
+.item-md .button-small-md ion-icon[slot="icon-only"] {
   @include padding(0);
 
 }

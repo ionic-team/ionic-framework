@@ -91,8 +91,8 @@
   @include margin($item-ios-slot-end-margin-top, $item-ios-slot-end-margin-end, $item-ios-slot-end-margin-bottom, $item-ios-slot-end-margin-start);
 }
 
-.item-ios ion-icon[slot="start"],
-.item-ios ion-icon[slot="end"] {
+.item-ios > ion-icon[slot="start"],
+.item-ios > ion-icon[slot="end"] {
   @include margin($item-ios-icon-slot-margin-top, $item-ios-icon-slot-margin-end, $item-ios-icon-slot-margin-bottom, $item-ios-icon-slot-margin-start);
 }
 
@@ -105,7 +105,7 @@
 // TODO iOS Item Button
 // --------------------------------------------------
 
-.item-ios .item-button {
+.item-ios .button-small-ios {
   @include padding(0, .5em);
 
   height: 24px;
@@ -113,7 +113,7 @@
   font-size: 13px;
 }
 
-.item-ios .item-button ion-icon[slot="icon-only"] {
+.item-ios .button-small-ios ion-icon[slot="icon-only"] {
   @include padding(0, 1px);
 }
 
