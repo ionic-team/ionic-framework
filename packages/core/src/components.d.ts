@@ -1438,6 +1438,7 @@ declare global {
   namespace JSXElements {
     export interface IonItemAttributes extends HTMLAttributes {
       color?: string;
+      disabled?: boolean;
       href?: string;
       mode?: 'ios' | 'md';
       onclick?: (this: HTMLElement, ev: MouseEvent) => any;

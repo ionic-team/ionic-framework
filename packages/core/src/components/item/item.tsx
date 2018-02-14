@@ -32,6 +32,11 @@ export class Item {
   @Prop() mode: 'ios' | 'md';
 
   /**
+   * If true, the user cannot interact with the item. Defaults to `false`.
+   */
+  @Prop() disabled = false;
+
+  /**
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
@@ -95,7 +100,8 @@ export class Item {
       ...childStyles,
       ...createThemedClasses(this.mode, this.color, 'item'),
       ...getElementClassMap(this.el.classList),
-      'item-block': true
+      'item-block': true,
+      'item-disabled': this.disabled,
     };
 
     this.hasStyleChange = false;

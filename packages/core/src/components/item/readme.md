@@ -16,6 +16,13 @@ Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"da
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
+#### disabled
+
+boolean
+
+If true, the user cannot interact with the item. Defaults to `false`.
+
+
 #### href
 
 string
@@ -58,6 +65,13 @@ string
 The color to use from your Sass `$colors` map.
 Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
+
+
+#### disabled
+
+boolean
+
+If true, the user cannot interact with the item. Defaults to `false`.
 
 
 #### href
