@@ -668,7 +668,7 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
       this._keyboard.onClose(() => {
         console.debug(`content, clearScrollPaddingFocusOut _keyboard.onClose`);
         this.addScrollPadding(0);
-      }, 200, 3000);
+      }, 50, 100);  // make polling and max wait time smaller
     }
   }
 

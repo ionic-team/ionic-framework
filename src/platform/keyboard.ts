@@ -164,7 +164,9 @@ export class Keyboard {
             console.debug(`keyboard, closed`);
             callback();
           });
-        }, 400);
+// The original delay is 400ms, with 200ms polling internval in content.ts cause a content view lagging problem
+// Both params had been tweak smaller
+        }, 50);
 
       } else {
         self._plt.timeout(checkKeyboard, pollingInternval);
