@@ -27,7 +27,7 @@
 }
 
 
-// iOS Item Slots
+// iOS Item Divider Slots
 // --------------------------------------------------
 
 .item-divider-ios [slot="start"] {
@@ -41,6 +41,55 @@
 .item-divider-ios ion-icon[slot="start"],
 .item-divider-ios ion-icon[slot="end"] {
   @include margin($item-ios-icon-slot-margin-top, $item-ios-icon-slot-margin-end, $item-ios-icon-slot-margin-bottom, $item-ios-icon-slot-margin-start);
+}
+
+
+// iOS Item Divider Content
+// --------------------------------------------------
+
+.item-divider-ios h1 {
+  @include margin(0, 0, 2px);
+
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.item-divider-ios h2 {
+  @include margin(0, 0, 2px);
+
+  font-size: 17px;
+  font-weight: normal;
+}
+
+.item-divider-ios h3,
+.item-divider-ios h4,
+.item-divider-ios h5,
+.item-divider-ios h6 {
+  @include margin(0, 0, 3px);
+
+  font-size: 14px;
+  font-weight: normal;
+  line-height: normal;
+}
+
+.item-divider-ios p {
+  @include margin($item-ios-paragraph-margin-top, $item-ios-paragraph-margin-end, $item-ios-paragraph-margin-bottom, $item-ios-paragraph-margin-start);
+
+  overflow: inherit;
+
+  font-size: $item-ios-paragraph-font-size;
+  line-height: normal;
+  text-overflow: inherit;
+  color: $item-ios-paragraph-text-color;
+}
+
+.item-divider-ios h2:last-child,
+.item-divider-ios h3:last-child,
+.item-divider-ios h4:last-child,
+.item-divider-ios h5:last-child,
+.item-divider-ios h6:last-child,
+.item-divider-ios p:last-child {
+  @include margin(null, null, 0, null);
 }
 
 
