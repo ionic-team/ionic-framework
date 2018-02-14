@@ -14,12 +14,17 @@
 
     <ion-router>
       <ion-route path="/" sel="tab1"> </ion-route>
+
       <ion-route path="/two" sel="tab2">
         <ion-route path="/" sel="page-one"> </ion-route>
         <ion-route path="/second-page" sel="page-two"> </ion-route>
+        <ion-route path="/thee-page" sel="page-three"> </ion-route>
       </ion-route>
+
       <ion-route path="/three" sel="tab-three"> </ion-route>
-      <ion-route path="/four" sel="tab4"> </ion-route>
+      <ion-route path="/four" sel="tab4">
+        <ion-route path="/" sel="page-two"> </ion-route>
+      </ion-route>
     </ion-router>
 
     <ion-tabs>
@@ -43,7 +48,7 @@
         title="Messages"
         icon="chatboxes"
         name="tab-four">
-        INLINE CONTENT
+          <ion-nav></ion-nav>
       </ion-tab>
     </ion-tabs>
 

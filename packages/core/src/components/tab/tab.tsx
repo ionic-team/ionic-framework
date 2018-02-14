@@ -8,7 +8,7 @@ import { FrameworkDelegate } from '../..';
 })
 export class Tab {
 
-  // private loaded = false;
+  private loaded = false;
   @Element() el: HTMLElement;
 
   @State() init = false;
@@ -81,36 +81,12 @@ export class Tab {
   @Method()
   setActive(active: boolean): Promise<any> {
     this.active = active;
-    if (active) {
-      const nav = getNavAsChildIfExists(this.el);
-      if (nav) {
-        // the tab's nav has been initialized externally
-
-        return ensureExternalRounterController().then((externalRouterController) => {
-          if (externalRouterController.getExternalNavPromise()) {
-            return (externalRouterController.getExternalNavPromise() as Promise<any>).then(() => {
-              externalRouterController.clearExternalNavPromise();
-            });
-          }
-
-          // the tab's nav has not been initialized externally, so
-          // check if we need to initiailize it
-          return (nav as any).componentOnReady().then(() => {
-            return nav.onAllTransitionsComplete();
-          }).then(() => {
-            if (!nav.getViews().length && !nav.isTransitioning() && !nav.initialized) {
-              return nav.setRoot(nav.root);
-            }
-            return Promise.resolve();
-          });
-        });
-      }
-    }
-
-    /*if (this.loaded || !active) {
+    if (!active) {
       return Promise.resolve();
     }
-
+    if (this.loaded) {
+      return this.configChildgNav();
+    }
     this.loaded = true;
 
     let promise: Promise<any>;
@@ -122,9 +98,7 @@ export class Tab {
     } else {
       promise = Promise.resolve();
     }
-    return promise.then(() => this.fireChildren());
-    */
-    return Promise.resolve();
+    return promise.then(() => this.configChildgNav());
   }
 
   @Method()
@@ -138,16 +112,32 @@ export class Tab {
     return null;
   }
 
-  /*private fireChildren() {
+  private configChildgNav(): Promise<any|void> {
     const nav = getNavAsChildIfExists(this.el);
-    if (nav && nav.getViews().length === 0 && nav.root) {
-      // we need to initialize
-      return nav.setRoot(nav.root);
+    if (nav) {
+      // the tab's nav has been initialized externally
+      return ensureExternalRounterController().then<void|any>((externalRouterController) => {
+        const externalNavPromise = externalRouterController.getExternalNavPromise();
+        if (externalNavPromise) {
+          return externalNavPromise.then(() => {
+            externalRouterController.clearExternalNavPromise();
+          });
+        }
+
+        // the tab's nav has not been initialized externally, so
+        // check if we need to initiailize it
+        return nav.componentOnReady()
+        .then(() => nav.onAllTransitionsComplete())
+        .then<any>(() => {
+          if (nav.getViews().length === 0 && !nav.isTransitioning() && !nav.initialized) {
+            return nav.setRoot(nav.root);
+          }
+          return Promise.resolve();
+        });
+      });
     }
-    // it's already been initialized if it exists
     return Promise.resolve();
   }
-  */
 
   hostData() {
     const visible = this.active && this.selected;
@@ -166,7 +156,7 @@ export class Tab {
   }
 }
 
-/*function attachViewToDom(container: HTMLElement, cmp: string): Promise<any> {
+function attachViewToDom(container: HTMLElement, cmp: string): Promise<any> {
   const el = document.createElement(cmp) as HTMLStencilElement;
   container.appendChild(el);
   if (el.componentOnReady) {
@@ -174,4 +164,3 @@ export class Tab {
   }
   return Promise.resolve();
 }
-*/

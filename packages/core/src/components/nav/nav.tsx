@@ -193,13 +193,25 @@ export class Nav implements PublicNav, NavOutlet {
   }
 
   @Method()
-  setRouteId(id: string, _: any = {}): Promise<any> {
-    assert(this.useRouter, 'routing is disabled');
+  setRouteId(id: string, _: any = {}, direction: number): Promise<boolean> {
     const active = this.getActive();
     if (active && active.component === id) {
-      return Promise.resolve(null);
+      return Promise.resolve(false);
     }
-    return this.setRoot(id);
+    if (direction === 1) {
+      return this.push(id).then(() => true);
+    } else if (direction === -1 && this._canGoBack(id)) {
+      return this.pop().then(() => true);
+    }
+    return this.setRoot(id).then(() => true);
+  }
+
+  private _canGoBack(id: any) {
+    if (!this.canGoBack()) {
+      return false;
+    }
+    const view = this.views[this.views.length - 1];
+    return view.component === id;
   }
 
   @Method()
@@ -215,7 +227,7 @@ export class Nav implements PublicNav, NavOutlet {
   getContentElement(): HTMLElement {
     const active = getActiveImpl(this);
     if (active) {
-      active.element;
+      return active.element;
     }
     return null;
   }

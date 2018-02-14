@@ -160,12 +160,12 @@ export class Tabs implements NavOutlet {
   }
 
   @Method()
-  setRouteId(id: any, _: any = {}): Promise<void> {
-    if (this.selectedTab === id) {
-      return Promise.resolve();
+  setRouteId(id: any): Promise<boolean> {
+    if (this.selectedTab && this.selectedTab.getRouteId() === id) {
+      return Promise.resolve(false);
     }
     const tab = this.tabs.find(t => id === t.getRouteId());
-    return this.select(tab);
+    return this.select(tab).then(() => true);
   }
 
 
@@ -185,13 +185,13 @@ export class Tabs implements NavOutlet {
 
   private initTabs() {
     const tabs = this.tabs = Array.from(this.el.querySelectorAll('ion-tab'));
-    const tabPromises: Promise<any>[] = [];
-    for (const tab of tabs) {
+    const tabPromises = tabs.map(tab => {
       const id = `t-${this.tabsId}-${++this.ids}`;
       tab.btnId = 'tab-' + id;
       tab.id = 'tabpanel-' + id;
-      tabPromises.push((tab as any).componentOnReady());
-    }
+      return tab.componentOnReady();
+    });
+
     return Promise.all(tabPromises);
   }
 

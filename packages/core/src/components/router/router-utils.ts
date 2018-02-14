@@ -1,5 +1,5 @@
 export interface NavOutlet {
-  setRouteId(id: any, data?: any): Promise<any>;
+  setRouteId(id: any, data: any, direction: number): Promise<boolean>;
   getRouteId(): string;
   getContentElement(): HTMLElement | null;
 }
@@ -28,22 +28,24 @@ export class RouterSegments {
   }
 }
 
-export function writeNavState(root: HTMLElement, chain: RouterEntries, index = 0): Promise<void> {
+export function writeNavState(root: HTMLElement, chain: RouterEntries, index: number, direction: number): Promise<void> {
   if (index >= chain.length) {
     return Promise.resolve();
   }
-
   const route = chain[index];
   const node = breadthFirstSearch(root);
   if (!node) {
     return Promise.resolve();
   }
   return node.componentOnReady()
-    .then(() => node.setRouteId(route.id, route.props))
-    .then(() => {
+    .then(() => node.setRouteId(route.id, route.props, direction))
+    .then(changed => {
+      if (changed) {
+        direction = 0;
+      }
       const nextEl = node.getContentElement();
       if (nextEl) {
-        return writeNavState(nextEl, chain, index + 1);
+        return writeNavState(nextEl, chain, index + 1, direction);
       }
       return null;
     });
@@ -199,18 +201,20 @@ export function breadthFirstSearch(root: HTMLElement): NavOutletElement | null {
   return null;
 }
 
-export function writePath(history: History, base: string, usePath: boolean, path: string[], isPop: boolean) {
+export function writePath(history: History, base: string, usePath: boolean, path: string[], isPop: boolean, state: number) {
   path = [base, ...path];
   let url = generatePath(path);
   if (usePath) {
     url = '#' + url;
   }
+  state++;
   if (isPop) {
     history.back();
-    history.replaceState(null, null, url);
+    history.replaceState(state, null, url);
   } else {
-    history.pushState(null, null, url);
+    history.pushState(state, null, url);
   }
+  return state;
 }
 
 export function readPath(loc: Location, base: string, useHash: boolean): string[] | null {

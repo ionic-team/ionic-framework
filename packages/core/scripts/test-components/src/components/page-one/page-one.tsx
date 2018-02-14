@@ -15,6 +15,7 @@ export class PageOne {
         </ion-header>
         <ion-content>
           page one
+          <a href='#/two/second-page'>Ir a la page 2</a>
         </ion-content>
       </ion-page>
     ];
