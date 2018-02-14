@@ -35,9 +35,11 @@
   </ion-app>
 
   <script>
-
     window.addEventListener('ionActionSheetDidDismiss', function(e){console.log('didDismiss', e)})
+
     async function presentBasic() {
+      const mode = Ionic.mode;
+
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
       await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
@@ -63,13 +65,13 @@
           }
         }, {
           text: 'Favorite',
-          icon: 'heart',
-          role: 'selected',
+          icon: mode === 'md' ? 'heart' : null,
           handler: () => {
             console.log('Favorite clicked');
           }
         }, {
           text: 'Cancel',
+          icon: mode === 'md' ? 'close' : null,
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');
@@ -108,6 +110,7 @@
         }, {
           text: 'Favorite',
           icon: 'heart',
+          role: 'selected',
           handler: () => {
             console.log('Favorite clicked');
           }
