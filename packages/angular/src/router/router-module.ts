@@ -29,7 +29,7 @@ import {
 import { IonicAngularModule } from '../module';
 
 import { PushPopOutletContexts } from './push-pop-outlet-contexts';
-import { CustomRouter } from './router';
+import { monkeyPatchRouter } from './monkey-patch-router';
 import { RouteEventHandler } from './route-event-handler';
 import { RouterOutlet  } from './outlet';
 import { flatten } from './router-utils';
@@ -75,8 +75,11 @@ export function setupRouter(
   config: Route[][], opts: ExtraOptions = {}, urlHandlingStrategy?: UrlHandlingStrategy,
   routeReuseStrategy?: RouteReuseStrategy) {
 
-const router = new CustomRouter(
+const router = new Router(
     null, urlSerializer, contexts, location, injector, loader, compiler, flatten(config));
+
+monkeyPatchRouter(router);
+
 
 if (urlHandlingStrategy) {
   router.urlHandlingStrategy = urlHandlingStrategy;

@@ -191,7 +191,6 @@ export function getDataFromObservable(activatedRoute: ActivatedRoute) {
 export function getDataFromParams(activatedRoute: ActivatedRoute) {
   return new Promise((resolve) => {
     activatedRoute.params.subscribe((data: any) => {
-      console.log('data: ', data);
       resolve(data || {});
     });
   });

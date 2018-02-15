@@ -19,12 +19,11 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
-    "build": "npm run clean && npm run override-router && npm run compile && npm run clean-generated",
+    "build": "npm run clean && npm run compile && npm run clean-generated",
     "clean": "rm -rf dist",
     "clean-generated": "node ./scripts/clean.js",
     "compile": "./node_modules/.bin/ngc",
     "deploy": "np --any-branch",
-    "override-router": "rm -rf ./node_modules/@angular/router && mkdir ./node_modules/@angular/router && cp -R ./scripts/router ./node_modules/@angular",
     "tsc": "tsc -p ."
   },
   "main": "./dist/src/index.js",
