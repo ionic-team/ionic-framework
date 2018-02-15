@@ -11,7 +11,6 @@ export { VirtualFooter } from './directives/virtual-footer';
 export { RouterOutlet } from './router/outlet';
 export { AsyncActivateRoutes } from './router/async-activated-routes';
 export { OutletInjector } from './router/outlet-injector';
-export { CustomRouter } from './router/router';
 export { IonicRouterModule } from './router/router-module';
 
 /* Providers */
