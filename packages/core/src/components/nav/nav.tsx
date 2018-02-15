@@ -968,16 +968,58 @@ export function fireViewWillLifecycles(enteringView: ViewController, leavingView
   enteringView && enteringView.willEnter();
 }
 
-export function attachViewToDom(nav: Nav, enteringView: ViewController, ti: TransitionInstruction) {
+export function attachViewToDom(nav: Nav, enteringView: ViewController, ti: TransitionInstruction): Promise<any> {
   if (enteringView && enteringView.state === STATE_NEW) {
     return ti.delegate.attachViewToDom(nav.element, enteringView.component, enteringView.data, [], ti.escapeHatch).then((mountingData) => {
       ti.mountingData = mountingData;
       Object.assign(enteringView, mountingData);
       enteringView.state = STATE_ATTACHED;
+    }).then(() => {
+      return waitForNewlyAttachedViewElementsToHydate(enteringView.element);
     });
   }
   // it's in the wrong state, so don't attach and just return
   return Promise.resolve();
+}
+
+export function waitForNewlyAttachedViewElementsToHydate(element: HTMLElement) {
+  // the element may or may not be a Stencil element
+  // so check if it has an `<ion-nav>`, `<ion-header>`, and `<ion-content>` for
+  // hydration
+  const promises: Promise<any>[] = [];
+  if ((element as any).componentOnReady) {
+    // it's a stencil element
+    promises.push((element as any).componentOnReady());
+  }
+
+  const navs = element.querySelectorAll('ion-nav');
+  for (let i = 0; i < navs.length; i++) {
+    const nav = navs.item(i);
+    promises.push((nav as any).componentOnReady());
+  }
+
+  // check for headers
+  const headers = element.querySelectorAll('ion-header');
+  for (let i = 0; i < headers.length; i++) {
+    const header = headers.item(i);
+    promises.push((header as any).componentOnReady());
+  }
+
+  // check for contents
+  const contents = element.querySelectorAll('ion-content');
+  for (let i = 0; i < contents.length; i++) {
+    const content = contents.item(i);
+    promises.push((content as any).componentOnReady());
+  }
+
+  // check for back buttons
+  const backButtons = element.querySelectorAll('ion-back-button');
+  for (let i = 0; i < backButtons.length; i++) {
+    const backButton = backButtons.item(i);
+    promises.push((backButton as any).componentOnReady());
+  }
+
+  return Promise.all(promises);
 }
 
 export function initializeViewBeforeTransition(ti: TransitionInstruction): Promise<ViewController[]> {
