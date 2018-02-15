@@ -314,6 +314,7 @@ declare global {
   namespace JSXElements {
     export interface IonBackButtonAttributes extends HTMLAttributes {
       mode?: 'ios' | 'md';
+      text?: string;
     }
   }
 }

@@ -5,95 +5,96 @@
   <title>Back Button</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <script>
-    class PageOne extends HTMLElement {
-      connectedCallback() {
-        this.innerHTML = `
-          <ion-page>
-            <ion-header>
-              <ion-toolbar>
-                <ion-buttons slot="start">
-                  <ion-back-button></ion-back-button>
-                </ion-buttons>
-                <ion-title>Page One</ion-title>
-              </ion-toolbar>
-            </ion-header>
-            <ion-content padding>
-              <h1>Page One</h1>
-              <ion-nav-push component="page-two">
-                <ion-button class="next">Go to Page Two</ion-button>
-              </ion-nav-push>
-            </ion-content>
-          </ion-page>
-        `;
-      }
-    }
-
-    class PageTwo extends HTMLElement {
-      connectedCallback() {
-        this.innerHTML = `
-          <ion-page>
-            <ion-header>
-              <ion-toolbar>
-                <ion-buttons slot="start">
-                  <ion-back-button></ion-back-button>
-                </ion-buttons>
-                <ion-title>Page Two</ion-title>
-              </ion-toolbar>
-            </ion-header>
-            <ion-content padding>
-              <h1>Page Two</h1>
-              <div>
-                <ion-nav-push component="page-three">
-                  <ion-button class="next">Go to Page Two</ion-button>
-                </ion-nav-push>
-              </div>
-              <div>
-                <ion-nav-pop>
-                  <ion-button class="next">Go Back</ion-button>
-                </ion-nav-pop>
-              </div>
-            </ion-content>
-          </ion-page>
-        `;
-      }
-    }
-
-    class PageThree extends HTMLElement {
-      connectedCallback() {
-        this.innerHTML = `
-          <ion-page>
-            <ion-header>
-              <ion-toolbar>
-                <ion-buttons slot="start">
-                  <ion-back-button></ion-back-button>
-                </ion-buttons>
-                <ion-title>Page Three</ion-title>
-              </ion-toolbar>
-            </ion-header>
-            <ion-content padding>
-              <h1>Page Three</h1>
-              <div>
-                <ion-nav-pop>
-                  <ion-button class="next">Go Back</ion-button>
-                </ion-nav-pop>
-              </div>
-            </ion-content>
-          </ion-page>
-        `;
-      }
-    }
-
-    customElements.define('page-one', PageOne);
-    customElements.define('page-two', PageTwo);
-    customElements.define('page-three', PageThree);
-
-  </script>
 </head>
-<body>
+<body onload="loadFirstPage()">
   <ion-app>
-    <ion-nav root="page-one"></ion-nav>
+    <ion-nav></ion-nav>
   </ion-app>
 </body>
 
+<script>
+
+  async function loadFirstPage() {
+    const nav = document.querySelector('ion-nav');
+    await nav.componentOnReady();
+    const firstPage = document.createElement('ion-page');
+    firstPage.classList.add('first-page');
+    firstPage.innerHTML = `
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+          </ion-buttons>
+          <ion-title>Page One</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content padding>
+        <h1>Page One</h1>
+        <ion-button class="next">Go to Page Two</ion-button>
+      </ion-content>
+    `;
+
+    await nav.push(firstPage);
+
+    // okay cool, we're in the DOM now
+    const button = firstPage.querySelector('.next');
+    button.addEventListener('click', async () => {
+      await goToPageTwo(nav);
+    });
+  }
+
+  async function goToPageTwo(nav) {
+    const secondPage = document.createElement('ion-page');
+    secondPage.classList.add('second-page');
+    secondPage.innerHTML = `
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button></ion-back-button>
+          </ion-buttons>
+          <ion-title>Page Two</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content padding>
+        <h1>Page Two</h1>
+        <p>Just an empty <code>ion-back-button</code></p>
+        <ion-button class="next">Go to Page Three</ion-button>
+      </ion-content>
+    `;
+
+    // okay cool, we're in the DOM now
+    await nav.push(secondPage);
+
+    const nextButton = secondPage.querySelector('ion-button .next');
+    nextButton.addEventListener('click', async () => {
+      await goToPageThree(nav);
+    });
+  }
+
+  async function goToPageThree(nav) {
+    const thirdPage = document.createElement('ion-page');
+    thirdPage.classList.add('third-page');
+    thirdPage.innerHTML = `
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button>
+            <ion-button color="danger">
+              <ion-icon name="add" slot="icon-only"></ion-icon>
+            </ion-button>
+            </ion-back-button>
+          </ion-buttons>
+          <ion-title>Page Three</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content padding>
+        <h1>Page Three</h1>
+        <p>Custom back button</p>
+      </ion-content>
+    `;
+
+    // okay cool, we're in the DOM now
+    await nav.push(thirdPage);
+  }
+</script>
 </html>

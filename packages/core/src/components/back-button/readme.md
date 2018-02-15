@@ -70,6 +70,14 @@ Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
+#### text
+
+string
+
+The text property is used to provide custom text for the back button while using the
+default look-and-feel
+
+
 ## Attributes
 
 #### mode
@@ -79,6 +87,14 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+
+
+#### text
+
+string
+
+The text property is used to provide custom text for the back button while using the
+default look-and-feel
 
 
 
