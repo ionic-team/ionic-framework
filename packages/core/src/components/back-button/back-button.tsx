@@ -3,7 +3,10 @@ import { Config } from '../../index';
 
 @Component({
   tag: 'ion-back-button',
-  styleUrl: 'back-button.scss',
+  styleUrls: {
+    ios: 'back-button.ios.scss',
+    md: 'back-button.md.scss'
+  },
   host: {
     theme: 'back-button'
   }
@@ -19,6 +22,12 @@ export class BackButton {
    */
   @Prop() mode: 'ios' | 'md';
 
+  /**
+   * The text property is used to provide custom text for the back button while using the
+   * default look-and-feel
+   */
+  @Prop() text: string = null;
+
   @Prop({ context: 'config' }) config: Config;
 
   @Element() el: HTMLElement;
@@ -26,10 +35,11 @@ export class BackButton {
   componentWillLoad() {
     this.custom = this.el.childElementCount > 0;
   }
+
   render() {
     const backButtonIcon = this.config.get('backButtonIcon', 'arrow-back');
-    const backButtonText = this.config.get('backButtonText', 'Back');
-    const buttonColor = this.mode === 'ios' ? 'primary' : '';
+    const defaultBackButtonText = this.config.get('backButtonText', 'Back');
+    const backButtonText = this.text || defaultBackButtonText;
 
     if (this.custom) {
       return (
@@ -37,17 +47,18 @@ export class BackButton {
           <slot />
         </ion-nav-pop>
       );
-    } else if (!this.custom) {
+    } else {
       return (
         <ion-nav-pop>
-          <ion-button color={buttonColor}>
-            <ion-icon name={backButtonIcon} slot='start' />
-            {backButtonText}
-          </ion-button>
+          <button class='back-button-inner-default'>
+          <span class='button-inner'>
+          <ion-icon name={backButtonIcon} slot='start' />
+          <span class='button-text'>{backButtonText}</span>
+          </span>
+          { this.mode === 'md' && <ion-ripple-effect/> }
+          </button>
         </ion-nav-pop>
       );
-    } else {
-      return undefined;
     }
   }
 }

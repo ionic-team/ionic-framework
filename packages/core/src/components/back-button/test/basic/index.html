@@ -10,19 +10,6 @@
   <ion-app>
     <ion-nav></ion-nav>
   </ion-app>
-  <style>
-      f {
-        display: block;
-        margin: 15px auto;
-        max-width: 150px;
-        height: 150px;
-        background: blue;
-      }
-
-      f:last-of-type {
-        background: yellow;
-      }
-    </style>
 </body>
 
 <script>
@@ -47,7 +34,7 @@
       </ion-content>
     `;
 
-    await nav.push(firstPage);
+    await nav.setRoot(firstPage);
 
     // okay cool, we're in the DOM now
     const button = firstPage.querySelector('.next');
@@ -92,7 +79,7 @@
         <ion-toolbar>
           <ion-buttons slot="start">
             <ion-back-button>
-            <ion-button>
+            <ion-button color="danger">
               <ion-icon name="add" slot="icon-only"></ion-icon>
             </ion-button>
             </ion-back-button>
@@ -110,10 +97,4 @@
     await nav.push(thirdPage);
   }
 </script>
-<!-- <style> -->
-<!--   ion&#45;back&#45;button { -->
-<!--     height: 50px; -->
-<!--     background&#45;color: blue; -->
-<!--   } -->
-<!-- </style> -->
 </html>

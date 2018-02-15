@@ -2,7 +2,7 @@
 <html dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <title>Nav</title>
+  <title>Back Button</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
   <script>
@@ -12,6 +12,9 @@
           <ion-page>
             <ion-header>
               <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-back-button></ion-back-button>
+                </ion-buttons>
                 <ion-title>Page One</ion-title>
               </ion-toolbar>
             </ion-header>
@@ -32,6 +35,9 @@
           <ion-page>
             <ion-header>
               <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-back-button></ion-back-button>
+                </ion-buttons>
                 <ion-title>Page Two</ion-title>
               </ion-toolbar>
             </ion-header>
@@ -39,13 +45,8 @@
               <h1>Page Two</h1>
               <div>
                 <ion-nav-push component="page-three">
-                  <ion-button class="next">Go to Page Two</ion-button>
+                  <ion-button class="next">Go to Page Three</ion-button>
                 </ion-nav-push>
-              </div>
-              <div>
-                <ion-nav-pop>
-                  <ion-button class="next">Go Back</ion-button>
-                </ion-nav-pop>
               </div>
             </ion-content>
           </ion-page>
@@ -59,16 +60,39 @@
           <ion-page>
             <ion-header>
               <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-back-button text='Page Two'></ion-back-button>
+                </ion-buttons>
                 <ion-title>Page Three</ion-title>
               </ion-toolbar>
             </ion-header>
             <ion-content padding>
               <h1>Page Three</h1>
               <div>
-                <ion-nav-pop>
-                  <ion-button class="next">Go Back</ion-button>
-                </ion-nav-pop>
+                <ion-nav-push component="page-four">
+                  <ion-button class="next">Go to Page Four</ion-button>
+                </ion-nav-push>
               </div>
+            </ion-content>
+          </ion-page>
+        `;
+      }
+    }
+
+    class PageFour extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-page>
+            <ion-header>
+              <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-back-button text='Page Three'></ion-back-button>
+                </ion-buttons>
+                <ion-title>Page Four</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content padding>
+              <h1>Page Four</h1>
             </ion-content>
           </ion-page>
         `;
@@ -78,6 +102,7 @@
     customElements.define('page-one', PageOne);
     customElements.define('page-two', PageTwo);
     customElements.define('page-three', PageThree);
+    customElements.define('page-four', PageFour);
 
   </script>
 </head>
@@ -86,4 +111,5 @@
     <ion-nav root="page-one"></ion-nav>
   </ion-app>
 </body>
+
 </html>
