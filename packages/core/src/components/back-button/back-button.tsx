@@ -3,7 +3,10 @@ import { Config } from '../../index';
 
 @Component({
   tag: 'ion-back-button',
-  styleUrl: 'back-button.scss',
+  styleUrls: {
+    ios: 'back-button.ios.scss',
+    md: 'back-button.md.scss'
+  },
   host: {
     theme: 'back-button'
   }
@@ -29,7 +32,7 @@ export class BackButton {
   render() {
     const backButtonIcon = this.config.get('backButtonIcon', 'arrow-back');
     const backButtonText = this.config.get('backButtonText', 'Back');
-    const buttonColor = this.mode === 'ios' ? 'primary' : '';
+    // const buttonColor = this.mode === 'ios' ? 'primary' : '';
 
     if (this.custom) {
       return (
@@ -40,10 +43,13 @@ export class BackButton {
     } else if (!this.custom) {
       return (
         <ion-nav-pop>
-          <ion-button color={buttonColor}>
-            <ion-icon name={backButtonIcon} slot='start' />
-            {backButtonText}
-          </ion-button>
+          <button class='back-button-inner-default'>
+          <span class='button-inner'>
+          <ion-icon name={backButtonIcon} slot='start' />
+          <span class='button-text'>{backButtonText}</span>
+          </span>
+          { this.mode === 'md' && <ion-ripple-effect/> }
+          </button>
         </ion-nav-pop>
       );
     } else {
