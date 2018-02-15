@@ -1842,7 +1842,7 @@ declare global {
 
 
 import {
-  NavPop as IonNavPush
+  NavPush as IonNavPush
 } from './components/nav-push/nav-push';
 
 declare global {
@@ -1865,6 +1865,38 @@ declare global {
   }
   namespace JSXElements {
     export interface IonNavPushAttributes extends HTMLAttributes {
+      component?: any;
+      data?: any;
+      url?: string;
+    }
+  }
+}
+
+
+import {
+  NavSetRoot as IonNavSetRoot
+} from './components/nav-set-root/nav-set-root';
+
+declare global {
+  interface HTMLIonNavSetRootElement extends IonNavSetRoot, HTMLStencilElement {
+  }
+  var HTMLIonNavSetRootElement: {
+    prototype: HTMLIonNavSetRootElement;
+    new (): HTMLIonNavSetRootElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-nav-set-root": HTMLIonNavSetRootElement;
+  }
+  interface ElementTagNameMap {
+    "ion-nav-set-root": HTMLIonNavSetRootElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-nav-set-root": JSXElements.IonNavSetRootAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonNavSetRootAttributes extends HTMLAttributes {
       component?: any;
       data?: any;
       url?: string;
