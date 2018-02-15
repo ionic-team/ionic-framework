@@ -968,14 +968,14 @@ export function fireViewWillLifecycles(enteringView: ViewController, leavingView
   enteringView && enteringView.willEnter();
 }
 
-export function attachViewToDom(nav: Nav, enteringView: ViewController, ti: TransitionInstruction) {
+export function attachViewToDom(nav: Nav, enteringView: ViewController, ti: TransitionInstruction): Promise<any> {
   if (enteringView && enteringView.state === STATE_NEW) {
     return ti.delegate.attachViewToDom(nav.element, enteringView.component, enteringView.data, [], ti.escapeHatch).then((mountingData) => {
       ti.mountingData = mountingData;
       Object.assign(enteringView, mountingData);
       enteringView.state = STATE_ATTACHED;
     }).then(() => {
-      waitForNewlyAttachedViewElementsToHydate(enteringView.element);
+      return waitForNewlyAttachedViewElementsToHydate(enteringView.element);
     });
   }
   // it's in the wrong state, so don't attach and just return
