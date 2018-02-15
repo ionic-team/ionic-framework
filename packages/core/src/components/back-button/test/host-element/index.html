@@ -45,13 +45,8 @@
               <h1>Page Two</h1>
               <div>
                 <ion-nav-push component="page-three">
-                  <ion-button class="next">Go to Page Two</ion-button>
+                  <ion-button class="next">Go to Page Three</ion-button>
                 </ion-nav-push>
-              </div>
-              <div>
-                <ion-nav-pop>
-                  <ion-button class="next">Go Back</ion-button>
-                </ion-nav-pop>
               </div>
             </ion-content>
           </ion-page>
@@ -66,7 +61,7 @@
             <ion-header>
               <ion-toolbar>
                 <ion-buttons slot="start">
-                  <ion-back-button></ion-back-button>
+                  <ion-back-button text='Page Two'></ion-back-button>
                 </ion-buttons>
                 <ion-title>Page Three</ion-title>
               </ion-toolbar>
@@ -74,10 +69,30 @@
             <ion-content padding>
               <h1>Page Three</h1>
               <div>
-                <ion-nav-pop>
-                  <ion-button class="next">Go Back</ion-button>
-                </ion-nav-pop>
+                <ion-nav-push component="page-four">
+                  <ion-button class="next">Go to Page Four</ion-button>
+                </ion-nav-push>
               </div>
+            </ion-content>
+          </ion-page>
+        `;
+      }
+    }
+
+    class PageFour extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+          <ion-page>
+            <ion-header>
+              <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-back-button text='Page Three'></ion-back-button>
+                </ion-buttons>
+                <ion-title>Page Four</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content padding>
+              <h1>Page Four</h1>
             </ion-content>
           </ion-page>
         `;
@@ -87,6 +102,7 @@
     customElements.define('page-one', PageOne);
     customElements.define('page-two', PageTwo);
     customElements.define('page-three', PageThree);
+    customElements.define('page-four', PageFour);
 
   </script>
 </head>

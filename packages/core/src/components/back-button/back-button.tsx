@@ -14,7 +14,6 @@ import { Config } from '../../index';
 export class BackButton {
 
   @State() custom: boolean;
-  @State() hasBackView = false;
 
   /**
    * The mode determines which platform styles to use.
@@ -33,25 +32,14 @@ export class BackButton {
 
   @Element() el: HTMLElement;
 
-  componentWillLoad(): any {
+  componentWillLoad() {
     this.custom = this.el.childElementCount > 0;
-    const nav = this.el.closest('ion-nav');
-    if (nav) {
-      return nav.componentOnReady().then(() => {
-        this.hasBackView = !!nav.getPrevious();
-      });
-    }
   }
 
   render() {
     const backButtonIcon = this.config.get('backButtonIcon', 'arrow-back');
     const defaultBackButtonText = this.config.get('backButtonText', 'Back');
     const backButtonText = this.text || defaultBackButtonText;
-
-    if (! this.hasBackView) {
-      // it doesn't have a back view, so just show an empty <ion-back-button></ion-back-button>
-      return undefined;
-    }
 
     if (this.custom) {
       return (
