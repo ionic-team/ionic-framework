@@ -79,37 +79,6 @@
     customElements.define('page-two', PageTwo);
     customElements.define('page-three', PageThree);
 
-    function regularElement() {
-      const start = Date.now();
-      const element = document.createElement('page-three');
-      document.body.appendChild(element);
-      const end = Date.now();
-      console.log(`It took ${end - start} millis to create the custom element, add it to the DOM`);
-      return Promise.resolve().then(() => {
-
-      }).then(() => {
-
-      }).then(() => {
-        const endTwo = Date.now();
-        console.log(`It took ${endTwo - start} millis after the promise blocks bro`);
-      });
-    }
-
-    function stencilElement() {
-      const start = Date.now();
-      const element = document.createElement('ion-nav');
-      document.body.appendChild(element);
-      const end = Date.now();
-      console.log(`It took ${end - start} millis to create the stencil element, add it to the DOM`);
-      return element.componentOnReady().then(() => {
-
-      }).then(() => {
-
-      }).then(() => {
-        const endTwo = Date.now();
-        console.log(`It took ${endTwo - start} millis after the promise blocks bro`);
-      });
-    }
   </script>
 </head>
 <body>

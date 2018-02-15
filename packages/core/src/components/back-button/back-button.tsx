@@ -14,6 +14,7 @@ import { Config } from '../../index';
 export class BackButton {
 
   @State() custom: boolean;
+  @State() hasBackView = false;
 
   /**
    * The mode determines which platform styles to use.
@@ -22,17 +23,35 @@ export class BackButton {
    */
   @Prop() mode: 'ios' | 'md';
 
+  /**
+   * The text property is used to provide custom text for the back button while using the
+   * default look-and-feel
+   */
+  @Prop() text: string = null;
+
   @Prop({ context: 'config' }) config: Config;
 
   @Element() el: HTMLElement;
 
-  componentWillLoad() {
+  componentWillLoad(): any {
     this.custom = this.el.childElementCount > 0;
+    const nav = this.el.closest('ion-nav');
+    if (nav) {
+      return nav.componentOnReady().then(() => {
+        this.hasBackView = !!nav.getPrevious();
+      });
+    }
   }
+
   render() {
     const backButtonIcon = this.config.get('backButtonIcon', 'arrow-back');
-    const backButtonText = this.config.get('backButtonText', 'Back');
-    // const buttonColor = this.mode === 'ios' ? 'primary' : '';
+    const defaultBackButtonText = this.config.get('backButtonText', 'Back');
+    const backButtonText = this.text || defaultBackButtonText;
+
+    if (! this.hasBackView) {
+      // it doesn't have a back view, so just show an empty <ion-back-button></ion-back-button>
+      return undefined;
+    }
 
     if (this.custom) {
       return (
@@ -40,7 +59,7 @@ export class BackButton {
           <slot />
         </ion-nav-pop>
       );
-    } else if (!this.custom) {
+    } else {
       return (
         <ion-nav-pop>
           <button class='back-button-inner-default'>
@@ -52,8 +71,6 @@ export class BackButton {
           </button>
         </ion-nav-pop>
       );
-    } else {
-      return undefined;
     }
   }
 }
