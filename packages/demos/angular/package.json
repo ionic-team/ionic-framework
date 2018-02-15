@@ -4,11 +4,11 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "npm run override-router && ng serve",
-    "build": "npm run override-router && ng build",
-    "test": "npm run override-router && ng test",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
     "lint": "ng lint",
-    "e2e": "npm run override-router && ng e2e",
+    "e2e": "ng e2e",
     "override-router": "rm -rf ./node_modules/@angular/router && mkdir ./node_modules/@angular/router && cp -R ./scripts/router ./node_modules/@angular"
   },
   "private": true,
