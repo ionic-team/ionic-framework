@@ -140,6 +140,8 @@ $list-md-header-color:           #757575 !default;
   border-bottom-width: 0;
 }
 
+.list-md[inset] .item-datetime,
+.list-md[inset] .item-select,
 .list-md[inset] .item-input {
   @include padding-horizontal(0);
 }
