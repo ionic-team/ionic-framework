@@ -41,6 +41,11 @@ ion-tab-button {
   color: inherit;
   background: transparent;
   cursor: pointer;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
 
 .tab-disabled {

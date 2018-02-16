@@ -1,9 +1,9 @@
 import { Color } from './components/Color';
 export interface ThemeVariable {
   property: string;
-  quickPick?: {text: string},
+  quickPick?: {text: string};
   value?: Color | number | string;
-  computed?: {type: ComputedType, params: any}
+  computed?: {type: ComputedType, params: any};
 }
 
 export enum ComputedType {
@@ -527,6 +527,9 @@ export const THEME_VARIABLES: ThemeVariable[] = [
   },
   {
     property: '--ion-tabbar-background-color'
+  },
+  {
+    property: '--tabbar-background-color-focused'
   },
   {
     property: '--ion-tabbar-border-color'

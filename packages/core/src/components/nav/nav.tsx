@@ -980,10 +980,52 @@ export function attachViewToDom(nav: Nav, enteringView: ViewController, ti: Tran
       ti.mountingData = mountingData;
       Object.assign(enteringView, mountingData);
       enteringView.state = STATE_ATTACHED;
-    });
+    })
+    // implicit returns FTW
+    .then(() => waitForNewlyAttachedViewElementsToHydate(enteringView.element));
   }
   // it's in the wrong state, so don't attach and just return
   return Promise.resolve();
+}
+
+export function waitForNewlyAttachedViewElementsToHydate(element: HTMLElement) {
+  // the element may or may not be a Stencil element
+  // so check if it has an `<ion-nav>`, `<ion-header>`, and `<ion-content>` for
+  // hydration
+  const promises: Promise<any>[] = [];
+  if ((element as any).componentOnReady) {
+    // it's a stencil element
+    promises.push((element as any).componentOnReady());
+  }
+
+  const navs = element.querySelectorAll('ion-nav');
+  for (let i = 0; i < navs.length; i++) {
+    const nav = navs.item(i);
+    promises.push((nav as any).componentOnReady());
+  }
+
+  // check for headers
+  const headers = element.querySelectorAll('ion-header');
+  for (let i = 0; i < headers.length; i++) {
+    const header = headers.item(i);
+    promises.push((header as any).componentOnReady());
+  }
+
+  // check for contents
+  const contents = element.querySelectorAll('ion-content');
+  for (let i = 0; i < contents.length; i++) {
+    const content = contents.item(i);
+    promises.push((content as any).componentOnReady());
+  }
+
+  // check for back buttons
+  const backButtons = element.querySelectorAll('ion-back-button');
+  for (let i = 0; i < backButtons.length; i++) {
+    const backButton = backButtons.item(i);
+    promises.push((backButton as any).componentOnReady());
+  }
+
+  return Promise.all(promises);
 }
 
 export function initializeViewBeforeTransition(ti: TransitionInstruction): Promise<ViewController[]> {
@@ -1306,7 +1348,7 @@ export function getDefaultEscapeHatch(): EscapeHatch {
   };
 }
 
-export function reconcileFromExternalRouterImpl(nav: Nav, component: any, data: any = {}, escapeHatch: EscapeHatch, isTopLevel: boolean) {
+export function reconcileFromExternalRouterImpl(nav: Nav, component: any, data: any = {}, escapeHatch: EscapeHatch, isTopLevel: boolean): Promise<NavResult> {
   // check if the nav has an `<ion-tab>` as a parent
   if (isParentTab(nav.element as any)) {
     // check if the tab is selected
@@ -1323,17 +1365,19 @@ export function updateTab(nav: Nav, component: any, data: any, escapeHatch: Esca
   // yeah yeah, I know this is kind of ugly but oh well, I know the internal structure of <ion-tabs>
   const tabs = tab.parentElement.parentElement as HTMLIonTabsElement;
 
-  return isTabSelected(tabs, tab).then((isSelected: boolean) => {
+  return isTabSelected(tabs, tab).then((isSelected) => {
     if (!isSelected) {
       const promise = updateNav(nav, component, data, escapeHatch, isTopLevel);
       const app = document.querySelector('ion-app');
       return app.componentOnReady().then(() => {
         app.setExternalNavPromise(promise);
-      }).then(() => {
+
         // okay, the tab is not selected, so we need to do a "switch" transition
         // basically, we should update the nav, and then swap the tabs
-        return promise.then(() => {
-          return tabs.select(tab);
+        return promise.then((navResult) => {
+          return tabs.select(tab).then(() => {
+            return navResult;
+          });
         });
       });
     }

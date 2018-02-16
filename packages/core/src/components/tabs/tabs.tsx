@@ -10,6 +10,7 @@ import { getIonApp } from '../../utils/helpers';
 })
 export class Tabs implements NavOutlet {
   private ids = -1;
+  private transitioning = false;
   private tabsId: number = (++tabIds);
   initialized = false;
 
@@ -107,10 +108,13 @@ export class Tabs implements NavOutlet {
    * @param {number|Tab} tabOrIndex Index, or the Tab instance, of the tab to select.
    */
   @Method()
-  select(tabOrIndex: number | HTMLIonTabElement): Promise<any> {
+  select(tabOrIndex: number | HTMLIonTabElement): Promise<boolean> {
+    if (this.transitioning) {
+      return Promise.resolve(false);
+    }
     const selectedTab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
     if (!selectedTab) {
-      return Promise.resolve();
+      return Promise.resolve(false);
     }
 
     // Reset rest of tabs
@@ -121,17 +125,21 @@ export class Tabs implements NavOutlet {
     }
 
     const leavingTab = this.selectedTab;
-
-    return selectedTab.setActive()
-      .then(() => {
+    this.transitioning = true;
+    return selectedTab.setActive().then(() => {
+      this.transitioning = false;
+      selectedTab.selected = true;
+      if (leavingTab !== selectedTab) {
         if (leavingTab) {
           leavingTab.active = false;
         }
-        selectedTab.selected = true;
         this.selectedTab = selectedTab;
         this.ionChange.emit(selectedTab);
         this.ionNavChanged.emit({isPop: false});
-      });
+        return true;
+      }
+      return false;
+    });
   }
 
   /**

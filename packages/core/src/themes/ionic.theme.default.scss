@@ -35,64 +35,64 @@ $ion-colors:  (
     base:             $primary,
     contrast:         #fff,
     rgb:              color-to-rgb-list($primary),
-    shade:            mix(#000, $primary, 12%),
-    tint:             mix(#fff, $primary, 10%)
+    shade:            get-color-shade($primary),
+    tint:             get-color-tint($primary)
   ),
   secondary: (
     base:             $secondary,
     contrast:         #fff,
     rgb:              color-to-rgb-list($secondary),
-    shade:            mix(#000, $secondary, 12%),
-    tint:             mix(#fff, $secondary, 10%)
+    shade:            get-color-shade($secondary),
+    tint:             get-color-tint($secondary)
   ),
   tertiary: (
     base:             $tertiary,
     contrast:         #fff,
     rgb:              color-to-rgb-list($tertiary),
-    shade:            mix(#000, $tertiary, 12%),
-    tint:             mix(#fff, $tertiary, 10%)
+    shade:            get-color-shade($tertiary),
+    tint:             get-color-tint($tertiary)
   ),
   success: (
     base:             $success,
     contrast:         #fff,
     rgb:              color-to-rgb-list($success),
-    shade:            mix(#000, $success, 12%),
-    tint:             mix(#fff, $success, 10%)
+    shade:            get-color-shade($success),
+    tint:             get-color-tint($success)
   ),
   warning: (
     base:             $warning,
     contrast:         #000,
     rgb:              color-to-rgb-list($warning),
-    shade:            mix(#000, $warning, 12%),
-    tint:             mix(#fff, $warning, 10%)
+    shade:            get-color-shade($warning),
+    tint:             get-color-tint($warning)
   ),
   danger: (
     base:             $danger,
     contrast:         #fff,
     rgb:              color-to-rgb-list($danger),
-    shade:            mix(#000, $danger, 12%),
-    tint:             mix(#fff, $danger, 10%)
+    shade:            get-color-shade($danger),
+    tint:             get-color-tint($danger)
   ),
   light: (
     base:             $light,
     contrast:         #000,
     rgb:              color-to-rgb-list($light),
-    shade:            mix(#000, $light, 12%),
-    tint:             mix(#fff, $light, 10%)
+    shade:            get-color-shade($light),
+    tint:             get-color-tint($light)
   ),
   medium: (
     base:             $medium,
     contrast:         #000,
     rgb:              color-to-rgb-list($medium),
-    shade:            mix(#000, $medium, 12%),
-    tint:             mix(#fff, $medium, 10%)
+    shade:            get-color-shade($medium),
+    tint:             get-color-tint($medium)
   ),
   dark: (
     base:             $dark,
     contrast:         #fff,
     rgb:              color-to-rgb-list($dark),
-    shade:            mix(#000, $dark, 12%),
-    tint:             mix(#fff, $dark, 10%)
+    shade:            get-color-shade($dark),
+    tint:             get-color-tint($dark)
   )
 );
 $colors:                                ion-extend-colors($ion-colors, $colors);
@@ -190,6 +190,7 @@ $overlay-background-color:              css-var(#fafafa, overlay-background-colo
 // Default Tabs & Tab bar
 // --------------------------------------------------
 $tabbar-background-color:               css-var(#f8f8f8, tabbar-background-color) !default;
+$tabbar-background-color-focused:       css-var(get-color-shade(#f8f8f8), tabbar-background-color-focused) !default;
 $tabbar-border-color:                   css-var($border-color, tabbar-border-color) !default;
 $tabbar-text-color-active:              css-var(#488aff, tabbar-text-color-active) !default;
 $tabbar-text-color:                     css-var(#8c8c8c, tabbar-text-color) !default;
