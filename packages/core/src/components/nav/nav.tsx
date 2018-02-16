@@ -1348,7 +1348,7 @@ export function getDefaultEscapeHatch(): EscapeHatch {
   };
 }
 
-export function reconcileFromExternalRouterImpl(nav: Nav, component: any, data: any = {}, escapeHatch: EscapeHatch, isTopLevel: boolean) {
+export function reconcileFromExternalRouterImpl(nav: Nav, component: any, data: any = {}, escapeHatch: EscapeHatch, isTopLevel: boolean): Promise<NavResult> {
   // check if the nav has an `<ion-tab>` as a parent
   if (isParentTab(nav.element as any)) {
     // check if the tab is selected
@@ -1374,8 +1374,10 @@ export function updateTab(nav: Nav, component: any, data: any, escapeHatch: Esca
       }).then(() => {
         // okay, the tab is not selected, so we need to do a "switch" transition
         // basically, we should update the nav, and then swap the tabs
-        return promise.then(() => {
-          return tabs.select(tab);
+        return promise.then((navResult) => {
+          return tabs.select(tab).then(() => {
+            return navResult;
+          });
         });
       });
     }
