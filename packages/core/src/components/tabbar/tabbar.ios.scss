@@ -42,7 +42,7 @@
 @mixin tabbar-ios($color-name) {
   $color-base: ion-color($colors-ios, $color-name, base, ios);
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-shade: ion-color($colors-ios, $color-name, tint, ios);
+  $color-shade: ion-color($colors-ios, $color-name, shade, ios);
 
   $translucent-background-color: ion-color-alpha($colors-ios, $color-name, $alpha-ios-high, ios);
 
@@ -56,6 +56,10 @@
 
   .tabbar-ios-#{$color-name} .tab-button {
     color: $color-contrast;
+  }
+
+  .tabbar-ios-#{$color-name} .tab-button.focused {
+    background: $color-shade;
   }
 
   .tabbar-ios-#{$color-name} .tab-button:hover:not(.disable-hover),

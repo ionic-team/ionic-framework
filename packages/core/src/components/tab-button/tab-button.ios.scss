@@ -10,6 +10,10 @@
   fill: $tab-button-ios-icon-color;
 }
 
+.tab-button-ios.focused {
+  background: $tabbar-ios-background-color-focused;
+}
+
 .tab-button-ios .tab-cover {
   @include padding(
     $tab-button-ios-padding-top,

@@ -8,6 +8,14 @@ $enable-css-variables: true;
 $css-variables: ();
 $modes: (ios, md);
 
+@function get-color-shade($color) {
+  @return mix(#000, $color, 12%);
+}
+
+@function get-color-tint($color) {
+  @return mix(#fff, $color, 10%);
+}
+
 @function force-hex($color) {
   @if type-of($color) == "color" {
     $hex: str-slice(ie-hex-str($color), 4);

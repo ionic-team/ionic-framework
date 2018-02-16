@@ -1,4 +1,4 @@
-import {Component, Element, Event, EventEmitter, Listen, Prop} from '@stencil/core';
+import {Component, Element, Event, EventEmitter, Listen, Prop, State} from '@stencil/core';
 
 
 @Component({
@@ -13,6 +13,8 @@ export class TabButton {
   @Element() el: HTMLElement;
 
   mode: string;
+
+  @State() keyFocus = false;
 
   @Prop() selected = false;
   @Prop() tab: HTMLIonTabElement;
@@ -33,6 +35,14 @@ export class TabButton {
   protected onClick(ev: UIEvent) {
     this.ionTabbarClick.emit(this.tab);
     ev.stopPropagation();
+  }
+
+  private onKeyUp() {
+    this.keyFocus = true;
+  }
+
+  private onBlur() {
+    this.keyFocus = false;
   }
 
   hostData() {
@@ -56,6 +66,7 @@ export class TabButton {
         'has-badge': hasBadge,
         'tab-disabled': tab.disabled,
         'tab-hidden': tab.hidden,
+        'focused': this.keyFocus
       }
     };
   }
@@ -63,7 +74,12 @@ export class TabButton {
   render() {
     const tab = this.tab;
     return [
-      <button type='button' class='tab-cover' disabled={tab.disabled}>
+      <button
+        type='button'
+        class='tab-cover'
+        onKeyUp={this.onKeyUp.bind(this)}
+        onBlur={this.onBlur.bind(this)}
+        disabled={tab.disabled}>
         { tab.icon && <ion-icon class='tab-button-icon' name={tab.icon}></ion-icon> }
         { tab.title && <span class='tab-button-text'>{tab.title}</span> }
         { tab.badge && <ion-badge class='tab-badge' color={tab.badgeStyle}>{tab.badge}</ion-badge> }

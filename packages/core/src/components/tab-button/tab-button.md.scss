@@ -13,6 +13,10 @@
   fill: $tab-button-md-icon-color;
 }
 
+.tab-button-md.focused {
+  background: $tabbar-md-background-color-focused;
+}
+
 .tab-button-md .tab-cover {
   @include padding(
     $tab-button-md-padding-top,
