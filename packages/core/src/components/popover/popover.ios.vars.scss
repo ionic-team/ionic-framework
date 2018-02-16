@@ -28,7 +28,7 @@ $popover-ios-text-color:                        $text-ios-color !default;
 $popover-ios-background-color:                  $background-ios-color !default;
 
 /// @prop - Background of the popover content
-$popover-ios-translucent-background-color:      $background-ios-color !default;
+$popover-ios-translucent-background-color:      ion-color-alpha($background-ios-color-value, background-ios-color, $alpha-ios-high) !default;
 
 /// @prop - Background of the popover arrow
 $popover-ios-arrow-background-color:            $popover-ios-background-color !default;
