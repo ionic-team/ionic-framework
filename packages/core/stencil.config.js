@@ -3,7 +3,6 @@ const postcss = require('@stencil/postcss');
 const autoprefixer = require('autoprefixer');
 
 exports.config = {
-  enableCache: false,
   namespace: 'Ionic',
   generateDistribution: true,
   generateWWW: false,
