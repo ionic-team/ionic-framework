@@ -10,6 +10,7 @@ import { getIonApp } from '../../utils/helpers';
 })
 export class Tabs implements NavOutlet {
   private ids = -1;
+  private transitioning = false;
   private tabsId: number = (++tabIds);
   initialized = false;
 
@@ -108,6 +109,9 @@ export class Tabs implements NavOutlet {
    */
   @Method()
   select(tabOrIndex: number | HTMLIonTabElement): Promise<boolean> {
+    if (this.transitioning) {
+      return Promise.resolve(false);
+    }
     const selectedTab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
     if (!selectedTab) {
       return Promise.resolve(false);
@@ -121,8 +125,9 @@ export class Tabs implements NavOutlet {
     }
 
     const leavingTab = this.selectedTab;
-
+    this.transitioning = true;
     return selectedTab.setActive().then(() => {
+      this.transitioning = false;
       selectedTab.selected = true;
       if (leavingTab !== selectedTab) {
         if (leavingTab) {
