@@ -100,6 +100,7 @@ export class Tabs implements NavOutlet {
   // @Listen('ionSelect')
   protected tabChange(ev: CustomEvent) {
     const selectedTab = ev.detail as HTMLIonTabElement;
+    debugger;
     this.select(selectedTab);
   }
 
@@ -107,7 +108,7 @@ export class Tabs implements NavOutlet {
    * @param {number|Tab} tabOrIndex Index, or the Tab instance, of the tab to select.
    */
   @Method()
-  select(tabOrIndex: number | HTMLIonTabElement): Promise<any> {
+  select(tabOrIndex: number | HTMLIonTabElement): Promise<boolean> {
     const selectedTab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
     if (!selectedTab) {
       return Promise.resolve();
@@ -124,13 +125,15 @@ export class Tabs implements NavOutlet {
 
     return selectedTab.setActive()
       .then(() => {
-        if (leavingTab) {
-          leavingTab.active = false;
-        }
         selectedTab.selected = true;
-        this.selectedTab = selectedTab;
-        this.ionChange.emit(selectedTab);
-        this.ionNavChanged.emit({isPop: false});
+        if (leavingTab && leavingTab !== selectedTab) {
+          leavingTab.active = false;
+          this.selectedTab = selectedTab;
+          this.ionChange.emit(selectedTab);
+          this.ionNavChanged.emit({isPop: false});
+          return true;
+        }
+        return false;
       });
   }
 
