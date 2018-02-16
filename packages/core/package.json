@@ -9,10 +9,13 @@
     "dist/"
   ],
   "devDependencies": {
-    "@stencil/core": "0.5.2",
+    "@stencil/core": "^0.6.0-0",
     "@stencil/dev-server": "latest",
+    "@stencil/postcss": "0.0.2",
+    "@stencil/sass": "0.0.2",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.6",
+    "autoprefixer": "^8.0.0",
     "chai": "^4.1.2",
     "chromedriver": "^2.33.2",
     "glob": "^7.1.2",

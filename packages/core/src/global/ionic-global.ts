@@ -1,3 +1,4 @@
+import 'ionicons';
 import { createConfigController } from './config-controller';
 import { PLATFORM_CONFIGS, detectPlatforms } from './platform-configs';
 import { createDomControllerClient } from './dom-controller';
