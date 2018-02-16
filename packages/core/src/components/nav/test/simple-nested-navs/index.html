@@ -13,7 +13,9 @@
           <ion-page>
             <ion-header>
               <ion-toolbar>
-                <ion-back-button slot="start"></ion-back-button>
+                <ion-buttons slot="start">
+                  <ion-back-button></ion-back-button>
+                </ion-buttons>
                 <ion-title>Page One</ion-title>
               </ion-toolbar>
             </ion-header>
@@ -42,7 +44,9 @@
           <ion-page>
             <ion-header>
               <ion-toolbar>
-                <ion-back-button slot="start"></ion-back-button>
+                <ion-buttons slot="start">
+                  <ion-back-button></ion-back-button>
+                </ion-buttons>
                 <ion-title>Page Two Section One</ion-title>
               </ion-toolbar>
             </ion-header>
@@ -51,12 +55,20 @@
               <ion-nav-push component="page-two-section-two">
                 <ion-button class="next">Go to Page Two Section Two</ion-button>
               </ion-nav-push>
-              <ion-nav-pop>
-                  <ion-button class="previous">Go Back</ion-button>
-              </ion-nav-pop>
+              <div>
+                <ion-button class="previous">Go Back</ion-button>
+              </div>
             </ion-content>
           </ion-page>
           `;
+
+          const button = this.querySelector('ion-button.previous');
+          button.addEventListener('click', () => {
+            const nav = this.closest('ion-nav');
+            if (nav.parent) {
+              nav.parent.pop();
+            }
+          });
         }
       }
 
@@ -66,7 +78,9 @@
           <ion-page>
             <ion-header>
               <ion-toolbar>
-                <ion-back-button slot="start"></ion-back-button>
+                <ion-buttons slot="start">
+                  <ion-back-button></ion-back-button>
+                </ion-buttons>
                 <ion-title>Page Two Section Two</ion-title>
               </ion-toolbar>
             </ion-header>
@@ -75,9 +89,6 @@
               <ion-nav-push component="page-three">
                 <ion-button class="next">Go to Page Three</ion-button>
               </ion-nav-push>
-              <ion-nav-pop>
-                  <ion-button class="previous">Go Back</ion-button>
-              </ion-nav-pop>
             </ion-content>
           </ion-page>
           `;
@@ -90,7 +101,9 @@
           <ion-page>
             <ion-header>
               <ion-toolbar>
-                <ion-back-button slot="start"></ion-back-button>
+                <ion-buttons slot="start">
+                  <ion-back-button></ion-back-button>
+                </ion-buttons>
                 <ion-title>Page Three</ion-title>
               </ion-toolbar>
             </ion-header>
