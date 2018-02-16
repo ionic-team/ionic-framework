@@ -71,6 +71,11 @@ function getIonPageElement(element: HTMLElement) {
     return ionPage;
   }
 
+  const ionNav = element.querySelector('ion-nav');
+  if (ionNav) {
+    return ionNav;
+  }
+
   // idk, return the original element so at least something animates and we don't have a null pointer
   return element;
 }
