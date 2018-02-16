@@ -1365,13 +1365,13 @@ export function updateTab(nav: Nav, component: any, data: any, escapeHatch: Esca
   // yeah yeah, I know this is kind of ugly but oh well, I know the internal structure of <ion-tabs>
   const tabs = tab.parentElement.parentElement as HTMLIonTabsElement;
 
-  return isTabSelected(tabs, tab).then((isSelected: boolean) => {
+  return isTabSelected(tabs, tab).then((isSelected) => {
     if (!isSelected) {
       const promise = updateNav(nav, component, data, escapeHatch, isTopLevel);
       const app = document.querySelector('ion-app');
       return app.componentOnReady().then(() => {
         app.setExternalNavPromise(promise);
-      }).then(() => {
+
         // okay, the tab is not selected, so we need to do a "switch" transition
         // basically, we should update the nav, and then swap the tabs
         return promise.then((navResult) => {

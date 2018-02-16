@@ -122,18 +122,19 @@ export class Tabs implements NavOutlet {
 
     const leavingTab = this.selectedTab;
 
-    return selectedTab.setActive()
-      .then(() => {
-        selectedTab.selected = true;
-        if (leavingTab && leavingTab !== selectedTab) {
+    return selectedTab.setActive().then(() => {
+      selectedTab.selected = true;
+      if (leavingTab !== selectedTab) {
+        if (leavingTab) {
           leavingTab.active = false;
-          this.selectedTab = selectedTab;
-          this.ionChange.emit(selectedTab);
-          this.ionNavChanged.emit({isPop: false});
-          return true;
         }
-        return false;
-      });
+        this.selectedTab = selectedTab;
+        this.ionChange.emit(selectedTab);
+        this.ionNavChanged.emit({isPop: false});
+        return true;
+      }
+      return false;
+    });
   }
 
   /**
