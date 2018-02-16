@@ -126,13 +126,7 @@ export class Tab {
       // the tab's nav has not been initialized externally, so
       // check if we need to initiailize it
       return nav.componentOnReady()
-      .then(() => nav.onAllTransitionsComplete())
-      .then<any>(() => {
-        if (nav.getViews().length === 0 && !nav.isTransitioning() && !nav.initialized) {
-          return nav.setRoot(nav.root);
-        }
-        return Promise.resolve();
-      });
+      .then(() => nav.activateFromTab());
     });
   }
 

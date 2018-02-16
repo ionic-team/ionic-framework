@@ -89,6 +89,9 @@ boolean
 
 ## Methods
 
+#### activateFromTab()
+
+
 #### canGoBack()
 
 

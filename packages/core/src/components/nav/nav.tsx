@@ -264,6 +264,11 @@ export class Nav implements PublicNav, NavOutlet {
     return reconcileFromExternalRouterImpl(this, component, data, escapeHatch, isTopLevel);
   }
 
+  @Method()
+  activateFromTab() {
+    return activateFromTabImpl(this);
+  }
+
   canSwipeBack(): boolean {
     return (this.swipeBackEnabled &&
       // this.childNavs.length === 0 &&
@@ -617,23 +622,25 @@ export function isUrl(component: any): boolean {
   return typeof component === 'string' && component.charAt(0) === '/';
 }
 
-export function navigateToUrl(nav: Nav, url: string, method: string): Promise<NavResult> {
-  let routingPromise: Promise<any> = null;
-  return new Promise((resolve, reject) => {
-    nav.urlExternalNavMap.set(url, {
-      url,
-      method,
-      resolve,
-      reject
-    });
-    if (!nav.routerDelegate) {
-      nav.routerDelegate = new DomRouterDelegate();
+export function navigateToUrl(nav: Nav, url: string, _method: string): Promise<any> {
+  if (!nav.routerDelegate) {
+    nav.routerDelegate = new DomRouterDelegate();
+  }
+  return nav.routerDelegate.pushUrlState(url);
+}
+
+export function activateFromTabImpl(nav: Nav): Promise<any> {
+  return nav.onAllTransitionsComplete().then(() => {
+    // if there is not a view set and it's not transitioning,
+    // go ahead and set the root
+    if (nav.getViews().length === 0 && !nav.isTransitioning()) {
+      return nav.setRoot(nav.root);
     }
-    routingPromise = nav.routerDelegate.pushUrlState(url);
-  }).then((navResult: NavResult) => {
-    return routingPromise.then(() => {
-      return navResult;
-    });
+
+    // okay, we have a view here, and it's almost certainly the correct view
+    // so what we need to do is update the browsers url to match what's in the top view
+    const viewController = nav.getActive() as ViewController;
+    return viewController && viewController.url ? navigateToUrl(nav, viewController.url, null) : Promise.resolve();
   });
 }
 
