@@ -70,10 +70,13 @@ function getIonPageElement(element: HTMLElement) {
   if (ionPage) {
     return ionPage;
   }
-
   const ionNav = element.querySelector('ion-nav');
   if (ionNav) {
     return ionNav;
+  }
+  const ionTabs = element.querySelector('ion-tabs');
+  if (ionTabs) {
+    return ionTabs;
   }
 
   // idk, return the original element so at least something animates and we don't have a null pointer
