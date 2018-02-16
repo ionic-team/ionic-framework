@@ -42,7 +42,7 @@
     "@angular/platform-browser": "latest",
     "@angular/platform-browser-dynamic": "latest",
     "@angular/router": "latest",
-    "@ionic/core": "next",
+    "@ionic/core": "0.0.2",
     "glob": "7.1.2",
     "ionicons": "~3.0.0",
     "rxjs": "5.5.2",
