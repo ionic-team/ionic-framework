@@ -11,7 +11,7 @@ declare const Ionic: { gesture: GestureController };
 export class TapClick {
 
   private app: HTMLIonAppElement;
-  private lastTouch = 0;
+  private lastTouch = -MOUSE_WAIT*10;
   private lastActivated = 0;
 
   private gestureCtrl: GestureController;
@@ -41,6 +41,7 @@ export class TapClick {
   @Listen('document:click', {passive: false, capture: true})
   onBodyClick(ev: Event) {
     if (this.shouldCancel()) {
+      debugger;
       ev.preventDefault();
       ev.stopPropagation();
     }
@@ -67,16 +68,16 @@ export class TapClick {
 
   @Listen('document:mousedown', { passive: true })
   onMouseDown(ev: MouseEvent) {
-    const t = now(ev);
-    if (this.lastTouch < t - MOUSE_WAIT) {
+    const t = now(ev) - MOUSE_WAIT;
+    if (this.lastTouch < t) {
       this.pointerDown(ev);
     }
   }
 
   @Listen('document:mouseup', { passive: true })
   onMouseUp(ev: TouchEvent) {
-    const t = now(ev);
-    if (this.lastTouch < t - MOUSE_WAIT) {
+    const t = now(ev) - MOUSE_WAIT;
+    if (this.lastTouch < t) {
       this.pointerUp(ev);
     }
   }
