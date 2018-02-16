@@ -1,6 +1,8 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
-import { ensureExternalRounterController, getNavAsChildIfExists } from '../../utils/helpers';
+
 import { FrameworkDelegate } from '../..';
+import { getIonApp, getNavAsChildIfExists } from '../../utils/helpers';
+
 
 @Component({
   tag: 'ion-tab',
@@ -81,7 +83,7 @@ export class Tab {
   @Method()
   prepareActive(): Promise<any> {
     if (this.loaded) {
-      return this.configChildgNav();
+      return this.configChildNav();
     }
     this.loaded = true;
 
@@ -94,7 +96,7 @@ export class Tab {
     } else {
       promise = Promise.resolve();
     }
-    return promise.then(() => this.configChildgNav());
+    return promise.then(() => this.configChildNav());
   }
 
   @Method()
@@ -108,15 +110,15 @@ export class Tab {
     return null;
   }
 
-  private configChildgNav(): Promise<any|void> {
+  private configChildNav(): Promise<any|void> {
     const nav = getNavAsChildIfExists(this.el);
     if (nav) {
       // the tab's nav has been initialized externally
-      return ensureExternalRounterController().then<void|any>((externalRouterController) => {
-        const externalNavPromise = externalRouterController.getExternalNavPromise();
+      return getIonApp().then((ionApp) => {
+        const externalNavPromise = ionApp ? ionApp.getExternalNavPromise() : null;
         if (externalNavPromise) {
-          return externalNavPromise.then(() => {
-            externalRouterController.clearExternalNavPromise();
+          return (externalNavPromise as any).then(() => {
+            ionApp.setExternalNavPromise(null);
           });
         }
 

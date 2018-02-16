@@ -5,7 +5,7 @@ import {
   Router
 } from '@angular/router';
 
-import { ensureExternalRounterController } from '../util/util';
+import { getIonApp } from '../util/util';
 
 @Injectable()
 export class RouteEventHandler {
@@ -14,16 +14,16 @@ export class RouteEventHandler {
 
     router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
-        ensureExternalRounterController().then((element) => {
-          element.updateExternalNavOccuring(false);
+        getIonApp().then((appElement) => {
+          appElement.updateExternalNavOccuring(false);
         });
       }
     });
   }
 
   externalNavStart() {
-    return ensureExternalRounterController().then((element) => {
-      element.updateExternalNavOccuring(true);
+    return getIonApp().then((appElement) => {
+      appElement.updateExternalNavOccuring(true);
     });
   }
 }

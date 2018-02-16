@@ -30,6 +30,49 @@ export class App {
 
   @Prop({ context: 'config' }) config: Config;
 
+  externalNavPromise: void | Promise<any> = null;
+  externalNavOccuring = false;
+
+  /**
+   * Returns the promise set by an external navigation system
+   * This API is not meant for public usage and could
+   * change at any time
+   */
+  @Method()
+  getExternalNavPromise(): void | Promise<any> {
+    return this.externalNavPromise;
+  }
+
+  /**
+   * Updates the Promise set by an external navigation system
+   * This API is not meant for public usage and could
+   * change at any time
+   */
+  @Method()
+  setExternalNavPromise(value: null | Promise<any>): void {
+    this.externalNavPromise = value;
+  }
+
+  /**
+   * Returns whether an external navigation event is occuring
+   * This API is not meant for public usage and could
+   * change at any time
+   */
+  @Method()
+  getExternalNavOccuring(): boolean {
+    return this.externalNavOccuring;
+  }
+
+  /**
+   * Updates whether an external navigation event is occuring
+   * This API is not meant for public usage and could
+   * change at any time
+   */
+  @Method()
+  updateExternalNavOccuring(status: boolean) {
+    this.externalNavOccuring = status;
+  }
+
   componentWillLoad() {
     this.modeCode = this.config.get('mode');
     this.useRouter = this.config.getBoolean('useRouter', false);

@@ -26,12 +26,7 @@ export function isString(something: any) {
   return typeof something === 'string' ? true : false;
 }
 
-export function ensureExternalRounterController(): Promise<HTMLIonExternalRouterControllerElement> {
-  const element = document.querySelector('ion-external-router-controller');
-  if (element) {
-    return (element as any).componentOnReady();
-  }
-  const toCreate = document.createElement('ion-external-router-controller');
-  document.body.appendChild(toCreate);
-  return (toCreate as any).componentOnReady();
+export function getIonApp(): Promise<HTMLIonAppElement> {
+  const element = ensureElementInBody('ion-app') as HTMLIonAppElement;
+  return element.componentOnReady();
 }

@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 import { Config, NavEventDetail, NavOutlet } from '../../index';
 
-import { asyncRaf, ensureExternalRounterController } from '../../utils/helpers';
+import { asyncRaf, getIonApp } from '../../utils/helpers';
 
 
 @Component({
@@ -75,10 +75,13 @@ export class Tabs implements NavOutlet {
 
     const promises: Promise<any>[] = [];
     promises.push(this.initTabs());
-    promises.push(ensureExternalRounterController());
-    return Promise.all(promises).then(([_, externalRouterController]) => {
-      return (externalRouterController as HTMLIonExternalRouterControllerElement).getExternalNavOccuring();
-    }).then((externalNavOccuring) => {
+    promises.push(getIonApp());
+    return Promise.all(promises).then(([_, ionApp]) => {
+      if (ionApp) {
+        return (ionApp as HTMLIonAppElement).getExternalNavOccuring();
+      }
+      return false;
+    }).then((externalNavOccuring: boolean) => {
       if (!externalNavOccuring) {
         return this.initSelect();
       }
@@ -116,11 +119,8 @@ export class Tabs implements NavOutlet {
         tab.selected = false;
       }
     }
-    selectedTab.selected = true;
 
     const leavingTab = this.selectedTab;
-    this.selectedTab = selectedTab;
-
 
     return selectedTab.prepareActive()
       .then(() => selectedTab.active = true)
@@ -129,6 +129,8 @@ export class Tabs implements NavOutlet {
         if (leavingTab) {
           leavingTab.active = false;
         }
+        selectedTab.selected = true;
+        this.selectedTab = selectedTab;
         this.ionChange.emit(selectedTab);
         this.ionNavChanged.emit({isPop: false});
       });
@@ -216,6 +218,7 @@ export class Tabs implements NavOutlet {
       this.selectedTab = selectedTab;
       if (selectedTab) {
         selectedTab.selected = true;
+        selectedTab.active = true;
       }
     });
   }

@@ -876,36 +876,6 @@ declare global {
 
 
 import {
-  ExternalRouterController as IonExternalRouterController
-} from './components/external-router-controller/external-router-controller';
-
-declare global {
-  interface HTMLIonExternalRouterControllerElement extends IonExternalRouterController, HTMLStencilElement {
-  }
-  var HTMLIonExternalRouterControllerElement: {
-    prototype: HTMLIonExternalRouterControllerElement;
-    new (): HTMLIonExternalRouterControllerElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-external-router-controller": HTMLIonExternalRouterControllerElement;
-  }
-  interface ElementTagNameMap {
-    "ion-external-router-controller": HTMLIonExternalRouterControllerElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-external-router-controller": JSXElements.IonExternalRouterControllerAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonExternalRouterControllerAttributes extends HTMLAttributes {
-      
-    }
-  }
-}
-
-
-import {
   FabButton as IonFabButton
 } from './components/fab-button/fab-button';
 

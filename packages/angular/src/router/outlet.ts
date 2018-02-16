@@ -28,7 +28,7 @@ import { OutletInjector } from './outlet-injector';
 import { RouteEventHandler } from './route-event-handler';
 
 import { AngularComponentMounter, AngularEscapeHatch } from '..';
-import { ensureExternalRounterController } from '../util/util';
+import { getIonApp } from '../util/util';
 
 let id = 0;
 
@@ -139,9 +139,14 @@ export class RouterOutlet implements OnDestroy, OnInit, RouterDelegate {
 export function activateRoute(navElement: HTMLIonNavElement,
   component: Type<any>, data: any = {}, cfr: ComponentFactoryResolver, injector: Injector, isTopLevel: boolean): Promise<void> {
 
-  return ensureExternalRounterController().then((externalRouterController) => {
+  return getIonApp().then((ionApp) => {
+    if (!ionApp) {
+      return Promise.reject(new Error(`<ion-app> element is required for angular router integration`));
+    }
     const escapeHatch = getEscapeHatch(cfr, injector);
-    return externalRouterController.reconcileNav(navElement, component, data, escapeHatch, isTopLevel);
+    return navElement.componentOnReady().then(() => {
+      return navElement.reconcileFromExternalRouter(component, data, escapeHatch, isTopLevel);
+    });
   });
 }
 

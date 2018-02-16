@@ -321,12 +321,14 @@ export function normalizeUrl(url: string) {
   return url;
 }
 
-export function ensureExternalRounterController(): Promise<HTMLIonExternalRouterControllerElement> {
-  const element = document.querySelector('ion-external-router-controller');
-  if (element) {
-    return (element as any).componentOnReady();
+export function isParentTab(element: HTMLElement) {
+  return element.parentElement.tagName.toLowerCase() === 'ion-tab';
+}
+
+export function getIonApp(): Promise<HTMLIonAppElement> {
+  const appElement = document.querySelector('ion-app');
+  if (!appElement) {
+    return Promise.resolve(null);
   }
-  const toCreate = document.createElement('ion-external-router-controller');
-  document.body.appendChild(toCreate);
-  return (toCreate as any).componentOnReady();
+  return appElement.componentOnReady();
 }

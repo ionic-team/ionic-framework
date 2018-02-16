@@ -51,6 +51,7 @@ import {
   focusOutActiveElement,
   isDef,
   isNumber,
+  isParentTab,
   normalizeUrl,
 } from '../../utils/helpers';
 
@@ -256,6 +257,11 @@ export class Nav implements PublicNav, NavOutlet {
   @Method()
   onAllTransitionsComplete() {
     return allTransitionsCompleteImpl(this);
+  }
+
+  @Method()
+  reconcileFromExternalRouter(component: any, data: any = {}, escapeHatch: EscapeHatch, isTopLevel: boolean) {
+    return reconcileFromExternalRouterImpl(this, component, data, escapeHatch, isTopLevel);
   }
 
   canSwipeBack(): boolean {
@@ -1299,6 +1305,92 @@ export function getDefaultEscapeHatch(): EscapeHatch {
     fromExternalRouter: false,
   };
 }
+
+export function reconcileFromExternalRouterImpl(nav: Nav, component: any, data: any = {}, escapeHatch: EscapeHatch, isTopLevel: boolean) {
+  // check if the nav has an `<ion-tab>` as a parent
+  if (isParentTab(nav.element as any)) {
+    // check if the tab is selected
+    return updateTab(nav, component, data, escapeHatch, isTopLevel);
+  } else {
+    return updateNav(nav, component, data, escapeHatch, isTopLevel);
+  }
+}
+
+export function updateTab(nav: Nav, component: any, data: any, escapeHatch: EscapeHatch, isTopLevel: boolean) {
+
+  const tab = nav.element.parentElement as HTMLIonTabElement;
+
+  // yeah yeah, I know this is kind of ugly but oh well, I know the internal structure of <ion-tabs>
+  const tabs = tab.parentElement.parentElement as HTMLIonTabsElement;
+
+  return isTabSelected(tabs, tab).then((isSelected: boolean) => {
+    if (!isSelected) {
+      const promise = updateNav(nav, component, data, escapeHatch, isTopLevel);
+      const app = document.querySelector('ion-app');
+      return app.componentOnReady().then(() => {
+        app.setExternalNavPromise(promise);
+      }).then(() => {
+        // okay, the tab is not selected, so we need to do a "switch" transition
+        // basically, we should update the nav, and then swap the tabs
+        return promise.then(() => {
+          return tabs.select(tab);
+        });
+      });
+    }
+
+    // okay cool, the tab is already selected, so we want to see a transition
+    return updateNav(nav, component, data, escapeHatch, isTopLevel);
+  });
+}
+
+export function isTabSelected(tabsElement: HTMLIonTabsElement, tabElement: HTMLIonTabElement ): Promise<boolean> {
+  const promises: Promise<any>[] = [];
+  promises.push(tabsElement.componentOnReady());
+  promises.push(tabElement.componentOnReady());
+  return Promise.all(promises).then(() => {
+    return tabsElement.getSelected() === tabElement;
+  });
+}
+
+export function updateNav(nav: Nav,
+  component: any, data: any, escapeHatch: EscapeHatch, isTopLevel: boolean): Promise<NavResult> {
+
+
+  // check if the component is the top view
+  const activeViews = nav.getViews();
+  if (activeViews.length === 0) {
+    // there isn't a view in the stack, so push one
+    return nav.setRoot(component, data, {}, escapeHatch);
+  }
+
+  const currentView = activeViews[activeViews.length - 1];
+  if (currentView.component === component) {
+    // the top view is already the component being activated, so there is no change needed
+    return Promise.resolve(null);
+  }
+
+  // check if the component is the previous view, if so, pop back to it
+  if (activeViews.length > 1) {
+    // there's at least two views in the stack
+    const previousView = activeViews[activeViews.length - 2];
+    if (previousView.component === component) {
+      // cool, we match the previous view, so pop it
+      return nav.pop(null, escapeHatch);
+    }
+  }
+
+  // check if the component is already in the stack of views, in which case we pop back to it
+  for (const view of activeViews) {
+    if (view.component === component) {
+      // cool, we found the match, pop back to that bad boy
+      return nav.popTo(view, null, escapeHatch);
+    }
+  }
+
+  // it's the top level nav, and it's not one of those other behaviors, so do a push so the user gets a chill animation
+  return nav.push(component, data, { animate: isTopLevel }, escapeHatch);
+}
+
 
 export interface IsRedirectRequired {
   required: boolean;
