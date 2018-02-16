@@ -39,10 +39,18 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
   const backDirection = (opts.direction === 'back');
   // setting up enter view
   if (enteringView) {
-
+    const contentEl = enteringView.element.querySelector('ion-content');
+    const headerEls = enteringView.element.querySelectorAll('ion-header > *:not(ion-toolbar),ion-footer > *');
+    const enteringToolBarEle = enteringView.element.querySelector('ion-toolbar');
     const enteringContent = rootTransition.create();
-    enteringContent.addElement(enteringView.element.querySelector('ion-content'));
-    enteringContent.addElement(enteringView.element.querySelectorAll('ion-header > *:not(ion-toolbar),ion-footer > *'));
+
+    if (!contentEl && !enteringToolBarEle && headerEls.length === 0) {
+      enteringContent.addElement(enteringView.element.querySelector('ion-page,ion-nav,ion-tabs'));
+    } else {
+      enteringContent.addElement(contentEl);
+      enteringContent.addElement(headerEls);
+    }
+
     rootTransition.add(enteringContent);
 
     if (backDirection) {
@@ -58,7 +66,6 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
 
     }
 
-    const enteringToolBarEle = enteringView.element.querySelector('ion-toolbar');
     if (enteringToolBarEle) {
       const enteringToolBar = rootTransition.create();
       enteringToolBar.addElement(enteringToolBarEle);
