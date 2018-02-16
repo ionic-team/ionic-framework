@@ -232,7 +232,7 @@ Emitted when the current tab is selected.
 #### getRouteId()
 
 
-#### prepareActive()
+#### setActive()
 
 
 

@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { FrameworkDelegate } from '../..';
-import { getIonApp, getNavAsChildIfExists } from '../../utils/helpers';
+import { asyncRaf, getIonApp, getNavAsChildIfExists } from '../../utils/helpers';
 
 
 @Component({
@@ -14,7 +14,7 @@ export class Tab {
   @Element() el: HTMLElement;
 
   @State() init = false;
-  @Prop() active = false;
+  @Prop({mutable: true}) active = false;
 
   /**
    * Set the root page for this tab.
@@ -81,25 +81,6 @@ export class Tab {
   @Event() ionSelect: EventEmitter<void>;
 
   @Method()
-  prepareActive(): Promise<any> {
-    if (this.loaded) {
-      return this.configChildNav();
-    }
-    this.loaded = true;
-
-    let promise: Promise<any>;
-    if (this.component) {
-      promise = (this.delegate)
-       ? this.delegate.attachViewToDom(this.el, this.component)
-       : attachViewToDom(this.el, this.component);
-
-    } else {
-      promise = Promise.resolve();
-    }
-    return promise.then(() => this.configChildNav());
-  }
-
-  @Method()
   getRouteId(): string|null {
     if (this.name) {
       return this.name;
@@ -110,31 +91,49 @@ export class Tab {
     return null;
   }
 
-  private configChildNav(): Promise<any|void> {
-    const nav = getNavAsChildIfExists(this.el);
-    if (nav) {
-      // the tab's nav has been initialized externally
-      return getIonApp().then((ionApp) => {
-        const externalNavPromise = ionApp ? ionApp.getExternalNavPromise() : null;
-        if (externalNavPromise) {
-          return (externalNavPromise as any).then(() => {
-            ionApp.setExternalNavPromise(null);
-          });
-        }
+  @Method()
+  setActive(): Promise<any> {
+    return this.prepareLazyLoaded().then(() => this.showTab());
+  }
 
-        // the tab's nav has not been initialized externally, so
-        // check if we need to initiailize it
-        return nav.componentOnReady()
-        .then(() => nav.onAllTransitionsComplete())
-        .then<any>(() => {
-          if (nav.getViews().length === 0 && !nav.isTransitioning() && !nav.initialized) {
-            return nav.setRoot(nav.root);
-          }
-          return Promise.resolve();
-        });
-      });
+  private prepareLazyLoaded(): Promise<any> {
+    if (!this.loaded && this.component) {
+      this.loaded = true;
+      const promise = (this.delegate)
+        ? this.delegate.attachViewToDom(this.el, this.component)
+        : attachViewToDom(this.el, this.component);
+
+      return promise.then(() => asyncRaf());
     }
     return Promise.resolve();
+  }
+
+  private showTab(): Promise<any|void> {
+    this.active = true;
+    const nav = getNavAsChildIfExists(this.el);
+    if (!nav) {
+      return Promise.resolve();
+    }
+    // the tab's nav has been initialized externally
+    return getIonApp().then((ionApp) => {
+      const externalNavPromise = ionApp ? ionApp.getExternalNavPromise() : null;
+      if (externalNavPromise) {
+        return (externalNavPromise as any).then(() => {
+          ionApp.setExternalNavPromise(null);
+        });
+      }
+
+      // the tab's nav has not been initialized externally, so
+      // check if we need to initiailize it
+      return nav.componentOnReady()
+      .then(() => nav.onAllTransitionsComplete())
+      .then<any>(() => {
+        if (nav.getViews().length === 0 && !nav.isTransitioning() && !nav.initialized) {
+          return nav.setRoot(nav.root);
+        }
+        return Promise.resolve();
+      });
+    });
   }
 
   hostData() {
