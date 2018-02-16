@@ -3,6 +3,7 @@
   "rules": {
     "no-conditional-assignment": false,
     "no-unnecessary-type-assertion": false,
-    "prefer-for-of": false
+    "prefer-for-of": false,
+    "no-import-side-effect": false,
   }
 }

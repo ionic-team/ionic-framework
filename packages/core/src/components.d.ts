@@ -4,8 +4,6 @@
  * and imports for stencil collections that might be configured in your stencil.config.js file
  */
 
-import 'ionicons';
-
 import {
   ActionSheetButton,
 } from './components/action-sheet/action-sheet';
