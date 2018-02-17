@@ -290,5 +290,5 @@ $alert-ios-checkbox-icon-transform:             rotate(45deg) !default;
 /// @prop - Filter of the translucent alert
 $alert-ios-translucent-filter:                  saturate(180%) blur(20px) !default;
 
-/// @prop - Minimum height of the tappable inputs in the checkbox alert
-$alert-ios-tappable-min-height:                 $item-min-height !default;
+/// @prop - Height of the tappable inputs in the checkbox alert
+$alert-ios-tappable-height:                     $item-min-height !default;

@@ -21,9 +21,6 @@ export class TapClick {
 
   private clearDefers = new WeakMap<HTMLElement, any>();
 
-  passive = true;
-  attachTo = 'document';
-
   @Prop({context: 'isServer'}) isServer: boolean;
   @Prop({context: 'enableListener'}) enableListener: EventListenerEnable;
 

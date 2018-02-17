@@ -323,5 +323,5 @@ $alert-md-checkbox-icon-border-color:         ion-color($colors-md, $alert-md-ch
 /// @prop - Transform of the icon in the checkbox alert
 $alert-md-checkbox-icon-transform:            rotate(45deg) !default;
 
-/// @prop - Minimum height of the tappable inputs in the checkbox alert
-$alert-md-tappable-min-height:                $item-min-height !default;
+/// @prop - Height of the tappable inputs in the checkbox alert
+$alert-md-tappable-height:                $item-min-height !default;

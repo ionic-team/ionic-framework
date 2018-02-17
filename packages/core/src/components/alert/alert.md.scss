@@ -97,7 +97,9 @@
 
   overflow: hidden;
 
-  min-height: $alert-md-tappable-min-height;
+  height: $alert-md-tappable-height;
+
+  contain: strict;
 }
 
 
@@ -201,6 +203,8 @@
   border-width: $alert-md-checkbox-border-width;
   border-style: $alert-md-checkbox-border-style;
   border-color: $alert-md-checkbox-border-color-off;
+
+  contain: strict;
 }
 
 // Material Design Alert Checkbox Checkmark: Checked

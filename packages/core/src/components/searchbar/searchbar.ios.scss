@@ -7,9 +7,17 @@
 .searchbar-ios {
   @include padding($searchbar-ios-padding-top, $searchbar-ios-padding-end, $searchbar-ios-padding-bottom, $searchbar-ios-padding-start);
 
-  min-height: $searchbar-ios-min-height;
+  height: $searchbar-ios-input-height + $searchbar-ios-padding-top + $searchbar-ios-padding-bottom;
 
   font-family: $searchbar-ios-font-family;
+
+  contain: strict;
+}
+
+.searchbar-ios .searchbar-input-container {
+  height: $searchbar-ios-input-height;
+
+  contain: strict;
 }
 
 
@@ -39,6 +47,8 @@
 
   background-repeat: no-repeat;
   background-size: $searchbar-ios-input-search-icon-size;
+
+  contain: strict;
 }
 
 
@@ -50,13 +60,15 @@
   @include padding(0, 28px);
   @include border-radius($searchbar-ios-input-border-radius);
 
-  height: $searchbar-ios-input-height;
+  height: 100%;
 
   font-size: 14px;
   font-weight: 400;
 
   color: $searchbar-ios-input-text-color;
   background-color: $searchbar-ios-input-background-color;
+
+  contain: strict;
 }
 
 

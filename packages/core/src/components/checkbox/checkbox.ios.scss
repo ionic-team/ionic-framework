@@ -19,6 +19,8 @@
   border-style: $checkbox-ios-icon-border-style;
   border-color: $checkbox-ios-icon-border-color-off;
   background-color: $checkbox-ios-background-color-off;
+
+  contain: strict;
 }
 
 

@@ -54,11 +54,13 @@
   position: relative;
   overflow: hidden;
 
-  min-height: $action-sheet-md-button-min-height;
+  height: $action-sheet-md-button-height;
 
   font-size: $action-sheet-md-button-font-size;
   color: $action-sheet-md-button-text-color;
   background: $action-sheet-md-button-background;
+
+  contain: strict;
 }
 
 .action-sheet-md .action-sheet-button.activated {

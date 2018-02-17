@@ -23,6 +23,8 @@
   transition-duration: $checkbox-md-transition-duration;
   transition-property: background;
   transition-timing-function: $checkbox-md-transition-easing;
+
+  contain: strict;
 }
 
 

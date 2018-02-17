@@ -113,7 +113,9 @@
 .alert-ios .alert-tappable {
   display: flex;
 
-  min-height: $alert-ios-tappable-min-height;
+  height: $alert-ios-tappable-height;
+
+  contain: strict;
 }
 
 
@@ -209,6 +211,8 @@
   border-style: $alert-ios-checkbox-border-style;
   border-color: $alert-ios-checkbox-border-color-off;
   background-color: $alert-ios-checkbox-background-color-off;
+
+  contain: strict;
 }
 
 
