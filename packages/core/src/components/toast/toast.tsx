@@ -21,12 +21,75 @@ import mdLeaveAnimation from './animations/md.leave';
   }
 })
 export class Toast {
+  private animation: Animation | null;
+
+  toastId: number;
+
+  @Element() private el: HTMLElement;
+
   mode: string;
   color: string;
 
-  private animation: Animation | null;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
+  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
 
-  @Element() private el: HTMLElement;
+  /**
+   * Animation to use when the toast is presented.
+   */
+  @Prop() enterAnimation: AnimationBuilder;
+
+  /**
+   * Animation to use when the toast is dismissed.
+   */
+  @Prop() leaveAnimation: AnimationBuilder;
+
+  /**
+   * Text to display in the close button.
+   */
+  @Prop() closeButtonText: string;
+
+  /**
+   * Additional classes to apply for custom CSS. If multiple classes are
+   * provided they should be separated by spaces.
+   */
+  @Prop() cssClass: string;
+
+  /**
+   * If true, the toast will dismiss when the page changes. Defaults to `false`.
+   */
+  @Prop() dismissOnPageChange: boolean;
+
+  /**
+   * How many milliseconds to wait before hiding the toast. By default, it will show
+   * until `dismiss()` is called.
+   */
+  @Prop() duration: number;
+
+  /**
+   * Message to be shown in the toast.
+   */
+  @Prop() message: string;
+
+  /**
+   * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
+   */
+  @Prop() position: string;
+
+  /**
+   * If true, the close button will be displayed. Defaults to `false`.
+   */
+  @Prop() showCloseButton = false;
+
+  /**
+   * If true, the toast will be translucent. Defaults to `false`.
+   */
+  @Prop() translucent = false;
+
+  /**
+   * If true, the toast will animate. Defaults to `true`.
+   */
+  @Prop() willAnimate = true;
 
   /**
    * Emitted after the toast has loaded.
@@ -58,24 +121,9 @@ export class Toast {
    */
   @Event() ionToastDidUnload: EventEmitter<ToastEventDetail>;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
-  @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
-
-  @Prop() message: string;
-  @Prop() cssClass: string;
-  @Prop() duration: number;
-  @Prop() showCloseButton: boolean;
-  @Prop() closeButtonText: string;
-  @Prop() dismissOnPageChange: boolean;
-  @Prop() position: string;
-  @Prop() translucent = false;
-  @Prop() toastId: number;
-  @Prop() willAnimate = true;
-
-  @Prop() enterAnimation: AnimationBuilder;
-  @Prop() leaveAnimation: AnimationBuilder;
-
+  /**
+   * Present the toast overlay after it has been created.
+   */
   @Method()
   present() {
     if (this.animation) {
@@ -102,6 +150,9 @@ export class Toast {
     });
   }
 
+  /**
+   * Dismiss the toast overlay after it has been presented.
+   */
   @Method()
   dismiss(data?: any, role?: string) {
     if (this.animation) {
