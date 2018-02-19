@@ -1,16 +1,6 @@
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-
-import {
-  Animation,
-  AnimationBuilder,
-  AnimationController,
-  Config,
-  DomController,
-  OverlayDismissEvent,
-  OverlayDismissEventDetail
-} from '../../index';
+import { Animation, AnimationBuilder, AnimationController, Config, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
-
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';

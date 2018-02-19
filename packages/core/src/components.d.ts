@@ -5,15 +5,15 @@
  */
 
 import {
-  ActionSheetButton,
-} from './components/action-sheet/action-sheet';
-import {
   AnimationBuilder,
   FrameworkDelegate,
   PickerColumn,
   PickerOptions,
   RouterDelegate,
 } from './index';
+import {
+  ActionSheetButton,
+} from './components/action-sheet/action-sheet';
 import {
   AlertButton,
   AlertInput,
@@ -1600,6 +1600,7 @@ declare global {
       cssClass?: string;
       dismissOnPageChange?: boolean;
       duration?: number;
+      enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
       showBackdrop?: boolean;
@@ -2057,14 +2058,11 @@ declare global {
     export interface IonPickerAttributes extends HTMLAttributes {
       buttons?: PickerButton[];
       columns?: PickerColumn[];
-      content?: string;
       cssClass?: string;
-      dismissOnPageChange?: boolean;
       duration?: number;
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
-      pickerId?: number;
       showBackdrop?: boolean;
       willAnimate?: boolean;
     }
@@ -2166,7 +2164,6 @@ declare global {
       ev?: Event;
       leaveAnimation?: AnimationBuilder;
       mode?: 'ios' | 'md';
-      popoverId?: number;
       showBackdrop?: boolean;
       translucent?: boolean;
       willAnimate?: boolean;
@@ -3411,7 +3408,6 @@ declare global {
       message?: string;
       position?: string;
       showCloseButton?: boolean;
-      toastId?: number;
       translucent?: boolean;
       willAnimate?: boolean;
     }

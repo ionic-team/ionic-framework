@@ -2,7 +2,10 @@
 
 An Alert is a dialog that presents users with information or collects information from the user using inputs. An alert appears on top of the app's content, and must be manually dismissed by the user before they can resume interaction with the app. It can also optionally have a `title`, `subTitle` and `message`.
 
-Alerts can be programmatically opened using an [Alert Controller](../../alert-controller/AlertController). They can be customized by passing alert options in the first argument of the alert controller's create method.
+
+### Creating
+
+Alerts can be created using a [Alert Controller](../../alert-controller/AlertController). They can be customized by passing alert options in the first argument of the alert controller's create method.
 
 
 ### Alert Buttons

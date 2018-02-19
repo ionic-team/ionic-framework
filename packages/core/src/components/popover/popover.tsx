@@ -1,14 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import {
-  Animation,
-  AnimationBuilder,
-  AnimationController,
-  Config,
-  DomController,
-  FrameworkDelegate,
-  OverlayDismissEvent,
-  OverlayDismissEventDetail
-} from '../../index';
+import { Animation, AnimationBuilder, AnimationController, Config, DomController, FrameworkDelegate, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 
 import { DomFrameworkDelegate } from '../../utils/dom-framework-delegate';
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
@@ -30,8 +21,82 @@ import mdLeaveAnimation from './animations/md.leave';
   }
 })
 export class Popover {
+  popoverId: number;
+
+  private animation: Animation;
+  private usersComponentElement: HTMLElement;
 
   @Element() private el: HTMLElement;
+
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
+  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop({ mutable: true }) delegate: FrameworkDelegate;
+
+  /**
+   * The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   */
+  @Prop() color: string;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @Prop() mode: 'ios' | 'md';
+
+  /**
+   * Animation to use when the popover is presented.
+   */
+  @Prop() enterAnimation: AnimationBuilder;
+
+  /**
+   * Animation to use when the popover is dismissed.
+   */
+  @Prop() leaveAnimation: AnimationBuilder;
+
+  /**
+   * The component to display inside of the popover.
+   */
+  @Prop() component: string;
+
+  /**
+   * The data to pass to the popover component.
+   */
+  @Prop() data: any = {};
+
+  /**
+   * Additional classes to apply for custom CSS. If multiple classes are
+   * provided they should be separated by spaces.
+   */
+  @Prop() cssClass: string;
+
+  /**
+   * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
+   */
+  @Prop() enableBackdropDismiss = true;
+
+  /**
+   * The event to pass to the popover animation.
+   */
+  @Prop() ev: Event;
+
+  /**
+   * If true, a backdrop will be displayed behind the popover. Defaults to `true`.
+   */
+  @Prop() showBackdrop = true;
+
+  /**
+   * If true, the popover will be translucent. Defaults to `false`.
+   */
+  @Prop() translucent = false;
+
+  /**
+   * If true, the popover will animate. Defaults to `true`.
+   */
+  @Prop() willAnimate = true;
 
   /**
    * Emitted after the popover has loaded.
@@ -63,40 +128,9 @@ export class Popover {
    */
   @Event() ionPopoverDidUnload: EventEmitter<PopoverEventDetail>;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
-  @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
-
   /**
-   * The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * Present the popover overlay after it has been created.
    */
-  @Prop() color: string;
-
-  /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-   */
-  @Prop() mode: 'ios' | 'md';
-
-  @Prop() component: string;
-  @Prop() data: any = {};
-  @Prop() cssClass: string;
-  @Prop() enableBackdropDismiss = true;
-  @Prop() enterAnimation: AnimationBuilder;
-  @Prop() leaveAnimation: AnimationBuilder;
-  @Prop() ev: Event;
-  @Prop() popoverId: number;
-  @Prop() showBackdrop = true;
-  @Prop() translucent = false;
-  @Prop() willAnimate = true;
-  @Prop({ mutable: true }) delegate: FrameworkDelegate;
-
-  private animation: Animation;
-  private usersComponentElement: HTMLElement;
-
   @Method()
   present() {
     if (this.animation) {
@@ -141,6 +175,9 @@ export class Popover {
       });
   }
 
+  /**
+   * Dismiss the popover overlay after it has been presented.
+   */
   @Method()
   dismiss(data?: any, role?: string) {
     if (this.animation) {
@@ -224,8 +261,7 @@ export class Popover {
         onClick={this.backdropClick.bind(this)}
         class={{
           ...backdropClasses
-        }}
-      />,
+        }}></ion-backdrop>,
       <div class={wrapperClasses}>
         <div class='popover-arrow' />
         <div class='popover-content'>
