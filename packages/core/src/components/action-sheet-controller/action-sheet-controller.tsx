@@ -9,6 +9,26 @@ const actionSheets = new Map<number, HTMLIonActionSheetElement>();
 })
 export class ActionSheetController implements OverlayController {
 
+  @Listen('body:ionActionSheetWillPresent')
+  protected actionSheetWillPresent(ev: ActionSheetEvent) {
+    actionSheets.set(ev.target.actionSheetId, ev.target);
+  }
+
+
+  @Listen('body:ionActionSheetWillDismiss, body:ionActionSheetDidUnload')
+  protected actionSheetWillDismiss(ev: ActionSheetEvent) {
+    actionSheets.delete(ev.target.actionSheetId);
+  }
+
+
+  @Listen('body:keyup.escape')
+  protected escapeKeyUp() {
+    removeLastActionSheet();
+  }
+
+  /*
+   * Create an action sheet overlay with action sheet options.
+   */
   @Method()
   create(opts?: ActionSheetOptions): Promise<HTMLIonActionSheetElement> {
     // create ionic's wrapping ion-actionSheet component
@@ -28,6 +48,9 @@ export class ActionSheetController implements OverlayController {
     return actionSheetElement.componentOnReady();
   }
 
+  /*
+   * Dismiss the open action sheet overlay.
+   */
   @Method()
   dismiss(data?: any, role?: any, actionSheetId = -1) {
     actionSheetId = actionSheetId >= 0 ? actionSheetId : getHighestId();
@@ -38,26 +61,12 @@ export class ActionSheetController implements OverlayController {
     return actionSheet.dismiss(data, role);
   }
 
+  /*
+   * Get the most recently opened action sheet overlay.
+   */
   @Method()
   getTop() {
     return actionSheets.get(getHighestId());
-  }
-
-  @Listen('body:ionActionSheetWillPresent')
-  protected actionSheetWillPresent(ev: ActionSheetEvent) {
-    actionSheets.set(ev.target.actionSheetId, ev.target);
-  }
-
-
-  @Listen('body:ionActionSheetWillDismiss, body:ionActionSheetDidUnload')
-  protected actionSheetWillDismiss(ev: ActionSheetEvent) {
-    actionSheets.delete(ev.target.actionSheetId);
-  }
-
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastActionSheet();
   }
 }
 
