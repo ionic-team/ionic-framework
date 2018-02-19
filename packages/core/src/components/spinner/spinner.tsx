@@ -32,17 +32,19 @@ export class Spinner {
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * How long it takes it to do one loop.
+   * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
    */
   @Prop() duration: number;
 
   /**
-   * SVG spinner name.
+   * The name of the SVG spinner to use. If a name is not provided, the platform's default
+   * spinner will be used. Possible values are: `"lines"`, `"lines-sm"`, `"dots"`, `"bubbles"`,
+   * `"circles"`, `"crescent"`.
    */
   @Prop() name: string;
 
   /**
-   * If true, pause the animation.
+   * If true, the spinner's animation will be paused. Defaults to `false`.
    */
   @Prop() paused = false;
 

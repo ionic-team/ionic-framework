@@ -1,92 +1,33 @@
 # ion-spinner
 
-The `ion-spinner` component provides a variety of animated SVG spinners.
-Spinners enables you to give users feedback that the app is actively
-processing/thinking/waiting/chillin’ out, or whatever you’d like it to indicate.
-By default, the `ion-refresher` feature uses this spinner component while it's
-the refresher is in the `refreshing` state.
+The Spinner component provides a variety of animated SVG spinners. Spinners are visual indicators that the app is loading content or performing another process that the user needs to wait on.
 
-Ionic offers a handful of spinners out of the box, and by default, it will use
-the appropriate spinner for the platform on which it’s running.
-
-<table class="table spinner-table">
- <tr>
-   <th>
-     <code>lines</code>
-   </th>
-   <td>
-     <ion-spinner name="lines"></ion-spinner>
-   </td>
- </tr>
- <tr>
-   <th>
-     <code>lines-small</code>
-   </th>
-   <td>
-     <ion-spinner name="lines-small"></ion-spinner>
-   </td>
- </tr>
- <tr>
-   <th>
-     <code>bubbles</code>
-   </th>
-   <td>
-     <ion-spinner name="bubbles"></ion-spinner>
-   </td>
- </tr>
- <tr>
-   <th>
-     <code>circles</code>
-   </th>
-   <td>
-     <ion-spinner name="circles"></ion-spinner>
-   </td>
- </tr>
- <tr>
-   <th>
-     <code>crescent</code>
-   </th>
-   <td>
-     <ion-spinner name="crescent"></ion-spinner>
-   </td>
- </tr>
- <tr>
-   <th>
-     <code>dots</code>
-   </th>
-   <td>
-     <ion-spinner name="dots"></ion-spinner>
-   </td>
- </tr>
-</table>
-
-The following code would use the default spinner for the platform it's
-running from. If it's neither iOS or Android, it'll default to use `ios`.
+The default spinner to use is based on the platform. The default spinner for `ios` is `"lines"`, and the default for `android` is `"crescent"`. If the platform is not `ios` or `android`, the spinner will default to `crescent`. If the `name` property is set, then that spinner will be used instead of the platform specific spinner.
 
 ```html
+<!-- Default Spinner -->
 <ion-spinner></ion-spinner>
-```
 
-By setting the `name` property, you can specify which predefined spinner to
-use, no matter what the platform is.
+<!-- Lines -->
+<ion-spinner name="lines"></ion-spinner>
 
-```html
+<!-- Lines Small -->
+<ion-spinner name="lines-sm"></ion-spinner>
+
+<!-- Dots -->
+<ion-spinner name="dots"></ion-spinner>
+
+<!-- Bubbles -->
 <ion-spinner name="bubbles"></ion-spinner>
-```
 
-## Styling SVG with CSS
-One cool thing about SVG is its ability to be styled with CSS! One thing to note
-is that some of the CSS properties on an SVG element have different names. For
-example, SVG uses the term `stroke` instead of `border`, and `fill` instead
-of `background-color`.
+<!-- Circles -->
+<ion-spinner name="circles"></ion-spinner>
 
-```css
-ion-spinner{
-  width: 28px;
-  height: 28px;
-  stroke: #444;
-  fill: #222;
-}
+<!-- Crescent -->
+<ion-spinner name="crescent"></ion-spinner>
+
+<!-- Paused Default Spinner -->
+<ion-spinner paused></ion-spinner>
 ```
 
 
@@ -108,7 +49,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 number
 
-How long it takes it to do one loop.
+Duration of the spinner animation in milliseconds. Default varies based on the spinner name.
 
 
 #### mode
@@ -124,14 +65,16 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 string
 
-SVG spinner name.
+The name of the SVG spinner to use. If a name is not provided, the platform's default
+spinner will be used. Possible values are: `"lines"`, `"lines-sm"`, `"dots"`, `"bubbles"`,
+`"circles"`, `"crescent"`.
 
 
 #### paused
 
 boolean
 
-If true, pause the animation.
+If true, the spinner's animation will be paused. Defaults to `false`.
 
 
 ## Attributes
@@ -149,7 +92,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 number
 
-How long it takes it to do one loop.
+Duration of the spinner animation in milliseconds. Default varies based on the spinner name.
 
 
 #### mode
@@ -165,14 +108,16 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 string
 
-SVG spinner name.
+The name of the SVG spinner to use. If a name is not provided, the platform's default
+spinner will be used. Possible values are: `"lines"`, `"lines-sm"`, `"dots"`, `"bubbles"`,
+`"circles"`, `"crescent"`.
 
 
 #### paused
 
 boolean
 
-If true, pause the animation.
+If true, the spinner's animation will be paused. Defaults to `false`.
 
 
 
