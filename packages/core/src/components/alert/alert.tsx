@@ -22,9 +22,9 @@ import mdLeaveAnimation from './animations/md.leave';
   }
 })
 export class Alert {
+  alertId: number;
   mode: string;
   color: string;
-  alertId: number;
 
   private animation: Animation | null = null;
   private activeId: string;
@@ -32,6 +32,66 @@ export class Alert {
   private hdrId: string;
 
   @Element() private el: HTMLElement;
+
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
+  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
+
+  /**
+   * Animation to use when the alert is presented.
+   */
+  @Prop() enterAnimation: AnimationBuilder;
+
+  /**
+   * Animation to use when the alert is dismissed.
+   */
+  @Prop() leaveAnimation: AnimationBuilder;
+
+  /**
+   * Additional classes to apply for custom CSS. If multiple classes are
+   * provided they should be separated by spaces.
+   */
+  @Prop() cssClass: string;
+
+  /**
+   * The main title in the heading of the alert.
+   */
+  @Prop() title: string;
+
+  /**
+   * The subtitle in the heading of the alert. Displayed under the title.
+   */
+  @Prop() subTitle: string;
+
+  /**
+   * The main message to be displayed in the alert.
+   */
+  @Prop() message: string;
+
+  /**
+   * Array of buttons to be added to the alert.
+   */
+  @Prop() buttons: AlertButton[] = [];
+
+  /**
+   * Array of input to show in the alert.
+   */
+  @Prop({ mutable: true }) inputs: AlertInput[] = [];
+
+  /**
+   * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
+   */
+  @Prop() enableBackdropDismiss = true;
+
+  /**
+   * If true, the alert will be translucent. Defaults to `false`.
+   */
+  @Prop() translucent = false;
+
+  /**
+   * If true, the alert will animate. Defaults to `true`.
+   */
+  @Prop() willAnimate = true;
 
   /**
    * Emitted after the alert has loaded.
@@ -63,69 +123,11 @@ export class Alert {
    */
   @Event() ionAlertDidUnload: EventEmitter<AlertEventDetail>;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
-  @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
-
   /**
-   * Additional class or classes to apply to the alert
+   * Present the alert overlay after it has been created.
    */
-  @Prop() cssClass: string;
-
-  /**
-   * Title for the alert
-   */
-  @Prop() title: string;
-
-  /**
-   * Subtitle for the alert
-   */
-  @Prop() subTitle: string;
-
-  /**
-   * Message to be shown in the alert
-   */
-  @Prop() message: string;
-
-  /**
-   * Array of buttons to be added to the alert. See AlertButton type for valid options
-   */
-  @Prop() buttons: AlertButton[] = [];
-
-  /**
-   * Array of input to show in the alert. See AlertInput type for valid options
-   */
-  @Prop({ mutable: true }) inputs: AlertInput[] = [];
-
-  /**
-   * If true, the alert will be dismissed when the backdrop is clicked.
-   */
-  @Prop() enableBackdropDismiss = true;
-
-  /**
-   * If true, alert will become translucent. Requires support for backdrop-filters.
-   */
-  @Prop() translucent = false;
-
-  /**
-   * Enable alert animations. If false, alert will not animate in
-   */
-  @Prop() willAnimate = true;
-
-  /**
-   * Animation to be used when the alert is shown
-   */
-  @Prop() enterAnimation: AnimationBuilder;
-
-  /**
-   * Animation to be used when the alert is dismissed
-   */
-  @Prop() leaveAnimation: AnimationBuilder;
-
-  /**
-   * Present the alert after is has been created
-   */
-  @Method() present() {
+  @Method()
+  present() {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
@@ -158,9 +160,10 @@ export class Alert {
   }
 
   /**
-   * Dismiss the alert
+   * Dismiss the alert overlay after it has been presented.
    */
-  @Method() dismiss(data?: any, role?: string) {
+  @Method()
+  dismiss(data?: any, role?: string) {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
@@ -418,8 +421,7 @@ export class Alert {
     return [
       <ion-backdrop
         onClick={this.backdropClick.bind(this)}
-        class='alert-backdrop'
-      />,
+        class='alert-backdrop'></ion-backdrop>,
       <div class='alert-wrapper'>
         <div class='alert-head'>
           {this.title

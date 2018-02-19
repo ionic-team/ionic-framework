@@ -39,8 +39,9 @@
     window.addEventListener('ionAlertWillDismiss', function(e){console.log('willDismiss', e)})
 
     async function presentAlert() {
-      var alertController = document.querySelector('ion-alert-controller');
+      const alertController = document.querySelector('ion-alert-controller');
       await alertController.componentOnReady();
+
       const alert = await alertController.create({
         title: 'Alert',
         subTitle: 'Subtitle',
@@ -51,7 +52,7 @@
     }
 
     async function presentAlertLongMessage() {
-      var alertController = document.querySelector('ion-alert-controller');
+      const alertController = document.querySelector('ion-alert-controller');
       await alertController.componentOnReady();
       const alert = await alertController.create({
         title: 'Alert',
@@ -62,7 +63,7 @@
     }
 
     async function presentAlertMultipleButtons() {
-      var alertController = document.querySelector('ion-alert-controller');
+      const alertController = document.querySelector('ion-alert-controller');
       await alertController.componentOnReady();
       const alert = await alertController.create({
         title: 'Alert',
@@ -74,7 +75,7 @@
     }
 
     async function presentAlertNoMessage() {
-      var alertController = document.querySelector('ion-alert-controller');
+      const alertController = document.querySelector('ion-alert-controller');
       await alertController.componentOnReady();
       const alert = await alertController.create({
         title: 'Alert',
@@ -84,7 +85,7 @@
     }
 
     async function presentAlertConfirm() {
-      var alertController = document.querySelector('ion-alert-controller');
+      const alertController = document.querySelector('ion-alert-controller');
       await alertController.componentOnReady();
       const alert = await alertController.create({
         title: 'Confirm!',
@@ -109,7 +110,7 @@
     }
 
     async function presentAlertPrompt() {
-      var alertController = document.querySelector('ion-alert-controller');
+      const alertController = document.querySelector('ion-alert-controller');
       await alertController.componentOnReady();
       const alert = await alertController.create({
         title: 'Prompt!',
@@ -172,7 +173,7 @@
     }
 
     async function presentAlertRadio() {
-      var alertController = document.querySelector('ion-alert-controller');
+      const alertController = document.querySelector('ion-alert-controller');
       await alertController.componentOnReady();
       const alert = await alertController.create({
         title: 'Radio',
@@ -231,7 +232,7 @@
     async function presentAlertCheckbox() {
 
 
-      var alertController = document.querySelector('ion-alert-controller');
+      const alertController = document.querySelector('ion-alert-controller');
       await alertController.componentOnReady();
       const alert = await alertController.create({
         title: 'Checkbox',
@@ -293,7 +294,7 @@
     }
 
     async function presentWithCssClass() {
-      var alertController = document.querySelector('ion-alert-controller');
+      const alertController = document.querySelector('ion-alert-controller');
       await alertController.componentOnReady();
       const alert = await alertController.create({
         title: 'Alert',

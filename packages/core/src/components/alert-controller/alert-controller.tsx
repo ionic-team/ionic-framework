@@ -9,6 +9,24 @@ const alerts = new Map<number, HTMLIonAlertElement>();
 })
 export class AlertController implements OverlayController {
 
+  @Listen('body:ionAlertWillPresent')
+  protected alertWillPresent(ev: AlertEvent) {
+    alerts.set(ev.target.alertId, ev.target);
+  }
+
+  @Listen('body:ionAlertWillDismiss, body:ionAlertDidUnload')
+  protected alertWillDismiss(ev: AlertEvent) {
+    alerts.delete(ev.target.alertId);
+  }
+
+  @Listen('body:keyup.escape')
+  protected escapeKeyUp() {
+    removeLastAlert();
+  }
+
+  /*
+   * Create an alert with optional titles, buttons and inputs.
+   */
   @Method()
   create(opts?: AlertOptions): Promise<HTMLIonAlertElement> {
     // create ionic's wrapping ion-alert component
@@ -28,6 +46,9 @@ export class AlertController implements OverlayController {
     return alertElement.componentOnReady();
   }
 
+  /*
+   * Dismiss an open alert.
+   */
   @Method()
   dismiss(data?: any, role?: any, alertId = -1) {
     alertId = alertId >= 0 ? alertId : getHighestId();
@@ -38,26 +59,12 @@ export class AlertController implements OverlayController {
     return alert.dismiss(data, role);
   }
 
+  /*
+   * Get the most recently opened alert.
+   */
   @Method()
   getTop() {
     return alerts.get(getHighestId());
-  }
-
-  @Listen('body:ionAlertWillPresent')
-  protected alertWillPresent(ev: AlertEvent) {
-    alerts.set(ev.target.alertId, ev.target);
-  }
-
-
-  @Listen('body:ionAlertWillDismiss, body:ionAlertDidUnload')
-  protected alertWillDismiss(ev: AlertEvent) {
-    alerts.delete(ev.target.alertId);
-  }
-
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastAlert();
   }
 }
 
