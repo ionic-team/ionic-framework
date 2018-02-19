@@ -43,6 +43,7 @@ export class AccountPage {
       ],
       inputs: [
         {
+          type: 'text',
           name: 'username',
           value: this.username,
           placeholder: 'username'
