@@ -137,7 +137,7 @@ export class RouterOutlet implements OnDestroy, OnInit, RouterDelegate {
 }
 
 export function activateRoute(navElement: HTMLIonNavElement,
-  component: Type<any>, data: any = {}, cfr: ComponentFactoryResolver, injector: Injector, isTopLevel: boolean): Promise<void> {
+  component: Type<any>, data: any = {}, cfr: ComponentFactoryResolver, injector: Injector, isTopLevel: boolean): Promise<any> {
 
   return getIonApp().then((ionApp) => {
     if (!ionApp) {

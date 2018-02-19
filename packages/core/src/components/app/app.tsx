@@ -2,10 +2,10 @@ import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } 
 import { Config, NavEvent, OverlayController, PublicNav, PublicViewController } from '../../index';
 
 import { getOrAppendElement } from '../../utils/helpers';
-import { isCordova } from '../../global/platform-utils';
 
 const rootNavs = new Map<number, HTMLIonNavElement>();
 const ACTIVE_SCROLLING_TIME = 100;
+let backButtonActions: BackButtonAction[] = [];
 
 @Component({
   tag: 'ion-app',
@@ -143,8 +143,51 @@ export class App {
     return null;
   }
 
+
+  /**
+   * The back button event is triggered when the user presses the native
+   * platform's back button, also referred to as the "hardware" back button.
+   * This event is only used within Cordova apps running on Android and
+   * Windows platforms. This event is not fired on iOS since iOS doesn't come
+   * with a hardware back button in the same sense an Android or Windows device
+   * does.
+   *
+   * Registering a hardware back button action and setting a priority allows
+   * apps to control which action should be called when the hardware back
+   * button is pressed. This method decides which of the registered back button
+   * actions has the highest priority and should be called.
+   *
+   * @param {Function} fn Called when the back button is pressed,
+   * if this registered action has the highest priority.
+   * @param {number} priority Set the priority for this action. Only the highest priority will execute. Defaults to `0`.
+   * @returns {Function} A function that, when called, will unregister
+   * the back button action.
+   */
+  @Method()
+  registerBackButtonAction(fn: Function, priority = 0): () => void {
+    const newAction = {
+      fn,
+      priority
+    };
+    backButtonActions.push(newAction);
+
+    return () => {
+      backButtonActions = backButtonActions.filter(bbAction => bbAction !== newAction);
+    };
+  }
+
   @Listen('document:backbutton')
   hardwareBackButtonPressed() {
+    // okay cool, we need to execute the user's custom method if they have one
+    const actionToExecute = backButtonActions.reduce((previous, current) => {
+      if (current.priority >= previous.priority) {
+        return current;
+      }
+      return previous;
+    });
+    actionToExecute && actionToExecute.fn && actionToExecute.fn();
+
+    // okay great, we've done the user action, now do the default actions
     // check if menu exists and is open
     return checkIfMenuIsOpen().then((done: boolean) => {
       if (!done) {
@@ -199,9 +242,9 @@ export class App {
   render() {
     const isDevice = true;
     return [
-      isCordova() && <ion-cordova-platform/>,
       isDevice && <ion-tap-click />,
       isDevice && <ion-status-tap />,
+      <ion-platform />,
       <slot></slot>
     ];
   }
@@ -346,4 +389,9 @@ export interface ExitAppEvent extends CustomEvent {
 }
 
 export interface ExitAppEventDetail {
+}
+
+export interface BackButtonAction {
+  fn: Function;
+  priority: number;
 }

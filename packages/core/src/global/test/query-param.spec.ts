@@ -1,19 +1,26 @@
-import { queryParam } from '../platform-configs';
+import { readQueryParam } from '../platform-configs';
 
-describe('QueryParam', () => {
+describe('readQueryParam', () => {
   it('should read the url for a queryParam', () => {
-    const qp = queryParam('?boolean=false', 'boolean');
+    const qp = readQueryParam('?boolean=false', 'boolean');
     expect(qp).toBeDefined();
     expect(qp).toEqual('false');
   });
 
   it('should get the value of  queryParam', () => {
-    const qp = queryParam('?keyValue=b', 'keyValue');
+    const qp = readQueryParam('?keyValue=b', 'keyValue');
     expect(qp).toEqual('b');
   });
 
-  it('should show nullfor a queryParam this is not passed', () => {
-    const qp = queryParam('', 'ionicanimate');
+  it('should show null for a queryParam this is not passed', () => {
+    const qp = readQueryParam('', 'ionicanimate');
     expect(qp).toBeNull();
+  });
+
+  it('should get some params', () => {
+    const url = 'http://www.google.com/blah?taco=yum&burrito=yesplease&enchillada=dope';
+    expect(readQueryParam(url, 'taco')).toEqual('yum');
+    expect(readQueryParam(url, 'burrito')).toEqual('yesplease');
+    expect(readQueryParam(url, 'enchillada')).toEqual('dope');
   });
 });

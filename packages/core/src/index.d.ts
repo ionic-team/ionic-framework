@@ -110,6 +110,8 @@ export { ToastController } from './components/toast-controller/toast-controller'
 export { Toggle } from './components/toggle/toggle';
 export { Toolbar } from './components/toolbar/toolbar';
 
+export { PlatformConfig } from './global/platform-configs';
+
 // export all of the component declarations that are dynamically created
 export * from './components';
 
