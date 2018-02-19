@@ -43,7 +43,7 @@ exports.config = {
     { components: ['ion-toggle'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
     { components: ['ion-tap-click', 'ion-status-tap'] },
-    { components: ['ion-cordova-platform'] },
+    { components: ['ion-platform', 'ion-cordova-platform'] },
     { components: ['ion-nav-pop'] },
   ],
   collections: [

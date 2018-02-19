@@ -1,5 +1,5 @@
 import { createConfigController } from './config-controller';
-import { PLATFORM_CONFIGS, detectPlatforms } from './platform-configs';
+import { PLATFORM_CONFIGS, detectPlatforms, readQueryParam } from './platform-configs';
 import { createDomControllerClient } from './dom-controller';
 
 
@@ -14,11 +14,19 @@ if (!Context.dom) {
   Context.dom = createDomControllerClient(window, now);
 }
 
+if (!Context.platforms) {
+  Context.platforms = detectPlatforms(window.location.href, window.navigator.userAgent, PLATFORM_CONFIGS, 'core');
+}
+
+if (!Context.readQueryParam) {
+  Context.readQueryParam = readQueryParam;
+}
+
 // create the Ionic.config from raw config object (if it exists)
 // and convert Ionic.config into a ConfigApi that has a get() fn
 Ionic.config = Context.config = createConfigController(
   Ionic.config,
-  detectPlatforms(window.location.href, window.navigator.userAgent, PLATFORM_CONFIGS, 'core')
+  Context.platforms
 );
 
 

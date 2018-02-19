@@ -27,6 +27,7 @@ import { Events } from './providers/events';
 import { LoadingController } from './providers/loading-controller';
 import { MenuController } from './providers/menu-controller';
 import { ModalController } from './providers/modal-controller';
+import { Platform } from './providers/platform';
 import { PopoverController } from './providers/popover-controller';
 import { ToastController } from './providers/toast-controller';
 
@@ -76,6 +77,7 @@ export class IonicAngularModule {
         LoadingController,
         MenuController,
         ModalController,
+        Platform,
         PopoverController,
         ToastController
       ]

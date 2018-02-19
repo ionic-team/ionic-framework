@@ -2075,6 +2075,36 @@ declare global {
 
 
 import {
+  Platform as IonPlatform
+} from './components/platform/platform';
+
+declare global {
+  interface HTMLIonPlatformElement extends IonPlatform, HTMLStencilElement {
+  }
+  var HTMLIonPlatformElement: {
+    prototype: HTMLIonPlatformElement;
+    new (): HTMLIonPlatformElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-platform": HTMLIonPlatformElement;
+  }
+  interface ElementTagNameMap {
+    "ion-platform": HTMLIonPlatformElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-platform": JSXElements.IonPlatformAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonPlatformAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
   PopoverController as IonPopoverController
 } from './components/popover-controller/popover-controller';
 
