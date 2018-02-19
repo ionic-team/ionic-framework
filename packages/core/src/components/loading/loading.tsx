@@ -1,16 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import {
-  Animation,
-  AnimationBuilder,
-  AnimationController,
-  Config,
-  DomController,
-  OverlayDismissEvent,
-  OverlayDismissEventDetail
-} from '../../index';
+import { Animation, AnimationBuilder, AnimationController, Config, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -36,6 +27,67 @@ export class Loading {
   private durationTimeout: any;
 
   @Element() private el: HTMLElement;
+
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
+  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
+
+  /**
+   * Animation to use when the loading indicator is presented.
+   */
+  @Prop() enterAnimation: AnimationBuilder;
+
+  /**
+   * Animation to use when the loading indicator is dismissed.
+   */
+  @Prop() leaveAnimation: AnimationBuilder;
+
+  /**
+   * Optional text content to display in the loading indicator.
+   */
+  @Prop() content: string;
+
+  /**
+   * Additional classes to apply for custom CSS. If multiple classes are
+   * provided they should be separated by spaces.
+   */
+  @Prop() cssClass: string;
+
+  /**
+   * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
+   */
+  @Prop() dismissOnPageChange = false;
+
+  /**
+   * Number of milliseconds to wait before dismissing the loading indicator.
+   */
+  @Prop() duration: number;
+
+  /**
+   * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
+   */
+  @Prop() enableBackdropDismiss = false;
+
+  /**
+   * If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
+   */
+  @Prop() showBackdrop = true;
+
+  /**
+   * The name of the spinner to display. Possible values are: `"lines"`, `"lines-sm"`, `"dots"`,
+   * `"bubbles"`, `"circles"`, `"crescent"`.
+   */
+  @Prop() spinner: string;
+
+  /**
+   * If true, the loading indicator will be translucent. Defaults to `false`.
+   */
+  @Prop() translucent = false;
+
+  /**
+   * If true, the loading indicator will animate. Defaults to `true`.
+   */
+  @Prop() willAnimate = true;
 
   /**
    * Emitted after the loading has loaded.
@@ -67,59 +119,40 @@ export class Loading {
    */
   @Event() ionLoadingDidUnload: EventEmitter<LoadingEventDetail>;
 
-  @Prop() spinner: string;
+  componentDidLoad() {
+    if (!this.spinner) {
+      this.spinner = this.config.get('loadingSpinner', this.mode === 'ios' ? 'lines' : 'crescent');
+    }
+    this.ionLoadingDidLoad.emit();
+  }
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
-  @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
+  componentDidEnter() {
+    // blur the currently active element
+    const activeElement: any = document.activeElement;
+    activeElement && activeElement.blur && activeElement.blur();
 
-  /**
-   * Additional classes to apply for custom CSS
-   */
-  @Prop() cssClass: string;
+    // If there is a duration, dismiss after that amount of time
+    if (typeof this.duration === 'number' && this.duration > 10) {
+      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
+    }
 
-  /**
-   * Optional text content to display in the loading indicator
-   */
-  @Prop() content: string;
+    this.ionLoadingDidPresent.emit();
+  }
 
-  /**
-   * Dismiss the loading indicator if the page is changed
-   */
-  @Prop() dismissOnPageChange = false;
+  componentDidUnload() {
+    this.ionLoadingDidUnload.emit();
+  }
 
-  /**
-   * Number of milliseconds to wait before dismissing the loading indicator
-   */
-  @Prop() duration: number;
+  @Listen('ionDismiss')
+  protected onDismiss(ev: UIEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
 
-  /**
-   * If true, the background will be translucent. Browser support for backdrop-filter is required for the full effect
-   */
-  @Prop() translucent = false;
-
-  /**
-   * Show the backdrop of not
-   */
-  @Prop() showBackdrop = true;
+    this.dismiss();
+  }
 
   /**
-   * Animation to use when loading indicator is presented
-   */
-  @Prop() enterAnimation: AnimationBuilder;
-
-  /**
-   * Animation to use when a loading indicator is dismissed
-   */
-  @Prop() leaveAnimation: AnimationBuilder;
-
-  /**
-   * Toggles whether animation should occur or not
-   */
-  @Prop() willAnimate = true;
-
-  /**
-   * Present a loading overlay after it has been created
+   * Present the loading overlay after it has been created.
    */
   @Method()
   present() {
@@ -151,7 +184,7 @@ export class Loading {
   }
 
   /**
-   * Dismiss a loading indicator programatically
+   * Dismiss the loading overlay after it has been presented.
    */
   @Method()
   dismiss(data?: any, role?: string) {
@@ -190,36 +223,10 @@ export class Loading {
     });
   }
 
-  componentDidLoad() {
-    if (!this.spinner) {
-      this.spinner = this.config.get('loadingSPinner', this.mode === 'ios' ? 'lines' : 'crescent');
+  protected backdropClick() {
+    if (this.enableBackdropDismiss) {
+      this.dismiss();
     }
-    this.ionLoadingDidLoad.emit();
-  }
-
-  componentDidEnter() {
-    // blur the currently active element
-    const activeElement: any = document.activeElement;
-    activeElement && activeElement.blur && activeElement.blur();
-
-    // If there is a duration, dismiss after that amount of time
-    if (typeof this.duration === 'number' && this.duration > 10) {
-      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
-    }
-
-    this.ionLoadingDidPresent.emit();
-  }
-
-  componentDidUnload() {
-    this.ionLoadingDidUnload.emit();
-  }
-
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
   }
 
   hostData() {
@@ -261,14 +268,12 @@ export class Loading {
     }
 
     return [
-      <ion-gesture
-        attachTo='parent'
-        autoBlockAll
+      <ion-backdrop
+        onClick={this.backdropClick.bind(this)}
         class={{
           ...themedClasses,
           'hide-backdrop': !this.showBackdrop
-        }}
-      ></ion-gesture>,
+        }}></ion-backdrop>,
       <div class='loading-wrapper' role='dialog'>
         {loadingInner}
       </div>
