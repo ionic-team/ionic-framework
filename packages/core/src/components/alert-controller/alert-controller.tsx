@@ -25,7 +25,7 @@ export class AlertController implements OverlayController {
   }
 
   /*
-   * Create an alert with optional titles, buttons and inputs.
+   * Create an alert overlay with alert options.
    */
   @Method()
   create(opts?: AlertOptions): Promise<HTMLIonAlertElement> {
@@ -47,7 +47,7 @@ export class AlertController implements OverlayController {
   }
 
   /*
-   * Dismiss an open alert.
+   * Dismiss the open alert overlay.
    */
   @Method()
   dismiss(data?: any, role?: any, alertId = -1) {
@@ -60,7 +60,7 @@ export class AlertController implements OverlayController {
   }
 
   /*
-   * Get the most recently opened alert.
+   * Get the most recently opened alert overlay.
    */
   @Method()
   getTop() {

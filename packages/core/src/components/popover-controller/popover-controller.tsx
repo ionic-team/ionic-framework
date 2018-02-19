@@ -9,6 +9,24 @@ const popovers = new Map<number, HTMLIonPopoverElement>();
 })
 export class PopoverController implements OverlayController {
 
+  @Listen('body:ionPopoverWillPresent')
+  protected popoverWillPresent(ev: PopoverEvent) {
+    popovers.set(ev.target.popoverId, ev.target);
+  }
+
+  @Listen('body:ionPopoverWillDismiss, body:ionPopoverDidUnload')
+  protected popoverWillDismiss(ev: PopoverEvent) {
+    popovers.delete(ev.target.popoverId);
+  }
+
+  @Listen('body:keyup.escape')
+  protected escapeKeyUp() {
+    removeLastPopover();
+  }
+
+  /*
+   * Create a popover overlay with popover options.
+   */
   @Method()
   create(opts?: PopoverOptions): Promise<HTMLIonPopoverElement> {
     // create ionic's wrapping ion-popover component
@@ -28,6 +46,9 @@ export class PopoverController implements OverlayController {
     return popoverElement.componentOnReady();
   }
 
+  /*
+   * Dismiss the open popover overlay.
+   */
   @Method()
   dismiss(data?: any, role?: any, popoverId = -1) {
     popoverId = popoverId >= 0 ? popoverId : getHighestId();
@@ -38,26 +59,12 @@ export class PopoverController implements OverlayController {
     return popover.dismiss(data, role);
   }
 
+  /*
+   * Get the most recently opened popover overlay.
+   */
   @Method()
   getTop() {
     return popovers.get(getHighestId());
-  }
-
-  @Listen('body:ionPopoverWillPresent')
-  protected popoverWillPresent(ev: PopoverEvent) {
-    popovers.set(ev.target.popoverId, ev.target);
-  }
-
-
-  @Listen('body:ionPopoverWillDismiss, body:ionPopoverDidUnload')
-  protected popoverWillDismiss(ev: PopoverEvent) {
-    popovers.delete(ev.target.popoverId);
-  }
-
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastPopover();
   }
 }
 

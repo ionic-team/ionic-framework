@@ -9,6 +9,24 @@ const pickers = new Map<number, HTMLIonPickerElement>();
 })
 export class PickerController implements OverlayController {
 
+  @Listen('body:ionPickerWillPresent')
+  protected pickerWillPresent(ev: PickerEvent) {
+    pickers.set(ev.target.pickerId, ev.target);
+  }
+
+  @Listen('body:ionPickerWillDismiss, body:ionPickerDidUnload')
+  protected pickerWillDismiss(ev: PickerEvent) {
+    pickers.delete(ev.target.pickerId);
+  }
+
+  @Listen('body:keyup.escape')
+  protected escapeKeyUp() {
+    removeLastPicker();
+  }
+
+  /*
+   * Create a picker overlay with picker options.
+   */
   @Method()
   create(opts?: PickerOptions): Promise<HTMLIonPickerElement> {
     // create ionic's wrapping ion-picker component
@@ -28,6 +46,9 @@ export class PickerController implements OverlayController {
     return pickerElement.componentOnReady();
   }
 
+  /*
+   * Dismiss the open picker overlay.
+   */
   @Method()
   dismiss(data?: any, role?: any, pickerId = -1) {
     pickerId = pickerId >= 0 ? pickerId : getHighestId();
@@ -38,26 +59,12 @@ export class PickerController implements OverlayController {
     return picker.dismiss(data, role);
   }
 
+  /*
+   * Get the most recently opened picker overlay.
+   */
   @Method()
   getTop() {
     return pickers.get(getHighestId());
-  }
-
-  @Listen('body:ionPickerWillPresent')
-  protected pickerWillPresent(ev: PickerEvent) {
-    pickers.set(ev.target.pickerId, ev.target);
-  }
-
-
-  @Listen('body:ionPickerWillDismiss, body:ionPickerDidUnload')
-  protected pickerWillDismiss(ev: PickerEvent) {
-    pickers.delete(ev.target.pickerId);
-  }
-
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastPicker();
   }
 }
 

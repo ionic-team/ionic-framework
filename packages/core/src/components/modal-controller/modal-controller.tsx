@@ -9,6 +9,24 @@ const modals = new Map<number, HTMLIonModalElement>();
 })
 export class ModalController implements OverlayController {
 
+  @Listen('body:ionModalWillPresent')
+  protected modalWillPresent(ev: ModalEvent) {
+    modals.set(ev.target.modalId, ev.target);
+  }
+
+  @Listen('body:ionModalWillDismiss, body:ionModalDidUnload')
+  protected modalWillDismiss(ev: ModalEvent) {
+    modals.delete(ev.target.modalId);
+  }
+
+  @Listen('body:keyup.escape')
+  protected escapeKeyUp() {
+    removeLastModal();
+  }
+
+  /*
+   * Create a modal overlay with modal options.
+   */
   @Method()
   create(opts?: ModalOptions): Promise<HTMLIonModalElement> {
     // create ionic's wrapping ion-modal component
@@ -28,6 +46,9 @@ export class ModalController implements OverlayController {
     return modalElement.componentOnReady();
   }
 
+  /*
+   * Dismiss the open modal overlay.
+   */
   @Method()
   dismiss(data?: any, role?: any, modalId = -1) {
     modalId = modalId >= 0 ? modalId : getHighestId();
@@ -38,25 +59,12 @@ export class ModalController implements OverlayController {
     return modal.dismiss(data, role);
   }
 
+  /*
+   * Get the most recently opened modal overlay.
+   */
   @Method()
   getTop() {
     return modals.get(getHighestId());
-  }
-
-  @Listen('body:ionModalWillPresent')
-  protected modalWillPresent(ev: ModalEvent) {
-    modals.set(ev.target.modalId, ev.target);
-  }
-
-
-  @Listen('body:ionModalWillDismiss, body:ionModalDidUnload')
-  protected modalWillDismiss(ev: ModalEvent) {
-    modals.delete(ev.target.modalId);
-  }
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastModal();
   }
 }
 

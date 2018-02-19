@@ -9,6 +9,24 @@ const loadings = new Map<number, HTMLIonLoadingElement>();
 })
 export class LoadingController implements OverlayController {
 
+  @Listen('body:ionLoadingWillPresent')
+  protected loadingWillPresent(ev: LoadingEvent) {
+    loadings.set(ev.target.loadingId, ev.target);
+  }
+
+  @Listen('body:ionLoadingWillDismiss, body:ionLoadingDidUnload')
+  protected loadingWillDismiss(ev: LoadingEvent) {
+    loadings.delete(ev.target.loadingId);
+  }
+
+  @Listen('body:keyup.escape')
+  protected escapeKeyUp() {
+    removeLastLoading();
+  }
+
+  /*
+   * Create a loading overlay with loading options.
+   */
   @Method()
   create(opts?: LoadingOptions): Promise<HTMLIonLoadingElement> {
     // create ionic's wrapping ion-loading component
@@ -28,6 +46,9 @@ export class LoadingController implements OverlayController {
     return loadingElement.componentOnReady();
   }
 
+  /*
+   * Dismiss the open loading overlay.
+   */
   @Method()
   dismiss(data?: any, role?: any, loadingId = -1) {
     loadingId = loadingId >= 0 ? loadingId : getHighestId();
@@ -35,26 +56,12 @@ export class LoadingController implements OverlayController {
     return loading.dismiss(data, role);
   }
 
+  /*
+   * Get the most recently opened loading overlay.
+   */
   @Method()
   getTop() {
     return loadings.get(getHighestId());
-  }
-
-  @Listen('body:ionLoadingWillPresent')
-  protected loadingWillPresent(ev: LoadingEvent) {
-    loadings.set(ev.target.loadingId, ev.target);
-  }
-
-
-  @Listen('body:ionLoadingWillDismiss, body:ionLoadingDidUnload')
-  protected loadingWillDismiss(ev: LoadingEvent) {
-    loadings.delete(ev.target.loadingId);
-  }
-
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastLoading();
   }
 }
 

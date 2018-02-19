@@ -9,6 +9,24 @@ const toasts = new Map<number, HTMLIonToastElement>();
 })
 export class ToastController implements OverlayController {
 
+  @Listen('body:ionToastWillPresent')
+  protected toastWillPresent(ev: ToastEvent) {
+    toasts.set(ev.target.toastId, ev.target);
+  }
+
+  @Listen('body:ionToastWillDismiss, body:ionToastDidUnload')
+  protected toastWillDismiss(ev: ToastEvent) {
+    toasts.delete(ev.target.toastId);
+  }
+
+  @Listen('body:keyup.escape')
+  protected escapeKeyUp() {
+    removeLastToast();
+  }
+
+  /*
+   * Create a toast overlay with toast options.
+   */
   @Method()
   create(opts?: ToastOptions): Promise<HTMLIonToastElement> {
     // create ionic's wrapping ion-toast component
@@ -28,6 +46,9 @@ export class ToastController implements OverlayController {
     return toastElement.componentOnReady();
   }
 
+  /*
+   * Dismiss the open toast overlay.
+   */
   @Method()
   dismiss(data?: any, role?: any, toastId = -1) {
     toastId = toastId >= 0 ? toastId : getHighestId();
@@ -38,26 +59,12 @@ export class ToastController implements OverlayController {
     return toast.dismiss(data, role);
   }
 
+  /*
+   * Get the most recently opened toast overlay.
+   */
   @Method()
   getTop() {
     return toasts.get(getHighestId());
-  }
-
-  @Listen('body:ionToastWillPresent')
-  protected toastWillPresent(ev: ToastEvent) {
-    toasts.set(ev.target.toastId, ev.target);
-  }
-
-
-  @Listen('body:ionToastWillDismiss, body:ionToastDidUnload')
-  protected toastWillDismiss(ev: ToastEvent) {
-    toasts.delete(ev.target.toastId);
-  }
-
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastToast();
   }
 }
 
