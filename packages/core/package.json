@@ -9,7 +9,7 @@
     "dist/"
   ],
   "devDependencies": {
-    "@stencil/core": "next",
+    "@stencil/core": "0.5.2",
     "@stencil/dev-server": "latest",
     "@stencil/postcss": "0.0.2",
     "@stencil/sass": "0.0.2",
