@@ -37,6 +37,56 @@ export class ActionSheet {
 
   @Element() private el: HTMLElement;
 
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
+  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
+
+  /**
+   * Animation to use when the action sheet is presented.
+   */
+  @Prop() enterAnimation: AnimationBuilder;
+
+  /**
+   * Animation to use when the action sheet is dismissed.
+   */
+  @Prop() leaveAnimation: AnimationBuilder;
+
+  /**
+   * An array of buttons for the action sheet.
+   */
+  @Prop() buttons: ActionSheetButton[];
+
+  /**
+   * Additional classes to apply for custom CSS. If multiple classes are
+   * provided they should be separated by spaces.
+   */
+  @Prop() cssClass: string;
+
+  /**
+   * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
+   */
+  @Prop() enableBackdropDismiss = true;
+
+  /**
+   * Subtitle for the action sheet.
+   */
+  @Prop() subTitle: string;
+
+  /**
+   * Title for the action sheet.
+   */
+  @Prop() title: string;
+
+  /**
+   * If true, the action sheet will be translucent. Defaults to `false`.
+   */
+  @Prop() translucent = false;
+
+  /**
+   * If true, the action sheet will animate. Defaults to `true`.
+   */
+  @Prop() willAnimate = true;
+
   /**
    * Emitted after the alert has loaded.
    */
@@ -67,57 +117,8 @@ export class ActionSheet {
    */
   @Event() ionActionSheetDidUnload: EventEmitter<ActionSheetEventDetail>;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
-  @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
-
   /**
-   * Additional class or classes to apply to the action-sheet
-   */
-  @Prop() cssClass: string;
-
-  /**
-   * Title for the action-sheet
-   */
-  @Prop() title: string;
-
-  /**
-   * Subtitle for the action-sheet
-   */
-  @Prop() subTitle: string;
-
-  /**
-   * An array of buttons for the action-sheet. See ActionsheetButton type for accepted values
-   */
-  @Prop() buttons: ActionSheetButton[];
-
-  /**
-   * If true, the action-sheet will be dismissed when the backdrop is clicked.
-   */
-  @Prop() enableBackdropDismiss = true;
-
-  /**
-   * If true, action-sheet will become translucent. Requires support for backdrop-filters.
-   */
-  @Prop() translucent = false;
-
-  /**
-   * Enable action-sheet animations. If false, action-sheet will not animate in
-   */
-  @Prop() willAnimate = true;
-
-  /**
-   * Animation to use when the action-sheet is created
-   */
-  @Prop() enterAnimation: AnimationBuilder;
-
-  /**
-   * Animation to use when the action-sheet is dismissed
-   */
-  @Prop() leaveAnimation: AnimationBuilder;
-
-  /**
-   * Present the action-sheet after is has been created
+   * Present the action sheet overlay after it has been created.
    */
   @Method()
   present() {
@@ -151,7 +152,7 @@ export class ActionSheet {
   }
 
   /**
-   * Dismiss the action-sheet
+   * Dismiss the action sheet overlay after it has been presented.
    */
   @Method()
   dismiss(data?: any, role?: string) {
@@ -247,8 +248,7 @@ export class ActionSheet {
     return [
       <ion-backdrop
         onClick={this.backdropClick.bind(this)}
-        class='action-sheet-backdrop'
-      />,
+        class='action-sheet-backdrop'></ion-backdrop>,
       <div class='action-sheet-wrapper' role='dialog'>
         <div class='action-sheet-container'>
           <div class='action-sheet-group'>
