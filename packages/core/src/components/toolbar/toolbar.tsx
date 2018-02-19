@@ -33,10 +33,10 @@ export class Toolbar {
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * If true, adds transparency to the header.
-   * Note: In order to scroll content behind the header, the `fullscreen`
+   * If true, the toolbar will be translucent.
+   * Note: In order to scroll content behind the toolbar, the `fullscreen`
    * attribute needs to be set on the content.
-   * Only affects `ios` mode. Defaults to `false`.
+   * Defaults to `false`.
    */
   @Prop() translucent = false;
 

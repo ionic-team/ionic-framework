@@ -59,7 +59,7 @@ boolean
 
 string
 
-The badge for the tab button.
+The badge for the tab.
 
 
 #### badgeStyle
@@ -73,14 +73,12 @@ The badge color for the tab button.
 
 string
 
-Set the root page for this tab.
-
 
 #### component
 
 any
 
-The badge for the tab button.
+The component to display inside of the tab.
 
 
 #### delegate
@@ -99,25 +97,28 @@ If true, the user cannot interact with the tab. Defaults to `false`.
 
 string
 
-The icon for the tab button.
+The icon for the tab.
 
 
 #### name
 
 string
 
+The name of the tab.
+
 
 #### selected
 
 boolean
+
+If true, the tab will be selected. Defaults to `false`.
 
 
 #### show
 
 boolean
 
-If true, the tab button is visible within the
-tabbar. Default: `true`.
+If true, the tab button is visible within the tabbar. Defaults to `true`.
 
 
 #### tabsHideOnSubPages
@@ -131,7 +132,7 @@ If true, hide the tabs on child pages.
 
 string
 
-The title of the tab button.
+The title of the tab.
 
 
 ## Attributes
@@ -145,7 +146,7 @@ boolean
 
 string
 
-The badge for the tab button.
+The badge for the tab.
 
 
 #### badge-style
@@ -159,14 +160,12 @@ The badge color for the tab button.
 
 string
 
-Set the root page for this tab.
-
 
 #### component
 
 any
 
-The badge for the tab button.
+The component to display inside of the tab.
 
 
 #### delegate
@@ -185,25 +184,28 @@ If true, the user cannot interact with the tab. Defaults to `false`.
 
 string
 
-The icon for the tab button.
+The icon for the tab.
 
 
 #### name
 
 string
 
+The name of the tab.
+
 
 #### selected
 
 boolean
+
+If true, the tab will be selected. Defaults to `false`.
 
 
 #### show
 
 boolean
 
-If true, the tab button is visible within the
-tabbar. Default: `true`.
+If true, the tab button is visible within the tabbar. Defaults to `true`.
 
 
 #### tabs-hide-on-sub-pages
@@ -217,7 +219,7 @@ If true, hide the tabs on child pages.
 
 string
 
-The title of the tab button.
+The title of the tab.
 
 
 ## Events

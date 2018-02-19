@@ -14,33 +14,27 @@ export class Tab {
   @Element() el: HTMLElement;
 
   @State() init = false;
-  @Prop({mutable: true}) active = false;
 
-  /**
-   * Set the root page for this tab.
-   */
+  @Prop() delegate: FrameworkDelegate;
+
+  @Prop({ mutable: true }) active = false;
+
   @Prop() btnId: string;
 
   /**
-   * The title of the tab button.
+   * The title of the tab.
    */
   @Prop() title: string;
 
   /**
-   * The icon for the tab button.
+   * The icon for the tab.
    */
   @Prop() icon: string;
 
   /**
-   * The badge for the tab button.
+   * The badge for the tab.
    */
   @Prop() badge: string;
-
-  /**
-   * The badge for the tab button.
-   */
-  @Prop() component: any;
-  @Prop() name: string;
 
   /**
    * The badge color for the tab button.
@@ -48,13 +42,34 @@ export class Tab {
   @Prop() badgeStyle = 'default';
 
   /**
+   * The component to display inside of the tab.
+   */
+  @Prop() component: any;
+
+  /**
+   * The name of the tab.
+   */
+  @Prop() name: string;
+
+  /**
    * If true, the user cannot interact with the tab. Defaults to `false`.
    */
   @Prop() disabled = false;
 
   /**
-   * If true, the tab button is visible within the
-   * tabbar. Default: `true`.
+   * If true, the tab will be selected. Defaults to `false`.
+   */
+  @Prop({ mutable: true }) selected = false;
+
+  @Watch('selected')
+  selectedChanged(selected: boolean) {
+    if (selected) {
+      this.ionSelect.emit();
+    }
+  }
+
+  /**
+   * If true, the tab button is visible within the tabbar. Defaults to `true`.
    */
   @Prop() show = true;
 
@@ -63,17 +78,6 @@ export class Tab {
    */
   @Prop() tabsHideOnSubPages = false;
 
-  @Prop() delegate: FrameworkDelegate;
-
-  @Prop({ mutable: true }) selected = false;
-
-
-  @Watch('selected')
-  selectedChanged(selected: boolean) {
-    if (selected) {
-      this.ionSelect.emit();
-    }
-  }
 
   /**
    * Emitted when the current tab is selected.

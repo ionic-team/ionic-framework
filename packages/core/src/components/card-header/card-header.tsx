@@ -26,8 +26,7 @@ export class CardHeader {
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * If true, adds transparency to the card header.
-   * Only affects `ios` mode. Defaults to `false`.
+   * If true, the card header will be translucent. Defaults to `false`.
    */
   @Prop() translucent = false;
 

@@ -17,7 +17,7 @@ export class VariableSelector {
   @Prop() property: string;
   @Prop() type: 'color' | 'percent';
   @Prop() usedWith: string[];
-  @Prop({mutable: true}) value: Color | string | number;
+  @Prop({ mutable: true }) value: Color | string | number;
 
   @Method()
   getProperty () {

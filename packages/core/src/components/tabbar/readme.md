@@ -41,6 +41,8 @@ string
 
 boolean
 
+If true, the tabbar will be translucent. Defaults to `false`.
+
 
 ## Attributes
 
@@ -77,6 +79,8 @@ string
 #### translucent
 
 boolean
+
+If true, the tabbar will be translucent. Defaults to `false`.
 
 
 

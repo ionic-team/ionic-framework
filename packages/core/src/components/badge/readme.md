@@ -12,18 +12,13 @@ Badges are inline block elements that usually appear near another element. Typic
 <ion-badge color="danger">44</ion-badge>
 <ion-badge color="light">55</ion-badge>
 <ion-badge color="dark">66</ion-badge>
-```
 
-```html
-<ion-content>
-  <ion-list>
-    <ion-item>
-      <ion-badge slot="start">11</ion-badge>
-      <ion-label>My Item</ion-label>
-      <ion-badge slot="end">22</ion-badge>
-    </ion-item>
-  </ion-list>
-</ion-content>
+<!-- Item with badge on left and right -->
+<ion-item>
+  <ion-badge slot="start">11</ion-badge>
+  <ion-label>My Item</ion-label>
+  <ion-badge slot="end">22</ion-badge>
+</ion-item>
 ```
 
 

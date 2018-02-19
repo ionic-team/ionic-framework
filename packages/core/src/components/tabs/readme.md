@@ -143,10 +143,10 @@ Set position of the tabbar: `top`, `bottom`.
 
 boolean
 
-If true, adds transparency to the tabbar.
-Note: In order to scroll content behind the tabbar, the `fullscreen`
+If true, the tabs will be translucent.
+Note: In order to scroll content behind the tabs, the `fullscreen`
 attribute needs to be set on the content.
-Only affects `ios` mode. Defaults to `false`.
+Defaults to `false`.
 
 
 ## Attributes
@@ -204,10 +204,10 @@ Set position of the tabbar: `top`, `bottom`.
 
 boolean
 
-If true, adds transparency to the tabbar.
-Note: In order to scroll content behind the tabbar, the `fullscreen`
+If true, the tabs will be translucent.
+Note: In order to scroll content behind the tabs, the `fullscreen`
 attribute needs to be set on the content.
-Only affects `ios` mode. Defaults to `false`.
+Defaults to `false`.
 
 
 ## Events

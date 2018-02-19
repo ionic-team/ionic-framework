@@ -27,8 +27,7 @@ Possible values are: `"ios"` or `"md"`.
 
 boolean
 
-If true, adds transparency to the card header.
-Only affects `ios` mode. Defaults to `false`.
+If true, the card header will be translucent. Defaults to `false`.
 
 
 ## Attributes
@@ -53,8 +52,7 @@ Possible values are: `"ios"` or `"md"`.
 
 boolean
 
-If true, adds transparency to the card header.
-Only affects `ios` mode. Defaults to `false`.
+If true, the card header will be translucent. Defaults to `false`.
 
 
 

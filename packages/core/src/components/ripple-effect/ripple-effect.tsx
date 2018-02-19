@@ -20,7 +20,7 @@ export class RippleEffect {
   @Prop({context: 'dom'}) dom: DomController;
   @Prop({context: 'enableListener'}) enableListener: EventListenerEnable;
 
-  @Prop({mutable: true}) useTapClick: boolean;
+  @Prop({ mutable: true }) useTapClick: boolean;
   @Watch('useTapClick')
   tapClickChanged(useTapClick: boolean) {
     this.enableListener(this, 'parent:ionActivated', useTapClick);

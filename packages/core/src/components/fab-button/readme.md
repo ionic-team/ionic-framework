@@ -90,8 +90,7 @@ boolean
 
 boolean
 
-If true, adds transparency to the fab.
-Only affects `ios` mode. Defaults to `false`.
+If true, the fab button will be translucent. Defaults to `false`.
 
 
 ## Attributes
@@ -148,8 +147,7 @@ boolean
 
 boolean
 
-If true, adds transparency to the fab.
-Only affects `ios` mode. Defaults to `false`.
+If true, the fab button will be translucent. Defaults to `false`.
 
 
 

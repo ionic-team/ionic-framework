@@ -39,6 +39,10 @@ export class Tabbar {
 
   @Prop() layout = 'icon-top';
   @Prop() highlight = false;
+
+  /**
+   * If true, the tabbar will be translucent. Defaults to `false`.
+   */
   @Prop() translucent = false;
 
   @Listen('body:keyboardWillHide')

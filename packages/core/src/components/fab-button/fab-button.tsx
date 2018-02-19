@@ -33,8 +33,7 @@ export class FabButton {
   @Prop() href: string;
 
   /**
-   * If true, adds transparency to the fab.
-   * Only affects `ios` mode. Defaults to `false`.
+   * If true, the fab button will be translucent. Defaults to `false`.
    */
   @Prop() translucent = false;
 

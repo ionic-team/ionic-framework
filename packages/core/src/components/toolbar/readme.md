@@ -109,10 +109,10 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 boolean
 
-If true, adds transparency to the header.
-Note: In order to scroll content behind the header, the `fullscreen`
+If true, the toolbar will be translucent.
+Note: In order to scroll content behind the toolbar, the `fullscreen`
 attribute needs to be set on the content.
-Only affects `ios` mode. Defaults to `false`.
+Defaults to `false`.
 
 
 ## Attributes
@@ -139,10 +139,10 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 boolean
 
-If true, adds transparency to the header.
-Note: In order to scroll content behind the header, the `fullscreen`
+If true, the toolbar will be translucent.
+Note: In order to scroll content behind the toolbar, the `fullscreen`
 attribute needs to be set on the content.
-Only affects `ios` mode. Defaults to `false`.
+Defaults to `false`.
 
 
 
