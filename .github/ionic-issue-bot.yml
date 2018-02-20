@@ -1,3 +1,16 @@
 triage:
   label: triage
   dryRun: false
+
+support:
+  label: support
+  message: >
+    Thanks for the issue! This issue appears to be a support request. We use this issue tracker exclusively for
+    bug reports and feature requests. Please use our [forum](https://forum.ionicframework.com) or our
+    [slack channel(https://ionicworldwide.herokuapp.com/) channels for questions about the framework.
+
+
+    Thank you for using Ionic!
+  close: true
+  lock: true
+  dryRun: false
