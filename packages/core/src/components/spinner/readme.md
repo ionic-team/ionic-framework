@@ -49,7 +49,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 number
 
-Duration of the spinner animation in milliseconds. Default varies based on the spinner name.
+Duration of the spinner animation in milliseconds. The default varies based on the spinner.
 
 
 #### mode
@@ -92,7 +92,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 number
 
-Duration of the spinner animation in milliseconds. Default varies based on the spinner name.
+Duration of the spinner animation in milliseconds. The default varies based on the spinner.
 
 
 #### mode
