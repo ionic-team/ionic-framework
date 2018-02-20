@@ -1109,6 +1109,40 @@ declare global {
 
 
 import {
+  HideWhen as IonHideWhen
+} from './components/hide-when/hide-when';
+
+declare global {
+  interface HTMLIonHideWhenElement extends IonHideWhen, HTMLStencilElement {
+  }
+  var HTMLIonHideWhenElement: {
+    prototype: HTMLIonHideWhenElement;
+    new (): HTMLIonHideWhenElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-hide-when": HTMLIonHideWhenElement;
+  }
+  interface ElementTagNameMap {
+    "ion-hide-when": HTMLIonHideWhenElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-hide-when": JSXElements.IonHideWhenAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonHideWhenAttributes extends HTMLAttributes {
+      mediaQuery?: string;
+      mode?: string;
+      or?: boolean;
+      platform?: string;
+      size?: string;
+    }
+  }
+}
+
+
+import {
   InfiniteScrollContent as IonInfiniteScrollContent
 } from './components/infinite-scroll-content/infinite-scroll-content';
 
@@ -2840,6 +2874,40 @@ declare global {
       placeholder?: string;
       selectedText?: string;
       value?: string | string[];
+    }
+  }
+}
+
+
+import {
+  ShowWhen as IonShowWhen
+} from './components/show-when/show-when';
+
+declare global {
+  interface HTMLIonShowWhenElement extends IonShowWhen, HTMLStencilElement {
+  }
+  var HTMLIonShowWhenElement: {
+    prototype: HTMLIonShowWhenElement;
+    new (): HTMLIonShowWhenElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-show-when": HTMLIonShowWhenElement;
+  }
+  interface ElementTagNameMap {
+    "ion-show-when": HTMLIonShowWhenElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-show-when": JSXElements.IonShowWhenAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonShowWhenAttributes extends HTMLAttributes {
+      mediaQuery?: string;
+      mode?: string;
+      or?: boolean;
+      platform?: string;
+      size?: string;
     }
   }
 }
