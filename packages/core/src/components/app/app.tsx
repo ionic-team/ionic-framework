@@ -26,12 +26,13 @@ export class App {
 
   @State() modeCode: string;
   @State() hoverCSS = false;
-  @State() useRouter = false;
 
   @Prop({ context: 'config' }) config: Config;
 
   externalNavPromise: void | Promise<any> = null;
   externalNavOccuring = false;
+  didScroll = false;
+
 
   /**
    * Returns the promise set by an external navigation system
@@ -75,7 +76,6 @@ export class App {
 
   componentWillLoad() {
     this.modeCode = this.config.get('mode');
-    this.useRouter = this.config.getBoolean('useRouter', false);
     this.hoverCSS = this.config.getBoolean('hoverCSS', false);
   }
 
@@ -124,6 +124,7 @@ export class App {
   @Method()
   setScrolling() {
     this.scrollTime = Date.now() + ACTIVE_SCROLLING_TIME;
+    this.didScroll = true;
   }
 
   @Method()

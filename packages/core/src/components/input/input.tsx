@@ -209,7 +209,6 @@ export class Input implements InputComponent {
     }
   }
 
-
   componentDidLoad() {
     this.debounceInput();
     this.emitStyle();
@@ -338,11 +337,10 @@ export class Input implements InputComponent {
       />,
       <button
         type='button'
-        hidden={this.clearInput !== true}
         class='input-clear-icon'
+        hidden={this.clearInput !== true}
         onClick={this.clearTextInput.bind(this)}
-        onMouseDown={this.clearTextInput.bind(this)}>
-      </button>
+        onMouseDown={this.clearTextInput.bind(this)}/>
     ];
   }
 }
