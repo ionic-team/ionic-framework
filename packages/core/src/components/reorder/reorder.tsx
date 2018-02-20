@@ -17,7 +17,7 @@ export class Reorder {
 
   @State() custom: boolean;
 
-  componentDidLoad() {
+  componentWillLoad() {
     this.custom = this.el.childElementCount > 0;
   }
 

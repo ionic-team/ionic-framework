@@ -48,10 +48,13 @@ export class RippleEffect {
     }
   }
 
-  componentDidLoad() {
+  componentWillLoad() {
     if (this.useTapClick === undefined) {
       this.useTapClick = !!document.querySelector('ion-tap-click');
     }
+  }
+
+  componentDidLoad() {
     this.tapClickChanged(this.useTapClick);
   }
 
