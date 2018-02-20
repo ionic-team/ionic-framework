@@ -761,6 +761,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonContentAttributes extends HTMLAttributes {
+      forceOverscroll?: boolean;
       fullscreen?: boolean;
     }
   }
@@ -2689,6 +2690,8 @@ declare global {
   }
   namespace JSXElements {
     export interface IonScrollAttributes extends HTMLAttributes {
+      forceOverscroll?: boolean;
+      mode?: string;
       onionScroll?: ScrollCallback;
       onionScrollEnd?: ScrollCallback;
       onionScrollStart?: ScrollCallback;

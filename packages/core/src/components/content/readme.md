@@ -16,6 +16,11 @@ view component.
 
 ## Properties
 
+#### forceOverscroll
+
+boolean
+
+
 #### fullscreen
 
 boolean
@@ -26,6 +31,11 @@ to transparent.
 
 
 ## Attributes
+
+#### force-overscroll
+
+boolean
+
 
 #### fullscreen
 

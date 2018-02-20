@@ -4,7 +4,14 @@ import { GestureDelegate } from '../gesture-controller/gesture-controller';
 
 
 @Component({
-  tag: 'ion-scroll'
+  tag: 'ion-scroll',
+  styleUrls: {
+    ios: 'scroll.ios.scss',
+    md: 'scroll.md.scss'
+  },
+  host: {
+    theme: 'scroll'
+  }
 })
 export class Scroll {
 
@@ -23,6 +30,9 @@ export class Scroll {
   @Prop({ context: 'enableListener'}) enableListener: EventListenerEnable;
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop({ context: 'isServer' }) isServer: boolean;
+
+  @Prop() mode: string;
+  @Prop({mutable: true}) forceOverscroll: boolean;
 
   @Prop() onionScrollStart: ScrollCallback;
   @Prop() onionScroll: ScrollCallback;
@@ -55,6 +65,9 @@ export class Scroll {
     if (this.isServer) {
       return;
     }
+    if (this.forceOverscroll === undefined) {
+      this.forceOverscroll = this.mode === 'ios' && ('ontouchstart' in window);
+    }
     this.app = this.el.closest('ion-app') as HTMLIonAppElement;
   }
 
@@ -75,6 +88,11 @@ export class Scroll {
         this.onScroll(timeStamp);
       });
     }
+  }
+
+  @Listen('touchend', {passive: true, capture: true })
+  onTouchEnd(_ev: TouchEvent) {
+    this.refocus();
   }
 
   @Method()
@@ -280,15 +298,33 @@ export class Scroll {
       this.onionScrollEnd(detail);
     }
     this.ionScrollEnd.emit(detail);
+    this.refocus();
+  }
+
+  private refocus() {
+    setTimeout(() => {
+      if (document.activeElement === document.body) {
+        (this.el.querySelector('.focus-input') as HTMLElement).focus();
+      }
+    });
+  }
+
+  hostData() {
+    return {
+      class: {
+        overscroll: this.forceOverscroll
+      }
+    };
   }
 
   render() {
-    return (
+    return [
       // scroll-inner is used to keep custom user padding
       <div class='scroll-inner'>
         <slot></slot>
-      </div>
-    );
+      </div>,
+      <input type='button' class='focus-input'/>
+    ];
   }
 
 }

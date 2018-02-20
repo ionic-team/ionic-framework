@@ -1,14 +1,10 @@
 import { Component, Element, Listen, Method, Prop } from '@stencil/core';
 import { Config, DomController } from '../../index';
-import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 import { getPageElement } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-content',
-  styleUrls: {
-    ios: 'content.ios.scss',
-    md: 'content.md.scss'
-  }
+  styleUrl: 'content.scss'
 })
 export class Content {
 
@@ -31,6 +27,8 @@ export class Content {
    * to transparent.
    */
   @Prop() fullscreen = false;
+
+  @Prop() forceOverscroll: boolean;
 
   @Listen('body:ionNavChanged')
   onNavChanged() {
@@ -112,18 +110,10 @@ export class Content {
   }
 
   render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'content');
-    const hostClasses = getElementClassMap(this.el.classList);
-
-    const scrollClasses = {
-      ...themedClasses,
-      ...hostClasses,
-    };
-
     this.resize();
 
     return [
-      <ion-scroll class={scrollClasses}>
+      <ion-scroll mode={this.mode} forceOverscroll={this.forceOverscroll}>
         <slot></slot>
       </ion-scroll>,
       <slot name='fixed'></slot>

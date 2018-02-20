@@ -7,6 +7,16 @@
 
 ## Properties
 
+#### forceOverscroll
+
+boolean
+
+
+#### mode
+
+string
+
+
 #### onionScroll
 
 
@@ -23,6 +33,16 @@
 
 
 ## Attributes
+
+#### force-overscroll
+
+boolean
+
+
+#### mode
+
+string
+
 
 #### onion-scroll
 
