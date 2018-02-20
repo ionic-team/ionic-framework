@@ -184,7 +184,7 @@ export class Tabbar {
           <ion-icon name='arrow-dropleft'/>
         </ion-button>,
 
-        <ion-scroll ref={(scrollEl: HTMLIonScrollElement) => this.scrollEl = scrollEl}>
+        <ion-scroll forceOverscroll={false} ref={(scrollEl: HTMLIonScrollElement) => this.scrollEl = scrollEl}>
           {tabButtons}
           {ionTabbarHighlight}
         </ion-scroll>,

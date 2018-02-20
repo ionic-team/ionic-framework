@@ -24,7 +24,10 @@ ion-menu.show-menu {
 
   position: absolute;
 
-  display: block;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: space-between;
 
   width: $menu-width;
   height: 100%;

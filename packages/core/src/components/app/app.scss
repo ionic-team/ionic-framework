@@ -165,12 +165,20 @@ ion-app {
 // Page Container Structure
 // --------------------------------------------------
 
-.ion-page,
-.page-inner {
+.ion-page {
+  @include position(0);
+
+  position: absolute;
+  z-index: $z-index-page-container;
   display: flex;
 
   flex-direction: column;
   justify-content: space-between;
+
+  width: 100%;
+  height: 100%;
+
+  contain: layout size style;
 }
 
 .hide-page {

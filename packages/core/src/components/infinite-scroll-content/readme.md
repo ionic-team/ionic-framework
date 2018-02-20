@@ -16,6 +16,7 @@ You can loading icon or loading text with the component's properties.
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 #### loadingSpinner
@@ -24,11 +25,13 @@ string
 
 An animated SVG spinner that shows while loading.
 
+
 #### loadingText
 
 string
 
 Optional text to display while loading.
+
 
 ## Attributes
 
@@ -38,12 +41,15 @@ string
 
 An animated SVG spinner that shows while loading.
 
+
 #### loading-text
 
 string
 
 Optional text to display while loading.
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

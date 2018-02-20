@@ -444,7 +444,7 @@ export class Menu {
 
   render() {
     return ([
-      <div class='menu-inner page-inner' ref={el => this.menuInnerEl = el}>
+      <div class='menu-inner' ref={el => this.menuInnerEl = el}>
         <slot></slot>
       </div>,
 
@@ -468,7 +468,7 @@ export class Menu {
         'type': 'pan',
         'direction': 'x',
         'threshold': 10,
-        'attachTo': 'body',
+        'attachTo': 'window',
         'disableScroll': true,
         'block': this.gestureBlocker
       }}/>
