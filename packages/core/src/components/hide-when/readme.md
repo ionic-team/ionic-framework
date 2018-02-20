@@ -22,6 +22,11 @@ string
 boolean
 
 
+#### orientation
+
+string
+
+
 #### platform
 
 string
@@ -47,6 +52,11 @@ string
 #### or
 
 boolean
+
+
+#### orientation
+
+string
 
 
 #### platform

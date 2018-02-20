@@ -1,9 +1,9 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, Element, Listen, Prop, State } from '@stencil/core';
 import { Config, PlatformConfig } from '../../index';
 
 import {
   DisplayWhen,
-  componentWillLoadImpl,
+  updateTestResults,
 } from '../../utils/show-hide-when-utils';
 
 @Component({
@@ -16,16 +16,18 @@ export class HideWhen implements DisplayWhen {
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'platforms' }) calculatedPlatforms: PlatformConfig[];
 
+  @Prop() orientation: string = null;
   @Prop() mediaQuery: string = null;
   @Prop() size: string = null;
   @Prop() mode: string = null;
   @Prop() platform: string = null;
   @Prop() or = false;
 
-  passesTest = false;
+  @State() passesTest = false;
 
+  @Listen('window:resize')
   componentWillLoad() {
-    return componentWillLoadImpl(this);
+    return updateTestResults(this);
   }
 
   hostData() {
