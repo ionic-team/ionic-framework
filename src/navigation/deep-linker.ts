@@ -2,7 +2,7 @@ import { ComponentFactory, ComponentFactoryResolver } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { App } from '../components/app/app';
-import { DIRECTION_BACK, NavLink, NavSegment, convertToViews, isNav, isTab, isTabs,  } from './nav-util';
+import { DIRECTION_BACK, NavLink, NavSegment, TransitionDoneFn, convertToViews, isNav, isTab, isTabs } from './nav-util';
 import { ModuleLoader } from '../util/module-loader';
 import { isArray, isPresent } from '../util/util';
 import { Tab, Tabs } from './nav-interfaces';
@@ -380,22 +380,21 @@ export class DeepLinker {
    *
    * @internal
    */
-  _loadViewForSegment(navContainer: NavigationContainer, segment: NavSegment, done: Function) {
+  _loadViewForSegment(navContainer: NavigationContainer, segment: NavSegment, done: TransitionDoneFn) {
     if (!segment) {
-      return done();
+      return done(false, false);
     }
 
     if (isTabs(navContainer) || (isTab(navContainer) && navContainer.parent)) {
       const tabs = <Tabs> <any> (isTabs(navContainer) ? navContainer : navContainer.parent);
       const selectedIndex = tabs._getSelectedTabIndex(segment.secondaryId);
       const tab = tabs.getByIndex(selectedIndex);
-      tab._lazyRootFromUrl = segment.name;
-      tab._lazyRootFromUrlData = segment.data;
+      tab._segment = segment;
       tabs.select(tab, {
         updateUrl: false,
         animate: false
       }, true);
-      return done();
+      return done(false, false);
     }
 
     const navController = <NavController> <any> navContainer;
@@ -410,14 +409,14 @@ export class DeepLinker {
         if (i === numViews) {
           // this is the last view in the stack and it's the same
           // as the segment so there's no change needed
-          return done();
+          return done(false, false);
         } else {
           // it's not the exact view as the end
           // let's have this nav go back to this exact view
           return navController.popTo(viewController, {
             animate: false,
             updateUrl: false,
-          }, {}, done);
+          }, done);
         }
       }
     }

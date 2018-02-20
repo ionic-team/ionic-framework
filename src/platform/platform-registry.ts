@@ -1,4 +1,4 @@
-import { OpaqueToken } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
 import { Platform, PlatformConfig } from './platform';
 import { isCordova, isElectron, isIos, isIosUIWebView } from './platform-utils';
@@ -109,16 +109,15 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
       hoverCSS: false,
       inputBlurring: isIos,
       inputCloning: isIos,
-      keyboardHeight: 300,
+      keyboardHeight: 250,
       mode: 'ios',
-      scrollAssist: isIos,
       statusbarPadding: isCordova,
       swipeBackEnabled: isIos,
       tapPolyfill: isIosUIWebView,
       virtualScrollEventAssist: isIosUIWebView,
       disableScrollAssist: isIos,
+      scrollAssist: isIos,
       keyboardResizes: keyboardResizes,
-      resizeAssist: keyboardResizes,
     },
     isMatch(plt: Platform) {
       return plt.isPlatformMatch('ios', ['iphone', 'ipad', 'ipod'], ['windows phone']);
@@ -251,7 +250,7 @@ function keyboardResizes(plt: Platform): boolean {
   return false;
 }
 
-export const PlatformConfigToken = new OpaqueToken('PLTCONFIG');
+export const PlatformConfigToken = new InjectionToken<any>('PLTCONFIG');
 
 export function providePlatformConfigs() {
   return PLATFORM_CONFIGS;

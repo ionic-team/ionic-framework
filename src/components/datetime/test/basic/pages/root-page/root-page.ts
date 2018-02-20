@@ -17,6 +17,7 @@ export class RootPage {
   leapYearsSummerMonths = '';
   convertedDate = '';
   specificDaysMonthsYears = '';
+  defaultValue: any;
 
   leapYearsArray = [2020, 2016, 2008, 2004, 2000, 1996];
 
@@ -29,6 +30,16 @@ export class RootPage {
     'fre',
     'l\u00f8r'
   ];
+
+  customOptions: any = {
+    buttons: [{
+      text: 'Save',
+      handler: () => console.log('Clicked Save!')
+    }, {
+      text: 'Log',
+      handler: () => console.log('Clicked Log!')
+    }]
+  };
 
   onChange(ev: any) {
     console.log('Changed', ev);

@@ -87,12 +87,12 @@ export function initEvents(s: Slides, plt: Platform): Function {
     }, { zone: false }, unregs);
 
     // mousemove
-    plt.registerListener(plt.doc(), 'mousemove', (ev: SlideUIEvent) => {
+    plt.registerListener(touchEventsTarget, 'mousemove', (ev: SlideUIEvent) => {
       onTouchMove(s, plt, ev);
     }, { zone: false }, unregs);
 
     // mouseup
-    plt.registerListener(plt.doc(), 'mouseup', (ev: SlideUIEvent) => {
+    plt.registerListener(touchEventsTarget, 'mouseup', (ev: SlideUIEvent) => {
       onTouchEnd(s, plt, ev);
     }, { zone: false }, unregs);
   }

@@ -7,6 +7,7 @@ import { Popover } from '../popover/popover';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { DeepLinker } from '../../navigation/deep-linker';
+import { Overlay } from '../../navigation/overlay';
 import { Form } from '../../util/form';
 import { BaseInput } from '../../util/base-input';
 import { assert, deepCopy, deepEqual, isCheckedProperty, isTrueProperty } from '../../util/util';
@@ -176,7 +177,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
 
   _multi: boolean = false;
   _options: QueryList<Option>;
-  _overlay: ActionSheet | Alert | Popover;
+  _overlay: Overlay;
   _texts: string[] = [];
   _text: string = '';
   _compareWith: (o1: any, o2: any) => boolean = isCheckedProperty;
@@ -293,10 +294,6 @@ export class Select extends BaseInput<any> implements OnDestroy {
     }
 
     let options = this._options.toArray();
-    if (this.interface === 'action-sheet' && options.length > 6) {
-      console.warn('Interface cannot be "action-sheet" with more than 6 options. Using the "alert" interface.');
-      this.interface = 'alert';
-    }
 
     if ((this.interface === 'action-sheet' || this.interface === 'popover') && this._multi) {
       console.warn('Interface cannot be "' + this.interface + '" with a multi-value select. Using the "alert" interface.');
@@ -308,7 +305,7 @@ export class Select extends BaseInput<any> implements OnDestroy {
       this.interface = 'alert';
     }
 
-    let overlay: ActionSheet | Alert | Popover;
+    let overlay: Overlay;
 
     if (this.interface === 'action-sheet') {
       selectOptions.buttons = selectOptions.buttons.concat(options.map(input => {
@@ -395,11 +392,11 @@ export class Select extends BaseInput<any> implements OnDestroy {
 
       // If the user passed a cssClass for the select, add it
       selectCssClass += selectOptions.cssClass ? ' ' + selectOptions.cssClass : '';
-      overlay.setCssClass(selectCssClass);
+      (overlay as Alert).setCssClass(selectCssClass);
 
-      overlay.addButton({
+      (overlay as Alert).addButton({
         text: this.okText,
-        handler: (selectedValues) => this.value = selectedValues
+        handler: (selectedValues: any) => this.value = selectedValues
       });
 
     }

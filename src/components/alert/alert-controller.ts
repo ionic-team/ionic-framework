@@ -51,21 +51,20 @@ import { Config } from '../../config/config';
  * ```ts
  * import { AlertController } from 'ionic-angular';
  *
- * constructor(private alertCtrl: AlertController) {
- *
- * }
+ * constructor(public alertCtrl: AlertController) { }
  *
  * presentAlert() {
- *   let alert = this.alertCtrl.create({
+ *   const alert = this.alertCtrl.create({
  *     title: 'Low battery',
  *     subTitle: '10% of battery remaining',
  *     buttons: ['Dismiss']
  *   });
+ *   alert.onDidDismiss(() => console.log('Alert was dismissed by the user'));
  *   alert.present();
  * }
  *
  * presentConfirm() {
- *   let alert = this.alertCtrl.create({
+ *   const alert = this.alertCtrl.create({
  *     title: 'Confirm purchase',
  *     message: 'Do you want to buy this book?',
  *     buttons: [
@@ -84,11 +83,12 @@ import { Config } from '../../config/config';
  *       }
  *     ]
  *   });
+ *   alert.onDidDismiss(() => console.log('Alert was dismissed by the user'));
  *   alert.present();
  * }
  *
  * presentPrompt() {
- *   let alert = this.alertCtrl.create({
+ *   const alert = this.alertCtrl.create({
  *     title: 'Login',
  *     inputs: [
  *       {
@@ -151,6 +151,7 @@ import { Config } from '../../config/config';
  *  | value       | `string`  | The input's value.                                              |
  *  | label       | `string`  | The input's label (only for radio/checkbox inputs)              |
  *  | checked     | `boolean` | Whether or not the input is checked.                            |
+ *  | disabled    | `boolean` | Whether or not the input is disabled.                           |
  *  | id          | `string`  | The input's id.                                                 |
  *
  *  Button options
@@ -161,6 +162,11 @@ import { Config } from '../../config/config';
  *  | handler  | `any`    | Emitted when the button is pressed.                             |
  *  | cssClass | `string` | An additional CSS class for the button.                         |
  *  | role     | `string` | The buttons role, null or `cancel`.                             |
+ *
+ * ### Detecting dismissal
+ *
+ * Any dismissal of the alert (including backdrop) can be detected
+ * using the method `onDidDismiss(() => {})`.
  *
  * ### Dismissing And Async Navigation
  *
@@ -181,14 +187,14 @@ import { Config } from '../../config/config';
  * out first, *then* start the next transition.
  *
  * ```ts
- * let alert = this.alertCtrl.create({
+ * const alert = this.alertCtrl.create({
  *   title: 'Hello',
  *   buttons: [{
  *     text: 'Ok',
  *     handler: () => {
  *       // user has clicked the alert button
  *       // begin the alert's dismiss transition
- *       let navTransition = alert.dismiss();
+ *       const navTransition = alert.dismiss();
  *
  *       // start some async method
  *       someAsyncOperation().then(() => {

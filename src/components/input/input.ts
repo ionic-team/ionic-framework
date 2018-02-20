@@ -101,6 +101,7 @@ import { Platform } from '../../platform/platform';
     '(focus)="onFocus($event)" ' +
     '(keydown)="onKeydown($event)" ' +
     '[type]="_type" ' +
+    'dir="auto" ' +
     '[attr.aria-labelledby]="_labelId" ' +
     '[attr.min]="min" ' +
     '[attr.max]="max" ' +
@@ -283,19 +284,24 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
       return;
     }
 
-    const blurOnScroll = config.getBoolean('hideCaretOnScroll', false);
-    if (blurOnScroll) {
+    const hideCaretOnScroll = config.getBoolean('hideCaretOnScroll', false);
+    if (hideCaretOnScroll) {
       this._enableHideCaretOnScroll();
     }
-
-    const resizeAssist = config.getBoolean('resizeAssist', false);
-    if (resizeAssist) {
-      this._keyboardHeight = 60;
-      this._enableResizeAssist();
+    const win = _plt.win() as any;
+    const keyboardPlugin = win.Ionic && win.Ionic.keyboardPlugin;
+    if (keyboardPlugin) {
+      const keyboardResizes = config.getBoolean('keyboardResizes', false);
+      if (keyboardResizes) {
+        this._keyboardHeight = config.getNumber('keyboardSafeArea', 60);
+        this._enableScrollMove();
+      } else {
+        this._enableScrollPadding();
+        this._enableScrollMove();
+      }
 
     } else {
       this._useAssist = config.getBoolean('scrollAssist', false);
-
       const usePadding = config.getBoolean('scrollPadding', this._useAssist);
       if (usePadding) {
         this._enableScrollPadding();
@@ -527,9 +533,8 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
 
     this.ionFocus.subscribe(() => {
       const content = this._content;
-
-      // add padding to the bottom of the scroll view (if needed)
-      content.addScrollPadding(this._getScrollData().scrollPadding);
+      const scrollPadding = this._getScrollData().scrollPadding;
+      content.addScrollPadding(scrollPadding);
       content.clearScrollPaddingFocusOut();
     });
   }
@@ -559,13 +564,13 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
     }
   }
 
-  _enableResizeAssist() {
+  _enableScrollMove() {
     assert(this._content, 'content is undefined');
 
     console.debug('Input: enableAutoScroll');
     this.ionFocus.subscribe(() => {
       const scrollData = this._getScrollData();
-      if (Math.abs(scrollData.scrollAmount) > 100) {
+      if (Math.abs(scrollData.scrollAmount) > 4) {
         this._content.scrollTo(0, scrollData.scrollTo, scrollData.scrollDuration);
       }
     });
@@ -721,7 +726,8 @@ export function getScrollData(
   inputOffsetHeight: number,
   scrollViewDimensions: ContentDimensions,
   keyboardHeight: number,
-  plaformHeight: number): ScrollData {
+  plaformHeight: number
+): ScrollData {
   // compute input's Y values relative to the body
   const inputTop = (inputOffsetTop + scrollViewDimensions.contentTop - scrollViewDimensions.scrollTop);
   const inputBottom = (inputTop + inputOffsetHeight);
@@ -751,6 +757,15 @@ export function getScrollData(
   */
 
   const scrollData: ScrollData = newScrollData();
+
+  // when auto-scrolling, there also needs to be enough
+  // content padding at the bottom of the scroll view
+  // always add scroll padding when a text input has focus
+  // this allows for the content to scroll above of the keyboard
+  // content behind the keyboard would be blank
+  // some cases may not need it, but when jumping around it's best
+  // to have the padding already rendered so there's no jank
+  scrollData.scrollPadding = keyboardHeight;
 
   if (inputTopWithinSafeArea && inputBottomWithinSafeArea) {
     // Input top within safe area, bottom within safe area
@@ -786,15 +801,6 @@ export function getScrollData(
 
   // figure out where it should scroll to for the best position to the input
   scrollData.scrollTo = (scrollViewDimensions.scrollTop - scrollData.scrollAmount);
-
-  // when auto-scrolling, there also needs to be enough
-  // content padding at the bottom of the scroll view
-  // always add scroll padding when a text input has focus
-  // this allows for the content to scroll above of the keyboard
-  // content behind the keyboard would be blank
-  // some cases may not need it, but when jumping around it's best
-  // to have the padding already rendered so there's no jank
-  scrollData.scrollPadding = keyboardHeight;
 
   // calculate animation duration
   const distance = Math.abs(scrollData.scrollAmount);

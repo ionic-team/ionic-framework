@@ -31,7 +31,7 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
  * The Content component provides an easy to use content area with
  * some useful methods to control the scrollable area. There should
  * only be one content in a single view component. If additional scrollable
- * elements are need, use [ionScroll](../../scroll/Scroll).
+ * elements are needed, use [ionScroll](../../scroll/Scroll).
  *
  *
  * The content area can also implement pull-to-refresh with the
@@ -227,6 +227,8 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
   /** @internal */
   _scrollDownOnLoad: boolean = false;
 
+  _viewCtrl: any;
+
   private _imgReqBfr: number;
   private _imgRndBfr: number;
   private _imgVelMax: number;
@@ -410,6 +412,8 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
     }
 
     if (viewCtrl) {
+      this._viewCtrl = viewCtrl;
+
       // content has a view controller
       viewCtrl._setIONContent(this);
       viewCtrl._setIONContentRef(elementRef);
@@ -635,6 +639,10 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
    */
   addScrollPadding(newPadding: number) {
     assert(typeof this._scrollPadding === 'number', '_scrollPadding must be a number');
+    if (newPadding === 0) {
+      this._inputPolling = false;
+      this._scrollPadding = -1;
+    }
     if (newPadding > this._scrollPadding) {
       console.debug(`content, addScrollPadding, newPadding: ${newPadding}, this._scrollPadding: ${this._scrollPadding}`);
 
@@ -659,12 +667,12 @@ export class Content extends Ion implements OnDestroy, AfterViewInit, IContent {
 
       this._keyboard.onClose(() => {
         console.debug(`content, clearScrollPaddingFocusOut _keyboard.onClose`);
-        this._inputPolling = false;
-        this._scrollPadding = -1;
         this.addScrollPadding(0);
       }, 200, 3000);
     }
   }
+
+
 
   /**
    * Tell the content to recalculate its dimensions. This should be called

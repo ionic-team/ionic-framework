@@ -501,8 +501,8 @@ export function mockTab(parentTabs: Tabs, overrideLoad: boolean = true): Tab {
   );
 
   if (overrideLoad) {
-    tab.load = (_opts: any, cb: Function) => {
-      cb();
+    tab.load = (_opts: any) => {
+      return Promise.resolve();
     };
   }
 

@@ -16,7 +16,12 @@
 
   <ion-item>
     <ion-label>MM DD YY</ion-label>
-    <ion-datetime displayFormat="MM DD YY" [(ngModel)]="placeholderDate" placeholder="Select Date"></ion-datetime>
+    <ion-datetime pickerFormat="YYYY-MM-DDThh:mm" [pickerOptions]="customOptions" [(ngModel)]="placeholderDate" placeholder="Select Date"></ion-datetime>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>MM DD YY</ion-label>
+    <ion-datetime displayFormat="MM DD YY" [(ngModel)]="placeholderDate" placeholder="Select Date" initialValue="1987-10-19"></ion-datetime>
   </ion-item>
 
   <ion-item>
@@ -77,6 +82,11 @@
     <ion-datetime monthValues="6,7,8" yearValues="2014,2015" dayValues="01,02,03,04,05,06,08,09,10, 11, 12, 13, 14" displayFormat="DD/MMM/YYYY" [(ngModel)]="specificDaysMonthsYears"></ion-datetime>
   </ion-item>
 
+  <ion-item>
+    <ion-label>Default value</ion-label>
+    <ion-datetime max="2100" pickerDefault="2017-08-06" [(ngModel)]="defaultValue"></ion-datetime>
+  </ion-item>
+
   <p aria-hidden="true" padding>
     <code>monthOnly: {{monthOnly}}</code><br>
     <code>wwwInvented: {{wwwInvented}}</code><br>
@@ -88,6 +98,7 @@
     <code>time: {{time}}</code><br>
     <code>Leap year, summer months: {{leapYearsSummerMonths}}</code><br>
     <code>Specific days/months/years: {{specificDaysMonthsYears}}</code><br>
+    <code>Default value: {{defaultValue}}</code><br>
   </p>
 
   <p>

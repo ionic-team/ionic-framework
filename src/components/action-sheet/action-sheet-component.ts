@@ -26,7 +26,7 @@ import { ViewController } from '../../navigation/view-controller';
             '{{b.text}}' +
           '</button>' +
         '</div>' +
-        '<div class="action-sheet-group" *ngIf="cancelButton">' +
+        '<div class="action-sheet-group action-sheet-group-cancel" *ngIf="cancelButton">' +
           '<button ion-button="action-sheet-button" (click)="click(cancelButton)" class="action-sheet-cancel disable-hover" [attr.icon-start]="cancelButton.icon ? \'\' : null" [ngClass]="cancelButton.cssClass">' +
             '<ion-icon [name]="cancelButton.icon" *ngIf="cancelButton.icon" class="action-sheet-icon"></ion-icon>' +
             '{{cancelButton.text}}' +

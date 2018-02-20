@@ -4,7 +4,7 @@ import { DateTime } from '../datetime';
 import { Form } from '../../../util/form';
 import { Picker } from '../../picker/picker';
 import { PickerController } from '../../picker/picker-controller';
-import * as datetime from '../../../util/datetime-util';
+import * as datetimeUtil from '../../../util/datetime-util';
 import { mockApp, mockConfig, mockElementRef, mockRenderer } from '../../../util/mock-providers';
 
 
@@ -491,6 +491,53 @@ describe('DateTime', () => {
 
   });
 
+  describe('defaultValue', () => {
+    it('should default to now if no initial value or bounds supplied', () => {
+      const now = datetimeUtil.parseDate(new Date().toISOString());
+      datetime.pickerFormat = 'YYYY-MM-DDThh:mm';
+      datetime.generate();
+      var columns = picker.getColumns();
+      expect(columns[0].options[columns[0].selectedIndex].value).toEqual(now.year);
+      expect(columns[1].options[columns[1].selectedIndex].value).toEqual(now.month);
+      expect(columns[2].options[columns[2].selectedIndex].value).toEqual(now.day);
+      expect(columns[3].options[columns[3].selectedIndex].value).toEqual(now.hour % 12);
+      expect(columns[4].options[columns[4].selectedIndex].value).toEqual(now.minute);
+    });
+
+    it('should default to max if no initial value supplied but max specified and max before current', () => {
+      datetime.max = '1987-10-19';
+      datetime.generate();
+      var columns = picker.getColumns();
+      expect(columns[0].options[columns[0].selectedIndex].value).toEqual(10);
+      expect(columns[1].options[columns[1].selectedIndex].value).toEqual(19);
+      expect(columns[2].options[columns[2].selectedIndex].value).toEqual(1987);
+    });
+
+    it('should default to current if no initial value supplied but max specified and max after current', () => {
+      const now = datetimeUtil.parseDate(new Date().toISOString());
+      datetime.max = '2100-10-19';
+      datetime.generate();
+      var columns = picker.getColumns();
+      expect(columns[0].options[columns[0].selectedIndex].value).toEqual(now.month);
+      expect(columns[1].options[columns[1].selectedIndex].value).toEqual(now.day);
+      expect(columns[2].options[columns[2].selectedIndex].value).toEqual(now.year);
+    });
+
+    it('should use pickerDefault if has no value', zoned(() => {
+      datetime.max = '2100-12-31';
+      datetime.pickerFormat = 'DD MMMM YYYY';
+      datetime.initialValue = '2004-08-06';
+
+      datetime.generate();
+      var columns = picker.getColumns();
+
+      expect(columns[0].options[columns[0].selectedIndex].value).toEqual(6);
+      expect(columns[1].options[columns[1].selectedIndex].value).toEqual(8);
+      expect(columns[2].options[columns[2].selectedIndex].value).toEqual(2004);
+    }));
+
+  });
+
   describe('setValue', () => {
 
     it('should update existing time value with 12-hour PM DateTimeData value', zoned(() => {
@@ -680,10 +727,10 @@ describe('DateTime', () => {
     datetime._picker = picker = new Picker(mockApp(), null, mockConfig());
   });
 
-  console.warn = function(){};
+  console.warn = function() {};
 
   // pt-br
-  var customLocale: datetime.LocaleData = {
+  var customLocale: datetimeUtil.LocaleData = {
     dayNames: [
       'domingo',
       'segunda-feira',
@@ -736,7 +783,7 @@ describe('DateTime', () => {
 
 function zoned(fn: () => any): (done: DoneFn) => void {
   return () => {
-    const zone = new NgZone(false);
+    const zone = new NgZone({enableLongStackTrace: false});
     zone.run(fn);
   };
 }

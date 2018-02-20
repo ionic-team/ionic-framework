@@ -21,6 +21,9 @@ $action-sheet-ios-padding-bottom:                       $action-sheet-ios-paddin
 /// @prop - Padding start of the action sheet
 $action-sheet-ios-padding-start:                        $action-sheet-ios-padding-end !default;
 
+/// @prop - Top margin of the action sheet button group
+$action-sheet-ios-group-margin-top:                     10px !default;
+
 /// @prop - Bottom margin of the action sheet button group
 $action-sheet-ios-group-margin-bottom:                  10px !default;
 
@@ -89,6 +92,11 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
   @include text-align($action-sheet-ios-text-align);
 }
 
+.action-sheet-ios .action-sheet-wrapper {
+  @include margin(constant(safe-area-inset-top), auto, constant(safe-area-inset-bottom), auto);
+  @include margin(env(safe-area-inset-top), auto, env(safe-area-inset-bottom), auto);
+}
+
 .action-sheet-ios .action-sheet-container {
   @include deprecated-variable(padding, $action-sheet-ios-padding) {
     @include padding($action-sheet-ios-padding-top, $action-sheet-ios-padding-end, $action-sheet-ios-padding-bottom, $action-sheet-ios-padding-start);
@@ -99,9 +107,19 @@ $action-sheet-ios-button-cancel-font-weight:            600 !default;
   @include border-radius($action-sheet-ios-border-radius);
   @include margin(null, null, $action-sheet-ios-group-margin-bottom - 2, null);
 
-  overflow: hidden;
-
   background: $action-sheet-ios-background;
+
+  // scss-lint:disable VendorPrefix
+  // TODO Removing this temporarily because it causes a flicker
+  // when there are not enough elements to overflow
+  // https://github.com/ionic-team/ionic/issues/13262
+  // -webkit-overflow-scrolling: touch;
+  // Prevents borders from going outside of the container
+  // -webkit-mask-image: -webkit-radial-gradient(circle, #fff, #000);
+}
+
+.action-sheet-ios .action-sheet-group:first-child {
+  @include margin($action-sheet-ios-group-margin-top, null, null, null);
 }
 
 .action-sheet-ios .action-sheet-group:last-child {

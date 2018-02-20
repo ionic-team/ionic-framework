@@ -47,12 +47,12 @@ import { LoadingOptions } from './loading-options';
  *
  * @usage
  * ```ts
- * constructor(public loadingCtrl: LoadingController) {
+ * import { LoadingController } from 'ionic-angular';
  *
- * }
+ * constructor(public loadingCtrl: LoadingController) { }
  *
  * presentLoadingDefault() {
- *   let loading = this.loadingCtrl.create({
+ *   const loading = this.loadingCtrl.create({
  *     content: 'Please wait...'
  *   });
  *
@@ -64,7 +64,7 @@ import { LoadingOptions } from './loading-options';
  * }
  *
  * presentLoadingCustom() {
- *   let loading = this.loadingCtrl.create({
+ *   const loading = this.loadingCtrl.create({
  *     spinner: 'hide',
  *     content: `
  *       <div class="custom-spinner-container">
@@ -81,7 +81,7 @@ import { LoadingOptions } from './loading-options';
  * }
  *
  * presentLoadingText() {
- *   let loading = this.loadingCtrl.create({
+ *   const loading = this.loadingCtrl.create({
  *     spinner: 'hide',
  *     content: 'Loading Please Wait...'
  *   });

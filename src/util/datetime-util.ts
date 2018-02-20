@@ -228,6 +228,12 @@ export function parseDate(val: any): DateTimeData {
   };
 }
 
+export function compareDates(d1: DateTimeData, d2: DateTimeData): number {
+  const date1 = new Date(d1.year, d1.month, d1.day, d1.hour, d1.minute, d1.second);
+  const date2 = new Date(d2.year, d2.month, d2.day, d2.hour, d2.minute, d2.second);
+
+  return date1.getTime() - date2.getTime();
+}
 
 export function updateDate(existingData: DateTimeData, newData: any): boolean {
   if (isPresent(newData) && newData !== '') {

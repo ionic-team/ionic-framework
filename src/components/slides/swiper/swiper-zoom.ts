@@ -90,14 +90,16 @@ function onGestureStart(s: Slides, _plt: Platform, ev: TouchEvent) {
     }
 
     z.gesture.image = <HTMLElement>z.gesture.slide.querySelector('img, svg, canvas, ion-img');
-    z.gesture.imageWrap = <HTMLElement>z.gesture.image.closest('.' + CLS.zoomContainer);
+    if (z.gesture.image) {
+      z.gesture.imageWrap = <HTMLElement>z.gesture.image.closest('.' + CLS.zoomContainer);
 
-    if (!z.gesture.imageWrap) {
-      z.gesture.image = undefined;
-      return;
+      if (!z.gesture.imageWrap) {
+        z.gesture.image = undefined;
+        return;
+      }
+
+      z.gesture.zoomMax = parseInt(z.gesture.imageWrap.getAttribute('data-swiper-zoom') || <any>s.zoomMax, 10);
     }
-
-    z.gesture.zoomMax = parseInt(z.gesture.imageWrap.getAttribute('data-swiper-zoom') || <any>s.zoomMax, 10);
   }
 
   transition(z.gesture.image, 0);
@@ -349,10 +351,10 @@ function toggleZoom(s: Slides, plt: Platform) {
   if (!z.gesture.slide) {
     z.gesture.slide = s.clickedSlide ? s.clickedSlide : s._slides[s._activeIndex];
     z.gesture.image = <HTMLElement>z.gesture.slide.querySelector('img, svg, canvas, ion-img');
-    z.gesture.imageWrap = <HTMLElement>z.gesture.image.closest('.' + CLS.zoomContainer);
+    z.gesture.imageWrap = z.gesture.image && <HTMLElement>z.gesture.image.closest('.' + CLS.zoomContainer);
   }
 
-  if (!z.gesture.image) return;
+  if (!z.gesture.imageWrap) return;
 
   var touchX: number;
   var touchY: number;
@@ -462,7 +464,7 @@ export function resetZoomEvents(s: Slides, plt: Platform) {
 
   // Scale image
   if (s._supportGestures) {
-    for (var i = 0; i < slides.length; i++) {
+    for (let i = 0; i < slides.length; i++) {
       slide = slides[i];
       // gesturestart
       plt.registerListener(slide, 'gesturestart', (ev: TouchEvent) => {

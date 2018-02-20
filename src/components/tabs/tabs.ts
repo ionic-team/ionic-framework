@@ -301,7 +301,11 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
    */
   ngOnDestroy() {
     this._onDestroy.next();
-    this.parent.unregisterChildNav(this);
+    if (this.parent) {
+      this.parent.unregisterChildNav(this);
+    } else {
+      this._app.unregisterRootNav(this);
+    }
   }
 
   /**
@@ -324,7 +328,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
   /**
    * @internal
    */
-  initTabs() {
+  initTabs(): Promise<any> {
     // get the selected index from the input
     // otherwise default it to use the first index
     let selectedIndex = (isBlank(this.selectedIndex) ? 0 : parseInt(<any>this.selectedIndex, 10));
@@ -344,17 +348,17 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
       selectedTab = this._tabs.find(t => t.enabled && t.show);
     }
 
+    let promise = Promise.resolve();
     if (selectedTab) {
-      if (tabsSegment) {
-        selectedTab._lazyRootFromUrl = tabsSegment.name;
-        selectedTab._lazyRootFromUrlData = tabsSegment.data;
-      }
-      this.select(selectedTab);
+      selectedTab._segment = tabsSegment;
+      promise = this.select(selectedTab);
     }
 
-    // set the initial href attribute values for each tab
-    this._tabs.forEach(t => {
-      t.updateHref(t.root, t.rootParams);
+    return promise.then(() => {
+      // set the initial href attribute values for each tab
+      this._tabs.forEach(t => {
+        t.updateHref(t.root, t.rootParams);
+      });
     });
   }
 
@@ -380,10 +384,10 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
   /**
    * @param {number|Tab} tabOrIndex Index, or the Tab instance, of the tab to select.
    */
-  select(tabOrIndex: number | Tab, opts: NavOptions = {}, fromUrl: boolean = false) {
+  select(tabOrIndex: number | Tab, opts: NavOptions = {}, fromUrl: boolean = false): Promise<any> {
     const selectedTab: Tab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
     if (isBlank(selectedTab)) {
-      return;
+      return Promise.resolve();
     }
 
     // If the selected tab is the current selected tab, we do not switch
@@ -411,7 +415,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
 
       // Let's start the transition
       opts.animate = false;
-      selectedTab.load(opts, () => {
+      return selectedTab.load(opts).then(() => {
         this._tabSwitchEnd(selectedTab, selectedPage, currentPage);
         if (opts.updateUrl !== false) {
           this._linker.navChange(DIRECTION_SWITCH);
@@ -421,6 +425,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
       });
     } else {
       this._fireChangeEvent(selectedTab);
+      return Promise.resolve();
     }
   }
 
@@ -446,8 +451,15 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
     }
 
     // Fire didEnter/didLeave lifecycle events
-    selectedPage && selectedPage._didEnter();
-    currentPage && currentPage._didLeave();
+    if (selectedPage) {
+      selectedPage._didEnter();
+      this._app.viewDidEnter.emit(selectedPage);
+    }
+
+    if (currentPage) {
+      currentPage && currentPage._didLeave();
+      this._app.viewDidLeave.emit(currentPage);
+    }
 
     // track the order of which tabs have been selected, by their index
     // do not track if the tab index is the same as the previous
@@ -532,36 +544,44 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
    * "Touch" the active tab, going back to the root view of the tab
    * or optionally letting the tab handle the event
    */
-  private _updateCurrentTab(tab: Tab, fromUrl: boolean) {
+  private _updateCurrentTab(tab: Tab, fromUrl: boolean): Promise<any> {
     const active = tab.getActive();
 
     if (active) {
-      if (fromUrl && tab._lazyRootFromUrl) {
+      if (fromUrl && tab._segment) {
         // see if the view controller exists
-        const vc = tab.getViewById(tab._lazyRootFromUrl);
+        const vc = tab.getViewById(tab._segment.name);
         if (vc) {
           // the view is already in the stack
-          tab.popTo(vc, {
+          return tab.popTo(vc, {
             animate: false,
             updateUrl: false,
           });
-        } else {
-          tab.setRoot(tab._lazyRootFromUrl, tab._lazyRootFromUrlData, {
-            animate: false, updateUrl: false
+        } else if (tab._views.length === 0 && tab._segment.defaultHistory && tab._segment.defaultHistory.length) {
+          return this._linker.initViews(tab._segment).then((views: ViewController[]) => {
+            return tab.setPages(views,  {
+              animate: false, updateUrl: false
+            });
+          }).then(() => {
+            tab._segment = null;
           });
-          tab._lazyRootFromUrl = null;
-          tab._lazyRootFromUrlData = null;
+        } else {
+          return tab.setRoot(tab._segment.name, tab._segment.data, {
+            animate: false, updateUrl: false
+          }).then(() => {
+            tab._segment = null;
+          });
         }
 
       } else if (active._cmp && active._cmp.instance.ionSelected) {
         // if they have a custom tab selected handler, call it
         active._cmp.instance.ionSelected();
-
+        return Promise.resolve();
       } else if (tab.length() > 1) {
         // if we're a few pages deep, pop to root
-        tab.popToRoot();
+        return tab.popToRoot();
       } else {
-        getComponent(this._linker, tab.root).then(viewController => {
+        return getComponent(this._linker, tab.root).then(viewController => {
           if (viewController.component !== active.component) {
             // Otherwise, if the page we're on is not our real root
             // reset it to our default root type
@@ -642,7 +662,7 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
   /**
    * @private
    */
-  _getSelectedTabIndex(secondaryId: string, fallbackIndex: number = 0): number {
+  _getSelectedTabIndex(secondaryId: string = '', fallbackIndex: number = 0): number {
     // we found a segment which probably represents which tab to select
     const indexMatch = secondaryId.match(/tab-(\d+)/);
     if (indexMatch) {

@@ -106,6 +106,34 @@ import { ViewController } from '../../navigation/view-controller';
  * }
  * ```
  *
+ * ### Zooming
+ * If your slides contain images, you can enable zooming on them by setting `zoom="true" and
+ * wrapping each image in a `div` with the class `swiper-zoom-container`. Zoom supports
+ * `img`, `svg`, `canvas`, and `ion-img`.
+ *
+ * ```html
+ * <ion-slides zoom="true">
+ *   <ion-slide>
+ *     <div class="swiper-zoom-container">
+ *       <img src="assets/img/dog.jpg">
+ *     </div>
+ *     <ion-label>Woof</ion-label>
+ *   </ion-slide>
+ *   <ion-slide>
+ *     <div class="swiper-zoom-container">
+ *       <img src="assets/img/cat.jpg">
+ *     </div>
+ *     <ion-label>Meow</ion-label>
+ *   </ion-slide>
+ *   <ion-slide>
+ *     <div class="swiper-zoom-container">
+ *       <img src="assets/img/fish.jpg">
+ *     </div>
+ *     <ion-label>Just keep swimming</ion-label>
+ *   </ion-slide>
+ * </ion-slides>
+ * ```
+ *
  * @advanced
  *
  * There are several options available to create customized slides. Ionic exposes

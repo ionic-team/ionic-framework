@@ -39,10 +39,10 @@ import { Config } from '../../config/config';
  *
  * export class MyClass{
  *
- *  constructor(public actionSheetCtrl: ActionSheetController) {}
+ *  constructor(public actionSheetCtrl: ActionSheetController) { }
  *
  *  presentActionSheet() {
- *    let actionSheet = this.actionSheetCtrl.create({
+ *    const actionSheet = this.actionSheetCtrl.create({
  *      title: 'Modify your album',
  *      buttons: [
  *        {
@@ -93,7 +93,7 @@ import { Config } from '../../config/config';
  * | icon     | `icon`   | The buttons icons.                                                                                                                               |
  * | handler  | `any`    | An express the button should evaluate.                                                                                                           |
  * | cssClass | `string` | Additional classes for custom styles, separated by spaces.                                                                                       |
- * | role     | `string` | How the button should be displayed, `destructive` or `cancel`. If not role is provided, it will display the button without any additional styles.|
+ * | role     | `string` | How the button should be displayed, `destructive` or `cancel`. If no role is provided, it will display the button without any additional styles. |
  *
  *
  * ### Dismissing And Async Navigation
@@ -115,7 +115,7 @@ import { Config } from '../../config/config';
  * out first, *then* start the next transition.
  *
  * ```ts
- * let actionSheet = this.actionSheetCtrl.create({
+ * const actionSheet = this.actionSheetCtrl.create({
  *   title: 'Hello',
  *   buttons: [{
  *     text: 'Ok',
