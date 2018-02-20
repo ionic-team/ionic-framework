@@ -1,10 +1,8 @@
-import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
-import { ElementRef, applyStyles, assert, getElementReference, now, updateDetail } from '../../utils/helpers';
-import { BLOCK_ALL, BlockerDelegate, GestureController, GestureDelegate } from '../gesture-controller/gesture-controller';
+import { Component, Event, EventEmitter, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
+import { ElementRef, assert, now, updateDetail } from '../../utils/helpers';
+import { BlockerDelegate, GestureDelegate, BlockerConfig, BLOCK_ALL } from '../gesture-controller/gesture-controller';
 import { DomController } from '../../index';
 import { PanRecognizer } from './recognizers';
-
-declare const Ionic: { gesture: GestureController };
 
 
 @Component({
@@ -14,7 +12,6 @@ export class Gesture {
 
   private detail: GestureDetail = {};
   private positions: number[] = [];
-  private ctrl: GestureController;
   private gesture: GestureDelegate;
   private lastTouch = 0;
   private pan: PanRecognizer;
@@ -25,8 +22,7 @@ export class Gesture {
   private isMoveQueued = false;
   private blocker: BlockerDelegate;
 
-  @Element() private el: HTMLElement;
-
+  @Prop({ connect: 'ion-gesture-controller' }) gestureCtrl: HTMLIonGestureControllerElement;
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
 
@@ -76,13 +72,18 @@ export class Gesture {
    */
   @Event() ionPress: EventEmitter;
 
+  componentWillLoad() {
+    return this.gestureCtrl.create({
+      name: this.gestureName,
+      priority: this.gesturePriority,
+      disableScroll: this.disableScroll
+    }).then((gesture) => this.gesture = gesture);
+  }
 
   componentDidLoad() {
     // in this case, we already know the GestureController and Gesture are already
     // apart of the same bundle, so it's safe to load it this way
     // only create one instance of GestureController, and reuse the same one later
-    this.ctrl = Ionic.gesture = Ionic.gesture || new GestureController();
-    this.gesture = this.ctrl.createGesture(this.gestureName, this.gesturePriority, this.disableScroll);
 
     const types = this.type.replace(/\s/g, '').toLowerCase().split(',');
     if (types.indexOf('pan') > -1) {
@@ -91,15 +92,9 @@ export class Gesture {
     this.hasPress = (types.indexOf('press') > -1);
 
     this.disabledChanged(this.disabled);
-    if (this.pan || this.hasPress) {
-      this.dom.write(() => {
-        applyStyles(getElementReference(this.el, this.attachTo), GESTURE_INLINE_STYLES);
-      });
-    }
 
     if (this.autoBlockAll) {
-      this.blocker = this.ctrl.createBlocker(BLOCK_ALL);
-      this.blocker.block();
+      this.setBlocker(BLOCK_ALL).then(b => b.block());
     }
   }
 
@@ -116,12 +111,19 @@ export class Gesture {
 
   @Watch('block')
   protected blockChanged(block: string) {
+    this.setBlocker({ disable: block.split(',')});
+  }
+
+  private setBlocker(config: BlockerConfig) {
     if (this.blocker) {
       this.blocker.destroy();
     }
-    if (block) {
-      this.blocker = this.ctrl.createBlocker({ disable: block.split(',')});
+    if (config) {
+      return this.gestureCtrl.componentOnReady()
+        .then(ctrl => ctrl.createBlocker(config))
+        .then(blocker => this.blocker = blocker);
     }
+    return Promise.resolve(null);
   }
 
   // DOWN *************************
@@ -459,18 +461,11 @@ export class Gesture {
       this.blocker = null;
     }
     this.gesture && this.gesture.destroy();
-    this.ctrl = this.gesture = this.pan = this.detail = this.detail.event = null;
+    this.gesture = this.pan = this.detail = this.detail.event = null;
   }
 
 }
 
-
-const GESTURE_INLINE_STYLES = {
-  'touch-action': 'none',
-  'user-select': 'none',
-  '-webkit-user-drag': 'none',
-  '-webkit-tap-highlight-color': 'rgba(0,0,0,0)'
-};
 
 const MOUSE_WAIT = 2500;
 

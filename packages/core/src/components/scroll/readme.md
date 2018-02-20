@@ -22,11 +22,6 @@
 
 
 
-#### scrollEvents
-
-boolean
-
-
 ## Attributes
 
 #### onion-scroll
@@ -42,11 +37,6 @@ boolean
 #### onion-scroll-start
 
 
-
-
-#### scroll-events
-
-boolean
 
 
 ## Events

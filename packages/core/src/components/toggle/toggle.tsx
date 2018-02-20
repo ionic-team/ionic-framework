@@ -16,12 +16,12 @@ import { debounce } from '../../utils/helpers';
   }
 })
 export class Toggle implements CheckboxInput {
+
   private didLoad: boolean;
   private gestureConfig: any;
   private inputId: string;
   private nativeInput: HTMLInputElement;
   private pivotX: number;
-
 
   @State() activated = false;
 
@@ -88,6 +88,7 @@ export class Toggle implements CheckboxInput {
       'onMove': this.onDragMove.bind(this),
       'onEnd': this.onDragEnd.bind(this),
       'gestureName': 'toggle',
+      'passive': false,
       'gesturePriority': 30,
       'type': 'pan',
       'direction': 'x',
@@ -141,6 +142,10 @@ export class Toggle implements CheckboxInput {
   private onDragStart(detail: GestureDetail) {
     this.pivotX = detail.currentX;
     this.activated = true;
+
+    // touch-action does not work in iOS
+    detail.event.preventDefault();
+    return true;
   }
 
   private onDragMove(detail: GestureDetail) {

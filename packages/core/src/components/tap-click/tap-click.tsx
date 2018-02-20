@@ -1,8 +1,5 @@
 import { Component, Element, EventListenerEnable, Listen, Prop } from '@stencil/core';
 import { now, pointerCoordX, pointerCoordY } from '../../utils/helpers';
-import { GestureController } from '../gesture-controller/gesture-controller';
-
-declare const Ionic: { gesture: GestureController };
 
 
 @Component({
@@ -13,8 +10,7 @@ export class TapClick {
   private app: HTMLIonAppElement;
   private lastTouch = -MOUSE_WAIT*10;
   private lastActivated = 0;
-
-  private gestureCtrl: GestureController;
+  private cancelled = false;
 
   private activatableEle: HTMLElement | null;
   private activeDefer: any;
@@ -30,40 +26,37 @@ export class TapClick {
     if (this.isServer) {
       return;
     }
-    this.gestureCtrl = Ionic.gesture = Ionic.gesture || new GestureController();
-
     this.app = this.el.closest('ion-app') as HTMLIonAppElement;
   }
 
-  @Listen('document:click', {passive: false, capture: true})
+  @Listen('body:click', {passive: false, capture: true})
   onBodyClick(ev: Event) {
-    if (this.shouldCancel()) {
-      debugger;
+    if (this.cancelled || this.shouldCancel()) {
       ev.preventDefault();
       ev.stopPropagation();
     }
   }
 
   // Touch Events
-  @Listen('document:touchstart', { passive: true })
+  @Listen('document:touchstart', { passive: true, capture: true })
   onTouchStart(ev: TouchEvent) {
     this.lastTouch = now(ev);
     this.pointerDown(ev);
   }
 
-  @Listen('document:touchcancel', { passive: true })
+  @Listen('document:touchcancel', { passive: true, capture: true })
   onTouchCancel(ev: TouchEvent) {
     this.lastTouch = now(ev);
     this.pointerUp(ev);
   }
 
-  @Listen('document:touchend', { passive: true })
+  @Listen('document:touchend', { passive: false, capture: true })
   onTouchEnd(ev: TouchEvent) {
     this.lastTouch = now(ev);
     this.pointerUp(ev);
   }
 
-  @Listen('document:mousedown', { passive: true })
+  @Listen('document:mousedown', { passive: true, capture: true })
   onMouseDown(ev: MouseEvent) {
     const t = now(ev) - MOUSE_WAIT;
     if (this.lastTouch < t) {
@@ -71,7 +64,7 @@ export class TapClick {
     }
   }
 
-  @Listen('document:mouseup', { passive: true })
+  @Listen('document:mouseup', { passive: false, capture: true })
   onMouseUp(ev: TouchEvent) {
     const t = now(ev) - MOUSE_WAIT;
     if (this.lastTouch < t) {
@@ -80,25 +73,32 @@ export class TapClick {
   }
 
   @Listen('body:ionScrollStart')
-  scrollStarted() {
+  @Listen('body:ionGestureCaptured')
+  cancelActive() {
     clearTimeout(this.activeDefer);
     if (this.activatableEle) {
       this.removeActivated(false);
       this.activatableEle = null;
     }
+    this.cancelled = true;
   }
 
   private pointerDown(ev: any) {
     if (this.activatableEle) {
       return;
     }
-    if (!this.shouldCancel()) {
+    this.cancelled = this.shouldCancel();
+
+    if (!this.cancelled) {
       this.setActivatedElement(getActivatableTarget(ev.target), ev);
     }
   }
 
   private pointerUp(ev: UIEvent) {
     this.setActivatedElement(null, ev);
+    if (this.cancelled) {
+      ev.preventDefault();
+    }
   }
 
   private setActivatedElement(el: HTMLElement | null, ev: UIEvent) {
@@ -173,10 +173,6 @@ export class TapClick {
   private shouldCancel(): boolean {
     if (!this.app.isEnabled()) {
       console.debug('click prevent: appDisabled');
-      return true;
-    }
-    if (this.gestureCtrl.isCaptured()) {
-      console.debug('click prevent: tap-click (gesture is captured)');
       return true;
     }
     return false;

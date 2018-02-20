@@ -1001,6 +1001,36 @@ declare global {
 
 
 import {
+  GestureController as IonGestureController
+} from './components/gesture-controller/gesture-controller';
+
+declare global {
+  interface HTMLIonGestureControllerElement extends IonGestureController, HTMLStencilElement {
+  }
+  var HTMLIonGestureControllerElement: {
+    prototype: HTMLIonGestureControllerElement;
+    new (): HTMLIonGestureControllerElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-gesture-controller": HTMLIonGestureControllerElement;
+  }
+  interface ElementTagNameMap {
+    "ion-gesture-controller": HTMLIonGestureControllerElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-gesture-controller": JSXElements.IonGestureControllerAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonGestureControllerAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
   Gesture as IonGesture
 } from './components/gesture/gesture';
 
@@ -2660,7 +2690,6 @@ declare global {
       onionScroll?: ScrollCallback;
       onionScrollEnd?: ScrollCallback;
       onionScrollStart?: ScrollCallback;
-      scrollEvents?: boolean;
     }
   }
 }

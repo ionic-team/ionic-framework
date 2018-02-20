@@ -1,3 +1,9 @@
+import { Component, Method, EventEmitter, Event } from "@stencil/core";
+
+
+@Component({
+  tag: 'ion-gesture-controller'
+})
 export class GestureController {
 
   private gestureId = 0;
@@ -6,19 +12,19 @@ export class GestureController {
   private disabledScroll = new Set<number>();
   private capturedId: number|null = null;
 
-  createGesture(gestureName: string, gesturePriority: number, disableScroll: boolean): GestureDelegate {
-    return new GestureDelegate(this, this.newID(), gestureName, gesturePriority, disableScroll);
+  @Event() ionGestureCaptured: EventEmitter<string>;
+
+  @Method()
+  create(config: GestureConfig): Promise<GestureDelegate> {
+    return Promise.resolve(new GestureDelegate(this, this.newID(), config.name, config.priority, config.disableScroll));
   }
 
-  createBlocker(opts: BlockerOptions = {}): BlockerDelegate {
+  @Method()
+  createBlocker(opts: BlockerConfig = {}): BlockerDelegate {
     return new BlockerDelegate(this.newID(), this,
       opts.disable,
       !!opts.disableScroll
     );
-  }
-
-  newID(): number {
-    return this.gestureId++;
   }
 
   start(gestureName: string, id: number, priority: number): boolean {
@@ -43,6 +49,7 @@ export class GestureController {
     if (maxPriority === priority) {
       this.capturedId = id;
       this.requestedStart.clear();
+      this.ionGestureCaptured.emit(gestureName);
       return true;
     }
     requestedStart.delete(id);
@@ -121,6 +128,9 @@ export class GestureController {
     return false;
   }
 
+  private newID(): number {
+    return this.gestureId++;
+  }
 }
 
 
@@ -180,13 +190,10 @@ export class GestureDelegate {
     this.release();
     this.ctrl = null;
   }
-
 }
 
 
 export class BlockerDelegate {
-
-  blocked = false;
 
   private ctrl: GestureController|null;
 
@@ -212,7 +219,6 @@ export class BlockerDelegate {
     if (this.disableScroll) {
       this.ctrl.disableScroll(this.blockerDelegateId);
     }
-    this.blocked = true;
   }
 
   unblock() {
@@ -227,7 +233,6 @@ export class BlockerDelegate {
     if (this.disableScroll) {
       this.ctrl.enableScroll(this.blockerDelegateId);
     }
-    this.blocked = false;
   }
 
   destroy() {
@@ -237,13 +242,20 @@ export class BlockerDelegate {
 }
 
 
-export interface BlockerOptions {
-  disableScroll?: boolean;
-  disable?: string[];
+export interface GestureConfig {
+  name: string;
+  priority: number;
+  disableScroll: boolean;
 }
 
 
-export const BLOCK_ALL: BlockerOptions = {
+export interface BlockerConfig {
+  disable?: string[];
+  disableScroll?: boolean;
+}
+
+
+export const BLOCK_ALL: BlockerConfig = {
   disable: ['menu-swipe', 'goback-swipe'],
   disableScroll: true
 };

@@ -1,8 +1,6 @@
-import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop } from '@stencil/core';
 import { Config, DomController, GestureDetail } from '../../index';
-import { GestureController, GestureDelegate } from '../gesture-controller/gesture-controller';
-
-declare const Ionic: { gesture: GestureController };
+import { GestureDelegate } from '../gesture-controller/gesture-controller';
 
 
 @Component({
@@ -20,6 +18,7 @@ export class Scroll {
 
   @Element() private el: HTMLElement;
 
+  @Prop({ connect: 'ion-gesture-controller'}) gestureCtrl: HTMLIonGestureControllerElement;
   @Prop({ context: 'config'}) config: Config;
   @Prop({ context: 'enableListener'}) enableListener: EventListenerEnable;
   @Prop({ context: 'dom' }) dom: DomController;
@@ -44,22 +43,19 @@ export class Scroll {
    */
   @Event() ionScrollEnd: EventEmitter;
 
-
-  @Prop() scrollEvents = false;
-  @Watch('scrollEvents')
-  scrollChanged(enabled: boolean) {
-    this.enableListener(this, 'scroll', enabled);
+  componentWillLoad() {
+    return this.gestureCtrl.create({
+      name: 'scroll',
+      priority: 100,
+      disableScroll: false,
+    }).then(gesture => this.gesture = gesture);
   }
 
   componentDidLoad() {
     if (this.isServer) {
       return;
     }
-
-    const gestureCtrl = Ionic.gesture = Ionic.gesture || new GestureController();
-    this.gesture = gestureCtrl.createGesture('scroll', 100, false);
     this.app = this.el.closest('ion-app') as HTMLIonAppElement;
-    this.scrollChanged(this.scrollEvents);
   }
 
   componentDidUnload() {
@@ -69,7 +65,7 @@ export class Scroll {
 
   // Native Scroll *************************
 
-  @Listen('scroll', { passive: true, enabled: false })
+  @Listen('scroll', { passive: true })
   onNativeScroll() {
     if (!this.queued) {
       this.queued = true;
@@ -219,6 +215,7 @@ export class Scroll {
       if (this.onionScrollStart) {
         this.onionScrollStart(detail);
       }
+      this.gesture.capture();
       this.ionScrollStart.emit(detail);
     }
     detail.deltaY = (detail.scrollTop - detail.startY);
@@ -277,6 +274,8 @@ export class Scroll {
     detail.timeStamp = timeStamp;
 
     // emit that the scroll has ended
+    this.gesture.release();
+
     if (this.onionScrollEnd) {
       this.onionScrollEnd(detail);
     }

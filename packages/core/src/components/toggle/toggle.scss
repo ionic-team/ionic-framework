@@ -7,6 +7,9 @@ ion-toggle {
   display: inline-block;
 
   contain: content;
+
+  touch-action: none;
+  user-select: none;
 }
 
 ion-toggle ion-gesture {
@@ -52,8 +55,10 @@ ion-toggle input {
 
   background: transparent;
   cursor: pointer;
+  border: 0;
 
   pointer-events: none;
+  // touch-action: pan-x;
 
   -webkit-appearance: none;
   -moz-appearance: none;

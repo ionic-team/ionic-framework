@@ -5,7 +5,20 @@
 <!-- Auto Generated Below -->
 
 
+## Events
+
+#### ionGestureCaptured
+
+
+## Methods
+
+#### create()
+
+
+#### createBlocker()
+
+
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

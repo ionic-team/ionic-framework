@@ -20,7 +20,7 @@ exports.config = {
     { components: ['ion-datetime', 'ion-picker', 'ion-picker-column', 'ion-picker-controller'] },
     { components: ['ion-events'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
-    { components: ['ion-gesture'] },
+    { components: ['ion-gesture', 'ion-gesture-controller'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
     { components: ['ion-item', 'ion-item-divider', 'ion-item-group', 'ion-label', 'ion-list', 'ion-list-header', 'ion-skeleton-text'] },
     { components: ['ion-item-sliding', 'ion-item-options', 'ion-item-option'] },
