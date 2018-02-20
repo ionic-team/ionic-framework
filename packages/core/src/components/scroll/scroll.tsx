@@ -32,6 +32,13 @@ export class Scroll {
   @Prop({ context: 'isServer' }) isServer: boolean;
 
   @Prop() mode: string;
+
+
+  /**
+   * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
+   * If the content exceeds the bounds of ionScroll, nothing will change.
+   * Note, the does not disable the system bounce on iOS. That is an OS level setting.
+   */
   @Prop({mutable: true}) forceOverscroll: boolean;
 
   @Prop() onionScrollStart: ScrollCallback;

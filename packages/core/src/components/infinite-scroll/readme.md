@@ -12,7 +12,7 @@ on the infinite scroll instance.
 <ion-content>
 
 <ion-list>
-  <ion-itemngFor="let i of items">{% raw %}{{i}}{% endraw %}</ion-item>
+  <ion-item ngFor="let i of items">{% raw %}{{i}}{% endraw %}</ion-item>
 </ion-list>
 
 <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
