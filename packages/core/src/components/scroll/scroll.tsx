@@ -309,11 +309,12 @@ export class Scroll {
   }
 
   private refocus() {
-    setTimeout(() => {
-      if (document.activeElement === document.body) {
-        (this.el.querySelector('.focus-input') as HTMLElement).focus();
-      }
-    });
+    // TODO: renable when desktop testing is done
+    // setTimeout(() => {
+    //   if (document.activeElement === document.body) {
+    //     (this.el.querySelector('.focus-input') as HTMLElement).focus();
+    //   }
+    // });
   }
 
   hostData() {
@@ -329,8 +330,7 @@ export class Scroll {
       // scroll-inner is used to keep custom user padding
       <div class='scroll-inner'>
         <slot></slot>
-      </div>,
-      <input type='button' class='focus-input'/>
+      </div>
     ];
   }
 
