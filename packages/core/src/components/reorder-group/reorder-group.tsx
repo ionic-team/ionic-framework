@@ -277,7 +277,7 @@ export class ReorderGroup {
         type: 'pan',
         direction: 'y',
         threshold: 0,
-        attachTo: 'body'
+        attachTo: 'window'
       }}>
         <slot></slot>
       </ion-gesture>

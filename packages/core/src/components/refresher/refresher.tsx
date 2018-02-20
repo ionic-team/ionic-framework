@@ -106,7 +106,7 @@ export class Refresher {
       'passive': false,
       'direction': 'y',
       'threshold': 0,
-      'attachTo': 'body'
+      'attachTo': 'window'
     };
   }
 
