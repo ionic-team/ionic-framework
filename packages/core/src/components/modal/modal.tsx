@@ -120,6 +120,30 @@ export class Modal {
    */
   @Event() ionModalDidUnload: EventEmitter<ModalEventDetail>;
 
+  componentDidLoad() {
+    this.ionModalDidLoad.emit();
+  }
+
+  componentDidUnload() {
+    this.ionModalDidUnload.emit();
+  }
+
+  @Listen('ionDismiss')
+  protected onDismiss(ev: UIEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.dismiss();
+  }
+
+  @Listen('ionBackdropTap')
+  protected onBackdropTap() {
+    // const opts: NavOptions = {
+    //   minClickBlockDuration: 400
+    // };
+    this.dismiss();
+  }
+
   /**
    * Present the modal overlay after it has been created.
    */
@@ -212,42 +236,11 @@ export class Modal {
     return this.el.querySelector(`.${USER_COMPONENT_MODAL_CONTAINER_CLASS}`);
   }
 
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  }
-
-  componentDidLoad() {
-    this.ionModalDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionModalDidUnload.emit();
-  }
-
-  protected backdropClick() {
-    if (this.enableBackdropDismiss) {
-      // const opts: NavOptions = {
-      //   minClickBlockDuration: 400
-      // };
-      this.dismiss();
-    }
-  }
-
   render() {
-    const backdropClasses = createThemedClasses(this.mode, this.color, 'modal-backdrop');
     const dialogClasses = createThemedClasses(this.mode, this.color, 'modal-wrapper');
 
     return [
-      <ion-backdrop
-        onClick={this.backdropClick.bind(this)}
-        class={{
-          ...backdropClasses,
-          'hide-backdrop': !this.showBackdrop
-        }}></ion-backdrop>,
+      <ion-backdrop visible={this.showBackdrop} tappable={this.enableBackdropDismiss}/>,
       <div role='dialog' class={dialogClasses}></div>
     ];
   }

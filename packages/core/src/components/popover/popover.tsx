@@ -128,6 +128,34 @@ export class Popover {
    */
   @Event() ionPopoverDidUnload: EventEmitter<PopoverEventDetail>;
 
+  componentDidLoad() {
+    this.ionPopoverDidLoad.emit();
+  }
+
+  componentDidEnter() {
+    this.ionPopoverDidPresent.emit();
+  }
+
+  componentDidUnload() {
+    this.ionPopoverDidUnload.emit();
+  }
+
+  @Listen('ionDismiss')
+  protected onDismiss(ev: UIEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.dismiss();
+  }
+
+  @Listen('ionBackdropTap')
+  protected onBackdropTap() {
+    // const opts: NavOptions = {
+    //   minClickBlockDuration: 400
+    // };
+    this.dismiss();
+  }
+
   /**
    * Present the popover overlay after it has been created.
    */
@@ -211,57 +239,21 @@ export class Popover {
       });
   }
 
-  componentDidLoad() {
-    this.ionPopoverDidLoad.emit();
-  }
-
-  componentDidEnter() {
-    this.ionPopoverDidPresent.emit();
-  }
-
-  componentDidUnload() {
-    this.ionPopoverDidUnload.emit();
-  }
-
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  }
-
-  protected backdropClick() {
-    if (this.enableBackdropDismiss) {
-      // const opts: NavOptions = {
-      //   minClickBlockDuration: 400
-      // };
-      this.dismiss();
-    }
-  }
-
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'popover-translucent') : {};
 
-    const hostClasses = {
-      ...themedClasses
-    };
-
     return {
-      class: hostClasses
+      class: {
+        ...themedClasses
+      }
     };
   }
 
   render() {
-    const backdropClasses = createThemedClasses(this.mode, this.color, 'popover-backdrop'),
-      wrapperClasses = createThemedClasses(this.mode, this.color, 'popover-wrapper');
+    const wrapperClasses = createThemedClasses(this.mode, this.color, 'popover-wrapper');
 
     return [
-      <ion-backdrop
-        onClick={this.backdropClick.bind(this)}
-        class={{
-          ...backdropClasses
-        }}></ion-backdrop>,
+      <ion-backdrop tappable={this.enableBackdropDismiss}/>,
       <div class={wrapperClasses}>
         <div class='popover-arrow' />
         <div class='popover-content'>

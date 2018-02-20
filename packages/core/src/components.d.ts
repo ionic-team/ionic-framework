@@ -342,7 +342,9 @@ declare global {
   }
   namespace JSXElements {
     export interface IonBackdropAttributes extends HTMLAttributes {
-      mode?: 'ios' | 'md';
+      stopPropagation?: boolean;
+      tappable?: boolean;
+      visible?: boolean;
     }
   }
 }

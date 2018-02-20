@@ -12,22 +12,41 @@ Backdrops are full screen components that overlay other components. They are use
 
 ## Properties
 
-#### mode
+#### stopPropagation
+
+boolean
 
 
+#### tappable
 
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
+boolean
+
+
+#### visible
+
+boolean
 
 
 ## Attributes
 
-#### mode
+#### stop-propagation
+
+boolean
 
 
+#### tappable
 
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
+boolean
+
+
+#### visible
+
+boolean
+
+
+## Events
+
+#### ionBackdropTap
 
 
 

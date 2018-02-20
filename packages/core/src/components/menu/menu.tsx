@@ -447,7 +447,13 @@ export class Menu {
       <div class='menu-inner page-inner' ref={el => this.menuInnerEl = el}>
         <slot></slot>
       </div>,
-      <ion-backdrop class='menu-backdrop' ref={el => this.backdropEl = el}></ion-backdrop> ,
+
+      <ion-backdrop
+        ref={el => this.backdropEl = el}
+        class='menu-backdrop'
+        tappable={false}
+        stopPropagation={false}/>,
+
       <ion-gesture {...{
         'canStart': this.canStart.bind(this),
         'onWillStart': this.onWillStart.bind(this),
@@ -465,7 +471,7 @@ export class Menu {
         'attachTo': 'body',
         'disableScroll': true,
         'block': this.gestureBlocker
-      }}></ion-gesture>
+      }}/>
     ]);
   }
 }

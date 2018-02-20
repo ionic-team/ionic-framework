@@ -7,7 +7,7 @@ export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElem
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
-  backdropAnimation.addElement(baseEl.querySelector('.alert-backdrop'));
+  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
 
   const wrapperAnimation = new Animation();
   wrapperAnimation.addElement(baseEl.querySelector('.alert-wrapper'));

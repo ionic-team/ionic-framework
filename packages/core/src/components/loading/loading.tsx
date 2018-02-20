@@ -151,6 +151,11 @@ export class Loading {
     this.dismiss();
   }
 
+  @Listen('ionBackdropTap')
+  protected onBackdropTap() {
+    this.dismiss();
+  }
+
   /**
    * Present the loading overlay after it has been created.
    */
@@ -223,12 +228,6 @@ export class Loading {
     });
   }
 
-  protected backdropClick() {
-    if (this.enableBackdropDismiss) {
-      this.dismiss();
-    }
-  }
-
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'loading-translucent') : {};
 
@@ -241,8 +240,6 @@ export class Loading {
   }
 
   render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'loading-backdrop');
-
     if (this.cssClass) {
       this.cssClass.split(' ').forEach(cssClass => {
         if (cssClass.trim() !== '') this.el.classList.add(cssClass);
@@ -268,12 +265,7 @@ export class Loading {
     }
 
     return [
-      <ion-backdrop
-        onClick={this.backdropClick.bind(this)}
-        class={{
-          ...themedClasses,
-          'hide-backdrop': !this.showBackdrop
-        }}></ion-backdrop>,
+      <ion-backdrop visible={this.showBackdrop} tappable={false} />,
       <div class='loading-wrapper' role='dialog'>
         {loadingInner}
       </div>

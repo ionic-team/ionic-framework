@@ -13,6 +13,8 @@ ion-action-sheet {
   width: $action-sheet-width;
   height: $action-sheet-width;
 
+  touch-action: none;
+
   font-smoothing: antialiased;
   -webkit-font-smoothing: antialiased;
 }

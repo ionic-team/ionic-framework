@@ -343,8 +343,7 @@ export class Nav implements PublicNav, NavOutlet {
         type='pan'
         direction='x'
         threshold={10}
-        attachTo='body'
-      ></ion-gesture>);
+        attachTo='body'/>);
     }
     if (this.mode === 'ios') {
       dom.push(<div class='nav-decor'/>);

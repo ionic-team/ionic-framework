@@ -218,6 +218,16 @@ export class Picker {
     this.dismiss();
   }
 
+  @Listen('ionBackdropTap')
+  protected onBackdropTap() {
+    const cancelBtn = this.buttons.find(b => b.role === 'cancel');
+    if (cancelBtn) {
+      this.buttonClick(cancelBtn);
+    } else {
+      this.dismiss();
+    }
+  }
+
   buttonClick(button: PickerButton) {
     // if (this.disabled) {
     //   return;
@@ -273,18 +283,6 @@ export class Picker {
     return this.columns;
   }
 
-  protected backdropClick() {
-    // TODO !this.disabled
-    if (this.enableBackdropDismiss) {
-      const cancelBtn = this.buttons.find(b => b.role === 'cancel');
-      if (cancelBtn) {
-        this.buttonClick(cancelBtn);
-      } else {
-        this.dismiss();
-      }
-    }
-  }
-
   render() {
     // TODO: cssClass
 
@@ -332,12 +330,7 @@ export class Picker {
     // });
 
     return [
-      <ion-backdrop
-        onClick={this.backdropClick.bind(this)}
-        class={{
-          'picker-backdrop': true,
-          'hide-backdrop': !this.showBackdrop
-        }}></ion-backdrop>,
+      <ion-backdrop visible={this.showBackdrop} tappable={this.enableBackdropDismiss}/>,
       <div class='picker-wrapper' role='dialog'>
         <div class='picker-toolbar'>
           {buttons.map(b =>

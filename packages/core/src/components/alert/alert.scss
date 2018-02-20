@@ -15,6 +15,8 @@ ion-alert {
   align-items: center;
   justify-content: center;
 
+  touch-action: none;
+
   contain: strict;
 
   font-smoothing: antialiased;

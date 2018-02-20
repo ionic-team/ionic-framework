@@ -195,10 +195,9 @@ export class ActionSheet {
     this.dismiss();
   }
 
-  protected backdropClick() {
-    if (this.enableBackdropDismiss) {
-      this.dismiss();
-    }
+  @Listen('ionBackdropTap')
+  protected onBackdropTap() {
+    this.dismiss();
   }
 
   protected buttonClick(button: ActionSheetButton) {
@@ -238,9 +237,7 @@ export class ActionSheet {
     const buttons = allButtons.filter(b => b.role !== 'cancel');
 
     return [
-      <ion-backdrop
-        onClick={this.backdropClick.bind(this)}
-        class='action-sheet-backdrop'></ion-backdrop>,
+      <ion-backdrop tappable={this.enableBackdropDismiss}/>,
       <div class='action-sheet-wrapper' role='dialog'>
         <div class='action-sheet-container'>
           <div class='action-sheet-group'>

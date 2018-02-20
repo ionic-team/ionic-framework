@@ -1,4 +1,4 @@
-import { Component, CssClassMap, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+import { Component, CssClassMap, Element, Event, EventEmitter, Method, Prop, Listen } from '@stencil/core';
 import { Animation, AnimationBuilder, AnimationController, Config, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 
@@ -204,10 +204,9 @@ export class Alert {
     this.ionAlertDidUnload.emit();
   }
 
-  protected backdropClick() {
-    if (this.enableBackdropDismiss) {
-      this.dismiss(null, BACKDROP);
-    }
+  @Listen('ionBackdropTap')
+  protected onBackdropTap() {
+    this.dismiss(null, BACKDROP);
   }
 
   rbClick(inputIndex: number) {
@@ -419,9 +418,7 @@ export class Alert {
     this.inputType = inputTypes.length > 0 ? inputTypes[0] : null;
 
     return [
-      <ion-backdrop
-        onClick={this.backdropClick.bind(this)}
-        class='alert-backdrop'></ion-backdrop>,
+      <ion-backdrop tappable={this.enableBackdropDismiss}/>,
       <div class='alert-wrapper'>
         <div class='alert-head'>
           {this.title
