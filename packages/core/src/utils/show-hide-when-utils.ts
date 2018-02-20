@@ -1,6 +1,6 @@
 import { Config, PlatformConfig } from '../index';
 
-export function componentWillLoadImpl(displayWhen: DisplayWhen) {
+export function updateTestResults(displayWhen: DisplayWhen) {
   displayWhen.passesTest = getTestResult(displayWhen);
 }
 
@@ -61,6 +61,9 @@ export function getTestResult(displayWhen: DisplayWhen) {
     const platformNames = displayWhen.calculatedPlatforms.map(platformConfig => platformConfig.name);
     resultsToConsider.push(isPlatformMatch(platformNames, displayWhen.platform));
   }
+  if (displayWhen.orientation) {
+    resultsToConsider.push(isOrientationMatch(displayWhen.orientation));
+  }
 
   if (!resultsToConsider.length) {
     return true;
@@ -76,6 +79,20 @@ export function getTestResult(displayWhen: DisplayWhen) {
   });
 }
 
+export function isOrientationMatch(orientation: string) {
+  if (orientation == 'portrait') {
+    return isPortrait();
+  } else if (orientation === 'landscape') {
+    return !isPortrait();
+  }
+  // it's an invalid orientation, so just return it
+  return false;
+}
+
+export function isPortrait(): boolean {
+  return window.matchMedia('(orientation: portrait)').matches;
+}
+
 const sizeToMediaQueryMap = new Map<string, string>();
 sizeToMediaQueryMap.set('xs', '(min-width: 0px)');
 sizeToMediaQueryMap.set('sm', '(min-width: 576px)');
@@ -89,6 +106,7 @@ export interface DisplayWhen {
   mediaQuery: string;
   mode: string;
   or: boolean;
+  orientation: string;
   passesTest: boolean;
   platform: string;
   size: string;

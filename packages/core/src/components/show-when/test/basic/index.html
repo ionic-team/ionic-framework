@@ -29,8 +29,17 @@
         </ion-show-when>
 
         <ion-show-when mode="ios">
-            <div>Shows on iOS only</div>
-          </ion-show-when>
+          <div>Shows on iOS only</div>
+        </ion-show-when>
+
+        <h2>Orientation Tests</h2>
+        <ion-show-when orientation="portrait">
+          <div>Shows on portrait orientation</div>
+        </ion-show-when>
+
+        <ion-show-when orientation="landscape">
+          <div>Shows on landscape orientation</div>
+        </ion-show-when>
 
         <h2>Platform Tests</h2>
 
@@ -80,8 +89,8 @@
         </ion-show-when>
 
         <ion-show-when size="xs, m">
-            <div>Only render on XS or m</div>
-          </ion-show-when>
+          <div>Only render on XS or m</div>
+        </ion-show-when>
 
       </ion-content>
 

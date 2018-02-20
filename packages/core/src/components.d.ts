@@ -1135,6 +1135,7 @@ declare global {
       mediaQuery?: string;
       mode?: string;
       or?: boolean;
+      orientation?: string;
       platform?: string;
       size?: string;
     }
@@ -2906,6 +2907,7 @@ declare global {
       mediaQuery?: string;
       mode?: string;
       or?: boolean;
+      orientation?: string;
       platform?: string;
       size?: string;
     }
