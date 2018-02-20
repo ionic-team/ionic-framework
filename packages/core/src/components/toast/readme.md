@@ -4,7 +4,7 @@ A Toast is a subtle notification commonly used in modern applications. It can be
 
 ### Creating
 
-All of the toast options should be passed in the first argument of the create method: `create(opts)`. The message to display should be passed in the `message` property. The `showCloseButton` option can be set to true in order to display a close button on the toast. See the properties below for all available options.
+All of the toast options should be passed in the create method. The message to display should be passed in the `message` property. The `showCloseButton` option can be set to true in order to display a close button on the toast. See the properties below for all available options.
 
 ### Positioning
 

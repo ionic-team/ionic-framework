@@ -1772,7 +1772,6 @@ declare global {
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
-      modalId?: number;
       mode?: 'ios' | 'md';
       showBackdrop?: boolean;
       willAnimate?: boolean;

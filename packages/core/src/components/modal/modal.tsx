@@ -1,14 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import {
-  Animation,
-  AnimationBuilder,
-  AnimationController,
-  Config,
-  DomController,
-  FrameworkDelegate,
-  OverlayDismissEvent,
-  OverlayDismissEventDetail
-} from '../../index';
+import { Animation, AnimationBuilder, AnimationController, Config, DomController, FrameworkDelegate, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 
 import { DomFrameworkDelegate } from '../../utils/dom-framework-delegate';
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
@@ -19,6 +10,7 @@ import iosLeaveAnimation from './animations/ios.leave';
 
 import mdEnterAnimation from './animations/md.enter';
 import mdLeaveAnimation from './animations/md.leave';
+
 @Component({
   tag: 'ion-modal',
   styleUrls: {
@@ -30,7 +22,73 @@ import mdLeaveAnimation from './animations/md.leave';
   }
 })
 export class Modal {
+  modalId: number;
+
+  private animation: Animation;
+  private usersComponentElement: HTMLElement;
+
   @Element() private el: HTMLElement;
+
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
+  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
+
+  @Prop({ mutable: true }) delegate: FrameworkDelegate;
+
+  /**
+   * The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   */
+  @Prop() color: string;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @Prop() mode: 'ios' | 'md';
+
+  /**
+   * Animation to use when the modal is presented.
+   */
+  @Prop() enterAnimation: AnimationBuilder;
+
+  /**
+   * Animation to use when the modal is dismissed.
+   */
+  @Prop() leaveAnimation: AnimationBuilder;
+
+  /**
+   * The component to display inside of the modal.
+   */
+  @Prop() component: any;
+
+  /**
+   * The data to pass to the modal component.
+   */
+  @Prop() data: any = {};
+
+  /**
+   * Additional classes to apply for custom CSS. If multiple classes are
+   * provided they should be separated by spaces.
+   */
+  @Prop() cssClass: string;
+
+  /**
+   * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
+   */
+  @Prop() enableBackdropDismiss = true;
+
+  /**
+   * If true, a backdrop will be displayed behind the modal. Defaults to `true`.
+   */
+  @Prop() showBackdrop = true;
+
+  /**
+   * If true, the modal will animate. Defaults to `true`.
+   */
+  @Prop() willAnimate = true;
 
   /**
    * Emitted after the modal has loaded.
@@ -62,40 +120,9 @@ export class Modal {
    */
   @Event() ionModalDidUnload: EventEmitter<ModalEventDetail>;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
-  @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
-
   /**
-   * The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * Present the modal overlay after it has been created.
    */
-  @Prop() color: string;
-
-  /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-   */
-  @Prop() mode: 'ios' | 'md';
-
-  @Prop() component: any;
-  @Prop() data: any = {};
-  @Prop() cssClass: string;
-  @Prop() enableBackdropDismiss = true;
-
-  @Prop() modalId: number;
-  @Prop() showBackdrop = true;
-
-  @Prop() enterAnimation: AnimationBuilder;
-  @Prop() leaveAnimation: AnimationBuilder;
-  @Prop() willAnimate = true;
-  @Prop({ mutable: true }) delegate: FrameworkDelegate;
-
-  private animation: Animation;
-  private usersComponentElement: HTMLElement;
-
   @Method()
   present() {
     if (this.animation) {
@@ -140,6 +167,9 @@ export class Modal {
     });
   }
 
+  /**
+   * Dismiss the modal overlay after it has been presented.
+   */
   @Method()
   dismiss(data?: any, role?: string) {
     if (this.animation) {
@@ -208,21 +238,17 @@ export class Modal {
   }
 
   render() {
-    const backdropClasses = createThemedClasses(this.mode, this.color, 'modal-backdrop'),
-      dialogClasses = createThemedClasses(this.mode, this.color, 'modal-wrapper');
+    const backdropClasses = createThemedClasses(this.mode, this.color, 'modal-backdrop');
+    const dialogClasses = createThemedClasses(this.mode, this.color, 'modal-wrapper');
+
     return [
-      <div
+      <ion-backdrop
         onClick={this.backdropClick.bind(this)}
         class={{
           ...backdropClasses,
           'hide-backdrop': !this.showBackdrop
-        }}
-      ></div>,
-      <div
-        role='dialog'
-        class={dialogClasses}
-      >
-      </div>
+        }}></ion-backdrop>,
+      <div role='dialog' class={dialogClasses}></div>
     ];
   }
 }
