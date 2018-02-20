@@ -4,6 +4,7 @@ import { Animation } from '../../../index';
  * iOS Popover Enter Animation
  */
 export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
+  debugger;
   let originY = 'top';
   let originX = 'left';
 
@@ -77,11 +78,15 @@ export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElem
 
   // make it pop up if there's room above
   if (
-    targetTop + targetHeight + contentHeight > bodyHeight &&
-    targetTop - contentHeight > 0
+    (targetTop + targetHeight + contentHeight) > bodyHeight &&
+    (targetTop - contentHeight) > 0
   ) {
     arrowCSS.top = targetTop - (arrowHeight + 1);
+    console.log(arrowCSS)
+    console.log(targetTop)
+    console.log(contentHeight)
     popoverCSS.top = targetTop - contentHeight - (arrowHeight - 1);
+
     baseEl.className = baseEl.className + ' popover-bottom';
     originY = 'bottom';
     // If there isn't room for it to pop up above the target cut it off
