@@ -201,22 +201,24 @@ export class DeepLinker {
    * @internal
    */
   _updateLocation(browserUrl: string, direction: string) {
-    if (this._indexAliasUrl === browserUrl) {
-      browserUrl = '/';
-    }
+    if (!this._app.isUrlDisabled()) {
+      if (this._indexAliasUrl === browserUrl) {
+        browserUrl = '/';
+      }
 
-    if (direction === DIRECTION_BACK && this._isBackUrl(browserUrl)) {
-      // this URL is exactly the same as the back URL
-      // it's safe to use the browser's location.back()
-      console.debug(`DeepLinker, location.back(), url: '${browserUrl}'`);
-      this._historyPop();
-      this._location.back();
+      if (direction === DIRECTION_BACK && this._isBackUrl(browserUrl)) {
+        // this URL is exactly the same as the back URL
+        // it's safe to use the browser's location.back()
+        console.debug(`DeepLinker, location.back(), url: '${browserUrl}'`);
+        this._historyPop();
+        this._location.back();
 
-    } else if (!this._isCurrentUrl(browserUrl)) {
-      // probably navigating forward
-      console.debug(`DeepLinker, location.go('${browserUrl}')`);
-      this._historyPush(browserUrl);
-      this._location.go(browserUrl);
+      } else if (!this._isCurrentUrl(browserUrl)) {
+        // probably navigating forward
+        console.debug(`DeepLinker, location.go('${browserUrl}')`);
+        this._historyPush(browserUrl);
+        this._location.go(browserUrl);
+      }
     }
   }
 

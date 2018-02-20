@@ -32,6 +32,7 @@ export class App {
   private _rootNavs = new Map<string, NavigationContainer>();
   private _disableScrollAssist: boolean;
   private _didScroll = false;
+  private _urlDisabled: boolean;
 
   /**
    * @hidden
@@ -88,6 +89,7 @@ export class App {
     // register this back button action with a default priority
     _plt.registerBackButtonAction(this.goBack.bind(this));
     this._disableScrollAssist = _config.getBoolean('disableScrollAssist', false);
+    this._urlDisabled = _config.getBoolean('urlDisabled', false);
 
     const blurring = _config.getBoolean('inputBlurring', false);
     if (blurring) {
@@ -203,6 +205,14 @@ export class App {
       return false;
     }
     return true;
+  }
+
+  setUrlDisabled(urlDisabled: boolean) {
+    this._urlDisabled = urlDisabled;
+  }
+
+  isUrlDisabled(): boolean {
+    return this._urlDisabled;
   }
 
   /**
