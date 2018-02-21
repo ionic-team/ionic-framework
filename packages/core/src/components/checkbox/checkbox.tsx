@@ -1,6 +1,6 @@
 import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
 import { Component, CssClassMap, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { debounce } from '../../utils/helpers';
+import { debounceEvent } from '../../utils/helpers';
 
 
 @Component({
@@ -81,7 +81,7 @@ export class Checkbox implements CheckboxInput {
   }
 
   componentDidLoad() {
-    this.ionStyle.emit = debounce(this.ionStyle.emit.bind(this.ionStyle));
+    this.ionStyle = debounceEvent(this.ionStyle, 0);
     this.didLoad = true;
 
     const parentItem = this.nativeInput.closest('ion-item');

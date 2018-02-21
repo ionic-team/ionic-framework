@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 import { createThemedClasses } from '../../utils/theme';
-import { debounce } from '../../utils/helpers';
+import { debounceEvent } from '../../utils/helpers';
 
 
 @Component({
@@ -65,11 +65,8 @@ export class Searchbar {
   @Prop() debounce = 250;
 
   @Watch('debounce')
-  private debounceInput() {
-    this.ionInput.emit = debounce(
-      this.ionInput.emit.bind(this.ionInput),
-      this.debounce
-    );
+  protected debounceChanged() {
+    this.ionInput = debounceEvent(this.ionInput, this.debounce);
   }
 
   /**
@@ -124,7 +121,7 @@ export class Searchbar {
 
   componentDidLoad() {
     this.positionElements();
-    this.debounceInput();
+    this.debounceChanged();
   }
 
   /**

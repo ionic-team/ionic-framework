@@ -1,4 +1,5 @@
 import { Animation } from '../index';
+import { EventEmitter } from '@stencil/core';
 
 export function clamp(min: number, n: number, max: number) {
   return Math.max(min, Math.min(n, max));
@@ -283,6 +284,14 @@ export function domControllerAsync(domControllerFunction: Function, callback?: F
       });
     });
   });
+}
+
+export function debounceEvent(event: EventEmitter, wait: number): EventEmitter {
+  const original = (event as any)._original || event;
+  return {
+    _original: event,
+    emit: debounce(original.emit.bind(original), wait)
+  } as EventEmitter;
 }
 
 export function debounce(func: Function, wait = 0) {

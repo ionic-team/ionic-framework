@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
-import { debounce } from '../../utils/helpers';
+import { debounceEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 import { InputComponent } from './input-base';
 
@@ -95,11 +95,8 @@ export class Input implements InputComponent {
   @Prop() debounce = 0;
 
   @Watch('debounce')
-  private debounceInput() {
-    this.ionInput.emit = debounce(
-      this.ionInput.emit.bind(this.ionInput),
-      this.debounce
-    );
+  protected debounceChanged() {
+    this.ionInput = debounceEvent(this.ionInput, this.debounce);
   }
 
   /**
@@ -210,7 +207,7 @@ export class Input implements InputComponent {
   }
 
   componentDidLoad() {
-    this.debounceInput();
+    this.debounceChanged();
     this.emitStyle();
 
     // By default, password inputs clear after focus when they have content

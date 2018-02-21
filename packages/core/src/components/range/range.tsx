@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { BaseInputComponent, GestureDetail } from '../../index';
-import { clamp, debounce } from '../../utils/helpers';
+import { clamp, debounceEvent } from '../../utils/helpers';
 
 export interface Tick {
   ratio: number | (() => number);
@@ -83,11 +83,8 @@ export class Range implements BaseInputComponent {
   @Prop() debounce = 0;
 
   @Watch('debounce')
-  private debounceChange() {
-    this.ionChange.emit = debounce(
-      this.ionChange.emit.bind(this.ionChange),
-      this.debounce
-    );
+  protected debounceChanged() {
+    this.ionChange = debounceEvent(this.ionChange, this.debounce);
   }
 
   /*
@@ -148,7 +145,7 @@ export class Range implements BaseInputComponent {
   componentWillLoad() {
     this.inputUpdated();
     this.createTicks();
-    this.debounceChange();
+    this.debounceChanged();
     this.emitStyle();
   }
 
