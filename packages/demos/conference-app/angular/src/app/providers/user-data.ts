@@ -62,7 +62,7 @@ export class UserData {
     });
   }
 
-  hasLoggedIn(): Promise<boolean> {
+  isLoggedIn(): Promise<boolean> {
     return this.storage.get(this.HAS_LOGGED_IN).then((value) => {
       return value === true;
     });
