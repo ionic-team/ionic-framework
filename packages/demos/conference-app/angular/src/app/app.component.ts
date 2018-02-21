@@ -50,11 +50,11 @@ export class AppComponent implements OnInit {
   ];
 
   constructor(
-    public confData: ConferenceData,
+    // public confData: ConferenceData,
     public events: Events,
     public menu: MenuController,
     public storage: Storage,
-    public userData: UserData) {
+    /*public userData: UserData*/) {
   }
 
   ngOnInit() {
@@ -72,12 +72,13 @@ export class AppComponent implements OnInit {
       });
 
     // load the conference data
-    this.confData.load();
+    // this.confData.load();
 
     // decide which menu items should be hidden by current login status stored in local storage
-    this.userData.hasLoggedIn().then((hasLoggedIn) => {
+    /*this.userData.hasLoggedIn().then((hasLoggedIn) => {
       this.enableMenu(hasLoggedIn === true);
     });
+    */
     this.enableMenu(true);
 
     this.listenToLoginEvents();
@@ -107,7 +108,7 @@ export class AppComponent implements OnInit {
         }).then(() => {
           if (page.logsOut === true) {
             // Give the menu time to close before changing to logged out
-            return this.userData.logout();
+            // return this.userData.logout();
           }
         });
       }
@@ -118,7 +119,7 @@ export class AppComponent implements OnInit {
     }).then(() => {
       if (page.logsOut === true) {
         // Give the menu time to close before changing to logged out
-        return this.userData.logout();
+        // return this.userData.logout();
       }
     });
   }
