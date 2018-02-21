@@ -2,7 +2,7 @@ import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEve
 import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { GestureDetail } from '../../index';
 import { hapticSelection } from '../../utils/haptic';
-import { debounceEvent } from '../../utils/helpers';
+import { deferEvent } from '../../utils/helpers';
 
 
 @Component({
@@ -98,7 +98,7 @@ export class Toggle implements CheckboxInput {
   }
 
   componentWillLoad() {
-    this.ionStyle = debounceEvent(this.ionStyle, 0);
+    this.ionStyle = deferEvent(this.ionStyle);
     this.inputId = `ion-tg-${toggleIds++}`;
     if (this.name === undefined) {
       this.name = this.inputId;

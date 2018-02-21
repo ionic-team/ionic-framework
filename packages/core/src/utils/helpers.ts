@@ -286,6 +286,10 @@ export function domControllerAsync(domControllerFunction: Function, callback?: F
   });
 }
 
+export function deferEvent(event: EventEmitter): EventEmitter {
+  return debounceEvent(event, 0);
+}
+
 export function debounceEvent(event: EventEmitter, wait: number): EventEmitter {
   const original = (event as any)._original || event;
   return {
