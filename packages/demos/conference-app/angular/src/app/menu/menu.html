@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Menu</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      Navigate
+    </ion-list-header>
+
+    <ion-item (click)="selectTab(0)">
+      <ion-icon slot="start" name="calendar"></ion-icon>
+      <ion-label>
+        Schedule
+      </ion-label>
+    </ion-item>
+
+    <!-- <ion-menu-toggle> -->
+      <ion-item (click)="selectTab(1)">
+        <ion-icon slot="start" name="contacts"></ion-icon>
+        <ion-label>
+          Speakers
+        </ion-label>
+      </ion-item>
+    <!-- </ion-menu-toggle> -->
+
+    <ion-menu-toggle>
+      <ion-item (click)="selectTab(2)">
+        <ion-icon slot="start" name="map"></ion-icon>
+        <ion-label>
+          Map
+        </ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+
+    <ion-menu-toggle>
+      <ion-item (click)="selectTab(3)">
+        <ion-icon slot="start" name="information-circle"></ion-icon>
+        <ion-label>
+          About
+        </ion-label>
+      </ion-item>
+    </ion-menu-toggle>
+  </ion-list>
+</ion-content>
