@@ -34,15 +34,11 @@ const routes: Routes = [
         outlet: 'speakers'
       },
 
-<<<<<<< HEAD
       {
         path: 'speaker-details/:speakerId',
         component: SpeakerDetailPage,
         outlet: 'speakers'
       },
-
-=======
->>>>>>> conf app progress
       // tab three
       {
         path: 'map',
