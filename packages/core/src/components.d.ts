@@ -3235,7 +3235,7 @@ declare global {
       highlight?: boolean;
       layout?: string;
       placement?: string;
-      scrollable?: Boolean;
+      scrollable?: boolean;
       selectedTab?: HTMLIonTabElement;
       tabs?: HTMLIonTabElement[];
       translucent?: boolean;

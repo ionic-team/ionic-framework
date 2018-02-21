@@ -24,7 +24,7 @@ string
 
 #### scrollable
 
-
+boolean
 
 
 #### selectedTab
@@ -63,7 +63,7 @@ string
 
 #### scrollable
 
-
+boolean
 
 
 #### selected-tab
