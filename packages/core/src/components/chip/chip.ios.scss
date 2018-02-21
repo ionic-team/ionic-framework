@@ -49,5 +49,10 @@
   .chip-ios .icon-ios-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
+
+    svg {
+      fill: $color-contrast;
+      stroke: $color-contrast;
+    }
   }
 }

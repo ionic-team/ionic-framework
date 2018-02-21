@@ -49,5 +49,10 @@
   .chip-md .icon-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
+
+    svg {
+      fill: $color-contrast;
+      stroke: $color-contrast;
+    }
   }
 }
