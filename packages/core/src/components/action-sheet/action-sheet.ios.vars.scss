@@ -64,7 +64,7 @@ $action-sheet-ios-title-border-width:                   $hairlines-width !defaul
 $action-sheet-ios-title-border-style:                   solid !default;
 
 /// @prop - Border color of the action sheet title
-$action-sheet-ios-title-border-color:                   $background-ios-color-step-150 !default;
+$action-sheet-ios-title-border-color:                   ion-color-alpha($text-ios-color-value, text-ios-color, $alpha-ios-low) !default;
 
 /// @prop - Font size of the action sheet sub title
 $action-sheet-ios-sub-title-font-size:                  12px !default;
@@ -82,7 +82,7 @@ $action-sheet-ios-sub-title-padding-bottom:             0 !default;
 $action-sheet-ios-sub-title-padding-start:              $action-sheet-ios-sub-title-padding-end !default;
 
 /// @prop - Minimum height of the action sheet button
-$action-sheet-ios-button-height:                    56px !default;
+$action-sheet-ios-button-height:                        56px !default;
 
 /// @prop - Padding of the action sheet button
 $action-sheet-ios-button-padding:                       18px !default;
