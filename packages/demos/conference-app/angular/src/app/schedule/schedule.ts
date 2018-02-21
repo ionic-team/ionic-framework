@@ -81,10 +81,7 @@ export class SchedulePage {
   goToSessionDetail(sessionData: any) {
     // go to the session detail page
     // and pass in the session data
-
-    // this.navCtrl.push(SessionDetailPage, { sessionId: sessionData.id, name: sessionData.name });
-    // this.navCtrl.push(`app/tabs/(tab-one:session/${sessionData.id})`);
-    this.router.navigateByUrl(`app/tabs/(tab-one:session/${sessionData.id})`);
+    this.router.navigateByUrl(`app/tabs/(schedule:session/${sessionData.id})`);
   }
 
   addFavorite(slidingItem: HTMLIonItemSlidingElement, sessionData: any) {
