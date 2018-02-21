@@ -8,23 +8,6 @@
   @include margin(-1px, $list-ios-margin-end, $list-ios-margin-bottom, $list-ios-margin-start);
 }
 
-.list-ios > .item-block:first-child {
-  border-top: $hairlines-width solid $item-ios-border-color;
-}
-
-.list-ios > .item-block:last-child,
-.list-ios > .item-sliding:last-child .item-block {
-  border-bottom: $hairlines-width solid $item-ios-border-color;
-}
-
-.list-ios > .item-block:last-child .item-inner,
-.list-ios > .item-sliding:last-child .item-block .item-inner {
-  border-bottom: 0;
-}
-
-.list-ios .item-block .item-inner {
-  border-bottom: $hairlines-width solid $item-ios-border-color;
-}
 
 // If the item has the no-lines attribute remove the bottom border from:
 // the item itself (for last-child items)
@@ -60,13 +43,13 @@
   border-bottom: 0;
 }
 
-.list-ios[inset] > .item:first-child,
-.list-ios[inset] > .item-sliding:first-child .item {
+.list-ios[inset] > ion-item:first-child .item,
+.list-ios[inset] > ion-item-sliding:first-child .item {
   border-top: 0;
 }
 
-.list-ios[inset] > .item:last-child,
-.list-ios[inset] > .item-sliding:last-child .item {
+.list-ios[inset] > ion-item:last-child .item,
+.list-ios[inset] > ion-item-sliding:last-child .item {
   border-bottom: 0;
 }
 
@@ -80,6 +63,6 @@
 
 .list-ios[no-lines] ion-list-header,
 .list-ios[no-lines] .item,
-.list-ios[no-lines] .item .item-inner {
+.list-ios[no-lines] .item-inner {
   border-width: 0;
 }

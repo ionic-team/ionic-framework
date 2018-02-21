@@ -2,23 +2,12 @@
 
 // Item
 // --------------------------------------------------
-// Core structure only, dimensions belong in specific modes
-//
-// ".item" includes elements:
-//   ion-item
-//   [ion-item]
-//   ion-item-divider
-//   ion-list-header
-//
-// ".item-block" includes elements:
-//   ion-item
-//   [ion-item]
 
 ion-item {
   display: block;
 }
 
-.item-block {
+.item {
   @include margin(0);
   @include padding(0);
   @include text-align(initial);

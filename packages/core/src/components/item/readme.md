@@ -16,6 +16,14 @@ Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"da
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
+#### detail
+
+boolean
+
+If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
+is `ios` and an `href`, `onclick` or `tappable` property is present.
+
+
 #### disabled
 
 boolean
@@ -53,7 +61,7 @@ If this property is set, a button tag will be rendered.
 boolean
 
 Whether or not this item should be tappable.
-If true, a button tag will be rendered. Default `true`.
+If true, a button tag will be rendered. Defaults to `false`.
 
 
 ## Attributes
@@ -67,6 +75,14 @@ Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"da
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
+#### detail
+
+boolean
+
+If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
+is `ios` and an `href`, `onclick` or `tappable` property is present.
+
+
 #### disabled
 
 boolean
@@ -104,7 +120,7 @@ If this property is set, a button tag will be rendered.
 boolean
 
 Whether or not this item should be tappable.
-If true, a button tag will be rendered. Default `true`.
+If true, a button tag will be rendered. Defaults to `false`.
 
 
 

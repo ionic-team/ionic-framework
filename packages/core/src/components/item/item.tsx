@@ -32,6 +32,12 @@ export class Item {
   @Prop() mode: 'ios' | 'md';
 
   /**
+   * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
+   * is `ios` and an `href`, `onclick` or `tappable` property is present.
+   */
+  @Prop() detail: boolean;
+
+  /**
    * If true, the user cannot interact with the item. Defaults to `false`.
    */
   @Prop() disabled = false;
@@ -50,7 +56,7 @@ export class Item {
 
   /**
    * Whether or not this item should be tappable.
-   * If true, a button tag will be rendered. Default `true`.
+   * If true, a button tag will be rendered. Defaults to `false`.
    */
   @Prop() tappable = false;
 
@@ -96,17 +102,7 @@ export class Item {
       childStyles = Object.assign(childStyles, this.itemStyles[key]);
     }
 
-    const themedClasses = {
-      ...childStyles,
-      ...createThemedClasses(this.mode, this.color, 'item'),
-      ...getElementClassMap(this.el.classList),
-      'item-block': true,
-      'item-disabled': this.disabled,
-    };
-
-    this.hasStyleChange = false;
-
-    const clickable = this.href || this.onclick || this.tappable;
+    const clickable = !!(this.href || this.onclick || this.tappable);
 
     let TagType = 'div';
     if (clickable) {
@@ -115,6 +111,18 @@ export class Item {
     const attrs = (TagType === 'button')
       ? {type: 'button'}
       : {};
+
+    const showDetail = this.detail != null ? this.detail : (this.mode === 'ios' && clickable);
+
+    const themedClasses = {
+      ...childStyles,
+      ...createThemedClasses(this.mode, this.color, 'item'),
+      ...getElementClassMap(this.el.classList),
+      'item-disabled': this.disabled,
+      'item-detail-push': showDetail,
+    };
+
+    this.hasStyleChange = false;
 
     return (
       <TagType class={themedClasses} {...attrs}>
