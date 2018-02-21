@@ -1,0 +1,38 @@
+<ion-page>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-toggle>
+          <ion-button>
+            <ion-icon slot="icon-only" name="menu"></ion-icon>
+          </ion-button>
+        </ion-menu-toggle>
+      </ion-buttons>
+      <ion-title>Support</ion-title>
+    </ion-toolbar>
+
+  </ion-header>
+
+  <ion-content>
+    <div class="logo">
+      <img src="assets/img/appicon.svg" alt="Ionic Logo">
+    </div>
+
+    <form #submitForm="ngForm" novalidate (ngSubmit)="submit(submitForm)">
+      <ion-list no-lines>
+        <ion-item>
+          <ion-label stacked color="primary">Enter your support message below</ion-label>
+          <ion-textarea [(ngModel)]="supportMessage" name="supportQuestion" #supportQuestion="ngModel" rows="6" required></ion-textarea>
+        </ion-item>
+      </ion-list>
+
+      <p ion-text [hidden]="supportQuestion.valid || submitted === false" color="danger" padding-left>
+        Support message is required
+      </p>
+
+      <div padding>
+        <ion-button block type="submit">Submit</ion-button>
+      </div>
+    </form>
+  </ion-content>
+</ion-page>

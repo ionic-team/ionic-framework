@@ -1,0 +1,54 @@
+<ion-page>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-toggle>
+          <ion-button>
+            <ion-icon slot="icon-only" name="menu"></ion-icon>
+          </ion-button>
+        </ion-menu-toggle>
+      </ion-buttons>
+
+      <ion-title>Login</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <div class="logo">
+      <img src="assets/img/appicon.svg" alt="Ionic logo">
+    </div>
+
+    <form #loginForm="ngForm" novalidate>
+      <ion-list no-lines>
+        <ion-item>
+          <ion-label stacked color="primary">Username</ion-label>
+          <ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
+            required>
+          </ion-input>
+        </ion-item>
+        <p ion-text [hidden]="username.valid || submitted == false" color="danger" padding-left>
+          Username is required
+        </p>
+
+        <ion-item>
+          <ion-label stacked color="primary">Password</ion-label>
+          <ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
+          </ion-input>
+        </ion-item>
+        <p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
+          Password is required
+        </p>
+      </ion-list>
+
+      <ion-row responsive-sm>
+        <ion-col>
+          <ion-button (click)="onLogin(loginForm)" type="submit" block>Login</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button (click)="onSignup()" color="light" block>Signup</ion-button>
+        </ion-col>
+      </ion-row>
+    </form>
+
+  </ion-content>
+</ion-page>
