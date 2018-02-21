@@ -1,19 +1,25 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "moduleResolution": "node",
+    "allowUnreachableCode": true,
+    "alwaysStrict": false,
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "forceConsistentCasingInFileNames": true,
     "lib": [
-      "es2017",
-      "dom"
-    ]
+      "dom",
+      "es2015"
+    ],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "noImplicitReturns": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "outDir": "./dist/out-tsc",
+    "pretty": true,
+    "removeComments": false,
+    "target": "es2015"
   }
 }

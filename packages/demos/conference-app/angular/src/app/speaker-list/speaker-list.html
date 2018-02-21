@@ -1,0 +1,72 @@
+<ion-page>
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-toggle>
+          <ion-button>
+            <ion-icon slot="icon-only" name="menu"></ion-icon>
+          </ion-button>
+        </ion-menu-toggle>
+      </ion-buttons>
+      <ion-title>Speakers</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="outer-content speaker-list">
+    <ion-list>
+      <ion-grid fixed>
+        <ion-row align-items-stretch>
+
+          <ion-col col-12 col-md-6 align-self-stretch align-self-center *ngFor="let speaker of speakers">
+
+            <ion-card class="speaker-card">
+              <ion-card-header>
+                <ion-item detail-none (click)="goToSpeakerDetail(speaker)">
+                  <ion-avatar slot="start">
+                    <img [src]="speaker.profilePic" alt="Speaker profile pic">
+                  </ion-avatar>
+                  {{speaker.name}}
+                </ion-item>
+              </ion-card-header>
+
+              <ion-card-content>
+                <ion-list>
+                  <ion-item *ngFor="let session of speaker.sessions" (click)="goToSessionDetail(session)">
+                    <h3>{{session.name}}</h3>
+                  </ion-item>
+
+                  <ion-item (click)="goToSpeakerDetail(speaker)">
+                    <h3>About {{speaker.name}}</h3>
+                  </ion-item>
+                </ion-list>
+              </ion-card-content>
+
+              <ion-row no-padding justify-content-center>
+                <ion-col col-12 col-lg-auto text-center text-lg-left>
+                  <ion-button fill="clear" size="small" color="primary" (click)="goToSpeakerTwitter(speaker)">
+                    <ion-icon name="logo-twitter" slot="start"></ion-icon>
+                    Tweet
+                  </ion-button>
+                </ion-col>
+                <ion-col col-12 col-lg-auto text-center>
+                  <ion-button fill="clear" size="small" color="primary" (click)="openSpeakerShare(speaker)">
+                    <ion-icon name='share-alt' slit="start"></ion-icon>
+                    Share
+                  </ion-button>
+                </ion-col>
+                <ion-col col-12 col-lg-auto text-center text-lg-right>
+                  <ion-button fill="clear" size="small" color="primary" (click)="openContact(speaker)">
+                    <ion-icon name='chatboxes' slot="start"></ion-icon>
+                    Contact
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+
+            </ion-card>
+
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+  </ion-content>
+</ion-page>

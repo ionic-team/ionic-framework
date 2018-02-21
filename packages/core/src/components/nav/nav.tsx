@@ -1332,7 +1332,7 @@ export function getTopTransaction(id: number) {
 }
 
 export function getDefaultTransition(config: Config) {
-  return config.get('mode') === 'md' ? buildMdTransition : buildIOSTransition;
+  return config.get('mode') === 'ios' ? buildIOSTransition : buildMdTransition;
 }
 
 let viewIds = VIEW_ID_START;
@@ -1382,6 +1382,7 @@ export function updateTab(nav: Nav, component: any, data: any, escapeHatch: Esca
         // basically, we should update the nav, and then swap the tabs
         return promise.then((navResult) => {
           return tabs.select(tab).then(() => {
+            app.setExternalNavPromise(null);
             return navResult;
           });
         });
