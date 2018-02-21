@@ -117,11 +117,11 @@ ion-segment-button {
       color: $color-base;
 
       &:hover:not(.segment-activated) {
-        background-color: ion-color-alpha($colors-ios, $color-base, $alpha-ios-lowest);
+        background-color: ion-color-alpha($colors-ios, $color-base, $alpha-ios-hover);
       }
 
       &:active:not(.segment-activated) {
-        background-color: ion-color-alpha($colors-ios, $color-base, $alpha-ios-lowest);
+        background-color: ion-color-alpha($colors-ios, $color-base, $alpha-ios-activated);
       }
 
       &.segment-activated {
@@ -131,7 +131,7 @@ ion-segment-button {
     }
 
     .segment-button-disabled {
-      color: ion-color-alpha($colors-ios, $color-base, $alpha-ios-medium);
+      color: ion-color-alpha($colors-ios, $color-base, $alpha-ios-disabled);
     }
   }
 }

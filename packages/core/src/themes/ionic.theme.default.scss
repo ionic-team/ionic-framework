@@ -17,13 +17,6 @@ $dark:            #222;
 // Allows users to override an individual color
 $colors:              () !default;
 
-// Allows users to override all alpha levels
-$alpha-lowest:        .06 !default;
-$alpha-low:           .1 !default;
-$alpha-medium:        .4 !default;
-$alpha-high:          .75 !default;
-$alpha-highest:       .9 !default;
-
 // Primary color map should provide
 //   - base: main color to be used.
 //   - rgb: a R,G,B list version of the base color. Used for alpha processing
@@ -99,10 +92,17 @@ $colors:                                ion-extend-colors($ion-colors, $colors);
 
 // Default Alpha levels
 // --------------------------------------------------
+$alpha-activated:                       css-var(.1, alpha-activated) !default;
+$alpha-border-low:                      css-var(.1, alpha-border-low) !default;
+$alpha-border-medium:                   css-var(.2, alpha-border-medium) !default;
+$alpha-border-high:                     css-var(.3, alpha-border-high) !default;
+$alpha-disabled:                        css-var(.5, alpha-disabled) !default;
+$alpha-focused:                         css-var(.25, alpha-focused) !default;
+$alpha-hover:                           css-var(.1, alpha-hover) !default;
 $alpha-lowest:                          css-var(.1, alpha-lowest) !default;
 $alpha-low:                             css-var(.25, alpha-low) !default;
 $alpha-medium:                          css-var(.5, alpha-medium) !default;
-$alpha-high:                            css-var(.75, alpha-high) !default;
+$alpha-high:                            css-var(.8, alpha-high) !default;
 $alpha-highest:                         css-var(.9, alpha-highest) !default;
 
 // Default General
@@ -135,9 +135,9 @@ $text-color-rgb:                        css-var(color-to-rgb-list($text-color-va
 
 // Default Background & Text Color Steps
 // Color Steps are used to provide variations in text and background colors of elements.
-// Steps are generally meant to move "away from" their  base color.
-// For example a $text-color of white would generally step towards black,
-// but a $text-color of black would step towards white.
+// Steps move towards there "opposite" color.
+// For example $text-color-step-XXX will be $text-color stepping towards $background-color,
+// but a $background-color-step-XXX will be $background-color stepping towards $text-color.
 // --------------------------------------------------
 $background-color-step-50:              css-var(mix($text-color-value, $background-color-value, 5%), background-color-step-50) !default;
 $background-color-step-100:             css-var(mix($text-color-value, $background-color-value, 10%), background-color-step-100) !default;

@@ -1,11 +1,18 @@
 /** default theme **/
 
 :root {
-  --ion-alpha-lowest: 0.06;
-  --ion-alpha-low: 0.1;
-  --ion-alpha-medium: 0.4;
-  --ion-alpha-high: 0.75;
-  --ion-alpha-highest: 0.9;
+  --ion-alpha-activated: .1;
+  --ion-alpha-border-low: .1;
+  --ion-alpha-border-medium: .2;
+  --ion-alpha-border-high: .3;
+  --ion-alpha-disabled: .5;
+  --ion-alpha-focused: .25;
+  --ion-alpha-hover: .1;
+  --ion-alpha-lowest: .1;
+  --ion-alpha-low: .25;
+  --ion-alpha-medium: .5;
+  --ion-alpha-high: .8;
+  --ion-alpha-highest: .9;
   --ion-color-primary: #488aff;
   --ion-color-primary-rgb: 72,138,255;
   --ion-color-primary-contrast: #ffffff;
@@ -113,4 +120,28 @@
   --ion-item-border-color: #c8c7cc;
   --ion-item-text-color: #000000;
   --ion-placeholder-text-color: #999999;
+
+  /** iOS overrides **/
+  --ion-border-ios-color: #dedede;
+  --ion-overlay-ios-background-color: #f9f9f9;
+  --ion-tabbar-ios-translucent-background-color: rgba(248,248,248, var(--ion-alpha-ios-high, var(--ion-alpha-high, 0.8)));
+  --ion-tabbar-ios-border-color: rgba(0, 0, 0, var(--ion-alpha-ios-border-medium, var(--ion-alpha-border-medium, 0.2)));
+  --ion-tabbar-ios-text-color-active: var(--ion-color-ios-primary, var(--ion-color-primary, #488aff));
+  --ion-toolbar-ios-translucent-background-color: rgba(248, 248, 248, var(--ion-alpha-ios-high, var(--ion-alpha-high, 0.8)));
+  --ion-toolbar-ios-border-color: rgba(0, 0, 0, var(--ion-alpha-ios-border-medium, var(--ion-alpha-border-medium, 0.2)));
+  --ion-item-ios-background-color: var(--ion-background-ios-color, var(--ion-background-color, #fff));
+  --ion-item-ios-background-color-active: #d9d9d9;
+
+  /** MD overrides **/
+  --ion-alpha-md-focused: 0.1;
+  --ion-alpha-md-border-low: 0.07;
+  --ion-border-md-color: #c1c4cd;
+  --ion-overlay-md-background-color: #fafafa;
+  --ion-tabbar-md-border-color: rgba(0, 0, 0, var(--ion-alpha-md-border-low, var(--ion-alpha-border-low, 0.07)));
+  --ion-tabbar-md-text-color: var(--ion-text-md-color-step-400, var(--ion-text-color-step-400, #666666));
+  --ion-toolbar-md-border-color: var(--ion-border-md-color, var(--ion-border-color, #c1c4cd));
+  --ion-toolbar-md-color-active: #4a4a4a;
+  --ion-toolbar-md-text-color: #424242;
+  --ion-item-md-background-color-active: #f1f1f1;
+  --ion-item-md-border-color: #dedede;
 }

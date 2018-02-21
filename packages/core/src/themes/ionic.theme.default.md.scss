@@ -15,11 +15,18 @@ $font-size-md-base:                     $font-size-base !default;
 
 // Default Material Design Alpha levels
 // --------------------------------------------------
-$alpha-md-lowest:                       css-var($alpha-lowest, alpha-md-lowest);
-$alpha-md-low:                          css-var($alpha-low, alpha-md-low);
-$alpha-md-medium:                       css-var($alpha-medium, alpha-md-medium);
-$alpha-md-high:                         css-var($alpha-high, alpha-md-high);
-$alpha-md-highest:                      css-var($alpha-highest, alpha-md-highest);
+$alpha-md-activated:                    css-var($alpha-activated, alpha-md-activated) !default;
+$alpha-md-border-low:                   css-var(.07, alpha-md-border-low) !default;
+$alpha-md-border-medium:                css-var($alpha-border-medium, alpha-md-border-medium) !default;
+$alpha-md-border-high:                  css-var($alpha-border-high, alpha-md-border-high) !default;
+$alpha-md-disabled:                     css-var($alpha-disabled, alpha-md-disabled) !default;
+$alpha-md-focused:                      css-var(.1, alpha-md-focused) !default;
+$alpha-md-hover:                        css-var($alpha-hover, alpha-md-hover) !default;
+$alpha-md-lowest:                       css-var($alpha-lowest, alpha-md-lowest) !default
+$alpha-md-low:                          css-var($alpha-low, alpha-md-low) !default;
+$alpha-md-medium:                       css-var($alpha-medium, alpha-md-medium) !default;
+$alpha-md-high:                         css-var($alpha-high, alpha-md-high) !default;
+$alpha-md-highest:                      css-var($alpha-highest, alpha-md-highest) !default;
 
 // Default Foreground and Background Colors values
 // Allows users to override an foreground / background colors
@@ -95,9 +102,9 @@ $overlay-md-background-color:           css-var(#fafafa, overlay-md-background-c
 // Material Design Tabs & Tab bar
 // --------------------------------------------------
 $tabbar-md-background-color:            css-var($tabbar-background-color, tabbar-md-background-color) !default;
-$tabbar-md-background-color-focused:    css-var($tabbar-background-color-focused, tabbar-ios-background-color-focused) !default;
-$tabbar-md-border-color:                css-var(rgba(0, 0, 0, .07), tabbar-md-border-color) !default; // TODO: @color-mod($border-md-color, a($alpha-lowest))
-$tabbar-md-text-color:                  css-var($text-md-color-step-400, tabbar-md-text-color) !default; // TODO: @color-mod($text-md-color, a($alpha-high))
+$tabbar-md-background-color-focused:    css-var($tabbar-background-color-focused, tabbar-md-background-color-focused) !default;
+$tabbar-md-border-color:                css-var(unquote("rgba(0, 0, 0, #{$alpha-md-border-low})"), tabbar-md-border-color) !default; // TODO: @color-mod($border-md-color, a($alpha-lowest))
+$tabbar-md-text-color:                  css-var($text-md-color-step-400, tabbar-md-text-color) !default;
 $tabbar-md-text-color-active:           css-var($tabbar-text-color-active, tabbar-md-text-color-active) !default;
 
 // Material Design Toolbar
@@ -116,3 +123,5 @@ $item-md-background-color:              css-var($item-background-color, item-md-
 $item-md-background-color-active:       css-var(#f1f1f1, item-md-background-color-active) !default;
 $item-md-border-color:                  css-var(#dedede, item-md-border-color) !default;
 $item-md-text-color:                    css-var($item-text-color, item-md-text-color) !default;
+
+@include css-variables-to-root($ion-colors-md);

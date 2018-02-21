@@ -147,7 +147,7 @@ $alert-ios-button-text-color:                   ion-color($colors-ios, primary, 
 $alert-ios-button-background-color:             transparent !default;
 
 /// @prop - Background color of the alert activated button
-$alert-ios-button-background-color-activated:   ion-color-alpha($text-ios-color-value, text-ios-color, $alpha-ios-lowest) !default;
+$alert-ios-button-background-color-activated:   ion-color-alpha($text-ios-color-value, text-ios-color, $alpha-ios-activated) !default;
 
 /// @prop - Border width of the alert button
 $alert-ios-button-border-width:                 $hairlines-width !default;
@@ -156,7 +156,7 @@ $alert-ios-button-border-width:                 $hairlines-width !default;
 $alert-ios-button-border-style:                 solid !default;
 
 /// @prop - Border color of the alert button
-$alert-ios-button-border-color:                 ion-color-alpha($text-ios-color-value, text-ios-color, $alpha-ios-low) !default;
+$alert-ios-button-border-color:                 ion-color-alpha($text-ios-color-value, text-ios-color, $alpha-ios-border-medium) !default;
 
 /// @prop - Border radius of the alert button
 $alert-ios-button-border-radius:                0 !default;
