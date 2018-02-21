@@ -5,12 +5,14 @@
 // --------------------------------------------------
 
 .back-button-ios .back-button-inner-default {
-  @include padding(0, 4px);
+  @include padding(0);
   @include margin(0);
 
   z-index: $back-button-ios-button-z-index;
   overflow: visible;
+
   min-height: 32px;
+
   border: 0;
   font-size: 17px;
   line-height: 1;
@@ -19,23 +21,23 @@
   transform: translateZ(0);
 
   &.activated {
-    opacity: 0.4;
+    opacity: .4;
   }
 }
 
 .back-button-ios ion-icon {
-  @include padding-horizontal(null, 0.3em);
-  @include margin(-1px, 0, 0, 0);
+  @include padding(0);
+  @include margin(0, -3px, 0, 0);
 
   display: inherit;
-  min-width: 18px;
-  font-size: 34px;
-  font-size: 1.4em;
-  line-height: 0.67;
+
+  font-size: 1.75em;
+
   pointer-events: none;
 }
+
 .back-button .button-text {
-  letter-spacing: -0.01em;
+  letter-spacing: .01em;
 }
 
 .enable-hover .back-button-ios:hover {

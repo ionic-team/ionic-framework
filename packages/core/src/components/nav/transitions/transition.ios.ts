@@ -18,7 +18,7 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
 
   const isRTL = document.dir === 'rtl';
   const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';
-  const OFF_LEFT = isRTL ? '33%' : '-33%';
+  const OFF_LEFT = isRTL ? '31%' : '-31%';
 
   rootTransition.duration(isDef(opts.duration) ? opts.duration : DURATION);
   rootTransition.easing(isDef(opts.easing) ? opts.easing : EASING);
@@ -191,7 +191,7 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
 
         const leavingBackBtnText = rootTransition.create();
         leavingBackBtnText.addElement(leavingToolBarEle.querySelector('.back-button .button-text'));
-        leavingBackBtnText.fromTo(TRANSLATEX, CENTER, (isRTL ? -300 : 300) + 'px');
+        leavingBackBtnText.fromTo(TRANSLATEX, CENTER, (isRTL ? -115 : 115) + 'px');
         leavingToolBar.add(leavingBackBtnText);
 
       } else {

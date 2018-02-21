@@ -671,7 +671,7 @@ export class Animator {
           let valNum = (((toNum - fromNum) * stepValue) + fromNum);
           const unit = fx.to.effectUnit;
           if (unit === 'px') {
-            valNum = Math.round(valNum);
+            valNum = valNum;
           }
           val = valNum + unit;
         }

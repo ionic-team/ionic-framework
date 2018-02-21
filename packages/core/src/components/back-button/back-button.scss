@@ -20,6 +20,7 @@
   display: inline-block;
 
   border: 0;
+  outline: none;
 
   line-height: 1;
 
@@ -36,8 +37,6 @@
 
   font-kerning: none;
   user-select: none;
-
-  contain: content;
 
   font-smoothing: antialiased;
   -webkit-font-smoothing: antialiased;
