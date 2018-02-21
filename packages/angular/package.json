@@ -48,8 +48,5 @@
     "rxjs": "5.5.2",
     "typescript": "latest",
     "zone.js": "0.8.18"
-  },
-  "dependencies": {
-    "@stencil/core": "0.6.0"
   }
 }
