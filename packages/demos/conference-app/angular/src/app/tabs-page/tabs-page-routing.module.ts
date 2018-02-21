@@ -38,7 +38,7 @@ const routes: Routes = [
         path: 'speaker-details/:speakerId',
         component: SpeakerDetailPage,
         outlet: 'speakers'
-      }
+      },
 
       // tab three
       {
