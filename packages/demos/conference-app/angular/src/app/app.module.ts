@@ -10,7 +10,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { Menu } from './menu/menu';
+import { MenuModule } from './menu/menu.module';
 
 import { ConferenceData } from './providers/conference-data';
 import { UserData } from './providers/user-data';
@@ -18,7 +18,6 @@ import { UserData } from './providers/user-data';
 @NgModule({
   declarations: [
     AppComponent,
-    Menu
   ],
   imports: [
     AppRoutingModule,
@@ -26,7 +25,8 @@ import { UserData } from './providers/user-data';
     HttpModule,
     IonicAngularModule.forRoot(),
     IonicStorageModule.forRoot(),
-    IonicRouterModule.forRoot()
+    IonicRouterModule.forRoot(),
+    MenuModule
   ],
   providers: [
     ConferenceData,
