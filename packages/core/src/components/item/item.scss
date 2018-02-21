@@ -8,6 +8,7 @@ ion-item {
 }
 
 .item {
+  @include border-radius(0);
   @include margin(0);
   @include padding(0);
   @include text-align(initial);
