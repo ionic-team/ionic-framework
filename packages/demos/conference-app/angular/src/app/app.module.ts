@@ -27,10 +27,10 @@ import { UserData } from './providers/user-data';
     IonicRouterModule.forRoot()
   ],
   providers: [
-    // ConferenceData,
+    ConferenceData,
     InAppBrowser,
     SplashScreen,
-    // UserData
+    UserData
   ],
   bootstrap: [AppComponent],
   schemas: [
