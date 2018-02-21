@@ -111,7 +111,7 @@ export class VirtualScroll {
   }
 
   componentDidLoad() {
-    this.scrollEl = this.el.closest('ion-scroll') as HTMLElement;
+    this.scrollEl = this.el.closest('ion-scroll');
     if (!this.scrollEl) {
       console.error('virtual-scroll must be used inside ion-scroll/ion-content');
       return;
@@ -203,58 +203,61 @@ export class VirtualScroll {
       this.timerUpdate = null;
     }
 
-    this.dom.read(() => {
-      let topOffset = 0;
-      let node: HTMLElement | null = this.el;
-      while (node && node !== this.scrollEl) {
-        topOffset += node.offsetTop;
-        node = node.parentElement;
+    this.dom.read(this.readVS.bind(this));
+    this.dom.read(this.writeVS.bind(this));
+  }
+
+  private readVS() {
+    let topOffset = 0;
+    let node: HTMLElement | null = this.el;
+    while (node && node !== this.scrollEl) {
+      topOffset += node.offsetTop;
+      node = node.parentElement;
+    }
+    this.viewportOffset = topOffset;
+    if (this.scrollEl) {
+      this.currentScrollTop = this.scrollEl.scrollTop;
+    }
+  }
+
+  private writeVS() {
+    const dirtyIndex = this.indexDirty;
+
+    // get visible viewport
+    const scrollTop = this.currentScrollTop - this.viewportOffset;
+    const viewport = getViewport(scrollTop, this.viewportHeight, 100);
+
+    // compute lazily the height index
+    const heightIndex = this.getHeightIndex(viewport);
+
+    // get array bounds of visible cells base in the viewport
+    const range = getRange(heightIndex, viewport, 2);
+
+    // fast path, do nothing
+    const shouldUpdate = getShouldUpdate(dirtyIndex, this.range, range);
+    if (!shouldUpdate) {
+      return;
+    }
+    this.range = range;
+
+    // in place mutation of the virtual DOM
+    updateVDom(
+      this.virtualDom,
+      heightIndex,
+      this.cells,
+      range
+    );
+
+    // write DOM
+    if (this.itemRender) {
+      doRender(this.el, this.itemRender, this.virtualDom, this.updateCellHeight.bind(this));
+      if (this.heightChanged) {
+        this.el.style.height = this.totalHeight + 'px';
+        this.heightChanged = false;
       }
-      this.viewportOffset = topOffset;
-      if (this.scrollEl) {
-        this.currentScrollTop = this.scrollEl.scrollTop;
-      }
-    });
-
-    this.dom.write(() => {
-      const dirtyIndex = this.indexDirty;
-
-      // get visible viewport
-      const scrollTop = this.currentScrollTop - this.viewportOffset;
-      const viewport = getViewport(scrollTop, this.viewportHeight, 100);
-
-      // compute lazily the height index
-      const heightIndex = this.getHeightIndex(viewport);
-
-      // get array bounds of visible cells base in the viewport
-      const range = getRange(heightIndex, viewport, 2);
-
-      // fast path, do nothing
-      const shouldUpdate = getShouldUpdate(dirtyIndex, this.range, range);
-      if (!shouldUpdate) {
-        return;
-      }
-      this.range = range;
-
-      // in place mutation of the virtual DOM
-      updateVDom(
-        this.virtualDom,
-        heightIndex,
-        this.cells,
-        range
-      );
-
-      // write DOM
-      if (this.itemRender) {
-        doRender(this.el, this.itemRender, this.virtualDom, this.updateCellHeight.bind(this));
-        if (this.heightChanged) {
-          this.el.style.height = this.totalHeight + 'px';
-          this.heightChanged = false;
-        }
-      } else if (this.domRender) {
-        this.domRender(this.virtualDom, this.totalHeight);
-      }
-    });
+    } else if (this.domRender) {
+      this.domRender(this.virtualDom, this.totalHeight);
+    }
   }
 
   private updateCellHeight(cell: Cell, node: HTMLStencilElement | HTMLElement) {

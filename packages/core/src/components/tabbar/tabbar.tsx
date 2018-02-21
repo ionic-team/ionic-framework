@@ -26,7 +26,7 @@ export class Tabbar {
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop() placement = 'bottom';
   @Prop() selectedTab: HTMLIonTabElement;
-  @Prop() scrollable: Boolean;
+  @Prop() scrollable: boolean;
   @Prop() tabs: HTMLIonTabElement[];
 
   private scrollEl: HTMLIonScrollElement;

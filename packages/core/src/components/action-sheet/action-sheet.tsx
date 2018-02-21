@@ -109,75 +109,6 @@ export class ActionSheet {
    */
   @Event() ionActionSheetDidUnload: EventEmitter<ActionSheetEventDetail>;
 
-  /**
-   * Present the action sheet overlay after it has been created.
-   */
-  @Method()
-  present() {
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-    this.ionActionSheetWillPresent.emit();
-
-    this.el.style.zIndex = `${20000 + this.actionSheetId}`;
-
-    // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('actionSheetEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
-
-    // build the animation and kick it off
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-
-      this.animation = animation;
-
-      // Check if prop animate is false or if the config for animate is defined/false
-      if (!this.willAnimate || (isDef(this.config.get('willAnimate')) && this.config.get('willAnimate') === false)) {
-        // if the duration is 0, it won't actually animate I don't think
-        // TODO - validate this
-        this.animation = animation.duration(0);
-      }
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      this.ionActionSheetDidPresent.emit();
-    });
-  }
-
-  /**
-   * Dismiss the action sheet overlay after it has been presented.
-   */
-  @Method()
-  dismiss(data?: any, role?: string) {
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-    this.ionActionSheetWillDismiss.emit({
-      data,
-      role
-    });
-    const animationBuilder = this.leaveAnimation || this.config.get('actionSheetLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
-
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-
-      if (!this.willAnimate || (isDef(this.config.get('willAnimate')) && this.config.get('willAnimate') === false)) {
-        this.animation = animation.duration(0);
-      }
-
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      this.ionActionSheetDidDismiss.emit({
-        data,
-        role
-      });
-    }).then(() => {
-      return domControllerAsync(this.dom.write, () => {
-        this.el.parentNode.removeChild(this.el);
-      });
-    });
-  }
 
   componentDidLoad() {
     this.ionActionSheetDidLoad.emit();
@@ -198,6 +129,61 @@ export class ActionSheet {
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
     this.dismiss();
+  }
+
+  /**
+   * Present the action sheet overlay after it has been created.
+   */
+  @Method()
+  present() {
+    this.ionActionSheetWillPresent.emit();
+
+    this.el.style.zIndex = `${20000 + this.actionSheetId}`;
+
+    // get the user's animation fn if one was provided
+    const animationBuilder = this.enterAnimation || this.config.get('actionSheetEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
+
+    // build the animation and kick it off
+    return this.playAnimation(animationBuilder).then(() => {
+      this.ionActionSheetDidPresent.emit();
+    });
+  }
+
+  /**
+   * Dismiss the action sheet overlay after it has been presented.
+   */
+  @Method()
+  dismiss(data?: any, role?: string) {
+    this.ionActionSheetWillDismiss.emit({data, role});
+
+    const animationBuilder = this.leaveAnimation || this.config.get('actionSheetLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
+    return this.playAnimation(animationBuilder).then(() => {
+      this.ionActionSheetDidDismiss.emit({data, role});
+      return domControllerAsync(this.dom.write, () => {
+        this.el.parentNode.removeChild(this.el);
+      });
+    });
+  }
+
+  private playAnimation(animationBuilder: AnimationBuilder) {
+    if (this.animation) {
+      this.animation.destroy();
+      this.animation = null;
+    }
+
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+      this.animation = animation;
+      // Check if prop animate is false or if the config for animate is defined/false
+      if (!this.willAnimate || (isDef(this.config.get('willAnimate')) && this.config.get('willAnimate') === false)) {
+        // if the duration is 0, it won't actually animate I don't think
+        // TODO - validate this
+        this.animation = animation.duration(0);
+      }
+      return playAnimationAsync(animation);
+    }).then((animation) => {
+      animation.destroy();
+      this.animation = null;
+    });
   }
 
   protected buttonClick(button: ActionSheetButton) {

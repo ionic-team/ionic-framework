@@ -42,12 +42,6 @@ export class ItemOption {
    */
   @Prop() href: string;
 
-  notCaptured() {
-    // if (!clickedOptionButton(ev)) {
-    //   this.closeOpened();
-    // }
-  }
-
   clickedOptionButton(ev: Event): boolean {
     const el = (ev.target as HTMLElement).closest('ion-item-option');
     return !!el;

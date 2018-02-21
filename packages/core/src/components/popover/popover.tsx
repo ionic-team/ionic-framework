@@ -150,9 +150,6 @@ export class Popover {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    // const opts: NavOptions = {
-    //   minClickBlockDuration: 400
-    // };
     this.dismiss();
   }
 

@@ -62,7 +62,7 @@ export class Router {
   }
 
   private writeNavStateRoot(): Promise<any> {
-    const node = document.querySelector('ion-app') as HTMLElement;
+    const node = document.querySelector('ion-app');
     const currentPath = this.readPath();
     const direction = window.history.state >= this.state ? 1 : -1;
     if (currentPath) {

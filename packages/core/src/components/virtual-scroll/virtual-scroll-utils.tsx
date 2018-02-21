@@ -49,7 +49,6 @@ export type DomRenderFn = (dom: VirtualNode[], height: number) => void;
 export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: Cell[], range: Range) {
   // reset dom
   for (const node of dom) {
-    // node.top = -9999;
     node.change = NodeChange.NoChange;
     node.d = true;
   }
@@ -76,7 +75,6 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
   // needs to append
   const pool = dom.filter((n) => n.d);
 
-  // console.log('toMutate', toMutate.length);
   for (const cell of toMutate) {
     const node = pool.find(n => n.d && n.cell.type === cell.type);
     const index = cell.index;

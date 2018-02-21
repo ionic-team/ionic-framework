@@ -1,6 +1,6 @@
-import { assert } from "../../utils/helpers";
-import { CSS_PROP } from "../animation-controller/constants";
-import { App } from "../..";
+import { assert } from '../../utils/helpers';
+import { CSS_PROP } from '../animation-controller/constants';
+import { App } from '../..';
 
 const SCROLL_DATA_MAP = new WeakMap<HTMLElement, ScrollData>();
 const SCROLL_ASSIST_SPEED = 0.3;
@@ -81,21 +81,27 @@ export function enableScrollPadding(_componentEl: HTMLElement, inputEl: HTMLElem
 
   return () => {
     inputEl.removeEventListener('focus', onFocus);
-  }
+  };
 }
 
 export function enableScrollMove(
   componentEl: HTMLElement,
+  inputEl: HTMLElement,
   contentEl: HTMLIonContentElement,
   keyboardHeight: number
 ) {
   console.debug('Input: enableAutoScroll');
-  this.ionFocus.subscribe(() => {
-    const scrollData = getScrollData(componentEl, contentEl, keyboardHeight)
+  const onFocus = () => {
+    const scrollData = getScrollData(componentEl, contentEl, keyboardHeight);
     if (Math.abs(scrollData.scrollAmount) > 4) {
       contentEl.scrollBy(0, scrollData.scrollAmount);
     }
-  });
+  };
+
+  inputEl.addEventListener('focus', onFocus);
+  return () => {
+    inputEl.removeEventListener('focus', onFocus);
+  };
 }
 
 const SKIP_BLURRING = ['INPUT', 'TEXTAREA', 'ION-INPUT', 'ION-TEXTAREA'];
@@ -150,7 +156,7 @@ export function enableInputBlurring(app: App) {
   return () => {
     document.removeEventListener('focusin', onFocusin, true);
     document.removeEventListener('touchend', onTouchend, false);
-  }
+  };
 }
 
 export function enableHideCaretOnScroll(componentEl: HTMLElement, inputEl: HTMLInputElement, scrollEl: HTMLIonScrollElement) {
@@ -158,7 +164,7 @@ export function enableHideCaretOnScroll(componentEl: HTMLElement, inputEl: HTMLI
   console.debug('Input: enableHideCaretOnScroll');
 
   function scrollHideCaret(shouldHideCaret: boolean) {
-    if(isFocused(inputEl)) {
+    if (isFocused(inputEl)) {
       relocateInput(componentEl, inputEl, shouldHideCaret);
     }
   }
@@ -168,12 +174,12 @@ export function enableHideCaretOnScroll(componentEl: HTMLElement, inputEl: HTMLI
   const showCaret = () => scrollHideCaret(false);
 
   scrollEl.addEventListener('ionScrollStart', hideCaret);
-  scrollEl.addEventListener('ionScrollEnd',showCaret);
+  scrollEl.addEventListener('ionScrollEnd', showCaret);
   inputEl.addEventListener('blur', onBlur);
 
   return () => {
     scrollEl.removeEventListener('ionScrollStart', hideCaret);
-    scrollEl.removeEventListener('ionScrollEnd',showCaret);
+    scrollEl.removeEventListener('ionScrollEnd', showCaret);
     inputEl.addEventListener('ionBlur', onBlur);
   };
 }
@@ -196,11 +202,13 @@ function cloneInputComponent(componentEle: HTMLElement, nativeInputEle: HTMLInpu
   // Make sure we kill all the clones before creating new ones
   // It is a defensive, removeClone() should do nothing
   // removeClone(plt, srcComponentEle, srcNativeInputEle);
-  assert(componentEle.parentElement.querySelector('.cloned-input') === null, 'leaked cloned input');
   // given a native <input> or <textarea> element
   // find its parent wrapping component like <ion-input> or <ion-textarea>
   // then clone the entire component
-  if (componentEle) {
+  const parentElement = componentEle.parentElement;
+  if (componentEle && parentElement) {
+    assert(parentElement.querySelector('.cloned-input') === null, 'leaked cloned input');
+
     // DOM READ
     const srcTop = componentEle.offsetTop;
     const srcLeft = componentEle.offsetLeft;
@@ -225,7 +233,7 @@ function cloneInputComponent(componentEle: HTMLElement, nativeInputEle: HTMLInpu
     clonedNativeInputEle.tabIndex = -1;
 
     clonedComponentEle.appendChild(clonedNativeInputEle);
-    componentEle.parentNode.appendChild(clonedComponentEle);
+    parentElement.appendChild(clonedComponentEle);
 
     clonedComponentEle.style.pointerEvents = 'none';
   }
@@ -250,7 +258,10 @@ function relocateInput(componentEl: HTMLElement, inputEle: HTMLInputElement, sho
     // before it receives the actual focus event
     // We hide the focused input (with the visible caret) invisiable by making it scale(0),
     cloneInputComponent(componentEl, inputEle);
-    const inputRelativeY = this._getScrollData().inputSafeY;
+    // TODO
+    // const inputRelativeY = this._getScrollData().inputSafeY;
+    const inputRelativeY = 0;
+
     // fix for #11817
     const tx = document.dir === 'rtl' ? 9999 : -9999;
     (inputEle.style as any)[CSS_PROP.transformProp] = `translate3d(${tx}px,${inputRelativeY}px,0)`;

@@ -57,7 +57,7 @@ export class ItemSliding {
 
   componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
-    this.list = this.el.closest('ion-list') as HTMLIonListElement;
+    this.list = this.el.closest('ion-list');
 
     this.updateOptions();
   }

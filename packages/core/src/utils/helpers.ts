@@ -266,10 +266,8 @@ export function reorderArray(array: any[], indexes: {from: number, to: number}):
 }
 
 export function playAnimationAsync(animation: Animation): Promise<Animation> {
-  return new Promise((resolve) => {
-    animation.onFinish((ani) => {
-      resolve(ani);
-    });
+  return new Promise(resolve => {
+    animation.onFinish(resolve);
     animation.play();
   });
 }
@@ -308,7 +306,7 @@ export function getNavAsChildIfExists(element: HTMLElement): HTMLIonNavElement|n
   return null;
 }
 
-export function normalizeUrl(url: string) {
+export function normalizeUrl(url: string): string {
   url = url.trim();
   if (url.charAt(0) !== '/') {
     // ensure first char is a /

@@ -1,4 +1,4 @@
-import { Component, Listen, EventEmitter, Event, Prop } from '@stencil/core';
+import { Component, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 import { now } from '../../utils/helpers';
 
 @Component({
@@ -29,13 +29,13 @@ export class Backdrop {
 
   @Listen('mousedown', {passive: false, capture: true})
   protected onMouseDown(ev: TouchEvent) {
-    if(this.lastClick < now(ev) - 2500) {
+    if (this.lastClick < now(ev) - 2500) {
       this.emitTap(ev);
     }
   }
 
   private emitTap(ev: Event) {
-    if(this.stopPropagation) {
+    if (this.stopPropagation) {
       ev.preventDefault();
       ev.stopPropagation();
     }

@@ -603,7 +603,7 @@ export function setPages(nav: Nav, delegate: FrameworkDelegate, animation: Anima
 export function preprocessTransaction(ti: TransitionInstruction): Promise<NavResult> {
   if (isUrl(ti.component)) {
     if (ti.method === PUSH || ti.method === POP || ti.method === SET_ROOT) {
-      return navigateToUrl(ti.nav, normalizeUrl(ti.component) as string, ti.method);
+      return navigateToUrl(ti.nav, normalizeUrl(ti.component), ti.method);
     } else {
       return Promise.reject(new Error('only push, pop, and setRoot methods support urls'));
     }

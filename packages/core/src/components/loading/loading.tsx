@@ -161,11 +161,6 @@ export class Loading {
    */
   @Method()
   present() {
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-
     this.ionLoadingWillPresent.emit();
 
     this.el.style.zIndex = `${20000 + this.loadingId}`;
@@ -174,16 +169,7 @@ export class Loading {
     const animationBuilder = this.enterAnimation || this.config.get('loadingEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
     // build the animation and kick it off
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-      if (!this.willAnimate) {
-        // if the duration is 0, it won't actually animate I don't think
-        // TODO - validate this
-        this.animation = animation.duration(0);
-      }
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
+    return this.playAnimation(animationBuilder).then(() => {
       this.componentDidEnter();
     });
   }
@@ -195,36 +181,35 @@ export class Loading {
   dismiss(data?: any, role?: string) {
     clearTimeout(this.durationTimeout);
 
+    this.ionLoadingWillDismiss.emit({data, role});
+
+    const animationBuilder = this.leaveAnimation || this.config.get('loadingLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
+
+    return this.playAnimation(animationBuilder).then(() => {
+      this.ionLoadingDidDismiss.emit({data, role});
+      return domControllerAsync(this.dom.write, () => {
+        this.el.parentNode.removeChild(this.el);
+      });
+    });
+  }
+
+  private playAnimation(animationBuilder: AnimationBuilder) {
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
     }
-
-    this.ionLoadingWillDismiss.emit({
-      data,
-      role
-    });
-
-    const animationBuilder = this.leaveAnimation || this.config.get('loadingLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
       if (!this.willAnimate) {
         // if the duration is 0, it won't actually animate I don't think
         // TODO - validate this
-        this.animation = animation.duration(0);
+        animation.duration(0);
       }
       return playAnimationAsync(animation);
-    }).then((animation) => {
+    }).then(animation => {
       animation.destroy();
-      this.ionLoadingDidDismiss.emit({
-        data,
-        role
-      });
-    }).then(() => {
-      return domControllerAsync(this.dom.write, () => {
-        this.el.parentNode.removeChild(this.el);
-      });
+      this.animation = null;
     });
   }
 

@@ -13,7 +13,7 @@ export class NavSetRoot {
 
   @Listen('child:click')
   push(): Promise<NavResult> {
-    const nav = this.element.closest('ion-nav') as HTMLIonNavElement;
+    const nav = this.element.closest('ion-nav');
     if (nav) {
       const toPush = this.url || this.component;
       return nav.setRoot(toPush, this.data);

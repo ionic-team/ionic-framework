@@ -1,4 +1,4 @@
-import { Component, CssClassMap, Element, Event, EventEmitter, Method, Prop, Listen } from '@stencil/core';
+import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, AnimationController, Config, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 
@@ -123,75 +123,6 @@ export class Alert {
    */
   @Event() ionAlertDidUnload: EventEmitter<AlertEventDetail>;
 
-  /**
-   * Present the alert overlay after it has been created.
-   */
-  @Method()
-  present() {
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-    this.ionAlertWillPresent.emit();
-
-    this.el.style.zIndex = `${20000 + this.alertId}`;
-
-    // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('alertEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
-
-    // build the animation and kick it off
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-      if (!this.willAnimate) {
-        // if the duration is 0, it won't actually animate I don't think
-        // TODO - validate this
-        this.animation = animation.duration(0);
-      }
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      const firstInput = this.el.querySelector('[tabindex]') as HTMLElement;
-      if (firstInput) {
-        firstInput.focus();
-      }
-
-      this.ionAlertDidPresent.emit();
-    });
-  }
-
-  /**
-   * Dismiss the alert overlay after it has been presented.
-   */
-  @Method()
-  dismiss(data?: any, role?: string) {
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-    this.ionAlertWillDismiss.emit({
-      data: data,
-      role: role
-    });
-
-    // get the user's animation fn if one was provided
-    const animationBuilder = this.leaveAnimation || this.config.get('alertLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
-
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      this.ionAlertDidDismiss.emit({
-        data: data,
-        role: role
-      });
-    }).then(() => {
-      return domControllerAsync(this.dom.write, () => {
-        this.el.parentNode.removeChild(this.el);
-      });
-    });
-  }
-
   componentDidLoad() {
     this.ionAlertDidLoad.emit();
   }
@@ -209,7 +140,46 @@ export class Alert {
     this.dismiss(null, BACKDROP);
   }
 
-  rbClick(inputIndex: number) {
+  /**
+   * Present the alert overlay after it has been created.
+   */
+  @Method()
+  present() {
+    this.ionAlertWillPresent.emit();
+
+    this.el.style.zIndex = `${20000 + this.alertId}`;
+
+    // get the user's animation fn if one was provided
+    const animationBuilder = this.enterAnimation || this.config.get('alertEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
+
+    // build the animation and kick it off
+    return this.playAnimation(animationBuilder).then(() => {
+      const firstInput = this.el.querySelector('[tabindex]') as HTMLElement;
+      if (firstInput) {
+        firstInput.focus();
+      }
+      this.ionAlertDidPresent.emit();
+    });
+  }
+
+  /**
+   * Dismiss the alert overlay after it has been presented.
+   */
+  @Method()
+  dismiss(data?: any, role?: string) {
+    this.ionAlertWillDismiss.emit({data, role});
+
+    // get the user's animation fn if one was provided
+    const animationBuilder = this.leaveAnimation || this.config.get('alertLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
+
+    return this.playAnimation(animationBuilder).then(() => {
+      return domControllerAsync(this.dom.write, () => {
+        this.el.parentNode.removeChild(this.el);
+      });
+    });
+  }
+
+  private rbClick(inputIndex: number) {
     this.inputs = this.inputs.map((input, index) => {
       input.checked = (inputIndex === index);
       return input;
@@ -223,7 +193,7 @@ export class Alert {
     }
   }
 
-  cbClick(inputIndex: number) {
+  private cbClick(inputIndex: number) {
     this.inputs = this.inputs.map((input, index) => {
       if (inputIndex === index) {
         input.checked = !input.checked;
@@ -237,7 +207,7 @@ export class Alert {
     }
   }
 
-  buttonClick(button: any) {
+  private buttonClick(button: any) {
     let shouldDismiss = true;
 
     if (button.handler) {
@@ -254,7 +224,7 @@ export class Alert {
     }
   }
 
-  getValues(): any {
+  private getValues(): any {
     if (this.inputType === 'radio') {
       // this is an alert with radio buttons (single value select)
       // return the one value which is checked, otherwise undefined
@@ -287,8 +257,27 @@ export class Alert {
     return values;
   }
 
+  private playAnimation(animationBuilder: AnimationBuilder) {
+    if (this.animation) {
+      this.animation.destroy();
+      this.animation = null;
+    }
 
-  renderCheckbox(inputs: AlertInput[]) {
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+      this.animation = animation;
+      if (!this.willAnimate) {
+        // if the duration is 0, it won't actually animate I don't think
+        animation.duration(0);
+      }
+      return playAnimationAsync(animation);
+    }).then(animation => {
+      animation.destroy();
+      this.animation = null;
+    });
+  }
+
+
+  private renderCheckbox(inputs: AlertInput[]) {
     if (inputs.length === 0) return null;
 
     return (
@@ -307,7 +296,7 @@ export class Alert {
     );
   }
 
-  renderRadio(inputs: AlertInput[]) {
+  private renderRadio(inputs: AlertInput[]) {
     if (inputs.length === 0) return null;
 
     return (
@@ -326,7 +315,7 @@ export class Alert {
     );
   }
 
-  renderInput(inputs: AlertInput[]) {
+  private renderInput(inputs: AlertInput[]) {
     if (inputs.length === 0) return null;
 
     return (

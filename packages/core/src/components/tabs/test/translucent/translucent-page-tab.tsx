@@ -13,7 +13,7 @@ export class TranslucentPageTab {
   @Element() element: HTMLElement;
 
   getTabs() {
-    return this.element.closest('ion-tabs') as HTMLIonTabsElement;
+    return this.element.closest('ion-tabs');
   }
 
   setLayout(value: string) {

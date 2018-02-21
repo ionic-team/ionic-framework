@@ -15,7 +15,7 @@ import { Side, assert, checkEdgeSide, isRightSide } from '../../utils/helpers';
 export class Menu {
 
   private gestureBlocker: string;
-  private animation: Animation;
+  private animation: Animation|undefined;
   private isPane = false;
   private _isOpen = false;
   private lastOnEnd = 0;
@@ -23,12 +23,12 @@ export class Menu {
   mode: string;
   color: string;
   isAnimating = false;
-  width: number = null;
+  width: number;
 
-  backdropEl: HTMLElement;
-  menuInnerEl: HTMLElement;
-  contentEl: HTMLElement;
-  menuCtrl: HTMLIonMenuControllerElement;
+  backdropEl: HTMLElement|undefined;
+  menuInnerEl: HTMLElement|undefined;
+  contentEl: HTMLElement|undefined;
+  menuCtrl: HTMLIonMenuControllerElement|undefined;
 
   @Element() el: HTMLIonMenuElement;
 
@@ -67,7 +67,7 @@ export class Menu {
       // Remove effects of previous animations
       this.menuInnerEl.removeAttribute('style');
     }
-    this.animation = null;
+    this.animation = undefined;
   }
 
   /**
@@ -129,7 +129,7 @@ export class Menu {
 
   componentWillLoad() {
     return this.lazyMenuCtrl.componentOnReady().then(menu => {
-      this.menuCtrl = menu as HTMLIonMenuControllerElement;
+      this.menuCtrl = menu;
     });
   }
 
@@ -141,7 +141,7 @@ export class Menu {
       ? '#' + this.contentId
       : '[main]';
     const parent = el.parentElement;
-    const content = this.contentEl = parent.querySelector(contentQuery) as HTMLElement;
+    const content = this.contentEl = parent.querySelector(contentQuery);
     if (!content || !content.tagName) {
       // requires content element
       return console.error('Menu: must have a "content" element to listen for drag events on.');
@@ -170,8 +170,8 @@ export class Menu {
     this.menuCtrl._unregister(this);
     this.animation && this.animation.destroy();
 
-    this.menuCtrl = this.animation = null;
-    this.contentEl = this.backdropEl = this.menuInnerEl = null;
+    this.menuCtrl = this.animation = undefined;
+    this.contentEl = this.backdropEl = this.menuInnerEl = undefined;
   }
 
   @Listen('body:ionSplitPaneVisible')

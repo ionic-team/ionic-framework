@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
 import { ElementRef, assert, now, updateDetail } from '../../utils/helpers';
-import { BlockerDelegate, GestureDelegate, BlockerConfig, BLOCK_ALL } from '../gesture-controller/gesture-controller';
+import { BLOCK_ALL, BlockerConfig, BlockerDelegate, GestureDelegate } from '../gesture-controller/gesture-controller';
 import { DomController } from '../../index';
 import { PanRecognizer } from './recognizers';
 
@@ -348,22 +348,13 @@ export class Gesture {
   // END *************************
 
   @Listen('touchcancel', { passive: true, enabled: false })
+  @Listen('touchend', { passive: true, enabled: false })
   onTouchCancel(ev: TouchEvent) {
     this.lastTouch = this.detail.timeStamp = now(ev);
 
     this.pointerUp(ev);
     this.enableTouch(false);
   }
-
-
-  @Listen('touchend', { passive: true, enabled: false })
-  onTouchEnd(ev: TouchEvent) {
-    this.lastTouch = this.detail.timeStamp = now(ev);
-
-    this.pointerUp(ev);
-    this.enableTouch(false);
-  }
-
 
   @Listen('document:mouseup', { passive: true, enabled: false })
   onMouseUp(ev: TouchEvent) {

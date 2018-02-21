@@ -85,7 +85,7 @@ export class InfiniteScroll {
   componentWillLoad() {
     const scrollEl = this.el.closest('ion-scroll');
     return scrollEl.componentOnReady().then((el) => {
-      this.scrollEl = el as HTMLIonScrollElement;
+      this.scrollEl = el;
     });
   }
 

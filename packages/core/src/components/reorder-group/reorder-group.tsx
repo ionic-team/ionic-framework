@@ -66,8 +66,8 @@ export class ReorderGroup {
   }
 
   componentDidLoad() {
-    this.containerEl = this.el.querySelector('ion-gesture') as HTMLElement;
-    this.scrollEl = this.el.closest('ion-scroll') as HTMLElement;
+    this.containerEl = this.el.querySelector('ion-gesture');
+    this.scrollEl = this.el.closest('ion-scroll');
     if (!this.disabled) {
       this.disabledChanged(false);
     }
@@ -82,7 +82,7 @@ export class ReorderGroup {
       return false;
     }
     const target = ev.event.target as HTMLElement;
-    const reorderEl = target.closest('ion-reorder') as HTMLElement;
+    const reorderEl = target.closest('ion-reorder');
     if (!reorderEl) {
       return false;
     }

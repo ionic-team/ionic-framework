@@ -8,7 +8,7 @@ import { now, pointerCoordX, pointerCoordY } from '../../utils/helpers';
 export class TapClick {
 
   private app: HTMLIonAppElement;
-  private lastTouch = -MOUSE_WAIT*10;
+  private lastTouch = -MOUSE_WAIT * 10;
   private lastActivated = 0;
   private cancelled = false;
 
@@ -26,7 +26,7 @@ export class TapClick {
     if (this.isServer) {
       return;
     }
-    this.app = this.el.closest('ion-app') as HTMLIonAppElement;
+    this.app = this.el.closest('ion-app');
   }
 
   @Listen('body:click', {passive: false, capture: true})

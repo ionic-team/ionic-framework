@@ -80,7 +80,7 @@ export function getTestResult(displayWhen: DisplayWhen) {
 }
 
 export function isOrientationMatch(orientation: string) {
-  if (orientation == 'portrait') {
+  if (orientation === 'portrait') {
     return isPortrait();
   } else if (orientation === 'landscape') {
     return !isPortrait();

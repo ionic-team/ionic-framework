@@ -133,7 +133,7 @@ export class App {
   }
 
   @Method()
-  getNavByIdOrName(nameOrId: number | string): PublicNav {
+  getNavByIdOrName(nameOrId: number | string): PublicNav|null {
     const navs = Array.from(rootNavs.values());
     for (const navContainer of navs) {
       const match = getNavByIdOrNameImpl(navContainer, nameOrId);
@@ -222,12 +222,12 @@ export class App {
   }
 
   @Listen('document:paused')
-  appResume(): void {
+  appResume(): null {
     return null;
   }
 
   @Listen('document:resume')
-  appPaused(): void {
+  appPaused(): null {
     return null;
   }
 

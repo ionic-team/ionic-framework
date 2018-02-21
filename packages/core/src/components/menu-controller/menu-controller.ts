@@ -224,7 +224,7 @@ export class MenuController {
     const side = menu.side;
     this.menus
       .filter(m => m.side === side && m !== menu)
-      .map(m => m.disabled = true);
+      .forEach(m => m.disabled = true);
   }
 
   /**

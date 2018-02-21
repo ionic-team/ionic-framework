@@ -40,7 +40,7 @@ export class HideWhen implements DisplayWhen {
   }
 
   render() {
-    return <slot></slot>
+    return <slot></slot>;
   }
 }
 

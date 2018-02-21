@@ -10,7 +10,7 @@ export class NavPop {
 
   @Listen('child:click')
   pop(): Promise<NavResult> {
-    const nav = this.element.closest('ion-nav') as HTMLIonNavElement;
+    const nav = this.element.closest('ion-nav');
     if (nav) {
       return nav.pop();
     }

@@ -1,4 +1,4 @@
-import { Component, Method, EventEmitter, Event } from "@stencil/core";
+import { Component, Event, EventEmitter, Method } from '@stencil/core';
 
 
 @Component({
@@ -82,21 +82,11 @@ export class GestureController {
   }
 
   disableScroll(id: number) {
-    // let isEnabled = !this.isScrollDisabled();
     this.disabledScroll.add(id);
-    // if (this._app && isEnabled && this.isScrollDisabled()) {
-    //   console.debug('GestureController: Disabling scrolling');
-    //   this._app._setDisableScroll(true);
-    // }
   }
 
   enableScroll(id: number) {
-    // let isDisabled = this.isScrollDisabled();
     this.disabledScroll.delete(id);
-    // if (this._app && isDisabled && !this.isScrollDisabled()) {
-    //   console.debug('GestureController: Enabling scrolling');
-    //   this._app._setDisableScroll(false);
-    // }
   }
 
   canStart(gestureName: string): boolean {

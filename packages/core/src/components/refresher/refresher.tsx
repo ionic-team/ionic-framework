@@ -336,11 +336,13 @@ export class Refresher {
   private setCss(y: number, duration: string, overflowVisible: boolean, delay: string) {
     this.appliedStyles = (y > 0);
     this.dom.write(() => {
-      const style = this.scrollEl.style;
-      style.transform = ((y > 0) ? 'translateY(' + y + 'px) translateZ(0px)' : 'translateZ(0px)');
-      style.transitionDuration = duration;
-      style.transitionDelay = delay;
-      style.overflow = (overflowVisible ? 'hidden' : '');
+      if (this.scrollEl) {
+        const style = this.scrollEl.style;
+        style.transform = ((y > 0) ? 'translateY(' + y + 'px) translateZ(0px)' : 'translateZ(0px)');
+        style.transitionDuration = duration;
+        style.transitionDelay = delay;
+        style.overflow = (overflowVisible ? 'hidden' : '');
+      }
     });
   }
 

@@ -75,7 +75,7 @@ export class Scroll {
     if (this.forceOverscroll === undefined) {
       this.forceOverscroll = this.mode === 'ios' && ('ontouchstart' in window);
     }
-    this.app = this.el.closest('ion-app') as HTMLIonAppElement;
+    this.app = this.el.closest('ion-app');
   }
 
   componentDidUnload() {
