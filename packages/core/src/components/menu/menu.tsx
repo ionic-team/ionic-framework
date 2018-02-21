@@ -137,15 +137,17 @@ export class Menu {
     assert(!!this.menuCtrl, 'menucontroller was not initialized');
 
     const el = this.el;
-    const contentQuery = (this.contentId)
-      ? '#' + this.contentId
-      : '[main]';
-    const parent = el.parentElement;
-    const content = this.contentEl = parent.querySelector(contentQuery);
+
+    const content = (this.contentId)
+      ? document.getElementById(this.contentId)
+      : el.parentElement.querySelector('[main]');
+
     if (!content || !content.tagName) {
       // requires content element
       return console.error('Menu: must have a "content" element to listen for drag events on.');
     }
+    this.contentEl = content as HTMLElement;
+
     // add menu's content classes
     content.classList.add('menu-content');
 
