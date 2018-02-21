@@ -7,7 +7,9 @@ import { AboutPage } from '../about/about';
 import { MapPage } from '../map/map';
 import { SchedulePage } from '../schedule/schedule';
 import { SessionDetailPage } from '../session-detail/session-detail';
+import { SpeakerDetailPage } from '../speaker-detail/speaker-detail';
 import { SpeakerListPage } from '../speaker-list/speaker-list';
+
 
 const routes: Routes = [
   {
@@ -31,6 +33,12 @@ const routes: Routes = [
         component: SpeakerListPage,
         outlet: 'speakers'
       },
+
+      {
+        path: 'speaker-details/:speakerId',
+        component: SpeakerDetailPage,
+        outlet: 'speakers'
+      }
 
       // tab three
       {

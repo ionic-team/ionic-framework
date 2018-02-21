@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-
+import { Router } from '@angular/router';
 import {
   ActionSheetController,
   NavController
@@ -20,10 +20,11 @@ export class SpeakerListPage {
   speakers: any[] = [];
 
   constructor(
-    public actionSheetCtrl: ActionSheetController,
-    public navCtrl: NavController,
-    public confData: ConferenceData,
-    public inAppBrowser: InAppBrowser
+    private actionSheetCtrl: ActionSheetController,
+    private navCtrl: NavController,
+    private confData: ConferenceData,
+    private inAppBrowser: InAppBrowser,
+    private router: Router
   ) {}
 
   ionViewDidEnter() {
@@ -33,11 +34,11 @@ export class SpeakerListPage {
   }
 
   goToSessionDetail(session: any) {
-    // this.navCtrl.push(SessionDetailPage, { sessionId: session.id });
+    this.router.navigateByUrl(`app/tabs/(schedule:session/${session.id})`);
   }
 
   goToSpeakerDetail(speaker: any) {
-    // this.navCtrl.push(SpeakerDetailPage, { speakerId: speaker.id });
+    this.router.navigateByUrl(`app/tabs/(speakers:speaker-details/${speaker.id})`);
   }
 
   goToSpeakerTwitter(speaker: any) {
