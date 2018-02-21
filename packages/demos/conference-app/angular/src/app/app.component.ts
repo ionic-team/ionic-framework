@@ -74,14 +74,6 @@ export class AppComponent implements OnInit {
     // load the conference data
     this.confData.load();
 
-    // decide which menu items should be hidden by current login status stored in local storage
-    this.userData.hasLoggedIn().then((hasLoggedIn) => {
-      this.enableMenu(hasLoggedIn === true);
-    });
-    this.enableMenu(true);
-
-    this.listenToLoginEvents();
-
     return getNav(this.navRef).then(() => {
       this.appPages = this.appPages.concat([]);
     });
@@ -127,25 +119,6 @@ export class AppComponent implements OnInit {
     return getNav(this.navRef).then((navElement) => {
       // navElement.setRoot(TutorialPage);
     });
-  }
-
-  listenToLoginEvents() {
-    this.events.subscribe('user:login', () => {
-      this.enableMenu(true);
-    });
-
-    this.events.subscribe('user:signup', () => {
-      this.enableMenu(true);
-    });
-
-    this.events.subscribe('user:logout', () => {
-      this.enableMenu(false);
-    });
-  }
-
-  enableMenu(loggedIn: boolean) {
-    this.menu.enable(loggedIn, 'loggedInMenu');
-    this.menu.enable(!loggedIn, 'loggedOutMenu');
   }
 
   isActive(page: PageInterface) {
