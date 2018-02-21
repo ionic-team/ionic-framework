@@ -4,10 +4,9 @@
     "allowUnreachableCode": true,
     "alwaysStrict": false,
     "declaration": true,
+    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "jsx": "react",
-    "jsxFactory": "h",
     "lib": [
       "dom",
       "es2015"
@@ -18,7 +17,7 @@
     "noImplicitReturns": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "outDir": ".tmp",
+    "outDir": "./dist/out-tsc",
     "pretty": true,
     "removeComments": false,
     "target": "es2015"
