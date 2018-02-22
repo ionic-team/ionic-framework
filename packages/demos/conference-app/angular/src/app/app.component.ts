@@ -23,7 +23,6 @@ import { UserData } from './providers/user-data';
 export class AppComponent implements OnInit {
 
   loggedIn = false;
-
   constructor(
     private events: Events,
     private router: Router,
@@ -32,7 +31,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.checkLoginStatus();
-
+    this.listenForLoginEvents();
   }
 
   checkLoginStatus() {
@@ -44,5 +43,41 @@ export class AppComponent implements OnInit {
     });
   }
 
+  listenForLoginEvents() {
+    this.events.subscribe('user:login', () => {
+      this.loggedIn = true;
+    });
+
+    this.events.subscribe('user:signup', () => {
+      this.loggedIn = true;
+    });
+
+    this.events.subscribe('user:logout', () => {
+      this.loggedIn = false;
+    });
+  }
+
+  selectTab(index: number) {
+    const tabs = document.querySelector('ion-tabs');
+    if (tabs) {
+      return tabs.componentOnReady().then(() => {
+        return tabs.select(index);
+      });
+    }
+  }
+
+  navigate(url: string) {
+    this.router.navigateByUrl(url);
+  }
+
+  logout() {
+    this.userData.logout().then(() => {
+      this.navigate('/app/tabs/(schedule:schedule)');
+    });
+  }
+
+  openTutorial() {
+    alert('todo tutorial');
+  }
 }
 
