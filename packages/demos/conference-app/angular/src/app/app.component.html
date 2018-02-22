@@ -1,13 +1,54 @@
 <ion-app>
-  <ion-split-pane>
+  <!--<ion-split-pane>
 
     <ion-menu>
-      <app-menu></app-menu>
+      <ion-page>
+        <ion-header>
+          <ion-toolbar color="primary">
+            <ion-title>Menu</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+
+
+          <div>
+            the value of loggedIn is {{loggedIn}}
+          </div>
+
+          <div *ngIf="loggedIn">
+            Just the bool, no operators
+          </div>
+
+          <div *ngIf="loggedIn === true">
+            I'm logged in
+          </div>
+
+          <div *ngIf="loggedIn === false">
+            I'm not logged in
+          </div>
+
+        </ion-content>
+      </ion-page>
     </ion-menu>
 
 
     <ion-nav #nav #content swipeBackEnabled="false" main></ion-nav>
 
   </ion-split-pane>
+-->
+<div>
+  the value of loggedIn is {{loggedIn}}
+</div>
 
+<div *ngIf="loggedIn">
+  Just the bool, no operators
+</div>
+
+<div *ngIf="loggedIn === true">
+  I'm logged in
+</div>
+
+<div *ngIf="loggedIn === false">
+  I'm not logged in
+</div>
 </ion-app>
