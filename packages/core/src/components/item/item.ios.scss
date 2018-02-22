@@ -141,7 +141,7 @@ ion-reorder-group > ion-gesture {
 }
 
 
-// iOS Item Avatar
+// iOS Item Avatar & Thumbnail
 // --------------------------------------------------
 
 .item-ios ion-avatar {
@@ -149,13 +149,14 @@ ion-reorder-group > ion-gesture {
   height: $item-ios-avatar-height;
 }
 
-
-// iOS Item Thumbnail
-// --------------------------------------------------
-
 .item-ios ion-thumbnail {
   width: $item-ios-thumbnail-width;
   height: $item-ios-thumbnail-height;
+}
+
+.item-ios ion-avatar[slot="end"],
+.item-ios ion-thumbnail[slot="end"] {
+  @include margin(($item-ios-padding-end / 2));
 }
 
 

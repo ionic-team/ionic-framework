@@ -44,16 +44,16 @@ $item-md-padding-start:               16px !default;
 // --------------------------------------------------
 
 /// @prop - Margin top for the start/end slot
-$item-md-slot-margin-top:             9px !default;
+$item-md-slot-margin-top:                   0 !default;
 
 /// @prop - Margin end for the start/end slot
-$item-md-slot-margin-end:             ($item-md-padding-end / 2) !default;
+$item-md-slot-margin-end:                   ($item-md-padding-end / 2) !default;
 
 /// @prop - Margin bottom for the start/end slot
-$item-md-slot-margin-bottom:          9px !default;
+$item-md-slot-margin-bottom:                $item-md-slot-margin-top !default;
 
 /// @prop - Margin start for the start/end slot
-$item-md-slot-margin-start:           0 !default;
+$item-md-slot-margin-start:                 0 !default;
 
 /// @prop - Margin top for an icon in the start/end slot
 $item-md-icon-slot-margin-top:              11px !default;

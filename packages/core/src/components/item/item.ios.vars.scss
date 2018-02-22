@@ -71,7 +71,7 @@ $item-ios-slot-start-margin-bottom:          $item-ios-slot-start-margin-top !de
 $item-ios-slot-start-margin-start:           0 !default;
 
 /// @prop - Margin top for the end slot
-$item-ios-slot-end-margin-top:               8px !default;
+$item-ios-slot-end-margin-top:               null !default;
 
 /// @prop - Margin end for the end slot
 $item-ios-slot-end-margin-end:               ($item-ios-padding-start / 2) !default;
