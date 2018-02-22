@@ -88,13 +88,19 @@ import { DeepLinker } from '../../navigation/deep-linker';
  *
  *  presentProfileModal() {
  *    let profileModal = this.modalCtrl.create(Profile, { userId: 8675309 });
+ *    
+ *    //fires after dismiss animation finishes
  *    profileModal.onDidDismiss(data => {
+ *      console.log(data);
+ *    });
+ *    
+ *    //fires before dismiss animation begins
+ *    profileModal.onWillDismiss(data => {
  *      console.log(data);
  *    });
  *    profileModal.present();
  *  }
  *
- * }
  *
  * @Component(...)
  * class Profile {
