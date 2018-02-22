@@ -36,6 +36,7 @@ export { PanRecognizer } from './components/gesture/recognizers';
 export {
   BLOCK_ALL,
   BlockerDelegate,
+  GestureController,
   GestureDelegate,
   BlockerConfig,
   GestureConfig,
