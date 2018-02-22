@@ -12,7 +12,7 @@
 string
 
 The color to use for the background.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### mode
@@ -37,7 +37,7 @@ If true, the card header will be translucent. Defaults to `false`.
 string
 
 The color to use for the background.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### mode

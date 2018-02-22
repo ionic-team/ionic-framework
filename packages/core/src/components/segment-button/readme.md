@@ -72,7 +72,7 @@ If true, the segment button is selected. Defaults to `false`.
 string
 
 The color to use for the text color.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### disabled
@@ -122,7 +122,7 @@ If true, the segment button is selected. Defaults to `false`.
 string
 
 The color to use for the text color.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### disabled

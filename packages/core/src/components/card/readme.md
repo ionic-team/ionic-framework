@@ -16,7 +16,7 @@ sub-components to reflect this. Please see `ion-card-content`,
 string
 
 The color to use for the background.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### mode
@@ -34,7 +34,7 @@ Possible values are: `"ios"` or `"md"`.
 string
 
 The color to use for the background.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### mode

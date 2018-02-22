@@ -63,7 +63,7 @@ Chips represent complex entities in small blocks, such as a contact. A chip can 
 string
 
 The color to use.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### mode
@@ -81,7 +81,7 @@ Possible values are: `"ios"` or `"md"`.
 string
 
 The color to use.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### mode

@@ -72,7 +72,7 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 string
 
 The color to use for the text color.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### disabled
@@ -102,7 +102,7 @@ the value of the segment.
 string
 
 The color to use for the text color.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### disabled

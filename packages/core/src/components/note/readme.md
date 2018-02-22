@@ -38,7 +38,7 @@ Notes are text elements generally used as subtitles that provide more informatio
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
@@ -58,7 +58,7 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 

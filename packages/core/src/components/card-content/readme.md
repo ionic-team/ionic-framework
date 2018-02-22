@@ -14,7 +14,7 @@ It is recommended that any text content for a card should be placed in an `ion-c
 string
 
 The color to use for the text.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### mode
@@ -32,7 +32,7 @@ Possible values are: `"ios"` or `"md"`.
 string
 
 The color to use for the text.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### mode
