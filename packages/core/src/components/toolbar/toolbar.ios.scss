@@ -85,7 +85,7 @@
 @mixin ios-toolbar-theme($color-name) {
   $color-base: ion-color($colors-ios, $color-name, base, ios);
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-translucent: ion-color-alpha($colors-ios, $color-name, alpha-highest, ios);
+  $color-translucent: ion-color-alpha($colors-ios, $color-name, $alpha-ios-highest, ios);
 
   .toolbar-ios-#{$color-name} {
 
