@@ -21,6 +21,14 @@ export class Backdrop {
 
   @Event() ionBackdropTap: EventEmitter;
 
+  componentDidLoad() {
+    registerBackdrop(this);
+  }
+
+  componentDidUnload() {
+    unregisterBackdrop(this);
+  }
+
   @Listen('touchstart', {passive: false, capture: true})
   protected onTouchStart(ev: TouchEvent) {
     this.lastClick = now(ev);
@@ -51,5 +59,20 @@ export class Backdrop {
         'backdrop-no-tappable': !this.tappable,
       }
     };
+  }
+}
+
+const BACKDROP_NO_SCROLL = 'backdrop-no-scroll';
+const activeBackdrops = new Set();
+
+function registerBackdrop(backdrop: any) {
+  activeBackdrops.add(backdrop);
+  document.body.classList.add(BACKDROP_NO_SCROLL);
+}
+
+function unregisterBackdrop(backdrop: any) {
+  activeBackdrops.delete(backdrop);
+  if(activeBackdrops.size === 0) {
+    document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
 }

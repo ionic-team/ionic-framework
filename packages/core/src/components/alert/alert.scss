@@ -6,7 +6,7 @@
 ion-alert {
   @include position(0, 0, 0, 0);
 
-  position: absolute;
+  position: fixed;
 
   z-index: $z-index-overlay;
 
@@ -61,6 +61,8 @@ ion-alert.alert-top {
   -webkit-overflow-scrolling: touch;
 
   overflow-y: scroll;
+
+  overscroll-behavior-y: contain;
 }
 
 .alert-input {

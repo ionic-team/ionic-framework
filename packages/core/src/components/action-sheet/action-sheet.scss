@@ -6,7 +6,7 @@
 ion-action-sheet {
   @include position(0, null, null, 0);
 
-  position: absolute;
+  position: fixed;
   z-index: $z-index-overlay;
   display: block;
 

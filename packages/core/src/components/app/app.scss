@@ -52,6 +52,8 @@ body {
 
   word-wrap: break-word;
 
+  overscroll-behavior-y: contain;
+
   text-size-adjust: none;
   user-select: none;
 }

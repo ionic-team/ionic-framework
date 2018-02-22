@@ -6,7 +6,7 @@
 ion-loading {
   @include position(0, 0, 0, 0);
 
-  position: absolute;
+  position: fixed;
   z-index: $z-index-overlay;
 
   display: flex;

@@ -6,6 +6,7 @@
   <title>Alert - Standalone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
+
 </head>
 
 <body>
@@ -19,9 +20,44 @@
   <button id="checkbox" onclick="presentAlertCheckbox()">Checkbox</button>
   <button onclick="presentWithCssClass()">CssClass</button>
 
+  <div class="f"></div>
+  <div class="f"></div>
+  <div class="f"></div>
+  <div class="f"></div>
+  <div class="f"></div>
+  <div class="f"></div>
+  <div class="f"></div>
+  <div class="f"></div>
+  <div class="f"></div>
+  <div class="f"></div>
+
+  <dialog id="favDialog">
+      <form method="dialog">
+        <section>
+          <p><label for="favAnimal">Favorite animal:</label>
+          <select id="favAnimal">
+            <option></option>
+            <option>Brine shrimp</option>
+            <option>Red panda</option>
+            <option>Spider monkey</option>
+          </select></p>
+        </section>
+        <menu>
+          <button id="cancel" type="reset">Cancel</button>
+          <button type="submit">Confirm</button>
+        </menu>
+      </form>
+    </dialog>
   <ion-alert-controller></ion-alert-controller>
 
   <style>
+    .f {
+      width: 200px;
+      height: 200px;
+      background: blue;
+      margin: 20px auto;
+    }
+
     body > button {
       display: block;
       clear: both;

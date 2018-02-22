@@ -342,6 +342,7 @@ export class Alert {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'alert-translucent') : {};
 
     return {
+      role: 'alertdialog',
       class: {
         ...themedClasses,
         ...getClassMap(this.cssClass)

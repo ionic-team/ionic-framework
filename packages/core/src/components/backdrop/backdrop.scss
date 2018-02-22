@@ -29,3 +29,7 @@ ion-backdrop {
     cursor: auto;
   }
 }
+
+body.backdrop-no-scroll {
+  overflow: hidden;
+}
