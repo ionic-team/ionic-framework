@@ -126,7 +126,7 @@ export class Platform {
 
   render() {
     return [
-      <ion-cordova-platform/>
+      isCordova() && <ion-cordova-platform/>
     ];
   }
 
