@@ -33,14 +33,7 @@ export { FabButton } from './components/fab-button/fab-button';
 export { Footer } from './components/footer/footer';
 export { Gesture, GestureCallback, GestureDetail } from './components/gesture/gesture';
 export { PanRecognizer } from './components/gesture/recognizers';
-export {
-  BLOCK_ALL,
-  BlockerDelegate,
-  GestureController,
-  GestureDelegate,
-  BlockerConfig,
-  GestureConfig,
-} from './components/gesture-controller/gesture-controller';
+export * from './components/gesture-controller/gesture-controller-utils';
 export { Grid } from './components/grid/grid';
 export { Header } from './components/header/header';
 export { InfiniteScroll } from './components/infinite-scroll/infinite-scroll';

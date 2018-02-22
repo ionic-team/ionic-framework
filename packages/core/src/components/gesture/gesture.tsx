@@ -1,7 +1,7 @@
 import { Component, Event, EventEmitter, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
 import { ElementRef, assert, now, updateDetail } from '../../utils/helpers';
-import { BLOCK_ALL, BlockerConfig, BlockerDelegate, GestureDelegate } from '../gesture-controller/gesture-controller';
-import { DomController } from '../../index';
+import { DomController, BlockerDelegate, GestureDelegate, BlockerConfig } from '../../index';
+import { BLOCK_ALL } from '../gesture-controller/gesture-controller-utils';
 import { PanRecognizer } from './recognizers';
 
 

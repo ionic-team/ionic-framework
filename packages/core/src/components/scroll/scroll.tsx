@@ -1,6 +1,5 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop } from '@stencil/core';
-import { Config, DomController, GestureDetail } from '../../index';
-import { GestureDelegate } from '../gesture-controller/gesture-controller';
+import { Config, DomController, GestureDetail, GestureDelegate } from '../../index';
 
 
 @Component({
@@ -65,7 +64,9 @@ export class Scroll {
       name: 'scroll',
       priority: 100,
       disableScroll: false,
-    }).then(gesture => this.gesture = gesture);
+    }).then((gesture) => {
+      this.gesture = gesture
+    });
   }
 
   componentDidLoad() {
