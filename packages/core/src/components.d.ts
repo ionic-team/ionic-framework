@@ -118,6 +118,7 @@ declare global {
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
+      overlayId?: number;
       subTitle?: string;
       title?: string;
       translucent?: boolean;
@@ -188,6 +189,7 @@ declare global {
       inputs?: AlertInput[];
       leaveAnimation?: AnimationBuilder;
       message?: string;
+      overlayId?: number;
       subTitle?: string;
       title?: string;
       translucent?: boolean;
@@ -1672,6 +1674,7 @@ declare global {
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
+      overlayId?: number;
       showBackdrop?: boolean;
       spinner?: string;
       translucent?: boolean;
@@ -1842,6 +1845,7 @@ declare global {
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
       mode?: 'ios' | 'md';
+      overlayId?: number;
       showBackdrop?: boolean;
       willAnimate?: boolean;
     }
@@ -2131,6 +2135,7 @@ declare global {
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
+      overlayId?: number;
       showBackdrop?: boolean;
       willAnimate?: boolean;
     }
@@ -2232,6 +2237,7 @@ declare global {
       ev?: Event;
       leaveAnimation?: AnimationBuilder;
       mode?: 'ios' | 'md';
+      overlayId?: number;
       showBackdrop?: boolean;
       translucent?: boolean;
       willAnimate?: boolean;
@@ -3510,6 +3516,7 @@ declare global {
       enterAnimation?: AnimationBuilder;
       leaveAnimation?: AnimationBuilder;
       message?: string;
+      overlayId?: number;
       position?: string;
       showCloseButton?: boolean;
       translucent?: boolean;

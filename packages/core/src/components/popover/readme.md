@@ -101,6 +101,11 @@ Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
+#### overlayId
+
+number
+
+
 #### showBackdrop
 
 boolean
@@ -195,6 +200,11 @@ Animation to use when the popover is dismissed.
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+
+
+#### overlay-id
+
+number
 
 
 #### show-backdrop

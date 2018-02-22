@@ -96,6 +96,11 @@ Animation to use when the action sheet is presented.
 Animation to use when the action sheet is dismissed.
 
 
+#### overlayId
+
+number
+
+
 #### subTitle
 
 string
@@ -160,6 +165,11 @@ Animation to use when the action sheet is presented.
 
 
 Animation to use when the action sheet is dismissed.
+
+
+#### overlay-id
+
+number
 
 
 #### sub-title

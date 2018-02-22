@@ -94,6 +94,11 @@ string
 Message to be shown in the toast.
 
 
+#### overlayId
+
+number
+
+
 #### position
 
 string
@@ -173,6 +178,11 @@ Animation to use when the toast is dismissed.
 string
 
 Message to be shown in the toast.
+
+
+#### overlay-id
+
+number
 
 
 #### position

@@ -1,8 +1,9 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, AnimationController, Config, CssClassMap, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
-import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 
+import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { OverlayInterface } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -20,10 +21,9 @@ import mdLeaveAnimation from './animations/md.leave';
     theme: 'toast'
   }
 })
-export class Toast {
-  private animation: Animation | null;
+export class Toast implements OverlayInterface {
 
-  toastId: number;
+  private animation: Animation | null;
 
   @Element() private el: HTMLElement;
 
@@ -33,6 +33,7 @@ export class Toast {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'dom' }) dom: DomController;
+  @Prop() overlayId: number;
 
   /**
    * Animation to use when the toast is presented.

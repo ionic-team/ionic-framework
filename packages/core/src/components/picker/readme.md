@@ -59,6 +59,11 @@ Animation to use when the picker is presented.
 Animation to use when the picker is dismissed.
 
 
+#### overlayId
+
+number
+
+
 #### showBackdrop
 
 boolean
@@ -123,6 +128,11 @@ Animation to use when the picker is presented.
 
 
 Animation to use when the picker is dismissed.
+
+
+#### overlay-id
+
+number
 
 
 #### show-backdrop

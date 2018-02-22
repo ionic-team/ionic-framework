@@ -1,10 +1,12 @@
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 import { Animation, AnimationBuilder, AnimationController, Config, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
+import { getClassMap } from '../../utils/theme';
+import { OverlayInterface } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
-import { getClassMap } from '../../utils/theme';
 
 @Component({
   tag: 'ion-picker',
@@ -16,12 +18,11 @@ import { getClassMap } from '../../utils/theme';
     theme: 'picker'
   }
 })
-export class Picker {
+export class Picker implements OverlayInterface {
+
   private animation: Animation;
   private durationTimeout: any;
   private mode: string;
-
-  pickerId: number;
 
   @Element() private el: HTMLElement;
 
@@ -31,6 +32,7 @@ export class Picker {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'dom' }) dom: DomController;
+  @Prop() overlayId: number;
 
   /**
    * Animation to use when the picker is presented.
@@ -120,7 +122,7 @@ export class Picker {
 
     this.ionPickerWillPresent.emit();
 
-    this.el.style.zIndex = `${20000 + this.pickerId}`;
+    this.el.style.zIndex = `${20000 + this.overlayId}`;
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('pickerEnter', iosEnterAnimation);

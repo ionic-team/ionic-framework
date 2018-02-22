@@ -90,6 +90,11 @@ string
 The main message to be displayed in the alert.
 
 
+#### overlayId
+
+number
+
+
 #### subTitle
 
 string
@@ -168,6 +173,11 @@ Animation to use when the alert is dismissed.
 string
 
 The main message to be displayed in the alert.
+
+
+#### overlay-id
+
+number
 
 
 #### sub-title

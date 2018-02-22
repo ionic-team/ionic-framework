@@ -83,6 +83,11 @@ Animation to use when the loading indicator is presented.
 Animation to use when the loading indicator is dismissed.
 
 
+#### overlayId
+
+number
+
+
 #### showBackdrop
 
 boolean
@@ -162,6 +167,11 @@ Animation to use when the loading indicator is presented.
 
 
 Animation to use when the loading indicator is dismissed.
+
+
+#### overlay-id
+
+number
 
 
 #### show-backdrop

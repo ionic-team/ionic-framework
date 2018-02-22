@@ -108,6 +108,7 @@
 
   -webkit-overflow-scrolling: touch;
 
+  overscroll-behavior: contain;
 }
 
 .alert-ios .alert-tappable {

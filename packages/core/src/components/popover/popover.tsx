@@ -4,6 +4,7 @@ import { Animation, AnimationBuilder, AnimationController, Config, DomController
 import { DomFrameworkDelegate } from '../../utils/dom-framework-delegate';
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
+import { OverlayInterface, BACKDROP } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -20,8 +21,7 @@ import mdLeaveAnimation from './animations/md.leave';
     theme: 'popover'
   }
 })
-export class Popover {
-  popoverId: number;
+export class Popover implements OverlayInterface {
 
   private animation: Animation;
   private usersComponentElement: HTMLElement;
@@ -32,6 +32,7 @@ export class Popover {
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop({ mutable: true }) delegate: FrameworkDelegate;
+  @Prop() overlayId: number;
 
   /**
    * The color to use from your Sass `$colors` map.
@@ -150,7 +151,7 @@ export class Popover {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss();
+    this.dismiss(null, BACKDROP);
   }
 
   /**
@@ -164,7 +165,7 @@ export class Popover {
     }
     this.ionPopoverWillPresent.emit();
 
-    this.el.style.zIndex = `${10000 + this.popoverId}`;
+    this.el.style.zIndex = `${10000 + this.overlayId}`;
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('popoverEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);

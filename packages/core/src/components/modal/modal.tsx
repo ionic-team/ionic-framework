@@ -4,6 +4,7 @@ import { Animation, AnimationBuilder, AnimationController, Config, DomController
 import { DomFrameworkDelegate } from '../../utils/dom-framework-delegate';
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
+import { OverlayInterface, BACKDROP } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -21,8 +22,7 @@ import mdLeaveAnimation from './animations/md.leave';
     theme: 'modal'
   }
 })
-export class Modal {
-  modalId: number;
+export class Modal implements OverlayInterface {
 
   private animation: Animation;
   private usersComponentElement: HTMLElement;
@@ -32,7 +32,7 @@ export class Modal {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'dom' }) dom: DomController;
-
+  @Prop() overlayId: number;
   @Prop({ mutable: true }) delegate: FrameworkDelegate;
 
   /**
@@ -138,10 +138,7 @@ export class Modal {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    // const opts: NavOptions = {
-    //   minClickBlockDuration: 400
-    // };
-    this.dismiss();
+    this.dismiss(null, BACKDROP);
   }
 
   /**
@@ -156,7 +153,7 @@ export class Modal {
 
     this.ionModalWillPresent.emit();
 
-    this.el.style.zIndex = `${20000 + this.modalId}`;
+    this.el.style.zIndex = `${20000 + this.overlayId}`;
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('modalEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);

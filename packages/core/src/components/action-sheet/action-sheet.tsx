@@ -3,6 +3,7 @@ import { Animation, AnimationBuilder, AnimationController, Config, DomController
 
 import { domControllerAsync, isDef, playAnimationAsync } from '../../utils/helpers';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { OverlayInterface, BACKDROP } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -20,10 +21,10 @@ import mdLeaveAnimation from './animations/md.leave';
     theme: 'action-sheet'
   }
 })
-export class ActionSheet {
+export class ActionSheet implements OverlayInterface {
+
   mode: string;
   color: string;
-  actionSheetId: number;
 
   private animation: Animation | null = null;
 
@@ -32,6 +33,7 @@ export class ActionSheet {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'dom' }) dom: DomController;
+  @Prop() overlayId: number;
 
   /**
    * Animation to use when the action sheet is presented.
@@ -128,7 +130,7 @@ export class ActionSheet {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss();
+    this.dismiss(null, BACKDROP);
   }
 
   /**
@@ -138,7 +140,7 @@ export class ActionSheet {
   present() {
     this.ionActionSheetWillPresent.emit();
 
-    this.el.style.zIndex = `${20000 + this.actionSheetId}`;
+    this.el.style.zIndex = `${20000 + this.overlayId}`;
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('actionSheetEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);

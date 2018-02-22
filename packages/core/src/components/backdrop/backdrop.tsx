@@ -54,6 +54,7 @@ export class Backdrop {
 
   hostData() {
     return {
+      tabindex: '-1',
       class: {
         'backdrop-hide': !this.visible,
         'backdrop-no-tappable': !this.tappable,

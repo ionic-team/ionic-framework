@@ -76,6 +76,8 @@ ion-action-sheet {
   flex-shrink: 2;
 
   pointer-events: all;
+
+  overscroll-behavior: contain;
 }
 
 .action-sheet-group-cancel {

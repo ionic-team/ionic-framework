@@ -1,9 +1,8 @@
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, AnimationController, Config, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
-
-import { BACKDROP } from '../../utils/overlay-constants';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { OverlayInterface, BACKDROP } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -21,8 +20,7 @@ import mdLeaveAnimation from './animations/md.leave';
     theme: 'alert'
   }
 })
-export class Alert {
-  alertId: number;
+export class Alert implements OverlayInterface {
   mode: string;
   color: string;
 
@@ -36,6 +34,7 @@ export class Alert {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'dom' }) dom: DomController;
+  @Prop() overlayId: number;
 
   /**
    * Animation to use when the alert is presented.
@@ -147,7 +146,7 @@ export class Alert {
   present() {
     this.ionAlertWillPresent.emit();
 
-    this.el.style.zIndex = `${20000 + this.alertId}`;
+    this.el.style.zIndex = `${20000 + this.overlayId}`;
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('alertEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
@@ -347,14 +346,14 @@ export class Alert {
         ...themedClasses,
         ...getClassMap(this.cssClass)
       },
-      id: this.alertId
+      id: this.overlayId
     };
   }
 
   render() {
-    const hdrId = `${this.alertId}-hdr`;
-    const subHdrId = `${this.alertId}-sub-hdr`;
-    const msgId = `${this.alertId}-msg`;
+    const hdrId = `alert-${this.overlayId}-hdr`;
+    const subHdrId = `alert-${this.overlayId}-sub-hdr`;
+    const msgId = `alert-${this.overlayId}-msg`;
 
     if (this.title || !this.subTitle) {
       this.hdrId = hdrId;
@@ -385,7 +384,7 @@ export class Alert {
         label: i.label,
         checked: !!i.checked,
         disabled: !!i.disabled,
-        id: i.id ? i.id : `alert-input-${this.alertId}-${index}`,
+        id: i.id ? i.id : `alert-input-${this.overlayId}-${index}`,
         handler: i.handler ? i.handler : null,
         min: i.min ? i.min : null,
         max: i.max ? i.max : null

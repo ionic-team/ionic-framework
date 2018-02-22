@@ -7,6 +7,7 @@ import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
 import mdEnterAnimation from './animations/md.enter';
 import mdLeaveAnimation from './animations/md.leave';
+import { OverlayInterface, BACKDROP } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-loading',
@@ -18,10 +19,10 @@ import mdLeaveAnimation from './animations/md.leave';
     theme: 'loading'
   }
 })
-export class Loading {
+
+export class Loading implements OverlayInterface {
   color: string;
   mode: string;
-  loadingId: number;
 
   private animation: Animation;
   private durationTimeout: any;
@@ -31,6 +32,7 @@ export class Loading {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'dom' }) dom: DomController;
+  @Prop() overlayId: number;
 
   /**
    * Animation to use when the loading indicator is presented.
@@ -153,7 +155,7 @@ export class Loading {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss();
+    this.dismiss(null, BACKDROP);
   }
 
   /**
@@ -163,7 +165,7 @@ export class Loading {
   present() {
     this.ionLoadingWillPresent.emit();
 
-    this.el.style.zIndex = `${20000 + this.loadingId}`;
+    this.el.style.zIndex = `${20000 + this.overlayId}`;
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('loadingEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
