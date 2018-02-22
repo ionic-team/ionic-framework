@@ -4,15 +4,15 @@
 // ----------------------------------
 
 // Private color variables, use colors() to override
-$primary:         #488aff;
-$secondary:       #32db64;
-$tertiary:        #f4a942;
+$primary:         #3880ff;
+$secondary:       #0cd1e8;
+$tertiary:        #7044ff;
 $success:         #10dc60;
 $warning:         #ffce00;
-$danger:          #f53d3d;
-$light:           #f4f4f4;
+$danger:          #f04141;
+$light:           #f4f5f8;
 $medium:          #989aa2;
-$dark:            #222;
+$dark:            #222428;
 
 // Allows users to override an individual color
 $colors:              () !default;
