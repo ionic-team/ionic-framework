@@ -34,7 +34,7 @@ class Snapshot {
     console.log(`done processing ${this.queue.length} screenshots`);
     console.log(`${this.mismatches.length} snapshots had significant mismatches`);
     console.log(`Test Id: ${this.testId}`);
-    console.log(`URL: ${this.domain}/${this.groupId}/${this.appId}/${this.testId}`);
+    console.log(`URL: https://${this.domain}/${this.groupId}/${this.appId}/${this.testId}`);
   }
 
   async takeScreenshot(driver, options) {
