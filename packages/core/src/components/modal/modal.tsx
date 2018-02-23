@@ -139,7 +139,7 @@ export class Modal implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss(null, BACKDROP);
+    this.dismiss(null, BACKDROP).catch();
   }
 
   /**
@@ -151,12 +151,6 @@ export class Modal implements OverlayInterface {
       return Promise.reject('overlay already presented');
     }
     this.presented = true;
-
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-
     this.ionModalWillPresent.emit();
 
     this.el.style.zIndex = `${20000 + this.overlayId}`;
@@ -177,20 +171,12 @@ export class Modal implements OverlayInterface {
     // add the modal by default to the data being passed
     this.data = this.data || {};
     this.data.modal = this.el;
-    this.delegate.attachViewToDom(userComponentParent, this.component, this.data, cssClasses)
-     .then((mountingData) => {
-       this.usersComponentElement = mountingData.element;
-     });
 
-     return this.animationCtrl.create(animationBuilder, this.el)
-     .then(animation => {
-      this.animation = animation;
-      if (!this.willAnimate) this.animation = animation.duration(0);
-      return playAnimationAsync(animation);
-    })
-    .then((animation) => {
-      animation.destroy();
-      this.ionModalDidPresent.emit();
+    return this.delegate.attachViewToDom(userComponentParent, this.component, this.data, cssClasses)
+     .then((mountingData) => this.usersComponentElement = mountingData.element)
+     .then(() => this.playAnimation(animationBuilder))
+     .then(() => {
+       this.ionModalDidPresent.emit();
     });
   }
 
@@ -203,10 +189,6 @@ export class Modal implements OverlayInterface {
       return Promise.reject('overlay is not presented');
     }
     this.presented = false;
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
     this.ionModalWillDismiss.emit({data, role});
 
     if (!this.delegate) {
@@ -216,25 +198,31 @@ export class Modal implements OverlayInterface {
     // get the user's animation fn if one was provided
     const animationBuilder = this.leaveAnimation || this.config.get('modalLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-
-    return this.animationCtrl.create(animationBuilder, this.el)
-    .then(animation => {
-      this.animation = animation;
-      if (!this.willAnimate) {
-        this.animation = animation.duration(0);
-      }
-      return playAnimationAsync(animation);
-    })
-    .then((animation) => {
-      animation.destroy();
+    return this.playAnimation(animationBuilder).then(() => {
       this.ionModalDidDismiss.emit({data, role});
-    })
-    .then(() => {
       return domControllerAsync(this.dom.write, () => {
         const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_MODAL_CONTAINER_CLASS}`);
         this.delegate.removeViewFromDom(userComponentParent, this.usersComponentElement);
         this.el.parentNode.removeChild(this.el);
       });
+    });
+  }
+
+  private playAnimation(animationBuilder: AnimationBuilder) {
+    if (this.animation) {
+      this.animation.destroy();
+      this.animation = null;
+    }
+
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+      this.animation = animation;
+      if (!this.willAnimate) {
+        animation.duration(0);
+      }
+      return playAnimationAsync(animation);
+    }).then((animation) => {
+      animation.destroy();
+      this.animation = null;
     });
   }
 

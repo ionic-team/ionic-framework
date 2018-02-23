@@ -134,10 +134,6 @@ export class Popover implements OverlayInterface {
     this.ionPopoverDidLoad.emit();
   }
 
-  componentDidEnter() {
-    this.ionPopoverDidPresent.emit();
-  }
-
   componentDidUnload() {
     this.ionPopoverDidUnload.emit();
   }
@@ -152,7 +148,7 @@ export class Popover implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss(null, BACKDROP);
+    this.dismiss(null, BACKDROP).catch();
   }
 
   /**
@@ -165,10 +161,6 @@ export class Popover implements OverlayInterface {
     }
     this.presented = true;
 
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
     this.ionPopoverWillPresent.emit();
 
     this.el.style.zIndex = `${10000 + this.overlayId}`;
@@ -191,19 +183,11 @@ export class Popover implements OverlayInterface {
     this.data.modal = this.el;
 
     return this.delegate.attachViewToDom(userComponentParent, this.component, this.data, cssClasses)
-      .then((mountingData) => {
-        this.usersComponentElement = mountingData.element;
-        return domControllerAsync(this.dom.raf)
-        .then(() => this.animationCtrl.create(animationBuilder, this.el, this.ev));
-      })
-      .then((animation) => {
-        this.animation = animation;
-        if (!this.willAnimate) this.animation = animation.duration(0);
-        return playAnimationAsync(animation);
-      })
-      .then((animation) => {
-        animation.destroy();
-        this.componentDidEnter();
+      .then((mountingData) => this.usersComponentElement = mountingData.element)
+      .then(() => domControllerAsync(this.dom.raf))
+      .then(() => this.playAnimation(animationBuilder))
+      .then(() => {
+        this.ionPopoverDidPresent.emit();
       });
   }
 
@@ -229,22 +213,33 @@ export class Popover implements OverlayInterface {
 
     const animationBuilder = this.leaveAnimation || this.config.get('popoverLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-    return this.animationCtrl.create(animationBuilder, this.el)
-      .then(animation => {
-        this.animation = animation;
-        return playAnimationAsync(animation);
-      })
-      .then((animation) => {
-        animation.destroy();
-        this.ionPopoverDidDismiss.emit({ data, role });
-      })
-      .then(() => {
-        return domControllerAsync(this.dom.write, () => {
-          const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_POPOVER_CONTAINER_CLASS}`);
-          this.delegate.removeViewFromDom(userComponentParent, this.usersComponentElement);
-          this.el.parentNode.removeChild(this.el);
-        });
+    return this.playAnimation(animationBuilder).then(() => {
+      this.ionPopoverDidDismiss.emit({ data, role });
+
+      return domControllerAsync(this.dom.write, () => {
+        const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_POPOVER_CONTAINER_CLASS}`);
+        this.delegate.removeViewFromDom(userComponentParent, this.usersComponentElement);
+        this.el.parentNode.removeChild(this.el);
       });
+    });
+  }
+
+  private playAnimation(animationBuilder: AnimationBuilder) {
+    if (this.animation) {
+      this.animation.destroy();
+      this.animation = null;
+    }
+
+    return this.animationCtrl.create(animationBuilder, this.el, this.ev).then((animation) => {
+      this.animation = animation;
+      if (!this.willAnimate) {
+        animation.duration(0);
+      }
+      return playAnimationAsync(animation);
+    }).then(animation => {
+      animation.destroy();
+      this.animation = null;
+    })
   }
 
   hostData() {

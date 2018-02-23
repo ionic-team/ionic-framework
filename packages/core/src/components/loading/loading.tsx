@@ -129,19 +129,6 @@ export class Loading implements OverlayInterface {
     this.ionLoadingDidLoad.emit();
   }
 
-  componentDidEnter() {
-    // blur the currently active element
-    const activeElement: any = document.activeElement;
-    activeElement && activeElement.blur && activeElement.blur();
-
-    // If there is a duration, dismiss after that amount of time
-    if (typeof this.duration === 'number' && this.duration > 10) {
-      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
-    }
-
-    this.ionLoadingDidPresent.emit();
-  }
-
   componentDidUnload() {
     this.ionLoadingDidUnload.emit();
   }
@@ -156,7 +143,7 @@ export class Loading implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss(null, BACKDROP);
+    this.dismiss(null, BACKDROP).catch();
   }
 
   /**
@@ -177,7 +164,15 @@ export class Loading implements OverlayInterface {
 
     // build the animation and kick it off
     return this.playAnimation(animationBuilder).then(() => {
-      this.componentDidEnter();
+      // blur the currently active element
+      const activeElement: any = document.activeElement;
+      activeElement && activeElement.blur && activeElement.blur();
+
+      // If there is a duration, dismiss after that amount of time
+      if (typeof this.duration === 'number' && this.duration > 10) {
+        this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
+      }
+      this.ionLoadingDidPresent.emit();
     });
   }
 

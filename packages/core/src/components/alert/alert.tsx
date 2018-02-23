@@ -1,6 +1,6 @@
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, AnimationController, Config, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
-import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
+import { domControllerAsync, playAnimationAsync, autoFocus } from '../../utils/helpers';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 import { OverlayInterface, BACKDROP } from '../../utils/overlays';
 
@@ -137,7 +137,7 @@ export class Alert implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss(null, BACKDROP);
+    this.dismiss(null, BACKDROP).catch();
   }
 
   /**
@@ -158,10 +158,7 @@ export class Alert implements OverlayInterface {
 
     // build the animation and kick it off
     return this.playAnimation(animationBuilder).then(() => {
-      const firstInput = this.el.querySelector('[tabindex]') as HTMLElement;
-      if (firstInput) {
-        firstInput.focus();
-      }
+      autoFocus(this.el);
       this.ionAlertDidPresent.emit();
     });
   }
@@ -181,6 +178,8 @@ export class Alert implements OverlayInterface {
     const animationBuilder = this.leaveAnimation || this.config.get('alertLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
     return this.playAnimation(animationBuilder).then(() => {
+      this.ionAlertDidDismiss.emit({data, role});
+
       return domControllerAsync(this.dom.write, () => {
         this.el.parentNode.removeChild(this.el);
       });
@@ -274,7 +273,6 @@ export class Alert implements OverlayInterface {
     return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
       this.animation = animation;
       if (!this.willAnimate) {
-        // if the duration is 0, it won't actually animate I don't think
         animation.duration(0);
       }
       return playAnimationAsync(animation);

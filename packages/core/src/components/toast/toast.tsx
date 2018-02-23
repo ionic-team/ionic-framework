@@ -133,27 +133,17 @@ export class Toast implements OverlayInterface {
     }
     this.presented = true;
 
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
     this.ionToastWillPresent.emit();
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('toastEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
     // build the animation and kick it off
-    return this.animationCtrl.create(animationBuilder, this.el, this.position).then(animation => {
-      this.animation = animation;
-      if (!this.willAnimate) {
-        // if the duration is 0, it won't actually animate I don't think
-        // TODO - validate this
-        this.animation = animation.duration(0);
+    return this.playAnimation(animationBuilder).then(() => {
+      this.ionToastDidPresent.emit();
+      if (this.duration) {
+        setTimeout(() => this.dismiss(), this.duration);
       }
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      this.componentDidEnter();
     });
   }
 
@@ -167,45 +157,38 @@ export class Toast implements OverlayInterface {
     }
     this.presented = false;
 
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-
-    this.ionToastWillDismiss.emit({
-      data,
-      role
-    });
+    this.ionToastWillDismiss.emit({data, role});
 
     const animationBuilder = this.leaveAnimation || this.config.get('toastLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-    return this.animationCtrl.create(animationBuilder, this.el, this.position).then(animation => {
-      this.animation = animation;
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      this.ionToastDidDismiss.emit({
-        data,
-        role
-      });
-    }).then(() => {
+    return this.playAnimation(animationBuilder).then(() => {
+      this.ionToastDidDismiss.emit({data, role});
       return domControllerAsync(this.dom.write, () => {
         this.el.parentNode.removeChild(this.el);
       });
     });
   }
 
-  componentDidLoad() {
-    this.ionToastDidLoad.emit();
+  playAnimation(animationBuilder: AnimationBuilder) {
+    if (this.animation) {
+      this.animation.destroy();
+      this.animation = null;
+    }
+
+    return this.animationCtrl.create(animationBuilder, this.el, this.position).then(animation => {
+      this.animation = animation;
+      if (!this.willAnimate) {
+        animation.duration(0);
+      }
+      return playAnimationAsync(animation);
+    }).then((animation) => {
+      animation.destroy();
+      this.animation = null;
+    });
   }
 
-  componentDidEnter() {
-    this.ionToastDidPresent.emit();
-    if (this.duration) {
-      setTimeout(() => {
-        this.dismiss();
-      }, this.duration);
-    }
+  componentDidLoad() {
+    this.ionToastDidLoad.emit();
   }
 
   componentDidUnload() {

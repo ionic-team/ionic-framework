@@ -111,6 +111,47 @@ export class Picker implements OverlayInterface {
    */
   @Event() ionPickerDidUnload: EventEmitter<PickerEventDetail>;
 
+
+  componentDidLoad() {
+    if (!this.spinner) {
+      let defaultSpinner = 'lines';
+
+      if (this.mode === 'md') {
+        defaultSpinner = 'crescent';
+      }
+
+      this.spinner = this.config.get('pickerSpinner') || defaultSpinner;
+    }
+
+    if (this.showSpinner === null || this.showSpinner === undefined) {
+      this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
+    }
+    this.ionPickerDidLoad.emit();
+  }
+
+  componentDidUnload() {
+    this.ionPickerDidUnload.emit();
+  }
+
+
+  @Listen('ionDismiss')
+  protected onDismiss(ev: UIEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.dismiss();
+  }
+
+  @Listen('ionBackdropTap')
+  protected onBackdropTap() {
+    const cancelBtn = this.buttons.find(b => b.role === 'cancel');
+    if (cancelBtn) {
+      this.buttonClick(cancelBtn);
+    } else {
+      this.dismiss().catch();
+    }
+  }
+
   /**
    * Present the picker overlay after it has been created.
    */
@@ -134,17 +175,16 @@ export class Picker implements OverlayInterface {
     const animationBuilder = this.enterAnimation || this.config.get('pickerEnter', iosEnterAnimation);
 
     // build the animation and kick it off
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-      if (!this.willAnimate) {
-        // if the duration is 0, it won't actually animate I don't think
-        // TODO - validate this
-        this.animation = animation.duration(0);
+    return this.playAnimation(animationBuilder).then(() => {
+      // blur the currently active element
+      const activeElement: any = document.activeElement;
+      activeElement && activeElement.blur && activeElement.blur();
+
+      // If there is a duration, dismiss after that amount of time
+      if (typeof this.duration === 'number' && this.duration > 10) {
+        this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
       }
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      this.componentDidEnter();
+      this.ionPickerDidPresent.emit();
     });
   }
 
@@ -159,120 +199,16 @@ export class Picker implements OverlayInterface {
     this.presented = false;
     clearTimeout(this.durationTimeout);
 
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-
-    this.ionPickerWillDismiss.emit({
-      data,
-      role
-    });
+    this.ionPickerWillDismiss.emit({data, role});
 
     const animationBuilder = this.leaveAnimation || this.config.get('pickerLeave', iosLeaveAnimation);
 
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
+    return this.playAnimation(animationBuilder).then(() => {
+      this.ionPickerDidDismiss.emit({data, role});
       return domControllerAsync(this.dom.write, () => {
         this.el.parentNode.removeChild(this.el);
       });
-    }).then(() => {
-      this.ionPickerDidDismiss.emit({
-        data,
-        role
-      });
     });
-  }
-
-  componentDidLoad() {
-    if (!this.spinner) {
-      let defaultSpinner = 'lines';
-
-      if (this.mode === 'md') {
-        defaultSpinner = 'crescent';
-      }
-
-      this.spinner = this.config.get('pickerSpinner') || defaultSpinner;
-    }
-
-    if (this.showSpinner === null || this.showSpinner === undefined) {
-      this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
-    }
-    this.ionPickerDidLoad.emit();
-  }
-
-  componentDidEnter() {
-    // blur the currently active element
-    const activeElement: any = document.activeElement;
-    activeElement && activeElement.blur && activeElement.blur();
-
-    // If there is a duration, dismiss after that amount of time
-    if (typeof this.duration === 'number' && this.duration > 10) {
-      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
-    }
-
-    this.ionPickerDidPresent.emit();
-  }
-
-  componentDidUnload() {
-    this.ionPickerDidUnload.emit();
-  }
-
-
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  }
-
-  @Listen('ionBackdropTap')
-  protected onBackdropTap() {
-    const cancelBtn = this.buttons.find(b => b.role === 'cancel');
-    if (cancelBtn) {
-      this.buttonClick(cancelBtn);
-    } else {
-      this.dismiss();
-    }
-  }
-
-  buttonClick(button: PickerButton) {
-    // if (this.disabled) {
-    //   return;
-    // }
-
-    // keep the time of the most recent button click
-    let shouldDismiss = true;
-
-    if (button.handler) {
-      // a handler has been provided, execute it
-      // pass the handler the values from the inputs
-      if (button.handler(this.getSelected()) === false) {
-        // if the return value of the handler is false then do not dismiss
-        shouldDismiss = false;
-      }
-    }
-
-    if (shouldDismiss) {
-      this.dismiss();
-    }
-  }
-
-  getSelected(): any {
-    const selected: {[k: string]: any} = {};
-    this.columns.forEach((col, index) => {
-      const selectedColumn = col.options[col.selectedIndex];
-      selected[col.name] = {
-        text: selectedColumn ? selectedColumn.text : null,
-        value: selectedColumn ? selectedColumn.value : null,
-        columnIndex: index,
-      };
-    });
-    return selected;
   }
 
   @Method()
@@ -295,11 +231,63 @@ export class Picker implements OverlayInterface {
     return this.columns;
   }
 
+  private playAnimation(animationBuilder: AnimationBuilder) {
+    if (this.animation) {
+      this.animation.destroy();
+      this.animation = null;
+    }
+
+    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
+      this.animation = animation;
+      if (!this.willAnimate) {
+        animation.duration(0);
+      }
+      return playAnimationAsync(animation);
+    }).then(animation => {
+      animation.destroy();
+      this.animation = null;
+    })
+  }
+
+  private buttonClick(button: PickerButton) {
+    // if (this.disabled) {
+    //   return;
+    // }
+
+    // keep the time of the most recent button click
+    let shouldDismiss = true;
+
+    if (button.handler) {
+      // a handler has been provided, execute it
+      // pass the handler the values from the inputs
+      if (button.handler(this.getSelected()) === false) {
+        // if the return value of the handler is false then do not dismiss
+        shouldDismiss = false;
+      }
+    }
+
+    if (shouldDismiss) {
+      this.dismiss();
+    }
+  }
+
+  private getSelected(): any {
+    const selected: {[k: string]: any} = {};
+    this.columns.forEach((col, index) => {
+      const selectedColumn = col.options[col.selectedIndex];
+      selected[col.name] = {
+        text: selectedColumn ? selectedColumn.text : null,
+        value: selectedColumn ? selectedColumn.value : null,
+        columnIndex: index,
+      };
+    });
+    return selected;
+  }
+
   render() {
     // TODO: cssClass
 
-    const buttons = this.buttons
-    .map(b => {
+    const buttons = this.buttons.map(b => {
       if (typeof b === 'string') {
         b = { text: b };
       }

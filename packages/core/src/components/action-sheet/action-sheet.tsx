@@ -131,7 +131,7 @@ export class ActionSheet implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss(null, BACKDROP);
+    this.dismiss(null, BACKDROP).catch();
   }
 
   /**
