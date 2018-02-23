@@ -27,7 +27,7 @@ exports.config = {
     { components: ['ion-infinite-scroll', 'ion-infinite-scroll-content'] },
     { components: ['ion-input', 'ion-textarea'] },
     { components: ['ion-loading', 'ion-loading-controller'] },
-    { components: ['ion-menu', 'ion-menu-controller'] },
+    { components: ['ion-menu', 'ion-menu-controller', 'ion-menu-toggle', 'ion-menu-button'] },
     { components: ['ion-modal', 'ion-modal-controller'] },
     { components: ['ion-nav', 'ion-page', 'ion-back-button'] },
     { components: ['ion-popover', 'ion-popover-controller'] },

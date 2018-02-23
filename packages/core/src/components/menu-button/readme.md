@@ -1,4 +1,4 @@
-# ion-menu-toggle
+# ion-menu-button
 
 
 
@@ -22,6 +22,15 @@ string
 Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
 
 
+#### mode
+
+
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+
+
 ## Attributes
 
 #### auto-hide
@@ -37,6 +46,15 @@ active
 string
 
 Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
+
+
+#### mode
+
+
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 

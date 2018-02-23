@@ -4,8 +4,6 @@
  * and imports for stencil collections that might be configured in your stencil.config.js file
  */
 
-import 'ionicons';
-
 import {
   AnimationBuilder,
   FrameworkDelegate,
@@ -1681,6 +1679,38 @@ declare global {
       spinner?: string;
       translucent?: boolean;
       willAnimate?: boolean;
+    }
+  }
+}
+
+
+import {
+  MenuButton as IonMenuButton
+} from './components/menu-button/menu-button';
+
+declare global {
+  interface HTMLIonMenuButtonElement extends IonMenuButton, HTMLStencilElement {
+  }
+  var HTMLIonMenuButtonElement: {
+    prototype: HTMLIonMenuButtonElement;
+    new (): HTMLIonMenuButtonElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-menu-button": HTMLIonMenuButtonElement;
+  }
+  interface ElementTagNameMap {
+    "ion-menu-button": HTMLIonMenuButtonElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-menu-button": JSXElements.IonMenuButtonAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonMenuButtonAttributes extends HTMLAttributes {
+      autoHide?: boolean;
+      menu?: string;
+      mode?: 'ios' | 'md';
     }
   }
 }
