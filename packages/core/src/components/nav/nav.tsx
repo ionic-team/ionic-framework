@@ -1127,7 +1127,7 @@ export function updateNavStacks(enteringView: ViewController, leavingView: ViewC
       return Promise.all(destroyQueuePromises);
     }
     return null;
-  }).then(() => {
+  })/*.then(() => {
     // set which animation it should use if it wasn't set yet
     if (ti.requiresTransition && !ti.opts.animation) {
       ti.opts.animation = isDef(ti.removeStart)
@@ -1135,6 +1135,7 @@ export function updateNavStacks(enteringView: ViewController, leavingView: ViewC
         : (enteringView || leavingView).getTransitionName(ti.opts.direction);
     }
   });
+  */
 }
 
 export function destroyView(nav: Nav, delegate: FrameworkDelegate, viewController: ViewController) {
@@ -1373,7 +1374,7 @@ export function updateTab(nav: Nav, component: any, data: any, escapeHatch: Esca
 
   return isTabSelected(tabs, tab).then((isSelected) => {
     if (!isSelected) {
-      const promise = updateNav(nav, component, data, escapeHatch, isTopLevel);
+      const promise = updateNav(nav, component, data, escapeHatch, false);
       const app = document.querySelector('ion-app');
       return app.componentOnReady().then(() => {
         app.setExternalNavPromise(promise);
@@ -1407,15 +1408,16 @@ export function updateNav(nav: Nav,
   component: any, data: any, escapeHatch: EscapeHatch, isTopLevel: boolean): Promise<NavResult> {
 
 
+  const url = location.pathname;
   // check if the component is the top view
-  const activeViews = nav.getViews();
+  const activeViews = nav.getViews() as ViewController[];
   if (activeViews.length === 0) {
     // there isn't a view in the stack, so push one
     return nav.setRoot(component, data, {}, escapeHatch);
   }
 
   const currentView = activeViews[activeViews.length - 1];
-  if (currentView.component === component) {
+  if (currentView.url === url) {
     // the top view is already the component being activated, so there is no change needed
     return Promise.resolve(null);
   }
@@ -1424,7 +1426,7 @@ export function updateNav(nav: Nav,
   if (activeViews.length > 1) {
     // there's at least two views in the stack
     const previousView = activeViews[activeViews.length - 2];
-    if (previousView.component === component) {
+    if (previousView.url === url) {
       // cool, we match the previous view, so pop it
       return nav.pop(null, escapeHatch);
     }
@@ -1432,7 +1434,7 @@ export function updateNav(nav: Nav,
 
   // check if the component is already in the stack of views, in which case we pop back to it
   for (const view of activeViews) {
-    if (view.component === component) {
+    if (view.url === url) {
       // cool, we found the match, pop back to that bad boy
       return nav.popTo(view, null, escapeHatch);
     }
