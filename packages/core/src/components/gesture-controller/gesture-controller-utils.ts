@@ -1,11 +1,11 @@
-
+import { GestureController } from "./gesture-controller";
 
 export class GestureDelegate {
-  private ctrl: any|null;
+  private ctrl: GestureController|null;
 
   constructor(
     ctrl: any,
-    private gestureDelegateId: number,
+    private id: number,
     private name: string,
     private priority: number,
     private disableScroll: boolean
@@ -26,7 +26,7 @@ export class GestureDelegate {
       return false;
     }
 
-    return this.ctrl.start(this.name, this.gestureDelegateId, this.priority);
+    return this.ctrl.start(this.name, this.id, this.priority);
   }
 
   capture(): boolean {
@@ -34,9 +34,9 @@ export class GestureDelegate {
       return false;
     }
 
-    const captured = this.ctrl.capture(this.name, this.gestureDelegateId, this.priority);
+    const captured = this.ctrl.capture(this.name, this.id, this.priority);
     if (captured && this.disableScroll) {
-      this.ctrl.disableScroll(this.gestureDelegateId);
+      this.ctrl.disableScroll(this.id);
     }
 
     return captured;
@@ -44,10 +44,10 @@ export class GestureDelegate {
 
   release() {
     if (this.ctrl) {
-      this.ctrl.release(this.gestureDelegateId);
+      this.ctrl.release(this.id);
 
       if (this.disableScroll) {
-        this.ctrl.enableScroll(this.gestureDelegateId);
+        this.ctrl.enableScroll(this.id);
       }
     }
   }
@@ -64,7 +64,7 @@ export class BlockerDelegate {
   private ctrl: any|null;
 
   constructor(
-    private blockerDelegateId: number,
+    private id: number,
     ctrl: any,
     private disable: string[] | undefined,
     private disableScroll: boolean
@@ -78,12 +78,12 @@ export class BlockerDelegate {
     }
     if (this.disable) {
       for (const gesture of this.disable) {
-        this.ctrl.disableGesture(gesture, this.blockerDelegateId);
+        this.ctrl.disableGesture(gesture, this.id);
       }
     }
 
     if (this.disableScroll) {
-      this.ctrl.disableScroll(this.blockerDelegateId);
+      this.ctrl.disableScroll(this.id);
     }
   }
 
@@ -93,11 +93,11 @@ export class BlockerDelegate {
     }
     if (this.disable) {
       for (const gesture of this.disable) {
-        this.ctrl.enableGesture(gesture, this.blockerDelegateId);
+        this.ctrl.enableGesture(gesture, this.id);
       }
     }
     if (this.disableScroll) {
-      this.ctrl.enableScroll(this.blockerDelegateId);
+      this.ctrl.enableScroll(this.id);
     }
   }
 
@@ -107,19 +107,16 @@ export class BlockerDelegate {
   }
 }
 
-
 export interface GestureConfig {
   name: string;
-  priority: number;
-  disableScroll: boolean;
+  priority?: number;
+  disableScroll?: boolean;
 }
-
 
 export interface BlockerConfig {
   disable?: string[];
   disableScroll?: boolean;
 }
-
 
 export const BLOCK_ALL: BlockerConfig = {
   disable: ['menu-swipe', 'goback-swipe'],

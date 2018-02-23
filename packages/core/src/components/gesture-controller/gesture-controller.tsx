@@ -17,7 +17,11 @@ export class GestureController {
 
   @Method()
   create(config: GestureConfig): Promise<GestureDelegate> {
-    return Promise.resolve(new GestureDelegate(this, this.newID(), config.name, config.priority, config.disableScroll));
+    return Promise.resolve(new GestureDelegate(
+      this, this.newID(),
+      config.name,
+      config.priority ? config.priority : 0,
+      !!config.disableScroll));
   }
 
   @Method()
@@ -43,14 +47,15 @@ export class GestureController {
     }
     const requestedStart = this.requestedStart;
     let maxPriority = -10000;
-    for (const value of requestedStart.values()) {
+
+    requestedStart.forEach(value => {
       maxPriority = Math.max(maxPriority, value);
-    }
+    });
 
     if (maxPriority === priority) {
       this.capturedId = id;
-      this.requestedStart.clear();
-      this.ionGestureCaptured.emit(gestureName);
+      requestedStart.clear();
+      this.ionGestureCaptured && this.ionGestureCaptured.emit(gestureName);
       return true;
     }
     requestedStart.delete(id);
@@ -120,6 +125,7 @@ export class GestureController {
   }
 
   private newID(): number {
-    return this.gestureId++;
+    this.gestureId++;
+    return this.gestureId;
   }
 }
