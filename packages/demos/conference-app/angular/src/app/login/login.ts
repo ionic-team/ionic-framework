@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-
-import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 import { UserData } from '../providers/user-data';
 import { UserOptions } from '../interfaces/user-options';
@@ -16,18 +15,21 @@ export class LoginPage {
   login: UserOptions = { username: '', password: '' };
   submitted = false;
 
-  constructor(public navCtrl: NavController, public userData: UserData) { }
+  constructor(
+    private router: Router,
+    private userData: UserData) { }
 
   onLogin(form: NgForm) {
     this.submitted = true;
 
     if (form.valid) {
-      this.userData.login(this.login.username);
-      // this.navCtrl.push(TabsPage);
+      this.userData.login(this.login.username).then(() => {
+        return this.router.navigateByUrl('/app/tabs/(schedule:schedule)');
+      });
     }
   }
 
   onSignup() {
-    // this.navCtrl.push(SignUpPage);
+    return this.router.navigateByUrl('/sign-up');
   }
 }

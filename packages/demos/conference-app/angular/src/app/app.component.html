@@ -2,7 +2,134 @@
   <ion-split-pane>
 
     <ion-menu>
-      <app-menu></app-menu>
+      <ion-page>
+        <ion-header>
+          <ion-toolbar color="primary">
+            <ion-title>Menu</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+
+          <ion-list>
+            <ion-list-header>
+              Navigate
+            </ion-list-header>
+
+            <ion-item (click)="selectTab(0)">
+              <ion-icon slot="start" name="calendar"></ion-icon>
+              <ion-label>
+                Schedule
+              </ion-label>
+            </ion-item>
+
+            <!-- <ion-menu-toggle> -->
+              <ion-item (click)="selectTab(1)">
+                <ion-icon slot="start" name="contacts"></ion-icon>
+                <ion-label>
+                  Speakers
+                </ion-label>
+              </ion-item>
+            <!-- </ion-menu-toggle> -->
+
+            <!-- <ion-menu-toggle> -->
+              <ion-item (click)="selectTab(2)">
+                <ion-icon slot="start" name="map"></ion-icon>
+                <ion-label>
+                  Map
+                </ion-label>
+              </ion-item>
+            <!-- </ion-menu-toggle> -->
+
+            <!-- <ion-menu-toggle> -->
+              <ion-item (click)="selectTab(3)">
+                <ion-icon slot="start" name="information-circle"></ion-icon>
+                <ion-label>
+                  About
+                </ion-label>
+              </ion-item>
+            <!-- </ion-menu-toggle> -->
+          </ion-list>
+
+          <ion-list>
+            <ion-list-header>
+              Account
+            </ion-list-header>
+
+            <!-- <ion-menu-toggle> -->
+            <ion-item (click)="navigate('/account')">
+              <ion-icon slot="start" name="person"></ion-icon>
+              <ion-label>
+                Account
+              </ion-label>
+            </ion-item>
+            <!-- </ion-menu-toggle> -->
+
+            <!-- <ion-menu-toggle> -->
+            <ion-item (click)="navigate('/support')">
+              <ion-icon slot="start" name="help"></ion-icon>
+              <ion-label>
+                Support
+              </ion-label>
+            </ion-item>
+            <!-- </ion-menu-toggle> -->
+
+            <!-- <ion-menu-toggle> -->
+            <ion-item (click)="logout()">
+              <ion-icon slot="start" name="log-out"></ion-icon>
+              <ion-label>
+                Logout
+              </ion-label>
+            </ion-item>
+            <!-- </ion-menu-toggle> -->
+
+          </ion-list>
+
+          <ion-list>
+            <ion-list-header>
+              Account
+            </ion-list-header>
+
+            <!-- <ion-menu-toggle> -->
+            <ion-item (click)="navigate('/login')">
+              <ion-icon slot="start" name="log-in"></ion-icon>
+              <ion-label>
+                Login
+              </ion-label>
+            </ion-item>
+            <!-- </ion-menu-toggle> -->
+
+            <!-- <ion-menu-toggle> -->
+            <ion-item (click)="navigate('/support')">
+              <ion-icon slot="start" name="help"></ion-icon>
+              <ion-label>
+                Support
+              </ion-label>
+            </ion-item>
+            <!-- </ion-menu-toggle> -->
+
+            <!-- <ion-menu-toggle> -->
+            <ion-item (click)="navigate('/sign-up')">
+              <ion-icon slot="start" name="person-add"></ion-icon>
+              <ion-label>
+                Sign-up
+              </ion-label>
+            </ion-item>
+            <!-- </ion-menu-toggle> -->
+          </ion-list>
+
+          <ion-list>
+            <ion-list-header>
+              Tutorial
+            </ion-list-header>
+            <!-- <ion-menu-toggle> -->
+              <ion-item (click)="openTutorial()">
+                <ion-icon slot="start" name="hammer"></ion-icon>
+                <ion-label>Show Tutorial</ion-label>
+              </ion-item>
+            <!-- </ion-menu-toggle> -->
+          </ion-list>
+        </ion-content>
+      </ion-page>
     </ion-menu>
 
 

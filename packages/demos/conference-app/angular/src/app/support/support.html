@@ -14,11 +14,11 @@
   </ion-header>
 
   <ion-content>
-    <div class="logo">
+    <div class="support-logo">
       <img src="assets/img/appicon.svg" alt="Ionic Logo">
     </div>
 
-    <form #submitForm="ngForm" novalidate (ngSubmit)="submit(submitForm)">
+    <form>
       <ion-list no-lines>
         <ion-item>
           <ion-label stacked color="primary">Enter your support message below</ion-label>
@@ -31,7 +31,7 @@
       </p>
 
       <div padding>
-        <ion-button block type="submit">Submit</ion-button>
+        <ion-button block (click)="submit()">Submit</ion-button>
       </div>
     </form>
   </ion-content>

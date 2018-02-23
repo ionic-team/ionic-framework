@@ -31,38 +31,14 @@ export class SupportPage {
 
   submit(form: NgForm) {
     this.submitted = true;
-
-    if (form.valid) {
+    const toast = this.toastCtrl.create({
+      message: 'Your support request has been sent.',
+      duration: 3000
+    });
+    toast.onDidDismiss(() => {
       this.supportMessage = '';
       this.submitted = false;
-
-      const toast = this.toastCtrl.create({
-        message: 'Your support request has been sent.',
-        duration: 3000
-      });
-      toast.present();
-    }
-  }
-
-  // If the user enters text in the support question and then navigates
-  // without submitting first, ask if they meant to leave the page
-  ionViewCanLeave(): boolean | Promise<boolean> {
-    // If the support message is empty we should just navigate
-    if (!this.supportMessage || this.supportMessage.trim().length === 0) {
-      return true;
-    }
-
-    return new Promise((resolve: any, reject: any) => {
-      const alert = this.alertCtrl.create({
-        title: 'Leave this page?',
-        message: 'Are you sure you want to leave this page? Your support message will not be submitted.',
-        buttons: [
-          { text: 'Stay', handler: reject },
-          { text: 'Leave', role: 'cancel', handler: resolve }
-        ]
-      });
-
-      alert.present();
     });
+    return toast.present();
   }
 }
