@@ -130,7 +130,7 @@ export class Tab {
       // the tab's nav has not been initialized externally, so
       // check if we need to initiailize it
       return nav.componentOnReady()
-      .then(() => nav.activateFromTab());
+      .then(() => nav.activateFromTab(this.selected));
     });
   }
 

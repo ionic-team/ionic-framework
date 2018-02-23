@@ -265,8 +265,8 @@ export class Nav implements PublicNav, NavOutlet {
   }
 
   @Method()
-  activateFromTab() {
-    return activateFromTabImpl(this);
+  activateFromTab(tabAlreadySelected: boolean) {
+    return activateFromTabImpl(this, tabAlreadySelected);
   }
 
   canSwipeBack(): boolean {
@@ -628,11 +628,11 @@ export function navigateToUrl(nav: Nav, url: string, _method: string): Promise<a
   return nav.routerDelegate.pushUrlState(url);
 }
 
-export function activateFromTabImpl(nav: Nav): Promise<any> {
+export function activateFromTabImpl(nav: Nav, tabAlreadySelected: boolean): Promise<any> {
   return nav.onAllTransitionsComplete().then(() => {
     // if there is not a view set and it's not transitioning,
     // go ahead and set the root
-    if (nav.getViews().length === 0 && !nav.isTransitioning()) {
+    if ( (nav.getViews().length === 0 || tabAlreadySelected) && !nav.isTransitioning()) {
       return nav.setRoot(nav.root);
     }
 
