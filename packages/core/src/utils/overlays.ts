@@ -1,3 +1,5 @@
+import { AnimationBuilder, Animation } from "..";
+import { playAnimationAsync } from "./helpers";
 
 let lastId = 1;
 
@@ -56,8 +58,33 @@ export function removeLastOverlay(overlays: OverlayMap) {
   return toRemove ? toRemove.dismiss() : Promise.resolve();
 }
 
+export function overlayAnimation(
+  overlay: OverlayInterface,
+  animationBuilder: AnimationBuilder,
+  animate: boolean,
+  baseEl: HTMLElement,
+  opts: any
+): Promise<void> {
+  if (overlay.animation) {
+    overlay.animation.destroy();
+    overlay.animation = null;
+  }
+  return overlay.animationCtrl.create(animationBuilder, baseEl, opts).then(animation => {
+    overlay.animation = animation;
+    if (!animate) {
+      animation.duration(0);
+    }
+    return playAnimationAsync(animation);
+  }).then((animation) => {
+    animation.destroy();
+    overlay.animation = null;
+  });
+}
+
 export interface OverlayInterface {
   overlayId: number;
+  animation: Animation;
+  animationCtrl: HTMLIonAnimationControllerElement;
 
   present(): Promise<void>;
   dismiss(data?: any, role?: string): Promise<void>;

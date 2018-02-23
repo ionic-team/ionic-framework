@@ -1,9 +1,9 @@
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController, Config, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { Animation, AnimationBuilder, Config, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 
-import { domControllerAsync, isDef, playAnimationAsync } from '../../utils/helpers';
+import { domControllerAsync } from '../../utils/helpers';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { OverlayInterface, BACKDROP } from '../../utils/overlays';
+import { OverlayInterface, BACKDROP, overlayAnimation } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -23,15 +23,15 @@ import mdLeaveAnimation from './animations/md.leave';
 })
 export class ActionSheet implements OverlayInterface {
 
+  private presented = false;
+
   mode: string;
   color: string;
-
-  private presented = false;
-  private animation: Animation | null = null;
+  animation: Animation;
 
   @Element() private el: HTMLElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop() overlayId: number;
@@ -178,25 +178,8 @@ export class ActionSheet implements OverlayInterface {
     });
   }
 
-  private playAnimation(animationBuilder: AnimationBuilder) {
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-      // Check if prop animate is false or if the config for animate is defined/false
-      if (!this.willAnimate || (isDef(this.config.get('willAnimate')) && this.config.get('willAnimate') === false)) {
-        // if the duration is 0, it won't actually animate I don't think
-        // TODO - validate this
-        this.animation = animation.duration(0);
-      }
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      this.animation = null;
-    });
+  private playAnimation(animationBuilder: AnimationBuilder): Promise<void> {
+    return overlayAnimation(this, animationBuilder, this.willAnimate, this.el, undefined);
   }
 
   protected buttonClick(button: ActionSheetButton) {

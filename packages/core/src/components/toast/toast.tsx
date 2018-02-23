@@ -1,9 +1,9 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController, Config, CssClassMap, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { Animation, AnimationBuilder, Config, CssClassMap, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 
-import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
+import { domControllerAsync } from '../../utils/helpers';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { OverlayInterface } from '../../utils/overlays';
+import { OverlayInterface, overlayAnimation } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -24,14 +24,14 @@ import mdLeaveAnimation from './animations/md.leave';
 export class Toast implements OverlayInterface {
 
   private presented = false;
-  private animation: Animation | null;
 
   @Element() private el: HTMLElement;
 
   mode: string;
   color: string;
+  animation: Animation | null;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop() overlayId: number;
@@ -123,6 +123,22 @@ export class Toast implements OverlayInterface {
    */
   @Event() ionToastDidUnload: EventEmitter<ToastEventDetail>;
 
+  componentDidLoad() {
+    this.ionToastDidLoad.emit();
+  }
+
+  componentDidUnload() {
+    this.ionToastDidUnload.emit();
+  }
+
+  @Listen('ionDismiss')
+  protected onDismiss(ev: UIEvent) {
+    ev.stopPropagation();
+    ev.preventDefault();
+
+    this.dismiss();
+  }
+
   /**
    * Present the toast overlay after it has been created.
    */
@@ -169,38 +185,8 @@ export class Toast implements OverlayInterface {
     });
   }
 
-  playAnimation(animationBuilder: AnimationBuilder) {
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-
-    return this.animationCtrl.create(animationBuilder, this.el, this.position).then(animation => {
-      this.animation = animation;
-      if (!this.willAnimate) {
-        animation.duration(0);
-      }
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      this.animation = null;
-    });
-  }
-
-  componentDidLoad() {
-    this.ionToastDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionToastDidUnload.emit();
-  }
-
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
+  private playAnimation(animationBuilder: AnimationBuilder): Promise<void> {
+    return overlayAnimation(this, animationBuilder, this.willAnimate, this.el, this.position);
   }
 
   private wrapperClass(): CssClassMap {

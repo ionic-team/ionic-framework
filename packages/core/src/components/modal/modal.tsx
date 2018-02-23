@@ -1,10 +1,10 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController, Config, DomController, FrameworkDelegate, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { Animation, AnimationBuilder, Config, DomController, FrameworkDelegate, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 
 import { DomFrameworkDelegate } from '../../utils/dom-framework-delegate';
-import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
+import { domControllerAsync } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
-import { OverlayInterface, BACKDROP } from '../../utils/overlays';
+import { OverlayInterface, BACKDROP, overlayAnimation } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -25,14 +25,16 @@ import mdLeaveAnimation from './animations/md.leave';
 export class Modal implements OverlayInterface {
 
   private presented = false;
-  private animation: Animation;
   private usersComponentElement: HTMLElement;
+
+  animation: Animation;
 
   @Element() private el: HTMLElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'dom' }) dom: DomController;
+
   @Prop() overlayId: number;
   @Prop({ mutable: true }) delegate: FrameworkDelegate;
 
@@ -208,22 +210,8 @@ export class Modal implements OverlayInterface {
     });
   }
 
-  private playAnimation(animationBuilder: AnimationBuilder) {
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-      if (!this.willAnimate) {
-        animation.duration(0);
-      }
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      this.animation = null;
-    });
+  private playAnimation(animationBuilder: AnimationBuilder): Promise<void> {
+    return overlayAnimation(this, animationBuilder, this.willAnimate, this.el, undefined);
   }
 
   @Method()

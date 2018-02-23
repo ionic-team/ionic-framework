@@ -1,9 +1,9 @@
 import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController, Config, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { Animation, AnimationBuilder, Config, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 
-import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
+import { domControllerAsync } from '../../utils/helpers';
 import { getClassMap } from '../../utils/theme';
-import { OverlayInterface } from '../../utils/overlays';
+import { OverlayInterface, overlayAnimation } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -21,16 +21,17 @@ import iosLeaveAnimation from './animations/ios.leave';
 export class Picker implements OverlayInterface {
 
   private presented = false;
-  private animation: Animation;
   private durationTimeout: any;
   private mode: string;
+
+  animation: Animation;
 
   @Element() private el: HTMLElement;
 
   @State() private showSpinner: boolean = null;
   @State() private spinner: string;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop() overlayId: number;
@@ -231,22 +232,8 @@ export class Picker implements OverlayInterface {
     return this.columns;
   }
 
-  private playAnimation(animationBuilder: AnimationBuilder) {
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-      if (!this.willAnimate) {
-        animation.duration(0);
-      }
-      return playAnimationAsync(animation);
-    }).then(animation => {
-      animation.destroy();
-      this.animation = null;
-    })
+  private playAnimation(animationBuilder: AnimationBuilder): Promise<void> {
+    return overlayAnimation(this, animationBuilder, this.willAnimate, this.el, undefined);
   }
 
   private buttonClick(button: PickerButton) {
