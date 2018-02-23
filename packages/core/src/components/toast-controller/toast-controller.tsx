@@ -37,7 +37,7 @@ export class ToastController implements OverlayController {
    * Dismiss the open toast overlay.
    */
   @Method()
-  dismiss(data?: any, role?: any, toastId = -1) {
+  dismiss(data?: any, role?: string, toastId = -1) {
     return dismissOverlay(data, role, this.toasts, toastId);
   }
 
@@ -45,7 +45,7 @@ export class ToastController implements OverlayController {
    * Get the most recently opened toast overlay.
    */
   @Method()
-  getTop() {
+  getTop(): HTMLIonToastElement {
     return getTopOverlay(this.toasts);
   }
 }

@@ -48,7 +48,7 @@ export class ActionSheetController implements OverlayController {
    * Get the most recently opened action sheet overlay.
    */
   @Method()
-  getTop() {
+  getTop(): HTMLIonActionSheetElement {
     return getTopOverlay(this.actionSheets);
   }
 }

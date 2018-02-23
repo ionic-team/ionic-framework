@@ -36,7 +36,7 @@ export class PopoverController implements OverlayController {
    * Dismiss the open popover overlay.
    */
   @Method()
-  dismiss(data?: any, role?: any, popoverId = -1) {
+  dismiss(data?: any, role?: string, popoverId = -1) {
     return dismissOverlay(data, role, this.popovers, popoverId);
   }
 
@@ -44,7 +44,7 @@ export class PopoverController implements OverlayController {
    * Get the most recently opened popover overlay.
    */
   @Method()
-  getTop() {
+  getTop(): HTMLIonPopoverElement {
     return getTopOverlay(this.popovers);
   }
 }

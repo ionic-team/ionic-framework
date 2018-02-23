@@ -270,7 +270,7 @@ export interface PopoverOptions {
   enableBackdropDismiss?: boolean;
   translucent?: boolean;
   enterAnimation?: AnimationBuilder;
-  leavenimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
   cssClass?: string;
   ev: Event;
   delegate?: FrameworkDelegate;

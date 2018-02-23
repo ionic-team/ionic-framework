@@ -257,7 +257,7 @@ export interface ToastOptions {
   position?: string;
   translucent?: boolean;
   enterAnimation?: AnimationBuilder;
-  exitAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
 }
 
 export interface ToastEvent extends CustomEvent {

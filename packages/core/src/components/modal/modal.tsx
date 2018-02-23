@@ -250,7 +250,7 @@ export interface ModalOptions {
   showBackdrop?: boolean;
   enableBackdropDismiss?: boolean;
   enterAnimation?: AnimationBuilder;
-  exitAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
   cssClass?: string;
   delegate?: FrameworkDelegate;
 }

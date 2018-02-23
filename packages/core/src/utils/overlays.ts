@@ -1,28 +1,23 @@
 
-export const BACKDROP = 'backdrop';
-
-export interface OverlayInterface {
-  overlayId: number;
-
-  present(): Promise<void>;
-  dismiss(data?: any, role?: string): Promise<void>;
-}
-
-export interface HTMLIonOverlayElement extends HTMLStencilElement, OverlayInterface {}
-
-export type OverlayMap = Map<number, HTMLIonOverlayElement>;
-
 let lastId = 1;
 
-export function createOverlay<T extends HTMLIonOverlayElement>
-(tagName: string, opts: any): Promise<T> {
+/**
+ * Make all properties in T readonly
+ */
+export type PropDescriptions<K extends string> = {
+  [P in K]: any;
+}
+
+
+export function createOverlay<T extends HTMLIonOverlayElement & PropDescriptions<keyof B>, B>
+(tagName: string, opts: B): Promise<T> {
   // create ionic's wrapping ion-alert component
   const element = document.createElement(tagName) as T;
 
   // give this alert a unique id
   element.overlayId = lastId++;
 
-  // convert the passed in alert options into props
+  // convert the passed in overlay options into props
   // that get passed down into the new alert
   Object.assign(element, opts);
 
@@ -33,7 +28,7 @@ export function createOverlay<T extends HTMLIonOverlayElement>
   return element.componentOnReady();
 }
 
-export function dismissOverlay(data: any, role: any, overlays: OverlayMap, id: number): Promise<void> {
+export function dismissOverlay(data: any, role: string, overlays: OverlayMap, id: number): Promise<void> {
   id = id >= 0 ? id : getHighestId(overlays);
   const overlay = overlays.get(id);
   if (!overlay) {
@@ -42,13 +37,13 @@ export function dismissOverlay(data: any, role: any, overlays: OverlayMap, id: n
   return overlay.dismiss(data, role);
 }
 
-export function getTopOverlay(overlays: Map<number, any>) {
-  return overlays.get(getHighestId(overlays));
+export function getTopOverlay<T extends HTMLIonOverlayElement>(overlays: OverlayMap): T {
+  return overlays.get(getHighestId(overlays)) as T;
 }
 
-export function getHighestId(overlays: Map<number, any>) {
+export function getHighestId(overlays: OverlayMap) {
   let minimum = -1;
-  overlays.forEach((_, id: number) => {
+  overlays.forEach((_, id) => {
     if (id > minimum) {
       minimum = id;
     }
@@ -57,6 +52,20 @@ export function getHighestId(overlays: Map<number, any>) {
 }
 
 export function removeLastOverlay(overlays: OverlayMap) {
-  const toRemove = getTopOverlay(overlays);
+  const toRemove = getTopOverlay(overlays) as any;
   return toRemove ? toRemove.dismiss() : Promise.resolve();
 }
+
+export interface OverlayInterface {
+  overlayId: number;
+
+  present(): Promise<void>;
+  dismiss(data?: any, role?: string): Promise<void>;
+}
+
+
+export interface HTMLIonOverlayElement extends HTMLStencilElement, OverlayInterface {}
+
+export type OverlayMap = Map<number, HTMLIonOverlayElement>;
+
+export const BACKDROP = 'backdrop';

@@ -37,7 +37,7 @@ export class PickerController implements OverlayController {
    * Dismiss the open picker overlay.
    */
   @Method()
-  dismiss(data?: any, role?: any, pickerId = -1) {
+  dismiss(data?: any, role?: string, pickerId = -1) {
     return dismissOverlay(data, role, this.pickers, pickerId);
   }
 
@@ -45,7 +45,7 @@ export class PickerController implements OverlayController {
    * Get the most recently opened picker overlay.
    */
   @Method()
-  getTop() {
+  getTop(): HTMLIonPickerElement {
     return getTopOverlay(this.pickers);
   }
 }

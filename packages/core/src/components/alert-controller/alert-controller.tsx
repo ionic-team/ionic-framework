@@ -37,7 +37,7 @@ export class AlertController implements OverlayController {
    * Dismiss the open alert overlay.
    */
   @Method()
-  dismiss(data?: any, role?: any, alertId = -1) {
+  dismiss(data?: any, role?: string, alertId = -1) {
     return dismissOverlay(data, role, this.alerts, alertId);
   }
 
@@ -45,7 +45,7 @@ export class AlertController implements OverlayController {
    * Get the most recently opened alert overlay.
    */
   @Method()
-  getTop() {
+  getTop(): HTMLIonAlertElement {
     return getTopOverlay(this.alerts);
   }
 }

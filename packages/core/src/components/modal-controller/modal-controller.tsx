@@ -37,7 +37,7 @@ export class ModalController implements OverlayController {
    * Dismiss the open modal overlay.
    */
   @Method()
-  dismiss(data?: any, role?: any, modalId = -1) {
+  dismiss(data?: any, role?: string, modalId = -1) {
     return dismissOverlay(data, role, this.modals, modalId);
   }
 
