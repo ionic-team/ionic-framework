@@ -27,7 +27,10 @@ export class MenuToggle {
   onClick() {
     getMenuController().then(menuCtrl => {
       if (menuCtrl) {
-        return menuCtrl.toggle(this.menu);
+        const menu = menuCtrl.get(this.menu);
+        if (menu && menu.isActive()) {
+          return menuCtrl.toggle(this.menu);
+        }
       }
       return false;
     });
