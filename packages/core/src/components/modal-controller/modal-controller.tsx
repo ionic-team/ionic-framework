@@ -45,7 +45,7 @@ export class ModalController implements OverlayController {
    * Get the most recently opened modal overlay.
    */
   @Method()
-  getTop() {
+  getTop(): HTMLIonModalElement {
     return getTopOverlay(this.modals);
   }
 }

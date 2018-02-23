@@ -45,7 +45,7 @@ export class LoadingController implements OverlayController {
    * Get the most recently opened loading overlay.
    */
   @Method()
-  getTop() {
+  getTop(): HTMLIonLoadingElement {
     return getTopOverlay(this.loadings);
   }
 }

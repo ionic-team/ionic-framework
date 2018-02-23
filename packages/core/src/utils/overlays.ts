@@ -2,14 +2,14 @@
 let lastId = 1;
 
 /**
- * Make all properties in T readonly
+ * Convert an interface where all the properties are optional to mandatory.
  */
-export type PropDescriptions<K extends string> = {
+export type Requires<K extends string> = {
   [P in K]: any;
 }
 
-
-export function createOverlay<T extends HTMLIonOverlayElement & PropDescriptions<keyof B>, B>
+export function createOverlay
+<T extends HTMLIonOverlayElement & Requires<keyof B>, B>
 (tagName: string, opts: B): Promise<T> {
   // create ionic's wrapping ion-alert component
   const element = document.createElement(tagName) as T;
@@ -52,7 +52,7 @@ export function getHighestId(overlays: OverlayMap) {
 }
 
 export function removeLastOverlay(overlays: OverlayMap) {
-  const toRemove = getTopOverlay(overlays) as any;
+  const toRemove = getTopOverlay(overlays);
   return toRemove ? toRemove.dismiss() : Promise.resolve();
 }
 
