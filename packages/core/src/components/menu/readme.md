@@ -137,6 +137,9 @@ It reports the relative position.
 #### ionMenuDisable
 
 
+#### ionMenuRegister
+
+
 #### ionOpen
 
 Emitted when the menu is open.

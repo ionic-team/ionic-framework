@@ -30,8 +30,9 @@ export class MenuToggle {
 
   @Listen('body:ionMenuDisable')
   @Listen('body:ionSplitPaneVisible')
+  @Listen('body:ionMenuRegister')
   updateVisibility() {
-    getMenuController().then(menuCtrl => {
+    return getMenuController().then(menuCtrl => {
       if (menuCtrl) {
         const menu = menuCtrl.get(this.menu);
         if (menu && menu.isActive()) {

@@ -127,6 +127,8 @@ export class Menu {
 
   @Event() protected ionMenuDisable: EventEmitter;
 
+  @Event() protected ionMenuRegister: EventEmitter;
+
   componentWillLoad() {
     return this.lazyMenuCtrl.componentOnReady().then(menu => {
       this.menuCtrl = menu;
@@ -163,6 +165,7 @@ export class Menu {
     }
     // register this menu with the app's menu controller
     this.menuCtrl._register(this);
+    this.ionMenuRegister.emit();
 
     // mask it as enabled / disabled
     this.disabled = !isEnabled;
