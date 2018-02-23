@@ -1,6 +1,7 @@
 @import "../../themes/ionic.globals";
 
 ion-scroll {
+
   @include position(0, 0, 0, 0);
 
   position: absolute;
@@ -13,9 +14,6 @@ ion-scroll {
   will-change: scroll-position;
 
   contain: size style layout;
-
-  margin: 0 !important; // scss-lint:disable all
-  padding: 0 !important; // scss-lint:disable all
 
   .focus-input {
     @include margin(0);
@@ -33,7 +31,6 @@ ion-scroll {
     appearance: none;
   }
 
-
   &.overscroll::before,
   &.overscroll::after {
     position: absolute;
@@ -50,5 +47,74 @@ ion-scroll {
 
   &.overscroll::after {
     top: -1px;
+  }
+}
+
+
+.scroll-inner {
+
+  // Padding Margin
+  // --------------------------------------------------
+
+  $content-padding: 16px;
+  $content-margin: 16px;
+
+  &.padding-all {
+    @include padding($content-padding);
+  }
+
+  &.padding-top {
+    @include padding($content-padding, null, null, null);
+  }
+
+  &.padding-start {
+    @include padding-horizontal($content-padding, null);
+  }
+
+  &.padding-end {
+    @include padding-horizontal(null, $content-padding);
+  }
+
+  &.padding-bottom {
+    @include padding(null, null, $content-padding, null);
+  }
+
+  &.padding-vertical {
+    @include padding($content-padding, null, $content-padding, null);
+  }
+
+  &.padding-horizontal {
+    @include padding-horizontal($content-padding);
+  }
+
+  // Content Margin
+  // --------------------------------------------------
+
+  &.margin-all {
+    @include margin($content-margin);
+  }
+
+  &.margin-top {
+    @include margin($content-margin, null, null, null);
+  }
+
+  &.margin-start {
+    @include margin-horizontal($content-margin, null);
+  }
+
+  &.margin-end {
+    @include margin-horizontal(null, $content-margin);
+  }
+
+  &.margin-bottom {
+    @include margin(null, null, $content-margin, null);
+  }
+
+  &.margin-vertical {
+    @include margin($content-margin, null, $content-margin, null);
+  }
+
+  &.margin-horizontal {
+    @include margin-horizontal($content-margin);
   }
 }

@@ -13,10 +13,10 @@
 
   color: $text-ios-color;
   background-color: $background-ios-color;
-}
 
-.scroll-ios hr {
-  height: $hairlines-width;
+  hr {
+    height: $hairlines-width;
 
-  background-color: ion-color-alpha($background-ios-color-value, background-ios-color, $alpha-ios-low);
+    background-color: ion-color-alpha($background-ios-color-value, background-ios-color, $alpha-ios-low);
+  }
 }

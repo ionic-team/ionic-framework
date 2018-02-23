@@ -1,6 +1,7 @@
 import { Component, Element, Listen, Method, Prop } from '@stencil/core';
 import { Config, DomController } from '../../index';
 import { getPageElement } from '../../utils/helpers';
+import { ScrollSide } from '../scroll/scroll';
 
 @Component({
   tag: 'ion-content',
@@ -20,6 +21,9 @@ export class Content {
 
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'dom' }) dom: DomController;
+
+  @Prop() padding: ScrollSide;
+  @Prop() margin: ScrollSide;
 
   /**
    * If true, the content will scroll behind the headers
@@ -118,7 +122,12 @@ export class Content {
     this.resize();
 
     return [
-      <ion-scroll mode={this.mode} forceOverscroll={this.forceOverscroll}>
+      <ion-scroll
+        mode={this.mode}
+        padding={this.padding}
+        margin={this.margin}
+        forceOverscroll={this.forceOverscroll}
+      >
         <slot></slot>
       </ion-scroll>,
       <slot name='fixed'></slot>

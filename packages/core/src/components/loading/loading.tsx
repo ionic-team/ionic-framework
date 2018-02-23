@@ -2,12 +2,12 @@ import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@
 import { Animation, AnimationBuilder, Config, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 import { domControllerAsync } from '../../utils/helpers';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { OverlayInterface, BACKDROP, overlayAnimation } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
 import mdEnterAnimation from './animations/md.enter';
 import mdLeaveAnimation from './animations/md.leave';
-import { OverlayInterface, BACKDROP, overlayAnimation } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-loading',

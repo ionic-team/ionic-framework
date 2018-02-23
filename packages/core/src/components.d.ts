@@ -4,6 +4,8 @@
  * and imports for stencil collections that might be configured in your stencil.config.js file
  */
 
+import 'ionicons';
+
 import {
   AnimationBuilder,
   FrameworkDelegate,
@@ -18,6 +20,9 @@ import {
   AlertButton,
   AlertInput,
 } from './components/alert/alert';
+import {
+  ScrollSide,
+} from './components/scroll/scroll';
 import {
   ElementRef,
   Side,
@@ -765,6 +770,8 @@ declare global {
     export interface IonContentAttributes extends HTMLAttributes {
       forceOverscroll?: boolean;
       fullscreen?: boolean;
+      margin?: ScrollSide;
+      padding?: ScrollSide;
     }
   }
 }
@@ -2730,10 +2737,12 @@ declare global {
   namespace JSXElements {
     export interface IonScrollAttributes extends HTMLAttributes {
       forceOverscroll?: boolean;
+      margin?: ScrollSide;
       mode?: string;
       onionScroll?: ScrollCallback;
       onionScrollEnd?: ScrollCallback;
       onionScrollStart?: ScrollCallback;
+      padding?: ScrollSide;
     }
   }
 }

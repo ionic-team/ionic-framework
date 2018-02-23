@@ -34,6 +34,16 @@ and footers. This effect can easily be seen by setting the toolbar
 to transparent.
 
 
+#### margin
+
+
+
+
+#### padding
+
+
+
+
 ## Attributes
 
 #### force-overscroll
@@ -52,6 +62,16 @@ boolean
 If true, the content will scroll behind the headers
 and footers. This effect can easily be seen by setting the toolbar
 to transparent.
+
+
+#### margin
+
+
+
+
+#### padding
+
+
 
 
 ## Methods
