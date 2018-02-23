@@ -78,7 +78,7 @@ export class Menu {
   @Watch('disabled')
   protected disabledChanged(disabled: boolean) {
     this.updateState();
-    this.ionMenuDisable.emit({disabled});
+    this.ionMenuChange.emit({ disabled: disabled, open: this._isOpen});
   }
 
   /**
@@ -109,12 +109,6 @@ export class Menu {
   @Prop() maxEdgeStart = 50;
 
   /**
-   * Emitted when the sliding position changes.
-   * It reports the relative position.
-   */
-  @Event() ionDrag: EventEmitter;
-
-  /**
    * Emitted when the menu is open.
    */
   @Event() ionOpen: EventEmitter;
@@ -125,9 +119,7 @@ export class Menu {
   @Event() ionClose: EventEmitter;
 
 
-  @Event() protected ionMenuDisable: EventEmitter;
-
-  @Event() protected ionMenuRegister: EventEmitter;
+  @Event() protected ionMenuChange: EventEmitter<MenuChangeEventDetail>;
 
   componentWillLoad() {
     return this.lazyMenuCtrl.componentOnReady().then(menu => {
@@ -165,7 +157,7 @@ export class Menu {
     }
     // register this menu with the app's menu controller
     this.menuCtrl._register(this);
-    this.ionMenuRegister.emit();
+    this.ionMenuChange.emit({ disabled: !isEnabled, open: this._isOpen});
 
     // mask it as enabled / disabled
     this.disabled = !isEnabled;
@@ -394,7 +386,7 @@ export class Menu {
       this.contentEl.classList.add(MENU_CONTENT_OPEN);
 
       // emit open event
-      this.ionOpen.emit({ menu: this.el });
+      this.ionOpen.emit();
 
     } else {
       // enable swipe to go back gesture
@@ -406,7 +398,7 @@ export class Menu {
       this.backdropEl.classList.remove(SHOW_BACKDROP);
 
       // emit close event
-      this.ionClose.emit({ menu: this.el });
+      this.ionClose.emit();
     }
     return isOpen;
   }
@@ -489,3 +481,13 @@ const SHOW_MENU = 'show-menu';
 const SHOW_BACKDROP = 'show-backdrop';
 const MENU_CONTENT_OPEN = 'menu-content-open';
 const GESTURE_BLOCKER = 'goback-swipe';
+
+export interface MenuChangeEvent {
+  target: HTMLIonMenuElement;
+  detail: MenuChangeEventDetail;
+}
+
+export interface MenuChangeEventDetail {
+  disabled: boolean;
+  open: boolean;
+}

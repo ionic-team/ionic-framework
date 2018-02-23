@@ -28,9 +28,8 @@ export class MenuToggle {
     });
   }
 
-  @Listen('body:ionMenuDisable')
+  @Listen('body:ionMenuChange')
   @Listen('body:ionSplitPaneVisible')
-  @Listen('body:ionMenuRegister')
   updateVisibility() {
     return getMenuController().then(menuCtrl => {
       if (menuCtrl) {

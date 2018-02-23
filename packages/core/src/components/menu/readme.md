@@ -128,16 +128,7 @@ see the `menuType` in the [config](../../config/Config). Available options:
 Emitted when the menu is closed.
 
 
-#### ionDrag
-
-Emitted when the sliding position changes.
-It reports the relative position.
-
-
-#### ionMenuDisable
-
-
-#### ionMenuRegister
+#### ionMenuChange
 
 
 #### ionOpen
