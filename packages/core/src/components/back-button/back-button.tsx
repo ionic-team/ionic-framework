@@ -51,11 +51,11 @@ export class BackButton {
       return (
         <ion-nav-pop>
           <button class='back-button-inner-default'>
-          <span class='button-inner'>
-          <ion-icon name={backButtonIcon} slot='start' />
-          <span class='button-text'>{backButtonText}</span>
-          </span>
-          { this.mode === 'md' && <ion-ripple-effect/> }
+            <span class='button-inner'>
+              <ion-icon name={backButtonIcon} slot='start' />
+              <span class='button-text'>{backButtonText}</span>
+            </span>
+            { this.mode === 'md' && <ion-ripple-effect/> }
           </button>
         </ion-nav-pop>
       );
