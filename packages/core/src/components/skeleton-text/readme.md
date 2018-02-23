@@ -7,12 +7,22 @@
 
 ## Properties
 
+#### animated
+
+boolean
+
+
 #### width
 
 string
 
 
 ## Attributes
+
+#### animated
+
+boolean
+
 
 #### width
 

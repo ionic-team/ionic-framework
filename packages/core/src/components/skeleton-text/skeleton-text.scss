@@ -18,3 +18,19 @@ ion-skeleton-text span {
 
   font-size: 8px;
 }
+
+ion-skeleton-text.animated {
+  animation: shine 1s infinite;
+}
+
+@keyframes shine {
+  to {
+    background-position:
+      0 0,
+      100% 0,
+      120px 0,
+      120px 40px,
+      120px 80px,
+      120px 120px;
+  }
+}
