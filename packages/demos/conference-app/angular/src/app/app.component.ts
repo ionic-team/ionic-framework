@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
   loggedIn = false;
   constructor(
     private events: Events,
+    private menu: MenuController,
     private router: Router,
     private userData: UserData) {
   }
@@ -35,44 +36,54 @@ export class AppComponent implements OnInit {
   }
 
   checkLoginStatus() {
-// vanilla promise resolve does not work
     return this.userData.isLoggedIn().then((loggedIn) => {
-      this.loggedIn = true;
-      // this.loggedIn = loggedIn;
-      // console.log('this.loggedIn: ', this.loggedIn);
+      return this.updateLoggedInStatus(loggedIn);
     });
+  }
+
+  updateLoggedInStatus(loggedIn: boolean) {
+    setTimeout(() => {
+      this.loggedIn = loggedIn;
+    }, 300);
   }
 
   listenForLoginEvents() {
     this.events.subscribe('user:login', () => {
-      this.loggedIn = true;
+      this.updateLoggedInStatus(true);
     });
 
     this.events.subscribe('user:signup', () => {
-      this.loggedIn = true;
+      this.updateLoggedInStatus(true);
     });
 
     this.events.subscribe('user:logout', () => {
-      this.loggedIn = false;
+      this.updateLoggedInStatus(false);
     });
   }
 
-  selectTab(index: number) {
+  selectTab(index: number, fallbackUrl: string) {
     const tabs = document.querySelector('ion-tabs');
+    let promise: Promise<any> = null;
     if (tabs) {
-      return tabs.componentOnReady().then(() => {
+      promise = tabs.componentOnReady();
+      promise.then(() => {
         return tabs.select(index);
       });
+    } else {
+      promise = this.navigate(fallbackUrl);
     }
+    return promise.then(() => {
+      return this.menu.toggle();
+    });
   }
 
   navigate(url: string) {
-    this.router.navigateByUrl(url);
+    return this.router.navigateByUrl(url);
   }
 
   logout() {
     this.userData.logout().then(() => {
-      this.navigate('/app/tabs/(schedule:schedule)');
+      return this.navigate('/app/tabs/(schedule:schedule)');
     });
   }
 
