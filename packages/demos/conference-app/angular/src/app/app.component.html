@@ -15,7 +15,7 @@
               Navigate
             </ion-list-header>
 
-            <ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
               <ion-item (click)="selectTab(0, '/app/tabs/(schedule:schedule)')">
                 <ion-icon slot="start" name="calendar"></ion-icon>
                 <ion-label>
@@ -24,7 +24,7 @@
               </ion-item>
             </ion-menu-toggle>
 
-            <ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
               <ion-item (click)="selectTab(1, '/app/tabs/(speakers:speakers)')">
                 <ion-icon slot="start" name="contacts"></ion-icon>
                 <ion-label>
@@ -33,7 +33,7 @@
               </ion-item>
             </ion-menu-toggle>
 
-            <ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
               <ion-item (click)="selectTab(2, '/app/tabs/(map:map)')">
                 <ion-icon slot="start" name="map"></ion-icon>
                 <ion-label>
@@ -42,7 +42,7 @@
               </ion-item>
             </ion-menu-toggle>
 
-            <ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
               <ion-item (click)="selectTab(3, '/app/tabs/(about:about)')">
                 <ion-icon slot="start" name="information-circle"></ion-icon>
                 <ion-label>
@@ -57,7 +57,7 @@
               Account
             </ion-list-header>
 
-            <ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
               <ion-item (click)="navigate('/account')">
                 <ion-icon slot="start" name="person"></ion-icon>
                 <ion-label>
@@ -66,7 +66,7 @@
               </ion-item>
             </ion-menu-toggle>
 
-            <ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
               <ion-item (click)="navigate('/support')">
                 <ion-icon slot="start" name="help"></ion-icon>
                 <ion-label>
@@ -75,7 +75,7 @@
               </ion-item>
             </ion-menu-toggle>
 
-            <ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
               <ion-item (click)="logout()">
                 <ion-icon slot="start" name="log-out"></ion-icon>
                 <ion-label>
@@ -91,7 +91,7 @@
               Account
             </ion-list-header>
 
-            <ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
               <ion-item (click)="navigate('/login')">
                 <ion-icon slot="start" name="log-in"></ion-icon>
                 <ion-label>
@@ -100,7 +100,7 @@
               </ion-item>
             </ion-menu-toggle>
 
-            <ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
               <ion-item (click)="navigate('/support')">
                 <ion-icon slot="start" name="help"></ion-icon>
                 <ion-label>
@@ -109,7 +109,7 @@
               </ion-item>
             </ion-menu-toggle>
 
-            <ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
               <ion-item (click)="navigate('/sign-up')">
                 <ion-icon slot="start" name="person-add"></ion-icon>
                 <ion-label>
@@ -123,7 +123,7 @@
             <ion-list-header>
               Tutorial
             </ion-list-header>
-            <ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false">
               <ion-item (click)="openTutorial()">
                 <ion-icon slot="start" name="hammer"></ion-icon>
                 <ion-label>Show Tutorial</ion-label>
