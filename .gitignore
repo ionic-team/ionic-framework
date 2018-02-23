@@ -34,6 +34,8 @@ scripts/e2e/webpackEntryPoints.json
 scripts/build/e2e-generated-tsconfig.json
 *.css.ts
 
+stencil-stats.json
+
 # demo stuff
 demos/node_modules
 demos/polyfills
