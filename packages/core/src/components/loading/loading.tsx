@@ -24,6 +24,7 @@ export class Loading implements OverlayInterface {
   color: string;
   mode: string;
 
+  private presented = false;
   private animation: Animation;
   private durationTimeout: any;
 
@@ -162,7 +163,11 @@ export class Loading implements OverlayInterface {
    * Present the loading overlay after it has been created.
    */
   @Method()
-  present() {
+  present(): Promise<void> {
+    if(this.presented) {
+      return Promise.reject('overlay already presented');
+    }
+    this.presented = true;
     this.ionLoadingWillPresent.emit();
 
     this.el.style.zIndex = `${20000 + this.overlayId}`;
@@ -181,6 +186,10 @@ export class Loading implements OverlayInterface {
    */
   @Method()
   dismiss(data?: any, role?: string) {
+    if(!this.presented) {
+      return Promise.reject('overlay is not presented');
+    }
+    this.presented = false;
     clearTimeout(this.durationTimeout);
 
     this.ionLoadingWillDismiss.emit({data, role});

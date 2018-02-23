@@ -24,6 +24,7 @@ export class Alert implements OverlayInterface {
   mode: string;
   color: string;
 
+  private presented = false;
   private animation: Animation | null = null;
   private activeId: string;
   private inputType: string | null = null;
@@ -143,7 +144,11 @@ export class Alert implements OverlayInterface {
    * Present the alert overlay after it has been created.
    */
   @Method()
-  present() {
+  present(): Promise<void> {
+    if(this.presented) {
+      return Promise.reject('overlay already presented');
+    }
+    this.presented = true;
     this.ionAlertWillPresent.emit();
 
     this.el.style.zIndex = `${20000 + this.overlayId}`;
@@ -166,6 +171,10 @@ export class Alert implements OverlayInterface {
    */
   @Method()
   dismiss(data?: any, role?: string) {
+    if(!this.presented) {
+      return Promise.reject('overlay is not presented');
+    }
+    this.presented = false;
     this.ionAlertWillDismiss.emit({data, role});
 
     // get the user's animation fn if one was provided

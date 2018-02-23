@@ -26,6 +26,7 @@ export class ActionSheet implements OverlayInterface {
   mode: string;
   color: string;
 
+  private presented = false;
   private animation: Animation | null = null;
 
   @Element() private el: HTMLElement;
@@ -137,7 +138,12 @@ export class ActionSheet implements OverlayInterface {
    * Present the action sheet overlay after it has been created.
    */
   @Method()
-  present() {
+  present(): Promise<void> {
+    if(this.presented) {
+      return Promise.reject('overlay already presented');
+    }
+    this.presented = true;
+
     this.ionActionSheetWillPresent.emit();
 
     this.el.style.zIndex = `${20000 + this.overlayId}`;
@@ -156,6 +162,11 @@ export class ActionSheet implements OverlayInterface {
    */
   @Method()
   dismiss(data?: any, role?: string) {
+    if(!this.presented) {
+      return Promise.reject('overlay is not presented');
+    }
+    this.presented = false;
+
     this.ionActionSheetWillDismiss.emit({data, role});
 
     const animationBuilder = this.leaveAnimation || this.config.get('actionSheetLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);

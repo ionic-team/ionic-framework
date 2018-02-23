@@ -24,6 +24,7 @@ import mdLeaveAnimation from './animations/md.leave';
 })
 export class Modal implements OverlayInterface {
 
+  private presented = false;
   private animation: Animation;
   private usersComponentElement: HTMLElement;
 
@@ -145,7 +146,12 @@ export class Modal implements OverlayInterface {
    * Present the modal overlay after it has been created.
    */
   @Method()
-  present() {
+  present(): Promise<void> {
+    if(this.presented) {
+      return Promise.reject('overlay already presented');
+    }
+    this.presented = true;
+
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
@@ -193,6 +199,10 @@ export class Modal implements OverlayInterface {
    */
   @Method()
   dismiss(data?: any, role?: string) {
+    if(!this.presented) {
+      return Promise.reject('overlay is not presented');
+    }
+    this.presented = false;
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;

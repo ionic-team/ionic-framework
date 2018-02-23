@@ -20,6 +20,7 @@ import iosLeaveAnimation from './animations/ios.leave';
 })
 export class Picker implements OverlayInterface {
 
+  private presented = false;
   private animation: Animation;
   private durationTimeout: any;
   private mode: string;
@@ -114,7 +115,12 @@ export class Picker implements OverlayInterface {
    * Present the picker overlay after it has been created.
    */
   @Method()
-  present() {
+  present(): Promise<void> {
+    if(this.presented) {
+      return Promise.reject('overlay already presented');
+    }
+    this.presented = true;
+
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
@@ -147,6 +153,10 @@ export class Picker implements OverlayInterface {
    */
   @Method()
   dismiss(data?: any, role?: string) {
+    if(!this.presented) {
+      return Promise.reject('overlay is not presented');
+    }
+    this.presented = false;
     clearTimeout(this.durationTimeout);
 
     if (this.animation) {

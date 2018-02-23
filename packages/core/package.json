@@ -37,6 +37,7 @@
     "deploy": "np --any-branch",
     "version": "npm run clean && stencil build --docs",
     "dev": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server\"",
+    "devapp": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server --broadcast\"",
     "e2e": "node ./scripts/e2e",
     "e2e-debug": "node --inspect --debug-brk ./scripts/e2e",
     "lint": "npm run tslint & npm run sass-lint",
