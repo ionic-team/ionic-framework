@@ -2980,6 +2980,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSkeletonTextAttributes extends HTMLAttributes {
+      animated?: boolean;
       width?: string;
     }
   }

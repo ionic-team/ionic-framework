@@ -15,6 +15,8 @@ export class SkeletonText {
   @Prop() width = '100%';
   @Prop() animated = false;
   render () {
-    return <span style={{width: this.width}} class={this.animated ? 'animated' : ''}>&nbsp;</span>;
+    return (<div class={this.animated ? 'animated' : ''}>
+              <span style={{width: this.width}}>&nbsp;</span>
+            </div>);
   }
 }
