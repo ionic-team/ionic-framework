@@ -163,14 +163,7 @@ export class Picker implements OverlayInterface {
     }
     this.presented = true;
 
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-
     this.ionPickerWillPresent.emit();
-
-    this.el.style.zIndex = `${20000 + this.overlayId}`;
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('pickerEnter', iosEnterAnimation);
@@ -269,6 +262,14 @@ export class Picker implements OverlayInterface {
       };
     });
     return selected;
+  }
+
+  hostData() {
+    return {
+      style: {
+        zIndex: 20000 + this.overlayId,
+      }
+    }
   }
 
   render() {

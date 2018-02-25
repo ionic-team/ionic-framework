@@ -76,6 +76,16 @@ export function overlayAnimation(
   });
 }
 
+export function autoFocus(containerEl: HTMLElement): HTMLElement {
+  const focusableEls = containerEl.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
+  if (focusableEls.length > 0) {
+    const el = focusableEls[0] as HTMLInputElement;
+    el.focus();
+    return el;
+  }
+  return null;
+}
+
 export interface OverlayInterface {
   overlayId: number;
   animation: Animation|undefined;

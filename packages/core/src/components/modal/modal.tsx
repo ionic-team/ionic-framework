@@ -155,8 +155,6 @@ export class Modal implements OverlayInterface {
     this.presented = true;
     this.ionModalWillPresent.emit();
 
-    this.el.style.zIndex = `${20000 + this.overlayId}`;
-
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('modalEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
@@ -220,6 +218,14 @@ export class Modal implements OverlayInterface {
   @Method()
   getUserComponentContainer(): HTMLElement {
     return this.el.querySelector(`.${USER_COMPONENT_MODAL_CONTAINER_CLASS}`);
+  }
+
+  hostData() {
+    return {
+      style: {
+        zIndex: 20000 + this.overlayId,
+      }
+    }
   }
 
   render() {

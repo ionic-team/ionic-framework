@@ -158,8 +158,6 @@ export class Loading implements OverlayInterface {
     this.presented = true;
     this.ionLoadingWillPresent.emit();
 
-    this.el.style.zIndex = `${20000 + this.overlayId}`;
-
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('loadingEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
@@ -208,6 +206,9 @@ export class Loading implements OverlayInterface {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'loading-translucent') : {};
 
     return {
+      style: {
+        zIndex: 20000 + this.overlayId,
+      },
       class: {
         ...themedClasses,
         ...getClassMap(this.cssClass)

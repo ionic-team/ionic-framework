@@ -146,8 +146,6 @@ export class ActionSheet implements OverlayInterface {
 
     this.ionActionSheetWillPresent.emit();
 
-    this.el.style.zIndex = `${20000 + this.overlayId}`;
-
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('actionSheetEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
@@ -198,6 +196,9 @@ export class ActionSheet implements OverlayInterface {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'action-sheet-translucent') : {};
 
     return {
+      style: {
+        zIndex: 20000 + this.overlayId,
+      },
       class: {
         ...themedClasses,
         ...getClassMap(this.cssClass)

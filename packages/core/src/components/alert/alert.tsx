@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, Config, CssClassMap, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
-import { autoFocus, domControllerAsync } from '../../utils/helpers';
+import { domControllerAsync } from '../../utils/helpers';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { BACKDROP, OverlayInterface, overlayAnimation } from '../../utils/overlays';
+import { BACKDROP, OverlayInterface, autoFocus, overlayAnimation } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -128,10 +128,6 @@ export class Alert implements OverlayInterface {
     this.ionAlertDidLoad.emit();
   }
 
-  componentDidEnter() {
-    this.ionAlertDidPresent.emit();
-  }
-
   componentDidUnload() {
     this.ionAlertDidUnload.emit();
   }
@@ -151,8 +147,6 @@ export class Alert implements OverlayInterface {
     }
     this.presented = true;
     this.ionAlertWillPresent.emit();
-
-    this.el.style.zIndex = `${20000 + this.overlayId}`;
 
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('alertEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
@@ -337,6 +331,9 @@ export class Alert implements OverlayInterface {
 
     return {
       role: 'alertdialog',
+      style: {
+        zIndex: 20000 + this.overlayId,
+      },
       class: {
         ...themedClasses,
         ...getClassMap(this.cssClass)

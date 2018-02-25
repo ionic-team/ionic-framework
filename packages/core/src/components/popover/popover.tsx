@@ -131,6 +131,12 @@ export class Popover implements OverlayInterface {
    */
   @Event() ionPopoverDidUnload: EventEmitter<PopoverEventDetail>;
 
+  componentWillLoad() {
+    if (!this.delegate) {
+      this.delegate = new DomFrameworkDelegate();
+    }
+  }
+
   componentDidLoad() {
     this.ionPopoverDidLoad.emit();
   }
@@ -164,15 +170,10 @@ export class Popover implements OverlayInterface {
 
     this.ionPopoverWillPresent.emit();
 
-    this.el.style.zIndex = `${10000 + this.overlayId}`;
-
     // get the user's animation fn if one was provided
     const animationBuilder = this.enterAnimation || this.config.get('popoverEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
     const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_POPOVER_CONTAINER_CLASS}`);
-    if (!this.delegate) {
-      this.delegate = new DomFrameworkDelegate();
-    }
 
     const cssClasses: string[] = [];
     if (this.cssClass && this.cssClass.length) {
@@ -203,16 +204,8 @@ export class Popover implements OverlayInterface {
       return Promise.reject('overlay is not presented');
     }
     this.presented = false;
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
 
     this.ionPopoverWillDismiss.emit({ data, role });
-
-    if (!this.delegate) {
-      this.delegate = new DomFrameworkDelegate();
-    }
 
     const animationBuilder = this.leaveAnimation || this.config.get('popoverLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
@@ -235,6 +228,9 @@ export class Popover implements OverlayInterface {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'popover-translucent') : {};
 
     return {
+      style: {
+        zIndex: 10000 + this.overlayId,
+      },
       class: {
         ...themedClasses
       }
