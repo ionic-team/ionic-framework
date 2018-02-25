@@ -12,10 +12,10 @@
     "ionicons": "4.0.0-16"
   },
   "devDependencies": {
-    "@stencil/core": "0.6.7",
+    "@stencil/core": "0.6.8",
     "@stencil/dev-server": "latest",
     "@stencil/postcss": "0.0.2",
-    "@stencil/sass": "0.0.2",
+    "@stencil/sass": "0.0.3",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.6",
     "autoprefixer": "^8.0.0",
