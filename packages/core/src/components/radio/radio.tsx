@@ -1,6 +1,7 @@
 import { BlurEvent, CheckedInputChangeEvent, FocusEvent, RadioButtonInput, StyleEvent } from '../../utils/input-interfaces';
-import { Component, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad, CssClassMap, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
+import { CssClassMap } from '../../index';
 
 
 @Component({

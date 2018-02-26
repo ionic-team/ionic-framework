@@ -1,4 +1,5 @@
-import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
+import { CssClassMap } from '../../index';
 import { HTMLIonSelectOptionElementEvent } from '../select-option/select-option';
 import { BlurEvent, FocusEvent, SelectInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
 

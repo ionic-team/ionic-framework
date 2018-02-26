@@ -1,4 +1,5 @@
-import { Component, CssClassMap, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { CssClassMap } from '../../index';
 
 import {
   DatetimeData,

@@ -1,4 +1,5 @@
-import { Component, CssClassMap, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { CssClassMap } from '../../index';
 import { BlurEvent, FocusEvent } from '../../utils/input-interfaces';
 import { getButtonClassMap, getElementClassMap } from '../../utils/theme';
 

@@ -1,5 +1,6 @@
 import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
-import { Component, CssClassMap, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { CssClassMap } from '../../index';
 import { deferEvent } from '../../utils/helpers';
 
 

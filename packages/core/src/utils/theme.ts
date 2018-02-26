@@ -1,4 +1,4 @@
-import { CssClassMap } from '@stencil/core';
+import { CssClassMap } from '../index';
 
 /**
  * Create the mode and color classes for the component based on the classes passed in
