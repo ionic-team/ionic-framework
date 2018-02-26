@@ -282,6 +282,7 @@ export class Alert implements OverlayInterface {
                 {i.label}
               </div>
             </div>
+            {this.mode==="md" ? <ion-ripple-effect /> : null}
           </button>
         ))}
       </div>
@@ -301,6 +302,7 @@ export class Alert implements OverlayInterface {
                 {i.label}
               </div>
             </div>
+            {this.mode==="md" ? <ion-ripple-effect /> : null}
           </button>
         ))}
       </div>

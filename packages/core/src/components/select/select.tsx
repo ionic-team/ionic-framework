@@ -28,6 +28,7 @@ export class Select {
   private labelId: string;
   private overlay: ActionSheet | Alert | Popover;
   private styleTmr: any;
+  private mode: string;
 
   @Element() private el: HTMLIonSelectElement;
 
@@ -520,6 +521,7 @@ export class Select {
         onBlur={this.onBlur.bind(this)}
         class='select-cover'>
         <slot></slot>
+        {this.mode==="md" ? <ion-ripple-effect /> : null}
       </button>,
       <input type='hidden' name={this.name} value={this.value}/>
     ];
