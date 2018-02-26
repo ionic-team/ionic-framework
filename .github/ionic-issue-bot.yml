@@ -14,3 +14,12 @@ support:
   close: true
   lock: true
   dryRun: false
+  
+incomplete:
+  label: missing template
+  message: >
+    Hello! While we appreciate you opening an issue with us I am going to close this issue and ask that you
+    open a new issue that has the template fully filled out, please. Thanks for using Ionic!
+  close: true
+  lock: true
+  dryRun: false
