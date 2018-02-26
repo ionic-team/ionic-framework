@@ -84,7 +84,7 @@ export class Popover implements OverlayInterface {
   /**
    * The event to pass to the popover animation.
    */
-  @Prop() ev: Event;
+  @Prop() ev: any;
 
   /**
    * If true, a backdrop will be displayed behind the popover. Defaults to `true`.

@@ -33,9 +33,6 @@ import {
   PickerColumn as PickerColumn2,
 } from './components/picker/picker';
 import {
-  Event,
-} from '@stencil/core';
-import {
   ScrollCallback,
 } from './components/scroll/scroll';
 import {
@@ -2268,7 +2265,7 @@ declare global {
       delegate?: FrameworkDelegate;
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
-      ev?: Event;
+      ev?: any;
       leaveAnimation?: AnimationBuilder;
       mode?: 'ios' | 'md';
       overlayId?: number;
