@@ -259,9 +259,6 @@ Emitted before the modal has presented.
 Dismiss the modal overlay after it has been presented.
 
 
-#### getUserComponentContainer()
-
-
 #### present()
 
 Present the modal overlay after it has been created.

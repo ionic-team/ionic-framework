@@ -26,7 +26,6 @@ export class Router {
   @Element() el: HTMLElement;
 
   componentDidLoad() {
-    // read config
     const tree = readRoutes(this.el);
     this.routes = flattenRouterTree(tree);
     this.redirects = readRedirects(this.el);

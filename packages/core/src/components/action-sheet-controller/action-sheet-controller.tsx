@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { ActionSheetEvent, ActionSheetOptions, OverlayController } from '../../index';
+import { ActionSheetOptions, OverlayController } from '../../index';
 import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({
@@ -11,14 +11,14 @@ export class ActionSheetController implements OverlayController {
 
 
   @Listen('body:ionActionSheetWillPresent')
-  protected actionSheetWillPresent(ev: ActionSheetEvent) {
+  protected actionSheetWillPresent(ev: any) {
     this.actionSheets.set(ev.target.overlayId, ev.target);
   }
 
 
   @Listen('body:ionActionSheetWillDismiss')
   @Listen('body:ionActionSheetDidUnload')
-  protected actionSheetWillDismiss(ev: ActionSheetEvent) {
+  protected actionSheetWillDismiss(ev: any) {
     this.actionSheets.delete(ev.target.overlayId);
   }
 

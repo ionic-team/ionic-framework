@@ -1,9 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, CssClassMap, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { Animation, AnimationBuilder, Config, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 
-import { domControllerAsync } from '../../utils/helpers';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { OverlayInterface, overlayAnimation } from '../../utils/overlays';
+import { OverlayInterface, dismiss, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -23,17 +22,16 @@ import mdLeaveAnimation from './animations/md.leave';
 })
 export class Toast implements OverlayInterface {
 
-  private presented = false;
+  presented = false;
 
-  @Element() private el: HTMLElement;
+  @Element() el: HTMLElement;
 
   mode: string;
   color: string;
-  animation: Animation | null;
+  animation: Animation | undefined;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
   @Prop() overlayId: number;
 
   /**
@@ -101,22 +99,22 @@ export class Toast implements OverlayInterface {
   /**
    * Emitted after the toast has presented.
    */
-  @Event() ionToastDidPresent: EventEmitter<ToastEventDetail>;
+  @Event({eventName: 'ionToastDidPresent'}) didPresent: EventEmitter<ToastEventDetail>;
 
   /**
    * Emitted before the toast has presented.
    */
-  @Event() ionToastWillPresent: EventEmitter<ToastEventDetail>;
+  @Event({eventName: 'ionToastWillPresent'}) willPresent: EventEmitter<ToastEventDetail>;
 
   /**
    * Emitted before the toast has dismissed.
    */
-  @Event() ionToastWillDismiss: EventEmitter<ToastDismissEventDetail>;
+  @Event({eventName: 'ionToastWillDismiss'}) willDismiss: EventEmitter<ToastDismissEventDetail>;
 
   /**
    * Emitted after the toast has dismissed.
    */
-  @Event() ionToastDidDismiss: EventEmitter<ToastDismissEventDetail>;
+  @Event({eventName: 'ionToastDidDismiss'}) didDismiss: EventEmitter<ToastDismissEventDetail>;
 
   /**
    * Emitted after the toast has unloaded.
@@ -144,19 +142,7 @@ export class Toast implements OverlayInterface {
    */
   @Method()
   present(): Promise<void> {
-    if (this.presented) {
-      return Promise.reject('overlay already presented');
-    }
-    this.presented = true;
-
-    this.ionToastWillPresent.emit();
-
-    // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('toastEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
-
-    // build the animation and kick it off
-    return this.playAnimation(animationBuilder).then(() => {
-      this.ionToastDidPresent.emit();
+    return present(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position).then(() => {
       if (this.duration) {
         setTimeout(() => this.dismiss(), this.duration);
       }
@@ -167,35 +153,10 @@ export class Toast implements OverlayInterface {
    * Dismiss the toast overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string) {
-    if (!this.presented) {
-      return Promise.reject('overlay is not presented');
-    }
-    this.presented = false;
-
-    this.ionToastWillDismiss.emit({data, role});
-
-    const animationBuilder = this.leaveAnimation || this.config.get('toastLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
-
-    return this.playAnimation(animationBuilder).then(() => {
-      this.ionToastDidDismiss.emit({data, role});
-      return domControllerAsync(this.dom.write, () => {
-        this.el.parentNode.removeChild(this.el);
-      });
-    });
+  dismiss(data?: any, role?: string): Promise<void> {
+    return dismiss(this, data, role, 'toastLeave', iosLeaveAnimation, mdLeaveAnimation, this.position);
   }
 
-  private playAnimation(animationBuilder: AnimationBuilder): Promise<void> {
-    return overlayAnimation(this, animationBuilder, this.willAnimate, this.el, this.position);
-  }
-
-  private wrapperClass(): CssClassMap {
-    const position = this.position ? this.position : 'bottom';
-    return {
-      'toast-wrapper': true,
-      [`toast-${position}`]: true
-    };
-  }
 
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'toast-translucent') : {};
@@ -209,8 +170,13 @@ export class Toast implements OverlayInterface {
   }
 
   render() {
+    const position = this.position ? this.position : 'bottom';
+    const wrapperClass = {
+      'toast-wrapper': true,
+      [`toast-${position}`]: true
+    };
     return (
-      <div class={this.wrapperClass()}>
+      <div class={wrapperClass}>
         <div class='toast-container'>
           {this.message
             ? <div class='toast-message'>{this.message}</div>
@@ -256,10 +222,3 @@ export interface ToastDismissEventDetail extends OverlayDismissEventDetail {
 export interface ToastDismissEvent extends OverlayDismissEvent {
   // keep this just for the sake of static types and potential future extensions
 }
-
-export {
-  iosEnterAnimation as iosToastEnterAnimation,
-  iosLeaveAnimation as iosToastLeaveAnimation,
-  mdEnterAnimation as mdToastEnterAnimation,
-  mdLeaveAnimation as mdToastLeaveAnimation
-};

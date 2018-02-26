@@ -1,13 +1,13 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
-import { domControllerAsync } from '../../utils/helpers';
+import { Animation, AnimationBuilder, Config, OverlayDismissEventDetail } from '../../index';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { BACKDROP, OverlayInterface, dismiss, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
+
 import mdEnterAnimation from './animations/md.enter';
 import mdLeaveAnimation from './animations/md.leave';
-import { BACKDROP, OverlayInterface, overlayAnimation } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-loading',
@@ -22,18 +22,17 @@ import { BACKDROP, OverlayInterface, overlayAnimation } from '../../utils/overla
 
 export class Loading implements OverlayInterface {
 
-  private presented = false;
   private durationTimeout: any;
 
+  presented = false;
   animation: Animation;
   color: string;
   mode: string;
 
-  @Element() private el: HTMLElement;
+  @Element() el: HTMLElement;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
   @Prop() overlayId: number;
 
   /**
@@ -94,39 +93,41 @@ export class Loading implements OverlayInterface {
   @Prop() willAnimate = true;
 
   /**
+   * Emitted after the loading has unloaded.
+   */
+  @Event() ionLoadingDidUnload: EventEmitter<void>;
+
+  /**
    * Emitted after the loading has loaded.
    */
-  @Event() ionLoadingDidLoad: EventEmitter<LoadingEventDetail>;
+  @Event() ionLoadingDidLoad: EventEmitter<void>;
 
   /**
    * Emitted after the loading has presented.
    */
-  @Event() ionLoadingDidPresent: EventEmitter<LoadingEventDetail>;
+  @Event({eventName: 'ionLoadingDidPresent'}) didPresent: EventEmitter<void>;
 
   /**
    * Emitted before the loading has presented.
    */
-  @Event() ionLoadingWillPresent: EventEmitter<LoadingEventDetail>;
+  @Event({eventName: 'ionLoadingWillPresent'}) willPresent: EventEmitter<void>;
 
   /**
    * Emitted before the loading has dismissed.
    */
-  @Event() ionLoadingWillDismiss: EventEmitter<LoadingDismissEventDetail>;
+  @Event({eventName: 'ionLoadingWillDismiss'}) willDismiss: EventEmitter<OverlayDismissEventDetail>;
 
   /**
    * Emitted after the loading has dismissed.
    */
-  @Event() ionLoadingDidDismiss: EventEmitter<LoadingDismissEventDetail>;
+  @Event({eventName: 'ionLoadingDidDismiss'}) didDismiss: EventEmitter<OverlayDismissEventDetail>;
 
-  /**
-   * Emitted after the loading has unloaded.
-   */
-  @Event() ionLoadingDidUnload: EventEmitter<LoadingEventDetail>;
-
-  componentDidLoad() {
+  componentWillLoad() {
     if (!this.spinner) {
       this.spinner = this.config.get('loadingSpinner', this.mode === 'ios' ? 'lines' : 'crescent');
     }
+  }
+  componentDidLoad() {
     this.ionLoadingDidLoad.emit();
   }
 
@@ -134,17 +135,9 @@ export class Loading implements OverlayInterface {
     this.ionLoadingDidUnload.emit();
   }
 
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
-  }
-
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss(null, BACKDROP).catch();
+    this.dismiss(null, BACKDROP);
   }
 
   /**
@@ -152,26 +145,10 @@ export class Loading implements OverlayInterface {
    */
   @Method()
   present(): Promise<void> {
-    if (this.presented) {
-      return Promise.reject('overlay already presented');
-    }
-    this.presented = true;
-    this.ionLoadingWillPresent.emit();
-
-    // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('loadingEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
-
-    // build the animation and kick it off
-    return this.playAnimation(animationBuilder).then(() => {
-      // blur the currently active element
-      const activeElement: any = document.activeElement;
-      activeElement && activeElement.blur && activeElement.blur();
-
-      // If there is a duration, dismiss after that amount of time
-      if (typeof this.duration === 'number' && this.duration > 10) {
-        this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
+    return present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined).then(() => {
+      if (this.duration > 0) {
+        this.durationTimeout = setTimeout(() => this.dismiss(), this.duration + 10);
       }
-      this.ionLoadingDidPresent.emit();
     });
   }
 
@@ -179,27 +156,11 @@ export class Loading implements OverlayInterface {
    * Dismiss the loading overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string) {
-    if (!this.presented) {
-      return Promise.reject('overlay is not presented');
+  dismiss(data?: any, role?: string): Promise<void> {
+    if (this.durationTimeout) {
+      clearTimeout(this.durationTimeout);
     }
-    this.presented = false;
-    clearTimeout(this.durationTimeout);
-
-    this.ionLoadingWillDismiss.emit({data, role});
-
-    const animationBuilder = this.leaveAnimation || this.config.get('loadingLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
-
-    return this.playAnimation(animationBuilder).then(() => {
-      this.ionLoadingDidDismiss.emit({data, role});
-      return domControllerAsync(this.dom.write, () => {
-        this.el.parentNode.removeChild(this.el);
-      });
-    });
-  }
-
-  private playAnimation(animationBuilder: AnimationBuilder): Promise<void> {
-    return overlayAnimation(this, animationBuilder, this.willAnimate, this.el, undefined);
+    return dismiss(this, data, role, 'loadingLeave', iosLeaveAnimation, mdLeaveAnimation, undefined);
   }
 
   hostData() {
@@ -217,34 +178,16 @@ export class Loading implements OverlayInterface {
   }
 
   render() {
-    if (this.cssClass) {
-      this.cssClass.split(' ').forEach(cssClass => {
-        if (cssClass.trim() !== '') this.el.classList.add(cssClass);
-      });
-    }
-
-    const loadingInner: JSX.Element[] = [];
-
-    if (this.spinner !== 'hide') {
-      loadingInner.push(
-        <div class='loading-spinner'>
-          <ion-spinner name={this.spinner}></ion-spinner>
-        </div>
-      );
-    }
-
-    if (this.content) {
-      loadingInner.push(
-        <div class='loading-content'>
-          {this.content}
-        </div>
-      );
-    }
-
     return [
       <ion-backdrop visible={this.showBackdrop} tappable={false} />,
       <div class='loading-wrapper' role='dialog'>
-        {loadingInner}
+
+        { this.spinner !== 'hide' &&
+        <div class='loading-spinner'>
+          <ion-spinner name={this.spinner}></ion-spinner>
+        </div>}
+
+        { this.content && <div class='loading-content'>{this.content}</div>}
       </div>
     ];
   }
@@ -259,27 +202,3 @@ export interface LoadingOptions {
   duration?: number;
   translucent?: boolean;
 }
-
-export interface LoadingEvent extends CustomEvent {
-  target: HTMLIonLoadingElement;
-  detail: LoadingEventDetail;
-}
-
-export interface LoadingEventDetail {
-
-}
-
-export interface LoadingDismissEventDetail extends OverlayDismissEventDetail {
-  // keep this just for the sake of static types and potential future extensions
-}
-
-export interface LoadingDismissEvent extends OverlayDismissEvent {
-  // keep this just for the sake of static types and potential future extensions
-}
-
-export {
-  iosEnterAnimation as iosLoadingEnterAnimation,
-  iosLeaveAnimation as iosLoadingLeaveAnimation,
-  mdEnterAnimation as mdLoadingEnterAnimation,
-  mdLeaveAnimation as mdLoadingLeaveAnimation
-};

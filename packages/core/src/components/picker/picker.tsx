@@ -1,9 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, CssClassMap, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { Animation, AnimationBuilder, Config, CssClassMap, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 
-import { domControllerAsync } from '../../utils/helpers';
 import { getClassMap } from '../../utils/theme';
-import { OverlayInterface, overlayAnimation } from '../../utils/overlays';
+import { OverlayInterface, dismiss, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -20,20 +19,19 @@ import iosLeaveAnimation from './animations/ios.leave';
 })
 export class Picker implements OverlayInterface {
 
-  private presented = false;
   private durationTimeout: any;
-  private mode: string;
 
+  mode: string;
+  presented = false;
   animation: Animation;
 
-  @Element() private el: HTMLElement;
+  @Element() el: HTMLElement;
 
-  @State() private showSpinner: boolean = null;
+  @State() private showSpinner: boolean|undefined;
   @State() private spinner: string;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
   @Prop() overlayId: number;
 
   /**
@@ -90,22 +88,22 @@ export class Picker implements OverlayInterface {
   /**
    * Emitted after the picker has presented.
    */
-  @Event() ionPickerDidPresent: EventEmitter<PickerEventDetail>;
+  @Event({eventName: 'ionPickerDidPresent'}) didPresent: EventEmitter<PickerEventDetail>;
 
   /**
    * Emitted before the picker has presented.
    */
-  @Event() ionPickerWillPresent: EventEmitter<PickerEventDetail>;
+  @Event({eventName: 'ionPickerWillPresent'}) willPresent: EventEmitter<PickerEventDetail>;
 
   /**
    * Emitted before the picker has dismissed.
    */
-  @Event() ionPickerWillDismiss: EventEmitter<PickerDismissEventDetail>;
+  @Event({eventName: 'ionPickerWillDismiss'}) willDismiss: EventEmitter<PickerDismissEventDetail>;
 
   /**
    * Emitted after the picker has dismissed.
    */
-  @Event() ionPickerDidDismiss: EventEmitter<PickerDismissEventDetail>;
+  @Event({eventName: 'ionPickerDidDismiss'}) didDismiss: EventEmitter<PickerDismissEventDetail>;
 
   /**
    * Emitted after the picker has unloaded.
@@ -113,34 +111,22 @@ export class Picker implements OverlayInterface {
   @Event() ionPickerDidUnload: EventEmitter<PickerEventDetail>;
 
 
-  componentDidLoad() {
+  componentWillLoad() {
     if (!this.spinner) {
-      let defaultSpinner = 'lines';
-
-      if (this.mode === 'md') {
-        defaultSpinner = 'crescent';
-      }
-
-      this.spinner = this.config.get('pickerSpinner') || defaultSpinner;
+      const defaultSpinner = (this.mode === 'ios') ? 'lines' : 'crescent';
+      this.spinner = this.config.get('pickerSpinner', defaultSpinner);
     }
-
-    if (this.showSpinner === null || this.showSpinner === undefined) {
+    if (this.showSpinner === undefined) {
       this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
     }
+  }
+
+  componentDidLoad() {
     this.ionPickerDidLoad.emit();
   }
 
   componentDidUnload() {
     this.ionPickerDidUnload.emit();
-  }
-
-
-  @Listen('ionDismiss')
-  protected onDismiss(ev: UIEvent) {
-    ev.stopPropagation();
-    ev.preventDefault();
-
-    this.dismiss();
   }
 
   @Listen('ionBackdropTap')
@@ -149,7 +135,7 @@ export class Picker implements OverlayInterface {
     if (cancelBtn) {
       this.buttonClick(cancelBtn);
     } else {
-      this.dismiss().catch();
+      this.dismiss();
     }
   }
 
@@ -158,27 +144,15 @@ export class Picker implements OverlayInterface {
    */
   @Method()
   present(): Promise<void> {
-    if (this.presented) {
-      return Promise.reject('overlay already presented');
-    }
-    this.presented = true;
-
-    this.ionPickerWillPresent.emit();
-
-    // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('pickerEnter', iosEnterAnimation);
-
-    // build the animation and kick it off
-    return this.playAnimation(animationBuilder).then(() => {
+    return present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined).then(() => {
       // blur the currently active element
       const activeElement: any = document.activeElement;
       activeElement && activeElement.blur && activeElement.blur();
 
       // If there is a duration, dismiss after that amount of time
-      if (typeof this.duration === 'number' && this.duration > 10) {
+      if (this.duration > 10) {
         this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
       }
-      this.ionPickerDidPresent.emit();
     });
   }
 
@@ -186,23 +160,11 @@ export class Picker implements OverlayInterface {
    * Dismiss the picker overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string) {
-    if (!this.presented) {
-      return Promise.reject('overlay is not presented');
+  dismiss(data?: any, role?: string): Promise<void> {
+    if (this.durationTimeout) {
+      clearTimeout(this.durationTimeout);
     }
-    this.presented = false;
-    clearTimeout(this.durationTimeout);
-
-    this.ionPickerWillDismiss.emit({data, role});
-
-    const animationBuilder = this.leaveAnimation || this.config.get('pickerLeave', iosLeaveAnimation);
-
-    return this.playAnimation(animationBuilder).then(() => {
-      this.ionPickerDidDismiss.emit({data, role});
-      return domControllerAsync(this.dom.write, () => {
-        this.el.parentNode.removeChild(this.el);
-      });
-    });
+    return dismiss(this, data, role, 'pickerLeave', iosLeaveAnimation, iosLeaveAnimation, undefined);
   }
 
   @Method()
@@ -223,10 +185,6 @@ export class Picker implements OverlayInterface {
   @Method()
   getColumns(): PickerColumn[] {
     return this.columns;
-  }
-
-  private playAnimation(animationBuilder: AnimationBuilder): Promise<void> {
-    return overlayAnimation(this, animationBuilder, this.willAnimate, this.el, undefined);
   }
 
   private buttonClick(button: PickerButton) {
@@ -269,7 +227,7 @@ export class Picker implements OverlayInterface {
       style: {
         zIndex: 20000 + this.overlayId,
       }
-    }
+    };
   }
 
   render() {
@@ -413,8 +371,3 @@ export interface PickerDismissEventDetail extends OverlayDismissEventDetail {
 export interface PickerDismissEvent extends OverlayDismissEvent {
   // keep this just for the sake of static types and potential future extensions
 }
-
-export {
-  iosEnterAnimation as iosPickerEnterAnimation,
-  iosLeaveAnimation as iosPickerLeaveAnimation
-};

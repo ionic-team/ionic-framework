@@ -1,6 +1,5 @@
-import { Component, Listen, Method, Prop } from '@stencil/core';
+import { Component, Listen, Prop } from '@stencil/core';
 import { DomController } from '../..';
-import { domControllerAsync } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-status-tap'
@@ -12,32 +11,24 @@ export class StatusTap {
   @Prop() duration = 300;
 
   @Listen('window:statusTap')
-  statusTap() {
-    return this.tap();
-  }
-
-  @Method()
-  mockTap() {
-    return this.tap();
-  }
-
-  private tap() {
-    return domControllerAsync(this.dom.read, () => {
+  onStatusTap() {
+    this.dom.read(() => {
       const width = window.innerWidth;
       const height = window.innerWidth;
       const el = document.elementFromPoint(width / 2, height / 2);
       if (!el) {
         return null;
       }
-      return el.closest('ion-scroll');
-    })
-    .then(scroll => scroll.componentOnReady())
-    .then(scroll => {
-      return domControllerAsync(this.dom.write, () => {
-        return scroll.scrollToTop(this.duration);
-      });
+      const scrollEl = el.closest('ion-scroll');
+      if (scrollEl) {
+        scrollEl.componentOnReady().then(() => {
+          this.dom.write(() => {
+            scrollEl.scrollToTop(this.duration);
+          });
+        });
+      }
     });
-
+  }
 
   /**
    * The back button event is triggered when the user presses the native
@@ -104,5 +95,4 @@ export class StatusTap {
   //     return Promise.resolve();
   //   });
   // }
-  }
 }

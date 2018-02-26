@@ -1,10 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, DomController, FrameworkDelegate, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { Animation, AnimationBuilder, Config, FrameworkDelegate, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 
-import { DomFrameworkDelegate } from '../../utils/dom-framework-delegate';
-import { domControllerAsync } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
-import { BACKDROP, OverlayInterface, overlayAnimation } from '../../utils/overlays';
+import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { BACKDROP, OverlayInterface, attachComponent, dismiss, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -23,16 +21,15 @@ import mdLeaveAnimation from './animations/md.leave';
 })
 export class Popover implements OverlayInterface {
 
-  private presented = false;
   private usersComponentElement: HTMLElement;
 
+  presented = false;
   animation: Animation;
 
-  @Element() private el: HTMLElement;
+  @Element() el: HTMLElement;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
   @Prop({ mutable: true }) delegate: FrameworkDelegate;
   @Prop() overlayId: number;
 
@@ -107,35 +104,30 @@ export class Popover implements OverlayInterface {
   @Event() ionPopoverDidLoad: EventEmitter<PopoverEventDetail>;
 
   /**
-   * Emitted after the popover has presented.
-   */
-  @Event() ionPopoverDidPresent: EventEmitter<PopoverEventDetail>;
-
-  /**
-   * Emitted before the popover has presented.
-   */
-  @Event() ionPopoverWillPresent: EventEmitter<PopoverEventDetail>;
-
-  /**
-   * Emitted before the popover has dismissed.
-   */
-  @Event() ionPopoverWillDismiss: EventEmitter<PopoverDismissEventDetail>;
-
-  /**
-   * Emitted after the popover has dismissed.
-   */
-  @Event() ionPopoverDidDismiss: EventEmitter<PopoverDismissEventDetail>;
-
-  /**
    * Emitted after the popover has unloaded.
    */
   @Event() ionPopoverDidUnload: EventEmitter<PopoverEventDetail>;
 
-  componentWillLoad() {
-    if (!this.delegate) {
-      this.delegate = new DomFrameworkDelegate();
-    }
-  }
+  /**
+   * Emitted after the popover has presented.
+   */
+  @Event({eventName: 'ionPopoverDidPresent'}) didPresent: EventEmitter<PopoverEventDetail>;
+
+  /**
+   * Emitted before the popover has presented.
+   */
+  @Event({eventName: 'ionPopoverWillPresent'}) willPresent: EventEmitter<PopoverEventDetail>;
+
+  /**
+   * Emitted before the popover has dismissed.
+   */
+  @Event({eventName: 'ionPopoverWillDismiss'}) willDismiss: EventEmitter<PopoverDismissEventDetail>;
+
+  /**
+   * Emitted after the popover has dismissed.
+   */
+  @Event({eventName: 'ionPopoverDidDismiss'}) didDismiss: EventEmitter<PopoverDismissEventDetail>;
+
 
   componentDidLoad() {
     this.ionPopoverDidLoad.emit();
@@ -155,7 +147,7 @@ export class Popover implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss(null, BACKDROP).catch();
+    this.dismiss(null, BACKDROP);
   }
 
   /**
@@ -164,64 +156,28 @@ export class Popover implements OverlayInterface {
   @Method()
   present(): Promise<void> {
     if (this.presented) {
-      return Promise.reject('overlay already presented');
+      return Promise.reject('df');
     }
-    this.presented = true;
-
-    this.ionPopoverWillPresent.emit();
-
-    // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('popoverEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
-
-    const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_POPOVER_CONTAINER_CLASS}`);
-
-    const cssClasses: string[] = [];
-    if (this.cssClass && this.cssClass.length) {
-      cssClasses.push(this.cssClass);
-    }
-
-    // add the modal by default to the data being passed
-    this.data = this.data || {};
-    this.data.modal = this.el;
-
-    return this.delegate.attachViewToDom(userComponentParent, this.component, this.data, cssClasses)
-      .then((mountingData) => {
-        this.usersComponentElement = mountingData.element;
-      })
-      .then(() => domControllerAsync(this.dom.raf))
-      .then(() => this.playAnimation(animationBuilder))
-      .then(() => {
-        this.ionPopoverDidPresent.emit();
-      });
+    const container = this.el.querySelector('.popover-content');
+    const data = {
+      ...this.data,
+      popover: this.el
+    };
+    const classes = {
+      ...getClassMap(this.cssClass),
+      'popover-viewport': true
+    };
+    return attachComponent(container, this.component, classes, data)
+      .then(el => this.usersComponentElement = el)
+      .then(() => present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.ev));
   }
 
   /**
    * Dismiss the popover overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string) {
-    if (!this.presented) {
-      return Promise.reject('overlay is not presented');
-    }
-    this.presented = false;
-
-    this.ionPopoverWillDismiss.emit({ data, role });
-
-    const animationBuilder = this.leaveAnimation || this.config.get('popoverLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
-
-    return this.playAnimation(animationBuilder).then(() => {
-      this.ionPopoverDidDismiss.emit({ data, role });
-
-      return domControllerAsync(this.dom.write, () => {
-        const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_POPOVER_CONTAINER_CLASS}`);
-        this.delegate.removeViewFromDom(userComponentParent, this.usersComponentElement);
-        this.el.parentNode.removeChild(this.el);
-      });
-    });
-  }
-
-  private playAnimation(animationBuilder: AnimationBuilder): Promise<void> {
-    return overlayAnimation(this, animationBuilder, this.willAnimate, this.el, this.ev);
+  dismiss(data?: any, role?: string): Promise<void> {
+    return dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.ev);
   }
 
   hostData() {
@@ -243,11 +199,8 @@ export class Popover implements OverlayInterface {
     return [
       <ion-backdrop tappable={this.enableBackdropDismiss}/>,
       <div class={wrapperClasses}>
-        <div class='popover-arrow' />
-        <div class='popover-content'>
-          <div class={USER_COMPONENT_POPOVER_CONTAINER_CLASS}>
-          </div>
-        </div>
+        <div class='popover-arrow'></div>
+        <div class='popover-content'></div>
       </div>
     ];
   }
@@ -297,12 +250,3 @@ export const POPOVER_POSITION_PROPERTIES: any = {
     centerTarget: false
   }
 };
-
-export {
-  iosEnterAnimation as iosPopoverEnterAnimation,
-  iosLeaveAnimation as iosPopoverLeaveAnimation,
-  mdEnterAnimation as mdPopoverEnterAnimation,
-  mdLeaveAnimation as mdPopoverLeaveAnimation
-};
-
-export const USER_COMPONENT_POPOVER_CONTAINER_CLASS = 'popover-viewport';

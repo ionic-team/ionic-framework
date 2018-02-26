@@ -1,10 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, DomController, FrameworkDelegate, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { Animation, AnimationBuilder, Config, FrameworkDelegate, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 
-import { DomFrameworkDelegate } from '../../utils/dom-framework-delegate';
-import { domControllerAsync } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
-import { BACKDROP, OverlayInterface, overlayAnimation } from '../../utils/overlays';
+import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { BACKDROP, OverlayInterface, attachComponent, dismiss, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -24,16 +22,15 @@ import mdLeaveAnimation from './animations/md.leave';
 })
 export class Modal implements OverlayInterface {
 
-  private presented = false;
   private usersComponentElement: HTMLElement;
 
-  animation: Animation;
+  animation: Animation|undefined;
+  presented = false;
 
-  @Element() private el: HTMLElement;
+  @Element() el: HTMLElement;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
 
   @Prop() overlayId: number;
   @Prop({ mutable: true }) delegate: FrameworkDelegate;
@@ -99,29 +96,29 @@ export class Modal implements OverlayInterface {
   @Event() ionModalDidLoad: EventEmitter<ModalEventDetail>;
 
   /**
+   * Emitted after the modal has unloaded.
+   */
+  @Event() ionModalDidUnload: EventEmitter<ModalEventDetail>;
+
+  /**
    * Emitted after the modal has presented.
    */
-  @Event() ionModalDidPresent: EventEmitter<ModalEventDetail>;
+  @Event({eventName: 'ionModalDidPresent'}) didPresent: EventEmitter<ModalEventDetail>;
 
   /**
    * Emitted before the modal has presented.
    */
-  @Event() ionModalWillPresent: EventEmitter<ModalEventDetail>;
+  @Event({eventName: 'ionModalWillPresent'}) willPresent: EventEmitter<ModalEventDetail>;
 
   /**
    * Emitted before the modal has dismissed.
    */
-  @Event() ionModalWillDismiss: EventEmitter<ModalDismissEventDetail>;
+  @Event({eventName: 'ionModalWillDismiss'}) willDismiss: EventEmitter<ModalDismissEventDetail>;
 
   /**
    * Emitted after the modal has dismissed.
    */
-  @Event() ionModalDidDismiss: EventEmitter<ModalDismissEventDetail>;
-
-  /**
-   * Emitted after the modal has unloaded.
-   */
-  @Event() ionModalDidUnload: EventEmitter<ModalEventDetail>;
+  @Event({eventName: 'ionModalDidDismiss'}) didDismiss: EventEmitter<ModalDismissEventDetail>;
 
   componentDidLoad() {
     this.ionModalDidLoad.emit();
@@ -141,7 +138,7 @@ export class Modal implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss(null, BACKDROP).catch();
+    this.dismiss(null, BACKDROP);
   }
 
   /**
@@ -150,74 +147,28 @@ export class Modal implements OverlayInterface {
   @Method()
   present(): Promise<void> {
     if (this.presented) {
-      return Promise.reject('overlay already presented');
+      return Promise.reject('df');
     }
-    this.presented = true;
-    this.ionModalWillPresent.emit();
-
-    // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('modalEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
-
-    const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_MODAL_CONTAINER_CLASS}`);
-    if (!this.delegate) {
-      this.delegate = new DomFrameworkDelegate();
-    }
-
-    const cssClasses = [];
-    if (this.cssClass && this.cssClass.length) {
-      cssClasses.push(this.cssClass);
-    }
-
-    // add the modal by default to the data being passed
-    this.data = this.data || {};
-    this.data.modal = this.el;
-
-    return this.delegate.attachViewToDom(userComponentParent, this.component, this.data, cssClasses)
-     .then((mountingData) => {
-       mountingData.element.classList.add('ion-page');
-       this.usersComponentElement = mountingData.element;
-     })
-     .then(() => this.playAnimation(animationBuilder))
-     .then(() => {
-       this.ionModalDidPresent.emit();
-    });
+    const container = this.el.querySelector(`.modal-wrapper`);
+    const data = {
+      ...this.data,
+      modal: this.el
+    };
+    const classes = {
+      ...getClassMap(this.cssClass),
+      'ion-page': true
+    };
+    return attachComponent(container, this.component, classes, data)
+      .then(el => this.usersComponentElement = el)
+      .then(() => present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, undefined));
   }
 
   /**
    * Dismiss the modal overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string) {
-    if (!this.presented) {
-      return Promise.reject('overlay is not presented');
-    }
-    this.presented = false;
-    this.ionModalWillDismiss.emit({data, role});
-
-    if (!this.delegate) {
-      this.delegate = new DomFrameworkDelegate();
-    }
-
-    // get the user's animation fn if one was provided
-    const animationBuilder = this.leaveAnimation || this.config.get('modalLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
-
-    return this.playAnimation(animationBuilder).then(() => {
-      this.ionModalDidDismiss.emit({data, role});
-      return domControllerAsync(this.dom.write, () => {
-        const userComponentParent = this.el.querySelector(`.${USER_COMPONENT_MODAL_CONTAINER_CLASS}`);
-        this.delegate.removeViewFromDom(userComponentParent, this.usersComponentElement);
-        this.el.parentNode.removeChild(this.el);
-      });
-    });
-  }
-
-  private playAnimation(animationBuilder: AnimationBuilder): Promise<void> {
-    return overlayAnimation(this, animationBuilder, this.willAnimate, this.el, undefined);
-  }
-
-  @Method()
-  getUserComponentContainer(): HTMLElement {
-    return this.el.querySelector(`.${USER_COMPONENT_MODAL_CONTAINER_CLASS}`);
+  dismiss(data?: any, role?: string): Promise<void> {
+    return dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, undefined);
   }
 
   hostData() {
@@ -225,7 +176,7 @@ export class Modal implements OverlayInterface {
       style: {
         zIndex: 20000 + this.overlayId,
       }
-    }
+    };
   }
 
   render() {
@@ -238,7 +189,6 @@ export class Modal implements OverlayInterface {
   }
 }
 
-
 export interface ModalOptions {
   component: any;
   data?: any;
@@ -249,7 +199,6 @@ export interface ModalOptions {
   cssClass?: string;
   delegate?: FrameworkDelegate;
 }
-
 
 export interface ModalEvent extends CustomEvent {
   target: HTMLIonModalElement;
@@ -268,11 +217,3 @@ export interface ModalDismissEvent extends OverlayDismissEvent {
   // keep this just for the sake of static types and potential future extensions
 }
 
-export {
-  iosEnterAnimation as iosModalEnterAnimation,
-  iosLeaveAnimation as iosModalLeaveAnimation,
-  mdEnterAnimation as mdModalEnterAnimation,
-  mdLeaveAnimation as mdModalLeaveAnimation
-};
-
-export const USER_COMPONENT_MODAL_CONTAINER_CLASS = 'modal-wrapper';

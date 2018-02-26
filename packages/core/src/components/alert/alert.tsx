@@ -1,8 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, CssClassMap, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
-import { domControllerAsync } from '../../utils/helpers';
+import { Animation, AnimationBuilder, Config, CssClassMap, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { BACKDROP, OverlayInterface, autoFocus, overlayAnimation } from '../../utils/overlays';
+import { BACKDROP, OverlayInterface, autoFocus, dismiss, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -22,20 +21,19 @@ import mdLeaveAnimation from './animations/md.leave';
 })
 export class Alert implements OverlayInterface {
 
-  private presented = false;
   private activeId: string;
   private inputType: string | null = null;
   private hdrId: string;
 
-  animation: Animation;
+  presented = false;
+  animation: Animation|undefined;
   mode: string;
   color: string;
 
-  @Element() private el: HTMLElement;
+  @Element() el: HTMLElement;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
   @Prop() overlayId: number;
 
   /**
@@ -95,34 +93,35 @@ export class Alert implements OverlayInterface {
   @Prop() willAnimate = true;
 
   /**
-   * Emitted after the alert has loaded.
+   * Emitted after the alert has presented.
    */
   @Event() ionAlertDidLoad: EventEmitter<AlertEventDetail>;
 
   /**
+   * Emitted before the alert has presented.
+   */
+  @Event() ionAlertDidUnload: EventEmitter<AlertEventDetail>;
+
+  /**
    * Emitted after the alert has presented.
    */
-  @Event() ionAlertDidPresent: EventEmitter<AlertEventDetail>;
+  @Event({eventName: 'ionAlertDidPresent'}) didPresent: EventEmitter<AlertEventDetail>;
 
   /**
    * Emitted before the alert has presented.
    */
-  @Event() ionAlertWillPresent: EventEmitter<AlertEventDetail>;
+  @Event({eventName: 'ionAlertWillPresent'}) willPresent: EventEmitter<AlertEventDetail>;
 
   /**
    * Emitted before the alert has dismissed.
    */
-  @Event() ionAlertWillDismiss: EventEmitter<AlertDismissEventDetail>;
+  @Event({eventName: 'ionAlertWillDismiss'}) willDismiss: EventEmitter<AlertDismissEventDetail>;
 
   /**
    * Emitted after the alert has dismissed.
    */
-  @Event() ionAlertDidDismiss: EventEmitter<AlertDismissEventDetail>;
+  @Event({eventName: 'ionAlertDidDismiss'}) didDismiss: EventEmitter<AlertDismissEventDetail>;
 
-  /**
-   * Emitted after the alert has unloaded.
-   */
-  @Event() ionAlertDidUnload: EventEmitter<AlertEventDetail>;
 
   componentDidLoad() {
     this.ionAlertDidLoad.emit();
@@ -134,7 +133,7 @@ export class Alert implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss(null, BACKDROP).catch();
+    this.dismiss(null, BACKDROP);
   }
 
   /**
@@ -142,19 +141,8 @@ export class Alert implements OverlayInterface {
    */
   @Method()
   present(): Promise<void> {
-    if (this.presented) {
-      return Promise.reject('overlay already presented');
-    }
-    this.presented = true;
-    this.ionAlertWillPresent.emit();
-
-    // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('alertEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
-
-    // build the animation and kick it off
-    return this.playAnimation(animationBuilder).then(() => {
+    return present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation, undefined).then(() => {
       autoFocus(this.el);
-      this.ionAlertDidPresent.emit();
     });
   }
 
@@ -162,23 +150,8 @@ export class Alert implements OverlayInterface {
    * Dismiss the alert overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string) {
-    if (!this.presented) {
-      return Promise.reject('overlay is not presented');
-    }
-    this.presented = false;
-    this.ionAlertWillDismiss.emit({data, role});
-
-    // get the user's animation fn if one was provided
-    const animationBuilder = this.leaveAnimation || this.config.get('alertLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
-
-    return this.playAnimation(animationBuilder).then(() => {
-      this.ionAlertDidDismiss.emit({data, role});
-
-      return domControllerAsync(this.dom.write, () => {
-        this.el.parentNode.removeChild(this.el);
-      });
-    });
+  dismiss(data?: any, role?: string): Promise<void> {
+    return dismiss(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation, undefined);
   }
 
   private rbClick(inputIndex: number) {
@@ -230,7 +203,7 @@ export class Alert implements OverlayInterface {
     if (this.inputType === 'radio') {
       // this is an alert with radio buttons (single value select)
       // return the one value which is checked, otherwise undefined
-      const checkedInput = this.inputs.find(i => i.checked);
+      const checkedInput = this.inputs.find(i => i.checked === true);
       console.debug('returning', checkedInput ? checkedInput.value : undefined);
       return checkedInput ? checkedInput.value : undefined;
     }
@@ -257,10 +230,6 @@ export class Alert implements OverlayInterface {
 
     console.debug('returning', values);
     return values;
-  }
-
-  private playAnimation(animationBuilder: AnimationBuilder): Promise<void> {
-    return overlayAnimation(this, animationBuilder, this.willAnimate, this.el, undefined);
   }
 
   private renderCheckbox(inputs: AlertInput[]) {
@@ -488,10 +457,3 @@ export interface AlertDismissEventDetail extends OverlayDismissEventDetail {
 export interface AlertDismissEvent extends OverlayDismissEvent {
   // keep this just for the sake of static types and potential future extensions
 }
-
-export {
-  iosEnterAnimation as iosAlertEnterAnimation,
-  iosLeaveAnimation as iosAlertLeaveAnimation,
-  mdEnterAnimation as mdAlertEnterAnimation,
-  mdLeaveAnimation as mdAlertLeaveAnimation,
-};

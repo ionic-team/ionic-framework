@@ -55,19 +55,6 @@ export function isRightSide(side: Side, defaultRight = false): boolean {
   }
 }
 
-export function domControllerAsync(domControllerFunction: Function, callback?: Function): Promise<any> {
-  return new Promise((resolve) => {
-    domControllerFunction(() => {
-      if (!callback) {
-        return resolve();
-      }
-      Promise.resolve(callback()).then((...args: any[]) => {
-        resolve(args);
-      });
-    });
-  });
-}
-
 export function deferEvent(event: EventEmitter): EventEmitter {
   return debounceEvent(event, 0);
 }

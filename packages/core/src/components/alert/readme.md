@@ -217,7 +217,7 @@ Emitted after the alert has dismissed.
 
 #### ionAlertDidLoad
 
-Emitted after the alert has loaded.
+Emitted after the alert has presented.
 
 
 #### ionAlertDidPresent
@@ -227,7 +227,7 @@ Emitted after the alert has presented.
 
 #### ionAlertDidUnload
 
-Emitted after the alert has unloaded.
+Emitted before the alert has presented.
 
 
 #### ionAlertWillDismiss

@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { LoadingEvent, LoadingOptions, OverlayController } from '../../index';
+import { LoadingOptions, OverlayController } from '../../index';
 import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 
@@ -11,12 +11,13 @@ export class LoadingController implements OverlayController {
   private loadings = new Map<number, HTMLIonLoadingElement>();
 
   @Listen('body:ionLoadingWillPresent')
-  protected loadingWillPresent(ev: LoadingEvent) {
+  protected loadingWillPresent(ev: any) {
     this.loadings.set(ev.target.overlayId, ev.target);
   }
 
-  @Listen('body:ionLoadingWillDismiss, body:ionLoadingDidUnload')
-  protected loadingWillDismiss(ev: LoadingEvent) {
+  @Listen('body:ionLoadingWillDismiss')
+  @Listen('body:ionLoadingDidUnload')
+  protected loadingWillDismiss(ev: any) {
     this.loadings.delete(ev.target.overlayId);
   }
 
