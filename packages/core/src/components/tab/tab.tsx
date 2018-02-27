@@ -1,7 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
-
-import { FrameworkDelegate } from '../..';
-import { asyncRaf, getIonApp, getNavAsChildIfExists } from '../../utils/helpers';
+import { asyncRaf } from '../../utils/helpers';
 
 
 @Component({
@@ -14,8 +12,6 @@ export class Tab {
   @Element() el: HTMLElement;
 
   @State() init = false;
-
-  @Prop() delegate: FrameworkDelegate;
 
   @Prop({ mutable: true }) active = false;
 
@@ -103,45 +99,23 @@ export class Tab {
   private prepareLazyLoaded(): Promise<any> {
     if (!this.loaded && this.component) {
       this.loaded = true;
-      const promise = (this.delegate)
-        ? this.delegate.attachViewToDom(this.el, this.component)
-        : attachViewToDom(this.el, this.component);
-
-      return promise.then(() => asyncRaf());
+      return attachViewToDom(this.el, this.component).then(() => asyncRaf());
     }
     return Promise.resolve();
   }
 
   private showTab(): Promise<any|void> {
     this.active = true;
-    const nav = getNavAsChildIfExists(this.el);
-    if (!nav) {
-      return Promise.resolve();
-    }
-    // the tab's nav has been initialized externally
-    return getIonApp().then((ionApp) => {
-      const externalNavPromise = ionApp ? ionApp.getExternalNavPromise() : null;
-      if (externalNavPromise) {
-        return (externalNavPromise as any).then(() => {
-          ionApp.setExternalNavPromise(null);
-        });
-      }
-
-      // the tab's nav has not been initialized externally, so
-      // check if we need to initiailize it
-      return nav.componentOnReady()
-      .then(() => nav.activateFromTab(this.selected));
-    });
+    return Promise.resolve();
   }
 
   hostData() {
-    const hidden = !this.active || !this.selected;
     return {
-      'aria-hidden': hidden,
       'aria-labelledby': this.btnId,
       'role': 'tabpanel',
-      class: {
-        'show-tab': this.active
+      'hidden': !this.active,
+      'class': {
+        'ion-page': !this.component
       }
     };
   }

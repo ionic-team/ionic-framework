@@ -57,6 +57,7 @@ export class TabButton {
       'role': 'tab',
       'id': tab.btnId,
       'aria-selected': selected,
+      'hidden': !tab.show,
       class: {
         'tab-selected': selected,
         'has-title': hasTitle,
@@ -64,8 +65,7 @@ export class TabButton {
         'has-title-only': hasTitleOnly,
         'has-icon-only': hasIconOnly,
         'has-badge': hasBadge,
-        'tab-disabled': tab.disabled,
-        'tab-hidden': tab.hidden,
+        'tab-btn-disabled': tab.disabled,
         'focused': this.keyFocus
       }
     };

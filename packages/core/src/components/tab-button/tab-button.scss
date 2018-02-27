@@ -48,7 +48,7 @@ ion-tab-button {
   }
 }
 
-.tab-disabled {
+.tab-btn-disabled {
   pointer-events: none;
 
   > .tab-cover {
@@ -101,7 +101,6 @@ ion-tab-button {
   justify-content: center;
 }
 
-.tab-hidden,
 .layout-icon-hide .tab-button-icon,
 .layout-title-hide .tab-button-text {
   display: none;

@@ -143,7 +143,7 @@ export function readRoutes(root: Element): RouterEntries {
     .filter(el => el.tagName === 'ION-ROUTE')
     .map(el => ({
       path: parsePath(el.path),
-      id: el.sel,
+      id: el.component,
       props: el.props,
       subroutes: readRoutes(el)
     }));

@@ -3,6 +3,7 @@ import { CSS_PROP, CSS_VALUE_REGEX, DURATION_MIN, TRANSFORM_PROPS, TRANSITION_EN
 import { transitionEnd } from './transition-end';
 
 
+const raf = window.requestAnimationFrame || ((f: Function) => f());
 
 export class Animator {
 
@@ -348,8 +349,8 @@ export class Animator {
     // from an input event, and just having one RAF would have this code
     // run within the same frame as the triggering input event, and the
     // input event probably already did way too much work for one frame
-    window.requestAnimationFrame(function() {
-      window.requestAnimationFrame(function() {
+    raf(() => {
+      raf(() => {
         self._playDomInspect(opts);
       });
     });
@@ -425,7 +426,7 @@ export class Animator {
     if (self._isAsync && !this._destroyed) {
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
-      window.requestAnimationFrame(function() {
+      raf(() => {
         self._playToStep(1);
       });
     }
@@ -1058,7 +1059,7 @@ export class Animator {
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
       if (!this._destroyed) {
-        window.requestAnimationFrame(() => {
+        raf(() => {
           this._playToStep(stepValue);
         });
       }

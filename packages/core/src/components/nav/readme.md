@@ -7,29 +7,9 @@
 
 ## Properties
 
-#### delegate
-
-
-
-
-#### lazy
-
-boolean
-
-
-#### mode
-
-string
-
-
 #### root
 
 any
-
-
-#### routerDelegate
-
-
 
 
 #### swipeBackEnabled
@@ -37,44 +17,14 @@ any
 boolean
 
 
-#### useUrls
-
-boolean
-
-
 ## Attributes
-
-#### delegate
-
-
-
-
-#### lazy
-
-boolean
-
-
-#### mode
-
-string
-
 
 #### root
 
 any
 
 
-#### router-delegate
-
-
-
-
 #### swipe-back-enabled
-
-boolean
-
-
-#### use-urls
 
 boolean
 
@@ -84,36 +34,32 @@ boolean
 #### ionNavChanged
 
 
-#### navInit
-
-
 ## Methods
 
-#### activateFromTab()
-
-
 #### canGoBack()
-
-
-#### first()
 
 
 #### getActive()
 
 
-#### getChildNavs()
+#### getAllChildNavs()
+
+
+#### getByIndex()
 
 
 #### getContentElement()
-
-
-#### getId()
 
 
 #### getPrevious()
 
 
 #### getRouteId()
+
+
+#### getViewById()
+
+Return a view controller
 
 
 #### getViews()
@@ -125,16 +71,10 @@ boolean
 #### insertPages()
 
 
-#### isTransitioning()
-
-
-#### last()
-
-
-#### onAllTransitionsComplete()
-
-
 #### pop()
+
+
+#### popAll()
 
 
 #### popTo()
@@ -146,9 +86,6 @@ boolean
 #### push()
 
 
-#### reconcileFromExternalRouter()
-
-
 #### removeIndex()
 
 
@@ -156,9 +93,6 @@ boolean
 
 
 #### setPages()
-
-
-#### setParent()
 
 
 #### setRoot()

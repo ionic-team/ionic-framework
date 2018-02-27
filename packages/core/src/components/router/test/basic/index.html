@@ -106,33 +106,30 @@
   <ion-app>
 
     <ion-router>
-      <ion-route path="/" sel="tab1"> </ion-route>
+      <ion-route path="/" component="tab-one"> </ion-route>
 
-      <ion-route path="/two" sel="tab2">
-        <ion-route path="/" sel="page-one"> </ion-route>
-        <ion-route path="/second-page" sel="page-two"> </ion-route>
-        <ion-route path="/thee-page" sel="page-three"> </ion-route>
+      <ion-route path="/two" component="tab-two">
+        <ion-route component="page-one"> </ion-route>
+        <ion-route path="/second-page" component="page-two"> </ion-route>
+        <ion-route path="/three-page" component="page-three"> </ion-route>
       </ion-route>
 
-      <ion-route path="/three" sel="tab-three"> </ion-route>
-      <ion-route path="/four" sel="tab4">
-        <ion-route path="/" sel="page-two"> </ion-route>
-      </ion-route>
+      <ion-route path="/three" component="tab3"> </ion-route>
+      <ion-route path="/four" component="tab4"> </ion-route>
+
     </ion-router>
 
     <ion-tabs>
 
-      <ion-tab name="tab1"
+      <ion-tab component="tab-one"
         title="Plain List"
-        icon="star"
-        component="tab-one"></ion-tab>
+        icon="star"></ion-tab>
 
-      <ion-tab name="tab2"
+      <ion-tab component="tab-two"
         title="Schedule"
-        icon="globe"
-        component="tab-two"></ion-tab>
+        icon="globe"></ion-tab>
 
-      <ion-tab
+      <ion-tab name="tab3"
         title="Stopwatch"
         icon="logo-facebook"
         component="tab-three"></ion-tab>

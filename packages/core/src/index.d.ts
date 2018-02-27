@@ -61,7 +61,6 @@ export {
 export * from './components/modal/modal';
 export { ModalController } from './components/modal-controller/modal-controller';
 export * from './components/nav/nav';
-export * from './components/nav/nav-interfaces';
 export { ViewController } from './components/nav/view-controller';
 export { Note } from './components/note/note';
 export { PickerColumnCmp } from './components/picker-column/picker-column';

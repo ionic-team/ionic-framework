@@ -1,5 +1,4 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
-import { NavResult } from '../../index';
 
 @Component({
   tag: 'ion-nav-set-root',
@@ -12,7 +11,7 @@ export class NavSetRoot {
   @Prop() data: any;
 
   @Listen('child:click')
-  push(): Promise<NavResult> {
+  push(): Promise<any> {
     const nav = this.element.closest('ion-nav');
     if (nav) {
       const toPush = this.url || this.component;

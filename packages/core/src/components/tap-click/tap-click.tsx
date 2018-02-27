@@ -7,7 +7,6 @@ import { now, pointerCoord } from '../../utils/helpers';
 })
 export class TapClick {
 
-  private app: HTMLIonAppElement;
   private lastTouch = -MOUSE_WAIT * 10;
   private lastActivated = 0;
   private cancelled = false;
@@ -22,16 +21,9 @@ export class TapClick {
 
   @Element() el: HTMLElement;
 
-  componentDidLoad() {
-    if (this.isServer) {
-      return;
-    }
-    this.app = this.el.closest('ion-app');
-  }
-
   @Listen('body:click', {passive: false, capture: true})
   onBodyClick(ev: Event) {
-    if (this.cancelled || this.shouldCancel()) {
+    if (this.cancelled) {
       ev.preventDefault();
       ev.stopPropagation();
     }
@@ -87,11 +79,8 @@ export class TapClick {
     if (this.activatableEle) {
       return;
     }
-    this.cancelled = this.shouldCancel();
-
-    if (!this.cancelled) {
-      this.setActivatedElement(getActivatableTarget(ev.target), ev);
-    }
+    this.cancelled = false;
+    this.setActivatedElement(getActivatableTarget(ev.target), ev);
   }
 
   private pointerUp(ev: UIEvent) {
@@ -166,15 +155,6 @@ export class TapClick {
     } else {
       activatableEle.classList.remove(ACTIVATED);
     }
-  }
-
-
-  private shouldCancel(): boolean {
-    if (!this.app.isEnabled()) {
-      console.debug('click prevent: appDisabled');
-      return true;
-    }
-    return false;
   }
 }
 

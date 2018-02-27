@@ -25,7 +25,6 @@ import {
   FrameworkDelegate,
   PickerColumn,
   PickerOptions,
-  RouterDelegate,
 } from './index';
 import {
   ActionSheetButton,
@@ -49,9 +48,6 @@ import {
 import {
   SelectPopoverOption,
 } from './components/select-popover/select-popover';
-import {
-  FrameworkDelegate as FrameworkDelegate2,
-} from '.';
 import {
   DomRenderFn,
   HeaderFn,
@@ -1980,7 +1976,7 @@ declare global {
 
 
 import {
-  Nav as IonNav
+  NavControllerBase as IonNav
 } from './components/nav/nav';
 
 declare global {
@@ -2003,13 +1999,8 @@ declare global {
   }
   namespace JSXElements {
     export interface IonNavAttributes extends HTMLAttributes {
-      delegate?: FrameworkDelegate;
-      lazy?: boolean;
-      mode?: string;
       root?: any;
-      routerDelegate?: RouterDelegate;
       swipeBackEnabled?: boolean;
-      useUrls?: boolean;
     }
   }
 }
@@ -2606,9 +2597,9 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRouteAttributes extends HTMLAttributes {
+      component?: string;
       path?: string;
       props?: any;
-      sel?: string;
     }
   }
 }
@@ -3202,7 +3193,6 @@ declare global {
       badgeStyle?: string;
       btnId?: string;
       component?: any;
-      delegate?: FrameworkDelegate;
       disabled?: boolean;
       icon?: string;
       name?: string;

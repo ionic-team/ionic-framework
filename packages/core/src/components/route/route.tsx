@@ -5,9 +5,7 @@ import { Component, Prop } from '@stencil/core';
   tag: 'ion-route'
 })
 export class Route {
-
-  @Prop() path: string;
-  @Prop() sel: string;
+  @Prop() path = '';
+  @Prop() component: string;
   @Prop() props: any = {};
-
 }

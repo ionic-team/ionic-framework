@@ -81,11 +81,6 @@ any
 The component to display inside of the tab.
 
 
-#### delegate
-
-
-
-
 #### disabled
 
 boolean
@@ -166,11 +161,6 @@ string
 any
 
 The component to display inside of the tab.
-
-
-#### delegate
-
-
 
 
 #### disabled
