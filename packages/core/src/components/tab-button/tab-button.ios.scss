@@ -40,10 +40,7 @@
 }
 
 .tab-button-ios .tab-button-icon {
-  @include margin(4px, null, 1px, null);
-
-  min-width: $tab-button-ios-icon-size + 5;
-  height: $tab-button-ios-icon-size;
+  @include margin(4px, null, null, null);
 
   font-size: $tab-button-ios-icon-size;
 }
