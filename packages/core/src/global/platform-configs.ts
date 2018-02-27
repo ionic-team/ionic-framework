@@ -33,9 +33,11 @@ export const PLATFORM_CONFIGS: PlatformConfig[] = [
   {
     name: IOS,
     settings: {
-      mode: IOS,
+      mode: "ios",
       tabsHighlight: false,
       statusbarPadding: isCordova(),
+      isDevice: true,
+      deviceHacks: true,
     },
     isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, IOS, [IPHONE, IPAD, 'ipod'], WINDOWS_PHONE)
   },
@@ -43,7 +45,7 @@ export const PLATFORM_CONFIGS: PlatformConfig[] = [
   {
     name: ANDROID,
     settings: {
-      activator: 'ripple',
+      isDevice: true,
       mode: 'md',
     },
     isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, ANDROID, [ANDROID, 'silk'], WINDOWS_PHONE)

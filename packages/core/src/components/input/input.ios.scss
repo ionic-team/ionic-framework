@@ -85,6 +85,13 @@
   }
 }
 
+// iOS Input After Label
+// --------------------------------------------------
+
+.label-ios + .input .native-input,
+.label-ios + .input + .cloned-input {
+  @include margin-horizontal($input-ios-by-label-margin-start, null);
+}
 
 // iOS Stacked & Floating Inputs
 // --------------------------------------------------
@@ -101,14 +108,6 @@
   @include margin-horizontal(0, null);
 }
 
-
-// iOS Input After Label
-// --------------------------------------------------
-
-.label-ios + ion-input .native-input,
-.label-ios + .input + .cloned-input {
-  @include margin-horizontal($input-ios-by-label-margin-start, null);
-}
 
 // iOS Clear Input Icon
 // --------------------------------------------------

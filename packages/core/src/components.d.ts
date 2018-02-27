@@ -21,6 +21,10 @@ import {
   AlertInput,
 } from './components/alert/alert';
 import {
+  App,
+  FrameworkDelegate as FrameworkDelegate2,
+} from '.';
+import {
   ElementRef,
   Side,
 } from './utils/helpers';
@@ -38,9 +42,6 @@ import {
 import {
   SelectPopoverOption,
 } from './components/select-popover/select-popover';
-import {
-  FrameworkDelegate as FrameworkDelegate2,
-} from '.';
 import {
   DomRenderFn,
   HeaderFn,
@@ -842,6 +843,36 @@ declare global {
       placeholder?: string;
       value?: string;
       yearValues?: number[] | number | string;
+    }
+  }
+}
+
+
+import {
+  DeviceHacks as IonDeviceHacks
+} from './components/device-hacks/device-hacks';
+
+declare global {
+  interface HTMLIonDeviceHacksElement extends IonDeviceHacks, HTMLStencilElement {
+  }
+  var HTMLIonDeviceHacksElement: {
+    prototype: HTMLIonDeviceHacksElement;
+    new (): HTMLIonDeviceHacksElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-device-hacks": HTMLIonDeviceHacksElement;
+  }
+  interface ElementTagNameMap {
+    "ion-device-hacks": HTMLIonDeviceHacksElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-device-hacks": JSXElements.IonDeviceHacksAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonDeviceHacksAttributes extends HTMLAttributes {
+      app?: App;
     }
   }
 }

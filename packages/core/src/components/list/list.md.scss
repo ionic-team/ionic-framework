@@ -12,7 +12,7 @@
   @include margin(-$list-md-margin-top, null, null, null);
 }
 
-.list-md > ion-input:last-child::after {
+.list-md > .input:last-child::after {
   @include position-horizontal(0, null);
 }
 

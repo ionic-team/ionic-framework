@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, Prop, Watch, Element } from '@stencil/core';
 
 import { debounceEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
@@ -16,6 +16,8 @@ import { InputComponent } from './input-base';
   }
 })
 export class Input implements InputComponent {
+
+  private nativeInput: HTMLInputElement;
   mode: string;
   color: string;
 
@@ -43,6 +45,16 @@ export class Input implements InputComponent {
    * Emitted when the input has focus.
    */
   @Event() ionFocus: EventEmitter;
+
+  /**
+   * Emitted when the input has been created.
+   */
+  @Event() ionInputDidLoad: EventEmitter;
+
+  /**
+   * Emitted when the input has been removed.
+   */
+  @Event() ionInputDidUnload: EventEmitter;
 
   /**
    * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
@@ -200,7 +212,7 @@ export class Input implements InputComponent {
    */
   @Watch('value')
   protected valueChanged() {
-    const inputEl = this.el.querySelector('input');
+    const inputEl = this.nativeInput;
     if (inputEl && inputEl.value !== this.value) {
       inputEl.value = this.value;
     }
@@ -214,6 +226,12 @@ export class Input implements InputComponent {
     if (this.type === 'password' && this.clearOnEdit !== false) {
       this.clearOnEdit = true;
     }
+    this.ionInputDidLoad.emit(this.el);
+  }
+
+  componentDidUnload() {
+    this.nativeInput = null;
+    this.ionInputDidUnload.emit(this.el);
   }
 
   private emitStyle() {
@@ -288,7 +306,7 @@ export class Input implements InputComponent {
 
   hasFocus(): boolean {
     // check if an input has focus or not
-    return this.el && (this.el.querySelector(':focus') === this.el.querySelector('input'));
+    return this.nativeInput === document.activeElement;
   }
 
   hasValue(): boolean {
@@ -301,6 +319,7 @@ export class Input implements InputComponent {
 
     return [
       <input
+        ref={input => this.nativeInput = input as any}
         aria-disabled={this.disabled ? 'true' : false}
         accept={this.accept}
         autoCapitalize={this.autocapitalize}

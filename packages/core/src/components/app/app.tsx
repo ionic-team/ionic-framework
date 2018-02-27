@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Config, NavEvent, OverlayController, PublicNav, PublicViewController } from '../../index';
 
 import { getOrAppendElement } from '../../utils/helpers';
@@ -19,20 +19,23 @@ let backButtonActions: BackButtonAction[] = [];
 })
 export class App {
 
+  private isDevice = false;
+  private deviceHacks = false;
   private scrollTime = 0;
-
-  @Element() element: HTMLElement;
-  @Event() exitApp: EventEmitter<ExitAppEventDetail>;
-
-  @State() modeCode: string;
-  @State() hoverCSS = false;
-
-  @Prop({ context: 'config' }) config: Config;
 
   externalNavPromise: void | Promise<any> = null;
   externalNavOccuring = false;
   didScroll = false;
 
+  @Element() element: HTMLElement;
+  @Event() exitApp: EventEmitter<ExitAppEventDetail>;
+
+  @Prop({ context: 'config' }) config: Config;
+
+  componentWillLoad() {
+    this.isDevice = this.config.getBoolean('isDevice', false);
+    this.deviceHacks = this.config.getBoolean('deviceHacks', false);
+  }
 
   /**
    * Returns the promise set by an external navigation system
@@ -72,11 +75,6 @@ export class App {
   @Method()
   updateExternalNavOccuring(status: boolean) {
     this.externalNavOccuring = status;
-  }
-
-  componentWillLoad() {
-    this.modeCode = this.config.get('mode');
-    this.hoverCSS = this.config.getBoolean('hoverCSS', false);
   }
 
   @Listen('body:navInit')
@@ -232,20 +230,23 @@ export class App {
   }
 
   hostData() {
+    const mode = this.config.get('mode');
+    const hoverCSS = this.config.getBoolean('hoverCSS', false);
+
     return {
       class: {
-        [this.modeCode]: true,
-        'enable-hover': this.hoverCSS
+        [mode]: true,
+        'enable-hover': hoverCSS
       }
     };
   }
 
   render() {
-    const isDevice = true;
     return [
-      isDevice && <ion-tap-click />,
-      isDevice && <ion-status-tap />,
       <ion-platform />,
+      this.deviceHacks && <ion-device-hacks app={this} />,
+      this.isDevice && <ion-tap-click />,
+      this.isDevice && <ion-status-tap />,
       <slot></slot>
     ];
   }

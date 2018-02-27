@@ -46,6 +46,7 @@ exports.config = {
     { components: ['ion-toggle'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
     { components: ['ion-tap-click', 'ion-status-tap'] },
+    { components: ['ion-device-hacks'] },
     { components: ['ion-platform', 'ion-cordova-platform'] },
     { components: ['ion-nav-pop'] },
     { components: ['ion-hide-when', 'ion-show-when'] },

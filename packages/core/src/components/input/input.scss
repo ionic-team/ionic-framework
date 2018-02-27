@@ -3,7 +3,7 @@
 // Input
 // --------------------------------------------------
 
-ion-input {
+.input {
   position: relative;
   display: block;
 
@@ -15,7 +15,7 @@ ion-input {
 // Input Within An Item
 // --------------------------------------------------
 
-.item-input ion-input {
+.item-input .input {
   position: static;
 }
 
