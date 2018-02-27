@@ -1,6 +1,8 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop } from '@stencil/core';
 import { Config, DomController, GestureDetail, GestureDelegate } from '../../index';
 
+export type ScrollSideStrings = '' | 'all' | 'top' | 'left' | 'right' | 'bottom' | 'vertical' | 'horizontal';
+export type ScrollSide = boolean | ScrollSideStrings | ScrollSideStrings[];
 
 @Component({
   tag: 'ion-scroll',
@@ -40,6 +42,9 @@ export class Scroll {
    */
   @Prop({mutable: true}) forceOverscroll: boolean;
 
+  @Prop() padding: ScrollSide;
+  @Prop() margin: ScrollSide;
+
   @Prop() onionScrollStart: ScrollCallback;
   @Prop() onionScroll: ScrollCallback;
   @Prop() onionScrollEnd: ScrollCallback;
@@ -60,6 +65,10 @@ export class Scroll {
   @Event() ionScrollEnd: EventEmitter;
 
   componentWillLoad() {
+    if (this.forceOverscroll === undefined) {
+      this.forceOverscroll = this.mode === 'ios' && ('ontouchstart' in window);
+    }
+
     return this.gestureCtrl.create({
       name: 'scroll',
       priority: 100,
@@ -72,9 +81,6 @@ export class Scroll {
   componentDidLoad() {
     if (this.isServer) {
       return;
-    }
-    if (this.forceOverscroll === undefined) {
-      this.forceOverscroll = this.mode === 'ios' && ('ontouchstart' in window);
     }
     this.app = this.el.closest('ion-app');
   }
@@ -332,14 +338,36 @@ export class Scroll {
   }
 
   render() {
+    const classMap = {
+      ...sideClassMap('padding', this.padding),
+      ...sideClassMap('margin', this.margin),
+      'scroll-inner': true,
+    }
     return [
       // scroll-inner is used to keep custom user padding
-      <div class='scroll-inner'>
+      <div class={classMap}>
         <slot></slot>
       </div>
     ];
   }
+}
 
+function sideClassMap(name: string, side: ScrollSide) {
+  const classMap: any = {};
+  let processed: string[];
+  if(Array.isArray(side)) {
+    processed = side;
+  } else if (side === '' || side === true) {
+    processed = ['all'];
+  } else if (side) {
+    processed = [side];
+  } else {
+    processed = [];
+  }
+  for (const rule of processed) {
+    classMap[`${name}-${rule}`] = true;
+  }
+  return classMap;
 }
 
 export interface ScrollDetail extends GestureDetail {

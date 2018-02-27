@@ -21,6 +21,9 @@ import {
   AlertInput,
 } from './components/alert/alert';
 import {
+  ScrollSide,
+} from './components/scroll/scroll';
+import {
   ElementRef,
   Side,
 } from './utils/helpers';
@@ -765,6 +768,8 @@ declare global {
     export interface IonContentAttributes extends HTMLAttributes {
       forceOverscroll?: boolean;
       fullscreen?: boolean;
+      margin?: ScrollSide;
+      padding?: ScrollSide;
     }
   }
 }
@@ -2760,10 +2765,12 @@ declare global {
   namespace JSXElements {
     export interface IonScrollAttributes extends HTMLAttributes {
       forceOverscroll?: boolean;
+      margin?: ScrollSide;
       mode?: string;
       onionScroll?: ScrollCallback;
       onionScrollEnd?: ScrollCallback;
       onionScrollStart?: ScrollCallback;
+      padding?: ScrollSide;
     }
   }
 }

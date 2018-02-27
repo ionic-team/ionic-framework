@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Content - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+    <ion-page>
+      <ion-header id="header">
+        <ion-toolbar style="display: none" id="toolbar2">
+          <ion-title>Hidden Toolbar</ion-title>
+        </ion-toolbar>
+        <ion-toolbar>
+          <ion-title>Content - Padding</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content id="content">
+        <div class="top"></div>
+        <ion-radio-group id="padding">
+          <ion-list-header>
+            Padding
+          </ion-list-header>
+
+          <ion-item>
+            <ion-label>&lt;ion-content padding&gt;</ion-label>
+            <ion-radio value=""></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>&lt;ion-content padding="top"&gt;</ion-label>
+            <ion-radio value="top"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>&lt;ion-content padding="bottom"&gt;</ion-label>
+            <ion-radio value="bottom"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>&lt;ion-content padding="start"&gt;</ion-label>
+            <ion-radio value="start"></ion-radio>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>&lt;ion-content padding="end"&gt;</ion-label>
+            <ion-radio value="end"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>&lt;ion-content padding="vertical"&gt;</ion-label>
+            <ion-radio value="vertical"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>&lt;ion-content padding="horizontal"&gt;</ion-label>
+            <ion-radio value="horizontal"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>&lt;ion-content padding={["start", "top"]}&gt;</ion-label>
+            <ion-radio value="start_top"></ion-radio>
+          </ion-item>
+
+        </ion-radio-group>
+        <div class="top"></div>
+      </ion-content>
+    </ion-page>
+
+    <script>
+      const segment = document.getElementById('padding');
+      segment.addEventListener('ionChange', (event) => {
+        const value = event.target.value;
+        const content = document.getElementById('content');
+        if(value === 'start_top') {
+          content.padding = ['start', 'top'];
+        } else {
+          content.padding = value;
+        }
+      });
+    </script>
+    <style>
+      .top {
+        width: 100%;
+        height: 20px;
+        background: black;
+      }
+
+      .scroll-inner {
+        border: 1px solid black;
+      }
+
+    </style>
+  </ion-app>
+
+</body>
+
+</html>

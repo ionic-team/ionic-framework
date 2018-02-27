@@ -160,25 +160,6 @@ declare global {
     export interface DOMAttributes {
       // for ion-menu and ion-split-pane
       main?: boolean;
-
-      padding?: boolean;
-      ['padding-top']?: boolean;
-      ['padding-bottom']?: boolean;
-      ['padding-left']?: boolean;
-      ['padding-right']?: boolean;
-      ['padding-horizontal']?: boolean;
-      ['padding-vertical']?: boolean;
-
-      margin?: boolean;
-      ['margin-top']?: boolean;
-      ['margin-bottom']?: boolean;
-      ['margin-left']?: boolean;
-      ['margin-right']?: boolean;
-      ['margin-horizontal']?: boolean;
-      ['margin-vertical']?: boolean;
-
-      ['no-padding']?: boolean;
-      ['no-margin']?: boolean;
     }
   }
 }
