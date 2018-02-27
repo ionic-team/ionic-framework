@@ -27,9 +27,9 @@ export class Keyboard {
 
   _tmr: number;
 
-  willShow = new EventEmitter<void>();
+  willShow = new EventEmitter<number>();
   willHide = new EventEmitter<void>();
-  didShow = new EventEmitter<void>();
+  didShow = new EventEmitter<number>();
   didHide = new EventEmitter<void>();
 
   eventsAvailable = false;
@@ -43,7 +43,7 @@ export class Keyboard {
     this.focusOutline(config.get('focusOutline'));
 
     const win = <any>_plt.win();
-    if (config.getBoolean('keyboardResizes', false)) {
+    if (win.Ionic && win.Ionic.keyboardPlugin) {
       this.listenV2(win);
     } else {
       this.listenV1(win);
@@ -52,9 +52,9 @@ export class Keyboard {
 
   private listenV2(win: any) {
     const platform = this._plt;
-    platform.registerListener(win, 'keyboardWillShow', () => {
+    platform.registerListener(win, 'keyboardWillShow', (ev: any) => {
       this._zone.run(() => {
-        this.willShow.emit();
+        this.willShow.emit(ev.keyboardHeight);
       });
     }, { zone: false, passive: true });
 
@@ -64,9 +64,9 @@ export class Keyboard {
       });
     }, { zone: false, passive: true });
 
-    platform.registerListener(win, 'keyboardDidShow', () => {
+    platform.registerListener(win, 'keyboardDidShow', (ev: any) => {
       this._zone.run(() => {
-        this.didShow.emit();
+        this.didShow.emit(ev.keyboardHeight);
       });
     }, { zone: false, passive: true });
 
@@ -266,6 +266,18 @@ export class Keyboard {
       return (activeEle.parentElement.querySelector(':focus') === activeEle);
     }
     return false;
+  }
+
+  /**
+   * Set to true to hide the additional toolbar that is on top of the keyboard.
+   * This toolbar features the Prev, Next, and Done buttons.
+   * @param hidden
+   */
+  hideFormAccessoryBar(hidden: boolean) {
+    const win = this._plt.win() as any;
+    if (win && win.Keyboard && win.Keyboard.hideFormAccessoryBar) {
+      win.Keyboard.hideFormAccessoryBar(hidden);
+    }
   }
 
 }

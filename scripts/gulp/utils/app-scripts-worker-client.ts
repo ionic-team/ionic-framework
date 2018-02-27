@@ -76,6 +76,7 @@ export function createWorker(msg: MessageToWorker): any {
       '--sass', msg.sassConfigPath,
       '--copy', msg.copyConfigPath,
       '--enableLint', 'false',
+      '--skipIonicAngularVersion', 'true'
     ];
 
     // TODO, use prod once we're a little more settled

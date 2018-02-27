@@ -1,8 +1,8 @@
 import { spawn } from 'cross-spawn';
 import { NODE_MODULES_ROOT, SRC_ROOT } from './constants';
-import { src, dest } from 'gulp';
-import { dirname, join } from 'path';
-import { ensureDirSync, readdirSync, readFile, readFileSync, statSync, writeFile, writeFileSync } from 'fs-extra';
+import { dest, src } from 'gulp';
+import { dirname, join, resolve } from 'path';
+import { ensureDirSync, readFile, readFileSync, readdirSync, statSync, writeFile, writeFileSync } from 'fs-extra';
 import { rollup } from 'rollup';
 import { Replacer } from 'strip-function';
 import * as commonjs from 'rollup-plugin-commonjs';
@@ -25,10 +25,10 @@ export function mergeObjects(obj1: any, obj2: any ) {
     obj2 = {};
   }
   var obj3 = {};
-  for (var attrname in obj1) {
+  for (let attrname in obj1) {
     (<any>obj3)[attrname] = obj1[attrname];
   }
-  for (var attrname in obj2) {
+  for (let attrname in obj2) {
     (<any>obj3)[attrname] = obj2[attrname];
   }
   return obj3;
@@ -214,7 +214,8 @@ export function runAppScriptsServe(testOrDemoName: string, appEntryPoint: string
     '--ionicAngularDir', ionicAngularDir,
     '--sass', sassConfigPath,
     '--copy', copyConfigPath,
-    '--enableLint', 'false'
+    '--enableLint', 'false',
+    '--skipIonicAngularVersion', 'true'
   ];
   if (devApp) {
     scriptArgs.push('--bonjour');
@@ -349,6 +350,8 @@ function bundlePolyfill(pathsToIncludeInPolyfill: string[], outputPath: string) 
       moduleName: 'MyBundle',
       dest: outputPath
     });
+  }).catch(err => {
+    console.log('caught rollup error: ', err);
   });
 }
 

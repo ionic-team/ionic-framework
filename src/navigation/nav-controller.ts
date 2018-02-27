@@ -266,6 +266,7 @@ import { NavigationContainer } from './navigation-container';
  *  | `ionViewCanEnter`   | boolean/Promise&lt;void&gt; | Runs before the view can enter. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can enter                                                                                                     |
  *  | `ionViewCanLeave`   | boolean/Promise&lt;void&gt; | Runs before the view can leave. This can be used as a sort of "guard" in authenticated views where you need to check permissions before the view can leave                                                                                                     |
  *
+ * Those events are only fired on IonicPage, for classic Angular Component, use [Angular Lifecycle Hooks](https://angular.io/guide/lifecycle-hooks).
  *
  * ## Nav Guards
  *

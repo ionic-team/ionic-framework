@@ -31,6 +31,16 @@ export class RootPage {
     'l\u00f8r'
   ];
 
+  customOptions: any = {
+    buttons: [{
+      text: 'Save',
+      handler: () => console.log('Clicked Save!')
+    }, {
+      text: 'Log',
+      handler: () => console.log('Clicked Log!')
+    }]
+  };
+
   onChange(ev: any) {
     console.log('Changed', ev);
   }

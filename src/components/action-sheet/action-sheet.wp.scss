@@ -106,10 +106,6 @@ $action-sheet-wp-icon-margin-bottom:              0 !default;
 $action-sheet-wp-icon-margin-start:               0 !default;
 
 
-.action-sheet-wp .action-sheet-wrapper {
-  box-shadow: $action-sheet-wp-box-shadow;
-}
-
 .action-sheet-wp .action-sheet-title {
   @include text-align($action-sheet-wp-title-text-align);
 
@@ -159,6 +155,8 @@ $action-sheet-wp-icon-margin-start:               0 !default;
 
 .action-sheet-wp .action-sheet-group:first-child {
   @include padding($action-sheet-wp-padding-top, null, null, null);
+
+  box-shadow: $action-sheet-wp-box-shadow;
 }
 
 .action-sheet-wp .action-sheet-group:last-child {

@@ -41,7 +41,7 @@ import { RootNode } from '../split-pane/split-pane';
  * <ion-nav #mycontent [root]="rootPage"></ion-nav>
  * ```
  *
- * To add a menu to an app, the `<ion-menu>` element should be added as a sibling to the `ion-nav` it will belongs
+ * To add a menu to an app, the `<ion-menu>` element should be added as a sibling to the `ion-nav` it will belong
  * to. A [local variable](https://angular.io/docs/ts/latest/guide/user-input.html#local-variables)
  * should be added to the `ion-nav` and passed to the `ion-menu`s `content` property.
  *

@@ -16,7 +16,7 @@
 
   <ion-item>
     <ion-label>MM DD YY</ion-label>
-    <ion-datetime pickerFormat="YYYY-MM-DDThh:mm" [(ngModel)]="placeholderDate" placeholder="Select Date"></ion-datetime>
+    <ion-datetime pickerFormat="YYYY-MM-DDThh:mm" [pickerOptions]="customOptions" [(ngModel)]="placeholderDate" placeholder="Select Date"></ion-datetime>
   </ion-item>
 
   <ion-item>

@@ -12,15 +12,5 @@
   "module": "index.js",
   "es2015": "es2015/index.js",
   "peerDependencies": {
-    "@angular/common": "",
-    "@angular/compiler": "",
-    "@angular/compiler-cli": "",
-    "@angular/core": "",
-    "@angular/forms": "",
-    "@angular/http": "",
-    "@angular/platform-browser": "",
-    "@angular/platform-browser-dynamic": "",
-    "rxjs": "",
-    "zone.js": ""
   }
 }
