@@ -21,10 +21,10 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Option](#option)
 - [Radio](#radio)
 - [Range](#range)
-- [Sass](#sass)
 - [Segment](#segment)
 - [Select](#select)
 - [Text/Typography](#text-typography)
+- [Theming](#theming)
 - [Toolbar](#toolbar)
 
 
@@ -751,25 +751,6 @@ These have been renamed to the following:
 ```
 
 
-## Sass
-
-Sass variables for changing the cordova statusbar have been renamed to app:
-
-**Old Usage Example:**
-
-```css
-$cordova-ios-statusbar-padding:   20px;
-$cordova-md-statusbar-padding:    20px;
-```
-
-**New Usage Example:**
-
-```css
-$app-ios-statusbar-padding:   20px;
-$app-md-statusbar-padding:    20px;
-```
-
-
 ## Segment
 
 The markup hasn't changed for Segments, but now writing `<ion-segment-button>` will render a native button element inside of it.
@@ -854,6 +835,53 @@ Typography should now be written as an `<ion-text>` element. Previously the `ion
   Gonna get a <ion-text color="secondary"><a>big dish of beef chow mein.</a></ion-text>
 </p>
 ```
+
+
+## Theming
+
+### Including Sass
+
+Previously all `scss` files in the `src` directory were imported. Now each `scss` file should be included for the component via Angular's `styleUrls` metadata. View [Angular's Component Styles](https://angular.io/guide/component-styles) for more information.
+
+This means that any styles wrapped with a page should now be removed since they will automatically be scoped to the component.
+
+**Old Usage Example:**
+
+```scss
+page-schedule {
+  p {
+    color: red;
+  }
+}
+```
+
+**New Usage Example:**
+
+```scss
+p {
+  color: red;
+}
+```
+
+
+### Sass Variables
+
+Sass variables for changing the cordova statusbar have been renamed to app:
+
+**Old Usage Example:**
+
+```css
+$cordova-ios-statusbar-padding:   20px;
+$cordova-md-statusbar-padding:    20px;
+```
+
+**New Usage Example:**
+
+```css
+$app-ios-statusbar-padding:   20px;
+$app-md-statusbar-padding:    20px;
+```
+
 
 ## Toolbar
 
