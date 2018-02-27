@@ -1127,7 +1127,8 @@ export function updateNavStacks(enteringView: ViewController, leavingView: ViewC
       return Promise.all(destroyQueuePromises);
     }
     return null;
-  })/*.then(() => {
+  });
+  /* .then(() => {
     // set which animation it should use if it wasn't set yet
     if (ti.requiresTransition && !ti.opts.animation) {
       ti.opts.animation = isDef(ti.removeStart)

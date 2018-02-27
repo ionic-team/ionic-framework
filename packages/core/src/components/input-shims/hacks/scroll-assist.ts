@@ -1,6 +1,6 @@
-import { pointerCoord } from "../../../utils/helpers";
-import { relocateInput, isFocused } from "./common";
-import { getScrollData } from "./scroll-data";
+import { pointerCoord } from '../../../utils/helpers';
+import { isFocused, relocateInput } from './common';
+import { getScrollData } from './scroll-data';
 
 
 export default function enableScrollAssist(

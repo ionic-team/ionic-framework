@@ -7,7 +7,7 @@ import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
 import mdEnterAnimation from './animations/md.enter';
 import mdLeaveAnimation from './animations/md.leave';
-import { OverlayInterface, BACKDROP, overlayAnimation } from '../../utils/overlays';
+import { BACKDROP, OverlayInterface, overlayAnimation } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-loading',
@@ -152,7 +152,7 @@ export class Loading implements OverlayInterface {
    */
   @Method()
   present(): Promise<void> {
-    if(this.presented) {
+    if (this.presented) {
       return Promise.reject('overlay already presented');
     }
     this.presented = true;
@@ -182,7 +182,7 @@ export class Loading implements OverlayInterface {
    */
   @Method()
   dismiss(data?: any, role?: string) {
-    if(!this.presented) {
+    if (!this.presented) {
       return Promise.reject('overlay is not presented');
     }
     this.presented = false;

@@ -158,7 +158,7 @@ export class Picker implements OverlayInterface {
    */
   @Method()
   present(): Promise<void> {
-    if(this.presented) {
+    if (this.presented) {
       return Promise.reject('overlay already presented');
     }
     this.presented = true;
@@ -194,7 +194,7 @@ export class Picker implements OverlayInterface {
    */
   @Method()
   dismiss(data?: any, role?: string) {
-    if(!this.presented) {
+    if (!this.presented) {
       return Promise.reject('overlay is not presented');
     }
     this.presented = false;

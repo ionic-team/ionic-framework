@@ -40,6 +40,6 @@ function setScrollPadding(input: HTMLElement, keyboardHeight: number) {
   } else {
     (el as any)[PADDING_TIMER_KEY] = setTimeout(() => {
       el.style.paddingBottom = '';
-    }, 120)
+    }, 120);
   }
 }

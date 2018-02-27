@@ -1,5 +1,5 @@
-import { AnimationBuilder, Animation } from "..";
-import { playAnimationAsync } from "./helpers";
+import { Animation, AnimationBuilder } from '..';
+import { playAnimationAsync } from './helpers';
 
 let lastId = 1;
 
@@ -8,7 +8,7 @@ let lastId = 1;
  */
 export type Requires<K extends string> = {
   [P in K]: any;
-}
+};
 
 export function createOverlay
 <T extends HTMLIonOverlayElement & Requires<keyof B>, B>

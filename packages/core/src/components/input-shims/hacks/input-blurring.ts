@@ -1,4 +1,4 @@
-import { App } from "../../..";
+import { App } from '../../..';
 
 const SKIP_BLURRING = ['INPUT', 'TEXTAREA', 'ION-INPUT', 'ION-TEXTAREA'];
 

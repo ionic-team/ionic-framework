@@ -241,7 +241,7 @@ describe('gesture controller', () => {
   describe('BlockerDelegate', () => {
     it('create one', async () => {
       const c = new GestureController();
-      const b = await c.createBlocker({
+      const b = c.createBlocker({
         disableScroll: true,
         disable: ['event1', 'event2', 'event3', 'event4']
       });
@@ -251,7 +251,7 @@ describe('gesture controller', () => {
       expect(b['ctrl']).toEqual(c);
       expect(b['id']).toEqual(1);
 
-      const b2 = await c.createBlocker({
+      const b2 = c.createBlocker({
         disable: ['event2', 'event3', 'event4', 'event5']
       });
 
@@ -314,11 +314,11 @@ describe('gesture controller', () => {
       const g2 = await c.create({ name: 'goback2' });
       expect(g2.canStart()).toEqual(true);
 
-      const g3 = await c.createBlocker({
+      const g3 = c.createBlocker({
         disable: ['range', 'goback', 'something']
       });
 
-      const g4 = await c.createBlocker({
+      const g4 = c.createBlocker({
         disable: ['range']
       });
 

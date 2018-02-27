@@ -1,4 +1,4 @@
-import { GestureController } from "./gesture-controller";
+import { GestureController } from './gesture-controller';
 
 export class GestureDelegate {
   private ctrl: GestureController|null;

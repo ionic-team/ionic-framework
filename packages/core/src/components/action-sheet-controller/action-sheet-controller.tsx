@@ -1,6 +1,6 @@
 import { Component, Listen, Method } from '@stencil/core';
 import { ActionSheetEvent, ActionSheetOptions, OverlayController } from '../../index';
-import { createOverlay, getTopOverlay, dismissOverlay, removeLastOverlay } from '../../utils/overlays';
+import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-action-sheet-controller'

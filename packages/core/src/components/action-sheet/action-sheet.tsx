@@ -3,7 +3,7 @@ import { Animation, AnimationBuilder, Config, CssClassMap, DomController, Overla
 
 import { domControllerAsync } from '../../utils/helpers';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { OverlayInterface, BACKDROP, overlayAnimation } from '../../utils/overlays';
+import { BACKDROP, OverlayInterface, overlayAnimation } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -139,7 +139,7 @@ export class ActionSheet implements OverlayInterface {
    */
   @Method()
   present(): Promise<void> {
-    if(this.presented) {
+    if (this.presented) {
       return Promise.reject('overlay already presented');
     }
     this.presented = true;
@@ -162,7 +162,7 @@ export class ActionSheet implements OverlayInterface {
    */
   @Method()
   dismiss(data?: any, role?: string) {
-    if(!this.presented) {
+    if (!this.presented) {
       return Promise.reject('overlay is not presented');
     }
     this.presented = false;

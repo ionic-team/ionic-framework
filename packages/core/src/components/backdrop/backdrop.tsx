@@ -73,7 +73,7 @@ function registerBackdrop(backdrop: any) {
 
 function unregisterBackdrop(backdrop: any) {
   activeBackdrops.delete(backdrop);
-  if(activeBackdrops.size === 0) {
+  if (activeBackdrops.size === 0) {
     document.body.classList.remove(BACKDROP_NO_SCROLL);
   }
 }

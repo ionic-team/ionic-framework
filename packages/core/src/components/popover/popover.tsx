@@ -4,7 +4,7 @@ import { Animation, AnimationBuilder, Config, DomController, FrameworkDelegate, 
 import { DomFrameworkDelegate } from '../../utils/dom-framework-delegate';
 import { domControllerAsync } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
-import { OverlayInterface, BACKDROP, overlayAnimation } from '../../utils/overlays';
+import { BACKDROP, OverlayInterface, overlayAnimation } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -157,7 +157,7 @@ export class Popover implements OverlayInterface {
    */
   @Method()
   present(): Promise<void> {
-    if(this.presented) {
+    if (this.presented) {
       return Promise.reject('overlay already presented');
     }
     this.presented = true;
@@ -197,7 +197,7 @@ export class Popover implements OverlayInterface {
    */
   @Method()
   dismiss(data?: any, role?: string) {
-    if(!this.presented) {
+    if (!this.presented) {
       return Promise.reject('overlay is not presented');
     }
     this.presented = false;

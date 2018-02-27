@@ -81,9 +81,9 @@ export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElem
     (targetTop - contentHeight) > 0
   ) {
     arrowCSS.top = targetTop - (arrowHeight + 1);
-    console.log(arrowCSS)
-    console.log(targetTop)
-    console.log(contentHeight)
+    console.log(arrowCSS);
+    console.log(targetTop);
+    console.log(contentHeight);
     popoverCSS.top = targetTop - contentHeight - (arrowHeight - 1);
 
     baseEl.className = baseEl.className + ' popover-bottom';

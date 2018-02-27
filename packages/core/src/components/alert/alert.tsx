@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, Config, CssClassMap, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
-import { domControllerAsync, autoFocus } from '../../utils/helpers';
+import { autoFocus, domControllerAsync } from '../../utils/helpers';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { OverlayInterface, BACKDROP, overlayAnimation } from '../../utils/overlays';
+import { BACKDROP, OverlayInterface, overlayAnimation } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -146,7 +146,7 @@ export class Alert implements OverlayInterface {
    */
   @Method()
   present(): Promise<void> {
-    if(this.presented) {
+    if (this.presented) {
       return Promise.reject('overlay already presented');
     }
     this.presented = true;
@@ -169,7 +169,7 @@ export class Alert implements OverlayInterface {
    */
   @Method()
   dismiss(data?: any, role?: string) {
-    if(!this.presented) {
+    if (!this.presented) {
       return Promise.reject('overlay is not presented');
     }
     this.presented = false;
@@ -282,7 +282,7 @@ export class Alert implements OverlayInterface {
                 {i.label}
               </div>
             </div>
-            {this.mode==="md" ? <ion-ripple-effect /> : null}
+            {this.mode === 'md' ? <ion-ripple-effect /> : null}
           </button>
         ))}
       </div>
@@ -302,7 +302,7 @@ export class Alert implements OverlayInterface {
                 {i.label}
               </div>
             </div>
-            {this.mode==="md" ? <ion-ripple-effect /> : null}
+            {this.mode === 'md' ? <ion-ripple-effect /> : null}
           </button>
         ))}
       </div>

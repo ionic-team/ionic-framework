@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Prop, Watch, Element } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
 import { debounceEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';

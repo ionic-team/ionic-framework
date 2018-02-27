@@ -1,10 +1,10 @@
-const RELOCATED_KEY= '$ionRelocated';
+const RELOCATED_KEY = '$ionRelocated';
 
 export function relocateInput(
   componentEl: HTMLElement,
   inputEl: HTMLInputElement,
   shouldRelocate: boolean,
-  inputRelativeY: number = 0
+  inputRelativeY = 0
 ) {
   if ((componentEl as any)[RELOCATED_KEY] === shouldRelocate) {
     return;
@@ -22,7 +22,7 @@ export function relocateInput(
     // We hide the focused input (with the visible caret) invisiable by making it scale(0),
     cloneInputComponent(componentEl, inputEl);
     const tx = document.dir === 'rtl' ? 9999 : -9999;
-    inputEl.style.transform= `translate3d(${tx}px,${inputRelativeY}px,0)`;
+    inputEl.style.transform = `translate3d(${tx}px,${inputRelativeY}px,0)`;
     // TODO
     // inputEle.style.opacity = '0';
   } else {
@@ -79,8 +79,6 @@ function cloneInputComponent(componentEl: HTMLElement, inputEl: HTMLInputElement
 
     const clonedInputEl = document.createElement('input');
     clonedInputEl.classList.add(...Array.from(inputEl.classList));
-    // Object.assign(clonedInputEl, input);
-    //const clonedInputEl = <HTMLInputElement>inputEl.cloneNode(false);
     clonedInputEl.value = inputEl.value;
     clonedInputEl.type = inputEl.type;
     clonedInputEl.placeholder = inputEl.placeholder;

@@ -1,10 +1,10 @@
-import { Component, Listen, Prop } from "@stencil/core";
-import { App, Config } from "../..";
+import { Component, Listen, Prop } from '@stencil/core';
+import { App, Config } from '../..';
 
-import enableHideCaretOnScroll from "./hacks/hide-caret";
-import enableInputBlurring from "./hacks/input-blurring";
-import enableScrollAssist from "./hacks/scroll-assist";
-import enableScrollPadding from "./hacks/scroll-padding";
+import enableHideCaretOnScroll from './hacks/hide-caret';
+import enableInputBlurring from './hacks/input-blurring';
+import enableScrollAssist from './hacks/scroll-assist';
+import enableScrollPadding from './hacks/scroll-padding';
 
 const INPUT_BLURRING = true;
 const SCROLL_ASSIST = true;
@@ -45,7 +45,7 @@ export class InputShims {
     // At this point we need to look for all the ion-inputs not registered yet
     // and register them.
     const inputs = Array.from(document.querySelectorAll('ion-input'));
-    for (let input of inputs) {
+    for (const input of inputs) {
       this.registerInput(input);
     }
     this.didLoad = true;
