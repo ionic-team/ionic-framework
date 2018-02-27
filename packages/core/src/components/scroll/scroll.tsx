@@ -118,6 +118,11 @@ export class Scroll {
   }
 
   @Method()
+  scrollByPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
+    return this.scrollToPoint(x + this.el.scrollLeft, y + this.el.scrollTop, duration, done);
+  }
+
+  @Method()
   scrollToPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
     // scroll animation loop w/ easing
     // credit https://gist.github.com/dezinezync/5487119

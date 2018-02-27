@@ -3,6 +3,13 @@ import { App, Config } from "../..";
 
 import enableHideCaretOnScroll from "./hacks/hide-caret";
 import enableInputBlurring from "./hacks/input-blurring";
+import enableScrollAssist from "./hacks/scroll-assist";
+import enableScrollPadding from "./hacks/scroll-padding";
+
+const INPUT_BLURRING = true;
+const SCROLL_ASSIST = true;
+const SCROLL_PADDING = true;
+const HIDE_CARET = true;
 
 @Component({
   tag: 'ion-input-shims',
@@ -11,19 +18,27 @@ export class InputShims {
 
   private didLoad = false;
   private hideCaret = false;
+  private scrollAssist = false;
   private keyboardHeight = 0;
   private hideCaretMap = new WeakMap<HTMLElement, Function>();
+  private scrollAssistMap = new WeakMap<HTMLElement, Function>();
 
   @Prop({context: 'config'}) config: Config;
   @Prop() app: App;
 
   componentDidLoad() {
-    this.keyboardHeight = this.config.getNumber('keyboardHeight', 200);
+    this.keyboardHeight = this.config.getNumber('keyboardHeight', 290);
+    this.scrollAssist = this.config.getBoolean('scrollAssist', true);
     this.hideCaret = this.config.getBoolean('hideCaretOnScroll', true);
 
     const inputBlurring = this.config.getBoolean('inputBlurring', true);
-    if (inputBlurring) {
+    if (inputBlurring && INPUT_BLURRING) {
       enableInputBlurring(this.app);
+    }
+
+    const scrollPadding = this.config.getBoolean('scrollPadding', true);
+    if (scrollPadding && SCROLL_PADDING) {
+      enableScrollPadding(this.keyboardHeight);
     }
 
     // Input might be already loaded in the DOM before ion-device-hacks did.
@@ -53,21 +68,32 @@ export class InputShims {
   }
 
   private registerInput(componentEl: HTMLElement) {
-    if (this.hideCaret && !this.hideCaretMap.has(componentEl)) {
-      const rmFn = enableHideCaretOnScroll(
-        componentEl,
-        componentEl.querySelector('input'),
-        componentEl.closest('ion-scroll'),
-        this.keyboardHeight
-      );
+    const inputEl = componentEl.querySelector('input');
+    const scrollEl = componentEl.closest('ion-scroll');
+    const contentEl = componentEl.closest('ion-content');
+
+    if (HIDE_CARET && this.hideCaret && !this.hideCaretMap.has(componentEl)) {
+      const rmFn = enableHideCaretOnScroll(componentEl, inputEl, scrollEl);
       this.hideCaretMap.set(componentEl, rmFn);
+    }
+
+    if (SCROLL_ASSIST && this.scrollAssist && !this.scrollAssistMap.has(componentEl)) {
+      const rmFn = enableScrollAssist(componentEl, inputEl, contentEl, this.keyboardHeight);
+      this.scrollAssistMap.set(componentEl, rmFn);
     }
   }
 
   private unregisterInput(componentEl: HTMLElement) {
-    if (this.hideCaret) {
+    if (HIDE_CARET && this.hideCaret) {
       const fn = this.hideCaretMap.get(componentEl);
       fn && fn();
+      this.hideCaretMap.delete(componentEl);
+    }
+
+    if (SCROLL_ASSIST && this.scrollAssist) {
+      const fn = this.scrollAssistMap.get(componentEl);
+      fn && fn();
+      this.scrollAssistMap.delete(componentEl);
     }
   }
 }

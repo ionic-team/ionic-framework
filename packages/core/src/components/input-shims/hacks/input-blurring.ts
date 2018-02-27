@@ -11,9 +11,6 @@ export default function enableInputBlurring(app: App) {
     focused = true;
   }
 
-  document.addEventListener('focusin', onFocusin, true);
-  document.addEventListener('touchend', onTouchend, false);
-
   function onTouchend(ev: any) {
     // if app did scroll return early
     if (app.didScroll) {
@@ -51,6 +48,10 @@ export default function enableInputBlurring(app: App) {
       }
     }, 50);
   }
+
+  document.addEventListener('focusin', onFocusin, true);
+  document.addEventListener('touchend', onTouchend, false);
+
   return () => {
     document.removeEventListener('focusin', onFocusin, true);
     document.removeEventListener('touchend', onTouchend, false);

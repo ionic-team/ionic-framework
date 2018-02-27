@@ -4,7 +4,6 @@ import { Animation } from '../../../index';
  * iOS Popover Enter Animation
  */
 export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
-  debugger;
   let originY = 'top';
   let originX = 'left';
 

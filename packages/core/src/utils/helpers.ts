@@ -69,19 +69,20 @@ export function now(ev: UIEvent) {
   return ev.timeStamp || Date.now();
 }
 
-export function pointerCoordX(ev: any): number {
+export function pointerCoord(ev: any): {x: number, y: number} {
   // get X coordinates for either a mouse click
   // or a touch depending on the given event
   if (ev) {
     const changedTouches = ev.changedTouches;
     if (changedTouches && changedTouches.length > 0) {
-      return changedTouches[0].clientX;
+      const touch = changedTouches[0];
+      return {x: touch.clientX, y: touch.clientY};
     }
     if (ev.pageX !== undefined) {
-      return ev.pageX;
+      return {x: ev.pageX, y: ev.pageY};
     }
   }
-  return 0;
+  return {x: 0, y: 0};
 }
 
 export function updateDetail(ev: any, detail: any) {
@@ -102,21 +103,6 @@ export function updateDetail(ev: any, detail: any) {
   }
   detail.currentX = x;
   detail.currentY = y;
-}
-
-export function pointerCoordY(ev: any): number {
-  // get Y coordinates for either a mouse click
-  // or a touch depending on the given event
-  if (ev) {
-    const changedTouches = ev.changedTouches;
-    if (changedTouches && changedTouches.length > 0) {
-      return changedTouches[0].clientY;
-    }
-    if (ev.pageY !== undefined) {
-      return ev.pageY;
-    }
-  }
-  return 0;
 }
 
 export type ElementRef = 'child' | 'parent' | 'body' | 'document' | 'window';

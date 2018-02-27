@@ -86,6 +86,9 @@ Emitted when the scroll has started.
 
 ## Methods
 
+#### scrollByPoint()
+
+
 #### scrollToBottom()
 
 

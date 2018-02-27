@@ -22,6 +22,9 @@ export const PLATFORM_CONFIGS: PlatformConfig[] = [
 
   {
     name: IPAD,
+    settings: {
+      keyboardHeight: 500,
+    },
     isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, IPAD, [IPAD], WINDOWS_PHONE)
   },
 
@@ -33,9 +36,10 @@ export const PLATFORM_CONFIGS: PlatformConfig[] = [
   {
     name: IOS,
     settings: {
-      mode: "ios",
+      mode: 'ios',
       tabsHighlight: false,
       statusbarPadding: isCordova(),
+      keyboardHeight: 250,
       isDevice: true,
       deviceHacks: true,
     },
@@ -45,8 +49,9 @@ export const PLATFORM_CONFIGS: PlatformConfig[] = [
   {
     name: ANDROID,
     settings: {
-      isDevice: true,
       mode: 'md',
+      isDevice: true,
+      keyboardHeight: 300,
     },
     isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, ANDROID, [ANDROID, 'silk'], WINDOWS_PHONE)
   },

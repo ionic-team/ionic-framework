@@ -1,5 +1,5 @@
 import { Component, Element, EventListenerEnable, Listen, Prop } from '@stencil/core';
-import { now, pointerCoordX, pointerCoordY } from '../../utils/helpers';
+import { now, pointerCoord } from '../../utils/helpers';
 
 
 @Component({
@@ -110,8 +110,7 @@ export class TapClick {
     clearTimeout(this.activeDefer);
     this.activeDefer = null;
 
-    const eventX = pointerCoordX(ev);
-    const eventY = pointerCoordY(ev);
+    const {x, y} = pointerCoord(ev);
 
     // unactivate selected
     if (activatableEle) {
@@ -119,7 +118,7 @@ export class TapClick {
         throw new Error('internal error');
       }
       if (!activatableEle.classList.contains(ACTIVATED)) {
-        this.addActivated(activatableEle, eventX, eventY);
+        this.addActivated(activatableEle, x, y);
       }
       this.removeActivated(true);
     }
@@ -134,7 +133,7 @@ export class TapClick {
 
       el.classList.remove(ACTIVATED);
       this.activeDefer = setTimeout(() => {
-        this.addActivated(el, eventX, eventY);
+        this.addActivated(el, x, y);
         this.activeDefer = null;
       }, ADD_ACTIVATED_DEFERS);
     }

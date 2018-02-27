@@ -49,14 +49,6 @@ export class Content {
     this.scrollEl = null;
   }
 
-  hostData() {
-    return {
-      class: {
-        'statusbar-padding': this.config.getBoolean('statusbarPadding')
-      }
-    };
-  }
-
   /**
    * Scroll to the top of the content component.
    *
@@ -79,7 +71,17 @@ export class Content {
     return this.scrollEl.scrollToBottom(duration);
   }
 
-  resize() {
+  @Method()
+  scrollByPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
+    return this.scrollEl.scrollByPoint(x, y, duration, done);
+  }
+
+  @Method()
+  scrollToPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
+    return this.scrollEl.scrollToPoint(x, y, duration, done);
+  }
+
+  private resize() {
     if (!this.scrollEl) {
       return;
     }
@@ -112,6 +114,14 @@ export class Content {
       style.bottom = -this.cBottom + 'px';
       this.dirty = false;
     }
+  }
+
+  hostData() {
+    return {
+      class: {
+        'statusbar-padding': this.config.getBoolean('statusbarPadding')
+      }
+    };
   }
 
   render() {

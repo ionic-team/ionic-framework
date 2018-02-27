@@ -56,12 +56,18 @@ to transparent.
 
 ## Methods
 
+#### scrollByPoint()
+
+
 #### scrollToBottom()
 
 Scroll to the bottom of the content component.
 
 Duration of the scroll animation in milliseconds. Defaults to `300`.
 Returns a promise which is resolved when the scroll has completed.
+
+
+#### scrollToPoint()
 
 
 #### scrollToTop()
