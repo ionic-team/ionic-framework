@@ -5,9 +5,9 @@ import enableHideCaretOnScroll from "./hacks/hide-caret";
 import enableInputBlurring from "./hacks/input-blurring";
 
 @Component({
-  tag: 'ion-device-hacks',
+  tag: 'ion-input-shims',
 })
-export class DeviceHacks {
+export class InputShims {
 
   private didLoad = false;
   private hideCaret = false;
@@ -38,6 +38,7 @@ export class DeviceHacks {
 
   @Listen('body:ionInputDidLoad')
   protected onInputDidLoad(event: CustomEvent<HTMLElement>) {
+    // TODO: remove if fixed: https://github.com/ionic-team/stencil/issues/576
     if (this.didLoad) {
       this.registerInput(event.detail);
     }
@@ -45,6 +46,7 @@ export class DeviceHacks {
 
   @Listen('body:ionInputDidUnload')
   protected onInputDidUnload(event: CustomEvent<HTMLElement>) {
+    // TODO: remove if fixed: https://github.com/ionic-team/stencil/issues/576
     if (this.didLoad) {
       this.unregisterInput(event.detail);
     }

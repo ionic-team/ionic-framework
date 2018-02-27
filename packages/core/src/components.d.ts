@@ -21,10 +21,6 @@ import {
   AlertInput,
 } from './components/alert/alert';
 import {
-  App,
-  FrameworkDelegate as FrameworkDelegate2,
-} from '.';
-import {
   ElementRef,
   Side,
 } from './utils/helpers';
@@ -32,6 +28,10 @@ import {
   GestureCallback,
   GestureDetail,
 } from './components/gesture/gesture';
+import {
+  App,
+  FrameworkDelegate as FrameworkDelegate2,
+} from '.';
 import {
   PickerButton,
   PickerColumn as PickerColumn2,
@@ -849,36 +849,6 @@ declare global {
 
 
 import {
-  DeviceHacks as IonDeviceHacks
-} from './components/device-hacks/device-hacks';
-
-declare global {
-  interface HTMLIonDeviceHacksElement extends IonDeviceHacks, HTMLStencilElement {
-  }
-  var HTMLIonDeviceHacksElement: {
-    prototype: HTMLIonDeviceHacksElement;
-    new (): HTMLIonDeviceHacksElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-device-hacks": HTMLIonDeviceHacksElement;
-  }
-  interface ElementTagNameMap {
-    "ion-device-hacks": HTMLIonDeviceHacksElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-device-hacks": JSXElements.IonDeviceHacksAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonDeviceHacksAttributes extends HTMLAttributes {
-      app?: App;
-    }
-  }
-}
-
-
-import {
   Events as IonEvents
 } from './components/events/events';
 
@@ -1266,6 +1236,36 @@ declare global {
       disabled?: boolean;
       position?: string;
       threshold?: string;
+    }
+  }
+}
+
+
+import {
+  InputShims as IonInputShims
+} from './components/input-shims/input-shims';
+
+declare global {
+  interface HTMLIonInputShimsElement extends IonInputShims, HTMLStencilElement {
+  }
+  var HTMLIonInputShimsElement: {
+    prototype: HTMLIonInputShimsElement;
+    new (): HTMLIonInputShimsElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-input-shims": HTMLIonInputShimsElement;
+  }
+  interface ElementTagNameMap {
+    "ion-input-shims": HTMLIonInputShimsElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-input-shims": JSXElements.IonInputShimsAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonInputShimsAttributes extends HTMLAttributes {
+      app?: App;
     }
   }
 }
