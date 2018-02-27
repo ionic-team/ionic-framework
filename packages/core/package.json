@@ -9,10 +9,10 @@
     "dist/"
   ],
   "dependencies": {
-    "ionicons": "4.0.0-16"
+    "ionicons": "4.0.0-18"
   },
   "devDependencies": {
-    "@stencil/core": "0.6.8",
+    "@stencil/core": "0.6.11",
     "@stencil/dev-server": "latest",
     "@stencil/postcss": "0.0.2",
     "@stencil/sass": "0.0.3",
