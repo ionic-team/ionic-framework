@@ -244,7 +244,7 @@ export class App {
   render() {
     return [
       <ion-platform />,
-      this.deviceHacks && <ion-device-hacks app={this} />,
+      this.deviceHacks && <ion-input-shims app={this} />,
       this.isDevice && <ion-tap-click />,
       this.isDevice && <ion-status-tap />,
       <slot></slot>
