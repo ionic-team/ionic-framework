@@ -627,6 +627,7 @@ export class Datetime {
         aria-disabled={this.disabled ? 'true' : false}
         onClick={this.open.bind(this)}
         class='datetime-cover'>
+        {this.mode === 'md' ? <ion-ripple-effect /> : null}
       </button>
     ];
   }

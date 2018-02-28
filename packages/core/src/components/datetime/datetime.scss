@@ -22,6 +22,11 @@ ion-datetime {
 
   background: transparent;
   cursor: pointer;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
 
 .datetime-text {
