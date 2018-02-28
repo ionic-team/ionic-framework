@@ -189,7 +189,7 @@ export class Select {
   @Listen('ionSelectOptionDidLoad')
   optLoad(ev: HTMLIonSelectOptionElementEvent) {
     const selectOption = ev.target;
-    this.childOpts.push(selectOption);
+    this.childOpts = Array.from(this.el.querySelectorAll('ion-select-option'));
 
     if (this.value !== undefined && (Array.isArray(this.value) && this.value.indexOf(selectOption.value) > -1) || (selectOption.value === this.value)) {
       // this select has a value and this

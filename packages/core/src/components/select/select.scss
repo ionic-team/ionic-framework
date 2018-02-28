@@ -4,8 +4,6 @@
 // --------------------------------------------------
 
 ion-select {
-  position: relative;
-
   display: flex;
   overflow: hidden;
 
@@ -41,6 +39,7 @@ ion-select {
   white-space: nowrap;
 }
 
+// TODO item needs this class
 .item-multiple-inputs ion-select {
   position: relative;
 }
