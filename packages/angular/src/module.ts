@@ -60,9 +60,14 @@ import { ToastController } from './providers/toast-controller';
   imports: [
     CommonModule,
   ],
+  providers: [
+    ModalController,
+    PopoverController,
+    AngularComponentMounter
+  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
-  ],
+  ]
 })
 export class IonicAngularModule {
   static forRoot(): ModuleWithProviders {
@@ -71,14 +76,11 @@ export class IonicAngularModule {
       providers: [
         AlertController,
         ActionSheetController,
-        AngularComponentMounter,
         App,
         Events,
         LoadingController,
         MenuController,
-        ModalController,
         Platform,
-        PopoverController,
         ToastController
       ]
     };
