@@ -38,7 +38,7 @@ export class BackButton {
 
   render() {
     const backButtonIcon = this.config.get('backButtonIcon', 'arrow-back');
-    const defaultBackButtonText = this.config.get('backButtonText', 'Back');
+    const defaultBackButtonText = this.config.get('backButtonText', this.mode === 'ios' ? 'Back' : '');
     const backButtonText = this.text || defaultBackButtonText;
 
     if (this.custom) {
