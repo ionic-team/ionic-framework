@@ -63,10 +63,10 @@ export function buildMdTransition(rootTransition: Transition, enteringView: View
 }
 
 function getIonPageElement(element: HTMLElement) {
-  if (element.tagName.toLowerCase() === 'ion-page') {
+  if (element.classList.contains('ion-page')) {
     return element;
   }
-  const ionPage = element.querySelector('ion-page');
+  const ionPage = element.querySelector('.ion-page');
   if (ionPage) {
     return ionPage;
   }

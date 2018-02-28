@@ -10,7 +10,7 @@
       class PageOne extends HTMLElement {
         connectedCallback() {
           this.innerHTML = `
-          <ion-page>
+
             <ion-header>
               <ion-toolbar>
                 <ion-buttons slot="start">
@@ -25,7 +25,6 @@
                 <ion-button class="next">Go to Page Two</ion-button>
               </ion-nav-push>
             </ion-content>
-          </ion-page>
           `;
         }
       }
@@ -41,7 +40,7 @@
       class PageTwoSectionOne extends HTMLElement {
         connectedCallback() {
           this.innerHTML = `
-          <ion-page>
+
             <ion-header>
               <ion-toolbar>
                 <ion-buttons slot="start">
@@ -59,7 +58,6 @@
                 <ion-button class="previous">Go Back</ion-button>
               </div>
             </ion-content>
-          </ion-page>
           `;
 
           const button = this.querySelector('ion-button.previous');
@@ -75,7 +73,7 @@
       class PageTwoSectionTwo extends HTMLElement {
         connectedCallback() {
           this.innerHTML = `
-          <ion-page>
+
             <ion-header>
               <ion-toolbar>
                 <ion-buttons slot="start">
@@ -90,7 +88,6 @@
                 <ion-button class="next">Go to Page Three</ion-button>
               </ion-nav-push>
             </ion-content>
-          </ion-page>
           `;
         }
       }
@@ -98,7 +95,7 @@
       class PageThree extends HTMLElement {
         connectedCallback() {
           this.innerHTML = `
-          <ion-page>
+
             <ion-header>
               <ion-toolbar>
                 <ion-buttons slot="start">
@@ -113,7 +110,6 @@
                   <ion-button class="previous">Go Back</ion-button>
               </ion-nav-pop>
             </ion-content>
-          </ion-page>
           `;
         }
       }

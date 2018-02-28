@@ -7,16 +7,14 @@ export class TabOne {
 
   render() {
     return [
-      <ion-page>
-        <ion-header>
-          <ion-toolbar>
-            <ion-title>Page One</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content>
-          tab one
-        </ion-content>
-      </ion-page>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Page One</ion-title>
+        </ion-toolbar>
+      </ion-header>,
+      <ion-content>
+        tab one
+      </ion-content>
     ];
   }
 }

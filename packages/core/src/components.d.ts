@@ -2082,36 +2082,6 @@ declare global {
 
 
 import {
-  Page as IonPage
-} from './components/page/page';
-
-declare global {
-  interface HTMLIonPageElement extends IonPage, HTMLStencilElement {
-  }
-  var HTMLIonPageElement: {
-    prototype: HTMLIonPageElement;
-    new (): HTMLIonPageElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-page": HTMLIonPageElement;
-  }
-  interface ElementTagNameMap {
-    "ion-page": HTMLIonPageElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-page": JSXElements.IonPageAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonPageAttributes extends HTMLAttributes {
-      
-    }
-  }
-}
-
-
-import {
   PickerColumnCmp as IonPickerColumn
 } from './components/picker-column/picker-column';
 
