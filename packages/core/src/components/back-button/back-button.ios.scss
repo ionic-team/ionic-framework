@@ -4,7 +4,7 @@
 // iOS Back Button
 // --------------------------------------------------
 
-.back-button-ios .back-button-inner-default {
+.back-button-ios .back-button-inner {
   @include padding(0);
   @include margin(0);
 
@@ -16,7 +16,6 @@
   border: 0;
   font-size: 17px;
   line-height: 1;
-  color: $back-button-ios-button-color;
   background-color: transparent;
   transform: translateZ(0);
 
@@ -40,6 +39,3 @@
   letter-spacing: .01em;
 }
 
-.enable-hover .back-button-ios:hover {
-  color: $back-button-ios-button-color;
-}

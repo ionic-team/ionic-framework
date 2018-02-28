@@ -50,7 +50,7 @@ export class BackButton {
     } else {
       return (
         <ion-nav-pop>
-          <button class='back-button-inner-default'>
+          <button class='back-button-inner'>
             <span class='button-inner'>
               <ion-icon name={backButtonIcon} slot='start' />
               <span class='button-text'>{backButtonText}</span>

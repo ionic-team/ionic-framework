@@ -1,9 +1,8 @@
 @import "./back-button";
-@import "./back-button.md.vars";
 
 // MD Back Button
 // --------------------------------------------------
-.back-button-md .back-button-inner-default {
+.back-button-md .back-button-inner {
   @include margin(0, 6px, 0, 0);
   @include padding(0, 5px);
 
@@ -13,7 +12,6 @@
   font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
-  color: $back-button-md-button-color;
   background-color: transparent;
   box-shadow: none;
 
@@ -24,20 +22,11 @@
 
 .back-button-md ion-icon {
   @include padding-horizontal(null, 0.3em);
-
   @include margin(0);
   @include padding(0, 6px);
   @include text-align(start);
-
   font-size: 24px;
   font-weight: normal;
-
-
   line-height: 0.67;
-
   pointer-events: none;
-}
-
-.enable-hover .back-button-md:hover {
-  color: $back-button-md-button-color;
 }

@@ -105,7 +105,7 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
 
         enteringToolBarBg
           .beforeClearStyles([OPACITY])
-          .fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
+          .fromTo(OPACITY, 0.01, 1, true);
 
         if (canNavGoBack(enteringView.nav, enteringView)) {
 
@@ -187,7 +187,7 @@ export function buildIOSTransition(rootTransition: Transition, enteringView: Vie
         // should just slide out, no fading out
         leavingToolBarBg
           .beforeClearStyles([OPACITY])
-          .fromTo(TRANSLATEX, CENTER, (isRTL ? '-100%' : '100%'));
+          .fromTo(OPACITY, 1, 0.01, true);
 
         const leavingBackBtnText = rootTransition.create();
         leavingBackBtnText.addElement(leavingToolBarEle.querySelector('.back-button .button-text'));
