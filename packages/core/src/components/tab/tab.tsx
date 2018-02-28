@@ -153,6 +153,7 @@ export class Tab {
 
 function attachViewToDom(container: HTMLElement, cmp: string): Promise<any> {
   const el = document.createElement(cmp) as HTMLStencilElement;
+  el.classList.add('ion-page');
   container.appendChild(el);
   if (el.componentOnReady) {
     return el.componentOnReady();
