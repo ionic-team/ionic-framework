@@ -26,9 +26,8 @@
     "deploy": "np --any-branch",
     "tsc": "tsc -p ."
   },
-  "main": "./dist/src/index.js",
-  "module": "./dist/src/index.js",
-  "types": "./dist/src/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist/"
   ],
@@ -45,6 +44,7 @@
     "@ionic/core": "next",
     "glob": "7.1.2",
     "ionicons": "~3.0.0",
+    "rimraf": "^2.6.2",
     "rxjs": "5.5.2",
     "typescript": "latest",
     "zone.js": "0.8.18"
