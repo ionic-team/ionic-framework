@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "0.0.3-13",
+  "version": "0.0.3",
   "description": "Base components for Ionic",
   "main": "dist/ionic.js",
   "types": "dist/types/index.d.ts",
