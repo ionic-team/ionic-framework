@@ -52,7 +52,7 @@ export class InputShims {
   }
 
   @Listen('body:ionInputDidLoad')
-  protected onInputDidLoad(event: CustomEvent<HTMLElement>) {
+  protected onInputDidLoad(event: any) {
     // TODO: remove if fixed: https://github.com/ionic-team/stencil/issues/576
     if (this.didLoad) {
       this.registerInput(event.detail);
@@ -60,7 +60,7 @@ export class InputShims {
   }
 
   @Listen('body:ionInputDidUnload')
-  protected onInputDidUnload(event: CustomEvent<HTMLElement>) {
+  protected onInputDidUnload(event: any) {
     // TODO: remove if fixed: https://github.com/ionic-team/stencil/issues/576
     if (this.didLoad) {
       this.unregisterInput(event.detail);
