@@ -1,13 +1,12 @@
+# @ionic/angular
 
-## Angular
+Ionic Angular specific building blocks on top of [@ionic/core](https://www.npmjs.com/package/@ionic/core) components/services.
 
-These are Angular specific building blocks on top of `@ionic/core` components/services.
 
-## To Build
+## Related
 
-1. run `npm run build` to build a distro to `dist`
-
-## Publishing
-
-1. Run `npm run deploy`
-2. Commit and push any outstanding changes
+* [Ionic Components](https://www.npmjs.com/package/@ionic/core)
+* [Ionicons](http://ionicons.com/)
+* [Ionic Worldwide Slack](http://ionicworldwide.herokuapp.com/)
+* [Stencil](https://stenciljs.com/)
+* [Stencil Worldwide Slack](https://stencil-worldwide.slack.com)
