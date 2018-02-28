@@ -63,7 +63,6 @@ export * from './components/nav/nav';
 export * from './components/nav/nav-interfaces';
 export { ViewController } from './components/nav/view-controller';
 export { Note } from './components/note/note';
-export { Page } from './components/page/page';
 export { PickerColumnCmp } from './components/picker-column/picker-column';
 export * from './components/picker/picker';
 export { PickerController } from './components/picker-controller/picker-controller';

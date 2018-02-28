@@ -7,17 +7,15 @@ export class PageOne {
 
   render() {
     return [
-      <ion-page>
-        <ion-header>
-          <ion-toolbar>
-            <ion-title>Page One</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content>
-          page one
-          <a href='#/two/second-page'>Ir a la page 2</a>
-        </ion-content>
-      </ion-page>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Page One</ion-title>
+        </ion-toolbar>
+      </ion-header>,
+      <ion-content>
+        page one
+        <a href='#/two/second-page'>Ir a la page 2</a>
+      </ion-content>
     ];
   }
 }

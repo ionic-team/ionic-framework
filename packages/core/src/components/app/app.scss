@@ -150,23 +150,10 @@ sub {
   bottom: -.25em;
 }
 
-ion-app {
-  @include position(0);
-
-  position: absolute;
-
-  z-index: $z-index-page-container;
-
-  width: 100%;
-  height: 100%;
-
-  contain: layout size style;
-}
-
-
 // Page Container Structure
 // --------------------------------------------------
 
+ion-app,
 .ion-page {
   @include position(0);
 

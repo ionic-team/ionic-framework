@@ -10,28 +10,27 @@
 
 <body>
   <ion-app>
-    <ion-page>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Action Sheet - Basic</ion-title>
-        </ion-toolbar>
-      </ion-header>
 
-      <ion-content padding>
-        <ion-action-sheet-controller></ion-action-sheet-controller>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Action Sheet - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-        <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
-        <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</ion-button>
-        <ion-button expand="block" id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</ion-button>
-        <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
-        <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
-        <ion-button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</ion-button>
-        <ion-button expand="block" id="icons" onclick="presentIcons()">Icons</ion-button>
-        <ion-button expand="block" id="cssClass" onclick="presentWithCssClass()">Custom CSS Class</ion-button>
+    <ion-content padding>
+      <ion-action-sheet-controller></ion-action-sheet-controller>
 
-      </ion-content>
+      <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
+      <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</ion-button>
+      <ion-button expand="block" id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</ion-button>
+      <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
+      <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
+      <ion-button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</ion-button>
+      <ion-button expand="block" id="icons" onclick="presentIcons()">Icons</ion-button>
+      <ion-button expand="block" id="cssClass" onclick="presentWithCssClass()">Custom CSS Class</ion-button>
 
-    </ion-page>
+    </ion-content>
+
   </ion-app>
 
   <script>

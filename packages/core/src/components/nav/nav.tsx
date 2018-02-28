@@ -985,6 +985,7 @@ export function attachViewToDom(nav: Nav, enteringView: ViewController, ti: Tran
     return ti.delegate.attachViewToDom(nav.element, enteringView.component, enteringView.data, [], ti.escapeHatch).then((mountingData) => {
       ti.mountingData = mountingData;
       Object.assign(enteringView, mountingData);
+      mountingData.element.classList.add('ion-page');
       enteringView.state = STATE_ATTACHED;
     })
     // implicit returns FTW

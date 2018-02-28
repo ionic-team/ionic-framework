@@ -30,7 +30,7 @@
   async function loadFirstPage() {
     const nav = document.querySelector('ion-nav');
     await nav.componentOnReady();
-    const firstPage = document.createElement('ion-page');
+    const firstPage = document.createElement('div');
     firstPage.classList.add('first-page');
     firstPage.innerHTML = `
       <ion-header>
@@ -54,7 +54,7 @@
   }
 
   async function goToPageTwo(nav) {
-    const secondPage = document.createElement('ion-page');
+    const secondPage = document.createElement('div');
     secondPage.classList.add('second-page');
     secondPage.innerHTML = `
       <ion-header>
@@ -81,7 +81,7 @@
   }
 
   async function goToPageThree(nav) {
-    const thirdPage = document.createElement('ion-page');
+    const thirdPage = document.createElement('div');
     thirdPage.classList.add('third-page');
     thirdPage.innerHTML = `
       <ion-header>

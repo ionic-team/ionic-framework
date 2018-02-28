@@ -7,16 +7,14 @@ export class TabTwo {
 
   render() {
     return [
-      <ion-page>
-        <ion-header>
-          <ion-toolbar>
-            <ion-title>Tab two (2)</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content>
-          <ion-nav></ion-nav>
-        </ion-content>
-      </ion-page>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Tab two (2)</ion-title>
+        </ion-toolbar>
+      </ion-header>,
+      <ion-content>
+        <ion-nav></ion-nav>
+      </ion-content>
     ];
   }
 }

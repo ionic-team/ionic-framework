@@ -10,7 +10,7 @@ async function presentModal() {
   await modalController.componentOnReady();
 
   // create component to open
-  const element = document.createElement('ion-page');
+  const element = document.createElement('div');
   element.innerHTML = `
   <ion-header>
     <ion-toolbar>
