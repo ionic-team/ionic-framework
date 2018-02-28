@@ -40,6 +40,8 @@ export class MenuButton {
 
   componentWillLoad() {
     this.custom = this.el.childElementCount > 0;
+    const closestNav = this.el.closest('ion-nav');
+    closestNav.canGoBack() ? this.el.hidden = true : this.el.hidden = false;
   }
 
   render() {
