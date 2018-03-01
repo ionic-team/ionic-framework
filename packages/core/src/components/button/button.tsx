@@ -132,7 +132,7 @@ export class Button {
     };
 
     const attrs = (TagType === 'button')
-      ? {type: 'button'}
+      ? { type: this.type }
       : {};
 
     return (
