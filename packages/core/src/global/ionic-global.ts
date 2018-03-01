@@ -1,7 +1,8 @@
 import 'ionicons';
 import { createConfigController } from './config-controller';
-import { PLATFORM_CONFIGS, detectPlatforms, readQueryParam } from './platform-configs';
 import { createDomControllerClient } from './dom-controller';
+import { PLATFORM_CONFIGS, detectPlatforms, readQueryParam } from './platform-configs';
+import { setupEvents } from './events';
 
 
 const Ionic = (window as any).Ionic = (window as any).Ionic || {};
@@ -30,6 +31,7 @@ Ionic.config = Context.config = createConfigController(
   Context.platforms
 );
 
+Ionic.Events = Context.Events = setupEvents(window, document);
 
 // first see if the mode was set as an attribute on <html>
 // which could have been set by the user, or by prerendering
