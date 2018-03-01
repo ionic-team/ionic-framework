@@ -3,15 +3,12 @@ import {
   Directive,
   ElementRef,
   Injector,
-  Optional,
   Type,
 } from '@angular/core';
 
 import { FrameworkDelegate } from '@ionic/core';
 
 import { AngularComponentMounter, AngularEscapeHatch } from '..';
-
-let id = 0;
 
 @Directive({
   selector: 'ion-nav',

@@ -15,13 +15,13 @@ import {
 import {ɵgetDOM as getDOM} from '@angular/platform-browser';
 
 import {
-  ROUTES,
-  ROUTER_CONFIGURATION,
   ChildrenOutletContexts,
   ExtraOptions,
+  ROUTER_CONFIGURATION,
+  ROUTES,
   Route,
-  Router,
   RouteReuseStrategy,
+  Router,
   UrlHandlingStrategy,
   UrlSerializer
 } from '@angular/router';
@@ -70,7 +70,7 @@ export class IonicRouterModule {
 }
 
 export function setupRouter(
-  ref: ApplicationRef, urlSerializer: UrlSerializer, contexts: ChildrenOutletContexts,
+  _ref: ApplicationRef, urlSerializer: UrlSerializer, contexts: ChildrenOutletContexts,
   location: Location, injector: Injector, loader: NgModuleFactoryLoader, compiler: Compiler,
   config: Route[][], opts: ExtraOptions = {}, urlHandlingStrategy?: UrlHandlingStrategy,
   routeReuseStrategy?: RouteReuseStrategy) {
@@ -96,7 +96,7 @@ if (opts.errorHandler) {
 if (opts.enableTracing) {
   const dom = getDOM();
   router.events.subscribe((e: any) => {
-    dom.logGroup(`Router Event: ${(<any>e.constructor).name}`);
+    dom.logGroup(`Router Event: ${(e.constructor).name}`);
     dom.log(e.toString());
     dom.log(e);
     dom.logGroupEnd();

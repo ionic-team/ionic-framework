@@ -10,7 +10,7 @@ import { getIonApp } from '../util/util';
 @Injectable()
 export class RouteEventHandler {
 
-  constructor(private router: Router) {
+  constructor(public router: Router) {
 
     router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {

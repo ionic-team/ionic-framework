@@ -8,7 +8,7 @@ export function nodeChildrenAsMap<T extends{outlet: string}>(node: TreeNode<T>| 
   return map;
 }
 
-export function forEach<K, V>(map: {[key: string]: V}, callback: (v: V, k: string) => void): void {
+export function forEach<_K, V>(map: {[key: string]: V}, callback: (v: V, k: string) => void): void {
   for (const prop in map) {
     if (map.hasOwnProperty(prop)) {
       callback(map[prop], prop);
@@ -30,28 +30,28 @@ export class TreeNode<T> {
 export function advanceActivatedRoute(route: any): void {
   if (route.snapshot) {
     const currentSnapshot = route.snapshot;
-    const nextSnapshot = (route as any)._futureSnapshot;
+    const nextSnapshot = (route)._futureSnapshot;
     route.snapshot = nextSnapshot;
     if (!shallowEqual(currentSnapshot.queryParams, nextSnapshot.queryParams)) {
-      (<any>route.queryParams).next(nextSnapshot.queryParams);
+      (route.queryParams).next(nextSnapshot.queryParams);
     }
     if (currentSnapshot.fragment !== nextSnapshot.fragment) {
-      (<any>route.fragment).next(nextSnapshot.fragment);
+      (route.fragment).next(nextSnapshot.fragment);
     }
     if (!shallowEqual(currentSnapshot.params, nextSnapshot.params)) {
-      (<any>route.params).next(nextSnapshot.params);
+      (route.params).next(nextSnapshot.params);
     }
     if (!shallowEqualArrays(currentSnapshot.url, nextSnapshot.url)) {
-      (<any>route.url).next(nextSnapshot.url);
+      (route.url).next(nextSnapshot.url);
     }
     if (!shallowEqual(currentSnapshot.data, nextSnapshot.data)) {
-      (<any>route.data).next(nextSnapshot.data);
+      (route.data).next(nextSnapshot.data);
     }
   } else {
-    route.snapshot = (route as any)._futureSnapshot;
+    route.snapshot = (route)._futureSnapshot;
 
     // this is for resolved data
-    (<any>route.data).next((route as any)._futureSnapshot.data);
+    (route.data).next((route)._futureSnapshot.data);
   }
 }
 
@@ -66,6 +66,7 @@ export function shallowEqualArrays(a: any[], b: any[]): boolean {
 export function shallowEqual(a: {[x: string]: any}, b: {[x: string]: any}): boolean {
   const k1 = Object.keys(a);
   const k2 = Object.keys(b);
+  /*tslint:disable*/
   if (k1.length != k2.length) {
     return false;
   }

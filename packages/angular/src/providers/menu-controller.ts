@@ -93,7 +93,7 @@ export class MenuController {
     return false;
   }
 
-  isOpenAsync(menuId?: string): Promise<boolean>{
+  isOpenAsync(menuId?: string): Promise<boolean> {
     return element.componentOnReady().then(() => {
       return element.isOpen(menuId);
     });

@@ -25,7 +25,7 @@ export function getProviders(element: HTMLElement, data: any) {
     {
       provide: NavParams, useFactory: provideNavParamsInjectable, deps: [NavParamsToken]
     },
-  ]
+  ];
 }
 
 export function provideNavControllerInjectable(element: HTMLIonNavElement) {

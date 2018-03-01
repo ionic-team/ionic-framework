@@ -7,7 +7,6 @@ import {
   ElementRef,
   EventEmitter,
   Injector,
-  NgZone,
   OnDestroy,
   OnInit,
   Output,
@@ -16,13 +15,13 @@ import {
 } from '@angular/core';
 
 import {
-  PRIMARY_OUTLET,
   ActivatedRoute,
   ChildrenOutletContexts,
+  PRIMARY_OUTLET,
   Router
 } from '@angular/router';
 
-import { NavResult, RouterDelegate } from '@ionic/core';
+import { RouterDelegate } from '@ionic/core';
 
 import { OutletInjector } from './outlet-injector';
 import { RouteEventHandler } from './route-event-handler';
@@ -179,7 +178,7 @@ export function getDataFromRoute(activatedRoute: ActivatedRoute): Promise<any> {
   promises.push(getDataFromObservable(activatedRoute));
   promises.push(getDataFromParams(activatedRoute));
   return Promise.all(promises).then(([data, params]: any[]) => {
-    let combined = {};
+    const combined = {};
     Object.assign(combined, data, params);
     return combined;
   });

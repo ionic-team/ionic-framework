@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "allowUnreachableCode": false,
+    "alwaysStrict": true,
     "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
     "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -13,17 +14,16 @@
     "moduleResolution": "node",
     "noImplicitAny": true,
     "noImplicitReturns": true,
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "outDir": "dist",
+    "pretty": true,
     "removeComments": false,
+    "rootDir": "src",
     "sourceMap": true,
-    "target": "es2015",
-    "rootDir": "src"
+    "target": "es2015"
   },
   "files": [
     "src/index.ts"
-  ],
-  "compileOnSave": false,
-  "buildOnSave": false
+  ]
 }

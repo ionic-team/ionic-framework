@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "allowUnreachableCode": false,
     "alwaysStrict": true,
+    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
     "declaration": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
@@ -9,7 +10,7 @@
     "jsxFactory": "h",
     "lib": [
       "dom",
-      "es2015"
+      "es2017"
     ],
     "module": "es2015",
     "moduleResolution": "node",

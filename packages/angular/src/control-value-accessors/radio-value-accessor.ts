@@ -21,8 +21,8 @@ export class RadioValueAccessor implements ControlValueAccessor {
   onTouched: () => void;
 
   constructor(private element: ElementRef, private renderer: Renderer2) {
-    this.onChange = () => { };
-    this.onTouched = () => { };
+    this.onChange = () => {/**/};
+    this.onTouched = () => {/**/};
   }
 
   writeValue(value: any) {

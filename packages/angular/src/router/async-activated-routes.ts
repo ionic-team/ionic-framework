@@ -14,10 +14,10 @@ import {
 } from '@angular/router';
 
 import {
+  TreeNode,
   advanceActivatedRoute,
   forEach,
-  nodeChildrenAsMap,
-  TreeNode
+  nodeChildrenAsMap
 } from './router-utils';
 
 export class AsyncActivateRoutes {
@@ -64,7 +64,7 @@ export class AsyncActivateRoutes {
         () => {
           const promises: Promise<void>[] = [];
           // De-activate the routes that will not be re-used
-          forEach(children, (v: TreeNode<ActivatedRoute>, childName: string) => {
+          forEach(children, (v: TreeNode<ActivatedRoute>) => {
             promises.push(this.deactivateRouteAndItsChildren(v, contexts));
           });
 
@@ -135,7 +135,7 @@ export class AsyncActivateRoutes {
       const contexts = route.value.component ? context.children : parentContexts;
 
       const promises: Promise<void>[] = [];
-      forEach(children, (v: any, k: string) => {
+      forEach(children, (v: any) => {
         promises.push(this.deactivateRouteAndItsChildren(v, contexts));
       });
 

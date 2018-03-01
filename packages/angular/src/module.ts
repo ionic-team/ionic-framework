@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import {
+  CUSTOM_ELEMENTS_SCHEMA,
   ModuleWithProviders,
-  NgModule,
-  CUSTOM_ELEMENTS_SCHEMA
+  NgModule
 } from '@angular/core';
 
 import { BooleanValueAccessor } from './control-value-accessors/boolean-value-accessor';

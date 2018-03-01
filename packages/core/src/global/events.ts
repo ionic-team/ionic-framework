@@ -26,7 +26,7 @@ export class Events {
    * @return true if a handler was removed
    */
   unsubscribe(topic: string, handler: Function = null) {
-    let t = this.c[topic];
+    const t = this.c[topic];
     if (!t) {
       // Wasn't found, wasn't removed
       return false;
@@ -39,7 +39,7 @@ export class Events {
     }
 
     // We need to find and remove a specific handler
-    let i = t.indexOf(handler);
+    const i = t.indexOf(handler);
 
     if (i < 0) {
       // Wasn't found, wasn't removed
@@ -63,12 +63,12 @@ export class Events {
    * @param {any} eventData the data to send as the event
    */
   publish(topic: string, ...args: any[]) {
-    var t = this.c[topic];
+    const t = this.c[topic];
     if (!t) {
       return null;
     }
 
-    let responses: any[] = [];
+    const responses: any[] = [];
     t.forEach((handler: any) => {
       responses.push(handler(...args));
     });

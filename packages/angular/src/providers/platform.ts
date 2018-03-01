@@ -5,7 +5,7 @@ export type DocumentDirection = 'ltr' | 'rtl';
 
 let dir: DocumentDirection = 'ltr';
 let isRtl = false;
-let lang: string = '';
+let lang = '';
 
 export class Platform {
 

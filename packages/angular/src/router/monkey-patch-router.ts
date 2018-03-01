@@ -42,7 +42,7 @@ export function monkeyPatchRouter(router: any) {
         }
       }
 
-      routes.push(new AsyncActivateRoutes(router.routeReuseStrategy, state, storedState, (evt: Event) => router.triggerEvent(evt)))
+      routes.push(new AsyncActivateRoutes(router.routeReuseStrategy, state, storedState, (evt: Event) => router.triggerEvent(evt)));
 
 
     })
@@ -83,7 +83,7 @@ export function monkeyPatchRouter(router: any) {
             resolvePromise(false);
           } else {
             router.resetStateAndUrl(storedState, storedUrl, rawUrl);
-            (router.events as any as Subject<Event>)
+            (router.events as Subject<Event>)
                 .next(new NavigationError(id, router.serializeUrl(url), e));
             try {
               resolvePromise(router.errorHandler(e));
