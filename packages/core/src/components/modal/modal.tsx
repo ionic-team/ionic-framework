@@ -175,7 +175,10 @@ export class Modal implements OverlayInterface {
     this.data.modal = this.el;
 
     return this.delegate.attachViewToDom(userComponentParent, this.component, this.data, cssClasses)
-     .then((mountingData) => this.usersComponentElement = mountingData.element)
+     .then((mountingData) => {
+       mountingData.element.classList.add('ion-page');
+       this.usersComponentElement = mountingData.element;
+     })
      .then(() => this.playAnimation(animationBuilder))
      .then(() => {
        this.ionModalDidPresent.emit();

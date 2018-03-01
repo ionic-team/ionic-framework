@@ -184,7 +184,9 @@ export class Popover implements OverlayInterface {
     this.data.modal = this.el;
 
     return this.delegate.attachViewToDom(userComponentParent, this.component, this.data, cssClasses)
-      .then((mountingData) => this.usersComponentElement = mountingData.element)
+      .then((mountingData) => {
+        this.usersComponentElement = mountingData.element;
+      })
       .then(() => domControllerAsync(this.dom.raf))
       .then(() => this.playAnimation(animationBuilder))
       .then(() => {
