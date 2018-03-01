@@ -21,3 +21,16 @@ export interface AngularEscapeHatch extends EscapeHatch {
   cfr?: ComponentFactoryResolver;
   injector?: Injector;
 }
+
+export interface IonicGlobal {
+  config: any;
+  Events: {
+    subscribe: (topic: string, ...handlers: Function[]) => void;
+    unsubscribe: (topic: string, handler: Function) => void;
+    publish: (topic: string, ...args: any[]) => any[];
+  };
+}
+
+export interface IonicWindow extends Window {
+  Ionic: IonicGlobal;
+}
