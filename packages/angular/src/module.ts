@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  APP_INITIALIZER,
   CUSTOM_ELEMENTS_SCHEMA,
   ModuleWithProviders,
   NgModule
@@ -23,7 +24,7 @@ import { ActionSheetController } from './providers/action-sheet-controller';
 import { AlertController } from './providers/alert-controller';
 import { AngularComponentMounter } from './providers/angular-component-mounter';
 import { App } from './providers/app';
-import { Events } from './providers/events';
+import { Events, setupProvideEvents } from './providers/events';
 import { LoadingController } from './providers/loading-controller';
 import { MenuController } from './providers/menu-controller';
 import { ModalController } from './providers/modal-controller';
@@ -81,7 +82,9 @@ export class IonicAngularModule {
         LoadingController,
         MenuController,
         Platform,
-        ToastController
+        ToastController,
+
+        { provide: APP_INITIALIZER, useFactory: setupProvideEvents, multi: true },
       ]
     };
   }

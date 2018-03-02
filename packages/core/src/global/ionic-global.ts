@@ -31,7 +31,7 @@ Ionic.config = Context.config = createConfigController(
   Context.platforms
 );
 
-Ionic.Events = Context.Events = setupEvents(window, document);
+setupEvents(window, document);
 
 // first see if the mode was set as an attribute on <html>
 // which could have been set by the user, or by prerendering
