@@ -85,6 +85,12 @@ export class Scroll {
     }
   }
 
+  componentDidUnload() {
+    if (this.watchDog) {
+      clearInterval(this.watchDog);
+    }
+  }
+
   @Listen('scroll', { passive: true })
   onScroll(ev: UIEvent) {
     const timeStamp = Date.now();
@@ -220,6 +226,9 @@ export class Scroll {
       isScrolling: true
     });
 
+    if (this.watchDog) {
+      clearInterval(this.watchDog);
+    }
     // watchdog
     this.watchDog = setInterval(() => {
       if (this.lastScroll < Date.now() - 120) {
