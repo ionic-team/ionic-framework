@@ -44,9 +44,12 @@ export function isCheckedProperty(a: any, b: any): boolean {
   return (a == b); // tslint:disable-line
 }
 
-export function assert(bool: boolean, msg: string) {
-  if (!bool) {
-    console.error(msg);
+export function assert(actual: any, reason: string) {
+  if (!actual) {
+    const message = 'ASSERT: ' + reason;
+    console.error(message);
+    debugger; // tslint:disable-line
+    throw new Error(message);
   }
 }
 

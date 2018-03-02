@@ -1,5 +1,5 @@
 import { Component, Listen, Prop } from '@stencil/core';
-import { App, Config } from '../..';
+import { Config } from '../..';
 
 import enableHideCaretOnScroll from './hacks/hide-caret';
 import enableInputBlurring from './hacks/input-blurring';
@@ -24,7 +24,6 @@ export class InputShims {
   private scrollAssistMap = new WeakMap<HTMLElement, Function>();
 
   @Prop({context: 'config'}) config: Config;
-  @Prop() app: App;
 
   componentDidLoad() {
     this.keyboardHeight = this.config.getNumber('keyboardHeight', 290);
@@ -33,7 +32,7 @@ export class InputShims {
 
     const inputBlurring = this.config.getBoolean('inputBlurring', true);
     if (inputBlurring && INPUT_BLURRING) {
-      enableInputBlurring(this.app);
+      enableInputBlurring();
     }
 
     const scrollPadding = this.config.getBoolean('scrollPadding', true);

@@ -1,6 +1,5 @@
-import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop } from '@stencil/core';
-import { Config, DomController, GestureDelegate, GestureDetail } from '../../index';
-
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Config, DomController } from '../../index';
 
 @Component({
   tag: 'ion-scroll',
@@ -14,19 +13,13 @@ import { Config, DomController, GestureDelegate, GestureDetail } from '../../ind
 })
 export class Scroll {
 
-  private gesture: GestureDelegate;
-  private positions: number[] = [];
-  private tmr: any;
-  private queued = false;
-  private app: HTMLIonAppElement;
+  private watchDog: any;
   private isScrolling = false;
-  private detail: ScrollDetail = {};
+  private lastScroll = 0;
 
   @Element() private el: HTMLElement;
 
-  @Prop({ connect: 'ion-gesture-controller'}) gestureCtrl: HTMLIonGestureControllerElement;
   @Prop({ context: 'config'}) config: Config;
-  @Prop({ context: 'enableListener'}) enableListener: EventListenerEnable;
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop({ context: 'isServer' }) isServer: boolean;
 
@@ -40,19 +33,10 @@ export class Scroll {
    */
   @Prop({mutable: true}) forceOverscroll: boolean;
 
-  @Prop() onionScrollStart: ScrollCallback;
-  @Prop() onionScroll: ScrollCallback;
-  @Prop() onionScrollEnd: ScrollCallback;
-
   /**
    * Emitted when the scroll has started.
    */
   @Event() ionScrollStart: EventEmitter;
-
-  /**
-   * Emitted while scrolling.
-   */
-  @Event({bubbles: false}) ionScroll: EventEmitter;
 
   /**
    * Emitted when the scroll has ended.
@@ -60,47 +44,20 @@ export class Scroll {
   @Event() ionScrollEnd: EventEmitter;
 
   componentWillLoad() {
-    return this.gestureCtrl.create({
-      name: 'scroll',
-      priority: 100,
-      disableScroll: false,
-    }).then((gesture) => {
-      this.gesture = gesture;
-    });
-  }
-
-  componentDidLoad() {
     if (this.isServer) {
       return;
     }
     if (this.forceOverscroll === undefined) {
       this.forceOverscroll = this.mode === 'ios' && ('ontouchstart' in window);
     }
-    this.app = this.el.closest('ion-app');
   }
-
-  componentDidUnload() {
-    this.gesture && this.gesture.destroy();
-    this.gesture = this.detail = this.detail.event = null;
-  }
-
-  // Native Scroll *************************
 
   @Listen('scroll', { passive: true })
-  onNativeScroll() {
-    if (!this.queued) {
-      this.queued = true;
-
-      this.dom.read(timeStamp => {
-        this.queued = false;
-        this.onScroll(timeStamp);
-      });
+  onScroll() {
+    this.lastScroll = Date.now();
+    if (!this.isScrolling) {
+      this.onScrollStart();
     }
-  }
-
-  @Listen('touchend', {passive: true, capture: true })
-  onTouchEnd(_ev: TouchEvent) {
-    this.refocus();
   }
 
   @Method()
@@ -212,115 +169,27 @@ export class Scroll {
     return promise;
   }
 
-  private onScroll(timeStamp: number) {
-    const detail = this.detail;
-    const positions = this.positions;
-    const el = this.el;
-    if (this.app) {
-      this.app.setScrolling();
-    }
 
-    detail.timeStamp = timeStamp;
+  private onScrollStart() {
+    console.debug('scroll start');
+    this.isScrolling = true;
+    this.ionScrollStart.emit(this.el);
 
-    // get the current scrollTop
-    // ******** DOM READ ****************
-    detail.scrollTop = el.scrollTop;
-
-    // get the current scrollLeft
-    // ******** DOM READ ****************
-    detail.scrollLeft = el.scrollLeft;
-
-
-    if (!this.isScrolling) {
-      // currently not scrolling, so this is a scroll start
-      this.isScrolling = true;
-
-      // remember the start positions
-      detail.startY = detail.scrollTop;
-      detail.startX = detail.scrollLeft;
-
-      // new scroll, so do some resets
-      detail.velocityY = detail.velocityX = detail.deltaY = detail.deltaX = positions.length = 0;
-
-      // emit only on the first scroll event
-      if (this.onionScrollStart) {
-        this.onionScrollStart(detail);
+    // watchdog
+    this.watchDog = setInterval(() => {
+      if (this.lastScroll < Date.now() - 120) {
+        this.onScrollEnd();
       }
-      this.gesture.capture();
-      this.ionScrollStart.emit(detail);
-    }
-    detail.deltaY = (detail.scrollTop - detail.startY);
-    detail.deltaX = (detail.scrollLeft - detail.startX);
-
-    // actively scrolling
-    positions.push(detail.scrollTop, detail.scrollLeft, detail.timeStamp);
-
-    // move pointer to position measured 100ms ago
-    const timeRange = timeStamp - 100;
-    let startPos = positions.length - 1;
-
-    while (startPos > 0 && positions[startPos] > timeRange) {
-      startPos -= 3;
-    }
-
-    if (startPos > 3) {
-      // compute relative movement between these two points
-      const frequency = 1 / (positions[startPos] - timeStamp);
-      const movedY = positions[startPos - 1] - detail.scrollLeft;
-      const movedX = positions[startPos - 2] - detail.scrollTop;
-
-      // based on XXms compute the movement to apply for each render step
-      // velocity = space/time = s*(1/t) = s*frequency
-      detail.velocityX = movedX * frequency;
-      detail.velocityY = movedY * frequency;
-    } else {
-      detail.velocityX = 0;
-      detail.velocityY = 0;
-    }
-
-    clearTimeout(this.tmr);
-    this.tmr = setTimeout(() => {
-
-      // haven't scrolled in a while, so it's a scrollend
-      this.isScrolling = false;
-
-      this.dom.read(timeStamp => {
-        if (!this.isScrolling) {
-          this.onEnd(timeStamp);
-        }
-      });
-    }, 80);
-
-    // emit on each scroll event
-    if (this.onionScroll) {
-      this.onionScroll(detail);
-    } else {
-      this.ionScroll.emit(detail);
-    }
+    }, 100);
   }
 
-  private onEnd(timeStamp: number) {
-    const detail = this.detail;
+  private onScrollEnd() {
+    console.debug('scroll end');
 
-    detail.timeStamp = timeStamp;
-
-    // emit that the scroll has ended
-    this.gesture.release();
-
-    if (this.onionScrollEnd) {
-      this.onionScrollEnd(detail);
-    }
-    this.ionScrollEnd.emit(detail);
-    this.refocus();
-  }
-
-  private refocus() {
-    // TODO: renable when desktop testing is done
-    // setTimeout(() => {
-    //   if (document.activeElement === document.body) {
-    //     (this.el.querySelector('.focus-input') as HTMLElement).focus();
-    //   }
-    // });
+    clearInterval(this.watchDog);
+    this.watchDog = null;
+    this.isScrolling = false;
+    this.ionScrollEnd.emit(this.el);
   }
 
   hostData() {
@@ -339,20 +208,4 @@ export class Scroll {
       </div>
     ];
   }
-
-}
-
-export interface ScrollDetail extends GestureDetail {
-  scrollTop?: number;
-  scrollLeft?: number;
-  scrollHeight?: number;
-  scrollWidth?: number;
-  contentHeight?: number;
-  contentWidth?: number;
-  contentTop?: number;
-  contentBottom?: number;
-}
-
-export interface ScrollCallback {
-  (detail?: ScrollDetail): boolean|void;
 }

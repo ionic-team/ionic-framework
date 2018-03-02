@@ -5,20 +5,6 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-#### app
-
-
-
-
-## Attributes
-
-#### app
-
-
-
-
 
 ----------------------------------------------
 

@@ -80,7 +80,7 @@ export {
 } from './components/router/router-utils';
 export { Row } from './components/row/row';
 export { Reorder } from './components/reorder/reorder';
-export { Scroll, ScrollCallback, ScrollDetail } from './components/scroll/scroll';
+export { Scroll } from './components/scroll/scroll';
 export { Searchbar } from './components/searchbar/searchbar';
 export { Segment } from './components/segment/segment';
 export { SegmentButton } from './components/segment-button/segment-button';
