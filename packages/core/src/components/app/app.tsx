@@ -4,7 +4,6 @@ import { Config, NavEvent, OverlayController, PublicNav, PublicViewController } 
 import { getOrAppendElement } from '../../utils/helpers';
 
 const rootNavs = new Map<number, HTMLIonNavElement>();
-const ACTIVE_SCROLLING_TIME = 100;
 let backButtonActions: BackButtonAction[] = [];
 
 @Component({
@@ -21,11 +20,9 @@ export class App {
 
   private isDevice = false;
   private deviceHacks = false;
-  private scrollTime = 0;
 
   externalNavPromise: void | Promise<any> = null;
   externalNavOccuring = false;
-  didScroll = false;
 
   @Element() element: HTMLElement;
   @Event() exitApp: EventEmitter<ExitAppEventDetail>;
@@ -102,29 +99,6 @@ export class App {
     return true;
   }
 
-  /**
-   * Boolean if the app is actively scrolling or not.
-   * @return {boolean} returns true or false
-   */
-  @Method()
-  isScrolling(): boolean {
-    const scrollTime = this.scrollTime;
-    if (scrollTime === 0) {
-      return false;
-    }
-    if (scrollTime < Date.now()) {
-      this.scrollTime = 0;
-      return false;
-    }
-    return true;
-  }
-
-  @Method()
-  setScrolling() {
-    this.scrollTime = Date.now() + ACTIVE_SCROLLING_TIME;
-    this.didScroll = true;
-  }
-
   @Method()
   getTopNavs(rootNavId = -1): PublicNav[] {
     return getTopNavsImpl(rootNavId);
@@ -141,7 +115,6 @@ export class App {
     }
     return null;
   }
-
 
   /**
    * The back button event is triggered when the user presses the native
@@ -244,7 +217,7 @@ export class App {
   render() {
     return [
       <ion-platform />,
-      this.deviceHacks && <ion-input-shims app={this} />,
+      this.deviceHacks && <ion-input-shims />,
       this.isDevice && <ion-tap-click />,
       this.isDevice && <ion-status-tap />,
       <slot></slot>

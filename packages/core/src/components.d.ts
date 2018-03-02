@@ -43,19 +43,15 @@ import {
   GestureDetail,
 } from './components/gesture/gesture';
 import {
-  App,
-  FrameworkDelegate as FrameworkDelegate2,
-} from '.';
-import {
   PickerButton,
   PickerColumn as PickerColumn2,
 } from './components/picker/picker';
 import {
-  ScrollCallback,
-} from './components/scroll/scroll';
-import {
   SelectPopoverOption,
 } from './components/select-popover/select-popover';
+import {
+  FrameworkDelegate as FrameworkDelegate2,
+} from '.';
 import {
   DomRenderFn,
   HeaderFn,
@@ -770,6 +766,7 @@ declare global {
     export interface IonContentAttributes extends HTMLAttributes {
       forceOverscroll?: boolean;
       fullscreen?: boolean;
+      scrollEvents?: boolean;
     }
   }
 }
@@ -1240,7 +1237,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonInputShimsAttributes extends HTMLAttributes {
-      app?: App;
+      
     }
   }
 }
@@ -2706,9 +2703,7 @@ declare global {
     export interface IonScrollAttributes extends HTMLAttributes {
       forceOverscroll?: boolean;
       mode?: string;
-      onionScroll?: ScrollCallback;
-      onionScrollEnd?: ScrollCallback;
-      onionScrollStart?: ScrollCallback;
+      scrollEvents?: boolean;
     }
   }
 }

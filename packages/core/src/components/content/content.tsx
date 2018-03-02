@@ -35,6 +35,9 @@ export class Content {
    */
   @Prop() forceOverscroll: boolean;
 
+
+  @Prop() scrollEvents = false;
+
   @Listen('body:ionNavChanged')
   onNavChanged() {
     this.resize();
@@ -128,7 +131,10 @@ export class Content {
     this.resize();
 
     return [
-      <ion-scroll mode={this.mode} forceOverscroll={this.forceOverscroll}>
+      <ion-scroll
+        mode={this.mode}
+        scrollEvents={this.scrollEvents}
+        forceOverscroll={this.forceOverscroll}>
         <slot></slot>
       </ion-scroll>,
       <slot name='fixed'></slot>

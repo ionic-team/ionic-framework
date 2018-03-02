@@ -21,19 +21,9 @@ Note, the does not disable the system bounce on iOS. That is an OS level setting
 string
 
 
-#### onionScroll
+#### scrollEvents
 
-
-
-
-#### onionScrollEnd
-
-
-
-
-#### onionScrollStart
-
-
+boolean
 
 
 ## Attributes
@@ -52,26 +42,17 @@ Note, the does not disable the system bounce on iOS. That is an OS level setting
 string
 
 
-#### onion-scroll
+#### scroll-events
 
-
-
-
-#### onion-scroll-end
-
-
-
-
-#### onion-scroll-start
-
-
+boolean
 
 
 ## Events
 
 #### ionScroll
 
-Emitted while scrolling.
+Emitted while scrolling. This event is disabled by default.
+Look at the property: `scrollEvents`
 
 
 #### ionScrollEnd

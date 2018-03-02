@@ -42,11 +42,6 @@ Returns an array of top level Navs
 Returns whether the application is enabled or not
 
 
-#### isScrolling()
-
-Boolean if the app is actively scrolling or not.
-
-
 #### registerBackButtonAction()
 
 The back button event is triggered when the user presses the native
@@ -67,9 +62,6 @@ actions has the highest priority and should be called.
 Updates the Promise set by an external navigation system
 This API is not meant for public usage and could
 change at any time
-
-
-#### setScrolling()
 
 
 #### updateExternalNavOccuring()

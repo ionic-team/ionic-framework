@@ -14,9 +14,6 @@ ion-scroll {
 
   contain: size style layout;
 
-  margin: 0 !important; // scss-lint:disable all
-  padding: 0 !important; // scss-lint:disable all
-
   .focus-input {
     @include margin(0);
     @include padding(0);
