@@ -21,21 +21,6 @@ Note, the does not disable the system bounce on iOS. That is an OS level setting
 string
 
 
-#### onionScroll
-
-
-
-
-#### onionScrollEnd
-
-
-
-
-#### onionScrollStart
-
-
-
-
 ## Attributes
 
 #### force-overscroll
@@ -52,27 +37,7 @@ Note, the does not disable the system bounce on iOS. That is an OS level setting
 string
 
 
-#### onion-scroll
-
-
-
-
-#### onion-scroll-end
-
-
-
-
-#### onion-scroll-start
-
-
-
-
 ## Events
-
-#### ionScroll
-
-Emitted while scrolling.
-
 
 #### ionScrollEnd
 

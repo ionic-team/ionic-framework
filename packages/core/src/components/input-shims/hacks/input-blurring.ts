@@ -1,11 +1,15 @@
-import { App } from '../../..';
 
 const SKIP_BLURRING = ['INPUT', 'TEXTAREA', 'ION-INPUT', 'ION-TEXTAREA'];
 
-export default function enableInputBlurring(app: App) {
+export default function enableInputBlurring() {
   console.debug('Input: enableInputBlurring');
 
   let focused = true;
+  let didScroll = false;
+
+  function onScroll() {
+    didScroll = true;
+  }
 
   function onFocusin() {
     focused = true;
@@ -13,8 +17,8 @@ export default function enableInputBlurring(app: App) {
 
   function onTouchend(ev: any) {
     // if app did scroll return early
-    if (app.didScroll) {
-      app.didScroll = false;
+    if (didScroll) {
+      didScroll = false;
       return;
     }
     const active = document.activeElement as HTMLElement;
@@ -49,10 +53,12 @@ export default function enableInputBlurring(app: App) {
     }, 50);
   }
 
+  document.addEventListener('ionScrollStart', onScroll);
   document.addEventListener('focusin', onFocusin, true);
   document.addEventListener('touchend', onTouchend, false);
 
   return () => {
+    document.removeEventListener('ionScrollStart', onScroll, true);
     document.removeEventListener('focusin', onFocusin, true);
     document.removeEventListener('touchend', onTouchend, false);
   };

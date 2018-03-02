@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { DomController, ScrollDetail } from '../../index';
+import { DomController } from '../../index';
 
 const enum Position {
   Top = 'top',
@@ -106,10 +106,9 @@ export class InfiniteScroll {
     this.scrollEl = null;
   }
 
-  @Listen('ionScroll', {enabled: false})
-  protected onScroll(ev: CustomEvent) {
+  @Listen('scroll', {enabled: false})
+  protected onScroll() {
     const scrollEl = this.scrollEl;
-    const detail = ev.detail as ScrollDetail;
     if (!scrollEl || !this.canStart()) {
       return 1;
     }
@@ -119,7 +118,7 @@ export class InfiniteScroll {
       // if there is no height of this element then do nothing
       return 2;
     }
-    const scrollTop = detail.scrollTop;
+    const scrollTop = scrollEl.scrollTop;
     const scrollHeight = scrollEl.scrollHeight;
     const height = scrollEl.offsetHeight;
     const threshold = this.thrPc ? (height * this.thrPc) : this.thrPx;
@@ -128,7 +127,7 @@ export class InfiniteScroll {
       ? scrollHeight - infiniteHeight - scrollTop - threshold - height
       : scrollTop - infiniteHeight - threshold;
 
-      if (distanceFromInfinite < 0) {
+    if (distanceFromInfinite < 0) {
       if (!this.didFire) {
         this.isLoading = true;
         this.didFire = true;
@@ -221,7 +220,7 @@ export class InfiniteScroll {
 
   private enableScrollEvents(shouldListen: boolean) {
     if (this.scrollEl) {
-      this.enableListener(this, 'ionScroll', shouldListen, this.scrollEl);
+      this.enableListener(this, 'scroll', shouldListen, this.scrollEl);
     }
   }
 
