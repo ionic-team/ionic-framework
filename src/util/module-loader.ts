@@ -6,10 +6,11 @@ import { requestIonicCallback } from './util';
 
 export const LAZY_LOADED_TOKEN = new InjectionToken<any>('LZYCMP');
 
-
-
 /**
- * @hidden
+ * @name ModuleLoader
+ * @description
+ * Use `ModuleLoader` to register lazy-loaded entry components when you need to display a component
+ * in a `Modal` or `Popover`.
  */
 @Injectable()
 export class ModuleLoader {
@@ -23,7 +24,13 @@ export class ModuleLoader {
     private _ngModuleLoader: NgModuleLoader,
     private _injector: Injector) {}
 
+  registerEntryComponents(components: Type<any>[], resolver: ComponentFactoryResolver) {
+    for (const component of components) {
+      this._cfrMap.set(component, resolver);
+    }
+  }
 
+  /** @internal */
   load(modulePath: string): Promise<LoadedModule> {
     console.time(`ModuleLoader, load: ${modulePath}'`);
 
@@ -49,6 +56,7 @@ export class ModuleLoader {
     });
   }
 
+  /** @internal */
   getComponentFactoryResolver(component: Type<any>) {
     return this._cfrMap.get(component);
   }

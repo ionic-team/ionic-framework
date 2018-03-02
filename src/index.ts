@@ -157,6 +157,7 @@ export { Events, setupEvents, setupProvideEvents } from './util/events';
 export { IonicErrorHandler } from './util/ionic-error-handler';
 export { Keyboard } from './platform/keyboard';
 export { Form, IonicFormInput, IonicTapInput } from './util/form';
+export { ModuleLoader } from './util/module-loader';
 export { reorderArray, normalizeURL } from './util/util';
 export { Animation, AnimationOptions, EffectProperty, EffectState, PlayOptions } from './animations/animation';
 export { PageTransition } from './transitions/page-transition';
