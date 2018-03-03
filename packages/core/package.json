@@ -50,6 +50,7 @@
     "lint": "npm run tslint & npm run sass-lint",
     "prepare.deploy": "node scripts/deploy.js --prepare",
     "sass-lint": "sass-lint -v -q",
+    "set.version": "node scripts/set-version.js",
     "snapshot": "node ./scripts/e2e --snapshot",
     "test": "jest --no-cache",
     "test.watch": "jest --watch --no-cache",
