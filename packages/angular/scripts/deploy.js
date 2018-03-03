@@ -149,10 +149,6 @@ function runTasks(opts) {
       {
         title: 'Set package.json version',
         task: () => execa('npm', ['run', 'set.version', opts.version], { cwd: rootDir }),
-      },
-      {
-        title: 'Generate CHANGELOG',
-        task: () => execa('npm', ['run', 'changelog'], { cwd: rootDir }),
       }
     );
   }
@@ -165,7 +161,7 @@ function runTasks(opts) {
       },
       {
         title: 'Tagging the latest commit',
-        task: () => execa('git', ['tag', `v${opts.version}`], { cwd: rootDir })
+        task: () => execa('git', ['tag', `${pkg.name}-v${opts.version}`], { cwd: rootDir })
       },
       {
         title: 'Pushing to Github',

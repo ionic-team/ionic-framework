@@ -1,19 +1,32 @@
 const fs = require('fs');
 const path = require('path');
+const semver = require('semver')
 
-const packageJsonPath = path.join(__dirname, '../package.json');
-const packageLockPath = path.join(__dirname, '../package-lock.json');
+const pkgJsonPath = path.join(__dirname, '../package.json');
+const pkgLockPath = path.join(__dirname, '../package-lock.json');
+const readmePath = path.join(__dirname, '../README.md');
 
-
-function getVersion() {
-  return process.argv[process.argv.length - 1];
+// get the version number from the last arg
+const newVersion = process.argv[2];
+semver.valid(newVersion);
+if (!newVersion) {
+  throw new Error('invalid version number: ' + newVersion);
 }
 
-const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-packageJson.version = getVersion();
+// update the package.json
+const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf-8'));
+pkgJson.version = newVersion;
 
-const packageLock = JSON.parse(fs.readFileSync(packageLockPath, 'utf-8'));
-packageLock.version = packageJson.version;
+// update the package-lock.json
+const pkgLock = JSON.parse(fs.readFileSync(pkgLockPath, 'utf-8'));
+pkgLock.version = pkgJson.version;
 
-fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2) + '\n');
-fs.writeFileSync(packageLockPath, JSON.stringify(packageLock, null, 2) + '\n');
+// update the readme script tag
+let readme = fs.readFileSync(readmePath, 'utf-8');
+const cdnUrl = 'https://unpkg.com/' + pkgJson.name + '@' + pkgJson.version + '/dist/ionic.js'
+readme = readme.replace(/https:\/\/unpkg.com(.*)ionic.js/, cdnUrl);
+
+// save our changes
+fs.writeFileSync(pkgJsonPath, JSON.stringify(pkgJson, null, 2) + '\n');
+fs.writeFileSync(pkgLockPath, JSON.stringify(pkgLock, null, 2) + '\n');
+fs.writeFileSync(readmePath, readme);

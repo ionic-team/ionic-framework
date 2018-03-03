@@ -2,6 +2,18 @@
   "name": "@ionic/core",
   "version": "0.1.3",
   "description": "Base components for Ionic",
+  "keywords": [
+    "ionic",
+    "framework",
+    "stencil",
+    "mobile",
+    "app",
+    "webapp",
+    "capacitor",
+    "cordova",
+    "progressive web app",
+    "pwa"
+  ],
   "main": "dist/ionic.js",
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
