@@ -58,7 +58,7 @@
     "semver": "^5.5.0",
     "tslint": "^5.8.0",
     "tslint-ionic-rules": "0.0.13",
-    "typescript": "latest",
+    "typescript": "^2.6.2",
     "zone.js": "0.8.18"
   }
 }
