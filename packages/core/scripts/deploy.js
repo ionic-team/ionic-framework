@@ -135,7 +135,7 @@ function runTasks(opts) {
       task: () => execa('npm', ['run', 'lint'], { cwd: rootDir })
     },
     {
-      title: 'Build @ionic/core',
+      title: 'Build ' + pkg.name,
       task: () => execa('npm', ['run', 'build'], { cwd: rootDir })
     },
     {
@@ -160,7 +160,7 @@ function runTasks(opts) {
   if (opts.publish) {
     tasks.push(
       {
-        title: 'Publish @ionic/core',
+        title: 'Publish ' + pkg.name,
         task: () => execa('npm', ['publish'].concat(opts.tag ? ['--tag', opts.tag] : []), { cwd: rootDir })
       },
       {

@@ -26,6 +26,7 @@
     "deploy": "node scripts/deploy.js",
     "lint": "tslint --project .",
     "prepare.deploy": "node scripts/deploy.js --prepare",
+    "set.version": "node scripts/set-version.js",
     "tsc": "tsc -p ."
   },
   "main": "./dist/index.js",
