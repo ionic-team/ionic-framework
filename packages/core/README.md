@@ -1,6 +1,8 @@
 # @ionic/core
 
-[Ionic](https://ionicframework.com/) is the open-source app development framework that makes it easy to build top quality native and progressive web apps with web technologies. Ionic Core is able to provide the collection by using Web Components at the lowest-level, so they work in any framework or with no framework at all.
+[Ionic](https://ionicframework.com/) is an open source App Development Framework that makes it easy to build top quality Native and Progressive Web Apps with web technologies.
+
+The Ionic Core package contains the Web Components that make up the reusable UI building blocks of Ionic Framework. These components are designed to be used in traditional frontend view libraries/frameworks (such as [Stencil](https://stenciljs.com/), React, Angular, or Vue), or on their own through traditional JavaScript in the browser.
 
 
 ## Features
