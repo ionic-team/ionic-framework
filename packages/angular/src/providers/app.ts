@@ -11,10 +11,6 @@ export class App {
     document.title = title;
   }
 
-  isScrolling(): boolean {
-    return isScrollingImpl(this);
-  }
-
   getRootNavs(): PublicNav[] {
     return getRootNavsImpl(this);
   }
@@ -44,13 +40,6 @@ export class App {
       return this._element.registerBackButtonAction(fn, priority);
     });
   }
-}
-
-export function isScrollingImpl(app: App) {
-  if (app._element && app._element.isScrolling) {
-    return app._element.isScrolling();
-  }
-  return false;
 }
 
 export function getRootNavsImpl(app: App) {

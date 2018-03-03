@@ -40,8 +40,10 @@ if (!Ionic) {
   throw new Error(`ionic.js script missing from index.html`);
 
 } else {
-
+  console.log('bypassing zone');
   Ionic.ael = function ngAddEventListener(elm, eventName, cb, opts) {
+    console.log('add listener', !!elm.__zone_symbol__addEventListener);
+
     if (elm.__zone_symbol__addEventListener) {
       elm.__zone_symbol__addEventListener(eventName, cb, opts);
     } else {
