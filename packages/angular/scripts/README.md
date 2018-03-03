@@ -1,9 +1,7 @@
+# Deploy
 
-## To Build
-
-1. run `npm run build` to build a distro to `dist`
-
-## Publishing
-
-1. Run `npm run deploy`
-2. Commit and push any outstanding changes
+1. `npm run prepare.deploy`
+2. Review/update changelog
+3. Commit updates using the package name and version number as the commit message.
+4. `npm run deploy`
+5. :tada:

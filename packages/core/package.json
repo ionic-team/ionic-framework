@@ -41,7 +41,7 @@
   "scripts": {
     "build": "npm run clean && stencil build --docs",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
-    "clean": "rm -rf dist",
+    "clean": "node scripts/clean.js",
     "deploy": "node scripts/deploy.js",
     "dev": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server\"",
     "devapp": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server --broadcast\"",
