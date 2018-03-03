@@ -1,3 +1,16 @@
+<a name="0.1.3"></a>
+## [0.1.3](https://github.com/ionic-team/ionic/compare/v0.1.2...v0.1.3) (2018-03-03)
+
+### Performance Improvements
+
+* Updates to latest stencil, that includes the zone bypassing abilities.
+
+### Bug Fixes
+
+* **ts:** ts strict fixes ([8ff02c7](https://github.com/ionic-team/ionic/commit/8ff02c7))
+
+
+
 <a name="0.1.2"></a>
 ## [0.1.2](https://github.com/ionic-team/ionic/compare/v0.1.1...v0.1.2) (2018-03-03)
 
