@@ -124,7 +124,7 @@ describe('gesture controller', () => {
 
   it('should test if several gestures can be started', async () => {
     const c = new GestureController();
-    const g1 = await c.create({ name: 'swipe' });
+    const g1 = await c.create({name: 'swipe' });
     const g2 = await c.create({name: 'swipe1', priority: 3});
     const g3 = await c.create({name: 'swipe2', priority: 4});
 
@@ -150,7 +150,7 @@ describe('gesture controller', () => {
     expect(g1.start()).toEqual(true);
     expect(g2.start()).toEqual(true);
     g3.destroy();
-    expect(g3['ctrl']).toBeNull();
+    expect(g3['ctrl']).toBeUndefined();
 
     const expected3 = new Map();
     expected3.set(1, 0);
@@ -295,7 +295,7 @@ describe('gesture controller', () => {
       expect(c.isDisabled('event5')).toBeTruthy();
 
       b2.destroy();
-      expect(b2['ctrl']).toBeNull();
+      expect(b2['ctrl']).toBeUndefined();
 
       expect(c.isDisabled('event1')).toBeFalsy();
       expect(c.isDisabled('event2')).toBeFalsy();
