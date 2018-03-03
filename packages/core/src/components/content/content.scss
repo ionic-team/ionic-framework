@@ -1,4 +1,4 @@
-@import "../../themes/ionic.globals";
+@import "../../themes/ionic.theme.default";
 
 // Content
 // --------------------------------------------------
@@ -15,4 +15,36 @@ ion-content {
 
   margin: 0 !important; // scss-lint:disable all
   padding: 0 !important; // scss-lint:disable all
+
+
+  // Padding Margin
+  // --------------------------------------------------
+
+  &[padding] .scroll-inner {
+    @include padding($content-padding);
+  }
+
+  &[padding-top] .scroll-inner {
+    @include padding($content-padding, null, null, null);
+  }
+
+  &[padding-start] .scroll-inner {
+    @include padding-horizontal($content-padding, null);
+  }
+
+  &[padding-end] .scroll-inner {
+    @include padding-horizontal(null, $content-padding);
+  }
+
+  &[padding-bottom] .scroll-inner {
+    @include padding(null, null, $content-padding, null);
+  }
+
+  &[padding-vertical] .scroll-inner {
+    @include padding($content-padding, null, $content-padding, null);
+  }
+
+  &[padding-horizontal] .scroll-inner {
+    @include padding-horizontal($content-padding);
+  }
 }

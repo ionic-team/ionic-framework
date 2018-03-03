@@ -803,6 +803,36 @@ declare global {
 
 
 import {
+  CSSUtils as IonCssUtils
+} from './components/css-utils/css-utils';
+
+declare global {
+  interface HTMLIonCssUtilsElement extends IonCssUtils, HTMLStencilElement {
+  }
+  var HTMLIonCssUtilsElement: {
+    prototype: HTMLIonCssUtilsElement;
+    new (): HTMLIonCssUtilsElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-css-utils": HTMLIonCssUtilsElement;
+  }
+  interface ElementTagNameMap {
+    "ion-css-utils": HTMLIonCssUtilsElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-css-utils": JSXElements.IonCssUtilsAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonCssUtilsAttributes extends HTMLAttributes {
+      
+    }
+  }
+}
+
+
+import {
   Datetime as IonDatetime
 } from './components/datetime/datetime';
 

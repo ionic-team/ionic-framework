@@ -15,7 +15,7 @@ import { deferEvent } from '../../utils/helpers';
   }
 })
 export class Checkbox implements CheckboxInput {
-  private didLoad: boolean;
+  private didLoad = false;
   private inputId: string;
   private nativeInput: HTMLInputElement;
 

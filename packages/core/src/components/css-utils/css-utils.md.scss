@@ -1,0 +1,16 @@
+@import "../../themes/ionic.globals.md";
+@import "./css-utils";
+
+// Content Padding
+// --------------------------------------------------
+
+@if ($include-padding-utilities == true) {
+  @include app-padding("md", $content-md-padding);
+}
+
+// Content Margin
+// --------------------------------------------------
+
+@if ($include-margin-utilities == true) {
+  @include app-margin("md", $content-md-padding);
+}
