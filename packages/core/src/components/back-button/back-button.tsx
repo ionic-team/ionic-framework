@@ -1,4 +1,4 @@
-import { Component, Element, Prop, State } from '@stencil/core';
+import { Component, Element, Prop } from '@stencil/core';
 import { Config } from '../../index';
 
 @Component({
@@ -13,7 +13,7 @@ import { Config } from '../../index';
 })
 export class BackButton {
 
-  @State() custom: boolean;
+  private custom = true;
 
   /**
    * The mode determines which platform styles to use.
@@ -26,7 +26,7 @@ export class BackButton {
    * The text property is used to provide custom text for the back button while using the
    * default look-and-feel
    */
-  @Prop() text: string = null;
+  @Prop() text: string|undefined;
 
   @Prop({ context: 'config' }) config: Config;
 

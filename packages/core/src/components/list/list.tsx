@@ -14,7 +14,7 @@ import { ItemSliding } from '../item-sliding/item-sliding';
   }
 })
 export class List {
-  private openedItem: ItemSliding;
+  private openedItem: ItemSliding|null;
 
   @Method()
   getOpenedItem() {
@@ -22,7 +22,7 @@ export class List {
   }
 
   @Method()
-  setOpenedItem(itemSliding: ItemSliding) {
+  setOpenedItem(itemSliding: ItemSliding|null) {
     this.openedItem = itemSliding;
   }
 

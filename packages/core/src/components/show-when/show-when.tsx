@@ -16,11 +16,11 @@ export class ShowWhen implements DisplayWhen {
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'platforms' }) calculatedPlatforms: PlatformConfig[];
 
-  @Prop() orientation: string = null;
-  @Prop() mediaQuery: string = null;
-  @Prop() size: string = null;
-  @Prop() mode: string = null;
-  @Prop() platform: string = null;
+  @Prop() orientation: string;
+  @Prop() mediaQuery: string;
+  @Prop() size: string;
+  @Prop() mode: string;
+  @Prop() platform: string;
   @Prop() or = false;
 
   @State() passesTest = false;

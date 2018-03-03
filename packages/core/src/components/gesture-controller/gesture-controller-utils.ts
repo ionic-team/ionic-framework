@@ -1,7 +1,7 @@
-import { GestureController } from './gesture-controller';
+import { GestureController } from '../..';
 
 export class GestureDelegate {
-  private ctrl: GestureController|null;
+  private ctrl: GestureController|undefined;
 
   constructor(
     ctrl: any,
@@ -54,14 +54,14 @@ export class GestureDelegate {
 
   destroy() {
     this.release();
-    this.ctrl = null;
+    this.ctrl = undefined;
   }
 }
 
 
 export class BlockerDelegate {
 
-  private ctrl: any|null;
+  private ctrl: GestureController|undefined;
 
   constructor(
     private id: number,
@@ -103,7 +103,7 @@ export class BlockerDelegate {
 
   destroy() {
     this.unblock();
-    this.ctrl = null;
+    this.ctrl = undefined;
   }
 }
 

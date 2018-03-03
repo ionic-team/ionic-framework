@@ -322,7 +322,7 @@ export class Searchbar {
       this.showCancelButton
         ? <button
           type='button'
-          tabindex={this.mode === 'ios' && !this.activated ? -1 : null}
+          tabindex={this.mode === 'ios' && !this.activated ? -1 : undefined}
           onClick={this.cancelSearchbar.bind(this)}
           onMouseDown={this.cancelSearchbar.bind(this)}
           class={cancelButtonClasses}>
@@ -356,7 +356,7 @@ export class Searchbar {
       </div>
     ];
 
-    if (this.mode === 'ios') {
+    if (cancelButton && this.mode === 'ios') {
       searchbar.push(cancelButton);
     }
 

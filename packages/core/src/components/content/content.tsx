@@ -8,10 +8,10 @@ import { getPageElement } from '../../utils/helpers';
 })
 export class Content {
 
-  private cTop = 0;
-  private cBottom = 0;
+  private cTop = -1;
+  private cBottom = -1;
   private dirty = false;
-  private scrollEl: HTMLIonScrollElement|null;
+  private scrollEl: HTMLIonScrollElement;
 
   mode: string;
   color: string;
@@ -44,12 +44,11 @@ export class Content {
   }
 
   componentDidLoad() {
-    this.scrollEl = this.el.querySelector('ion-scroll');
     this.resize();
   }
 
   componentDidUnload() {
-    this.scrollEl = null;
+    this.scrollEl = undefined as any;
   }
 
   /**
@@ -94,7 +93,7 @@ export class Content {
         this.dom.write(this.writeDimensions.bind(this));
       });
     } else {
-      this.cTop = this.cBottom = null;
+      this.cTop = this.cBottom = -1;
       this.dom.write(() => this.scrollEl && this.scrollEl.removeAttribute('style'));
     }
   }
@@ -132,6 +131,7 @@ export class Content {
 
     return [
       <ion-scroll
+        ref={el => this.scrollEl = el as any}
         mode={this.mode}
         scrollEvents={this.scrollEvents}
         forceOverscroll={this.forceOverscroll}>

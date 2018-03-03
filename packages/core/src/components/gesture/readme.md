@@ -17,11 +17,6 @@
 boolean
 
 
-#### block
-
-string
-
-
 #### canStart
 
 
@@ -112,11 +107,6 @@ string
 #### auto-block-all
 
 boolean
-
-
-#### block
-
-string
 
 
 #### can-start

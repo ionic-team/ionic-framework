@@ -1,4 +1,4 @@
-import { Component, Element, Prop, State } from '@stencil/core';
+import { Component, Element, Prop } from '@stencil/core';
 import { Config } from '../../index';
 
 @Component({
@@ -13,14 +13,7 @@ import { Config } from '../../index';
 })
 export class MenuButton {
 
-  @State() custom: boolean;
-
-  /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-   */
-  @Prop() mode: 'ios' | 'md';
+  private custom = true;
 
   /**
    * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
@@ -33,34 +26,24 @@ export class MenuButton {
    */
   @Prop() autoHide = true;
 
-
   @Prop({ context: 'config' }) config: Config;
 
   @Element() el: HTMLElement;
 
   componentWillLoad() {
     this.custom = this.el.childElementCount > 0;
-    const closestNav = this.el.closest('ion-nav');
-    closestNav.canGoBack() ? this.el.hidden = true : this.el.hidden = false;
   }
 
   render() {
     const menuIcon = this.config.get('menuIcon', 'menu');
-
-    if (this.custom) {
-      return (
-        <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
-          <slot />
-        </ion-menu-toggle>
-      );
-    } else {
-      return (
-        <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
-          <ion-button>
-            <ion-icon slot='icon-only' name={menuIcon}></ion-icon>
-          </ion-button>
-        </ion-menu-toggle>
-      );
-    }
+    return (
+      <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
+        <ion-button>
+          {this.custom
+            ? <slot/>
+            : <ion-icon slot='icon-only' name={menuIcon}/>}
+        </ion-button>
+      </ion-menu-toggle>
+    );
   }
 }

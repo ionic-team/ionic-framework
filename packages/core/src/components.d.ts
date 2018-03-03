@@ -315,7 +315,7 @@ declare global {
   namespace JSXElements {
     export interface IonBackButtonAttributes extends HTMLAttributes {
       mode?: 'ios' | 'md';
-      text?: string;
+      text?: string|undefined;
     }
   }
 }
@@ -1033,7 +1033,6 @@ declare global {
     export interface IonGestureAttributes extends HTMLAttributes {
       attachTo?: ElementRef;
       autoBlockAll?: boolean;
-      block?: string;
       canStart?: GestureCallback;
       direction?: string;
       disabled?: boolean;
@@ -1712,7 +1711,6 @@ declare global {
     export interface IonMenuButtonAttributes extends HTMLAttributes {
       autoHide?: boolean;
       menu?: string;
-      mode?: 'ios' | 'md';
     }
   }
 }
@@ -2845,7 +2843,7 @@ declare global {
     export interface IonSelectOptionAttributes extends HTMLAttributes {
       disabled?: boolean;
       selected?: boolean;
-      value?: string;
+      value?: string|null;
     }
   }
 }
@@ -2917,7 +2915,7 @@ declare global {
       okText?: string;
       placeholder?: string;
       selectedText?: string;
-      value?: string | string[];
+      value?: string | string[] | null;
     }
   }
 }

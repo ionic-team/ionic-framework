@@ -23,7 +23,7 @@ If true, the element is selected.
 
 #### value
 
-string
+
 
 The text value of the option.
 
@@ -46,7 +46,7 @@ If true, the element is selected.
 
 #### value
 
-string
+
 
 The text value of the option.
 

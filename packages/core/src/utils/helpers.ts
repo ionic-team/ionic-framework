@@ -53,7 +53,7 @@ export function assert(actual: any, reason: string) {
   }
 }
 
-export function autoFocus(containerEl: HTMLElement): HTMLElement {
+export function autoFocus(containerEl: HTMLElement): HTMLElement|null {
   const focusableEls = containerEl.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
   if (focusableEls.length > 0) {
     const el = focusableEls[0] as HTMLInputElement;
@@ -335,7 +335,7 @@ export function isParentTab(element: HTMLElement) {
   return element.parentElement.tagName.toLowerCase() === 'ion-tab';
 }
 
-export function getIonApp(): Promise<HTMLIonAppElement> {
+export function getIonApp(): Promise<HTMLIonAppElement|null> {
   const appElement = document.querySelector('ion-app');
   if (!appElement) {
     return Promise.resolve(null);

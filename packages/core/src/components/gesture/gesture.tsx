@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
 import { ElementRef, assert, now, updateDetail } from '../../utils/helpers';
-import { BlockerConfig, BlockerDelegate, DomController, GestureDelegate } from '../../index';
+import { BlockerDelegate, DomController, GestureDelegate } from '../../index';
 import { BLOCK_ALL } from '../gesture-controller/gesture-controller-utils';
 import { PanRecognizer } from './recognizers';
 
@@ -10,7 +10,7 @@ import { PanRecognizer } from './recognizers';
 })
 export class Gesture {
 
-  private detail: GestureDetail = {};
+  private detail: GestureDetail;
   private positions: number[] = [];
   private gesture: GestureDelegate;
   private lastTouch = 0;
@@ -20,7 +20,7 @@ export class Gesture {
   private hasStartedPan = false;
   private hasFiredStart = true;
   private isMoveQueued = false;
-  private blocker: BlockerDelegate;
+  private blocker: BlockerDelegate|undefined;
 
   @Prop({ connect: 'ion-gesture-controller' }) gestureCtrl: HTMLIonGestureControllerElement;
   @Prop({ context: 'dom' }) dom: DomController;
@@ -29,7 +29,6 @@ export class Gesture {
   @Prop() disabled = false;
   @Prop() attachTo: ElementRef = 'child';
   @Prop() autoBlockAll = false;
-  @Prop() block: string = null;
   @Prop() disableScroll = false;
   @Prop() direction = 'x';
   @Prop() gestureName = '';
@@ -72,6 +71,24 @@ export class Gesture {
    */
   @Event() ionPress: EventEmitter;
 
+  constructor() {
+    this.detail = {
+      type: 'pan',
+      startX: 0,
+      startY: 0,
+      startTimeStamp: 0,
+      currentX: 0,
+      currentY: 0,
+      velocityX: 0,
+      velocityY: 0,
+      deltaX: 0,
+      deltaY: 0,
+      timeStamp: 0,
+      event: undefined as any,
+      data: undefined,
+    };
+  }
+
   componentWillLoad() {
     return this.gestureCtrl.create({
       name: this.gestureName,
@@ -94,7 +111,9 @@ export class Gesture {
     this.disabledChanged(this.disabled);
 
     if (this.autoBlockAll) {
-      this.setBlocker(BLOCK_ALL).then(b => b.block());
+      this.gestureCtrl.componentOnReady()
+        .then(ctrl => ctrl.createBlocker(BLOCK_ALL))
+        .then(blocker => this.blocker = blocker);
     }
   }
 
@@ -107,23 +126,6 @@ export class Gesture {
         this.abortGesture();
       }
     }
-  }
-
-  @Watch('block')
-  protected blockChanged(block: string) {
-    this.setBlocker({ disable: block.split(',')});
-  }
-
-  private setBlocker(config: BlockerConfig) {
-    if (this.blocker) {
-      this.blocker.destroy();
-    }
-    if (config) {
-      return this.gestureCtrl.componentOnReady()
-        .then(ctrl => ctrl.createBlocker(config))
-        .then(blocker => this.blocker = blocker);
-    }
-    return Promise.resolve(null);
   }
 
   // DOWN *************************
@@ -296,7 +298,7 @@ export class Gesture {
   }
 
   private tryToCapturePan(): boolean {
-    if (this.gesture && !this.gesture.capture()) {
+    if (!this.gesture.capture()) {
       return false;
     }
     this.hasCapturedPan = true;
@@ -449,10 +451,9 @@ export class Gesture {
   componentDidUnload() {
     if (this.blocker) {
       this.blocker.destroy();
-      this.blocker = null;
+      this.blocker = undefined;
     }
-    this.gesture && this.gesture.destroy();
-    this.gesture = this.pan = this.detail = this.detail.event = null;
+    this.gesture.destroy();
   }
 
 }
@@ -462,18 +463,18 @@ const MOUSE_WAIT = 2500;
 
 
 export interface GestureDetail {
-  type?: string;
-  event?: UIEvent;
-  startX?: number;
-  startY?: number;
-  startTimeStamp?: number;
-  currentX?: number;
-  currentY?: number;
-  velocityX?: number;
-  velocityY?: number;
-  deltaX?: number;
-  deltaY?: number;
-  timeStamp?: number;
+  type: string;
+  startX: number;
+  startY: number;
+  startTimeStamp: number;
+  currentX: number;
+  currentY: number;
+  velocityX: number;
+  velocityY: number;
+  deltaX: number;
+  deltaY: number;
+  timeStamp: number;
+  event: UIEvent;
   data?: any;
 }
 

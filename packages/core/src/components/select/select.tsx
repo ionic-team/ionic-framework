@@ -27,7 +27,7 @@ export class Select {
   private childOpts: HTMLIonSelectOptionElement[] = [];
   private selectId: string;
   private labelId: string;
-  private overlay: ActionSheet | Alert | Popover;
+  private overlay: ActionSheet | Alert | Popover | null;
   private styleTmr: any;
   private mode: string;
 
@@ -40,9 +40,7 @@ export class Select {
   @State() text: string;
 
   @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl: ActionSheetController;
-
   @Prop({ connect: 'ion-alert-controller' }) alertCtrl: AlertController;
-
   @Prop({ connect: 'ion-popover-controller' }) popoverCtrl: PopoverController;
 
   /**
@@ -97,7 +95,7 @@ export class Select {
   /**
    * the value of the select.
    */
-  @Prop({ mutable: true }) value: string | string[];
+  @Prop({ mutable: true }) value: string | string[] | null = null;
 
   /**
    * Emitted when the value has changed.

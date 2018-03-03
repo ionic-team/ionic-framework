@@ -34,16 +34,16 @@ export const enum SlidingState {
   }
 })
 export class ItemSliding {
-  private item: HTMLIonItemElement;
-  private list: HTMLIonListElement;
+  private item: HTMLIonItemElement|null;
+  private list: HTMLIonListElement|null;
   private openAmount = 0;
   private initialOpenAmount = 0;
   private optsWidthRightSide = 0;
   private optsWidthLeftSide = 0;
   private sides: ItemSide;
   private tmr: number;
-  private leftOptions: ItemOptions;
-  private rightOptions: ItemOptions;
+  private leftOptions: ItemOptions|null;
+  private rightOptions: ItemOptions|null;
   private optsDirty = true;
 
   @Element() private el: HTMLElement;
@@ -106,7 +106,7 @@ export class ItemSliding {
    */
   @Method()
   closeOpened(): boolean {
-    return this.list && this.list.closeSlidingItems();
+    return !!(this.list && this.list.closeSlidingItems());
   }
 
   private updateOptions() {

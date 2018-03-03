@@ -30,7 +30,7 @@ export function createOverlay
   return element.componentOnReady();
 }
 
-export function dismissOverlay(data: any, role: string, overlays: OverlayMap, id: number): Promise<void> {
+export function dismissOverlay(data: any, role: string|undefined, overlays: OverlayMap, id: number): Promise<void> {
   id = id >= 0 ? id : getHighestId(overlays);
   const overlay = overlays.get(id);
   if (!overlay) {
@@ -67,7 +67,7 @@ export function overlayAnimation(
 ): Promise<void> {
   if (overlay.animation) {
     overlay.animation.destroy();
-    overlay.animation = null;
+    overlay.animation = undefined;
   }
   return overlay.animationCtrl.create(animationBuilder, baseEl, opts).then(animation => {
     overlay.animation = animation;
@@ -77,13 +77,13 @@ export function overlayAnimation(
     return playAnimationAsync(animation);
   }).then((animation) => {
     animation.destroy();
-    overlay.animation = null;
+    overlay.animation = undefined;
   });
 }
 
 export interface OverlayInterface {
   overlayId: number;
-  animation: Animation;
+  animation: Animation|undefined;
   animationCtrl: HTMLIonAnimationControllerElement;
 
   present(): Promise<void>;

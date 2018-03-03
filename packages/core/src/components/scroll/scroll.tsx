@@ -72,7 +72,8 @@ export class Scroll {
       deltaX: 0,
       deltaY: 0,
       timeStamp: 0,
-      data: undefined
+      data: undefined,
+      isScrolling: true,
     };
   }
 
@@ -317,13 +318,13 @@ function updateScrollDetail(
 }
 
 export interface ScrollDetail extends GestureDetail, ScrollBaseDetail {
-  positions?: number[];
-  scrollTop?: number;
-  scrollLeft?: number;
+  positions: number[];
+  scrollTop: number;
+  scrollLeft: number;
 }
 
 export interface ScrollBaseDetail {
-  isScrolling?: boolean;
+  isScrolling: boolean;
 }
 
 export interface ScrollCallback {

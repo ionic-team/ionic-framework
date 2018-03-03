@@ -19,12 +19,8 @@ export function isPlatformMatch(platforms: string[], multiPlatformString: string
 export function isModeMatch(config: Config, multiModeString: string) {
   // you can only ever be in one mode, so if an entry from the list matches, return true
   const modes = multiModeString.replace(/\s/g, '').split(',');
-  for (const mode of modes) {
-    if (config.get('mode') === mode) {
-      return true;
-    }
-  }
-  return false;
+  const currentMode = config.get('mode');
+  return modes.indexOf(currentMode) >= 0;
 }
 
 
@@ -34,16 +30,13 @@ export function isMediaQueryMatch(mediaQuery: string) {
 
 export function isSizeMatch(multiSizeString: string) {
   const sizes = multiSizeString.replace(/\s/g, '').split(',');
-
-  const booleans = sizes.map(size => {
-    const mediaQuery = sizeToMediaQueryMap.get(size);
-    if (!mediaQuery) {
-      return false;
+  for (const size of sizes) {
+    const mediaQuery = SIZE_TO_MEDIA[size];
+    if (mediaQuery && window.matchMedia(mediaQuery).matches) {
+      return true;
     }
-
-    return window.matchMedia(mediaQuery).matches;
-  });
-  return booleans.reduce((prev, current) => prev || current);
+  }
+  return false;
 }
 
 export function getTestResult(displayWhen: DisplayWhen) {
@@ -93,12 +86,13 @@ export function isPortrait(): boolean {
   return window.matchMedia('(orientation: portrait)').matches;
 }
 
-const sizeToMediaQueryMap = new Map<string, string>();
-sizeToMediaQueryMap.set('xs', '(min-width: 0px)');
-sizeToMediaQueryMap.set('sm', '(min-width: 576px)');
-sizeToMediaQueryMap.set('md', '(min-width: 768px)');
-sizeToMediaQueryMap.set('lg', '(min-width: 992px)');
-sizeToMediaQueryMap.set('xl', '(min-width: 1200px)');
+const SIZE_TO_MEDIA: any = {
+  'xs': '(min-width: 0px)',
+  'sm': '(min-width: 576px)',
+  'md': '(min-width: 768px)',
+  'lg': '(min-width: 992px)',
+  'xl': '(min-width: 1200px)'
+};
 
 export interface DisplayWhen {
   calculatedPlatforms: PlatformConfig[];
