@@ -36,10 +36,7 @@ import { IonicWindow } from './types/interfaces';
 const win = (window as IonicWindow);
 const Ionic = win.Ionic;
 
-if (!Ionic) {
-  throw new Error(`ionic.js script missing from index.html`);
-
-} else {
+if (Ionic) {
   console.log('bypassing zone');
   Ionic.ael = function ngAddEventListener(elm, eventName, cb, opts) {
     console.log('add listener', !!elm.__zone_symbol__addEventListener);
@@ -66,5 +63,4 @@ if (!Ionic) {
       win.requestAnimationFrame(cb);
     }
   };
-
 }
