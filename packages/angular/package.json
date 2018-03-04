@@ -21,6 +21,7 @@
   },
   "scripts": {
     "build": "npm run clean && npm run compile && npm run clean-generated",
+    "build.link": "node scripts/link-copy.js",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
     "compile": "./node_modules/.bin/ngc",
