@@ -1,8 +1,9 @@
 import { CommonModule } from '@angular/common';
 import {
+  APP_INITIALIZER,
+  CUSTOM_ELEMENTS_SCHEMA,
   ModuleWithProviders,
-  NgModule,
-  CUSTOM_ELEMENTS_SCHEMA
+  NgModule
 } from '@angular/core';
 
 import { BooleanValueAccessor } from './control-value-accessors/boolean-value-accessor';
@@ -11,40 +12,34 @@ import { RadioValueAccessor } from './control-value-accessors/radio-value-access
 import { SelectValueAccessor } from './control-value-accessors/select-value-accessor';
 import { TextValueAccessor } from './control-value-accessors/text-value-accessor';
 
-
-/* Components */
-
-
 /* Directives */
-import { MenuToggle } from './directives/menu-toggle';
-
+import { IonNav } from './directives/ion-nav';
 import { VirtualScroll } from './directives/virtual-scroll';
 import { VirtualItem } from './directives/virtual-item';
 import { VirtualHeader } from './directives/virtual-header';
 import { VirtualFooter } from './directives/virtual-footer';
-
 
 /* Providers */
 import { ActionSheetController } from './providers/action-sheet-controller';
 import { AlertController } from './providers/alert-controller';
 import { AngularComponentMounter } from './providers/angular-component-mounter';
 import { App } from './providers/app';
-import { Events } from './providers/events';
+import { Events, setupProvideEvents } from './providers/events';
 import { LoadingController } from './providers/loading-controller';
 import { MenuController } from './providers/menu-controller';
 import { ModalController } from './providers/modal-controller';
+import { Platform } from './providers/platform';
 import { PopoverController } from './providers/popover-controller';
 import { ToastController } from './providers/toast-controller';
 
 @NgModule({
   declarations: [
     BooleanValueAccessor,
-    MenuToggle,
+    IonNav,
     NumericValueAccessor,
     RadioValueAccessor,
     SelectValueAccessor,
     TextValueAccessor,
-
     VirtualScroll,
     VirtualItem,
     VirtualHeader,
@@ -52,7 +47,7 @@ import { ToastController } from './providers/toast-controller';
   ],
   exports: [
     BooleanValueAccessor,
-    MenuToggle,
+    IonNav,
     NumericValueAccessor,
     RadioValueAccessor,
     SelectValueAccessor,
@@ -61,14 +56,19 @@ import { ToastController } from './providers/toast-controller';
     VirtualScroll,
     VirtualItem,
     VirtualHeader,
-    VirtualFooter,
+    VirtualFooter
   ],
   imports: [
     CommonModule,
   ],
+  providers: [
+    ModalController,
+    PopoverController,
+    AngularComponentMounter
+  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
-  ],
+  ]
 })
 export class IonicAngularModule {
   static forRoot(): ModuleWithProviders {
@@ -77,14 +77,14 @@ export class IonicAngularModule {
       providers: [
         AlertController,
         ActionSheetController,
-        AngularComponentMounter,
         App,
         Events,
         LoadingController,
         MenuController,
-        ModalController,
-        PopoverController,
-        ToastController
+        Platform,
+        ToastController,
+
+        { provide: APP_INITIALIZER, useFactory: setupProvideEvents, multi: true },
       ]
     };
   }

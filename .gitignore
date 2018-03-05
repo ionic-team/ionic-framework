@@ -19,6 +19,7 @@ node_modules/
 tmp/
 temp/
 packages/core/theme-builder/
+packages/core/test-components/
 $RECYCLE.BIN/
 
 .DS_Store
@@ -32,6 +33,8 @@ src/themes/version.scss
 scripts/e2e/webpackEntryPoints.json
 scripts/build/e2e-generated-tsconfig.json
 *.css.ts
+
+stencil-stats.json
 
 # demo stuff
 demos/node_modules

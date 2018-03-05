@@ -16,6 +16,15 @@ view component.
 
 ## Properties
 
+#### forceOverscroll
+
+boolean
+
+If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
+If the content exceeds the bounds of ionContent, nothing will change.
+Note, the does not disable the system bounce on iOS. That is an OS level setting.
+
+
 #### fullscreen
 
 boolean
@@ -25,29 +34,22 @@ and footers. This effect can easily be seen by setting the toolbar
 to transparent.
 
 
-#### ionScroll
+#### scrollEvents
 
-
-
-Emitted on every scroll event.
-
-
-#### ionScrollEnd
-
-
-
-Emitted when scrolling ends.
-
-
-#### ionScrollStart
-
-
-
-Emitted when the scrolling first starts.
+boolean
 
 
 ## Attributes
 
+#### force-overscroll
+
+boolean
+
+If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
+If the content exceeds the bounds of ionContent, nothing will change.
+Note, the does not disable the system bounce on iOS. That is an OS level setting.
+
+
 #### fullscreen
 
 boolean
@@ -57,28 +59,15 @@ and footers. This effect can easily be seen by setting the toolbar
 to transparent.
 
 
-#### ion-scroll
+#### scroll-events
 
-
-
-Emitted on every scroll event.
-
-
-#### ion-scroll-end
-
-
-
-Emitted when scrolling ends.
-
-
-#### ion-scroll-start
-
-
-
-Emitted when the scrolling first starts.
+boolean
 
 
 ## Methods
+
+#### scrollByPoint()
+
 
 #### scrollToBottom()
 
@@ -86,6 +75,9 @@ Scroll to the bottom of the content component.
 
 Duration of the scroll animation in milliseconds. Defaults to `300`.
 Returns a promise which is resolved when the scroll has completed.
+
+
+#### scrollToPoint()
 
 
 #### scrollToTop()
@@ -99,4 +91,4 @@ Returns a promise which is resolved when the scroll has completed.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

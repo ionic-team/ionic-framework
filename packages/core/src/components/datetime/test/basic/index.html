@@ -8,10 +8,15 @@
 </head>
 <body>
   <ion-app>
-    <ion-page>
+
       <ion-header>
         <ion-toolbar>
           <ion-title>Datetime - Basic</ion-title>
+          <ion-buttons slot="end">
+            <ion-button onclick="toggleBoolean('dynamicDisabled', 'disabled')">
+            (disabled)
+            </ion-button>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>
 
@@ -28,18 +33,28 @@
           </ion-item>
 
           <ion-item>
+            <ion-label>Disabled</ion-label>
+            <ion-datetime id="dynamicDisabled" display-format="MM DD YY" disabled value="1994-12-15"></ion-datetime>
+          </ion-item>
+
+          <ion-item>
             <ion-label>YYYY</ion-label>
             <ion-datetime id="customPickerOptions" placeholder="Custom Options" display-format="YYYY" min="1981" max="2002"></ion-datetime>
           </ion-item>
 
           <ion-item>
-            <ion-label>MMMM YY</ion-label>
+            <ion-label stacked>MMMM YY</ion-label>
             <ion-datetime display-format="MMMM YY" min="1989-06-04" max="2004-08-23" value="1994-12-15T13:47:20.789"></ion-datetime>
           </ion-item>
 
           <ion-item>
-            <ion-label>MM/DD/YYYY</ion-label>
+            <ion-label floating>MM/DD/YYYY</ion-label>
             <ion-datetime display-format="MM/DD/YYYY" min="1994-03-14" max="2012-12-09" value="2002-09-23T15:03:46.789" class="e2eOpenMMDDYYYY"></ion-datetime>
+          </ion-item>
+
+          <ion-item>
+            <ion-label floating>MM/DD/YYYY</ion-label>
+            <ion-datetime display-format="MM/DD/YYYY" min="1994-03-14" max="2012-12-09" class="e2eOpenMMDDYYYY"></ion-datetime>
           </ion-item>
 
           <ion-item>
@@ -105,14 +120,7 @@
 
         </ion-list>
 
-        <div text-center>
-          <ion-button onclick="toggleBoolean('dynamicDisabled', 'disabled')">
-            Toggle Disabled
-          </ion-button>
-        </div>
-
       </ion-content>
-    </ion-page>
 
     <script>
       var yearValuesArray = [2020, 2016, 2008, 2004, 2000, 1996];

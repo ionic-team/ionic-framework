@@ -16,7 +16,7 @@
 // Searchbar Search Icon
 // -----------------------------------------
 
-.searchbar-md .searchbar-search-icon {
+.searchbar-search-icon-md {
   @include position(11px, null, null, 16px);
   @include svg-background-image($searchbar-md-input-search-icon-svg, true);
 
@@ -25,32 +25,37 @@
 }
 
 
-// Searchbar Cancel Icon (MD only)
+// Searchbar Cancel Icon
 // -----------------------------------------
 
-.searchbar-md .searchbar-md-cancel {
+.searchbar-cancel-button-md {
   @include position(0, null, null, 10px);
   @include margin(0);
 
   display: none;
 
-  width: $searchbar-md-input-search-icon-size + 1;
   height: 100%;
+
+  border: 0;
+  font-size: $searchbar-md-cancel-button-font-size;
+
+  color: $searchbar-md-cancel-button-color;
+  background-color: $searchbar-md-cancel-button-background-color;
 }
 
 // Searchbar Search & Cancel Icon
 // -----------------------------------------
 
-.searchbar-md .searchbar-search-icon,
-.searchbar-md .searchbar-md-cancel {
+.searchbar-search-icon-md,
+.searchbar-cancel-button-md {
   position: absolute;
 
   background-repeat: no-repeat;
   background-size: $searchbar-md-input-search-icon-size;
 }
 
-.searchbar-md .searchbar-search-icon.activated,
-.searchbar-md .searchbar-md-cancel.activated {
+.searchbar-search-icon-md.activated,
+.searchbar-cancel-button-md.activated {
   background-color: transparent;
 }
 
@@ -80,7 +85,7 @@
 // Searchbar Clear Input Icon
 // -----------------------------------------
 
-.searchbar-md ion-button.searchbar-clear-icon {
+.searchbar-md .searchbar-clear-icon {
   @include position(0, 13px, null, null);
   @include svg-background-image($searchbar-md-input-clear-icon-svg);
   @include padding(0);
@@ -91,11 +96,13 @@
   width: $searchbar-md-input-clear-icon-size;
   height: 100%;
 
+  border: 0;
+  background-color: transparent;
   background-repeat: no-repeat;
   background-size: $searchbar-md-input-clear-icon-size;
 }
 
-.searchbar-md ion-button.searchbar-clear-icon.activated {
+.searchbar-md .searchbar-clear-icon.activated {
   background-color: transparent;
 }
 
@@ -103,11 +110,11 @@
 // Searchbar Focused
 // -----------------------------------------
 
-.searchbar-md.searchbar-has-focus.searchbar-show-cancel .searchbar-search-icon {
+.searchbar-has-focus.searchbar-show-cancel .searchbar-search-icon-md {
   display: none;
 }
 
-.searchbar-md.searchbar-has-focus.searchbar-show-cancel .searchbar-md-cancel {
+.searchbar-has-focus.searchbar-show-cancel .searchbar-cancel-button-md {
   display: inline-flex;
 }
 
@@ -117,16 +124,4 @@
 
 .toolbar .searchbar-md {
   @include padding(3px);
-}
-
-.toolbar .searchbar-md .searchbar-md-cancel {
-  @include position-horizontal(14px, null);
-}
-
-
-// Searchbar Cancel Icon (iOS only)
-// -----------------------------------------
-
-.searchbar-md .searchbar-ios-cancel {
-  display: none;
 }

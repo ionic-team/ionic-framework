@@ -1,4 +1,5 @@
-import { Component, CssClassMap, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { CssClassMap } from '../../index';
 import { BlurEvent, FocusEvent } from '../../utils/input-interfaces';
 import { getButtonClassMap, getElementClassMap } from '../../utils/theme';
 
@@ -14,6 +15,13 @@ export class Button {
   @Element() private el: HTMLElement;
 
   @State() keyFocus: boolean;
+
+  /**
+   * The type of the button.
+   * Possible values are: `"submit"`, `"reset"` and `"button"`.
+   * Default value is: `"button"`
+   */
+  @Prop() type = 'button';
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -63,7 +71,7 @@ export class Button {
 
   /**
    * The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
@@ -123,8 +131,13 @@ export class Button {
       'focused': this.keyFocus
     };
 
+    const attrs = (TagType === 'button')
+      ? { type: this.type }
+      : {};
+
     return (
       <TagType
+        {...attrs}
         class={buttonClasses}
         disabled={this.disabled}
         href={this.href}
@@ -134,10 +147,10 @@ export class Button {
           <span class='button-inner'>
             <slot name='icon-only'></slot>
             <slot name='start'></slot>
-            <slot></slot>
+            <span class='button-text'><slot></slot></span>
             <slot name='end'></slot>
           </span>
-          { this.mode === 'md' && <ion-ripple-effect useTapClick={true} /> }
+          { this.mode === 'md' && <ion-ripple-effect/> }
       </TagType>
     );
   }

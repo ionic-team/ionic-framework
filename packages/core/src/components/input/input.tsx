@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
-import { debounce } from '../../utils/helpers';
+import { debounceEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 import { InputComponent } from './input-base';
 
@@ -16,6 +16,8 @@ import { InputComponent } from './input-base';
   }
 })
 export class Input implements InputComponent {
+
+  private nativeInput: HTMLInputElement;
   mode: string;
   color: string;
 
@@ -43,6 +45,16 @@ export class Input implements InputComponent {
    * Emitted when the input has focus.
    */
   @Event() ionFocus: EventEmitter;
+
+  /**
+   * Emitted when the input has been created.
+   */
+  @Event() ionInputDidLoad: EventEmitter;
+
+  /**
+   * Emitted when the input has been removed.
+   */
+  @Event() ionInputDidUnload: EventEmitter;
 
   /**
    * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
@@ -95,11 +107,8 @@ export class Input implements InputComponent {
   @Prop() debounce = 0;
 
   @Watch('debounce')
-  private debounceInput() {
-    this.ionInput.emit = debounce(
-      this.ionInput.emit.bind(this.ionInput),
-      this.debounce
-    );
+  protected debounceChanged() {
+    this.ionInput = debounceEvent(this.ionInput, this.debounce);
   }
 
   /**
@@ -203,21 +212,26 @@ export class Input implements InputComponent {
    */
   @Watch('value')
   protected valueChanged() {
-    const inputEl = this.el.querySelector('input');
-    if (inputEl.value !== this.value) {
+    const inputEl = this.nativeInput;
+    if (inputEl && inputEl.value !== this.value) {
       inputEl.value = this.value;
     }
   }
 
-
   componentDidLoad() {
-    this.debounceInput();
+    this.debounceChanged();
     this.emitStyle();
 
     // By default, password inputs clear after focus when they have content
     if (this.type === 'password' && this.clearOnEdit !== false) {
       this.clearOnEdit = true;
     }
+    this.ionInputDidLoad.emit(this.el);
+  }
+
+  componentDidUnload() {
+    this.nativeInput = null;
+    this.ionInputDidUnload.emit(this.el);
   }
 
   private emitStyle() {
@@ -236,20 +250,20 @@ export class Input implements InputComponent {
     });
   }
 
-  inputBlurred(ev: any) {
+  inputBlurred(ev: Event) {
     this.ionBlur.emit(ev);
 
     this.focusChange(this.hasFocus());
     this.emitStyle();
   }
 
-  inputChanged(ev: any) {
-    this.value = ev.target && ev.target.value;
+  inputChanged(ev: Event) {
+    this.value = ev.target && (ev.target as HTMLInputElement).value;
     this.ionInput.emit(ev);
     this.emitStyle();
   }
 
-  inputFocused(ev: any) {
+  inputFocused(ev: Event) {
     this.ionFocus.emit(ev);
 
     this.focusChange(this.hasFocus());
@@ -263,15 +277,14 @@ export class Input implements InputComponent {
     }
   }
 
-  inputKeydown(ev: any) {
+  inputKeydown(ev: Event) {
     this.checkClearOnEdit(ev);
   }
-
 
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  checkClearOnEdit(ev: any) {
+  checkClearOnEdit(ev: Event) {
     if (!this.clearOnEdit) {
       return;
     }
@@ -286,14 +299,14 @@ export class Input implements InputComponent {
     this.didBlurAfterEdit = false;
   }
 
-  clearTextInput(ev: any) {
+  clearTextInput(ev: Event) {
     this.value = '';
     this.ionInput.emit(ev);
   }
 
   hasFocus(): boolean {
     // check if an input has focus or not
-    return this.el && (this.el.querySelector(':focus') === this.el.querySelector('input'));
+    return this.nativeInput === document.activeElement;
   }
 
   hasValue(): boolean {
@@ -306,6 +319,7 @@ export class Input implements InputComponent {
 
     return [
       <input
+        ref={input => this.nativeInput = input as any}
         aria-disabled={this.disabled ? 'true' : false}
         accept={this.accept}
         autoCapitalize={this.autocapitalize}
@@ -313,6 +327,7 @@ export class Input implements InputComponent {
         autoCorrect={this.autocorrect}
         autoFocus={this.autofocus}
         checked={this.checked}
+        class={themedClasses}
         disabled={this.disabled}
         inputMode={this.inputmode}
         min={this.min}
@@ -331,18 +346,17 @@ export class Input implements InputComponent {
         size={this.size}
         type={this.type}
         value={this.value}
-        class={themedClasses}
         onBlur={this.inputBlurred.bind(this)}
         onInput={this.inputChanged.bind(this)}
         onFocus={this.inputFocused.bind(this)}
         onKeyDown={this.inputKeydown.bind(this)}
       />,
       <button
-        hidden={this.clearInput !== true}
+        type='button'
         class='input-clear-icon'
+        hidden={this.clearInput !== true}
         onClick={this.clearTextInput.bind(this)}
-        onMouseDown={this.clearTextInput.bind(this)}>
-      </button>
+        onMouseDown={this.clearTextInput.bind(this)}/>
     ];
   }
 }

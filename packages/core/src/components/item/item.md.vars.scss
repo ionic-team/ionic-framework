@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Color of the item paragraph
-$item-md-paragraph-text-color:       $text-color-step-200 !default;
+$item-md-paragraph-text-color:       $text-md-color-step-400 !default;
 
 /// @prop - Font family of the item
 $item-md-font-family:                $font-family-md-base !default;
@@ -24,14 +24,8 @@ $item-md-thumbnail-width:            80px !default;
 /// @prop - Height of the thumbnail in the item
 $item-md-thumbnail-height:           $item-md-thumbnail-width !default;
 
-/// @prop - Shows the detail arrow icon on an item
-$item-md-detail-push-show:           false !default;
-
 /// @prop - Color of the detail arrow icon
-$item-md-detail-push-color:          $item-md-text-color !default;
-
-/// @prop - Icon for the detail arrow
-$item-md-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-md-detail-push-color}'/></svg>" !default;
+$item-md-detail-push-color:          $item-md-border-color !default;
 
 /// @prop - Padding top for the item content
 $item-md-padding-top:                 13px !default;
@@ -50,16 +44,16 @@ $item-md-padding-start:               16px !default;
 // --------------------------------------------------
 
 /// @prop - Margin top for the start/end slot
-$item-md-slot-margin-top:             9px !default;
+$item-md-slot-margin-top:                   0 !default;
 
 /// @prop - Margin end for the start/end slot
-$item-md-slot-margin-end:             ($item-md-padding-end / 2) !default;
+$item-md-slot-margin-end:                   ($item-md-padding-end / 2) !default;
 
 /// @prop - Margin bottom for the start/end slot
-$item-md-slot-margin-bottom:          9px !default;
+$item-md-slot-margin-bottom:                $item-md-slot-margin-top !default;
 
 /// @prop - Margin start for the start/end slot
-$item-md-slot-margin-start:           0 !default;
+$item-md-slot-margin-start:                 0 !default;
 
 /// @prop - Margin top for an icon in the start/end slot
 $item-md-icon-slot-margin-top:              11px !default;

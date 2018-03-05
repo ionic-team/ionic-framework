@@ -20,7 +20,7 @@ export class Toolbar {
 
   /**
    * The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
@@ -33,17 +33,17 @@ export class Toolbar {
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * If true, adds transparency to the header.
-   * Note: In order to scroll content behind the header, the `fullscreen`
+   * If true, the toolbar will be translucent.
+   * Note: In order to scroll content behind the toolbar, the `fullscreen`
    * attribute needs to be set on the content.
-   * Only affects `ios` mode. Defaults to `false`.
+   * Defaults to `false`.
    */
   @Prop() translucent = false;
 
   componentDidLoad() {
     const buttons = this.el.querySelectorAll('ion-button');
     for (let i = 0; i < buttons.length; i++) {
-      buttons[i].setAttribute('button-type', 'bar-button');
+      buttons[i].buttonType = 'bar-button';
     }
   }
 

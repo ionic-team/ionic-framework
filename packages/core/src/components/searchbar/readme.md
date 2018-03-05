@@ -74,7 +74,7 @@ Set the the cancel button text. Default: `"Cancel"`.
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
@@ -164,7 +164,7 @@ Set the the cancel button text. Default: `"Cancel"`.
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
@@ -249,4 +249,4 @@ Emitted when the Searchbar input has changed, including when it's cleared.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

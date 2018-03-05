@@ -1,14 +1,15 @@
 {
   "name": "@ionic/angular",
-  "version": "0.0.2-21",
+  "version": "0.0.2-28",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
     "framework",
+    "angular",
     "mobile",
     "app",
-    "hybrid",
     "webapp",
+    "capacitor",
     "cordova",
     "progressive web app",
     "pwa"
@@ -20,15 +21,18 @@
   },
   "scripts": {
     "build": "npm run clean && npm run compile && npm run clean-generated",
-    "clean": "rm -rf dist",
-    "clean-generated": "node ./scripts/clean.js",
+    "build.link": "node scripts/link-copy.js",
+    "clean": "node scripts/clean.js",
+    "clean-generated": "node ./scripts/clean-generated.js",
     "compile": "./node_modules/.bin/ngc",
-    "deploy": "np --any-branch",
+    "deploy": "node scripts/deploy.js",
+    "lint": "tslint --project .",
+    "prepare.deploy": "node scripts/deploy.js --prepare",
+    "set.version": "node scripts/set-version.js",
     "tsc": "tsc -p ."
   },
-  "main": "./dist/src/index.js",
-  "module": "./dist/src/index.js",
-  "types": "./dist/src/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist/"
   ],
@@ -41,15 +45,20 @@
     "@angular/http": "latest",
     "@angular/platform-browser": "latest",
     "@angular/platform-browser-dynamic": "latest",
-    "@danbucholtz/ng-router": "latest",
-    "@ionic/core": "next",
+    "@angular/router": "latest",
+    "@ionic/core": "^0.1.3",
+    "chalk": "^2.3.2",
+    "execa": "^0.9.0",
+    "fs-extra": "^5.0.0",
     "glob": "7.1.2",
-    "ionicons": "~3.0.0",
+    "inquirer": "^5.1.0",
+    "listr": "^0.13.0",
+    "rimraf": "^2.6.2",
     "rxjs": "5.5.2",
-    "typescript": "~2.5.2",
+    "semver": "^5.5.0",
+    "tslint": "^5.8.0",
+    "tslint-ionic-rules": "0.0.13",
+    "typescript": "latest",
     "zone.js": "0.8.18"
-  },
-  "dependencies": {
-    "@stencil/core": "next"
   }
 }

@@ -1,54 +1,49 @@
 # @ionic/core
 
-This contains the core stencil components for ionic based applications.
+[Ionic](https://ionicframework.com/) is an open source App Development Framework that makes it easy to build top quality Native and Progressive Web Apps with web technologies.
 
-## Let's get started
-
-### 1. Install global dependencies
-
-- stencil
-- np
-- jest
-- tsc
-- tslint
-
-```
-npm i -g stencil np jest tsc tslint
-```
-
-### 2. Clone your ionic fork
-```
-git@github.com:ionic-team/ionic.git
-cd ionic
-```
-
-### 3. Run `npm install`
-```
-npm install
-cd packages/core
-npm install
-````
-
-Notice that ionic-core lives in `packages/core`.
-
-### 4. Run `npm run dev`
-Make sure you are inside `packages/core`
+The Ionic Core package contains the Web Components that make up the reusable UI building blocks of Ionic Framework. These components are designed to be used in traditional frontend view libraries/frameworks (such as [Stencil](https://stenciljs.com/), React, Angular, or Vue), or on their own through traditional JavaScript in the browser.
 
 
-## How to contribute
+## Features
 
-1. `npm run dev` allows you to modify the components and have live reloading, just like another ionic app.
+* Tiny, highly optimized components built with [Stencil](https://stenciljs.com/)
+* Styling for both iOS and Material Design
+* No build or compiling required
+* Simply add the static files to any project
+* Lazy-loaded components without configuration
+* Asynchronous rendering
+* Theming through CSS Variables
 
-3. When everything looks good, run  `npm run validate` to verify the tests linter and production build passes.
+
+## How to use
+
+Easiest way to start using Ionic Core is by adding a script tag to the CDN:
+
+    <script src="https://unpkg.com/@ionic/core@0.1.2/dist/ionic.js"></script>
+
+Any Ionic component added to the webpage will automatically load. This includes writing the component tag directly in HTML, or using JavaScript such as `document.createElement('ion-toggle')`.
+
+Additionally, within this package is a `dist/ionic.js` file and accompanying `dist/ionic/` directory. These are the same files which are used by the CDN, and they're available in this package so they can be apart of an app's local development.
 
 
-## More commands
+## Framework Bindings
 
-- `npm run build`: build ionic-core for production.
-- `npm run dev`: live reloading server for ionic developement,
-- `npm run test`: runs unit tests.
-- `npm run clean`: cleans dist folder.
-- `npm run lint`: runs typescript linter.
-- `npm run lint-fix`: tries to auto-fix linter issues.
-- `npm run validate`: runs tests, linter and production build.
-- `npm run deploy`: publishes a new version to NPM.
+The `@ionic/core` package can by used in simple HTML, or by vanilla JavaScript without any framework at all. Ionic also has packages that make it easiesr to integrate Ionic into a framework's traditional ecosystem and patterns. (However, at the lowest-level framework bindings are still just using Ionic Core and Web Components).
+
+* [@ionic/angular](https://www.npmjs.com/package/@ionic/angular)
+
+
+## Related
+
+* [Ionic Documentation](https://ionicframework.com/docs/)
+* [Ionic Worldwide Slack](http://ionicworldwide.herokuapp.com/)
+* [Ionic Forum](https://forum.ionicframework.com/)
+* [Ionicons](http://ionicons.com/)
+* [Stencil](https://stenciljs.com/)
+* [Stencil Worldwide Slack](https://stencil-worldwide.slack.com)
+
+
+## License
+
+* [MIT](https://raw.githubusercontent.com/ionic-team/ionic/master/LICENSE)

@@ -6,6 +6,7 @@
 
 .alert-ios {
   font-family: $alert-ios-font-family;
+  font-size: $alert-ios-font-size;
 }
 
 .alert-ios .alert-wrapper {
@@ -107,12 +108,15 @@
 
   -webkit-overflow-scrolling: touch;
 
+  overscroll-behavior: contain;
 }
 
 .alert-ios .alert-tappable {
   display: flex;
 
-  min-height: $alert-ios-tappable-min-height;
+  height: $alert-ios-tappable-height;
+
+  contain: strict;
 }
 
 
@@ -191,10 +195,6 @@
   color: $alert-ios-checkbox-label-text-color;
 }
 
-.alert-ios [aria-checked=true] .alert-checkbox-label {
-  color: $alert-ios-checkbox-label-text-color-checked;
-}
-
 // iOS Alert Checkbox Outer Circle: Unchecked
 // -----------------------------------------
 
@@ -212,6 +212,8 @@
   border-style: $alert-ios-checkbox-border-style;
   border-color: $alert-ios-checkbox-border-color-off;
   background-color: $alert-ios-checkbox-background-color-off;
+
+  contain: strict;
 }
 
 

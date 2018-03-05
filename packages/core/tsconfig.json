@@ -1,26 +1,26 @@
 {
   "compilerOptions": {
-    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
-    "alwaysStrict": true,
+    "declaration": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "jsxFactory": "h",
     "lib": [
       "dom",
-      "es2015"
+      "es2017"
     ],
     "module": "es2015",
     "moduleResolution": "node",
-    "noImplicitAny": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": ".tmp",
     "pretty": true,
     "removeComments": false,
+    "strict": true,
+    "strictPropertyInitialization": false,
     "target": "es2015"
   },
   "include": [

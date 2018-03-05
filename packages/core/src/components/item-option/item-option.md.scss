@@ -1,0 +1,31 @@
+@import "./item-option";
+@import "./item-option.md.vars";
+
+// Material Design Item Option
+// --------------------------------------------------
+
+.item-option-md {
+  font-size: $item-option-button-md-font-size;
+  color: $item-option-button-md-text-color;
+  background-color: $item-option-button-md-background-color;
+}
+
+.item-option-md .item-option-button {
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+
+// Generate Material Design Option Button Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-md {
+  $color-base: ion-color($colors-md, $color-name, base, md);
+  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
+  $color-shade: ion-color($colors-md, $color-name, tint, md);
+
+  .item-option-md-#{$color-name} {
+    color: $color-contrast;
+    background-color: $color-base;
+  }
+}

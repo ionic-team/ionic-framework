@@ -4,6 +4,10 @@ import { DomController } from '../../index';
 
 @Component({
   tag: 'ion-tabbar',
+  styleUrls: {
+    ios: 'tabbar.ios.scss',
+    md: 'tabbar.md.scss'
+  },
   host: {
     theme: 'tabbar'
   }
@@ -22,7 +26,7 @@ export class Tabbar {
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop() placement = 'bottom';
   @Prop() selectedTab: HTMLIonTabElement;
-  @Prop() scrollable: Boolean;
+  @Prop() scrollable: boolean;
   @Prop() tabs: HTMLIonTabElement[];
 
   private scrollEl: HTMLIonScrollElement;
@@ -35,6 +39,10 @@ export class Tabbar {
 
   @Prop() layout = 'icon-top';
   @Prop() highlight = false;
+
+  /**
+   * If true, the tabbar will be translucent. Defaults to `false`.
+   */
   @Prop() translucent = false;
 
   @Listen('body:keyboardWillHide')
@@ -69,8 +77,8 @@ export class Tabbar {
     let next: {tab: HTMLIonTabButtonElement, amount: number};
 
     tabs.forEach((tab: HTMLIonTabButtonElement) => {
-      const left: number = tab.offsetLeft,
-        right: number = left + tab.offsetWidth;
+      const left = tab.offsetLeft;
+      const right = left + tab.offsetWidth;
 
       if (left < scrollLeft) {
         previous = {tab, amount: left};
@@ -152,41 +160,35 @@ export class Tabbar {
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'tabbar-translucent') : {};
 
-    const layoutClass = `layout-${this.layout}`;
-    const placementClass = `placement-${this.placement}`;
-
-    const hostClasses = {
-      ...themedClasses,
-      'tabbar-hidden': this.hidden,
-      'scrollable': this.scrollable,
-      [layoutClass]: true,
-      [placementClass]: true
-    };
-
     return {
       role: 'tablist',
-      class: hostClasses
+      class: {
+        ...themedClasses,
+        [`layout-${this.layout}`]: true,
+        [`placement-${this.placement}`]: true,
+        'tabbar-hidden': this.hidden,
+        'scrollable': this.scrollable
+      }
     };
   }
 
   render() {
-    const selectedTab = this.selectedTab,
-      ionTabbarHighlight = this.highlight ? <div class='animated tabbar-highlight'/> as HTMLElement : null,
-      tabButtons = this.tabs.map(tab => <ion-tab-button tab={tab} selected={selectedTab === tab}/>);
-
+    const selectedTab = this.selectedTab;
+    const ionTabbarHighlight = this.highlight ? <div class='animated tabbar-highlight'/> as HTMLElement : null;
+    const buttonClasses = createThemedClasses(this.mode, this.color, 'tab-button');
+    const tabButtons = this.tabs.map(tab => <ion-tab-button class={buttonClasses} tab={tab} selected={selectedTab === tab}/>);
 
     if (this.scrollable) {
       return [
         <ion-button onClick={() => this.scrollByTab('left')} fill='clear' class={{inactive: !this.canScrollLeft}}>
           <ion-icon name='arrow-dropleft'/>
         </ion-button>,
-        <ion-scroll
-          ref={(scrollEl: HTMLIonScrollElement) => {
-            this.scrollEl = scrollEl;
-          }}>
+
+        <ion-scroll forceOverscroll={false} ref={(scrollEl: HTMLIonScrollElement) => this.scrollEl = scrollEl}>
           {tabButtons}
           {ionTabbarHighlight}
         </ion-scroll>,
+
         <ion-button onClick={() => this.scrollByTab('right')} fill='clear' class={{inactive: !this.canScrollRight}}>
           <ion-icon name='arrow-dropright'/>
         </ion-button>

@@ -43,7 +43,7 @@ A chip-button is an inset button that is placed inside of a chip.
 string
 
 The color to use.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### disabled
@@ -83,7 +83,7 @@ Possible values are: `"ios"` or `"md"`.
 string
 
 The color to use.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### disabled
@@ -119,4 +119,4 @@ Possible values are: `"ios"` or `"md"`.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

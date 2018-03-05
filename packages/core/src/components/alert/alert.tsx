@@ -1,9 +1,8 @@
-import { Component, CssClassMap, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController, Config, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
-import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
-
-import { BACKDROP } from '../../utils/overlay-constants';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Animation, AnimationBuilder, Config, CssClassMap, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { autoFocus, domControllerAsync } from '../../utils/helpers';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { BACKDROP, OverlayInterface, overlayAnimation } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -21,17 +20,79 @@ import mdLeaveAnimation from './animations/md.leave';
     theme: 'alert'
   }
 })
-export class Alert {
-  mode: string;
-  color: string;
-  alertId: number;
+export class Alert implements OverlayInterface {
 
-  private animation: Animation | null = null;
+  private presented = false;
   private activeId: string;
   private inputType: string | null = null;
   private hdrId: string;
 
+  animation: Animation;
+  mode: string;
+  color: string;
+
   @Element() private el: HTMLElement;
+
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
+  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop() overlayId: number;
+
+  /**
+   * Animation to use when the alert is presented.
+   */
+  @Prop() enterAnimation: AnimationBuilder;
+
+  /**
+   * Animation to use when the alert is dismissed.
+   */
+  @Prop() leaveAnimation: AnimationBuilder;
+
+  /**
+   * Additional classes to apply for custom CSS. If multiple classes are
+   * provided they should be separated by spaces.
+   */
+  @Prop() cssClass: string;
+
+  /**
+   * The main title in the heading of the alert.
+   */
+  @Prop() title: string;
+
+  /**
+   * The subtitle in the heading of the alert. Displayed under the title.
+   */
+  @Prop() subTitle: string;
+
+  /**
+   * The main message to be displayed in the alert.
+   */
+  @Prop() message: string;
+
+  /**
+   * Array of buttons to be added to the alert.
+   */
+  @Prop() buttons: AlertButton[] = [];
+
+  /**
+   * Array of input to show in the alert.
+   */
+  @Prop({ mutable: true }) inputs: AlertInput[] = [];
+
+  /**
+   * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
+   */
+  @Prop() enableBackdropDismiss = true;
+
+  /**
+   * If true, the alert will be translucent. Defaults to `false`.
+   */
+  @Prop() translucent = false;
+
+  /**
+   * If true, the alert will animate. Defaults to `true`.
+   */
+  @Prop() willAnimate = true;
 
   /**
    * Emitted after the alert has loaded.
@@ -63,132 +124,6 @@ export class Alert {
    */
   @Event() ionAlertDidUnload: EventEmitter<AlertEventDetail>;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
-  @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
-
-  /**
-   * Additional class or classes to apply to the alert
-   */
-  @Prop() cssClass: string;
-
-  /**
-   * Title for the alert
-   */
-  @Prop() title: string;
-
-  /**
-   * Subtitle for the alert
-   */
-  @Prop() subTitle: string;
-
-  /**
-   * Message to be shown in the alert
-   */
-  @Prop() message: string;
-
-  /**
-   * Array of buttons to be added to the alert. See AlertButton type for valid options
-   */
-  @Prop() buttons: AlertButton[] = [];
-
-  /**
-   * Array of input to show in the alert. See AlertInput type for valid options
-   */
-  @Prop({ mutable: true }) inputs: AlertInput[] = [];
-
-  /**
-   * If true, the alert will be dismissed when the backdrop is clicked.
-   */
-  @Prop() enableBackdropDismiss = true;
-
-  /**
-   * If true, alert will become translucent. Requires support for backdrop-filters.
-   */
-  @Prop() translucent = false;
-
-  /**
-   * Enable alert animations. If false, alert will not animate in
-   */
-  @Prop() willAnimate = true;
-
-  /**
-   * Animation to be used when the alert is shown
-   */
-  @Prop() enterAnimation: AnimationBuilder;
-
-  /**
-   * Animation to be used when the alert is dismissed
-   */
-  @Prop() leaveAnimation: AnimationBuilder;
-
-  /**
-   * Present the alert after is has been created
-   */
-  @Method() present() {
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-    this.ionAlertWillPresent.emit();
-
-    this.el.style.zIndex = `${20000 + this.alertId}`;
-
-    // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('alertEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
-
-    // build the animation and kick it off
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-      if (!this.willAnimate) {
-        // if the duration is 0, it won't actually animate I don't think
-        // TODO - validate this
-        this.animation = animation.duration(0);
-      }
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      const firstInput = this.el.querySelector('[tabindex]') as HTMLElement;
-      if (firstInput) {
-        firstInput.focus();
-      }
-
-      this.ionAlertDidPresent.emit();
-    });
-  }
-
-  /**
-   * Dismiss the alert
-   */
-  @Method() dismiss(data?: any, role?: string) {
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-    this.ionAlertWillDismiss.emit({
-      data: data,
-      role: role
-    });
-
-    // get the user's animation fn if one was provided
-    const animationBuilder = this.leaveAnimation || this.config.get('alertLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
-
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      this.ionAlertDidDismiss.emit({
-        data: data,
-        role: role
-      });
-    }).then(() => {
-      return domControllerAsync(this.dom.write, () => {
-        this.el.parentNode.removeChild(this.el);
-      });
-    });
-  }
-
   componentDidLoad() {
     this.ionAlertDidLoad.emit();
   }
@@ -201,13 +136,58 @@ export class Alert {
     this.ionAlertDidUnload.emit();
   }
 
-  protected backdropClick() {
-    if (this.enableBackdropDismiss) {
-      this.dismiss(null, BACKDROP);
-    }
+  @Listen('ionBackdropTap')
+  protected onBackdropTap() {
+    this.dismiss(null, BACKDROP).catch();
   }
 
-  rbClick(inputIndex: number) {
+  /**
+   * Present the alert overlay after it has been created.
+   */
+  @Method()
+  present(): Promise<void> {
+    if (this.presented) {
+      return Promise.reject('overlay already presented');
+    }
+    this.presented = true;
+    this.ionAlertWillPresent.emit();
+
+    this.el.style.zIndex = `${20000 + this.overlayId}`;
+
+    // get the user's animation fn if one was provided
+    const animationBuilder = this.enterAnimation || this.config.get('alertEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
+
+    // build the animation and kick it off
+    return this.playAnimation(animationBuilder).then(() => {
+      autoFocus(this.el);
+      this.ionAlertDidPresent.emit();
+    });
+  }
+
+  /**
+   * Dismiss the alert overlay after it has been presented.
+   */
+  @Method()
+  dismiss(data?: any, role?: string) {
+    if (!this.presented) {
+      return Promise.reject('overlay is not presented');
+    }
+    this.presented = false;
+    this.ionAlertWillDismiss.emit({data, role});
+
+    // get the user's animation fn if one was provided
+    const animationBuilder = this.leaveAnimation || this.config.get('alertLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
+
+    return this.playAnimation(animationBuilder).then(() => {
+      this.ionAlertDidDismiss.emit({data, role});
+
+      return domControllerAsync(this.dom.write, () => {
+        this.el.parentNode.removeChild(this.el);
+      });
+    });
+  }
+
+  private rbClick(inputIndex: number) {
     this.inputs = this.inputs.map((input, index) => {
       input.checked = (inputIndex === index);
       return input;
@@ -221,7 +201,7 @@ export class Alert {
     }
   }
 
-  cbClick(inputIndex: number) {
+  private cbClick(inputIndex: number) {
     this.inputs = this.inputs.map((input, index) => {
       if (inputIndex === index) {
         input.checked = !input.checked;
@@ -235,7 +215,7 @@ export class Alert {
     }
   }
 
-  buttonClick(button: any) {
+  private buttonClick(button: any) {
     let shouldDismiss = true;
 
     if (button.handler) {
@@ -252,7 +232,7 @@ export class Alert {
     }
   }
 
-  getValues(): any {
+  private getValues(): any {
     if (this.inputType === 'radio') {
       // this is an alert with radio buttons (single value select)
       // return the one value which is checked, otherwise undefined
@@ -285,46 +265,51 @@ export class Alert {
     return values;
   }
 
+  private playAnimation(animationBuilder: AnimationBuilder): Promise<void> {
+    return overlayAnimation(this, animationBuilder, this.willAnimate, this.el, undefined);
+  }
 
-  renderCheckbox(inputs: AlertInput[]) {
+  private renderCheckbox(inputs: AlertInput[]) {
     if (inputs.length === 0) return null;
 
     return (
       <div class='alert-checkbox-group'>
         { inputs.map((i, index) => (
           <button onClick={() => this.cbClick(index)} aria-checked={i.checked} id={i.id} disabled={i.disabled} tabIndex={0} role='checkbox' class='alert-tappable alert-checkbox alert-checkbox-button'>
-            <div class='button-inner'>
+            <div class='alert-button-inner'>
               <div class='alert-checkbox-icon'><div class='alert-checkbox-inner'></div></div>
               <div class='alert-checkbox-label'>
                 {i.label}
               </div>
             </div>
+            {this.mode === 'md' ? <ion-ripple-effect /> : null}
           </button>
         ))}
       </div>
     );
   }
 
-  renderRadio(inputs: AlertInput[]) {
+  private renderRadio(inputs: AlertInput[]) {
     if (inputs.length === 0) return null;
 
     return (
       <div class='alert-radio-group' role='radiogroup' aria-labelledby={this.hdrId} aria-activedescendant={this.activeId}>
         { inputs.map((i, index) => (
           <button onClick={() => this.rbClick(index)} aria-checked={i.checked} disabled={i.disabled} id={i.id} tabIndex={0} class='alert-radio-button alert-tappable alert-radio' role='radio'>
-            <div class='button-inner'>
+            <div class='alert-button-inner'>
               <div class='alert-radio-icon'><div class='alert-radio-inner'></div></div>
               <div class='alert-radio-label'>
                 {i.label}
               </div>
             </div>
+            {this.mode === 'md' ? <ion-ripple-effect /> : null}
           </button>
         ))}
       </div>
     );
   }
 
-  renderInput(inputs: AlertInput[]) {
+  private renderInput(inputs: AlertInput[]) {
     if (inputs.length === 0) return null;
 
     return (
@@ -351,18 +336,19 @@ export class Alert {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'alert-translucent') : {};
 
     return {
+      role: 'alertdialog',
       class: {
         ...themedClasses,
         ...getClassMap(this.cssClass)
       },
-      id: this.alertId
+      id: this.overlayId
     };
   }
 
   render() {
-    const hdrId = `${this.alertId}-hdr`;
-    const subHdrId = `${this.alertId}-sub-hdr`;
-    const msgId = `${this.alertId}-msg`;
+    const hdrId = `alert-${this.overlayId}-hdr`;
+    const subHdrId = `alert-${this.overlayId}-sub-hdr`;
+    const msgId = `alert-${this.overlayId}-msg`;
 
     if (this.title || !this.subTitle) {
       this.hdrId = hdrId;
@@ -393,7 +379,7 @@ export class Alert {
         label: i.label,
         checked: !!i.checked,
         disabled: !!i.disabled,
-        id: i.id ? i.id : `alert-input-${this.alertId}-${index}`,
+        id: i.id ? i.id : `alert-input-${this.overlayId}-${index}`,
         handler: i.handler ? i.handler : null,
         min: i.min ? i.min : null,
         max: i.max ? i.max : null
@@ -416,10 +402,7 @@ export class Alert {
     this.inputType = inputTypes.length > 0 ? inputTypes[0] : null;
 
     return [
-      <ion-backdrop
-        onClick={this.backdropClick.bind(this)}
-        class='alert-backdrop'
-      />,
+      <ion-backdrop tappable={this.enableBackdropDismiss}/>,
       <div class='alert-wrapper'>
         <div class='alert-head'>
           {this.title
@@ -442,7 +425,7 @@ export class Alert {
         <div class={alertButtonGroupClass}>
           {buttons.map(b =>
             <button class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)}>
-              <span class='button-inner'>
+              <span class='alert-button-inner'>
                 {b.text}
               </span>
             </button>

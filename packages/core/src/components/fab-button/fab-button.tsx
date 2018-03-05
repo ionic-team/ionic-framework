@@ -1,5 +1,6 @@
-import { Component, CssClassMap, Element, Prop, State } from '@stencil/core';
+import { Component, Element, Prop, State } from '@stencil/core';
 import { createThemedClasses, getElementClassMap } from '../../utils/theme';
+import { CssClassMap } from '../../index';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class FabButton {
 
   /**
    * The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
@@ -33,8 +34,7 @@ export class FabButton {
   @Prop() href: string;
 
   /**
-   * If true, adds transparency to the fab.
-   * Only affects `ios` mode. Defaults to `false`.
+   * If true, the fab button will be translucent. Defaults to `false`.
    */
   @Prop() translucent = false;
 
@@ -52,10 +52,11 @@ export class FabButton {
   @Prop() disabled = false;
 
   componentDidLoad() {
-    const parentNode = this.el.parentNode.nodeName;
+    const parentNode = this.el.parentNode;
+    const parentTag = parentNode ? parentNode.nodeName : null;
 
-    this.inList = (parentNode === 'ION-FAB-LIST');
-    this.inContainer = (parentNode === 'ION-FAB');
+    this.inList = (parentTag === 'ION-FAB-LIST');
+    this.inContainer = (parentTag === 'ION-FAB');
   }
 
 
@@ -101,10 +102,10 @@ export class FabButton {
         href={this.href}
         onClick={this.clickedFab.bind(this)}>
         <ion-icon name='close' class='fab-button-close-icon'></ion-icon>
-        <span class='button-inner'>
+        <span class='fab-button-inner'>
           <slot></slot>
         </span>
-        { this.mode === 'md' && <ion-ripple-effect useTapClick={true} /> }
+        { this.mode === 'md' && <ion-ripple-effect/> }
       </TagType>
     );
   }

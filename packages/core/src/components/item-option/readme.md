@@ -15,7 +15,7 @@ action for the item.
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
@@ -24,6 +24,13 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 boolean
 
 If true, the user cannot interact with the item option. Defaults to `false`.
+
+
+#### expandable
+
+boolean
+
+If true, the option will expand to take up the available width and cover any other options. Defaults to `false`.
 
 
 #### href
@@ -50,7 +57,7 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
@@ -59,6 +66,13 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 boolean
 
 If true, the user cannot interact with the item option. Defaults to `false`.
+
+
+#### expandable
+
+boolean
+
+If true, the option will expand to take up the available width and cover any other options. Defaults to `false`.
 
 
 #### href
@@ -81,4 +95,4 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

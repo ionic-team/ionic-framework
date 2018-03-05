@@ -1,17 +1,18 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Config } from '../../index';
+import { Config, NavEventDetail, NavOutlet } from '../../index';
+
+import { getIonApp } from '../../utils/helpers';
 
 
 @Component({
   tag: 'ion-tabs',
-  styleUrls: {
-    ios: 'tabs.ios.scss',
-    md: 'tabs.md.scss'
-  }
+  styleUrl: 'tabs.scss'
 })
-export class Tabs {
+export class Tabs implements NavOutlet {
   private ids = -1;
+  private transitioning = false;
   private tabsId: number = (++tabIds);
+  initialized = false;
 
   @Element() el: HTMLElement;
 
@@ -22,7 +23,7 @@ export class Tabs {
 
   /**
    * The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
@@ -53,10 +54,10 @@ export class Tabs {
   @Prop({ mutable: true }) tabbarHighlight: boolean;
 
   /**
-   * If true, adds transparency to the tabbar.
-   * Note: In order to scroll content behind the tabbar, the `fullscreen`
+   * If true, the tabs will be translucent.
+   * Note: In order to scroll content behind the tabs, the `fullscreen`
    * attribute needs to be set on the content.
-   * Only affects `ios` mode. Defaults to `false`.
+   * Defaults to `false`.
    */
   @Prop() translucent = false;
 
@@ -66,14 +67,29 @@ export class Tabs {
    * Emitted when the tab changes.
    */
   @Event() ionChange: EventEmitter;
+  @Event() ionNavChanged: EventEmitter<NavEventDetail>;
 
   componentDidLoad() {
     this.loadConfig('tabsPlacement', 'bottom');
     this.loadConfig('tabsLayout', 'icon-top');
     this.loadConfig('tabsHighlight', true);
 
-    this.initTabs();
-    this.initSelect();
+    const promises: Promise<any>[] = [];
+    promises.push(this.initTabs());
+    promises.push(getIonApp());
+    return Promise.all(promises).then(([_, ionApp]) => {
+      if (ionApp) {
+        return (ionApp as HTMLIonAppElement).getExternalNavOccuring();
+      }
+      return false;
+    }).then((externalNavOccuring: boolean) => {
+      if (!externalNavOccuring) {
+        return this.initSelect();
+      }
+      return null;
+    }).then(() => {
+      this.initialized = true;
+    });
   }
 
   componentDidUnload() {
@@ -92,10 +108,13 @@ export class Tabs {
    * @param {number|Tab} tabOrIndex Index, or the Tab instance, of the tab to select.
    */
   @Method()
-  select(tabOrIndex: number | HTMLIonTabElement): Promise<any> {
+  select(tabOrIndex: number | HTMLIonTabElement): Promise<boolean> {
+    if (this.transitioning) {
+      return Promise.resolve(false);
+    }
     const selectedTab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
     if (!selectedTab) {
-      return Promise.resolve();
+      return Promise.resolve(false);
     }
 
     // Reset rest of tabs
@@ -104,21 +123,24 @@ export class Tabs {
         tab.selected = false;
       }
     }
-    selectedTab.selected = true;
 
     const leavingTab = this.selectedTab;
-    this.selectedTab = selectedTab;
-
-    let promise = selectedTab.setActive(true);
-    if (leavingTab && leavingTab !== selectedTab) {
-      promise = promise.then(() => leavingTab.setActive(false));
-    }
-
-    return promise.then(() => {
-      this.ionChange.emit(selectedTab);
+    this.transitioning = true;
+    return selectedTab.setActive().then(() => {
+      this.transitioning = false;
+      selectedTab.selected = true;
+      if (leavingTab !== selectedTab) {
+        if (leavingTab) {
+          leavingTab.active = false;
+        }
+        this.selectedTab = selectedTab;
+        this.ionChange.emit(selectedTab);
+        this.ionNavChanged.emit({isPop: false});
+        return true;
+      }
+      return false;
     });
   }
-
 
   /**
    * @param {number} index Index of the tab you want to get
@@ -134,7 +156,7 @@ export class Tabs {
    */
   @Method()
   getSelected(): HTMLIonTabElement | undefined {
-    return this.tabs.find((tab) => tab.selected);
+    return this.selectedTab;
   }
 
   @Method()
@@ -147,49 +169,46 @@ export class Tabs {
     return this.tabs;
   }
 
- /*@Method()
-  getState(): NavState {
-    const selectedTab = this.getSelected();
-    if (!selectedTab) {
-      return null;
-    }
-    return {
-      path: selectedTab.getPath(),
-      focusNode: selectedTab
-    };
-  }
-
   @Method()
-  getRoutes(): RouterEntries {
-    const a = this.tabs.map(t => {
-      return {
-        path: t.getPath(),
-        id: t
-      };
-    });
-    return a;
+  setRouteId(id: any): Promise<boolean> {
+    if (this.selectedTab && this.selectedTab.getRouteId() === id) {
+      return Promise.resolve(false);
+    }
+    const tab = this.tabs.find(t => id === t.getRouteId());
+    return this.select(tab).then(() => true);
   }
 
 
   @Method()
-  setRouteId(id: any, _: any = {}): Promise<void> {
-    if (this.selectedTab === id) {
-      return Promise.resolve();
+  getRouteId(): string|null {
+    if (this.selectedTab) {
+      return this.selectedTab.getRouteId();
     }
-    return this.select(id);
+    return null;
   }
-  */
+
+
+  @Method()
+  getContentElement(): HTMLElement {
+    return this.selectedTab;
+  }
 
   private initTabs() {
     const tabs = this.tabs = Array.from(this.el.querySelectorAll('ion-tab'));
-    for (const tab of tabs) {
+    const tabPromises = tabs.map(tab => {
       const id = `t-${this.tabsId}-${++this.ids}`;
       tab.btnId = 'tab-' + id;
       tab.id = 'tabpanel-' + id;
-    }
+      return tab.componentOnReady();
+    });
+
+    return Promise.all(tabPromises);
   }
 
   private initSelect() {
+    if (document.querySelector('ion-router')) {
+      return Promise.resolve();
+    }
     // find pre-selected tabs
     const selectedTab = this.tabs.find(t => t.selected) ||
       this.tabs.find(t => t.show && !t.disabled);
@@ -200,10 +219,14 @@ export class Tabs {
         tab.selected = false;
       }
     }
-    if (selectedTab) {
-      selectedTab.setActive(true);
-    }
-    this.selectedTab = selectedTab;
+    const promise = selectedTab ? selectedTab.setActive() : Promise.resolve();
+    return promise.then(() => {
+      this.selectedTab = selectedTab;
+      if (selectedTab) {
+        selectedTab.selected = true;
+        selectedTab.active = true;
+      }
+    });
   }
 
   private loadConfig(attrKey: string, fallback: any) {

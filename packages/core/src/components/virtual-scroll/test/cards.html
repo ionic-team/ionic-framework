@@ -10,7 +10,7 @@
 
 <body>
   <ion-app>
-    <ion-page>
+
 
       <ion-header>
         <ion-toolbar>
@@ -22,59 +22,52 @@
         <ion-virtual-scroll id="virtual"></ion-virtual-scroll>
       </ion-content>
 
-    </ion-page>
+
 
   </ion-app>
 
   <script>
-
-
-    async function init() {
-      const virtual = await document.getElementById('virtual').componentOnReady();
-      virtual.approxItemHeight = 200;
-      // virtual.itemHeight = (item) => 69 + 40 + 22 * Math.ceil(item.content.length/30);
-      virtual.headerFn = (item, index) => {
-        if (index % 20 === 0) {
-          return 'Header ' + index;
-        }
-        return null;
+    const virtual = document.getElementById('virtual');
+    virtual.approxItemHeight = 200;
+    virtual.headerFn = (item, index) => {
+      if (index % 20 === 0) {
+        return 'Header ' + index;
       }
+      return null;
+    }
 
-
-      function renderItem(el, item) {
-        if (!el) {
-          el = document.createElement('ion-card');
-        }
-        el.innerHTML = `
-        <ion-card-header>
-          <ion-card-title>Card Header</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>${item.content}</ion-card-content>`;
-        return el;
+    function renderItem(el, item) {
+      if (!el) {
+        el = document.createElement('ion-card');
       }
+      el.innerHTML = `
+      <ion-card-header>
+        <ion-card-title>Card Header</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>${item.content}</ion-card-content>`;
+      return el;
+    }
 
-      function renderHeader(el, item) {
-        if (!el) {
-          el = document.createElement('ion-item-divider');
-        }
-        el.textContent = item;
-        return el;
+    function renderHeader(el, item) {
+      if (!el) {
+        el = document.createElement('ion-item-divider');
       }
+      el.textContent = item;
+      return el;
+    }
 
-      virtual.itemRender = (el, cell) => {
-        if (cell.type === 0) return renderItem(el, cell.value);
-        return renderHeader(el, cell.value);
-      };
-      const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
-      const items = [];
-      for (var i = 0; i < 1000; i++) {
-        items.push({
-          content: lorem.substring(0, (Math.random() * (lorem.length - 100)) + 100)
-        });
-      }
-      virtual.items = items;
+    virtual.itemRender = (el, cell) => {
+      if (cell.type === 0) return renderItem(el, cell.value);
+      return renderHeader(el, cell.value);
     };
-    setTimeout(init, 200);
+    const lorem = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.';
+    const items = [];
+    for (var i = 0; i < 1000; i++) {
+      items.push({
+        content: lorem.substring(0, (Math.random() * (lorem.length - 100)) + 100)
+      });
+    }
+    virtual.items = items;
   </script>
 
 </body>

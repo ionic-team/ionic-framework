@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Element, Prop } from '@stencil/core';
 
 
 @Component({
@@ -12,10 +12,11 @@ import { Component, Prop } from '@stencil/core';
   }
 })
 export class ItemDivider {
+  @Element() private el: HTMLElement;
 
   /**
    * The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
@@ -26,6 +27,17 @@ export class ItemDivider {
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode: 'ios' | 'md';
+
+  componentDidLoad() {
+    // Change the button size to small for each ion-button in the item
+    // unless the size is explicitly set
+    const buttons = this.el.querySelectorAll('ion-button');
+    for (let i = 0; i < buttons.length; i++) {
+      if (!buttons[i].size) {
+        buttons[i].size = 'small';
+      }
+    }
+  }
 
   render() {
     return [

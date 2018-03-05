@@ -17,11 +17,6 @@
 boolean
 
 
-#### block
-
-string
-
-
 #### canStart
 
 
@@ -112,11 +107,6 @@ string
 #### auto-block-all
 
 boolean
-
-
-#### block
-
-string
 
 
 #### can-start
@@ -229,4 +219,4 @@ Emitted when press is detected.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

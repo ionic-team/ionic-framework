@@ -1,20 +1,12 @@
-import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
+import { Animation, AnimationBuilder, Config, CssClassMap, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 
-import {
-  Animation,
-  AnimationBuilder,
-  AnimationController,
-  Config,
-  DomController,
-  OverlayDismissEvent,
-  OverlayDismissEventDetail
-} from '../../index';
-import { domControllerAsync, playAnimationAsync } from '../../utils/helpers';
-
+import { domControllerAsync } from '../../utils/helpers';
+import { getClassMap } from '../../utils/theme';
+import { OverlayInterface, overlayAnimation } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
-import { getClassMap } from '../../utils/theme';
 
 @Component({
   tag: 'ion-picker',
@@ -26,12 +18,69 @@ import { getClassMap } from '../../utils/theme';
     theme: 'picker'
   }
 })
-export class Picker {
-  private animation: Animation;
+export class Picker implements OverlayInterface {
+
+  private presented = false;
   private durationTimeout: any;
   private mode: string;
 
+  animation: Animation;
+
   @Element() private el: HTMLElement;
+
+  @State() private showSpinner: boolean = null;
+  @State() private spinner: string;
+
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
+  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop() overlayId: number;
+
+  /**
+   * Animation to use when the picker is presented.
+   */
+  @Prop() enterAnimation: AnimationBuilder;
+
+  /**
+   * Animation to use when the picker is dismissed.
+   */
+  @Prop() leaveAnimation: AnimationBuilder;
+
+  /**
+   * Array of buttons to be displayed at the top of the picker.
+   */
+  @Prop() buttons: PickerButton[] = [];
+
+  /**
+   * Array of columns to be displayed in the picker.
+   */
+  @Prop() columns: PickerColumn[] = [];
+
+  /**
+   * Additional classes to apply for custom CSS. If multiple classes are
+   * provided they should be separated by spaces.
+   */
+  @Prop() cssClass: string;
+
+  /**
+   * Number of milliseconds to wait before dismissing the picker.
+   */
+  @Prop() duration: number;
+
+  /**
+   * If true, a backdrop will be displayed behind the picker. Defaults to `true`.
+   */
+  @Prop() showBackdrop = true;
+
+  /**
+   * If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
+   */
+  @Prop() enableBackdropDismiss = true;
+
+  /**
+   * If true, the picker will animate. Defaults to `true`.
+   */
+  @Prop() willAnimate = true;
 
   /**
    * Emitted after the picker has loaded.
@@ -63,87 +112,6 @@ export class Picker {
    */
   @Event() ionPickerDidUnload: EventEmitter<PickerEventDetail>;
 
-  @State() private showSpinner: boolean = null;
-  @State() private spinner: string;
-
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
-  @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
-
-  @Prop() cssClass: string;
-  @Prop() content: string;
-  @Prop() dismissOnPageChange = false;
-  @Prop() duration: number;
-  @Prop() enterAnimation: AnimationBuilder;
-  @Prop() leaveAnimation: AnimationBuilder;
-  @Prop() pickerId: number;
-  @Prop() showBackdrop = true;
-  @Prop() enableBackdropDismiss = true;
-  @Prop() willAnimate = true;
-
-  @Prop() buttons: PickerButton[] = [];
-  @Prop() columns: PickerColumn[] = [];
-
-  @Method()
-  present() {
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-
-    this.ionPickerWillPresent.emit();
-
-    this.el.style.zIndex = `${20000 + this.pickerId}`;
-
-    // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('pickerEnter', iosEnterAnimation);
-
-    // build the animation and kick it off
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-      if (!this.willAnimate) {
-        // if the duration is 0, it won't actually animate I don't think
-        // TODO - validate this
-        this.animation = animation.duration(0);
-      }
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      this.componentDidEnter();
-    });
-  }
-
-  @Method()
-  dismiss(data?: any, role?: string) {
-    clearTimeout(this.durationTimeout);
-
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-
-    this.ionPickerWillDismiss.emit({
-      data,
-      role
-    });
-
-    const animationBuilder = this.leaveAnimation || this.config.get('pickerLeave', iosLeaveAnimation);
-
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      return domControllerAsync(this.dom.write, () => {
-        this.el.parentNode.removeChild(this.el);
-      });
-    }).then(() => {
-      this.ionPickerDidDismiss.emit({
-        data,
-        role
-      });
-    });
-  }
 
   componentDidLoad() {
     if (!this.spinner) {
@@ -162,19 +130,6 @@ export class Picker {
     this.ionPickerDidLoad.emit();
   }
 
-  componentDidEnter() {
-    // blur the currently active element
-    const activeElement: any = document.activeElement;
-    activeElement && activeElement.blur && activeElement.blur();
-
-    // If there is a duration, dismiss after that amount of time
-    if (typeof this.duration === 'number' && this.duration > 10) {
-      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
-    }
-
-    this.ionPickerDidPresent.emit();
-  }
-
   componentDidUnload() {
     this.ionPickerDidUnload.emit();
   }
@@ -188,7 +143,100 @@ export class Picker {
     this.dismiss();
   }
 
-  buttonClick(button: PickerButton) {
+  @Listen('ionBackdropTap')
+  protected onBackdropTap() {
+    const cancelBtn = this.buttons.find(b => b.role === 'cancel');
+    if (cancelBtn) {
+      this.buttonClick(cancelBtn);
+    } else {
+      this.dismiss().catch();
+    }
+  }
+
+  /**
+   * Present the picker overlay after it has been created.
+   */
+  @Method()
+  present(): Promise<void> {
+    if (this.presented) {
+      return Promise.reject('overlay already presented');
+    }
+    this.presented = true;
+
+    if (this.animation) {
+      this.animation.destroy();
+      this.animation = null;
+    }
+
+    this.ionPickerWillPresent.emit();
+
+    this.el.style.zIndex = `${20000 + this.overlayId}`;
+
+    // get the user's animation fn if one was provided
+    const animationBuilder = this.enterAnimation || this.config.get('pickerEnter', iosEnterAnimation);
+
+    // build the animation and kick it off
+    return this.playAnimation(animationBuilder).then(() => {
+      // blur the currently active element
+      const activeElement: any = document.activeElement;
+      activeElement && activeElement.blur && activeElement.blur();
+
+      // If there is a duration, dismiss after that amount of time
+      if (typeof this.duration === 'number' && this.duration > 10) {
+        this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
+      }
+      this.ionPickerDidPresent.emit();
+    });
+  }
+
+  /**
+   * Dismiss the picker overlay after it has been presented.
+   */
+  @Method()
+  dismiss(data?: any, role?: string) {
+    if (!this.presented) {
+      return Promise.reject('overlay is not presented');
+    }
+    this.presented = false;
+    clearTimeout(this.durationTimeout);
+
+    this.ionPickerWillDismiss.emit({data, role});
+
+    const animationBuilder = this.leaveAnimation || this.config.get('pickerLeave', iosLeaveAnimation);
+
+    return this.playAnimation(animationBuilder).then(() => {
+      this.ionPickerDidDismiss.emit({data, role});
+      return domControllerAsync(this.dom.write, () => {
+        this.el.parentNode.removeChild(this.el);
+      });
+    });
+  }
+
+  @Method()
+  addButton(button: any) {
+    this.buttons.push(button);
+  }
+
+  @Method()
+  addColumn(column: PickerColumn) {
+    this.columns.push(column);
+  }
+
+  @Method()
+  getColumn(name: string): PickerColumn {
+    return this.getColumns().find(column => column.name === name);
+  }
+
+  @Method()
+  getColumns(): PickerColumn[] {
+    return this.columns;
+  }
+
+  private playAnimation(animationBuilder: AnimationBuilder): Promise<void> {
+    return overlayAnimation(this, animationBuilder, this.willAnimate, this.el, undefined);
+  }
+
+  private buttonClick(button: PickerButton) {
     // if (this.disabled) {
     //   return;
     // }
@@ -210,7 +258,7 @@ export class Picker {
     }
   }
 
-  getSelected(): any {
+  private getSelected(): any {
     const selected: {[k: string]: any} = {};
     this.columns.forEach((col, index) => {
       const selectedColumn = col.options[col.selectedIndex];
@@ -223,49 +271,10 @@ export class Picker {
     return selected;
   }
 
-  /**
-   * @param {any} button Picker toolbar button
-   */
-  @Method()
-  addButton(button: any) {
-    this.buttons.push(button);
-  }
-
-  /**
-   * @param {PickerColumn} column Picker toolbar button
-   */
-  @Method()
-  addColumn(column: PickerColumn) {
-    this.columns.push(column);
-  }
-
-  @Method()
-  getColumn(name: string): PickerColumn {
-    return this.getColumns().find(column => column.name === name);
-  }
-
-  @Method()
-  getColumns(): PickerColumn[] {
-    return this.columns;
-  }
-
-  protected backdropClick() {
-    // TODO !this.disabled
-    if (this.enableBackdropDismiss) {
-      const cancelBtn = this.buttons.find(b => b.role === 'cancel');
-      if (cancelBtn) {
-        this.buttonClick(cancelBtn);
-      } else {
-        this.dismiss();
-      }
-    }
-  }
-
   render() {
     // TODO: cssClass
 
-    const buttons = this.buttons
-    .map(b => {
+    const buttons = this.buttons.map(b => {
       if (typeof b === 'string') {
         b = { text: b };
       }
@@ -307,31 +316,8 @@ export class Picker {
     //   return column;
     // });
 
-    // RENDER TODO
-    // <ion-backdrop (click)="bdClick()"></ion-backdrop>
-    // <div class="picker-wrapper">
-    //   <div class="picker-toolbar">
-    //     <div *ngFor="let b of d.buttons" class="picker-toolbar-button" [ngClass]="b.cssRole">
-    //       <ion-button (click)="btnClick(b)" [ngClass]="b.cssClass" class="picker-button" clear>
-    //         {{b.text}}
-    //       </ion-button>
-    //     </div>
-    //   </div>
-    //   <div class="picker-columns">
-    //     <div class="picker-above-highlight"></div>
-    //     <div *ngFor="let c of d.columns" [col]="c" class="picker-col" (ionChange)="_colChange($event)"></div>
-    //     <div class="picker-below-highlight"></div>
-    //   </div>
-    // </div>
-
     return [
-      <ion-backdrop
-        onClick={this.backdropClick.bind(this)}
-        class={{
-          'picker-backdrop': true,
-          'hide-backdrop': !this.showBackdrop
-        }}
-      />,
+      <ion-backdrop visible={this.showBackdrop} tappable={this.enableBackdropDismiss}/>,
       <div class='picker-wrapper' role='dialog'>
         <div class='picker-toolbar'>
           {buttons.map(b =>

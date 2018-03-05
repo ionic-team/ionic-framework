@@ -1,4 +1,4 @@
-import { NavContainer } from '@ionic/core';
+import { PublicNav } from '@ionic/core';
 
 export class App {
 
@@ -11,28 +11,35 @@ export class App {
     document.title = title;
   }
 
-  isScrolling(): boolean {
-    return isScrollingImpl(this);
-  }
-
-  getRootNavs(): NavContainer[] {
+  getRootNavs(): PublicNav[] {
     return getRootNavsImpl(this);
   }
 
-  getActiveNavs(rootNavId?: number): NavContainer[] {
-    return getActiveNavsImpl(this, rootNavId);
+  getRootNavsAsync(): Promise<PublicNav[]> {
+    return getRootNavsAsyncImpl(this);
   }
 
-  getNavByIdOrName(nameOrId: number | string): NavContainer {
+  getTopNavs(rootNavId?: number): PublicNav[] {
+    return getTopNavsImpl(this, rootNavId);
+  }
+
+  getTopNavsAsync(rootNavId?: number): Promise<PublicNav[]> {
+    return getTopNavsAsyncImpl(this, rootNavId);
+  }
+
+  getNavByIdOrName(nameOrId: number | string): PublicNav {
     return getNavByIdOrNameImpl(this, nameOrId);
   }
-}
 
-export function isScrollingImpl(app: App) {
-  if (app._element && app._element.isScrolling) {
-    return app._element.isScrolling();
+  getNavByIdOrNameAsync(nameOrId: number | string): Promise<PublicNav> {
+    return getNavByIdOrNameAsyncImpl(this, nameOrId);
   }
-  return false;
+
+  registerBackButtonAction(fn: Function, priority = 0): Promise<() => void> {
+    return this._element.componentOnReady().then(() => {
+      return this._element.registerBackButtonAction(fn, priority);
+    });
+  }
 }
 
 export function getRootNavsImpl(app: App) {
@@ -42,16 +49,34 @@ export function getRootNavsImpl(app: App) {
   return [];
 }
 
-export function getActiveNavsImpl(app: App, rootNavId?: number): NavContainer[] {
-  if (app._element && app._element.getActiveNavs) {
-    return app._element.getActiveNavs(rootNavId);
+export function getRootNavsAsyncImpl(app: App) {
+  return app._element.componentOnReady().then(() => {
+    return app._element.getRootNavs();
+  });
+}
+
+export function getTopNavsImpl(app: App, rootNavId?: number): PublicNav[] {
+  if (app._element && app._element.getTopNavs) {
+    return app._element.getTopNavs(rootNavId);
   }
   return [];
 }
 
-export function getNavByIdOrNameImpl(app: App, nameOrId: number | string): NavContainer {
+export function getTopNavsAsyncImpl(app: App, rootNavId?: number): Promise<PublicNav[]> {
+  return app._element.componentOnReady().then(() => {
+    return app._element.getTopNavs(rootNavId);
+  });
+}
+
+export function getNavByIdOrNameImpl(app: App, nameOrId: number | string): PublicNav {
   if (app._element && app._element.getNavByIdOrName) {
     return app._element.getNavByIdOrName(nameOrId);
   }
   return null;
+}
+
+export function getNavByIdOrNameAsyncImpl(app: App, nameOrId: number | string): Promise<PublicNav> {
+  return app._element.componentOnReady().then(() => {
+    return app._element.getNavByIdOrName(nameOrId);
+  });
 }

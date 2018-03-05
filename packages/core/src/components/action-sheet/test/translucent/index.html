@@ -10,7 +10,7 @@
 
 <body>
   <ion-app>
-    <ion-page>
+
       <ion-header>
         <ion-toolbar>
           <ion-title>Action Sheet - Translucent</ion-title>
@@ -41,7 +41,7 @@
           </ion-row>
         </ion-grid>
       </ion-content>
-    </ion-page>
+    
   </ion-app>
 
   <script>
@@ -96,6 +96,7 @@
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
       await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
+        enableBackdropDismiss: false,
         buttons: [{
           text: 'Archive',
           handler: () => {

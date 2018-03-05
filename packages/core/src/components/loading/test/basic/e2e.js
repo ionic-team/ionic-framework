@@ -27,5 +27,10 @@ platforms.forEach(platform => {
       const page = new E2ETestPage(driver, platform);
       return page.present('basic');
     });
+
+    register('should open default spinner', driver => {
+      const page = new E2ETestPage(driver, platform);
+      return page.present('default');
+    });
   });
 });

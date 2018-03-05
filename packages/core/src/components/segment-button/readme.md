@@ -1,29 +1,53 @@
 # ion-segment-button
 
-The child buttons of the `ion-segment` component. Each `ion-segment-button` must have a value.
+Segment buttons are groups of related buttons inside of a [Segment](../../segment/Segment). They are displayed in a horizontal row. A segment button can be checked by default by adding the `checked` attribute or by setting the `value` of the segment to the `value` of the segment button. Only one segment button should be selected at a time.
 
 ```html
-<ion-content>
-  <!-- Segment buttons with icons -->
-  <ion-segment [(ngModel)]="icons" color="secondary">
-    <ion-segment-button value="camera">
-      <ion-icon name="camera"></ion-icon>
-    </ion-segment-button>
-    <ion-segment-button value="bookmark">
-      <ion-icon name="bookmark"></ion-icon>
-    </ion-segment-button>
-  </ion-segment>
+<!-- Segment buttons with text -->
+<ion-segment>
+  <ion-segment-button>
+    Friends
+  </ion-segment-button>
+  <ion-segment-button>
+    Enemies
+  </ion-segment-button>
+</ion-segment>
 
-  <!-- Segment buttons with text -->
-  <ion-segment [(ngModel)]="relationship" color="primary">
-    <ion-segment-button value="friends" (ionSelect)="selectedFriends()">
-      Friends
-    </ion-segment-button>
-    <ion-segment-button value="enemies" (ionSelect)="selectedEnemies()">
-      Enemies
-    </ion-segment-button>
-  </ion-segment>
-</ion-content>
+<!-- Segment buttons with the first checked and the last disabled -->
+<ion-segment>
+  <ion-segment-button checked>
+    Paid
+  </ion-segment-button>
+  <ion-segment-button>
+    Free
+  </ion-segment-button>
+  <ion-segment-button disabled>
+    Top
+  </ion-segment-button>
+</ion-segment>
+
+<!-- Segment buttons with values and icons -->
+<ion-segment>
+  <ion-segment-button value="camera">
+    <ion-icon name="camera"></ion-icon>
+  </ion-segment-button>
+  <ion-segment-button value="bookmark">
+    <ion-icon name="bookmark"></ion-icon>
+  </ion-segment-button>
+</ion-segment>
+
+<!-- Segment with a value that checks the last button -->
+<ion-segment value="shared">
+  <ion-segment-button value="bookmarks">
+    Bookmarks
+  </ion-segment-button>
+  <ion-segment-button value="reading">
+    Reading List
+  </ion-segment-button>
+  <ion-segment-button value="shared">
+    Shared Links
+  </ion-segment-button>
+</ion-segment>
 ```
 
 <!-- Auto Generated Below -->
@@ -48,7 +72,7 @@ If true, the segment button is selected. Defaults to `false`.
 string
 
 The color to use for the text color.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### disabled
@@ -98,7 +122,7 @@ If true, the segment button is selected. Defaults to `false`.
 string
 
 The color to use for the text color.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### disabled
@@ -139,4 +163,4 @@ Emitted when the segment button is clicked.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

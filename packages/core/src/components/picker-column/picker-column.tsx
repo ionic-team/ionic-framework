@@ -416,7 +416,7 @@ export class PickerColumnCmp {
     })
     .filter(clientInformation => clientInformation !== null);
 
-    const results: any[] = [];
+    const results: JSX.Element[] = [];
 
     if (col.prefix) {
       results.push(

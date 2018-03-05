@@ -6,7 +6,10 @@
 
 .app-ios {
 
-  @include footer-safe-area($toolbar-ios-height, $toolbar-ios-padding, $tabs-ios-tab-height);
+  @include footer-safe-area(
+    $toolbar-ios-height,
+    $toolbar-ios-padding,
+    $tabbar-ios-height);
 
   font-family: $font-family-ios-base;
   font-size: $font-size-ios-base;
@@ -27,4 +30,14 @@ a {
   color: $app-ios-link-color;
 }
 
-@import "../icon/icon.ios";
+
+// iOS Content Padding
+// --------------------------------------------------
+
+@include app-padding("ios", $content-ios-padding);
+
+
+// iOS Content Margin
+// --------------------------------------------------
+
+@include app-margin("ios", $content-ios-margin);

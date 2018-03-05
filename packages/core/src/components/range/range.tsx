@@ -1,6 +1,12 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { BaseInputComponent, GestureDetail } from '../../index';
-import { clamp, debounce } from '../../utils/helpers';
+import { clamp, debounceEvent } from '../../utils/helpers';
+
+export interface Tick {
+  ratio: number | (() => number);
+  left: string;
+  active?: boolean;
+}
 
 @Component({
   tag: 'ion-range',
@@ -28,7 +34,7 @@ export class Range implements BaseInputComponent {
   @State() valB = 0;
   @State() ratioA = 0;
   @State() ratioB = 0;
-  @State() ticks: any[] = [];
+  @State() ticks: Tick[] = [];
   @State() activeB: boolean;
   @State() rect: ClientRect;
 
@@ -58,7 +64,7 @@ export class Range implements BaseInputComponent {
 
   /**
    * The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
@@ -77,11 +83,8 @@ export class Range implements BaseInputComponent {
   @Prop() debounce = 0;
 
   @Watch('debounce')
-  private debounceChange() {
-    this.ionChange.emit = debounce(
-      this.ionChange.emit.bind(this.ionChange),
-      this.debounce
-    );
+  protected debounceChanged() {
+    this.ionChange = debounceEvent(this.ionChange, this.debounce);
   }
 
   /*
@@ -142,7 +145,7 @@ export class Range implements BaseInputComponent {
   componentWillLoad() {
     this.inputUpdated();
     this.createTicks();
-    this.debounceChange();
+    this.debounceChanged();
     this.emitStyle();
   }
 

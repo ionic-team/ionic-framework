@@ -6,7 +6,7 @@
 ion-loading {
   @include position(0, 0, 0, 0);
 
-  position: absolute;
+  position: fixed;
   z-index: $z-index-overlay;
 
   display: flex;
@@ -14,35 +14,13 @@ ion-loading {
   align-items: center;
   justify-content: center;
 
+  touch-action: none;
+
   contain: strict;
-}
-
-ion-loading ion-gesture {
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  visibility: inherit;
 }
 
 ion-loading-controller {
   display: none;
-}
-
-.loading-backdrop {
-  @include position(0, null, null, 0);
-
-  position: absolute;
-
-  z-index: $z-index-backdrop;
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  opacity: .01;
-  transform: translateZ(0);
 }
 
 .loading-wrapper {

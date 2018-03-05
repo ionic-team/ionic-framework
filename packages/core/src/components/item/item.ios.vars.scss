@@ -25,7 +25,7 @@ $item-ios-paragraph-margin-start:            $item-ios-paragraph-margin-end !def
 $item-ios-paragraph-font-size:               14px !default;
 
 /// @prop - Color of the item paragraph
-$item-ios-paragraph-text-color:              $text-ios-color-step-300 !default;
+$item-ios-paragraph-text-color:              $text-ios-color-step-600 !default;
 
 /// @prop - Width of the avatar in the item
 $item-ios-avatar-width:                      36px !default;
@@ -39,14 +39,8 @@ $item-ios-thumbnail-width:                   56px !default;
 /// @prop - Height of the thumbnail in the item
 $item-ios-thumbnail-height:                  $item-ios-thumbnail-width !default;
 
-/// @prop - Shows the detail arrow icon on an item
-$item-ios-detail-push-show:                  true !default;
-
 /// @prop - Color of the detail arrow icon
 $item-ios-detail-push-color:                 $item-ios-border-color !default;
-
-/// @prop - Icon for the detail arrow
-$item-ios-detail-push-svg:                   "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-ios-detail-push-color}'/></svg>" !default;
 
 /// @prop - Padding top for the item content
 $item-ios-padding-top:                       11px !default;
@@ -77,7 +71,7 @@ $item-ios-slot-start-margin-bottom:          $item-ios-slot-start-margin-top !de
 $item-ios-slot-start-margin-start:           0 !default;
 
 /// @prop - Margin top for the end slot
-$item-ios-slot-end-margin-top:               8px !default;
+$item-ios-slot-end-margin-top:               null !default;
 
 /// @prop - Margin end for the end slot
 $item-ios-slot-end-margin-end:               ($item-ios-padding-start / 2) !default;

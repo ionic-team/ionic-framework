@@ -1,0 +1,22 @@
+@import "./scroll";
+@import "./scroll.ios.vars";
+
+// iOS Content
+// --------------------------------------------------
+
+.outer-content .scroll-ios {
+  background: $content-ios-outer-background;
+}
+
+.scroll-ios {
+  font-family: $content-ios-font-family;
+
+  color: $text-ios-color;
+  background-color: $background-ios-color;
+}
+
+.scroll-ios hr {
+  height: $hairlines-width;
+
+  background-color: ion-color-alpha($background-ios-color-value, background-ios-color, $alpha-ios-low);
+}

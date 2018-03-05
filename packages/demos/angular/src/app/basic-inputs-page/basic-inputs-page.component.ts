@@ -7,6 +7,8 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
   encapsulation: ViewEncapsulation.None
 })
 export class BasicInputsPageComponent implements OnInit {
+  disableInputs = false;
+
   datetimeValue = '2017-11-18T14:17:45-06:00';
   textareaValue = 'This is the Textarea Input';
   textValue = 'This is the Text Input';

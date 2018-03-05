@@ -1,4 +1,5 @@
-import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
+import { CssClassMap } from '../../index';
 import { HTMLIonSelectOptionElementEvent } from '../select-option/select-option';
 import { BlurEvent, FocusEvent, SelectInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
 
@@ -26,8 +27,9 @@ export class Select {
   private childOpts: HTMLIonSelectOptionElement[] = [];
   private selectId: string;
   private labelId: string;
-  private overlay: ActionSheet | Alert | Popover;
+  private overlay: ActionSheet | Alert | Popover | null;
   private styleTmr: any;
+  private mode: string;
 
   @Element() private el: HTMLIonSelectElement;
 
@@ -38,9 +40,7 @@ export class Select {
   @State() text: string;
 
   @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl: ActionSheetController;
-
   @Prop({ connect: 'ion-alert-controller' }) alertCtrl: AlertController;
-
   @Prop({ connect: 'ion-popover-controller' }) popoverCtrl: PopoverController;
 
   /**
@@ -95,7 +95,7 @@ export class Select {
   /**
    * the value of the select.
    */
-  @Prop({ mutable: true }) value: string | string[];
+  @Prop({ mutable: true }) value: string | string[] | null = null;
 
   /**
    * Emitted when the value has changed.
@@ -181,12 +181,13 @@ export class Select {
       value: this.value,
       text: this.text
     });
+    this.emitStyle();
   }
 
   @Listen('ionSelectOptionDidLoad')
   optLoad(ev: HTMLIonSelectOptionElementEvent) {
     const selectOption = ev.target;
-    this.childOpts.push(selectOption);
+    this.childOpts = Array.from(this.el.querySelectorAll('ion-select-option'));
 
     if (this.value !== undefined && (Array.isArray(this.value) && this.value.indexOf(selectOption.value) > -1) || (selectOption.value === this.value)) {
       // this select has a value and this
@@ -240,7 +241,6 @@ export class Select {
       this.value = this.multiple ? [] : undefined;
     }
     this.name = this.name || this.selectId;
-    this.emitStyle();
   }
 
   componentDidLoad() {
@@ -269,6 +269,7 @@ export class Select {
         this.text = checked.textContent;
       }
     }
+    this.emitStyle();
   }
 
   getLabel() {
@@ -507,6 +508,7 @@ export class Select {
         <div class='select-icon-inner'></div>
       </div>,
       <button
+        type='button'
         role='combobox'
         aria-haspopup='dialog'
         aria-expanded={this.isExpanded}
@@ -518,6 +520,7 @@ export class Select {
         onBlur={this.onBlur.bind(this)}
         class='select-cover'>
         <slot></slot>
+        {this.mode === 'md' ? <ion-ripple-effect /> : null}
       </button>,
       <input type='hidden' name={this.name} value={this.value}/>
     ];

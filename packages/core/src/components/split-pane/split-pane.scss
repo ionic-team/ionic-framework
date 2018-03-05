@@ -16,8 +16,8 @@
   contain: strict;
 }
 
-.split-pane-visible >.split-pane-side,
-.split-pane-visible >.split-pane-main {
+.split-pane-visible > .split-pane-side,
+.split-pane-visible > .split-pane-main {
   @include position(0, 0, 0, 0);
 
   // scss-lint:disable ImportantRule
@@ -30,7 +30,10 @@
   box-shadow: none !important;
 }
 
-.split-pane-visible >.split-pane-side {
+.split-pane-visible > .split-pane-side:not(ion-menu),
+.split-pane-visible > ion-menu.split-pane-side.menu-enabled {
+  display: flex;
+
   flex-shrink: 0;
 
   order: -1;
@@ -40,12 +43,8 @@
   display: none;
 }
 
-.split-pane-visible > .split-pane-side {
-  display: flex;
-}
-
-.split-pane-visible >ion-menu.menu-enabled {
-  >.menu-inner {
+.split-pane-visible > ion-menu {
+  > .menu-inner {
     @include position-horizontal(0, 0);
 
     // scss-lint:disable ImportantRule
@@ -55,25 +54,25 @@
     transform: none !important;
   }
 
-  >.ion-backdrop {
+  > .ion-backdrop {
     // scss-lint:disable ImportantRule
     display: hidden !important;
   }
 }
 
-.split-pane-visible >.split-pane-side[side=start] {
+.split-pane-visible > .split-pane-side[side=start] {
   @include multi-dir() {
     order: -1;
   }
 }
 
-.split-pane-visible >.split-pane-side[side=end] {
+.split-pane-visible > .split-pane-side[side=end] {
   @include multi-dir() {
     order: 1;
   }
 }
 
-.split-pane-visible >.split-pane-side[side=left] {
+.split-pane-visible > .split-pane-side[side=left] {
   @include ltr() {
     order: -1;
   }
@@ -83,7 +82,7 @@
   }
 }
 
-.split-pane-visible >.split-pane-side[side=right] {
+.split-pane-visible > .split-pane-side[side=right] {
   @include ltr() {
     order: 1;
   }

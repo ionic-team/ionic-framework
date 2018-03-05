@@ -4,11 +4,11 @@ import {
   Animation,
   AnimationOptions,
   FrameworkDelegate,
+  FrameworkMountingData,
   Nav,
   NavOptions,
   PublicViewController,
   ViewController,
-  FrameworkMountingData
 } from '../../index';
 
 export interface PublicNav {
@@ -27,20 +27,16 @@ export interface PublicNav {
   getPrevious(view?: PublicViewController): PublicViewController;
   canGoBack(): boolean;
   canSwipeBack(): boolean;
-  getFirstView(): PublicViewController;
+  first(): PublicViewController;
+  last(): PublicViewController;
   getChildNavs(): PublicNav[];
+  getViews(): PublicViewController[];
 
-  element?: HTMLElement;
-}
-
-export interface NavContainer {
-  id?: number;
+  navId?: number;
   name?: string;
-  parent?: Nav;
-  getChildNavs?(): NavContainer[];
-  getAllChildNavs?(): NavContainer[];
-  getType?(): string;
-  getSecondaryIdentifier?(): string;
+  element?: HTMLElement;
+  parent?: PublicNav;
+  initialized?: boolean;
 }
 
 export interface NavOptions {
@@ -76,9 +72,9 @@ export interface TransitionInstruction {
   nav?: Nav;
   delegate?: FrameworkDelegate;
   animation?: Animation;
-  escapeHatch?: any;
+  escapeHatch?: EscapeHatch;
   method?: string;
-  mountingData?: any;
+  mountingData?: FrameworkMountingData;
 }
 
 export interface NavResult {
@@ -89,6 +85,18 @@ export interface NavResult {
 export interface ComponentDataPair {
   component: any;
   data: any;
+}
+
+export interface ExternalNavData {
+  url: string;
+  method: string;
+  resolve: Function;
+  reject: Function;
+}
+
+export interface EscapeHatch {
+  fromExternalRouter?: boolean;
+  url?: string;
 }
 
 export interface Transition extends Animation {
@@ -110,4 +118,5 @@ export interface PublicViewController {
   component?: any;
   instance?: any;
   element?: HTMLElement;
+  timestamp?: number;
 }

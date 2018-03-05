@@ -31,7 +31,7 @@
 // -----------------------------------------
 
 .action-sheet-md .action-sheet-group {
-  background: $action-sheet-md-background;
+  background-color: $action-sheet-md-background-color;
 }
 
 .action-sheet-md .action-sheet-group:first-child {
@@ -54,11 +54,13 @@
   position: relative;
   overflow: hidden;
 
-  min-height: $action-sheet-md-button-min-height;
+  height: $action-sheet-md-button-height;
 
   font-size: $action-sheet-md-button-font-size;
   color: $action-sheet-md-button-text-color;
   background: $action-sheet-md-button-background;
+
+  contain: strict;
 }
 
 .action-sheet-md .action-sheet-button.activated {
@@ -71,7 +73,7 @@
   font-size: $action-sheet-md-icon-font-size;
 }
 
-.action-sheet-md .action-sheet-group .button-inner {
+.action-sheet-md .action-sheet-button-inner {
   justify-content: flex-start;
 }
 

@@ -1,0 +1,41 @@
+@import "./back-button";
+@import "./back-button.ios.vars";
+
+// iOS Back Button
+// --------------------------------------------------
+
+.back-button-ios .back-button-inner {
+  @include padding(0);
+  @include margin(0);
+
+  z-index: $back-button-ios-button-z-index;
+  overflow: visible;
+
+  min-height: 32px;
+
+  border: 0;
+  font-size: 17px;
+  line-height: 1;
+  background-color: transparent;
+  transform: translateZ(0);
+
+  &.activated {
+    opacity: .4;
+  }
+}
+
+.back-button-ios ion-icon {
+  @include padding(0);
+  @include margin(0, -3px, 0, 0);
+
+  display: inherit;
+
+  font-size: 1.75em;
+
+  pointer-events: none;
+}
+
+.back-button .button-text {
+  letter-spacing: .01em;
+}
+

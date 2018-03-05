@@ -381,10 +381,16 @@ which is an expensive operation and should be avoided if possible.
 
 ## Methods
 
+#### markDirty()
+
+
+#### markDirtyTail()
+
+
 #### positionForItem()
 
 
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

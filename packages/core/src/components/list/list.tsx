@@ -14,7 +14,7 @@ import { ItemSliding } from '../item-sliding/item-sliding';
   }
 })
 export class List {
-  private openedItem: ItemSliding;
+  private openedItem: ItemSliding|null;
 
   @Method()
   getOpenedItem() {
@@ -22,10 +22,13 @@ export class List {
   }
 
   @Method()
-  setOpenedItem(itemSliding: ItemSliding) {
+  setOpenedItem(itemSliding: ItemSliding|null) {
     this.openedItem = itemSliding;
   }
 
+  /**
+   * Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding).
+   */
   @Method()
   closeSlidingItems(): boolean {
     if (this.openedItem) {

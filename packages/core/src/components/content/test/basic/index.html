@@ -8,7 +8,7 @@
 </head>
 <body>
   <ion-app>
-    <ion-page>
+
       <ion-header id="header">
         <ion-toolbar style="display: none" id="toolbar2">
           <ion-title>Hidden Toolbar</ion-title>
@@ -67,9 +67,15 @@
           <ion-title>Footer</ion-title>
         </ion-toolbar>
       </ion-footer>
-    </ion-page>
 
     <script>
+      const content = document.getElementById('content');
+      content.scrollEvents = true;
+      content.addEventListener('ionScrollStart', () => console.log('scroll start'));
+      content.addEventListener('ionScroll', (ev) => console.log('scroll', ev.detail));
+      content.addEventListener('ionScrollEnd', () => console.log('scroll end'));
+
+
       function toggleFullscreen() {
         const content = document.getElementById('content');
         content.fullscreen = !content.fullscreen;

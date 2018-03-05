@@ -1,16 +1,30 @@
-import { isCordova } from './platform-utils';
+import { isCordova, isElectron,  } from './platform-utils';
 
-const IPAD = 'ipad';
-const IPHONE = 'iphone';
-const IOS = 'ios';
-const WINDOWS_PHONE = ['windows phone'];
+import {
+  ANDROID,
+  CORDOVA,
+  CORE,
+  ELECTRON,
+  IOS,
+  IPAD,
+  IPHONE,
+  MOBILE,
+  PHABLET,
+  TABLET,
+  WINDOWS_PHONE,
+} from './platform-utils';
 
+const width = window.innerWidth;
+const height = window.innerHeight;
 
 // order from most specifc to least specific
 export const PLATFORM_CONFIGS: PlatformConfig[] = [
 
   {
     name: IPAD,
+    settings: {
+      keyboardHeight: 500,
+    },
     isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, IPAD, [IPAD], WINDOWS_PHONE)
   },
 
@@ -22,28 +36,70 @@ export const PLATFORM_CONFIGS: PlatformConfig[] = [
   {
     name: IOS,
     settings: {
-      mode: IOS,
+      mode: 'ios',
       tabsHighlight: false,
       statusbarPadding: isCordova(),
+      keyboardHeight: 250,
+      isDevice: true,
+      deviceHacks: true,
     },
     isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, IOS, [IPHONE, IPAD, 'ipod'], WINDOWS_PHONE)
   },
 
   {
-    name: 'android',
+    name: ANDROID,
     settings: {
-      activator: 'ripple',
       mode: 'md',
+      isDevice: true,
+      keyboardHeight: 300,
     },
-    isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, 'android', ['android', 'silk'], WINDOWS_PHONE)
+    isMatch: (url, userAgent) => isPlatformMatch(url, userAgent, ANDROID, [ANDROID, 'silk'], WINDOWS_PHONE)
   },
 
   {
-    name: 'core',
+    name: CORE,
     settings: {
       mode: 'md'
     }
   },
+
+  {
+    name: PHABLET,
+    isMatch: () => {
+      const smallest = Math.min(width, height);
+      const largest = Math.max(width, height);
+      return (smallest > 390 && smallest < 520) &&
+        (largest > 620 && largest < 800);
+    }
+  },
+
+  {
+    name: MOBILE
+  },
+
+  {
+    name: TABLET,
+    isMatch: () => {
+      const smallest = Math.min(width, height);
+      const largest = Math.max(width, height);
+      return (smallest > 460 && smallest < 820) &&
+        (largest > 780 && largest < 1400);
+    }
+  },
+
+  {
+    name: CORDOVA,
+    isMatch: () => {
+      return isCordova();
+    }
+  },
+
+  {
+    name: ELECTRON,
+    isMatch: () => {
+      return isElectron();
+    }
+  }
 
 ];
 
@@ -59,7 +115,7 @@ export function detectPlatforms(url: string, userAgent: string, platforms: Platf
 }
 
 export function isPlatformMatch(url: string, userAgent: string, platformName: string, userAgentAtLeastHas: string[], userAgentMustNotHave: string[]) {
-  const queryValue = queryParam(url, 'ionicplatform');
+  const queryValue = readQueryParam(url, 'ionicplatform');
   if (queryValue) {
     return queryValue === platformName;
   }
@@ -83,7 +139,7 @@ export function isPlatformMatch(url: string, userAgent: string, platformName: st
 }
 
 
-export function queryParam(url: string, key: string) {
+export function readQueryParam(url: string, key: string) {
   key = key.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
   const regex = new RegExp('[\\?&]' + key + '=([^&#]*)');
   const results = regex.exec(url);

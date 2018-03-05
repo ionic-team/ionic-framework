@@ -9,9 +9,26 @@
 </head>
 
 <body>
-  <ion-button id="basic" expand="block" onclick="presentPopover({ component: 'profile-page', ev: event })">Show Popover</ion-button>
+  <button id="basic" onclick="presentPopover({ component: 'profile-page', ev: event })">Show Popover</button>
+  <button onclick="presentPopover({ component: 'translucent-page', ev: event, translucent: true })">Show Translucent Popover</button>
+  <button color="secondary" onclick="presentPopover({ component: 'list-page', ev: event })">Show Long List Popover</button>
+  <button color="danger" onclick="presentPopover({ component: 'profile-page' })">No Event Popover</button>
 
   <ion-popover-controller></ion-popover-controller>
+
+  <style>
+    body > button {
+      display: block;
+      clear: both;
+      width: 100%;
+      padding: 12px 8px;
+      font-size: 1em;
+      background: #f8f8f8;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+  </style>
 
   <script>
     async function presentPopover(opts) {
@@ -42,6 +59,46 @@
     }
 
     customElements.define('profile-page', ProfilePage);
+
+    class ListPage extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        let items = '';
+        for (var i = 0; i < 30; i++) {
+          items += '<ion-item><ion-label>Item ' + i + '</ion-label></ion-item>';
+        }
+
+        this.innerHTML = `
+          <ion-content>
+            <ion-list>
+              <ion-list-header>Ionic</ion-list-header>
+              ` + items + `
+            </ion-list>
+          </ion-content>
+        `;
+      }
+    }
+
+    customElements.define('list-page', ListPage);
+
+    class TranslucentPage extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.innerHTML = `
+          <div padding>
+            <h1>Translucent Popover</h1>
+          </div>
+        `;
+      }
+    }
+
+    customElements.define('translucent-page', TranslucentPage);
   </script>
 </body>
 </html>

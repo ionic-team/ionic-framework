@@ -92,7 +92,7 @@ attribute to the element.
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
@@ -109,10 +109,10 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 boolean
 
-If true, adds transparency to the header.
-Note: In order to scroll content behind the header, the `fullscreen`
+If true, the toolbar will be translucent.
+Note: In order to scroll content behind the toolbar, the `fullscreen`
 attribute needs to be set on the content.
-Only affects `ios` mode. Defaults to `false`.
+Defaults to `false`.
 
 
 ## Attributes
@@ -122,7 +122,7 @@ Only affects `ios` mode. Defaults to `false`.
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
@@ -139,13 +139,13 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 boolean
 
-If true, adds transparency to the header.
-Note: In order to scroll content behind the header, the `fullscreen`
+If true, the toolbar will be translucent.
+Note: In order to scroll content behind the toolbar, the `fullscreen`
 attribute needs to be set on the content.
-Only affects `ios` mode. Defaults to `false`.
+Defaults to `false`.
 
 
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

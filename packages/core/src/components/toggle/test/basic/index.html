@@ -8,7 +8,7 @@
 </head>
 <body>
   <ion-app>
-    <ion-page>
+
       <ion-header>
         <ion-toolbar>
           <ion-title>Toggle - Basic</ion-title>
@@ -67,9 +67,9 @@
 
 
         <p aria-hidden="true" text-center>
-          <ion-button onClick="toggleBoolean('grapeChecked', 'checked')" outline small>Grape Checked</ion-button>
-          <ion-button onClick="toggleBoolean('grapeChecked', 'disabled')" outline small>Grape Disabled</ion-button>
-          <ion-button onClick="printForm()" outline small>Print Form</ion-button>
+          <ion-button onClick="toggleBoolean('grapeChecked', 'checked')" fill="outline" size="small">Grape Checked</ion-button>
+          <ion-button onClick="toggleBoolean('grapeChecked', 'disabled')" fill="outline" size="small">Grape Disabled</ion-button>
+          <ion-button onClick="printForm()" fill="outline" size="small">Print Form</ion-button>
         </p>
 
         <p>
@@ -77,7 +77,6 @@
           Stand-alone toggle: <span id="standAloneCheckedSpan"></span>
         </p>
       </ion-content>
-    </ion-page>
 
     <script>
       function printForm(ev) {

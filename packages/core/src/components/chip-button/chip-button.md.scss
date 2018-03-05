@@ -5,11 +5,8 @@
 // --------------------------------------------------
 
 .chip-button-md {
+  color: $chip-button-md-text-color;
   background-color: $chip-button-md-background-color;
-}
-
-.chip-button-md .icon {
-  fill: $chip-button-md-icon-fill-color;
 }
 
 
@@ -19,10 +16,6 @@
 .chip-button-clear-md {
   color: $chip-button-md-clear-text-color;
   background-color: $chip-button-md-clear-background-color;
-}
-
-.chip-button-clear-md .icon {
-  fill: $chip-button-md-clear-icon-fill-color;
 }
 
 
@@ -38,15 +31,21 @@
     background-color: $color-base;
   }
 
-  .chip-button-md-#{$color-name} .icon {
-    fill: $color-contrast;
+  .chip-md-#{$color-name} .chip-button-md {
+    color: $color-base;
+    background-color: $color-contrast;
   }
+
+  // Clear Chip Buttons
+  // --------------------------------------------------
 
   .chip-button-clear-md-#{$color-name} {
     color: $color-base;
+    background-color: transparent;
   }
 
-  .chip-button-clear-md-#{$color-name} .icon {
-    fill: $color-base;
+  .chip-md-#{$color-name} .chip-button-clear-md {
+    color: $color-contrast;
+    background-color: transparent;
   }
 }

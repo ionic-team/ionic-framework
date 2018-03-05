@@ -2,375 +2,129 @@
 <html dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <title>Nav</title>
+  <title>Simple Nested Navs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
+  <script>
+
+      class PageOne extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+
+            <ion-header>
+              <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-back-button></ion-back-button>
+                </ion-buttons>
+                <ion-title>Page One</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content padding>
+              <h1>Page One</h1>
+              <ion-nav-push component="page-two">
+                <ion-button class="next">Go to Page Two</ion-button>
+              </ion-nav-push>
+            </ion-content>
+          `;
+        }
+      }
+
+      class PageTwo extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+          <ion-nav root="page-two-section-one"></ion-nav>
+          `;
+        }
+      }
+
+      class PageTwoSectionOne extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+
+            <ion-header>
+              <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-back-button></ion-back-button>
+                </ion-buttons>
+                <ion-title>Page Two Section One</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content padding>
+              <h1>Page Two Section One</h1>
+              <ion-nav-push component="page-two-section-two">
+                <ion-button class="next">Go to Page Two Section Two</ion-button>
+              </ion-nav-push>
+              <div>
+                <ion-button class="previous">Go Back</ion-button>
+              </div>
+            </ion-content>
+          `;
+
+          const button = this.querySelector('ion-button.previous');
+          button.addEventListener('click', () => {
+            const nav = this.closest('ion-nav');
+            if (nav.parent) {
+              nav.parent.pop();
+            }
+          });
+        }
+      }
+
+      class PageTwoSectionTwo extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+
+            <ion-header>
+              <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-back-button></ion-back-button>
+                </ion-buttons>
+                <ion-title>Page Two Section Two</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content padding>
+              <h1>Page Two Section Two</h1>
+              <ion-nav-push component="page-three">
+                <ion-button class="next">Go to Page Three</ion-button>
+              </ion-nav-push>
+            </ion-content>
+          `;
+        }
+      }
+
+      class PageThree extends HTMLElement {
+        connectedCallback() {
+          this.innerHTML = `
+
+            <ion-header>
+              <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-back-button></ion-back-button>
+                </ion-buttons>
+                <ion-title>Page Three</ion-title>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content padding>
+              <h1>Page Three</h1>
+              <ion-nav-pop>
+                  <ion-button class="previous">Go Back</ion-button>
+              </ion-nav-pop>
+            </ion-content>
+          `;
+        }
+      }
+
+      customElements.define('page-one', PageOne);
+      customElements.define('page-two', PageTwo);
+      customElements.define('page-two-section-one', PageTwoSectionOne);
+      customElements.define('page-two-section-two', PageTwoSectionTwo);
+      customElements.define('page-three', PageThree);
+
+    </script>
 </head>
-<body onload="loadFirstPage()">
+<body>
   <ion-app>
-    <ion-nav></ion-nav>
+    <ion-nav root="page-one"></ion-nav>
   </ion-app>
-  <style>
-      f {
-        display: block;
-        margin: 15px auto;
-        max-width: 150px;
-        height: 150px;
-        background: blue;
-      }
-
-      f:last-of-type {
-        background: yellow;
-      }
-    </style>
 </body>
-
-<script>
-
-  async function loadFirstPage() {
-    const nav = document.querySelector('ion-nav');
-    await nav.componentOnReady();
-    const navOnePageOne = document.createElement('div');
-    navOnePageOne.classList.add('nav-one-page-one');
-    navOnePageOne.innerHTML = `
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Nav One Page One</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content padding>
-        <h1>Nav One Page One</h1>
-        <ion-button class="next">Go to Nav One Page Two</ion-button>
-      </ion-content>
-    `;
-
-    await nav.push(navOnePageOne);
-
-    // okay cool, we're in the DOM now
-    const button = navOnePageOne.querySelector('ion-button');
-    button.addEventListener('click', async () => {
-      await goToNavOnePageTwo(nav);
-    });
-  }
-
-  async function goToNavOnePageTwo(nav) {
-    const navOnePageTwo = document.createElement('div');
-    navOnePageTwo.classList.add('nav-one-page-two');
-    navOnePageTwo.innerHTML = `
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Nav One Page Two</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content padding>
-        <h1>Nav One Page Two</h1>
-        <div>
-          <ion-button class="page-three">Go to Nav One Page Three</ion-button>
-        </div>
-        <div>
-          <ion-button class="next">Go to Nav Two Page One</ion-button>
-        </div>
-        <div>
-          <ion-button class="previous">Go Back to Nav One Page One</ion-button>
-        </div>
-      </ion-content>
-    `;
-
-    // okay cool, we're in the DOM now
-    await nav.push(navOnePageTwo);
-
-    const previousButton = navOnePageTwo.querySelector('ion-button .previous');
-    previousButton.addEventListener('click', async () => {
-      await nav.pop();
-    });
-
-    const nextButton = navOnePageTwo.querySelector('ion-button .next');
-    nextButton.addEventListener('click', async () => {
-      await goToNavTwo(nav);
-    });
-  }
-
-  async function goToNavTwo(nav) {
-    const navTwoParent = document.createElement('div');
-    navTwoParent.classList.add('nav-two');
-    navTwoParent.innerHTML = `
-      <ion-nav></ion-nav>
-    `;
-
-    await nav.push(navTwoParent)
-
-    const navTwo = navTwoParent.querySelector('ion-nav');
-    await navTwo.componentOnReady();
-
-    goToNavTwoPageOne(nav, navTwo);
-  }
-
-  async function goToNavTwoPageOne(nav, navTwo) {
-    const navTwoPageOne = document.createElement('div');
-    navTwoPageOne.classList.add('nav-two-page-one');
-    navTwoPageOne.innerHTML = `
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Nav Two Page One</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content padding>
-        <h1>Nav Two Page One</h1>
-        <div>
-          <ion-button class="next nav-one">Push on Nav One</ion-button>
-        </div>
-        <div>
-          <ion-button class="next nav-two">Push on Nav Two</ion-button>
-        </div>
-        <div>
-          <ion-button class="previous nav-one">Pop on Nav One</ion-button>
-        </div>
-        <div>
-          <ion-button class="previous nav-two">Pop on Nav Two</ion-button>
-        </div>
-      </ion-content>
-    `;
-
-    // okay cool, we're in the DOM now
-    await navTwo.push(navTwoPageOne);
-
-    const pushNavOneButton = navTwoPageOne.querySelector('ion-button.next.nav-one');
-    pushNavOneButton.addEventListener('click', async () => {
-      await goToNavOnePageThree(nav);
-    });
-
-    const pushNavTwoButton = navTwoPageOne.querySelector('ion-button.next.nav-two');
-    pushNavTwoButton.addEventListener('click', async () => {
-      await goToNavTwoPageTwo(nav, navTwo);
-    });
-
-    const navOnePopButton = navTwoPageOne.querySelector('ion-button.previous.nav-one');
-    navOnePopButton.addEventListener('click', async () => {
-      await nav.pop();
-    });
-
-    const navTwoPopButton = navTwoPageOne.querySelector('ion-button.previous.nav-two');
-    navTwoPopButton.addEventListener('click', async () => {
-      await navTwo.pop();
-    });
-  }
-
-  async function goToNavOnePageThree(nav) {
-    const navOnePageThree = document.createElement('div');
-    navOnePageThree.classList.add('nav-one-page-three');
-    navOnePageThree.innerHTML = `
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Nav One Page Three</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content padding>
-        <h1>Nav One Page Three</h1>
-        <ion-button class="previous">Go Back</ion-button>
-      </ion-content>
-    `;
-
-    // okay cool, we're in the DOM now
-    await nav.push(navOnePageThree);
-
-    const previousButton = navOnePageThree.querySelector('ion-button .previous');
-    previousButton.addEventListener('click', async () => {
-      await nav.pop();
-    });
-  }
-
-  async function goToNavTwoPageTwo(navOne, navTwo) {
-    const navTwoPageTwo = document.createElement('div');
-    navTwoPageTwo.classList.add('nav-two-page-two');
-    navTwoPageTwo.innerHTML = `
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Nav Two Page Two</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content padding>
-        <h1>Nav Two Page Two</h1>
-        <div>
-          <ion-button class="nav-three next">Go To Nav Three Page One</ion-button>
-        </div>
-        <div>
-          <ion-button class="previous">Go Back to Nav Two Page One</ion-button>
-        </div>
-      </ion-content>
-    `;
-
-    // okay cool, we're in the DOM now
-    await navTwo.push(navTwoPageTwo);
-
-    const nextButton = navTwoPageTwo.querySelector('ion-button .next');
-    nextButton.addEventListener('click', async () => {
-      await goToNavThree(navOne, navTwo);
-    });
-
-    const previousButton = navTwoPageTwo.querySelector('ion-button .previous');
-    previousButton.addEventListener('click', async () => {
-      await navTwo.pop();
-    });
-  }
-
-  async function goToNavThree(navOne, navTwo) {
-    const navThreeParent = document.createElement('div');
-    navThreeParent.classList.add('nav-three');
-    navThreeParent.innerHTML = `
-      <ion-nav></ion-nav>
-    `;
-
-    await navTwo.push(navThreeParent);
-
-    const navThree = navThreeParent.querySelector('ion-nav');
-
-    await navThree.componentOnReady();
-
-    goToNavThreePageOne(navOne, navTwo, navThree);
-  }
-
-  async function goToNavThreePageOne(navOne, navTwo, navThree) {
-    const navThreePageOne = document.createElement('div');
-    navThreePageOne.classList.add('nav-three-page-one');
-    navThreePageOne.innerHTML = `
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Nav Three Page One</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content padding>
-        <h1>Nav Three Page One</h1>
-        <div>
-          <ion-button class="next nav-one">Push on Nav One</ion-button>
-        </div>
-        <div>
-          <ion-button class="next nav-two">Push on Nav Two</ion-button>
-        </div>
-        <div>
-          <ion-button class="next nav-three">Push on Nav Three</ion-button>
-        </div>
-        <div>
-          <ion-button class="previous nav-one">Pop on Nav One</ion-button>
-        </div>
-        <div>
-          <ion-button class="previous nav-two">Pop on Nav Two</ion-button>
-        </div>
-        <div>
-          <ion-button class="previous nav-three">Pop on Nav Three</ion-button>
-        </div>
-      </ion-content>
-    `;
-
-    // okay cool, we're in the DOM now
-    await navThree.push(navThreePageOne);
-
-    const pushNavOneButton = navThreePageOne.querySelector('ion-button.next.nav-one');
-    pushNavOneButton.addEventListener('click', async () => {
-      await goToNavOnePageThree(navOne);
-    });
-
-    const pushNavTwoButton = navThreePageOne.querySelector('ion-button.next.nav-two');
-    pushNavTwoButton.addEventListener('click', async () => {
-      await goToNavTwoPageThree(navOne, navTwo);
-    });
-
-    const pushNavThreeButton = navThreePageOne.querySelector('ion-button.next.nav-three');
-    pushNavThreeButton.addEventListener('click', async () => {
-      await goToNavThreePageTwo(navOne, navTwo, navThree);
-    });
-
-    const navOnePopButton = navThreePageOne.querySelector('ion-button.previous.nav-one');
-    navOnePopButton.addEventListener('click', async () => {
-      await navOne.pop();
-    });
-
-    const navTwoPopButton = navThreePageOne.querySelector('ion-button.previous.nav-two');
-    navTwoPopButton.addEventListener('click', async () => {
-      await navTwo.pop();
-    });
-
-    const navThreePopButton = navThreePageOne.querySelector('ion-button.previous.nav-three');
-    navThreePopButton.addEventListener('click', async () => {
-      await navThree.pop();
-    });
-  }
-
-  async function goToNavTwoPageThree(navOne, navTwo) {
-    const navTwoPageThree = document.createElement('div');
-    navTwoPageThree.classList.add('nav-two-page-three');
-    navTwoPageThree.innerHTML = `
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Nav Two Page Three</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content padding>
-        <h1>Nav Two Page Three</h1>
-        <ion-button class="previous">Go Back</ion-button>
-      </ion-content>
-    `;
-
-    // okay cool, we're in the DOM now
-    await navTwo.push(navTwoPageThree);
-
-    const previousButton = navTwoPageThree.querySelector('ion-button .previous');
-    previousButton.addEventListener('click', async () => {
-      await navTwo.pop();
-    });
-  }
-
-  async function goToNavThreePageTwo(navOne, navTwo, navThree) {
-    const navThreePageTwo = document.createElement('div');
-    navThreePageTwo.classList.add('nav-three-page-two');
-    navThreePageTwo.innerHTML = `
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Nav Three Page Two</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content padding>
-        <h1>Nav Three Page Two</h1>
-        <ion-button class="next">Go to Nav Three Page Three</ion-button>
-        <ion-button class="previous">Go Back to Nav Three Page One</ion-button>
-      </ion-content>
-    `;
-
-    // okay cool, we're in the DOM now
-    await navThree.push(navThreePageTwo);
-
-    const nextButton = navThreePageTwo.querySelector('ion-button .next');
-    nextButton.addEventListener('click', async () => {
-      goToNavThreePageThree(navOne, navTwo, navThree);
-    });
-
-    const previousButton = navThreePageTwo.querySelector('ion-button .previous');
-    previousButton.addEventListener('click', async () => {
-      await navThree.pop();
-    });
-  }
-
-  async function goToNavThreePageThree(navOne, navTwo, navThree) {
-    const navThreePageThree = document.createElement('div');
-    navThreePageThree.classList.add('nav-three-page-three');
-    navThreePageThree.innerHTML = `
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Nav Three Page Three</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content padding>
-        <h1>Nav Three Page Three</h1>
-        <ion-button class="previous">Go Back to Nav Three Page Two</ion-button>
-      </ion-content>
-    `;
-
-    // okay cool, we're in the DOM now
-    await navThree.push(navThreePageThree);
-
-    const previousButton = navThreePageThree.querySelector('ion-button .previous');
-    previousButton.addEventListener('click', async () => {
-      await navThree.pop();
-    });
-  }
-</script>
 </html>

@@ -7,11 +7,6 @@
 
 ## Properties
 
-#### component
-
-string
-
-
 #### path
 
 string
@@ -20,15 +15,15 @@ string
 #### props
 
 any
+
+
+#### sel
+
+string
 
 
 ## Attributes
 
-#### component
-
-string
-
-
 #### path
 
 string
@@ -39,12 +34,12 @@ string
 any
 
 
-## Methods
+#### sel
 
-#### getRoute()
+string
 
 
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

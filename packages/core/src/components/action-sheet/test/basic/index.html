@@ -10,34 +10,79 @@
 
 <body>
   <ion-app>
-    <ion-page>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Action Sheet - Basic</ion-title>
-        </ion-toolbar>
-      </ion-header>
 
-      <ion-content padding>
-        <ion-action-sheet-controller></ion-action-sheet-controller>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Action Sheet - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-        <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
-        <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</ion-button>
-        <ion-button expand="block" id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</ion-button>
-        <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
-        <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
-        <ion-button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</ion-button>
-        <ion-button expand="block" id="icons" onclick="presentIcons()">Icons</ion-button>
-        <ion-button expand="block" id="cssClass" onclick="presentWithCssClass()">Custom CSS Class</ion-button>
+    <ion-content padding>
+      <ion-action-sheet-controller></ion-action-sheet-controller>
 
-      </ion-content>
+      <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
+      <ion-button expand="block" id="noBackdropDismiss" onclick="presentNoBackdropDismiss()">No Backdrop Dismiss</ion-button>
+      <ion-button expand="block" id="alertFromActionSheet" onclick="presentAlert()">Alert from Action Sheet</ion-button>
+      <ion-button expand="block" id="scrollableOptions" onclick="presentScroll()">Scrollable Options</ion-button>
+      <ion-button expand="block" id="scrollWithoutCancel" onclick="presentScrollNoCancel()">Scroll Without Cancel</ion-button>
+      <ion-button expand="block" id="cancelOnly" onclick="presentCancelOnly()">Cancel Only</ion-button>
+      <ion-button expand="block" id="icons" onclick="presentIcons()">Icons</ion-button>
+      <ion-button expand="block" id="cssClass" onclick="presentWithCssClass()">Custom CSS Class</ion-button>
 
-    </ion-page>
+    </ion-content>
+
   </ion-app>
 
   <script>
-
     window.addEventListener('ionActionSheetDidDismiss', function(e){console.log('didDismiss', e)})
+
     async function presentBasic() {
+      const mode = Ionic.mode;
+
+      const actionSheetController = document.querySelector('ion-action-sheet-controller');
+      await actionSheetController.componentOnReady();
+      const actionSheetElement = await actionSheetController.create({
+        title: "Albums",
+        buttons: [{
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash',
+          handler: () => {
+            console.log('Delete clicked');
+          }
+        }, {
+          text: 'Share',
+          icon: 'share',
+          handler: () => {
+            console.log('Share clicked');
+          }
+        }, {
+          text: 'Play (open modal)',
+          icon: 'arrow-dropright-circle',
+          handler: () => {
+            console.log('Play clicked');
+          }
+        }, {
+          text: 'Favorite',
+          icon: mode === 'md' ? 'heart' : null,
+          handler: () => {
+            console.log('Favorite clicked');
+          }
+        }, {
+          text: 'Cancel',
+          icon: mode === 'md' ? 'close' : null,
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]
+      });
+      await actionSheetElement.present();
+    }
+
+    async function presentIcons() {
+      const mode = Ionic.mode;
+
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
       await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
@@ -71,49 +116,6 @@
         }, {
           text: 'Cancel',
           role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }]
-      })
-      await actionSheetElement.present();
-    }
-
-    async function presentIcons() {
-      const mode = Ionic.mode;
-
-      const actionSheetController = document.querySelector('ion-action-sheet-controller');
-      await actionSheetController.componentOnReady();
-      const actionSheetElement = await actionSheetController.create({
-        title: "Albums",
-        buttons: [{
-          text: 'Delete',
-          role: 'destructive',
-          icon: 'trash',
-          handler: () => {
-            console.log('Delete clicked');
-          }
-        }, {
-          text: 'Share',
-          icon: 'share',
-          handler: () => {
-            console.log('Share clicked');
-          }
-        }, {
-          text: 'Play (open modal)',
-          icon: 'arrow-dropright-circle',
-          handler: () => {
-            console.log('Play clicked');
-          }
-        }, {
-          text: 'Favorite',
-          icon: 'heart',
-          handler: () => {
-            console.log('Favorite clicked');
-          }
-        }, {
-          text: 'Cancel',
-          role: 'cancel',
           icon: 'close',
           handler: () => {
             console.log('Cancel clicked');
@@ -127,6 +129,7 @@
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
       await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
+        enableBackdropDismiss: false,
         buttons: [{
           text: 'Archive',
           handler: () => {

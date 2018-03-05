@@ -34,66 +34,30 @@ export const enum SlidingState {
   }
 })
 export class ItemSliding {
-
-  private item: HTMLIonItemElement;
-  private list: HTMLIonListElement;
+  private item: HTMLIonItemElement|null;
+  private list: HTMLIonListElement|null;
   private openAmount = 0;
   private initialOpenAmount = 0;
   private optsWidthRightSide = 0;
   private optsWidthLeftSide = 0;
   private sides: ItemSide;
-  private tmr: any = null;
-  private leftOptions: ItemOptions;
-  private rightOptions: ItemOptions;
+  private tmr: number;
+  private leftOptions: ItemOptions|null;
+  private rightOptions: ItemOptions|null;
   private optsDirty = true;
-  private gestureOptions: any;
 
   @Element() private el: HTMLElement;
-  @State() state: SlidingState = SlidingState.Disabled;
 
+  @State() state: SlidingState = SlidingState.Disabled;
 
   /**
    * Emitted when the sliding position changes.
-   * It reports the relative position.
-   *
-   * ```ts
-   * onDrag(slidingItem) {
-   *   let percent = slidingItem.getSlidingPercent();
-   *   if (percent > 0) {
-   *     // positive
-   *     console.log('right side');
-   *   } else {
-   *     // negative
-   *     console.log('left side');
-   *   }
-   *   if (Math.abs(percent) > 1) {
-   *     console.log('overscroll');
-   *   }
-   * }
-   * ```
-   *
    */
   @Event() ionDrag: EventEmitter;
 
-  constructor() {
-    this.gestureOptions = {
-      'canStart': this.canStart.bind(this),
-      'onStart': this.onDragStart.bind(this),
-      'onMove': this.onDragMove.bind(this),
-      'onEnd': this.onDragEnd.bind(this),
-      'gestureName': 'item-swipe',
-      'gesturePriority': -10,
-      'type': 'pan',
-      'direction': 'x',
-      'maxAngle': 20,
-      'threshold': 5,
-      'attachTo': 'parent'
-    };
-  }
-
   componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
-    this.list = this.el.closest('ion-list') as HTMLIonListElement;
+    this.list = this.el.closest('ion-list');
 
     this.updateOptions();
   }
@@ -102,18 +66,27 @@ export class ItemSliding {
     this.item = this.list = this.leftOptions = this.rightOptions = null;
   }
 
+  /**
+   * Get the amount the item is open in pixels.
+   */
   @Method()
   getOpenAmount(): number {
     return this.openAmount;
   }
 
+  /**
+   * Get the ratio of the open amount of the item compared to the width of the options.
+   * If the number returned is positive, then the options on the right side are open.
+   * If the number returned is negative, then the options on the left side are open.
+   * If the absolute value of the number is greater than 1, the item is open more than
+   * the width of the options.
+   */
   @Method()
-  getSlidingPercent(): number {
-    const openAmount = this.openAmount;
-    if (openAmount > 0) {
-      return openAmount / this.optsWidthRightSide;
-    } else if (openAmount < 0) {
-      return openAmount / this.optsWidthLeftSide;
+  getSlidingRatio(): number {
+    if (this.openAmount > 0) {
+      return this.openAmount / this.optsWidthRightSide;
+    } else if (this.openAmount < 0) {
+      return this.openAmount / this.optsWidthLeftSide;
     } else {
       return 0;
     }
@@ -122,46 +95,18 @@ export class ItemSliding {
 
   /**
    * Close the sliding item. Items can also be closed from the [List](../../list/List).
-   *
-   * The sliding item can be closed by grabbing a reference to `ItemSliding`. In the
-   * below example, the template reference variable `slidingItem` is placed on the element
-   * and passed to the `share` method.
-   *
-   * ```html
-   * <ion-list>
-   *   <ion-item-sliding #slidingItem>
-   *     <ion-item>
-   *       Item
-   *     </ion-item>
-   *     <ion-item-options>
-   *       <ion-button (click)="share(slidingItem)">Share</ion-button>
-   *     </ion-item-options>
-   *   </ion-item-sliding>
-   * </ion-list>
-   * ```
-   *
-   * ```ts
-   * import { Component } from '@angular/core';
-   * import { ItemSliding } from 'ionic-angular';
-   *
-   * @Component({...})
-   * export class MyClass {
-   *   constructor() { }
-   *
-   *   share(slidingItem: ItemSliding) {
-   *     slidingItem.close();
-   *   }
-   * }
-   * ```
    */
   @Method()
   close() {
     this.setOpenAmount(0, true);
   }
 
+  /**
+   * Close all of the sliding items in the list. Items can also be closed from the [List](../../list/List).
+   */
   @Method()
   closeOpened(): boolean {
-    return this.list && this.list.closeSlidingItems();
+    return !!(this.list && this.list.closeSlidingItems());
   }
 
   private updateOptions() {
@@ -286,20 +231,18 @@ export class ItemSliding {
 
     if (isFinal) {
       style.transition = '';
+    }
 
-    } else if (openAmount > 0) {
+    if (openAmount > 0) {
       this.state = (openAmount >= (this.optsWidthRightSide + SWIPE_MARGIN))
         ? SlidingState.Right | SlidingState.SwipeRight
         : SlidingState.Right;
-
     } else if (openAmount < 0) {
       this.state = (openAmount <= (-this.optsWidthLeftSide - SWIPE_MARGIN))
         ? SlidingState.Left | SlidingState.SwipeLeft
         : SlidingState.Left;
-    }
-
-    if (openAmount === 0) {
-      this.tmr = setTimeout(() => {
+    } else {
+      this.tmr = window.setTimeout(() => {
         this.state = SlidingState.Disabled;
         this.tmr = null;
       }, 600);
@@ -315,19 +258,31 @@ export class ItemSliding {
   hostData() {
     return {
       class: {
-        'item-wrapper': true,
-        'active-slide': (this.state !== SlidingState.Disabled),
-        'active-options-right': !!(this.state & SlidingState.Right),
-        'active-options-left': !!(this.state & SlidingState.Left),
-        'active-swipe-right': !!(this.state & SlidingState.SwipeRight),
-        'active-swipe-left': !!(this.state & SlidingState.SwipeLeft)
+        'item-sliding': true,
+        'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
+        'item-sliding-active-options-right': !!(this.state & SlidingState.Right),
+        'item-sliding-active-options-left': !!(this.state & SlidingState.Left),
+        'item-sliding-active-swipe-right': !!(this.state & SlidingState.SwipeRight),
+        'item-sliding-active-swipe-left': !!(this.state & SlidingState.SwipeLeft)
       }
     };
   }
 
   render() {
     return (
-      <ion-gesture {...this.gestureOptions}>
+      <ion-gesture {...{
+        'canStart': this.canStart.bind(this),
+        'onStart': this.onDragStart.bind(this),
+        'onMove': this.onDragMove.bind(this),
+        'onEnd': this.onDragEnd.bind(this),
+        'gestureName': 'item-swipe',
+        'gesturePriority': -10,
+        'type': 'pan',
+        'direction': 'x',
+        'maxAngle': 20,
+        'threshold': 5,
+        'attachTo': 'parent'
+      }}>
         <slot></slot>
       </ion-gesture>
     );

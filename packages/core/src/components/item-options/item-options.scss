@@ -1,0 +1,78 @@
+@import "./item-options.vars";
+
+// Item Options
+// --------------------------------------------------
+
+ion-item-options {
+  position: absolute;
+  z-index: $z-index-item-options;
+  display: none;
+
+  height: 100%;
+
+  font-size: 14px;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    top: 0;
+
+    right: 0;
+  }
+
+  @include ltr() {
+    justify-content: flex-end;
+  }
+
+  @include rtl() {
+    justify-content: flex-start;
+
+    &:not(.item-options-right) {
+      // scss-lint:disable PropertySpelling
+      right: auto;
+      left: 0;
+
+      justify-content: flex-end;
+    }
+  }
+
+  &.hydrated {
+    visibility: hidden;
+  }
+}
+
+.item-options-left {
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    right: auto;
+    left: 0;
+  }
+
+  @include ltr() {
+    justify-content: flex-start;
+  }
+
+  @include rtl() {
+    justify-content: flex-end;
+  }
+}
+
+.item-sliding-active-slide {
+  @include rtl() {
+    &.item-sliding-active-options-left ion-item-options:not(.item-options-right) {
+      width: 100%;
+
+      visibility: visible;
+    }
+  }
+
+  ion-item-options {
+    display: flex;
+  }
+
+  &.item-sliding-active-options-left .item-options-left,
+  &.item-sliding-active-options-right ion-item-options:not(.item-options-left) {
+    width: 100%;
+
+    visibility: visible;
+  }
+}

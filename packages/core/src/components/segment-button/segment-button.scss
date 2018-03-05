@@ -1,0 +1,37 @@
+@import "../../themes/ionic.globals";
+
+// Segment Button
+// --------------------------------------------------
+
+ion-segment-button {
+  display: flex;
+
+  flex: 1;
+}
+
+.segment-button {
+  @include border-radius(0);
+  @include margin-horizontal(0);
+  @include text-align(center);
+
+  position: relative;
+  display: block;
+
+  overflow: hidden;
+
+  border: 0;
+
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+
+  font-kerning: none;
+  user-select: none;
+  contain: content;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+}

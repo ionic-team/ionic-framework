@@ -21,7 +21,7 @@
 }
 
 
-// Material Design Item Slots
+// Material Design Item Divider Slots
 // --------------------------------------------------
 
 .item-divider-md [slot="start"],
@@ -47,6 +47,46 @@
 .item-divider-md ion-avatar[slot="end"],
 .item-divider-md ion-thumbnail[slot="end"] {
   @include margin(($item-md-padding-end / 2));
+}
+
+
+// Material Design Item Divider Content
+// --------------------------------------------------
+
+.item-divider-md h1 {
+  @include margin(0, 0, 2px);
+
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.item-divider-md h2 {
+  @include margin(2px, 0);
+
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.item-divider-md h3,
+.item-divider-md h4,
+.item-divider-md h5,
+.item-divider-md h6 {
+  @include margin(2px, 0);
+
+  font-size: 14px;
+  font-weight: normal;
+  line-height: normal;
+}
+
+.item-divider-md p {
+  @include margin(0, 0, 2px);
+
+  overflow: inherit;
+
+  font-size: 14px;
+  line-height: normal;
+  text-overflow: inherit;
+  color: $item-md-paragraph-text-color;
 }
 
 

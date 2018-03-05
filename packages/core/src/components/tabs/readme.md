@@ -95,7 +95,7 @@ components to switch to `TabsRoot3`:
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
@@ -143,10 +143,10 @@ Set position of the tabbar: `top`, `bottom`.
 
 boolean
 
-If true, adds transparency to the tabbar.
-Note: In order to scroll content behind the tabbar, the `fullscreen`
+If true, the tabs will be translucent.
+Note: In order to scroll content behind the tabs, the `fullscreen`
 attribute needs to be set on the content.
-Only affects `ios` mode. Defaults to `false`.
+Defaults to `false`.
 
 
 ## Attributes
@@ -156,7 +156,7 @@ Only affects `ios` mode. Defaults to `false`.
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
@@ -204,10 +204,10 @@ Set position of the tabbar: `top`, `bottom`.
 
 boolean
 
-If true, adds transparency to the tabbar.
-Note: In order to scroll content behind the tabbar, the `fullscreen`
+If true, the tabs will be translucent.
+Note: In order to scroll content behind the tabs, the `fullscreen`
 attribute needs to be set on the content.
-Only affects `ios` mode. Defaults to `false`.
+Defaults to `false`.
 
 
 ## Events
@@ -217,12 +217,21 @@ Only affects `ios` mode. Defaults to `false`.
 Emitted when the tab changes.
 
 
+#### ionNavChanged
+
+
 ## Methods
 
 #### getByIndex()
 
 
+#### getContentElement()
+
+
 #### getIndex()
+
+
+#### getRouteId()
 
 
 #### getSelected()
@@ -234,7 +243,10 @@ Emitted when the tab changes.
 #### select()
 
 
+#### setRouteId()
+
+
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

@@ -8,7 +8,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "override-router": "rm -rf ./node_modules/@angular/router && mkdir ./node_modules/@angular/router && cp -R ./scripts/router ./node_modules/@angular"
   },
   "private": true,
   "dependencies": {
@@ -21,10 +22,11 @@
     "@angular/platform-browser": "latest",
     "@angular/platform-browser-dynamic": "latest",
     "@angular/router": "latest",
-    "@danbucholtz/ng-router": "6.0.0-beta.1-20a6848be",
     "@ionic/angular": "next",
     "@ionic/core": "next",
+    "body-parser": "^1.18.2",
     "core-js": "^2.4.1",
+    "express": "^4.16.2",
     "rxjs": "^5.5.2",
     "zone.js": "^0.8.14"
   },
@@ -32,7 +34,6 @@
     "@angular/cli": "latest",
     "@angular/compiler-cli": "latest",
     "@angular/language-service": "latest",
-    "@stencil/core": "next",
     "@types/jasmine": "~2.5.53",
     "@types/jasminewd2": "~2.0.2",
     "@types/node": "~6.0.60",
@@ -46,7 +47,7 @@
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.1.2",
-    "ts-node": "~3.2.0",
+    "ts-node": "^3.2.2",
     "tslint": "~5.7.0",
     "typescript": "^2.5.2"
   }

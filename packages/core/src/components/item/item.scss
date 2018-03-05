@@ -2,25 +2,13 @@
 
 // Item
 // --------------------------------------------------
-// Core structure only, dimensions belong in specific modes
-//
-// ".item" includes elements:
-//   ion-item
-//   [ion-item]
-//   ion-item-divider
-//   ion-list-header
-//
-// ".item-block" includes elements:
-//   ion-item
-//   [ion-item]
 
 ion-item {
   display: block;
-
-  contain: content;
 }
 
-.item-block {
+.item {
+  @include border-radius(0);
   @include margin(0);
   @include padding(0);
   @include text-align(initial);
@@ -81,7 +69,7 @@ ion-item-group {
 }
 
 [vertical-align-top],
-ion-input.item {
+.input.item {
   align-items: flex-start;
 }
 
@@ -100,4 +88,14 @@ ion-input.item {
 .item > ion-icon,
 .item-inner > ion-icon {
   font-size: 1.6em;
+}
+
+.item .button {
+  @include margin(0);
+}
+
+.item-disabled {
+  cursor: default;
+  opacity: .4;
+  pointer-events: none;
 }

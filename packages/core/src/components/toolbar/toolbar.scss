@@ -94,6 +94,7 @@ ion-buttons,
   display: inline-block;
 
   line-height: 1;
+  text-decoration: none;
   text-overflow: ellipsis;
   text-transform: none;
   white-space: nowrap;
@@ -130,20 +131,3 @@ ion-buttons,
   align-items: center;
 }
 
-
-// Back Button
-// --------------------------------------------------
-
-.back-button {
-  display: none;
-}
-
-.back-button.show-back-button {
-  display: inline-block;
-}
-
-.back-button-text {
-  display: flex;
-
-  align-items: center;
-}

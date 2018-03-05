@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Nav</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+  <script>
+
+    class PageOne extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Page One</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          page one
+          <a href='#/two/second-page'>Ir a la page 2</a>
+        </ion-content>`;
+      }
+    }
+
+    class PageTwo extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Page Two</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          page two
+        </ion-content>`;
+      }
+    }
+
+    class PageThree extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Page 3</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          page tres
+        </ion-content>`;
+      }
+    }
+
+    class TabOne extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab one</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          this is the first pahe
+        </ion-content>`;
+      }
+    }
+
+    class TabTwo extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab Two</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          <ion-nav></ion-nav>
+        </ion-content>`;
+      }
+    }
+
+    class TabThree extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab three</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          hey! this is the 3 tab
+        </ion-content>`;
+      }
+    }
+
+    customElements.define('page-one', PageOne);
+    customElements.define('page-two', PageTwo);
+    customElements.define('page-three', PageThree);
+
+    customElements.define('tab-one', TabOne);
+    customElements.define('tab-two', TabTwo);
+    customElements.define('tab-three', TabThree);
+  </script>
+</head>
+<body>
+
+  <ion-app>
+
+    <ion-router>
+      <ion-route path="/" sel="tab1"> </ion-route>
+
+      <ion-route path="/two" sel="tab2">
+        <ion-route path="/" sel="page-one"> </ion-route>
+        <ion-route path="/second-page" sel="page-two"> </ion-route>
+        <ion-route path="/thee-page" sel="page-three"> </ion-route>
+      </ion-route>
+
+      <ion-route path="/three" sel="tab-three"> </ion-route>
+      <ion-route path="/four" sel="tab4">
+        <ion-route path="/" sel="page-two"> </ion-route>
+      </ion-route>
+    </ion-router>
+
+    <ion-tabs>
+
+      <ion-tab name="tab1"
+        title="Plain List"
+        icon="star"
+        component="tab-one"></ion-tab>
+
+      <ion-tab name="tab2"
+        title="Schedule"
+        icon="globe"
+        component="tab-two"></ion-tab>
+
+      <ion-tab
+        title="Stopwatch"
+        icon="logo-facebook"
+        component="tab-three"></ion-tab>
+
+      <ion-tab name="tab4"
+        title="Messages"
+        icon="chatboxes"
+        name="tab-four">
+        inline tab 4
+      </ion-tab>
+    </ion-tabs>
+
+  </ion-app>
+
+  <style>
+    f {
+      display: block;
+      margin: 15px auto;
+      max-width: 150px;
+      height: 150px;
+      background: blue;
+    }
+
+    f:last-of-type {
+      background: yellow;
+    }
+  </style>
+</body>
+
+<script>
+
+</script>
+</html>

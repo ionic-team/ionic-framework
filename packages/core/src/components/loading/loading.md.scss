@@ -1,12 +1,13 @@
 @import "./loading";
 @import "./loading.md.vars";
 
-.loading-backdrop-ios {
-  background-color: $loading-backdrop-md-color;
-}
-
 // Material Design Loading Indicator
 // --------------------------------------------------
+
+.loading-md {
+  font-family: $loading-md-font-family;
+  font-size: $loading-md-font-size;
+}
 
 .loading-md .loading-wrapper {
   @include border-radius($loading-md-border-radius);

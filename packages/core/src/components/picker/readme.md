@@ -1,5 +1,7 @@
 # ion-picker
 
+A Picker is a dialog that displays a row of buttons and columns underneath. It appears on top of the app's content, and at the bottom of the viewport.
+
 
 
 <!-- Auto Generated Below -->
@@ -11,48 +13,53 @@
 
 
 
+Array of buttons to be displayed at the top of the picker.
+
 
 #### columns
 
 
 
-
-#### content
-
-string
+Array of columns to be displayed in the picker.
 
 
 #### cssClass
 
 string
 
-
-#### dismissOnPageChange
-
-boolean
+Additional classes to apply for custom CSS. If multiple classes are
+provided they should be separated by spaces.
 
 
 #### duration
 
 number
 
+Number of milliseconds to wait before dismissing the picker.
+
 
 #### enableBackdropDismiss
 
 boolean
+
+If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
 
 
 #### enterAnimation
 
 
 
+Animation to use when the picker is presented.
+
 
 #### leaveAnimation
 
 
 
+Animation to use when the picker is dismissed.
 
-#### pickerId
+
+#### overlayId
 
 number
 
@@ -61,10 +68,14 @@ number
 
 boolean
 
+If true, a backdrop will be displayed behind the picker. Defaults to `true`.
+
 
 #### willAnimate
 
 boolean
+
+If true, the picker will animate. Defaults to `true`.
 
 
 ## Attributes
@@ -73,48 +84,53 @@ boolean
 
 
 
+Array of buttons to be displayed at the top of the picker.
+
 
 #### columns
 
 
 
-
-#### content
-
-string
+Array of columns to be displayed in the picker.
 
 
 #### css-class
 
 string
 
-
-#### dismiss-on-page-change
-
-boolean
+Additional classes to apply for custom CSS. If multiple classes are
+provided they should be separated by spaces.
 
 
 #### duration
 
 number
 
+Number of milliseconds to wait before dismissing the picker.
+
 
 #### enable-backdrop-dismiss
 
 boolean
+
+If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
 
 
 #### enter-animation
 
 
 
+Animation to use when the picker is presented.
+
 
 #### leave-animation
 
 
 
+Animation to use when the picker is dismissed.
 
-#### picker-id
+
+#### overlay-id
 
 number
 
@@ -123,10 +139,14 @@ number
 
 boolean
 
+If true, a backdrop will be displayed behind the picker. Defaults to `true`.
+
 
 #### will-animate
 
 boolean
+
+If true, the picker will animate. Defaults to `true`.
 
 
 ## Events
@@ -171,6 +191,8 @@ Emitted before the picker has presented.
 
 #### dismiss()
 
+Dismiss the picker overlay after it has been presented.
+
 
 #### getColumn()
 
@@ -180,8 +202,10 @@ Emitted before the picker has presented.
 
 #### present()
 
+Present the picker overlay after it has been created.
+
 
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

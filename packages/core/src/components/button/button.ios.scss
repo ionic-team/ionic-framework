@@ -34,12 +34,19 @@
   opacity: $button-ios-opacity-hover;
 }
 
+a[disabled],
+button[disabled],
+.button[disabled] {
+  opacity: $button-ios-opacity-disabled;
+}
+
+
 // iOS Default Button Color Mixin
 // --------------------------------------------------
 
 @mixin ios-button-default($color-name) {
   $bg-color: ion-color($colors-ios, $color-name, base, ios);
-  $bg-color-activated: ion-color($colors-ios, $color-name, tint, ios);
+  $bg-color-activated: ion-color($colors-ios, $color-name, shade, ios);
   $bg-color-focused: ion-color($colors-ios, $color-name, shade, ios);
   $fg-color: ion-color($colors-ios, $color-name, contrast, ios);
 
@@ -130,7 +137,7 @@
   $color-base: ion-color($colors-ios, $color-name, base, ios);
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
   $color-tint: ion-color($colors-ios, $color-name, shade, ios);
-  $bg-color-focused: ion-color-alpha($colors-ios, $color-name, $alpha-ios-low, ios);
+  $bg-color-focused: ion-color-alpha($colors-ios, $color-name, $alpha-ios-focused, ios);
 
   .button-outline-ios-#{$color-name} {
     border-color: $color-base;
@@ -183,7 +190,7 @@
 
 @mixin ios-button-clear($color-name) {
   $fg-color: ion-color($colors-ios, $color-name, base, ios);
-  $bg-color-focused: ion-color-alpha($colors-ios, $color-name, $alpha-ios-low, ios);
+  $bg-color-focused: ion-color-alpha($colors-ios, $color-name, $alpha-ios-focused, ios);
 
   .button-clear-ios-#{$color-name} {
     border-color: $button-ios-clear-border-color;

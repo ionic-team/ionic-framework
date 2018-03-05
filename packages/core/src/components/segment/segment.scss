@@ -11,37 +11,7 @@ ion-segment {
   justify-content: center;
 
   width: 100%;
-}
 
-ion-segment-button {
-  display: flex;
-
-  flex: 1;
-}
-
-.segment-button {
-  @include border-radius(0);
-  @include margin-horizontal(0);
-  @include text-align(center);
-
-  position: relative;
-  display: block;
-
-  overflow: hidden;
-
-  text-decoration: none;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  cursor: pointer;
-
-  font-kerning: none;
-  user-select: none;
-  contain: content;
   font-smoothing: antialiased;
   -webkit-font-smoothing: antialiased;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
 }

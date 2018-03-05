@@ -10,7 +10,7 @@
 
 <body>
   <ion-app>
-    <ion-page>
+
       <ion-header>
         <ion-toolbar>
           <ion-title>Badge - Basic</ion-title>
@@ -21,28 +21,44 @@
         <ion-list>
           <ion-list-header>Badges Right</ion-list-header>
           <ion-item>
-            <ion-badge slot="end">99</ion-badge>
             <ion-label>Default Badge</ion-label>
+            <ion-badge slot="end">00</ion-badge>
           </ion-item>
           <ion-item>
-            <ion-badge slot="end" color="primary">99</ion-badge>
             <ion-label>Primary Badge</ion-label>
+            <ion-badge slot="end" color="primary">11</ion-badge>
           </ion-item>
           <ion-item>
-            <ion-badge slot="end" color="secondary">99</ion-badge>
             <ion-label>Secondary Badge</ion-label>
+            <ion-badge slot="end" color="secondary">22</ion-badge>
           </ion-item>
           <ion-item>
-            <ion-badge slot="end" color="danger">99</ion-badge>
+            <ion-label>Tertiary Badge</ion-label>
+            <ion-badge slot="end" color="tertiary">33</ion-badge>
+          </ion-item>
+          <ion-item>
+            <ion-label>Success Badge</ion-label>
+            <ion-badge slot="end" color="success">44</ion-badge>
+          </ion-item>
+          <ion-item>
+            <ion-label>Warning Badge</ion-label>
+            <ion-badge slot="end" color="warning">55</ion-badge>
+          </ion-item>
+          <ion-item>
             <ion-label>Danger Badge</ion-label>
+            <ion-badge slot="end" color="danger">66</ion-badge>
           </ion-item>
           <ion-item>
-            <ion-badge slot="end" color="light">99</ion-badge>
             <ion-label>Light Badge</ion-label>
+            <ion-badge slot="end" color="light">77</ion-badge>
           </ion-item>
           <ion-item>
-            <ion-badge slot="end" color="dark">99</ion-badge>
+            <ion-label>Medium Badge</ion-label>
+            <ion-badge slot="end" color="medium">88</ion-badge>
+          </ion-item>
+          <ion-item>
             <ion-label>Dark Badge</ion-label>
+            <ion-badge slot="end" color="dark">99</ion-badge>
           </ion-item>
           <ion-item onclick="toggleColor()">
             <ion-badge id="toggleColor" slot="end" color="primary">primary</ion-badge>
@@ -53,33 +69,49 @@
         <ion-list>
           <ion-list-header>Badges Left</ion-list-header>
           <ion-item>
-            <ion-badge slot="start">99</ion-badge>
             <ion-label>Default Badge</ion-label>
+            <ion-badge slot="start">00</ion-badge>
           </ion-item>
           <ion-item>
-            <ion-badge slot="start" color="primary">99</ion-badge>
             <ion-label>Primary Badge</ion-label>
+            <ion-badge slot="start" color="primary">11</ion-badge>
           </ion-item>
           <ion-item>
-            <ion-badge slot="start" color="secondary">99</ion-badge>
             <ion-label>Secondary Badge</ion-label>
+            <ion-badge slot="start" color="secondary">22</ion-badge>
           </ion-item>
           <ion-item>
-            <ion-badge slot="start" color="danger">99</ion-badge>
+            <ion-label>Tertiary Badge</ion-label>
+            <ion-badge slot="start" color="tertiary">33</ion-badge>
+          </ion-item>
+          <ion-item>
+            <ion-label>Success Badge</ion-label>
+            <ion-badge slot="start" color="success">44</ion-badge>
+          </ion-item>
+          <ion-item>
+            <ion-label>Warning Badge</ion-label>
+            <ion-badge slot="start" color="warning">55</ion-badge>
+          </ion-item>
+          <ion-item>
             <ion-label>Danger Badge</ion-label>
+            <ion-badge slot="start" color="danger">66</ion-badge>
           </ion-item>
           <ion-item>
-            <ion-badge slot="start" color="light">99</ion-badge>
             <ion-label>Light Badge</ion-label>
+            <ion-badge slot="start" color="light">77</ion-badge>
           </ion-item>
           <ion-item>
-            <ion-badge slot="start" color="dark">99</ion-badge>
+            <ion-label>Medium Badge</ion-label>
+            <ion-badge slot="start" color="medium">88</ion-badge>
+          </ion-item>
+          <ion-item>
             <ion-label>Dark Badge</ion-label>
+            <ion-badge slot="start" color="dark">99</ion-badge>
           </ion-item>
         </ion-list>
       </ion-content>
 
-    </ion-page>
+
   </ion-app>
 
   <script>

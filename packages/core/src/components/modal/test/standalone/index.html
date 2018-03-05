@@ -9,9 +9,23 @@
 </head>
 
 <body>
-  <ion-button id="basic" expand="block" onclick="presentModal()">Present Modal</ion-button>
+  <button id="basic" onclick="presentModal()">Present Modal</button>
 
   <ion-modal-controller></ion-modal-controller>
+
+  <style>
+    body > button {
+      display: block;
+      clear: both;
+      width: 100%;
+      padding: 12px 8px;
+      font-size: 1em;
+      background: #f8f8f8;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+  </style>
 
   <script>
     async function presentModal() {

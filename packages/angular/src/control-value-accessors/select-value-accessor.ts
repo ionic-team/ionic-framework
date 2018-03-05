@@ -1,6 +1,8 @@
 import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+import { setIonicClasses } from './util/set-ionic-classes';
+
 // NOTE: May need to look at this to see if we need anything else:
 // https://github.com/angular/angular/blob/5.0.2/packages/forms/src/directives/select_control_value_accessor.ts#L28-L158
 @Directive({
@@ -16,8 +18,8 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class SelectValueAccessor implements ControlValueAccessor {
   constructor(private element: ElementRef, private renderer: Renderer2) {
-    this.onChange = () => {};
-    this.onTouched = () => {};
+    this.onChange = () => {/**/};
+    this.onTouched = () => {/**/};
   }
 
   onChange: (value: any) => void;
@@ -25,16 +27,23 @@ export class SelectValueAccessor implements ControlValueAccessor {
 
   writeValue(value: any) {
     this.renderer.setProperty(this.element.nativeElement, 'value', value);
+    setIonicClasses(this.element);
   }
 
   @HostListener('ionChange', ['$event.target.value'])
   _handleChangeEvent(value: any) {
     this.onChange(value);
+    setTimeout(() => {
+      setIonicClasses(this.element);
+    });
   }
 
   @HostListener('ionBlur')
   _handleBlurEvent() {
     this.onTouched();
+    setTimeout(() => {
+      setIonicClasses(this.element);
+    });
   }
 
   registerOnChange(fn: (value: any) => void) {

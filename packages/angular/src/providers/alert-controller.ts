@@ -12,20 +12,20 @@ export class AlertController {
   }
 }
 
-export function getAlertProxy(opts: AlertOptions){
+export function getAlertProxy(opts: AlertOptions) {
   return {
     id: alertId++,
     state: PRESENTING,
     opts: opts,
-    present: function() { return present(this)},
-    dismiss: function() { return dismiss(this)},
+    present: function() { return present(this); },
+    dismiss: function() { return dismiss(this); },
     onDidDismiss: function(callback: (data: any, role: string) => void) {
       (this as AlertProxyInternal).onDidDismissHandler = callback;
     },
     onWillDismiss: function(callback: (data: any, role: string) => void) {
       (this as AlertProxyInternal).onWillDismissHandler = callback;
     },
-  }
+  };
 }
 
 export function present(alertProxy: AlertProxyInternal): Promise<any> {
@@ -82,8 +82,8 @@ export function loadOverlay(opts: AlertOptions): Promise<HTMLIonAlertElement> {
 }
 
 export interface AlertProxy {
-  present(): Promise<void>
-  dismiss(): Promise<void>
+  present(): Promise<void>;
+  dismiss(): Promise<void>;
   onDidDismiss(callback: (data: any, role: string) => void): void;
   onWillDismiss(callback: (data: any, role: string) => void): void;
 }

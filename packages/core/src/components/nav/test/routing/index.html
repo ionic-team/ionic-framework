@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Nav</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+  <script src="/test-components/build/app.js"></script>
+
+</head>
+<body>
+
+  <ion-app>
+
+    <ion-router>
+
+      <ion-route path="/" component="page-one">
+        <ion-route path="/nested" component="page-nested-one"></ion-route>
+        <ion-route path="/nestes2" component="page-nested-two"></ion-route>
+      </ion-route>
+
+      <ion-route path="/two" component="page-two"></ion-route>
+    </ion-router>
+
+    <ion-nav></ion-nav>
+
+  </ion-app>
+
+  <style>
+    f {
+      display: block;
+      margin: 15px auto;
+      max-width: 150px;
+      height: 150px;
+      background: blue;
+    }
+
+    f:last-of-type {
+      background: yellow;
+    }
+  </style>
+</body>
+
+<script>
+
+</script>
+</html>

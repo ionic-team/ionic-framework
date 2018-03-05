@@ -12,8 +12,8 @@
   height: $chip-md-height;
 
   font-family: $chip-md-font-family;
-
   font-size: $chip-md-font-size;
+
   color: $chip-md-text-color;
   background: $chip-md-background-color;
 }
@@ -49,5 +49,10 @@
   .chip-md .icon-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
+
+    svg {
+      fill: $color-contrast;
+      stroke: $color-contrast;
+    }
   }
 }

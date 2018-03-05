@@ -59,6 +59,22 @@ import { Component } from '@angular/core';
         </ion-segment>
         <ion-button color="dark" (click)="toggleBDisabled()">Toggle Button Disabled</ion-button>
         <ion-button color="dark" (click)="toggleSDisabled()">Toggle Segment Disabled</ion-button>
+
+        <ion-item>
+          <ion-label>Period Days</ion-label>
+          <ion-select [(ngModel)]="valve.periodDays" (ionChange)="periodDaysChange(valve)">
+            <ion-select-option value="1">1 Day</ion-select-option>
+            <ion-select-option value="2">2 Days</ion-select-option>
+            <ion-select-option value="3">3 Days</ion-select-option>
+            <ion-select-option value="4">4 Days</ion-select-option>
+            <ion-select-option value="5">5 Days</ion-select-option>
+            <ion-select-option value="6">6 Days</ion-select-option>
+            <ion-select-option value="7">7 Days</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-segment [(ngModel)]="valve.selectDay">
+          <ion-segment-button *ngFor="let info of valve.daysInfo" value="{{info.day}}">{{info.day+1}}th day</ion-segment-button>
+        </ion-segment>
       </ion-content>
 
       <ion-footer>
@@ -113,6 +129,32 @@ export class SegmentPageComponent {
   icons: string = 'camera';
   isDisabledB: boolean = true;
   isDisabledS: boolean = false;
+
+  valve = {
+    daysInfo: [],
+    selectDay: '0',
+    periodDays: 3
+  }
+
+  constructor() {
+    this.periodDaysChange(this.valve);
+  }
+
+  periodDaysChange(valve) {
+    valve.periodDays = parseInt(valve.periodDays);
+    if (valve.daysInfo.length < valve.periodDays) {
+      for (let i = valve.daysInfo.length; i < valve.periodDays; ++i) {
+        valve.daysInfo.push({day:i, intervals:[]});
+      }
+    } else if (valve.daysInfo.length > valve.periodDays) {
+      valve.daysInfo = valve.daysInfo.slice(0, valve.periodDays);
+    }
+  }
+
+  addDays(valve) {
+    valve.periodDays += 1;
+    this.periodDaysChange(valve);
+  }
 
   toggleBDisabled() {
     this.isDisabledB = !this.isDisabledB;

@@ -20,31 +20,11 @@ ion-modal-controller {
   display: none;
 }
 
-.modal-backdrop {
-  @include position(0, null, null, 0);
 
-  position: absolute;
-
-  z-index: $z-index-backdrop;
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  opacity: .01;
-  transform: translateZ(0);
-
-  @media not all and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
-    visibility: hidden;
+@media not all and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
+  ion-modal ion-backdrop {
+    display: none;
   }
-}
-
-.modal-backdrop.backdrop-no-tappable {
-  cursor: auto;
-}
-
-.modal-backdrop.hide-backdrop {
-  visibility: hidden;
 }
 
 .modal-wrapper {

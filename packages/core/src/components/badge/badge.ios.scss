@@ -22,8 +22,8 @@
   $contrast-color: ion-color($colors-ios, $color-name, contrast, ios);
 
   .badge-ios-#{$color-name} {
-    color: $base-color;
-    background-color: $contrast-color;
+    color: $contrast-color;
+    background-color: $base-color;
   }
 
 }

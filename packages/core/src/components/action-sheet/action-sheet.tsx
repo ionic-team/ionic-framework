@@ -1,16 +1,9 @@
-import { Component, CssClassMap, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import {
-  Animation,
-  AnimationBuilder,
-  AnimationController,
-  Config,
-  DomController,
-  OverlayDismissEvent,
-  OverlayDismissEventDetail
-} from '../../index';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Animation, AnimationBuilder, Config, CssClassMap, DomController, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
 
-import { domControllerAsync, isDef, playAnimationAsync } from '../../utils/helpers';
+import { domControllerAsync } from '../../utils/helpers';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { BACKDROP, OverlayInterface, overlayAnimation } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -28,14 +21,66 @@ import mdLeaveAnimation from './animations/md.leave';
     theme: 'action-sheet'
   }
 })
-export class ActionSheet {
+export class ActionSheet implements OverlayInterface {
+
+  private presented = false;
+
   mode: string;
   color: string;
-  actionSheetId: number;
-
-  private animation: Animation | null = null;
+  animation: Animation;
 
   @Element() private el: HTMLElement;
+
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
+  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop() overlayId: number;
+
+  /**
+   * Animation to use when the action sheet is presented.
+   */
+  @Prop() enterAnimation: AnimationBuilder;
+
+  /**
+   * Animation to use when the action sheet is dismissed.
+   */
+  @Prop() leaveAnimation: AnimationBuilder;
+
+  /**
+   * An array of buttons for the action sheet.
+   */
+  @Prop() buttons: ActionSheetButton[];
+
+  /**
+   * Additional classes to apply for custom CSS. If multiple classes are
+   * provided they should be separated by spaces.
+   */
+  @Prop() cssClass: string;
+
+  /**
+   * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
+   */
+  @Prop() enableBackdropDismiss = true;
+
+  /**
+   * Subtitle for the action sheet.
+   */
+  @Prop() subTitle: string;
+
+  /**
+   * Title for the action sheet.
+   */
+  @Prop() title: string;
+
+  /**
+   * If true, the action sheet will be translucent. Defaults to `false`.
+   */
+  @Prop() translucent = false;
+
+  /**
+   * If true, the action sheet will animate. Defaults to `true`.
+   */
+  @Prop() willAnimate = true;
 
   /**
    * Emitted after the alert has loaded.
@@ -67,124 +112,6 @@ export class ActionSheet {
    */
   @Event() ionActionSheetDidUnload: EventEmitter<ActionSheetEventDetail>;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: AnimationController;
-  @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
-
-  /**
-   * Additional class or classes to apply to the action-sheet
-   */
-  @Prop() cssClass: string;
-
-  /**
-   * Title for the action-sheet
-   */
-  @Prop() title: string;
-
-  /**
-   * Subtitle for the action-sheet
-   */
-  @Prop() subTitle: string;
-
-  /**
-   * An array of buttons for the action-sheet. See ActionsheetButton type for accepted values
-   */
-  @Prop() buttons: ActionSheetButton[];
-
-  /**
-   * If true, the action-sheet will be dismissed when the backdrop is clicked.
-   */
-  @Prop() enableBackdropDismiss = true;
-
-  /**
-   * If true, action-sheet will become translucent. Requires support for backdrop-filters.
-   */
-  @Prop() translucent = false;
-
-  /**
-   * Enable action-sheet animations. If false, action-sheet will not animate in
-   */
-  @Prop() willAnimate = true;
-
-  /**
-   * Animation to use when the action-sheet is created
-   */
-  @Prop() enterAnimation: AnimationBuilder;
-
-  /**
-   * Animation to use when the action-sheet is dismissed
-   */
-  @Prop() leaveAnimation: AnimationBuilder;
-
-  /**
-   * Present the action-sheet after is has been created
-   */
-  @Method()
-  present() {
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-    this.ionActionSheetWillPresent.emit();
-
-    this.el.style.zIndex = `${20000 + this.actionSheetId}`;
-
-    // get the user's animation fn if one was provided
-    const animationBuilder = this.enterAnimation || this.config.get('actionSheetEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
-
-    // build the animation and kick it off
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-
-      this.animation = animation;
-
-      // Check if prop animate is false or if the config for animate is defined/false
-      if (!this.willAnimate || (isDef(this.config.get('willAnimate')) && this.config.get('willAnimate') === false)) {
-        // if the duration is 0, it won't actually animate I don't think
-        // TODO - validate this
-        this.animation = animation.duration(0);
-      }
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      this.ionActionSheetDidPresent.emit();
-    });
-  }
-
-  /**
-   * Dismiss the action-sheet
-   */
-  @Method()
-  dismiss(data?: any, role?: string) {
-    if (this.animation) {
-      this.animation.destroy();
-      this.animation = null;
-    }
-    this.ionActionSheetWillDismiss.emit({
-      data,
-      role
-    });
-    const animationBuilder = this.leaveAnimation || this.config.get('actionSheetLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
-
-    return this.animationCtrl.create(animationBuilder, this.el).then(animation => {
-      this.animation = animation;
-
-      if (!this.willAnimate || (isDef(this.config.get('willAnimate')) && this.config.get('willAnimate') === false)) {
-        this.animation = animation.duration(0);
-      }
-
-      return playAnimationAsync(animation);
-    }).then((animation) => {
-      animation.destroy();
-      this.ionActionSheetDidDismiss.emit({
-        data,
-        role
-      });
-    }).then(() => {
-      return domControllerAsync(this.dom.write, () => {
-        this.el.parentNode.removeChild(this.el);
-      });
-    });
-  }
 
   componentDidLoad() {
     this.ionActionSheetDidLoad.emit();
@@ -202,10 +129,57 @@ export class ActionSheet {
     this.dismiss();
   }
 
-  protected backdropClick() {
-    if (this.enableBackdropDismiss) {
-      this.dismiss();
+  @Listen('ionBackdropTap')
+  protected onBackdropTap() {
+    this.dismiss(null, BACKDROP).catch();
+  }
+
+  /**
+   * Present the action sheet overlay after it has been created.
+   */
+  @Method()
+  present(): Promise<void> {
+    if (this.presented) {
+      return Promise.reject('overlay already presented');
     }
+    this.presented = true;
+
+    this.ionActionSheetWillPresent.emit();
+
+    this.el.style.zIndex = `${20000 + this.overlayId}`;
+
+    // get the user's animation fn if one was provided
+    const animationBuilder = this.enterAnimation || this.config.get('actionSheetEnter', this.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
+
+    // build the animation and kick it off
+    return this.playAnimation(animationBuilder).then(() => {
+      this.ionActionSheetDidPresent.emit();
+    });
+  }
+
+  /**
+   * Dismiss the action sheet overlay after it has been presented.
+   */
+  @Method()
+  dismiss(data?: any, role?: string) {
+    if (!this.presented) {
+      return Promise.reject('overlay is not presented');
+    }
+    this.presented = false;
+
+    this.ionActionSheetWillDismiss.emit({data, role});
+
+    const animationBuilder = this.leaveAnimation || this.config.get('actionSheetLeave', this.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
+    return this.playAnimation(animationBuilder).then(() => {
+      this.ionActionSheetDidDismiss.emit({data, role});
+      return domControllerAsync(this.dom.write, () => {
+        this.el.parentNode.removeChild(this.el);
+      });
+    });
+  }
+
+  private playAnimation(animationBuilder: AnimationBuilder): Promise<void> {
+    return overlayAnimation(this, animationBuilder, this.willAnimate, this.el, undefined);
   }
 
   protected buttonClick(button: ActionSheetButton) {
@@ -245,10 +219,7 @@ export class ActionSheet {
     const buttons = allButtons.filter(b => b.role !== 'cancel');
 
     return [
-      <ion-backdrop
-        onClick={this.backdropClick.bind(this)}
-        class='action-sheet-backdrop'
-      />,
+      <ion-backdrop tappable={this.enableBackdropDismiss}/>,
       <div class='action-sheet-wrapper' role='dialog'>
         <div class='action-sheet-container'>
           <div class='action-sheet-group'>
@@ -262,7 +233,7 @@ export class ActionSheet {
               : null}
             {buttons.map(b =>
               <button class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
-                <span class='button-inner'>
+                <span class='action-sheet-button-inner'>
                   {b.icon
                     ? <ion-icon name={b.icon} class='action-sheet-icon' />
                     : null}
@@ -277,7 +248,7 @@ export class ActionSheet {
                   class={buttonClass(cancelButton)}
                   onClick={() => this.buttonClick(cancelButton)}
                 >
-                  <span class='button-inner'>
+                  <span class='action-sheet-button-inner'>
                     {cancelButton.icon
                       ? <ion-icon
                           name={cancelButton.icon}

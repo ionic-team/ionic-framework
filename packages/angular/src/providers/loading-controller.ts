@@ -12,20 +12,20 @@ export class LoadingController {
   }
 }
 
-export function getLoadingProxy(opts: LoadingOptions){
+export function getLoadingProxy(opts: LoadingOptions) {
   return {
     id: loadingId++,
     state: PRESENTING,
     opts: opts,
-    present: function() { return present(this)},
-    dismiss: function() { return dismiss(this)},
+    present: function() { return present(this); },
+    dismiss: function() { return dismiss(this); },
     onDidDismiss: function(callback: (data: any, role: string) => void) {
       (this as LoadingProxyInternal).onDidDismissHandler = callback;
     },
     onWillDismiss: function(callback: (data: any, role: string) => void) {
       (this as LoadingProxyInternal).onWillDismissHandler = callback;
     },
-  }
+  };
 }
 
 export function present(loadingProxy: LoadingProxyInternal): Promise<any> {
@@ -82,8 +82,8 @@ export function loadOverlay(opts: LoadingOptions): Promise<HTMLIonLoadingElement
 }
 
 export interface LoadingProxy {
-  present(): Promise<void>
-  dismiss(): Promise<void>
+  present(): Promise<void>;
+  dismiss(): Promise<void>;
   onDidDismiss(callback: (data: any, role: string) => void): void;
   onWillDismiss(callback: (data: any, role: string) => void): void;
 }

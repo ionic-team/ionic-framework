@@ -6,7 +6,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Dynamic Mode](#dynamic-mode)
 - [Button](#button)
 - [Chip](#chip)
-- [Cordova](#cordova)
+- [Colors](#colors)
 - [Datetime](#datetime)
 - [FAB](#fab)
 - [Fixed Content](#fixed-content)
@@ -14,6 +14,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Input](#Input)
 - [Item](#item)
 - [Item Divider](#item-divider)
+- [Item Sliding](#item-sliding)
 - [List Header](#list-header)
 - [Menu Toggle](#menu-toggle)
 - [Nav](#nav)
@@ -23,6 +24,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Segment](#segment)
 - [Select](#select)
 - [Text/Typography](#text-typography)
+- [Theming](#theming)
 - [Toolbar](#toolbar)
 
 
@@ -172,6 +174,36 @@ Buttons inside of an `<ion-chip>` container should now be written as an `<ion-ch
 </ion-chip>
 ```
 
+
+## Colors
+
+The default Ionic theme colors have changed. Previously we had:
+
+```
+primary:         #327eff
+secondary:       #32db64
+danger:          #f53d3d
+light:           #f4f4f4
+dark:            #222
+```
+
+Some of their values have changed and we now include more colors by default:
+
+```
+primary:         #3880ff
+secondary:       #0cd1e8
+tertiary:        #7044ff
+success:         #10dc60
+warning:         #ffce00
+danger:          #f04141
+light:           #f4f5f8
+medium:          #989aa2
+dark:            #222428
+```
+
+The `secondary` color saw the largest change. If you were previously using our `secondary` color we recommend switching to `success` instead.
+
+
 ## Datetime
 
 The Datetime classes and interfaces have changed capitalization from `DateTime` to `Datetime`. This is more consistent with other components and their tags.
@@ -186,24 +218,6 @@ import { DateTime } from 'ionic-angular';
 
 ```javascript
 import { Datetime } from 'ionic-angular';
-```
-
-## Cordova
-
-Sass variables for changing the cordova statusbar have been renamed to app:
-
-**Old Usage Example:**
-
-```css
-$cordova-ios-statusbar-padding:   20px;
-$cordova-md-statusbar-padding:    20px;
-```
-
-**New Usage Example:**
-
-```css
-$app-ios-statusbar-padding:   20px;
-$app-md-statusbar-padding:    20px;
 ```
 
 ## FAB
@@ -337,7 +351,7 @@ $input-highlight-color-valid:       #32db64;
 
 ### Markup Changed
 
-Item should now be written as an `<ion-item>` element. Ionic will determine when to render an anchor tag based on the presence of an `href` attribute, and a button tag based on the presence of a click. Otherwise, it will render a div.
+Item should now be written as an `<ion-item>` element. Ionic will determine when to render an anchor tag based on the presence of an `href` attribute, and a button tag based on the presence of an `onclick` or `tappable` attribute. Otherwise, it will render a div.
 
 **Old Usage Example:**
 
@@ -362,7 +376,7 @@ Item should now be written as an `<ion-item>` element. Ionic will determine when
   Default Item
 </ion-item>
 
-<ion-item (click)="doSomething()">
+<ion-item tappable (click)="doSomething()">
   Button Item
 </ion-item>
 
@@ -419,6 +433,36 @@ These have been renamed to the following:
 </ion-item>
 ```
 
+### Detail Push
+
+The attributes to show/hide the detail arrows on items have been converted to a single property and value. Instead of writing `detail-push` or `detail-none` to show/hide the arrow, it should be written `detail`/`detail="true"` or `detail="false"`.
+
+**Old Usage Example:**
+
+```html
+<button ion-item detail-none>
+  <ion-label>Item Label</ion-label>
+</button>
+
+<ion-item detail-push>
+  <ion-label>Item Label</ion-label>
+</ion-item>
+```
+
+**New Usage Example:**
+
+```html
+<ion-item tappable detail="false">
+  <ion-label>Item Label</ion-label>
+</ion-item>
+
+<ion-item detail>
+  <ion-label>Item Label</ion-label>
+</ion-item>
+```
+
+By default, items that render buttons or anchor tags will show the arrow in `ios` mode.
+
 ## Item Divider
 
 ### Label Required
@@ -467,7 +511,48 @@ The `menuToggle` attribute should not be added to an element anymore. Elements t
 </ion-menu-toggle>
 ```
 
-#### Toolbar
+## Item Sliding
+
+### Markup Changed
+
+The option component should not be written as a `button` with an `ion-button` directive anymore. It should be written as an `ion-item-option`. This will render a native button element inside of it.
+
+**Old Usage Example:**
+
+```html
+<ion-item-sliding>
+  <ion-item>
+    Item 1
+  </ion-item>
+  <ion-item-options side="right">
+    <button ion-button expandable>
+      <ion-icon name="star"></ion-icon>
+    </button>
+  </ion-item-options>
+</ion-item-sliding>
+```
+
+**New Usage Example:**
+
+```html
+<ion-item-sliding>
+  <ion-item>
+    <ion-label>Item 1</ion-label>
+  </ion-item>
+  <ion-item-options side="right">
+    <ion-item-option expandable>
+      <ion-icon name="star"></ion-icon>
+    </ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>
+```
+
+### Method Renamed
+
+The `getSlidingPercent` method has been renamed to `getSlidingRatio` since the function is returning a ratio of the open amount of the item compared to the width of the options.
+
+
+## Toolbar
 
 Previously if a `menuToggle` directive was added to an Ionic `button` in a toolbar, it would be positioned outside of the `ion-buttons` element. Since menu toggle is simply a wrapper to a button now, it should be placed inside of the `ion-buttons` element.
 
@@ -750,6 +835,53 @@ Typography should now be written as an `<ion-text>` element. Previously the `ion
   Gonna get a <ion-text color="secondary"><a>big dish of beef chow mein.</a></ion-text>
 </p>
 ```
+
+
+## Theming
+
+### Including Sass
+
+Previously all `scss` files in the `src` directory were imported. Now each `scss` file should be included for the component via Angular's `styleUrls` metadata. View [Angular's Component Styles](https://angular.io/guide/component-styles) for more information.
+
+This means that any styles wrapped with a page should now be removed since they will automatically be scoped to the component.
+
+**Old Usage Example:**
+
+```scss
+page-schedule {
+  p {
+    color: red;
+  }
+}
+```
+
+**New Usage Example:**
+
+```scss
+p {
+  color: red;
+}
+```
+
+
+### Sass Variables
+
+Sass variables for changing the cordova statusbar have been renamed to app:
+
+**Old Usage Example:**
+
+```css
+$cordova-ios-statusbar-padding:   20px;
+$cordova-md-statusbar-padding:    20px;
+```
+
+**New Usage Example:**
+
+```css
+$app-ios-statusbar-padding:   20px;
+$app-md-statusbar-padding:    20px;
+```
+
 
 ## Toolbar
 

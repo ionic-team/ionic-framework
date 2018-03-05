@@ -7,6 +7,14 @@
 
 ## Properties
 
+#### autoHide
+
+boolean
+
+Automatically hides the content when the corresponding menu is not
+active
+
+
 #### menu
 
 string
@@ -15,6 +23,14 @@ Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `ri
 
 
 ## Attributes
+
+#### auto-hide
+
+boolean
+
+Automatically hides the content when the corresponding menu is not
+active
+
 
 #### menu
 
@@ -26,4 +42,4 @@ Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `ri
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

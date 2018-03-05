@@ -1,5 +1,31 @@
 # ion-loading
 
+An overlay that can be used to indicate activity while blocking user interaction. The loading indicator appears on top of the app's content, and can be dismissed by the app to resume user interaction with the app. It includes an optional backdrop, which can be disabled by setting `showBackdrop: false` upon creation.
+
+
+### Creating
+
+Loading indicators can be created using a [Loading Controller](../../loading-controller/LoadingController). They can be customized by passing loading options in the loading controller's create method. The spinner name should be passed in the `spinner` property, and any optional HTML can be passed in the `content` property. If a value is not passed to `spinner` the loading indicator will use the spinner specified by the platform.
+
+
+### Dismissing
+
+The loading indicator can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the loading options. By default the loading indicator will show even during page changes, but this can be disabled by setting `dismissOnPageChange` to `true`. To dismiss the loading indicator after creation, call the `dismiss()` method on the loading instance. The `onDidDismiss` function can be called to perform an action after the loading indicator is dismissed.
+
+
+```javascript
+async function presentLoading() {
+  const loadingController = document.querySelector('ion-loading-controller');
+  await loadingController.componentOnReady();
+
+  const loadingElement = await loadingController.create({
+    content: 'Please wait...',
+    spinner: 'crescent',
+    duration: 2000
+  });
+  return await loadingElement.present();
+}
+```
 
 
 <!-- Auto Generated Below -->
@@ -11,68 +37,84 @@
 
 string
 
-Optional text content to display in the loading indicator
+Optional text content to display in the loading indicator.
 
 
 #### cssClass
 
 string
 
-Additional classes to apply for custom CSS
+Additional classes to apply for custom CSS. If multiple classes are
+provided they should be separated by spaces.
 
 
 #### dismissOnPageChange
 
 boolean
 
-Dismiss the loading indicator if the page is changed
+If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
 
 
 #### duration
 
 number
 
-Number of milliseconds to wait before dismissing the loading indicator
+Number of milliseconds to wait before dismissing the loading indicator.
+
+
+#### enableBackdropDismiss
+
+boolean
+
+If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
 
 
 #### enterAnimation
 
 
 
-Animation to use when loading indicator is presented
+Animation to use when the loading indicator is presented.
 
 
 #### leaveAnimation
 
 
 
-Animation to use when a loading indicator is dismissed
+Animation to use when the loading indicator is dismissed.
+
+
+#### overlayId
+
+number
 
 
 #### showBackdrop
 
 boolean
 
-Show the backdrop of not
+If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
 
 
 #### spinner
 
 string
 
+The name of the spinner to display. Possible values are: `"lines"`, `"lines-sm"`, `"dots"`,
+`"bubbles"`, `"circles"`, `"crescent"`.
+
 
 #### translucent
 
 boolean
 
-If true, the background will be translucent. Browser support for backdrop-filter is required for the full effect
+If true, the loading indicator will be translucent. Defaults to `false`.
 
 
 #### willAnimate
 
 boolean
 
-Toggles whether animation should occur or not
+If true, the loading indicator will animate. Defaults to `true`.
 
 
 ## Attributes
@@ -81,68 +123,84 @@ Toggles whether animation should occur or not
 
 string
 
-Optional text content to display in the loading indicator
+Optional text content to display in the loading indicator.
 
 
 #### css-class
 
 string
 
-Additional classes to apply for custom CSS
+Additional classes to apply for custom CSS. If multiple classes are
+provided they should be separated by spaces.
 
 
 #### dismiss-on-page-change
 
 boolean
 
-Dismiss the loading indicator if the page is changed
+If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
 
 
 #### duration
 
 number
 
-Number of milliseconds to wait before dismissing the loading indicator
+Number of milliseconds to wait before dismissing the loading indicator.
+
+
+#### enable-backdrop-dismiss
+
+boolean
+
+If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
 
 
 #### enter-animation
 
 
 
-Animation to use when loading indicator is presented
+Animation to use when the loading indicator is presented.
 
 
 #### leave-animation
 
 
 
-Animation to use when a loading indicator is dismissed
+Animation to use when the loading indicator is dismissed.
+
+
+#### overlay-id
+
+number
 
 
 #### show-backdrop
 
 boolean
 
-Show the backdrop of not
+If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
 
 
 #### spinner
 
 string
 
+The name of the spinner to display. Possible values are: `"lines"`, `"lines-sm"`, `"dots"`,
+`"bubbles"`, `"circles"`, `"crescent"`.
+
 
 #### translucent
 
 boolean
 
-If true, the background will be translucent. Browser support for backdrop-filter is required for the full effect
+If true, the loading indicator will be translucent. Defaults to `false`.
 
 
 #### will-animate
 
 boolean
 
-Toggles whether animation should occur or not
+If true, the loading indicator will animate. Defaults to `true`.
 
 
 ## Events
@@ -181,15 +239,15 @@ Emitted before the loading has presented.
 
 #### dismiss()
 
-Dismiss a loading indicator programatically
+Dismiss the loading overlay after it has been presented.
 
 
 #### present()
 
-Present a loading overlay after it has been created
+Present the loading overlay after it has been created.
 
 
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

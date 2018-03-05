@@ -7,53 +7,52 @@
 
 ## Properties
 
-#### disabled
+#### forceOverscroll
 
 boolean
 
-
-#### onionScroll
-
-
-
-
-#### onionScrollEnd
+If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
+If the content exceeds the bounds of ionScroll, nothing will change.
+Note, the does not disable the system bounce on iOS. That is an OS level setting.
 
 
+#### mode
+
+string
 
 
-#### onionScrollStart
+#### scrollEvents
 
-
+boolean
 
 
 ## Attributes
 
-#### disabled
+#### force-overscroll
 
 boolean
 
-
-#### onion-scroll
-
-
-
-
-#### onion-scroll-end
+If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
+If the content exceeds the bounds of ionScroll, nothing will change.
+Note, the does not disable the system bounce on iOS. That is an OS level setting.
 
 
+#### mode
+
+string
 
 
-#### onion-scroll-start
+#### scroll-events
 
-
+boolean
 
 
 ## Events
 
 #### ionScroll
 
-Emitted while scrolling.
+Emitted while scrolling. This event is disabled by default.
+Look at the property: `scrollEvents`
 
 
 #### ionScrollEnd
@@ -68,6 +67,9 @@ Emitted when the scroll has started.
 
 ## Methods
 
+#### scrollByPoint()
+
+
 #### scrollToBottom()
 
 
@@ -80,4 +82,4 @@ Emitted when the scroll has started.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

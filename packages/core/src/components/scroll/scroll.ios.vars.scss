@@ -1,0 +1,10 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Content
+// --------------------------------------------------
+
+/// @prop - Font family of the content
+$content-ios-font-family:         $font-family-ios-base !default;
+
+/// @prop - Background color of the outer content
+$content-ios-outer-background:    $background-ios-color-step-50 !default;

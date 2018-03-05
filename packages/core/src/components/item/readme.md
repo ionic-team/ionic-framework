@@ -12,8 +12,23 @@
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
+
+
+#### detail
+
+boolean
+
+If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
+is `ios` and an `href`, `onclick` or `tappable` property is present.
+
+
+#### disabled
+
+boolean
+
+If true, the user cannot interact with the item. Defaults to `false`.
 
 
 #### href
@@ -46,7 +61,7 @@ If this property is set, a button tag will be rendered.
 boolean
 
 Whether or not this item should be tappable.
-If true, a button tag will be rendered. Default `true`.
+If true, a button tag will be rendered. Defaults to `false`.
 
 
 ## Attributes
@@ -56,8 +71,23 @@ If true, a button tag will be rendered. Default `true`.
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
+
+
+#### detail
+
+boolean
+
+If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
+is `ios` and an `href`, `onclick` or `tappable` property is present.
+
+
+#### disabled
+
+boolean
+
+If true, the user cannot interact with the item. Defaults to `false`.
 
 
 #### href
@@ -90,10 +120,10 @@ If this property is set, a button tag will be rendered.
 boolean
 
 Whether or not this item should be tappable.
-If true, a button tag will be rendered. Default `true`.
+If true, a button tag will be rendered. Defaults to `false`.
 
 
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

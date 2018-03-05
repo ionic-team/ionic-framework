@@ -1,12 +1,13 @@
 @import "./loading";
 @import "./loading.ios.vars";
 
-.loading-backdrop-ios {
-  background-color: $loading-backdrop-ios-color;
-}
-
 // iOS Loading Indicator
 // --------------------------------------------------
+
+.loading-ios {
+  font-family: $loading-ios-font-family;
+  font-size: $loading-ios-font-size;
+}
 
 .loading-ios .loading-wrapper {
   @include border-radius($loading-ios-border-radius);

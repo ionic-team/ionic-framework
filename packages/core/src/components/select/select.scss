@@ -4,16 +4,12 @@
 // --------------------------------------------------
 
 ion-select {
-  position: relative;
-
   display: flex;
   overflow: hidden;
 
 }
 
 .item .select {
-  position: static;
-
   max-width: 45%;
 }
 
@@ -43,6 +39,7 @@ ion-select {
   white-space: nowrap;
 }
 
+// TODO item needs this class
 .item-multiple-inputs ion-select {
   position: relative;
 }
@@ -68,4 +65,13 @@ ion-select {
 
 .select-key button {
   border: 2px solid #5e9ed6;
+}
+
+
+// Stacked & Floating Select
+// --------------------------------------------------
+
+.item-label-stacked .select,
+.item-label-floating .select {
+  max-width: 100%;
 }

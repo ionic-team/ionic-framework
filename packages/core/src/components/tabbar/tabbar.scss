@@ -1,0 +1,78 @@
+@import "../../themes/ionic.globals";
+
+ion-tabbar {
+  position: relative;
+
+  z-index: $z-index-toolbar;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  order: 1;
+
+  width: 100%;
+}
+
+ion-tabbar.tabbar-hidden {
+  display: none;
+}
+
+ion-tabbar.placement-top {
+  order: -1;
+}
+
+
+// Tab Highlight
+// --------------------------------------------------
+
+.tabbar-highlight {
+  @include position(null, null, 0, 0);
+  @include transform-origin(0, 0);
+
+  position: absolute;
+
+  display: block;
+
+  width: 1px;
+  height: 2px;
+
+  transform: translateZ(0);
+
+  &.animated {
+    transition-duration: 300ms;
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+
+    will-change: transform;
+  }
+}
+
+.placement-top .tabbar-highlight {
+  bottom: 0;
+}
+
+.placement-bottom .tabbar-highlight {
+  top: 0;
+}
+
+
+// Overflow Scrolling
+// --------------------------------------------------
+
+ion-tabbar.scrollable {
+  ion-scroll {
+    overflow: hidden;
+  }
+
+  .scroll-inner {
+    position: relative;
+    display: flex;
+
+    flex-direction: row;
+  }
+
+  ion-button.inactive {
+    visibility: hidden;
+  }
+}

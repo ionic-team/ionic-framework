@@ -17,7 +17,7 @@
   class PageOne extends HTMLElement {
     async connectedCallback() {
       this.innerHTML = `
-      <ion-page>
+
         <ion-header>
           <ion-toolbar>
             <ion-title>Page One</ion-title>
@@ -26,8 +26,7 @@
         <ion-content padding>
           <h1>Page One</h1>
           <ion-button class="next">Go to Page Two</ion-button>
-        </ion-content>
-      </ion-page>`;
+        </ion-content>`;
 
       const button = this.querySelector('ion-button');
       button.addEventListener('click', async () => {
@@ -39,7 +38,7 @@
   class PageTwo extends HTMLElement {
     async connectedCallback() {
       this.innerHTML = `
-        <ion-page>
+
           <ion-header>
             <ion-toolbar>
               <ion-title>Page Two</ion-title>
@@ -49,8 +48,7 @@
             <h1>Page Two</h1>
             <ion-button class="next">Go to Page Three</ion-button>
             <ion-button class="previous">Go Back</ion-button>
-          </ion-content>
-        </ion-page>`;
+          </ion-content>`;
 
       const previousButton = this.querySelector('ion-button.previous');
       previousButton.addEventListener('click', async () => {
@@ -67,7 +65,7 @@
   class PageThree extends HTMLElement {
     async connectedCallback() {
       this.innerHTML = `
-        <ion-page>
+
           <ion-header>
             <ion-toolbar>
               <ion-title>Page Three</ion-title>
@@ -76,8 +74,7 @@
           <ion-content padding>
             <h1>Page Three</h1>
             <ion-button class="previous">Go Back</ion-button>
-          </ion-content>
-        </ion-page>`;
+          </ion-content>`;
 
       const previousButton = this.querySelector('ion-button.previous');
       previousButton.addEventListener('click', async () => {

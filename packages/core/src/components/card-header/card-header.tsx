@@ -15,7 +15,7 @@ import { createThemedClasses } from '../../utils/theme';
 export class CardHeader {
   /**
    * The color to use for the background.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @Prop() color: string;
 
@@ -26,8 +26,7 @@ export class CardHeader {
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * If true, adds transparency to the card header.
-   * Only affects `ios` mode. Defaults to `false`.
+   * If true, the card header will be translucent. Defaults to `false`.
    */
   @Prop() translucent = false;
 

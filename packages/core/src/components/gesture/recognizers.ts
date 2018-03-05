@@ -1,5 +1,4 @@
 
-
 export class PanRecognizer {
   private startX: number;
   private startY: number;

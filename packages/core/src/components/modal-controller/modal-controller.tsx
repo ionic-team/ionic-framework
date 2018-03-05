@@ -1,73 +1,51 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { ModalEvent, ModalOptions } from '../../index';
+import { ModalEvent, ModalOptions, OverlayController } from '../../index';
+import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
-let ids = 0;
-const modals = new Map<number, HTMLIonModalElement>();
 
 @Component({
   tag: 'ion-modal-controller'
 })
-export class ModalController {
+export class ModalController implements OverlayController {
 
-  @Method()
-  create(opts?: ModalOptions): Promise<HTMLIonModalElement> {
-    // create ionic's wrapping ion-modal component
-    const modalElement = document.createElement('ion-modal');
-
-    // give this modal a unique id
-    modalElement.modalId = ids++;
-
-    // convert the passed in modal options into props
-    // that get passed down into the new modal
-    Object.assign(modalElement, opts);
-
-    // append the modal element to the document body
-    const appRoot = document.querySelector('ion-app') || document.body;
-    appRoot.appendChild(modalElement);
-
-    return (modalElement as any).componentOnReady();
-  }
-
-  @Method()
-  dismiss(data?: any, role?: any, modalId = -1) {
-    modalId = modalId >= 0 ? modalId : getHighestId();
-    const modal = modals.get(modalId);
-    if (!modal) {
-      return Promise.reject('modal does not exist');
-    }
-    return modal.dismiss(data, role);
-  }
-
+  private modals = new Map<number, HTMLIonModalElement>();
 
   @Listen('body:ionModalWillPresent')
   protected modalWillPresent(ev: ModalEvent) {
-    modals.set(ev.target.modalId, ev.target);
+    this.modals.set(ev.target.overlayId, ev.target);
   }
-
 
   @Listen('body:ionModalWillDismiss, body:ionModalDidUnload')
   protected modalWillDismiss(ev: ModalEvent) {
-    modals.delete(ev.target.modalId);
+    this.modals.delete(ev.target.overlayId);
   }
-
 
   @Listen('body:keyup.escape')
   protected escapeKeyUp() {
-    removeLastModal();
+    removeLastOverlay(this.modals);
   }
-}
 
-function getHighestId() {
-  let minimum = -1;
-  modals.forEach((_modal: HTMLIonModalElement, id: number) => {
-    if (id > minimum) {
-      minimum = id;
-    }
-  });
-  return minimum;
-}
+  /*
+   * Create a modal overlay with modal options.
+   */
+  @Method()
+  create(opts?: ModalOptions): Promise<HTMLIonModalElement> {
+    return createOverlay('ion-modal', opts);
+  }
 
-function removeLastModal() {
-  const toRemove = modals.get(getHighestId());
-  return toRemove ? toRemove.dismiss() : Promise.resolve();
+  /*
+   * Dismiss the open modal overlay.
+   */
+  @Method()
+  dismiss(data?: any, role?: string, modalId = -1) {
+    return dismissOverlay(data, role, this.modals, modalId);
+  }
+
+  /*
+   * Get the most recently opened modal overlay.
+   */
+  @Method()
+  getTop(): HTMLIonModalElement {
+    return getTopOverlay(this.modals);
+  }
 }

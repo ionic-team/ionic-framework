@@ -77,11 +77,15 @@ export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElem
 
   // make it pop up if there's room above
   if (
-    targetTop + targetHeight + contentHeight > bodyHeight &&
-    targetTop - contentHeight > 0
+    (targetTop + targetHeight + contentHeight) > bodyHeight &&
+    (targetTop - contentHeight) > 0
   ) {
     arrowCSS.top = targetTop - (arrowHeight + 1);
+    console.log(arrowCSS);
+    console.log(targetTop);
+    console.log(contentHeight);
     popoverCSS.top = targetTop - contentHeight - (arrowHeight - 1);
+
     baseEl.className = baseEl.className + ' popover-bottom';
     originY = 'bottom';
     // If there isn't room for it to pop up above the target cut it off
@@ -116,7 +120,7 @@ export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElem
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
-  backdropAnimation.addElement(baseEl.querySelector('.popover-backdrop'));
+  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
   backdropAnimation.fromTo('opacity', 0.01, 0.08);
 
   const wrapperAnimation = new Animation();

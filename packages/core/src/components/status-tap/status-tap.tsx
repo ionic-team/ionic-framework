@@ -31,7 +31,7 @@ export class StatusTap {
       }
       return el.closest('ion-scroll');
     }).then(([scroll]: HTMLIonScrollElement[]) => {
-      return (scroll as any).componentOnReady();
+      return scroll.componentOnReady();
     }).then((scroll: HTMLIonScrollElement) => {
       return domControllerAsync(this.dom.write, () => {
         return scroll.scrollToTop(this.duration);

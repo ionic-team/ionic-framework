@@ -26,10 +26,10 @@ export interface InputBaseComponent {
   value: string;
 
   // Shared Methods
-  inputBlurred: (ev: any) => void;
-  inputChanged: (ev: any) => void;
-  inputFocused: (ev: any) => void;
-  inputKeydown: (ev: any) => void;
+  inputBlurred: (ev: Event) => void;
+  inputChanged: (ev: Event) => void;
+  inputFocused: (ev: Event) => void;
+  inputKeydown: (ev: Event) => void;
 }
 
 export interface InputComponent extends InputBaseComponent {

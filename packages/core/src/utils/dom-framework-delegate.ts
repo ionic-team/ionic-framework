@@ -28,12 +28,4 @@ export class DomFrameworkDelegate implements FrameworkDelegate {
     parentElement.removeChild(childElement);
     return Promise.resolve();
   }
-
-  shouldDeferToRouter(_elementOrComponentToMount: any): Promise<boolean> {
-    return Promise.resolve(false);
-  }
-
-  routeToUrl(_elementOrComponentToMount: any): Promise<any> {
-    return Promise.resolve('todo');
-  }
 }

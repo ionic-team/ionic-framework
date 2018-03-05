@@ -6,6 +6,15 @@
   <title>Menu - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
+
+  <style>
+    .f {
+      width: 200px;
+      height: 200px;
+      background: blue;
+      margin: 20px auto;
+    }
+  </style>
 </head>
 
 <body>
@@ -21,17 +30,17 @@
       <ion-content>
         <ion-list>
           <ion-item>Open Right Menu</ion-item>
-          <ion-item detail-none>Close Menu</ion-item>
-          <ion-item detail-none>Close Menu</ion-item>
-          <ion-item detail-none>Close Menu</ion-item>
-          <ion-item detail-none>Close Menu</ion-item>
-          <ion-item detail-none>Close Menu</ion-item>
-          <ion-item detail-none>Close Menu</ion-item>
-          <ion-item detail-none>Close Menu</ion-item>
-          <ion-item detail-none>Close Menu</ion-item>
-          <ion-item detail-none>Close Menu</ion-item>
-          <ion-item detail-none>Close Menu</ion-item>
-          <ion-item detail-none>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
         </ion-list>
       </ion-content>
 
@@ -55,7 +64,7 @@
       </ion-content>
     </ion-menu>
 
-    <ion-page main>
+    <div class="ion-page" main>
 
       <ion-header>
         <ion-toolbar>
@@ -75,9 +84,17 @@
 
           <ion-button onclick="setEnabled()">Set Swipe Enabled False</ion-button>
         </p>
+
+        <div class="f"></div>
+        <div class="f"></div>
+        <div class="f"></div>
+        <div class="f"></div>
+        <div class="f"></div>
+        <div class="f"></div>
+
       </ion-content>
 
-    </ion-page>
+    </div>
 
   </ion-app>
   <ion-menu-controller></ion-menu-controller>

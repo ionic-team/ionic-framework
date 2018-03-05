@@ -30,6 +30,9 @@ ion-searchbar {
 
 .searchbar-input {
   @include appearance(none);
+
+  box-sizing: border-box;
+
   display: block;
 
   width: 100%;
@@ -40,6 +43,10 @@ ion-searchbar {
   &:active,
   &:focus {
     outline: none;
+  }
+
+  &::-webkit-search-cancel-button {
+    display: none;
   }
 }
 

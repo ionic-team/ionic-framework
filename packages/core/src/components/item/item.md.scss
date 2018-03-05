@@ -64,10 +64,42 @@
   color: $item-md-paragraph-text-color;
 }
 
-.item-md.item-block .item-inner {
+.item-md .item-inner {
   @include padding-horizontal(null, ($item-md-padding-end / 2));
 
   border-bottom: 1px solid $item-md-border-color;
+}
+
+
+// Material Design Items in Lists
+// --------------------------------------------------
+// Removed the requirement that their immmediate
+// parent is listed this adds support for other list components
+
+ion-list,
+ion-reorder-group > ion-gesture {
+  > ion-item:first-child .item-md,
+  > ion-item-sliding:first-child .item-md {
+    border-top: 1px solid $item-md-border-color;
+  }
+
+  > ion-item:last-child .item-md,
+  > ion-item-sliding:last-child .item-md {
+    border-bottom: 1px solid $item-md-border-color;
+  }
+
+  > ion-item:last-child .item-md .item-inner,
+  > ion-item-sliding:last-child .item-md .item-inner {
+    border-bottom: 0;
+  }
+}
+
+// If the item has the no-lines attribute remove the bottom border from:
+// the item itself (for last-child items)
+// the item-inner class (if it is not last)
+ion-item[no-lines],
+ion-item[no-lines] .item-inner {
+  border-width: 0;
 }
 
 
@@ -75,17 +107,13 @@
 // --------------------------------------------------
 
 // Only show the forward arrow icon if true
-@if $item-md-detail-push-show == true {
-  .item-md[detail-push] .item-inner,
-  button.item-md:not([detail-none]) .item-inner,
-  a.item-md:not([detail-none]) .item-inner {
-    @include svg-background-image($item-md-detail-push-svg, true);
-    @include padding-horizontal(null, 32px);
-    @include background-position(end, $item-md-padding-end - 2, center);
+.item-md.item-detail-push .item-inner {
+  @include item-push-svg-url($item-md-detail-push-color);
+  @include padding-horizontal(null, 32px);
+  @include background-position(end, $item-md-padding-end - 2, center);
 
-    background-repeat: no-repeat;
-    background-size: 14px 14px;
-  }
+  background-repeat: no-repeat;
+  background-size: 14px 14px;
 }
 
 
@@ -97,13 +125,13 @@
   @include margin($item-md-slot-margin-top, $item-md-slot-margin-end, $item-md-slot-margin-bottom, $item-md-slot-margin-start);
 }
 
-.item-md ion-icon[slot="start"],
-.item-md ion-icon[slot="end"] {
+.item-md > ion-icon[slot="start"],
+.item-md > ion-icon[slot="end"] {
   @include margin($item-md-icon-slot-margin-top, $item-md-icon-slot-margin-end, $item-md-icon-slot-margin-bottom, $item-md-icon-slot-margin-start);
 }
 
-.item-md ion-icon[slot="start"] + .item-inner,
-.item-md ion-icon[slot="start"] + .item-input {
+.item-md > ion-icon[slot="start"] + .item-inner,
+.item-md > ion-icon[slot="start"] + .item-input {
   @include margin-horizontal($item-md-padding-start + ($item-md-padding-start / 2), null);
 }
 
@@ -123,10 +151,10 @@
 }
 
 
-// TODO Material Design Item Button
+// Material Design Item Button
 // --------------------------------------------------
 
-.item-md .item-button {
+.item-md .button-small-md {
   @include padding(0, .6em);
 
   height: 25px;
@@ -134,7 +162,7 @@
   font-size: 12px;
 }
 
-.item-md .item-button ion-icon[slot="icon-only"] {
+.item-md .button-small-md ion-icon[slot="icon-only"] {
   @include padding(0);
 
 }
@@ -157,33 +185,22 @@
 }
 
 
-// Item reorder
-// --------------------------------------------------
-
-.item-md ion-reorder {
-  font-size: 1.5em;
-  opacity: .3;
-}
-
-
 // Generate Material Design Item and Item Divider Colors
 // --------------------------------------------------
 
 @each $color-name, $color-value in $colors-md {
   $color-base: ion-color($colors-md, $color-name, base, md);
   $color-contrast: ion-color($colors-md, $color-name, contrast, md);
+  $color-shade: ion-color($colors-md, $color-name, shade, md);
   $color-tint: ion-color($colors-md, $color-name, tint, md);
 
-  // If there is text with a color it should use this color
-  // and override whatever item sets it to
-  .item-md .text-md-#{$color-name} {
-    color: $color-base;
-  }
-
-  .item-md-#{$color-name},
-  .item-divider-md-#{$color-name} {
+  .item-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
+
+    .item-inner {
+      border-bottom-color: $color-shade;
+    }
 
     p {
       color: $color-contrast;
@@ -192,5 +209,9 @@
     &.activated {
       background-color: $color-tint;
     }
+  }
+
+  .item-md-#{$color-name}.item-detail-push .item-inner {
+    @include item-push-svg-url($color-shade);
   }
 }

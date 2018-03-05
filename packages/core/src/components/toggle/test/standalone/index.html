@@ -9,12 +9,22 @@
 </head>
 
 <body>
-  <ion-toggle checked></ion-toggle>
-  <ion-toggle color="secondary" (ionChange)="kiwiChange($event)" checked></ion-toggle>
-  <ion-toggle color="danger" name="cherry" checked></ion-toggle>
-  <ion-toggle color="light" (ionChange)="strawberryChange($event)" checked="true"></ion-toggle>
-  <ion-toggle color="warning" checked></ion-toggle>
-  <ion-toggle color="dark" checked></ion-toggle>
+  <!-- Default -->
+  <ion-toggle></ion-toggle>
+
+  <!-- Colors -->
+  <ion-toggle checked color="primary"></ion-toggle>
+  <ion-toggle checked color="secondary"></ion-toggle>
+  <ion-toggle checked color="tertiary"></ion-toggle>
+  <ion-toggle checked color="success"></ion-toggle>
+  <ion-toggle checked color="warning"></ion-toggle>
+  <ion-toggle checked color="danger"></ion-toggle>
+  <ion-toggle checked color="light"></ion-toggle>
+  <ion-toggle checked color="medium"></ion-toggle>
+  <ion-toggle checked color="dark"></ion-toggle>
+
+  <!-- Disabled -->
   <ion-toggle checked disabled></ion-toggle>
+  <ion-toggle checked disabled color="secondary"></ion-toggle>
 </body>
 </html>

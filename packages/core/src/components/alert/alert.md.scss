@@ -6,6 +6,7 @@
 
 .alert-md {
   font-family: $alert-md-font-family;
+  font-size: $alert-md-font-size;
 }
 
 .alert-md .alert-wrapper {
@@ -29,6 +30,7 @@
 
 .alert-md .alert-title {
   font-size: $alert-md-title-font-size;
+  font-weight: $alert-md-title-font-weight;
 }
 
 .alert-md .alert-sub-title {
@@ -95,7 +97,9 @@
 
   overflow: hidden;
 
-  min-height: $alert-md-tappable-min-height;
+  height: $alert-md-tappable-height;
+
+  contain: strict;
 }
 
 
@@ -183,9 +187,6 @@
   color: $alert-md-checkbox-label-text-color;
 }
 
-.alert-md [aria-checked=true] .alert-checkbox-label {
-  color: $alert-md-checkbox-label-text-color-checked;
-}
 
 // Material Design Alert Checkbox Outline: Unchecked
 // --------------------------------------------------
@@ -202,6 +203,8 @@
   border-width: $alert-md-checkbox-border-width;
   border-style: $alert-md-checkbox-border-style;
   border-color: $alert-md-checkbox-border-color-off;
+
+  contain: strict;
 }
 
 // Material Design Alert Checkbox Checkmark: Checked
@@ -264,6 +267,6 @@
   background-color: $alert-md-button-background-color-activated;
 }
 
-.alert-md .alert-button .button-inner {
+.alert-md .alert-button-inner {
   justify-content: $alert-md-button-group-justify-content;
 }

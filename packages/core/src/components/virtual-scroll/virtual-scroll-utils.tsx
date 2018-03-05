@@ -21,10 +21,10 @@ export const enum NodeChange {
 }
 
 export interface Cell {
-  type: CellType;
-  value: any;
   i: number;
   index: number;
+  value: any;
+  type: CellType;
   height: number;
   reads: number;
   visible: boolean;
@@ -35,6 +35,7 @@ export interface VirtualNode {
   top: number;
   change: NodeChange;
   d: boolean;
+  visible: boolean;
 }
 const MIN_READS = 2;
 
@@ -48,7 +49,6 @@ export type DomRenderFn = (dom: VirtualNode[], height: number) => void;
 export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: Cell[], range: Range) {
   // reset dom
   for (const node of dom) {
-    // node.top = -9999;
     node.change = NodeChange.NoChange;
     node.d = true;
   }
@@ -75,7 +75,6 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
   // needs to append
   const pool = dom.filter((n) => n.d);
 
-  // console.log('toMutate', toMutate.length);
   for (const cell of toMutate) {
     const node = pool.find(n => n.d && n.cell.type === cell.type);
     const index = cell.index;
@@ -88,6 +87,7 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
       dom.push({
         d: false,
         cell: cell,
+        visible: true,
         change: NodeChange.Cell,
         top: heightIndex[index],
       });
@@ -102,8 +102,14 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
 }
 
 
-export function doRender(el: HTMLElement, itemRender: ItemRenderFn, dom: VirtualNode[], updateCellHeight: Function, total: number) {
+export function doRender(
+  el: HTMLElement,
+  itemRender: ItemRenderFn,
+  dom: VirtualNode[],
+  updateCellHeight: Function
+) {
   const children = el.children;
+  const childrenNu = children.length;
   let child: HTMLElement;
   for (let i = 0; i < dom.length; i++) {
     const node = dom[i];
@@ -111,7 +117,7 @@ export function doRender(el: HTMLElement, itemRender: ItemRenderFn, dom: Virtual
 
     // the cell change, the content must be updated
     if (node.change === NodeChange.Cell) {
-      if (i < children.length) {
+      if (i < childrenNu) {
         child = children[i] as HTMLElement;
         itemRender(child, cell, i);
       } else {
@@ -128,16 +134,24 @@ export function doRender(el: HTMLElement, itemRender: ItemRenderFn, dom: Virtual
     if (node.change !== NodeChange.NoChange) {
       child.style.transform = `translate3d(0,${node.top}px,0)`;
     }
-    if (cell.visible) {
-      child.classList.remove('virtual-loading');
-    } else {
-      child.classList.add('virtual-loading');
+
+    // update visibility
+    const visible = cell.visible;
+    if (node.visible !== visible) {
+      if (visible) {
+        child.classList.remove('virtual-loading');
+      } else {
+        child.classList.add('virtual-loading');
+      }
+      node.visible = visible;
     }
+
+    // dynamic height
     if (cell.reads > 0) {
       updateCellHeight(cell, child);
+      cell.reads--;
     }
   }
-  el.style.height = total + 'px';
 }
 
 export function getViewport(scrollTop: number, vierportHeight: number, margin: number): Viewport {
@@ -166,7 +180,8 @@ export function getRange(heightIndex: Uint32Array, viewport: Viewport, buffer: n
       break;
     }
   }
-  const end = Math.min(i + buffer, heightIndex.length - 1);
+
+  const end = Math.min(i + buffer, heightIndex.length);
   const length = end - offset;
   return { offset, length };
 }
@@ -181,6 +196,23 @@ export function getShouldUpdate(dirtyIndex: number, currentRange: Range, range: 
 }
 
 
+export function findCellIndex(cells: Cell[], index: number): number {
+  if (index === 0) {
+    return 0;
+  }
+  return cells.findIndex(c => c.index === index);
+}
+
+export function inplaceUpdate(dst: Cell[], src: Cell[], offset: number) {
+  if (offset === 0 && src.length >= dst.length) {
+    return src;
+  }
+  for (let i = 0; i < src.length; i++) {
+    dst[i + offset] = src[i];
+  }
+  return dst;
+}
+
 export function calcCells(
   items: any[],
 
@@ -190,12 +222,15 @@ export function calcCells(
 
   approxHeaderHeight: number,
   approxFooterHeight: number,
-  approxItemHeight: number
+  approxItemHeight: number,
+
+  j: number,
+  offset: number,
+  len: number
 ): Cell[] {
   const cells = [];
-  let j = 0;
-
-  for (let i = 0; i < items.length; i++) {
+  const end = len + offset;
+  for (let i = offset; i < end; i++) {
     const item = items[i];
     if (headerFn) {
       const value = headerFn(item, i, items);

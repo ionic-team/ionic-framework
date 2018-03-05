@@ -404,6 +404,16 @@ Emitted when the input has focus.
 Emitted when the input value has changed.
 
 
+#### ionInputDidLoad
+
+Emitted when the input has been created.
+
+
+#### ionInputDidUnload
+
+Emitted when the input has been removed.
+
+
 #### ionStyle
 
 Emitted when the styles change.
@@ -412,4 +422,4 @@ Emitted when the styles change.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

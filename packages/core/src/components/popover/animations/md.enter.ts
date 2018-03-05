@@ -70,7 +70,7 @@ export default function mdEnterAnimation(Animation: Animation, baseEl: HTMLEleme
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
-  backdropAnimation.addElement(baseEl.querySelector('.popover-backdrop'));
+  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
   backdropAnimation.fromTo('opacity', 0.01, 0.08);
 
   const wrapperAnimation = new Animation();

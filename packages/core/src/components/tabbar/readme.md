@@ -24,7 +24,7 @@ string
 
 #### scrollable
 
-
+boolean
 
 
 #### selectedTab
@@ -40,6 +40,8 @@ string
 #### translucent
 
 boolean
+
+If true, the tabbar will be translucent. Defaults to `false`.
 
 
 ## Attributes
@@ -61,7 +63,7 @@ string
 
 #### scrollable
 
-
+boolean
 
 
 #### selected-tab
@@ -78,8 +80,10 @@ string
 
 boolean
 
+If true, the tabbar will be translucent. Defaults to `false`.
+
 
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

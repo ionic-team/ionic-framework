@@ -1,5 +1,5 @@
 import { Component, Element, Listen, Prop, State } from '@stencil/core';
-import { createThemedClasses } from '../../utils/theme';
+import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 import { CssClassMap } from '../../index';
 
 
@@ -19,7 +19,7 @@ export class Item {
 
   /**
    * The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
@@ -30,6 +30,17 @@ export class Item {
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode: 'ios' | 'md';
+
+  /**
+   * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
+   * is `ios` and an `href`, `onclick` or `tappable` property is present.
+   */
+  @Prop() detail: boolean;
+
+  /**
+   * If true, the user cannot interact with the item. Defaults to `false`.
+   */
+  @Prop() disabled = false;
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -45,7 +56,7 @@ export class Item {
 
   /**
    * Whether or not this item should be tappable.
-   * If true, a button tag will be rendered. Default `true`.
+   * If true, a button tag will be rendered. Defaults to `false`.
    */
   @Prop() tappable = false;
 
@@ -91,23 +102,30 @@ export class Item {
       childStyles = Object.assign(childStyles, this.itemStyles[key]);
     }
 
-    const themedClasses = {
-      ...childStyles,
-      ...createThemedClasses(this.mode, this.color, 'item'),
-      'item-block': true
-    };
-
-    this.hasStyleChange = false;
-
-    const clickable = this.href || this.onclick || this.tappable;
+    const clickable = !!(this.href || this.onclick || this.tappable);
 
     let TagType = 'div';
     if (clickable) {
       TagType = this.href ? 'a' : 'button';
     }
+    const attrs = (TagType === 'button')
+      ? {type: 'button'}
+      : {};
+
+    const showDetail = this.detail != null ? this.detail : (this.mode === 'ios' && clickable);
+
+    const themedClasses = {
+      ...childStyles,
+      ...createThemedClasses(this.mode, this.color, 'item'),
+      ...getElementClassMap(this.el.classList),
+      'item-disabled': this.disabled,
+      'item-detail-push': showDetail,
+    };
+
+    this.hasStyleChange = false;
 
     return (
-      <TagType class={themedClasses}>
+      <TagType class={themedClasses} {...attrs}>
         <slot name='start'></slot>
         <div class='item-inner'>
           <div class='input-wrapper'>
@@ -115,7 +133,7 @@ export class Item {
           </div>
           <slot name='end'></slot>
         </div>
-        { clickable && this.mode === 'md' && <ion-ripple-effect useTapClick={true} /> }
+        { clickable && this.mode === 'md' && <ion-ripple-effect/> }
       </TagType>
     );
   }

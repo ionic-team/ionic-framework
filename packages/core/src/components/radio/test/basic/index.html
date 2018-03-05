@@ -8,7 +8,7 @@
 </head>
 <body>
   <ion-app>
-    <ion-page>
+
       <ion-header>
         <ion-toolbar>
           <ion-title>Radio - Basic</ion-title>
@@ -73,10 +73,10 @@
           </ion-radio-group>
 
           <ion-item>
-            <ion-button slot="start" onClick="toggleBoolean('grapeChecked', 'checked')" outline small>Checked</ion-button>
-            <ion-button slot="start" onClick="toggleBoolean('grapeChecked', 'disabled')" outline small>Disabled</ion-button>
-            <ion-button slot="end" onClick="printRadioValues()" outline small>Print</ion-button>
-            <ion-button slot="end" onClick="toggleString('dangerRadio', 'color', 'danger', 'secondary')" outline small color="danger">Color</ion-button>
+            <ion-button slot="start" onClick="toggleBoolean('grapeChecked', 'checked')" fill="outline" size="small">Checked</ion-button>
+            <ion-button slot="start" onClick="toggleBoolean('grapeChecked', 'disabled')" fill="outline" size="small">Disabled</ion-button>
+            <ion-button slot="end" onClick="printRadioValues()" fill="outline" size="small">Print</ion-button>
+            <ion-button slot="end" onClick="toggleString('dangerRadio', 'color', 'danger', 'secondary')" fill="outline" size="small" color="danger">Color</ion-button>
           </ion-item>
         </ion-list>
 
@@ -135,7 +135,6 @@
         </ion-item>
 
       </ion-content>
-    </ion-page>
 
     <script>
       var radioValues = ['fruitRadio', 'pizzaRadio', 'veggiesRadio'];

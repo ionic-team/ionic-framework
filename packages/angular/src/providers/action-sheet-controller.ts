@@ -12,20 +12,20 @@ export class ActionSheetController {
   }
 }
 
-export function getActionSheetProxy(opts: ActionSheetOptions){
+export function getActionSheetProxy(opts: ActionSheetOptions) {
   return {
     id: actionSheetId++,
     state: PRESENTING,
     opts: opts,
-    present: function() { return present(this)},
-    dismiss: function() { return dismiss(this)},
+    present: function() { return present(this); },
+    dismiss: function() { return dismiss(this); },
     onDidDismiss: function(callback: (data: any, role: string) => void) {
       (this as ActionSheetProxyInternal).onDidDismissHandler = callback;
     },
     onWillDismiss: function(callback: (data: any, role: string) => void) {
       (this as ActionSheetProxyInternal).onWillDismissHandler = callback;
     },
-  }
+  };
 }
 
 export function present(actionSheetProxy: ActionSheetProxyInternal): Promise<any> {
@@ -82,8 +82,8 @@ export function loadOverlay(opts: ActionSheetOptions): Promise<HTMLIonActionShee
 }
 
 export interface ActionSheetProxy {
-  present(): Promise<void>
-  dismiss(): Promise<void>
+  present(): Promise<void>;
+  dismiss(): Promise<void>;
   onDidDismiss(callback: (data: any, role: string) => void): void;
   onWillDismiss(callback: (data: any, role: string) => void): void;
 }

@@ -8,12 +8,20 @@ $enable-css-variables: true;
 $css-variables: ();
 $modes: (ios, md);
 
-@mixin css-variables-to-root {
-  :root {
-    @each $name, $color in $css-variables {
-      #{$name}: $color;
-    }
+@function get-color-shade($color) {
+  @return mix(#000, $color, 12%);
+}
+
+@function get-color-tint($color) {
+  @return mix(#fff, $color, 10%);
+}
+
+@function force-hex($color) {
+  @if type-of($color) == "color" {
+    $hex: str-slice(ie-hex-str($color), 4);
+    @return unquote("\##{to-lower-case($hex)}");
   }
+  @return $color;
 }
 
 @function get-mode($name) {
@@ -216,4 +224,23 @@ $modes: (ios, md);
     }
   }
   @return $result;
+}
+
+@mixin css-variables-to-root($colors) {
+  @each $name, $value in $colors {
+    @each $variation, $color in $value {
+      @if ($variation == 'base') {
+        $test: css-var(force-hex($color), unquote("color-#{$name}"));
+        $test: css-var("#{red($color)},#{green($color)},#{blue($color)}", unquote("color-#{$name}-rgb"));
+      }@else {
+        $test: css-var(force-hex($color), unquote("color-#{$name}-#{$variation}"));
+      }
+    }
+  }
+
+  :root {
+    @each $name, $color in $css-variables {
+      #{$name}: $color;
+    }
+  }
 }

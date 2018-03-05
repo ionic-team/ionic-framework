@@ -7,7 +7,7 @@
 
 ## Properties
 
-#### content
+#### contentId
 
 string
 
@@ -65,7 +65,7 @@ see the `menuType` in the [config](../../config/Config). Available options:
 
 ## Attributes
 
-#### content
+#### content-id
 
 string
 
@@ -128,10 +128,7 @@ see the `menuType` in the [config](../../config/Config). Available options:
 Emitted when the menu is closed.
 
 
-#### ionDrag
-
-Emitted when the sliding position changes.
-It reports the relative position.
+#### ionMenuChange
 
 
 #### ionOpen
@@ -142,6 +139,9 @@ Emitted when the menu is open.
 ## Methods
 
 #### close()
+
+
+#### isActive()
 
 
 #### isOpen()
@@ -159,4 +159,4 @@ Emitted when the menu is open.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

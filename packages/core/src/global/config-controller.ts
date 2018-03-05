@@ -1,5 +1,5 @@
 import { Config } from '../index';
-import { PlatformConfig, queryParam } from './platform-configs';
+import { PlatformConfig, readQueryParam } from './platform-configs';
 import { isDef } from '../utils/helpers';
 
 export function createConfigController(configObj: any, platforms: PlatformConfig[]): Config {
@@ -7,7 +7,7 @@ export function createConfigController(configObj: any, platforms: PlatformConfig
 
   function get(key: string, fallback?: any): any {
 
-    const queryValue = queryParam(window.location.href, `ionic${key}`);
+    const queryValue = readQueryParam(window.location.href, `ionic${key}`);
     if (isDef(queryValue)) {
       return configObj[key] = (queryValue === 'true' ? true : queryValue === 'false' ? false : queryValue);
     }

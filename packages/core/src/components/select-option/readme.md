@@ -23,7 +23,7 @@ If true, the element is selected.
 
 #### value
 
-string
+
 
 The text value of the option.
 
@@ -46,7 +46,7 @@ If true, the element is selected.
 
 #### value
 
-string
+
 
 The text value of the option.
 
@@ -66,4 +66,4 @@ Emitted when the select option unloads.
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

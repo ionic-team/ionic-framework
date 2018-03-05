@@ -1,4 +1,4 @@
-import { EmbeddedViewRef, AfterContentInit, ContentChild, Directive, ElementRef, Input, IterableDiffers, TrackByFunction } from '@angular/core';
+import { ChangeDetectorRef, ContentChild, Directive, ElementRef, EmbeddedViewRef } from '@angular/core';
 import { VirtualItem } from './virtual-item';
 import { VirtualHeader } from './virtual-header';
 import { VirtualFooter } from './virtual-footer';
@@ -13,7 +13,10 @@ export class VirtualScroll {
   @ContentChild(VirtualHeader) hdrTmp: VirtualHeader;
   @ContentChild(VirtualFooter) ftrTmp: VirtualFooter;
 
-  constructor(private el: ElementRef) {
+  constructor(
+    private el: ElementRef,
+    public cd: ChangeDetectorRef,
+  ) {
     this.el.nativeElement.itemRender = this.itemRender.bind(this);
   }
 
@@ -27,14 +30,16 @@ export class VirtualScroll {
       el = getElement(node);
       (el as any)['$ionView'] = node;
     }
-    const ctx = (el as any)['$ionView'].context;
+    const node = (el as any)['$ionView'];
+    const ctx = node.context;
     ctx.$implicit = cell.value;
     ctx.index = cell.index;
+    node.detectChanges();
     return el;
   }
 
   private getComponent(type: number) {
-    switch(type) {
+    switch (type) {
       case 0: return this.itmTmp.templateRef;
       case 1: return this.hdrTmp.templateRef;
       case 2: return this.ftrTmp.templateRef;
@@ -45,7 +50,7 @@ export class VirtualScroll {
 
 function getElement(view: EmbeddedViewRef<VirtualContext>): HTMLElement {
   const rootNodes = view.rootNodes;
-  for (var i = 0; i < rootNodes.length; i++) {
+  for (let i = 0; i < rootNodes.length; i++) {
     if (rootNodes[i].nodeType === 1) {
       return rootNodes[i];
     }

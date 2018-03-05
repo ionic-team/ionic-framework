@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
-import { debounce } from '../../utils/helpers';
+import { debounceEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 import { TextareaComponent } from '../input/input-base';
 
@@ -75,11 +75,8 @@ export class Textarea implements TextareaComponent {
   @Prop() debounce = 0;
 
   @Watch('debounce')
-  private debounceInput() {
-    this.ionInput.emit = debounce(
-      this.ionInput.emit.bind(this.ionInput),
-      this.debounce
-    );
+  protected debounceChanged() {
+    this.ionInput = debounceEvent(this.ionInput, this.debounce);
   }
 
   /**
@@ -159,7 +156,7 @@ export class Textarea implements TextareaComponent {
   }
 
   componentDidLoad() {
-    this.debounceInput();
+    this.debounceChanged();
     this.emitStyle();
   }
 
@@ -179,39 +176,39 @@ export class Textarea implements TextareaComponent {
     });
   }
 
-  clearTextInput(ev: any) {
+  clearTextInput(ev: Event) {
     this.value = '';
     this.ionInput.emit(ev);
   }
 
-  inputBlurred(ev: any) {
+  inputBlurred(ev: Event) {
     this.ionBlur.emit(ev);
 
     this.focusChange(this.hasFocus());
     this.emitStyle();
   }
 
-  inputChanged(ev: any) {
-    this.value = ev.target && ev.target.value;
+  inputChanged(ev: Event) {
+    this.value = ev.target && (ev.target as HTMLInputElement).value;
     this.ionInput.emit(ev);
     this.emitStyle();
   }
 
-  inputFocused(ev: any) {
+  inputFocused(ev: Event) {
     this.ionFocus.emit(ev);
 
     this.focusChange(this.hasFocus());
     this.emitStyle();
   }
 
-  inputKeydown(ev: any) {
+  inputKeydown(ev: Event) {
     this.checkClearOnEdit(ev);
   }
 
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  checkClearOnEdit(ev: any) {
+  checkClearOnEdit(ev: Event) {
     if (!this.clearOnEdit) {
       return;
     }

@@ -1,4 +1,3 @@
-
 import { Animation } from '../../../index';
 
 /**
@@ -8,7 +7,7 @@ export default function mdEnterAnimation(Animation: Animation, baseEl: HTMLEleme
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
-  backdropAnimation.addElement(baseEl.querySelector('.action-sheet-backdrop'));
+  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
 
   const wrapperAnimation = new Animation();
   wrapperAnimation.addElement(baseEl.querySelector('.action-sheet-wrapper'));

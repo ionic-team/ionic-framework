@@ -7,7 +7,7 @@ export default function mdLeaveAnimation(Animation: Animation, baseEl: HTMLEleme
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();
-  backdropAnimation.addElement(baseEl.querySelector('.loading-backdrop'));
+  backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
 
   const wrapperAnimation = new Animation();
   wrapperAnimation.addElement(baseEl.querySelector('.loading-wrapper'));

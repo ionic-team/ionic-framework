@@ -156,12 +156,15 @@ Can also be a boolean expression.
 Emitted when the split pane is visible.
 
 
-#### ionSplitPaneDidChange
+#### ionSplitPaneVisible
 
 Expression to be called when the split-pane visibility has changed
 
 
 ## Methods
+
+#### isPane()
+
 
 #### isVisible()
 
@@ -169,4 +172,4 @@ Expression to be called when the split-pane visibility has changed
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

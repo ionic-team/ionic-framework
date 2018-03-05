@@ -1,3 +1,7 @@
+const sass = require('@stencil/sass');
+const postcss = require('@stencil/postcss');
+const autoprefixer = require('autoprefixer');
+
 exports.config = {
   namespace: 'Ionic',
   generateDistribution: true,
@@ -14,22 +18,22 @@ exports.config = {
     { components: ['ion-checkbox'] },
     { components: ['ion-chip', 'ion-chip-button'] },
     { components: ['ion-datetime', 'ion-picker', 'ion-picker-column', 'ion-picker-controller'] },
-    { components: ['ion-events'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
-    { components: ['ion-gesture'] },
+    { components: ['ion-gesture', 'ion-gesture-controller'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
     { components: ['ion-item', 'ion-item-divider', 'ion-item-group', 'ion-label', 'ion-list', 'ion-list-header', 'ion-skeleton-text'] },
     { components: ['ion-item-sliding', 'ion-item-options', 'ion-item-option'] },
     { components: ['ion-infinite-scroll', 'ion-infinite-scroll-content'] },
     { components: ['ion-input', 'ion-textarea'] },
+    { components: ['ion-input-shims'] },
     { components: ['ion-loading', 'ion-loading-controller'] },
-    { components: ['ion-menu', 'ion-menu-controller'] },
+    { components: ['ion-menu', 'ion-menu-controller', 'ion-menu-toggle', 'ion-menu-button'] },
     { components: ['ion-modal', 'ion-modal-controller'] },
-    { components: ['ion-nav', 'ion-page'] },
+    { components: ['ion-nav', 'ion-back-button'] },
     { components: ['ion-popover', 'ion-popover-controller'] },
     { components: ['ion-radio', 'ion-radio-group'] },
     { components: ['ion-reorder', 'ion-reorder-group'] },
-    { components: ['ion-route', 'ion-router-controller'] },
+    { components: ['ion-route', 'ion-router'] },
     { components: ['ion-searchbar'] },
     { components: ['ion-segment', 'ion-segment-button'] },
     { components: ['ion-select', 'ion-select-option', 'ion-select-popover'] },
@@ -42,17 +46,32 @@ exports.config = {
     { components: ['ion-toggle'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
     { components: ['ion-tap-click', 'ion-status-tap'] },
+    { components: ['ion-platform', 'ion-cordova-platform'] },
+    { components: ['ion-nav-pop'] },
+    { components: ['ion-hide-when', 'ion-show-when'] },
   ],
-  collections: [
-    'ionicons'
+  plugins: [
+    sass(),
+    postcss({
+      plugins: [
+        autoprefixer({
+          browsers: [
+            'last 2 versions',
+            'iOS >= 8',
+            'Android >= 4.4',
+            'Explorer >= 11',
+            'ExplorerMobile >= 11'
+          ],
+          cascade: false
+        })
+      ]
+    })
   ],
-  copy: [
-    { src: '**/*.scss' }
-  ],
+  copy: [{ src: '**/*.scss' }],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',
-  enableCache: false,
-  buildStats: true
+  buildStats: true,
+  enableCache: false
 };
 
 exports.devServer = {

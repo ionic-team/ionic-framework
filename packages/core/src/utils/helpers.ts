@@ -1,4 +1,5 @@
-import { Animation, StencilElement } from '../index';
+import { Animation } from '../index';
+import { EventEmitter } from '@stencil/core';
 
 export function clamp(min: number, n: number, max: number) {
   return Math.max(min, Math.min(n, max));
@@ -43,10 +44,23 @@ export function isCheckedProperty(a: any, b: any): boolean {
   return (a == b); // tslint:disable-line
 }
 
-export function assert(bool: boolean, msg: string) {
-  if (!bool) {
-    console.error(msg);
+export function assert(actual: any, reason: string) {
+  if (!actual) {
+    const message = 'ASSERT: ' + reason;
+    console.error(message);
+    debugger; // tslint:disable-line
+    throw new Error(message);
   }
+}
+
+export function autoFocus(containerEl: HTMLElement): HTMLElement|null {
+  const focusableEls = containerEl.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
+  if (focusableEls.length > 0) {
+    const el = focusableEls[0] as HTMLInputElement;
+    el.focus();
+    return el;
+  }
+  return null;
 }
 
 export function toDashCase(str: string) {
@@ -58,19 +72,20 @@ export function now(ev: UIEvent) {
   return ev.timeStamp || Date.now();
 }
 
-export function pointerCoordX(ev: any): number {
+export function pointerCoord(ev: any): {x: number, y: number} {
   // get X coordinates for either a mouse click
   // or a touch depending on the given event
   if (ev) {
     const changedTouches = ev.changedTouches;
     if (changedTouches && changedTouches.length > 0) {
-      return changedTouches[0].clientX;
+      const touch = changedTouches[0];
+      return {x: touch.clientX, y: touch.clientY};
     }
     if (ev.pageX !== undefined) {
-      return ev.pageX;
+      return {x: ev.pageX, y: ev.pageY};
     }
   }
-  return 0;
+  return {x: 0, y: 0};
 }
 
 export function updateDetail(ev: any, detail: any) {
@@ -91,21 +106,6 @@ export function updateDetail(ev: any, detail: any) {
   }
   detail.currentX = x;
   detail.currentY = y;
-}
-
-export function pointerCoordY(ev: any): number {
-  // get Y coordinates for either a mouse click
-  // or a touch depending on the given event
-  if (ev) {
-    const changedTouches = ev.changedTouches;
-    if (changedTouches && changedTouches.length > 0) {
-      return changedTouches[0].clientY;
-    }
-    if (ev.pageY !== undefined) {
-      return ev.pageY;
-    }
-  }
-  return 0;
 }
 
 export type ElementRef = 'child' | 'parent' | 'body' | 'document' | 'window';
@@ -146,7 +146,7 @@ export function getPageElement(el: HTMLElement) {
   if (tabs) {
     return tabs;
   }
-  const page = el.closest('ion-page,.ion-page,page-inner');
+  const page = el.closest('ion-app,ion-page,.ion-page,page-inner');
   if (page) {
     return page;
   }
@@ -212,10 +212,6 @@ export function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolea
   return (!isMovingFast && isOnResetZone) || (isResetDirection && isMovingFast);
 }
 
-export function isReady(element: Element): Promise<any> {
-  return (element as StencilElement).componentOnReady();
-}
-
 export function getOrAppendElement(tagName: string): Element {
   const element = document.querySelector(tagName);
   if (element) {
@@ -270,10 +266,8 @@ export function reorderArray(array: any[], indexes: {from: number, to: number}):
 }
 
 export function playAnimationAsync(animation: Animation): Promise<Animation> {
-  return new Promise((resolve) => {
-    animation.onFinish((ani) => {
-      resolve(ani);
-    });
+  return new Promise(resolve => {
+    animation.onFinish(resolve);
     animation.play();
   });
 }
@@ -291,6 +285,18 @@ export function domControllerAsync(domControllerFunction: Function, callback?: F
   });
 }
 
+export function deferEvent(event: EventEmitter): EventEmitter {
+  return debounceEvent(event, 0);
+}
+
+export function debounceEvent(event: EventEmitter, wait: number): EventEmitter {
+  const original = (event as any)._original || event;
+  return {
+    _original: event,
+    emit: debounce(original.emit.bind(original), wait)
+  } as EventEmitter;
+}
+
 export function debounce(func: Function, wait = 0) {
   let timer: number;
   return (...args: any[]): void => {
@@ -299,11 +305,40 @@ export function debounce(func: Function, wait = 0) {
   };
 }
 
+export function asyncRaf(): Promise<number> {
+  return new Promise(resolve => requestAnimationFrame(resolve));
+}
+
 export function getNavAsChildIfExists(element: HTMLElement): HTMLIonNavElement|null {
   for (let i = 0; i < element.children.length; i++) {
     if (element.children[i].tagName.toLowerCase() === 'ion-nav') {
-      return element.children[i] as HTMLIonNavElement;
+      return element.children[i] as any as HTMLIonNavElement;
     }
   }
   return null;
+}
+
+export function normalizeUrl(url: string): string {
+  url = url.trim();
+  if (url.charAt(0) !== '/') {
+    // ensure first char is a /
+    url = '/' + url;
+  }
+  if (url.length > 1 && url.charAt(url.length - 1) === '/') {
+    // ensure last char is not a /
+    url = url.substr(0, url.length - 1);
+  }
+  return url;
+}
+
+export function isParentTab(element: HTMLElement) {
+  return element.parentElement.tagName.toLowerCase() === 'ion-tab';
+}
+
+export function getIonApp(): Promise<HTMLIonAppElement|null> {
+  const appElement = document.querySelector('ion-app');
+  if (!appElement) {
+    return Promise.resolve(null);
+  }
+  return appElement.componentOnReady();
 }

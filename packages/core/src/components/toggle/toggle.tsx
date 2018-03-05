@@ -2,7 +2,7 @@ import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEve
 import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { GestureDetail } from '../../index';
 import { hapticSelection } from '../../utils/haptic';
-import { debounce } from '../../utils/helpers';
+import { deferEvent } from '../../utils/helpers';
 
 
 @Component({
@@ -16,12 +16,12 @@ import { debounce } from '../../utils/helpers';
   }
 })
 export class Toggle implements CheckboxInput {
+
   private didLoad: boolean;
   private gestureConfig: any;
   private inputId: string;
   private nativeInput: HTMLInputElement;
   private pivotX: number;
-
 
   @State() activated = false;
 
@@ -29,7 +29,7 @@ export class Toggle implements CheckboxInput {
 
   /**
    * The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color: string;
@@ -88,6 +88,7 @@ export class Toggle implements CheckboxInput {
       'onMove': this.onDragMove.bind(this),
       'onEnd': this.onDragEnd.bind(this),
       'gestureName': 'toggle',
+      'passive': false,
       'gesturePriority': 30,
       'type': 'pan',
       'direction': 'x',
@@ -97,7 +98,7 @@ export class Toggle implements CheckboxInput {
   }
 
   componentWillLoad() {
-    this.ionStyle.emit = debounce(this.ionStyle.emit.bind(this.ionStyle));
+    this.ionStyle = deferEvent(this.ionStyle);
     this.inputId = `ion-tg-${toggleIds++}`;
     if (this.name === undefined) {
       this.name = this.inputId;
@@ -141,6 +142,10 @@ export class Toggle implements CheckboxInput {
   private onDragStart(detail: GestureDetail) {
     this.pivotX = detail.currentX;
     this.activated = true;
+
+    // touch-action does not work in iOS
+    detail.event.preventDefault();
+    return true;
   }
 
   private onDragMove(detail: GestureDetail) {

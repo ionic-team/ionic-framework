@@ -6,7 +6,7 @@
 ion-alert {
   @include position(0, 0, 0, 0);
 
-  position: absolute;
+  position: fixed;
 
   z-index: $z-index-overlay;
 
@@ -15,17 +15,18 @@ ion-alert {
   align-items: center;
   justify-content: center;
 
+  touch-action: none;
+
   contain: strict;
+
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
 }
 
 ion-alert.alert-top {
   @include padding(50px, null, null, null);
 
   align-items: flex-start;
-}
-
-ion-alert input {
-  width: 100%;
 }
 
 .alert-wrapper {
@@ -55,15 +56,25 @@ ion-alert input {
 }
 
 .alert-message {
-  overflow-y: scroll;
+  box-sizing: border-box;
 
   -webkit-overflow-scrolling: touch;
+
+  overflow-y: scroll;
+
+  overscroll-behavior-y: contain;
 }
 
 .alert-input {
   @include padding(10px, 0);
 
+  box-sizing: border-box;
+
+  width: 100%;
+
   border: 0;
+  font: inherit;
+
   background: inherit;
 }
 
@@ -92,6 +103,18 @@ ion-alert input {
   line-height: $alert-button-line-height;
 }
 
+.alert-button-inner {
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 100%;
+}
+
 .alert-tappable {
   @include text-align(start);
   @include appearance(none);
@@ -100,11 +123,12 @@ ion-alert input {
 
   width: 100%;
 
+  border: 0;
+
   font-size: inherit;
   line-height: initial;
   background: transparent;
 }
-
 
 .alert-button,
 .alert-checkbox,
@@ -114,4 +138,10 @@ ion-alert input {
   &:focus {
     outline: none;
   }
+}
+
+.alert-radio-icon,
+.alert-checkbox-icon,
+.alert-checkbox-inner {
+  box-sizing: border-box;
 }

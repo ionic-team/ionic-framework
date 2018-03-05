@@ -10,7 +10,7 @@
 
 <body>
   <ion-app>
-    <ion-page>
+
       <ion-header>
         <ion-toolbar>
           <ion-title>Modal - Basic</ion-title>
@@ -23,7 +23,7 @@
           <ion-button id="presentModal" class="e2ePresentModal" onclick="presentModal()">Present modal</ion-button>
         </p>
       </ion-content>
-    </ion-page>
+
   </ion-app>
 
   <script>
@@ -36,7 +36,7 @@
       await modalController.componentOnReady();
 
       // create component to open
-      const element = document.createElement('ion-page');
+      const element = document.createElement('div');
       element.innerHTML = `
       <ion-header>
         <ion-toolbar>

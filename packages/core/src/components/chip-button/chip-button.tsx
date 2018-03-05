@@ -1,4 +1,5 @@
-import { Component, CssClassMap, Element, Prop } from '@stencil/core';
+import { Component, Element, Prop } from '@stencil/core';
+import { CssClassMap } from '../../index';
 import { getButtonClassMap, getElementClassMap } from '../../utils/theme';
 
 @Component({
@@ -13,7 +14,7 @@ export class ChipButton {
 
   /**
    * The color to use.
-   * Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @Prop() color: string;
 
@@ -64,10 +65,10 @@ export class ChipButton {
         class={buttonClasses}
         disabled={this.disabled}
         href={this.href}>
-          <span class='button-inner'>
+          <span class='chip-button-inner'>
             <slot></slot>
           </span>
-          { this.mode === 'md' && <ion-ripple-effect useTapClick={true} /> }
+          { this.mode === 'md' && <ion-ripple-effect/> }
       </TagType>
     );
   }

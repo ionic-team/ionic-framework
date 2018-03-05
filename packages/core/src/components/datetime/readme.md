@@ -224,7 +224,7 @@ The text to display on the picker's cancel button. Default: `Cancel`.
 
 #### dayNames
 
-any
+
 
 Full day of the week names. This can be used to provide
 locale names for each day in the week. Defaults to English.
@@ -232,7 +232,7 @@ locale names for each day in the week. Defaults to English.
 
 #### dayShortNames
 
-any
+
 
 Short abbreviated day of the week names. This can be used to provide
 locale names for each day in the week. Defaults to English.
@@ -240,12 +240,12 @@ locale names for each day in the week. Defaults to English.
 
 #### dayValues
 
-any
+
 
 Values used to create the list of selectable days. By default
 every day is shown for the given month. However, to control exactly which days of
-the month to display, the `dayValues` input can take either an array of numbers, or
-string of comma separated numbers. Note that even if the array days have an invalid
+the month to display, the `dayValues` input can take a number, an array of numbers, or
+a string of comma separated numbers. Note that even if the array days have an invalid
 number for the selected month, like `31` in February, it will correctly not show
 days which are not valid for the selected month.
 
@@ -277,12 +277,12 @@ The text to display on the picker's "Done" button. Default: `Done`.
 
 #### hourValues
 
-any
+
 
 Values used to create the list of selectable hours. By default
 the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However,
-to control exactly which hours to display, the `hourValues` input can take either an
-array of numbers, or string of comma separated numbers.
+to control exactly which hours to display, the `hourValues` input can take a number, an
+array of numbers, or a string of comma separated numbers.
 
 
 #### max
@@ -311,18 +311,18 @@ Defaults to the beginning of the year, 100 years ago from today.
 
 #### minuteValues
 
-any
+
 
 Values used to create the list of selectable minutes. By default
 the mintues range from `0` to `59`. However, to control exactly which minutes to display,
-the `minuteValues` input can take either an array of numbers, or string of comma separated
-numbers. For example, if the minute selections should only be every 15 minutes, then
-this input value would be `minuteValues="0,15,30,45"`.
+the `minuteValues` input can take a number, an array of numbers, or a string of comma
+separated numbers. For example, if the minute selections should only be every 15 minutes,
+then this input value would be `minuteValues="0,15,30,45"`.
 
 
 #### monthNames
 
-any
+
 
 Full names for each month name. This can be used to provide
 locale month names. Defaults to English.
@@ -330,7 +330,7 @@ locale month names. Defaults to English.
 
 #### monthShortNames
 
-any
+
 
 Short abbreviated names for each month name. This can be used to provide
 locale month names. Defaults to English.
@@ -338,11 +338,11 @@ locale month names. Defaults to English.
 
 #### monthValues
 
-any
+
 
 Values used to create the list of selectable months. By default
 the month values range from `1` to `12`. However, to control exactly which months to
-display, the `monthValues` input can take either an array of numbers, or string of
+display, the `monthValues` input can take a number, an array of numbers, or a string of
 comma separated numbers. For example, if only summer months should be shown, then this
 input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a
 zero-based index, meaning January's value is `1`, and December's is `12`.
@@ -385,11 +385,11 @@ the value of the datetime.
 
 #### yearValues
 
-any
+
 
 Values used to create the list of selectable years. By default
 the year values range between the `min` and `max` datetime inputs. However, to
-control exactly which years to display, the `yearValues` input can take either an array
+control exactly which years to display, the `yearValues` input can take a number, an array
 of numbers, or string of comma separated numbers. For example, to show upcoming and
 recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
 
@@ -405,7 +405,7 @@ The text to display on the picker's cancel button. Default: `Cancel`.
 
 #### day-names
 
-any
+
 
 Full day of the week names. This can be used to provide
 locale names for each day in the week. Defaults to English.
@@ -413,7 +413,7 @@ locale names for each day in the week. Defaults to English.
 
 #### day-short-names
 
-any
+
 
 Short abbreviated day of the week names. This can be used to provide
 locale names for each day in the week. Defaults to English.
@@ -421,12 +421,12 @@ locale names for each day in the week. Defaults to English.
 
 #### day-values
 
-any
+
 
 Values used to create the list of selectable days. By default
 every day is shown for the given month. However, to control exactly which days of
-the month to display, the `dayValues` input can take either an array of numbers, or
-string of comma separated numbers. Note that even if the array days have an invalid
+the month to display, the `dayValues` input can take a number, an array of numbers, or
+a string of comma separated numbers. Note that even if the array days have an invalid
 number for the selected month, like `31` in February, it will correctly not show
 days which are not valid for the selected month.
 
@@ -458,12 +458,12 @@ The text to display on the picker's "Done" button. Default: `Done`.
 
 #### hour-values
 
-any
+
 
 Values used to create the list of selectable hours. By default
 the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However,
-to control exactly which hours to display, the `hourValues` input can take either an
-array of numbers, or string of comma separated numbers.
+to control exactly which hours to display, the `hourValues` input can take a number, an
+array of numbers, or a string of comma separated numbers.
 
 
 #### max
@@ -492,18 +492,18 @@ Defaults to the beginning of the year, 100 years ago from today.
 
 #### minute-values
 
-any
+
 
 Values used to create the list of selectable minutes. By default
 the mintues range from `0` to `59`. However, to control exactly which minutes to display,
-the `minuteValues` input can take either an array of numbers, or string of comma separated
-numbers. For example, if the minute selections should only be every 15 minutes, then
-this input value would be `minuteValues="0,15,30,45"`.
+the `minuteValues` input can take a number, an array of numbers, or a string of comma
+separated numbers. For example, if the minute selections should only be every 15 minutes,
+then this input value would be `minuteValues="0,15,30,45"`.
 
 
 #### month-names
 
-any
+
 
 Full names for each month name. This can be used to provide
 locale month names. Defaults to English.
@@ -511,7 +511,7 @@ locale month names. Defaults to English.
 
 #### month-short-names
 
-any
+
 
 Short abbreviated names for each month name. This can be used to provide
 locale month names. Defaults to English.
@@ -519,11 +519,11 @@ locale month names. Defaults to English.
 
 #### month-values
 
-any
+
 
 Values used to create the list of selectable months. By default
 the month values range from `1` to `12`. However, to control exactly which months to
-display, the `monthValues` input can take either an array of numbers, or string of
+display, the `monthValues` input can take a number, an array of numbers, or a string of
 comma separated numbers. For example, if only summer months should be shown, then this
 input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a
 zero-based index, meaning January's value is `1`, and December's is `12`.
@@ -566,11 +566,11 @@ the value of the datetime.
 
 #### year-values
 
-any
+
 
 Values used to create the list of selectable years. By default
 the year values range between the `min` and `max` datetime inputs. However, to
-control exactly which years to display, the `yearValues` input can take either an array
+control exactly which years to display, the `yearValues` input can take a number, an array
 of numbers, or string of comma separated numbers. For example, to show upcoming and
 recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
 
@@ -582,7 +582,12 @@ recent leap years, then this input's value would be `yearValues="2024,2020,2016,
 Emitted when the datetime selection was cancelled.
 
 
+#### ionStyle
+
+Emitted when the styles change.
+
+
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

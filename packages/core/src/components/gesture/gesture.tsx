@@ -1,10 +1,8 @@
-import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
-import { ElementRef, applyStyles, assert, getElementReference, now, updateDetail } from '../../utils/helpers';
-import { BLOCK_ALL, BlockerDelegate, GestureController, GestureDelegate } from '../gesture-controller/gesture-controller';
-import { DomController } from '../../index';
+import { Component, Event, EventEmitter, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
+import { ElementRef, assert, now, updateDetail } from '../../utils/helpers';
+import { BlockerDelegate, DomController, GestureDelegate } from '../../index';
+import { BLOCK_ALL } from '../gesture-controller/gesture-controller-utils';
 import { PanRecognizer } from './recognizers';
-
-declare const Ionic: { gesture: GestureController };
 
 
 @Component({
@@ -12,9 +10,8 @@ declare const Ionic: { gesture: GestureController };
 })
 export class Gesture {
 
-  private detail: GestureDetail = {};
+  private detail: GestureDetail;
   private positions: number[] = [];
-  private ctrl: GestureController;
   private gesture: GestureDelegate;
   private lastTouch = 0;
   private pan: PanRecognizer;
@@ -23,17 +20,15 @@ export class Gesture {
   private hasStartedPan = false;
   private hasFiredStart = true;
   private isMoveQueued = false;
-  private blocker: BlockerDelegate;
+  private blocker: BlockerDelegate|undefined;
 
-  @Element() private el: HTMLElement;
-
+  @Prop({ connect: 'ion-gesture-controller' }) gestureCtrl: HTMLIonGestureControllerElement;
   @Prop({ context: 'dom' }) dom: DomController;
   @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
 
   @Prop() disabled = false;
   @Prop() attachTo: ElementRef = 'child';
   @Prop() autoBlockAll = false;
-  @Prop() block: string = null;
   @Prop() disableScroll = false;
   @Prop() direction = 'x';
   @Prop() gestureName = '';
@@ -76,13 +71,36 @@ export class Gesture {
    */
   @Event() ionPress: EventEmitter;
 
+  constructor() {
+    this.detail = {
+      type: 'pan',
+      startX: 0,
+      startY: 0,
+      startTimeStamp: 0,
+      currentX: 0,
+      currentY: 0,
+      velocityX: 0,
+      velocityY: 0,
+      deltaX: 0,
+      deltaY: 0,
+      timeStamp: 0,
+      event: undefined as any,
+      data: undefined,
+    };
+  }
+
+  componentWillLoad() {
+    return this.gestureCtrl.create({
+      name: this.gestureName,
+      priority: this.gesturePriority,
+      disableScroll: this.disableScroll
+    }).then((gesture) => this.gesture = gesture);
+  }
 
   componentDidLoad() {
     // in this case, we already know the GestureController and Gesture are already
     // apart of the same bundle, so it's safe to load it this way
     // only create one instance of GestureController, and reuse the same one later
-    this.ctrl = Ionic.gesture = Ionic.gesture || new GestureController();
-    this.gesture = this.ctrl.createGesture(this.gestureName, this.gesturePriority, this.disableScroll);
 
     const types = this.type.replace(/\s/g, '').toLowerCase().split(',');
     if (types.indexOf('pan') > -1) {
@@ -91,15 +109,11 @@ export class Gesture {
     this.hasPress = (types.indexOf('press') > -1);
 
     this.disabledChanged(this.disabled);
-    if (this.pan || this.hasPress) {
-      this.dom.write(() => {
-        applyStyles(getElementReference(this.el, this.attachTo), GESTURE_INLINE_STYLES);
-      });
-    }
 
     if (this.autoBlockAll) {
-      this.blocker = this.ctrl.createBlocker(BLOCK_ALL);
-      this.blocker.block();
+      this.gestureCtrl.componentOnReady()
+        .then(ctrl => ctrl.createBlocker(BLOCK_ALL))
+        .then(blocker => this.blocker = blocker);
     }
   }
 
@@ -111,16 +125,6 @@ export class Gesture {
       if (isDisabled) {
         this.abortGesture();
       }
-    }
-  }
-
-  @Watch('block')
-  protected blockChanged(block: string) {
-    if (this.blocker) {
-      this.blocker.destroy();
-    }
-    if (block) {
-      this.blocker = this.ctrl.createBlocker({ disable: block.split(',')});
     }
   }
 
@@ -294,7 +298,7 @@ export class Gesture {
   }
 
   private tryToCapturePan(): boolean {
-    if (this.gesture && !this.gesture.capture()) {
+    if (!this.gesture.capture()) {
       return false;
     }
     this.hasCapturedPan = true;
@@ -346,22 +350,13 @@ export class Gesture {
   // END *************************
 
   @Listen('touchcancel', { passive: true, enabled: false })
+  @Listen('touchend', { passive: true, enabled: false })
   onTouchCancel(ev: TouchEvent) {
     this.lastTouch = this.detail.timeStamp = now(ev);
 
     this.pointerUp(ev);
     this.enableTouch(false);
   }
-
-
-  @Listen('touchend', { passive: true, enabled: false })
-  onTouchEnd(ev: TouchEvent) {
-    this.lastTouch = this.detail.timeStamp = now(ev);
-
-    this.pointerUp(ev);
-    this.enableTouch(false);
-  }
-
 
   @Listen('document:mouseup', { passive: true, enabled: false })
   onMouseUp(ev: TouchEvent) {
@@ -456,38 +451,30 @@ export class Gesture {
   componentDidUnload() {
     if (this.blocker) {
       this.blocker.destroy();
-      this.blocker = null;
+      this.blocker = undefined;
     }
-    this.gesture && this.gesture.destroy();
-    this.ctrl = this.gesture = this.pan = this.detail = this.detail.event = null;
+    this.gesture.destroy();
   }
 
 }
 
 
-const GESTURE_INLINE_STYLES = {
-  'touch-action': 'none',
-  'user-select': 'none',
-  '-webkit-user-drag': 'none',
-  '-webkit-tap-highlight-color': 'rgba(0,0,0,0)'
-};
-
 const MOUSE_WAIT = 2500;
 
 
 export interface GestureDetail {
-  type?: string;
-  event?: UIEvent;
-  startX?: number;
-  startY?: number;
-  startTimeStamp?: number;
-  currentX?: number;
-  currentY?: number;
-  velocityX?: number;
-  velocityY?: number;
-  deltaX?: number;
-  deltaY?: number;
-  timeStamp?: number;
+  type: string;
+  startX: number;
+  startY: number;
+  startTimeStamp: number;
+  currentX: number;
+  currentY: number;
+  velocityX: number;
+  velocityY: number;
+  deltaX: number;
+  deltaY: number;
+  timeStamp: number;
+  event: UIEvent;
   data?: any;
 }
 

@@ -1,73 +1,51 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { PickerEvent, PickerOptions } from '../../index';
+import { OverlayController, PickerEvent, PickerOptions } from '../../index';
+import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
-let ids = 0;
-const pickers = new Map<number, HTMLIonPickerElement>();
 
 @Component({
   tag: 'ion-picker-controller'
 })
-export class PickerController {
+export class PickerController implements OverlayController {
 
-  @Method()
-  create(opts?: PickerOptions): Promise<HTMLIonPickerElement> {
-    // create ionic's wrapping ion-picker component
-    const pickerElement = document.createElement('ion-picker');
-
-    // give this picker a unique id
-    pickerElement.pickerId = ids++;
-
-    // convert the passed in picker options into props
-    // that get passed down into the new picker
-    Object.assign(pickerElement, opts);
-
-    // append the picker element to the document body
-    const appRoot = document.querySelector('ion-app') || document.body;
-    appRoot.appendChild(pickerElement);
-
-    return (pickerElement as any).componentOnReady();
-  }
-
-  @Method()
-  dismiss(data?: any, role?: any, pickerId = -1) {
-    pickerId = pickerId >= 0 ? pickerId : getHighestId();
-    const picker = pickers.get(pickerId);
-    if (!picker) {
-      return Promise.reject('picker does not exist');
-    }
-    return picker.dismiss(data, role);
-  }
-
+  private pickers = new Map<number, HTMLIonPickerElement>();
 
   @Listen('body:ionPickerWillPresent')
   protected pickerWillPresent(ev: PickerEvent) {
-    pickers.set(ev.target.pickerId, ev.target);
+    this.pickers.set(ev.target.overlayId, ev.target);
   }
-
 
   @Listen('body:ionPickerWillDismiss, body:ionPickerDidUnload')
   protected pickerWillDismiss(ev: PickerEvent) {
-    pickers.delete(ev.target.pickerId);
+    this.pickers.delete(ev.target.overlayId);
   }
-
 
   @Listen('body:keyup.escape')
   protected escapeKeyUp() {
-    removeLastPicker();
+    removeLastOverlay(this.pickers);
   }
-}
 
-function getHighestId() {
-  let minimum = -1;
-  pickers.forEach((_picker: HTMLIonPickerElement, id: number) => {
-    if (id > minimum) {
-      minimum = id;
-    }
-  });
-  return minimum;
-}
+  /*
+   * Create a picker overlay with picker options.
+   */
+  @Method()
+  create(opts?: PickerOptions): Promise<HTMLIonPickerElement> {
+    return createOverlay('ion-picker', opts);
+  }
 
-function removeLastPicker() {
-  const toRemove = pickers.get(getHighestId());
-  return toRemove ? toRemove.dismiss() : Promise.resolve();
+  /*
+   * Dismiss the open picker overlay.
+   */
+  @Method()
+  dismiss(data?: any, role?: string, pickerId = -1) {
+    return dismissOverlay(data, role, this.pickers, pickerId);
+  }
+
+  /*
+   * Get the most recently opened picker overlay.
+   */
+  @Method()
+  getTop(): HTMLIonPickerElement {
+    return getTopOverlay(this.pickers);
+  }
 }

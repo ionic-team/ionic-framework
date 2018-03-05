@@ -4,9 +4,9 @@ import {
   ComponentRef,
   Injector
 } from '@angular/core';
-import { ActivatedRoute } from '@danbucholtz/ng-router';
+import { ActivatedRoute } from '@angular/router';
 
-import { FrameworkMountingData } from '@ionic/core';
+import { EscapeHatch, FrameworkMountingData} from '@ionic/core';
 
 export interface AngularMountingData extends FrameworkMountingData {
   componentFactory?: ComponentFactory<any>;
@@ -16,8 +16,20 @@ export interface AngularMountingData extends FrameworkMountingData {
   angularHostElement?: HTMLElement;
 }
 
-export interface AngularEscapeHatch {
+export interface AngularEscapeHatch extends EscapeHatch {
   activatedRoute?: ActivatedRoute;
   cfr?: ComponentFactoryResolver;
   injector?: Injector;
+}
+
+export interface IonicGlobal {
+  config: any;
+  ael: (elm: any, eventName: string, cb: Function, opts: any) => void;
+  raf: Function;
+  rel: (elm: any, eventName: string, cb: Function, opts: any) => void;
+}
+
+export interface IonicWindow extends Window {
+  Ionic: IonicGlobal;
+  __zone_symbol__requestAnimationFrame: Function;
 }

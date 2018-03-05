@@ -8,7 +8,7 @@
 </head>
 <body>
   <ion-app>
-    <ion-page>
+
       <ion-header>
         <ion-toolbar>
           <ion-title>Select - Basic</ion-title>
@@ -207,10 +207,36 @@
           <ion-item>
             <ion-label>Disabled</ion-label>
             <ion-select multiple disabled="true">
-              <ion-select-option checked="true">Selected Text</ion-select-option>
+              <ion-select-option selected="true">Selected Text</ion-select-option>
             </ion-select>
           </ion-item>
 
+          <ion-item>
+            <ion-label stacked>Stacked</ion-label>
+            <ion-select>
+              <ion-select-option>Default</ion-select-option>
+              <ion-select-option>Other</ion-select-option>
+              <ion-select-option>N/A</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label floating>Floating</ion-label>
+            <ion-select>
+              <ion-select-option>Default</ion-select-option>
+              <ion-select-option>Other</ion-select-option>
+              <ion-select-option>N/A</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label floating>Floating</ion-label>
+            <ion-select>
+              <ion-select-option selected="true">Default</ion-select-option>
+              <ion-select-option>Other</ion-select-option>
+              <ion-select-option>N/A</ion-select-option>
+            </ion-select>
+          </ion-item>
         </ion-list>
 
         <div text-center>
@@ -220,7 +246,6 @@
         </div>
 
       </ion-content>
-    </ion-page>
 
     <script>
       var pets = document.getElementById('pets');

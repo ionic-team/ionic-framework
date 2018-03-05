@@ -1,0 +1,9 @@
+
+// Item Mixins
+// --------------------------------------------------
+
+@mixin item-push-svg-url($fill) {
+  $item-detail-push-svg: "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$fill}'/></svg>";
+
+  @include svg-background-image($item-detail-push-svg, true);
+}

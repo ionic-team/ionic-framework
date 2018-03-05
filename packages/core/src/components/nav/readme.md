@@ -27,6 +27,16 @@ string
 any
 
 
+#### routerDelegate
+
+
+
+
+#### swipeBackEnabled
+
+boolean
+
+
 #### useUrls
 
 boolean
@@ -54,6 +64,16 @@ string
 any
 
 
+#### router-delegate
+
+
+
+
+#### swipe-back-enabled
+
+boolean
+
+
 #### use-urls
 
 boolean
@@ -69,13 +89,13 @@ boolean
 
 ## Methods
 
+#### activateFromTab()
+
+
 #### canGoBack()
 
 
-#### canSwipeBack()
-
-
-#### clearTransitionInfoForUrl()
+#### first()
 
 
 #### getActive()
@@ -84,7 +104,7 @@ boolean
 #### getChildNavs()
 
 
-#### getFirstView()
+#### getContentElement()
 
 
 #### getId()
@@ -93,13 +113,7 @@ boolean
 #### getPrevious()
 
 
-#### getRoutes()
-
-
-#### getState()
-
-
-#### getTransitionInfoForUrl()
+#### getRouteId()
 
 
 #### getViews()
@@ -114,6 +128,12 @@ boolean
 #### isTransitioning()
 
 
+#### last()
+
+
+#### onAllTransitionsComplete()
+
+
 #### pop()
 
 
@@ -124,6 +144,9 @@ boolean
 
 
 #### push()
+
+
+#### reconcileFromExternalRouter()
 
 
 #### removeIndex()
@@ -147,4 +170,4 @@ boolean
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

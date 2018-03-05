@@ -1,20 +1,23 @@
-import { Component, Element, State } from '@stencil/core';
+import { Component, Element } from '@stencil/core';
 
 
 @Component({
   tag: 'ion-reorder',
-  styleUrl: 'reorder.scss',
+  styleUrls: {
+    ios: 'reorder.ios.scss',
+    md: 'reorder.md.scss',
+  },
   host: {
     theme: 'reorder'
   }
 })
 export class Reorder {
 
+  private custom = true;
+
   @Element() private el: HTMLElement;
 
-  @State() custom: boolean;
-
-  componentDidLoad() {
+  componentWillLoad() {
     this.custom = this.el.childElementCount > 0;
   }
 
@@ -29,14 +32,9 @@ export class Reorder {
   }
 
   render() {
-    // TODO: https://github.com/ionic-team/stencil/issues/171
-    if (this.custom === true) {
-      return <slot></slot>;
-    } else if (this.custom === false) {
-      return <ion-icon class='reorder-icon' name='reorder'></ion-icon>;
-    } else {
-      return undefined;
-    }
+    return (this.custom)
+      ? <slot/>
+      : <ion-icon class='reorder-icon' name='reorder'/>;
   }
 
 }

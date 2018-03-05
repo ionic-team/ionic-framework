@@ -11,10 +11,10 @@
 
 boolean
 
-If true, adds transparency to the header.
+If true, the header will be translucent.
 Note: In order to scroll content behind the header, the `fullscreen`
 attribute needs to be set on the content.
-Only affects `ios` mode. Defaults to `false`.
+Defaults to `false`.
 
 
 ## Attributes
@@ -23,13 +23,13 @@ Only affects `ios` mode. Defaults to `false`.
 
 boolean
 
-If true, adds transparency to the header.
+If true, the header will be translucent.
 Note: In order to scroll content behind the header, the `fullscreen`
 attribute needs to be set on the content.
-Only affects `ios` mode. Defaults to `false`.
+Defaults to `false`.
 
 
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

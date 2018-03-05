@@ -23,17 +23,17 @@
         <ion-content>
           <ion-list>
             <ion-item>Open Right Menu</ion-item>
-            <ion-item detail-none>Close Menu</ion-item>
-            <ion-item detail-none>Close Menu</ion-item>
-            <ion-item detail-none>Close Menu</ion-item>
-            <ion-item detail-none>Close Menu</ion-item>
-            <ion-item detail-none>Close Menu</ion-item>
-            <ion-item detail-none>Close Menu</ion-item>
-            <ion-item detail-none>Close Menu</ion-item>
-            <ion-item detail-none>Close Menu</ion-item>
-            <ion-item detail-none>Close Menu</ion-item>
-            <ion-item detail-none>Close Menu</ion-item>
-            <ion-item detail-none>Close Menu</ion-item>
+            <ion-item>Close Menu</ion-item>
+            <ion-item>Close Menu</ion-item>
+            <ion-item>Close Menu</ion-item>
+            <ion-item>Close Menu</ion-item>
+            <ion-item>Close Menu</ion-item>
+            <ion-item>Close Menu</ion-item>
+            <ion-item>Close Menu</ion-item>
+            <ion-item>Close Menu</ion-item>
+            <ion-item>Close Menu</ion-item>
+            <ion-item>Close Menu</ion-item>
+            <ion-item>Close Menu</ion-item>
           </ion-list>
         </ion-content>
 
@@ -45,13 +45,17 @@
 
       </ion-menu>
 
-      <ion-page main>
+      <div class='ion-page' main>
 
         <ion-header>
           <ion-toolbar>
+
             <ion-buttons slot="start">
-              <ion-button onclick="openLeft()"><ion-icon slot="icon-only" name="menu"></ion-icon></ion-button>
+              <ion-menu-toggle>
+                <ion-button><ion-icon slot="icon-only" name="menu"></ion-icon></ion-button>
+              </ion-menu-toggle>
             </ion-buttons>
+
             <ion-title>Navigation</ion-title>
           </ion-toolbar>
         </ion-header>
@@ -66,7 +70,7 @@
           <f></f>
         </ion-content>
 
-      </ion-page>
+      </div>
     </ion-split-pane>
 
   </ion-app>

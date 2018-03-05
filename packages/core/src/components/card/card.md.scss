@@ -23,11 +23,11 @@
 
 .card-md > .item:last-child,
 .card-md > .item:last-child .item-inner,
-.card-md > .item-wrapper:last-child .item {
+.card-md > .item-sliding:last-child .item {
   border-bottom: 0;
 }
 
-.card-md .item-md.item-block .item-inner {
+.card-md .item-md .item-inner {
   border: 0;
 }
 

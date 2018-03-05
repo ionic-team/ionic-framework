@@ -1,4 +1,5 @@
-import { Component, CssClassMap, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { CssClassMap } from '../../index';
 
 import {
   DatetimeData,
@@ -52,6 +53,11 @@ export class Datetime {
    */
   @Prop() disabled = false;
 
+  @Watch('disabled')
+  protected disabledChanged() {
+    this.emitStyle();
+  }
+
   /**
    * The minimum datetime allowed. Value must be a date string
    * following the
@@ -104,72 +110,72 @@ export class Datetime {
   /**
    * Values used to create the list of selectable years. By default
    * the year values range between the `min` and `max` datetime inputs. However, to
-   * control exactly which years to display, the `yearValues` input can take either an array
+   * control exactly which years to display, the `yearValues` input can take a number, an array
    * of numbers, or string of comma separated numbers. For example, to show upcoming and
    * recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
    */
-  @Prop() yearValues: any;
+  @Prop() yearValues: number[] | number | string;
 
   /**
    * Values used to create the list of selectable months. By default
    * the month values range from `1` to `12`. However, to control exactly which months to
-   * display, the `monthValues` input can take either an array of numbers, or string of
+   * display, the `monthValues` input can take a number, an array of numbers, or a string of
    * comma separated numbers. For example, if only summer months should be shown, then this
    * input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a
    * zero-based index, meaning January's value is `1`, and December's is `12`.
    */
-  @Prop() monthValues: any;
+  @Prop() monthValues: number[] | number | string;
 
   /**
    * Values used to create the list of selectable days. By default
    * every day is shown for the given month. However, to control exactly which days of
-   * the month to display, the `dayValues` input can take either an array of numbers, or
-   * string of comma separated numbers. Note that even if the array days have an invalid
+   * the month to display, the `dayValues` input can take a number, an array of numbers, or
+   * a string of comma separated numbers. Note that even if the array days have an invalid
    * number for the selected month, like `31` in February, it will correctly not show
    * days which are not valid for the selected month.
    */
-  @Prop() dayValues: any;
+  @Prop() dayValues: number[] | number | string;
 
   /**
    * Values used to create the list of selectable hours. By default
    * the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However,
-   * to control exactly which hours to display, the `hourValues` input can take either an
-   * array of numbers, or string of comma separated numbers.
+   * to control exactly which hours to display, the `hourValues` input can take a number, an
+   * array of numbers, or a string of comma separated numbers.
    */
-  @Prop() hourValues: any;
+  @Prop() hourValues: number[] | number | string;
 
   /**
    * Values used to create the list of selectable minutes. By default
    * the mintues range from `0` to `59`. However, to control exactly which minutes to display,
-   * the `minuteValues` input can take either an array of numbers, or string of comma separated
-   * numbers. For example, if the minute selections should only be every 15 minutes, then
-   * this input value would be `minuteValues="0,15,30,45"`.
+   * the `minuteValues` input can take a number, an array of numbers, or a string of comma
+   * separated numbers. For example, if the minute selections should only be every 15 minutes,
+   * then this input value would be `minuteValues="0,15,30,45"`.
    */
-  @Prop() minuteValues: any;
+  @Prop() minuteValues: number[] | number | string;
 
   /**
    * Full names for each month name. This can be used to provide
    * locale month names. Defaults to English.
    */
-  @Prop() monthNames: any;
+  @Prop() monthNames: string[] | string;
 
   /**
    * Short abbreviated names for each month name. This can be used to provide
    * locale month names. Defaults to English.
    */
-  @Prop() monthShortNames: any;
+  @Prop() monthShortNames: string[] | string;
 
   /**
    * Full day of the week names. This can be used to provide
    * locale names for each day in the week. Defaults to English.
    */
-  @Prop() dayNames: any;
+  @Prop() dayNames: string[] | string;
 
   /**
    * Short abbreviated day of the week names. This can be used to provide
    * locale names for each day in the week. Defaults to English.
    */
-  @Prop() dayShortNames: any;
+  @Prop() dayShortNames: string[] | string;
 
   /**
    * Any additional options that the picker interface can accept.
@@ -197,12 +203,19 @@ export class Datetime {
   @Watch('value')
   protected valueChanged() {
     this.updateValue();
+    this.emitStyle();
   }
 
   /**
    * Emitted when the datetime selection was cancelled.
    */
   @Event() ionCancel: EventEmitter;
+
+  /**
+   * Emitted when the styles change.
+   */
+  @Event() ionStyle: EventEmitter;
+
 
   componentWillLoad() {
     // first see if locale names were provided in the inputs
@@ -219,6 +232,22 @@ export class Datetime {
     this.updateValue();
   }
 
+  componentDidLoad() {
+    this.emitStyle();
+  }
+
+  emitStyle() {
+    clearTimeout(this.styleTmr);
+
+    this.styleTmr = setTimeout(() => {
+      this.ionStyle.emit({
+        'datetime': true,
+        'datetime-disabled': this.disabled,
+        'input-has-value': this.hasValue()
+      });
+    });
+  }
+
   /**
    * Update the datetime text and datetime value
    */
@@ -232,15 +261,18 @@ export class Datetime {
 
     // If the user has not passed in picker buttons,
     // add a cancel and ok button to the picker
-    if (pickerOptions.buttons.length === 0) {
-      pickerOptions.buttons = [{
-        text: this.cancelText,
-        role: 'cancel',
-        handler: () => this.ionCancel.emit(this)
-      }, {
-        text: this.doneText,
-        handler: (data: any) => this.value = data,
-      }];
+    const buttons = pickerOptions.buttons;
+    if (!buttons || buttons.length === 0) {
+      pickerOptions.buttons = [
+        {
+          text: this.cancelText,
+          role: 'cancel',
+          handler: () => this.ionCancel.emit(this)
+        },
+        {
+          text: this.doneText,
+          handler: (data: any) => this.value = data,
+        }];
     }
 
     pickerOptions.columns = this.generateColumns();
@@ -588,12 +620,14 @@ export class Datetime {
     return [
       <div class={ datetimeTextClasses }>{ datetimeText }</div>,
       <button
+        type='button'
         aria-haspopup='true'
         id={this.datetimeId}
         aria-labelledby={this.labelId}
         aria-disabled={this.disabled ? 'true' : false}
         onClick={this.open.bind(this)}
         class='datetime-cover'>
+        {this.mode === 'md' ? <ion-ripple-effect /> : null}
       </button>
     ];
   }

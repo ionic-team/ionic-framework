@@ -4,7 +4,6 @@ import {
   Injectable,
   Injector,
   NgZone,
-  ReflectiveInjector,
   Type
 } from '@angular/core';
 
@@ -43,13 +42,13 @@ export class AngularComponentMounter {
 
   attachViewToDomImpl(crf: ComponentFactoryResolver, parentElement: HTMLElement, hostElement: HTMLElement, componentToMount: Type<any>, injector: Injector, appRef: ApplicationRef, data: any, classesToAdd: string[]): AngularMountingData {
 
-    const componentProviders = ReflectiveInjector.resolve(getProviders(parentElement, data));
+
     const componentFactory = crf.resolveComponentFactory(componentToMount);
     if (!hostElement) {
       hostElement = document.createElement(componentFactory.selector);
     }
 
-    const childInjector = ReflectiveInjector.fromResolvedProviders(componentProviders, injector);
+    const childInjector = Injector.create(getProviders(parentElement, data), injector);
     const componentRef = componentFactory.create(childInjector, [], hostElement);
     for (const clazz of classesToAdd) {
       hostElement.classList.add(clazz);

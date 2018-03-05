@@ -1,7 +1,13 @@
 import { Transition } from './nav-interfaces';
-import { Animation, AnimationOptions, Config, Nav, RouterEntry, TransitionBuilder, ViewController } from '../../index';
+import { Animation, AnimationOptions, Config, Nav, TransitionBuilder, ViewController } from '../../index';
 import { isDef } from '../../utils/helpers';
 
+export enum State {
+  New,
+  INITIALIZED,
+  ATTACHED,
+  DESTROYED,
+}
 export const STATE_NEW = 1;
 export const STATE_INITIALIZED = 2;
 export const STATE_ATTACHED = 3;
@@ -23,22 +29,12 @@ export let VIEW_ID_START = 2000;
 let transitionIds = 0;
 const activeTransitions = new Map<number, any>();
 
-let portalZindex = 9999;
-
 export function isViewController(object: any): boolean {
   return !!(object && object.didLoad && object.willUnload);
 }
 
 export function setZIndex(nav: Nav, enteringView: ViewController, leavingView: ViewController, direction: string) {
   if (enteringView) {
-    if (nav.isPortal) {
-      if (direction === DIRECTION_FORWARD) {
-        // TODO - fix typing
-        updateZIndex(enteringView, (nav as any).zIndexOffset + portalZindex);
-      }
-      portalZindex++;
-      return;
-    }
 
     leavingView = leavingView || nav.getPrevious(enteringView) as ViewController;
 
@@ -64,17 +60,15 @@ export function updateZIndex(viewController: ViewController, newZIndex: number) 
   }
 }
 
-export function toggleHidden(element: HTMLElement, isVisible: Boolean, shouldBeVisible: boolean) {
-  if (isVisible !== shouldBeVisible) {
-    element.hidden = shouldBeVisible;
-  }
+export function toggleHidden(element: HTMLElement, shouldBeHidden: boolean) {
+    element.hidden = shouldBeHidden;
 }
 
-export function canNavGoBack(nav: Nav) {
+export function canNavGoBack(nav: Nav, view?: ViewController) {
   if (!nav) {
     return false;
   }
-  return !!nav.getPrevious();
+  return !!nav.getPrevious(view);
 }
 
 export function transitionFactory(animation: Animation): Transition {
@@ -133,20 +127,28 @@ export function destroyTransition(transitionId: number) {
 }
 
 export function getHydratedTransition(name: string, config: Config, transitionId: number, emptyTransition: Transition, enteringView: ViewController, leavingView: ViewController, opts: AnimationOptions, defaultTransitionFactory: TransitionBuilder): Promise<Transition> {
-
+  // Let makes sure everything is hydrated and ready to animate
+  const componentReadyPromise: Promise<any>[] = [];
+  if (enteringView && (enteringView.element as any).componentOnReady) {
+    componentReadyPromise.push((enteringView.element as any).componentOnReady());
+  }
+  if (leavingView && (leavingView.element as any).componentOnReady) {
+    componentReadyPromise.push((leavingView.element as any).componentOnReady());
+  }
   const transitionFactory = config.get(name) as TransitionBuilder || defaultTransitionFactory;
-
-  return transitionFactory(emptyTransition, enteringView, leavingView, opts).then((hydratedTransition) => {
-    hydratedTransition.transitionId = transitionId;
-    if (!activeTransitions.has(transitionId)) {
-      // sweet, this is the root transition
-      activeTransitions.set(transitionId, hydratedTransition);
-    } else {
-      // we've got a parent transition going
-      // just append this transition to the existing one
-      activeTransitions.get(transitionId).add(hydratedTransition);
-    }
-    return hydratedTransition;
+  return Promise.all(componentReadyPromise)
+    .then(() => transitionFactory(emptyTransition, enteringView, leavingView, opts))
+    .then((hydratedTransition) => {
+      hydratedTransition.transitionId = transitionId;
+      if (!activeTransitions.has(transitionId)) {
+        // sweet, this is the root transition
+        activeTransitions.set(transitionId, hydratedTransition);
+      } else {
+        // we've got a parent transition going
+        // just append this transition to the existing one
+        activeTransitions.get(transitionId).add(hydratedTransition);
+      }
+      return hydratedTransition;
   });
 }
 
@@ -159,7 +161,11 @@ export function canSwipeBack(_nav: Nav) {
 }
 
 export function getFirstView(nav: Nav): ViewController {
-  return nav.views && nav.views.length > 0 ? nav.views[0] : null;
+  return nav.views && nav.views.length ? nav.views[0] : null;
+}
+
+export function getLastView(nav: Nav): ViewController {
+  return nav.views && nav.views.length ? nav.views[nav.views.length - 1] : null;
 }
 
 export function getActiveChildNavs(nav: Nav): Nav[] {
@@ -183,10 +189,6 @@ export function getPreviousImpl(nav: Nav, viewController: ViewController): ViewC
 
 export function getNextNavId() {
   return navControllerIds++;
-}
-
-export function resolveRoute(nav: Nav, component: string): RouterEntry {
-  return nav.routes.find(r => r.id === component);
 }
 
 let navControllerIds = NAV_ID_START;

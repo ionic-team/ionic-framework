@@ -2,7 +2,6 @@
 
 // Item Sliding
 // --------------------------------------------------
-// The hidden right-side buttons that can be exposed under a list item with dragging.
 
 ion-item-sliding {
   position: relative;
@@ -12,95 +11,7 @@ ion-item-sliding {
   width: 100%;
 }
 
-ion-item-options {
-  position: absolute;
-  z-index: $z-index-item-options;
-  display: none;
-
-  height: 100%;
-
-  font-size: 14px;
-  visibility: hidden;
-
-  @include multi-dir() {
-    // scss-lint:disable PropertySpelling
-    top: 0;
-
-    right: 0;
-  }
-
-  @include ltr() {
-    justify-content: flex-end;
-  }
-
-  @include rtl() {
-    justify-content: flex-start;
-
-    &:not([side=right]) {
-      // scss-lint:disable PropertySpelling
-      right: auto;
-      left: 0;
-
-      justify-content: flex-end;
-    }
-  }
-}
-
-ion-item-options[side=left] {
-  @include multi-dir() {
-    // scss-lint:disable PropertySpelling
-    right: auto;
-    left: 0;
-  }
-
-  @include ltr() {
-    justify-content: flex-start;
-  }
-
-  @include rtl() {
-    justify-content: flex-end;
-  }
-}
-
-
-ion-item-option {
-  @include padding(0, .7em);
-
-  position: relative;
-  display: flex;
-
-  align-items: center;
-
-  min-width: 60px;
-}
-
-.item-option-button {
-  @include position(0, 0, 0, 0);
-  @include margin(0);
-  @include padding(0);
-  @include border-radius(0);
-
-  position: absolute;
-
-  border: 0;
-  background: none;
-}
-
-ion-item-options:not([icon-start]) ion-item-option:not([icon-only]) {
-  .button-inner {
-    flex-direction: column;
-  }
-}
-
-ion-item-sliding.active-slide {
-  @include rtl() {
-    &.active-options-left ion-item-options:not([side=right]) {
-      width: 100%;
-
-      visibility: visible;
-     }
-  }
-
+.item-sliding-active-slide {
   ion-item,
   ion-item.activated {
     position: relative;
@@ -112,63 +23,5 @@ ion-item-sliding.active-slide {
     pointer-events: none;
 
     will-change: transform;
-  }
-
-  ion-item-options {
-    display: flex;
-  }
-
-  &.active-options-left ion-item-options[side=left],
-  &.active-options-right ion-item-options:not([side=left]) {
-    width: 100%;
-
-    visibility: visible;
-  }
-}
-
-// Item Expandable Animation
-// --------------------------------------------------
-
-ion-item-option[expandable] {
-  flex-shrink: 0;
-
-  transition-duration: 0;
-  transition-property: none;
-  transition-timing-function: cubic-bezier(.65, .05, .36, 1);
-}
-
-ion-item-sliding.active-swipe-right ion-item-option[expandable] {
-  transition-duration: .6s;
-  transition-property: padding-left;
-
-  @include multi-dir() {
-    // scss-lint:disable PropertySpelling
-    padding-left: 90%;
-  }
-
-  @include ltr() {
-    order: 1;
-  }
-
-  @include rtl() {
-    order: -1;
-  }
-}
-
-ion-item-sliding.active-swipe-left ion-item-option[expandable] {
-  transition-duration: .6s;
-  transition-property: padding-right;
-
-  @include multi-dir() {
-    // scss-lint:disable PropertySpelling
-    padding-right: 90%;
-  }
-
-  @include ltr() {
-    order: -1;
-  }
-
-  @include rtl() {
-    order: 1;
   }
 }

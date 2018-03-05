@@ -1,0 +1,16 @@
+@import "./scroll";
+@import "./scroll.md.vars";
+
+// Material Design Content
+// --------------------------------------------------
+
+.scroll-md {
+  font-family: $content-md-font-family;
+
+  color: $text-md-color;
+  background-color: $background-md-color;
+
+  hr {
+    background-color: $background-md-color-step-50;
+  }
+}

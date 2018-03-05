@@ -12,18 +12,13 @@ Badges are inline block elements that usually appear near another element. Typic
 <ion-badge color="danger">44</ion-badge>
 <ion-badge color="light">55</ion-badge>
 <ion-badge color="dark">66</ion-badge>
-```
 
-```html
-<ion-content>
-  <ion-list>
-    <ion-item>
-      <ion-badge slot="start">11</ion-badge>
-      <ion-label>My Item</ion-label>
-      <ion-badge slot="end">22</ion-badge>
-    </ion-item>
-  </ion-list>
-</ion-content>
+<!-- Item with badge on left and right -->
+<ion-item>
+  <ion-badge slot="start">11</ion-badge>
+  <ion-label>My Item</ion-label>
+  <ion-badge slot="end">22</ion-badge>
+</ion-item>
 ```
 
 
@@ -37,7 +32,7 @@ Badges are inline block elements that usually appear near another element. Typic
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
@@ -57,7 +52,7 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
@@ -73,4 +68,4 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 ----------------------------------------------
 
-*Built by [StencilJS](https://stenciljs.com/)*
+*Built with [StencilJS](https://stenciljs.com/)*

@@ -27,7 +27,7 @@ export class SplitPane {
   private rmL: any;
 
   @Element() private el: HTMLElement;
-  @State() private visible = false;
+  @State() visible = false;
 
   /**
    * If true, the split pane will be hidden. Defaults to `false`.
@@ -42,14 +42,21 @@ export class SplitPane {
   @Prop() when: string | boolean = QUERY['md'];
 
   /**
-   * Expression to be called when the split-pane visibility has changed
-   */
-  @Event() ionSplitPaneDidChange: EventEmitter;
-
-  /**
    * Emitted when the split pane is visible.
    */
   @Event() ionChange: EventEmitter;
+
+  /**
+   * Expression to be called when the split-pane visibility has changed
+   */
+  @Event() protected ionSplitPaneVisible: EventEmitter;
+
+  @Watch('visible')
+  visibleChanged(visible: boolean) {
+    const detail = { visible };
+    this.ionChange.emit(detail);
+    this.ionSplitPaneVisible.emit(detail);
+  }
 
   componentDidLoad() {
     this._styleChildren();
@@ -59,6 +66,58 @@ export class SplitPane {
   componentDidUnload() {
     this.rmL && this.rmL();
     this.rmL = null;
+  }
+
+  @Watch('when')
+  protected whenChanged() {
+    this.rmL && this.rmL();
+    this.rmL = null;
+
+    // Check if the split-pane is disabled
+    if (this.disabled) {
+      this.visible = false;
+      return;
+    }
+
+    // When query is a boolean
+    const query = this.when;
+    if (typeof query === 'boolean') {
+      this.visible = query;
+      return;
+    }
+
+    // When query is a string, let's find first if it is a shortcut
+    const defaultQuery = QUERY[query];
+    const mediaQuery = (defaultQuery)
+      ? defaultQuery
+      : query;
+
+    // Media query is empty or null, we hide it
+    if (!mediaQuery || mediaQuery.length === 0) {
+      this.visible = false;
+      return;
+    }
+
+    // Listen on media query
+    const callback = (q: MediaQueryList) => this.visible = q.matches;
+    const mediaList = window.matchMedia(mediaQuery);
+    mediaList.addListener(callback);
+    this.rmL = () => mediaList.removeListener(callback);
+    this.visible = mediaList.matches;
+  }
+
+  @Method()
+  isVisible(): boolean {
+    return this.visible;
+  }
+
+  @Method()
+  isPane(element: HTMLElement): boolean {
+    if (!this.visible) {
+      return false;
+    }
+    return element.parentElement === this.el
+      && element.classList.contains(SPLIT_PANE_SIDE);
   }
 
   private _styleChildren() {
@@ -82,66 +141,6 @@ export class SplitPane {
     }
   }
 
-  @Watch('when')
-  protected whenChanged() {
-    this.rmL && this.rmL();
-    this.rmL = null;
-
-    // Check if the split-pane is disabled
-    if (this.disabled) {
-      this._setVisible(false);
-      return;
-    }
-
-    // When query is a boolean
-    const query = this.when;
-    if (typeof query === 'boolean') {
-      this._setVisible(query);
-      return;
-    }
-
-    // When query is a string, let's find first if it is a shortcut
-    const defaultQuery = QUERY[query];
-    const mediaQuery = (defaultQuery)
-      ? defaultQuery
-      : query;
-
-    // Media query is empty or null, we hide it
-    if (!mediaQuery || mediaQuery.length === 0) {
-      this._setVisible(false);
-      return;
-    }
-
-    // Listen on media query
-    const callback = (q: MediaQueryList) => this._setVisible(q.matches);
-    const mediaList = window.matchMedia(mediaQuery);
-    mediaList.addListener(callback);
-    this.rmL = () => mediaList.removeListener(callback);
-    this._setVisible(mediaList.matches);
-  }
-
-  private _setVisible(visible: boolean) {
-    if (this.visible !== visible) {
-      this.visible = visible;
-      const detail = { splitPane: this };
-      this.ionChange.emit(detail);
-      this.ionSplitPaneDidChange.emit(detail);
-    }
-  }
-
-  @Method()
-  isVisible(): boolean {
-    return this.visible;
-  }
-
-  isPane(element: HTMLElement): boolean {
-    if (!this.visible) {
-      return false;
-    }
-    return element.parentElement === this.el
-      && element.classList.contains(SPLIT_PANE_SIDE);
-  }
-
   hostData() {
     return {
       class: {
@@ -153,14 +152,8 @@ export class SplitPane {
   render() {
     return <slot></slot>;
   }
-
 }
 
-export interface SplitPaneAlert {
-  detail: {
-    splitPane: SplitPane
-  };
-}
 
 function setPaneClass(el: HTMLElement, isMain: boolean) {
   let toAdd;

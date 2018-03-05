@@ -25,7 +25,7 @@ export class SelectOption {
   /**
    * The text value of the option.
    */
-  @Prop({ mutable: true }) value: string;
+  @Prop({ mutable: true }) value: string|null = null;
 
   /**
    * Emitted when the select option loads.
