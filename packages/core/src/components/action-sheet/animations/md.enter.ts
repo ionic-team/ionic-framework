@@ -1,4 +1,3 @@
-
 import { Animation } from '../../../index';
 
 /**
