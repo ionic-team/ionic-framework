@@ -12,11 +12,7 @@ export type Requires<K extends string> = {
 
 export function createOverlay
 <T extends HTMLIonOverlayElement & Requires<keyof B>, B>
-(tagName: string, opts: B): Promise<T> {
-  // create ionic's wrapping ion-alert component
-  const element = document.createElement(tagName) as T;
-
-  // give this alert a unique id
+(element: T, opts: B): Promise<T> {
   element.overlayId = lastId++;
 
   // convert the passed in overlay options into props

@@ -33,7 +33,7 @@ export class ActionSheetController implements OverlayController {
    */
   @Method()
   create(opts?: ActionSheetOptions): Promise<HTMLIonActionSheetElement> {
-    return createOverlay('ion-action-sheet', opts);
+    return createOverlay(document.createElement('ion-action-sheet'), opts);
   }
 
   /*

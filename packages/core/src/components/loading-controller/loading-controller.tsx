@@ -30,7 +30,7 @@ export class LoadingController implements OverlayController {
    */
   @Method()
   create(opts?: LoadingOptions): Promise<HTMLIonLoadingElement> {
-    return createOverlay('ion-loading', opts);
+    return createOverlay(document.createElement('ion-loading'), opts);
   }
 
   /*

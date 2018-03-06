@@ -29,7 +29,7 @@ export class PopoverController implements OverlayController {
    */
   @Method()
   create(opts?: PopoverOptions): Promise<HTMLIonPopoverElement> {
-    return createOverlay('ion-popover', opts);
+    return createOverlay(document.createElement('ion-popover'), opts);
   }
 
   /*

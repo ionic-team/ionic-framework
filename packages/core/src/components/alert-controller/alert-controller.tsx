@@ -30,7 +30,7 @@ export class AlertController implements OverlayController {
    */
   @Method()
   create(opts?: AlertOptions): Promise<HTMLIonAlertElement> {
-    return createOverlay('ion-alert', opts);
+    return createOverlay(document.createElement('ion-alert'), opts);
   }
 
   /*

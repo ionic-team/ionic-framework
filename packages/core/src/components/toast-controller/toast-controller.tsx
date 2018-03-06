@@ -30,7 +30,7 @@ export class ToastController implements OverlayController {
    */
   @Method()
   create(opts?: ToastOptions): Promise<HTMLIonToastElement> {
-    return createOverlay('ion-toast', opts);
+    return createOverlay(document.createElement('ion-toast'), opts);
   }
 
   /*
