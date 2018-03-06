@@ -1,3 +1,17 @@
+<a name="0.1.4-0"></a>
+## [0.1.4-0](https://github.com/ionic-team/ionic/compare/v0.1.3...v0.1.4-0) (2018-03-06)
+
+### Refactor
+
+- Refactored navigation system
+
+### Bug Fixes
+
+* **testing:** do not throw error for missing Ionic global ([aa91d11](https://github.com/ionic-team/ionic/commit/aa91d11))
+* **zone:** forgot to remove console.logs ([4ec3e48](https://github.com/ionic-team/ionic/commit/4ec3e48))
+
+
+
 <a name="0.1.3"></a>
 ## [0.1.3](https://github.com/ionic-team/ionic/compare/v0.1.2...v0.1.3) (2018-03-03)
 
