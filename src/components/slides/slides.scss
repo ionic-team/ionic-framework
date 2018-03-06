@@ -239,7 +239,7 @@ button.swiper-pagination-bullet {
 }
 
 .swiper-pagination-bullet-active {
-  background: #007aff;
+  background: color($colors, primary);
   opacity: 1;
 }
 
@@ -282,7 +282,7 @@ button.swiper-pagination-bullet {
   width: 100%;
   height: 100%;
 
-  background: #007aff;
+  background: color($colors, primary);
 
   transform: scale(0);
 }
