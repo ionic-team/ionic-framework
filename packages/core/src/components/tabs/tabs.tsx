@@ -73,8 +73,10 @@ export class Tabs implements NavOutlet {
   }
 
   componentDidLoad() {
-    return this.initTabs()
-      .then(() => this.initSelect());
+    return this.initTabs().then(() => {
+      const useRouter = !!document.querySelector('ion-router');
+      return useRouter ? this.initSelect() : Promise.resolve();
+    });
   }
 
   componentDidUnload() {
