@@ -9,7 +9,7 @@ import { asyncRaf } from '../../utils/helpers';
 export class Tab {
 
   private loaded = false;
-  @Element() el: HTMLElement;
+  @Element() el: HTMLIonTabElement;
 
   @State() init = false;
 
@@ -92,7 +92,7 @@ export class Tab {
   }
 
   @Method()
-  setActive(): Promise<any> {
+  setActive(): Promise<HTMLIonTabElement> {
     return this.prepareLazyLoaded().then(() => this.showTab());
   }
 
@@ -104,9 +104,9 @@ export class Tab {
     return Promise.resolve();
   }
 
-  private showTab(): Promise<any|void> {
+  private showTab(): Promise<HTMLIonTabElement> {
     this.active = true;
-    return Promise.resolve();
+    return Promise.resolve(this.el);
   }
 
   hostData() {

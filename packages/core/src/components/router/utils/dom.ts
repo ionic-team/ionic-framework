@@ -18,9 +18,11 @@ export function writeNavState(root: HTMLElement, chain: RouteChain, index: numbe
       }
       const nextEl = node.getContentElement();
       if (nextEl) {
-        return writeNavState(nextEl, chain, index + 1, direction);
+        return writeNavState(nextEl, chain, index + 1, direction)
+          .then(() => node.markVisible());
+      } else {
+        return node.markVisible();
       }
-      return null;
     });
 }
 

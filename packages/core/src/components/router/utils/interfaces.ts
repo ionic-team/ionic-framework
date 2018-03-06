@@ -1,7 +1,9 @@
 
 export interface NavOutlet {
   setRouteId(id: any, data: any, direction: number): Promise<boolean>;
+  markVisible(): Promise<void>;
   getRouteId(): string;
+
   getContentElement(): HTMLElement | null;
 }
 

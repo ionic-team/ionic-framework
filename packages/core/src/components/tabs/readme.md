@@ -240,6 +240,9 @@ Emitted when the tab changes.
 #### getTabs()
 
 
+#### markVisible()
+
+
 #### select()
 
 
