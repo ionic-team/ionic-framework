@@ -1,6 +1,10 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
-import { RouterEntries, matchPath, matchRouteChain, readNavState, readPath, readRoutes, writeNavState, writePath } from './router-utils';
 import { Config, DomController } from '../../index';
+import { flattenRouterTree, readRoutes } from './utils/parser';
+import { readNavState, writeNavState } from './utils/dom';
+import { chainToPath, readPath, writePath } from './utils/path';
+import { RouteChain } from './utils/interfaces';
+import { routerIDsToChain, routerPathToChain } from './utils/matching';
 
 
 @Component({
@@ -8,7 +12,7 @@ import { Config, DomController } from '../../index';
 })
 export class Router {
 
-  private routes: RouterEntries;
+  private routes: RouteChain[];
   private busy = false;
   private state = 0;
 
@@ -22,7 +26,8 @@ export class Router {
 
   componentDidLoad() {
     // read config
-    this.routes = readRoutes(this.el);
+    const tree = readRoutes(this.el);
+    this.routes = flattenRouterTree(tree);
 
     // perform first write
     this.dom.raf(() => {
@@ -49,16 +54,16 @@ export class Router {
       return;
     }
     console.debug('[IN] nav changed -> update URL');
-    const { stack, pivot } = this.readNavState();
-    const { path, routes } = matchPath(stack, this.routes);
-    if (pivot) {
+    const { ids, pivot } = this.readNavState();
+    const { chain, matches } = routerIDsToChain(ids, this.routes);
+    if (chain.length > matches) {
       // readNavState() found a pivot that is not initialized
       console.debug('[IN] pivot uninitialized -> write partial nav state');
-      this.writeNavState(pivot, [], routes, 0);
+      this.writeNavState(pivot, chain.slice(matches), 0);
     }
 
     const isPop = ev.detail.isPop === true;
-    this.writePath(path, isPop);
+    this.writePath(chain, isPop);
   }
 
   private writeNavStateRoot(): Promise<any> {
@@ -66,14 +71,13 @@ export class Router {
     const currentPath = this.readPath();
     const direction = window.history.state >= this.state ? 1 : -1;
     if (currentPath) {
-      return this.writeNavState(node, currentPath, this.routes, direction);
+      const {chain} = routerPathToChain(currentPath, this.routes);
+      return this.writeNavState(node, chain, direction);
     }
     return Promise.resolve();
   }
 
-  private writeNavState(node: any, path: string[], routes: RouterEntries, direction: number): Promise<any> {
-    const chain = matchRouteChain(path, routes);
-
+  private writeNavState(node: any, chain: RouteChain, direction: number): Promise<any> {
     this.busy = true;
     return writeNavState(node, chain, 0, direction)
       .catch(err => console.error(err))
@@ -85,7 +89,8 @@ export class Router {
     return readNavState(root);
   }
 
-  private writePath(path: string[], isPop: boolean) {
+  private writePath(chain: RouteChain, isPop: boolean) {
+    const path = chainToPath(chain);
     this.state = writePath(window.history, this.base, this.useHash, path, isPop, this.state);
   }
 

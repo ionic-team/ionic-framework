@@ -74,10 +74,10 @@ export { Range, RangeEvent } from './components/range/range';
 export { RangeKnob } from './components/range-knob/range-knob';
 export { ReorderGroup } from './components/reorder-group/reorder-group';
 export {
-  RouterEntry,
-  RouterEntries,
+  RouteNode,
+  RouteTree,
   NavOutlet
-} from './components/router/router-utils';
+} from './components/router/utils/interfaces';
 export { Row } from './components/row/row';
 export { Reorder } from './components/reorder/reorder';
 export { Scroll } from './components/scroll/scroll';
