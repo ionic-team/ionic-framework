@@ -60,9 +60,6 @@ export class MenuToggle {
     };
   }
 
-  render() {
-    return <slot></slot>;
-  }
 }
 
 function getMenuController(): Promise<HTMLIonMenuControllerElement> {

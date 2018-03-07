@@ -11,8 +11,4 @@ import { Component } from '@stencil/core';
     theme: 'item-group'
   }
 })
-export class ItemGroup {
-  render() {
-    return <slot></slot>;
-  }
-}
+export class ItemGroup {}

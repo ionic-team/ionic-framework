@@ -60,10 +60,6 @@ export class SelectOption {
     };
   }
 
-  render() {
-    return <slot></slot>;
-  }
-
 }
 
 

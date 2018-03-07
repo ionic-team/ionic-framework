@@ -42,7 +42,4 @@ export class CardHeader {
     };
   }
 
-  render() {
-    return <slot></slot>;
-  }
 }

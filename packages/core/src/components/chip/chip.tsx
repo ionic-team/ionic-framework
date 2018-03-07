@@ -24,7 +24,4 @@ export class Chip {
    */
   @Prop() mode: 'ios' | 'md';
 
-  render() {
-    return <slot></slot>;
-  }
 }

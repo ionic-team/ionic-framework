@@ -7,8 +7,4 @@ import { Component } from '@stencil/core';
     theme: 'bar-buttons'
   }
 })
-export class Buttons {
-  render() {
-    return <slot></slot>;
-  }
-}
+export class Buttons {}

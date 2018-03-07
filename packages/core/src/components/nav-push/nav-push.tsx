@@ -21,8 +21,4 @@ export class NavPush {
     return Promise.resolve(null);
   }
 
-  render() {
-    return <slot></slot>;
-  }
-
 }

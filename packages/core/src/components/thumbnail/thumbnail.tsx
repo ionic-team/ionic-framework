@@ -11,8 +11,4 @@ import { Component } from '@stencil/core';
     theme: 'thumbnail'
   }
 })
-export class Thumbnail {
-  render() {
-    return <slot></slot>;
-  }
-}
+export class Thumbnail {}

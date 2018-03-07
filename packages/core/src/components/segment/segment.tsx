@@ -83,7 +83,4 @@ export class Segment {
     };
   }
 
-  render() {
-    return <slot></slot>;
-  }
 }

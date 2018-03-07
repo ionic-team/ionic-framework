@@ -27,7 +27,4 @@ export class Note {
    */
   @Prop() mode: 'ios' | 'md';
 
-  render() {
-    return <slot></slot>;
-  }
 }

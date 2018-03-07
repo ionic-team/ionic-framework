@@ -23,7 +23,4 @@ export class CardContent {
    */
   @Prop() mode: 'ios' | 'md';
 
-  render() {
-    return <slot></slot>;
-  }
 }

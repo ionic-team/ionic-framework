@@ -175,9 +175,6 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
     return hostAttrs;
   }
 
-  render() {
-    return <slot></slot>;
-  }
 }
 
 let radioGroupIds = 0;

@@ -47,7 +47,4 @@ export class ItemOptions {
     };
   }
 
-  render() {
-    return <slot></slot>;
-  }
 }

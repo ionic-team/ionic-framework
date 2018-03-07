@@ -16,7 +16,4 @@ export class Slide {
     };
   }
 
-  render() {
-    return <slot></slot>;
-  }
 }

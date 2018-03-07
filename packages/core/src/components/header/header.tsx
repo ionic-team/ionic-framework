@@ -36,7 +36,4 @@ export class Header {
     };
   }
 
-  render() {
-    return <slot></slot>;
-  }
 }

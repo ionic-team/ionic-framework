@@ -73,7 +73,4 @@ export class Label {
     });
   }
 
-  render() {
-    return <slot></slot>;
-  }
 }

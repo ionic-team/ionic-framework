@@ -39,9 +39,6 @@ export class ShowWhen implements DisplayWhen {
     };
   }
 
-  render() {
-    return <slot></slot>;
-  }
 }
 
 

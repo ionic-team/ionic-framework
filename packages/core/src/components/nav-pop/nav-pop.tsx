@@ -16,8 +16,4 @@ export class NavPop {
     return Promise.resolve(null);
   }
 
-  render() {
-    return <slot></slot>;
-  }
-
 }

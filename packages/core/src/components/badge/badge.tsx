@@ -27,7 +27,4 @@ export class Badge {
    */
   @Prop() mode: 'ios' | 'md';
 
-  render() {
-    return <slot></slot>;
-  }
 }

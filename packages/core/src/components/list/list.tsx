@@ -39,7 +39,4 @@ export class List {
     return false;
   }
 
-  render() {
-    return <slot></slot>;
-  }
 }

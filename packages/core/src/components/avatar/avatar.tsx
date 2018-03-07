@@ -11,8 +11,4 @@ import { Component } from '@stencil/core';
     theme: 'avatar'
   }
 })
-export class Avatar {
-  render() {
-    return <slot></slot>;
-  }
-}
+export class Avatar {}

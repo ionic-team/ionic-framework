@@ -233,8 +233,4 @@ export class InfiniteScroll {
     };
   }
 
-  render() {
-    return <slot></slot>;
-  }
-
 }

@@ -32,7 +32,4 @@ export class CardTitle {
     };
   }
 
-  render() {
-    return <slot></slot>;
-  }
 }

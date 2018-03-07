@@ -20,8 +20,4 @@ export class NavSetRoot {
     return Promise.resolve(null);
   }
 
-  render() {
-    return <slot></slot>;
-  }
-
 }

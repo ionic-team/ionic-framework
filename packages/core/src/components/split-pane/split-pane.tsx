@@ -149,9 +149,6 @@ export class SplitPane {
     };
   }
 
-  render() {
-    return <slot></slot>;
-  }
 }
 
 

@@ -36,7 +36,4 @@ export class Footer {
     };
   }
 
-  render() {
-    return <slot></slot>;
-  }
 }
