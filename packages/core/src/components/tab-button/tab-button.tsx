@@ -33,8 +33,11 @@ export class TabButton {
 
   @Listen('click')
   protected onClick(ev: UIEvent) {
-    this.ionTabbarClick.emit(this.tab);
+    if (!this.tab.disabled) {
+      this.ionTabbarClick.emit(this.tab);
+    }
     ev.stopPropagation();
+    ev.preventDefault();
   }
 
   private onKeyUp() {
@@ -73,18 +76,19 @@ export class TabButton {
 
   render() {
     const tab = this.tab;
+    const href = tab.href || '#';
+
     return [
-      <button
-        type='button'
+      <a
+        href={href}
         class='tab-cover'
         onKeyUp={this.onKeyUp.bind(this)}
-        onBlur={this.onBlur.bind(this)}
-        disabled={tab.disabled}>
+        onBlur={this.onBlur.bind(this)}>
         { tab.icon && <ion-icon class='tab-button-icon' name={tab.icon}></ion-icon> }
         { tab.title && <span class='tab-button-text'>{tab.title}</span> }
         { tab.badge && <ion-badge class='tab-badge' color={tab.badgeStyle}>{tab.badge}</ion-badge> }
         { this.mode === 'md' && <ion-ripple-effect/> }
-      </button>
+      </a>
     ];
   }
 }

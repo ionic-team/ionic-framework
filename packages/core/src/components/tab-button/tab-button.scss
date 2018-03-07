@@ -24,6 +24,10 @@ ion-tab-button {
   user-select: none;
 }
 
+ion-tab-button a {
+  text-decoration: none;
+}
+
 .tab-cover {
   @include margin(0);
   @include padding(0);

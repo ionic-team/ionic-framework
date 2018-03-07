@@ -88,6 +88,13 @@ boolean
 If true, the user cannot interact with the tab. Defaults to `false`.
 
 
+#### href
+
+string
+
+The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
+
+
 #### icon
 
 string
@@ -168,6 +175,13 @@ The component to display inside of the tab.
 boolean
 
 If true, the user cannot interact with the tab. Defaults to `false`.
+
+
+#### href
+
+string
+
+The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
 
 
 #### icon

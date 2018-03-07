@@ -3194,6 +3194,7 @@ declare global {
       btnId?: string;
       component?: any;
       disabled?: boolean;
+      href?: string;
       icon?: string;
       name?: string;
       selected?: boolean;

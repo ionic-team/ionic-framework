@@ -23,6 +23,11 @@ export class Tab {
   @Prop() title: string;
 
   /**
+   * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
+   */
+  @Prop() href: string;
+
+  /**
    * The icon for the tab.
    */
   @Prop() icon: string;
@@ -120,9 +125,6 @@ export class Tab {
     };
   }
 
-  render() {
-    return <slot/>;
-  }
 }
 
 function attachViewToDom(container: HTMLElement, cmp: string): Promise<any> {
