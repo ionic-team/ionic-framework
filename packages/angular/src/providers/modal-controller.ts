@@ -1,31 +1,20 @@
 import {
-  ComponentFactoryResolver,
   Injectable,
-  Injector,
-  Type,
 } from '@angular/core';
 
 import {
-  FrameworkDelegate,
   ModalDismissEvent,
   ModalOptions
 } from '@ionic/core';
-
-import { AngularComponentMounter } from '../providers/angular-component-mounter';
-import { AngularMountingData } from '../types/interfaces';
 
 import { ensureElementInBody, hydrateElement } from '../util/util';
 
 let modalId = 0;
 
 @Injectable()
-export class ModalController implements FrameworkDelegate {
-
-  constructor(private angularComponentMounter: AngularComponentMounter, private componentResolveFactory: ComponentFactoryResolver, private injector: Injector) {
-  }
+export class ModalController {
 
   create(opts?: ModalOptions): ModalProxy {
-    opts.delegate = this;
     return getModalProxy(opts);
   }
 
@@ -36,14 +25,6 @@ export class ModalController implements FrameworkDelegate {
     });
   }
 
-  attachViewToDom(elementOrContainerToMountTo: HTMLElement, elementOrComponentToMount: Type<any>, data?: any, classesToAdd?: string[]): Promise<AngularMountingData> {
-
-    return this.angularComponentMounter.attachViewToDom(elementOrContainerToMountTo, null, elementOrComponentToMount, this.componentResolveFactory, this.injector, data, classesToAdd);
-  }
-
-  removeViewFromDom(parentElement: HTMLElement, childElement: HTMLElement) {
-    return this.angularComponentMounter.removeViewFromDom(parentElement, childElement);
-  }
 }
 
 export function getModalProxy(opts: ModalOptions) {

@@ -1,31 +1,20 @@
 import {
-  ComponentFactoryResolver,
   Injectable,
-  Injector,
-  Type,
 } from '@angular/core';
 
 import {
-  FrameworkDelegate,
   PopoverDismissEvent,
   PopoverOptions
 } from '@ionic/core';
-
-import { AngularComponentMounter } from '../providers/angular-component-mounter';
-import { AngularMountingData } from '../types/interfaces';
 
 import { ensureElementInBody, hydrateElement } from '../util/util';
 
 let popoverId = 0;
 
 @Injectable()
-export class PopoverController implements FrameworkDelegate {
-
-  constructor(private angularComponentMounter: AngularComponentMounter, private componentResolveFactory: ComponentFactoryResolver, private injector: Injector) {
-  }
+export class PopoverController {
 
   create(opts?: PopoverOptions): PopoverProxy {
-    opts.delegate = this;
     return getPopoverProxy(opts);
   }
 
@@ -34,15 +23,6 @@ export class PopoverController implements FrameworkDelegate {
     return popoverController.componentOnReady().then(() => {
       return popoverController.dismiss(data, role, id);
     });
-  }
-
-  attachViewToDom(elementOrContainerToMountTo: HTMLElement, elementOrComponentToMount: Type<any>, data?: any, classesToAdd?: string[]): Promise<AngularMountingData> {
-
-    return this.angularComponentMounter.attachViewToDom(elementOrContainerToMountTo, null, elementOrComponentToMount, this.componentResolveFactory, this.injector, data, classesToAdd);
-  }
-
-  removeViewFromDom(parentElement: HTMLElement, childElement: HTMLElement) {
-    return this.angularComponentMounter.removeViewFromDom(parentElement, childElement);
   }
 }
 
