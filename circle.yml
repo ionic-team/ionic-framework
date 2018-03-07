@@ -5,8 +5,8 @@ jobs:
     docker:
       - image: node:8
     branches:
-      ignore:
-        - core
+      # ignore:
+      #   - core
     steps:
       - checkout
       - restore_cache:
@@ -28,5 +28,5 @@ jobs:
          paths:
          - ~/ionic/packages/core/node_modules/
       - run:
-          name: Validate
+          name: Validate Core
           command: npm --prefix packages/core/ run validate
