@@ -13,7 +13,7 @@ jobs:
          key: node_modules_{{ checksum "package.json" }}
       - run:
          name: Install monorepo node modules
-         command: npm i
+         command: npm ci
       - save_cache:
          key: node_modules_{{ checksum "package.json" }}
          paths:
@@ -22,7 +22,7 @@ jobs:
          key: node_modules_{{ checksum "packages/core/package.json" }}
       - run:
          name: Install core node modules
-         command: npm --prefix packages/core/ i
+         command: npm --prefix packages/core/ ci
       - save_cache:
          key: node_modules_{{ checksum "packages/core/package.json" }}
          paths:
