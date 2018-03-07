@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/ionic/
     docker:
-      - image: node:8.9
+      - image: node:8
     branches:
       # ignore:
       #   - core
