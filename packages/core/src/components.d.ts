@@ -2232,8 +2232,7 @@ declare global {
       mode?: string;
       orientation?: string;
       platform?: string;
-      queryMatches?: boolean;
-      size?: string;
+      size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
     }
   }
 }
