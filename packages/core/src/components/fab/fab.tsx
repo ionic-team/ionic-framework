@@ -1,4 +1,4 @@
-import { Component, Element, Method, State } from '@stencil/core';
+import { Component, Element, Method, Prop, State } from '@stencil/core';
 
 
 @Component({
@@ -11,6 +11,26 @@ export class Fab {
   @State() activated = false;
 
   /**
+   * Where to align the fab horizontally in the viewport.
+   * Possible values are: `"left"`, `"right"`, `"center"`, `"start"`, `"end"`.
+   */
+  @Prop() horizontal: 'left' | 'right' | 'center' | 'start' | 'end';
+
+  /**
+   * Where to align the fab vertically in the viewport.
+   * Possible values are: `"top"`, `"center"`, `"bottom"`.
+   */
+  @Prop() vertical: 'top' | 'center' | 'bottom';
+
+  /**
+   * If true, the fab will display on the edge of the header if
+   * `vertical` is `"top"`, and on the edge of the footer if
+   * it is `"bottom"`. Should be used with a `fixed` slot.
+   */
+  @Prop() edge: boolean;
+
+
+  /**
    * Close an active FAB list container
    */
   @Method()
@@ -20,6 +40,16 @@ export class Fab {
 
   toggleActive = () => {
     this.activated = !this.activated;
+  }
+
+  hostData() {
+    return {
+      class: {
+        [`fab-horizontal-${this.horizontal}`]: this.horizontal,
+        [`fab-vertical-${this.vertical}`]: this.vertical,
+        ['fab-edge']: this.edge
+      }
+    };
   }
 
   render() {

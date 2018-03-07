@@ -937,7 +937,9 @@ declare global {
   }
   namespace JSXElements {
     export interface IonFabAttributes extends HTMLAttributes {
-      
+      edge?: boolean;
+      horizontal?: 'left' | 'right' | 'center' | 'start' | 'end';
+      vertical?: 'top' | 'center' | 'bottom';
     }
   }
 }

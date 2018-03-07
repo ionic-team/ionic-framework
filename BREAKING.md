@@ -79,7 +79,7 @@ The `small` and `large` attributes are now combined under the `size` attribute. 
 
 | Old Property                | New Property | Property Behavior           |
 | --------------------------- | ------------ | --------------------------- |
-| `small`, `large`            | `size`       |  Sets the button size.      |
+| `small`, `large`            | `size`       | Sets the button size.       |
 | `clear`, `outline`, `solid` | `fill`       | Sets the button fill style. |
 | `full`, `block`             | `expand`     | Sets the button width.      |
 
@@ -253,7 +253,7 @@ Buttons inside of an `<ion-fab>` container should now be written as an `<ion-fab
 **New Usage Example:**
 
 ```html
-<ion-fab top right edge>
+<ion-fab vertical="top" horizontal="right" edge>
   <ion-fab-button>
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
@@ -274,9 +274,52 @@ Buttons inside of an `<ion-fab>` container should now be written as an `<ion-fab
 </ion-fab>
 ```
 
+### Attributes Renamed
+
+The mutually exclusive boolean attributes to position the fab have been combined into two single string attributes.
+
+The attributes to align the fab horizontally are now combined under the `horizontal` attribute and the attributes to align the fab vertically are now combined under the `vertical` attribute:
+
+| Old Property | New Property         | Property Behavior                                                       |
+|--------------|----------------------|-------------------------------------------------------------------------|
+| left         | `horizontal="left"`  | Positions to the left of the viewport.                                  |
+| right        | `horizontal="right"` | Positions to the right of the viewport.                                 |
+| center       | `horizontal="center"`| Positions to the center of the viewport.                                |
+| start        | `horizontal="start"` | Positions to the left of the viewport in LTR, and to the right in RTL.  |
+| end          | `horizontal="end"`   | Positions to the right of the viewport in LTR, and to the left in RTL.  |
+| top          | `vertical="top"`     | Positions at the top of the viewport.                                   |
+| bottom       | `vertical="bottom"`  | Positions at the bottom of the viewport.                                |
+| middle       | `vertical="center"`  | Positions at the center of the viewport.                                |
+
+_Note that `middle` has been changed to `center` for the vertical positioning._
+
+**Old Usage Example:**
+
+```html
+<ion-fab top right edge>
+  <!-- fab buttons and lists -->
+</ion-fab>
+
+<ion-fab center middle>
+  <!-- fab buttons and lists -->
+</ion-fab>
+```
+
+**New Usage Example:**
+
+```html
+<ion-fab vertical="top" horizontal="right" edge>
+  <!-- fab buttons and lists -->
+</ion-fab>
+
+<ion-fab vertical="center" horizontal="center">
+  <!-- fab buttons and lists -->
+</ion-fab>
+```
+
 ### Fixed Content
 
-The `<ion-fab>` container was previously placed inside of the fixed content by default. Now, any fixed content should go inside of the `<ion-fixed>` container.
+The `<ion-fab>` container was previously placed inside of the fixed content by default. Now, any fixed content should use the `fixed` slot.
 
 **Old Usage Example:**
 
@@ -292,11 +335,9 @@ The `<ion-fab>` container was previously placed inside of the fixed content by d
 **New Usage Example:**
 
 ```html
-<ion-fixed>
-  <ion-fab top right edge>
-    <!-- fab buttons and lists -->
-  </ion-fab>
-</ion-fixed>
+<ion-fab vertical="top" horizontal="right" edge slot="fixed">
+  <!-- fab buttons and lists -->
+</ion-fab>
 <ion-content>
   Scrollable Content
 </ion-content>

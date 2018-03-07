@@ -6,66 +6,69 @@
 ion-fab {
   position: absolute;
   z-index: $z-index-fixed-content;
+}
 
-  &[center] {
-    @include position(null, null, null, 50%);
-    @include margin-horizontal(-$fab-size / 2, null);
+
+// FAB Horizontal Positioning
+// --------------------------------------------------
+
+.fab-horizontal-left {
+  // scss-lint:disable PropertySpelling
+  @include multi-dir() {
+    left: $fab-content-margin;
+
+    left: calc(#{$fab-content-margin} + constant(safe-area-inset-left));
+    left: calc(#{$fab-content-margin} + env(safe-area-inset-left));
   }
+}
 
-  &[middle] {
-    @include margin(-$fab-size / 2, null, null, null);
+.fab-horizontal-right {
+  // scss-lint:disable PropertySpelling
+  @include multi-dir() {
+    right: $fab-content-margin;
 
-    top: 50%;
+    right: calc(#{$fab-content-margin} + constant(safe-area-inset-right));
+    right: calc(#{$fab-content-margin} + env(safe-area-inset-right));
   }
+}
 
-  &[top] {
-    top: $fab-content-margin;
-  }
+.fab-horizontal-center {
+  @include position(null, null, null, 50%);
+  @include margin-horizontal(-$fab-size / 2, null);
+}
 
-  &[right] {
-    // scss-lint:disable PropertySpelling
-    @include multi-dir() {
-      right: $fab-content-margin;
-    }
+.fab-horizontal-start {
+  @include position-horizontal($fab-content-margin, null);
+  @include safe-position-horizontal($fab-content-margin, null);
+}
 
-    @include multi-dir() {
-      right: calc(#{$fab-content-margin} + constant(safe-area-inset-right));
-      right: calc(#{$fab-content-margin} + env(safe-area-inset-right));
-    }
-  }
-
-  &[end] {
-    @include position-horizontal(null, $fab-content-margin);
-    @include safe-position-horizontal(null, $fab-content-margin);
-  }
-
-  &[bottom] {
-    bottom: $fab-content-margin;
-  }
-
-  &[left] {
-    // scss-lint:disable PropertySpelling
-    @include multi-dir() {
-      left: $fab-content-margin;
-    }
+.fab-horizontal-end {
+  @include position-horizontal(null, $fab-content-margin);
+  @include safe-position-horizontal(null, $fab-content-margin);
+}
 
 
-    @include multi-dir() {
-      left: calc(#{$fab-content-margin} + constant(safe-area-inset-left));
-      left: calc(#{$fab-content-margin} + env(safe-area-inset-left));
-    }
-  }
+// FAB Vertical Positioning
+// --------------------------------------------------
 
-  &[start] {
-    @include position-horizontal($fab-content-margin, null);
-    @include safe-position-horizontal($fab-content-margin, null);
-  }
+.fab-vertical-top {
+  top: $fab-content-margin;
 
-  &[top][edge] {
+  &.fab-edge {
     top: -$fab-size / 2;
   }
+}
 
-  &[bottom][edge] {
+.fab-vertical-bottom {
+  bottom: $fab-content-margin;
+
+  &.fab-edge {
     bottom: -$fab-size / 2;
   }
+}
+
+.fab-vertical-center {
+  @include margin(-$fab-size / 2, null, null, null);
+
+  top: 50%;
 }

@@ -98,6 +98,60 @@ The fab should have one main fab button. Fabs can also contain fab lists which c
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+#### edge
+
+boolean
+
+If true, the fab will display on the edge of the header if
+`vertical` is `"top"`, and on the edge of the footer if
+it is `"bottom"`. Should be used with a `fixed` slot.
+
+
+#### horizontal
+
+
+
+Where to align the fab horizontally in the viewport.
+Possible values are: `"left"`, `"right"`, `"center"`, `"start"`, `"end"`.
+
+
+#### vertical
+
+
+
+Where to align the fab vertically in the viewport.
+Possible values are: `"top"`, `"center"`, `"bottom"`.
+
+
+## Attributes
+
+#### edge
+
+boolean
+
+If true, the fab will display on the edge of the header if
+`vertical` is `"top"`, and on the edge of the footer if
+it is `"bottom"`. Should be used with a `fixed` slot.
+
+
+#### horizontal
+
+
+
+Where to align the fab horizontally in the viewport.
+Possible values are: `"left"`, `"right"`, `"center"`, `"start"`, `"end"`.
+
+
+#### vertical
+
+
+
+Where to align the fab vertically in the viewport.
+Possible values are: `"top"`, `"center"`, `"bottom"`.
+
+
 ## Methods
 
 #### close()
