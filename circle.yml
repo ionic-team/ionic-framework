@@ -3,12 +3,21 @@ jobs:
   build:
     working_directory: ~/ionic/
     docker:
-      - image: node:9
+      - image: node:8
     branches:
       # ignore:
       #   - core
     steps:
       - checkout
+      - restore_cache:
+         key: node_modules_global_5.7
+      - run:
+         name: Install npm > v5.7
+         command: npm i -g npm
+      - save_cache:
+         key: node_modules_global_5.7
+         paths:
+         - ~/ionic/node_modules/
       - restore_cache:
          key: node_modules_{{ checksum "package.json" }}
       - run:
