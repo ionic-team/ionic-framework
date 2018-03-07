@@ -10,19 +10,10 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-         key: node_modules_global_5.7
-      - run:
-         name: Install npm > v5.7
-         command: npm i -g npm
-      - save_cache:
-         key: node_modules_global_5.7
-         paths:
-         - ~/ionic/node_modules/
-      - restore_cache:
          key: node_modules_{{ checksum "package.json" }}
       - run:
          name: Install monorepo node modules
-         command: npm ci
+         command: npm i
       - save_cache:
          key: node_modules_{{ checksum "package.json" }}
          paths:
@@ -31,7 +22,7 @@ jobs:
          key: node_modules_{{ checksum "packages/core/package.json" }}
       - run:
          name: Install core node modules
-         command: npm --prefix packages/core/ ci
+         command: npm --prefix packages/core/ i
       - save_cache:
          key: node_modules_{{ checksum "packages/core/package.json" }}
          paths:
