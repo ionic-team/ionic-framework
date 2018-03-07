@@ -1,8 +1,8 @@
 import { breadthFirstSearch } from './common';
 import { NavOutlet, RouteChain } from './interfaces';
 
-export function writeNavState(root: HTMLElement, chain: RouteChain, index: number, direction: number): Promise<void> {
-  if (index >= chain.length) {
+export function writeNavState(root: HTMLElement, chain: RouteChain|null, index: number, direction: number): Promise<void> {
+  if (!chain || index >= chain.length) {
     return Promise.resolve();
   }
   const route = chain[index];
