@@ -1,7 +1,7 @@
 import { Config, PlatformConfig } from '../index';
 
 export function updateTestResults(displayWhen: DisplayWhen) {
-  displayWhen.passesTest = getTestResult(displayWhen);
+  displayWhen.queryMatches = getTestResult(displayWhen);
 }
 
 export function isPlatformMatch(platforms: string[], multiPlatformString: string) {
@@ -23,16 +23,15 @@ export function isModeMatch(config: Config, multiModeString: string) {
   return modes.indexOf(currentMode) >= 0;
 }
 
-
 export function isMediaQueryMatch(mediaQuery: string) {
   return window.matchMedia(mediaQuery).matches;
 }
 
 export function isSizeMatch(multiSizeString: string) {
-  const sizes = multiSizeString.replace(/\s/g, '').split(',');
+  const sizes = multiSizeString.replace(/\s+/g, '').split(',');
   for (const size of sizes) {
-    const mediaQuery = SIZE_TO_MEDIA[size];
-    if (mediaQuery && window.matchMedia(mediaQuery).matches) {
+    const mediaQuery = SIZE_TO_MEDIA[size] ? SIZE_TO_MEDIA[size] : size;
+    if (isMediaQueryMatch(mediaQuery)) {
       return true;
     }
   }
@@ -42,6 +41,7 @@ export function isSizeMatch(multiSizeString: string) {
 export function getTestResult(displayWhen: DisplayWhen) {
   const resultsToConsider: boolean[] = [];
   if (displayWhen.mediaQuery) {
+    console.log(displayWhen.mediaQuery)
     resultsToConsider.push(isMediaQueryMatch(displayWhen.mediaQuery));
   }
   if (displayWhen.size) {
@@ -81,7 +81,6 @@ export function isOrientationMatch(orientation: string) {
   // it's an invalid orientation, so just return it
   return false;
 }
-
 export function isPortrait(): boolean {
   return window.matchMedia('(orientation: portrait)').matches;
 }
@@ -100,8 +99,8 @@ export interface DisplayWhen {
   mediaQuery: string;
   mode: string;
   or: boolean;
-  orientation: string;
-  passesTest: boolean;
-  platform: string;
   size: string;
+  orientation: string;
+  queryMatches: boolean;
+  platform: string;
 }

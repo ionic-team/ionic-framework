@@ -1,4 +1,4 @@
-# ion-hide-when
+# ion-show-when
 
 
 
@@ -17,11 +17,6 @@ string
 string
 
 
-#### or
-
-boolean
-
-
 #### orientation
 
 string
@@ -30,6 +25,11 @@ string
 #### platform
 
 string
+
+
+#### queryMatches
+
+boolean
 
 
 #### size
@@ -49,11 +49,6 @@ string
 string
 
 
-#### or
-
-boolean
-
-
 #### orientation
 
 string
@@ -62,6 +57,11 @@ string
 #### platform
 
 string
+
+
+#### query-matches
+
+boolean
 
 
 #### size

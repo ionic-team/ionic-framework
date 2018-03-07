@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Query - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script src="/dist/ionic.js"></script>
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Query - Basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content padding>
+
+        <h2>Mode Tests</h2>
+        <ion-query mode="md, ios">
+          <div>Shows on MD, iOS</div>
+        </ion-query>
+
+        <ion-query mode="md">
+          <div>Shows on MD only</div>
+        </ion-query>
+
+        <ion-query mode="ios">
+          <div>Shows on iOS only</div>
+        </ion-query>
+
+        <h2>Orientation Tests</h2>
+        <ion-query orientation="portrait">
+          <div>Shows on portrait orientation</div>
+        </ion-query>
+
+        <ion-query orientation="landscape">
+          <div>Shows on landscape orientation</div>
+        </ion-query>
+
+        <h2>Platform Tests</h2>
+
+        <ion-query platform="android,ios">
+          <div>Render on Android and iOS</div>
+        </ion-query>
+
+        <ion-query platform="ios">
+          <div>Only render on iOS</div>
+        </ion-query>
+
+        <ion-query platform="android">
+          <div>Only render on Android</div>
+        </ion-query>
+
+        <ion-query platform="ipad">
+          <div>Only render on ipad</div>
+        </ion-query>
+
+        <ion-query platform="phablet">
+          <div>Only render on phablet</div>
+        </ion-query>
+
+        <ion-query platform="iphone">
+          <div>Only render on phone</div>
+        </ion-query>
+
+        <h2>Size Tests</h2>
+        <ion-query size="xs">
+          <div>Only render on xs</div>
+        </ion-query>
+
+        <ion-query size="sm">
+          <div>Only render on sm</div>
+        </ion-query>
+
+        <ion-query size="md">
+          <div>Only render on md</div>
+        </ion-query>
+
+        <ion-query size="lg">
+          <div>Only render on lg</div>
+        </ion-query>
+
+        <ion-query size="xl">
+          <div>Only render on xl</div>
+        </ion-query>
+
+        <h2>Media Query</h2>
+
+        <ion-query media-query="(max-width: 500px), (min-width: 1200px)">
+          <div>Only render when <code>max-width: 500px</code>  or <code>min-width: 1200px</code></div>
+        </ion-query>
+    </ion-content>
+
+
+  </ion-app>
+
+  <script>
+  </script>
+</body>
+
+</html>

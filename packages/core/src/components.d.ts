@@ -1111,41 +1111,6 @@ declare global {
 
 
 import {
-  HideWhen as IonHideWhen
-} from './components/hide-when/hide-when';
-
-declare global {
-  interface HTMLIonHideWhenElement extends IonHideWhen, HTMLStencilElement {
-  }
-  var HTMLIonHideWhenElement: {
-    prototype: HTMLIonHideWhenElement;
-    new (): HTMLIonHideWhenElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-hide-when": HTMLIonHideWhenElement;
-  }
-  interface ElementTagNameMap {
-    "ion-hide-when": HTMLIonHideWhenElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-hide-when": JSXElements.IonHideWhenAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonHideWhenAttributes extends HTMLAttributes {
-      mediaQuery?: string;
-      mode?: string;
-      or?: boolean;
-      orientation?: string;
-      platform?: string;
-      size?: string;
-    }
-  }
-}
-
-
-import {
   InfiniteScrollContent as IonInfiniteScrollContent
 } from './components/infinite-scroll-content/infinite-scroll-content';
 
@@ -2240,6 +2205,41 @@ declare global {
 
 
 import {
+  Query as IonQuery
+} from './components/query/query';
+
+declare global {
+  interface HTMLIonQueryElement extends IonQuery, HTMLStencilElement {
+  }
+  var HTMLIonQueryElement: {
+    prototype: HTMLIonQueryElement;
+    new (): HTMLIonQueryElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-query": HTMLIonQueryElement;
+  }
+  interface ElementTagNameMap {
+    "ion-query": HTMLIonQueryElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-query": JSXElements.IonQueryAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonQueryAttributes extends HTMLAttributes {
+      mediaQuery?: string;
+      mode?: string;
+      orientation?: string;
+      platform?: string;
+      queryMatches?: boolean;
+      size?: string;
+    }
+  }
+}
+
+
+import {
   RadioGroup as IonRadioGroup
 } from './components/radio-group/radio-group';
 
@@ -2907,41 +2907,6 @@ declare global {
       placeholder?: string;
       selectedText?: string;
       value?: string | string[] | null;
-    }
-  }
-}
-
-
-import {
-  ShowWhen as IonShowWhen
-} from './components/show-when/show-when';
-
-declare global {
-  interface HTMLIonShowWhenElement extends IonShowWhen, HTMLStencilElement {
-  }
-  var HTMLIonShowWhenElement: {
-    prototype: HTMLIonShowWhenElement;
-    new (): HTMLIonShowWhenElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-show-when": HTMLIonShowWhenElement;
-  }
-  interface ElementTagNameMap {
-    "ion-show-when": HTMLIonShowWhenElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-show-when": JSXElements.IonShowWhenAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonShowWhenAttributes extends HTMLAttributes {
-      mediaQuery?: string;
-      mode?: string;
-      or?: boolean;
-      orientation?: string;
-      platform?: string;
-      size?: string;
     }
   }
 }

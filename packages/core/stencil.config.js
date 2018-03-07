@@ -48,7 +48,7 @@ exports.config = {
     { components: ['ion-tap-click', 'ion-status-tap'] },
     { components: ['ion-platform', 'ion-cordova-platform'] },
     { components: ['ion-nav-pop'] },
-    { components: ['ion-hide-when', 'ion-show-when'] },
+    { components: ['ion-query'] },
   ],
   plugins: [
     sass(),
