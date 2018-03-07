@@ -44,7 +44,7 @@ export type NodeHeightFn = (node: VirtualNode, index: number) => number;
 export type HeaderFn = (item: any, index: number, items: any[]) => string | null;
 export type ItemHeightFn = (item: any, index?: number) => number;
 export type ItemRenderFn = (el: HTMLElement|null, cell: Cell, domIndex?: number) => HTMLElement;
-export type DomRenderFn = (dom: VirtualNode[], height: number) => void;
+export type DomRenderFn = (dom: VirtualNode[]) => void;
 
 export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: Cell[], range: Range) {
   // reset dom

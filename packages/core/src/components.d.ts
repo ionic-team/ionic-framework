@@ -3618,6 +3618,7 @@ declare global {
       itemRender?: ItemRenderFn;
       items?: any[];
       nodeHeight?: NodeHeightFn;
+      renderer?: (item: any) => JSX.Element;
     }
   }
 }

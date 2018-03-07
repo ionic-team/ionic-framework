@@ -280,6 +280,11 @@ which is an expensive operation and should be avoided if possible.
 
 
 
+#### renderer
+
+
+
+
 ## Attributes
 
 #### approx-footer-height
@@ -375,6 +380,11 @@ which is an expensive operation and should be avoided if possible.
 
 
 #### node-height
+
+
+
+
+#### renderer
 
 
 

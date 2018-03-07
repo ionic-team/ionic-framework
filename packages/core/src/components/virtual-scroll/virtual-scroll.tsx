@@ -13,7 +13,7 @@ import { Cell, DomRenderFn, HeaderFn, ItemHeightFn,
 })
 export class VirtualScroll {
 
-  private scrollEl: HTMLElement | null;
+  private scrollEl: HTMLIonScrollElement | null;
   private range: Range = {offset: 0, length: 0};
   private timerUpdate: any;
   private heightIndex: Uint32Array;
@@ -99,6 +99,7 @@ export class VirtualScroll {
    */
   @Prop() items: any[];
 
+  @Prop() renderer: (item: any) => JSX.Element;
   @Prop() nodeHeight: NodeHeightFn;
   @Prop() itemHeight: ItemHeightFn;
   @Prop() itemRender: ItemRenderFn;
@@ -116,9 +117,11 @@ export class VirtualScroll {
       console.error('virtual-scroll must be used inside ion-scroll/ion-content');
       return;
     }
-    this.calcDimensions();
-    this.calcCells();
-    this.updateState();
+    this.scrollEl.componentOnReady().then(() => {
+      this.calcDimensions();
+      this.calcCells();
+      this.updateState();
+    });
   }
 
   componentDidUpdate() {
@@ -251,12 +254,14 @@ export class VirtualScroll {
     // write DOM
     if (this.itemRender) {
       doRender(this.el, this.itemRender, this.virtualDom, this.updateCellHeight.bind(this));
-      if (this.heightChanged) {
-        this.el.style.height = this.totalHeight + 'px';
-        this.heightChanged = false;
-      }
     } else if (this.domRender) {
-      this.domRender(this.virtualDom, this.totalHeight);
+      this.domRender(this.virtualDom);
+    } else if (this.renderer) {
+      (this.el as any).forceUpdate();
+    }
+    if (this.heightChanged) {
+      this.el.style.height = this.totalHeight + 'px';
+      this.heightChanged = false;
     }
   }
 
@@ -299,7 +304,6 @@ export class VirtualScroll {
     const shouldEnable = !!(
       this.scrollEl &&
       this.cells &&
-      (this.itemRender || this.domRender) &&
       this.viewportHeight > 1
     );
     if (shouldEnable !== this.isEnabled) {
@@ -361,5 +365,29 @@ export class VirtualScroll {
       this.isEnabled = shouldListen;
       this.enableListener(this, 'scroll', shouldListen, this.scrollEl);
     }
+  }
+
+  render() {
+    const renderer = this.renderer;
+    if (renderer) {
+      return this.virtualDom.map((dom) => {
+        const item = renderer(dom.cell.value) as any;
+        const classes = ['virtual-item'];
+        if (!item.vattrs) {
+          item.vattrs = {};
+        }
+        item.vattrs.class += ' virtual-item';
+        if (!dom.visible) {
+          classes.push('virtual-loading');
+        }
+        item.vattrs.class += ' ' + classes.join(' ');
+        if (!item.vattrs.style) {
+          item.vattrs.style = {};
+        }
+        item.vattrs.style['transform'] = `translate3d(0,${dom.top}px,0)`;
+        return item;
+      });
+    }
+    return undefined;
   }
 }
