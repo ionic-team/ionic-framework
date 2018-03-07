@@ -224,11 +224,6 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  markVisible() {
-    return Promise.resolve();
-  }
-
-  @Method()
   getContentElement(): HTMLElement {
     const active = this.getActive();
     if (active) {

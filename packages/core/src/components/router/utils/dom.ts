@@ -11,18 +11,20 @@ export function writeNavState(root: HTMLElement, chain: RouteChain, index: numbe
     return Promise.resolve();
   }
   return node.componentOnReady()
-    .then(() => node.setRouteId(route.id, route.props, direction))
+    .then(() => node.setRouteId(route.id, route.params, direction))
     .then(changed => {
       if (changed) {
         direction = 0;
       }
       const nextEl = node.getContentElement();
-      if (nextEl) {
-        return writeNavState(nextEl, chain, index + 1, direction)
-          .then(() => node.markVisible());
-      } else {
-        return node.markVisible();
+      const promise = (nextEl)
+        ? writeNavState(nextEl, chain, index + 1, direction)
+        : Promise.resolve();
+
+      if (node.markVisible) {
+        return promise.then(() => node.markVisible());
       }
+      return promise;
     });
 }
 

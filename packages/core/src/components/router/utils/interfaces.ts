@@ -1,7 +1,7 @@
 
 export interface NavOutlet {
   setRouteId(id: any, data: any, direction: number): Promise<boolean>;
-  markVisible(): Promise<void>;
+  markVisible?(): Promise<void>;
   getRouteId(): string;
 
   getContentElement(): HTMLElement | null;
@@ -17,7 +17,7 @@ export type NavOutletElement = NavOutlet & HTMLStencilElement;
 export interface RouteEntry {
   id: string;
   path: string[];
-  props: any|undefined;
+  params: any|undefined;
 }
 
 export interface RouteNode extends RouteEntry {

@@ -1,31 +1,30 @@
 import { RouteChain } from '../utils/interfaces';
-import { matchesIDs, matchesPath, routerPathToChain } from '../utils/matching';
-import { mockRouteElement } from './parser.spec';
-import { mockElement } from '@stencil/core/dist/testing';
+import { matchesIDs, matchesPath, mergeParams, routerPathToChain } from '../utils/matching';
+import { parsePath } from '../utils/path';
 
 const CHAIN_1: RouteChain = [
-  { id: '2', path: ['to'], props: undefined },
-  { id: '1', path: ['path'], props: undefined },
-  { id: '3', path: ['segment'], props: undefined },
-  { id: '4', path: [''], props: undefined },
+  { id: '2', path: ['to'], params: undefined },
+  { id: '1', path: ['path'], params: undefined },
+  { id: '3', path: ['segment'], params: undefined },
+  { id: '4', path: [''], params: undefined },
 ];
 
 const CHAIN_2: RouteChain = [
-  { id: '2', path: [''], props: undefined },
-  { id: '1', path: [''], props: undefined },
-  { id: '3', path: ['segment', 'to'], props: undefined },
-  { id: '4', path: [''], props: undefined },
-  { id: '5', path: ['hola'], props: undefined },
-  { id: '6', path: [''], props: undefined },
-  { id: '7', path: [''], props: undefined },
-  { id: '8', path: ['adios', 'que', 'tal'], props: undefined },
+  { id: '2', path: [''], params: undefined },
+  { id: '1', path: [''], params: undefined },
+  { id: '3', path: ['segment', 'to'], params: undefined },
+  { id: '4', path: [''], params: undefined },
+  { id: '5', path: ['hola'], params: undefined },
+  { id: '6', path: [''], params: undefined },
+  { id: '7', path: [''], params: undefined },
+  { id: '8', path: ['adios', 'que', 'tal'], params: undefined },
 ];
 
 const CHAIN_3: RouteChain = [
-  { id: '2', path: ['this', 'to'], props: undefined },
-  { id: '1', path: ['path'], props: undefined },
-  { id: '3', path: ['segment', 'to', 'element'], props: undefined },
-  { id: '4', path: [''], props: undefined },
+  { id: '2', path: ['this', 'to'], params: undefined },
+  { id: '1', path: ['path'], params: undefined },
+  { id: '3', path: ['segment', 'to', 'element'], params: undefined },
+  { id: '4', path: [''], params: undefined },
 ];
 
 
@@ -47,67 +46,85 @@ describe('matchesIDs', () => {
 describe('matchesPath', () => {
   it('should match simple path', () => {
     const chain: RouteChain = CHAIN_3;
-    expect(matchesPath(['this'], chain)).toBe(false);
-    expect(matchesPath(['this', 'to'], chain)).toBe(false);
-    expect(matchesPath(['this', 'to', 'path'], chain)).toBe(false);
-    expect(matchesPath(['this', 'to', 'path', 'segment'], chain)).toBe(false);
-    expect(matchesPath(['this', 'to', 'path', 'segment', 'to'], chain)).toBe(false);
-    expect(matchesPath(['this', 'to', 'path', 'segment', 'to', 'element'], chain)).toBe(true);
-    expect(matchesPath(['this', 'to', 'path', 'segment', 'to', 'element', 'more'], chain)).toBe(false);
+    expect(matchesPath(['this'], chain)).toEqual(null);
+    expect(matchesPath(['this', 'to'], chain)).toEqual(null);
+    expect(matchesPath(['this', 'to', 'path'], chain)).toEqual(null);
+    expect(matchesPath(['this', 'to', 'path', 'segment'], chain)).toEqual(null);
+    expect(matchesPath(['this', 'to', 'path', 'segment', 'to'], chain)).toEqual(null);
+    expect(matchesPath(['this', 'to', 'path', 'segment', 'to', 'element'], chain)).toEqual(chain);
+    expect(matchesPath(['this', 'to', 'path', 'segment', 'to', 'element', 'more'], chain)).toEqual(null);
 
-    expect(matchesPath([], chain)).toBe(false);
-    expect(matchesPath([''], chain)).toBe(false);
-    expect(matchesPath(['path'], chain)).toBe(false);
+    expect(matchesPath([], chain)).toEqual(null);
+    expect(matchesPath([''], chain)).toEqual(null);
+    expect(matchesPath(['path'], chain)).toEqual(null);
   });
 
   it('should match simple default route', () => {
     const chain: RouteChain = CHAIN_2;
-    expect(matchesPath([''], chain)).toBe(false);
-    expect(matchesPath(['segment'], chain)).toBe(false);
-    expect(matchesPath(['segment', 'to'], chain)).toBe(false);
-    expect(matchesPath(['segment', 'to', 'hola'], chain)).toBe(false);
-    expect(matchesPath(['segment', 'to', 'hola', 'adios'], chain)).toBe(false);
-    expect(matchesPath(['segment', 'to', 'hola', 'adios', 'que'], chain)).toBe(false);
-    expect(matchesPath(['segment', 'to', 'hola', 'adios', 'que', 'tal'], chain)).toBe(true);
+    expect(matchesPath([''], chain)).toEqual(null);
+    expect(matchesPath(['segment'], chain)).toEqual(null);
+    expect(matchesPath(['segment', 'to'], chain)).toEqual(null);
+    expect(matchesPath(['segment', 'to', 'hola'], chain)).toEqual(null);
+    expect(matchesPath(['segment', 'to', 'hola', 'adios'], chain)).toEqual(null);
+    expect(matchesPath(['segment', 'to', 'hola', 'adios', 'que'], chain)).toEqual(null);
+    expect(matchesPath(['segment', 'to', 'hola', 'adios', 'que', 'tal'], chain)).toEqual(chain);
+    expect(matchesPath(['segment', 'to', 'hola', 'adios', 'que', 'tal', 'more'], chain)).toEqual(chain);
 
-    expect(matchesPath(['to'], chain)).toBe(false);
-    expect(matchesPath(['path', 'to'], chain)).toBe(false);
+    expect(matchesPath(['to'], chain)).toEqual(null);
+    expect(matchesPath(['path', 'to'], chain)).toEqual(null);
   });
 
   it('should match simple route 2', () => {
-    const chain: RouteChain = [{ id: '5', path: ['hola'], props: undefined }];
-    expect(matchesPath([''], chain)).toBe(false);
-    expect(matchesPath(['hola'], chain)).toBe(true);
-    expect(matchesPath(['hola', 'hola'], chain)).toBe(true);
-    expect(matchesPath(['hola', 'adios'], chain)).toBe(true);
+    const chain: RouteChain = [{ id: '5', path: ['hola'], params: undefined }];
+    expect(matchesPath([''], chain)).toEqual(null);
+    expect(matchesPath(['hola'], chain)).toEqual(chain);
+    expect(matchesPath(['hola', 'hola'], chain)).toEqual(chain);
+    expect(matchesPath(['hola', 'adios'], chain)).toEqual(chain);
   });
 
   it('should match simple route 3', () => {
-    const chain: RouteChain = [{ id: '5', path: ['hola', 'adios'], props: undefined }];
-    expect(matchesPath([''], chain)).toBe(false);
-    expect(matchesPath(['hola'], chain)).toBe(false);
-    expect(matchesPath(['hola', 'hola'], chain)).toBe(false);
-    expect(matchesPath(['hola', 'adios'], chain)).toBe(true);
+    const chain: RouteChain = [{ id: '5', path: ['hola', 'adios'], params: undefined }];
+    expect(matchesPath([''], chain)).toEqual(null);
+    expect(matchesPath(['hola'], chain)).toEqual(null);
+    expect(matchesPath(['hola', 'hola'], chain)).toEqual(null);
+    expect(matchesPath(['hola', 'adios'], chain)).toEqual(chain);
+    expect(matchesPath(['hola', 'adios', 'bye'], chain)).toEqual(chain);
   });
 
   it('should match simple route 4', () => {
     const chain: RouteChain = [
-      { id: '5', path: ['hola'], props: undefined },
-      { id: '5', path: ['adios'], props: undefined }];
+      { id: '5', path: ['hola'], params: undefined },
+      { id: '5', path: ['adios'], params: undefined }];
 
-    expect(matchesPath([''], chain)).toBe(false);
-    expect(matchesPath(['hola'], chain)).toBe(false);
-    expect(matchesPath(['hola', 'hola'], chain)).toBe(false);
-    expect(matchesPath(['hola', 'adios'], chain)).toBe(true);
+    expect(matchesPath([''], chain)).toEqual(null);
+    expect(matchesPath(['hola'], chain)).toEqual(null);
+    expect(matchesPath(['hola', 'hola'], chain)).toEqual(null);
+    expect(matchesPath(['hola', 'adios'], chain)).toEqual(chain);
+  });
+
+  it('should match with parameters', () => {
+    const chain: RouteChain = [
+      { id: '5', path: ['profile', ':name'], params: undefined },
+      { id: '5', path: [''], params: undefined },
+      { id: '5', path: ['image'], params: {size: 'lg'} },
+      { id: '5', path: ['image', ':size', ':type'], params: {size: 'mg'} },
+    ];
+    const matched = matchesPath(parsePath('/profile/manu/image/image/large/retina'), chain);
+    expect(matched).toEqual([
+      { id: '5', path: ['profile', ':name'], params: {name: 'manu'} },
+      { id: '5', path: [''], params: undefined },
+      { id: '5', path: ['image'], params: {size: 'lg'} },
+      { id: '5', path: ['image', ':size', ':type'], params: {size: 'large', type: 'retina'} },
+    ]);
   });
 });
 
 describe('routerPathToChain', () => {
   it('should match the route with higher priority', () => {
-    const chain3: RouteChain = [{ id: '5', path: ['hola'], props: undefined }];
+    const chain3: RouteChain = [{ id: '5', path: ['hola'], params: undefined }];
     const chain4: RouteChain = [
-      { id: '5', path: ['hola'], props: undefined },
-      { id: '5', path: ['adios'], props: undefined }];
+      { id: '5', path: ['hola'], params: undefined },
+      { id: '5', path: ['adios'], params: undefined }];
 
     const routes: RouteChain[] = [
       CHAIN_1,
@@ -147,14 +164,14 @@ describe('routerPathToChain', () => {
 
   it('should match the default route', () => {
     const chain1: RouteChain = [
-      { id: 'tabs', path: [''], props: undefined },
-      { id: 'tab1', path: [''], props: undefined },
-      { id: 'schedule', path: [''], props: undefined }
+      { id: 'tabs', path: [''], params: undefined },
+      { id: 'tab1', path: [''], params: undefined },
+      { id: 'schedule', path: [''], params: undefined }
     ];
     const chain2: RouteChain = [
-      { id: 'tabs', path: [''], props: undefined },
-      { id: 'tab2', path: ['tab2'], props: undefined },
-      { id: 'page2', path: [''], props: undefined }
+      { id: 'tabs', path: [''], params: undefined },
+      { id: 'tab2', path: ['tab2'], params: undefined },
+      { id: 'page2', path: [''], params: undefined }
     ];
 
     expect(routerPathToChain([''], [chain1])).toEqual({chain: chain1, matches: 3});
@@ -162,20 +179,47 @@ describe('routerPathToChain', () => {
 
     expect(routerPathToChain([''], [chain2])).toEqual({chain: null, matches: 0});
     expect(routerPathToChain(['tab2'], [chain2])).toEqual({chain: chain2, matches: 3});
+  });
+});
 
+describe('mergeParams', () => {
+  it('should merge undefined', () => {
+    expect(mergeParams(undefined, undefined)).toBeUndefined();
+    expect(mergeParams(null, undefined)).toBeUndefined();
+    expect(mergeParams(undefined, null)).toBeUndefined();
+    expect(mergeParams(null, null)).toBeUndefined();
   });
 
+  it('should merge undefined with params', () => {
+    const params = {data: '1'};
+    expect(mergeParams(undefined, params)).toEqual(params);
+    expect(mergeParams(null, params)).toEqual(params);
+    expect(mergeParams(params, undefined)).toEqual(params);
+    expect(mergeParams(params, null)).toEqual(params);
+  });
 
+  it('should merge params with params', () => {
+    const params1 = {data: '1', data3: 'hello'};
+    const params2 = {data: '2', data2: 'hola'};
+
+    expect(mergeParams(params1, params2)).toEqual({
+      data: '2',
+      data2: 'hola',
+      data3: 'hello'
+    });
+    expect(params1).toEqual({data: '1', data3: 'hello'});
+    expect(params2).toEqual({data: '2', data2: 'hola'});
+  });
 });
 
 // describe('matchRoute', () => {
 //   it('should match simple route', () => {
 //     const path = ['path', 'to', 'component'];
 //     const routes: RouteChain[] = [
-//       [{ id: 2, path: ['to'], props: undefined }],
-//       [{ id: 1, path: ['path'], props: undefined }],
-//       [{ id: 3, path: ['segment'], props: undefined }],
-//       [{ id: 4, path: [''], props: undefined }],
+//       [{ id: 2, path: ['to'], params: undefined }],
+//       [{ id: 1, path: ['path'], params: undefined }],
+//       [{ id: 3, path: ['segment'], params: undefined }],
+//       [{ id: 4, path: [''], params: undefined }],
 //     ];
 //     const match = routerPathToChain(path, routes);
 //     expect(match).toEqual({ id: 1, path: ['path'], children: [] });
@@ -184,10 +228,10 @@ describe('routerPathToChain', () => {
 
 //   it('should match default route', () => {
 //     const routes: RouteTree = [
-//       { id: 2, path: ['to'], children: [], props: undefined },
-//       { id: 1, path: ['path'], children: [], props: undefined },
-//       { id: 3, path: ['segment'], children: [], props: undefined },
-//       { id: 4, path: [''], children: [], props: undefined },
+//       { id: 2, path: ['to'], children: [], params: undefined },
+//       { id: 1, path: ['path'], children: [], params: undefined },
+//       { id: 3, path: ['segment'], children: [], params: undefined },
+//       { id: 4, path: [''], children: [], params: undefined },
 //     ];
 //     const seg = new RouterSegments(['hola', 'path']);
 //     let match = matchRoute(seg, routes);
@@ -204,10 +248,10 @@ describe('routerPathToChain', () => {
 
 //   it('should not match any route', () => {
 //     const routes: RouteTree = [
-//       { id: 2, path: ['to', 'to', 'to'], children: [], props: undefined },
-//       { id: 1, path: ['adam', 'manu'], children: [], props: undefined },
-//       { id: 3, path: ['hola', 'adam'], children: [], props: undefined },
-//       { id: 4, path: [''], children: [], props: undefined },
+//       { id: 2, path: ['to', 'to', 'to'], children: [], params: undefined },
+//       { id: 1, path: ['adam', 'manu'], children: [], params: undefined },
+//       { id: 3, path: ['hola', 'adam'], children: [], params: undefined },
+//       { id: 4, path: [''], children: [], params: undefined },
 //     ];
 //     const seg = new RouterSegments(['hola', 'manu', 'adam']);
 //     const match = matchRoute(seg, routes);
@@ -224,8 +268,8 @@ describe('routerPathToChain', () => {
 
 //   it('should not match any route (2)', () => {
 //     const routes: RouteTree = [
-//       { id: 1, path: ['adam', 'manu'], children: [], props: undefined },
-//       { id: 3, path: ['hola', 'adam'], children: [], props: undefined },
+//       { id: 1, path: ['adam', 'manu'], children: [], params: undefined },
+//       { id: 3, path: ['hola', 'adam'], children: [], params: undefined },
 //     ];
 //     const seg = new RouterSegments(['adam']);
 //     expect(matchRoute(seg, routes)).toBeNull();
@@ -235,10 +279,10 @@ describe('routerPathToChain', () => {
 
 //   it ('should match multiple segments', () => {
 //     const routes: RouteTree = [
-//       { id: 1, path: ['adam', 'manu'], children: [], props: undefined },
-//       { id: 2, path: ['manu', 'hello'], children: [], props: undefined },
-//       { id: 3, path: ['hello'], children: [], props: undefined },
-//       { id: 4, path: [''], children: [], props: undefined },
+//       { id: 1, path: ['adam', 'manu'], children: [], params: undefined },
+//       { id: 2, path: ['manu', 'hello'], children: [], params: undefined },
+//       { id: 3, path: ['hello'], children: [], params: undefined },
+//       { id: 4, path: [''], children: [], params: undefined },
 //     ];
 //     const seg = new RouterSegments(['adam', 'manu', 'hello', 'manu', 'hello']);
 //     let match = matchRoute(seg, routes);
@@ -259,9 +303,9 @@ describe('routerPathToChain', () => {
 
 //   it('should match long multi segments', () => {
 //     const routes: RouteTree = [
-//       { id: 1, path: ['adam', 'manu', 'hello', 'menu', 'hello'], children: [], props: undefined },
-//       { id: 2, path: ['adam', 'manu', 'hello', 'menu'], children: [], props: undefined },
-//       { id: 3, path: ['adam', 'manu'], children: [], props: undefined },
+//       { id: 1, path: ['adam', 'manu', 'hello', 'menu', 'hello'], children: [], params: undefined },
+//       { id: 2, path: ['adam', 'manu', 'hello', 'menu'], children: [], params: undefined },
+//       { id: 3, path: ['adam', 'manu'], children: [], params: undefined },
 //     ];
 //     const seg = new RouterSegments(['adam', 'manu', 'hello', 'menu', 'hello']);
 //     const match = matchRoute(seg, routes);

@@ -71,9 +71,6 @@ Return a view controller
 #### insertPages()
 
 
-#### markVisible()
-
-
 #### pop()
 
 

@@ -8,7 +8,7 @@ export function readRoutes(root: Element): RouteTree {
     .map(el => ({
       path: parsePath(readProp(el, 'path')),
       id: readProp(el, 'component'),
-      props: readProp(el, 'props'),
+      params: el.params,
       children: readRoutes(el)
     }));
 }
@@ -36,7 +36,7 @@ function flattenNode(chain: RouteChain, routes: RouteChain[], node: RouteNode) {
   s.push({
     id: node.id,
     path: node.path,
-    props: node.props
+    params: node.params
   });
 
   if (node.children.length === 0) {

@@ -12,14 +12,14 @@
 string
 
 
+#### params
+
+
+
+
 #### path
 
 string
-
-
-#### props
-
-any
 
 
 ## Attributes
@@ -29,14 +29,14 @@ any
 string
 
 
+#### params
+
+
+
+
 #### path
 
 string
-
-
-#### props
-
-any
 
 
 
