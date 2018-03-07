@@ -13,6 +13,10 @@ import { CssClassMap } from '../../index';
 export class FabButton {
   @Element() private el: HTMLElement;
 
+  @State() private inContainer = false;
+
+  @State() private inList = false;
+
   /**
    * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -28,6 +32,16 @@ export class FabButton {
   @Prop() mode: 'ios' | 'md';
 
   /**
+   * If true, the fab button will be show a close icon. Defaults to `false`.
+   */
+  @Prop() activated = false;
+
+  /**
+   * If true, the user cannot interact with the fab button. Defaults to `false`.
+   */
+  @Prop() disabled = false;
+
+  /**
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
@@ -38,18 +52,10 @@ export class FabButton {
    */
   @Prop() translucent = false;
 
-  @Prop() activated = false;
   @Prop() toggleActive: Function;
 
   @Prop() show = false;
 
-  @State() private inContainer = false;
-  @State() private inList = false;
-
-  /**
-   * If true, the user cannot interact with the fab button. Defaults to `false`.
-   */
-  @Prop() disabled = false;
 
   componentDidLoad() {
     const parentNode = this.el.parentNode;
@@ -74,7 +80,6 @@ export class FabButton {
       'fab-button-in-list': this.inList,
       [`fab-button-${this.mode}-in-list`]: this.inList,
       [`fab-button-translucent-${this.mode}-in-list`]: (this.inList && this.translucent),
-
       'fab-button-close-active': this.activated,
       'fab-button-show': this.show,
     };

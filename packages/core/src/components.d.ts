@@ -908,6 +908,7 @@ declare global {
   namespace JSXElements {
     export interface IonFabListAttributes extends HTMLAttributes {
       activated?: boolean;
+      side?: 'left' | 'right' | 'top' | 'bottom';
     }
   }
 }

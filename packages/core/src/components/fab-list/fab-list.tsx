@@ -8,6 +8,9 @@ import { Component, Element, Prop, Watch } from '@stencil/core';
 export class FabList {
   @Element() private el: HTMLIonFabElement;
 
+  /**
+   * If true, the fab list will be show all fab buttons in the list. Defaults to `false`.
+   */
   @Prop() activated = false;
 
   @Watch('activated')
@@ -22,10 +25,17 @@ export class FabList {
     }
   }
 
+  /**
+   * The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
+   */
+  @Prop() side: 'left' | 'right' | 'top' | 'bottom' = 'bottom';
+
+
   hostData() {
     return {
       class: {
-        'fab-list-active': this.activated
+        'fab-list-active': this.activated,
+        [`fab-list-side-${this.side}`]: this.side
       }
     };
   }

@@ -42,6 +42,8 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 
 boolean
 
+If true, the fab button will be show a close icon. Defaults to `false`.
+
 
 #### color
 
@@ -98,6 +100,8 @@ If true, the fab button will be translucent. Defaults to `false`.
 #### activated
 
 boolean
+
+If true, the fab button will be show a close icon. Defaults to `false`.
 
 
 #### color

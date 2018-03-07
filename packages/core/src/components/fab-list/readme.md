@@ -33,12 +33,30 @@ The `ion-fab-list` element is a container for multiple FAB buttons. This collect
 
 boolean
 
+If true, the fab list will be show all fab buttons in the list. Defaults to `false`.
+
+
+#### side
+
+
+
+The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
+
 
 ## Attributes
 
 #### activated
 
 boolean
+
+If true, the fab list will be show all fab buttons in the list. Defaults to `false`.
+
+
+#### side
+
+
+
+The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
 
 
 

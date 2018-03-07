@@ -38,26 +38,26 @@ ion-fab-list {
   transform: scale(1);
 }
 
-ion-fab-list[side=left] .fab-button-in-list,
-ion-fab-list[side=right] .fab-button-in-list {
+.fab-list-side-left .fab-button-in-list,
+.fab-list-side-right .fab-button-in-list {
   @include margin(0, 8px);
 }
 
-ion-fab-list[side=top] {
+.fab-list-side-top {
   top: auto;
   bottom: 0;
 
   flex-direction: column-reverse;
 }
 
-ion-fab-list[side=left] {
+.fab-list-side-left {
   @include margin(0, $fab-size + $fab-list-margin);
   @include position-horizontal(null, 0);
 
   flex-direction: row-reverse;
 }
 
-ion-fab-list[side=right] {
+.fab-list-side-right {
   @include margin(0, $fab-size + $fab-list-margin);
   @include position(null, null, null, 0);
 
