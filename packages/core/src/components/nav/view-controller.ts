@@ -30,7 +30,6 @@ export class ViewController {
   _nav: NavControllerBase;
   _zIndex: number;
   _state: number = STATE_NEW;
-  _cssClass: string;
 
   /** @hidden */
   id: string;
@@ -44,15 +43,8 @@ export class ViewController {
 
   constructor(
     public component: any,
-    public data?: any,
-    rootCssClass: string = DEFAULT_CSS_CLASS
-  ) {
-    // component could be anything, never use it directly
-    // it could be a string, a HTMLElement
-    // passed in data could be NavParams, but all we care about is its data object
-    // this.data = (data instanceof NavParams ? data.data : (isPresent(data) ? data : {}));
-    this._cssClass = rootCssClass;
-  }
+    public data?: any
+  ) {}
 
   /**
    * @hidden
@@ -65,6 +57,11 @@ export class ViewController {
     this.element = (typeof component === 'string')
       ? document.createElement(component)
       : component;
+
+    this.element.classList.add('ion-page');
+    if (this.data) {
+      Object.assign(this.element, this.data);
+    }
   }
 
   _setNav(navCtrl: NavControllerBase) {
@@ -322,5 +319,3 @@ export class ViewController {
 export function isViewController(viewCtrl: any): viewCtrl is ViewController {
   return !!(viewCtrl && (<ViewController>viewCtrl)._didLoad && (<ViewController>viewCtrl)._willUnload);
 }
-
-const DEFAULT_CSS_CLASS = 'ion-page';

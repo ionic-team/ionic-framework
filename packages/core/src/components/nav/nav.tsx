@@ -619,14 +619,9 @@ export class NavControllerBase implements NavOutlet {
     // render the component ref instance to the DOM
     // ******** DOM WRITE ****************
     this.el.appendChild(view.element);
+
     view._state = STATE_ATTACHED;
 
-    // TODO: fails in test
-    if (view._cssClass) {
-      // the ElementRef of the actual ion-page created
-      // ******** DOM WRITE ****************+
-      view.element.classList.add(view._cssClass);
-    }
     // successfully finished loading the entering view
     // fire off the "didLoad" lifecycle events
     view._didLoad();
