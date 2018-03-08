@@ -7,7 +7,7 @@ export function readRoutes(root: Element): RouteTree {
     .filter(el => el.tagName === 'ION-ROUTE')
     .map(el => ({
       path: parsePath(readProp(el, 'path')),
-      id: readProp(el, 'component'),
+      id: readProp(el, 'component').toLowerCase(),
       params: el.params,
       children: readRoutes(el)
     }));

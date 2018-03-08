@@ -1,4 +1,4 @@
-import { RouteChain } from '../utils/interfaces';
+import { RouteChain, RouteID } from '../utils/interfaces';
 import { routerIDsToChain, routerPathToChain } from '../utils/matching';
 import { mockRouteElement } from './parser.spec';
 import { chainToPath, generatePath, parsePath } from '../utils/path';
@@ -18,19 +18,37 @@ describe('ionic-conference-app', () => {
     expect(getRouteIDs('/about', routes)).toEqual(['page-tabs', 'page-about']);
     expect(getRouteIDs('/tutorial', routes)).toEqual(['page-tutorial']);
 
-    expect(getRoutePaths(['page-tabs', 'tab-schedule', 'page-schedule'], routes)).toEqual('/');
-    expect(getRoutePaths(['page-tabs', 'tab-speaker', 'page-speaker-list'], routes)).toEqual('/speaker');
-    expect(getRoutePaths(['page-tabs', 'page-map'], routes)).toEqual('/map');
-    expect(getRoutePaths(['page-tabs', 'page-about'], routes)).toEqual('/about');
-    expect(getRoutePaths(['page-tutorial'], routes)).toEqual('/tutorial');
+    expect(getRoutePath([
+      {id: 'PAGE-TABS'},
+      {id: 'tab-schedule'},
+      {id: 'page-schedule'}], routes)).toEqual('/');
 
+    expect(getRoutePath([
+      {id: 'page-tabs'},
+      {id: 'TAB-SPEAKER'}], routes)).toEqual('/speaker');
+
+    expect(getRoutePath([
+      {id: 'page-tabs'},
+      {id: 'TAB-SPEAKER'},
+      {id: 'page-speaker-list'}], routes)).toEqual('/speaker');
+
+    expect(getRoutePath([
+      {id: 'page-tabs'},
+      {id: 'PAGE-MAP'}], routes)).toEqual('/map');
+
+    expect(getRoutePath([
+      {id: 'page-tabs'},
+      {id: 'page-about'}], routes)).toEqual('/about');
+
+    expect(getRoutePath([
+      {id: 'page-tutorial'}], routes)).toEqual('/tutorial');
   });
 });
 
 
 function conferenceAppRouting() {
   const p2 = mockRouteElement('/', 'tab-schedule');
-  const p3 = mockRouteElement('/', 'page-schedule');
+  const p3 = mockRouteElement('/', 'PAGE-SCHEDULE');
   p2.appendChild(p3);
 
   const p4 = mockRouteElement('/speaker', 'tab-speaker');
@@ -56,10 +74,10 @@ function conferenceAppRouting() {
 
 
 function getRouteIDs(path: string, routes: RouteChain[]): string[] {
-  return routerPathToChain(parsePath(path), routes).chain.map(r => r.id);
+  return routerPathToChain(parsePath(path), routes).map(r => r.id);
 }
 
-function getRoutePaths(ids: string[], routes: RouteChain[]): string {
-  return generatePath(chainToPath(routerIDsToChain(ids, routes).chain));
+function getRoutePath(ids: RouteID[], routes: RouteChain[]): string {
+  return generatePath(chainToPath(routerIDsToChain(ids, routes)));
 }
 

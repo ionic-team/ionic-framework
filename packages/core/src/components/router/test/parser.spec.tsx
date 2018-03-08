@@ -5,7 +5,7 @@ import { RouteTree } from '../utils/interfaces';
 describe('readRoutes', () => {
   it('should read URL', () => {
     const root = mockElement('div');
-    const r1 = mockRouteElement('/', 'main-page');
+    const r1 = mockRouteElement('/', 'MAIN-PAGE');
     const r2 = mockRouteElement('/one-page', 'one-page');
     const r3 = mockRouteElement('secondpage', 'second-page');
     const r4 = mockRouteElement('/5/hola', '4');
@@ -20,12 +20,12 @@ describe('readRoutes', () => {
     r4.appendChild(r6);
 
     const expected: RouteTree = [
-      { path: [''], id: 'main-page', children: [], props: undefined },
-      { path: ['one-page'], id: 'one-page', children: [], props: undefined },
-      { path: ['secondpage'], id: 'second-page', props: undefined, children: [
-        { path: ['5', 'hola'], id: '4', props: undefined, children: [
-          { path: ['path', 'to', 'five'], id: '5', children: [], props: undefined },
-          { path: ['path', 'to', 'five2'], id: '6', children: [], props: undefined }
+      { path: [''], id: 'main-page', children: [], params: undefined },
+      { path: ['one-page'], id: 'one-page', children: [], params: undefined },
+      { path: ['secondpage'], id: 'second-page', params: undefined, children: [
+        { path: ['5', 'hola'], id: '4', params: undefined, children: [
+          { path: ['path', 'to', 'five'], id: '5', children: [], params: undefined },
+          { path: ['path', 'to', 'five2'], id: '6', children: [], params: undefined }
         ] }
       ] }
     ];
@@ -36,12 +36,12 @@ describe('readRoutes', () => {
 describe('flattenRouterTree', () => {
   it('should process routes', () => {
     const entries: RouteTree = [
-      { path: [''], id: 'hola', children: [], props: undefined },
-      { path: ['one-page'], id: 'one-page', children: [], props: undefined },
-      { path: ['secondpage'], id: 'second-page', props: undefined, children: [
-        { path: ['5', 'hola'], id: '4', props: undefined, children: [
-          { path: ['path', 'to', 'five'], id: '5', children: [], props: undefined },
-          { path: ['path', 'to', 'five2'], id: '6', children: [], props: undefined }
+      { path: [''], id: 'hola', children: [], params: undefined },
+      { path: ['one-page'], id: 'one-page', children: [], params: undefined },
+      { path: ['secondpage'], id: 'second-page', params: undefined, children: [
+        { path: ['5', 'hola'], id: '4', params: undefined, children: [
+          { path: ['path', 'to', 'five'], id: '5', children: [], params: undefined },
+          { path: ['path', 'to', 'five2'], id: '6', children: [], params: undefined }
         ] }
       ] }
     ];

@@ -11,8 +11,16 @@ export function generatePath(segments: string[]): string {
 export function chainToPath(chain: RouteChain): string[] {
   const path = [];
   for (const route of chain) {
-    if (route.path[0] !== '') {
-      path.push(...route.path);
+    for (const segment of route.path) {
+      if (segment[0] === ':') {
+        const param = route.params && route.params[segment.slice(1)];
+        if (!param) {
+          throw new Error(`missing param ${segment.slice(1)}`);
+        }
+        path.push(param);
+      } else if (segment !== '') {
+        path.push(segment);
+      }
     }
   }
   return path;
@@ -24,14 +32,12 @@ export function writePath(history: History, base: string, usePath: boolean, path
   if (usePath) {
     url = '#' + url;
   }
-  state++;
   if (isPop) {
-    history.back();
+    // history.back();
     history.replaceState(state, null, url);
   } else {
     history.pushState(state, null, url);
   }
-  return state;
 }
 
 export function readPath(loc: Location, base: string, useHash: boolean): string[] | null {

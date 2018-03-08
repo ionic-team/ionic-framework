@@ -222,7 +222,7 @@ Emitted when the tab changes.
 
 ## Methods
 
-#### getContentElement()
+#### getContainerEl()
 
 
 #### getRouteId()

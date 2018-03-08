@@ -25,6 +25,7 @@ import { Transition } from './transition';
 
 import iosTransitionAnimation from './animations/ios.transition';
 import mdTransitionAnimation from './animations/md.transition';
+import { RouteID } from '../router/utils/interfaces';
 
 const TrnsCtrl = new TransitionController();
 
@@ -215,16 +216,19 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  getRouteId(): string | null {
-    const element = this.getContentElement();
-    if (element) {
-      return element.tagName;
+  getRouteId(): RouteID|null {
+    const active = this.getActive();
+    if (active) {
+      return {
+        id: active.element.tagName,
+        params: active.data
+      };
     }
     return null;
   }
 
   @Method()
-  getContentElement(): HTMLElement {
+  getContainerEl(): HTMLElement {
     const active = this.getActive();
     if (active) {
       return active.element;

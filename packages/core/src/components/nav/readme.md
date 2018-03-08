@@ -48,7 +48,7 @@ boolean
 #### getByIndex()
 
 
-#### getContentElement()
+#### getContainerEl()
 
 
 #### getPrevious()

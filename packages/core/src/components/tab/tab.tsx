@@ -1,6 +1,4 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
-import { asyncRaf } from '../../utils/helpers';
-
 
 @Component({
   tag: 'ion-tab',
@@ -86,7 +84,7 @@ export class Tab {
   @Event() ionSelect: EventEmitter<void>;
 
   @Method()
-  getRouteId(): string|null {
+  getTabId(): string|null {
     if (this.name) {
       return this.name;
     }
@@ -104,7 +102,7 @@ export class Tab {
   private prepareLazyLoaded(): Promise<any> {
     if (!this.loaded && this.component) {
       this.loaded = true;
-      return attachViewToDom(this.el, this.component).then(() => asyncRaf());
+      return attachViewToDom(this.el, this.component);
     }
     return Promise.resolve();
   }

@@ -132,34 +132,12 @@ describe('routerPathToChain', () => {
       chain3,
       chain4
     ];
-    expect(routerPathToChain(['to'], routes)).toEqual({
-      chain: null,
-      matches: 0,
-    });
-
-    expect(routerPathToChain([''], routes)).toEqual({
-      chain: null,
-      matches: 0,
-    });
-    expect(routerPathToChain(['segment', 'to'], routes)).toEqual({
-      chain: null,
-      matches: 0,
-    });
-
-    expect(routerPathToChain(['hola'], routes)).toEqual({
-      chain: chain3,
-      matches: 1,
-    });
-    expect(routerPathToChain(['hola', 'hola'], routes)).toEqual({
-      chain: chain3,
-      matches: 1,
-    });
-
-    expect(routerPathToChain(['hola', 'adios'], routes)).toEqual({
-      chain: chain4,
-      matches: 2,
-    });
-
+    expect(routerPathToChain(['to'], routes)).toEqual(null);
+    expect(routerPathToChain([''], routes)).toEqual(null);
+    expect(routerPathToChain(['segment', 'to'], routes)).toEqual(null);
+    expect(routerPathToChain(['hola'], routes)).toEqual(chain3);
+    expect(routerPathToChain(['hola', 'hola'], routes)).toEqual(chain3);
+    expect(routerPathToChain(['hola', 'adios'], routes)).toEqual(chain4);
   });
 
   it('should match the default route', () => {
@@ -174,11 +152,11 @@ describe('routerPathToChain', () => {
       { id: 'page2', path: [''], params: undefined }
     ];
 
-    expect(routerPathToChain([''], [chain1])).toEqual({chain: chain1, matches: 3});
-    expect(routerPathToChain(['tab2'], [chain1])).toEqual({chain: null, matches: 0});
+    expect(routerPathToChain([''], [chain1])).toEqual(chain1);
+    expect(routerPathToChain(['tab2'], [chain1])).toEqual(null);
 
-    expect(routerPathToChain([''], [chain2])).toEqual({chain: null, matches: 0});
-    expect(routerPathToChain(['tab2'], [chain2])).toEqual({chain: chain2, matches: 3});
+    expect(routerPathToChain([''], [chain2])).toEqual(null);
+    expect(routerPathToChain(['tab2'], [chain2])).toEqual(chain2);
   });
 });
 

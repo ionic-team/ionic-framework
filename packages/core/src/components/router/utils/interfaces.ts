@@ -2,14 +2,14 @@
 export interface NavOutlet {
   setRouteId(id: string, data: any, direction: number): Promise<boolean>;
   markVisible?(): Promise<void>;
-  getRouteId(): string;
+  getRouteId(): RouteID|null;
 
-  getContentElement(): HTMLElement | null;
+  getContainerEl(): HTMLElement | null;
 }
 
-export interface RouteMatch {
-  chain: RouteChain;
-  matches: number;
+export interface RouteID {
+  id: string;
+  params?: any;
 }
 
 export type NavOutletElement = NavOutlet & HTMLStencilElement;

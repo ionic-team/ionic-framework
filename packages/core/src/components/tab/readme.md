@@ -235,7 +235,7 @@ Emitted when the current tab is selected.
 
 ## Methods
 
-#### getRouteId()
+#### getTabId()
 
 
 #### setActive()

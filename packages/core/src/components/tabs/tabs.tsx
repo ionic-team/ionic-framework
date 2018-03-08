@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 import { Config, NavOutlet } from '../../index';
+import { RouteID } from '../router/utils/interfaces';
 
 
 @Component({
@@ -101,7 +102,7 @@ export class Tabs implements NavOutlet {
   @Method()
   getTab(tabOrIndex: string | number | HTMLIonTabElement): HTMLIonTabElement {
     if (typeof tabOrIndex === 'string') {
-      return this.tabs.find(tab => tab.getRouteId() === tabOrIndex);
+      return this.tabs.find(tab => tab.getTabId() === tabOrIndex);
     }
     if (typeof tabOrIndex === 'number') {
       return this.tabs[tabOrIndex];
@@ -136,16 +137,14 @@ export class Tabs implements NavOutlet {
   }
 
   @Method()
-  getRouteId(): string|null {
-    if (this.selectedTab) {
-      return this.selectedTab.getRouteId();
-    }
-    return null;
+  getRouteId(): RouteID|null {
+    const id = this.selectedTab && this.selectedTab.getTabId();
+    return id ? {id} : null;
   }
 
 
   @Method()
-  getContentElement(): HTMLElement {
+  getContainerEl(): HTMLElement {
     return this.routingView || this.selectedTab;
   }
 

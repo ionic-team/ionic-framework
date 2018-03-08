@@ -1,4 +1,5 @@
-import { generatePath, parsePath } from '../utils/path';
+import { chainToPath, generatePath, parsePath } from '../utils/path';
+import { RouteChain } from '../utils/interfaces';
 
 describe('parseURL', () => {
   it('should parse empty path', () => {
@@ -53,3 +54,39 @@ describe('generatePath', () => {
 
   });
 });
+
+
+describe('chainToPath', () => {
+  it('should generate a simple URL', () => {
+    const chain: RouteChain = [
+      { id: '2', path: [''], params: undefined },
+      { id: '1', path: [''], params: undefined },
+      { id: '3', path: ['segment', 'to'], params: undefined },
+      { id: '4', path: [''], params: undefined },
+      { id: '5', path: ['hola', '', 'hey'], params: undefined },
+      { id: '6', path: [''], params: undefined },
+      { id: '7', path: [':param'], params: {param: 'name'} },
+      { id: '8', path: ['adios', ':name', ':id'], params: {name: 'manu', id: '123'} },
+    ];
+    expect(chainToPath(chain)).toEqual(
+      ['segment', 'to', 'hola', 'hey', 'name', 'adios', 'manu', '123']
+    );
+  });
+
+  it('should raise an exception', () => {
+    const chain: RouteChain = [
+      { id: '3', path: ['segment'], params: undefined },
+      { id: '8', path: [':name'], params: undefined },
+    ];
+    expect(() => chainToPath(chain)).toThrowError('missing param name');
+  });
+
+  it('should raise an exception 2', () => {
+    const chain: RouteChain = [
+      { id: '3', path: ['segment'], params: undefined },
+      { id: '8', path: [':name', ':id'], params: {name: 'hey'} },
+    ];
+    expect(() => chainToPath(chain)).toThrowError('missing param id');
+  });
+});
+

@@ -1,5 +1,5 @@
 import { breadthFirstSearch } from './common';
-import { NavOutlet, RouteChain } from './interfaces';
+import { NavOutlet, RouteChain, RouteID } from './interfaces';
 
 export function writeNavState(root: HTMLElement, chain: RouteChain|null, index: number, direction: number): Promise<void> {
   if (!chain || index >= chain.length) {
@@ -16,7 +16,7 @@ export function writeNavState(root: HTMLElement, chain: RouteChain|null, index: 
       if (changed) {
         direction = 0;
       }
-      const nextEl = node.getContentElement();
+      const nextEl = node.getContainerEl();
       const promise = (nextEl)
         ? writeNavState(nextEl, chain, index + 1, direction)
         : Promise.resolve();
@@ -29,15 +29,15 @@ export function writeNavState(root: HTMLElement, chain: RouteChain|null, index: 
 }
 
 export function readNavState(node: HTMLElement) {
-  const stack: string[] = [];
+  const ids: RouteID[] = [];
   let pivot: NavOutlet|null;
   while (true) {
     pivot = breadthFirstSearch(node);
     if (pivot) {
-      const cmp = pivot.getRouteId();
-      if (cmp) {
-        node = pivot.getContentElement();
-        stack.push(cmp.toLowerCase());
+      const id = pivot.getRouteId();
+      if (id) {
+        node = pivot.getContainerEl();
+        ids.push(id);
       } else {
         break;
       }
@@ -45,8 +45,5 @@ export function readNavState(node: HTMLElement) {
       break;
     }
   }
-  return {
-    ids: stack,
-    pivot: pivot,
-  };
+  return {ids, pivot};
 }

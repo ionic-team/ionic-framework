@@ -52,16 +52,20 @@ export class Router {
     }
     console.debug('[IN] nav changed -> update URL');
     const { ids, pivot } = this.readNavState();
-    const { chain, matches } = routerIDsToChain(ids, this.routes);
-    if (chain.length > matches) {
-      // readNavState() found a pivot that is not initialized
-      console.debug('[IN] pivot uninitialized -> write partial nav state');
-      this.writeNavState(pivot, chain.slice(matches), 0);
-    }
+    const chain = routerIDsToChain(ids, this.routes);
+    if (chain) {
+      if (chain.length > ids.length) {
+        // readNavState() found a pivot that is not initialized
+        console.debug('[IN] pivot uninitialized -> write partial nav state');
+        this.writeNavState(pivot, chain.slice(ids.length), 0);
+      }
 
-    const isPop = ev.detail.isPop === true;
-    const path = chainToPath(chain);
-    this.writePath(path, isPop);
+      const isPop = ev.detail.isPop === true;
+      const path = chainToPath(chain);
+      this.writePath(path, isPop);
+    } else {
+      console.warn('no matching URL for ', ids.map(i => i.id));
+    }
   }
 
   @Method()
@@ -80,7 +84,7 @@ export class Router {
     }
     const direction = window.history.state >= this.state ? 1 : -1;
     const node = document.querySelector('ion-app');
-    const {chain} = routerPathToChain(currentPath, this.routes);
+    const chain = routerPathToChain(currentPath, this.routes);
     return this.writeNavState(node, chain, direction);
   }
 
@@ -100,14 +104,12 @@ export class Router {
   }
 
   private writePath(path: string[], isPop: boolean) {
-    this.state = writePath(window.history, this.base, this.useHash, path, isPop, this.state);
+    // busyURL is used to prevent reentering in the popstate event
+    this.state++;
+    writePath(window.history, this.base, this.useHash, path, isPop, this.state);
   }
 
   private readPath(): string[] | null {
     return readPath(window.location, this.base, this.useHash);
-  }
-
-  render() {
-    return <slot/>;
   }
 }

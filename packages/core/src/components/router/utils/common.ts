@@ -6,13 +6,6 @@ export class RouterSegments {
     this.path = path.slice();
   }
 
-  isDefault(): boolean {
-    if (this.path.length > 0) {
-      return this.path[0] === '';
-    }
-    return true;
-  }
-
   next(): string {
     if (this.path.length > 0) {
       return this.path.shift() as string;
