@@ -50,7 +50,7 @@ export class BackButton {
       ev.preventDefault();
       nav.pop();
     } else if (this.defaultHref) {
-      openURL(this.defaultHref, ev);
+      openURL(this.defaultHref, ev, true);
     }
   }
 

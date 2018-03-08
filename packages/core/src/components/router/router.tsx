@@ -69,8 +69,8 @@ export class Router {
   }
 
   @Method()
-  pushURL(url: string) {
-    this.writePath(parsePath(url), false);
+  pushURL(url: string, isPop = false) {
+    this.writePath(parsePath(url), isPop);
     return this.writeNavStateRoot();
   }
 
