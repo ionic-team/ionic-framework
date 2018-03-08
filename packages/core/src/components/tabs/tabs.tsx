@@ -7,10 +7,10 @@ import { Config, NavOutlet } from '../../index';
   styleUrl: 'tabs.scss'
 })
 export class Tabs implements NavOutlet {
+
   private ids = -1;
   private transitioning = false;
   private routingView: HTMLIonTabElement;
-
   private tabsId: number = (++tabIds);
 
   @Element() el: HTMLElement;
@@ -80,7 +80,7 @@ export class Tabs implements NavOutlet {
 
   componentDidUnload() {
     this.tabs.length = 0;
-    this.selectedTab = undefined;
+    this.selectedTab = this.routingView = undefined;
   }
 
   @Listen('ionTabbarClick')
@@ -98,13 +98,15 @@ export class Tabs implements NavOutlet {
       .then(selectedTab => this.tabSwitch(selectedTab));
   }
 
-  /**
-   * @param {number} index Index of the tab you want to get
-   * @returns {HTMLIonTabElement} Returns the tab who's index matches the one passed
-   */
   @Method()
-  getByIndex(index: number): HTMLIonTabElement {
-    return this.tabs[index];
+  getTab(tabOrIndex: string | number | HTMLIonTabElement): HTMLIonTabElement {
+    if (typeof tabOrIndex === 'string') {
+      return this.tabs.find(tab => tab.getRouteId() === tabOrIndex);
+    }
+    if (typeof tabOrIndex === 'number') {
+      return this.tabs[tabOrIndex];
+    }
+    return tabOrIndex;
   }
 
   /**
@@ -116,24 +118,13 @@ export class Tabs implements NavOutlet {
   }
 
   @Method()
-  getIndex(tab: HTMLIonTabElement): number {
-    return this.tabs.indexOf(tab);
-  }
-
-  @Method()
-  getTabs(): HTMLIonTabElement[] {
-    return this.tabs;
-  }
-
-  @Method()
-  setRouteId(id: any): Promise<boolean> {
-    if (this.selectedTab && this.selectedTab.getRouteId() === id) {
-      return Promise.resolve(false);
-    }
-    const tab = this.tabs.find(t => id === t.getRouteId());
-    return this.setActive(tab).then(() => {
-      this.routingView = tab;
-      return true;
+  setRouteId(id: string): Promise<boolean> {
+    return this.setActive(id).then(tab => {
+      if (tab) {
+        this.routingView = tab;
+        return true;
+      }
+      return false;
     });
   }
 
@@ -201,12 +192,12 @@ export class Tabs implements NavOutlet {
     }
   }
 
-  private setActive(tabOrIndex: number | HTMLIonTabElement): Promise<HTMLIonTabElement|null> {
+  private setActive(tabOrIndex: string | number | HTMLIonTabElement): Promise<HTMLIonTabElement|null> {
     if (this.transitioning) {
       return Promise.resolve(null);
     }
-    const selectedTab = (typeof tabOrIndex === 'number' ? this.getByIndex(tabOrIndex) : tabOrIndex);
-    if (!selectedTab) {
+    const selectedTab = this.getTab(tabOrIndex);
+    if (!selectedTab || selectedTab === this.selectedTab) {
       return Promise.resolve(null);
     }
 
