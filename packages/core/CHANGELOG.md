@@ -1,3 +1,21 @@
+<a name="0.1.4-3"></a>
+## [0.1.4-3](https://github.com/ionic-team/ionic/compare/v0.1.4-2...v0.1.4-3) (2018-03-08)
+
+
+### Bug Fixes
+
+* **router:** passing params to ion-nav ([d1263a8](https://github.com/ionic-team/ionic/commit/d1263a8))
+
+
+### Features
+
+* **back-button:** adds defaultHref ([5271f68](https://github.com/ionic-team/ionic/commit/5271f68))
+* **nav:** params ([878d7e6](https://github.com/ionic-team/ionic/commit/878d7e6))
+* **route:** adds route-link ([4a3030f](https://github.com/ionic-team/ionic/commit/4a3030f))
+* **router:** reverse lookup with params ([3ce8a67](https://github.com/ionic-team/ionic/commit/3ce8a67))
+
+
+
 <a name="0.1.4-2"></a>
 ## [0.1.4-2](https://github.com/ionic-team/ionic/compare/v0.1.4-0...v0.1.4-2) (2018-03-07)
 
