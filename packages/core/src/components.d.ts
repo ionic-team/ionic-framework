@@ -197,6 +197,36 @@ declare global {
 
 
 import {
+  Anchor as IonAnchor
+} from './components/anchor/anchor';
+
+declare global {
+  interface HTMLIonAnchorElement extends IonAnchor, HTMLStencilElement {
+  }
+  var HTMLIonAnchorElement: {
+    prototype: HTMLIonAnchorElement;
+    new (): HTMLIonAnchorElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-anchor": HTMLIonAnchorElement;
+  }
+  interface ElementTagNameMap {
+    "ion-anchor": HTMLIonAnchorElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-anchor": JSXElements.IonAnchorAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonAnchorAttributes extends HTMLAttributes {
+      href?: string;
+    }
+  }
+}
+
+
+import {
   AnimationControllerImpl as IonAnimationController
 } from './components/animation-controller/animation-controller';
 
@@ -2542,36 +2572,6 @@ declare global {
   namespace JSXElements {
     export interface IonRippleEffectAttributes extends HTMLAttributes {
       useTapClick?: boolean;
-    }
-  }
-}
-
-
-import {
-  RouteLink as IonAnchor
-} from './components/route-link/route-link';
-
-declare global {
-  interface HTMLIonAnchorElement extends IonAnchor, HTMLStencilElement {
-  }
-  var HTMLIonAnchorElement: {
-    prototype: HTMLIonAnchorElement;
-    new (): HTMLIonAnchorElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-anchor": HTMLIonAnchorElement;
-  }
-  interface ElementTagNameMap {
-    "ion-anchor": HTMLIonAnchorElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-anchor": JSXElements.IonAnchorAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonAnchorAttributes extends HTMLAttributes {
-      href?: string;
     }
   }
 }

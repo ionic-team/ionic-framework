@@ -5,7 +5,7 @@ import { openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-anchor'
 })
-export class RouteLink {
+export class Anchor {
 
   @Prop() href: string;
 
