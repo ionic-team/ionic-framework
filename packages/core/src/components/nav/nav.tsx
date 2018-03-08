@@ -201,17 +201,17 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  setRouteId(id: string, _: any = {}, direction: number): Promise<boolean> {
+  setRouteId(id: string, params: any = {}, direction: number): Promise<boolean> {
     const active = this.getActive();
     if (active && active.component === id) {
       return Promise.resolve(false);
     }
     if (direction === 1) {
-      return this.push(id).then(() => true);
+      return this.push(id, params).then(() => true);
     } else if (direction === -1 && this.canGoBack()) {
       return this.pop().then(() => true);
     }
-    return this.setRoot(id).then(() => true);
+    return this.setRoot(id, params).then(() => true);
   }
 
   @Method()
