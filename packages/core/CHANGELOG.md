@@ -1,3 +1,14 @@
+<a name="0.1.4-4"></a>
+## [0.1.4-4](https://github.com/ionic-team/ionic/compare/v0.1.4-3...v0.1.4-4) (2018-03-08)
+
+
+### Bug Fixes
+
+* **back-button:** implements back animation ([64a787a](https://github.com/ionic-team/ionic/commit/64a787a))
+* **route:** params is not undefined ([8b6df5a](https://github.com/ionic-team/ionic/commit/8b6df5a))
+
+
+
 <a name="0.1.4-3"></a>
 ## [0.1.4-3](https://github.com/ionic-team/ionic/compare/v0.1.4-2...v0.1.4-3) (2018-03-08)
 
