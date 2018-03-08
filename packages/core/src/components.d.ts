@@ -2546,31 +2546,30 @@ declare global {
 
 
 import {
-  RouteLink as IonRouteLink
+  RouteLink as IonAnchor
 } from './components/route-link/route-link';
 
 declare global {
-  interface HTMLIonRouteLinkElement extends IonRouteLink, HTMLStencilElement {
+  interface HTMLIonAnchorElement extends IonAnchor, HTMLStencilElement {
   }
-  var HTMLIonRouteLinkElement: {
-    prototype: HTMLIonRouteLinkElement;
-    new (): HTMLIonRouteLinkElement;
+  var HTMLIonAnchorElement: {
+    prototype: HTMLIonAnchorElement;
+    new (): HTMLIonAnchorElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-route-link": HTMLIonRouteLinkElement;
+    "ion-anchor": HTMLIonAnchorElement;
   }
   interface ElementTagNameMap {
-    "ion-route-link": HTMLIonRouteLinkElement;
+    "ion-anchor": HTMLIonAnchorElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-route-link": JSXElements.IonRouteLinkAttributes;
+      "ion-anchor": JSXElements.IonAnchorAttributes;
     }
   }
   namespace JSXElements {
-    export interface IonRouteLinkAttributes extends HTMLAttributes {
-      router?: any;
-      url?: string;
+    export interface IonAnchorAttributes extends HTMLAttributes {
+      href?: string;
     }
   }
 }

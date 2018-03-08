@@ -62,3 +62,14 @@ export function getClassMap(classes: string | undefined): CssClassMap {
   return map;
 }
 
+export function openURL(url: string, ev: Event) {
+  if (url && url.indexOf('://') === -1) {
+    const router = document.querySelector('ion-router');
+    if (router) {
+      ev && ev.preventDefault();
+      return router.componentOnReady().then(() => router.pushURL(url));
+    }
+  }
+  return Promise.resolve();
+}
+

@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 import { CssClassMap } from '../../index';
 import { BlurEvent, FocusEvent } from '../../utils/input-interfaces';
-import { getButtonClassMap, getElementClassMap } from '../../utils/theme';
+import { getButtonClassMap, getElementClassMap, openURL } from '../../utils/theme';
 
 
 @Component({
@@ -133,16 +133,16 @@ export class Button {
 
     const attrs = (TagType === 'button')
       ? { type: this.type }
-      : {};
+      : { href: this.href };
 
     return (
       <TagType
         {...attrs}
         class={buttonClasses}
         disabled={this.disabled}
-        href={this.href}
         onFocus={this.onFocus.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
+        onClick={(ev) => openURL(this.href, ev)}
         onBlur={this.onBlur.bind(this)}>
           <span class='button-inner'>
             <slot name='icon-only'></slot>

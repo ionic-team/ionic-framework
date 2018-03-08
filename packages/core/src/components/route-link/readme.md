@@ -7,24 +7,14 @@
 
 ## Properties
 
-#### router
-
-any
-
-
-#### url
+#### href
 
 string
 
 
 ## Attributes
 
-#### router
-
-any
-
-
-#### url
+#### href
 
 string
 

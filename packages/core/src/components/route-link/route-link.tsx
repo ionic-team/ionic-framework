@@ -1,12 +1,17 @@
 import { Component, Prop } from '@stencil/core';
+import { openURL } from '../../utils/theme';
 
 
 @Component({
-  tag: 'ion-route-link'
+  tag: 'ion-anchor'
 })
 export class RouteLink {
-  @Prop() url: string;
 
-  // The instance of the router
-  @Prop() router: any;
+  @Prop() href: string;
+
+  render() {
+    return <a
+      href={this.href}
+      onClick={(ev) => openURL(this.href, ev)}><slot/></a>;
+  }
 }

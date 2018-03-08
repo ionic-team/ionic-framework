@@ -1,8 +1,8 @@
-import { Component, Element, Listen, Prop } from '@stencil/core';
+import { Component, Element, Listen, Method, Prop } from '@stencil/core';
 import { Config, DomController } from '../../index';
 import { flattenRouterTree, readRoutes } from './utils/parser';
 import { readNavState, writeNavState } from './utils/dom';
-import { chainToPath, readPath, writePath } from './utils/path';
+import { chainToPath, parsePath, readPath, writePath } from './utils/path';
 import { RouteChain } from './utils/interfaces';
 import { routerIDsToChain, routerPathToChain } from './utils/matching';
 
@@ -42,10 +42,7 @@ export class Router {
       this.state++;
       window.history.replaceState(this.state, document.title, document.location.href);
     }
-    if (!this.busy) {
-      console.debug('[OUT] hash changed -> write nav state');
-      this.writeNavStateRoot();
-    }
+    this.writeNavStateRoot();
   }
 
   @Listen('body:ionNavChanged')
@@ -63,21 +60,34 @@ export class Router {
     }
 
     const isPop = ev.detail.isPop === true;
-    this.writePath(chain, isPop);
+    const path = chainToPath(chain);
+    this.writePath(path, isPop);
+  }
+
+  @Method()
+  pushURL(url: string) {
+    this.writePath(parsePath(url), false);
+    return this.writeNavStateRoot();
   }
 
   private writeNavStateRoot(): Promise<any> {
-    const node = document.querySelector('ion-app');
-    const currentPath = this.readPath();
-    const direction = window.history.state >= this.state ? 1 : -1;
-    if (currentPath) {
-      const {chain} = routerPathToChain(currentPath, this.routes);
-      return this.writeNavState(node, chain, direction);
+    if (this.busy) {
+      return Promise.resolve();
     }
-    return Promise.resolve();
+    const currentPath = this.readPath();
+    if (!currentPath) {
+      return Promise.resolve();
+    }
+    const direction = window.history.state >= this.state ? 1 : -1;
+    const node = document.querySelector('ion-app');
+    const {chain} = routerPathToChain(currentPath, this.routes);
+    return this.writeNavState(node, chain, direction);
   }
 
   private writeNavState(node: any, chain: RouteChain, direction: number): Promise<any> {
+    if (this.busy) {
+      return Promise.resolve();
+    }
     this.busy = true;
     return writeNavState(node, chain, 0, direction)
       .catch(err => console.error(err))
@@ -89,8 +99,7 @@ export class Router {
     return readNavState(root);
   }
 
-  private writePath(chain: RouteChain, isPop: boolean) {
-    const path = chainToPath(chain);
+  private writePath(path: string[], isPop: boolean) {
     this.state = writePath(window.history, this.base, this.useHash, path, isPop, this.state);
   }
 

@@ -1,5 +1,5 @@
 import { Component, Element, Listen, Prop, State } from '@stencil/core';
-import { createThemedClasses, getElementClassMap } from '../../utils/theme';
+import { createThemedClasses, getElementClassMap, openURL } from '../../utils/theme';
 import { CssClassMap } from '../../index';
 
 
@@ -104,10 +104,10 @@ export class Item {
 
     const clickable = !!(this.href || this.onclick || this.tappable);
 
-    let TagType = 'div';
-    if (clickable) {
-      TagType = this.href ? 'a' : 'button';
-    }
+    const TagType = clickable
+      ? this.href ? 'a' : 'button'
+      : 'div';
+
     const attrs = (TagType === 'button')
       ? {type: 'button'}
       : {href: this.href};
@@ -125,7 +125,10 @@ export class Item {
     this.hasStyleChange = false;
 
     return (
-      <TagType class={themedClasses} {...attrs}>
+      <TagType
+        {...attrs}
+        class={themedClasses}
+        onClick={(ev) => openURL(this.href, ev)}>
         <slot name='start'></slot>
         <div class='item-inner'>
           <div class='input-wrapper'>
