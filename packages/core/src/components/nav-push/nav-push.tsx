@@ -6,14 +6,14 @@ import { Component, Element, Listen, Prop } from '@stencil/core';
 })
 export class NavPush {
 
-  @Element() element: HTMLElement;
+  @Element() el: HTMLElement;
   @Prop() component: any;
   @Prop() url: string;
   @Prop() data: any;
 
   @Listen('child:click')
   push(): Promise<any> {
-    const nav = this.element.closest('ion-nav') as HTMLIonNavElement;
+    const nav = this.el.closest('ion-nav');
     if (nav) {
       const toPush = this.url || this.component;
       return nav.push(toPush, this.data);

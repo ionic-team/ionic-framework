@@ -8,7 +8,7 @@ const TRANSFORM = 'transform';
 const TRANSLATEX = 'translateX';
 const CENTER = '0%';
 const OFF_OPACITY = 0.8;
-const SHOW_BACK_BTN_CSS = 'show-back-button';
+const SHOW_BACK_BTN_CSS = 'can-back-back';
 
 export default function iosTransitionAnimation(Animation: Animation, _: HTMLElement, opts: AnimationOptions): Promise<Animation> {
 
@@ -76,7 +76,7 @@ export default function iosTransitionAnimation(Animation: Animation, _: HTMLElem
       enteringToolBarBg.addElement(enteringToolBarEle.querySelector('.toolbar-background'));
 
       const enteringBackButton = new Animation();
-      enteringBackButton.addElement(enteringToolBarEle.querySelector('.back-button'));
+      enteringBackButton.addElement(enteringToolBarEle.querySelector('ion-back-button'));
 
       enteringToolBar
         .add(enteringTitle)

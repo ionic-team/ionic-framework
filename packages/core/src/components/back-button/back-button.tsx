@@ -1,5 +1,6 @@
 import { Component, Element, Prop } from '@stencil/core';
 import { Config } from '../../index';
+import { openURL } from '../../utils/theme';
 
 @Component({
   tag: 'ion-back-button',
@@ -12,8 +13,6 @@ import { Config } from '../../index';
   }
 })
 export class BackButton {
-
-  private custom = true;
 
   /**
    * The mode determines which platform styles to use.
@@ -28,37 +27,45 @@ export class BackButton {
    */
   @Prop() text: string|undefined;
 
+  @Prop() icon: string;
+
+  @Prop() defaultHref: string;
+
   @Prop({ context: 'config' }) config: Config;
 
   @Element() el: HTMLElement;
 
-  componentWillLoad() {
-    this.custom = this.el.childElementCount > 0;
+
+  hostData() {
+    return {
+      class: {
+        'show-back-button': !!this.defaultHref
+      }
+    };
+  }
+
+  private onClick(ev: Event) {
+    const nav = this.el.closest('ion-nav');
+    if (nav && nav.canGoBack()) {
+      ev.preventDefault();
+      nav.pop();
+    } else if (this.defaultHref) {
+      openURL(this.defaultHref, ev);
+    }
   }
 
   render() {
-    const backButtonIcon = this.config.get('backButtonIcon', 'arrow-back');
-    const defaultBackButtonText = this.config.get('backButtonText', this.mode === 'ios' ? 'Back' : '');
-    const backButtonText = this.text || defaultBackButtonText;
+    const backButtonIcon = this.icon || this.config.get('backButtonIcon', 'arrow-back');
+    const backButtonText = this.text || this.config.get('backButtonText', this.mode === 'ios' ? 'Back' : '');
 
-    if (this.custom) {
-      return (
-        <ion-nav-pop>
-          <slot />
-        </ion-nav-pop>
-      );
-    } else {
-      return (
-        <ion-nav-pop>
-          <button class='back-button-inner'>
-            <span class='button-inner'>
-              <ion-icon name={backButtonIcon} slot='start' />
-              <span class='button-text'>{backButtonText}</span>
-            </span>
-            { this.mode === 'md' && <ion-ripple-effect/> }
-          </button>
-        </ion-nav-pop>
-      );
-    }
+    return (
+      <button
+        class='back-button-inner'
+        onClick={(ev) => this.onClick(ev)}>
+        { backButtonIcon && <ion-icon name={backButtonIcon}/> }
+        { backButtonText && <span class='button-text'>{backButtonText}</span> }
+        { this.mode === 'md' && <ion-ripple-effect/> }
+      </button>
+    );
   }
 }

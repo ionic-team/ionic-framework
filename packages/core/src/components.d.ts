@@ -310,6 +310,8 @@ declare global {
   }
   namespace JSXElements {
     export interface IonBackButtonAttributes extends HTMLAttributes {
+      defaultHref?: string;
+      icon?: string;
       mode?: 'ios' | 'md';
       text?: string|undefined;
     }

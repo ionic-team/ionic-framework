@@ -4,7 +4,7 @@ import { isDef } from '../../../utils/helpers';
 const TRANSLATEY = 'translateY';
 const OFF_BOTTOM = '40px';
 const CENTER = '0px';
-const SHOW_BACK_BTN_CSS = 'show-back-button';
+const SHOW_BACK_BTN_CSS = 'can-back-back';
 
 export default function mdTransitionAnimation(Animation: Animation, _: HTMLElement, opts: AnimationOptions): Promise<Animation> {
 
@@ -39,7 +39,7 @@ export default function mdTransitionAnimation(Animation: Animation, _: HTMLEleme
       rootTransition.add(enteringToolBar);
 
       const enteringBackButton = new Animation();
-      enteringBackButton.addElement(enteringToolbarEle.querySelector('.back-button'));
+      enteringBackButton.addElement(enteringToolbarEle.querySelector('ion-back-button'));
       rootTransition.add(enteringBackButton);
       if (opts.enteringView.enableBack()) {
         enteringBackButton.beforeAddClass(SHOW_BACK_BTN_CSS);

@@ -44,7 +44,7 @@
   }
 
   async function goToPageTwo(nav) {
-    const firstPage = document.createElement('div');
+    const secondPage = document.createElement('div');
     secondPage.classList.add('second-page');
     secondPage.innerHTML = `
       <ion-header>
@@ -78,12 +78,7 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-back-button>
-            <ion-button color="danger">
-              <ion-icon name="add" slot="start"></ion-icon>
-              Text!
-            </ion-button>
-            </ion-back-button>
+            <ion-back-button color="danger" text="Text!" icon="add"></ion-back-button>
           </ion-buttons>
           <ion-title>Page Three</ion-title>
         </ion-toolbar>

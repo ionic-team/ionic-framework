@@ -5,11 +5,11 @@ import { Component, Element, Listen } from '@stencil/core';
 })
 export class NavPop {
 
-  @Element() element: HTMLElement;
+  @Element() el: HTMLElement;
 
   @Listen('child:click')
   pop(): Promise<any> {
-    const nav = this.element.closest('ion-nav') as HTMLIonNavElement;
+    const nav = this.el.closest('ion-nav');
     if (nav) {
       return nav.pop();
     }

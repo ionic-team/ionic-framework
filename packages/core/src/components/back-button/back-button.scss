@@ -7,6 +7,7 @@
   display: none;
 }
 
+.back-button.can-back-back,
 .back-button.show-back-button {
   display: inline-block;
 }
@@ -40,6 +41,14 @@
 
   font-smoothing: antialiased;
   -webkit-font-smoothing: antialiased;
+
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
 }
 
 .back-button .button-inner {

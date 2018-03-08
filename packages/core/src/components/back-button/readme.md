@@ -15,18 +15,14 @@ add a back button to your view, all you need is:
 
 The back button component is smart enough to know what to render and what content to show.
 
-If, however, you want more control over what is shown in the back button, you can pass your own button markup.
+If, however, you want more control over what is shown in the back button, you use the
+`text` and `icon` properties.
 
 ```html
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button>
-        <ion-button>
-            Button Text
-          <ion-icon name="add" slot="start"></ion-icon>
-        </ion-button>
-      </ion-back-button>
+      <ion-back-button text="Volver" icon="add"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -39,11 +35,7 @@ Or no button text at all:
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button>
-        <ion-button>
-          <ion-icon name="add" slot="icon-only"></ion-icon>
-        </ion-button>
-      </ion-back-button>
+      <ion-back-button text="" icon="add"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -54,6 +46,16 @@ Or no button text at all:
 
 
 ## Properties
+
+#### defaultHref
+
+string
+
+
+#### icon
+
+string
+
 
 #### mode
 
@@ -73,6 +75,16 @@ default look-and-feel
 
 
 ## Attributes
+
+#### default-href
+
+string
+
+
+#### icon
+
+string
+
 
 #### mode
 
