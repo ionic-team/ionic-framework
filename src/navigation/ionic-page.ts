@@ -79,7 +79,8 @@ export interface IonicPageMetadata {
  *
  * The `@IonicPage` decorator accepts a `DeepLinkMetadataType` object. This object accepts
  * the following properties: `name`, `segment`, `defaultHistory`, and `priority`. All of them
- * are optional but can be used to create complex navigation links.
+ * are optional but can be used to create complex navigation links. The `name` and `segment`
+ * values must be unique.
  *
  *
  * ### Changing Name
@@ -108,9 +109,10 @@ export interface IonicPageMetadata {
  * ### Setting URL Path
  *
  * The `segment` property is used to set the URL to the page. If this property isn't provided, the
- * `segment` will use the value of `name`. Since components can be loaded anywhere in the app, the
- * `segment` doesn't require a full URL path. When a page becomes the active page, the `segment` is
- * appended to the URL.
+ * `segment` will use the value of source file name without the extension (`'my-page.ts'` results
+ * in segment name `'my-page'`). Since components can be loaded anywhere in the app, the `segment`
+ * doesn't require a full URL path. When a page becomes the active page, the `segment` is appended
+ * to the URL.
  *
  * The `segment` can be changed to anything and doesn't have to match the `name`. For example, passing
  * a value for `name` and `segment`:
