@@ -85,7 +85,7 @@ export class TapClick {
 
   private pointerUp(ev: UIEvent) {
     this.setActivatedElement(null, ev);
-    if (this.cancelled) {
+    if (this.cancelled && ev.cancelable) {
       ev.preventDefault();
     }
   }

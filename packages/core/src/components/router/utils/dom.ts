@@ -11,8 +11,8 @@ export function writeNavState(root: HTMLElement, chain: RouteChain|null, index: 
   }
   return node.componentOnReady()
     .then(() => node.setRouteId(route.id, route.params, direction))
-    .then(changed => {
-      if (changed) {
+    .then(result => {
+      if (result.changed) {
         direction = 0;
       }
       const nextEl = node.getContainerEl();
@@ -20,8 +20,8 @@ export function writeNavState(root: HTMLElement, chain: RouteChain|null, index: 
         ? writeNavState(nextEl, chain, index + 1, direction)
         : Promise.resolve();
 
-      if (node.markVisible) {
-        return promise.then(() => node.markVisible());
+      if (result.markVisible) {
+        return promise.then(() => result.markVisible());
       }
       return promise;
     });

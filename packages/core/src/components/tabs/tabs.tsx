@@ -1,6 +1,6 @@
 import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 import { Config, NavOutlet } from '../../index';
-import { RouteID } from '../router/utils/interfaces';
+import { RouteID, RouteWrite } from '../router/utils/interfaces';
 
 
 @Component({
@@ -105,12 +105,15 @@ export class Tabs implements NavOutlet {
   }
 
   @Method()
-  setRouteId(id: string): Promise<boolean> {
+  setRouteId(id: string): Promise<RouteWrite> {
     const selectedTab = this.getTab(id);
     if (!this.shouldSwitch(selectedTab)) {
-      return Promise.resolve(false);
+      return Promise.resolve({changed: false});
     }
-    return this.setActive(selectedTab).then(() => true);
+    return this.setActive(selectedTab).then(() => ({
+      changed: true,
+      markVisible: () => { this.tabSwitch(); }
+    }));
   }
 
   @Method()
@@ -130,13 +133,6 @@ export class Tabs implements NavOutlet {
   @Method()
   getSelected(): HTMLIonTabElement | undefined {
     return this.selectedTab;
-  }
-
-
-  @Method()
-  markVisible(): Promise<void> {
-    this.tabSwitch();
-    return Promise.resolve();
   }
 
   @Method()

@@ -1,10 +1,14 @@
 
 export interface NavOutlet {
-  setRouteId(id: string, data: any, direction: number): Promise<boolean>;
-  markVisible?(): Promise<void>;
+  setRouteId(id: string, data: any, direction: number): Promise<RouteWrite>;
   getRouteId(): RouteID|null;
 
   getContainerEl(): HTMLElement | null;
+}
+
+export interface RouteWrite {
+  changed: boolean;
+  markVisible?: () => void|Promise<void>;
 }
 
 export interface RouteID {

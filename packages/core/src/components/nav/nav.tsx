@@ -26,7 +26,7 @@ import { Transition } from './transition';
 
 import iosTransitionAnimation from './animations/ios.transition';
 import mdTransitionAnimation from './animations/md.transition';
-import { RouteID } from '../router/utils/interfaces';
+import { RouteID, RouteWrite } from '../router/utils/interfaces';
 
 const TrnsCtrl = new TransitionController();
 
@@ -203,17 +203,41 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  setRouteId(id: string, params: any = {}, direction: number): Promise<boolean> {
+  setRouteId(id: string, params: any = {}, direction: number): Promise<RouteWrite> {
     const active = this.getActive();
     if (active && active.component === id) {
-      return Promise.resolve(false);
+      return Promise.resolve({changed: false});
     }
+
+    let resolve: (result: RouteWrite) => void;
+    const promise = new Promise<RouteWrite>((r) => resolve = r);
+
+    const commonOpts: NavOptions = {
+      viewIsReady: () => {
+        let markVisible;
+        const p = new Promise((r) => markVisible = r);
+        resolve({
+          changed: true,
+          markVisible
+        });
+        return p;
+      }
+    };
+
     if (direction === 1) {
-      return this.push(id, params).then(() => true);
-    } else if (direction === -1 && this.canGoBack()) {
-      return this.pop().then(() => true);
+      this.push(id, params, commonOpts);
+    } else if (direction === -1) {
+      this.canGoBack()
+        ? this.pop(commonOpts)
+        : this.setRoot(id, params, {
+          ...commonOpts,
+          direction: DIRECTION_BACK,
+          animate: true
+        });
+    } else {
+      this.setRoot(id, params, commonOpts);
     }
-    return this.setRoot(id, params).then(() => true);
+    return promise;
   }
 
   @Method()
@@ -340,9 +364,13 @@ export class NavControllerBase implements NavOutlet {
     this.isTransitioning = false;
     // let's see if there's another to kick off
     this._nextTrns();
-    this.ionNavChanged.emit({
-      isPop: result.direction === 'back'
-    });
+    const router = document.querySelector('ion-router');
+    const isPop = result.direction === DIRECTION_BACK;
+    if (router) {
+      router.navChanged(isPop);
+    }
+
+    this.ionNavChanged.emit({isPop});
 
     if (ti.done) {
       ti.done(
@@ -425,7 +453,7 @@ export class NavControllerBase implements NavOutlet {
     return true;
   }
 
-  private _waitUntilReady(enteringView: ViewController, leavingView: ViewController) {
+  private _waitUntilReady(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction) {
     const promises = [];
     if (enteringView) {
       promises.push(isReady(enteringView.element));
@@ -433,7 +461,11 @@ export class NavControllerBase implements NavOutlet {
     if (leavingView) {
       promises.push(isReady(leavingView.element));
     }
-    return Promise.all(promises);
+    const promise = Promise.all(promises);
+    if (ti.opts.viewIsReady) {
+      return promise.then(ti.opts.viewIsReady);
+    }
+    return promise;
   }
 
   private _startTI(ti: TransitionInstruction): Promise<void> {
@@ -690,7 +722,7 @@ export class NavControllerBase implements NavOutlet {
 
     // transition start has to be registered before attaching the view to the DOM!
     const promise = new Promise<void>(resolve => transition.registerStart(resolve))
-      .then(() => this._waitUntilReady(enteringView, leavingView))
+      .then(() => this._waitUntilReady(enteringView, leavingView, ti))
       .then(() => this._transitionInit(transition, enteringView, leavingView, opts))
       .then(() => this._transitionStart(transition, enteringView, leavingView, opts));
 

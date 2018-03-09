@@ -144,6 +144,7 @@ export interface NavOptions {
   ev?: any;
   updateUrl?: boolean;
   isNavRoot?: boolean;
+  viewIsReady?: () => Promise<any>;
 }
 
 export function isPresent(val: any): val is any { return val !== undefined && val !== null; }
