@@ -148,7 +148,7 @@ import { NavigationContainer } from './navigation-container';
  *
  * ## Pushing a View
  * To push a new view onto the navigation stack, use the `push` method.
- * If the page has an [`<ion-navbar>`](../../navbar/Navbar/),
+ * If the page has an [`<ion-navbar>`](../../components/toolbar/Navbar/),
  * a back button will automatically be added to the pushed view.
  *
  * Data can also be passed to a view by passing an object to the `push` method.
