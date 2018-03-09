@@ -63,11 +63,11 @@ export function getClassMap(classes: string | undefined): CssClassMap {
 }
 
 export function openURL(url: string, ev: Event, isPop = false) {
-  if (url && url.indexOf('://') === -1) {
+  if (url && url[0] !== '#' && url.indexOf('://') === -1) {
     const router = document.querySelector('ion-router');
     if (router) {
       ev && ev.preventDefault();
-      return router.componentOnReady().then(() => router.pushURL(url, isPop));
+      return router.componentOnReady().then(() => router.push(url, isPop));
     }
   }
   return Promise.resolve();

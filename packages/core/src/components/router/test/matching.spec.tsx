@@ -1,5 +1,5 @@
 import { RouteChain } from '../utils/interfaces';
-import { matchesIDs, matchesPath, mergeParams, routerPathToChain } from '../utils/matching';
+import { RouterSegments, matchesIDs, matchesPath, mergeParams, routerPathToChain } from '../utils/matching';
 import { parsePath } from '../utils/path';
 
 const CHAIN_1: RouteChain = [
@@ -187,6 +187,28 @@ describe('mergeParams', () => {
     });
     expect(params1).toEqual({data: '1', data3: 'hello'});
     expect(params2).toEqual({data: '2', data2: 'hola'});
+  });
+});
+
+
+describe('RouterSegments', () => {
+  it ('should initialize with empty array', () => {
+    const s = new RouterSegments([]);
+    expect(s.next()).toEqual('');
+    expect(s.next()).toEqual('');
+    expect(s.next()).toEqual('');
+    expect(s.next()).toEqual('');
+    expect(s.next()).toEqual('');
+  });
+
+  it ('should initialize with array', () => {
+    const s = new RouterSegments(['', 'path', 'to', 'destination']);
+    expect(s.next()).toEqual('');
+    expect(s.next()).toEqual('path');
+    expect(s.next()).toEqual('to');
+    expect(s.next()).toEqual('destination');
+    expect(s.next()).toEqual('');
+    expect(s.next()).toEqual('');
   });
 });
 

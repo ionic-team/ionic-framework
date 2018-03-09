@@ -1,8 +1,8 @@
-import { Component, Element, Listen, Method, Prop } from '@stencil/core';
+import { Build, Component, Element, Listen, Method, Prop } from '@stencil/core';
 import { Config, DomController } from '../../index';
 import { flattenRouterTree, readRoutes } from './utils/parser';
 import { readNavState, writeNavState } from './utils/dom';
-import { chainToPath, parsePath, readPath, writePath } from './utils/path';
+import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
 import { RouteChain } from './utils/interfaces';
 import { routerIDsToChain, routerPathToChain } from './utils/matching';
 
@@ -29,6 +29,16 @@ export class Router {
     const tree = readRoutes(this.el);
     this.routes = flattenRouterTree(tree);
 
+    if (Build.isDev) {
+      console.debug('%c[@ionic/core]', 'font-weight: bold', `ion-router registered ${this.routes.length} routes`);
+      for (const chain of this.routes) {
+        const path: string[] = [];
+        chain.forEach(r => path.push(...r.path));
+        const ids = chain.map(r => r.id);
+        console.debug(`%c ${generatePath(path)}`, 'font-weight: bold; padding-left: 20px', '=>\t', `(${ids.join(', ')})`);
+      }
+    }
+
     // perform first write
     this.dom.raf(() => {
       console.debug('[OUT] page load -> write nav state');
@@ -45,32 +55,32 @@ export class Router {
     this.writeNavStateRoot();
   }
 
-  @Listen('body:ionNavChanged')
-  protected onNavChanged(ev: CustomEvent) {
-    if (this.busy) {
-      return;
-    }
-    console.debug('[IN] nav changed -> update URL');
-    const { ids, pivot } = this.readNavState();
-    const chain = routerIDsToChain(ids, this.routes);
-    if (chain) {
-      if (chain.length > ids.length) {
-        // readNavState() found a pivot that is not initialized
-        console.debug('[IN] pivot uninitialized -> write partial nav state');
-        this.writeNavState(pivot, chain.slice(ids.length), 0);
-      }
+  @Method()
+  navChanged(isPop: boolean) {
+    if (!this.busy) {
+      console.debug('[IN] nav changed -> update URL');
+      const { ids, pivot } = this.readNavState();
+      const chain = routerIDsToChain(ids, this.routes);
+      if (chain) {
+        const path = chainToPath(chain);
+        this.writePath(path, isPop);
 
-      const isPop = ev.detail.isPop === true;
-      const path = chainToPath(chain);
-      this.writePath(path, isPop);
-    } else {
-      console.warn('no matching URL for ', ids.map(i => i.id));
+        if (chain.length > ids.length) {
+          // readNavState() found a pivot that is not initialized
+          console.debug('[IN] pivot uninitialized -> write partial nav state');
+          return this.writeNavState(pivot, chain.slice(ids.length), 0);
+        }
+      } else {
+        console.warn('no matching URL for ', ids.map(i => i.id));
+      }
     }
+    return Promise.resolve();
   }
 
+
   @Method()
-  pushURL(url: string, isPop = false) {
-    this.writePath(parsePath(url), isPop);
+  push(url: string, backDirection = false) {
+    this.writePath(parsePath(url), backDirection);
     return this.writeNavStateRoot();
   }
 

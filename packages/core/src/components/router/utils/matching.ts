@@ -1,4 +1,3 @@
-import { RouterSegments } from './common';
 import { RouteChain, RouteID } from './interfaces';
 
 export function matchesIDs(ids: string[], chain: RouteChain): number {
@@ -11,7 +10,6 @@ export function matchesIDs(ids: string[], chain: RouteChain): number {
   }
   return i;
 }
-
 
 export function matchesPath(path: string[], chain: RouteChain): RouteChain | null {
   const segments = new RouterSegments(path);
@@ -107,3 +105,18 @@ export function routerPathToChain(path: string[], chains: RouteChain[]): RouteCh
   }
   return match;
 }
+
+export class RouterSegments {
+  private path: string[];
+  constructor(path: string[]) {
+    this.path = path.slice();
+  }
+
+  next(): string {
+    if (this.path.length > 0) {
+      return this.path.shift() as string;
+    }
+    return '';
+  }
+}
+

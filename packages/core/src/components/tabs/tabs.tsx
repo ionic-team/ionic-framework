@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
+import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 import { Config, NavOutlet } from '../../index';
 import { RouteID } from '../router/utils/interfaces';
 
@@ -11,8 +11,8 @@ export class Tabs implements NavOutlet {
 
   private ids = -1;
   private transitioning = false;
-  private routingView: HTMLIonTabElement;
   private tabsId: number = (++tabIds);
+  private leavingTab: HTMLIonTabElement | undefined;
 
   @Element() el: HTMLElement;
 
@@ -81,7 +81,7 @@ export class Tabs implements NavOutlet {
 
   componentDidUnload() {
     this.tabs.length = 0;
-    this.selectedTab = this.routingView = undefined;
+    this.selectedTab = this.leavingTab = undefined;
   }
 
   @Listen('ionTabbarClick')
@@ -95,8 +95,22 @@ export class Tabs implements NavOutlet {
    */
   @Method()
   select(tabOrIndex: number | HTMLIonTabElement): Promise<boolean> {
-    return this.setActive(tabOrIndex)
-      .then(selectedTab => this.tabSwitch(selectedTab));
+    const selectedTab = this.getTab(tabOrIndex);
+    if (!this.shouldSwitch(selectedTab)) {
+      return Promise.resolve(false);
+    }
+    return this.setActive(selectedTab)
+      .then(() => this.notifyRouter())
+      .then(() => this.tabSwitch());
+  }
+
+  @Method()
+  setRouteId(id: string): Promise<boolean> {
+    const selectedTab = this.getTab(id);
+    if (!this.shouldSwitch(selectedTab)) {
+      return Promise.resolve(false);
+    }
+    return this.setActive(selectedTab).then(() => true);
   }
 
   @Method()
@@ -118,21 +132,10 @@ export class Tabs implements NavOutlet {
     return this.selectedTab;
   }
 
-  @Method()
-  setRouteId(id: string): Promise<boolean> {
-    return this.setActive(id).then(tab => {
-      if (tab) {
-        this.routingView = tab;
-        return true;
-      }
-      return false;
-    });
-  }
 
   @Method()
   markVisible(): Promise<void> {
-    this.tabSwitch(this.routingView);
-    this.routingView = null;
+    this.tabSwitch();
     return Promise.resolve();
   }
 
@@ -142,10 +145,9 @@ export class Tabs implements NavOutlet {
     return id ? {id} : null;
   }
 
-
   @Method()
   getContainerEl(): HTMLElement {
-    return this.routingView || this.selectedTab;
+    return this.selectedTab;
   }
 
   private initTabs() {
@@ -162,6 +164,13 @@ export class Tabs implements NavOutlet {
 
   private initSelect(): Promise<void> {
     if (document.querySelector('ion-router')) {
+      if (Build.isDev) {
+        const selectedTab = this.tabs.find(t => t.selected);
+        if (selectedTab) {
+          console.warn('When using a router (ion-router) <ion-tab selected="true"> makes no difference' +
+          'Define routes properly the define which tab is selected');
+        }
+      }
       return Promise.resolve();
     }
     // find pre-selected tabs
@@ -191,13 +200,13 @@ export class Tabs implements NavOutlet {
     }
   }
 
-  private setActive(tabOrIndex: string | number | HTMLIonTabElement): Promise<HTMLIonTabElement|null> {
+  private setActive(selectedTab: HTMLIonTabElement): Promise<void> {
     if (this.transitioning) {
-      return Promise.resolve(null);
+      return Promise.reject('transitioning already happening');
     }
-    const selectedTab = this.getTab(tabOrIndex);
-    if (!selectedTab || selectedTab === this.selectedTab) {
-      return Promise.resolve(null);
+
+    if (!selectedTab) {
+      return Promise.reject('no tab is selected');
     }
 
     // Reset rest of tabs
@@ -208,26 +217,44 @@ export class Tabs implements NavOutlet {
     }
 
     this.transitioning = true;
+    this.leavingTab = this.selectedTab;
+    this.selectedTab = selectedTab;
     return selectedTab.setActive();
   }
 
-  private tabSwitch(selectedTab: HTMLIonTabElement | null): boolean {
+  private tabSwitch(): boolean {
+    const selectedTab = this.selectedTab;
+    const leavingTab = this.leavingTab;
+
+    this.leavingTab = undefined;
     this.transitioning = false;
     if (!selectedTab) {
       return false;
     }
-    const leavingTab = this.selectedTab;
+
     selectedTab.selected = true;
     if (leavingTab !== selectedTab) {
       if (leavingTab) {
         leavingTab.active = false;
       }
-      this.selectedTab = selectedTab;
       this.ionChange.emit(selectedTab);
       this.ionNavChanged.emit({isPop: false});
       return true;
     }
     return false;
+  }
+
+  private notifyRouter() {
+    const router = document.querySelector('ion-router');
+    if (router) {
+      return router.navChanged(false);
+    }
+    return Promise.resolve();
+  }
+
+  private shouldSwitch(selectedTab: HTMLIonTabElement) {
+    const leavingTab = this.selectedTab;
+    return selectedTab && selectedTab !== leavingTab && !this.transitioning;
   }
 
   render() {

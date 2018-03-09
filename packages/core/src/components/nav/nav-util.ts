@@ -3,10 +3,10 @@ import { NavControllerBase } from './nav';
 import { Transition } from './transition';
 
 
-export type Page2 = string | HTMLElement | ViewController;
+export type NavParams = {[key: string]: any};
 
 export interface PageMeta {
-  page: Page2;
+  page:  string | HTMLElement | ViewController;
   params?: any;
 }
 

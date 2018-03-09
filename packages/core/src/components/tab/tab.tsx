@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Build, Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-tab',
@@ -83,6 +83,16 @@ export class Tab {
    */
   @Event() ionSelect: EventEmitter<void>;
 
+  componentWillLoad() {
+    if (Build.isDev) {
+      if (this.component && this.el.childElementCount > 0) {
+        console.error('You can not use a lazy-loaded component in a tab and inlineed content at the same time.' +
+      `- Remove the component attribute in: <ion-tab component="${this.component}">` +
+      ` or` +
+      `- Remove the embeded content inside the ion-tab: <ion-tab></ion-tab>`);
+      }
+    }
+  }
   @Method()
   getTabId(): string|null {
     if (this.name) {
@@ -95,21 +105,18 @@ export class Tab {
   }
 
   @Method()
-  setActive(): Promise<HTMLIonTabElement> {
-    return this.prepareLazyLoaded().then(() => this.showTab());
+  setActive(): Promise<void> {
+    return this.prepareLazyLoaded().then(() => {
+      this.active = true;
+    });
   }
 
-  private prepareLazyLoaded(): Promise<any> {
+  private prepareLazyLoaded(): Promise<HTMLElement|void> {
     if (!this.loaded && this.component) {
       this.loaded = true;
       return attachViewToDom(this.el, this.component);
     }
     return Promise.resolve();
-  }
-
-  private showTab(): Promise<HTMLIonTabElement> {
-    this.active = true;
-    return Promise.resolve(this.el);
   }
 
   hostData() {
@@ -125,12 +132,12 @@ export class Tab {
 
 }
 
-function attachViewToDom(container: HTMLElement, cmp: string): Promise<any> {
+function attachViewToDom(container: HTMLElement, cmp: string): Promise<HTMLElement> {
   const el = document.createElement(cmp) as HTMLStencilElement;
   el.classList.add('ion-page');
   container.appendChild(el);
   if (el.componentOnReady) {
     return el.componentOnReady();
   }
-  return Promise.resolve();
+  return Promise.resolve(el);
 }

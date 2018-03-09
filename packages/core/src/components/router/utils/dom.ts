@@ -1,12 +1,11 @@
-import { breadthFirstSearch } from './common';
-import { NavOutlet, RouteChain, RouteID } from './interfaces';
+import { NavOutlet, NavOutletElement, RouteChain, RouteID } from './interfaces';
 
 export function writeNavState(root: HTMLElement, chain: RouteChain|null, index: number, direction: number): Promise<void> {
   if (!chain || index >= chain.length) {
     return Promise.resolve();
   }
   const route = chain[index];
-  const node = breadthFirstSearch(root);
+  const node = searchNavNode(root);
   if (!node) {
     return Promise.resolve();
   }
@@ -32,7 +31,7 @@ export function readNavState(node: HTMLElement) {
   const ids: RouteID[] = [];
   let pivot: NavOutlet|null;
   while (true) {
-    pivot = breadthFirstSearch(node);
+    pivot = searchNavNode(node);
     if (pivot) {
       const id = pivot.getRouteId();
       if (id) {
@@ -46,4 +45,13 @@ export function readNavState(node: HTMLElement) {
     }
   }
   return {ids, pivot};
+}
+
+const QUERY = 'ion-nav,ion-tabs';
+
+function searchNavNode(root: HTMLElement): NavOutletElement {
+  if (root.matches(QUERY)) {
+    return root as NavOutletElement;
+  }
+  return root.querySelector(QUERY);
 }

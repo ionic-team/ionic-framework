@@ -31,7 +31,10 @@ boolean
 
 ## Methods
 
-#### pushURL()
+#### navChanged()
+
+
+#### push()
 
 
 

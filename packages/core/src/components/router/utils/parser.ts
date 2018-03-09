@@ -5,12 +5,18 @@ import { parsePath } from './path';
 export function readRoutes(root: Element): RouteTree {
   return (Array.from(root.children) as HTMLIonRouteElement[])
     .filter(el => el.tagName === 'ION-ROUTE')
-    .map(el => ({
-      path: parsePath(readProp(el, 'path')),
-      id: readProp(el, 'component').toLowerCase(),
-      params: el.params,
-      children: readRoutes(el)
-    }));
+    .map(el => {
+      const path = parsePath(readProp(el, 'path'));
+      if (path.includes(':id')) {
+        console.warn('Using ":id" is not recommended in `ion-route`, it causes conflicts in the DOM');
+      }
+      return {
+        path: path,
+        id: readProp(el, 'component').toLowerCase(),
+        params: el.params,
+        children: readRoutes(el)
+      };
+    });
 }
 
 export function readProp(el: HTMLElement, prop: string): string|undefined {

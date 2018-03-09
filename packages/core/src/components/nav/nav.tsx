@@ -1,9 +1,10 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import {
   DIRECTION_BACK,
   DIRECTION_FORWARD,
   INIT_ZINDEX,
   NavOptions,
+  NavParams,
   NavResult,
   STATE_ATTACHED,
   STATE_DESTROYED,
@@ -66,7 +67,7 @@ export class NavControllerBase implements NavOutlet {
       const useRouter = !!document.querySelector('ion-router');
       if (!useRouter) {
         this.setRoot(this.root);
-      } else {
+      } else if (Build.isDev) {
         console.warn('<ion-nav> does not support a root attribute when using ion-router.');
       }
     }
@@ -90,7 +91,7 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  push(page: any, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
+  push(page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
     return this._queueTrns({
       insertStart: -1,
       insertViews: [{ page: page, params: params }],
@@ -99,7 +100,7 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  insert(insertIndex: number, page: any, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
+  insert(insertIndex: number, page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
     return this._queueTrns({
       insertStart: insertIndex,
       insertViews: [{ page: page, params: params }],
