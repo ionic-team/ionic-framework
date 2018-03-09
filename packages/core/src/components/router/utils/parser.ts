@@ -1,10 +1,24 @@
-import { RouteChain, RouteNode, RouteTree } from './interfaces';
+import { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interfaces';
 import { parsePath } from './path';
 
 
+export function readRedirects(root: Element): RouteRedirect[] {
+  return (Array.from(root.children) as HTMLIonRouteElement[])
+  .filter(el => el.tagName === 'ION-ROUTE' && el.redirectTo)
+  .map(el => {
+    if (el.component) {
+      throw new Error('Can\'t mix the component and redirectTo attribute in the same ion-route');
+    }
+    return {
+      path: parsePath(readProp(el, 'path')),
+      to: parsePath(readProp(el, 'redirectTo'))
+    };
+  });
+}
+
 export function readRoutes(root: Element): RouteTree {
   return (Array.from(root.children) as HTMLIonRouteElement[])
-    .filter(el => el.tagName === 'ION-ROUTE')
+    .filter(el => el.tagName === 'ION-ROUTE' && el.component)
     .map(el => {
       const path = parsePath(readProp(el, 'path'));
       if (path.includes(':id')) {

@@ -1,4 +1,29 @@
-import { RouteChain, RouteID } from './interfaces';
+import { RouteChain, RouteID, RouteRedirect } from './interfaces';
+
+
+export function matchesRedirect(input: string[], route: RouteRedirect): boolean {
+  const {path} = route;
+  if (path.length !== input.length) {
+    return false;
+  }
+
+  for (let i = 0; i < path.length; i++) {
+    if (path[i] !== input[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+export function routeRedirect(path: string[], routes: RouteRedirect[]): RouteRedirect|null {
+  for (const route of routes) {
+    if (matchesRedirect(path, route)) {
+      return route;
+    }
+  }
+  return null;
+}
+
 
 export function matchesIDs(ids: string[], chain: RouteChain): number {
   const len = Math.min(ids.length, chain.length);

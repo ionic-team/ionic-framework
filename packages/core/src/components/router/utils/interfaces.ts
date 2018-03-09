@@ -6,6 +6,11 @@ export interface NavOutlet {
   getContainerEl(): HTMLElement | null;
 }
 
+export interface RouteRedirect {
+  path: string[];
+  to: string[];
+}
+
 export interface RouteWrite {
   changed: boolean;
   markVisible?: () => void|Promise<void>;

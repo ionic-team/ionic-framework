@@ -2604,6 +2604,7 @@ declare global {
       component?: string;
       params?: {[key: string]: any};
       path?: string;
+      redirectTo?: string;
     }
   }
 }

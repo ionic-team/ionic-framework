@@ -1,10 +1,10 @@
 import { Build, Component, Element, Listen, Method, Prop } from '@stencil/core';
 import { Config, DomController } from '../../index';
-import { flattenRouterTree, readRoutes } from './utils/parser';
+import { flattenRouterTree, readRoutes, readRedirects } from './utils/parser';
 import { readNavState, writeNavState } from './utils/dom';
 import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
-import { RouteChain } from './utils/interfaces';
-import { routerIDsToChain, routerPathToChain } from './utils/matching';
+import { RouteChain, RouteRedirect } from './utils/interfaces';
+import { routerIDsToChain, routerPathToChain, routeRedirect } from './utils/matching';
 
 
 @Component({
@@ -13,6 +13,7 @@ import { routerIDsToChain, routerPathToChain } from './utils/matching';
 export class Router {
 
   private routes: RouteChain[];
+  private redirects: RouteRedirect[];
   private busy = false;
   private state = 0;
 
@@ -28,6 +29,7 @@ export class Router {
     // read config
     const tree = readRoutes(this.el);
     this.routes = flattenRouterTree(tree);
+    this.redirects = readRedirects(this.el);
 
     if (Build.isDev) {
       console.debug('%c[@ionic/core]', 'font-weight: bold', `ion-router registered ${this.routes.length} routes`);
@@ -42,7 +44,7 @@ export class Router {
     // perform first write
     this.dom.raf(() => {
       console.debug('[OUT] page load -> write nav state');
-      this.writeNavStateRoot();
+      this.onPopState();
     });
   }
 
@@ -52,7 +54,7 @@ export class Router {
       this.state++;
       window.history.replaceState(this.state, document.title, document.location.href);
     }
-    this.writeNavStateRoot();
+    this.writeNavStateRoot(this.readPath());
   }
 
   @Method()
@@ -80,21 +82,23 @@ export class Router {
 
   @Method()
   push(url: string, backDirection = false) {
-    this.writePath(parsePath(url), backDirection);
-    return this.writeNavStateRoot();
+    const path = parsePath(url);
+    this.writePath(path, backDirection);
+    return this.writeNavStateRoot(path);
   }
 
-  private writeNavStateRoot(): Promise<any> {
+  private writeNavStateRoot(path: string[]): Promise<any> {
     if (this.busy) {
       return Promise.resolve();
     }
-    const currentPath = this.readPath();
-    if (!currentPath) {
-      return Promise.resolve();
+    const redirect = routeRedirect(path, this.redirects);
+    if (redirect) {
+      this.writePath(redirect.to, true);
+      path = redirect.to;
     }
     const direction = window.history.state >= this.state ? 1 : -1;
     const node = document.querySelector('ion-app');
-    const chain = routerPathToChain(currentPath, this.routes);
+    const chain = routerPathToChain(path, this.routes);
     return this.writeNavState(node, chain, direction);
   }
 

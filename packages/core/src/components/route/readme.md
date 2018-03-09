@@ -22,6 +22,11 @@ string
 string
 
 
+#### redirectTo
+
+string
+
+
 ## Attributes
 
 #### component
@@ -35,6 +40,11 @@ string
 
 
 #### path
+
+string
+
+
+#### redirect-to
 
 string
 
