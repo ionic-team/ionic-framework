@@ -41,7 +41,7 @@ import { DeepLinker } from '../../navigation/deep-linker';
  *  constructor(public modalCtrl: ModalController) { }
  *
  *  presentProfileModal() {
- *    const profileModal = this.modalCtrl.create(Profile, { userId: 8675309 });
+ *    const profileModal = this.modalCtrl.create(Profile, { userId: 8675309 }, { enableBackdropDismiss: true });
  *    profileModal.present();
  *  }
  *
@@ -87,7 +87,7 @@ import { DeepLinker } from '../../navigation/deep-linker';
  *  }
  *
  *  presentProfileModal() {
- *    let profileModal = this.modalCtrl.create(Profile, { userId: 8675309 });
+ *    let profileModal = this.modalCtrl.create(Profile, { userId: 8675309 }, { enableBackdropDismiss: true });
  *    profileModal.onDidDismiss(data => {
  *      console.log(data);
  *    });
