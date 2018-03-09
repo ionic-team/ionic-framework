@@ -1108,6 +1108,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   getActive(): ViewController {
+    this._views = this._views ? this._views : [];
     return this._views[this._views.length - 1];
   }
 
