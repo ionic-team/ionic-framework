@@ -1,3 +1,21 @@
+<a name="0.1.4-5"></a>
+## [0.1.4-5](https://github.com/ionic-team/ionic/compare/v0.1.4-4...v0.1.4-5) (2018-03-09)
+
+
+### Bug Fixes
+
+* **item:** button outline ([f671008](https://github.com/ionic-team/ionic/commit/f671008))
+* **router:** fix flickering ([f2ac6e3](https://github.com/ionic-team/ionic/commit/f2ac6e3))
+* **router:** flickering 2 ([88f2981](https://github.com/ionic-team/ionic/commit/88f2981))
+* **router:** tslint ([1ace045](https://github.com/ionic-team/ionic/commit/1ace045))
+
+
+### Features
+
+* **router:** adds redirectTo ([f5c6333](https://github.com/ionic-team/ionic/commit/f5c6333))
+
+
+
 <a name="0.1.4-4"></a>
 ## [0.1.4-4](https://github.com/ionic-team/ionic/compare/v0.1.4-3...v0.1.4-4) (2018-03-08)
 
