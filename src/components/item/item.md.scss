@@ -33,6 +33,9 @@ $item-md-detail-push-color:          $list-md-border-color !default;
 /// @prop - Icon for the detail arrow
 $item-md-detail-push-svg:            "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 20'><path d='M2,20l-2-2l8-8L0,2l2-2l10,10L2,20z' fill='#{$item-md-detail-push-color}'/></svg>" !default;
 
+/// @prop - Border bottom for the item
+$item-md-border-bottom:              1px solid $list-md-border-color !default;
+
 /// @prop - Color for the divider
 $item-md-divider-color:              #858585 !default;
 
@@ -111,7 +114,7 @@ $item-md-sliding-content-background: $list-md-background-color !default;
 .item-md.item-block .item-inner {
   @include padding-horizontal(null, ($item-md-padding-end / 2));
 
-  border-bottom: 1px solid $list-md-border-color;
+  border-bottom: $item-md-border-bottom;
 }
 
 
