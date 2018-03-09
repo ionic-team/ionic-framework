@@ -1,10 +1,10 @@
 import { Build, Component, Element, Listen, Method, Prop } from '@stencil/core';
 import { Config, DomController } from '../../index';
-import { flattenRouterTree, readRoutes, readRedirects } from './utils/parser';
+import { flattenRouterTree, readRedirects, readRoutes } from './utils/parser';
 import { readNavState, writeNavState } from './utils/dom';
 import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
 import { RouteChain, RouteRedirect } from './utils/interfaces';
-import { routerIDsToChain, routerPathToChain, routeRedirect } from './utils/matching';
+import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matching';
 
 
 @Component({
