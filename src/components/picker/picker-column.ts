@@ -221,7 +221,7 @@ export class PickerColumnCmp {
     if (Math.abs(endY - this.startY) > 3) {
       var y = this.y + (endY - this.startY);
       this.update(y, 0, true, true);
-    } else if (endY == this.startY && this.startTouchIndex != null) {
+    } else if (this.startTouchIndex != null) {
       // click event
       this.setSelected(this.startTouchIndex, 150);
     }
