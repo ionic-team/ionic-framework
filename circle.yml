@@ -3,45 +3,30 @@ jobs:
   build:
     working_directory: ~/ionic/
     docker:
-      - image: node:7
+      - image: node:8
     branches:
-      ignore:
-        - core
+      # ignore:
+      #   - core
     steps:
       - checkout
       - restore_cache:
-         key: ionic-site
-      - run:
-         name: Prepare ionic-site repo
-         command: ./packages/ionic-angular/scripts/docs/prepare.sh
-      - save_cache:
-         key: ionic-site
-         paths:
-         - ~/ionic-site/
-      - restore_cache:
          key: node_modules_{{ checksum "package.json" }}
       - run:
-         name: Install node modules
+         name: Install monorepo node modules
          command: npm i
       - save_cache:
          key: node_modules_{{ checksum "package.json" }}
          paths:
          - ~/ionic/node_modules/
+      - restore_cache:
+         key: node_modules_{{ checksum "packages/core/package.json" }}
       - run:
-          name: Run tslint
-          command: ./node_modules/.bin/gulp lint.ts
+         name: Install core node modules
+         command: npm --prefix packages/core/ i
+      - save_cache:
+         key: node_modules_{{ checksum "packages/core/package.json" }}
+         paths:
+         - ~/ionic/packages/core/node_modules/
       - run:
-          name: Build Demos
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              ./node_modules/.bin/gulp demos.prod --production=true --batch=$CIRCLE_NODE_INDEX --batches=$CIRCLE_NODE_TOTAL
-            fi
-      - add_ssh_keys
-      - deploy:
-          name: Update docs
-          command: |
-            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-              ./packages/ionic-angular/scripts/ci/deploy.sh
-            else
-              echo "We are on ${CIRCLE_BRANCH} branch, not going to update docs."
-            fi
+          name: Validate Core
+          command: npm --prefix packages/core/ run validate
