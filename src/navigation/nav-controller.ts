@@ -286,11 +286,7 @@ import { NavigationContainer } from './navigation-container';
  *   ionViewCanLeave(): boolean{
  *    // here we can either return true or false
  *    // depending on if we want to leave this view
- *    if(isValid(randomValue)){
- *       return true;
- *     } else {
- *       return false;
- *     }
+ *    return isValid(randomValue);
  *   }
  * }
  * ```
