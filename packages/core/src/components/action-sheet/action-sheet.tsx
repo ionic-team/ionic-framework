@@ -110,7 +110,7 @@ export class ActionSheet implements OverlayInterface {
   /**
    * Emitted after the alert has unloaded.
    */
-  @Event() ionActionSheetDidUnload: EventEmitter<ActionSheetEventDetail>;
+  @Event({eventName: 'ionActionSheetDidUnload'}) ionActionSheetDidUnload: EventEmitter<ActionSheetEventDetail>;
 
 
   componentDidLoad() {

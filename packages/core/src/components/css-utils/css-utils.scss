@@ -1,0 +1,219 @@
+@import "./css-utils.vars";
+
+// Util
+// --------------------------------------------------
+@import "../../themes/util";
+
+ion-css-utils {
+  display: none;
+}
+
+// Text Alignment
+// --------------------------------------------------
+
+@if ($include-text-alignment-utilities == true) {
+  // Creates text alignment attributes based on screen size
+  @each $breakpoint in map-keys($screen-breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+
+    @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+      // Provide `[text-{bp}]` attributes for aligning the text based
+      // on the breakpoint
+      [text#{$infix}-center] {
+        @include text-align(center, !important);
+      }
+
+      [text#{$infix}-justify] {
+        @include text-align(justify, !important);
+      }
+
+      [text#{$infix}-start] {
+        @include text-align(start, !important);
+      }
+
+      [text#{$infix}-end] {
+        @include text-align(end, !important);
+      }
+
+      [text#{$infix}-left] {
+        @include text-align(left, !important);
+      }
+
+      [text#{$infix}-right] {
+        @include text-align(right, !important);
+      }
+
+      [text#{$infix}-nowrap] {
+        // scss-lint:disable ImportantRule
+        white-space: nowrap !important;
+      }
+
+      [text#{$infix}-wrap] {
+        // scss-lint:disable ImportantRule
+        white-space: normal !important;
+      }
+    }
+  }
+}
+
+
+// Text Transformation
+// --------------------------------------------------
+
+@if ($include-text-transform-utilities == true) {
+  // Creates text transform attributes based on screen size
+  @each $breakpoint in map-keys($screen-breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+
+    @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+      // Provide `[text-{bp}]` attributes for transforming the text based
+      // on the breakpoint
+      [text#{$infix}-uppercase] {
+        // scss-lint:disable ImportantRule
+        text-transform: uppercase !important;
+      }
+
+      [text#{$infix}-lowercase] {
+        // scss-lint:disable ImportantRule
+        text-transform: lowercase !important;
+      }
+
+      [text#{$infix}-capitalize] {
+        // scss-lint:disable ImportantRule
+        text-transform: capitalize !important;
+      }
+    }
+  }
+}
+
+
+// Float Elements
+// --------------------------------------------------
+
+@if ($include-float-element-utilities == true) {
+  // Creates text transform attributes based on screen size
+  @each $breakpoint in map-keys($screen-breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+
+    @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+      // Provide `[float-{bp}]` attributes for floating the element based
+      // on the breakpoint
+      [float#{$infix}-left] {
+        @include float(left, !important);
+      }
+
+      [float#{$infix}-right] {
+        @include float(right, !important);
+      }
+
+      [float#{$infix}-start] {
+        @include float(start, !important);
+      }
+
+      [float#{$infix}-end] {
+        @include float(end, !important);
+      }
+    }
+  }
+}
+
+
+@if ($include-padding-utilities == true) {
+  [padding] {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      &:first-child {
+        @include margin(-3px, null, null, null);
+      }
+    }
+  }
+
+  ion-app [no-padding] {
+    @include padding(0);
+  }
+}
+
+@if ($include-margin-utilities == true) {
+  ion-app [no-margin] {
+    @include margin(0);
+  }
+}
+
+
+@mixin app-padding($mode, $content-padding) {
+  .app-#{$mode} [padding] {
+    @include padding($content-padding);
+  }
+
+  .app-#{$mode} [padding-top] {
+    @include padding($content-padding, null, null, null);
+  }
+
+  .app-#{$mode} [padding-left] {
+    @include padding-horizontal($content-padding, null);
+  }
+
+  .app-#{$mode} [padding-right] {
+    @include padding-horizontal(null, $content-padding);
+  }
+
+  .app-#{$mode} [padding-bottom] {
+    @include padding(null, null, $content-padding, null);
+  }
+
+  .app-#{$mode} [padding-vertical] {
+    @include padding($content-padding, null, $content-padding, null);
+  }
+
+  .app-#{$mode} [padding-horizontal] {
+    @include padding-horizontal($content-padding);
+  }
+}
+
+
+// Content Margin
+// --------------------------------------------------
+
+@mixin app-margin($mode, $content-margin) {
+  .app-#{$mode} [margin] {
+    @include margin($content-margin);
+  }
+
+  .app-#{$mode} [margin-top] {
+    @include margin($content-margin, null, null, null);
+  }
+
+  .app-#{$mode} [margin-left] {
+    // scss-lint:disable PropertySpelling
+    margin-left: $content-margin;
+  }
+
+  .app-#{$mode} [margin-start] {
+    @include margin-horizontal($content-margin, null);
+  }
+
+  .app-#{$mode} [margin-right] {
+    // scss-lint:disable PropertySpelling
+    margin-right: $content-margin;
+  }
+
+  .app-#{$mode} [margin-end] {
+    @include margin-horizontal(null, $content-margin);
+  }
+
+  .app-#{$mode} [margin-bottom] {
+    @include margin(null, null, $content-margin, null);
+  }
+
+  .app-#{$mode} [margin-vertical] {
+    @include margin($content-margin, null, $content-margin, null);
+  }
+
+  .app-#{$mode} [margin-horizontal] {
+    @include margin-horizontal($content-margin);
+  }
+}

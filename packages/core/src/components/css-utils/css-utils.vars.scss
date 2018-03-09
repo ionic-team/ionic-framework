@@ -1,0 +1,34 @@
+// CSS Utilities
+// --------------------------------------------------
+
+/// @prop - Whether to include all of the padding attributes
+$include-padding-utilities:             true !default;
+
+/// @prop - Whether to include all of the margin attributes
+$include-margin-utilities:              true !default;
+
+/// @prop - Whether to include all of the responsive utility attributes
+$include-responsive-utilities:          true !default;
+
+/// @prop - Whether to include all of the responsive text alignment attributes
+$include-text-alignment-utilities:      $include-responsive-utilities !default;
+
+/// @prop - Whether to include all of the responsive text transform attributes
+$include-text-transform-utilities:      $include-responsive-utilities !default;
+
+/// @prop - Whether to include all of the responsive float attributes
+$include-float-element-utilities:       $include-responsive-utilities !default;
+
+
+// Screen Breakpoints
+// --------------------------------------------------
+
+/// @prop - The minimum dimensions at which your layout will change,
+/// adapting to different screen sizes, for use in media queries
+$screen-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;

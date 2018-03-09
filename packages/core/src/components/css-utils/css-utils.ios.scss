@@ -1,0 +1,17 @@
+@import "../../themes/ionic.globals.ios";
+@import "./css-utils";
+
+// Content Padding
+// --------------------------------------------------
+
+@if ($include-padding-utilities == true) {
+  @include app-padding("ios", $content-ios-padding);
+}
+
+// Content Margin
+// --------------------------------------------------
+
+@if ($include-margin-utilities == true) {
+  @include app-margin("ios", $content-ios-padding);
+}
+
