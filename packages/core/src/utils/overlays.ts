@@ -1,6 +1,5 @@
 import { EventEmitter } from '@stencil/core';
-import { CssClassMap } from '@stencil/core/dist/declarations';
-import { Animation, AnimationBuilder, Config } from '..';
+import { Animation, AnimationBuilder, Config, CssClassMap } from '..';
 
 let lastId = 1;
 
