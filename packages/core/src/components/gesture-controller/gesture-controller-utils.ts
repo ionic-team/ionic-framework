@@ -117,8 +117,3 @@ export interface BlockerConfig {
   disable?: string[];
   disableScroll?: boolean;
 }
-
-export const BLOCK_ALL: BlockerConfig = {
-  disable: ['menu-swipe', 'goback-swipe'],
-  disableScroll: true
-};

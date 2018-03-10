@@ -1,7 +1,27 @@
 import { AnimationOptions, EffectProperty, EffectState, PlayOptions } from './animation-interface';
-import { CSS_PROP, CSS_VALUE_REGEX, DURATION_MIN, TRANSFORM_PROPS, TRANSITION_END_FALLBACK_PADDING_MS } from './constants';
+import { CSS_PROP, CSS_VALUE_REGEX, DURATION_MIN, TRANSITION_END_FALLBACK_PADDING_MS } from './constants';
 import { transitionEnd } from './transition-end';
 
+
+export const TRANSFORM_PROPS: {[key: string]: number} = {
+  'translateX': 1,
+  'translateY': 1,
+  'translateZ': 1,
+
+  'scale': 1,
+  'scaleX': 1,
+  'scaleY': 1,
+  'scaleZ': 1,
+
+  'rotate': 1,
+  'rotateX': 1,
+  'rotateY': 1,
+  'rotateZ': 1,
+
+  'skewX': 1,
+  'skewY': 1,
+  'perspective': 1
+};
 
 const raf = window.requestAnimationFrame || ((f: Function) => f());
 
@@ -50,7 +70,6 @@ export class Animator {
         this._addEl(el);
       }
     }
-
     return this;
   }
 
@@ -117,7 +136,7 @@ export class Animator {
   /**
    * Set the easing for this animation.
    */
-  easing(name: string) {
+  easing(name: string): Animator {
     this._easingName = name;
     return this;
   }
@@ -125,7 +144,7 @@ export class Animator {
   /**
    * Set the easing for this reversed animation.
    */
-  easingReverse(name: string) {
+  easingReverse(name: string): Animator {
     this._reversedEasingName = name;
     return this;
   }
@@ -356,7 +375,15 @@ export class Animator {
     });
   }
 
-  syncPlay() {
+  playAsync(opts?: PlayOptions): Promise<Animator> {
+    return new Promise(resolve => {
+      this.onFinish(resolve, {oneTimeCallback: true, clearExistingCallacks: true });
+      this.play(opts);
+      return this;
+    });
+  }
+
+  playSync() {
     // If the animation was already invalidated (it did finish), do nothing
     if (!this._destroyed) {
       const opts = { duration: 0 };
@@ -371,7 +398,7 @@ export class Animator {
    * DOM WRITE
    * RECURSION
    */
-  _playInit(opts: PlayOptions|undefined) {
+  private _playInit(opts: PlayOptions|undefined) {
     // always default that an animation does not tween
     // a tween requires that an Animation class has an element
     // and that it has at least one FROM/TO effect
@@ -1212,7 +1239,7 @@ export class Animator {
    * NO DOM
    */
   _transEl(): HTMLElement|null {
-    // get the lowest level element that has an Animation
+    // get the lowest level element that has an Animator
     for (let i = 0; i < this._childAnimationTotal; i++) {
       const targetEl = this._childAnimations[i]._transEl();
       if (targetEl) {
@@ -1221,9 +1248,5 @@ export class Animator {
     }
 
     return (this._hasTweenEffect && this._hasDur && this._elements && this._elementTotal > 0 ? this._elements[0] : null);
-  }
-
-  create() {
-    return new Animator();
   }
 }

@@ -72,7 +72,7 @@ export { RadioGroup } from './components/radio-group/radio-group';
 export { Radio, HTMLIonRadioElementEvent } from './components/radio/radio';
 export { Range, RangeEvent } from './components/range/range';
 export { RangeKnob } from './components/range-knob/range-knob';
-export { ReorderGroup } from './components/reorder-group/reorder-group';
+export { ReorderGroup, reorderArray } from './components/reorder-group/reorder-group';
 export {
   RouteNode,
   RouteTree,
@@ -109,6 +109,7 @@ export { PlatformConfig } from './global/platform-configs';
 export * from './components';
 
 export { DomController, RafCallback } from './global/dom-controller';
+export { FrameworkDelegate, FrameworkMountingData } from './utils/dom-framework-delegate';
 
 export interface Config {
   get: (key: string, fallback?: any) => any;
@@ -134,22 +135,6 @@ export interface OverlayDismissEvent extends CustomEvent {
 export interface OverlayDismissEventDetail {
   data?: any;
   role?: string;
-}
-
-export interface FrameworkDelegate {
-  attachViewToDom(elementOrContainerToMountTo: any, elementOrComponentToMount: any, propsOrDataObj?: any, classesToAdd?: string[], escapeHatch?: any): Promise<FrameworkMountingData>;
-  removeViewFromDom(elementOrContainerToUnmountFrom: any, elementOrComponentToUnmount: any, escapeHatch?: any): Promise<void>;
-}
-
-export interface RouterDelegate {
-  pushUrlState(urlSegment: string, stateObject?: any, title?: string): Promise<any>;
-  popUrlState(): Promise<any>;
-}
-
-export interface FrameworkMountingData {
-  element: HTMLElement;
-  component: any;
-  data: any;
 }
 
 declare global {

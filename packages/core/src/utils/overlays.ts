@@ -1,5 +1,4 @@
 import { Animation, AnimationBuilder } from '..';
-import { playAnimationAsync } from './helpers';
 
 let lastId = 1;
 
@@ -70,7 +69,7 @@ export function overlayAnimation(
     if (!animate) {
       animation.duration(0);
     }
-    return playAnimationAsync(animation);
+    return animation.playAsync();
   }).then((animation) => {
     animation.destroy();
     overlay.animation = undefined;

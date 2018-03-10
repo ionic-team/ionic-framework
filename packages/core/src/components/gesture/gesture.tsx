@@ -1,8 +1,12 @@
 import { Component, Event, EventEmitter, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
-import { ElementRef, assert, now, updateDetail } from '../../utils/helpers';
-import { BlockerDelegate, DomController, GestureDelegate } from '../../index';
-import { BLOCK_ALL } from '../gesture-controller/gesture-controller-utils';
+import { assert, now } from '../../utils/helpers';
+import { BlockerConfig, BlockerDelegate, DomController, GestureDelegate } from '../../index';
 import { PanRecognizer } from './recognizers';
+
+export const BLOCK_ALL: BlockerConfig = {
+  disable: ['menu-swipe', 'goback-swipe'],
+  disableScroll: true
+};
 
 
 @Component({
@@ -27,7 +31,7 @@ export class Gesture {
   @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
 
   @Prop() disabled = false;
-  @Prop() attachTo: ElementRef = 'child';
+  @Prop() attachTo: string|HTMLElement = 'child';
   @Prop() autoBlockAll = false;
   @Prop() disableScroll = false;
   @Prop() direction = 'x';
@@ -478,7 +482,26 @@ export interface GestureDetail {
   data?: any;
 }
 
-
 export interface GestureCallback {
   (detail?: GestureDetail): boolean|void;
+}
+
+function updateDetail(ev: any, detail: any) {
+  // get X coordinates for either a mouse click
+  // or a touch depending on the given event
+  let x = 0;
+  let y = 0;
+  if (ev) {
+    const changedTouches = ev.changedTouches;
+    if (changedTouches && changedTouches.length > 0) {
+      const touch = changedTouches[0];
+      x = touch.clientX;
+      y = touch.clientY;
+    } else if (ev.pageX !== undefined) {
+      x = ev.pageX;
+      y = ev.pageY;
+    }
+  }
+  detail.currentX = x;
+  detail.currentY = y;
 }

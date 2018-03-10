@@ -34,13 +34,12 @@ import {
   AlertInput,
 } from './components/alert/alert';
 import {
-  ElementRef,
-  Side,
-} from './utils/helpers';
-import {
   GestureCallback,
   GestureDetail,
 } from './components/gesture/gesture';
+import {
+  Side,
+} from './utils/helpers';
 import {
   PickerButton,
   PickerColumn as PickerColumn2,
@@ -1062,7 +1061,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonGestureAttributes extends HTMLAttributes {
-      attachTo?: ElementRef;
+      attachTo?: string|HTMLElement;
       autoBlockAll?: boolean;
       canStart?: GestureCallback;
       direction?: string;

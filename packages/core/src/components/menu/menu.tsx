@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { Animation, Config, GestureDetail } from '../../index';
-import { Side, assert, checkEdgeSide, isRightSide } from '../../utils/helpers';
+import { Side, assert, isRightSide } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-menu',
@@ -248,19 +248,13 @@ export class Menu {
   }
 
   private startAnimation(shouldOpen: boolean, animated: boolean): Promise<Animation> {
-    let done;
-    const promise = new Promise<Animation>(resolve => done = resolve);
-    const ani = this.animation
-      .onFinish(done, {oneTimeCallback: true, clearExistingCallacks: true })
-      .reverse(!shouldOpen);
-
+    const ani = this.animation.reverse(!shouldOpen);
     if (animated) {
-      ani.play();
+      return ani.playAsync();
     } else {
-      ani.syncPlay();
+      ani.playSync();
+      return Promise.resolve(ani);
     }
-
-    return promise;
   }
 
   private canSwipe(): boolean {
@@ -475,6 +469,14 @@ export class Menu {
 
 function computeDelta(deltaX: number, isOpen: boolean, isRightSide: boolean): number {
   return Math.max(0, (isOpen !== isRightSide) ? -deltaX : deltaX);
+}
+
+function checkEdgeSide(posX: number, isRightSide: boolean, maxEdgeStart: number): boolean {
+  if (isRightSide) {
+    return posX >= window.innerWidth - maxEdgeStart;
+  } else {
+    return posX <= maxEdgeStart;
+  }
 }
 
 const SHOW_MENU = 'show-menu';

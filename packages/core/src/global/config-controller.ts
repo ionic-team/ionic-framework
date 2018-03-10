@@ -45,8 +45,8 @@ export function createConfigController(configObj: any, platforms: PlatformConfig
   }
 
   return {
-    get: get,
-    getBoolean: getBoolean,
-    getNumber: getNumber
+    get,
+    getBoolean,
+    getNumber
   };
 }

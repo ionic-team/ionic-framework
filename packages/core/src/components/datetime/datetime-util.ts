@@ -1,8 +1,8 @@
-import { isArray, isBlank, isString } from '../../utils/helpers';
 
+export function isBlank(val: any): val is null { return val === undefined || val === null; }
 
 export function renderDatetime(template: string, value: DatetimeData, locale: LocaleData) {
-  if (isBlank(value)) {
+  if (value === undefined) {
     return '';
   }
 
@@ -234,7 +234,7 @@ export function parseDate(val: any): DatetimeData {
 export function updateDate(existingData: DatetimeData, newData: any): boolean {
   if (newData && newData !== '') {
 
-    if (isString(newData)) {
+    if (typeof newData === 'string') {
       // new date is a string, and hopefully in the ISO format
       // convert it to our DatetimeData if a valid ISO
       newData = parseDate(newData);
@@ -399,14 +399,14 @@ export function convertToArrayOfStrings(input: string | string[] | undefined | n
     return null;
   }
 
-  if (isString(input)) {
+  if (typeof input === 'string') {
     // convert the string to an array of strings
     // auto remove any [] characters
     input = input.replace(/\[|\]/g, '').split(',');
   }
 
   let values: string[];
-  if (isArray(input)) {
+  if (Array.isArray(input)) {
     // trim up each string value
     values = input.map(val => val.toString().trim());
   }
@@ -424,14 +424,14 @@ export function convertToArrayOfStrings(input: string | string[] | undefined | n
  * an array of numbers, and clean up any user input
  */
 export function convertToArrayOfNumbers(input: any[] | string | number, type: string): number[] {
-  if (isString(input)) {
+  if (typeof input === 'string') {
     // convert the string to an array of strings
     // auto remove any whitespace and [] characters
     input = input.replace(/\[|\]|\s/g, '').split(',');
   }
 
   let values: number[];
-  if (isArray(input)) {
+  if (Array.isArray(input)) {
     // ensure each value is an actual number in the returned array
     values = input
       .map((num: any) => parseInt(num, 10))

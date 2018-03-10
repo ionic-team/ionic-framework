@@ -19,7 +19,7 @@ import {
 
 import { ViewController, isViewController } from './view-controller';
 import { AnimationOptions, Config, DomController, GestureDetail, NavOutlet } from '../..';
-import { assert, isBlank, isNumber } from '../../utils/helpers';
+import { assert } from '../../utils/helpers';
 
 import { TransitionController } from './transition-controller';
 import { Transition } from './transition';
@@ -136,7 +136,7 @@ export class NavControllerBase implements NavOutlet {
     if (isViewController(indexOrViewCtrl)) {
       config.removeView = indexOrViewCtrl;
       config.removeStart = 1;
-    } else if (isNumber(indexOrViewCtrl)) {
+    } else if (typeof indexOrViewCtrl === 'number') {
       config.removeStart = indexOrViewCtrl + 1;
     }
     return this._queueTrns(config, done);
@@ -186,7 +186,7 @@ export class NavControllerBase implements NavOutlet {
 
   @Method()
   setPages(pages: any[], opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
-    if (isBlank(opts)) {
+    if (!opts) {
       opts = {};
     }
     // if animation wasn't set to true then default it to NOT animate

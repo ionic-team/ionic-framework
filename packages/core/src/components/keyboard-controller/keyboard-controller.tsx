@@ -1,6 +1,5 @@
 import { Component, Event, EventEmitter, Prop} from '@stencil/core';
 import { Config } from '../..';
-import { focusOutActiveElement, getDocument, getWindow, hasFocusedTextInput } from '../../utils/helpers';
 import { KEY_TAB } from './keys';
 
 let v2KeyboardWillShowHandler: () => void = null;
@@ -75,11 +74,11 @@ export function onCloseImpl(keyboardController: KeyboardController, callback: Fu
 }
 
 export function componentDidLoadImpl(keyboardController: KeyboardController) {
-  focusOutline(getDocument(), keyboardController.config.get('focusOutline'));
+  focusOutline(document, keyboardController.config.get('focusOutline'));
   if (keyboardController.config.getBoolean('keyboardResizes', false)) {
-    listenV2(getWindow(), keyboardController);
+    listenV2(window, keyboardController);
   } else {
-    listenV1(getWindow(), keyboardController);
+    listenV1(window, keyboardController);
   }
 }
 
@@ -182,6 +181,32 @@ export function focusOutline(doc: Document, value: boolean) {
 
   doc.addEventListener('keydown', keyDownHandler);
 }
+
+
+
+function hasFocusedTextInput() {
+  const activeElement = document.activeElement;
+  if (isTextInput(activeElement) && activeElement.parentElement) {
+    return activeElement.parentElement.querySelector(':focus') === activeElement;
+  }
+  return false;
+}
+
+const NON_TEXT_INPUT_REGEX = /^(radio|checkbox|range|file|submit|reset|color|image|button)$/i;
+
+function isTextInput(el: any) {
+  return !!el &&
+      (el.tagName === 'TEXTAREA'
+      || el.contentEditable === 'true'
+      || (el.tagName === 'INPUT' && !(NON_TEXT_INPUT_REGEX.test(el.type))));
+}
+
+
+function focusOutActiveElement() {
+  const activeElement = document.activeElement as HTMLElement;
+  activeElement && activeElement.blur && activeElement.blur();
+}
+
 
 const KEYBOARD_CLOSE_POLLING = 150;
 const KEYBOARD_POLLING_CHECKS_MAX = 100;

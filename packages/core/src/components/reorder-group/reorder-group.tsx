@@ -1,8 +1,6 @@
 import { Component, Element, Prop, State, Watch } from '@stencil/core';
 import { DomController, GestureDetail } from '../../index';
-import { clamp, reorderArray } from '../../utils/helpers';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart} from '../../utils/haptic';
-import { CSS_PROP } from '../animation-controller/constants';
 
 const AUTO_SCROLL_MARGIN = 60;
 const SCROLL_JUMP = 10;
@@ -148,7 +146,7 @@ export class ReorderGroup {
     // // Get coordinate
     const top = this.containerTop - scroll;
     const bottom = this.containerBottom - scroll;
-    const currentY = clamp(top, ev.currentY, bottom);
+    const currentY = Math.max(top, Math.min(ev.currentY, bottom));
     const deltaY = scroll + currentY - ev.startY;
     const normalizedY = currentY - top;
     const toIndex = this.itemIndexForTop(normalizedY);
@@ -161,7 +159,7 @@ export class ReorderGroup {
     }
 
     // Update selected item position
-    (selectedItem.style as any)[CSS_PROP.transformProp] = `translateY(${deltaY}px)`;
+    selectedItem.style.transform = `translateY(${deltaY}px)`;
   }
 
   private onDragEnd() {
@@ -182,9 +180,8 @@ export class ReorderGroup {
     this.containerEl.insertBefore(selectedItem, ref);
 
     const len = children.length;
-    const transform = CSS_PROP.transformProp;
     for (let i = 0; i < len; i++) {
-      children[i].style[transform] = '';
+      children[i].style['transform'] = '';
     }
 
     const reorderInactive = () => {
@@ -223,7 +220,6 @@ export class ReorderGroup {
   private reorderMove(fromIndex: number, toIndex: number) {
     const itemHeight = this.selectedItemHeight;
     const children = this.containerEl.children;
-    const transform = CSS_PROP.transformProp;
     for (let i = 0; i < children.length; i++) {
       const style = (children[i] as any).style;
       let value = '';
@@ -232,7 +228,7 @@ export class ReorderGroup {
       } else if (i < fromIndex && i >= toIndex) {
         value = `translateY(${itemHeight}px)`;
       }
-      style[transform] = value;
+      style['transform'] = value;
     }
   }
 
@@ -302,3 +298,11 @@ function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement
   }
   return null;
 }
+
+export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {
+  const element = array[indexes.from];
+  array.splice(indexes.from, 1);
+  array.splice(indexes.to, 0, element);
+  return array;
+}
+

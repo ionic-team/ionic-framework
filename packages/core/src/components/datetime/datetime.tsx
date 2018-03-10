@@ -12,13 +12,14 @@ import {
   dateValueRange,
   daysInMonth,
   getValueFromFormat,
+  isBlank,
   parseDate,
   parseTemplate,
   renderDatetime,
   renderTextFormat,
   updateDate
 } from './datetime-util';
-import { clamp, isBlank, isObject } from '../../utils/helpers';
+import { clamp } from '../../utils/helpers';
 import { Picker, PickerColumn, PickerController, PickerOptions } from '../../index';
 
 
@@ -590,7 +591,7 @@ export class Datetime {
   hasValue(): boolean {
     const val = this.datetimeValue;
     return val
-      && isObject(val)
+      && typeof val === 'object'
       && Object.keys(val).length > 0;
   }
 

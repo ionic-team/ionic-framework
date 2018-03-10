@@ -6,7 +6,7 @@ export interface AnimationController {
 
 export interface Animation {
   new (): any;
-  parent: Animation;
+  parent: Animation|undefined;
   hasChildren: boolean;
   addElement(el: Node|Node[]|NodeList): Animation;
   add(childAnimation: Animation): Animation;
@@ -30,7 +30,8 @@ export interface Animation {
   afterStyles(styles: { [property: string]: any; }): Animation;
   afterClearStyles(propertyNames: string[]): Animation;
   play(opts?: PlayOptions): void;
-  syncPlay(): void;
+  playSync(): void;
+  playAsync(opts?: PlayOptions): Promise<Animation>;
   reverse(shouldReverse?: boolean): Animation;
   stop(stepValue?: number): void;
   progressStart(): void;
@@ -39,7 +40,6 @@ export interface Animation {
   onFinish(callback: (animation?: Animation) => void, opts?: {oneTimeCallback?: boolean, clearExistingCallacks?: boolean}): Animation;
   destroy(): void;
   isRoot(): boolean;
-  create(): Animation;
   hasCompleted: boolean;
 }
 
