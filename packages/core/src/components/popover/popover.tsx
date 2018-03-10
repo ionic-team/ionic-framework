@@ -6,6 +6,7 @@ import { BACKDROP, OverlayInterface, attachComponent, dismiss, present } from '.
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
+
 import mdEnterAnimation from './animations/md.enter';
 import mdLeaveAnimation from './animations/md.leave';
 
@@ -21,7 +22,7 @@ import mdLeaveAnimation from './animations/md.leave';
 })
 export class Popover implements OverlayInterface {
 
-  private usersComponentElement: HTMLElement;
+  private usersElement: HTMLElement;
 
   presented = false;
   animation: Animation;
@@ -150,6 +151,23 @@ export class Popover implements OverlayInterface {
     this.dismiss(null, BACKDROP);
   }
 
+  @Listen('ionModalDidPresent')
+  @Listen('ionModalWillPresent')
+  @Listen('ionModalWillDismiss')
+  @Listen('ionModalDidDismiss')
+  protected lifecycle(modalEvent: CustomEvent) {
+    const el = this.usersElement;
+    const name = LIFECYCLE_MAP[modalEvent.type];
+    if (el && name) {
+      const event = new CustomEvent(name, {
+        bubbles: false,
+        cancelable: false,
+        detail: modalEvent.detail
+      });
+      el.dispatchEvent(event);
+    }
+  }
+
   /**
    * Present the popover overlay after it has been created.
    */
@@ -168,7 +186,7 @@ export class Popover implements OverlayInterface {
       'popover-viewport': true
     };
     return attachComponent(container, this.component, classes, data)
-      .then(el => this.usersComponentElement = el)
+      .then(el => this.usersElement = el)
       .then(() => present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.ev));
   }
 
@@ -235,6 +253,14 @@ export interface PopoverDismissEventDetail extends OverlayDismissEventDetail {
 export interface PopoverDismissEvent extends OverlayDismissEvent {
   // keep this just for the sake of static types and potential future extensions
 }
+
+const LIFECYCLE_MAP: any = {
+  'ionPopoverDidPresent': 'ionViewDidEnter',
+  'ionPopoverWillPresent': 'ionViewWillEnter',
+  'ionPopoverWillDismiss': 'ionViewWillDismiss',
+  'ionPopoverDidDismiss': 'ionViewDidDismiss',
+};
+
 
 export const POPOVER_POSITION_PROPERTIES: any = {
   ios: {

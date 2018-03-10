@@ -22,7 +22,7 @@ import mdLeaveAnimation from './animations/md.leave';
 })
 export class Modal implements OverlayInterface {
 
-  private usersComponentElement: HTMLElement;
+  private usersElement: HTMLElement;
 
   animation: Animation|undefined;
   presented = false;
@@ -141,13 +141,30 @@ export class Modal implements OverlayInterface {
     this.dismiss(null, BACKDROP);
   }
 
+  @Listen('ionModalDidPresent')
+  @Listen('ionModalWillPresent')
+  @Listen('ionModalWillDismiss')
+  @Listen('ionModalDidDismiss')
+  protected lifecycle(modalEvent: CustomEvent) {
+    const el = this.usersElement;
+    const name = LIFECYCLE_MAP[modalEvent.type];
+    if (el && name) {
+      const event = new CustomEvent(name, {
+        bubbles: false,
+        cancelable: false,
+        detail: modalEvent.detail
+      });
+      el.dispatchEvent(event);
+    }
+  }
+
   /**
    * Present the modal overlay after it has been created.
    */
   @Method()
   present(): Promise<void> {
     if (this.presented) {
-      return Promise.reject('df');
+      return Promise.resolve();
     }
     const container = this.el.querySelector(`.modal-wrapper`);
     const data = {
@@ -159,7 +176,7 @@ export class Modal implements OverlayInterface {
       'ion-page': true
     };
     return attachComponent(container, this.component, classes, data)
-      .then(el => this.usersComponentElement = el)
+      .then(el => this.usersElement = el)
       .then(() => present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, undefined));
   }
 
@@ -188,6 +205,13 @@ export class Modal implements OverlayInterface {
     ];
   }
 }
+
+const LIFECYCLE_MAP: any = {
+  'ionModalDidPresent': 'ionViewDidEnter',
+  'ionModalWillPresent': 'ionViewWillEnter',
+  'ionModalWillDismiss': 'ionViewWillDismiss',
+  'ionModalDidDismiss': 'ionViewDidDismiss',
+};
 
 export interface ModalOptions {
   component: any;
