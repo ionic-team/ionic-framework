@@ -151,10 +151,10 @@ export class Popover implements OverlayInterface {
     this.dismiss(null, BACKDROP);
   }
 
-  @Listen('ionModalDidPresent')
-  @Listen('ionModalWillPresent')
-  @Listen('ionModalWillDismiss')
-  @Listen('ionModalDidDismiss')
+  @Listen('ionPopoverDidPresent')
+  @Listen('ionPopoverWillPresent')
+  @Listen('ionPopoverWillDismiss')
+  @Listen('ionPopoverDidDismiss')
   protected lifecycle(modalEvent: CustomEvent) {
     const el = this.usersElement;
     const name = LIFECYCLE_MAP[modalEvent.type];
