@@ -26,6 +26,12 @@
           <ion-button onclick="addItems()">Add Items</ion-button>
         </p>
         <ion-virtual-scroll id="virtual"></ion-virtual-scroll>
+        <ion-infinite-scroll threshold="100px" id="infinite-scroll">
+          <ion-infinite-scroll-content
+            loadingSpinner="bubbles"
+            loadingText="Loading more data...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
       </ion-content>
 
 
@@ -36,8 +42,10 @@
     const virtual = document.getElementById('virtual');
     const items = Array.from({length: 100}, (x, i) => i);
 
-    function addItems() {
-      const append = Array.from({length: 10}, (x, i) => "append" + i);
+    function addItems(append) {
+      if(!append) {
+        append = Array.from({length: 10}, (x, i) => "append" + i);
+      }
       items.push(...append);
       virtual.markDirtyTail(append.length)
     }
@@ -79,6 +87,27 @@
       return renderHeader(el, cell.value);
     };
     virtual.items = items;
+
+
+
+    const infiniteScroll = document.getElementById('infinite-scroll');
+    infiniteScroll.addEventListener('ionInfinite', async function() {
+      console.log('Loading data...');
+      const data = await getAsyncData();
+      infiniteScroll.complete();
+      addItems(data);
+
+      console.log('Done');
+    });
+
+    function getAsyncData() {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          const data = Array.from({length: 10}, (x, i) => "append" + i);
+          resolve(data);
+        }, 500);
+      });
+    }
   </script>
 </body>
 </html>

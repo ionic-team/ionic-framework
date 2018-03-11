@@ -14,8 +14,8 @@ export class NavPush {
   @Listen('child:click')
   push(): Promise<any> {
     const nav = this.el.closest('ion-nav');
-    if (nav) {
-      const toPush = this.url || this.component;
+    const toPush = this.url || this.component;
+    if (nav && toPush) {
       return nav.push(toPush, this.data);
     }
     return Promise.resolve(null);
