@@ -110,7 +110,7 @@ export class PickerColumnCmp {
     // remember where the pointer started from`
     let target: any = ev.target;
     if (target.tagName == "BUTTON" && target.className && target.className.indexOf('picker-opt') != -1) {
-      this.startTouchIndex = target.getAttribute('data-index') || 0;
+      this.startTouchIndex = target.getAttribute('data-index');
     }
     this.startY = pointerCoord(ev).y;
 
@@ -218,7 +218,7 @@ export class PickerColumnCmp {
       this.velocity = clamp(-MAX_PICKER_SPEED, velocity, MAX_PICKER_SPEED);
     }
 
-    if (Math.abs(endY - this.startY) > 3) {
+    if (Math.abs(endY - this.startY) > 6) {
       var y = this.y + (endY - this.startY);
       this.update(y, 0, true, true);
     } else if (this.startTouchIndex != null) {
