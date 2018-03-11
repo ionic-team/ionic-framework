@@ -247,11 +247,15 @@ export class Button extends Ion {
 
   /** @hidden */
   _attr(type: string, attrName: string, attrValue: boolean) {
+    let attrValueIsTruthy = isTrueProperty(attrValue);
+    if (!attrValueIsTruthy && (<any>this)[type] !== attrName) {
+      return
+    }
     if (type === '_style') {
       this._updateColor(this._color, false);
     }
     this._setClass((<any>this)[type], false);
-    if (isTrueProperty(attrValue)) {
+    if (attrValueIsTruthy) {
       (<any>this)[type] = attrName;
       this._setClass(attrName, true);
 
