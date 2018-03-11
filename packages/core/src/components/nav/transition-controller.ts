@@ -2,12 +2,9 @@ import { isPresent } from './nav-util';
 import { Transition } from './transition';
 import { NavControllerBase } from './nav';
 
-
 export class TransitionController {
   private _ids = 0;
   private _trns = new Map<number, Transition>();
-
-  // constructor(public plt: Platform, private _config: Config) {}
 
   getRootTrnsId(nav: NavControllerBase): number {
     nav = nav.parent;

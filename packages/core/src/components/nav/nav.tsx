@@ -1,17 +1,13 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import {
-  DIRECTION_BACK,
-  DIRECTION_FORWARD,
   INIT_ZINDEX,
+  NavDirection,
   NavOptions,
   NavParams,
   NavResult,
-  STATE_ATTACHED,
-  STATE_DESTROYED,
-  STATE_INITIALIZED,
-  STATE_NEW,
   TransitionDoneFn,
   TransitionInstruction,
+  ViewState,
   convertToViews,
   isPresent,
   setZIndex
@@ -19,6 +15,7 @@ import {
 
 import { ViewController, isViewController } from './view-controller';
 import { AnimationOptions, Config, DomController, GestureDetail, NavOutlet } from '../..';
+import { RouteID, RouteWrite } from '../router/utils/interfaces';
 import { assert } from '../../utils/helpers';
 
 import { TransitionController } from './transition-controller';
@@ -26,7 +23,6 @@ import { Transition } from './transition';
 
 import iosTransitionAnimation from './animations/ios.transition';
 import mdTransitionAnimation from './animations/md.transition';
-import { RouteID, RouteWrite } from '../router/utils/interfaces';
 
 const TrnsCtrl = new TransitionController();
 
@@ -208,6 +204,7 @@ export class NavControllerBase implements NavOutlet {
     if (active && active.component === id) {
       return Promise.resolve({changed: false});
     }
+    const viewController = this._views.find(v => v.component === id) || id;
 
     let resolve: (result: RouteWrite) => void;
     const promise = new Promise<RouteWrite>((r) => resolve = r);
@@ -215,7 +212,7 @@ export class NavControllerBase implements NavOutlet {
     const commonOpts: NavOptions = {
       viewIsReady: () => {
         let markVisible;
-        const p = new Promise((r) => markVisible = r);
+        const p = new Promise(r => markVisible = r);
         resolve({
           changed: true,
           markVisible
@@ -225,17 +222,15 @@ export class NavControllerBase implements NavOutlet {
     };
 
     if (direction === 1) {
-      this.push(id, params, commonOpts);
+      this.push(viewController, params, commonOpts);
     } else if (direction === -1) {
-      this.canGoBack()
-        ? this.pop(commonOpts)
-        : this.setRoot(id, params, {
-          ...commonOpts,
-          direction: DIRECTION_BACK,
-          animate: true
-        });
+      this.setRoot(id, params, {
+        ...commonOpts,
+        direction: NavDirection.back,
+        animate: true
+      });
     } else {
-      this.setRoot(id, params, commonOpts);
+      this.setRoot(viewController, params, commonOpts);
     }
     return promise;
   }
@@ -365,7 +360,7 @@ export class NavControllerBase implements NavOutlet {
     // let's see if there's another to kick off
     this._nextTrns();
     const router = document.querySelector('ion-router');
-    const isPop = result.direction === DIRECTION_BACK;
+    const isPop = result.direction === NavDirection.back;
     if (router) {
       router.navChanged(isPop);
     }
@@ -441,7 +436,7 @@ export class NavControllerBase implements NavOutlet {
         // Needs transition?
         ti.requiresTransition = (ti.enteringRequiresTransition || ti.leavingRequiresTransition) && enteringView !== leavingView;
 
-        if (enteringView && enteringView._state === STATE_NEW) {
+        if (enteringView && enteringView._state === ViewState.New) {
           this._viewInit(enteringView);
         }
       })
@@ -522,7 +517,7 @@ export class NavControllerBase implements NavOutlet {
       if (nav && nav !== this) {
         throw new Error('inserted view was already inserted');
       }
-      if (view._state === STATE_DESTROYED) {
+      if (view._state === ViewState.Destroyed) {
         throw new Error('inserted view was already destroyed');
       }
     }
@@ -575,7 +570,7 @@ export class NavControllerBase implements NavOutlet {
         }
       }
       // default the direction to "back"
-      opts.direction = opts.direction || DIRECTION_BACK;
+      opts.direction = opts.direction || NavDirection.back;
     }
 
     const finalBalance = this._views.length + (insertViews ? insertViews.length : 0) - (removeCount ? removeCount : 0);
@@ -603,7 +598,7 @@ export class NavControllerBase implements NavOutlet {
 
       if (ti.enteringRequiresTransition) {
         // default to forward if not already set
-        opts.direction = opts.direction || DIRECTION_FORWARD;
+        opts.direction = opts.direction || NavDirection.forward;
       }
     }
 
@@ -640,15 +635,14 @@ export class NavControllerBase implements NavOutlet {
    */
   private _viewInit(enteringView: ViewController) {
     assert(enteringView, 'enteringView must be non null');
-    assert(enteringView._state === STATE_NEW, 'enteringView state must be NEW');
+    assert(enteringView._state === ViewState.New, 'enteringView state must be NEW');
 
-    enteringView._state = STATE_INITIALIZED;
+    enteringView._state = ViewState.Initialized;
     enteringView.init();
-    enteringView._preLoad();
   }
 
   private _viewAttachToDOM(view: ViewController) {
-    assert(view._state === STATE_INITIALIZED, 'view state must be INITIALIZED');
+    assert(view._state === ViewState.Initialized, 'view state must be INITIALIZED');
 
     // fire willLoad before change detection runs
     view._willLoad();
@@ -657,7 +651,7 @@ export class NavControllerBase implements NavOutlet {
     // ******** DOM WRITE ****************
     this.el.appendChild(view.element);
 
-    view._state = STATE_ATTACHED;
+    view._state = ViewState.Attached;
 
     // successfully finished loading the entering view
     // fire off the "didLoad" lifecycle events
@@ -726,7 +720,7 @@ export class NavControllerBase implements NavOutlet {
       .then(() => this._transitionInit(transition, enteringView, leavingView, opts))
       .then(() => this._transitionStart(transition, enteringView, leavingView, opts));
 
-    if (enteringView && (enteringView._state === STATE_INITIALIZED)) {
+    if (enteringView && (enteringView._state === ViewState.Initialized)) {
       // render the entering component in the DOM
       // this would also render new child navs/views
       // which may have their very own async canEnter/Leave tests
@@ -894,7 +888,7 @@ export class NavControllerBase implements NavOutlet {
   }
 
   private _removeView(view: ViewController) {
-    assert(view._state === STATE_ATTACHED || view._state === STATE_DESTROYED, 'view state should be loaded or destroyed');
+    assert(view._state === ViewState.Attached || view._state === ViewState.Destroyed, 'view state should be loaded or destroyed');
 
     const views = this._views;
     const index = views.indexOf(view);
@@ -988,7 +982,7 @@ export class NavControllerBase implements NavOutlet {
 
     // default the direction to "back";
     const opts: NavOptions = {
-      direction: DIRECTION_BACK,
+      direction: NavDirection.back,
       progressAnimation: true
     };
 

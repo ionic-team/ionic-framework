@@ -1,5 +1,5 @@
 
-import { NavOptions, STATE_ATTACHED, STATE_DESTROYED, STATE_INITIALIZED, STATE_NEW } from './nav-util';
+import { NavOptions, ViewState } from './nav-util';
 import { NavControllerBase } from './nav';
 import { assert } from '../../utils/helpers';
 
@@ -29,7 +29,7 @@ export class ViewController {
 
   _nav: NavControllerBase;
   _zIndex: number;
-  _state: number = STATE_NEW;
+  _state: ViewState = ViewState.New;
 
   /** @hidden */
   id: string;
@@ -162,10 +162,6 @@ export class ViewController {
     }
   }
 
-  _preLoad() {
-    assert(this._state === STATE_INITIALIZED, 'view state must be INITIALIZED');
-    this._lifecycle('PreLoad');
-  }
 
   /**
    * @hidden
@@ -173,7 +169,7 @@ export class ViewController {
    * This event is fired before the component and his children have been initialized.
    */
   _willLoad() {
-    assert(this._state === STATE_INITIALIZED, 'view state must be INITIALIZED');
+    assert(this._state === ViewState.Initialized, 'view state must be INITIALIZED');
     this._lifecycle('WillLoad');
   }
 
@@ -186,7 +182,7 @@ export class ViewController {
    * recommended method to use when a view becomes active.
    */
   _didLoad() {
-    assert(this._state === STATE_ATTACHED, 'view state must be ATTACHED');
+    assert(this._state === ViewState.Attached, 'view state must be ATTACHED');
     this._lifecycle('DidLoad');
   }
 
@@ -195,7 +191,7 @@ export class ViewController {
    * The view is about to enter and become the active view.
    */
   _willEnter() {
-    assert(this._state === STATE_ATTACHED, 'view state must be ATTACHED');
+    assert(this._state === ViewState.Attached, 'view state must be ATTACHED');
 
     if (this._detached) {
       // ensure this has been re-attached to the change detector
@@ -214,10 +210,8 @@ export class ViewController {
    * will fire, whether it was the first load or loaded from the cache.
    */
   _didEnter() {
-    assert(this._state === STATE_ATTACHED, 'view state must be ATTACHED');
+    assert(this._state === ViewState.Attached, 'view state must be ATTACHED');
 
-    // this._nb && this._nb.didEnter();
-    // this.didEnter.emit(null);
     this._lifecycle('DidEnter');
   }
 
@@ -226,7 +220,6 @@ export class ViewController {
    * The view is about to leave and no longer be the active view.
    */
   _willLeave(_willUnload: boolean) {
-    // this.willLeave.emit(null);
     this._lifecycle('WillLeave');
   }
 
@@ -236,7 +229,6 @@ export class ViewController {
    * will fire, whether it is cached or unloaded.
    */
   _didLeave() {
-    // this.didLeave.emit(null);
     this._lifecycle('DidLeave');
 
     // when this is not the active page
@@ -252,7 +244,6 @@ export class ViewController {
    * @hidden
    */
   _willUnload() {
-    // this.willUnload.emit(null);
     this._lifecycle('WillUnload');
   }
 
@@ -261,18 +252,15 @@ export class ViewController {
    * DOM WRITE
    */
   _destroy() {
-    assert(this._state !== STATE_DESTROYED, 'view state must be ATTACHED');
+    assert(this._state !== ViewState.Destroyed, 'view state must be ATTACHED');
 
     const element = this.element;
     if (element) {
-      // completely destroy this component. boom.
-      // TODO
-      // this._cmp.destroy();
       element.remove();
     }
 
     this._nav = this._cntDir = this._leavingOpts = null;
-    this._state = STATE_DESTROYED;
+    this._state = ViewState.Destroyed;
   }
 
   /**
@@ -313,7 +301,6 @@ export class ViewController {
     });
     this.element.dispatchEvent(event);
   }
-
 }
 
 export function isViewController(viewCtrl: any): viewCtrl is ViewController {
