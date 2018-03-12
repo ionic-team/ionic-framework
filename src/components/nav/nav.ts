@@ -50,7 +50,8 @@ import { RootNode } from '../split-pane/split-pane';
   selector: 'ion-nav',
   template:
     '<div #viewport nav-viewport></div>' +
-    '<div class="nav-decor"></div>',
+    '<div class="nav-decor"></div>' +
+    '<ng-content></ng-content>',
   encapsulation: ViewEncapsulation.None,
   providers: [{provide: RootNode, useExisting: forwardRef(() => Nav) }]
 })
