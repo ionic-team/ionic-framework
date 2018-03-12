@@ -98,8 +98,8 @@ export function initSwiper(s: Slides, plt: Platform) {
   if (s.paginationType) {
     s._paginationContainer = <any>s.container.querySelector('.swiper-pagination');
 
-    if (s.paginationType === 'bullets') {
-      s._paginationContainer.classList.add(CLS.paginationModifier + 'clickable');
+    if (s.paginationType === 'bullets' && s.paginationClickable) {
+      s._paginationContainer.classList.add(CLS.paginationClickable);
     }
     s._paginationContainer.classList.add(CLS.paginationModifier + s.paginationType);
   }
