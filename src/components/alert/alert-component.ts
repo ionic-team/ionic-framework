@@ -81,6 +81,7 @@ export class AlertCmp {
   id: number;
   inputType: string;
   lastClick: number;
+  isEscape: boolean;
   msgId: string;
   subHdrId: string;
   mode: string;
@@ -111,6 +112,7 @@ export class AlertCmp {
     }
 
     this.id = (++alertIds);
+    this.isEscape = false;
     this.descId = '';
     this.hdrId = 'alert-hdr-' + this.id;
     this.subHdrId = 'alert-subhdr-' + this.id;
@@ -225,7 +227,8 @@ export class AlertCmp {
 
       } else if (ev.keyCode === KEY_ESCAPE) {
         console.debug(`alert, escape button`);
-        this.bdClick();
+        this.isEscape = true;
+         this.bdClick();
       }
     }
   }
@@ -293,7 +296,17 @@ export class AlertCmp {
     const opts: NavOptions = {
       minClickBlockDuration: 400
     };
-    return this._viewCtrl.dismiss(this.getValues(), role, opts);
+
+    let p = this._viewCtrl.dismiss(this.getValues(), role, opts);
+    if (this.isEscape) {
+      p.then(() => {
+        this.isEscape = false;
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+    }
+    return p;
   }
 
   getValues(): any {

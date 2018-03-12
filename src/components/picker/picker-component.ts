@@ -44,6 +44,7 @@ export class PickerCmp {
   d: PickerOptions;
   enabled: boolean;
   lastClick: number;
+  isEscape: boolean;
   id: number;
   mode: string;
   _gestureBlocker: BlockerDelegate;
@@ -58,6 +59,7 @@ export class PickerCmp {
   ) {
     this._gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
+    this.isEscape = false;
     this.mode = config.get('mode');
     renderer.setElementClass(_elementRef.nativeElement, `picker-${this.mode}`, true);
 
@@ -153,6 +155,7 @@ export class PickerCmp {
 
       } else if (ev.keyCode === KEY_ESCAPE) {
         console.debug('picker, escape button');
+        this.isEscape = true;
         this.bdClick();
       }
     }
@@ -202,7 +205,18 @@ export class PickerCmp {
   }
 
   dismiss(role: string): Promise<any> {
-    return this._viewCtrl.dismiss(this.getSelected(), role);
+    let p = this._viewCtrl.dismiss(this.getSelected(), role);
+
+    if (this.isEscape) {
+      p.then(() => {
+        this.isEscape = false;
+      })
+      .catch((err) => {
+        console.warn(err);
+      });
+    }
+
+    return p;
   }
 
   getSelected(): any {

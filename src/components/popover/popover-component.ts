@@ -109,7 +109,9 @@ export class PopoverCmp {
   @HostListener('body:keyup', ['$event'])
   _keyUp(ev: KeyboardEvent) {
     if (this._enabled && ev.keyCode === KEY_ESCAPE && this._viewCtrl.isLast()) {
-      this._bdClick();
+      this._bdClick().catch((err) => {
+        console.warn(err);
+      });
     }
   }
 

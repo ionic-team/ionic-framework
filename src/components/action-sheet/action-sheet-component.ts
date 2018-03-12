@@ -50,6 +50,7 @@ export class ActionSheetCmp {
   enabled: boolean;
   hdrId: string;
   id: number;
+  isEscape: boolean;
   mode: string;
   gestureBlocker: BlockerDelegate;
 
@@ -63,6 +64,7 @@ export class ActionSheetCmp {
   ) {
     this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
+    this.isEscape = false;
     this.mode = config.get('mode');
     renderer.setElementClass(_elementRef.nativeElement, `action-sheet-${this.mode}`, true);
 
@@ -127,6 +129,7 @@ export class ActionSheetCmp {
     if (this.enabled && ev.keyCode === KEY_ESCAPE && this._viewCtrl.isLast()) {
       console.debug('actionsheet, escape button');
       this.bdClick();
+      this.isEscape = true;
     }
   }
 
@@ -165,7 +168,16 @@ export class ActionSheetCmp {
     const opts: NavOptions = {
       minClickBlockDuration: 400
     };
-    return this._viewCtrl.dismiss(null, role, opts);
+    let p = this._viewCtrl.dismiss(null, role, opts);
+
+    if (this.isEscape) {
+      p.then(() => {
+        this.isEscape = false;
+      }).catch( (err) => {
+        console.debug(err);
+      });
+    }
+    return p;
   }
 
   ngOnDestroy() {
