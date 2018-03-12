@@ -96,7 +96,9 @@ export function initSwiper(s: Slides, plt: Platform) {
 
   // Pagination
   if (s.paginationType) {
-    s._paginationContainer = <any>s.container.querySelector('.swiper-pagination');
+    // As nested slides also have a paginationcontainer we need to ensure to pick the our own, which will always be last
+    const childPaginationContainer = <any>s.container.querySelectorAll('.swiper-pagination');
+    s._paginationContainer = childPaginationContainer[childPaginationContainer.length - 1];
 
     if (s.paginationType === 'bullets') {
       s._paginationContainer.classList.add(CLS.paginationModifier + 'clickable');
@@ -358,6 +360,16 @@ export function updateSlidesSize(s: Slides, plt: Platform) {
   s._snapGrid = [];
   s._slidesGrid = [];
   s._slidesSizesGrid = [];
+
+  var nestedWrapper = (<any>s._wrapper.querySelectorAll('.' + CLS.wrapper));
+  var nestedSlides: Array<any>;
+  nestedSlides = [];
+  nestedWrapper.forEach((wrapper: any) => {
+    wrapper.querySelectorAll('.' + CLS.slide).forEach((slide: any) => nestedSlides.push(slide));
+  });
+  s._slides = Array.from(s._slides).filter(((slide: any) => {
+       return nestedSlides.indexOf((slide)) === -1;
+     }));
 
   var spaceBetween: any = s.spaceBetween;
   var slidePosition = -s.slidesOffsetBefore;
