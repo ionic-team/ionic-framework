@@ -312,29 +312,15 @@ export class Config {
    * @param {string} [key] - The key used to look up the value at a later point in time.
    * @param {string} [value] - The config value being stored.
    */
-  set(...args: any[]) {
-    const arg0 = args[0];
-    const arg1 = args[1];
-
-    switch (args.length) {
-      case 2:
-        // set('key', 'value') = set key/value pair
-        // arg1 = value
-        this._s[arg0] = arg1;
-        delete this._c[arg0]; // clear cache
-        break;
-
-      case 3:
-        // setting('ios', 'key', 'value') = set key/value pair for platform
-        // arg0 = platform
-        // arg1 = key
-        // arg2 = value
-        this._s.platforms = this._s.platforms || {};
-        this._s.platforms[arg0] = this._s.platforms[arg0] || {};
-        this._s.platforms[arg0][arg1] = args[2];
-        delete this._c[arg1]; // clear cache
-        break;
-
+  set(key: string, value: any, platform?: string) {
+    if (!platform) {
+      this._s[key] = value;
+      delete this._c[key]; // clear cache
+    } else {
+      this._s.platforms = this._s.platforms || {};
+      this._s.platforms[platform] = this._s.platforms[platform] || {};
+      this._s.platforms[platform][key] = value;
+      delete this._c[key]; // clear cache
     }
 
     return this;
