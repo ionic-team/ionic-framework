@@ -249,6 +249,11 @@ ion-tab {
 }
 
 ion-tab.show-tab {
+  z-index: 1;
+  display: block;
+}
+
+ion-tab.minor-show-tab {
   display: block;
 }
 

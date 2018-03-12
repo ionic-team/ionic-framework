@@ -269,6 +269,93 @@ describe('Tabs', () => {
 
   });
 
+  describe('tabsSwipe', () => {
+
+    describe('tabsSwipeEnable', () => {
+
+      it('should be false if does not specify this property', () => {
+        var tabs = mockTabs();
+        mockTab(tabs);
+
+        expect(tabs.tabsSwipeEnable).toEqual(false);
+      });
+
+      it('should be true if specifies this property with true', () => {
+        var tabs = mockTabs();
+        mockTab(tabs);
+        tabs.tabsSwipeEnable = true;
+
+        expect(tabs.tabsSwipeEnable).toEqual(true);
+      });
+
+    });
+
+    describe('tabsSwipeThreshold', () => {
+
+      it('should be 0.33 if does not specify this property', () => {
+        var tabs = mockTabs();
+        mockTab(tabs);
+
+        expect(tabs.tabsSwipeThreshold).toEqual(0.33);
+      });
+
+      it('should be 0.1 if the given value is less than 0.1', () => {
+        var tabs = mockTabs();
+        mockTab(tabs);
+        tabs.tabsSwipeThreshold = 0;
+
+        expect(tabs.tabsSwipeThreshold).toEqual(0.1);
+      });
+
+      it('should be 0.75 if the given value is greater than 0.75', () => {
+        var tabs = mockTabs();
+        mockTab(tabs);
+        tabs.tabsSwipeThreshold = 10;
+
+        expect(tabs.tabsSwipeThreshold).toEqual(0.75);
+      });
+
+      it('should be equal to the given value when the value is between 0.1 and 0.75', () => {
+        var tabs = mockTabs();
+        mockTab(tabs);
+        var value = 0.6;
+        tabs.tabsSwipeThreshold = value;
+
+        expect(tabs.tabsSwipeThreshold).toEqual(value);
+      });
+
+    });
+
+    describe('dragStartThreshold', () => {
+
+      it('should be 20 if does not specify this property', () => {
+        var tabs = mockTabs();
+        mockTab(tabs);
+
+        expect(tabs.dragStartThreshold).toEqual(20);
+      });
+
+      it('should be 5 if the given value is less than 5', () => {
+        var tabs = mockTabs();
+        mockTab(tabs);
+        tabs.dragStartThreshold = 0;
+
+        expect(tabs.dragStartThreshold).toEqual(5);
+      });
+
+      it('should be equal to the given value when the value is greater than 5', () => {
+        var tabs = mockTabs();
+        mockTab(tabs);
+        var value = 50;
+        tabs.dragStartThreshold = value;
+
+        expect(tabs.dragStartThreshold).toEqual(value);
+      });
+
+    });
+
+  });
+
   @Component({})
   class SomePage {}
 
