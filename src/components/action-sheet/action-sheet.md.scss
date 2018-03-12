@@ -108,9 +108,6 @@ $action-sheet-md-icon-margin-start:                     0 !default;
 .action-sheet-md .action-sheet-button {
   @include text-align($action-sheet-md-text-align);
 
-  position: relative;
-  overflow: hidden;
-
   min-height: $action-sheet-md-button-min-height;
 
   font-size: $action-sheet-md-button-font-size;
@@ -125,6 +122,13 @@ $action-sheet-md-icon-margin-start:                     0 !default;
 
 .action-sheet-md .action-sheet-button.activated {
   background: $action-sheet-md-button-background-activated;
+}
+
+// Separate selector to support ripple in an md mode app with an ios mode action sheet
+.action-sheet-button-md {
+  // necessary for ripple to work properly
+  position: relative;
+  overflow: hidden;
 }
 
 .action-sheet-md .action-sheet-icon {
