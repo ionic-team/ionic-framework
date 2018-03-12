@@ -132,7 +132,7 @@ function onGestureChange(s: Slides, _plt: Platform, ev: TouchEvent) {
   }
 
   if (z.scale < s.zoomMin) {
-    z.scale =  s.zoomMin + 1 - Math.pow((s.zoomMin - z.scale + 1), 0.5);
+    z.scale =  s.zoomMin;
   }
 
   transform(z.gesture.image, 'translate3d(0,0,0) scale(' + z.scale + ')');
@@ -144,7 +144,7 @@ function onGestureEnd(s: Slides, _plt: Platform, ev: TouchEvent) {
   s.originalEvent = ev;
 
   if (!s._supportGestures) {
-    if (ev.type !== 'touchend' || ev.type === 'touchend' && ev.changedTouches.length < 2) {
+    if (ev.type !== 'touchend') {
       return;
     }
   }
@@ -153,7 +153,7 @@ function onGestureEnd(s: Slides, _plt: Platform, ev: TouchEvent) {
 
   z.scale = Math.max(Math.min(z.scale, z.gesture.zoomMax), s.zoomMin);
 
-  transition(z.gesture.image, s.speed);
+  transition(z.gesture.image, 0);
   transform(z.gesture.image, 'translate3d(0,0,0) scale(' + z.scale + ')');
 
   z.currentScale = z.scale;
@@ -334,7 +334,7 @@ function onTouchEnd(s: Slides) {
 function onTransitionEnd(s: Slides) {
   const z = s._zoom;
 
-  if (z.gesture.slide && s._previousIndex !== s._activeIndex) {
+  if (z.gesture.slide) {
     transform(z.gesture.image, 'translate3d(0,0,0) scale(1)');
     transform(z.gesture.imageWrap, 'translate3d(0,0,0)');
 
@@ -511,7 +511,7 @@ export function resetZoomEvents(s: Slides, plt: Platform) {
   for (let i = 0; i < slides.length; i++) {
     slide = slides[i];
     if (slide.querySelector('.' + CLS.zoomContainer)) {
-      plt.registerListener(slide, 's.touchEvents.move', (ev: TouchEvent) => {
+      plt.registerListener(slide, s._touchEvents.move, (ev: TouchEvent) => {
         onTouchMove(s, plt, ev);
       }, evtOpts, unRegs);
     }
@@ -523,7 +523,7 @@ export function resetZoomEvents(s: Slides, plt: Platform) {
   unRegs.push(() => { touchEndSub.unsubscribe(); });
 
   // Scale Out
-  var transEndSub = s.ionSlideTouchEnd.subscribe(() => {
+  var transEndSub = s.ionSlideTransitionEnd.subscribe(() => {
     onTransitionEnd(s);
   });
   unRegs.push(() => { transEndSub.unsubscribe(); });
