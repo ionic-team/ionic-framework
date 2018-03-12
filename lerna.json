@@ -1,8 +1,8 @@
 {
   "lerna": "2.0.0-rc.5",
   "packages": [
-    "packages/*",
-    "packages/demos/*"
+    "*",
+    "demos/*"
   ],
   "commands": {
     "bootstrap": {

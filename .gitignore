@@ -18,8 +18,8 @@ dist/
 node_modules/
 tmp/
 temp/
-packages/core/theme-builder/
-packages/core/test-components/
+core/theme-builder/
+core/test-components/
 $RECYCLE.BIN/
 
 .DS_Store

@@ -8,15 +8,15 @@
 
 ### 2. Run `npm install`
 
-  cd packages/core
+  cd core
   npm install
 
 
-Notice that `@ionic/core` lives in `packages/core`.
+Notice that `@ionic/core` lives in `core`.
 
 ### 3. Run `npm run dev`
 
-Make sure you are inside the `packages/core` directory.
+Make sure you are inside the `core` directory.
 
     npm run dev
 

@@ -1,6 +1,6 @@
 # End-To-End Testing Scripts
 
-This document describes the process of installing the dependencies for, running, and writing end-to-end tests for ionic core. Your working directory is assumed to be `packages/core`.
+This document describes the process of installing the dependencies for, running, and writing end-to-end tests for ionic core. Your working directory is assumed to be `core`.
 
 ---
 

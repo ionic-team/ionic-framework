@@ -2,7 +2,7 @@
 
 CD to core package:
 
-    cd packages/core
+    cd core
 
 
 Pull latest:

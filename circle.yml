@@ -19,14 +19,14 @@ jobs:
          paths:
          - ~/ionic/node_modules/
       - restore_cache:
-         key: node_modules_{{ checksum "packages/core/package.json" }}
+         key: node_modules_{{ checksum "core/package.json" }}
       - run:
          name: Install core node modules
-         command: npm --prefix packages/core/ i
+         command: npm --prefix core/ i
       - save_cache:
-         key: node_modules_{{ checksum "packages/core/package.json" }}
+         key: node_modules_{{ checksum "core/package.json" }}
          paths:
-         - ~/ionic/packages/core/node_modules/
+         - ~/ionic/core/node_modules/
       - run:
           name: Validate Core
-          command: npm --prefix packages/core/ run validate
+          command: npm --prefix core/ run validate
