@@ -9,7 +9,7 @@ Ionic is based on [Web Components](https://www.webcomponents.org/introduction) a
 # Packages
 
 - [Core](packages/core/README.md)
-- [Ionic Angular](packages/ionic-angular/README.md)
+- [Ionic Angular](packages/angular/README.md)
 
 
 ### Getting Started
