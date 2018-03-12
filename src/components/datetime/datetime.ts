@@ -380,6 +380,16 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
   @Input() dayValues: any;
 
   /**
+   * @input {array | string} Values used to create the list of selectable weekdays. By default
+   * the weekday values range from `0` to `6`. However, to control exactly which days of the week to
+   * display, the `weekdayValues` input can take either an array of numbers, or string of
+   * comma separated numbers. For example, if only weekend days should be shown, then this
+   * input value would be `weekdayValues="0,6"`. Note that weekday numbers do have a
+   * zero-based index, meaning Sunday's value is `0`, and Saturday's is `6`.
+   */
+  @Input() weekdayValues: any;
+
+  /**
    * @input {array | string} Values used to create the list of selectable hours. By default
    * the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However,
    * to control exactly which hours to display, the `hourValues` input can take either an
@@ -655,6 +665,23 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
     const options = column.options;
     let indexMin = options.length - 1;
     let indexMax = 0;
+    let filteredDays: any[] = []; // Contains the days that will show.
+
+    if (name === 'day' && ub[0] === lb[0] && ub[1] === lb[1] && isPresent(this.weekdayValues)) {
+      var weekdays = convertToArrayOfNumbers(this.weekdayValues, 'weekday');
+      // Find the day of the week that the month starts on (months are 0 indexed in the date object)
+      var firstDay = new Date(ub[0], ub[1] - 1, 1).getDay();
+      for (var i = 0; i < weekdays.length; i++) {
+        // Date is the first day that matches the weekday values
+        var date = 1 + weekdays[i] - firstDay;
+        if (date < 0) date += 7;
+
+        while (date <= 31) {
+          filteredDays.push(date);
+          date += 7;
+        }
+      }
+    }
 
     for (var i = 0; i < options.length; i++) {
       var opt = options[i];
@@ -666,7 +693,8 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
         value < lowerBounds[index] ||
         value > upperBounds[index] ||
         dateSortValue(ub[0], ub[1], ub[2], ub[3], ub[4]) < min ||
-        dateSortValue(lb[0], lb[1], lb[2], lb[3], lb[4]) > max
+        dateSortValue(lb[0], lb[1], lb[2], lb[3], lb[4]) > max ||
+        (name === 'day' && isPresent(this.weekdayValues) && filteredDays.indexOf(value) === -1)
       );
       if (!disabled) {
         indexMin = Math.min(indexMin, i);
