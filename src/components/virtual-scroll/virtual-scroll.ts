@@ -394,19 +394,39 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
     // dimensions because it's still rendered and only opacity hidden
     this.setElementClass('virtual-loading', true);
 
-    // wait for the content to be rendered and has readable dimensions
-    const readSub = _ctrl.readReady.subscribe(() => {
-      readSub.unsubscribe();
-      this.readUpdate(true);
-    });
+    // if virtualzone is initialized on conditional rendering change, the view might already be readReady
+    if (_ctrl.isReadReady) {
+      // wait for vs to be rendered
+      setTimeout(() => {
+        this.readUpdate(true);
+      });
+    } else {
+      // wait for the content to be rendered and has readable dimensions
+      const readSub = _ctrl.readReady.subscribe(() => {
+        readSub.unsubscribe();
+        this.readUpdate(true);
+      });
+    }
 
-    // wait for the content to be writable
-    const writeSub = _ctrl.writeReady.subscribe(() => {
-      writeSub.unsubscribe();
-      this._init = true;
-      this.writeUpdate(true);
-      this._listeners();
-    });
+    // if virtualzone is initialized on conditional rendering change, the view might already be writeReady
+    if (_ctrl.isWriteReady) {
+      // wait for vs to be rendered
+      setTimeout(() => {
+        this.writeInit();
+      });
+    } else {
+      // wait for the content to be writable
+      const writeSub = _ctrl.writeReady.subscribe(() => {
+        writeSub.unsubscribe();
+        this.writeInit();
+      });
+    }
+  }
+
+  writeInit() {
+    this._init = true;
+    this.writeUpdate(true);
+    this._listeners();
   }
 
   /**
@@ -426,8 +446,8 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
   }
 
   /**
-  * @hidden
-  */
+   * @hidden
+   */
   ngOnChanges(changes: SimpleChanges): void {
     if ('virtualScroll' in changes) {
       // React on virtualScroll changes only once all inputs have been initialized
@@ -716,6 +736,11 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
    * @hidden
    */
   scrollUpdate(ev: ScrollEvent) {
+    // sometimes ionScroll doesn't return any events, workaround for it
+    if (!ev) {
+      return;
+    }
+
     // set the scroll top from the scroll event
     this._data.scrollTop = ev.scrollTop;
 
@@ -826,7 +851,11 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
     this._scrollSub && this._scrollSub.unsubscribe();
     this._scrollEndSub && this._scrollEndSub.unsubscribe();
     this._resizeSub = this._scrollEndSub = this._scrollSub = null;
-    this._hdrFn = this._ftrFn = this._records = this._cells = this._nodes = this._data = null;
+    this._hdrFn = this._ftrFn = null;
+    this._cells = this._nodes = this._records = [];
+    this._data = {
+      scrollTop: 0,
+    };
   }
 }
 
