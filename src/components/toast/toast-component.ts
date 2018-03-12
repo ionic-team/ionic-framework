@@ -16,7 +16,7 @@ import { ViewController } from '../../navigation/view-controller';
       '[class.toast-middle]="d.position === \'middle\'" ' +
       '[class.toast-top]="d.position === \'top\'"> ' +
       '<div class="toast-container"> ' +
-        '<div class="toast-message" id="{{hdrId}}" *ngIf="d.message">{{d.message}}</div> ' +
+        '<div class="toast-message" id="{{hdrId}}" *ngIf="d.message" [innerHTML]="d.message"></div> ' +
         '<button ion-button clear class="toast-button" *ngIf="d.showCloseButton" (click)="cbClick()"> ' +
           '{{ d.closeButtonText || \'Close\' }} ' +
          '</button> ' +
