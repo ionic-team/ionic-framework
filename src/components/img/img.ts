@@ -112,6 +112,10 @@ export class Img implements OnDestroy, IImg {
   /** @internal */
   _rect: any;
   /** @internal */
+  _top: number;
+  /** @internal */
+  _bottom: number;
+  /** @internal */
   _w: string = '';
   /** @internal */
   _h: string = '';
@@ -253,16 +257,14 @@ export class Img implements OnDestroy, IImg {
    * @hidden
    */
   get top(): number {
-    const bounds = this._getBounds();
-    return bounds && bounds.top || 0;
+    return this._top || 0;
   }
 
   /**
    * @hidden
    */
   get bottom(): number {
-    const bounds = this._getBounds();
-    return bounds && bounds.bottom || 0;
+    return this._bottom || 0;
   }
 
   private _getBounds() {
@@ -275,6 +277,9 @@ export class Img implements OnDestroy, IImg {
       // we don't have bounds from virtual scroll
       // so let's do the raw DOM lookup w/ getBoundingClientRect
       this._rect = (<HTMLElement>this._elementRef.nativeElement).getBoundingClientRect();
+
+      this._top = this._rect.top + this._content._scrollContent.nativeElement.scrollTop;
+      this._bottom = this._rect.bottom + this._content._scrollContent.nativeElement.scrollTop;
       console.debug(`img, ${this._src}, read, ${this._rect.top} - ${this._rect.bottom}`);
     }
     return this._rect;
