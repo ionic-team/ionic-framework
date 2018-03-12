@@ -1,6 +1,5 @@
 import { ComponentFactory, ComponentFactoryResolver } from '@angular/core';
 import { Location } from '@angular/common';
-
 import { App } from '../components/app/app';
 import { DIRECTION_BACK, NavLink, NavSegment, TransitionDoneFn, convertToViews, isNav, isTab, isTabs } from './nav-util';
 import { ModuleLoader } from '../util/module-loader';
@@ -27,7 +26,8 @@ export class DeepLinker {
     public _serializer: UrlSerializer,
     public _location: Location,
     public _moduleLoader: ModuleLoader,
-    public _baseCfr: ComponentFactoryResolver
+    public _baseCfr: ComponentFactoryResolver,
+    public _baseHref: string
   ) {}
 
   /**
@@ -35,7 +35,7 @@ export class DeepLinker {
    */
   init() {
     // scenario 1: Initial load of all navs from the initial browser URL
-    const browserUrl = normalizeUrl(this._location.path());
+    const browserUrl = normalizeUrl(this._location.path(), this._baseHref);
     console.debug(`DeepLinker, init load: ${browserUrl}`);
 
     // remember this URL in our internal history stack
@@ -43,7 +43,7 @@ export class DeepLinker {
 
     // listen for browser URL changes
     this._location.subscribe((locationChg: { url: string }) => {
-      this._urlChange(normalizeUrl(locationChg.url));
+      this._urlChange(normalizeUrl(locationChg.url, this._baseHref));
     });
   }
 
@@ -120,7 +120,7 @@ export class DeepLinker {
 
   getCurrentSegments(browserUrl?: string) {
     if (!browserUrl) {
-      browserUrl = normalizeUrl(this._location.path());
+      browserUrl = normalizeUrl(this._location.path(), this._baseHref);
     }
     return this._serializer.parse(browserUrl);
   }
@@ -290,7 +290,7 @@ export class DeepLinker {
    * @internal
    */
   getSegmentByNavIdOrName(navId: string, name: string): NavSegment {
-    const browserUrl = normalizeUrl(this._location.path());
+    const browserUrl = normalizeUrl(this._location.path(), this._baseHref);
     const segments = this._serializer.parse(browserUrl);
     for (const segment of segments) {
       if (segment.navId === navId || segment.navId === name) {
@@ -433,18 +433,21 @@ export class DeepLinker {
 }
 
 
-export function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location, moduleLoader: ModuleLoader, cfr: ComponentFactoryResolver) {
-  const deepLinker = new DeepLinker(app, serializer, location, moduleLoader, cfr);
+export function setupDeepLinker(app: App, serializer: UrlSerializer, location: Location, moduleLoader: ModuleLoader, cfr: ComponentFactoryResolver, baseHref: string) {
+  const deepLinker = new DeepLinker(app, serializer, location, moduleLoader, cfr, baseHref);
   deepLinker.init();
   return deepLinker;
 }
 
 
-export function normalizeUrl(browserUrl: string): string {
+export function normalizeUrl(browserUrl: string, baseHref: string = '/'): string {
   browserUrl = browserUrl.trim();
   if (browserUrl.charAt(0) !== '/') {
     // ensure first char is a /
     browserUrl = '/' + browserUrl;
+  }
+  if (!browserUrl.startsWith(baseHref)) {
+    browserUrl = baseHref + browserUrl;
   }
   if (browserUrl.length > 1 && browserUrl.charAt(browserUrl.length - 1) === '/') {
     // ensure last char is not a /
