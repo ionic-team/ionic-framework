@@ -450,7 +450,7 @@ export function normalizeUrl(browserUrl: string): string {
     // ensure last char is not a /
     browserUrl = browserUrl.substr(0, browserUrl.length - 1);
   }
-  return browserUrl;
+  return browserUrl.replace(/\?[^#]+/, "");
 }
 
 export function getNavFromTree(nav: NavigationContainer, id: string) {
