@@ -63,7 +63,7 @@ export class ActionSheetCmp {
   ) {
     this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
-    this.mode = config.get('mode');
+    this.mode = this.d.mode || config.get('mode');
     renderer.setElementClass(_elementRef.nativeElement, `action-sheet-${this.mode}`, true);
 
     if (this.d.cssClass) {

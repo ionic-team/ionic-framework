@@ -3,6 +3,7 @@ export interface PickerOptions {
   buttons?: any[];
   columns?: PickerColumn[];
   cssClass?: string;
+  mode?: string;
   enableBackdropDismiss?: boolean;
 }
 

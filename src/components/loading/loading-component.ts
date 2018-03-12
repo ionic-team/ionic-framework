@@ -31,6 +31,7 @@ export class LoadingCmp {
   id: number;
   showSpinner: boolean;
   durationTimeout: any;
+  mode: string;
   gestureBlocker: BlockerDelegate;
 
   constructor(
@@ -44,8 +45,9 @@ export class LoadingCmp {
     assert(params.data, 'params data must be valid');
     this.gestureBlocker = gestureCtrl.createBlocker(BLOCK_ALL);
     this.d = params.data;
+    this.mode = this.d.mode || _config.get('mode');
 
-    renderer.setElementClass(_elementRef.nativeElement, `loading-${_config.get('mode')}`, true);
+    renderer.setElementClass(_elementRef.nativeElement, `loading-${this.mode}`, true);
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {

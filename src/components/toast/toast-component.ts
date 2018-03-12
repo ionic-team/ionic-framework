@@ -3,6 +3,7 @@ import { AfterViewInit, Component, ElementRef, Renderer } from '@angular/core';
 import { Config } from '../../config/config';
 import { NavParams } from '../../navigation/nav-params';
 import { ViewController } from '../../navigation/view-controller';
+import { ToastOptions } from './toast-options';
 
 
 /**
@@ -29,15 +30,8 @@ import { ViewController } from '../../navigation/view-controller';
   },
 })
 export class ToastCmp implements AfterViewInit {
-  d: {
-    message?: string;
-    cssClass?: string;
-    duration?: number;
-    showCloseButton?: boolean;
-    closeButtonText?: string;
-    dismissOnPageChange?: boolean;
-    position?: string;
-  };
+  d: ToastOptions;
+  mode: string;
   descId: string;
   dismissTimeout: number = undefined;
   enabled: boolean;
@@ -51,8 +45,9 @@ export class ToastCmp implements AfterViewInit {
     params: NavParams,
     renderer: Renderer
   ) {
-    renderer.setElementClass(_elementRef.nativeElement, `toast-${_config.get('mode')}`, true);
     this.d = params.data;
+    this.mode = this.d.mode || _config.get('mode');
+    renderer.setElementClass(_elementRef.nativeElement, `toast-${this.mode}`, true);
 
     if (this.d.cssClass) {
       this.d.cssClass.split(' ').forEach(cssClass => {
