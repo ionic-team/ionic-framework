@@ -4,7 +4,7 @@ import { KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
-import { BlockerDelegate, GESTURE_GO_BACK_SWIPE, GESTURE_MENU_SWIPE,  GestureController } from '../../gestures/gesture-controller';
+import { BlockerDelegate, GESTURE_GO_BACK_SWIPE, GESTURE_MENU_SWIPE, GestureController } from '../../gestures/gesture-controller';
 import { ModuleLoader } from '../../util/module-loader';
 import { assert } from '../../util/util';
 
@@ -14,7 +14,7 @@ import { assert } from '../../util/util';
 @Component({
   selector: 'ion-modal',
   template:
-    '<ion-backdrop (click)="_bdClick()" [class.backdrop-no-tappable]="!_bdDismiss"></ion-backdrop>' +
+    '<ion-backdrop (click)="_bdClick()" [hidden]="!_showBackdrop" [class.backdrop-no-tappable]="!_bdDismiss"></ion-backdrop>' +
     '<div class="modal-wrapper">' +
       '<div #viewport nav-viewport></div>' +
     '</div>'
@@ -24,6 +24,7 @@ export class ModalCmp {
   @ViewChild('viewport', { read: ViewContainerRef }) _viewport: ViewContainerRef;
 
   _bdDismiss: boolean;
+  _showBackdrop: boolean;
   _enabled: boolean;
   _gestureBlocker: BlockerDelegate;
 
@@ -44,6 +45,7 @@ export class ModalCmp {
       disable: [GESTURE_MENU_SWIPE, GESTURE_GO_BACK_SWIPE]
     });
     this._bdDismiss = opts.enableBackdropDismiss;
+    this._showBackdrop = opts.showBackdrop;
 
     if (opts.cssClass) {
       opts.cssClass.split(' ').forEach((cssClass: string) => {
