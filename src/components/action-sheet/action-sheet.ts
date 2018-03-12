@@ -6,6 +6,7 @@ import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
+import { Type } from '@angular/core';
 
 
 /**
@@ -14,11 +15,11 @@ import { ViewController } from '../../navigation/view-controller';
 export class ActionSheet extends ViewController {
   private _app: App;
 
-  constructor(app: App, opts: ActionSheetOptions, config: Config) {
+  constructor(app: App, opts: ActionSheetOptions, config: Config, component?: Type<any>) {
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
-    super(ActionSheetCmp, opts, null);
+    super(component || ActionSheetCmp, opts, null);
     this._app = app;
     this.isOverlay = true;
 

@@ -83,3 +83,11 @@ it('should open alert with mode', function() {
 it('should close with button click', function() {
   element(by.css('.alert-button:last-child')).click();
 });
+
+it('should open a alert custom component', function() {
+  element(by.css('.e2eAlertCustom')).click().then(() => {
+    const el = element(by.css('.custom-alert'));
+    expect(el).toBeDefined();
+  });
+
+});

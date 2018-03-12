@@ -7,6 +7,7 @@ import { LoadingOptions } from './loading-options';
 import { LoadingMdPopIn, LoadingMdPopOut, LoadingPopIn, LoadingPopOut, LoadingWpPopIn, LoadingWpPopOut } from './loading-transitions';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
+import { Type } from '@angular/core';
 
 /**
  * @hidden
@@ -14,12 +15,12 @@ import { ViewController } from '../../navigation/view-controller';
 export class Loading extends ViewController {
   private _app: App;
 
-  constructor(app: App, opts: LoadingOptions = {}, config: Config) {
+  constructor(app: App, opts: LoadingOptions = {}, config: Config, component?: Type<any>) {
     opts.showBackdrop = isPresent(opts.showBackdrop) ? !!opts.showBackdrop : true;
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : false;
     opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
 
-    super(LoadingCmp, opts, null);
+    super(component || LoadingCmp, opts, null);
     this._app = app;
     this.isOverlay = true;
 

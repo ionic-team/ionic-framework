@@ -1,3 +1,4 @@
+import { AlertCustomCmp } from '../../../../alert-custom/alert-custom-component';
 import { Component } from '@angular/core';
 import { AlertController, IonicPage, ModalController } from '../../../../../..';
 
@@ -311,6 +312,15 @@ export class PageOne {
       mode: alertMode,
       buttons: ['OK']
     });
+
+    alert.present();
+  }
+
+  doAlertWithCustomComponent() {
+    let alert = this.alertCtrl.create({
+      title: 'Alert custom component!',
+      buttons: ['OK']
+    }, AlertCustomCmp);
 
     alert.present();
   }

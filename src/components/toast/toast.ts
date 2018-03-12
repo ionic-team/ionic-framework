@@ -1,3 +1,4 @@
+import { Type } from '@angular/core';
 import { App } from '../app/app';
 import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
@@ -15,9 +16,9 @@ import { ViewController } from '../../navigation/view-controller';
 export class Toast extends ViewController {
   private _app: App;
 
-  constructor(app: App, opts: ToastOptions = {}, config: Config) {
+  constructor(app: App, opts: ToastOptions = {}, config: Config, component?: Type<any>) {
     opts.dismissOnPageChange = isPresent(opts.dismissOnPageChange) ? !!opts.dismissOnPageChange : false;
-    super(ToastCmp, opts, null);
+    super(component || ToastCmp, opts, null);
     this._app = app;
 
     // set the position to the bottom if not provided

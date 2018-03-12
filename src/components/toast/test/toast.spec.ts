@@ -1,5 +1,6 @@
 import { mockApp, mockConfig } from '../../../util/mock-providers';
 import { ToastController } from '../toast-controller';
+import { ToastCustomCmp } from '../toast-custom/toast-custom-component';
 
 
 describe('Toast', () => {
@@ -51,6 +52,15 @@ describe('Toast', () => {
       });
 
       expect(toast.data.duration).toEqual(3000);
+    });
+
+    it('should render a custom toast component', () => {
+      let toast = toastCtrl.create({
+        message: 'Please Wait...',
+        duration: 3000
+      }, ToastCustomCmp);
+
+      expect(toast.component).toEqual(ToastCustomCmp);
     });
   });
 

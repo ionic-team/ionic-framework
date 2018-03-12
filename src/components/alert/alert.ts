@@ -6,6 +6,7 @@ import { Config } from '../../config/config';
 import { isPresent } from '../../util/util';
 import { NavOptions } from '../../navigation/nav-util';
 import { ViewController } from '../../navigation/view-controller';
+import { Type } from '@angular/core';
 
 
 /**
@@ -14,12 +15,12 @@ import { ViewController } from '../../navigation/view-controller';
 export class Alert extends ViewController {
   private _app: App;
 
-  constructor(app: App, opts: AlertOptions = {}, config: Config) {
+  constructor(app: App, opts: AlertOptions = {}, config: Config, component?: Type<any>) {
     opts.inputs = opts.inputs || [];
     opts.buttons = opts.buttons || [];
     opts.enableBackdropDismiss = isPresent(opts.enableBackdropDismiss) ? !!opts.enableBackdropDismiss : true;
 
-    super(AlertCmp, opts, null);
+    super(component || AlertCmp, opts, null);
     this._app = app;
     this.isOverlay = true;
 

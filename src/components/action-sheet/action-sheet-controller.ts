@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 
 import { ActionSheet } from './action-sheet';
 import { ActionSheetOptions } from './action-sheet-options';
@@ -163,8 +163,8 @@ export class ActionSheetController {
    * Open an action sheet with a title, subTitle, and an array of buttons
    * @param {ActionSheetOptions} opts Action sheet options
    */
-  create(opts: ActionSheetOptions = {}): ActionSheet {
-    return new ActionSheet(this._app, opts, this.config);
+  create(opts: ActionSheetOptions = {}, component?: Type<any>): ActionSheet {
+    return new ActionSheet(this._app, opts, this.config, component);
   }
 
 }

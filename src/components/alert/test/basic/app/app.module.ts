@@ -1,3 +1,4 @@
+import { AlertCustomCmp } from '../../../alert-custom/alert-custom-component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule } from '../../../../..';
@@ -7,11 +8,12 @@ import { PageOneModule } from '../pages/page-one/page-one.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AlertCustomCmp
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(AppComponent, {}),
+    IonicModule.forRoot([AppComponent, AlertCustomCmp], {}),
     PageOneModule
   ],
   bootstrap: [IonicApp]

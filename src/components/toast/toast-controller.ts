@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -77,8 +77,8 @@ export class ToastController {
    * Create a new toast component. See options below
    * @param {ToastOptions} opts Toast options. See the below table for available options.
    */
-  create(opts: ToastOptions = {}) {
-    return new Toast(this._app, opts, this.config);
+  create(opts: ToastOptions = {}, component?: Type<any>) {
+    return new Toast(this._app, opts, this.config, component);
   }
 
 }

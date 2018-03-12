@@ -394,11 +394,13 @@ export class IonicModule {
      * @param {any} deepLinkConfig Any configuration needed for the Ionic Deeplinker.
      */
   static forRoot(appRoot: any, config: any = null, deepLinkConfig: DeepLinkConfig = null): ModuleWithProviders {
+    const rootComponent = appRoot instanceof Array && appRoot.length > 0 ? appRoot[0] : appRoot;
+
     return {
       ngModule: IonicModule,
       providers: [
         // useValue: bootstrap values
-        { provide: AppRootToken, useValue: appRoot },
+        { provide: AppRootToken, useValue: rootComponent },
         { provide: ConfigToken, useValue: config },
         { provide: DeepLinkConfigToken, useValue: deepLinkConfig },
         { provide: APP_BASE_HREF, useValue: '/'},
