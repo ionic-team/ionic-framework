@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, CssClassMap, OverlayDismissEvent } from '../../index';
+import { Animation, AnimationBuilder, Config, CssClassMap } from '../../index';
 
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { BACKDROP, OverlayInterface, dismiss, present } from '../../utils/overlays';
+import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -102,12 +102,12 @@ export class ActionSheet implements OverlayInterface {
   /**
    * Emitted before the alert has dismissed.
    */
-  @Event({eventName: 'ionActionSheetWillDismiss'}) willDismiss: EventEmitter;
+  @Event({eventName: 'ionActionSheetWillDismiss'}) willDismiss: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the alert has dismissed.
    */
-  @Event({eventName: 'ionActionSheetDidDismiss'}) didDismiss: EventEmitter;
+  @Event({eventName: 'ionActionSheetDidDismiss'}) didDismiss: EventEmitter<OverlayEventDetail>;
 
 
   componentDidLoad() {
@@ -137,6 +137,16 @@ export class ActionSheet implements OverlayInterface {
   @Method()
   dismiss(data?: any, role?: string): Promise<void> {
     return dismiss(this, data, role, 'actionSheetLeave', iosLeaveAnimation, mdLeaveAnimation, undefined);
+  }
+
+  @Method()
+  onDidDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionActionSheetDidDismiss', callback);
+  }
+
+  @Method()
+  onWillDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionActionSheetWillDismiss', callback);
   }
 
   protected buttonClick(button: ActionSheetButton) {
@@ -255,6 +265,3 @@ export interface ActionSheetButton {
   handler?: () => boolean | void;
 }
 
-export interface ActionSheetDismissEvent extends OverlayDismissEvent {
-  // keep this just for the sake of static types and potential future extensions
-}

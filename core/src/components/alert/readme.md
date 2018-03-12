@@ -247,6 +247,12 @@ Emitted before the alert has presented.
 Dismiss the alert overlay after it has been presented.
 
 
+#### onDidDismiss()
+
+
+#### onWillDismiss()
+
+
 #### present()
 
 Present the alert overlay after it has been created.

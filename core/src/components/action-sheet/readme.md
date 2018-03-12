@@ -239,6 +239,12 @@ Emitted before the alert has presented.
 Dismiss the action sheet overlay after it has been presented.
 
 
+#### onDidDismiss()
+
+
+#### onWillDismiss()
+
+
 #### present()
 
 Present the action sheet overlay after it has been created.

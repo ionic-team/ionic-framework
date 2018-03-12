@@ -259,6 +259,12 @@ Emitted before the modal has presented.
 Dismiss the modal overlay after it has been presented.
 
 
+#### onDidDismiss()
+
+
+#### onWillDismiss()
+
+
 #### present()
 
 Present the modal overlay after it has been created.

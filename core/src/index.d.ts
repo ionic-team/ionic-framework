@@ -128,15 +128,6 @@ export interface BaseInputComponent {
   fireBlur: () => void;
 }
 
-export interface OverlayDismissEvent extends CustomEvent {
-  detail: OverlayDismissEventDetail;
-}
-
-export interface OverlayDismissEventDetail {
-  data?: any;
-  role?: string;
-}
-
 declare global {
 
   namespace JSXElements {

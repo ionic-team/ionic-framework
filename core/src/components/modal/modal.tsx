@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, FrameworkDelegate, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { Animation, AnimationBuilder, Config, FrameworkDelegate } from '../../index';
 
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { BACKDROP, OverlayInterface, attachComponent, dismiss, present } from '../../utils/overlays';
+import { BACKDROP, OverlayEventDetail, OverlayInterface, attachComponent, dismiss, eventMethod, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -93,32 +93,32 @@ export class Modal implements OverlayInterface {
   /**
    * Emitted after the modal has loaded.
    */
-  @Event() ionModalDidLoad: EventEmitter<ModalEventDetail>;
+  @Event() ionModalDidLoad: EventEmitter<void>;
 
   /**
    * Emitted after the modal has unloaded.
    */
-  @Event() ionModalDidUnload: EventEmitter<ModalEventDetail>;
+  @Event() ionModalDidUnload: EventEmitter<void>;
 
   /**
    * Emitted after the modal has presented.
    */
-  @Event({eventName: 'ionModalDidPresent'}) didPresent: EventEmitter<ModalEventDetail>;
+  @Event({eventName: 'ionModalDidPresent'}) didPresent: EventEmitter<void>;
 
   /**
    * Emitted before the modal has presented.
    */
-  @Event({eventName: 'ionModalWillPresent'}) willPresent: EventEmitter<ModalEventDetail>;
+  @Event({eventName: 'ionModalWillPresent'}) willPresent: EventEmitter<void>;
 
   /**
    * Emitted before the modal has dismissed.
    */
-  @Event({eventName: 'ionModalWillDismiss'}) willDismiss: EventEmitter<ModalDismissEventDetail>;
+  @Event({eventName: 'ionModalWillDismiss'}) willDismiss: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the modal has dismissed.
    */
-  @Event({eventName: 'ionModalDidDismiss'}) didDismiss: EventEmitter<ModalDismissEventDetail>;
+  @Event({eventName: 'ionModalDidDismiss'}) didDismiss: EventEmitter<OverlayEventDetail>;
 
   componentDidLoad() {
     this.ionModalDidLoad.emit();
@@ -188,6 +188,16 @@ export class Modal implements OverlayInterface {
     return dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, undefined);
   }
 
+  @Method()
+  onDidDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionModalDidDismiss', callback);
+  }
+
+  @Method()
+  onWillDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionModalWillDismiss', callback);
+  }
+
   hostData() {
     return {
       style: {
@@ -223,21 +233,3 @@ export interface ModalOptions {
   cssClass?: string;
   delegate?: FrameworkDelegate;
 }
-
-export interface ModalEvent extends CustomEvent {
-  target: HTMLIonModalElement;
-  detail: ModalEventDetail;
-}
-
-export interface ModalEventDetail {
-
-}
-
-export interface ModalDismissEventDetail extends OverlayDismissEventDetail {
-  // keep this just for the sake of static types and potential future extensions
-}
-
-export interface ModalDismissEvent extends OverlayDismissEvent {
-  // keep this just for the sake of static types and potential future extensions
-}
-

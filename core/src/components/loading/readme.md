@@ -242,6 +242,12 @@ Emitted before the loading has presented.
 Dismiss the loading overlay after it has been presented.
 
 
+#### onDidDismiss()
+
+
+#### onWillDismiss()
+
+
 #### present()
 
 Present the loading overlay after it has been created.

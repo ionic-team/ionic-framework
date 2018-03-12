@@ -267,6 +267,12 @@ Emitted before the popover has presented.
 Dismiss the popover overlay after it has been presented.
 
 
+#### onDidDismiss()
+
+
+#### onWillDismiss()
+
+
 #### present()
 
 Present the popover overlay after it has been created.

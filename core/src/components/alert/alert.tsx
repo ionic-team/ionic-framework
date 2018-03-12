@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, CssClassMap, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { Animation, AnimationBuilder, Config, CssClassMap } from '../../index';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { BACKDROP, OverlayInterface, autoFocus, dismiss, present } from '../../utils/overlays';
+import { BACKDROP, OverlayEventDetail, OverlayInterface, autoFocus, dismiss, eventMethod, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -95,32 +95,32 @@ export class Alert implements OverlayInterface {
   /**
    * Emitted after the alert has presented.
    */
-  @Event() ionAlertDidLoad: EventEmitter<AlertEventDetail>;
+  @Event() ionAlertDidLoad: EventEmitter<void>;
 
   /**
    * Emitted before the alert has presented.
    */
-  @Event() ionAlertDidUnload: EventEmitter<AlertEventDetail>;
+  @Event() ionAlertDidUnload: EventEmitter<void>;
 
   /**
    * Emitted after the alert has presented.
    */
-  @Event({eventName: 'ionAlertDidPresent'}) didPresent: EventEmitter<AlertEventDetail>;
+  @Event({eventName: 'ionAlertDidPresent'}) didPresent: EventEmitter<void>;
 
   /**
    * Emitted before the alert has presented.
    */
-  @Event({eventName: 'ionAlertWillPresent'}) willPresent: EventEmitter<AlertEventDetail>;
+  @Event({eventName: 'ionAlertWillPresent'}) willPresent: EventEmitter<void>;
 
   /**
    * Emitted before the alert has dismissed.
    */
-  @Event({eventName: 'ionAlertWillDismiss'}) willDismiss: EventEmitter<AlertDismissEventDetail>;
+  @Event({eventName: 'ionAlertWillDismiss'}) willDismiss: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the alert has dismissed.
    */
-  @Event({eventName: 'ionAlertDidDismiss'}) didDismiss: EventEmitter<AlertDismissEventDetail>;
+  @Event({eventName: 'ionAlertDidDismiss'}) didDismiss: EventEmitter<OverlayEventDetail>;
 
 
   componentDidLoad() {
@@ -154,6 +154,16 @@ export class Alert implements OverlayInterface {
     return dismiss(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation, undefined);
   }
 
+  @Method()
+  onDidDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionAlerDidDismiss', callback);
+  }
+
+  @Method()
+  onWillDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionAlertWillDismiss', callback);
+  }
+
   private rbClick(inputIndex: number) {
     this.inputs = this.inputs.map((input, index) => {
       input.checked = (inputIndex === index);
@@ -180,6 +190,7 @@ export class Alert implements OverlayInterface {
       cbButton.handler(cbButton);
     }
   }
+
 
   private buttonClick(button: any) {
     let shouldDismiss = true;
@@ -440,20 +451,4 @@ export interface AlertButton {
   role?: string;
   cssClass?: string;
   handler?: (value: any) => boolean|void;
-}
-
-export interface AlertEvent extends CustomEvent {
-  target: HTMLIonAlertElement;
-  detail: AlertEventDetail;
-}
-
-export interface AlertEventDetail {
-}
-
-export interface AlertDismissEventDetail extends OverlayDismissEventDetail {
-  // keep this just for the sake of static types and potential future extensions
-}
-
-export interface AlertDismissEvent extends OverlayDismissEvent {
-  // keep this just for the sake of static types and potential future extensions
 }

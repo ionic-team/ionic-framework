@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { AlertEvent, AlertOptions, OverlayController } from '../../index';
+import { AlertOptions, OverlayController } from '../../index';
 import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({
@@ -10,13 +10,13 @@ export class AlertController implements OverlayController {
   private alerts = new Map<number, HTMLIonAlertElement>();
 
   @Listen('body:ionAlertWillPresent')
-  protected alertWillPresent(ev: AlertEvent) {
+  protected alertWillPresent(ev: any) {
     this.alerts.set(ev.target.overlayId, ev.target);
   }
 
   @Listen('body:ionAlertWillDismiss')
   @Listen('body:ionAlertDidUnload')
-  protected alertWillDismiss(ev: AlertEvent) {
+  protected alertWillDismiss(ev: any) {
     this.alerts.delete(ev.target.overlayId);
   }
 

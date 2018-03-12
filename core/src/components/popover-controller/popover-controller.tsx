@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { OverlayController, PopoverEvent, PopoverOptions } from '../../index';
+import { OverlayController, PopoverOptions } from '../../index';
 import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({
@@ -10,12 +10,13 @@ export class PopoverController implements OverlayController {
   private popovers = new Map<number, HTMLIonPopoverElement>();
 
   @Listen('body:ionPopoverWillPresent')
-  protected popoverWillPresent(ev: PopoverEvent) {
+  protected popoverWillPresent(ev: any) {
     this.popovers.set(ev.target.overlayId, ev.target);
   }
 
-  @Listen('body:ionPopoverWillDismiss, body:ionPopoverDidUnload')
-  protected popoverWillDismiss(ev: PopoverEvent) {
+  @Listen('body:ionPopoverWillDismiss')
+  @Listen('body:ionPopoverDidUnload')
+  protected popoverWillDismiss(ev: any) {
     this.popovers.delete(ev.target.overlayId);
   }
 

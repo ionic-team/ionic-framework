@@ -252,6 +252,12 @@ Emitted before the toast has presented.
 Dismiss the toast overlay after it has been presented.
 
 
+#### onDidDismiss()
+
+
+#### onWillDismiss()
+
+
 #### present()
 
 Present the toast overlay after it has been created.

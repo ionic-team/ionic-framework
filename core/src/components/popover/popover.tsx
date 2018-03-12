@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, FrameworkDelegate, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { Animation, AnimationBuilder, Config, FrameworkDelegate } from '../../index';
 
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { BACKDROP, OverlayInterface, attachComponent, dismiss, present } from '../../utils/overlays';
+import { BACKDROP, OverlayEventDetail, OverlayInterface, attachComponent, dismiss, eventMethod, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -102,32 +102,32 @@ export class Popover implements OverlayInterface {
   /**
    * Emitted after the popover has loaded.
    */
-  @Event() ionPopoverDidLoad: EventEmitter<PopoverEventDetail>;
+  @Event() ionPopoverDidLoad: EventEmitter<void>;
 
   /**
    * Emitted after the popover has unloaded.
    */
-  @Event() ionPopoverDidUnload: EventEmitter<PopoverEventDetail>;
+  @Event() ionPopoverDidUnload: EventEmitter<void>;
 
   /**
    * Emitted after the popover has presented.
    */
-  @Event({eventName: 'ionPopoverDidPresent'}) didPresent: EventEmitter<PopoverEventDetail>;
+  @Event({eventName: 'ionPopoverDidPresent'}) didPresent: EventEmitter<void>;
 
   /**
    * Emitted before the popover has presented.
    */
-  @Event({eventName: 'ionPopoverWillPresent'}) willPresent: EventEmitter<PopoverEventDetail>;
+  @Event({eventName: 'ionPopoverWillPresent'}) willPresent: EventEmitter<void>;
 
   /**
    * Emitted before the popover has dismissed.
    */
-  @Event({eventName: 'ionPopoverWillDismiss'}) willDismiss: EventEmitter<PopoverDismissEventDetail>;
+  @Event({eventName: 'ionPopoverWillDismiss'}) willDismiss: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the popover has dismissed.
    */
-  @Event({eventName: 'ionPopoverDidDismiss'}) didDismiss: EventEmitter<PopoverDismissEventDetail>;
+  @Event({eventName: 'ionPopoverDidDismiss'}) didDismiss: EventEmitter<OverlayEventDetail>;
 
 
   componentDidLoad() {
@@ -198,6 +198,16 @@ export class Popover implements OverlayInterface {
     return dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.ev);
   }
 
+  @Method()
+  onDidDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionPopoverDidDismiss', callback);
+  }
+
+  @Method()
+  onWillDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionPopoverWillDismiss', callback);
+  }
+
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'popover-translucent') : {};
 
@@ -235,23 +245,6 @@ export interface PopoverOptions {
   cssClass?: string;
   ev: Event;
   delegate?: FrameworkDelegate;
-}
-
-export interface PopoverEvent extends CustomEvent {
-  target: HTMLIonPopoverElement;
-  detail: PopoverEventDetail;
-}
-
-export interface PopoverEventDetail {
-
-}
-
-export interface PopoverDismissEventDetail extends OverlayDismissEventDetail {
-  // keep this just for the sake of static types and potential future extensions
-}
-
-export interface PopoverDismissEvent extends OverlayDismissEvent {
-  // keep this just for the sake of static types and potential future extensions
 }
 
 const LIFECYCLE_MAP: any = {

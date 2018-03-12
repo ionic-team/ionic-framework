@@ -200,6 +200,12 @@ Dismiss the picker overlay after it has been presented.
 #### getColumns()
 
 
+#### onDidDismiss()
+
+
+#### onWillDismiss()
+
+
 #### present()
 
 Present the picker overlay after it has been created.

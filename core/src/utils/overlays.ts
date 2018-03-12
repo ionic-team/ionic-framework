@@ -148,6 +148,30 @@ export function attachComponent(container: Element, component: string|HTMLElemen
   return Promise.resolve(el);
 }
 
+export function eventMethod(element: HTMLElement, eventName: string, callback: Function): Promise<any> {
+  let resolve: Function;
+  const promise = new Promise(r => resolve = r);
+  onceEvent(element, eventName, (event) => {
+    const detail = event.detail;
+    callback && callback(detail);
+    resolve(detail);
+  });
+  return promise;
+}
+
+export function onceEvent(element: HTMLElement, eventName: string, callback: (ev: CustomEvent) => void) {
+  const handler = (ev: CustomEvent) => {
+    element.removeEventListener(eventName, handler);
+    callback(ev);
+  };
+  element.addEventListener(eventName, handler);
+}
+
+export interface OverlayEventDetail {
+  data?: any;
+  role?: string;
+}
+
 export interface OverlayInterface {
   mode: string;
   el: HTMLElement;

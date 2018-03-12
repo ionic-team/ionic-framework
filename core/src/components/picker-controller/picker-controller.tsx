@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { OverlayController, PickerEvent, PickerOptions } from '../../index';
+import { OverlayController, PickerOptions } from '../../index';
 import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 
@@ -11,12 +11,13 @@ export class PickerController implements OverlayController {
   private pickers = new Map<number, HTMLIonPickerElement>();
 
   @Listen('body:ionPickerWillPresent')
-  protected pickerWillPresent(ev: PickerEvent) {
+  protected pickerWillPresent(ev: any) {
     this.pickers.set(ev.target.overlayId, ev.target);
   }
 
-  @Listen('body:ionPickerWillDismiss, body:ionPickerDidUnload')
-  protected pickerWillDismiss(ev: PickerEvent) {
+  @Listen('body:ionPickerWillDismiss')
+  @Listen('body:ionPickerDidUnload')
+  protected pickerWillDismiss(ev: any) {
     this.pickers.delete(ev.target.overlayId);
   }
 

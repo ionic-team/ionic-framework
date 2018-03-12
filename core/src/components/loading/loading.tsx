@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, OverlayDismissEventDetail } from '../../index';
+import { Animation, AnimationBuilder, Config } from '../../index';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { BACKDROP, OverlayInterface, dismiss, present } from '../../utils/overlays';
+import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -115,12 +115,12 @@ export class Loading implements OverlayInterface {
   /**
    * Emitted before the loading has dismissed.
    */
-  @Event({eventName: 'ionLoadingWillDismiss'}) willDismiss: EventEmitter<OverlayDismissEventDetail>;
+  @Event({eventName: 'ionLoadingWillDismiss'}) willDismiss: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the loading has dismissed.
    */
-  @Event({eventName: 'ionLoadingDidDismiss'}) didDismiss: EventEmitter<OverlayDismissEventDetail>;
+  @Event({eventName: 'ionLoadingDidDismiss'}) didDismiss: EventEmitter<OverlayEventDetail>;
 
   componentWillLoad() {
     if (!this.spinner) {
@@ -161,6 +161,16 @@ export class Loading implements OverlayInterface {
       clearTimeout(this.durationTimeout);
     }
     return dismiss(this, data, role, 'loadingLeave', iosLeaveAnimation, mdLeaveAnimation, undefined);
+  }
+
+  @Method()
+  onDidDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionLoadingDidDismiss', callback);
+  }
+
+  @Method()
+  onWillDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionLoadingWillDismiss', callback);
   }
 
   hostData() {

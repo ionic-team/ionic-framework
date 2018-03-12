@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { ModalEvent, ModalOptions, OverlayController } from '../../index';
+import { ModalOptions, OverlayController } from '../../index';
 import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 
@@ -11,12 +11,13 @@ export class ModalController implements OverlayController {
   private modals = new Map<number, HTMLIonModalElement>();
 
   @Listen('body:ionModalWillPresent')
-  protected modalWillPresent(ev: ModalEvent) {
+  protected modalWillPresent(ev: any) {
     this.modals.set(ev.target.overlayId, ev.target);
   }
 
-  @Listen('body:ionModalWillDismiss, body:ionModalDidUnload')
-  protected modalWillDismiss(ev: ModalEvent) {
+  @Listen('body:ionModalWillDismiss')
+  @Listen('body:ionModalDidUnload')
+  protected modalWillDismiss(ev: any) {
     this.modals.delete(ev.target.overlayId);
   }
 

@@ -1,5 +1,5 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { OverlayController, ToastEvent, ToastOptions } from '../../index';
+import { OverlayController, ToastOptions } from '../../index';
 import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 
@@ -11,12 +11,13 @@ export class ToastController implements OverlayController {
   private toasts = new Map<number, HTMLIonToastElement>();
 
   @Listen('body:ionToastWillPresent')
-  protected toastWillPresent(ev: ToastEvent) {
+  protected toastWillPresent(ev: any) {
     this.toasts.set(ev.target.overlayId, ev.target);
   }
 
-  @Listen('body:ionToastWillDismiss, body:ionToastDidUnload')
-  protected toastWillDismiss(ev: ToastEvent) {
+  @Listen('body:ionToastWillDismiss')
+  @Listen('body:ionToastDidUnload')
+  protected toastWillDismiss(ev: any) {
     this.toasts.delete(ev.target.overlayId);
   }
 

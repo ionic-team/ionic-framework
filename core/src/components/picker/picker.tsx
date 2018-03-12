@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, CssClassMap, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { Animation, AnimationBuilder, Config, CssClassMap } from '../../index';
 
 import { getClassMap } from '../../utils/theme';
-import { OverlayInterface, dismiss, present } from '../../utils/overlays';
+import { OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -83,32 +83,32 @@ export class Picker implements OverlayInterface {
   /**
    * Emitted after the picker has loaded.
    */
-  @Event() ionPickerDidLoad: EventEmitter<PickerEventDetail>;
+  @Event() ionPickerDidLoad: EventEmitter<void>;
 
   /**
    * Emitted after the picker has presented.
    */
-  @Event({eventName: 'ionPickerDidPresent'}) didPresent: EventEmitter<PickerEventDetail>;
+  @Event({eventName: 'ionPickerDidPresent'}) didPresent: EventEmitter<void>;
 
   /**
    * Emitted before the picker has presented.
    */
-  @Event({eventName: 'ionPickerWillPresent'}) willPresent: EventEmitter<PickerEventDetail>;
+  @Event({eventName: 'ionPickerWillPresent'}) willPresent: EventEmitter<void>;
 
   /**
    * Emitted before the picker has dismissed.
    */
-  @Event({eventName: 'ionPickerWillDismiss'}) willDismiss: EventEmitter<PickerDismissEventDetail>;
+  @Event({eventName: 'ionPickerWillDismiss'}) willDismiss: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the picker has dismissed.
    */
-  @Event({eventName: 'ionPickerDidDismiss'}) didDismiss: EventEmitter<PickerDismissEventDetail>;
+  @Event({eventName: 'ionPickerDidDismiss'}) didDismiss: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the picker has unloaded.
    */
-  @Event() ionPickerDidUnload: EventEmitter<PickerEventDetail>;
+  @Event() ionPickerDidUnload: EventEmitter<void>;
 
 
   componentWillLoad() {
@@ -165,6 +165,16 @@ export class Picker implements OverlayInterface {
       clearTimeout(this.durationTimeout);
     }
     return dismiss(this, data, role, 'pickerLeave', iosLeaveAnimation, iosLeaveAnimation, undefined);
+  }
+
+  @Method()
+  onDidDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionPickerDidDismiss', callback);
+  }
+
+  @Method()
+  onWillDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionPickerWillDismiss', callback);
   }
 
   @Method()
@@ -353,21 +363,4 @@ export interface PickerColumnOption {
   duration?: number;
   transform?: string;
   selected?: boolean;
-}
-
-export interface PickerEvent extends CustomEvent {
-  target: HTMLIonPickerElement;
-  detail: PickerEventDetail;
-}
-
-export interface PickerEventDetail {
-
-}
-
-export interface PickerDismissEventDetail extends OverlayDismissEventDetail {
-  // keep this just for the sake of static types and potential future extensions
-}
-
-export interface PickerDismissEvent extends OverlayDismissEvent {
-  // keep this just for the sake of static types and potential future extensions
 }

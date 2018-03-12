@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, OverlayDismissEvent, OverlayDismissEventDetail } from '../../index';
+import { Animation, AnimationBuilder, Config } from '../../index';
 
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { OverlayInterface, dismiss, present } from '../../utils/overlays';
+import { OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -94,32 +94,32 @@ export class Toast implements OverlayInterface {
   /**
    * Emitted after the toast has loaded.
    */
-  @Event() ionToastDidLoad: EventEmitter<ToastEventDetail>;
+  @Event() ionToastDidLoad: EventEmitter<void>;
 
   /**
    * Emitted after the toast has presented.
    */
-  @Event({eventName: 'ionToastDidPresent'}) didPresent: EventEmitter<ToastEventDetail>;
+  @Event({eventName: 'ionToastDidPresent'}) didPresent: EventEmitter<void>;
 
   /**
    * Emitted before the toast has presented.
    */
-  @Event({eventName: 'ionToastWillPresent'}) willPresent: EventEmitter<ToastEventDetail>;
+  @Event({eventName: 'ionToastWillPresent'}) willPresent: EventEmitter<void>;
 
   /**
    * Emitted before the toast has dismissed.
    */
-  @Event({eventName: 'ionToastWillDismiss'}) willDismiss: EventEmitter<ToastDismissEventDetail>;
+  @Event({eventName: 'ionToastWillDismiss'}) willDismiss: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the toast has dismissed.
    */
-  @Event({eventName: 'ionToastDidDismiss'}) didDismiss: EventEmitter<ToastDismissEventDetail>;
+  @Event({eventName: 'ionToastDidDismiss'}) didDismiss: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the toast has unloaded.
    */
-  @Event() ionToastDidUnload: EventEmitter<ToastEventDetail>;
+  @Event() ionToastDidUnload: EventEmitter<void>;
 
   componentDidLoad() {
     this.ionToastDidLoad.emit();
@@ -157,6 +157,15 @@ export class Toast implements OverlayInterface {
     return dismiss(this, data, role, 'toastLeave', iosLeaveAnimation, mdLeaveAnimation, this.position);
   }
 
+  @Method()
+  onDidDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionToastDidDismiss', callback);
+  }
+
+  @Method()
+  onWillDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionToastWillDismiss', callback);
+  }
 
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'toast-translucent') : {};
@@ -204,21 +213,4 @@ export interface ToastOptions {
   translucent?: boolean;
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
-}
-
-export interface ToastEvent extends CustomEvent {
-  target: HTMLIonToastElement;
-  detail: ToastEventDetail;
-}
-
-export interface ToastEventDetail {
-
-}
-
-export interface ToastDismissEventDetail extends OverlayDismissEventDetail {
-  // keep this just for the sake of static types and potential future extensions
-}
-
-export interface ToastDismissEvent extends OverlayDismissEvent {
-  // keep this just for the sake of static types and potential future extensions
 }
