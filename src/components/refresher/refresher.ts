@@ -470,7 +470,7 @@ export class Refresher {
 
     const content = this._content;
     const Css = this._plt.Css;
-    content.setScrollElementStyle(Css.transform, ((y > 0) ? 'translateY(' + y + 'px) translateZ(0px)' : 'translateZ(0px)'));
+    content.setScrollElementStyle(Css.transform, ((y > 0) ? 'translateY(' + y + 'px) translateZ(0px)' : ''));
     content.setScrollElementStyle(Css.transitionDuration, duration);
     content.setScrollElementStyle(Css.transitionDelay, delay);
     content.setScrollElementStyle('overflow', (overflowVisible ? 'hidden' : ''));
