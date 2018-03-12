@@ -191,7 +191,7 @@ export class RadioButton extends Ion implements IonicTapInput, OnDestroy, OnInit
     ev.stopPropagation();
 
     this.checked = true;
-    this.ionSelect.emit(this.value);
+    this.ionSelect.emit(this.value, this);
   }
 
   /**
