@@ -35,11 +35,15 @@ a {
   display: block;
 
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   will-change: scroll-position;
 
   contain: size style layout;
+}
+
+.platform-core .scroll-content {
+  overflow-y: auto;
 }
 
 ion-content.js-scroll > .scroll-content {
