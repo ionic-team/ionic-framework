@@ -93,6 +93,23 @@ class MenuRevealType extends MenuType {
 }
 MenuController.registerType('reveal', MenuRevealType);
 
+/**
+ * @hidden
+ * Menu Split Type
+ * The content slides over to reveal the menu underneath and shrinks so all the content remains inside the viewport.
+ * The menu itself, which is under the content, does not move.
+ */
+class MenuSplitType extends MenuType {
+    constructor(menu: Menu, plt: Platform) {
+        super(plt);
+
+        const contentOpen = new Animation(plt, menu.getContentElement());
+        contentOpen.fromTo('width', '100%', 'calc(100% - ' + menu.width() + 'px');
+        contentOpen.fromTo(menu.isRightSide ? 'right' : 'left', '0px', menu.width()+ 'px');
+        this.ani.add(contentOpen);
+    }
+}
+MenuController.registerType('split', MenuSplitType);
 
 /**
  * @hidden
