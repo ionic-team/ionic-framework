@@ -6,7 +6,7 @@
 // Icons inside of buttons with text
 @mixin button-icon {
   font-size: 1.4em;
-  line-height: .67;
+  line-height: .85;
 
   pointer-events: none;
 }
@@ -35,7 +35,7 @@
   @include padding(0, .5em);
 
   font-size: 1.8em;
-  line-height: .67;
+  line-height: .85;
 
   pointer-events: none;
 }
