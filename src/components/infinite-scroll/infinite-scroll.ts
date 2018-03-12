@@ -232,11 +232,16 @@ export class InfiniteScroll {
       return 1;
     }
 
-    if (this._lastCheck + 32 > ev.timeStamp) {
-      // no need to check less than every XXms
+    try {
+      if (this._lastCheck + 32 > ev.timeStamp) {
+        // no need to check less than every XXms
+        return 2;
+      }
+      this._lastCheck = ev.timeStamp;
+    } catch (e) {
+      // ev is undefined
       return 2;
     }
-    this._lastCheck = ev.timeStamp;
 
     // ******** DOM READ ****************
     const infiniteHeight = this._elementRef.nativeElement.scrollHeight;
