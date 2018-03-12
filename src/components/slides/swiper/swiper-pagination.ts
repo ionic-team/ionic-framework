@@ -32,7 +32,7 @@ export function updatePagination(s: Slides) {
 
   s._paginationContainer.innerHTML = paginationHTML;
 
-  s._bullets = <any>s._paginationContainer.querySelectorAll('.' + CLS.bullet);
+  s._bullets = <any>s._paginationContainer.querySelectorAll(':scope.' + CLS.bullet);
 }
 
 
