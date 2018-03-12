@@ -354,7 +354,8 @@ export function updateContainerSize(s: Slides, plt: Platform) {
 }
 
 export function updateSlidesSize(s: Slides, plt: Platform) {
-  s._slides = (<any>s._wrapper.querySelectorAll('.' + CLS.slide));
+  s._slides = (<any>Array.from(s._wrapper.children)
+    .filter(el => el.classList.contains(CLS.slide)));
   s._snapGrid = [];
   s._slidesGrid = [];
   s._slidesSizesGrid = [];
