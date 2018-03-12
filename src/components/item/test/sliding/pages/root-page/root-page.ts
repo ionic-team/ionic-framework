@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { AlertController, ItemSliding, List, ToastController } from '../../../../../../';
 
 @Component({
@@ -15,7 +15,13 @@ export class RootPage {
 
   showOptions: boolean = false;
 
-  constructor(private alertCtrl: AlertController, private toastCtrl: ToastController) {
+  showElement = true;
+
+  constructor(
+    private alertCtrl: AlertController, 
+    private toastCtrl: ToastController, 
+    private changeDetectorRef: ChangeDetectorRef
+  ) {
     for (let x = 0; x < 5; x++) {
       this.items.push(x);
     }
@@ -111,4 +117,25 @@ export class RootPage {
   reload() {
     window.location.reload();
   }
+
+  dragItem(item: ItemSliding) {
+    
+    let percent = item.getOpenAmount();
+    if (percent > 0) {
+      this.showElement = false;
+      this.changeDetectorRef.detectChanges();
+    }else{
+      this.showElement = true;
+      this.changeDetectorRef.detectChanges();
+    }
+  }
+
+  onClose(item: ItemSliding) {
+    let percent = item.getOpenAmount();
+    if (percent == 0) {
+      this.showElement = true;
+      this.changeDetectorRef.detectChanges();
+    }
+  }
+
 }

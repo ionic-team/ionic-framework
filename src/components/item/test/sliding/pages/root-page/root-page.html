@@ -12,6 +12,7 @@
 
 <ion-content>
 
+  <h2 [hidden]="!showElement">Show element</h2>
   <div padding>
     <button ion-button block (click)="toggleSliding()">Toggle sliding</button>
     <button ion-button block (click)="changeDynamic()">Change Dynamic Options</button>
@@ -62,6 +63,24 @@
           {{ archiveText }}
         </button>
       </ion-item-options>
+    </ion-item-sliding>
+
+    <ion-item-sliding (ionClose)="onClose($event)">
+      <a ion-item>
+        <h2>Show/Hide a element</h2>
+        <p>When this item is swiped/closed, a element</p>
+        <p>is showed or hided</p>
+      </a>
+
+      <ion-item-options side="right" (ionSwipe)="dragItem($event)">
+        <button ion-button icon-only color="danger">
+          <ion-icon name="trash"></ion-icon>
+        </button>
+        <button ion-button icon-only>
+          <ion-icon name="star"></ion-icon>
+        </button>
+      </ion-item-options>
+
     </ion-item-sliding>
 
     <ion-item-sliding #item100>
