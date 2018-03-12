@@ -357,7 +357,7 @@ export class Img implements OnDestroy, IImg {
   /**
    * @hidden
    */
-  ngAfterContentInit() {
+  ngAfterViewInit() {
     this._img = this._elementRef.nativeElement.firstChild;
 
     this._unreg = this._plt.registerListener(this._img, 'load', () => {
