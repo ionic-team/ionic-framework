@@ -153,7 +153,7 @@
 @mixin multi-dir() {
   @if $app-direction == multi {
     $root: #{&};
-    @at-root [dir="ltr"], [dir="rtl"] {
+    @at-root [dir] {
       #{$root} {
         @content;
       }
