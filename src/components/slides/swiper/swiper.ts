@@ -353,8 +353,23 @@ export function updateContainerSize(s: Slides, plt: Platform) {
   s._renderedSize = isHorizontal(s) ? width : height;
 }
 
+/**
+ * returns array of slides belonging only to input slider
+ * @param {Slides} s
+ * @returns {any[]}
+ */
+function getSlidesBelongingToSlider(s: Slides): any[] {
+  const slideRegExp: RegExp = new RegExp("(?:^| )(" + CLS.slide + ")(?: |$)");
+  let sliderChildren: any = s._wrapper.querySelector('.' + CLS.slide);
+  sliderChildren = sliderChildren ? sliderChildren.parentNode.childNodes : null;
+  if (!sliderChildren) {
+    return [];
+  }
+  return Array.prototype.filter.call(sliderChildren, (node: any) => node.nodeType === 1 && slideRegExp.test(node.className));
+}
+
 export function updateSlidesSize(s: Slides, plt: Platform) {
-  s._slides = (<any>s._wrapper.querySelectorAll('.' + CLS.slide));
+  s._slides = getSlidesBelongingToSlider(s);
   s._snapGrid = [];
   s._slidesGrid = [];
   s._slidesSizesGrid = [];

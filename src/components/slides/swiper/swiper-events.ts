@@ -275,11 +275,7 @@ function updateClickedSlide(s: Slides, plt: Platform, e: SlideUIEvent) {
   }
 }
 
-var isTouched: boolean;
-var isMoved: boolean;
-var allowTouchCallbacks: boolean;
 var touchStartTime: number;
-var isScrolling: boolean;
 var currentTranslate: number;
 var startTranslate: any;
 var allowThresholdMove: any;
@@ -328,11 +324,10 @@ function onTouchStart(s: Slides, plt: Platform, ev: SlideUIEvent) {
     return;
   }
 
-  isTouched = true;
-  isMoved = false;
-  allowTouchCallbacks = true;
-
-  isScrolling = undefined;
+  s.isTouched = true;
+  s.isMoved = false;
+  s.allowTouchCallbacks = true;
+  s.isScrolling = undefined;
   startMoving = undefined;
 
   s._touches.startX = startX;
@@ -380,9 +375,9 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
     return;
   }
   if (s.onlyExternal) {
-    // isMoved = true;
+    // s.isMoved = true;
     s._allowClick = false;
-    if (isTouched) {
+    if (s.isTouched) {
       s._touches.startX = s._touches.currentX = ev.type === 'touchmove' ? ev.targetTouches[0].pageX : ev.pageX;
       s._touches.startY = s._touches.currentY = ev.type === 'touchmove' ? ev.targetTouches[0].pageY : ev.pageY;
       touchStartTime = Date.now();
@@ -412,7 +407,7 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
   const activeEle = plt.getActiveElement();
   if (isTouchEvent && activeEle) {
     if (ev.target === activeEle && isFormElement(ev.target)) {
-      isMoved = true;
+      s.isMoved = true;
       s._allowClick = false;
       return;
     }
@@ -423,19 +418,19 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
   s._touches.currentX = ev.type === 'touchmove' ? ev.targetTouches[0].pageX : ev.pageX;
   s._touches.currentY = ev.type === 'touchmove' ? ev.targetTouches[0].pageY : ev.pageY;
 
-  if (typeof isScrolling === 'undefined') {
+  if (typeof s.isScrolling === 'undefined') {
     var touchAngle: number;
     if (isHorizontal(s) && s._touches.currentY === s._touches.startY || !isHorizontal(s) && s._touches.currentX === s._touches.startX) {
-      isScrolling = false;
+      s.isScrolling = false;
     } else {
       touchAngle = Math.atan2(Math.abs(s._touches.currentY - s._touches.startY), Math.abs(s._touches.currentX - s._touches.startX)) * 180 / Math.PI;
-      isScrolling = isHorizontal(s) ? touchAngle > s.touchAngle : (90 - touchAngle > s.touchAngle);
+      s.isScrolling = isHorizontal(s) ? touchAngle > s.touchAngle : (90 - touchAngle > s.touchAngle);
     }
   }
 
-  if (!isTouched) return;
-  if (isScrolling)  {
-    isTouched = false;
+  if (!s.isTouched) return;
+  if (s.isScrolling)  {
+    s.isTouched = false;
     return;
   }
 
@@ -448,7 +443,7 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
     ev.stopPropagation();
   }
 
-  if (!isMoved) {
+  if (!s.isMoved) {
     if (s.loop) {
       fixLoop(s, plt);
     }
@@ -469,7 +464,7 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
     }
     allowMomentumBounce = false;
   }
-  isMoved = true;
+  s.isMoved = true;
 
   var diff = s._touches.diff = isHorizontal(s) ? s._touches.currentX - s._touches.startX : s._touches.currentY - s._touches.startY;
 
@@ -557,12 +552,12 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
   }
   s.originalEvent = ev;
 
-  if (allowTouchCallbacks) {
+  if (s.allowTouchCallbacks) {
     s.ionSlideTouchEnd.emit(ev);
   }
 
-  allowTouchCallbacks = false;
-  if (!isTouched) return;
+  s.allowTouchCallbacks = false;
+  if (!s.isTouched) return;
 
   // Time diff
   var touchEndTime = Date.now();
@@ -602,11 +597,11 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
     }
   });
 
-  if (!isTouched || !isMoved || !s.swipeDirection || s._touches.diff === 0 || currentTranslate === startTranslate) {
-    isTouched = isMoved = false;
+  if (!s.isTouched || !s.isMoved || !s.swipeDirection || s._touches.diff === 0 || currentTranslate === startTranslate) {
+    s.isTouched = s.isMoved = false;
     return;
   }
-  isTouched = isMoved = false;
+  s.isTouched = s.isMoved = false;
 
   var currentPos: number;
   if (s.followFinger) {
