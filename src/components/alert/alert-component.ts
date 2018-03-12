@@ -25,11 +25,12 @@ import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
         '<h3 id="{{subHdrId}}" class="alert-sub-title" *ngIf="d.subTitle" [innerHTML]="d.subTitle"></h3>' +
       '</div>' +
       '<div id="{{msgId}}" class="alert-message" [innerHTML]="d.message"></div>' +
+      '<ion-searchbar class="alert-search-bar" *ngIf="showSearchBar" [(ngModel)]="searchText" (ionInput)="filterOptions()"></ion-searchbar>' +
       '<div *ngIf="d.inputs.length" [ngSwitch]="inputType">' +
 
         '<ng-template ngSwitchCase="radio">' +
           '<div class="alert-radio-group" role="radiogroup" [attr.aria-labelledby]="hdrId" [attr.aria-activedescendant]="activeId">' +
-            '<button ion-button="alert-radio-button" *ngFor="let i of d.inputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
+            '<button ion-button="alert-radio-button" *ngFor="let i of visibleInputs" (click)="rbClick(i)" [attr.aria-checked]="i.checked" [disabled]="i.disabled" [attr.id]="i.id" class="alert-tappable alert-radio" role="radio">' +
               '<div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>' +
               '<div class="alert-radio-label">' +
                 '{{i.label}}' +
@@ -40,7 +41,7 @@ import { AlertButton, AlertInputOptions, AlertOptions } from './alert-options';
 
         '<ng-template ngSwitchCase="checkbox">' +
           '<div class="alert-checkbox-group">' +
-            '<button ion-button="alert-checkbox-button" *ngFor="let i of d.inputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [attr.id]="i.id" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">' +
+            '<button ion-button="alert-checkbox-button" *ngFor="let i of visibleInputs" (click)="cbClick(i)" [attr.aria-checked]="i.checked" [attr.id]="i.id" [disabled]="i.disabled" class="alert-tappable alert-checkbox" role="checkbox">' +
               '<div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>' +
               '<div class="alert-checkbox-label">' +
                 '{{i.label}}' +
@@ -86,6 +87,9 @@ export class AlertCmp {
   mode: string;
   keyboardResizes: boolean;
   gestureBlocker: BlockerDelegate;
+  showSearchBar: boolean;
+  searchText: string;
+  visibleInputs: AlertInputOptions[];
 
   constructor(
     public _viewCtrl: ViewController,
@@ -117,6 +121,8 @@ export class AlertCmp {
     this.msgId = 'alert-msg-' + this.id;
     this.activeId = '';
     this.lastClick = 0;
+    this.searchText = '';
+    this.showSearchBar = false;
 
     if (this.d.message) {
       this.descId = this.msgId;
@@ -174,12 +180,20 @@ export class AlertCmp {
 
     this.inputType = inputTypes.length ? inputTypes[0] : null;
 
+    if (this.d.enableSearch) {
+      if (this.inputType !== 'checkbox' && this.inputType !== 'radio') {
+        console.warn(`Search is only supported for checkbox/radio alerts`);
+      } else {
+        this.showSearchBar = true;
+      }
+    }
+
     const checkedInput = this.d.inputs.find(input => input.checked);
     if (checkedInput) {
       this.activeId = checkedInput.id;
     }
 
-    const hasTextInput = (this.d.inputs.length && this.d.inputs.some(i => !(NON_TEXT_INPUT_REGEX.test(i.type))));
+    const hasTextInput = (this.d.inputs.length && this.d.inputs.some(i => !(NON_TEXT_INPUT_REGEX.test(i.type)))) || this.showSearchBar;
     if (!this.keyboardResizes && hasTextInput && this._plt.is('mobile')) {
       // this alert has a text input and it's on a mobile device so we should align
       // the alert up high because we need to leave space for the virtual keboard
@@ -187,6 +201,8 @@ export class AlertCmp {
       // the browser trying to scroll the input into a safe area
       this._renderer.setElementClass(this._elementRef.nativeElement, 'alert-top', true);
     }
+
+    this.visibleInputs = this.d.inputs;
   }
 
   ionViewWillEnter() {
@@ -322,6 +338,12 @@ export class AlertCmp {
       values[i.name] = i.value;
     });
     return values;
+  }
+
+  filterOptions() {
+    // create a case-insensitive regex from the search text
+    let regex = new RegExp(this.searchText, 'i');
+    this.visibleInputs = this.d.inputs.filter(i => i.label.search(regex) > -1);
   }
 
   ngOnDestroy() {

@@ -6,7 +6,9 @@ import { Component } from '@angular/core';
 export class PageOne {
   gender: string;
   gaming: string;
+  gamingAlertOpts: any;
   toppings: Array<string>;
+  toppingsAlertOpts: any;
   petAlertOpts: any;
   petData: any;
   pets: Array<string>;
@@ -20,6 +22,14 @@ export class PageOne {
   constructor() {
     this.gender = 'f';
     this.gaming = 'n64';
+
+    this.gamingAlertOpts = {
+      enableSearch: true
+    };
+
+    this.toppingsAlertOpts = {
+      enableSearch: true
+    };
 
     this.petAlertOpts = {
       title: 'Like Pets?',

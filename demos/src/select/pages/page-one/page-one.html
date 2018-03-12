@@ -29,7 +29,7 @@
 
     <ion-item>
       <ion-label>Gaming</ion-label>
-      <ion-select [(ngModel)]="gaming" okText="Okay" cancelText="Dismiss">
+      <ion-select [(ngModel)]="gaming" okText="Okay" cancelText="Dismiss" [selectOptions]="gamingAlertOpts">
         <ion-option value="nes">NES</ion-option>
         <ion-option value="n64">Nintendo64</ion-option>
         <ion-option value="ps">PlayStation</ion-option>
@@ -133,7 +133,7 @@
 
     <ion-item>
       <ion-label>Toppings</ion-label>
-      <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!">
+      <ion-select [(ngModel)]="toppings" multiple="true" cancelText="Nah" okText="Okay!" [selectOptions]="toppingsAlertOpts">
         <ion-option value="bacon">Bacon</ion-option>
         <ion-option value="olives">Black Olives</ion-option>
         <ion-option value="xcheese">Extra Cheese</ion-option>
