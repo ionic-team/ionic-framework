@@ -33,6 +33,9 @@ export class ModuleLoader {
     if (!promise) {
       promise = this._ngModuleLoader.load(splitString[0], splitString[1]);
       this._promiseMap.set(modulePath, promise);
+      promise.catch(() => {
+          this._promiseMap.delete(modulePath);
+      });
     }
 
     return promise.then(loadedModule => {
