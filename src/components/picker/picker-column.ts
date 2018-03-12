@@ -19,7 +19,7 @@ import { UIEventManager } from '../../gestures/ui-event-manager';
     '<div class="picker-opts" #colEle [style.max-width]="col.optionsWidth">' +
       '<button *ngFor="let o of col.options; let i=index"' +
         '[class.picker-opt-disabled]="o.disabled" ' +
-        'class="picker-opt" disable-activated (click)="optClick($event, i)">' +
+    'class="picker-opt" disable-activated [attr.data-index]="i" (click)="optClick($event, i)">' +
         '{{o.text}}' +
       '</button>' +
     '</div>' +
@@ -38,6 +38,7 @@ export class PickerColumnCmp {
   optHeight: number;
   velocity: number;
   pos: number[] = [];
+  startTouchIndex: number = null;
   startY: number = null;
   rafId: number;
   bounceFrom: number;
@@ -107,6 +108,10 @@ export class PickerColumnCmp {
     this._plt.cancelRaf(this.rafId);
 
     // remember where the pointer started from`
+    let target: any = ev.target;
+    if (target.tagName == "BUTTON" && target.className && target.className.indexOf('picker-opt') != -1) {
+      this.startTouchIndex = target.getAttribute('data-index');
+    }
     this.startY = pointerCoord(ev).y;
 
     // reset everything
@@ -213,11 +218,15 @@ export class PickerColumnCmp {
       this.velocity = clamp(-MAX_PICKER_SPEED, velocity, MAX_PICKER_SPEED);
     }
 
-    if (Math.abs(endY - this.startY) > 3) {
+    if (Math.abs(endY - this.startY) > 6) {
       var y = this.y + (endY - this.startY);
       this.update(y, 0, true, true);
+    } else if (this.startTouchIndex != null) {
+      // click event
+      this.setSelected(this.startTouchIndex, 150);
     }
 
+    this.startTouchIndex = null;
     this.startY = null;
     this.decelerate();
   }
