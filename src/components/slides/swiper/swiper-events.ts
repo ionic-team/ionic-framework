@@ -300,6 +300,10 @@ var startMoving: boolean;
 function onTouchStart(s: Slides, plt: Platform, ev: SlideUIEvent) {
   console.debug(`ion-slide, onTouchStart: ${ev.type}`);
 
+  if (isMoved) {
+    return false;
+  }
+
   if (ev.originalEvent) {
     ev = ev.originalEvent;
   }
