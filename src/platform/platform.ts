@@ -458,7 +458,13 @@ export class Platform {
     });
 
     // run the winning action if there is one
-    winner && winner.fn && winner.fn();
+    try {
+      winner && winner.fn && winner.fn();
+    } catch (e) {
+      // throw exception outside zone
+      console.error(e);
+      this.timeout(() => { throw e; });
+    }
   }
 
 
