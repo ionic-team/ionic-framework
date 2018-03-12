@@ -972,7 +972,7 @@ export class Slides extends Ion {
     if (this._init) {
       this._plt.cancelTimeout(this._tmr);
       this._tmr = this._plt.timeout(() => {
-        update(this, this._plt);
+        update(this, this._plt, true);
 
         // Don't allow pager to show with > 10 slides
         if (this.length() > 10) {
