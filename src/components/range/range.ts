@@ -117,7 +117,7 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
   _min = 0;
   _max = 100;
   _step = 1;
-  _snaps: boolean;
+  _snaps: boolean = false;
 
   _valA = 0;
   _valB = 0;
@@ -285,6 +285,12 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
   }
 
   /** @internal */
+  _calcRatio(current: PointerCoordinates, rect: ClientRect): number {
+    let ratio = clamp(0, (current.x - rect.left) / (rect.width), 1);
+    return this._plt.isRTL ? 1 - ratio : ratio;
+  }
+
+  /** @internal */
   _pointerDown(ev: UIEvent): boolean {
     // TODO: we could stop listening for events instead of checking this._disabled.
     // since there are a lot of events involved, this solution is
@@ -307,7 +313,7 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
     const rect = this._rect = this._plt.getElementBoundingClientRect(this._slider.nativeElement);
 
     // figure out which knob they started closer to
-    const ratio = clamp(0, (current.x - rect.left) / (rect.width), 1);
+    const ratio = this._calcRatio(current, rect);
     this._activeB = this._dual && (Math.abs(ratio - this._ratioA) > Math.abs(ratio - this._ratioB));
 
     // update the active knob's position
@@ -363,13 +369,8 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
   _update(current: PointerCoordinates, rect: ClientRect, isPressed: boolean) {
     // figure out where the pointer is currently at
     // update the knob being interacted with
-    let ratio = clamp(0, (current.x - rect.left) / (rect.width), 1);
-    let val = this._ratioToValue(ratio);
-
-    if (this._snaps) {
-      // snaps the ratio to the current value
-      ratio = this._valueToRatio(val);
-    }
+    let val = this._ratioToValue(this._calcRatio(current, rect));
+    let ratio = this._valueToRatio(val);
 
     // update which knob is pressed
     this._pressed = isPressed;
@@ -508,7 +509,11 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
 
   /** @internal */
   _valueToRatio(value: number) {
-    value = Math.round((value - this._min) / this._step) * this._step;
+    value = value - this._min;
+    if (this.snaps) {
+      // snaps the ratio to the current value
+      value = Math.round(value / this._step) * this._step;
+    }
     value = value / (this._max - this._min);
     return clamp(0, value, 1);
   }

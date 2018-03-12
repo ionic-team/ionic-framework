@@ -93,8 +93,8 @@ ion-fab {
   }
 
   &[right] {
-    // scss-lint:disable PropertySpelling
     @include multi-dir() {
+      // scss-lint:disable PropertySpelling
       right: $fab-content-margin;
     }
 
@@ -114,8 +114,8 @@ ion-fab {
   }
 
   &[left] {
-    // scss-lint:disable PropertySpelling
     @include multi-dir() {
+      // scss-lint:disable PropertySpelling
       left: $fab-content-margin;
     }
 

@@ -49,4 +49,43 @@ ion-range ion-icon {
   flex: 1;
 
   cursor: pointer;
+
+  @include rtl() {
+    transform: scaleX(-1);
+  }
+}
+
+.range-pressed .range-bar-active {
+  will-change: left, right;
+}
+
+.range-pressed .range-knob-handle {
+  will-change: left;
+}
+
+.range-knob-handle {
+  @include text-align(center);
+
+  position: absolute;
+
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    left: 0;
+  }
+}
+
+.range-bar {
+  @include multi-dir() {
+    // scss-lint:disable PropertySpelling
+    left: 0;
+  }
+}
+
+.range-pin {
+  @include text-align(center);
+  @include transform(translate3d(0, 28px, 0), flip-scale(.01));
+}
+
+.range-knob-pressed .range-pin {
+  @include transform(translate3d(0, 0, 0), flip-scale(1));
 }
