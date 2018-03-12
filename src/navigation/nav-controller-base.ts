@@ -164,7 +164,7 @@ export class NavControllerBase extends Ion implements NavController {
 
   popAll(): Promise<any[]> {
     let promises: any[] = [];
-    for (var i = this._views.length - 1; i >= 0; i--) {
+    for (var i = this.length() - 1; i >= 0; i--) {
       promises.push(this.pop(null));
     }
     return Promise.all(promises);
@@ -339,7 +339,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   _startTI(ti: TransitionInstruction): Promise<void> {
-    const viewsLength = this._views.length;
+    const viewsLength = this.length();
 
     if (isPresent(ti.removeView)) {
       assert(isPresent(ti.removeStart), 'removeView needs removeStart');
@@ -411,7 +411,7 @@ export class NavControllerBase extends Ion implements NavController {
 
     const removeStart = ti.removeStart;
     if (isPresent(removeStart)) {
-      var views = this._views;
+      var views = this._views || [];
       var removeEnd = removeStart + ti.removeCount;
       var i: number;
       var view: ViewController;
@@ -445,7 +445,7 @@ export class NavControllerBase extends Ion implements NavController {
 
       destroyQueue = [];
       for (i = 0; i < removeCount; i++) {
-        view = this._views[i + removeStart];
+        view = this.getByIndex(i + removeStart);
         if (view && view !== enteringView && view !== leavingView) {
           destroyQueue.push(view);
         }
@@ -454,7 +454,7 @@ export class NavControllerBase extends Ion implements NavController {
       opts.direction = opts.direction || DIRECTION_BACK;
     }
 
-    const finalBalance = this._views.length + (insertViews ? insertViews.length : 0) - (removeCount ? removeCount : 0);
+    const finalBalance = this.length() + (insertViews ? insertViews.length : 0) - (removeCount ? removeCount : 0);
     assert(finalBalance >= 0, 'final balance can not be negative');
     if (finalBalance === 0 && !this._isPortal) {
       console.warn(`You can't remove all the pages in the navigation stack. nav.pop() is probably called too many times.`,
@@ -685,7 +685,7 @@ export class NavControllerBase extends Ion implements NavController {
 
     // we should animate (duration > 0) if the pushed page is not the first one (startup)
     // or if it is a portal (modal, actionsheet, etc.)
-    const isFirstPage = !this._init && this._views.length === 1;
+    const isFirstPage = !this._init && this.length() === 1;
     const shouldNotAnimate = isFirstPage && !this._isPortal;
     const canNotAnimate = this._config.get('animate') === false;
     if (shouldNotAnimate || canNotAnimate) {
@@ -816,7 +816,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   _insertViewAt(view: ViewController, index: number) {
-    const existingIndex = this._views.indexOf(view);
+    const existingIndex = this.indexOf(view);
     if (existingIndex > -1) {
       // this view is already in the stack!!
       // move it to its new location
@@ -842,7 +842,7 @@ export class NavControllerBase extends Ion implements NavController {
   _removeView(view: ViewController) {
     assert(view._state === STATE_ATTACHED || view._state === STATE_DESTROYED, 'view state should be loaded or destroyed');
 
-    const views = this._views;
+    const views = this._views || [];
     const index = views.indexOf(view);
     assert(index > -1, 'view must be part of the stack');
     if (index >= 0) {
@@ -864,8 +864,8 @@ export class NavControllerBase extends Ion implements NavController {
 
     // only do this if the views exist, though
     if (!this._destroyed) {
-      const activeViewIndex = this._views.indexOf(activeView);
-      const views = this._views;
+      const activeViewIndex = this.indexOf(activeView);
+      const views = this._views || [];
       let reorderZIndexes = false;
       let view: ViewController;
       let i: number;
@@ -1013,7 +1013,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   destroy() {
-    const views = this._views;
+    const views = this._views || [];
     let view: ViewController;
     for (var i = 0; i < views.length; i++) {
       view = views[i];
@@ -1108,7 +1108,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   getActive(): ViewController {
-    return this._views[this._views.length - 1];
+    return this._views ? this._views[this._views.length - 1] : null;
   }
 
   isActive(view: ViewController): boolean {
@@ -1116,7 +1116,7 @@ export class NavControllerBase extends Ion implements NavController {
   }
 
   getByIndex(index: number): ViewController {
-    return this._views[index];
+    return this._views ? this._views[index] : null;
   }
 
   getPrevious(view?: ViewController): ViewController {
@@ -1125,28 +1125,28 @@ export class NavControllerBase extends Ion implements NavController {
       view = this.getActive();
     }
     const views = this._views;
-    const index = views.indexOf(view);
+    const index = this.indexOf(view);
     return (index > 0) ? views[index - 1] : null;
   }
 
   first(): ViewController {
     // returns the first view controller in this nav controller's stack.
-    return this._views[0];
+    return this._views ? this._views[0] : null;
   }
 
   last(): ViewController {
     // returns the last page in this nav controller's stack.
     const views = this._views;
-    return views[views.length - 1];
+    return views ? views[views.length - 1] : null;
   }
 
   indexOf(view: ViewController): number {
     // returns the index number of the given view controller.
-    return this._views.indexOf(view);
+    return this._views ? this._views.indexOf(view) : -1;
   }
 
   length(): number {
-    return this._views.length;
+    return this._views ? this._views.length : 0;
   }
 
   getViews(): Array<ViewController> {
