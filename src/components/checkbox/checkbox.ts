@@ -86,6 +86,7 @@ import { Item } from '../item/item';
             '[attr.aria-checked]="_value" ' +
             '[attr.aria-labelledby]="_labelId" ' +
             '[attr.aria-disabled]="_disabled" ' +
+            '[disabled]="_disabled" ' +
             'class="item-cover"> ' +
     '</button>',
   host: {
