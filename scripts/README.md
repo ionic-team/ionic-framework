@@ -112,7 +112,7 @@ It does not work for windows, linux, or non retina macs.
 
 #### Errors
 
-If you are having getting an error running snapshot such as `SessionNotCreatedError: session not created exception` or `UnknownError: Connection refused` the solution is to download the chromedriver from here: http://chromedriver.storage.googleapis.com/index.html?path=2.24/ and then move it into your `protractor/selenium` folder
+If you are having getting an error running snapshot such as `SessionNotCreatedError: session not created exception` or `UnknownError: Connection refused` the solution is to download the chromedriver from here: https://chromedriver.storage.googleapis.com/index.html?path=2.24/ and then move it into your `protractor/selenium` folder
 
 Running `webdriver-manager help` should show you what directory the webdriver is at under the options. For example, yours may be at `/usr/local/lib/node_modules/protractor/selenium` or if you use nvm `/Users/{username}/.nvm/versions/node/v7.5.0/lib/node_modules/protractor/selenium`.
 
@@ -166,13 +166,13 @@ Running `webdriver-manager help` should show you what directory the webdriver is
 
 ### Releasing Component Demos
 
-Ionic Component demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit in [ionic-preview-app](https://github.com/ionic-team/ionic-preview-app). No action is necessary.
+Ionic Component demos are automatically compiled and deployed to the [ionic staging site](https://ionic-site-staging.herokuapp.com/) on every commit in [ionic-preview-app](https://github.com/ionic-team/ionic-preview-app). No action is necessary.
 
 If you'd like to manually update the demos, follow the steps on the preview app for [running locally on the site](https://github.com/ionic-team/ionic-preview-app#running-locally-on-the-site).
 
 
 ### Releasing API Demos
 
-Ionic API demos are automatically compiled and deployed to the [ionic staging site](http://ionic-site-staging.herokuapp.com/) on every commit. No action is necessary.
+Ionic API demos are automatically compiled and deployed to the [ionic staging site](https://ionic-site-staging.herokuapp.com/) on every commit. No action is necessary.
 
 If you'd like to manually update the demos, clone the [`ionic-site`](https://github.com/ionic-team/ionic-site) repo as a sibling of `ionic`. From `ionic` run `gulp demos` and then `gulp docs`, and it'll compile and copy the demos to the `ionic-site` repo, ready for testing.
