@@ -155,6 +155,41 @@ export class EventEmitterProxy<T> extends EventEmitter<T> {
  * }
  * ```
  *
+ * ### Fixed positioning
+ *
+ * If you require some elements on a scrollable page to stay fixed, you should not use CSS fixed
+ * positioning. This will cause stutter on iOS in many cases. Instead, you should use the
+ * `[ion-fixed]` attribute on the element.
+ *
+ * ```html
+ * <ion-content>
+ *   <div ion-fixed>
+ *     This element will not scroll with the rest of the page
+ *   </div>
+ * </ion-content>
+ * ```
+ *
+ * ### Disable scrolling
+ *
+ * In case some pages should not be scrollable, you can use the `[no-scroll]` attribute for this.
+ *
+ * ```html
+ * <ion-content no-scroll>
+ * </ion-content>
+ * ```
+ *
+ * ### Disable scroll bouncing
+ *
+ * Use the following attribute to disable the overscroll bounce.
+ *
+ * ```html
+ * <ion-content no-bounce>
+ * </ion-content>
+ * ```
+ *
+ * Note: This only disables bouncing when the page is smaller than the viewport. When the page is
+ * larger it will scroll and bounce as usual.
+ *
  */
 @Component({
   selector: 'ion-content',
