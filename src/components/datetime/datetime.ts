@@ -874,11 +874,11 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
     min.day = min.day || 1;
     max.day = max.day || 31;
     min.hour = min.hour || 0;
-    max.hour = max.hour || 23;
+    if(max.hour == null) { max.hour = 23 }
     min.minute = min.minute || 0;
-    max.minute = max.minute || 59;
+    if(max.minute == null) { max.minute = 59 }
     min.second = min.second || 0;
-    max.second = max.second || 59;
+    if(max.second == null) { max.second = 59 }
 
     // Ensure min/max constraits
     if (min.year > max.year) {
