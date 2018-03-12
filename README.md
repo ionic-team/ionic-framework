@@ -46,3 +46,8 @@ As Ionic components migrate to the web component standard, a goal of ours is to 
 
 The source code for Ionic V1 has been moved to [ionic-team/ionic-v1](https://github.com/ionic-team/ionic-v1).
 Please open any issues and pull requests related to Ionic V1 on that repository.
+
+
+### Ionic V3
+
+The source code for Ionic V3 has been moved to the [v3 branch](https://github.com/ionic-team/ionic/tree/v3).
