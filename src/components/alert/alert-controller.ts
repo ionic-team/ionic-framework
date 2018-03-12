@@ -87,6 +87,24 @@ import { Config } from '../../config/config';
  *   alert.present();
  * }
  *
+ * presentCustom() {
+ *  let alert = this.alertCtrl.create({
+ *    title: 'Custom alert',
+ *    component: CustomInnerComponent,
+ *    navParams: {initialValue: "Banana"},
+ *    buttons: [{
+ *        text: 'OK',
+ *        handler: (component: CustomInnerComponent) => {
+ *          console.log('Custom component data:', component.selectedValue);
+ *        }
+ *    }, {
+ *        text: 'Cancel',
+ *        role: 'cancel'
+ *    }]
+ *  });
+ *  alert.present();
+ * }
+ * 
  * presentPrompt() {
  *   const alert = this.alertCtrl.create({
  *     title: 'Login',
@@ -137,6 +155,8 @@ import { Config } from '../../config/config';
  *  | message               | `string`  | The message for the alert.                                                   |
  *  | cssClass              | `string`  | Additional classes for custom styles, separated by spaces.                   |
  *  | inputs                | `array`   | An array of inputs for the alert. See input options.                         |
+ *  | component             | `any`     | The subcomponent to embedd into the alert.                                   |
+ *  | data                  | `any`     | Any data to pass to the subcomponent view as NavParams.                      |
  *  | buttons               | `array`   | An array of buttons for the alert. See buttons options.                      |
  *  | enableBackdropDismiss | `boolean` | Whether the alert should be dismissed by tapping the backdrop. Default true. |
  *
@@ -231,7 +251,7 @@ export class AlertController {
   constructor(private _app: App, public config: Config) { }
 
   /**
-   * Display an alert with a title, inputs, and buttons
+   * Display an alert with a title, inputs or a subcomponent, and buttons
    * @param {AlertOptions} opts Alert. See the table below
    */
   create(opts: AlertOptions = {}): Alert {

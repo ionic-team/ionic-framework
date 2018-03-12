@@ -4,6 +4,7 @@ import { IonicApp, IonicModule } from '../../../../..';
 
 import { AppComponent } from './app.component';
 import { PageOneModule } from '../pages/page-one/page-one.module';
+import { CustomInnerComponentModule } from '../pages/custom-component/custom-component.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { PageOneModule } from '../pages/page-one/page-one.module';
   imports: [
     BrowserModule,
     IonicModule.forRoot(AppComponent, {}),
-    PageOneModule
+    PageOneModule,
+    CustomInnerComponentModule
   ],
   bootstrap: [IonicApp]
 })
