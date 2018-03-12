@@ -1,4 +1,4 @@
-import { NavLink, NavSegment } from '../nav-util';
+import { NavLink, NavSegment, NavGroup, DehydratedSegment, DehydratedSegmentPair } from '../nav-util';
 import {
   UrlSerializer,
   convertUrlToDehydratedSegments,
@@ -10,6 +10,8 @@ import {
   navGroupStringtoObjects,
   normalizeLinks,
   urlToNavGroupStrings,
+  getSegmentsFromNavGroups,
+  getSegmentsFromUrlPieces
   } from '../url-serializer';
 import { MockView1, MockView2, MockView3, mockApp, mockDeepLinkConfig, mockNavController, mockTab, mockTabs, noop } from '../../util/mock-providers';
 
@@ -797,6 +799,21 @@ describe('UrlSerializer', () => {
       expect(segmentPairs[2].segments[1].name).toEqual('taco-page');
       expect(segmentPairs[2].segments[1].secondaryId).toEqual('fifth-page');
     });
+
+    it('should return a segment when default history matches', () => {
+      const rootlink1 = { component: MockView1, name: 'root1', segment: 'root-one' };
+      const rootlink2 = { component: MockView1, name: 'root2', segment: 'root-two' };
+      const sublink1 = { component: MockView1, name: 'sub1', segment: 'sub', defaultHistory: ['root1'] };
+      const sublink2 = { component: MockView1, name: 'sub2', segment: 'sub', defaultHistory: ['root2'] };
+
+      const links = normalizeLinks([rootlink1, rootlink2, sublink1, sublink2]);
+      const url = 'root-two/sub';
+      const segmentPairs = convertUrlToDehydratedSegments(url, links);
+      expect(segmentPairs.length).toEqual(1);
+      expect(segmentPairs[0].segments.length).toEqual(2);
+      expect(segmentPairs[0].segments[0].name).toEqual('root2');
+      expect(segmentPairs[0].segments[1].name).toEqual('sub2');
+    });
   });
 
   describe('convertUrlToSegments', () => {
@@ -817,6 +834,80 @@ describe('UrlSerializer', () => {
       expect(segments.length).toEqual(1);
       expect(segments[0].type).toEqual('nav');
       expect(segments[0].navId).toEqual(mockNav.id);
+    });
+  });
+
+  describe('getSegmentsFromUrlPieces', () => {
+    it('should return null when lengths are different', () => {
+      const urlSections = ['account'];
+      const link1:NavLink = { component: MockView1, name: 'login', segment: 'account/login' };
+      let links = normalizeLinks([link1]);
+
+      const segments:DehydratedSegment = getSegmentsFromUrlPieces(urlSections, links[0]);
+      expect(segments).toBe(null);
+    });
+
+    it('should return null when parts do not match', () => {
+      const urlSections = ['account', 'logout'];
+      const link1:NavLink = { component: MockView1, name: 'login', segment: 'account/login' };
+      let links = normalizeLinks([link1]);
+
+      const segments:DehydratedSegment = getSegmentsFromUrlPieces(urlSections, links[0]);
+      expect(segments).toBe(null);
+    });
+
+    it('should return hydrated segment when parts match', () => {
+      const urlSections = ['account', 'login'];
+      const link1: NavLink = { component: MockView1, name: 'login', segment: 'account/login' };
+      let links = normalizeLinks([link1]);
+
+      const segments:DehydratedSegment = getSegmentsFromUrlPieces(urlSections, links[0]);
+      expect(segments.id).toEqual('account/login');
+      expect(segments.name).toEqual('login');
+    });
+
+    it('should work when using data-driven segment', () => {
+      const urlSections = ['account', 'login'];
+      const link1: NavLink = { component: MockView1, name: 'account-action', segment: 'account/:action' };
+      let links = normalizeLinks([link1]);
+
+      const segments:DehydratedSegment = getSegmentsFromUrlPieces(urlSections, links[0]);
+      expect(segments.id).toEqual('account/login');
+      expect(segments.name).toEqual('account-action');
+    });
+  });
+
+  describe('getSegmentsFromNavGroups', () => {
+    it('should return hydrated segment when parts match', () => {
+      const group1:NavGroup = { type: 'nav', navId: 'n1', secondaryId: null, segmentPieces: ['settings-page'] };
+
+      const link1: NavLink = { component: MockView1, name: 'login-page', segment: 'login-page' };
+      const link2: NavLink = { component: MockView1, name: 'settings-page', segment: 'settings-page' };
+      const link3: NavLink = { component: MockView1, name: 'details-page', segment: 'details-page' };
+      let links = normalizeLinks([link1, link2, link3]);
+
+      const segments:DehydratedSegmentPair[] = getSegmentsFromNavGroups([group1], links);
+      expect(segments.length).toEqual(1);
+      expect(segments[0].navGroup.navId).toEqual(group1.navId);
+      expect(segments[0].segments.length).toEqual(1);
+      expect(segments[0].segments[0].name).toEqual('settings-page');
+    });
+
+    it('should return hydrated segment when tabs match', () => {
+      const tabs = mockTabs();
+      const tab = mockTab(tabs);
+      const group1:NavGroup = { type: 'tabs', navId: tabs.id, secondaryId: 'tabs', segmentPieces: ['1', 'settings-page'] };
+
+      const link1: NavLink = { component: MockView1, name: 'login-page', segment: 'login-page' };
+      const link2: NavLink = { component: MockView1, name: 'settings-page', segment: 'settings-page' };
+      const link3: NavLink = { component: MockView1, name: 'details-page', segment: 'details-page' };
+      let links = normalizeLinks([link1, link2, link3]);
+
+      const segments:DehydratedSegmentPair[] = getSegmentsFromNavGroups([group1], links);
+      expect(segments.length).toEqual(1);
+      expect(segments[0].navGroup.navId).toEqual(group1.navId);
+      expect(segments[0].segments.length).toEqual(1);
+      expect(segments[0].segments[0].name).toEqual('settings-page');
     });
   });
 
