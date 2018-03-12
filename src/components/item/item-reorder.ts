@@ -243,11 +243,13 @@ export class ItemReorder implements ItemReorderGestureDelegate {
   }
 
   _scrollContent(scroll: number) {
-    const scrollTop = this._content.scrollTop + scroll;
+    const contentDimensions = this._content.getContentDimensions();
+    const contentTop = contentDimensions.scrollTop;
+    const scrollTop = contentTop + scroll;
     if (scroll !== 0) {
       this._content.scrollTo(0, scrollTop, 0);
     }
-    return scrollTop;
+    return scroll;
   }
 
   _reorderReset() {
