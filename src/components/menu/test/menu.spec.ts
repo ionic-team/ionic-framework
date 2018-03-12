@@ -300,7 +300,7 @@ describe('MenuController', () => {
   let menuCtrl: MenuController;
 
   beforeEach(() => {
-    menuCtrl = new MenuController();
+    menuCtrl = new MenuController(mockPlatform());
   });
 
 });

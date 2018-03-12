@@ -1,19 +1,19 @@
 import { by, element } from 'protractor';
 
-it('should toggle left menu', function() {
-  element(by.css('.e2eContentToggleLeftMenu')).click();
+it('should toggle start menu', function() {
+  element(by.css('.e2eContentToggleStartMenu')).click();
 });
 
 
-it('should close left menu', function() {
-  element(by.css('.e2eCloseLeftMenu')).click();
+it('should close start menu', function() {
+  element(by.css('.e2eCloseStartMenu')).click();
 });
 
-it('should toggle right menu', function() {
-  element(by.css('.e2eContentToggleRightMenu')).click();
+it('should toggle end menu', function() {
+  element(by.css('.e2eContentToggleEndMenu')).click();
 });
 
 
-it('should close right menu', function() {
-  element(by.css('.e2eCloseRightMenu')).click();
+it('should close end menu', function() {
+  element(by.css('.e2eCloseEndMenu')).click();
 });

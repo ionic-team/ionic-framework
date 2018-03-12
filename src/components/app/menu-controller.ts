@@ -1,6 +1,7 @@
 import { Menu, MenuType } from './menu-interface';
 import { Platform } from '../../platform/platform';
-import { assert, removeArrayItem  } from '../../util/util';
+import { assert, isRightSide, removeArrayItem } from '../../util/util';
+import { Injectable } from '@angular/core';
 
 
 /**
@@ -115,8 +116,12 @@ import { assert, removeArrayItem  } from '../../util/util';
  * @see {@link /docs/api/components/menu/Menu/ Menu API Docs}
  *
  */
+@Injectable()
 export class MenuController {
   private _menus: Array<Menu> = [];
+
+  constructor(private plt: Platform) {
+  }
 
   /**
    * Programatically open the Menu.
@@ -243,6 +248,10 @@ export class MenuController {
    */
   get(menuId?: string): Menu {
     var menu: Menu;
+
+    if (menuId === 'start' || menuId === 'end') {
+      menuId = isRightSide(menuId, this.plt.isRTL) ? 'right' : 'left';
+    }
 
     if (menuId === 'left' || menuId === 'right') {
       // there could be more than one menu on the same side

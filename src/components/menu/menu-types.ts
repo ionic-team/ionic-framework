@@ -11,12 +11,12 @@ import { Platform } from '../../platform/platform';
  * type will provide their own animations for open and close
  * and registers itself with Menu.
  */
-export class MenuType implements IMenuType {
+export abstract class MenuType implements IMenuType {
 
   ani: Animation;
   isOpening: boolean;
 
-  constructor(plt: Platform) {
+  constructor(public menu: Menu, plt: Platform) {
     this.ani = new Animation(plt);
     this.ani
       .easing('cubic-bezier(0.0, 0.0, 0.2, 1)')
@@ -67,6 +67,8 @@ export class MenuType implements IMenuType {
     ani.progressEnd(shouldComplete, currentStepValue, dur);
   }
 
+  abstract updatePosition(): void;
+
   destroy() {
     this.ani.destroy();
     this.ani = null;
@@ -82,13 +84,20 @@ export class MenuType implements IMenuType {
  * The menu itself, which is under the content, does not move.
  */
 class MenuRevealType extends MenuType {
-  constructor(menu: Menu, plt: Platform) {
-    super(plt);
+  private contentOpen: Animation;
 
-    const openedX = (menu.width() * (menu.isRightSide ? -1 : 1)) + 'px';
-    const contentOpen = new Animation(plt, menu.getContentElement());
-    contentOpen.fromTo('translateX', '0px', openedX);
-    this.ani.add(contentOpen);
+  constructor(menu: Menu, plt: Platform) {
+    super(menu, plt);
+
+    this.contentOpen = new Animation(plt, menu.getContentElement());
+    this.ani.add(this.contentOpen);
+
+    this.updatePosition();
+  }
+
+  updatePosition() {
+    let openedX = (this.menu.width() * (this.menu.isRightSide ? -1 : 1)) + 'px';
+    this.contentOpen.fromTo('translateX', '0px', openedX);
   }
 }
 MenuController.registerType('reveal', MenuRevealType);
@@ -101,30 +110,38 @@ MenuController.registerType('reveal', MenuRevealType);
  * The menu itself also slides over to reveal its bad self.
  */
 class MenuPushType extends MenuType {
-  constructor(menu: Menu, plt: Platform) {
-    super(plt);
+  private menuAni: Animation;
+  private contentApi: Animation;
 
+  constructor(menu: Menu, plt: Platform) {
+    super(menu, plt);
+
+    this.menuAni = new Animation(plt, menu.getMenuElement());
+    this.ani.add(this.menuAni);
+
+    this.contentApi = new Animation(plt, menu.getContentElement());
+    this.ani.add(this.contentApi);
+
+    this.updatePosition();
+  }
+
+  updatePosition() {
     let contentOpenedX: string, menuClosedX: string, menuOpenedX: string;
-    const width = menu.width();
-    if (menu.isRightSide) {
+    const width = this.menu.width();
+
+    if (this.menu.isRightSide) {
       // right side
       contentOpenedX = -width + 'px';
       menuClosedX = width + 'px';
       menuOpenedX = '0px';
-
     } else {
       contentOpenedX = width + 'px';
       menuOpenedX = '0px';
       menuClosedX = -width + 'px';
     }
 
-    const menuAni = new Animation(plt, menu.getMenuElement());
-    menuAni.fromTo('translateX', menuClosedX, menuOpenedX);
-    this.ani.add(menuAni);
-
-    const contentApi = new Animation(plt, menu.getContentElement());
-    contentApi.fromTo('translateX', '0px', contentOpenedX);
-    this.ani.add(contentApi);
+    this.menuAni.fromTo('translateX', menuClosedX, menuOpenedX);
+    this.contentApi.fromTo('translateX', '0px', contentOpenedX);
   }
 }
 MenuController.registerType('push', MenuPushType);
@@ -137,12 +154,26 @@ MenuController.registerType('push', MenuPushType);
  * itself, which is under the menu, does not move.
  */
 class MenuOverlayType extends MenuType {
-  constructor(menu: Menu, plt: Platform) {
-    super(plt);
+  private menuAni: Animation;
 
+  constructor(menu: Menu, plt: Platform) {
+    super(menu, plt);
+
+    const backdropApi = new Animation(plt, menu.getBackdropElement());
+    backdropApi.fromTo('opacity', 0.01, 0.35);
+    this.ani.add(backdropApi);
+
+    this.menuAni = new Animation(plt, menu.getMenuElement());
+    this.ani.add(this.menuAni);
+
+    this.updatePosition();
+  }
+
+  updatePosition() {
     let closedX: string, openedX: string;
-    const width = menu.width();
-    if (menu.isRightSide) {
+    const width = this.menu.width();
+
+    if (this.menu.isRightSide) {
       // right side
       closedX = 8 + width + 'px';
       openedX = '0px';
@@ -153,13 +184,7 @@ class MenuOverlayType extends MenuType {
       openedX = '0px';
     }
 
-    const menuAni = new Animation(plt, menu.getMenuElement());
-    menuAni.fromTo('translateX', closedX, openedX);
-    this.ani.add(menuAni);
-
-    const backdropApi = new Animation(plt, menu.getBackdropElement());
-    backdropApi.fromTo('opacity', 0.01, 0.35);
-    this.ani.add(backdropApi);
+    this.menuAni.fromTo('translateX', closedX, openedX);
   }
 }
 MenuController.registerType('overlay', MenuOverlayType);

@@ -207,16 +207,12 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
   private _gestureBlocker: BlockerDelegate;
   private _isPane: boolean = false;
   private _side: Side;
+  private _dirChanged: EventEmitter<any>;
 
   /**
    * @hidden
    */
   isOpen: boolean = false;
-
-  /**
-   * @hidden
-   */
-  isRightSide: boolean = false;
 
   /**
    * @hidden
@@ -268,16 +264,21 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
    */
   @Input()
   get side(): Side {
-    return this._side;
+    if (this.isRightSide) {
+      return 'right';
+    }
+
+    return 'left';
   }
 
   set side(val: Side) {
-    this.isRightSide = isRightSide(val, this._plt.isRTL);
-    if (this.isRightSide) {
-      this._side = 'right';
-    } else {
-      this._side = 'left';
-    }
+    this._side = val;
+
+    this._updateType();
+  }
+
+  get isRightSide(): boolean {
+    return isRightSide(this._side, this._plt.isRTL);
   }
 
   /**
@@ -341,6 +342,8 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
       disable: [GESTURE_GO_BACK_SWIPE]
     });
     this.side = 'start';
+
+    this._dirChanged = Platform.dirChanged.subscribe(this._updateType.bind(this));
   }
 
   /**
@@ -412,8 +415,17 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
   /**
    * @hidden
    */
+  private _updateType(): void {
+    // Update type's position if type exists
+    if (this._type)
+      this._getType().updatePosition();
+  }
+
+  /**
+   * @hidden
+   */
   setOpen(shouldOpen: boolean, animated: boolean = true): Promise<boolean> {
-    // If the menu is disabled or it is currenly being animated, let's do nothing
+    // If the menu is disabled or it is currently being animated, let's do nothing
     if ((shouldOpen === this.isOpen) || !this._canOpen() || this._isAnimating) {
       return Promise.resolve(this.isOpen);
     }
@@ -729,6 +741,7 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
     this._events.destroy();
     this._gesture && this._gesture.destroy();
     this._type && this._type.destroy();
+    this._dirChanged.unsubscribe();
 
     this._gesture = null;
     this._type = null;

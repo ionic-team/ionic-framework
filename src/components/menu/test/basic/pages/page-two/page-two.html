@@ -2,7 +2,7 @@
 
   <ion-navbar>
 
-    <button ion-button menuToggle="left">
+    <button ion-button menuToggle="start">
       <ion-icon name="menu"></ion-icon>
     </button>
 
@@ -11,9 +11,7 @@
     </ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only>
-        <ion-icon name="football"></ion-icon>
-      </button>
+      <button ion-button (click)="toggleDir()">Dir</button>
     </ion-buttons>
 
     <ion-buttons start>
@@ -22,7 +20,7 @@
       </button>
     </ion-buttons>
 
-    <button ion-button [menuToggle]="myMenu" right color="secondary">
+    <button ion-button [menuToggle]="myMenu" end color="secondary">
       <ion-icon name="menu"></ion-icon>
     </button>
 
@@ -37,9 +35,9 @@
 
   <ion-list>
     <ion-item-sliding>
-      <button ion-item class="e2eContentToggleLeftMenu" menuToggle="left">Toggle Left Menu</button>
+      <button ion-item class="e2eContentToggleStartMenu" menuToggle="start">Toggle Start Menu</button>
 
-      <ion-item-options side="left">
+      <ion-item-options side="start">
         <button ion-button>Test</button>
       </ion-item-options>
       <ion-item-options>
@@ -50,7 +48,7 @@
 
 
   <p>
-    <button ion-button class="e2eContentToggleRightMenu" menuToggle="right">Toggle Right Menu</button>
+    <button ion-button class="e2eContentToggleEndMenu" menuToggle="end">Toggle End Menu</button>
   </p>
 
   <ion-card>

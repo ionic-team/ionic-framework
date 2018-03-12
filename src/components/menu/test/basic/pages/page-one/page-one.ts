@@ -33,12 +33,12 @@ export class PageOne {
     });
   }
 
-  openRightMenu() {
-    this.menuCtrl.open('right');
+  openEndMenu() {
+    this.menuCtrl.open('end');
   }
 
-  openLeftMenu() {
-    this.menuCtrl.open('left');
+  openStartMenu() {
+    this.menuCtrl.open('start');
   }
 
   onDrag(ev: any) {

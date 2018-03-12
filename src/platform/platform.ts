@@ -52,6 +52,8 @@ export class Platform {
   private _isPortrait: boolean = null;
   private _uiEvtOpts = false;
 
+  static dirChanged: EventEmitter<any> = new EventEmitter();
+
   /** @hidden */
   zone: NgZone;
 
@@ -325,6 +327,8 @@ export class Platform {
     if (updateDocument !== false) {
       this._doc['documentElement'].setAttribute('dir', dir);
     }
+
+    Platform.dirChanged.emit(this._dir);
   }
 
   /**

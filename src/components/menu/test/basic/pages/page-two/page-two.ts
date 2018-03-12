@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AlertController, IonicPage, ModalController, NavController } from '../../../../../..';
+import { Platform } from '../../../../../../platform/platform';
 
 @IonicPage()
 @Component({
@@ -9,9 +10,14 @@ export class PageTwo {
   constructor(
     public navCtrl: NavController,
     public alertCtrl: AlertController,
-    public modalCtrl: ModalController) { }
+    public modalCtrl: ModalController,
+    public platform: Platform) { }
 
-  myMenu: string = 'right';
+  myMenu: string = 'end';
+
+  toggleDir() {
+    this.platform.setDir(this.platform.isRTL ? 'ltr' : 'rtl', true);
+  }
 
   presentAlert() {
     let alert = this.alertCtrl.create({
