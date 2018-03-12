@@ -28,7 +28,7 @@ export class DeepLinker {
     public _location: Location,
     public _moduleLoader: ModuleLoader,
     public _baseCfr: ComponentFactoryResolver
-  ) {}
+  ) { }
 
   /**
    * @internal
@@ -112,7 +112,7 @@ export class DeepLinker {
           })
           .filter(pair => !!pair)
           .forEach(pair => {
-            this._loadViewForSegment(pair.navContainer, pair.segment, () => {});
+            this._loadViewForSegment(pair.navContainer, pair.segment, () => { });
           });
       }
     }
@@ -147,11 +147,15 @@ export class DeepLinker {
       const navContainers: NavigationContainer[] = this._app.getRootNavs();
       for (const navContainer of navContainers) {
         const segmentsForNav = this.getSegmentsFromNav(navContainer);
-         segments = segments.concat(segmentsForNav);
+        segments = segments.concat(segmentsForNav);
       }
       segments = segments.filter(segment => !!segment);
       if (segments.length) {
-        const browserUrl = this._serializer.serialize(segments);
+        let browserUrl = this._serializer.serialize(segments);
+        let origUrl = normalizeUrl(this._location.path());
+        if (browserUrl === origUrl.replace(/\?[^#]+/, '')) {
+          browserUrl = origUrl;
+        }
         this._updateLocation(browserUrl, direction);
       }
     }
@@ -171,7 +175,7 @@ export class DeepLinker {
   }
 
   getSegmentFromNav(nav: NavController, component?: any, data?: any): NavSegment {
-     if (!component) {
+    if (!component) {
       const viewController = nav.getActive(true);
       if (viewController) {
         component = viewController.component;
@@ -386,7 +390,7 @@ export class DeepLinker {
     }
 
     if (isTabs(navContainer) || (isTab(navContainer) && navContainer.parent)) {
-      const tabs = <Tabs> <any> (isTabs(navContainer) ? navContainer : navContainer.parent);
+      const tabs = <Tabs><any>(isTabs(navContainer) ? navContainer : navContainer.parent);
       const selectedIndex = tabs._getSelectedTabIndex(segment.secondaryId);
       const tab = tabs.getByIndex(selectedIndex);
       tab._segment = segment;
@@ -397,7 +401,7 @@ export class DeepLinker {
       return done(false, false);
     }
 
-    const navController = <NavController> <any> navContainer;
+    const navController = <NavController><any>navContainer;
     const numViews = navController.length() - 1;
     // walk backwards to see if the exact view we want to show here
     // is already in the stack that we can just pop back to
