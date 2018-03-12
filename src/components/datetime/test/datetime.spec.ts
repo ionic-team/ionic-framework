@@ -493,7 +493,7 @@ describe('DateTime', () => {
 
   describe('defaultValue', () => {
     it('should default to now if no initial value or bounds supplied', () => {
-      const now = datetimeUtil.parseDate(new Date().toISOString());
+      const now = datetimeUtil.parseDate(new Date(Date.now() - (new Date).getTimezoneOffset() * 60000).toISOString().slice(0,-5));
       datetime.pickerFormat = 'YYYY-MM-DDThh:mm';
       datetime.generate();
       var columns = picker.getColumns();
@@ -514,7 +514,7 @@ describe('DateTime', () => {
     });
 
     it('should default to current if no initial value supplied but max specified and max after current', () => {
-      const now = datetimeUtil.parseDate(new Date().toISOString());
+      const now = datetimeUtil.parseDate(new Date(Date.now() - (new Date).getTimezoneOffset() * 60000).toISOString().slice(0,-5));
       datetime.max = '2100-10-19';
       datetime.generate();
       var columns = picker.getColumns();

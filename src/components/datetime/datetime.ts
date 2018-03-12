@@ -810,7 +810,7 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
       return this.initialValue;
     }
 
-    const nowString = (new Date).toISOString();
+    const nowString = new Date(Date.now() - (new Date).getTimezoneOffset() * 60000).toISOString().slice(0,-5);
     if (this.max) {
       const now = parseDate(nowString);
       const max = parseDate(this.max);
