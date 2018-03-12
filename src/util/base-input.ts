@@ -119,6 +119,11 @@ export class BaseInput<T> extends Ion implements CommonInput<T> {
   setDisabledState(isDisabled: boolean) {
     this._disabled = isDisabled = isTrueProperty(isDisabled);
     this._item && this._item.setElementClass(`item-${this._componentName}-disabled`, isDisabled);
+
+    if (this._elementRef && this._elementRef.nativeElement && this._elementRef.nativeElement.children[0]) {
+        this._elementRef.nativeElement.children[0].disabled = isDisabled;
+        this._inputUpdated();
+    }
   }
 
   /**
@@ -370,6 +375,6 @@ function setControlCss(element: Ion, control: NgControl) {
   element.setElementClass('ng-touched', control.touched);
   element.setElementClass('ng-pristine', control.pristine);
   element.setElementClass('ng-dirty', control.dirty);
-  element.setElementClass('ng-valid', control.valid);
-  element.setElementClass('ng-invalid', !control.valid);
+  element.setElementClass('ng-valid', control.valid && !control.disabled);
+  element.setElementClass('ng-invalid', !control.valid && !control.disabled);
 }
