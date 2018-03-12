@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { App } from '../components/app/app';
 import { DIRECTION_BACK, NavLink, NavSegment, TransitionDoneFn, convertToViews, isNav, isTab, isTabs } from './nav-util';
 import { ModuleLoader } from '../util/module-loader';
-import { isArray, isPresent } from '../util/util';
+import { isArray, isPresent, deepEqual } from '../util/util';
 import { Tab, Tabs } from './nav-interfaces';
 import { NavigationContainer } from './navigation-container';
 import { NavController } from './nav-controller';
@@ -403,7 +403,9 @@ export class DeepLinker {
     // is already in the stack that we can just pop back to
     for (let i = numViews; i >= 0; i--) {
       const viewController = navController.getByIndex(i);
-      if (viewController && (viewController.id === segment.id || viewController.id === segment.name)) {
+      if (viewController && (viewController.id === segment.id || viewController.id === segment.name)
+          && deepEqual(viewController.data, segment.data != null ? segment.data : {}))
+      {
         // hooray! we've already got a view loaded in the stack
         // matching the view they wanted to show
         if (i === numViews) {
