@@ -1,4 +1,3 @@
-
 export { IonicApp } from './components/app/app-root';
 export { MenuController } from './components/app/menu-controller';
 export { ActionSheet } from './components/action-sheet/action-sheet';
@@ -67,7 +66,7 @@ export { Option } from './components/option/option';
 export { Picker } from './components/picker/picker';
 export { PickerCmp } from './components/picker/picker-component';
 export { PickerColumnCmp } from './components/picker/picker-column';
-export { PickerController }  from './components/picker/picker-controller';
+export { PickerController } from './components/picker/picker-controller';
 export { PickerOptions, PickerColumn, PickerColumnOption } from './components/picker/picker-options';
 export { Popover } from './components/popover/popover';
 export { PopoverCmp } from './components/popover/popover-component';
@@ -141,18 +140,19 @@ export { Gesture } from './gestures/gesture';
 export { SlideEdgeGesture } from './gestures/slide-edge-gesture';
 export { SlideData, SlideGesture } from './gestures/slide-gesture';
 export {
-  BLOCK_ALL,
-  BlockerOptions,
-  GESTURE_GO_BACK_SWIPE,
-  GESTURE_MENU_SWIPE,
-  GESTURE_ITEM_SWIPE,
-  GESTURE_REFRESHER,
-  GESTURE_TOGGLE,
-  GestureOptions,
-  GestureController,
-  GestureDelegate,
-  BlockerDelegate,
-} from './gestures/gesture-controller';
+    BLOCK_ALL,
+    BlockerOptions,
+    GESTURE_GO_BACK_SWIPE,
+    GESTURE_MENU_SWIPE,
+    GESTURE_ITEM_SWIPE,
+    GESTURE_REFRESHER,
+    GESTURE_TOGGLE,
+    GestureOptions,
+    GestureController,
+    GestureDelegate,
+    BlockerDelegate,
+}
+from './gestures/gesture-controller';
 export { Events, setupEvents, setupProvideEvents } from './util/events';
 export { IonicErrorHandler } from './util/ionic-error-handler';
 export { Keyboard } from './platform/keyboard';
@@ -165,5 +165,13 @@ export { PlatformConfigToken } from './platform/platform-registry';
 export { registerModeConfigs } from './config/mode-registry';
 export { IonicGestureConfig } from './gestures/gesture-config';
 
-export { IonicModule, IonicPageModule, provideLocationStrategy } from './module';
+export { ViewCanEnter } from './navigation/lifecycle-hooks/view-can-enter';
+export { ViewCanLeave } from './navigation/lifecycle-hooks/view-can-leave';
+export { ViewDidEnter } from './navigation/lifecycle-hooks/view-did-enter';
+export { ViewDidLeave } from './navigation/lifecycle-hooks/view-did-leave';
+export { ViewDidLoad } from './navigation/lifecycle-hooks/view-did-load';
+export { ViewWillEnter } from './navigation/lifecycle-hooks/view-will-enter';
+export { ViewWillLeave } from './navigation/lifecycle-hooks/view-will-leave';
+export { ViewWillUnload } from './navigation/lifecycle-hooks/view-will-unload';
 
+export { IonicModule, IonicPageModule, provideLocationStrategy } from './module';
