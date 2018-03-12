@@ -2,6 +2,9 @@
   <h5 padding-left> Search - Default </h5>
   <ion-searchbar [(ngModel)]="defaultSearch" type="tel" showCancelButton debounce="500" (ionChange)="changedInput($event)" (ionInput)="triggerInput($event)" (ionBlur)="inputBlurred($event)" (ionFocus)="inputFocused($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)"></ion-searchbar>
 
+  <h5 padding-left> Search - Disabled </h5>
+  <ion-searchbar  [(ngModel)]="defaultSearch" type="text" disabled showCancelButton debounce="500" (ionChange)="changedInput($event)" (ionInput)="triggerInput($event)" (ionBlur)="inputBlurred($event)" (ionFocus)="inputFocused($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)"></ion-searchbar>
+
   <h5 padding-left> Search - Animated </h5>
   <ion-searchbar [(ngModel)]="defaultSearch" animated="true" showCancelButton debounce="500" (ionChange)="changedInput($event)" (ionInput)="triggerInput($event)" (ionBlur)="inputBlurred($event)" (ionFocus)="inputFocused($event)" (ionCancel)="onCancelSearchbar($event)" (ionClear)="onClearSearchbar($event)"></ion-searchbar>
 

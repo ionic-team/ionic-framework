@@ -40,7 +40,8 @@ import { Platform } from '../../platform/platform';
         '[attr.type]="type" ' +
         '[attr.autocomplete]="_autocomplete" ' +
         '[attr.autocorrect]="_autocorrect" ' +
-        '[attr.spellcheck]="_spellcheck">' +
+        '[attr.spellcheck]="_spellcheck" ' +
+        '[disabled]="_disabled">' +
       '<button ion-button clear class="searchbar-clear-icon" [mode]="_mode" (click)="clearInput($event)" (mousedown)="clearInput($event)" type="button"></button>' +
     '</div>' +
     '<button ion-button #cancelButton mode="ios" [tabindex]="_isActive ? 1 : -1" clear (click)="cancelSearchbar($event)" (mousedown)="cancelSearchbar($event)" class="searchbar-ios-cancel" type="button">{{cancelButtonText}}</button>',
