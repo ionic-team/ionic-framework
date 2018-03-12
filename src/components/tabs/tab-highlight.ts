@@ -1,4 +1,4 @@
-import { Directive, ElementRef } from '@angular/core';
+import { Directive, ElementRef, Input } from '@angular/core';
 
 import { DomController } from '../../platform/dom-controller';
 import { Tab } from './tab';
@@ -12,6 +12,8 @@ import { Tab } from './tab';
 export class TabHighlight {
   private _init: boolean;
 
+  @Input() width: string = '100%';
+
   constructor(private _elementRef: ElementRef, private _dom: DomController) {}
 
   select(tab: Tab) {
@@ -19,10 +21,15 @@ export class TabHighlight {
       return;
     }
     const dom = this._dom;
-
     dom.read(() => {
       const btnEle: HTMLElement = tab.btn.getNativeElement();
-      const transform = `translate3d(${btnEle.offsetLeft}px,0,0) scaleX(${btnEle.offsetWidth})`;
+      let width = parseInt(this.width, 10);
+      const isRelative = (this.width.slice(-1) === '%');
+      if (isRelative) {
+        width = btnEle.offsetWidth * (width / 100);
+      }
+      const offset = btnEle.offsetLeft + (btnEle.offsetWidth - width) / 2;
+      const transform = `translate3d(${offset}px,0,0) scaleX(${width})`;
 
       dom.write(() => {
         const ele = this._elementRef.nativeElement;

@@ -159,7 +159,7 @@ import { ViewController } from '../../navigation/view-controller';
   template:
     '<div class="tabbar" role="tablist" #tabbar>' +
       '<a *ngFor="let t of _tabs" [tab]="t" class="tab-button" role="tab" href="#" (ionSelect)="select(t)"></a>' +
-      '<div class="tab-highlight"></div>' +
+      '<div class="tab-highlight" [width]="tabsHighlightWidth"></div>' +
     '</div>' +
     '<ng-content></ng-content>' +
     '<div #portal tab-portal></div>',
@@ -209,6 +209,14 @@ export class Tabs extends Ion implements AfterViewInit, RootNode, ITabs, Navigat
    * @input {boolean} If true, show the tab highlight bar under the selected tab.
    */
   @Input() tabsHighlight: boolean;
+
+  /**
+   * @input {string} Sets the size of the highlight bar relative to the size of the tabbar button.
+   * It accepts absolute values like `100px` and relative ones, like `50%`.
+   *
+   * The default values is `100%`. That is, the bar has the same size as the button.
+   */
+  @Input() tabsHighlightWidth: string = '100%';
 
   /**
    * @output {any} Emitted when the tab changes.
