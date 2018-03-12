@@ -167,7 +167,6 @@ export class Alert implements OverlayInterface {
       rbButton.handler(rbButton);
     }
   }
-
   private cbClick(inputIndex: number) {
     this.inputs = this.inputs.map((input, index) => {
       if (inputIndex === index) {
@@ -285,6 +284,7 @@ export class Alert implements OverlayInterface {
               type={i.type}
               min={i.min}
               max={i.max}
+              onInput={e => i.value = (e.target as any).value}
               id={i.id}
               disabled={i.disabled}
               tabIndex={0}
