@@ -432,6 +432,7 @@ export class Refresher {
    */
   cancel() {
     this._close(STATE_CANCELLING, '');
+    this.ionPull.emit(this);
   }
 
   _close(state: string, delay: string) {
