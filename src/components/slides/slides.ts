@@ -894,7 +894,47 @@ export class Slides extends Ion {
   /** @internal */
   _zoom: SlideZoom;
 
-  /** @hidden */
+  /** @internal */
+  _isTouched: boolean;
+  /** @internal */
+  _isMoved: boolean;
+  /** @internal */
+  _allowTouchCallbacks: boolean;
+  /** @internal */
+  _touchStartTime: number;
+  /** @internal */
+  _isScrolling: boolean;
+  /** @internal */
+  _currentTranslate: number;
+  /** @internal */
+  _startTranslate: any;
+  /** @internal */
+  _allowThresholdMove: any;
+
+  // Last click time
+  /** @internal */
+  _lastClickTime = Date.now();
+  /** @internal */
+  _clickTimeout: any;
+
+  // Velocities
+  /** @internal */
+  _velocities: any[] = [];
+  /** @internal */
+  _allowMomentumBounce: boolean;
+
+
+  // Touch handlers
+  /** @internal */
+  _isTouchEvent: boolean;
+  /** @internal */
+  _startMoving: boolean;
+
+  // The timer id for the resize debounce
+  /** @internal */
+  _resizeId: number;
+
+  /** @private */
   nextButton: HTMLElement;
   /** @hidden */
   prevButton: HTMLElement;

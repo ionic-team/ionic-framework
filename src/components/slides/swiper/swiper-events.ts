@@ -275,28 +275,6 @@ function updateClickedSlide(s: Slides, plt: Platform, e: SlideUIEvent) {
   }
 }
 
-var isTouched: boolean;
-var isMoved: boolean;
-var allowTouchCallbacks: boolean;
-var touchStartTime: number;
-var isScrolling: boolean;
-var currentTranslate: number;
-var startTranslate: any;
-var allowThresholdMove: any;
-
-// Last click time
-var lastClickTime = Date.now();
-var clickTimeout: any;
-
-// Velocities
-var velocities: any[] = [];
-var allowMomentumBounce: boolean;
-
-
-// Touch handlers
-var isTouchEvent: boolean;
-var startMoving: boolean;
-
 function onTouchStart(s: Slides, plt: Platform, ev: SlideUIEvent) {
   console.debug(`ion-slide, onTouchStart: ${ev.type}`);
 
@@ -305,9 +283,9 @@ function onTouchStart(s: Slides, plt: Platform, ev: SlideUIEvent) {
   }
   s.originalEvent = ev;
 
-  isTouchEvent = ev.type === 'touchstart';
+  s._isTouchEvent = ev.type === 'touchstart';
 
-  if (!isTouchEvent && 'which' in ev && ev.which === 3) {
+  if (!s._isTouchEvent && 'which' in ev && ev.which === 3) {
     return;
   }
 
@@ -328,24 +306,24 @@ function onTouchStart(s: Slides, plt: Platform, ev: SlideUIEvent) {
     return;
   }
 
-  isTouched = true;
-  isMoved = false;
-  allowTouchCallbacks = true;
+  s._isTouched = true;
+  s._isMoved = false;
+  s._allowTouchCallbacks = true;
 
-  isScrolling = undefined;
-  startMoving = undefined;
+  s._isScrolling = undefined;
+  s._startMoving = undefined;
 
   s._touches.startX = startX;
   s._touches.startY = startY;
 
-  touchStartTime = Date.now();
+  s._touchStartTime = Date.now();
   s._allowClick = true;
 
   updateContainerSize(s, plt);
   s.swipeDirection = undefined;
 
   if (s.threshold > 0) {
-    allowThresholdMove = false;
+    s._allowThresholdMove = false;
   }
 
   if (ev.type !== 'touchstart') {
@@ -373,7 +351,7 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
   }
   s.originalEvent = ev;
 
-  if (isTouchEvent && ev.type === 'mousemove') return;
+  if (s._isTouchEvent && ev.type === 'mousemove') return;
   if (ev.preventedByNestedSwiper) {
     s._touches.startX = ev.type === 'touchmove' ? ev.targetTouches[0].pageX : ev.pageX;
     s._touches.startY = ev.type === 'touchmove' ? ev.targetTouches[0].pageY : ev.pageY;
@@ -382,15 +360,15 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
   if (s.onlyExternal) {
     // isMoved = true;
     s._allowClick = false;
-    if (isTouched) {
+    if (s._isTouched) {
       s._touches.startX = s._touches.currentX = ev.type === 'touchmove' ? ev.targetTouches[0].pageX : ev.pageX;
       s._touches.startY = s._touches.currentY = ev.type === 'touchmove' ? ev.targetTouches[0].pageY : ev.pageY;
-      touchStartTime = Date.now();
+      s._touchStartTime = Date.now();
     }
     return;
   }
 
-  if (isTouchEvent && s.touchReleaseOnEdges && !s.loop) {
+  if (s._isTouchEvent && s.touchReleaseOnEdges && !s.loop) {
     if (!isHorizontal(s)) {
       // Vertical
       if (
@@ -410,9 +388,9 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
   }
 
   const activeEle = plt.getActiveElement();
-  if (isTouchEvent && activeEle) {
+  if (s._isTouchEvent && activeEle) {
     if (ev.target === activeEle && isFormElement(ev.target)) {
-      isMoved = true;
+      s._isMoved = true;
       s._allowClick = false;
       return;
     }
@@ -423,19 +401,19 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
   s._touches.currentX = ev.type === 'touchmove' ? ev.targetTouches[0].pageX : ev.pageX;
   s._touches.currentY = ev.type === 'touchmove' ? ev.targetTouches[0].pageY : ev.pageY;
 
-  if (typeof isScrolling === 'undefined') {
+  if (typeof s._isScrolling === 'undefined') {
     var touchAngle: number;
     if (isHorizontal(s) && s._touches.currentY === s._touches.startY || !isHorizontal(s) && s._touches.currentX === s._touches.startX) {
-      isScrolling = false;
+      s._isScrolling = false;
     } else {
       touchAngle = Math.atan2(Math.abs(s._touches.currentY - s._touches.startY), Math.abs(s._touches.currentX - s._touches.startX)) * 180 / Math.PI;
-      isScrolling = isHorizontal(s) ? touchAngle > s.touchAngle : (90 - touchAngle > s.touchAngle);
+      s._isScrolling = isHorizontal(s) ? touchAngle > s.touchAngle : (90 - touchAngle > s.touchAngle);
     }
   }
 
-  if (!isTouched) return;
-  if (isScrolling)  {
-    isTouched = false;
+  if (!s._isTouched) return;
+  if (s._isScrolling)  {
+    s._isTouched = false;
     return;
   }
 
@@ -448,12 +426,12 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
     ev.stopPropagation();
   }
 
-  if (!isMoved) {
+  if (!s._isMoved) {
     if (s.loop) {
       fixLoop(s, plt);
     }
 
-    startTranslate = getWrapperTranslate(s, plt);
+    s._startTranslate = getWrapperTranslate(s, plt);
     setWrapperTransition(s, plt, 0);
 
     if (s._animating) {
@@ -467,9 +445,9 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
         pauseAutoplay(s, plt);
       }
     }
-    allowMomentumBounce = false;
+    s._allowMomentumBounce = false;
   }
-  isMoved = true;
+  s._isMoved = true;
 
   var diff = s._touches.diff = isHorizontal(s) ? s._touches.currentX - s._touches.startX : s._touches.currentY - s._touches.startY;
 
@@ -477,18 +455,18 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
   if (s._rtl) diff = -diff;
 
   s.swipeDirection = diff > 0 ? 'prev' : 'next';
-  currentTranslate = diff + startTranslate;
+  s._currentTranslate = diff + s._startTranslate;
 
   var disableParentSwiper = true;
-  if ((diff > 0 && currentTranslate > minTranslate(s))) {
+  if ((diff > 0 && s._currentTranslate > minTranslate(s))) {
     disableParentSwiper = false;
     if (s.resistance) {
-      currentTranslate = minTranslate(s) - 1 + Math.pow(-minTranslate(s) + startTranslate + diff, s.resistanceRatio);
+      s._currentTranslate = minTranslate(s) - 1 + Math.pow(-minTranslate(s) + s._startTranslate + diff, s.resistanceRatio);
     }
 
-  } else if (diff < 0 && currentTranslate < maxTranslate(s)) {
+  } else if (diff < 0 && s._currentTranslate < maxTranslate(s)) {
     disableParentSwiper = false;
-    if (s.resistance) currentTranslate = maxTranslate(s) + 1 - Math.pow(maxTranslate(s) - startTranslate - diff, s.resistanceRatio);
+    if (s.resistance) s._currentTranslate = maxTranslate(s) + 1 - Math.pow(maxTranslate(s) - s._startTranslate - diff, s.resistanceRatio);
   }
 
   if (disableParentSwiper) {
@@ -496,28 +474,28 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
   }
 
   // Directions locks
-  if (!s._allowSwipeToNext && s.swipeDirection === 'next' && currentTranslate < startTranslate) {
-    currentTranslate = startTranslate;
+  if (!s._allowSwipeToNext && s.swipeDirection === 'next' && s._currentTranslate < s._startTranslate) {
+    s._currentTranslate = s._startTranslate;
   }
 
-  if (!s._allowSwipeToPrev && s.swipeDirection === 'prev' && currentTranslate > startTranslate) {
-    currentTranslate = startTranslate;
+  if (!s._allowSwipeToPrev && s.swipeDirection === 'prev' && s._currentTranslate > s._startTranslate) {
+    s._currentTranslate = s._startTranslate;
   }
 
   // Threshold
   if (s.threshold > 0) {
-    if (Math.abs(diff) > s.threshold || allowThresholdMove) {
-      if (!allowThresholdMove) {
-        allowThresholdMove = true;
+    if (Math.abs(diff) > s.threshold || s._allowThresholdMove) {
+      if (!s._allowThresholdMove) {
+        s._allowThresholdMove = true;
         s._touches.startX = s._touches.currentX;
         s._touches.startY = s._touches.currentY;
-        currentTranslate = startTranslate;
+        s._currentTranslate = s._startTranslate;
         s._touches.diff = isHorizontal(s) ? s._touches.currentX - s._touches.startX : s._touches.currentY - s._touches.startY;
         return;
       }
 
     } else {
-      currentTranslate = startTranslate;
+      s._currentTranslate = s._startTranslate;
       return;
     }
   }
@@ -530,22 +508,22 @@ function onTouchMove(s: Slides, plt: Platform, ev: SlideUIEvent) {
   }
   if (s.freeMode) {
     // Velocity
-    if (velocities.length === 0) {
-      velocities.push({
+    if (s._velocities.length === 0) {
+      s._velocities.push({
         position: (<any>s._touches)[isHorizontal(s) ? 'startX' : 'startY'],
-        time: touchStartTime
+        time: s._touchStartTime
       });
     }
-    velocities.push({
+    s._velocities.push({
       position: (<any>s._touches)[isHorizontal(s) ? 'currentX' : 'currentY'],
       time: (new Date()).getTime()
     });
   }
   // Update progress
-  updateProgress(s, currentTranslate);
+  updateProgress(s, s._currentTranslate);
 
   // Update translate
-  setWrapperTranslate(s, plt, currentTranslate);
+  setWrapperTranslate(s, plt, s._currentTranslate);
 }
 
 
@@ -557,16 +535,16 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
   }
   s.originalEvent = ev;
 
-  if (allowTouchCallbacks) {
+  if (s._allowTouchCallbacks) {
     s.ionSlideTouchEnd.emit(ev);
   }
 
-  allowTouchCallbacks = false;
-  if (!isTouched) return;
+  s._allowTouchCallbacks = false;
+  if (!s._isTouched) return;
 
   // Time diff
   var touchEndTime = Date.now();
-  var timeDiff = touchEndTime - touchStartTime;
+  var timeDiff = touchEndTime - s._touchStartTime;
 
   // Tap, doubleTap, Click
   if (s._allowClick) {
@@ -575,12 +553,12 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
     s._zone.run(() => {
       s.ionSlideTap.emit(s);
 
-      if (timeDiff < 300 && (touchEndTime - lastClickTime) > 300) {
-        if (clickTimeout) {
-          plt.cancelTimeout(clickTimeout);
+      if (timeDiff < 300 && (touchEndTime - s._lastClickTime) > 300) {
+        if (s._clickTimeout) {
+          plt.cancelTimeout(s._clickTimeout);
         }
 
-        clickTimeout = plt.timeout(() => {
+        s._clickTimeout = plt.timeout(() => {
           if (!s) return;
           if (s.paginationHide && s._paginationContainer && !(<HTMLElement>ev.target).classList.contains(CLS.bullet)) {
             s._paginationContainer.classList.toggle(CLS.paginationHidden);
@@ -588,31 +566,31 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
         }, 300);
       }
 
-      if (timeDiff < 300 && (touchEndTime - lastClickTime) < 300) {
-        if (clickTimeout) clearTimeout(clickTimeout);
+      if (timeDiff < 300 && (touchEndTime - s._lastClickTime) < 300) {
+        if (s._clickTimeout) clearTimeout(s._clickTimeout);
         s.ionSlideDoubleTap.emit(s);
       }
     });
   }
 
-  lastClickTime = Date.now();
+  s._lastClickTime = Date.now();
   plt.timeout(() => {
     if (s) {
       s._allowClick = true;
     }
   });
 
-  if (!isTouched || !isMoved || !s.swipeDirection || s._touches.diff === 0 || currentTranslate === startTranslate) {
-    isTouched = isMoved = false;
+  if (!s._isTouched || !s._isMoved || !s.swipeDirection || s._touches.diff === 0 || s._currentTranslate === s._startTranslate) {
+    s._isTouched = s._isMoved = false;
     return;
   }
-  isTouched = isMoved = false;
+  s._isTouched = s._isMoved = false;
 
   var currentPos: number;
   if (s.followFinger) {
     currentPos = s._rtl ? s._translate : -s._translate;
   } else {
-    currentPos = -currentTranslate;
+    currentPos = -s._currentTranslate;
   }
 
   if (s.freeMode) {
@@ -630,8 +608,8 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
     }
 
     if (s.freeModeMomentum) {
-      if (velocities.length > 1) {
-        var lastMoveEvent = velocities.pop(), velocityEvent = velocities.pop();
+      if (s._velocities.length > 1) {
+        var lastMoveEvent = s._velocities.pop(), velocityEvent = s._velocities.pop();
 
         var distance = lastMoveEvent.position - velocityEvent.position;
         var time = lastMoveEvent.time - velocityEvent.time;
@@ -651,7 +629,7 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
 
       s.velocity = s.velocity * s.freeModeMomentumVelocityRatio;
 
-      velocities.length = 0;
+      s._velocities.length = 0;
       var momentumDuration = 1000 * s.freeModeMomentumRatio;
       var momentumDistance = s.velocity * momentumDuration;
 
@@ -668,7 +646,7 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
           }
           afterBouncePosition = maxTranslate(s);
           doBounce = true;
-          allowMomentumBounce = true;
+          s._allowMomentumBounce = true;
         } else {
           newPosition = maxTranslate(s);
         }
@@ -680,7 +658,7 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
           }
           afterBouncePosition = minTranslate(s);
           doBounce = true;
-          allowMomentumBounce = true;
+          s._allowMomentumBounce = true;
         } else {
           newPosition = minTranslate(s);
         }
@@ -725,7 +703,7 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
         s._animating = true;
 
         plt.transitionEnd(s._wrapper, () => {
-          if (!s || !allowMomentumBounce) return;
+          if (!s || !s._allowMomentumBounce) return;
 
           setWrapperTransition(s, plt, s.speed);
           setWrapperTranslate(s, plt, afterBouncePosition);
@@ -830,18 +808,17 @@ function onTouchEnd(s: Slides, plt: Platform, ev: SlideUIEvent) {
 /*=========================
   Resize Handler
   ===========================*/
-let resizeId: number;
 function onResize(s: Slides, plt: Platform, forceUpdatePagination: boolean) {
   // TODO: hacky, we should use Resize Observer in the future
-  if (resizeId) {
-    plt.cancelTimeout(resizeId);
-    resizeId = null;
+  if (s._resizeId) {
+    plt.cancelTimeout(s._resizeId);
+    s._resizeId = null;
   }
-  resizeId = plt.timeout(() => doResize(s, plt, forceUpdatePagination), 200);
+  s._resizeId = plt.timeout(() => doResize(s, plt, forceUpdatePagination), 200);
 }
 
 function doResize(s: Slides, plt: Platform, forceUpdatePagination: boolean) {
-  resizeId = null;
+  s._resizeId = null;
   // Disable locks on resize
   var allowSwipeToPrev = s._allowSwipeToPrev;
   var allowSwipeToNext = s._allowSwipeToNext;
