@@ -109,7 +109,10 @@ export const PLATFORM_CONFIGS: { [key: string]: PlatformConfig } = {
       hoverCSS: false,
       inputBlurring: isIos,
       inputCloning: isIos,
-      keyboardHeight: 250,
+      keyboardHeight: function(plt: Platform): number {
+        let isIphoneX = plt.width() === 375 && plt.height() === 812;
+        return isIphoneX ? 325 : 250;
+      },
       mode: 'ios',
       statusbarPadding: isCordova,
       swipeBackEnabled: isIos,
