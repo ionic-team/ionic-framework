@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, HostListener, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
 
 import { KEY_ESCAPE } from '../../platform/key';
 import { NavParams } from '../../navigation/nav-params';
@@ -29,7 +29,7 @@ export class ModalCmp {
 
   constructor(
     public _cfr: ComponentFactoryResolver,
-    public _renderer: Renderer,
+    public _renderer: Renderer2,
     public _elementRef: ElementRef,
     public _navParams: NavParams,
     public _viewCtrl: ViewController,
@@ -48,7 +48,7 @@ export class ModalCmp {
     if (opts.cssClass) {
       opts.cssClass.split(' ').forEach((cssClass: string) => {
         // Make sure the class isn't whitespace, otherwise it throws exceptions
-        if (cssClass.trim() !== '') _renderer.setElementClass(_elementRef.nativeElement, cssClass, true);
+        if (cssClass.trim() !== '') _renderer.addClass(_elementRef.nativeElement, cssClass);
       });
     }
   }
@@ -91,7 +91,7 @@ export class ModalCmp {
   }
 
   _setCssClass(componentRef: any, className: string) {
-    this._renderer.setElementClass(componentRef.location.nativeElement, className, true);
+    this._renderer.addClass(componentRef.location.nativeElement, className);
   }
 
   _bdClick() {
