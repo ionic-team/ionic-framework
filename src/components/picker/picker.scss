@@ -21,6 +21,8 @@ ion-picker-cmp {
   height: $picker-width;
 
   contain: strict;
+  
+  overflow:hidden;
 }
 
 .picker-toolbar {
