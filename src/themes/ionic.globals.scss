@@ -47,4 +47,6 @@ $z-index-backdrop:               2; // scss-lint:disable DefaultRule
 $z-index-overlay-wrapper:        10; // scss-lint:disable DefaultRule
 
 $z-index-item-options:           1; // scss-lint:disable DefaultRule
-$z-index-item-divider:          100; // scss-lint:disable DefaultRule
+$z-index-item-divider:           100; // scss-lint:disable DefaultRule
+
+$z-index-dir-enforcer:           999999; // scss-lint:disable DefaultRule

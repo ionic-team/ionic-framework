@@ -1200,6 +1200,14 @@ export function setupPlatform(doc: HTMLDocument, platformConfigs: {[key: string]
 
   plt.init();
 
+  // add direction enforcement if dev server exists
+  if ((<any>win)['IonicDevServer']) {
+    let enforcer = doc.createElement('div');
+    enforcer.classList.add('direction-enforcer');
+    enforcer.innerText = 'Direction is not loaded in SCSS';
+    doc.querySelector('body').appendChild(enforcer);
+  }
+
   // add the platform obj to the window
   (<any>win)['Ionic'] = (<any>win)['Ionic'] || {};
   (<any>win)['Ionic']['platform'] = plt;

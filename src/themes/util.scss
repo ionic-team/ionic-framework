@@ -68,3 +68,25 @@ ion-input :focus {
 .click-block-active {
   @include transform(translate3d(0, 0, 0));
 }
+
+
+.direction-enforcer {
+  @include position(0, 0, 0, 0);
+  @include text-align(center);
+
+  position: absolute;
+  z-index: $z-index-dir-enforcer;
+
+  display: none;
+
+  background-color: white;
+}
+
+
+@each $dir in ltr, rtl {
+  [dir="#{$dir}"] .direction-enforcer {
+    @if $app-direction != $dir and $app-direction != multi {
+      display: block;
+    }
+  }
+}
