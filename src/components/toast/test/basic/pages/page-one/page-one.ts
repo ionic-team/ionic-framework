@@ -53,9 +53,60 @@ export class PageOne {
       message: 'Your internet connection appears to be offline. Data integrity is not gauranteed.',
       showCloseButton: true,
       closeButtonText: 'Ok',
+      closeButtonColor: 'danger',
       position: positionString
     });
     toast.onDidDismiss(this.dismissHandler);
+    toast.present();
+  }
+
+  showToastWithCloseButtonUnifiedOption(positionString: string) {
+    const toast = this.toastCtrl.create({
+      message: 'You can pass all close button options with key "closeButton"',
+      closeButton: {
+        show: true,
+        text: 'OK',
+        color: 'danger'
+      },
+      position: positionString
+    });
+    toast.onDidDismiss(this.dismissHandler);
+    toast.present();
+  }
+
+  showToastWithCloseEvent(positionString: string) {
+    const toast = this.toastCtrl.create({
+      message: 'This is a toast with custom close click',
+      closeButtonText: 'Ok',
+      position: positionString,
+      closeClick: () => {
+        console.log('CUSTOM ACTION WHEN CLICK!!');
+        /**
+         * Optional: Cancel the default dismiss with the
+         * callback parameter.
+         *
+         * toastComponent.enabled = false;
+         */
+      }
+    });
+
+    toast.present();
+  }
+
+  showToastWithHtmlMessage() {
+    const toast = this.toastCtrl.create({
+      messageHtml: '<b>TEST HTML</b> custom',
+      closeButtonText: 'Ok'
+    });
+    toast.present();
+  }
+
+  showToastWithoutFocus() {
+    const toast = this.toastCtrl.create({
+      autoFocus: false,
+      messageHtml: 'Not focus on close button',
+      closeButtonText: 'Ok'
+    });
     toast.present();
   }
 
@@ -64,7 +115,6 @@ export class PageOne {
       message: 'I am dismissed on page change',
       dismissOnPageChange: true
     });
-    toast.onDidDismiss(this.dismissHandler);
     toast.present();
 
     setTimeout(() => {
