@@ -144,6 +144,7 @@ export function setupEvents(plt: Platform, dom: DomController): Events {
         scroll._el = contentEle;
           // We need to stop scrolling if it's happening and scroll up
 
+        style['WebkitOverflowScrolling'] = 'auto';
         style['WebkitBackfaceVisibility'] = 'hidden';
         style['WebkitTransform'] = 'translate3d(0,0,0)';
 
@@ -152,6 +153,7 @@ export function setupEvents(plt: Platform, dom: DomController): Events {
 
           function finish() {
             style.overflow = '';
+            style['WebkitOverflowScrolling'] = '';
             style['WebkitBackfaceVisibility'] = '';
             style['WebkitTransform'] = '';
           }
