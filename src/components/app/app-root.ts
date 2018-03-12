@@ -128,7 +128,7 @@ export class IonicApp extends Ion implements OnInit {
         return modalPortal;
       }
 
-    } if (hasModal) {
+    } else if (hasModal) {
       return modalPortal;
 
     } else if (hasDefault) {
