@@ -167,6 +167,7 @@ export class Platform {
    * | phablet         | on a phablet device.               |
    * | tablet          | on a tablet device.                |
    * | windows         | on a device running Windows.       |
+   * | electron        | in Electron on a desktop device.   |
    *
    * @param {string} platformName
    */
