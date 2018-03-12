@@ -112,8 +112,7 @@ export class Events {
 /**
  * @hidden
  */
-export function setupEvents(plt: Platform, dom: DomController): Events {
-  const events = new Events();
+export function setupEvents(events: Events, plt: Platform, dom: DomController): Events {
   const win = plt.win();
   const doc = plt.doc();
 
@@ -176,8 +175,8 @@ export function setupEvents(plt: Platform, dom: DomController): Events {
 /**
  * @hidden
  */
-export function setupProvideEvents(plt: Platform, dom: DomController) {
+export function setupProvideEvents(events: Events, plt: Platform, dom: DomController) {
   return function() {
-    return setupEvents(plt, dom);
+    return setupEvents(events, plt, dom);
   };
 }
