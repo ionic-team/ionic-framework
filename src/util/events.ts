@@ -1,6 +1,7 @@
 import { DomController } from '../platform/dom-controller';
 import { Platform } from '../platform/platform';
-import { ScrollView } from './scroll-view';
+import { ScrollView } from '../util/scroll-view';
+import { Subject, Subscription } from 'rxjs/Rx';
 
 /**
  * @name Events
@@ -17,23 +18,31 @@ import { ScrollView } from './scroll-view';
  *
  * createUser(user) {
  *   console.log('User created!')
- *   this.events.publish('user:created', user, Date.now());
+ *   events.publish('user:created', { user, time: Date.now() });
  * }
  *
  *
  * // second page (listen for the user created event after function is called)
  * constructor(public events: Events) {
- *   events.subscribe('user:created', (user, time) => {
- *     // user and time are the same arguments passed in `events.publish(user, time)`
+ *   events.subscribe('user:created', ({ user, time }) => {
+ *     // user and time are the same arguments passed as keys in `events.publish({ ... })`
  *     console.log('Welcome', user, 'at', time);
  *   });
+ * }
+ *
+ * // third page utilises rxjs interface
+ * constructor(public events: Events) {
+ *   this.destroyed = new Subject<boolean>();
+ *   events.topic('user:created')
+ *     .takeUntil(this.destroyed)
+ *     .subscribe(({ user, time }) => console.log('Welcome', user, 'at', time));
  * }
  *
  * ```
  * @demo /docs/demos/src/events/
  */
 export class Events {
-  private _channels: any = [];
+  private _channels: Map<string, Subject<any>> = new Map();
 
   /**
    * Subscribe to an event topic. Events that get posted to that topic will trigger the provided handler.
@@ -41,52 +50,8 @@ export class Events {
    * @param {string} topic the topic to subscribe to
    * @param {function} handler the event handler
    */
-  subscribe(topic: string, ...handlers: Function[]) {
-    if (!this._channels[topic]) {
-      this._channels[topic] = [];
-    }
-    handlers.forEach((handler) => {
-      this._channels[topic].push(handler);
-    });
-  }
-
-  /**
-   * Unsubscribe from the given topic. Your handler will no longer receive events published to this topic.
-   *
-   * @param {string} topic the topic to unsubscribe from
-   * @param {function} handler the event handler
-   *
-   * @return true if a handler was removed
-   */
-  unsubscribe(topic: string, handler: Function = null) {
-    let t = this._channels[topic];
-    if (!t) {
-      // Wasn't found, wasn't removed
-      return false;
-    }
-
-    if (!handler) {
-      // Remove all handlers for this topic
-      delete this._channels[topic];
-      return true;
-    }
-
-    // We need to find and remove a specific handler
-    let i = t.indexOf(handler);
-
-    if (i < 0) {
-      // Wasn't found, wasn't removed
-      return false;
-    }
-
-    t.splice(i, 1);
-
-    // If the channel is empty now, remove it from the channel map
-    if (!t.length) {
-      delete this._channels[topic];
-    }
-
-    return true;
+  subscribe(topic: string, handler: (value: any) => void): Subscription {
+    return this.topic(topic).subscribe(handler);
   }
 
   /**
@@ -95,17 +60,31 @@ export class Events {
    * @param {string} topic the topic to publish to
    * @param {any} eventData the data to send as the event
    */
-  publish(topic: string, ...args: any[]) {
-    var t = this._channels[topic];
+  publish(topic: string, eventData: any = {}) {
+    var t = this._channels.get(topic);
     if (!t) {
-      return null;
+      return;
     }
 
-    let responses: any[] = [];
-    t.forEach((handler: any) => {
-      responses.push(handler(...args));
-    });
-    return responses;
+    t.next(eventData);
+  }
+
+  /**
+   * Returns new Observable for the given topic.
+   *
+   * @param {string} name the topic to retrieve
+   * @return {Subject} observable responsible for the given topic
+   */
+  topic(name: string): Subject<any> {
+    let channel = this._channels.get(name);
+
+    if (!channel) {
+      channel = new Subject<any>();
+      channel.subscribe(null, null, () => this._channels.delete(name))
+      this._channels.set(name, channel);
+    }
+
+    return channel;
   }
 }
 
