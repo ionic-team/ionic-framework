@@ -723,8 +723,12 @@ export function fixLoop(s: Slides, plt: Platform) {
   ===========================*/
 
 export function slideTo(s: Slides, plt: Platform, slideIndex?: number, speed?: number, runCallbacks = true, internal?: boolean) {
-  if (typeof slideIndex === 'undefined') slideIndex = 0;
-  if (slideIndex < 0) slideIndex = 0;
+  if (typeof slideIndex === 'undefined' || slideIndex < 0) {
+    slideIndex = 0;
+  }
+  else if (slideIndex >= s._slides.length) {
+    slideIndex = s._slides.length - 1;
+  }
 
   s._snapIndex = Math.floor(slideIndex / s.slidesPerGroup);
   if (s._snapIndex >= s._snapGrid.length) s._snapIndex = s._snapGrid.length - 1;
