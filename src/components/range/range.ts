@@ -117,6 +117,7 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
   _min = 0;
   _max = 100;
   _step = 1;
+  _resolution = 0;
   _snaps: boolean;
 
   _valA = 0;
@@ -143,7 +144,7 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
     return this._min;
   }
   set min(val: number) {
-    val = Math.round(val);
+    val = Number(val);
     if (!isNaN(val)) {
       this._min = val;
       this._inputUpdated();
@@ -158,7 +159,7 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
     return this._max;
   }
   set max(val: number) {
-    val = Math.round(val);
+    val = Number(val);
     if (!isNaN(val)) {
       this._max = val;
       this._inputUpdated();
@@ -173,9 +174,11 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
     return this._step;
   }
   set step(val: number) {
-    val = Math.round(val);
+    val = Number(val);
     if (!isNaN(val) && val > 0) {
       this._step = val;
+      // Need to also add "resolution" to prevent binary/decimal conversion edge cases like 1.2000000000000002
+      this._resolution = this._calcResolution(this._step);
     }
   }
 
@@ -360,6 +363,16 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
   }
 
   /** @internal */
+  _calcResolution(num: number) {
+    return String(num).replace(/^-?\d*\.?|0+$/g, '').length;
+  }
+
+  /** @internal */
+  _round(num: number) {
+    return Number(num.toFixed(this._resolution));
+  }
+
+  /** @internal */
   _update(current: PointerCoordinates, rect: ClientRect, isPressed: boolean) {
     // figure out where the pointer is currently at
     // update the knob being interacted with
@@ -501,9 +514,9 @@ export class Range extends BaseInput<any> implements AfterContentInit, ControlVa
 
   /** @internal */
   _ratioToValue(ratio: number) {
-    ratio = Math.round(((this._max - this._min) * ratio));
-    ratio = Math.round(ratio / this._step) * this._step + this._min;
-    return clamp(this._min, ratio, this._max);
+    ratio = (this._max - this._min) * ratio;
+    ratio = this._round(ratio / this._step) * this._step + this._min;
+    return clamp(this._min, this._round(ratio), this._max);
   }
 
   /** @internal */
