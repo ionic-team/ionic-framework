@@ -18,7 +18,7 @@ describe('Infinite Scroll', () => {
 
       setInfiniteScrollTop(300);
 
-      var result = inf._onScroll(ev);
+      var result = inf._onScroll(Object.assign(ev, content.getContentDimensions()));
       expect(result).toEqual(6);
     });
 
@@ -31,7 +31,7 @@ describe('Infinite Scroll', () => {
 
       setInfiniteScrollTop(300);
 
-      var result = inf._onScroll(ev);
+      var result = inf._onScroll(Object.assign(ev, content.getContentDimensions()));
       expect(result).toEqual(5);
     });
 
@@ -122,18 +122,20 @@ describe('Infinite Scroll', () => {
   let infiniteElementRef: any;
   let ev: ScrollEvent = (<any>{});
   let dom: DomController;
+  let renderer: any;
 
   beforeEach(() => {
     contentElementRef = mockElementRef();
     dom = mockDomController();
-    content = new Content(config, mockPlatform(), dom, contentElementRef, mockRenderer(), null, null, mockZone(), null, null);
+    renderer = mockRenderer();
+    content = new Content(config, mockPlatform(), dom, contentElementRef, renderer, null, null, mockZone(), null, null);
     let ele = document.createElement('div');
     ele.className = 'scroll-content';
     content._scrollContent = mockElementRefEle(ele);
 
     infiniteElementRef = mockElementRef();
 
-    inf = new InfiniteScroll(content, mockZone(), infiniteElementRef, dom);
+    inf = new InfiniteScroll(content, mockZone(), infiniteElementRef, dom, renderer);
   });
 
   function setInfiniteScrollTop(scrollTop: any) {
