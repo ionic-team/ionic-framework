@@ -286,7 +286,7 @@ import {
   encapsulation: ViewEncapsulation.None,
 })
 export class DateTime extends BaseInput<DateTimeData> implements AfterContentInit, ControlValueAccessor, OnDestroy {
-
+  [key:string]: any
   _text: string = '';
   _min: DateTimeData;
   _max: DateTimeData;
@@ -395,6 +395,21 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
    * this input value would be `minuteValues="0,15,30,45"`.
    */
   @Input() minuteValues: any;
+
+  /**
+    * @input {string} Label that will be placed next to the hours picker column, if it exists.
+    */
+  @Input() hourLabel: any;
+
+  /**
+    * @input {string} Label that will be placed next to the minutes picker column, if it exists.
+    */
+  @Input() minuteLabel: any;
+
+  /**
+    * @input {string} Label that will be placed next to the seconds picker column, if it exists.
+    */
+  @Input() secondLabel: any;
 
   /**
    * @input {array} Full names for each month name. This can be used to provide
@@ -620,6 +635,18 @@ export class DateTime extends BaseInput<DateTimeData> implements AfterContentIni
 
         // add our newly created column to the picker
         picker.addColumn(column);
+
+        // add a label column if defined
+        if(<any>this[key + 'Label'] != null) {
+            const label = <any>this[key + 'Label'];
+            const labelColumn: PickerColumn = {
+                name: key + 'Label',
+                selectedIndex: 0,
+                cssClass: 'datetime-picker-label',
+                options: [{value: label, text: label}]
+            }
+            picker.addColumn(labelColumn);
+        }
       });
 
 
