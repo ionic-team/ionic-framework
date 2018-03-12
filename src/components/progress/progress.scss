@@ -1,0 +1,149 @@
+@import "../../themes/ionic.globals";
+
+// Progress bar
+// --------------------------------------------------
+
+/// @prop - The color of the element that is being animated
+$progress-color:               rgb(16, 108, 2001) !default;
+
+/// @prop - The background color of the progress bar
+$progress-buffer-color:        rgb(170, 209, 249) !default;
+
+/// @prop - The animation duration of the progress bar
+$progress-animation-duration:  2s !default;
+
+/// @prop - The speed at which the progress values transition, this is useful for determinate and buffer modes
+$progress-values-transition:   .3s !default;
+
+/// @prop - The speed at which the buffer circles will be animating
+$progress-buffer-circle-speed: .3s !default;
+
+/// @prop - SVG to use for the buffering circles whenever the progress bar is buffering
+$progress-buffer-circles-svg:  "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjEyIiBoZWlnaHQ9IjQiIHZpZXdQb3J0PSIwIDAgMTIgNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgogIDxlbGxpcHNlIGN4PSIyIiBjeT0iMiIgcng9IjIiIHJ5PSIyIj4KICAgIDxhbmltYXRlIGF0dHJpYnV0ZU5hbWU9ImN4IiBmcm9tPSIyIiB0bz0iLTEwIiBkdXI9IjAuNnMiIHJlcGVhdENvdW50PSJpbmRlZmluaXRlIiAvPgogIDwvZWxsaXBzZT4KICA8ZWxsaXBzZSBjeD0iMTQiIGN5PSIyIiByeD0iMiIgcnk9IjIiIGNsYXNzPSJsb2FkZXIiPgogICAgPGFuaW1hdGUgYXR0cmlidXRlTmFtZT0iY3giIGZyb209IjE0IiB0bz0iMiIgZHVyPSIwLjZzIiByZXBlYXRDb3VudD0iaW5kZWZpbml0ZSIgLz4KICA8L2VsbGlwc2U+Cjwvc3ZnPgo=" !default;
+
+ion-progress {
+  position: relative;
+  display: block;
+  overflow: hidden;
+
+  width: 100%;
+  height: 5px;
+  @keyframes indeterminate {
+    0% {
+      width: 0%;
+      // scss-lint:disable PropertySpelling
+      left: 0%;
+
+    }
+
+    50% {
+      width: 75%;
+
+      // scss-lint:disable PropertySpelling
+      left: 25%;
+
+    }
+
+    75% {
+      width: 0%;
+
+      // scss-lint:disable PropertySpelling
+      left: 110%;
+
+    }
+  }
+  @keyframes buffering {
+    to {
+      transform: translateX(-10px);
+    }
+  }
+
+  .animatable {
+    position: absolute;
+    display: none;
+
+    width: 0%;
+    height: 100%;
+
+    background-color: $progress-color;
+
+  }
+
+  .progress {
+    display: none;
+
+    width: 0%;
+    height: 100%;
+
+    background-color: $progress-color;
+    transition: width $progress-values-transition cubic-bezier(.4, .0, .2, 1);
+  }
+
+  .buffer-circles {
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    display: none;
+
+    width: 100%;
+    height: 4px;
+
+    background-image: linear-gradient(to right, rgba(255, 255, 255, .7), rgba(255, 255, 255, .7)), linear-gradient(to right, $progress-color, $progress-color);
+
+    mask: url(#{$progress-buffer-circles-svg});
+  }
+
+  .buffer {
+    position: absolute;
+    top: 0;
+    z-index: -1;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: $progress-buffer-color;
+  }
+
+  &.indeterminate .animatable,
+  &.query .animatable {
+    display: block;
+
+    animation: indeterminate $progress-animation-duration infinite;
+
+  }
+
+  &.indeterminate {
+
+    @include rtl() {
+      transform: rotate(180deg);
+    }
+  }
+
+  &.query {
+    transform: rotate(180deg);
+
+    @include rtl() {
+      transform: rotate(0deg);
+    }
+
+  }
+
+  &.determinate,
+  &.buffer {
+    .progress {
+      display: block;
+    }
+  }
+
+  &.buffer .buffer-circles {
+    display: block;
+
+    animation: buffering $progress-buffer-circle-speed infinite;
+
+    @include rtl() {
+      animation-direction: reverse;
+    }
+
+  }
+
+}

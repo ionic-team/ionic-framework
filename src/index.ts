@@ -73,6 +73,7 @@ export { Popover } from './components/popover/popover';
 export { PopoverCmp } from './components/popover/popover-component';
 export { PopoverController } from './components/popover/popover-controller';
 export { PopoverOptions } from './components/popover/popover-options';
+export { Progress } from './components/progress/progress';
 export { RadioButton } from './components/radio/radio-button';
 export { RadioGroup } from './components/radio/radio-group';
 export { Range } from './components/range/range';

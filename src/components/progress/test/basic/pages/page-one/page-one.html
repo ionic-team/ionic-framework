@@ -1,0 +1,61 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-title>Progress bars</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content no-bounce>
+
+  <ion-list>
+
+    <ion-list-header>
+      Indeterminate
+    </ion-list-header>
+
+    <ion-progress indicator="indeterminate"></ion-progress>
+
+    <ion-list-header>
+      Query
+    </ion-list-header>
+
+    <ion-progress indicator="query"></ion-progress>
+
+
+    <ion-list-header>
+      Determinate
+    </ion-list-header>
+
+    <ion-progress [value]="value"></ion-progress>
+
+
+    <ion-item>
+      <ion-range min="0" max="100" [(ngModel)]="value" color="secondary">
+        <ion-label range-left>0</ion-label>
+        <ion-label range-right>100</ion-label>
+      </ion-range>
+    </ion-item>
+
+    <ion-list-header>
+      Buffer
+    </ion-list-header>
+
+    <ion-progress indicator="buffer" [value]="value" [buffer]="buffer"></ion-progress>
+
+
+
+
+    <ion-item>
+      <ion-range min="0" max="100" [(ngModel)]="buffer" color="secondary">
+        <ion-label range-left>0</ion-label>
+        <ion-label range-right>100</ion-label>
+      </ion-range>
+    </ion-item>
+
+  </ion-list>
+
+
+
+</ion-content>
