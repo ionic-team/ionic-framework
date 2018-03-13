@@ -148,7 +148,7 @@ $button-md-outline-background-color:            transparent !default;
 $button-md-outline-box-shadow:                  none !default;
 
 /// @prop - Background color of the outline button on hover
-$button-md-outline-background-color-hover:      ion-color-alpha($text-md-color-value, text-md-color, $alpha-md-hover) !default;
+$button-md-outline-background-color-hover:      css-var($text-md-color-value, text-md-color, $alpha-md-hover) !default;
 
 /// @prop - Background color of the activated outline button
 $button-md-outline-background-color-activated:  transparent !default;
@@ -184,13 +184,13 @@ $button-md-clear-box-shadow:                    none !default;
 $button-md-clear-opacity:                       1 !default;
 
 /// @prop - Background color of the activated clear button
-$button-md-clear-background-color-activated:    ion-color-alpha($text-md-color-value, text-md-color, $alpha-md-activated) !default;
+$button-md-clear-background-color-activated:    css-var($text-md-color-value, text-md-color, $alpha-md-activated) !default;
 
 /// @prop - Box shadow of the activated clear button
 $button-md-clear-box-shadow-activated:          $button-md-clear-box-shadow !default;
 
 /// @prop - Background color of the clear button on hover
-$button-md-clear-background-color-hover:        ion-color-alpha($text-md-color-value, text-md-color, $alpha-md-hover) !default;
+$button-md-clear-background-color-hover:        css-var($text-md-color-value, text-md-color, $alpha-md-hover) !default;
 
 /// @prop - Background color of the ripple on the clear button
 $button-md-clear-ripple-background-color:       $text-md-color-step-600 !default;

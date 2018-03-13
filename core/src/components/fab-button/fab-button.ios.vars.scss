@@ -22,7 +22,7 @@ $fab-ios-background-color-activated:                    ion-color($colors-ios, $
 $fab-ios-list-button-background-color:                  ion-color($colors-ios, light, base, ios) !default;
 
 /// @prop - Background color of the button in a list
-$fab-ios-list-button-translucent-background-color:      ion-color-alpha($background-ios-color-value, background-ios-color, $alpha-ios-high) !default;
+$fab-ios-list-button-translucent-background-color:      css-var($background-ios-color-value, background-ios-color, $alpha-ios-high) !default;
 
 /// @prop - Text color of the button in a list
 $fab-ios-list-button-text-color:                        ion-color($colors-ios, $fab-ios-list-button-background-color, contrast, ios) !default;

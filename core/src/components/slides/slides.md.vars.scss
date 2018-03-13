@@ -7,13 +7,13 @@ $slides-md-bullet-background-color:               $text-md-color-step-400 !defau
 $slides-md-bullet-background-color-active:        ion-color($colors-md, primary, base, md) !default;
 
 /// @prop - Slides Progress indicator Background color
-$slides-md-progress-background-color:             ion-color-alpha($text-md-color-value, text-md-color, $alpha-md-low) !default;
+$slides-md-progress-background-color:             css-var($text-md-color-value, text-md-color, $alpha-md-low) !default;
 
 /// @prop - Slides Progress indicator bar Background color
 $slides-md-progress-bar-background-color:         ion-color($colors-md, primary, shade, md) !default;
 
 /// @prop - Slides Scroll bar Background color
-$slides-md-scroll-bar-background-color:           ion-color-alpha($text-md-color-value, text-md-color, $alpha-md-low) !default;
+$slides-md-scroll-bar-background-color:           css-var($text-md-color-value, text-md-color, $alpha-md-low) !default;
 
 /// @prop - Slides Scroll bar drag handle Background color
-$slides-md-scroll-bar-drag-background-color:      ion-color-alpha($text-md-color-value, text-md-color, $alpha-md-medium) !default;
+$slides-md-scroll-bar-drag-background-color:      css-var($text-md-color-value, text-md-color, $alpha-md-medium) !default;

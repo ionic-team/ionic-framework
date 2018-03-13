@@ -94,7 +94,7 @@ $overlay-md-background-color:           css-var(#fafafa, overlay-md-background-c
 // --------------------------------------------------
 $tabbar-md-background-color:            css-var($tabbar-background-color, tabbar-md-background-color) !default;
 $tabbar-md-background-color-focused:    css-var($tabbar-background-color-focused, tabbar-md-background-color-focused) !default;
-$tabbar-md-border-color:                ion-color-alpha(rgb(0, 0, 0), tabbar-md-border-color, $alpha-md-border-low) !default; // TODO: @color-mod($border-md-color, a($alpha-lowest))
+$tabbar-md-border-color:                css-var(rgb(0, 0, 0), tabbar-md-border-color, $alpha-md-border-low) !default; // TODO: @color-mod($border-md-color, a($alpha-lowest))
 $tabbar-md-text-color:                  css-var($text-md-color-step-400, tabbar-md-text-color) !default;
 $tabbar-md-text-color-active:           css-var($tabbar-text-color-active, tabbar-md-text-color-active) !default;
 
