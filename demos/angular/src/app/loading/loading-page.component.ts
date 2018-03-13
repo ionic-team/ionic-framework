@@ -6,7 +6,6 @@ import { LoadingController } from '@ionic/angular';
   selector: 'app-loading-page',
   template: `
   <ion-app>
-  <ion-page class="show-page">
     <ion-header>
       <ion-toolbar>
         <ion-title>Test</ion-title>
@@ -15,7 +14,6 @@ import { LoadingController } from '@ionic/angular';
     <ion-content padding>
       <ion-button (click)="clickMe()">Open Basic Loading</ion-button>
     </ion-content>
-  </ion-page>
 </ion-app>
   `
 })
@@ -25,12 +23,12 @@ export class LoadingPageComponent {
 
   }
 
-  clickMe() {
-    const loading = this.loadingController.create({
+  async clickMe() {
+    const loading = await this.loadingController.create({
       duration: 1000,
       content: 'Ahem. Please wait.'
     });
-    loading.present();
+    return loading.present();
   }
 
 }

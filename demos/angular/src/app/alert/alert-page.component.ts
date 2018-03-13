@@ -6,7 +6,6 @@ import { AlertController } from '@ionic/angular';
   selector: 'app-alert-page',
   template: `
   <ion-app>
-  <ion-page class="show-page">
     <ion-header>
       <ion-toolbar>
         <ion-title>Test</ion-title>
@@ -15,18 +14,15 @@ import { AlertController } from '@ionic/angular';
     <ion-content padding>
       <ion-button (click)="clickMe()">Open Basic Alert</ion-button>
     </ion-content>
-  </ion-page>
 </ion-app>
   `
 })
 export class AlertPageComponent {
 
-  constructor(private alertController: AlertController) {
+  constructor(private alertController: AlertController) {}
 
-  }
-
-  clickMe() {
-    const alert = this.alertController.create({
+  async clickMe() {
+    const alert = await this.alertController.create({
       title: 'ohhhh snap',
       message: 'Ive been injected via Angular keeping the old api',
       buttons: [
@@ -45,14 +41,8 @@ export class AlertPageComponent {
           }
         }
       ]
-
     });
-    alert.present().then(() => {
-      // return alert.dismiss();
-
-    }).then(() => {
-      console.log('dismissed');
-    });
+    return alert.present();
   }
 
 }

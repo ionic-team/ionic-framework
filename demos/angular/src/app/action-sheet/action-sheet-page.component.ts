@@ -6,7 +6,6 @@ import { ActionSheetController } from '@ionic/angular';
   selector: 'app-action-sheet-page',
   template: `
   <ion-app>
-  <ion-page class="show-page">
     <ion-header>
       <ion-toolbar>
         <ion-title>Test</ion-title>
@@ -15,7 +14,6 @@ import { ActionSheetController } from '@ionic/angular';
     <ion-content padding>
       <ion-button (click)="clickMe()">Open Basic ActionSheet</ion-button>
     </ion-content>
-  </ion-page>
 </ion-app>
   `
 })
@@ -25,8 +23,8 @@ export class ActionSheetPageComponent {
 
   }
 
-  clickMe() {
-    const actionSheet = this.actionSheetController.create({
+  async clickMe() {
+    const actionSheet = await this.actionSheetController.create({
       title: 'Albums',
       buttons: [{
         text: 'Delete',

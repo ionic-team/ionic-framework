@@ -7,7 +7,6 @@ import { PopoverPageToPresent } from './popover-page-to-present';
   selector: 'app-popover-page',
   template: `
   <ion-app>
-    <ion-page class="show-page">
       <ion-header>
         <ion-toolbar>
           <ion-title>Test</ion-title>
@@ -21,7 +20,6 @@ import { PopoverPageToPresent } from './popover-page-to-present';
       <ion-content padding>
         <ion-button (click)="clickMe($event)">Open Basic Popover</ion-button>
       </ion-content>
-    </ion-page>
 </ion-app>
   `
 })
@@ -30,8 +28,8 @@ export class PopoverPageComponent {
   constructor(private popoverController: PopoverController) {
   }
 
-  clickMe(event: Event) {
-    const popover = this.popoverController.create({
+  async clickMe(event: Event) {
+    const popover = await this.popoverController.create({
       component: PopoverPageToPresent,
       ev: event
     });

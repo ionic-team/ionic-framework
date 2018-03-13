@@ -19,7 +19,6 @@ import { Component } from '@angular/core';
   ],
   template: `
   <ion-app>
-  <ion-page class="show-page">
   <ion-header #header>
     <ion-toolbar style="display: none" #toolbar>
       <ion-title>Hidden Toolbar</ion-title>
@@ -54,7 +53,6 @@ import { Component } from '@angular/core';
       <ion-title>Footer</ion-title>
     </ion-toolbar>
   </ion-footer>
-</ion-page>
 </ion-app>
   `
 })

@@ -2,7 +2,7 @@
 export function proxyMethod(ctrlName: string, methodName: string, ...args: any[]) {
   const controller = ensureElementInBody(ctrlName);
   return controller.componentOnReady()
-    .then(() => (controller as any)[methodName].apply(args));
+    .then(() => (controller as any)[methodName].apply(controller, args));
 }
 
 export function ensureElementInBody(elementName: string) {

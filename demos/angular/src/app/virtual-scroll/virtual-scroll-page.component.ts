@@ -6,7 +6,6 @@ import { ToastController } from '@ionic/angular';
   selector: 'app-virtual-scroll-page',
   template: `
   <ion-app>
-    <ion-page>
       <ion-header>
         <ion-toolbar>
           <ion-title>Test</ion-title>
@@ -33,8 +32,6 @@ import { ToastController } from '@ionic/angular';
   </ion-virtual-scroll>
 
     </ion-content>
-    </ion-page>
-
   </ion-app>`
 })
 export class VirtualScrollPageComponent {

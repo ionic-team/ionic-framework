@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-badge-page',
   template: `
   <ion-app>
-  <ion-page class="show-page">
     <ion-header>
       <ion-toolbar>
         <ion-title>Badges</ion-title>
@@ -71,7 +70,6 @@ import { Component } from '@angular/core';
         </ion-item>
       </ion-list>
     </ion-content>
-  </ion-page>
 </ion-app>
   `
 })

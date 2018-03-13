@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-card-page',
   template: `
   <ion-app>
-  <ion-page class="show-page">
     <ion-header>
       <ion-toolbar>
         <ion-title>Card</ion-title>
@@ -57,7 +56,6 @@ import { Component } from '@angular/core';
         </ion-item>
       </ion-card>
     </ion-content>
-  </ion-page>
 </ion-app>
   `
 })

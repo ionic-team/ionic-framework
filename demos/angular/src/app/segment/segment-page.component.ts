@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-segment-page',
   template: `
   <ion-app>
-    <ion-page class="show-page">
       <ion-header>
         <ion-toolbar>
           <ion-segment id="segment" [(ngModel)]="relationship" (ionChange)="onSegmentChanged($event)">
@@ -118,7 +117,6 @@ import { Component } from '@angular/core';
           </ion-segment>
         </ion-toolbar>
       </ion-footer>
-  </ion-page>
 </ion-app>
   `
 })

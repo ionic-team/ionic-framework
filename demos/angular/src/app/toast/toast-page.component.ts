@@ -6,7 +6,6 @@ import { ToastController } from '@ionic/angular';
   selector: 'app-toast-page',
   template: `
   <ion-app>
-  <ion-page class="show-page">
     <ion-header>
       <ion-toolbar>
         <ion-title>Test</ion-title>
@@ -15,7 +14,6 @@ import { ToastController } from '@ionic/angular';
     <ion-content padding>
       <ion-button (click)="clickMe()">Open Basic Toast</ion-button>
     </ion-content>
-  </ion-page>
 </ion-app>
   `
 })
@@ -25,8 +23,8 @@ export class ToastPageComponent {
 
   }
 
-  clickMe() {
-    const toast = this.toastController.create({
+  async clickMe() {
+    const toast = await this.toastController.create({
       closeButtonText: 'close dat toast',
       duration: 1000,
       message: 'Howdy ho toasty neighbor',

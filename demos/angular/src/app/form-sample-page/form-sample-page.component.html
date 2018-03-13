@@ -1,6 +1,5 @@
 <ion-app>
   <form #myForm="ngForm">
-    <ion-page class="show-page">
       <ion-header>
         <ion-toolbar>
           <ion-title>Sample Form</ion-title>
@@ -85,6 +84,5 @@
         <ion-button expand="block" [disabled]="myForm.invalid" (click)="save(myForm.value)">
           <ion-icon name="save" slot="start"></ion-icon>Looks Good to Me</ion-button>
       </ion-footer>
-    </ion-page>
   </form>
 </ion-app>

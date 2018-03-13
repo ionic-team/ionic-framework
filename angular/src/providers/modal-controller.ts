@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ModalOptions } from '@ionic/core';
 import { OverlayBaseController } from '../util/overlay';
-import { AngularDelegate } from '..';
+import { AngularDelegate } from './angular-delegate';
 
 @Injectable()
 export class ModalController extends OverlayBaseController<ModalOptions, HTMLIonModalElement> {

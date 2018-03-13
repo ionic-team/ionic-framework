@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { PostTestService } from './post-test/post-test.service';
 
-import { IonicAngularModule, IonicRouterModule } from '@ionic/angular';
+import { IonicAngularModule } from '@ionic/angular';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,7 +15,6 @@ import { IonicAngularModule, IonicRouterModule } from '@ionic/angular';
     BrowserModule,
     HttpClientModule,
     IonicAngularModule.forRoot(),
-    IonicRouterModule.forRoot()
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

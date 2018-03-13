@@ -4,7 +4,6 @@ import { ModalController } from '@ionic/angular';
 @Component({
   selector: 'page-one',
   template: `
-<ion-page>
   <ion-header>
     <ion-toolbar>
       <ion-title>Page One</ion-title>
@@ -17,7 +16,6 @@ import { ModalController } from '@ionic/angular';
     </ul>
     <ion-button class="dismiss-btn" (click)="dismiss()">Close Modal</ion-button>
   </ion-content>
-</ion-page>
   `,
   encapsulation: ViewEncapsulation.None
 })
