@@ -31,6 +31,7 @@ import { Events, setupProvideEvents } from './providers/events';
 import { LoadingController } from './providers/loading-controller';
 import { MenuController } from './providers/menu-controller';
 import { ModalController } from './providers/modal-controller';
+import { PickerController } from './providers/picker-controller';
 import { Platform } from './providers/platform';
 import { PopoverController } from './providers/popover-controller';
 import { ToastController } from './providers/toast-controller';
@@ -72,7 +73,7 @@ import { ToastController } from './providers/toast-controller';
   ],
   providers: [
     ModalController,
-    PopoverController
+    PopoverController,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
@@ -87,6 +88,7 @@ export class IonicAngularModule {
         ActionSheetController,
         Events,
         LoadingController,
+        PickerController,
         MenuController,
         Platform,
         ToastController,

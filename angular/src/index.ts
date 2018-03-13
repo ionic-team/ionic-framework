@@ -13,15 +13,16 @@ export { VirtualHeader } from './directives/virtual-header';
 export { VirtualFooter } from './directives/virtual-footer';
 
 /* Providers */
-export { ActionSheetController, ActionSheetProxy } from './providers/action-sheet-controller';
-export { AlertController, AlertProxy } from './providers/alert-controller';
+export { ActionSheetController } from './providers/action-sheet-controller';
+export { AlertController } from './providers/alert-controller';
 export { Events } from './providers/events';
-export { LoadingController, LoadingProxy } from './providers/loading-controller';
+export { LoadingController } from './providers/loading-controller';
 export { MenuController } from './providers/menu-controller';
-export { ModalController, ModalProxy } from './providers/modal-controller';
+export { PickerController } from './providers/picker-controller';
+export { ModalController } from './providers/modal-controller';
 export { Platform } from './providers/platform';
-export { PopoverController, PopoverProxy } from './providers/popover-controller';
-export { ToastController, ToastProxy } from './providers/toast-controller';
+export { PopoverController } from './providers/popover-controller';
+export { ToastController } from './providers/toast-controller';
 
 export * from './types/interfaces';
 
