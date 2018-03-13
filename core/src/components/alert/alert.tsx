@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, Config, CssClassMap } from '../../index';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { BACKDROP, OverlayEventDetail, OverlayInterface, autoFocus, dismiss, eventMethod, present } from '../../utils/overlays';
+import { BACKDROP, OverlayEventDetail, OverlayInterface, autoFocus, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -136,6 +136,15 @@ export class Alert implements OverlayInterface {
     this.dismiss(null, BACKDROP);
   }
 
+  @Listen('ionAlertWillDismiss')
+  protected dispatchCancelHandler(ev: CustomEvent) {
+    const role = ev.detail.role;
+    if (isCancel(role)) {
+      const cancelButton = this.buttons.find(b => b.role === 'cancel');
+      this.callButtonHandler(cancelButton);
+    }
+  }
+
   /**
    * Present the alert overlay after it has been created.
    */
@@ -177,6 +186,7 @@ export class Alert implements OverlayInterface {
       rbButton.handler(rbButton);
     }
   }
+
   private cbClick(inputIndex: number) {
     this.inputs = this.inputs.map((input, index) => {
       if (inputIndex === index) {
@@ -191,22 +201,28 @@ export class Alert implements OverlayInterface {
     }
   }
 
+  private buttonClick(button: AlertButton) {
+    const role = button.role;
+    if (isCancel(role)) {
+      this.dismiss(this.getValues(), role);
+      return;
+    }
+    const shouldDismiss = this.callButtonHandler(button);
+    if (shouldDismiss) {
+      this.dismiss(this.getValues(), button.role);
+    }
+  }
 
-  private buttonClick(button: any) {
-    let shouldDismiss = true;
-
-    if (button.handler) {
+  private callButtonHandler(button: AlertButton|undefined): boolean {
+    if (button && button.handler) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
       if (button.handler(this.getValues()) === false) {
         // if the return value of the handler is false then do not dismiss
-        shouldDismiss = false;
+        return false;
       }
     }
-
-    if (shouldDismiss) {
-      this.dismiss(this.getValues(), button.role);
-    }
+    return true;
   }
 
   private getValues(): any {

@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@
 import { Animation, AnimationBuilder, Config, CssClassMap } from '../../index';
 
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
+import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -123,6 +123,15 @@ export class ActionSheet implements OverlayInterface {
     this.dismiss(null, BACKDROP);
   }
 
+  @Listen('ionActionSheetWillDismiss')
+  protected dispatchCancelHandler(ev: CustomEvent) {
+    const role = ev.detail.role;
+    if (isCancel(role)) {
+      const cancelButton = this.buttons.find(b => b.role === 'cancel');
+      this.callButtonHandler(cancelButton);
+    }
+  }
+
   /**
    * Present the action sheet overlay after it has been created.
    */
@@ -150,15 +159,27 @@ export class ActionSheet implements OverlayInterface {
   }
 
   protected buttonClick(button: ActionSheetButton) {
-    let shouldDismiss = true;
-    if (button.handler) {
+    const role = button.role;
+    if (isCancel(role)) {
+      this.dismiss(undefined, role);
+      return;
+    }
+    const shouldDismiss = this.callButtonHandler(button);
+    if (shouldDismiss) {
+      this.dismiss(undefined, button.role);
+    }
+  }
+
+  private callButtonHandler(button: ActionSheetButton|undefined): boolean {
+    if (button && button.handler) {
+      // a handler has been provided, execute it
+      // pass the handler the values from the inputs
       if (button.handler() === false) {
-        shouldDismiss = false;
+        // if the return value of the handler is false then do not dismiss
+        return false;
       }
     }
-    if (shouldDismiss) {
-      this.dismiss();
-    }
+    return true;
   }
 
   hostData() {

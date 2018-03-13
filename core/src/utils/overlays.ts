@@ -167,6 +167,12 @@ export function onceEvent(element: HTMLElement, eventName: string, callback: (ev
   element.addEventListener(eventName, handler);
 }
 
+
+export function isCancel(role: string): boolean {
+  return role === 'cancel' || role === BACKDROP;
+}
+
+
 export interface OverlayEventDetail {
   data?: any;
   role?: string;
