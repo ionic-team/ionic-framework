@@ -40,15 +40,6 @@ $background-md-color:                   css-var($background-md-color-value, back
 $text-md-color:                         css-var($text-md-color-value, text-md-color) !default;
 $placeholder-text-md-color:             css-var($placeholder-text-color, placeholder-text-md-color) !default;
 
-// Generated Foreground and Background Colors for alpha
-// These variables are not used, but we call this here in order to add these colors
-// to the global list of css variables for a theme. This is only used to get a dump of all
-// css variables that the theme uses.
-// TODO: @color-mod: remove all of this
-// --------------------------------------------------
-$background-color-rgb:                  css-var(color-to-rgb-list($background-md-color-value), background-md-color-rgb) !default;
-$text-color-rgb:                        css-var(color-to-rgb-list($text-md-color-value), text-md-color-rgb) !default;
-
 // Default Material Design Background & Text Color Steps
 // --------------------------------------------------
 $background-md-color-step-50:           css-var(mix($text-md-color-value, $background-md-color-value, 5%), background-md-color-step-50) !default;
@@ -103,7 +94,7 @@ $overlay-md-background-color:           css-var(#fafafa, overlay-md-background-c
 // --------------------------------------------------
 $tabbar-md-background-color:            css-var($tabbar-background-color, tabbar-md-background-color) !default;
 $tabbar-md-background-color-focused:    css-var($tabbar-background-color-focused, tabbar-md-background-color-focused) !default;
-$tabbar-md-border-color:                css-var(unquote("rgba(0, 0, 0, #{$alpha-md-border-low})"), tabbar-md-border-color) !default; // TODO: @color-mod($border-md-color, a($alpha-lowest))
+$tabbar-md-border-color:                ion-color-alpha(rgb(0, 0, 0), tabbar-md-border-color, $alpha-md-border-low) !default; // TODO: @color-mod($border-md-color, a($alpha-lowest))
 $tabbar-md-text-color:                  css-var($text-md-color-step-400, tabbar-md-text-color) !default;
 $tabbar-md-text-color-active:           css-var($tabbar-text-color-active, tabbar-md-text-color-active) !default;
 
@@ -123,5 +114,3 @@ $item-md-background-color:              css-var($item-background-color, item-md-
 $item-md-background-color-active:       css-var(#f1f1f1, item-md-background-color-active) !default;
 $item-md-border-color:                  css-var(#dedede, item-md-border-color) !default;
 $item-md-text-color:                    css-var($item-text-color, item-md-text-color) !default;
-
-@include css-variables-to-root($ion-colors-md);

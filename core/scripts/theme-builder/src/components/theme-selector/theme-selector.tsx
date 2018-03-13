@@ -5,13 +5,18 @@ import { COLOR_URL, getThemeUrl, STORED_THEME_KEY }                     from '..
 
 const PLACEHOLDER_COLOR = '#ff00ff';
 
+enum DefaultCSSDuplicateMode {
+  inherit = 'inherit',
+  ignore = 'ignore',
+  bake = 'bake'
+}
+
 @Component({
   tag: 'theme-selector',
   styleUrl: 'theme-selector.css'
 })
 
 export class ThemeSelector {
-
   @Element() el: HTMLThemeSelectorElement;
   @State() generateContrast: boolean = false;
   @State() generateSteps: boolean = true;
@@ -29,6 +34,7 @@ export class ThemeSelector {
   private currentHoveredProperty: string;
   private cssHolder: HTMLStyleElement;
   private proxyElement: HTMLElement;
+  private defaultCSSDuplicateMode: DefaultCSSDuplicateMode = DefaultCSSDuplicateMode.bake;
 
   changeColor (property: string, value: Color | string) {
     this.themeVariables = this.themeVariables.map(themeVariable => {
@@ -56,18 +62,32 @@ export class ThemeSelector {
     await this.loadThemeCss();
   }
 
-  generateCss () {
+  async generateCss () {
     console.log('ThemeSelector generateCss', this.themeName);
 
-    const c: string[] = [];
+    const defaultThemeURL = getThemeUrl('default'),
+      defaultCSS: string = this.themeName === 'default' ? '' : await fetch(defaultThemeURL).then(r => r.text()),
+      c: string[] = [];
+
     c.push(`/** ${this.themeName} theme **/`);
     c.push(`\n`);
     c.push(':root {');
 
     this.themeVariables.forEach(themeVariable => {
       const variableValue = themeVariable.value,
-        value = variableValue instanceof Color ? variableValue.hex : variableValue;
-      c.push(`  ${themeVariable.property}: ${value};`);
+        value = variableValue instanceof Color ? variableValue.hex : variableValue,
+        match = defaultCSS.match(`(${themeVariable.property}): ?(.*);`);
+
+      let matchValue: string | number = match && match[2];
+      if (matchValue && !matchValue.match(/,|#/)) matchValue = parseFloat(matchValue);
+
+      if (this.defaultCSSDuplicateMode === DefaultCSSDuplicateMode.bake || matchValue !== value) {
+        c.push(`  ${themeVariable.property}: ${value};`);
+      } else {
+        if (this.defaultCSSDuplicateMode === DefaultCSSDuplicateMode.inherit) {
+          c.push(`  ${themeVariable.property}: inherit;`);
+        }
+      }
 
       this.el.style.setProperty(themeVariable.property, value.toString());
     });
@@ -124,6 +144,12 @@ export class ThemeSelector {
     localStorage.setItem(STORED_THEME_KEY, this.themeName);
 
     await this.loadThemeCss();
+  }
+
+
+  async onDefaultCSSDuplicateChange (mode: DefaultCSSDuplicateMode) {
+    this.defaultCSSDuplicateMode = mode;
+    await this.generateCss();
   }
 
   @Listen('colorChange')
@@ -239,7 +265,7 @@ export class ThemeSelector {
               return <variable-selector
                 class={{'is-primary': !!computedReferences.length, used: this.propertiesUsed.indexOf(d.property) >= 0}}
                 property={d.property} value={d.value}
-                usedWith={Array.from(new Set(computedReferences))}></variable-selector>;
+                usedWith={Array.from(new Set(computedReferences))}/>;
             })
         }
       </section>,
@@ -269,7 +295,7 @@ export class ThemeSelector {
       </section>;
 
     return [
-      <div id="css-proxy" ref={el => this.proxyElement = el}></div>,
+      <div id="css-proxy" ref={el => this.proxyElement = el}/>,
       <div>
         <div class="top-bar">
           <select onChange={this.onChangeUrl.bind(this)}>
@@ -283,25 +309,47 @@ export class ThemeSelector {
               <div class="row">
                 <div class="checkbox">
                   <input type="checkbox" id="generateContrast" checked={this.generateContrast}
-                         onChange={this.toggleCheck.bind(this, 'generateContrast')}></input>
+                         onChange={this.toggleCheck.bind(this, 'generateContrast')}/>
                   <label>Auto Contrast</label>
                 </div>
                 <div class="checkbox">
                   <input type="checkbox" id="generateVariations" checked={this.generateVariations}
-                         onChange={this.toggleCheck.bind(this, 'generateVariations')}></input>
+                         onChange={this.toggleCheck.bind(this, 'generateVariations')}/>
                   <label>Auto Shade/Tint</label>
                 </div>
               </div>
               <div class="row">
                 <div class="checkbox">
                   <input type="checkbox" id="generateSteps" checked={this.generateSteps}
-                         onChange={this.toggleCheck.bind(this, 'generateSteps')}></input>
+                         onChange={this.toggleCheck.bind(this, 'generateSteps')}/>
                   <label>Auto Steps</label>
                 </div>
                 <div class="checkbox">
                   <input type="checkbox" id="showSteps" checked={this.showSteps}
-                         onChange={this.toggleCheck.bind(this, 'showSteps')}></input>
+                         onChange={this.toggleCheck.bind(this, 'showSteps')}/>
                   <label>Show Steps</label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="radio-group">
+                  <label>Default Duplication Mode: </label>
+                  <div class="radio">
+                    <input name="radio-default-css-duplicate" type="radio"
+                           onChange={this.onDefaultCSSDuplicateChange.bind(this, DefaultCSSDuplicateMode.inherit)}/>
+                    <label>inherit</label>
+                  </div>
+
+                  <div class="radio">
+                    <input name="radio-default-css-duplicate" type="radio"
+                           onChange={this.onDefaultCSSDuplicateChange.bind(this, DefaultCSSDuplicateMode.ignore)}/>
+                    <label>ignore</label>
+                  </div>
+
+                  <div class="radio">
+                    <input name="radio-default-css-duplicate" type="radio" checked
+                           onChange={this.onDefaultCSSDuplicateChange.bind(this, DefaultCSSDuplicateMode.bake)}/>
+                    <label>bake</label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -383,4 +431,4 @@ export class ThemeSelector {
       contrast && (contrast.value = color.contrast());
     }
   }
-};
+}

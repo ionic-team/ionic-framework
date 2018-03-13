@@ -137,7 +137,7 @@ button[disabled],
   $color-base: ion-color($colors-ios, $color-name, base, ios);
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
   $color-tint: ion-color($colors-ios, $color-name, shade, ios);
-  $bg-color-focused: ion-color-alpha($colors-ios, $color-name, $alpha-ios-focused, ios);
+  $bg-color-focused: ion-color($colors-ios, $color-name, base, ios, $alpha-ios-focused);
 
   .button-outline-ios-#{$color-name} {
     border-color: $color-base;
@@ -190,7 +190,7 @@ button[disabled],
 
 @mixin ios-button-clear($color-name) {
   $fg-color: ion-color($colors-ios, $color-name, base, ios);
-  $bg-color-focused: ion-color-alpha($colors-ios, $color-name, $alpha-ios-focused, ios);
+  $bg-color-focused: ion-color($colors-ios, $color-name, base, ios, $alpha-ios-focused);
 
   .button-clear-ios-#{$color-name} {
     border-color: $button-ios-clear-border-color;

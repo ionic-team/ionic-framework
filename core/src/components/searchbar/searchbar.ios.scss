@@ -156,11 +156,10 @@
 
 // Generate Default Search Bar Colors
 // --------------------------------------------------
-
 @each $color-name, $color-value in $colors-ios {
   $color-base: ion-color($colors-ios, $color-name, base, ios);
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-shade: ion-color($colors-ios, $color-name, shade, ios);
+  $color-contrast-alpha: ion-color($colors-ios, $color-name, contrast, ios, $alpha-ios-lowest);
   $color-tint: ion-color($colors-ios, $color-name, tint, ios);
 
   .searchbar-ios-#{$color-name} .searchbar-cancel-button-ios {
@@ -179,7 +178,7 @@
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-input {
     @include placeholder($color-contrast, $opacity: .5);
     color: $color-contrast;
-    background: $color-shade;
+    background: $color-contrast-alpha;
   }
 
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-clear-icon {

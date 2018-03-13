@@ -127,7 +127,18 @@ $modes: (ios, md);
   @return $color;
 }
 
-@function ion-color($colors, $name, $variation: null, $mode: null) {
+// Also can take the format
+@function ion-color-alpha($color, $name, $alpha) {
+  @if (type-of($color) == color) {
+    $value: color-to-rgb-list($color);
+    $value: css-var($value, "#{$name}-rgb");
+    @return unquote("rgba(#{$value}, #{$alpha})");
+  } @else {
+    @error "ion-color-alpha requires a color value. '#{$color}' was provided. Use ion-color for alpha values from the color map";
+  }
+}
+
+@function ion-color($colors, $name, $variation: null, $mode: null, $alpha: null) {
 
   // If CSS variables are off or someone passed a raw color, we will be passed color values
   // we need to look up the map in order to provide variations
@@ -184,23 +195,14 @@ $modes: (ios, md);
       $name: "#{$name}-#{$variation}";
     }
 
+    @if $alpha {
+      @return ion-color-alpha($color, $name, $alpha)
+    }
+
     @return css-var($color, $name);
   }
 
   @error "Unknown Color: '#{$name}' with variation '#{$variation}'";
-}
-
-// Also can take the format
-// ion-color-alpha($color-value, $css-variable-name, $alpha) {
-@function ion-color-alpha($colors, $name, $alpha, $mode: null) {
-  @if (type-of($colors) == color) {
-    $value: color-to-rgb-list($colors);
-    $fallback: css-var($value, $name);
-    @return unquote("rgba(#{$value}, #{$alpha})");
-  } @else {
-    $value: ion-color($colors, $name, rgb, $mode);
-    @return unquote("rgba(#{$value}, #{$alpha})");
-  }
 }
 
 @function ion-extend-colors($parent, $children...) {
