@@ -31,7 +31,7 @@ export class Popover implements OverlayInterface {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
-  @Prop({ mutable: true }) delegate: FrameworkDelegate;
+  @Prop() delegate: FrameworkDelegate;
   @Prop() overlayId: number;
 
   /**
@@ -185,7 +185,7 @@ export class Popover implements OverlayInterface {
       ...getClassMap(this.cssClass),
       'popover-viewport': true
     };
-    return attachComponent(container, this.component, classes, data)
+    return attachComponent(this.delegate, container, this.component, classes, data)
       .then(el => this.usersElement = el)
       .then(() => present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.ev));
   }

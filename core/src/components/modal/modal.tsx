@@ -33,7 +33,7 @@ export class Modal implements OverlayInterface {
   @Prop({ context: 'config' }) config: Config;
 
   @Prop() overlayId: number;
-  @Prop({ mutable: true }) delegate: FrameworkDelegate;
+  @Prop() delegate: FrameworkDelegate;
 
   /**
    * The color to use from your Sass `$colors` map.
@@ -175,7 +175,7 @@ export class Modal implements OverlayInterface {
       ...getClassMap(this.cssClass),
       'ion-page': true
     };
-    return attachComponent(container, this.component, classes, data)
+    return attachComponent(this.delegate, container, this.component, classes, data)
       .then(el => this.usersElement = el)
       .then(() => present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, undefined));
   }

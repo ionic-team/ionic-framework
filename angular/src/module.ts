@@ -25,6 +25,7 @@ import { VirtualHeader } from './directives/virtual-header';
 import { VirtualFooter } from './directives/virtual-footer';
 
 /* Providers */
+import { AngularDelegate } from './providers/angular-delegate';
 import { ActionSheetController } from './providers/action-sheet-controller';
 import { AlertController } from './providers/alert-controller';
 import { Events, setupProvideEvents } from './providers/events';
@@ -71,10 +72,6 @@ import { ToastController } from './providers/toast-controller';
   imports: [
     CommonModule,
   ],
-  providers: [
-    ModalController,
-    PopoverController,
-  ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ]
@@ -84,6 +81,9 @@ export class IonicAngularModule {
     return {
       ngModule: IonicAngularModule,
       providers: [
+        ModalController,
+        PopoverController,
+        AngularDelegate,
         AlertController,
         ActionSheetController,
         Events,

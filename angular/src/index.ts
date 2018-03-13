@@ -13,6 +13,7 @@ export { VirtualHeader } from './directives/virtual-header';
 export { VirtualFooter } from './directives/virtual-footer';
 
 /* Providers */
+export { AngularDelegate } from './providers/angular-delegate';
 export { ActionSheetController } from './providers/action-sheet-controller';
 export { AlertController } from './providers/alert-controller';
 export { Events } from './providers/events';

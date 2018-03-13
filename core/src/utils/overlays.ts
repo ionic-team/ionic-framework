@@ -1,5 +1,5 @@
 import { EventEmitter } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, CssClassMap } from '..';
+import { Animation, AnimationBuilder, Config, CssClassMap, FrameworkDelegate } from '..';
 
 let lastId = 1;
 
@@ -137,7 +137,10 @@ export function autoFocus(containerEl: HTMLElement): HTMLElement|null {
   return null;
 }
 
-export function attachComponent(container: Element, component: string|HTMLElement, cssClasses: CssClassMap, data: any): Promise<HTMLElement> {
+export function attachComponent(delegate: FrameworkDelegate, container: Element, component: string|HTMLElement, cssClasses: CssClassMap, data: any): Promise<HTMLElement> {
+  if (delegate) {
+    return delegate.attachViewToDom(container, component, data, Object.keys(cssClasses));
+  }
   const el = (typeof component === 'string') ? document.createElement(component) : component;
   Object.assign(el, data);
   Object.keys(cssClasses).forEach(c => el.classList.add(c));

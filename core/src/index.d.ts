@@ -109,7 +109,7 @@ export { PlatformConfig } from './global/platform-configs';
 export * from './components';
 
 export { DomController, RafCallback } from './global/dom-controller';
-export { FrameworkDelegate, FrameworkMountingData } from './utils/dom-framework-delegate';
+export { FrameworkDelegate } from './utils/dom-framework-delegate';
 export { OverlayEventDetail } from './utils/overlays';
 
 export interface Config {
