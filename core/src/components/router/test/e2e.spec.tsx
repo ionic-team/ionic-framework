@@ -73,11 +73,11 @@ function conferenceAppRouting() {
 
 
 
-function getRouteIDs(path: string, routes: RouteChain[]): string[] {
+export function getRouteIDs(path: string, routes: RouteChain[]): string[] {
   return routerPathToChain(parsePath(path), routes).map(r => r.id);
 }
 
-function getRoutePath(ids: RouteID[], routes: RouteChain[]): string {
+export function getRoutePath(ids: RouteID[], routes: RouteChain[]): string {
   return generatePath(chainToPath(routerIDsToChain(ids, routes)));
 }
 

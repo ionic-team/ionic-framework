@@ -122,13 +122,30 @@ export function routerPathToChain(path: string[], chains: RouteChain[]): RouteCh
   for (const chain of chains) {
     const matchedChain = matchesPath(path, chain);
     if (matchedChain !== null) {
-      if (matchedChain.length > matches) {
-        matches = matchedChain.length;
+      const score = computePriority(matchedChain);
+      if (score > matches) {
+        matches = score;
         match = matchedChain;
       }
     }
   }
   return match;
+}
+
+export function computePriority(chain: RouteChain): number {
+  let score = 1;
+  let level = 1;
+  for (const route of chain) {
+    for (const path of route.path) {
+      if (path[0] === ':') {
+        score += Math.pow(1, level);
+      } else if (path !== '') {
+        score += Math.pow(2, level);
+      }
+      level++;
+    }
+  }
+  return score;
 }
 
 export class RouterSegments {

@@ -140,6 +140,44 @@ describe('routerPathToChain', () => {
     expect(routerPathToChain(['hola', 'adios'], routes)).toEqual(chain4);
   });
 
+  it('should match the route with higher priority 2', () => {
+
+    const chain1: RouteChain = [{ id: '1', path: ['categories', ':category_slug'], params: undefined }];
+    const chain2: RouteChain = [{ id: '2', path: ['workouts', ':workout_slug'], params: undefined }];
+    const chain3: RouteChain = [{ id: '3', path: ['workouts', ':workout_slug', 'time-select'], params: undefined }];
+    const chain4: RouteChain = [{ id: '4', path: ['workouts', ':workout_slug', 'end-workout'], params: undefined }];
+    const chain5: RouteChain = [{ id: '5', path: ['plans'], params: undefined }];
+    const chain6: RouteChain = [{ id: '6', path: ['custom'], params: undefined }];
+    const chain7: RouteChain = [{ id: '7', path: ['workouts', 'list'], params: undefined }];
+
+    const routes: RouteChain[] = [
+      chain1,
+      chain2,
+      chain3,
+      chain4,
+      chain5,
+      chain6,
+      chain7
+    ];
+    // no match
+    expect(routerPathToChain(['categories'], routes)).toEqual(null);
+    expect(routerPathToChain(['workouts'], routes)).toEqual(null);
+
+    expect(routerPathToChain(['plans'], routes)).toEqual(chain5);
+    expect(routerPathToChain(['custom'], routes)).toEqual(chain6);
+    expect(routerPathToChain(['workouts', 'list'], routes)).toEqual(chain7);
+
+    expect(routerPathToChain(['workouts', 'hola'], routes)).toEqual(
+      [{ id: '2', path: ['workouts', ':workout_slug'], params: {'workout_slug': 'hola'} }]
+    );
+    expect(routerPathToChain(['workouts', 'hello', 'time-select'], routes)).toEqual(
+      [{ id: '3', path: ['workouts', ':workout_slug', 'time-select'], params: {'workout_slug': 'hello'} }]
+    );
+    expect(routerPathToChain(['workouts', 'hello2', 'end-workout'], routes)).toEqual(
+      [{ id: '4', path: ['workouts', ':workout_slug', 'end-workout'], params: {'workout_slug': 'hello2'} }]
+    );
+  });
+
   it('should match the default route', () => {
     const chain1: RouteChain = [
       { id: 'tabs', path: [''], params: undefined },
