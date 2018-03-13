@@ -5,6 +5,6 @@ import { OverlayBaseController } from '../util/overlay';
 @Injectable()
 export class ToastController extends OverlayBaseController<ToastOptions, HTMLIonToastElement> {
   constructor() {
-    super('ion-popover-controller');
+    super('ion-toast-controller');
   }
 }

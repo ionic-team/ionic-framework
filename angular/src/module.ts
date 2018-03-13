@@ -69,6 +69,11 @@ import { ToastController } from './providers/toast-controller';
     VirtualHeader,
     VirtualFooter
   ],
+  providers: [
+    AngularDelegate,
+    ModalController,
+    PopoverController,
+  ],
   imports: [
     CommonModule,
   ],
@@ -81,9 +86,6 @@ export class IonicAngularModule {
     return {
       ngModule: IonicAngularModule,
       providers: [
-        ModalController,
-        PopoverController,
-        AngularDelegate,
         AlertController,
         ActionSheetController,
         Events,

@@ -9,7 +9,19 @@ import { FrameworkDelegate } from '@ionic/core';
 
 
 @Injectable()
-export class AngularDelegate implements FrameworkDelegate {
+export class AngularDelegate {
+
+  constructor(
+    private appRef: ApplicationRef
+  ) {}
+
+  create(cfr: ComponentFactoryResolver, injector: Injector) {
+    return new AngularFrameworkDelegate(cfr, injector, this.appRef);
+  }
+}
+
+
+export class AngularFrameworkDelegate implements FrameworkDelegate {
 
   private elRefMap = new WeakMap<HTMLElement, any>();
 

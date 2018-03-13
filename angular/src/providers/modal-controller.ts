@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ComponentFactoryResolver, Injectable, Injector } from '@angular/core';
 import { ModalOptions } from '@ionic/core';
 import { OverlayBaseController } from '../util/overlay';
 import { AngularDelegate } from './angular-delegate';
@@ -6,6 +6,8 @@ import { AngularDelegate } from './angular-delegate';
 @Injectable()
 export class ModalController extends OverlayBaseController<ModalOptions, HTMLIonModalElement> {
   constructor(
+    private cfr: ComponentFactoryResolver,
+    private injector: Injector,
     private angularDelegate: AngularDelegate,
   ) {
     super('ion-modal-controller');
@@ -14,7 +16,7 @@ export class ModalController extends OverlayBaseController<ModalOptions, HTMLIon
   create(opts?: ModalOptions): Promise<HTMLIonModalElement> {
     return super.create({
       ...opts,
-      delegate: this.angularDelegate
+      delegate: this.angularDelegate.create(this.cfr, this.injector)
     });
   }
 }
