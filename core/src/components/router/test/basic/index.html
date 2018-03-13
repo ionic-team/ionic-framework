@@ -106,16 +106,16 @@
   <ion-app>
 
     <ion-router>
-      <ion-route path="/" component="tab-one"> </ion-route>
+      <ion-route url="/" component="tab-one"> </ion-route>
 
-      <ion-route path="/two" component="tab-two">
+      <ion-route url="/two" component="tab-two">
         <ion-route component="page-one"> </ion-route>
-        <ion-route path="/second-page" component="page-two"> </ion-route>
-        <ion-route path="/three-page" component="page-three"> </ion-route>
+        <ion-route url="/second-page" component="page-two"> </ion-route>
+        <ion-route url="/three-page" component="page-three"> </ion-route>
       </ion-route>
 
-      <ion-route path="/three" component="tab3"> </ion-route>
-      <ion-route path="/four" component="tab4"> </ion-route>
+      <ion-route url="/three" component="tab3"> </ion-route>
+      <ion-route url="/four" component="tab4"> </ion-route>
 
     </ion-router>
 

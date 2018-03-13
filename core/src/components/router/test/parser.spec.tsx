@@ -60,7 +60,7 @@ describe('flattenRouterTree', () => {
 
 export function mockRouteElement(path: string, component: string) {
   const el = mockElement('ion-route');
-  el.setAttribute('path', path);
+  el.setAttribute('url', path);
   (el as any).component = component;
   return el;
 }

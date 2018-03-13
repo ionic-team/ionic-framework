@@ -12,17 +12,17 @@
 string
 
 
-#### params
+#### componentProps
 
 
 
 
-#### path
+#### redirectTo
 
 string
 
 
-#### redirectTo
+#### url
 
 string
 
@@ -34,17 +34,17 @@ string
 string
 
 
-#### params
+#### component-props
 
 
 
 
-#### path
+#### redirect-to
 
 string
 
 
-#### redirect-to
+#### url
 
 string
 

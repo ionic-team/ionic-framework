@@ -5,8 +5,8 @@ import { Component, Prop } from '@stencil/core';
   tag: 'ion-route'
 })
 export class Route {
-  @Prop() path = '';
+  @Prop() url = '';
   @Prop() component: string;
   @Prop() redirectTo: string;
-  @Prop() params: {[key: string]: any};
+  @Prop() componentProps: {[key: string]: any};
 }

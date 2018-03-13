@@ -2601,9 +2601,9 @@ declare global {
   namespace JSXElements {
     export interface IonRouteAttributes extends HTMLAttributes {
       component?: string;
-      params?: {[key: string]: any};
-      path?: string;
+      componentProps?: {[key: string]: any};
       redirectTo?: string;
+      url?: string;
     }
   }
 }

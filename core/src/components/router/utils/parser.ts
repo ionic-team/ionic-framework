@@ -10,7 +10,7 @@ export function readRedirects(root: Element): RouteRedirect[] {
       throw new Error('Can\'t mix the component and redirectTo attribute in the same ion-route');
     }
     return {
-      path: parsePath(readProp(el, 'path')),
+      path: parsePath(readProp(el, 'url')),
       to: parsePath(readProp(el, 'redirectTo'))
     };
   });
@@ -20,14 +20,10 @@ export function readRoutes(root: Element): RouteTree {
   return (Array.from(root.children) as HTMLIonRouteElement[])
     .filter(el => el.tagName === 'ION-ROUTE' && el.component)
     .map(el => {
-      const path = parsePath(readProp(el, 'path'));
-      if (path.includes(':id')) {
-        console.warn('Using ":id" is not recommended in `ion-route`, it causes conflicts in the DOM');
-      }
       return {
-        path: path,
+        path: parsePath(readProp(el, 'url')),
         id: readProp(el, 'component').toLowerCase(),
-        params: el.params,
+        params: el.componentProps,
         children: readRoutes(el)
       };
     });
