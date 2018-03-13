@@ -200,6 +200,12 @@ export interface OverlayInterface {
   dismiss(data?: any, role?: string): Promise<void>;
 }
 
+export interface OverlayController {
+  create(opts?: any): Promise<HTMLElement>;
+  dismiss(data?: any, role?: string, alertId?: number): Promise<void>;
+  getTop(): HTMLElement;
+}
+
 export interface HTMLIonOverlayElement extends HTMLStencilElement, OverlayInterface {}
 
 export type OverlayMap = Map<number, HTMLIonOverlayElement>;

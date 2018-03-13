@@ -1,6 +1,6 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { OverlayController, PopoverOptions } from '../../index';
-import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+import { PopoverOptions } from '../../index';
+import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-popover-controller'

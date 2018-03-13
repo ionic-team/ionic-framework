@@ -1,6 +1,4 @@
-
 import { proxyMethod } from '../util/util';
-
 
 export class OverlayBaseController<Opts, Overlay> {
   constructor(private ctrl: string) {}
@@ -11,5 +9,9 @@ export class OverlayBaseController<Opts, Overlay> {
 
   dismiss(data?: any, role?: string, id = -1): Promise<void> {
     return proxyMethod(this.ctrl, 'dismiss', data, role, id);
+  }
+
+  getTop(): Promise<Overlay> {
+    return proxyMethod(this.ctrl, 'getTop');
   }
 }

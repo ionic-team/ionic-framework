@@ -1,6 +1,6 @@
 import { Component, Listen, Method } from '@stencil/core';
-import { LoadingOptions, OverlayController } from '../../index';
-import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+import { LoadingOptions } from '../../index';
+import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 
 @Component({

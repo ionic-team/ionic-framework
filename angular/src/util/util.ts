@@ -1,6 +1,4 @@
 
-
-
 export function proxyMethod(ctrlName: string, methodName: string, ...args: any[]) {
   const controller = ensureElementInBody(ctrlName);
   return controller.componentOnReady()
@@ -14,19 +12,4 @@ export function ensureElementInBody(elementName: string) {
     document.body.appendChild(element);
   }
   return element as HTMLStencilElement;
-}
-
-export function removeAllNodeChildren(element: HTMLElement) {
-  while (element.firstChild) {
-    element.removeChild(element.firstChild);
-  }
-}
-
-export function isString(something: any) {
-  return typeof something === 'string' ? true : false;
-}
-
-export function getIonApp(): Promise<HTMLIonAppElement> {
-  const element = ensureElementInBody('ion-app') as HTMLIonAppElement;
-  return element.componentOnReady();
 }

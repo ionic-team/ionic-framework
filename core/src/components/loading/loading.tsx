@@ -19,7 +19,6 @@ import mdLeaveAnimation from './animations/md.leave';
     theme: 'loading'
   }
 })
-
 export class Loading implements OverlayInterface {
 
   private durationTimeout: any;
