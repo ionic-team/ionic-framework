@@ -37,6 +37,7 @@ export class NavControllerBase implements NavOutlet {
   private _init = false;
   private _queue: TransitionInstruction[] = [];
   private _sbTrns: Transition;
+  private useRouter = false;
   isTransitioning = false;
   private _destroyed = false;
 
@@ -60,8 +61,7 @@ export class NavControllerBase implements NavOutlet {
   @Watch('root')
   rootChanged() {
     if (this.root) {
-      const useRouter = !!document.querySelector('ion-router');
-      if (!useRouter) {
+      if (!this.useRouter) {
         this.setRoot(this.root);
       } else if (Build.isDev) {
         console.warn('<ion-nav> does not support a root attribute when using ion-router.');
@@ -72,6 +72,7 @@ export class NavControllerBase implements NavOutlet {
   @Event() ionNavChanged: EventEmitter;
 
   componentWillLoad() {
+    this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
     if (this.swipeBackEnabled === undefined) {
       this.swipeBackEnabled = this.mode === 'ios' && this.config.getBoolean('swipeBackEnabled', true);
     }
@@ -359,9 +360,9 @@ export class NavControllerBase implements NavOutlet {
     this.isTransitioning = false;
     // let's see if there's another to kick off
     this._nextTrns();
-    const router = document.querySelector('ion-router');
     const isPop = result.direction === NavDirection.back;
-    if (router) {
+    if (this.useRouter) {
+      const router = document.querySelector('ion-router');
       router.navChanged(isPop);
     }
 

@@ -200,6 +200,7 @@ export class Modal implements OverlayInterface {
 
   hostData() {
     return {
+      'no-router': true,
       style: {
         zIndex: 20000 + this.overlayId,
       }

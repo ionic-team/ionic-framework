@@ -215,6 +215,7 @@ export class Popover implements OverlayInterface {
       style: {
         zIndex: 10000 + this.overlayId,
       },
+      'no-router': true,
       class: {
         ...themedClasses
       }

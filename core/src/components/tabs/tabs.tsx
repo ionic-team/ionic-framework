@@ -11,6 +11,7 @@ export class Tabs implements NavOutlet {
 
   private ids = -1;
   private transitioning = false;
+  private useRouter = false;
   private tabsId: number = (++tabIds);
   private leavingTab: HTMLIonTabElement | undefined;
 
@@ -70,6 +71,8 @@ export class Tabs implements NavOutlet {
   @Event() ionNavChanged: EventEmitter<any>;
 
   componentWillLoad() {
+    this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
+
     this.loadConfig('tabsPlacement', 'bottom');
     this.loadConfig('tabsLayout', 'icon-top');
     this.loadConfig('tabsHighlight', true);
@@ -159,7 +162,7 @@ export class Tabs implements NavOutlet {
   }
 
   private initSelect(): Promise<void> {
-    if (document.querySelector('ion-router')) {
+    if (this.useRouter) {
       if (Build.isDev) {
         const selectedTab = this.tabs.find(t => t.selected);
         if (selectedTab) {
@@ -241,9 +244,11 @@ export class Tabs implements NavOutlet {
   }
 
   private notifyRouter() {
-    const router = document.querySelector('ion-router');
-    if (router) {
-      return router.navChanged(false);
+    if (this.useRouter) {
+      const router = document.querySelector('ion-router');
+      if (router) {
+        return router.navChanged(false);
+      }
     }
     return Promise.resolve(false);
   }

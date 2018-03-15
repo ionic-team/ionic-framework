@@ -50,7 +50,7 @@ export function readNavState(node: HTMLElement) {
   return {ids, pivot};
 }
 
-const QUERY = 'ion-nav,ion-tabs';
+const QUERY = ':not([no-router]) ion-nav,:not([no-router]) ion-tabs';
 
 function searchNavNode(root: HTMLElement): NavOutletElement {
   if (root.matches(QUERY)) {
