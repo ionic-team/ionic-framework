@@ -7,9 +7,9 @@ export interface NavOutlet {
 }
 
 export interface RouterEventDetail {
-  from: string[]|null;
-  redirectedFrom: string[]|null;
-  to: string[];
+  from: string|null;
+  redirectedFrom: string|null;
+  to: string;
 }
 
 export interface RouteRedirect {

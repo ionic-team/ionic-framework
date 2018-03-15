@@ -2,7 +2,7 @@ import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop } 
 import { Config, DomController } from '../../index';
 import { flattenRouterTree, readRedirects, readRoutes } from './utils/parser';
 import { readNavState, writeNavState } from './utils/dom';
-import { chainToPath, parsePath, readPath, writePath } from './utils/path';
+import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
 import { RouteChain, RouteRedirect, RouterEventDetail } from './utils/interfaces';
 import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matching';
 import { printRoutes } from './utils/debug';
@@ -14,7 +14,7 @@ import { printRoutes } from './utils/debug';
 export class Router {
 
   private routes: RouteChain[];
-  private previousPath: string[] = null;
+  private previousPath: string = null;
   private redirects: RouteRedirect[];
   private busy = false;
   private init = false;
@@ -143,9 +143,10 @@ export class Router {
     return readPath(window.location, this.base, this.useHash);
   }
 
-  private emitRouteChange(path: string[], redirectedFrom: string[]|null) {
+  private emitRouteChange(path: string[], redirectPath: string[]|null) {
     const from = this.previousPath;
-    const to = path.slice();
+    const redirectedFrom = redirectPath ? generatePath(redirectPath) : null;
+    const to = generatePath(path);
     this.previousPath = to;
     this.ionRouteChanged.emit({
       from,
