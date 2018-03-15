@@ -1,13 +1,13 @@
 import { NavOutlet, NavOutletElement, RouteChain, RouteID } from './interfaces';
 
-export function writeNavState(root: HTMLElement, chain: RouteChain|null, index: number, direction: number): Promise<void> {
+export function writeNavState(root: HTMLElement, chain: RouteChain|null, index: number, direction: number): Promise<boolean> {
   if (!chain || index >= chain.length) {
-    return Promise.resolve();
+    return Promise.resolve(direction === 0);
   }
   const route = chain[index];
   const node = searchNavNode(root);
   if (!node) {
-    return Promise.resolve();
+    return Promise.resolve(direction === 0);
   }
   return node.componentOnReady()
     .then(() => node.setRouteId(route.id, route.params, direction))
@@ -18,10 +18,13 @@ export function writeNavState(root: HTMLElement, chain: RouteChain|null, index: 
       const nextEl = node.getContainerEl();
       const promise = (nextEl)
         ? writeNavState(nextEl, chain, index + 1, direction)
-        : Promise.resolve();
+        : Promise.resolve(direction === 0);
 
       if (result.markVisible) {
-        return promise.then(() => result.markVisible());
+        return promise.then((c) => {
+          result.markVisible();
+          return c;
+        });
       }
       return promise;
     });

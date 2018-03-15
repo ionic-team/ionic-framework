@@ -29,6 +29,11 @@ string
 boolean
 
 
+## Events
+
+#### ionRouteChanged
+
+
 ## Methods
 
 #### navChanged()

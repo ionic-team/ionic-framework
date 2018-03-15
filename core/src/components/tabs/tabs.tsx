@@ -245,7 +245,7 @@ export class Tabs implements NavOutlet {
     if (router) {
       return router.navChanged(false);
     }
-    return Promise.resolve();
+    return Promise.resolve(false);
   }
 
   private shouldSwitch(selectedTab: HTMLIonTabElement) {

@@ -6,6 +6,12 @@ export interface NavOutlet {
   getContainerEl(): HTMLElement | null;
 }
 
+export interface RouterEventDetail {
+  from: string[]|null;
+  redirectedFrom: string[]|null;
+  to: string[];
+}
+
 export interface RouteRedirect {
   path: string[];
   to: string[];
