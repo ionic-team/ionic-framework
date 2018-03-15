@@ -14,53 +14,60 @@ export enum ComputedType {
 
 export const THEME_VARIABLES: ThemeVariable[] = [
   {
-    property: '--ion-alpha-md-activated'
+    property: '--ion-alpha-activated'
   },
   {
-    property: '--ion-alpha-md-border-low'
+    property: '--ion-alpha-border-low'
   },
   {
-    property: '--ion-alpha-md-border-medium'
+    property: '--ion-alpha-border-medium'
   },
   {
-    property: '--ion-alpha-md-border-high'
+    property: '--ion-alpha-border-high'
   },
   {
-    property: '--ion-alpha-md-disabled'
+    property: '--ion-alpha-disabled'
   },
   {
-    property: '--ion-alpha-md-focused'
+    property: '--ion-alpha-focused'
   },
   {
-    property: '--ion-alpha-md-hover'
+    property: '--ion-alpha-hover'
   },
   {
-    property: '--ion-alpha-md-lowest'
+    property: '--ion-alpha-lowest'
   },
   {
-    property: '--ion-alpha-md-low'
+    property: '--ion-alpha-low'
   },
   {
-    property: '--ion-alpha-md-medium'
+    property: '--ion-alpha-medium'
   },
   {
-    property: '--ion-alpha-md-high'
+    property: '--ion-alpha-high'
   },
   {
-    property: '--ion-alpha-md-highest'
+    property: '--ion-alpha-highest'
   },
   {
     property: '--ion-color-primary',
     quickPick: {text: 'p'}
   },
   {
-    property: '--ion-color-primary-contrast'
-  },
-  {
     property: '--ion-color-primary-rgb',
     computed: {
       type: ComputedType.rgblist,
       params: {property: '--ion-color-primary'}
+    }
+  },
+  {
+    property: '--ion-color-primary-contrast'
+  },
+  {
+    property: '--ion-color-primary-contrast-rgb',
+    computed: {
+      type: ComputedType.rgblist,
+      params: {property: '--ion-color-primary-contrast'}
     }
   },
   {
@@ -551,7 +558,7 @@ export const THEME_VARIABLES: ThemeVariable[] = [
     property: '--ion-tabbar-background-color'
   },
   {
-    property: '--tabbar-background-color-focused'
+    property: '--ion-tabbar-background-color-focused'
   },
   {
     property: '--ion-tabbar-border-color'

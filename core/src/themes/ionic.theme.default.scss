@@ -19,7 +19,6 @@ $colors:              () !default;
 
 // Primary color map should provide
 //   - base: main color to be used.
-//   - rgb: a R,G,B list version of the base color. Used for alpha processing
 //   - contrast: Color that will provide readable text against the base color
 //   - shade: 12% darker version of the base color (mix with black)
 //   - tint: 10% lighter version of the base color (mix with white)
@@ -27,63 +26,54 @@ $ion-colors:  (
   primary: (
     base:             $primary,
     contrast:         #fff,
-    rgb:              color-to-rgb-list($primary),
     shade:            get-color-shade($primary),
     tint:             get-color-tint($primary)
   ),
   secondary: (
     base:             $secondary,
     contrast:         #fff,
-    rgb:              color-to-rgb-list($secondary),
     shade:            get-color-shade($secondary),
     tint:             get-color-tint($secondary)
   ),
   tertiary: (
     base:             $tertiary,
     contrast:         #fff,
-    rgb:              color-to-rgb-list($tertiary),
     shade:            get-color-shade($tertiary),
     tint:             get-color-tint($tertiary)
   ),
   success: (
     base:             $success,
     contrast:         #fff,
-    rgb:              color-to-rgb-list($success),
     shade:            get-color-shade($success),
     tint:             get-color-tint($success)
   ),
   warning: (
     base:             $warning,
     contrast:         #000,
-    rgb:              color-to-rgb-list($warning),
     shade:            get-color-shade($warning),
     tint:             get-color-tint($warning)
   ),
   danger: (
     base:             $danger,
     contrast:         #fff,
-    rgb:              color-to-rgb-list($danger),
     shade:            get-color-shade($danger),
     tint:             get-color-tint($danger)
   ),
   light: (
     base:             $light,
     contrast:         #000,
-    rgb:              color-to-rgb-list($light),
     shade:            get-color-shade($light),
     tint:             get-color-tint($light)
   ),
   medium: (
     base:             $medium,
     contrast:         #000,
-    rgb:              color-to-rgb-list($medium),
     shade:            get-color-shade($medium),
     tint:             get-color-tint($medium)
   ),
   dark: (
     base:             $dark,
     contrast:         #fff,
-    rgb:              color-to-rgb-list($dark),
     shade:            get-color-shade($dark),
     tint:             get-color-tint($dark)
   )
@@ -123,15 +113,6 @@ $text-color-value:                      #000 !default;
 $background-color:                      css-var($background-color-value, background-color) !default;
 $text-color:                            css-var($text-color-value, text-color) !default;
 $placeholder-text-color:                css-var(#999, placeholder-text-color) !default;
-
-// Generated Foreground and Background Colors for alpha
-// These variables are not used, but we call this here in order to add these colors
-// to the global list of css variables for a theme. This is only used to get a dump of all
-// css variables that the theme uses.
-// TODO: @color-mod: remove all of this
-// --------------------------------------------------
-$background-color-rgb:                  css-var(color-to-rgb-list($background-color-value), background-color-rgb) !default; // TODO: @color-mod: remove
-$text-color-rgb:                        css-var(color-to-rgb-list($text-color-value), text-color-rgb) !default; // TODO: @color-mod: remove
 
 // Default Background & Text Color Steps
 // Color Steps are used to provide variations in text and background colors of elements.

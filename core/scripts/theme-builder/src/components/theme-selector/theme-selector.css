@@ -108,11 +108,20 @@ section {
   font-size: 11px;
 }
 
-.checkbox {
-  padding: 8px 8px 0 0;
+.checkbox, .radio-group {
+  align-items: center;
   font-size: 10px;
   color: #333333;
-  width: 100px;
+  width: 300px;
+}
+.radio-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkbox {
+  padding: 8px 8px 0 0;
+  width: 150px;
 }
 
 .settings {

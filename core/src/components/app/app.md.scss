@@ -29,13 +29,13 @@ a {
   color: $app-md-link-color;
 }
 
-// iOS Content Padding
+// Material Design Content Padding
 // --------------------------------------------------
 
 @include app-padding("md", $content-md-padding);
 
 
-// iOS Content Margin
+// Material Design Content Margin
 // --------------------------------------------------
 
 @include app-margin("md", $content-md-margin);

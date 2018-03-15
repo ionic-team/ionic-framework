@@ -73,7 +73,7 @@
   }
 
   .fab-translucent-ios-#{$color-name} {
-    background-color: ion-color-alpha($colors-ios, $color-name, $alpha-ios-highest);
+    background-color: ion-color($colors-ios, $color-name, base, ios, $alpha-ios-highest);
     opacity: .8;
   }
 

@@ -44,7 +44,7 @@
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
   $color-shade: ion-color($colors-ios, $color-name, shade, ios);
 
-  $translucent-background-color: ion-color-alpha($colors-ios, $color-name, $alpha-ios-high, ios);
+  $translucent-background-color: ion-color($colors-ios, $color-name, base, ios, $alpha-ios-high);
 
   .tabbar-ios-#{$color-name} {
     border-color: $background-ios-color-step-400;

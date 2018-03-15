@@ -1,12 +1,14 @@
 @import "./ionic.functions.list";
 @import "./ionic.functions.string";
 
-$css-variable-prefix: "--ion-";
-$default-color-variation: base;
-$default-color-prefix: color-;
-$enable-css-variables: true;
+$css-variable-prefix: "--ion-" !default;
+$default-color-variation: base !default;
+$default-color-prefix: color- !default;
+$enable-css-variables: true !default;
+$modes: (ios, md) !default;
+
+// Private
 $css-variables: ();
-$modes: (ios, md);
 
 @function get-color-shade($color) {
   @return mix(#000, $color, 12%);
@@ -103,31 +105,63 @@ $modes: (ios, md);
   @return (name: $name, variation: $variation, mode: $mode);
 }
 
-@function css-var($color, $name) {
+// Creates a css variable from a value/alpha combination. alpha is optional. css-var aids in 3 main ways
+// first is alpha generation
+// -- when given alpha it will convert the value to a RGBList and create a css variable name with the suffix '-rgb'
+// second is mode fallbacks
+// -- when given a name that contains a mode (-ios- or -md-) it will create the proper fallback scheme for non mode variables
+// -- for example when given text-ios-color the variable will result in var(text-ios-color, var(text-color, $value));
+// third is when css variables are disabled
+// -- provides a bottleneck method to return all colors as normal colors (with alpha transforms)
+@function css-var($value, $name, $alpha: null) {
   @if ($enable-css-variables) {
-    $is-reference: str-contains($color, $css-variable-prefix);
+    $is-reference: str-contains($value, $css-variable-prefix);
     $global-css-variable: #{$css-variable-prefix}#{$name};
     $mode: get-mode($name);
+    $result: null;
+
+    @if ($alpha and $is-reference) {
+      @error "css-var error alpha (#{$alpha}) cannot be used with references. When trying to set '#{$name}', '#{$value}' was a reference.";
+    }
+
+    @if ($alpha) {
+      $global-css-variable: "#{$global-css-variable}-rgb";
+      $value: color-to-rgb-list($value);
+    }
 
     @if ($mode != null) {
       $mode-css-variable: $global-css-variable;
       $mode: "-#{$mode}-";
       $global-css-variable: str-replace($mode-css-variable, $mode, "-");
 
-      $css-variables: map-merge($css-variables, ($mode-css-variable: $color)) !global;
-      $color: #{if($is-reference, "#{$color}", "var(#{$global-css-variable}, #{$color})")};
-      $color: "var(#{$mode-css-variable}, #{$color})";
+      $css-variables: map-merge($css-variables, ($mode-css-variable: $value)) !global;
+
+      $fallback: "var(#{$global-css-variable}, #{$value})";
+      @if $is-reference {
+        $fallback: "#{$value}";
+      }
+
+      $result: "var(#{$mode-css-variable}, #{$fallback})";
     } @else {
-      $css-variables: map-merge($css-variables, ($global-css-variable: $color)) !global;
-      $color: "var(#{$global-css-variable}, #{$color})";
+      $css-variables: map-merge($css-variables, ($global-css-variable: $value)) !global;
+      $result: "var(#{$global-css-variable}, #{$value})";
+    }
+
+    @if $alpha {
+      $result: "rgba(#{$result}, #{$alpha})";
+    }
+    @return unquote($result);
+  } @else {
+    @if ($alpha) {
+      $value: color-to-rgb-list($value);
+      @return unquote("rgba(#{$value}, #{$alpha})");
+    } @else {
+      @return $value;
     }
   }
-
-  $color: if(type-of($color) != string, $color, unquote($color));
-  @return $color;
 }
 
-@function ion-color($colors, $name, $variation: null, $mode: null) {
+@function ion-color($colors, $name, $variation: null, $mode: null, $alpha: null) {
 
   // If CSS variables are off or someone passed a raw color, we will be passed color values
   // we need to look up the map in order to provide variations
@@ -184,23 +218,14 @@ $modes: (ios, md);
       $name: "#{$name}-#{$variation}";
     }
 
+    @if $alpha {
+      @return css-var($color, $name, $alpha)
+    }
+
     @return css-var($color, $name);
   }
 
   @error "Unknown Color: '#{$name}' with variation '#{$variation}'";
-}
-
-// Also can take the format
-// ion-color-alpha($color-value, $css-variable-name, $alpha) {
-@function ion-color-alpha($colors, $name, $alpha, $mode: null) {
-  @if (type-of($colors) == color) {
-    $value: color-to-rgb-list($colors);
-    $fallback: css-var($value, $name);
-    @return unquote("rgba(#{$value}, #{$alpha})");
-  } @else {
-    $value: ion-color($colors, $name, rgb, $mode);
-    @return unquote("rgba(#{$value}, #{$alpha})");
-  }
 }
 
 @function ion-extend-colors($parent, $children...) {
@@ -232,7 +257,7 @@ $modes: (ios, md);
       @if ($variation == 'base') {
         $test: css-var(force-hex($color), unquote("color-#{$name}"));
         $test: css-var("#{red($color)},#{green($color)},#{blue($color)}", unquote("color-#{$name}-rgb"));
-      }@else {
+      } @else {
         $test: css-var(force-hex($color), unquote("color-#{$name}-#{$variation}"));
       }
     }
