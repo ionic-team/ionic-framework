@@ -33,17 +33,25 @@ export class Router {
 
   componentDidLoad() {
     this.init = true;
-    this.onRouteChanged();
+    this.onRedirectChanged();
+    this.onRoutesChanged();
+  }
+
+  @Listen('ionRouteRedirectChanged')
+  protected onRedirectChanged() {
+    if (!this.init) {
+      return;
+    }
+    this.redirects = readRedirects(this.el);
   }
 
   @Listen('ionRouteDataChanged')
-  protected onRouteChanged() {
+  protected onRoutesChanged() {
     if (!this.init) {
       return;
     }
     const tree = readRoutes(this.el);
     this.routes = flattenRouterTree(tree);
-    this.redirects = readRedirects(this.el);
 
     if (Build.isDev) {
       printRoutes(this.routes);
@@ -59,6 +67,7 @@ export class Router {
       this.onPopState();
     });
   }
+
 
   @Listen('window:popstate')
   protected onPopState() {
@@ -110,7 +119,7 @@ export class Router {
     let redirectFrom: string[] = null;
     if (redirect) {
       this.setPath(redirect.to, true);
-      redirectFrom = redirect.path;
+      redirectFrom = redirect.from;
       path = redirect.to;
     }
     const direction = window.history.state >= this.state ? 1 : -1;

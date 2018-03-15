@@ -13,8 +13,8 @@ export interface RouterEventDetail {
 }
 
 export interface RouteRedirect {
-  path: string[];
-  to: string[];
+  from: string[];
+  to: string[]|undefined;
 }
 
 export interface RouteWrite {

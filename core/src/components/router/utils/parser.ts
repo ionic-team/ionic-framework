@@ -1,30 +1,32 @@
 import { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interfaces';
 import { parsePath } from './path';
+import { mergeParams } from './matching';
 
 
 export function readRedirects(root: Element): RouteRedirect[] {
-  return (Array.from(root.children) as HTMLIonRouteElement[])
-  .filter(el => el.tagName === 'ION-ROUTE' && el.redirectTo)
-  .map(el => {
-    if (el.component) {
-      throw new Error('Can\'t mix the component and redirectTo attribute in the same ion-route');
-    }
-    return {
-      path: parsePath(readProp(el, 'url')),
-      to: parsePath(readProp(el, 'redirectTo'))
-    };
-  });
+  return (Array.from(root.children) as HTMLIonRouteRedirectElement[])
+    .filter(el => el.tagName === 'ION-ROUTE-REDIRECT')
+    .map(el => {
+      const to = readProp(el, 'to');
+      return {
+        from: parsePath(readProp(el, 'from')),
+        to: to == null ? undefined : parsePath(to),
+      };
+    });
 }
 
-export function readRoutes(root: Element): RouteTree {
-  return (Array.from(root.children) as HTMLIonRouteElement[])
+export function readRoutes(root: Element, node = root): RouteTree {
+  const commonParams = {
+    router: root
+  };
+  return (Array.from(node.children) as HTMLIonRouteElement[])
     .filter(el => el.tagName === 'ION-ROUTE' && el.component)
     .map(el => {
       return {
         path: parsePath(readProp(el, 'url')),
         id: readProp(el, 'component').toLowerCase(),
-        params: el.componentProps,
-        children: readRoutes(el)
+        params: mergeParams(commonParams, el.componentProps),
+        children: readRoutes(root, el)
       };
     });
 }

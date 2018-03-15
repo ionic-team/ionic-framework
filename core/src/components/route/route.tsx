@@ -8,7 +8,6 @@ export class Route {
 
   @Prop() url = '';
   @Prop() component: string;
-  @Prop() redirectTo: string;
   @Prop() componentProps: {[key: string]: any};
 
   @Event() ionRouteDataChanged: EventEmitter;

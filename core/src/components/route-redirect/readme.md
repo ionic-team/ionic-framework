@@ -7,41 +7,31 @@
 
 ## Properties
 
-#### component
+#### from
 
 string
 
 
-#### componentProps
-
-
-
-
-#### url
+#### to
 
 string
 
 
 ## Attributes
 
-#### component
+#### from
 
 string
 
 
-#### component-props
-
-
-
-
-#### url
+#### to
 
 string
 
 
 ## Events
 
-#### ionRouteDataChanged
+#### ionRouteRedirectChanged
 
 
 

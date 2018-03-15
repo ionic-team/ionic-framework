@@ -2577,6 +2577,37 @@ declare global {
 
 
 import {
+  RouteRedirect as IonRouteRedirect
+} from './components/route-redirect/route-redirect';
+
+declare global {
+  interface HTMLIonRouteRedirectElement extends IonRouteRedirect, HTMLStencilElement {
+  }
+  var HTMLIonRouteRedirectElement: {
+    prototype: HTMLIonRouteRedirectElement;
+    new (): HTMLIonRouteRedirectElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-route-redirect": HTMLIonRouteRedirectElement;
+  }
+  interface ElementTagNameMap {
+    "ion-route-redirect": HTMLIonRouteRedirectElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-route-redirect": JSXElements.IonRouteRedirectAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonRouteRedirectAttributes extends HTMLAttributes {
+      from?: string;
+      to?: string;
+    }
+  }
+}
+
+
+import {
   Route as IonRoute
 } from './components/route/route';
 
@@ -2602,7 +2633,6 @@ declare global {
     export interface IonRouteAttributes extends HTMLAttributes {
       component?: string;
       componentProps?: {[key: string]: any};
-      redirectTo?: string;
       url?: string;
     }
   }
