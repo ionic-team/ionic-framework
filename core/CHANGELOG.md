@@ -1,3 +1,13 @@
+<a name="0.1.4-7"></a>
+## [0.1.4-7](https://github.com/ionic-team/ionic/compare/v0.1.4-6...v0.1.4-7) (2018-03-16)
+
+
+### Features
+
+* **router:** wildcard redirects ([2bdf4ad](https://github.com/ionic-team/ionic/commit/2bdf4ad))
+
+
+
 <a name="0.1.4-6"></a>
 ## [0.1.4-6](https://github.com/ionic-team/ionic/compare/v0.1.4-5...v0.1.4-6) (2018-03-15)
 
