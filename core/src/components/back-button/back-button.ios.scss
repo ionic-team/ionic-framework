@@ -16,7 +16,10 @@
   border: 0;
   font-size: 17px;
   line-height: 1;
+
+  color: $back-button-ios-color;
   background-color: transparent;
+
   transform: translateZ(0);
 
   &.activated {

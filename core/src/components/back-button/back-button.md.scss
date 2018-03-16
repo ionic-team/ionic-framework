@@ -1,7 +1,9 @@
 @import "./back-button";
+@import "./back-button.md.vars";
 
 // MD Back Button
 // --------------------------------------------------
+
 .back-button-md .back-button-inner {
   @include margin(2px, 6px, 0, 0);
   @include padding(0, 5px);
@@ -12,7 +14,10 @@
   font-size: 14px;
   font-weight: 500;
   text-transform: uppercase;
+
+  color: $back-button-md-color;
   background-color: transparent;
+
   box-shadow: none;
 
   &.activated {
@@ -25,6 +30,7 @@
   @include margin(0);
   @include padding(0, 6px);
   @include text-align(start);
+
   font-size: 24px;
   font-weight: normal;
   line-height: 0.67;
