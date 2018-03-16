@@ -2,6 +2,7 @@
 [ ] **1.x** (For Ionic 1.x issues, please use https://github.com/ionic-team/ionic-v1)
 [ ] **2.x**
 [ ] **3.x**
+[ ] **4.x**
 
 **I'm submitting a ...**  (check one with "x")
 [ ] bug report
