@@ -157,13 +157,29 @@ export class Toast implements OverlayInterface {
     return dismiss(this, data, role, 'toastLeave', iosLeaveAnimation, mdLeaveAnimation, this.position);
   }
 
+  /**
+   * Returns a promise that resolves when the toast did dismiss. It also accepts a callback
+   * that is called in the same circustances.
+   *
+   * ```
+   * const {data, role} = await toast.onDidDismiss();
+   * ```
+   */
   @Method()
-  onDidDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionToastDidDismiss', callback);
   }
 
+  /**
+   * Returns a promise that resolves when the toast will dismiss. It also accepts a callback
+   * that is called in the same circustances.
+   *
+   * ```
+   * const {data, role} = await toast.onWillDismiss();
+   * ```
+   */
   @Method()
-  onWillDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionToastWillDismiss', callback);
   }
 

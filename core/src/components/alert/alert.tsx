@@ -150,7 +150,7 @@ export class Alert implements OverlayInterface {
    */
   @Method()
   present(): Promise<void> {
-    return present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation, undefined).then(() => {
+    return present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation).then(() => {
       autoFocus(this.el);
     });
   }
@@ -160,16 +160,32 @@ export class Alert implements OverlayInterface {
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<void> {
-    return dismiss(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation, undefined);
+    return dismiss(this, data, role, 'alertLeave', iosLeaveAnimation, mdLeaveAnimation);
   }
 
+  /**
+   * Returns a promise that resolves when the alert did dismiss. It also accepts a callback
+   * that is called in the same circustances.
+   *
+   * ```
+   * const {data, role} = await alert.onDidDismiss();
+   * ```
+   */
   @Method()
-  onDidDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionAlerDidDismiss', callback);
   }
 
+  /**
+   * Returns a promise that resolves when the alert will dismiss. It also accepts a callback
+   * that is called in the same circustances.
+   *
+   * ```
+   * const {data, role} = await alert.onWillDismiss();
+   * ```
+   */
   @Method()
-  onWillDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionAlertWillDismiss', callback);
   }
 

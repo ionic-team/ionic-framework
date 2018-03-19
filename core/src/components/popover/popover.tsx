@@ -198,13 +198,29 @@ export class Popover implements OverlayInterface {
     return dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.ev);
   }
 
+  /**
+   * Returns a promise that resolves when the popover did dismiss. It also accepts a callback
+   * that is called in the same circustances.
+   *
+   * ```
+   * const {data, role} = await popover.onDidDismiss();
+   * ```
+   */
   @Method()
-  onDidDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionPopoverDidDismiss', callback);
   }
 
+  /**
+   * Returns a promise that resolves when the popover will dismiss. It also accepts a callback
+   * that is called in the same circustances.
+   *
+   * ```
+   * const {data, role} = await popover.onWillDismiss();
+   * ```
+   */
   @Method()
-  onWillDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionPopoverWillDismiss', callback);
   }
 

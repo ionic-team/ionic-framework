@@ -177,7 +177,7 @@ export class Modal implements OverlayInterface {
     };
     return attachComponent(this.delegate, container, this.component, classes, data)
       .then(el => this.usersElement = el)
-      .then(() => present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation, undefined));
+      .then(() => present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation));
   }
 
   /**
@@ -185,16 +185,32 @@ export class Modal implements OverlayInterface {
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<void> {
-    return dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation, undefined);
+    return dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation);
   }
 
+  /**
+   * Returns a promise that resolves when the modal did dismiss. It also accepts a callback
+   * that is called in the same circustances.
+   *
+   * ```
+   * const {data, role} = await modal.onDidDismiss();
+   * ```
+   */
   @Method()
-  onDidDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionModalDidDismiss', callback);
   }
 
+  /**
+   * Returns a promise that resolves when the modal will dismiss. It also accepts a callback
+   * that is called in the same circustances.
+   *
+   * ```
+   * const {data, role} = await modal.onWillDismiss();
+   * ```
+   */
   @Method()
-  onWillDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionModalWillDismiss', callback);
   }
 

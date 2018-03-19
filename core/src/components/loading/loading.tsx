@@ -159,16 +159,32 @@ export class Loading implements OverlayInterface {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    return dismiss(this, data, role, 'loadingLeave', iosLeaveAnimation, mdLeaveAnimation, undefined);
+    return dismiss(this, data, role, 'loadingLeave', iosLeaveAnimation, mdLeaveAnimation);
   }
 
+  /**
+   * Returns a promise that resolves when the loading did dismiss. It also accepts a callback
+   * that is called in the same circustances.
+   *
+   * ```
+   * const {data, role} = await loading.onDidDismiss();
+   * ```
+   */
   @Method()
-  onDidDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionLoadingDidDismiss', callback);
   }
 
+  /**
+   * Returns a promise that resolves when the loading will dismiss. It also accepts a callback
+   * that is called in the same circustances.
+   *
+   * ```
+   * const {data, role} = await loading.onWillDismiss();
+   * ```
+   */
   @Method()
-  onWillDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionLoadingWillDismiss', callback);
   }
 

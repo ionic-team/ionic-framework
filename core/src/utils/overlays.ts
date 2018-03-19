@@ -58,7 +58,7 @@ export function present(
   name: string,
   iosEnterAnimation: AnimationBuilder,
   mdEnterAnimation: AnimationBuilder,
-  opts: any
+  opts?: any
 ) {
   if (overlay.presented) {
     return Promise.resolve();
@@ -83,7 +83,7 @@ export function dismiss(
   name: string,
   iosLeaveAnimation: AnimationBuilder,
   mdLeaveAnimation: AnimationBuilder,
-  opts: any
+  opts?: any
 ): Promise<void> {
   if (!overlay.presented) {
     return Promise.resolve();
@@ -151,9 +151,9 @@ export function attachComponent(delegate: FrameworkDelegate, container: Element,
   return Promise.resolve(el);
 }
 
-export function eventMethod(element: HTMLElement, eventName: string, callback: Function): Promise<any> {
+export function eventMethod<T>(element: HTMLElement, eventName: string, callback?: (detail: T) => void): Promise<T> {
   let resolve: Function;
-  const promise = new Promise(r => resolve = r);
+  const promise = new Promise<T>(r => resolve = r);
   onceEvent(element, eventName, (event) => {
     const detail = event.detail;
     callback && callback(detail);

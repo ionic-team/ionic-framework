@@ -137,7 +137,7 @@ export class ActionSheet implements OverlayInterface {
    */
   @Method()
   present(): Promise<void> {
-    return present(this, 'actionSheetEnter', iosEnterAnimation, mdEnterAnimation, undefined);
+    return present(this, 'actionSheetEnter', iosEnterAnimation, mdEnterAnimation);
   }
 
   /**
@@ -145,16 +145,32 @@ export class ActionSheet implements OverlayInterface {
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<void> {
-    return dismiss(this, data, role, 'actionSheetLeave', iosLeaveAnimation, mdLeaveAnimation, undefined);
+    return dismiss(this, data, role, 'actionSheetLeave', iosLeaveAnimation, mdLeaveAnimation);
   }
 
+  /**
+   * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback
+   * that is called in the same circustances.
+   *
+   * ```
+   * const {data, role} = await actionSheet.onDidDismiss();
+   * ```
+   */
   @Method()
-  onDidDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionActionSheetDidDismiss', callback);
   }
 
+  /**
+   * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback
+   * that is called in the same circustances.
+   *
+   * ```
+   * const {data, role} = await actionSheet.onWillDismiss();
+   * ```
+   */
   @Method()
-  onWillDismiss(callback: (data?: any, role?: string) => void): Promise<OverlayEventDetail> {
+  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionActionSheetWillDismiss', callback);
   }
 
