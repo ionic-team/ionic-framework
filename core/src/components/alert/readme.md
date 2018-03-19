@@ -249,8 +249,22 @@ Dismiss the alert overlay after it has been presented.
 
 #### onDidDismiss()
 
+Returns a promise that resolves when the alert did dismiss. It also accepts a callback
+that is called in the same circustances.
+
+```
+const {data, role} = await alert.onDidDismiss();
+```
+
 
 #### onWillDismiss()
+
+Returns a promise that resolves when the alert will dismiss. It also accepts a callback
+that is called in the same circustances.
+
+```
+const {data, role} = await alert.onWillDismiss();
+```
 
 
 #### present()

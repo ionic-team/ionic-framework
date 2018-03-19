@@ -202,8 +202,22 @@ Dismiss the picker overlay after it has been presented.
 
 #### onDidDismiss()
 
+Returns a promise that resolves when the picker did dismiss. It also accepts a callback
+that is called in the same circustances.
+
+```
+const {data, role} = await picker.onDidDismiss();
+```
+
 
 #### onWillDismiss()
+
+Returns a promise that resolves when the picker will dismiss. It also accepts a callback
+that is called in the same circustances.
+
+```
+const {data, role} = await picker.onWillDismiss();
+```
 
 
 #### present()

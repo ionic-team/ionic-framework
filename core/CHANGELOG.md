@@ -1,3 +1,18 @@
+<a name="0.1.4-8"></a>
+## [0.1.4-8](https://github.com/ionic-team/ionic/compare/v0.1.4-7...v0.1.4-8) (2018-03-19)
+
+
+### Bug Fixes
+
+* **back-button:** apply the proper color to the back button ([7d2de18](https://github.com/ionic-team/ionic/commit/7d2de18)), closes [#14177](https://github.com/ionic-team/ionic/issues/14177)
+
+
+### Features
+
+* **nav:** support for rootParams ([50abcf5](https://github.com/ionic-team/ionic/commit/50abcf5))
+
+
+
 <a name="0.1.4-7"></a>
 ## [0.1.4-7](https://github.com/ionic-team/ionic/compare/v0.1.4-6...v0.1.4-7) (2018-03-16)
 

@@ -12,6 +12,11 @@
 any
 
 
+#### rootParams
+
+any
+
+
 #### swipeBackEnabled
 
 boolean
@@ -20,6 +25,11 @@ boolean
 ## Attributes
 
 #### root
+
+any
+
+
+#### root-params
 
 any
 
