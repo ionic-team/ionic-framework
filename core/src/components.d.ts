@@ -113,6 +113,7 @@ declare global {
       cssClass?: string;
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
+      keyboardClose?: boolean;
       leaveAnimation?: AnimationBuilder;
       overlayId?: number;
       subTitle?: string;
@@ -183,6 +184,7 @@ declare global {
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
       inputs?: AlertInput[];
+      keyboardClose?: boolean;
       leaveAnimation?: AnimationBuilder;
       message?: string;
       overlayId?: number;
@@ -1520,36 +1522,6 @@ declare global {
 
 
 import {
-  KeyboardController as IonKeyboardController
-} from './components/keyboard-controller/keyboard-controller';
-
-declare global {
-  interface HTMLIonKeyboardControllerElement extends IonKeyboardController, HTMLStencilElement {
-  }
-  var HTMLIonKeyboardControllerElement: {
-    prototype: HTMLIonKeyboardControllerElement;
-    new (): HTMLIonKeyboardControllerElement;
-  };
-  interface HTMLElementTagNameMap {
-    "ion-keyboard-controller": HTMLIonKeyboardControllerElement;
-  }
-  interface ElementTagNameMap {
-    "ion-keyboard-controller": HTMLIonKeyboardControllerElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      "ion-keyboard-controller": JSXElements.IonKeyboardControllerAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonKeyboardControllerAttributes extends HTMLAttributes {
-      
-    }
-  }
-}
-
-
-import {
   Label as IonLabel
 } from './components/label/label';
 
@@ -1704,6 +1676,7 @@ declare global {
       duration?: number;
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
+      keyboardClose?: boolean;
       leaveAnimation?: AnimationBuilder;
       overlayId?: number;
       showBackdrop?: boolean;
@@ -1905,6 +1878,7 @@ declare global {
       delegate?: FrameworkDelegate;
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
+      keyboardClose?: boolean;
       leaveAnimation?: AnimationBuilder;
       mode?: 'ios' | 'md';
       overlayId?: number;
@@ -2162,6 +2136,7 @@ declare global {
       duration?: number;
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
+      keyboardClose?: boolean;
       leaveAnimation?: AnimationBuilder;
       overlayId?: number;
       showBackdrop?: boolean;
@@ -2263,6 +2238,7 @@ declare global {
       enableBackdropDismiss?: boolean;
       enterAnimation?: AnimationBuilder;
       ev?: any;
+      keyboardClose?: boolean;
       leaveAnimation?: AnimationBuilder;
       mode?: 'ios' | 'md';
       overlayId?: number;
@@ -3540,6 +3516,7 @@ declare global {
       dismissOnPageChange?: boolean;
       duration?: number;
       enterAnimation?: AnimationBuilder;
+      keyboardClose?: boolean;
       leaveAnimation?: AnimationBuilder;
       message?: string;
       overlayId?: number;

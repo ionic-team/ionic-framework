@@ -1,6 +1,7 @@
 import { ViewController, isViewController } from './view-controller';
 import { NavControllerBase } from './nav';
 import { Transition } from './transition';
+import { FrameworkDelegate } from '../..';
 
 export function convertToView(page: any, params: any): ViewController {
   if (!page) {
@@ -81,11 +82,8 @@ export interface NavOptions {
   id?: string;
   keyboardClose?: boolean;
   progressAnimation?: boolean;
-  disableApp?: boolean;
-  minClickBlockDuration?: number;
   ev?: any;
-  updateUrl?: boolean;
-  isNavRoot?: boolean;
+  delegate?: FrameworkDelegate;
   viewIsReady?: () => Promise<any>;
 }
 

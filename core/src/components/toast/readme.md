@@ -80,6 +80,11 @@ until `dismiss()` is called.
 Animation to use when the toast is presented.
 
 
+#### keyboardClose
+
+boolean
+
+
 #### leaveAnimation
 
 
@@ -164,6 +169,11 @@ until `dismiss()` is called.
 
 
 Animation to use when the toast is presented.
+
+
+#### keyboard-close
+
+boolean
 
 
 #### leave-animation

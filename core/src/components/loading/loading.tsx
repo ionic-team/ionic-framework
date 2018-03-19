@@ -33,6 +33,7 @@ export class Loading implements OverlayInterface {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
   @Prop() overlayId: number;
+  @Prop() keyboardClose = true;
 
   /**
    * Animation to use when the loading indicator is presented.

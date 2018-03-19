@@ -85,6 +85,11 @@ any
 The event to pass to the popover animation.
 
 
+#### keyboardClose
+
+boolean
+
+
 #### leaveAnimation
 
 
@@ -184,6 +189,11 @@ Animation to use when the popover is presented.
 any
 
 The event to pass to the popover animation.
+
+
+#### keyboard-close
+
+boolean
 
 
 #### leave-animation

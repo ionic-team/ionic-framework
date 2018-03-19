@@ -32,6 +32,7 @@ export class ActionSheet implements OverlayInterface {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
   @Prop() overlayId: number;
+  @Prop() keyboardClose = true;
 
   /**
    * Animation to use when the action sheet is presented.

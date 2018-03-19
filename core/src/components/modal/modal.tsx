@@ -34,6 +34,7 @@ export class Modal implements OverlayInterface {
 
   @Prop() overlayId: number;
   @Prop() delegate: FrameworkDelegate;
+  @Prop() keyboardClose = true;
 
   /**
    * The color to use from your Sass `$colors` map.

@@ -33,6 +33,7 @@ export class Popover implements OverlayInterface {
   @Prop({ context: 'config' }) config: Config;
   @Prop() delegate: FrameworkDelegate;
   @Prop() overlayId: number;
+  @Prop() keyboardClose = true;
 
   /**
    * The color to use from your Sass `$colors` map.

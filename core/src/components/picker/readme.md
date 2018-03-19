@@ -52,6 +52,11 @@ If true, the picker will be dismissed when the backdrop is clicked. Defaults to 
 Animation to use when the picker is presented.
 
 
+#### keyboardClose
+
+boolean
+
+
 #### leaveAnimation
 
 
@@ -121,6 +126,11 @@ If true, the picker will be dismissed when the backdrop is clicked. Defaults to 
 
 
 Animation to use when the picker is presented.
+
+
+#### keyboard-close
+
+boolean
 
 
 #### leave-animation

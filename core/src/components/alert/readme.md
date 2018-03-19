@@ -76,6 +76,11 @@ Animation to use when the alert is presented.
 Array of input to show in the alert.
 
 
+#### keyboardClose
+
+boolean
+
+
 #### leaveAnimation
 
 
@@ -159,6 +164,11 @@ Animation to use when the alert is presented.
 
 
 Array of input to show in the alert.
+
+
+#### keyboard-close
+
+boolean
 
 
 #### leave-animation

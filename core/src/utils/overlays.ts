@@ -115,6 +115,9 @@ function overlayAnimation(
     overlay.animation.destroy();
     overlay.animation = undefined;
   }
+  if (overlay.keyboardClose) {
+    closeKeyboard();
+  }
   return overlay.animationCtrl.create(animationBuilder, baseEl, opts).then(animation => {
     overlay.animation = animation;
     if (!overlay.willAnimate) {
@@ -170,11 +173,14 @@ export function onceEvent(element: HTMLElement, eventName: string, callback: (ev
   element.addEventListener(eventName, handler);
 }
 
+function closeKeyboard() {
+  const activeElement = document.activeElement as HTMLElement;
+  activeElement && activeElement.blur && activeElement.blur();
+}
 
 export function isCancel(role: string): boolean {
   return role === 'cancel' || role === BACKDROP;
 }
-
 
 export interface OverlayEventDetail {
   data?: any;
@@ -185,6 +191,7 @@ export interface OverlayInterface {
   mode: string;
   el: HTMLElement;
   willAnimate: boolean;
+  keyboardClose: boolean;
   config: Config;
   overlayId: number;
   presented: boolean;

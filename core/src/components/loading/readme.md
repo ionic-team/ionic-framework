@@ -76,6 +76,11 @@ If true, the loading indicator will be dismissed when the backdrop is clicked. D
 Animation to use when the loading indicator is presented.
 
 
+#### keyboardClose
+
+boolean
+
+
 #### leaveAnimation
 
 
@@ -160,6 +165,11 @@ If true, the loading indicator will be dismissed when the backdrop is clicked. D
 
 
 Animation to use when the loading indicator is presented.
+
+
+#### keyboard-close
+
+boolean
 
 
 #### leave-animation

@@ -98,6 +98,11 @@ If true, the modal will be dismissed when the backdrop is clicked. Defaults to `
 Animation to use when the modal is presented.
 
 
+#### keyboardClose
+
+boolean
+
+
 #### leaveAnimation
 
 
@@ -183,6 +188,11 @@ If true, the modal will be dismissed when the backdrop is clicked. Defaults to `
 
 
 Animation to use when the modal is presented.
+
+
+#### keyboard-close
+
+boolean
 
 
 #### leave-animation

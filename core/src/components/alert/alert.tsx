@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, Config, CssClassMap } from '../../index';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { BACKDROP, OverlayEventDetail, OverlayInterface, autoFocus, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
+import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -35,6 +35,7 @@ export class Alert implements OverlayInterface {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
   @Prop() overlayId: number;
+  @Prop() keyboardClose = true;
 
   /**
    * Animation to use when the alert is presented.
@@ -150,9 +151,7 @@ export class Alert implements OverlayInterface {
    */
   @Method()
   present(): Promise<void> {
-    return present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation).then(() => {
-      autoFocus(this.el);
-    });
+    return present(this, 'alertEnter', iosEnterAnimation, mdEnterAnimation);
   }
 
   /**

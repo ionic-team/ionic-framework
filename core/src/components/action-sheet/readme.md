@@ -89,6 +89,11 @@ If true, the action sheet will be dismissed when the backdrop is clicked. Defaul
 Animation to use when the action sheet is presented.
 
 
+#### keyboardClose
+
+boolean
+
+
 #### leaveAnimation
 
 
@@ -158,6 +163,11 @@ If true, the action sheet will be dismissed when the backdrop is clicked. Defaul
 
 
 Animation to use when the action sheet is presented.
+
+
+#### keyboard-close
+
+boolean
 
 
 #### leave-animation

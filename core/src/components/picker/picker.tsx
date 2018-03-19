@@ -33,6 +33,7 @@ export class Picker implements OverlayInterface {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
   @Prop() overlayId: number;
+  @Prop() keyboardClose = true;
 
   /**
    * Animation to use when the picker is presented.
@@ -145,10 +146,6 @@ export class Picker implements OverlayInterface {
   @Method()
   present(): Promise<void> {
     return present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined).then(() => {
-      // blur the currently active element
-      const activeElement: any = document.activeElement;
-      activeElement && activeElement.blur && activeElement.blur();
-
       // If there is a duration, dismiss after that amount of time
       if (this.duration > 10) {
         this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);

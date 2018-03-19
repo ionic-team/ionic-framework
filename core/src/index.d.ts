@@ -44,8 +44,6 @@ export { Item } from './components/item/item';
 export { ItemDivider } from './components/item-divider/item-divider';
 export { ItemOption } from './components/item-option/item-option';
 export { ItemSliding } from './components/item-sliding/item-sliding';
-export { KeyboardController } from './components/keyboard-controller/keyboard-controller';
-export * from './components/keyboard-controller/keys';
 export { Label } from './components/label/label';
 export { List } from './components/list/list';
 export { ListHeader } from './components/list-header/list-header';
