@@ -117,27 +117,15 @@
 // --------------------------------------------------
 
 .bar-buttons-md {
-  order: map-get($toolbar-order-md, buttons-mode-start);
+  @include text-align(start);
+
+  order: map-get($toolbar-order-md, buttons-start);
 
   transform: translateZ(0);
 }
 
-.bar-buttons-md[slot="start"] {
-  order: map-get($toolbar-order-md, buttons-start);
-}
-
-.bar-button-md:first-child {
-  @include margin-horizontal(0, null);
-}
-
-.bar-buttons-md[slot="mode-end"] {
-  @include text-align(end);
-
-  order: map-get($toolbar-order-md, buttons-mode-end);
-}
-
 .bar-buttons-md[slot="end"] {
-  @include text-align(right);
+  @include text-align(end);
 
   order: map-get($toolbar-order-md, buttons-end);
 }

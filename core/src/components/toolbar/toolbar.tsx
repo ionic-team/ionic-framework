@@ -67,12 +67,10 @@ export class Toolbar {
     return [
       <div class={backgroundCss}></div>,
       <slot name='start'></slot>,
-      <slot name='mode-start'></slot>,
-      <slot name='mode-end'></slot>,
-      <slot name='end'></slot>,
       <div class={contentCss}>
         <slot></slot>
-      </div>
+      </div>,
+      <slot name='end'></slot>
     ];
   }
 }

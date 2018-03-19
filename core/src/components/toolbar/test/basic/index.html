@@ -6,30 +6,144 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
 </head>
-<body>
+<body onload="initialize()">
   <ion-app>
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Toolbar</ion-title>
+      </ion-toolbar>
 
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Toolbar - Basic</ion-title>
-        </ion-toolbar>
-      </ion-header>
+      <ion-toolbar color="primary">
+        <ion-buttons slot="start" class="dynamic-slot">
+          <ion-button>
+            <ion-icon slot="icon-only" name="contact"></ion-icon>
+          </ion-button>
+          <ion-button>
+            <ion-icon slot="icon-only" name="search"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button color="secondary">
+            <ion-icon slot="icon-only" name="more"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Subheader</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-      <ion-content id="content" padding>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae lobortis felis, eu sodales enim. Nam risus nibh, placerat at rutrum ac, vehicula vel velit. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum quis elementum ligula, ac aliquet nulla. Mauris non placerat mauris. Aenean dignissim lacinia porttitor. Praesent fringilla at est et ullamcorper. In ac ante ac massa porta venenatis ut id nibh. Fusce felis neque, aliquet in velit vitae, venenatis euismod libero. Donec vulputate, urna sed sagittis tempor, mi arcu tristique lacus, eget fringilla urna sem eget felis. Fusce dignissim lacus a scelerisque vehicula. Nulla nec enim nunc.
+    <ion-content id="content" fullscreen="true">
+      <ion-card color="secondary">
+        <ion-card-header>
+          Card Header
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card-title>
+            Title
+          </ion-card-title>
+          Some normal text in content.
+          <h3>h3 in content</h3>
+          <p>
+            Paragraph in content.
+          </p>
+          <p>
+            Another paragraph in content.
+          </p>
+        </ion-card-content>
+      </ion-card>
 
-        Quisque nec dui eu nibh pulvinar bibendum quis ut nunc. Duis ex odio, sollicitudin ac mollis nec, fringilla non lacus. Maecenas sed tincidunt urna. Nunc feugiat maximus venenatis. Donec porttitor, felis eget porttitor tempor, quam nulla dapibus nisl, sit amet posuere sapien sapien malesuada tortor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Quisque luctus, sapien nec tincidunt efficitur, nibh turpis faucibus felis, in sodales massa augue nec erat. Morbi sollicitudin nisi ex, et gravida nisi euismod eu. Suspendisse hendrerit dapibus orci, non viverra neque vestibulum id. Quisque vitae interdum ligula, quis consectetur nibh.
+      <ion-card color="primary" class="rainbow-content">
+        <ion-card-header>
+          Card Header
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card-title>
+            Title
+          </ion-card-title>
+          Some normal text in content.
+          <h3>h3 in content</h3>
+          <p>
+            Paragraph in content.
+          </p>
+          <p>
+            Another paragraph in content.
+          </p>
+        </ion-card-content>
+      </ion-card>
 
-        Phasellus in mi at erat ultrices semper. Fusce sollicitudin at dolor ac lobortis. Morbi sit amet sem quis nulla pellentesque imperdiet. Nullam eu sem a enim maximus eleifend non vulputate leo. Proin quis congue lacus. Pellentesque placerat, quam at tempus pulvinar, nisl ligula tempor risus, quis pretium arcu odio et nulla. Nullam mollis consequat pharetra. Phasellus dictum velit sed purus mattis maximus. In molestie eget massa ut dignissim. In a interdum elit. In finibus nibh a mauris lobortis aliquet. Proin rutrum varius consequat. In mollis dapibus nisl, eu finibus urna viverra ac. Quisque scelerisque nisl eu suscipit consectetur.
-      </ion-content>
+      <ion-card color="primary">
+        <ion-card-header>
+          Card Header
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card-title>
+            Title
+          </ion-card-title>
+          Some normal text in content.
+          <h3>h3 in content</h3>
+          <p>
+            Paragraph in content.
+          </p>
+          <p>
+            Another paragraph in content.
+          </p>
+        </ion-card-content>
+      </ion-card>
 
-      <ion-footer>
-        <ion-toolbar>
-          <ion-title>Footer Toolbar</ion-title>
-        </ion-toolbar>
-      </ion-footer>
+      <ion-list id="dynamicList">
+      </ion-list>
 
+    </ion-content>
+
+    <ion-footer>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button>
+            <ion-icon slot="icon-only" name="search"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-searchbar>
+        </ion-searchbar>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-title>
+          Footer
+        </ion-title>
+      </ion-toolbar>
+    </ion-footer>
   </ion-app>
+
+  <style>
+    .rainbow-content {
+      background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+    }
+  </style>
+
+  <script>
+    function initialize() {
+      var mode = Ionic.mode;
+
+      if (mode === 'md') {
+        var buttons = document.querySelectorAll('.dynamic-slot');
+
+        for (var i = 0; i < buttons.length; i++) {
+          buttons[i].setAttribute('slot', 'end');
+        }
+      }
+    }
+
+    let items = [];
+    for (var i = 0; i < 30; i++) {
+      items.push( i+1 );
+    }
+    const list = document.getElementById('dynamicList');
+
+    let html = '';
+    for(let item of items) {
+      html += `<ion-item>${item}</ion-item>`;
+    }
+    list.innerHTML = html;
+  </script>
 </body>
 </html>
 

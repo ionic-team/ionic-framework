@@ -45,8 +45,6 @@ ion-toolbar ion-title {
 }
 
 ion-buttons {
-  @include margin(0, 2px);
-
   display: block;
 
   transform: translateZ(0);

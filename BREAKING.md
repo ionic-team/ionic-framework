@@ -928,22 +928,71 @@ $app-md-statusbar-padding:    20px;
 
 ### Attributes Renamed
 
-The attributes to position an `ion-buttons` element inside of a toolbar have been renamed, as well as the behavior attached to the name. We noticed there was some confusion behind the behavior of the `start` and `end` attributes, and with the new support for RTL we wanted to make the behavior of these match RTL. In order to do this we had to rename the old `start`/`end` to something that makes more sense with their behavior.
+The attributes to position an `ion-buttons` element inside of a toolbar have been either removed or renamed, as well as the behavior of the attributes. We noticed there was some confusion behind the behavior of the `start` and `end` attributes, and with the new support for RTL we wanted to make these match RTL. In order to do this we have removed the old functionality behind the `start`/`end` attributes and renamed the `left`/`right` attributes.
 
-The names and behavior of each of the properties was previously:
+**Old Properties:**
 
-| Old Property | Property Behavior                                                                                            |
-|--------------|--------------------------------------------------------------------------------------------------------------|
-| `start`      | Positions element to the left of the content in `ios` mode, and directly to the right in `md` and `wp` mode. |
-| `end`        | Positions element to the right of the content in `ios` mode, and to the far right in `md` and `wp` mode.     |
-| `left`       | Positions element to the left of all other elements.                                                         |
-| `right`      | Positions element to the right of all other elements.                                                        |
+| Old Property | Old Behavior                                                                                                     |
+|--------------|------------------------------------------------------------------------------------------------------------------|
+| `start`      | Positions element to the `left` of the content in `ios` mode, and directly to the `right` in `md` and `wp` mode. |
+| `end`        | Positions element to the `right` of the content in `ios` mode, and to the far `right` in `md` and `wp` mode.     |
+| `left`       | Positions element to the `left` of all other elements.                                                           |
+| `right`      | Positions element to the `right` of all other elements.                                                          |
 
-The properties have been renamed to the following:
+**New Properties:**
 
-| Old Property | New Property        | Property Behavior                                                                                                |
-|--------------|---------------------|------------------------------------------------------------------------------------------------------------------|
-| `start`      | `slot="mode-start"` | Positions element to the `left` of the content in `ios` mode, and directly to the `right` in `md` and `wp` mode. |
-| `end`        | `slot="mode-end"`   | Positions element to the `right` of the content in `ios` mode, and to the far right in `md` and `wp` mode.       |
-| `left`       | `slot="start"`      | Positions element to the `left` of all other elements in `LTR`, and to the `right` in `RTL`.                     |
-| `right`      | `slot="end"`        | Positions element to the `right` of all other elements in `LTR`, and to the `left` in `RTL`.                     |
+| New Property     | New Behavior                                                                                                 |
+|------------------|--------------------------------------------------------------------------------------------------------------|
+| `slot="start"`   | Positions element to the `left` of all other elements in `LTR`, and to the `right` in `RTL`.                 |
+| `slot="end"`     | Positions element to the `right` of all other elements in `LTR`, and to the `left` in `RTL`.                 |
+
+
+**Old Usage Example:**
+
+```html
+<ion-toolbar>
+  <ion-buttons left>
+    <button ion-button>Cancel</button>
+  </ion-buttons>
+
+  <ion-title>
+    Filter Sessions
+  </ion-title>
+
+  <ion-buttons right>
+    <button ion-button>Done</button>
+  </ion-buttons>
+</ion-toolbar>
+```
+
+**New Usage Example:**
+
+```html
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-button>Cancel</ion-button>
+  </ion-buttons>
+
+  <ion-title>
+    Filter Sessions
+  </ion-title>
+
+  <ion-buttons slot="end">
+    <ion-button>Done</ion-button>
+  </ion-buttons>
+</ion-toolbar>
+```
+
+If you need to position buttons based on the mode, we recommend something like the following:
+
+```html
+<ion-toolbar>
+  <ion-buttons [slot]="mode === 'md' ? 'end' : 'start'">
+    <ion-button>Cancel</ion-button>
+  </ion-buttons>
+
+  <ion-title>
+    Filter Sessions
+  </ion-title>
+</ion-toolbar>
+```
