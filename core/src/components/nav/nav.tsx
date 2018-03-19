@@ -57,12 +57,13 @@ export class NavControllerBase implements NavOutlet {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({mutable: true}) swipeBackEnabled: boolean;
+  @Prop() rootParams: any;
   @Prop() root: any;
   @Watch('root')
   rootChanged() {
     if (this.root) {
       if (!this.useRouter) {
-        this.setRoot(this.root);
+        this.setRoot(this.root, this.rootParams);
       } else if (Build.isDev) {
         console.warn('<ion-nav> does not support a root attribute when using ion-router.');
       }
