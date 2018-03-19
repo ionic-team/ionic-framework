@@ -3,7 +3,7 @@ triage:
   dryRun: false
 
 support:
-  label: support
+  label: "ionitron: support"
   message: >
     Thanks for the issue! This issue appears to be a support request. We use this issue tracker exclusively for
     bug reports and feature requests. Please use our [forum](https://forum.ionicframework.com) or our
@@ -16,7 +16,7 @@ support:
   dryRun: false
 
 incomplete:
-  label: missing template
+  label: "ionitron: missing template"
   message: >
     Thanks for the issue! It appears that you have not filled out the provided issue template. We use this issue
     template in order to gather more information and further assist you. Please create a new issue and ensure the
