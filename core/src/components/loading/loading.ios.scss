@@ -48,9 +48,9 @@
 // iOS Loading Spinner fill colors
 // -----------------------------------------
 
-.loading-ios .spinner-ios line,
-.loading-ios .spinner-ios-small line {
-  stroke: $loading-ios-spinner-ios-color;
+.loading-ios .spinner-lines-ios line,
+.loading-ios .spinner-lines-sm-ios line {
+  stroke: $loading-ios-spinner-lines-color;
 }
 
 .loading-ios .spinner-bubbles circle {
