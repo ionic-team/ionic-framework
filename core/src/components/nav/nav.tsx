@@ -12,7 +12,7 @@ import {
 } from './nav-util';
 
 import { ViewController, isViewController } from './view-controller';
-import { Animation, Config, DomController, GestureDetail, NavOutlet } from '../..';
+import { Animation, Config, DomController, FrameworkDelegate, GestureDetail, NavOutlet } from '../..';
 import { RouteID, RouteWrite } from '../router/utils/interfaces';
 import { assert } from '../../utils/helpers';
 
@@ -51,6 +51,7 @@ export class NavControllerBase implements NavOutlet {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ mutable: true }) swipeBackEnabled: boolean;
   @Prop({ mutable: true }) animated: boolean;
+  @Prop() delegate: FrameworkDelegate;
   @Prop() rootParams: any;
   @Prop() root: any;
   @Watch('root')
@@ -342,16 +343,11 @@ export class NavControllerBase implements NavOutlet {
     }
     this._init = true;
 
-    // ensure we're not transitioning here
-    this.isTransitioning = false;
-    // let's see if there's another to kick off
-    this._nextTrns();
     const isPop = result.direction === NavDirection.back;
     if (this.useRouter) {
       const router = document.querySelector('ion-router');
       router && router.navChanged(isPop);
     }
-
     this.ionNavChanged.emit({isPop});
 
     if (ti.done) {
@@ -372,11 +368,6 @@ export class NavControllerBase implements NavOutlet {
       return;
     }
     this._queue.length = 0;
-
-    // let's see if there's another to kick off
-    this.isTransitioning = false;
-    this._nextTrns();
-
     this._fireError(rejectReason, ti);
   }
 
@@ -405,11 +396,16 @@ export class NavControllerBase implements NavOutlet {
       return false;
     }
 
-    // set that this nav is actively transitioning
-    this.isTransitioning = true;
+    this.runTransition(ti);
+    return true;
+  }
 
+  private async runTransition(ti: TransitionInstruction) {
     try {
+      // set that this nav is actively transitioning
+      this.isTransitioning = true;
       this._prepareTI(ti);
+
       const leavingView = this.getActive();
       const enteringView = this._getEnteringView(ti, leavingView);
 
@@ -421,23 +417,28 @@ export class NavControllerBase implements NavOutlet {
       ti.requiresTransition = (ti.enteringRequiresTransition || ti.leavingRequiresTransition) && enteringView !== leavingView;
 
       if (enteringView && enteringView._state === ViewState.New) {
-        enteringView.init(this.el);
+        await enteringView.init(this.el);
       }
       this._postViewInit(enteringView, leavingView, ti);
 
-      this._transition(enteringView, leavingView, ti)
-        .then((result) => this._success(result, ti))
-        .catch((rejectReason) => this._failed(rejectReason, ti));
+      const result = await this._transition(enteringView, leavingView, ti);
 
+      this._success(result, ti);
     } catch (rejectReason) {
       this._failed(rejectReason, ti);
     }
-    return true;
+    this.isTransitioning = false;
+    this._nextTrns();
   }
 
   private _prepareTI(ti: TransitionInstruction) {
     const viewsLength = this._views.length;
 
+    ti.opts = ti.opts || {};
+
+    if (ti.opts.delegate === undefined) {
+      ti.opts.delegate = this.delegate;
+    }
     if (ti.removeView != null) {
       assert(isPresent(ti.removeStart), 'removeView needs removeStart');
       assert(isPresent(ti.removeCount), 'removeView needs removeCount');
@@ -481,6 +482,7 @@ export class NavControllerBase implements NavOutlet {
     // Check all the inserted view are correct
     for (let i = 0; i < viewControllers.length; i++) {
       const view = viewControllers[i];
+      view.delegate = ti.opts.delegate;
       const nav = view._nav;
       if (nav && nav !== this) {
         throw new Error('inserted view was already inserted');
@@ -519,7 +521,7 @@ export class NavControllerBase implements NavOutlet {
     assert(ti.resolve, 'resolve must be valid');
     assert(ti.reject, 'reject must be valid');
 
-    const opts = ti.opts = ti.opts || {};
+    const opts = ti.opts;
     const insertViews = ti.insertViews;
     const removeStart = ti.removeStart;
     const removeCount = ti.removeCount;

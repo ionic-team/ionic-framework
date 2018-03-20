@@ -43,6 +43,9 @@ import {
   Side,
 } from './utils/helpers';
 import {
+  FrameworkDelegate as FrameworkDelegate2,
+} from '.';
+import {
   PickerButton,
   PickerColumn as PickerColumn2,
 } from './components/picker/picker';
@@ -2010,6 +2013,7 @@ declare global {
   namespace JSXElements {
     export interface IonNavAttributes extends HTMLAttributes {
       animated?: boolean;
+      delegate?: FrameworkDelegate;
       root?: any;
       rootParams?: any;
       swipeBackEnabled?: boolean;

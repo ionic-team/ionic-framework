@@ -19,6 +19,9 @@ const routes: Routes = [
   { path: 'popover', loadChildren: 'app/popover/popover.module#PopoverModule' },
   { path: 'segment', loadChildren: 'app/segment/segment.module#SegmentModule' },
   { path: 'virtual-scroll', loadChildren: 'app/virtual-scroll/virtual-scroll.module#VirtualScrollModule' },
+
+  { path: 'no-routing-nav', loadChildren: 'app/no-routing-nav/no-routing-nav.module#NoRoutingNavModule' },
+
 ];
 
 @NgModule({

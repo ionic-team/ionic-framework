@@ -1,7 +1,6 @@
 import { ComponentFactoryResolver, Directive, ElementRef, Injector} from '@angular/core';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
-import { FrameworkDelegate, NavOptions, NavParams, TransitionDoneFn, ViewController } from '@ionic/core';
+import { NavOptions, NavParams, TransitionDoneFn, ViewController } from '@ionic/core';
 import { proxyEl } from '../util/util';
 import { AngularDelegate } from '..';
 
@@ -11,50 +10,37 @@ import { AngularDelegate } from '..';
 })
 export class IonNav {
 
-  private delegate: FrameworkDelegate;
-
   constructor(
     private ref: ElementRef,
-    router: Router,
     cfr: ComponentFactoryResolver,
     injector: Injector,
     angularDelegate: AngularDelegate,
   ) {
-    this.delegate = angularDelegate.create(cfr, injector);
-    console.log('ion-nav');
-
-    router.events.subscribe(ev => {
-      if (ev instanceof NavigationStart) {
-        console.log('NavigationStart', ev.url);
-
-      } else if (ev instanceof NavigationEnd) {
-        console.log('NavigationEnd', ev.url);
-      }
-    });
+    this.ref.nativeElement.delegate = angularDelegate.create(cfr, injector);
   }
 
   push(page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
-    return proxyEl(this.ref, 'push', page, params, this.wrap(opts), done);
+    return proxyEl(this.ref, 'push', page, params, opts, done);
   }
 
   insert(insertIndex: number, page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
-    return proxyEl(this.ref, 'insert', insertIndex, page, params, this.wrap(opts), done);
+    return proxyEl(this.ref, 'insert', insertIndex, page, params, opts, done);
   }
 
   insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
-    return proxyEl(this.ref, 'insertPages', insertIndex, insertPages, this.wrap(opts), done);
+    return proxyEl(this.ref, 'insertPages', insertIndex, insertPages, opts, done);
   }
 
   pop(opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
-    return proxyEl(this.ref, 'pop', this.wrap(opts), done);
+    return proxyEl(this.ref, 'pop', opts, done);
   }
 
   popTo(indexOrViewCtrl: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
-    return proxyEl(this.ref, 'popTo', indexOrViewCtrl, this.wrap(opts), done);
+    return proxyEl(this.ref, 'popTo', indexOrViewCtrl, opts, done);
   }
 
   popToRoot(opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
-    return proxyEl(this.ref, 'popToRoot', this.wrap(opts), done);
+    return proxyEl(this.ref, 'popToRoot', opts, done);
   }
 
   popAll(): Promise<boolean[]> {
@@ -62,19 +48,19 @@ export class IonNav {
   }
 
   removeIndex(startIndex: number, removeCount = 1, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
-    return proxyEl(this.ref, 'removeIndex', startIndex, removeCount, this.wrap(opts), done);
+    return proxyEl(this.ref, 'removeIndex', startIndex, removeCount, opts, done);
   }
 
   removeView(viewController: ViewController, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
-    return proxyEl(this.ref, 'removeView', viewController, this.wrap(opts), done);
+    return proxyEl(this.ref, 'removeView', viewController, opts, done);
   }
 
   setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
-    return proxyEl(this.ref, 'setRoot', pageOrViewCtrl, params, this.wrap(opts), done);
+    return proxyEl(this.ref, 'setRoot', pageOrViewCtrl, params, opts, done);
   }
 
   setPages(pages: any[], opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
-    return proxyEl(this.ref, 'setPages', pages, this.wrap(opts), done);
+    return proxyEl(this.ref, 'setPages', pages, opts, done);
   }
 
   getAllChildNavs(): any[] {
@@ -114,12 +100,4 @@ export class IonNav {
   length() {
     return proxyEl(this.ref, 'length');
   }
-
-  private wrap(opts?: NavOptions): NavOptions {
-    return {
-      ...this.wrap(opts),
-      delegate: this.delegate
-    };
-  }
-
 }

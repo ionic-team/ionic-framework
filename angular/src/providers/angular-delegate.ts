@@ -53,9 +53,9 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
   }
 
   removeViewFromDom(_container: any, component: any): Promise<void> {
-    const mountingData = this.elRefMap.get(component);
-    if (mountingData) {
-      mountingData.componentRef.destroy();
+    const componentRef = this.elRefMap.get(component);
+    if (componentRef) {
+      componentRef.destroy();
       this.elRefMap.delete(component);
     }
     return Promise.resolve();

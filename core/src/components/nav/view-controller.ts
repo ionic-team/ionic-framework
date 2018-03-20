@@ -32,11 +32,11 @@ export class ViewController {
   /** @hidden */
   id: string;
   element: HTMLElement;
+  delegate: FrameworkDelegate;
 
   constructor(
     public component: any,
-    public data: any,
-    private delegate?: FrameworkDelegate,
+    public data: any
   ) {}
 
   /**
