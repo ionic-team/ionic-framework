@@ -23,6 +23,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Range](#range)
 - [Segment](#segment)
 - [Select](#select)
+- [Spinner](#spinner)
 - [Text/Typography](#text-typography)
 - [Theming](#theming)
 - [Toolbar](#toolbar)
@@ -830,6 +831,29 @@ this.customOptions = {
   subTitle: 'Select your toppings'
 };
 ```
+
+## Spinner
+
+### Name Changed
+
+The `ios` and `ios-small` spinner's have been renamed to `lines` and `lines-small`, respectively. This also applies to any components that use spinner: `ion-loading`, `ion-infinite-scroll`, `ion-refresher`.
+
+**Old Usage Example:**
+
+```html
+<ion-spinner name="ios"></ion-spinner>
+
+<ion-spinner name="ios-small"></ion-spinner>
+```
+
+**New Usage Example:**
+
+```html
+<ion-spinner name="lines"></ion-spinner>
+
+<ion-spinner name="lines-small"></ion-spinner>
+```
+
 
 ## Text / Typography
 
