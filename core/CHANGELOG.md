@@ -1,3 +1,23 @@
+<a name="0.1.4-9"></a>
+## [0.1.4-9](https://github.com/ionic-team/ionic/compare/v0.1.4-8...v0.1.4-9) (2018-03-20)
+
+
+### Bug Fixes
+
+* **all:** ts strict (part 3) ([06ad60e](https://github.com/ionic-team/ionic/commit/06ad60e))
+* **angular:** ion-nav no routing ([9094c66](https://github.com/ionic-team/ionic/commit/9094c66))
+* **angular:** removeViewFromDom ([41f54f8](https://github.com/ionic-team/ionic/commit/41f54f8))
+* **back-button:** use correct color for ios back button ([b82c382](https://github.com/ionic-team/ionic/commit/b82c382)), closes [#14177](https://github.com/ionic-team/ionic/issues/14177)
+* **overlays:** page is removed properly ([9988c75](https://github.com/ionic-team/ionic/commit/9988c75))
+* **theming:** update spinner classes to new names ([f578122](https://github.com/ionic-team/ionic/commit/f578122))
+
+
+### Features
+
+* **angular:** ion-nav ([f39d3ad](https://github.com/ionic-team/ionic/commit/f39d3ad))
+
+
+
 <a name="0.1.4-8"></a>
 ## [0.1.4-8](https://github.com/ionic-team/ionic/compare/v0.1.4-7...v0.1.4-8) (2018-03-19)
 
