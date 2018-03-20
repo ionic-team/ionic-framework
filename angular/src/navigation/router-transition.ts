@@ -1,6 +1,5 @@
 import { ComponentRef } from '@angular/core';
 
-
 export function runTransition(enteringRef: ComponentRef<any>, leavingRef: ComponentRef<any>): Promise<void> {
   const enteringElm = (enteringRef && enteringRef.location && enteringRef.location.nativeElement);
   const leavingElm = (leavingRef && leavingRef.location && leavingRef.location.nativeElement);
@@ -9,11 +8,11 @@ export function runTransition(enteringRef: ComponentRef<any>, leavingRef: Compon
     return Promise.resolve();
   }
 
-  return transition(enteringElm, leavingElm);
+  return tr(enteringElm, leavingElm);
 }
 
 
-function transition(enteringElm: HTMLElement, leavingElm: HTMLElement): Promise<void> {
+function tr(enteringElm: HTMLElement, leavingElm: HTMLElement): Promise<void> {
   console.log('transition start');
 
   return new Promise(resolve => {

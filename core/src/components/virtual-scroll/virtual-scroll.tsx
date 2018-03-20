@@ -28,7 +28,7 @@ export class VirtualScroll {
   private heightChanged = false;
   private lastItemLen = 0;
 
-  @Element() el: HTMLElement;
+  @Element() el: HTMLStencilElement;
 
   @Prop({context: 'dom'}) dom: DomController;
   @Prop({context: 'enableListener'}) enableListener: EventListenerEnable;
@@ -257,7 +257,7 @@ export class VirtualScroll {
     } else if (this.domRender) {
       this.domRender(this.virtualDom);
     } else if (this.renderer) {
-      (this.el as any).forceUpdate();
+      this.el.forceUpdate();
     }
     if (this.heightChanged) {
       this.el.style.height = this.totalHeight + 'px';
