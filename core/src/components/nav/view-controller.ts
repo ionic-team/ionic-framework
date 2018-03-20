@@ -47,7 +47,7 @@ export class ViewController {
 
     const component = this.component;
     if (this.delegate) {
-      return this.delegate.attachViewToDom(container, component, this.data, ['ion-page']).then(el => {
+      return this.delegate.attachViewToDom(container, component, this.data, ['ion-page', 'hide-page']).then(el => {
         this.element = el;
       });
     }
@@ -102,9 +102,12 @@ export class ViewController {
 
     const element = this.element;
     if (element) {
-      element.remove();
+      if (this.delegate) {
+        this.delegate.removeViewFromDom(element.parentElement, element);
+      } else {
+        element.remove();
+      }
     }
-
     this._nav = this._cntDir = this._leavingOpts = null;
     this._state = ViewState.Destroyed;
   }
