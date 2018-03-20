@@ -24,7 +24,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Segment](#segment)
 - [Select](#select)
 - [Spinner](#spinner)
-- [Text/Typography](#text-typography)
+- [Text / Typography](#text--typography)
 - [Theming](#theming)
 - [Toolbar](#toolbar)
 
@@ -318,7 +318,7 @@ _Note that `middle` has been changed to `center` for the vertical positioning._
 </ion-fab>
 ```
 
-### Fixed Content
+## Fixed Content
 
 The `<ion-fab>` container was previously placed inside of the fixed content by default. Now, any fixed content should use the `fixed` slot.
 
@@ -517,41 +517,6 @@ Previously an `ion-label` would automatically get added to an `ion-item-divider`
 </ion-item-divider>
 ```
 
-## List Header
-
-### Label Required
-
-Previously an `ion-label` would automatically get added to an `ion-list-header` if one wasn't provided. Now an `ion-label` should always be added if the component is used to display text.
-
-```html
-<ion-list-header>
-  <ion-label>List Header Label</ion-label>
-</ion-list-header>
-```
-
-## Menu Toggle
-
-### Markup Changed
-
-The `menuToggle` attribute should not be added to an element anymore. Elements that should toggle a menu should be wrapped in an `ion-menu-toggle` element.
-
-**Old Usage Example:**
-
-```html
-<button ion-button menuToggle>
-  Toggle Menu
-</button>
-```
-
-**New Usage Example:**
-
-```html
-<ion-menu-toggle>
-  <ion-button>
-    Toggle Menu
-  </ion-button>
-</ion-menu-toggle>
-```
 
 ## Item Sliding
 
@@ -592,6 +557,43 @@ The option component should not be written as a `button` with an `ion-button` di
 ### Method Renamed
 
 The `getSlidingPercent` method has been renamed to `getSlidingRatio` since the function is returning a ratio of the open amount of the item compared to the width of the options.
+
+
+## List Header
+
+### Label Required
+
+Previously an `ion-label` would automatically get added to an `ion-list-header` if one wasn't provided. Now an `ion-label` should always be added if the component is used to display text.
+
+```html
+<ion-list-header>
+  <ion-label>List Header Label</ion-label>
+</ion-list-header>
+```
+
+## Menu Toggle
+
+### Markup Changed
+
+The `menuToggle` attribute should not be added to an element anymore. Elements that should toggle a menu should be wrapped in an `ion-menu-toggle` element.
+
+**Old Usage Example:**
+
+```html
+<button ion-button menuToggle>
+  Toggle Menu
+</button>
+```
+
+**New Usage Example:**
+
+```html
+<ion-menu-toggle>
+  <ion-button>
+    Toggle Menu
+  </ion-button>
+</ion-menu-toggle>
+```
 
 
 ## Nav
