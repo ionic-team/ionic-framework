@@ -19,13 +19,13 @@ $card-ios-margin-start:                20px !default;
 $card-ios-background-color:            $item-ios-background-color !default;
 
 /// @prop - Box shadow color of the card
-$card-ios-box-shadow-color:            rgba(0, 0, 0, .18) !default;
+$card-ios-box-shadow-color:            rgba(0, 0, 0, .12) !default;
 
 /// @prop - Box shadow of the card
-$card-ios-box-shadow:                  0 16px 42px $card-ios-box-shadow-color !default;
+$card-ios-box-shadow:                  0 4px 16px $card-ios-box-shadow-color !default;
 
 /// @prop - Border radius of the card
-$card-ios-border-radius:               14px !default;
+$card-ios-border-radius:               8px !default;
 
 /// @prop - Font family of the card
 $card-ios-font-family:                 $font-family-ios-base !default;

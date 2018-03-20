@@ -39,6 +39,12 @@ $button-ios-border-radius:                          8px !default;
 /// @prop - Font size of the button text
 $button-ios-font-size:                              16px !default;
 
+/// @prop - Font weight of the button text
+$button-ios-font-weight:                            500 !default;
+
+/// @prop - Letter spacing of the button text
+$button-ios-letter-spacing:                         -.03em !default;
+
 /// @prop - Background color of the button
 $button-ios-background-color:                       ion-color($colors-ios, primary, base, ios) !default;
 

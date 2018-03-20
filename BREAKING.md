@@ -594,36 +594,6 @@ The option component should not be written as a `button` with an `ion-button` di
 The `getSlidingPercent` method has been renamed to `getSlidingRatio` since the function is returning a ratio of the open amount of the item compared to the width of the options.
 
 
-## Toolbar
-
-Previously if a `menuToggle` directive was added to an Ionic `button` in a toolbar, it would be positioned outside of the `ion-buttons` element. Since menu toggle is simply a wrapper to a button now, it should be placed inside of the `ion-buttons` element.
-
-**Old Usage Example:**
-
-```html
-<ion-toolbar>
-  <button ion-button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
-  <ion-title>Left side menu toggle</ion-title>
-</ion-toolbar>
-```
-
-**New Usage Example:**
-
-```html
-<ion-toolbar>
-  <ion-buttons slot="start">
-    <ion-menu-toggle>
-      <ion-button>
-        <ion-icon slot="icon-only" name="menu"></ion-icon>
-      </ion-button>
-    </ion-menu-toggle>
-  </ion-buttons>
-  <ion-title>Left side menu toggle</ion-title>
-</ion-toolbar>
-```
-
 ## Nav
 
 ### Method renamed
@@ -949,6 +919,36 @@ $app-md-statusbar-padding:    20px;
 
 
 ## Toolbar
+
+### Menu Toggle
+
+Previously if a `menuToggle` directive was added to an Ionic `button` in a toolbar, it would be positioned outside of the `ion-buttons` element. Since menu toggle is simply a wrapper to a button now, it should be placed inside of the `ion-buttons` element.
+
+**Old Usage Example:**
+
+```html
+<ion-toolbar>
+  <button ion-button menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <ion-title>Left side menu toggle</ion-title>
+</ion-toolbar>
+```
+
+**New Usage Example:**
+
+```html
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-menu-toggle>
+      <ion-button>
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </ion-menu-toggle>
+  </ion-buttons>
+  <ion-title>Left side menu toggle</ion-title>
+</ion-toolbar>
+```
 
 ### Attributes Renamed
 

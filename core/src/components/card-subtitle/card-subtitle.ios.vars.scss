@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Font size of the card subtitle
-$card-ios-subtitle-font-size:            16px !default;
+$card-ios-subtitle-font-size:            12px !default;
 
 /// @prop - Font weight of the card subtitle
 $card-ios-subtitle-font-weight:          700 !default;
@@ -13,7 +13,7 @@ $card-ios-subtitle-font-weight:          700 !default;
 $card-ios-subtitle-text-transform:       uppercase !default;
 
 /// @prop - Letter spacing of the card subtitle
-$card-ios-subtitle-letter-spacing:       .6px !default;
+$card-ios-subtitle-letter-spacing:       .4px !default;
 
 /// @prop - Padding top of the card subtitle
 $card-ios-subtitle-padding-top:          0 !default;
@@ -26,6 +26,18 @@ $card-ios-subtitle-padding-bottom:       $card-ios-subtitle-padding-top !default
 
 /// @prop - Padding start of the card subtitle
 $card-ios-subtitle-padding-start:        $card-ios-subtitle-padding-end !default;
+
+/// @prop - Margin top of the card subtitle
+$card-ios-subtitle-margin-top:           0 !default;
+
+/// @prop - Margin end of the card subtitle
+$card-ios-subtitle-margin-end:           $card-ios-subtitle-margin-top !default;
+
+/// @prop - Margin bottom of the card subtitle
+$card-ios-subtitle-margin-bottom:        4px !default;
+
+/// @prop - Margin start of the card subtitle
+$card-ios-subtitle-margin-start:         $card-ios-subtitle-margin-end !default;
 
 /// @prop - Color of the card subtitle
 $card-ios-subtitle-color:                $text-ios-color-step-400 !default;

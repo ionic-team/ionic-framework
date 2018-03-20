@@ -29,7 +29,7 @@
 
 .back-button-ios ion-icon {
   @include padding(0);
-  @include margin(0, -3px, 0, 0);
+  @include margin(0, -4px, 0, 0);
 
   display: inherit;
 
@@ -37,8 +37,3 @@
 
   pointer-events: none;
 }
-
-.back-button .button-text {
-  letter-spacing: .01em;
-}
-
