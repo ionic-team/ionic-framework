@@ -98,9 +98,7 @@ export function dismiss(
 
   return overlayAnimation(overlay, animationBuilder, overlay.el, opts).then(() => {
     overlay.didDismiss.emit({data, role});
-    if (overlay.el.parentNode) {
-      overlay.el.parentNode.removeChild(overlay.el);
-    }
+    overlay.el.remove();
   });
 }
 
@@ -152,6 +150,17 @@ export function attachComponent(delegate: FrameworkDelegate, container: Element,
     return (el as any).componentOnReady();
   }
   return Promise.resolve(el);
+}
+
+export function detachComponent(delegate: FrameworkDelegate, element: HTMLElement) {
+  if (element) {
+    if (delegate) {
+      const container = element.parentElement;
+      return delegate.removeViewFromDom(container, element);
+    }
+    element.remove();
+  }
+  return Promise.resolve();
 }
 
 export function eventMethod<T>(element: HTMLElement, eventName: string, callback?: (detail: T) => void): Promise<T> {

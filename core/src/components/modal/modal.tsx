@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@
 import { Animation, AnimationBuilder, Config, FrameworkDelegate } from '../../index';
 
 import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { BACKDROP, OverlayEventDetail, OverlayInterface, attachComponent, dismiss, eventMethod, present } from '../../utils/overlays';
+import { BACKDROP, OverlayEventDetail, OverlayInterface, attachComponent, detachComponent, dismiss, eventMethod, present } from '../../utils/overlays';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -186,7 +186,8 @@ export class Modal implements OverlayInterface {
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<void> {
-    return dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation);
+    return dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation)
+      .then(() => detachComponent(this.delegate, this.usersElement));
   }
 
   /**

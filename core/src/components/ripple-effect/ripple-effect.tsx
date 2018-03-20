@@ -82,7 +82,7 @@ export class RippleEffect {
       style.animationDuration = duration + 'ms';
 
       this.el.appendChild(div);
-      setTimeout(() => this.el.removeChild(div), duration + 50);
+      setTimeout(() => div.remove(), duration + 50);
     });
   }
 }

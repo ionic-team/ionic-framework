@@ -40,7 +40,7 @@ function removeClone(componentEl: HTMLElement, inputEl: HTMLElement) {
   if (componentEl && componentEl.parentElement) {
     const clonedInputEles = componentEl.parentElement.querySelectorAll('.cloned-input');
     for (let i = 0; i < clonedInputEles.length; i++) {
-      clonedInputEles[i].parentNode.removeChild(clonedInputEles[i]);
+      clonedInputEles[i].remove();
     }
     componentEl.style.pointerEvents = '';
   }
