@@ -77,7 +77,7 @@ export class Loading implements OverlayInterface {
   @Prop() showBackdrop = true;
 
   /**
-   * The name of the spinner to display. Possible values are: `"lines"`, `"lines-sm"`, `"dots"`,
+   * The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`,
    * `"bubbles"`, `"circles"`, `"crescent"`.
    */
   @Prop() spinner: string;

@@ -38,7 +38,7 @@ export class Spinner {
 
   /**
    * The name of the SVG spinner to use. If a name is not provided, the platform's default
-   * spinner will be used. Possible values are: `"lines"`, `"lines-sm"`, `"dots"`, `"bubbles"`,
+   * spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`,
    * `"circles"`, `"crescent"`.
    */
   @Prop() name: string;
@@ -65,8 +65,8 @@ export class Spinner {
       name = 'lines';
     } else if (name === 'ios-small') {
       // deprecation warning, renamed in v4
-      console.warn(`spinner "ios-small" has been renamed to "lines-sm"`);
-      name = 'lines-sm';
+      console.warn(`spinner "ios-small" has been renamed to "lines-small"`);
+      name = 'lines-small';
     }
     return name;
   }

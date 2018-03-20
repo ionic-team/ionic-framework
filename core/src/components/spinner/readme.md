@@ -12,7 +12,7 @@ The default spinner to use is based on the platform. The default spinner for `io
 <ion-spinner name="lines"></ion-spinner>
 
 <!-- Lines Small -->
-<ion-spinner name="lines-sm"></ion-spinner>
+<ion-spinner name="lines-small"></ion-spinner>
 
 <!-- Dots -->
 <ion-spinner name="dots"></ion-spinner>
@@ -66,7 +66,7 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 string
 
 The name of the SVG spinner to use. If a name is not provided, the platform's default
-spinner will be used. Possible values are: `"lines"`, `"lines-sm"`, `"dots"`, `"bubbles"`,
+spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`,
 `"circles"`, `"crescent"`.
 
 
@@ -109,7 +109,7 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 string
 
 The name of the SVG spinner to use. If a name is not provided, the platform's default
-spinner will be used. Possible values are: `"lines"`, `"lines-sm"`, `"dots"`, `"bubbles"`,
+spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`,
 `"circles"`, `"crescent"`.
 
 

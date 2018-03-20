@@ -104,7 +104,7 @@ If true, a backdrop will be displayed behind the loading indicator. Defaults to 
 
 string
 
-The name of the spinner to display. Possible values are: `"lines"`, `"lines-sm"`, `"dots"`,
+The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`,
 `"bubbles"`, `"circles"`, `"crescent"`.
 
 
@@ -195,7 +195,7 @@ If true, a backdrop will be displayed behind the loading indicator. Defaults to 
 
 string
 
-The name of the spinner to display. Possible values are: `"lines"`, `"lines-sm"`, `"dots"`,
+The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`,
 `"bubbles"`, `"circles"`, `"crescent"`.
 
 

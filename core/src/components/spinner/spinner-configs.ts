@@ -21,7 +21,7 @@ export const SPINNERS: SpinnerConfigs = {
     }
   },
 
-  'lines-sm': {
+  'lines-small': {
     dur: 1000,
     lines: 12,
     fn: (dur: number, index: number, total: number) => {

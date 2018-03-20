@@ -27,17 +27,17 @@ ion-spinner.spinner-paused svg {
 }
 
 
-// Spinner: lines / lines-sm
+// Spinner: lines / lines-small
 // --------------------------------------------------
 
 .spinner-lines line,
-.spinner-lines-sm line {
+.spinner-lines-small line {
   stroke-width: 4px;
   stroke-linecap: round;
 }
 
 .spinner-lines svg,
-.spinner-lines-sm svg {
+.spinner-lines-small svg {
   animation: spinner-fade-out 1s linear infinite;
 }
 

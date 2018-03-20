@@ -5,6 +5,8 @@
   color: $infinite-scroll-md-loading-text-color;
 }
 
+.infinite-scroll-content-md .infinite-loading-spinner .spinner-lines-md line,
+.infinite-scroll-content-md .infinite-loading-spinner .spinner-lines-small-md line,
 .infinite-scroll-content-md .infinite-loading-spinner .spinner-crescent circle {
   stroke: $infinite-scroll-md-loading-color;
 }

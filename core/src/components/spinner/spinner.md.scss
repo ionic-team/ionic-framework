@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 .spinner-lines-md line,
-.spinner-lines-sm-md line {
+.spinner-lines-small-md line {
   stroke: $spinner-md-lines-color;
 }
 
@@ -35,7 +35,7 @@
   .spinner-md-#{$color-name} {
 
     &.spinner-lines line,
-    &.spinner-lines-sm line,
+    &.spinner-lines-small line,
     &.spinner-crescent circle {
       stroke: $color-base;
     }
