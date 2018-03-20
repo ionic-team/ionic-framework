@@ -1,7 +1,7 @@
 import { ViewController, isViewController } from './view-controller';
 import { Animation, FrameworkDelegate } from '../..';
 
-export function convertToView(page: any, params: any): ViewController {
+export function convertToView(page: any, params: any): ViewController|null {
   if (!page) {
     return null;
   }
@@ -20,8 +20,7 @@ export function convertToViews(pages: any[]): ViewController[] {
       return convertToView(page.page, page.params);
     }
     return convertToView(page, undefined);
-  })
-  .filter(v => v !== null);
+  }).filter(v => v !== null) as ViewController[];
 }
 
 export function isPresent(val: any): val is any {
@@ -80,7 +79,7 @@ export interface TransitionDoneFn {
 }
 
 export interface TransitionInstruction {
-  opts: NavOptions;
+  opts: NavOptions|undefined;
   insertStart?: number;
   insertViews?: any[];
   removeView?: ViewController;

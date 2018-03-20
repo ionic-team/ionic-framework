@@ -150,7 +150,7 @@ export class NavControllerBase implements NavOutlet {
   popAll(): Promise<boolean[]> {
     const promises: Promise<boolean>[] = [];
     for (let i = this._views.length - 1; i >= 0; i--) {
-      promises.push(this.pop(null));
+      promises.push(this.pop(undefined));
     }
     return Promise.all(promises);
   }
@@ -235,7 +235,7 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  getRouteId(): RouteID|null {
+  getRouteId(): RouteID|undefined {
     const active = this.getActive();
     if (active) {
       return {
@@ -243,16 +243,16 @@ export class NavControllerBase implements NavOutlet {
         params: active.data
       };
     }
-    return null;
+    return undefined;
   }
 
   @Method()
-  getContainerEl(): HTMLElement {
+  getContainerEl(): HTMLElement|undefined {
     const active = this.getActive();
     if (active) {
       return active.element;
     }
-    return null;
+    return undefined;
   }
 
   @Method()
@@ -276,10 +276,10 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  getPrevious(view = this.getActive()): ViewController {
+  getPrevious(view = this.getActive()): ViewController|undefined {
     const views = this._views;
     const index = views.indexOf(view);
-    return (index > 0) ? views[index - 1] : null;
+    return (index > 0) ? views[index - 1] : undefined;
   }
 
   @Method()
@@ -291,7 +291,7 @@ export class NavControllerBase implements NavOutlet {
    * Return a view controller
    */
   @Method()
-  getViewById(id: string): ViewController {
+  getViewById(id: string): ViewController|undefined {
     return this._views.find(vc => vc.id === id);
   }
 
@@ -313,7 +313,7 @@ export class NavControllerBase implements NavOutlet {
   // 7. _transitionStart(): called once the transition actually starts, it initializes the Animation underneath.
   // 8. _transitionFinish(): called once the transition finishes
   // 9. _cleanup(): syncs the navigation internal state with the DOM. For example it removes the pages from the DOM or hides/show them.
-  private _queueTrns(ti: TransitionInstruction, done: TransitionDoneFn): Promise<boolean> {
+  private _queueTrns(ti: TransitionInstruction, done: TransitionDoneFn|undefined): Promise<boolean> {
     const promise = new Promise<boolean>((resolve, reject) => {
       ti.resolve = resolve;
       ti.reject = reject;
@@ -349,7 +349,7 @@ export class NavControllerBase implements NavOutlet {
     const isPop = result.direction === NavDirection.back;
     if (this.useRouter) {
       const router = document.querySelector('ion-router');
-      router.navChanged(isPop);
+      router && router.navChanged(isPop);
     }
 
     this.ionNavChanged.emit({isPop});
@@ -438,7 +438,7 @@ export class NavControllerBase implements NavOutlet {
   private _prepareTI(ti: TransitionInstruction) {
     const viewsLength = this._views.length;
 
-    if (isPresent(ti.removeView)) {
+    if (ti.removeView != null) {
       assert(isPresent(ti.removeStart), 'removeView needs removeStart');
       assert(isPresent(ti.removeCount), 'removeView needs removeCount');
 
@@ -448,7 +448,7 @@ export class NavControllerBase implements NavOutlet {
       }
       ti.removeStart += index;
     }
-    if (isPresent(ti.removeStart)) {
+    if (ti.removeStart != null) {
       if (ti.removeStart < 0) {
         ti.removeStart = (viewsLength - 1);
       }
@@ -523,7 +523,7 @@ export class NavControllerBase implements NavOutlet {
     const insertViews = ti.insertViews;
     const removeStart = ti.removeStart;
     const removeCount = ti.removeCount;
-    let destroyQueue: ViewController[];
+    let destroyQueue: ViewController[] = undefined;
 
     // there are views to remove
     if (isPresent(removeStart)) {
@@ -597,7 +597,7 @@ export class NavControllerBase implements NavOutlet {
     }
   }
 
-  private _transition(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction): Promise<NavResult> {
+  private async _transition(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction): Promise<NavResult> {
     if (!ti.requiresTransition) {
       // transition is not required, so we are already done!
       // they're inserting/removing the views somewhere in the middle or
@@ -645,12 +645,11 @@ export class NavControllerBase implements NavOutlet {
       enteringEl,
       leavingEl
     };
-    return transition(animationOpts)
-      .then(trns => this._transitionFinish(trns, enteringView, leavingView, ti.opts));
+    const trns = await transition(animationOpts);
+    return this._transitionFinish(trns, enteringView, leavingView, ti.opts);
   }
 
-  private _transitionFinish(transition: Animation, enteringView: ViewController, leavingView: ViewController, opts: NavOptions): NavResult {
-
+  private _transitionFinish(transition: Animation|void, enteringView: ViewController, leavingView: ViewController, opts: NavOptions): NavResult {
     const hasCompleted = transition ? transition.hasCompleted : true;
 
     if (hasCompleted) {
@@ -777,7 +776,7 @@ export class NavControllerBase implements NavOutlet {
       removeStart: -1,
       removeCount: 1,
       opts: opts,
-    }, null);
+    }, undefined);
   }
 
   private swipeBackProgress(detail: GestureDetail) {

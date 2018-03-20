@@ -44,7 +44,7 @@ export interface Animation {
 
 
 export interface AnimationBuilder {
-  (Animation: Animation, baseEl?: HTMLElement, opts?: any): Promise<Animation>;
+  (Animation: Animation, baseEl: HTMLElement, opts?: any): Promise<Animation>;
 }
 
 export interface PlayOptions {

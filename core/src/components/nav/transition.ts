@@ -1,7 +1,7 @@
 import { NavDirection } from './nav-util';
 import { Animation, AnimationBuilder } from '../..';
 
-export function transition(opts: AnimationOptions): Promise<Animation|undefined> {
+export async function transition(opts: AnimationOptions): Promise<Animation|void> {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
 
@@ -15,51 +15,49 @@ export function transition(opts: AnimationOptions): Promise<Animation|undefined>
   }
 
   // transition path
-  return waitDeepReady(opts)
-    .then(() => fireWillEvents(enteringEl, leavingEl))
-    .then(() => createTransition(opts))
-    .then((transition) => playTransition(transition, opts))
-    .then((transition) => {
-      if (transition.hasCompleted) {
-        fireDidEvents(enteringEl, leavingEl);
-      }
-      return transition;
-    });
-}
-
-function notifyViewReady(viewIsReady: undefined | (() => Promise<any>)) {
-  if (viewIsReady) {
-    return viewIsReady();
+  await waitDeepReady(opts);
+  const transition = await createTransition(opts);
+  fireWillEvents(enteringEl, leavingEl);
+  await playTransition(transition, opts);
+  if (transition.hasCompleted) {
+    fireDidEvents(enteringEl, leavingEl);
   }
-  return Promise.resolve();
+  return transition;
 }
 
-function noAnimation(opts: AnimationOptions) {
+async function notifyViewReady(viewIsReady: undefined | (() => Promise<any>)) {
+  if (viewIsReady) {
+    await viewIsReady();
+  }
+}
+
+async function noAnimation(opts: AnimationOptions) {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
 
   enteringEl && enteringEl.classList.remove('hide-page');
   leavingEl && leavingEl.classList.remove('hide-page');
 
-  return waitShallowReady(opts).then(() => {
-    fireWillEvents(enteringEl, leavingEl);
-    fireDidEvents(enteringEl, leavingEl);
-    return undefined;
-  });
+  await waitShallowReady(opts);
+
+  fireWillEvents(enteringEl, leavingEl);
+  fireDidEvents(enteringEl, leavingEl);
 }
 
-function waitDeepReady(opts: AnimationOptions) {
-  return Promise.all([
+async function waitDeepReady(opts: AnimationOptions) {
+  await Promise.all([
     deepReady(opts.enteringEl),
     deepReady(opts.leavingEl)
-  ]).then(() => notifyViewReady(opts.viewIsReady));
+  ]);
+  await notifyViewReady(opts.viewIsReady);
 }
 
-function waitShallowReady(opts: AnimationOptions) {
-  return Promise.all([
+async function waitShallowReady(opts: AnimationOptions) {
+  await Promise.all([
     shallowReady(opts.enteringEl),
     shallowReady(opts.leavingEl)
-  ]).then(() => notifyViewReady(opts.viewIsReady));
+  ]);
+  await notifyViewReady(opts.viewIsReady);
 }
 
 function showPages(enteringEl: HTMLElement, leavingEl: HTMLElement) {
@@ -140,14 +138,14 @@ export function lifecycle(el: HTMLElement, lifecycle: ViewLifecycle) {
   }
 }
 
-function shallowReady(el: HTMLElement): Promise<any> {
+function shallowReady(el: Element): Promise<any> {
   if (el && (el as any).componentOnReady) {
     return (el as any).componentOnReady();
   }
   return Promise.resolve();
 }
 
-function deepReady(el: HTMLElement): Promise<any> {
+function deepReady(el: Element): Promise<any> {
   if (!el) {
     return Promise.resolve();
   }
@@ -158,7 +156,7 @@ function deepReady(el: HTMLElement): Promise<any> {
   }
 }
 
-export enum ViewLifecycle {
+export const enum ViewLifecycle {
   WillEnter = 'ionViewWillEnter',
   DidEnter = 'ionViewDidEnter',
   WillLeave = 'ionViewWillLeave',

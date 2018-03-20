@@ -22,7 +22,7 @@
     "outDir": ".tmp",
     "pretty": true,
     "removeComments": false,
-    "target": "es2015"
+    "target": "es2017"
   },
   "include": [
     "src/**/*.ts",

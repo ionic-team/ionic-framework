@@ -139,13 +139,13 @@ export class Tabs implements NavOutlet {
   }
 
   @Method()
-  getRouteId(): RouteID|null {
+  getRouteId(): RouteID|undefined {
     const id = this.selectedTab && this.selectedTab.getTabId();
-    return id ? {id} : null;
+    return id ? {id} : undefined;
   }
 
   @Method()
-  getContainerEl(): HTMLElement {
+  getContainerEl(): HTMLElement|undefined {
     return this.selectedTab;
   }
 

@@ -33,7 +33,7 @@ exports.config = {
     { components: ['ion-popover', 'ion-popover-controller'] },
     { components: ['ion-radio', 'ion-radio-group'] },
     { components: ['ion-reorder', 'ion-reorder-group'] },
-    { components: ['ion-route', 'ion-router'] },
+    { components: ['ion-router', 'ion-route', 'ion-route-redirect'] },
     { components: ['ion-searchbar'] },
     { components: ['ion-segment', 'ion-segment-button'] },
     { components: ['ion-select', 'ion-select-option', 'ion-select-popover'] },

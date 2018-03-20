@@ -21,19 +21,19 @@ export function writeNavState(root: HTMLElement, chain: RouteChain|null, index: 
         ? writeNavState(nextEl, chain, index + 1, direction)
         : Promise.resolve(direction === 0);
 
-      if (result.markVisible) {
-        return promise.then((c) => {
+      return promise.then((c) => {
+        if (result.markVisible) {
           result.markVisible();
-          return c;
-        });
-      }
-      return promise;
+        }
+        return c;
+      });
     });
 }
 
-export function readNavState(node: HTMLElement) {
+export function readNavState(root: HTMLElement) {
   const ids: RouteID[] = [];
   let pivot: NavOutlet|null;
+  let node: HTMLElement|undefined = root;
   while (true) {
     pivot = searchNavNode(node);
     if (pivot) {
@@ -53,7 +53,10 @@ export function readNavState(node: HTMLElement) {
 
 const QUERY = ':not([no-router]) ion-nav,:not([no-router]) ion-tabs';
 
-function searchNavNode(root: HTMLElement): NavOutletElement {
+function searchNavNode(root: HTMLElement|undefined): NavOutletElement|null {
+  if (!root) {
+    return null;
+  }
   if (root.matches(QUERY)) {
     return root as NavOutletElement;
   }

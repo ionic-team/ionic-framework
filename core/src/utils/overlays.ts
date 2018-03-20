@@ -157,7 +157,7 @@ export function attachComponent(delegate: FrameworkDelegate, container: Element,
 export function eventMethod<T>(element: HTMLElement, eventName: string, callback?: (detail: T) => void): Promise<T> {
   let resolve: Function;
   const promise = new Promise<T>(r => resolve = r);
-  onceEvent(element, eventName, (event) => {
+  onceEvent(element, eventName, (event: any) => {
     const detail = event.detail;
     callback && callback(detail);
     resolve(detail);
@@ -165,8 +165,8 @@ export function eventMethod<T>(element: HTMLElement, eventName: string, callback
   return promise;
 }
 
-export function onceEvent(element: HTMLElement, eventName: string, callback: (ev: CustomEvent) => void) {
-  const handler = (ev: CustomEvent) => {
+export function onceEvent(element: HTMLElement, eventName: string, callback: (ev: Event) => void) {
+  const handler = (ev: Event) => {
     element.removeEventListener(eventName, handler);
     callback(ev);
   };
@@ -178,7 +178,7 @@ function closeKeyboard() {
   activeElement && activeElement.blur && activeElement.blur();
 }
 
-export function isCancel(role: string): boolean {
+export function isCancel(role: string|undefined): boolean {
   return role === 'cancel' || role === BACKDROP;
 }
 
