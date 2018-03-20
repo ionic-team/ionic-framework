@@ -13,7 +13,7 @@ platforms.forEach(platform => {
   describe('menu/standalone', () => {
     register('should init', driver => {
       const page = new E2ETestPage(driver, platform);
-      return page.navigate('ion-page');
+      return page.navigate('.ion-page');
     });
   });
 });
