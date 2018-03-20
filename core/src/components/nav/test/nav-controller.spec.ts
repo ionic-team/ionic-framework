@@ -5,6 +5,7 @@ import { AnimationControllerImpl } from '../../animation-controller/animation-co
 import { createConfigController } from '../../../global/config-controller';
 
 import { NavDirection, NavOptions, ViewState } from '../nav-util';
+import { MyCustomEvent, mockLifecycle } from '../transition';
 
 
 describe('NavController', () => {
@@ -1074,15 +1075,11 @@ const MockView5 = 'mock-view5';
 const dom = mockDocument();
 
 
-const win = global as any;
-if (!win.CustomEvent) {
-  win.CustomEvent = function(name: string, params: any) {
-    console.log('"hkljhlkhljkhljk');
-    const event = dom.createEvent('CustomEvent');
-    event.initCustomEvent(name, false, false, params.detail);
-    return event;
-  };
-}
+mockLifecycle(function(name: string, params: any) {
+  const event = dom.createEvent('CustomEvent');
+  event.initCustomEvent(name, false, false, params.detail);
+  return event;
+});
 
 function mockView(component ?: any, data ?: any) {
   if (!component) {

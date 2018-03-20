@@ -1,6 +1,8 @@
 import { NavDirection } from './nav-util';
 import { Animation, AnimationBuilder } from '../..';
 
+export let MyCustomEvent = CustomEvent;
+
 export async function transition(opts: AnimationOptions): Promise<Animation|void> {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
@@ -130,12 +132,16 @@ function setZIndex(enteringEl: HTMLElement, leavingEl: HTMLElement, direction: N
 
 export function lifecycle(el: HTMLElement, lifecycle: ViewLifecycle) {
   if (el) {
-    const event = new CustomEvent(lifecycle, {
+    const event = new MyCustomEvent(lifecycle, {
       bubbles: false,
       cancelable: false
     });
     el.dispatchEvent(event);
   }
+}
+
+export function mockLifecycle(fn: any) {
+  MyCustomEvent = fn;
 }
 
 function shallowReady(el: Element): Promise<any> {
