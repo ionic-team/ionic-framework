@@ -1,7 +1,5 @@
 import { ViewController, isViewController } from './view-controller';
-import { NavControllerBase } from './nav';
-import { Transition } from './transition';
-import { FrameworkDelegate } from '../..';
+import { Animation, FrameworkDelegate } from '../..';
 
 export function convertToView(page: any, params: any): ViewController {
   if (!page) {
@@ -26,32 +24,12 @@ export function convertToViews(pages: any[]): ViewController[] {
   .filter(v => v !== null);
 }
 
-export function setZIndex(nav: NavControllerBase, enteringView: ViewController, leavingView: ViewController, direction: string) {
-  if (enteringView) {
-
-    leavingView = leavingView || nav.getPrevious(enteringView);
-
-    if (leavingView && isPresent(leavingView._zIndex)) {
-      if (direction === NavDirection.back) {
-        enteringView._setZIndex(leavingView._zIndex - 1);
-
-      } else {
-        enteringView._setZIndex(leavingView._zIndex + 1);
-      }
-
-    } else {
-      enteringView._setZIndex(INIT_ZINDEX);
-    }
-  }
-}
-
 export function isPresent(val: any): val is any {
   return val !== undefined && val !== null;
 }
 
 export const enum ViewState {
   New = 1,
-  Initialized,
   Attached,
   Destroyed
 }
@@ -61,15 +39,13 @@ export const enum NavDirection {
   forward = 'forward'
 }
 
-export const INIT_ZINDEX = 100;
-
 export type NavParams = {[key: string]: any};
 
 export interface NavResult {
   hasCompleted: boolean;
   requiresTransition: boolean;
-  enteringName?: string;
-  leavingName?: string;
+  enteringView?: ViewController;
+  leavingView?: ViewController;
   direction?: string;
 }
 
@@ -96,11 +72,11 @@ export interface TransitionResolveFn {
 }
 
 export interface TransitionRejectFn {
-  (rejectReason: any, transition?: Transition): void;
+  (rejectReason: any, transition?: Animation): void;
 }
 
 export interface TransitionDoneFn {
-  (hasCompleted: boolean, requiresTransition: boolean, enteringName?: string, leavingName?: string, direction?: string): void;
+  (hasCompleted: boolean, requiresTransition: boolean, enteringView?: ViewController, leavingView?: ViewController, direction?: string): void;
 }
 
 export interface TransitionInstruction {

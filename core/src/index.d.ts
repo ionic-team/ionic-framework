@@ -8,7 +8,6 @@ export {
   Animation,
   AnimationBuilder,
   AnimationController,
-  AnimationOptions
 } from './components/animation-controller/animation-interface';
 export { App } from './components/app/app';
 export { Avatar } from './components/avatar/avatar';

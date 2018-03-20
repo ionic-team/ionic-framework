@@ -1,6 +1,5 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import {
-  INIT_ZINDEX,
   NavDirection,
   NavOptions,
   NavParams,
@@ -10,21 +9,16 @@ import {
   ViewState,
   convertToViews,
   isPresent,
-  setZIndex
 } from './nav-util';
 
 import { ViewController, isViewController } from './view-controller';
-import { AnimationOptions, Config, DomController, GestureDetail, NavOutlet } from '../..';
+import { Animation, Config, DomController, GestureDetail, NavOutlet } from '../..';
 import { RouteID, RouteWrite } from '../router/utils/interfaces';
 import { assert } from '../../utils/helpers';
 
-import { TransitionController } from './transition-controller';
-import { Transition } from './transition';
-
 import iosTransitionAnimation from './animations/ios.transition';
 import mdTransitionAnimation from './animations/md.transition';
-
-const TrnsCtrl = new TransitionController();
+import { AnimationOptions, ViewLifecycle, lifecycle, transition } from './transition';
 
 @Component({
   tag: 'ion-nav',
@@ -36,13 +30,12 @@ export class NavControllerBase implements NavOutlet {
   private _ids = -1;
   private _init = false;
   private _queue: TransitionInstruction[] = [];
-  private _sbTrns: Transition;
+  private _sbTrns: Animation;
   private useRouter = false;
   isTransitioning = false;
   private _destroyed = false;
 
   _views: ViewController[] = [];
-  _trnsId: number = null;
 
   id: string;
   name: string;
@@ -56,7 +49,8 @@ export class NavControllerBase implements NavOutlet {
   @Prop({context: 'config'}) config: Config;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
-  @Prop({mutable: true}) swipeBackEnabled: boolean;
+  @Prop({ mutable: true }) swipeBackEnabled: boolean;
+  @Prop({ mutable: true }) animated: boolean;
   @Prop() rootParams: any;
   @Prop() root: any;
   @Watch('root')
@@ -73,14 +67,17 @@ export class NavControllerBase implements NavOutlet {
   @Event() ionNavChanged: EventEmitter;
 
   componentWillLoad() {
+    this.id = 'n' + (++ctrlIds);
     this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
     if (this.swipeBackEnabled === undefined) {
-      this.swipeBackEnabled = this.mode === 'ios' && this.config.getBoolean('swipeBackEnabled', true);
+      this.swipeBackEnabled = this.config.getBoolean('swipeBackEnabled', this.mode === 'ios');
+    }
+    if (this.animated === undefined) {
+      this.animated = this.config.getBoolean('animate', true);
     }
   }
 
   componentDidLoad() {
-    this.id = 'n' + (++ctrlIds);
     this.rootChanged();
   }
 
@@ -89,7 +86,7 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  push(page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
+  push(page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     return this._queueTrns({
       insertStart: -1,
       insertViews: [{ page: page, params: params }],
@@ -98,7 +95,7 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  insert(insertIndex: number, page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
+  insert(insertIndex: number, page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     return this._queueTrns({
       insertStart: insertIndex,
       insertViews: [{ page: page, params: params }],
@@ -107,7 +104,7 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
+  insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     return this._queueTrns({
       insertStart: insertIndex,
       insertViews: insertPages,
@@ -116,7 +113,7 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  pop(opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
+  pop(opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     return this._queueTrns({
       removeStart: -1,
       removeCount: 1,
@@ -125,7 +122,7 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  popTo(indexOrViewCtrl: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
+  popTo(indexOrViewCtrl: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     const config: TransitionInstruction = {
       removeStart: -1,
       removeCount: -1,
@@ -141,7 +138,7 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  popToRoot(opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
+  popToRoot(opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     return this._queueTrns({
       removeStart: 1,
       removeCount: -1,
@@ -150,8 +147,8 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  popAll(): Promise<any[]> {
-    const promises: any[] = [];
+  popAll(): Promise<boolean[]> {
+    const promises: Promise<boolean>[] = [];
     for (let i = this._views.length - 1; i >= 0; i--) {
       promises.push(this.pop(null));
     }
@@ -159,7 +156,7 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  removeIndex(startIndex: number, removeCount = 1, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
+  removeIndex(startIndex: number, removeCount = 1, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     return this._queueTrns({
       removeStart: startIndex,
       removeCount: removeCount,
@@ -168,7 +165,7 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  removeView(viewController: ViewController, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
+  removeView(viewController: ViewController, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     return this._queueTrns({
       removeView: viewController,
       removeStart: 0,
@@ -178,12 +175,12 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
+  setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     return this.setPages([{ page: pageOrViewCtrl, params: params }], opts, done);
   }
 
   @Method()
-  setPages(pages: any[], opts?: NavOptions, done?: TransitionDoneFn): Promise<any> {
+  setPages(pages: any[], opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     if (!opts) {
       opts = {};
     }
@@ -264,11 +261,9 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  canGoBack(): boolean {
-    const activeView = this.getActive();
-    return !!(activeView && activeView.enableBack());
+  canGoBack(view = this.getActive()): boolean {
+    return !!(view && this.getPrevious(view));
   }
-
 
   @Method()
   getActive(): ViewController {
@@ -281,11 +276,7 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  getPrevious(view?: ViewController): ViewController {
-    // returns the view controller which is before the given view controller.
-    if (!view) {
-      view = this.getActive();
-    }
+  getPrevious(view = this.getActive()): ViewController {
     const views = this._views;
     const index = views.indexOf(view);
     return (index > 0) ? views[index - 1] : null;
@@ -301,12 +292,7 @@ export class NavControllerBase implements NavOutlet {
    */
   @Method()
   getViewById(id: string): ViewController {
-    for (const vc of this._views) {
-      if (vc && vc.id === id) {
-        return vc;
-      }
-    }
-    return null;
+    return this._views.find(vc => vc.id === id);
   }
 
   indexOf(viewController: ViewController) {
@@ -355,7 +341,6 @@ export class NavControllerBase implements NavOutlet {
       return;
     }
     this._init = true;
-    this._trnsId = null;
 
     // ensure we're not transitioning here
     this.isTransitioning = false;
@@ -373,8 +358,8 @@ export class NavControllerBase implements NavOutlet {
       ti.done(
         result.hasCompleted,
         result.requiresTransition,
-        result.enteringName,
-        result.leavingName,
+        result.enteringView,
+        result.leavingView,
         result.direction
       );
     }
@@ -386,7 +371,6 @@ export class NavControllerBase implements NavOutlet {
       this._fireError('nav controller was destroyed', ti);
       return;
     }
-    this._trnsId = null;
     this._queue.length = 0;
 
     // let's see if there's another to kick off
@@ -422,50 +406,36 @@ export class NavControllerBase implements NavOutlet {
     }
 
     // set that this nav is actively transitioning
-    let enteringView: ViewController;
-    let leavingView: ViewController;
+    this.isTransitioning = true;
 
-    this._startTI(ti)
-      .then(() => {
-        this._prepareViewControllers(ti);
-        leavingView = this.getActive();
-        enteringView = this._getEnteringView(ti, leavingView);
+    try {
+      this._prepareTI(ti);
+      const leavingView = this.getActive();
+      const enteringView = this._getEnteringView(ti, leavingView);
 
-        if (!leavingView && !enteringView) {
-          throw new Error('no views in the stack to be removed');
-        }
+      if (!leavingView && !enteringView) {
+        throw new Error('no views in the stack to be removed');
+      }
 
-        // Needs transition?
-        ti.requiresTransition = (ti.enteringRequiresTransition || ti.leavingRequiresTransition) && enteringView !== leavingView;
+      // Needs transition?
+      ti.requiresTransition = (ti.enteringRequiresTransition || ti.leavingRequiresTransition) && enteringView !== leavingView;
 
-        if (enteringView && enteringView._state === ViewState.New) {
-          this._viewInit(enteringView);
-        }
-      })
-      .then(() => this._postViewInit(enteringView, leavingView, ti))
-      .then(() => this._transition(enteringView, leavingView, ti))
-      .then((result) => this._success(result, ti))
-      .catch((rejectReason) => this._failed(rejectReason, ti));
+      if (enteringView && enteringView._state === ViewState.New) {
+        enteringView.init(this.el);
+      }
+      this._postViewInit(enteringView, leavingView, ti);
 
+      this._transition(enteringView, leavingView, ti)
+        .then((result) => this._success(result, ti))
+        .catch((rejectReason) => this._failed(rejectReason, ti));
+
+    } catch (rejectReason) {
+      this._failed(rejectReason, ti);
+    }
     return true;
   }
 
-  private _waitUntilReady(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction) {
-    const promises = [];
-    if (enteringView) {
-      promises.push(isReady(enteringView.element));
-    }
-    if (leavingView) {
-      promises.push(isReady(leavingView.element));
-    }
-    const promise = Promise.all(promises);
-    if (ti.opts.viewIsReady) {
-      return promise.then(ti.opts.viewIsReady);
-    }
-    return promise;
-  }
-
-  private _startTI(ti: TransitionInstruction): Promise<void> {
+  private _prepareTI(ti: TransitionInstruction) {
     const viewsLength = this._views.length;
 
     if (isPresent(ti.removeView)) {
@@ -474,7 +444,7 @@ export class NavControllerBase implements NavOutlet {
 
       const index = this._views.indexOf(ti.removeView);
       if (index < 0) {
-        return Promise.reject('removeView was not found');
+        throw new Error('removeView was not found');
       }
       ti.removeStart += index;
     }
@@ -496,11 +466,7 @@ export class NavControllerBase implements NavOutlet {
       }
       ti.enteringRequiresTransition = (ti.insertStart === viewsLength);
     }
-    this.isTransitioning = true;
-    return Promise.resolve();
-  }
 
-  private _prepareViewControllers(ti: TransitionInstruction) {
     const insertViews = ti.insertViews;
     if (!insertViews) {
       return;
@@ -553,7 +519,7 @@ export class NavControllerBase implements NavOutlet {
     assert(ti.resolve, 'resolve must be valid');
     assert(ti.reject, 'reject must be valid');
 
-    const opts = ti.opts || {};
+    const opts = ti.opts = ti.opts || {};
     const insertViews = ti.insertViews;
     const removeStart = ti.removeStart;
     const removeCount = ti.removeCount;
@@ -612,9 +578,9 @@ export class NavControllerBase implements NavOutlet {
     if (destroyQueue && destroyQueue.length > 0) {
       for (let i = 0; i < destroyQueue.length; i++) {
         const view = destroyQueue[i];
-        view._willLeave(true);
-        view._didLeave();
-        view._willUnload();
+        lifecycle(view.element, ViewLifecycle.WillLeave);
+        lifecycle(view.element, ViewLifecycle.DidLeave);
+        lifecycle(view.element, ViewLifecycle.WillUnload);
       }
 
       // once all lifecycle events has been delivered, we can safely detroy the views
@@ -629,35 +595,6 @@ export class NavControllerBase implements NavOutlet {
         ? (leavingView || enteringView).getTransitionName(opts.direction)
         : (enteringView || leavingView).getTransitionName(opts.direction);
     }
-    ti.opts = opts;
-  }
-
-  /**
-   * DOM WRITE
-   */
-  private _viewInit(enteringView: ViewController) {
-    assert(enteringView, 'enteringView must be non null');
-    assert(enteringView._state === ViewState.New, 'enteringView state must be NEW');
-
-    enteringView._state = ViewState.Initialized;
-    enteringView.init();
-  }
-
-  private _viewAttachToDOM(view: ViewController) {
-    assert(view._state === ViewState.Initialized, 'view state must be INITIALIZED');
-
-    // fire willLoad before change detection runs
-    view._willLoad();
-
-    // render the component ref instance to the DOM
-    // ******** DOM WRITE ****************
-    this.el.appendChild(view.element);
-
-    view._state = ViewState.Attached;
-
-    // successfully finished loading the entering view
-    // fire off the "didLoad" lifecycle events
-    view._didLoad();
   }
 
   private _transition(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction): Promise<NavResult> {
@@ -671,198 +608,68 @@ export class NavControllerBase implements NavOutlet {
         requiresTransition: false
       });
     }
-
-    const opts = ti.opts;
-
-    // figure out if this transition is the root one or a
-    // child of a parent nav that has the root transition
-    this._trnsId = TrnsCtrl.getRootTrnsId(this);
-    if (this._trnsId === null) {
-      // this is the root transition, meaning all child navs and their views
-      // should be added as a child transition to this one
-      this._trnsId = TrnsCtrl.nextId();
+    if (this._sbTrns) {
+      this._sbTrns.destroy();
+      this._sbTrns = null;
     }
-
-    // create the transition options
-    const animationOpts: AnimationOptions = {
-      animation: opts.animation,
-      direction: opts.direction,
-      duration: (opts.animate === false ? 0 : opts.duration),
-      easing: opts.easing,
-      isRTL: document.dir === 'rtl',
-      ev: opts.ev,
-      enteringView: enteringView,
-      leavingView: leavingView,
-      nav: this as any,
-    };
-
-    const animation = this.mode === 'ios' ? iosTransitionAnimation : mdTransitionAnimation;
-
-    const transition = new Transition(
-      this.animationCtrl,
-      animation,
-      enteringView,
-      leavingView,
-      animationOpts
-    );
-    TrnsCtrl.register(this._trnsId, transition);
-
-    // ensure any swipeback transitions are cleared out
-    this._sbTrns && this._sbTrns.destroy();
-    this._sbTrns = null;
-
-    // swipe to go back root transition
-    if (!transition.parent && opts.progressAnimation) {
-      this._sbTrns = transition;
-    }
-
-    // transition start has to be registered before attaching the view to the DOM!
-    const promise = new Promise<void>(resolve => transition.registerStart(resolve))
-      .then(() => this._waitUntilReady(enteringView, leavingView, ti))
-      .then(() => this._transitionInit(transition, enteringView, leavingView, opts))
-      .then(() => this._transitionStart(transition, enteringView, leavingView, opts));
-
-    if (enteringView && (enteringView._state === ViewState.Initialized)) {
-      // render the entering component in the DOM
-      // this would also render new child navs/views
-      // which may have their very own async canEnter/Leave tests
-      // ******** DOM WRITE ****************
-      this._viewAttachToDOM(enteringView);
-    }
-
-
-    // if (!transition.hasChildren) {
-      // lowest level transition, so kick it off and let it bubble up to start all of them
-      transition.start();
-    // }
-    return promise;
-  }
-
-
-  private _transitionInit(transition: Transition, enteringView: ViewController, leavingView: ViewController, opts: NavOptions): Promise<void> {
-    assert(this.isTransitioning, 'isTransitioning has to be true');
-
-    this._trnsId = null;
-
-    // set the correct zIndex for the entering and leaving views
-    // ******** DOM WRITE ****************
-    setZIndex(this, enteringView, leavingView, opts.direction);
-
-    // always ensure the entering view is viewable
-    // ******** DOM WRITE ****************
-    enteringView && enteringView._domShow(true);
-
-    // always ensure the leaving view is viewable
-    // ******** DOM WRITE ****************
-    leavingView && leavingView._domShow(true);
-
-    // initialize the transition
-    return transition.init();
-  }
-
-  private _transitionStart(transition: Transition, enteringView: ViewController, leavingView: ViewController, opts: NavOptions): Promise<NavResult> {
-    assert(this.isTransitioning, 'isTransitioning has to be true');
 
     // we should animate (duration > 0) if the pushed page is not the first one (startup)
     // or if it is a portal (modal, actionsheet, etc.)
-    const shouldNotAnimate = !this._init && this._views.length === 1;
-    const canNotAnimate = !this.config.getBoolean('animate', true);
-    if (shouldNotAnimate || canNotAnimate) {
-      opts.animate = false;
-    }
+    const shouldAnimate = this.animated && this._init && this._views.length > 1;
 
-    if (opts.animate === false) {
-      // if it was somehow set to not animation, then make the duration zero
-      transition.ani.duration(0);
-    }
+    const animationBuilder = (shouldAnimate)
+      ? this.mode === 'ios' ? iosTransitionAnimation : mdTransitionAnimation
+      : undefined;
 
-    // create a callback that needs to run within zone
-    // that will fire off the willEnter/Leave lifecycle events at the right time
-    transition.ani.beforeAddRead(this._viewsWillLifecycles.bind(this, enteringView, leavingView));
+    const progressAnimation = ti.opts.progressAnimation
+      ? (animation: Animation) => this._sbTrns = animation
+      : undefined;
 
-    // create a callback for when the animation is done
-    const promise = new Promise(resolve => {
-      transition.ani.onFinish(resolve);
-    });
+    const opts = ti.opts;
+    const enteringEl = enteringView && enteringView.element;
+    const leavingEl = leavingView && leavingView.element;
+    const animationOpts: AnimationOptions = {
+      animationCtrl: this.animationCtrl,
+      animationBuilder: animationBuilder,
+      animation: undefined,
 
-    if (transition.ani.isRoot()) {
-      // cool, let's do this, start the transition
-      if (opts.progressAnimation) {
-        // this is a swipe to go back, just get the transition progress ready
-        // kick off the swipe animation start
-        transition.ani.progressStart();
+      direction: opts.direction as NavDirection,
+      duration: opts.duration,
+      easing: opts.easing,
+      viewIsReady: opts.viewIsReady,
 
-      } else {
-        // only the top level transition should actually start "play"
-        // kick it off and let it play through
-        // ******** DOM WRITE ****************
-        transition.ani.play();
-      }
-    }
-
-    return promise.then(() => {
-      return this._transitionFinish(transition, opts);
-    });
+      showGoBack: this.canGoBack(enteringView),
+      isRTL: document.dir === 'rtl',
+      progressAnimation,
+      baseEl: this.el,
+      enteringEl,
+      leavingEl
+    };
+    return transition(animationOpts)
+      .then(trns => this._transitionFinish(trns, enteringView, leavingView, ti.opts));
   }
 
-  private _transitionFinish(transition: Transition, opts: NavOptions): NavResult {
+  private _transitionFinish(transition: Animation, enteringView: ViewController, leavingView: ViewController, opts: NavOptions): NavResult {
 
-    const hasCompleted = transition.ani.hasCompleted;
-    const enteringView = transition.enteringView;
-    const leavingView = transition.leavingView;
-
-    // mainly for testing
-    let enteringName: string;
-    let leavingName: string;
+    const hasCompleted = transition ? transition.hasCompleted : true;
 
     if (hasCompleted) {
-      // transition has completed (went from 0 to 1)
-      if (enteringView) {
-        enteringName = enteringView.name;
-        enteringView._didEnter();
-      }
-
-      if (leavingView) {
-        leavingName = leavingView.name;
-        leavingView._didLeave();
-      }
-
       this._cleanup(enteringView);
     } else {
-      // If transition does not complete, we have to cleanup anyway, because
-      // previous pages in the stack are not hidden probably.
       this._cleanup(leavingView);
     }
 
-    if (transition.ani.isRoot()) {
-      // this is the root transition
-      // it's safe to destroy this transition
-      TrnsCtrl.destroy(transition.trnsId);
-
-      // it's safe to enable the app again
-      // mark ourselves as not transitioning - `deepLinker navchange` requires this
-      // TODO - probably could be resolved in a better way
-      this.isTransitioning = false;
-    }
+    // this is the root transition
+    // it's safe to destroy this transition
+    transition && transition.destroy();
 
     return {
       hasCompleted: hasCompleted,
       requiresTransition: true,
-      enteringName: enteringName,
-      leavingName: leavingName,
+      enteringView,
+      leavingView,
       direction: opts.direction
     };
-  }
-
-  private _viewsWillLifecycles(enteringView: ViewController, leavingView: ViewController) {
-    if (enteringView || leavingView) {
-      // Here, the order is important. WillLeave must be called before WillEnter.
-      if (leavingView) {
-        const willUnload = enteringView ? leavingView.index > enteringView.index : true;
-        leavingView._willLeave(willUnload);
-      }
-      enteringView && enteringView._willEnter();
-    }
   }
 
   private _insertViewAt(view: ViewController, index: number) {
@@ -915,52 +722,30 @@ export class NavControllerBase implements NavOutlet {
     if (!this._destroyed) {
       const activeViewIndex = this._views.indexOf(activeView);
       const views = this._views;
-      let reorderZIndexes = false;
-      let view: ViewController;
-      let i: number;
 
-      for (i = views.length - 1; i >= 0; i--) {
-        view = views[i];
+      for (let i = views.length - 1; i >= 0; i--) {
+        const view = views[i];
         if (i > activeViewIndex) {
           // this view comes after the active view
           // let's unload it
-          view._willUnload();
+          lifecycle(view.element, ViewLifecycle.WillUnload);
           this._destroyView(view);
 
         } else if (i < activeViewIndex) {
           // this view comes before the active view
           // and it is not a portal then ensure it is hidden
-          view._domShow(false);
-        }
-        if (view._zIndex <= 0) {
-          reorderZIndexes = true;
-        }
-      }
-
-      if (reorderZIndexes) {
-        for (i = 0; i < views.length; i++) {
-          view = views[i];
-          // ******** DOM WRITE ****************
-          view._setZIndex(view._zIndex + INIT_ZINDEX + 1);
+          view.element.hidden = true;
         }
       }
     }
   }
-
-  // registerChildNav(container: NavigationContainer) {
-  //   this._children.push(container);
-  // }
-
-  // unregisterChildNav(nav: any) {
-  //   this._children = this._children.filter(child => child !== nav);
-  // }
 
   destroy() {
     const views = this._views;
     let view: ViewController;
     for (let i = 0; i < views.length; i++) {
       view = views[i];
-      view._willUnload();
+      lifecycle(view.element, ViewLifecycle.WillUnload);
       view._destroy();
     }
 
@@ -1006,7 +791,7 @@ export class NavControllerBase implements NavOutlet {
       const delta = detail.deltaX;
       const stepValue = delta / window.innerWidth;
       // set the transition animation's progress
-      this._sbTrns.ani.progressStep(stepValue);
+      this._sbTrns.progressStep(stepValue);
     }
   }
 
@@ -1029,7 +814,7 @@ export class NavControllerBase implements NavOutlet {
         realDur = Math.min(dur, 300);
       }
 
-      this._sbTrns.ani.progressEnd(shouldComplete, stepValue, realDur);
+      this._sbTrns.progressEnd(shouldComplete, stepValue, realDur);
     }
   }
 
@@ -1066,14 +851,3 @@ export class NavControllerBase implements NavOutlet {
 }
 
 let ctrlIds = -1;
-
-function isReady(el: HTMLElement): Promise<any> {
-  if (!el) {
-    return Promise.resolve();
-  }
-  if ((el as any).componentOnReady) {
-    return (el as any).componentOnReady();
-  } else {
-    return Promise.all(Array.from(el.children).map(isReady));
-  }
-}

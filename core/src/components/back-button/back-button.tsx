@@ -35,15 +35,6 @@ export class BackButton {
 
   @Element() el: HTMLElement;
 
-
-  hostData() {
-    return {
-      class: {
-        'show-back-button': !!this.defaultHref
-      }
-    };
-  }
-
   private onClick(ev: Event) {
     const nav = this.el.closest('ion-nav');
     if (nav && nav.canGoBack()) {
@@ -52,6 +43,14 @@ export class BackButton {
     } else if (this.defaultHref) {
       openURL(this.defaultHref, ev, true);
     }
+  }
+
+  hostData() {
+    return {
+      class: {
+        'show-back-button': !!this.defaultHref
+      }
+    };
   }
 
   render() {

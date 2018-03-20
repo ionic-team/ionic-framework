@@ -1,4 +1,4 @@
-import { AnimationOptions, EffectProperty, EffectState, PlayOptions } from './animation-interface';
+import { EffectProperty, EffectState, PlayOptions } from './animation-interface';
 import { CSS_PROP, CSS_VALUE_REGEX, DURATION_MIN, TRANSITION_END_FALLBACK_PADDING_MS } from './constants';
 import { transitionEnd } from './transition-end';
 
@@ -54,7 +54,6 @@ export class Animator {
   private _destroyed = false;
 
   parent: Animator|undefined;
-  opts: AnimationOptions;
   hasChildren = false;
   isPlaying = false;
   hasCompleted = false;

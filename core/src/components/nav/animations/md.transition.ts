@@ -1,61 +1,61 @@
-import { Animation, AnimationOptions } from '../../../index';
-import { isDef } from '../../../utils/helpers';
+import { Animation } from '../../../index';
+import { AnimationOptions } from '../transition';
 
 const TRANSLATEY = 'translateY';
 const OFF_BOTTOM = '40px';
 const CENTER = '0px';
-const SHOW_BACK_BTN_CSS = 'can-back-back';
 
 export default function mdTransitionAnimation(Animation: Animation, _: HTMLElement, opts: AnimationOptions): Promise<Animation> {
 
-  const enteringEl = opts.enteringView ? opts.enteringView.element : undefined;
-  const leavingEl = opts.leavingView ? opts.leavingView.element : undefined;
+  const enteringEl = opts.enteringEl;
+  const leavingEl = opts.leavingEl;
   const ionPageElement = getIonPageElement(enteringEl);
 
   const rootTransition = new Animation();
-  rootTransition.addElement(ionPageElement);
-  rootTransition.beforeRemoveClass('hide-page');
+  rootTransition
+    .addElement(ionPageElement)
+    .beforeRemoveClass('hide-page');
 
   const backDirection = (opts.direction === 'back');
   if (enteringEl) {
 
     // animate the component itself
     if (backDirection) {
-      rootTransition.duration(isDef(opts.duration) ? opts.duration : 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
-    } else {
-      rootTransition.duration(isDef(opts.duration) ? opts.duration : 280).easing('cubic-bezier(0.36,0.66,0.04,1)');
-
       rootTransition
-      .fromTo(TRANSLATEY, OFF_BOTTOM, CENTER, true)
-      .fromTo('opacity', 0.01, 1, true);
+        .duration(opts.duration || 200)
+        .easing('cubic-bezier(0.47,0,0.745,0.715)');
+
+    } else {
+      rootTransition
+        .duration(opts.duration || 280)
+        .easing('cubic-bezier(0.36,0.66,0.04,1)')
+        .fromTo(TRANSLATEY, OFF_BOTTOM, CENTER, true)
+        .fromTo('opacity', 0.01, 1, true);
     }
 
     // Animate toolbar if it's there
     const enteringToolbarEle = ionPageElement.querySelector('ion-toolbar');
     if (enteringToolbarEle) {
-
       const enteringToolBar = new Animation();
       enteringToolBar.addElement(enteringToolbarEle);
       rootTransition.add(enteringToolBar);
-
-      const enteringBackButton = new Animation();
-      enteringBackButton.addElement(enteringToolbarEle.querySelector('ion-back-button'));
-      rootTransition.add(enteringBackButton);
-      if (opts.enteringView.enableBack()) {
-        enteringBackButton.beforeAddClass(SHOW_BACK_BTN_CSS);
-      } else {
-        enteringBackButton.beforeRemoveClass(SHOW_BACK_BTN_CSS);
-      }
     }
   }
 
   // setup leaving view
   if (leavingEl && backDirection) {
     // leaving content
-    rootTransition.duration(opts.duration || 200).easing('cubic-bezier(0.47,0,0.745,0.715)');
+    rootTransition
+      .duration(opts.duration || 200)
+      .easing('cubic-bezier(0.47,0,0.745,0.715)');
+
     const leavingPage = new Animation();
-    leavingPage.addElement(getIonPageElement(leavingEl));
-    rootTransition.add(leavingPage.fromTo(TRANSLATEY, CENTER, OFF_BOTTOM).fromTo('opacity', 1, 0));
+    leavingPage
+      .addElement(getIonPageElement(leavingEl))
+      .fromTo(TRANSLATEY, CENTER, OFF_BOTTOM)
+      .fromTo('opacity', 1, 0);
+
+    rootTransition.add(leavingPage);
   }
 
   return Promise.resolve(rootTransition);

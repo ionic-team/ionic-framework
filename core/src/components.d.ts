@@ -2007,6 +2007,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonNavAttributes extends HTMLAttributes {
+      animated?: boolean;
       root?: any;
       rootParams?: any;
       swipeBackEnabled?: boolean;

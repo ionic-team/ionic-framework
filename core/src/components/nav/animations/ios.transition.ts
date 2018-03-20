@@ -1,5 +1,5 @@
-import { Animation, AnimationOptions } from '../../../index';
-import { isDef } from '../../../utils/helpers';
+import { Animation } from '../../../index';
+import { AnimationOptions } from '../transition';
 
 const DURATION = 500;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
@@ -8,27 +8,29 @@ const TRANSFORM = 'transform';
 const TRANSLATEX = 'translateX';
 const CENTER = '0%';
 const OFF_OPACITY = 0.8;
-const SHOW_BACK_BTN_CSS = 'can-back-back';
 
-export default function iosTransitionAnimation(Animation: Animation, _: HTMLElement, opts: AnimationOptions): Promise<Animation> {
+export default function iosTransitionAnimation(Animation: Animation, navEl: HTMLElement, opts: AnimationOptions): Promise<Animation> {
 
   const isRTL = opts.isRTL;
   const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';
   const OFF_LEFT = isRTL ? '31%' : '-31%';
 
-  const enteringEl = opts.enteringView ? opts.enteringView.element : undefined;
-  const leavingEl = opts.leavingView  ? opts.leavingView.element : undefined;
-  const nav = opts.nav;
+  const enteringEl = opts.enteringEl;
+  const leavingEl = opts.leavingEl;
 
   const rootTransition = new Animation();
-  rootTransition.duration(isDef(opts.duration) ? opts.duration : DURATION);
-  rootTransition.easing(isDef(opts.easing) ? opts.easing : EASING);
-  rootTransition.addElement(enteringEl);
-  rootTransition.beforeRemoveClass('hide-page');
+  rootTransition
+    .addElement(enteringEl)
+    .duration(opts.duration || DURATION)
+    .easing(opts.easing || EASING)
+    .beforeRemoveClass('hide-page');
 
-  if (leavingEl && nav) {
+  if (leavingEl && navEl) {
     const navDecor = new Animation();
-    navDecor.addElement(nav.el).duringAddClass('show-decor');
+    navDecor
+      .addElement(navEl)
+      .duringAddClass('show-decor');
+
     rootTransition.add(navDecor);
   }
 
@@ -90,10 +92,8 @@ export default function iosTransitionAnimation(Animation: Animation, _: HTMLElem
       if (backDirection) {
         enteringTitle.fromTo(TRANSLATEX, OFF_LEFT, CENTER, true);
 
-        if (opts.enteringView.enableBack()) {
-          // back direction, entering page has a back button
-          enteringBackButton.beforeAddClass(SHOW_BACK_BTN_CSS).fromTo(OPACITY, 0.01, 1, true);
-        }
+        // back direction, entering page has a back button
+        enteringBackButton.fromTo(OPACITY, 0.01, 1, true);
       } else {
         // entering toolbar, forward direction
         enteringTitle.fromTo(TRANSLATEX, OFF_RIGHT, CENTER, true);
@@ -102,21 +102,15 @@ export default function iosTransitionAnimation(Animation: Animation, _: HTMLElem
           .beforeClearStyles([OPACITY])
           .fromTo(OPACITY, 0.01, 1, true);
 
-        if (opts.enteringView.enableBack()) {
-          // forward direction, entering page has a back button
-          enteringBackButton
-            .beforeAddClass(SHOW_BACK_BTN_CSS)
-            .fromTo(OPACITY, 0.01, 1, true);
+        // forward direction, entering page has a back button
+        enteringBackButton.fromTo(OPACITY, 0.01, 1, true);
 
+        const enteringBackBtnText = new Animation();
+        enteringBackBtnText
+          .addElement(enteringToolBarEle.querySelector('ion-back-button .button-text'))
+          .fromTo(TRANSLATEX, (isRTL ? '-100px' : '100px'), '0px');
 
-          const enteringBackBtnText = new Animation();
-          enteringBackBtnText.addElement(enteringToolBarEle.querySelector('ion-back-button .button-text'));
-
-          enteringBackBtnText.fromTo(TRANSLATEX, (isRTL ? '-100px' : '100px'), '0px');
-          enteringToolBar.add(enteringBackBtnText);
-        } else {
-          enteringBackButton.beforeRemoveClass(SHOW_BACK_BTN_CSS);
-        }
+        enteringToolBar.add(enteringBackBtnText);
       }
     }
   }

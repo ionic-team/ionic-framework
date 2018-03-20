@@ -1,4 +1,3 @@
-import { ViewController } from '../..';
 
 export interface AnimationController {
   create(animationBuilder?: AnimationBuilder, baseEl?: any, opts?: any): Promise<Animation>;
@@ -46,19 +45,6 @@ export interface Animation {
 
 export interface AnimationBuilder {
   (Animation: Animation, baseEl?: HTMLElement, opts?: any): Promise<Animation>;
-}
-
-
-export interface AnimationOptions {
-  animation?: string;
-  duration?: number;
-  easing?: string;
-  direction?: string;
-  isRTL?: boolean;
-  ev?: any;
-  enteringView: ViewController;
-  leavingView: ViewController;
-  nav: HTMLIonNavElement;
 }
 
 export interface PlayOptions {

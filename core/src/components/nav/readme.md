@@ -7,6 +7,11 @@
 
 ## Properties
 
+#### animated
+
+boolean
+
+
 #### root
 
 any
@@ -23,6 +28,11 @@ boolean
 
 
 ## Attributes
+
+#### animated
+
+boolean
+
 
 #### root
 

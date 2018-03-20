@@ -11,6 +11,7 @@ export function writeNavState(root: HTMLElement, chain: RouteChain|null, index: 
   }
   return node.componentOnReady()
     .then(() => node.setRouteId(route.id, route.params, direction))
+    .catch(() => ({changed: false, markVisible: undefined}))
     .then(result => {
       if (result.changed) {
         direction = 0;
