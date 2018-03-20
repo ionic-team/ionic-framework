@@ -1,5 +1,5 @@
-import { NavDirection } from './nav-util';
-import { Animation, AnimationBuilder } from '../..';
+import { Animation, AnimationBuilder } from '../';
+import { NavDirection } from '../components/nav/nav-util';
 
 export let MyCustomEvent = CustomEvent;
 

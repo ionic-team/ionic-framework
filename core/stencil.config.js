@@ -4,8 +4,6 @@ const autoprefixer = require('autoprefixer');
 
 exports.config = {
   namespace: 'Ionic',
-  generateDistribution: true,
-  generateWWW: false,
   bundles: [
     { components: ['ion-animation-controller'] },
     { components: ['ion-app', 'ion-content', 'ion-scroll', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
@@ -66,6 +64,9 @@ exports.config = {
         })
       ]
     })
+  ],
+  outputTargets: [
+    { type: 'dist' }
   ],
   copy: [{ src: '**/*.scss' }],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',

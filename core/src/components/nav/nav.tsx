@@ -18,7 +18,7 @@ import { assert } from '../../utils/helpers';
 
 import iosTransitionAnimation from './animations/ios.transition';
 import mdTransitionAnimation from './animations/md.transition';
-import { AnimationOptions, ViewLifecycle, lifecycle, transition } from './transition';
+import { AnimationOptions, ViewLifecycle, lifecycle, transition } from '../../utils/transition';
 
 @Component({
   tag: 'ion-nav',

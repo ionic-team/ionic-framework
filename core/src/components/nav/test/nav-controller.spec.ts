@@ -5,7 +5,7 @@ import { AnimationControllerImpl } from '../../animation-controller/animation-co
 import { createConfigController } from '../../../global/config-controller';
 
 import { NavDirection, NavOptions, ViewState } from '../nav-util';
-import { MyCustomEvent, mockLifecycle } from '../transition';
+import { mockLifecycle } from '../../../utils/transition';
 
 
 describe('NavController', () => {

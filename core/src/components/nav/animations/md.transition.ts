@@ -1,5 +1,5 @@
 import { Animation } from '../../../index';
-import { AnimationOptions } from '../transition';
+import { AnimationOptions } from '../../../utils/transition';
 
 const TRANSLATEY = 'translateY';
 const OFF_BOTTOM = '40px';
