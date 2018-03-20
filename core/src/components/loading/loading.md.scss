@@ -35,9 +35,9 @@
 // Material Design Loading Spinner fill colors
 // -----------------------------------------
 
-.loading-md .spinner-ios line,
-.loading-md .spinner-ios-small line {
-  stroke: $loading-md-spinner-ios-color;
+.loading-md .spinner-lines-md line,
+.loading-md .spinner-lines-sm-md line {
+  stroke: $loading-md-spinner-lines-color;
 }
 
 .loading-md .spinner-bubbles circle {
