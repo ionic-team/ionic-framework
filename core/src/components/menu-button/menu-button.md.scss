@@ -1,0 +1,38 @@
+@import "./menu-button";
+@import "./menu-button.md.vars";
+
+// MD Menu Button
+// --------------------------------------------------
+
+.menu-button-md .menu-button-inner {
+  @include margin(2px, 6px, 0, 0);
+  @include padding(0, 5px);
+
+  min-width: 44px;
+  height: 32px;
+  border: 0;
+  font-size: 14px;
+  font-weight: 500;
+  text-transform: uppercase;
+
+  color: $menu-button-md-color;
+  background-color: transparent;
+
+  box-shadow: none;
+
+  &.activated {
+    opacity: 0.4;
+  }
+}
+
+.menu-button-md ion-icon {
+  @include padding-horizontal(null, 0.3em);
+  @include margin(0);
+  @include padding(0, 6px);
+  @include text-align(start);
+
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 0.67;
+  pointer-events: none;
+}
