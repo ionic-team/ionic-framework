@@ -1,8 +1,7 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 @Component({
-  tag: 'ion-tab',
-  styleUrl: 'tab.scss'
+  tag: 'ion-tab'
 })
 export class Tab {
 

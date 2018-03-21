@@ -15,6 +15,7 @@ export class RouterOutlet implements NavOutlet {
 
   private isTransitioning = false;
   private activeEl: HTMLElement = undefined;
+  private activeComponent: any;
 
   mode: string;
 
@@ -28,14 +29,16 @@ export class RouterOutlet implements NavOutlet {
   @Prop() delegate: FrameworkDelegate;
 
   componentDidUnload() {
-    this.activeEl = undefined;
+    this.activeEl = this.activeComponent = undefined;
   }
 
   @Method()
   async setRoot(component: HTMLElement|string, params?: {[key: string]: any}, opts?: RouterOutletOptions): Promise<boolean> {
-    if (this.isTransitioning) {
+    if (this.isTransitioning || this.activeComponent === component) {
       return false;
     }
+    this.activeComponent = component;
+
     // attach entering view to DOM
     const enteringEl = await attachComponent(this.delegate, this.el, component, ['ion-page', 'hide-page'], params);
     const leavingEl = this.activeEl;

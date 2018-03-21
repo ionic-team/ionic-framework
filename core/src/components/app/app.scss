@@ -154,20 +154,29 @@ sub {
 // --------------------------------------------------
 
 ion-app,
+ion-router-outlet,
+ion-tab,
+ion-tabs,
+ion-nav,
 .ion-page {
   @include position(0);
 
   position: absolute;
   z-index: $z-index-page-container;
-  display: flex;
-
-  flex-direction: column;
-  justify-content: space-between;
+  overflow: hidden;
 
   width: 100%;
   height: 100%;
 
   contain: layout size style;
+}
+
+ion-app,
+.ion-page {
+  display: flex;
+
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .hide-page {

@@ -22,7 +22,6 @@ import mdTransitionAnimation from './animations/md.transition';
 
 @Component({
   tag: 'ion-nav',
-  styleUrl: 'nav.scss'
 })
 export class NavControllerBase implements NavOutlet {
 
