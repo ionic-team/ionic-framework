@@ -18,6 +18,9 @@ async function main() {
     await publishProject('angular', version);
 
     await publishGit(version);
+
+    console.log(`\n @ionic/core ${version} published!! 🎉`);
+    console.log(`@ionic/angular ${version} published!! 🎉\n`);
     process.exit(0);
 
   } catch (err) {
