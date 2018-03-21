@@ -1,30 +1,32 @@
-import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, EventEmitter, Injector, OnDestroy, OnInit, Output, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute, ChildrenOutletContexts } from '@angular/router';
-import * as ctrl from './router-controller';
-import { runTransition } from './router-transition';
+import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, EventEmitter, Injector, OnDestroy, OnInit, Output, ViewContainerRef, ElementRef } from '@angular/core';
+import { ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET } from '@angular/router';
 
-
-@Directive({selector: 'ion-router-outlet', exportAs: 'ionOutlet'})
+@Directive({
+  selector: 'ion-router-outlet',
+  exportAs: 'outlet'
+})
 export class IonRouterOutlet implements OnDestroy, OnInit {
+
   private activated: ComponentRef<any>|null = null;
+  private deactivated: ComponentRef<any>|null = null;
+
   private _activatedRoute: ActivatedRoute|null = null;
   private name: string;
-
-  private views: ctrl.RouteView[] = [];
 
   @Output('activate') activateEvents = new EventEmitter<any>();
   @Output('deactivate') deactivateEvents = new EventEmitter<any>();
 
   constructor(
       private parentContexts: ChildrenOutletContexts, private location: ViewContainerRef,
-      private resolver: ComponentFactoryResolver, @Attribute('name') name: string,
+      private resolver: ComponentFactoryResolver,
+      private elementRef: ElementRef,
+      @Attribute('name') name: string,
       private changeDetector: ChangeDetectorRef) {
-    this.name = name || 'primary';
+    this.name = name || PRIMARY_OUTLET;
     parentContexts.onChildOutletCreated(this.name, this as any);
   }
 
   ngOnDestroy(): void {
-    ctrl.destoryViews(this.views);
     this.parentContexts.onChildOutletDestroyed(this.name);
   }
 
@@ -82,69 +84,68 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   attach(ref: ComponentRef<any>, activatedRoute: ActivatedRoute) {
     this.activated = ref;
     this._activatedRoute = activatedRoute;
-
-    ctrl.attachView(this.views, this.location, ref, activatedRoute);
+    this.location.insert(ref.hostView);
   }
 
   deactivate(): void {
     if (this.activated) {
       const c = this.component;
-
-      ctrl.deactivateView(this.views, this.activated);
-
+      this.deactivated = this.activated;
       this.activated = null;
       this._activatedRoute = null;
       this.deactivateEvents.emit(c);
     }
   }
 
-  activateWith(activatedRoute: ActivatedRoute, resolver: ComponentFactoryResolver|null) {
+  async activateWith(activatedRoute: ActivatedRoute, resolver: ComponentFactoryResolver|null) {
     if (this.isActivated) {
       throw new Error('Cannot activate an already activated outlet');
     }
-
     this._activatedRoute = activatedRoute;
+    const snapshot = (activatedRoute as any)._futureSnapshot;
 
-    const existingView = ctrl.getExistingView(this.views, activatedRoute);
-    if (existingView) {
-      // we've already got a view hanging around
-      this.activated = existingView.ref;
+    const component = <any>snapshot.routeConfig !.component;
+    resolver = resolver || this.resolver;
 
-    } else {
-      // haven't created this view yet
-      const snapshot = (activatedRoute as any)._futureSnapshot;
+    const factory = resolver.resolveComponentFactory(component);
+    const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
 
-      const component = <any>snapshot.routeConfig !.component;
-      resolver = resolver || this.resolver;
-
-      const factory = resolver.resolveComponentFactory(component);
-      const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
-
-      const injector = new OutletInjector(activatedRoute, childContexts, this.location.injector);
-      this.activated = this.location.createComponent(factory, this.location.length, injector);
-
-      // keep a ref
-      ctrl.initRouteViewElm(this.views, this.activated, activatedRoute);
-    }
+    const injector = new OutletInjector(activatedRoute, childContexts, this.location.injector);
+    this.activated = this.location.createComponent(factory, this.location.length, injector);
 
     // Calling `markForCheck` to make sure we will run the change detection when the
     // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
     this.changeDetector.markForCheck();
+    await this.transition();
+    this.activateEvents.emit(this.activated.instance);
+  }
 
-    const lastDeactivatedRef = ctrl.getLastDeactivatedRef(this.views);
+  async transition() {
+    const enteringRef = this.activated;
+    const enteringEl = (enteringRef && enteringRef.location && enteringRef.location.nativeElement) as HTMLElement;
+    if (enteringEl) {
+      enteringEl.classList.add('ion-page', 'hide-page');
 
-    runTransition(this.activated, lastDeactivatedRef).then(() => {
-      console.log('transition end');
-      this.activateEvents.emit(this.activated.instance);
-    });
+      const navEl = this.elementRef.nativeElement;
+      navEl.appendChild(enteringEl);
+
+      await navEl.componentOnReady();
+      await navEl.commit(enteringEl);
+
+      if (this.deactivated) {
+        this.deactivated.destroy();
+        this.deactivated = null;
+      }
+    }
   }
 }
 
-
 class OutletInjector implements Injector {
   constructor(
-      private route: ActivatedRoute, private childContexts: ChildrenOutletContexts,
-      private parent: Injector) {}
+    private route: ActivatedRoute,
+    private childContexts: ChildrenOutletContexts,
+    private parent: Injector
+  ) {}
 
   get(token: any, notFoundValue?: any): any {
     if (token === ActivatedRoute) {

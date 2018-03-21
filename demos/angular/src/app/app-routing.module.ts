@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'virtual-scroll', loadChildren: 'app/virtual-scroll/virtual-scroll.module#VirtualScrollModule' },
 
   { path: 'no-routing-nav', loadChildren: 'app/no-routing-nav/no-routing-nav.module#NoRoutingNavModule' },
-
+  { path: 'simple-nav', loadChildren: 'app/simple-nav/simple-nav.module#SimpleNavModule' },
 ];
 
 @NgModule({
