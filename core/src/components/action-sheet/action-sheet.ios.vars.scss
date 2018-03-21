@@ -37,13 +37,13 @@ $action-sheet-ios-translucent-background-color:         css-var($background-ios-
 $action-sheet-ios-border-radius:                        13px !default;
 
 /// @prop - Padding top of the action sheet title
-$action-sheet-ios-title-padding-top:                    15px !default;
+$action-sheet-ios-title-padding-top:                    14px !default;
 
 /// @prop - Padding end of the action sheet title
 $action-sheet-ios-title-padding-end:                    $action-sheet-ios-title-padding-top !default;
 
 /// @prop - Padding bottom of the action sheet title
-$action-sheet-ios-title-padding-bottom:                 $action-sheet-ios-title-padding-top !default;
+$action-sheet-ios-title-padding-bottom:                 13px !default;
 
 /// @prop - Padding start of the action sheet title
 $action-sheet-ios-title-padding-start:                  $action-sheet-ios-title-padding-end !default;
