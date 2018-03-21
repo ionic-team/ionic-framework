@@ -46,8 +46,10 @@ export class ViewController {
   async init(container: HTMLElement) {
     this._state = ViewState.Attached;
 
-    const component = this.component;
-    this.element = await attachComponent(this.delegate, container, component, ['ion-page', 'hide-page'], this.data);
+    if (!this.element) {
+      const component = this.component;
+      this.element = await attachComponent(this.delegate, container, component, ['ion-page', 'hide-page'], this.data);
+    }
   }
 
   _setNav(navCtrl: NavControllerBase) {
