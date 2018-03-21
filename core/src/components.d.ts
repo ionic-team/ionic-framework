@@ -43,6 +43,7 @@ import {
   Side,
 } from './utils/helpers';
 import {
+  AnimationBuilder as AnimationBuilder2,
   FrameworkDelegate as FrameworkDelegate2,
 } from '.';
 import {
@@ -2618,6 +2619,38 @@ declare global {
       component?: string;
       componentProps?: {[key: string]: any};
       url?: string;
+    }
+  }
+}
+
+
+import {
+  RouterOutlet as IonRouterOutlet
+} from './components/router-outlet/route-outlet';
+
+declare global {
+  interface HTMLIonRouterOutletElement extends IonRouterOutlet, HTMLStencilElement {
+  }
+  var HTMLIonRouterOutletElement: {
+    prototype: HTMLIonRouterOutletElement;
+    new (): HTMLIonRouterOutletElement;
+  };
+  interface HTMLElementTagNameMap {
+    "ion-router-outlet": HTMLIonRouterOutletElement;
+  }
+  interface ElementTagNameMap {
+    "ion-router-outlet": HTMLIonRouterOutletElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      "ion-router-outlet": JSXElements.IonRouterOutletAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonRouterOutletAttributes extends HTMLAttributes {
+      animated?: boolean;
+      animationBuilder?: AnimationBuilder;
+      delegate?: FrameworkDelegate;
     }
   }
 }
