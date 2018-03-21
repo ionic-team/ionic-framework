@@ -50,15 +50,18 @@ export function getButtonClassMap(buttonType: string, mode: string): CssClassMap
   };
 }
 
+export function getClassList(classes: string | undefined): string[] {
+  if (classes) {
+    return classes
+      .split(' ')
+      .filter(c => c.trim() !== '');
+  }
+  return [];
+}
 
 export function getClassMap(classes: string | undefined): CssClassMap {
   const map: CssClassMap = {};
-  if (classes) {
-    classes
-      .split(' ')
-      .filter(c => c.trim() !== '')
-      .forEach(c => map[c] = true);
-  }
+  getClassList(classes).forEach(c => map[c] = true);
   return map;
 }
 

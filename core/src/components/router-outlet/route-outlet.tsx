@@ -2,11 +2,11 @@ import { Component, Element, Method, Prop } from '@stencil/core';
 import { transition } from '../../utils';
 import { NavDirection } from '../nav/nav-util';
 import { AnimationBuilder, Config, FrameworkDelegate, NavOutlet } from '../..';
-import { attachComponent, detachComponent } from '../../utils/overlays';
+import { attachComponent, detachComponent } from '../../utils/framework-delegate';
+import { RouteID, RouteWrite } from '../router/utils/interfaces';
 
 import iosTransitionAnimation from '../nav/animations/ios.transition';
 import mdTransitionAnimation from '../nav/animations/md.transition';
-import { RouteID, RouteWrite } from '../router/utils/interfaces';
 
 @Component({
   tag: 'ion-router-outlet'
@@ -37,7 +37,7 @@ export class RouterOutlet implements NavOutlet {
       return false;
     }
     // attach entering view to DOM
-    const enteringEl = await attachComponent(this.delegate, this.el, component, NAV_CLASSES, params);
+    const enteringEl = await attachComponent(this.delegate, this.el, component, ['ion-page', 'hide-page'], params);
     const leavingEl = this.activeEl;
 
     // commit animation
@@ -121,5 +121,3 @@ export interface RouterOutletOptions {
   direction?: NavDirection;
   mode?: 'md' | 'ios';
 }
-
-const NAV_CLASSES = {'ion-page': true, 'hide-page': true};

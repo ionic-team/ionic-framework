@@ -3,6 +3,7 @@ import { NavOptions, ViewState } from './nav-util';
 import { NavControllerBase } from './nav';
 import { assert } from '../../utils/helpers';
 import { FrameworkDelegate } from '../..';
+import { attachComponent } from '../../utils/framework-delegate';
 
 /**
  * @name ViewController
@@ -42,30 +43,11 @@ export class ViewController {
   /**
    * @hidden
    */
-  init(container: HTMLElement) {
+  async init(container: HTMLElement) {
     this._state = ViewState.Attached;
 
     const component = this.component;
-    if (this.delegate) {
-      return this.delegate.attachViewToDom(container, component, this.data, ['ion-page', 'hide-page']).then(el => {
-        this.element = el;
-      });
-    }
-    const element = (this.element)
-      ? this.element
-      : typeof component === 'string'
-      ? document.createElement(component)
-      : component;
-
-    element.classList.add('ion-page');
-    element.classList.add('hide-page');
-
-    if (this.data) {
-      Object.assign(element, this.data);
-    }
-    container.appendChild(element);
-    this.element = element;
-    return Promise.resolve();
+    this.element = await attachComponent(this.delegate, container, component, ['ion-page', 'hide-page'], this.data);
   }
 
   _setNav(navCtrl: NavControllerBase) {

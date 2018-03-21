@@ -1,8 +1,9 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, Config, FrameworkDelegate } from '../../index';
 
-import { createThemedClasses, getClassMap } from '../../utils/theme';
-import { BACKDROP, OverlayEventDetail, OverlayInterface, attachComponent, detachComponent, dismiss, eventMethod, present } from '../../utils/overlays';
+import { createThemedClasses, getClassList } from '../../utils/theme';
+import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
+import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';
@@ -182,10 +183,10 @@ export class Popover implements OverlayInterface {
       ...this.data,
       popover: this.el
     };
-    const classes = {
-      ...getClassMap(this.cssClass),
-      'popover-viewport': true
-    };
+    const classes = [
+      ...getClassList(this.cssClass),
+      'popover-viewport'
+    ];
     return attachComponent(this.delegate, container, this.component, classes, data)
       .then(el => this.usersElement = el)
       .then(() => present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.ev));
