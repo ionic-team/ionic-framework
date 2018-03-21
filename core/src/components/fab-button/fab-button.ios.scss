@@ -7,14 +7,25 @@
 .fab-button-ios {
   color: $fab-ios-text-color;
   background-color: $fab-ios-background-color;
+
+  box-shadow: $fab-ios-box-shadow;
+
+  transition: $fab-ios-transition;
 }
 
 .fab-button-ios.activated {
   background-color: $fab-ios-background-color-activated;
+
+  box-shadow: $fab-ios-box-shadow-activated;
+
+  transform: $fab-ios-transform;
+  transition: $fab-ios-transition-activated;
 }
 
 .fab-button-ios .icon {
   fill: $fab-ios-icon-fill-color;
+
+  font-size: $fab-ios-icon-font-size;
 }
 
 // FAB buttons in a list

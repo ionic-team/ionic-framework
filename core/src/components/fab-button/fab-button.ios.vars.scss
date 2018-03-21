@@ -3,6 +3,21 @@
 // iOS FAB Button
 // --------------------------------------------------
 
+/// @prop - Box shadow of the FAB button
+$fab-ios-box-shadow:                                    0px 4px 16px rgba(0, 0, 0, .12) !default;
+
+/// @prop - Box shadow of the activated FAB button
+$fab-ios-box-shadow-activated:                          $fab-ios-box-shadow !default;
+
+/// @prop - Transform of the FAB button
+$fab-ios-transform:                                     scale(1.1) !default;
+
+/// @prop - Transition of the FAB button
+$fab-ios-transition:                                    .2s transform cubic-bezier(.25, 1.11, .78, 1.59) !default;
+
+/// @prop - Transition of the activated FAB button
+$fab-ios-transition-activated:                          .2s transform ease-out !default;
+
 /// @prop - Background color of the button
 $fab-ios-background-color:                              ion-color($colors-ios, primary, base, ios) !default;
 
@@ -14,6 +29,9 @@ $fab-ios-text-color:                                    ion-color($colors-ios, $
 
 /// @prop - Color of the button icon
 $fab-ios-icon-fill-color:                               $fab-ios-text-color !default;
+
+/// @prop - Font size of the button icon
+$fab-ios-icon-font-size:                                28px !default;
 
 /// @prop - Background color of the activated button
 $fab-ios-background-color-activated:                    ion-color($colors-ios, $fab-ios-background-color, tint, ios) !default;
