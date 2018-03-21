@@ -17,7 +17,10 @@
         </ion-header>
         <ion-content>
           page one
-          <a href='#/two/second-page'>Ir a la page 2</a>
+          <p><a href='#/two/second-page'>Go to page 2</a></p>
+          <p><a href='#/two/three/hola'>Go to page 3 (hola)</a></p>
+          <p><a href='#/two/three/something'>Go to page 3 (something)</a></p>
+
         </ion-content>`;
       }
     }
@@ -31,7 +34,8 @@
           </ion-toolbar>
         </ion-header>
         <ion-content>
-          page two
+          <p><a href='#/two/three/hola'>Go to page 3 (hola)</a></p>
+          <p><a href='#/two/three/hello'>Go to page 3 (hello)</a></p>
         </ion-content>`;
       }
     }
@@ -41,11 +45,14 @@
         this.innerHTML = `
         <ion-header>
           <ion-toolbar>
-            <ion-title>Page 3</ion-title>
+            <ion-title>Page 3 ${this.prop1}</ion-title>
           </ion-toolbar>
         </ion-header>
         <ion-content>
-          page tres
+          <p><a href='#/two/three/hola'>Go to page 3 (hola)</a></p>
+          <p><a href='#/two/three/hello'>Go to page 3 (hello)</a></p>
+          <p><a href='#/two/second-page'>Go to page 2</a></p>
+          <p><a href='#/two/'>Go to page 1</a></p>
         </ion-content>`;
       }
     }
@@ -111,7 +118,7 @@
       <ion-route url="/two" component="tab-two">
         <ion-route component="page-one"> </ion-route>
         <ion-route url="/second-page" component="page-two"> </ion-route>
-        <ion-route url="/three-page" component="page-three"> </ion-route>
+        <ion-route url="/three/:prop1" component="page-three"> </ion-route>
       </ion-route>
 
       <ion-route url="/three" component="tab3"> </ion-route>

@@ -75,6 +75,36 @@ export class ViewController {
     this._leavingOpts = opts;
   }
 
+  matches(id: string, params: any): boolean {
+    if (this.component !== id) {
+      return false;
+    }
+    const currentParams = this.data;
+    const null1 = (currentParams == null);
+    const null2 = (params == null);
+    if (null1 !== null2) {
+      return false;
+    }
+    if (null1 && null2) {
+      return true;
+    }
+
+    const keysA = Object.keys(currentParams);
+    const keysB = Object.keys(params);
+    if (keysA.length !== keysB.length) {
+      return false;
+    }
+
+    // Test for A's keys different from B.
+    for (let i = 0; i < keysA.length; i++) {
+      const key = keysA[i];
+      if (currentParams[key] !== params[key]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   /**
    * @hidden
    * DOM WRITE

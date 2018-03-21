@@ -200,10 +200,12 @@ export class NavControllerBase implements NavOutlet {
   @Method()
   setRouteId(id: string, params: any = {}, direction: number): Promise<RouteWrite> {
     const active = this.getActive();
-    if (active && active.component === id) {
+
+    if (active && active.matches(id, params)) {
       return Promise.resolve({changed: false, element: active.element});
     }
-    const viewController = this._views.find(v => v.component === id) || id;
+
+    const viewController = this._views.find(v => v.matches(id, params));
 
     let resolve: (result: RouteWrite) => void;
     const promise = new Promise<RouteWrite>((r) => resolve = r);
@@ -220,17 +222,14 @@ export class NavControllerBase implements NavOutlet {
         return p;
       }
     };
-
-    if (direction === 1) {
-      this.push(viewController, params, commonOpts);
+    if (viewController) {
+      this.popTo(viewController, {...commonOpts, direction: NavDirection.back});
+    } else if (direction === 1) {
+      this.push(id, params, commonOpts);
     } else if (direction === -1) {
-      this.setRoot(id, params, {
-        ...commonOpts,
-        direction: NavDirection.back,
-        animate: true
-      });
+      this.setRoot(id, params, {...commonOpts, direction: NavDirection.back, animate: true});
     } else {
-      this.setRoot(viewController, params, commonOpts);
+      this.setRoot(id, params, commonOpts);
     }
     return promise;
   }
