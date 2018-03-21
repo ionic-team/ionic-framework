@@ -2,5 +2,17 @@
   "name": "@ionic/source",
   "version": "0.0.1",
   "description": "Ionic mono-repo root package.json, used mainly to execute build scripts. This package is not published to npm.",
-  "private": true
+  "private": true,
+  "scripts": {
+    "prepare.deploy": "node .scripts/prepare.js",
+    "deploy": "node .scripts/publish.js"
+  },
+  "dependencies": {
+    "chalk": "^2.3.2",
+    "execa": "^0.10.0",
+    "fs-extra": "^5.0.0",
+    "inquirer": "^5.1.0",
+    "listr": "^0.13.0",
+    "semver": "^5.5.0"
+  }
 }
