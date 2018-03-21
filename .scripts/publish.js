@@ -4,53 +4,48 @@
  */
 const chalk = require('chalk');
 const execa = require('execa');
-const inquirer = require('inquirer');
 const Listr = require('listr');
-const fs = require('fs-extra');
-const path = require('path');
-const semver = require('semver');
+const common = require('./common');
 
-const rootDir = path.join(__dirname, '../');
 
 async function main() {
   try {
-    await publishProject('core');
-    await publishProject('angular');
+    const {version} = common.readPkg('core');
 
-    await publishGit();
+    await common.checkGit();
+
+    await publishProject('core', version);
+    await publishProject('angular', version);
+
+    await publishGit(version);
     process.exit(0);
 
-  } catch(err) {
+  } catch (err) {
     console.log('\n', chalk.red(err), '\n');
     process.exit(1);
   }
 }
 
-async function publishProject(project) {
-  const projectRoot = path.join(rootDir, project);
-  const pkg = readPkg(project);
+async function publishProject(project, version) {
+  const projectRoot = common.projectPath(project);
   const listr = new Listr([{
-    title: 'Publish ' + pkg.name,
-    task: () => execa('npm', ['publish'].concat(opts.tag ? ['--tag', opts.tag] : []), { cwd: projectRoot })
+    title: `Publish (latest) ${project} (v${version})`,
+    task: () => execa('npm', ['publish'].concat(opts.tag ? ['--tag', 'latest'] : []), { cwd: projectRoot })
   }], { showSubtasks: false });
   await listr.run();
 }
 
-async function publishGit() {
+async function publishGit(version) {
+  const rootDir = common.rootPath();
   const listr = new Listr([{
     title: 'Tagging the latest commit',
-    task: () => execa('git', ['tag', `v${opts.version}`], { cwd: rootDir })
+    task: () => execa('git', ['tag', `v${version}`], { cwd: rootDir })
   },
   {
     title: 'Pushing to Github',
     task: () => execa('git', ['push', '--follow-tags'], { cwd: rootDir })
   }]);
   await listr.run();
-}
-
-function readPkg(project) {
-  const packageJsonPath = path.join(rootDir, project, 'package.json');
-  return JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
 }
 
 main();

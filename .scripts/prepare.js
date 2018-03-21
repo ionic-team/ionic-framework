@@ -7,20 +7,19 @@ const execa = require('execa');
 const inquirer = require('inquirer');
 const Listr = require('listr');
 const fs = require('fs-extra');
-const path = require('path');
 const semver = require('semver');
+const common = require('./common');
+const path = require('path');
 
-const rootDir = path.join(__dirname, '../');
 
 async function main() {
   try {
-    await checkGit();
+    await common.checkGit();
 
     const version = await askVersion();
     await checkTagVersion(version);
     await prepareProject('core', version);
-    await link('core', 'angular');
-    await prepareProject('angular', version);
+    await prepareProject('angular', version, ['@ionic/core']);
 
     await generateChangeLog(version);
     process.exit(0);
@@ -28,46 +27,6 @@ async function main() {
     console.log('\n', chalk.red(err), '\n');
     process.exit(1);
   }
-}
-
-async function checkGit() {
-  const listr = new Listr([
-    {
-      title: 'Check npm version',
-      skip: () => isVersionLower('6.0.0', process.version),
-      task: () => execa.stdout('npm', ['version', '--json']).then(json => {
-        const versions = JSON.parse(json);
-        if (!satisfies(versions.npm, '>=2.15.8 <3.0.0 || >=3.10.1')) {
-          throw new Error(`npm@${versions.npm} has known issues publishing when running Node.js 6. Please upgrade npm or downgrade Node and publish again. https://github.com/npm/npm/issues/5082`);
-        }
-      })
-    },
-    {
-      title: 'Check current branch',
-      task: () => execa.stdout('git', ['symbolic-ref', '--short', 'HEAD']).then(branch => {
-        if (branch !== 'master' && branch !== 'core') {
-          throw new Error('Not on `master` or `core` branch');
-        }
-      })
-    },
-    {
-      title: 'Check local working tree',
-      task: () => execa.stdout('git', ['status', '--porcelain']).then(status => {
-        if (status !== '') {
-          throw new Error('Unclean working tree. Commit or stash changes first.');
-        }
-      })
-    },
-    {
-      title: 'Check remote history',
-      task: () => execa.stdout('git', ['rev-list', '--count', '--left-only', '@{u}...HEAD']).then(result => {
-        if (result !== '0') {
-          throw new Error('Remote history differs. Please pull changes.');
-        }
-      })
-    }
-  ]);
-  await listr.run();
 }
 
 async function checkTagVersion(version) {
@@ -106,7 +65,7 @@ async function checkTagVersion(version) {
 
 
 async function askVersion() {
-  const pkg = readPkg('core');
+  const pkg = common.readPkg('core');
   const oldVersion = pkg.version;
 
   const prompts = [
@@ -158,15 +117,14 @@ async function askVersion() {
   return version;
 }
 
-async function prepareProject(project, version) {
-  const projectRoot = path.join(rootDir, project);
-  const pkg = readPkg(project);
+async function prepareProject(project, version, dependencies) {
+  const projectRoot = common.projectPath(project);
+  const pkg = common.readPkg(project);
   const oldVersion = pkg.version;
 
-  console.log(`\nPrepare to publish a new version of ${chalk.bold.magenta(pkg.name)} ${chalk.dim(`(${oldVersion})`)}\n`);
+  console.log(`\nPrepare to publish a new version of ${chalk.bold.magenta(pkg.name)} ${chalk.dim(`(${oldVersion}) => (${version})`)}\n`);
 
-
-  const listr = new Listr([
+  const tasks = [
     {
       title: 'Validate version',
       task: () => {
@@ -177,12 +135,28 @@ async function prepareProject(project, version) {
     },
     {
       title: 'Cleanup',
-      task: () => fs.remove('node_modules')
+      task: () => fs.remove(path.join(projectRoot, 'node_modules'))
     },
     {
       title: 'Install npm dependencies',
       task: () => execa('npm', ['install'], { cwd: projectRoot }),
-    },
+    }];
+
+  if (dependencies && dependencies.length > 0) {
+    tasks.push(
+      {
+        title: 'Linking local dependencies',
+        task: () => {
+          return new Listr(dependencies.map(dep => ({
+            title: dep,
+            task: () => execa('npm', ['link', dep], { cwd: projectRoot }),
+          })));
+        }
+      }
+    );
+  }
+
+  tasks.push(
     {
       title: 'Run lint',
       task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot })
@@ -196,15 +170,22 @@ async function prepareProject(project, version) {
       task: () => execa('npm', ['test'], { cwd: projectRoot })
     },
     {
-      title: 'Set package.json version',
+      title: 'Linking',
+      task: () => execa('npm', ['link'], { cwd: projectRoot })
+    },
+    {
+      title: `Updating ${project}/package.json version ${chalk.dim(`(${version})`)}`,
       task: () => execa('npm', ['version', version], { cwd: projectRoot }),
     },
-  ], { showSubtasks: false });
+  );
+
+  const listr = new Listr(tasks, { showSubtasks: false });
   await listr.run();
 }
 
 
 async function generateChangeLog() {
+  const rootDir = common.rootPath();
   const listr = new Listr([{
     title: 'Generate CHANGELOG',
     task: () => execa('npm', ['run', 'changelog'], { cwd: rootDir }),
@@ -218,7 +199,7 @@ const PRERELEASE_VERSIONS = ['prepatch', 'preminor', 'premajor', 'prerelease'];
 
 const isValidVersion = input => Boolean(semver.valid(input));
 
-const isValidVersionInput = input => SEMVER_INCREMENTS.indexOf(input) !== -1 || isValidVersion(input);
+const isValidVersionInput = input => SEMVER_INCREMENTS.indexOf(input) !== -1 || common.isValidVersion(input);
 
 const isPrereleaseVersion = version => PRERELEASE_VERSIONS.indexOf(version) !== -1 || Boolean(semver.prerelease(version));
 
@@ -231,22 +212,12 @@ function getNewVersion(oldVersion, input) {
 };
 
 const isVersionGreater = (oldVersion, newVersion) => {
-  if (!isValidVersion(newVersion)) {
+  if (!common.isValidVersion(newVersion)) {
     throw new Error('Version should be a valid semver version.');
   }
 
   return semver.gt(newVersion, oldVersion);
 };
-
-const isVersionLower = (oldVersion, newVersion) => {
-  if (!isValidVersion(newVersion)) {
-    throw new Error('Version should be a valid semver version.');
-  }
-
-  return semver.lt(newVersion, oldVersion);
-};
-
-const satisfies = (version, range) => semver.satisfies(version, range);
 
 
 function prettyVersionDiff(oldVersion, inc) {
@@ -269,12 +240,5 @@ function prettyVersionDiff(oldVersion, inc) {
   }
   return output.join(chalk.reset.dim('.'));
 }
-
-
-function readPkg(project) {
-  const packageJsonPath = path.join(rootDir, project, 'package.json');
-  return JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
-}
-
 
 main();
