@@ -191,7 +191,7 @@ export class Picker implements OverlayInterface {
   }
 
   @Method()
-  addButton(button: any) {
+  addButton(button: PickerButton) {
     this.buttons.push(button);
   }
 
@@ -201,8 +201,8 @@ export class Picker implements OverlayInterface {
   }
 
   @Method()
-  getColumn(name: string): PickerColumn {
-    return this.getColumns().find(column => column.name === name);
+  getColumn(name: string): PickerColumn|undefined {
+    return this.columns.find(column => column.name === name);
   }
 
   @Method()
@@ -232,10 +232,10 @@ export class Picker implements OverlayInterface {
     }
   }
 
-  private getSelected(): any {
+  private getSelected() {
     const selected: {[k: string]: any} = {};
     this.columns.forEach((col, index) => {
-      const selectedColumn = col.options[col.selectedIndex];
+      const selectedColumn = col.selectedIndex ? col.options[col.selectedIndex] : null;
       selected[col.name] = {
         text: selectedColumn ? selectedColumn.text : null,
         value: selectedColumn ? selectedColumn.value : null,
@@ -354,13 +354,13 @@ export interface PickerOptions {
 }
 
 export interface PickerColumn {
-  name?: string;
+  name: string;
   align?: string;
   selectedIndex?: number;
   prevSelected?: number;
   prefix?: string;
   suffix?: string;
-  options?: PickerColumnOption[];
+  options: PickerColumnOption[];
   cssClass?: string;
   columnWidth?: string;
   prefixWidth?: string;

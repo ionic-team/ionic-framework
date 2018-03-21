@@ -35,7 +35,7 @@ export function renderDatetime(template: string, value: DatetimeData, locale: Lo
 }
 
 
-export function renderTextFormat(format: string, value: any, date: DatetimeData, locale: LocaleData): string {
+export function renderTextFormat(format: string, value: any, date: DatetimeData|null, locale: LocaleData): string {
 
   if (format === FORMAT_DDDD || format === FORMAT_DDD) {
     try {
@@ -55,11 +55,11 @@ export function renderTextFormat(format: string, value: any, date: DatetimeData,
   }
 
   if (format === FORMAT_A) {
-    return date ? date.hour < 12 ? 'AM' : 'PM' : value ? value.toUpperCase() : '';
+    return date && date.hour ? date.hour < 12 ? 'AM' : 'PM' : value ? value.toUpperCase() : '';
   }
 
   if (format === FORMAT_a) {
-    return date ? date.hour < 12 ? 'am' : 'pm' : value ? value : '';
+    return date && date.hour ? date.hour < 12 ? 'am' : 'pm' : value ? value : '';
   }
 
   if (isBlank(value)) {
@@ -102,45 +102,48 @@ export function renderTextFormat(format: string, value: any, date: DatetimeData,
 
 export function dateValueRange(format: string, min: DatetimeData, max: DatetimeData): any[] {
   const opts: any[] = [];
-  let i: number;
 
   if (format === FORMAT_YYYY || format === FORMAT_YY) {
     // year
-    i = max.year;
-    while (i >= min.year) {
-      opts.push(i--);
+    if (!max.year || !min.year) {
+      throw new Error('min and max year is undefined');
+    }
+
+    for (let i = max.year - 1; i >= min.year; i--) {
+      opts.push(i);
     }
 
   } else if (format === FORMAT_MMMM || format === FORMAT_MMM ||
              format === FORMAT_MM || format === FORMAT_M ||
              format === FORMAT_hh || format === FORMAT_h) {
+
     // month or 12-hour
-    for (i = 1; i < 13; i++) {
+    for (let i = 1; i < 13; i++) {
       opts.push(i);
     }
 
   } else if (format === FORMAT_DDDD || format === FORMAT_DDD ||
              format === FORMAT_DD || format === FORMAT_D) {
     // day
-    for (i = 1; i < 32; i++) {
+    for (let i = 1; i < 32; i++) {
       opts.push(i);
     }
 
   } else if (format === FORMAT_HH || format === FORMAT_H) {
     // 24-hour
-    for (i = 0; i < 24; i++) {
+    for (let i = 0; i < 24; i++) {
       opts.push(i);
     }
 
   } else if (format === FORMAT_mm || format === FORMAT_m) {
     // minutes
-    for (i = 0; i < 60; i++) {
+    for (let i = 0; i < 60; i++) {
       opts.push(i);
     }
 
   } else if (format === FORMAT_ss || format === FORMAT_s) {
     // seconds
-    for (i = 0; i < 60; i++) {
+    for (let i = 0; i < 60; i++) {
       opts.push(i);
     }
 
@@ -175,10 +178,10 @@ export function isLeapYear(year: number): boolean {
 const ISO_8601_REGEXP = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 
-export function parseDate(val: any): DatetimeData {
+export function parseDate(val: any): DatetimeData|null {
   // manually parse IS0 cuz Date.parse cannot be trusted
   // ISO 8601 format: 1994-12-15T13:47:20Z
-  let parse: any[];
+  let parse: any[] = null;
 
   if (val && val !== '') {
     // try parsing for just time first, HH:MM
@@ -322,7 +325,7 @@ export function getValueFromFormat(date: DatetimeData, format: string) {
 }
 
 
-export function convertFormatToKey(format: string): string {
+export function convertFormatToKey(format: string): string|null {
   for (const k in FORMAT_KEYS) {
     if (FORMAT_KEYS[k].f === format) {
       return FORMAT_KEYS[k].k;
@@ -448,15 +451,15 @@ export function convertToArrayOfNumbers(input: any[] | string | number, type: st
 }
 
 
-function twoDigit(val: number): string {
+function twoDigit(val: number | undefined): string {
   return ('0' + (val ? Math.abs(val) : '0')).slice(-2);
 }
 
-function threeDigit(val: number): string {
+function threeDigit(val: number | undefined): string {
   return ('00' + (val ? Math.abs(val) : '0')).slice(-3);
 }
 
-function fourDigit(val: number): string {
+function fourDigit(val: number | undefined): string {
   return ('000' + (val ? Math.abs(val) : '0')).slice(-4);
 }
 

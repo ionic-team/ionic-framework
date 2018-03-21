@@ -34,9 +34,9 @@ export function writePath(history: History, base: string, usePath: boolean, path
   }
   if (isPop) {
     // history.back();
-    history.replaceState(state, null, url);
+    history.replaceState(state, '', url);
   } else {
-    history.pushState(state, null, url);
+    history.pushState(state, '', url);
   }
 }
 
@@ -51,8 +51,8 @@ export function readPath(loc: Location, base: string, useHash: boolean): string[
   return null;
 }
 
-export function parsePath(path: string): string[] {
-  if (path === null || path === undefined) {
+export function parsePath(path: string|null|undefined): string[] {
+  if (path == null) {
     return [''];
   }
   const segments = path.split('/')

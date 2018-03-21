@@ -47,7 +47,7 @@ export function matchesIDs(ids: string[], chain: RouteChain): number {
 export function matchesPath(path: string[], chain: RouteChain): RouteChain | null {
   const segments = new RouterSegments(path);
   let matchesDefault = false;
-  let allparams: any[];
+  let allparams: any[]|undefined = undefined;
   for (let i = 0; i < chain.length; i++) {
     const path = chain[i].path;
     if (path[0] === '') {
@@ -125,7 +125,7 @@ export function routerIDsToChain(ids: RouteID[], chains: RouteChain[]): RouteCha
 
 
 export function routerPathToChain(path: string[], chains: RouteChain[]): RouteChain|null {
-  let match: RouteChain = null;
+  let match: RouteChain|null = null;
   let matches = 0;
   for (const chain of chains) {
     const matchedChain = matchesPath(path, chain);

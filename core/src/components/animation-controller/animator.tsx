@@ -211,20 +211,21 @@ export class Animator {
     // add from/to EffectState to the EffectProperty
     const fxState: EffectState = {
       val: val,
-      num: null,
+      num: 0,
       effectUnit: '',
     };
     fxProp[state] = fxState;
 
     if (typeof val === 'string' && val.indexOf(' ') < 0) {
       const r = val.match(CSS_VALUE_REGEX);
-      const num = parseFloat(r[1]);
+      if (r) {
+        const num = parseFloat(r[1]);
 
-      if (!isNaN(num)) {
-        fxState.num = num;
+        if (!isNaN(num)) {
+          fxState.num = num;
+        }
+        fxState.effectUnit = (r[0] !== r[2] ? r[2] : '');
       }
-      fxState.effectUnit = (r[0] !== r[2] ? r[2] : '');
-
     } else if (typeof val === 'number') {
       fxState.num = val;
     }
@@ -972,19 +973,18 @@ export class Animator {
    * NO RECURSION
    */
   _willChange(addWillChange: boolean) {
-    let i = 0;
     let wc: string[];
     const effects = this._fxProperties;
     let willChange: string;
 
     if (addWillChange && effects) {
       wc = [];
-      for (i = 0; i < effects.length; i++) {
+      for (let i = 0; i < effects.length; i++) {
         const propWC = effects[i].wc;
         if (propWC === 'webkitTransform') {
           wc.push('transform', '-webkit-transform');
 
-        } else {
+        } else if (propWC) {
           wc.push(propWC);
         }
       }
@@ -994,9 +994,12 @@ export class Animator {
       willChange = '';
     }
 
-    for (i = 0; i < this._elementTotal; i++) {
-      // ******** DOM WRITE ****************
-      (this._elements[i] as any).style.willChange = willChange;
+    const elements = this._elements;
+    if (elements) {
+      for (let i = 0; i < this._elementTotal; i++) {
+        // ******** DOM WRITE ****************
+        (elements[i] as any).style.willChange = willChange;
+      }
     }
   }
 
@@ -1057,7 +1060,7 @@ export class Animator {
     if (this._isReverse) {
       // if the animation is going in reverse then
       // flip the step value: 0 becomes 1, 1 becomes 0
-      currentStepValue = ((currentStepValue * -1) + 1);
+      currentStepValue = 1 - currentStepValue;
     }
     const stepValue = shouldComplete ? 1 : 0;
 
@@ -1065,10 +1068,10 @@ export class Animator {
     if (dur === undefined) {
       dur = -1;
     }
-    if (diff < 0.05) {
+    if (dur < 0) {
+      dur = this._duration || 0;
+    } else if (diff < 0.05) {
       dur = 0;
-    } else if (dur < 0) {
-      dur = this._duration;
     }
 
     this._isAsync = (dur > 30);

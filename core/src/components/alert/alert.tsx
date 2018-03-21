@@ -21,8 +21,8 @@ import mdLeaveAnimation from './animations/md.leave';
 })
 export class Alert implements OverlayInterface {
 
-  private activeId: string;
-  private inputType: string | null = null;
+  private activeId: string | undefined;
+  private inputType: string | undefined;
   private hdrId: string;
 
   presented = false;
@@ -266,7 +266,7 @@ export class Alert implements OverlayInterface {
     // return an object of all the values with the input name as the key
     const values: {[k: string]: string} = {};
     this.inputs.forEach(i => {
-      values[i.name] = i.value;
+      values[i.name] = i.value || '';
     });
 
     console.debug('returning', values);
@@ -407,7 +407,7 @@ export class Alert implements OverlayInterface {
       console.warn(`Alert cannot mix input types: ${(inputTypes.join('/'))}. Please see alert docs for more info.`);
     }
 
-    this.inputType = inputTypes.length > 0 ? inputTypes[0] : null;
+    this.inputType = inputTypes.length > 0 ? inputTypes[0] : undefined;
 
     return [
       <ion-backdrop tappable={this.enableBackdropDismiss}/>,
