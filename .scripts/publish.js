@@ -30,7 +30,7 @@ async function publishProject(project, version) {
   const projectRoot = common.projectPath(project);
   const listr = new Listr([{
     title: `Publish (latest) ${project} (v${version})`,
-    task: () => execa('npm', ['publish'].concat(opts.tag ? ['--tag', 'latest'] : []), { cwd: projectRoot })
+    task: () => execa('npm', ['publish', '--tag', 'latest'], { cwd: projectRoot })
   }], { showSubtasks: false });
   await listr.run();
 }

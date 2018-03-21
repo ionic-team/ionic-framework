@@ -1,3 +1,27 @@
+<a name="0.1.4"></a>
+## [0.1.4](https://github.com/ionic-team/ionic/compare/v0.1.4-9...v0.1.4) (2018-03-21)
+
+
+### Bug Fixes
+
+* **action-sheet:** update padding on title to match native ([f0a40fa](https://github.com/ionic-team/ionic/commit/f0a40fa))
+* **alert:** update colors for alert text and input borders ([605ec93](https://github.com/ionic-team/ionic/commit/605ec93)), closes [#14196](https://github.com/ionic-team/ionic/issues/14196)
+* **alert:** update md alert to closer match spec ([7d53e49](https://github.com/ionic-team/ionic/commit/7d53e49))
+* **all:** ts strict (part 4) ([4693229](https://github.com/ionic-team/ionic/commit/4693229))
+* **angular:** router-outlet animation ([943e2f7](https://github.com/ionic-team/ionic/commit/943e2f7))
+* **chip:** use lighter background color ([08553f1](https://github.com/ionic-team/ionic/commit/08553f1)), closes [#14196](https://github.com/ionic-team/ionic/issues/14196)
+* **picker:** does not scroll ([b49a45d](https://github.com/ionic-team/ionic/commit/b49a45d))
+* **router:** reusing checks params ([371fc19](https://github.com/ionic-team/ionic/commit/371fc19))
+* **router-outlet:** css and change logic ([6e683c5](https://github.com/ionic-team/ionic/commit/6e683c5))
+
+
+### Features
+
+* **fab:** add box shadow and transition for ios ([d26074a](https://github.com/ionic-team/ionic/commit/d26074a))
+* **ion-router-outlet:** adds router-outlet ([c03afab](https://github.com/ionic-team/ionic/commit/c03afab))
+
+
+
 <a name="0.1.4-9"></a>
 ## [0.1.4-9](https://github.com/ionic-team/ionic/compare/v0.1.4-8...v0.1.4-9) (2018-03-20)
 
