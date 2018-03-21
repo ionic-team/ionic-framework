@@ -78,8 +78,9 @@ export class Tabs implements NavOutlet {
     this.loadConfig('tabsHighlight', true);
   }
 
-  componentDidLoad() {
-    return this.initTabs().then(() => this.initSelect());
+  async componentDidLoad() {
+    await this.initTabs();
+    await this.initSelect();
   }
 
   componentDidUnload() {
@@ -97,26 +98,35 @@ export class Tabs implements NavOutlet {
    * @param {number|Tab} tabOrIndex Index, or the Tab instance, of the tab to select.
    */
   @Method()
-  select(tabOrIndex: number | HTMLIonTabElement): Promise<boolean> {
+  async select(tabOrIndex: number | HTMLIonTabElement): Promise<boolean> {
     const selectedTab = this.getTab(tabOrIndex);
     if (!this.shouldSwitch(selectedTab)) {
-      return Promise.resolve(false);
+      return false;
     }
-    return this.setActive(selectedTab)
-      .then(() => this.notifyRouter())
-      .then(() => this.tabSwitch());
+    await this.setActive(selectedTab);
+    await this.notifyRouter();
+    return this.tabSwitch();
   }
 
   @Method()
-  setRouteId(id: string): Promise<RouteWrite> {
+  async setRouteId(id: string): Promise<RouteWrite> {
     const selectedTab = this.getTab(id);
     if (!this.shouldSwitch(selectedTab)) {
-      return Promise.resolve({changed: false});
+      return {changed: false, element: this.selectedTab};
     }
-    return this.setActive(selectedTab).then(() => ({
+
+    await this.setActive(selectedTab);
+    return {
       changed: true,
+      element: this.selectedTab,
       markVisible: () => { this.tabSwitch(); }
-    }));
+    };
+  }
+
+  @Method()
+  getRouteId(): RouteID|undefined {
+    const id = this.selectedTab && this.selectedTab.getTabId();
+    return id ? {id, element: this.selectedTab} : undefined;
   }
 
   @Method()
@@ -138,17 +148,6 @@ export class Tabs implements NavOutlet {
     return this.selectedTab;
   }
 
-  @Method()
-  getRouteId(): RouteID|undefined {
-    const id = this.selectedTab && this.selectedTab.getTabId();
-    return id ? {id} : undefined;
-  }
-
-  @Method()
-  getContainerEl(): HTMLElement|undefined {
-    return this.selectedTab;
-  }
-
   private initTabs() {
     const tabs = this.tabs = Array.from(this.el.querySelectorAll('ion-tab'));
     const tabPromises = tabs.map(tab => {
@@ -161,7 +160,7 @@ export class Tabs implements NavOutlet {
     return Promise.all(tabPromises);
   }
 
-  private initSelect(): Promise<void> {
+  private async initSelect(): Promise<void> {
     if (this.useRouter) {
       if (Build.isDev) {
         const selectedTab = this.tabs.find(t => t.selected);
@@ -170,7 +169,7 @@ export class Tabs implements NavOutlet {
           'Define routes properly the define which tab is selected');
         }
       }
-      return Promise.resolve();
+      return;
     }
     // find pre-selected tabs
     const selectedTab = this.tabs.find(t => t.selected) ||
@@ -182,14 +181,14 @@ export class Tabs implements NavOutlet {
         tab.selected = false;
       }
     }
-    const promise = selectedTab ? selectedTab.setActive() : Promise.resolve(null);
-    return promise.then(() => {
-      this.selectedTab = selectedTab;
-      if (selectedTab) {
-        selectedTab.selected = true;
-        selectedTab.active = true;
-      }
-    });
+    if (selectedTab) {
+      await selectedTab.setActive();
+    }
+    this.selectedTab = selectedTab;
+    if (selectedTab) {
+      selectedTab.selected = true;
+      selectedTab.active = true;
+    }
   }
 
   private loadConfig(attrKey: string, fallback: any) {

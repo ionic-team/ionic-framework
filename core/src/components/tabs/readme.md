@@ -222,9 +222,6 @@ Emitted when the tab changes.
 
 ## Methods
 
-#### getContainerEl()
-
-
 #### getRouteId()
 
 

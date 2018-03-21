@@ -9,7 +9,7 @@ export async function transition(opts: AnimationOptions): Promise<Animation|void
 
   setZIndex(enteringEl, leavingEl, opts.direction);
   showPages(enteringEl, leavingEl);
-  showGoBack(enteringEl, opts.showGoBack);
+  showGoBack(enteringEl, !!opts.showGoBack);
 
   // fast path for no animation
   if (!opts.animationBuilder && !opts.animation) {
@@ -173,13 +173,12 @@ export const enum ViewLifecycle {
 export interface AnimationOptions {
   animationCtrl: HTMLIonAnimationControllerElement;
   animationBuilder: AnimationBuilder;
-  animation: Animation|undefined;
-  direction: NavDirection;
-  duration: number|undefined;
-  easing: string|undefined;
-  isRTL: boolean;
-  showGoBack: boolean;
-  viewIsReady: undefined | (() => Promise<any>);
+  animation?: Animation;
+  direction?: NavDirection;
+  duration?: number;
+  easing?: string;
+  viewIsReady?: () => Promise<any>;
+  showGoBack?: boolean;
   progressAnimation?: Function;
   enteringEl: HTMLElement;
   leavingEl: HTMLElement;

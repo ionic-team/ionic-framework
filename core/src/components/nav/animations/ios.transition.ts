@@ -11,7 +11,7 @@ const OFF_OPACITY = 0.8;
 
 export default function iosTransitionAnimation(Animation: Animation, navEl: HTMLElement, opts: AnimationOptions): Promise<Animation> {
 
-  const isRTL = opts.isRTL;
+  const isRTL = document.dir === 'rtl';
   const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';
   const OFF_LEFT = isRTL ? '31%' : '-31%';
 

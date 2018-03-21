@@ -14,11 +14,11 @@ import {
 import { ViewController, isViewController } from './view-controller';
 import { Animation, Config, DomController, FrameworkDelegate, GestureDetail, NavOutlet } from '../..';
 import { RouteID, RouteWrite } from '../router/utils/interfaces';
+import { AnimationOptions, ViewLifecycle, lifecycle, transition } from '../../utils/transition';
 import { assert } from '../../utils/helpers';
 
 import iosTransitionAnimation from './animations/ios.transition';
 import mdTransitionAnimation from './animations/md.transition';
-import { AnimationOptions, ViewLifecycle, lifecycle, transition } from '../../utils/transition';
 
 @Component({
   tag: 'ion-nav',
@@ -202,7 +202,7 @@ export class NavControllerBase implements NavOutlet {
   setRouteId(id: string, params: any = {}, direction: number): Promise<RouteWrite> {
     const active = this.getActive();
     if (active && active.component === id) {
-      return Promise.resolve({changed: false});
+      return Promise.resolve({changed: false, element: active.element});
     }
     const viewController = this._views.find(v => v.component === id) || id;
 
@@ -215,6 +215,7 @@ export class NavControllerBase implements NavOutlet {
         const p = new Promise(r => markVisible = r);
         resolve({
           changed: true,
+          element: this.getActive().element,
           markVisible
         });
         return p;
@@ -238,22 +239,11 @@ export class NavControllerBase implements NavOutlet {
   @Method()
   getRouteId(): RouteID|undefined {
     const active = this.getActive();
-    if (active) {
-      return {
-        id: active.element.tagName,
-        params: active.data
-      };
-    }
-    return undefined;
-  }
-
-  @Method()
-  getContainerEl(): HTMLElement|undefined {
-    const active = this.getActive();
-    if (active) {
-      return active.element;
-    }
-    return undefined;
+    return active ? {
+      id: active.element.tagName,
+      params: active.data,
+      element: active.element
+    } : undefined;
   }
 
   @Method()
@@ -641,7 +631,6 @@ export class NavControllerBase implements NavOutlet {
       viewIsReady: opts.viewIsReady,
 
       showGoBack: this.canGoBack(enteringView),
-      isRTL: document.dir === 'rtl',
       progressAnimation,
       baseEl: this.el,
       enteringEl,

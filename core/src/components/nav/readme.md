@@ -78,9 +78,6 @@ boolean
 #### getByIndex()
 
 
-#### getContainerEl()
-
-
 #### getPrevious()
 
 
