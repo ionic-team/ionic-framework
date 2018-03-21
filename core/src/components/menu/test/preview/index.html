@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Menu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script src="/dist/ionic.js"></script>
+
+  <style>
+    .f {
+      width: 200px;
+      height: 200px;
+      background: blue;
+      margin: 20px auto;
+    }
+  </style>
+</head>
+
+<body>
+  <ion-app>
+    <ion-menu side="left" class="e2eLeftMenu">
+
+      <ion-header>
+        <ion-toolbar color="secondary">
+          <ion-title>Left Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content>
+        <ion-list>
+          <ion-item>Open Right Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+          <ion-item>Close Menu</ion-item>
+        </ion-list>
+      </ion-content>
+
+      <ion-footer>
+        <ion-toolbar color="secondary">
+          <ion-title>Footer</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+
+    </ion-menu>
+
+    <ion-menu side="right">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Hola</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content padding>
+        hola macho
+      </ion-content>
+    </ion-menu>
+
+    <div class="ion-page" main>
+
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Menu</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content padding>
+        <p>
+          <ion-button id="left" onclick="openLeft()">Open left menu</ion-button>
+          <ion-button onclick="openRight()">Open right menu</ion-button>
+        </p>
+        <p>
+          <ion-button onclick="setPush()">Set Push</ion-button>
+          <ion-button onclick="setOverlay()">Set Overlay</ion-button>
+          <ion-button onclick="setReveal()">Set Reveal</ion-button>
+
+          <ion-button onclick="setEnabled()">Set Swipe Enabled False</ion-button>
+        </p>
+
+        <div class="f"></div>
+        <div class="f"></div>
+        <div class="f"></div>
+        <div class="f"></div>
+        <div class="f"></div>
+        <div class="f"></div>
+
+      </ion-content>
+
+    </div>
+
+  </ion-app>
+  <ion-menu-controller></ion-menu-controller>
+
+  <script>
+    const menu = document.querySelector('ion-menu-controller');
+    function openLeft() {
+      console.log('Open left menu');
+      menu.open('left');
+    }
+    function openRight() {
+      console.log('Open right menu');
+      menu.open('right');
+    }
+    function setPush() {
+      menu.get('left').type = 'push';
+      menu.get('right').type = 'push';
+    }
+    function setOverlay() {
+      menu.get('left').type = 'overlay';
+      menu.get('right').type = 'overlay';
+    }
+    function setReveal() {
+      menu.get('left').type = 'reveal';
+      menu.get('right').type = 'reveal';
+    }
+    function setEnabled() {
+      menu.get('left').swipeEnabled = false;
+    }
+  </script>
+</body>
+</html>

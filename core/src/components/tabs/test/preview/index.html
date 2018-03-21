@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Tab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script src="/dist/ionic.js"></script>
+</head>
+<body>
+
+  <ion-app>
+    <ion-tabs>
+      <ion-tab title="Plain List" icon="star" path="">
+
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab One</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content padding>
+          Tab One
+        </ion-content>
+
+      </ion-tab>
+
+      <ion-tab title="Schedule" icon="globe" path="tab2">
+
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab Two</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content padding>
+          Tab Two
+        </ion-content>
+
+      </ion-tab>
+
+      <ion-tab title="Stopwatch" icon="logo-facebook" path="tab3">
+
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab Three</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content padding>
+          Tab Three
+        </ion-content>
+
+      </ion-tab>
+
+      <ion-tab disabled
+        title="Messages"
+        icon="chatboxes"
+        component="page-one"
+        path="tab4">
+      </ion-tab>
+    </ion-tabs>
+  </ion-app>
+</body>
+</html>
