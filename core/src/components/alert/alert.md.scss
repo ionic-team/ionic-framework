@@ -115,6 +115,7 @@
 
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: $alert-md-radio-label-font-size;
 
   color: $alert-md-radio-label-text-color;
 }
@@ -183,6 +184,7 @@
 
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: $alert-md-checkbox-label-font-size;
 
   color: $alert-md-checkbox-label-text-color;
 }
