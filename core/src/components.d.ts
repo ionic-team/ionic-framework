@@ -801,6 +801,7 @@ declare global {
     export interface IonContentAttributes extends HTMLAttributes {
       forceOverscroll?: boolean;
       fullscreen?: boolean;
+      scrollEnabled?: boolean;
       scrollEvents?: boolean;
     }
   }

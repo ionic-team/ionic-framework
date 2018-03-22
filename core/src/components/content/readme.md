@@ -34,6 +34,11 @@ and footers. This effect can easily be seen by setting the toolbar
 to transparent.
 
 
+#### scrollEnabled
+
+boolean
+
+
 #### scrollEvents
 
 boolean
@@ -57,6 +62,11 @@ boolean
 If true, the content will scroll behind the headers
 and footers. This effect can easily be seen by setting the toolbar
 to transparent.
+
+
+#### scroll-enabled
+
+boolean
 
 
 #### scroll-events

@@ -34,6 +34,7 @@ export class Content {
    */
   @Prop() forceOverscroll: boolean;
 
+  @Prop() scrollEnabled = true;
 
   @Prop() scrollEvents = false;
 
@@ -58,6 +59,9 @@ export class Content {
    */
   @Method()
   scrollToTop(duration = 300) {
+    if (!this.scrollEl) {
+      throw new Error('content is not scrollable');
+    }
     return this.scrollEl.scrollToTop(duration);
   }
 
@@ -69,16 +73,25 @@ export class Content {
    */
   @Method()
   scrollToBottom(duration = 300) {
+    if (!this.scrollEl) {
+      throw new Error('content is not scrollable');
+    }
     return this.scrollEl.scrollToBottom(duration);
   }
 
   @Method()
   scrollByPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
+    if (!this.scrollEl) {
+      throw new Error('content is not scrollable');
+    }
     return this.scrollEl.scrollByPoint(x, y, duration, done);
   }
 
   @Method()
   scrollToPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
+    if (!this.scrollEl) {
+      throw new Error('content is not scrollable');
+    }
     return this.scrollEl.scrollToPoint(x, y, duration, done);
   }
 
@@ -129,13 +142,15 @@ export class Content {
     this.resize();
 
     return [
-      <ion-scroll
-        ref={el => this.scrollEl = el as any}
-        mode={this.mode}
-        scrollEvents={this.scrollEvents}
-        forceOverscroll={this.forceOverscroll}>
-        <slot></slot>
-      </ion-scroll>,
+      (this.scrollEnabled)
+      ? <ion-scroll
+          ref={el => this.scrollEl = el as any}
+          mode={this.mode}
+          scrollEvents={this.scrollEvents}
+          forceOverscroll={this.forceOverscroll}>
+          <slot></slot>
+        </ion-scroll>
+      : <div class='scroll-inner'><slot></slot></div>,
       <slot name='fixed'></slot>
     ];
   }
