@@ -207,14 +207,11 @@ async function generateChangeLog() {
 }
 
 
-const SEMVER_INCREMENTS = ['patch', 'minor', 'major', 'prepatch', 'preminor', 'premajor', 'prerelease'];
-const PRERELEASE_VERSIONS = ['prepatch', 'preminor', 'premajor', 'prerelease'];
+const SEMVER_INCREMENTS = ['patch', 'minor', 'major'];
 
 const isValidVersion = input => Boolean(semver.valid(input));
 
 const isValidVersionInput = input => SEMVER_INCREMENTS.indexOf(input) !== -1 || common.isValidVersion(input);
-
-const isPrereleaseVersion = version => PRERELEASE_VERSIONS.indexOf(version) !== -1 || Boolean(semver.prerelease(version));
 
 function getNewVersion(oldVersion, input) {
   if (!isValidVersionInput(input)) {
