@@ -75,7 +75,8 @@ export class Router {
       this.state++;
       window.history.replaceState(this.state, document.title, document.location.href);
     }
-    this.writeNavStateRoot(this.getPath());
+    const direction = window.history.state >= this.state ? 1 : -1;
+    this.writeNavStateRoot(this.getPath(), direction);
   }
 
   @Method()
@@ -108,10 +109,11 @@ export class Router {
   push(url: string, backDirection = false) {
     const path = parsePath(url);
     this.setPath(path, backDirection);
-    return this.writeNavStateRoot(path);
+
+    return this.writeNavStateRoot(path, backDirection ? -1 : 1);
   }
 
-  private writeNavStateRoot(path: string[]): Promise<boolean> {
+  private writeNavStateRoot(path: string[], direction: number): Promise<boolean> {
     if (this.busy) {
       return Promise.resolve(false);
     }
@@ -122,7 +124,6 @@ export class Router {
       redirectFrom = redirect.from;
       path = redirect.to;
     }
-    const direction = window.history.state >= this.state ? 1 : -1;
     const chain = routerPathToChain(path, this.routes);
     return this.writeNavState(document.body, chain, direction).then(changed => {
       if (changed) {
