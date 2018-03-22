@@ -63,12 +63,9 @@ input.native-input:-webkit-autofill {
 // The input cover is not clickable when the input is disabled
 
 .input-cover {
-  @include position(0, null, null, 0);
+  @include position(0, 0, 0, 0);
 
   position: absolute;
-
-  width: 100%;
-  height: 100%;
 }
 
 .input[disabled] .input-cover {

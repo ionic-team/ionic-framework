@@ -159,14 +159,11 @@ ion-tab,
 ion-tabs,
 ion-nav,
 .ion-page {
-  @include position(0);
+  @include position(0, 0, 0, 0);
 
   position: absolute;
   z-index: $z-index-page-container;
   overflow: hidden;
-
-  width: 100%;
-  height: 100%;
 
   contain: layout size style;
 }
@@ -192,16 +189,13 @@ $navigation-ios-transition-background: #000 !default;
 }
 
 .show-decor > .nav-decor {
-  @include position(0, null, null, 0);
+  @include position(0, 0, 0, 0);
 
   // when ios pages transition, the leaving page grays out
   // this is the black square behind all pages so they gray out
   position: absolute;
   z-index: 0;
   display: block;
-
-  width: 100%;
-  height: 100%;
 
   background: $navigation-ios-transition-background;
 

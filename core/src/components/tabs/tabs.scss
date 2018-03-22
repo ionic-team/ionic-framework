@@ -1,7 +1,7 @@
 @import "../../themes/ionic.globals";
 
 ion-tabs {
-  @include position(0);
+  @include position(0, 0, 0, 0);
 
   position: absolute;
 

@@ -4,14 +4,11 @@
 // --------------------------------------------------
 
 ion-action-sheet {
-  @include position(0, null, null, 0);
+  @include position(0, 0, 0, 0);
 
   position: fixed;
   z-index: $z-index-overlay;
   display: block;
-
-  width: $action-sheet-width;
-  height: $action-sheet-width;
 
   touch-action: none;
 
