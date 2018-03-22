@@ -102,20 +102,17 @@ export class Slides {
    */
   @Prop() pager = true;
 
-  render() {
-    return (
-      <div class='swiper-container' data-dir='rtl'>
-        <div class='swiper-wrapper'>
-          <slot />
-        </div>
-        <div
-          class={{
-            'swiper-pagination': true,
-            hide: !this.pager
-          }}
-        />
-      </div>
-    );
+  componentDidLoad() {
+    let timer: number;
+    clearTimeout(timer);
+    timer = setTimeout(this.initSlides.bind(this), 10);
+  }
+
+  componentDidUnload() {
+    this.init = false;
+
+    this.enableKeyboardControl(false);
+    this.swiper.destroy(true, true);
   }
 
   private initSlides() {
@@ -134,133 +131,6 @@ export class Slides {
 
       this.init = true;
     }
-  }
-
-  normalizeOptions() {
-      // Base options, can be changed
-      const swiperOptions = {
-        effect: 'slide',
-        autoplay: 0,
-        direction: 'horizontal',
-        initialSlide: 0,
-        loop: false,
-        pager: false,
-        pagination: '.swiper-pagination',
-        paginationType: 'bullets',
-        parallax: false,
-        slidesPerView: 1,
-        spaceBetween: 0,
-        speed: 300,
-        zoom: false,
-        slidesPerColumn: 1,
-        slidesPerColumnFill: 'column',
-        slidesPerGroup: 1,
-        centeredSlides: false,
-        slidesOffsetBefore: 0,
-        slidesOffsetAfter: 0,
-        touchEventsTarget: 'container',
-        autoplayDisableOnInteraction: true,
-        autoplayStopOnLast: false,
-        freeMode: false,
-        freeModeMomentum: true,
-        freeModeMomentumRatio: 1,
-        freeModeMomentumBounce: true,
-        freeModeMomentumBounceRatio: 1,
-        freeModeMomentumVelocityRatio: 1,
-        freeModeSticky: false,
-        freeModeMinimumVelocity: 0.02,
-        autoHeight: false,
-        setWrapperSize: false,
-        zoomMax: 3,
-        zoomMin: 1,
-        zoomToggle: true,
-        touchRatio: 1,
-        touchAngle: 45,
-        simulateTouch: true,
-        shortSwipes: true,
-        longSwipes: true,
-        longSwipesRatio: 0.5,
-        longSwipesMs: 300,
-        followFinger: true,
-        onlyExternal: false,
-        threshold: 0,
-        touchMoveStopPropagation: true,
-        touchReleaseOnEdges: false,
-        iOSEdgeSwipeDetection: false,
-        iOSEdgeSwipeThreshold: 20,
-        paginationClickable: false,
-        paginationHide: false,
-        resistance: true,
-        resistanceRatio: 0.85,
-        watchSlidesProgress: false,
-        watchSlidesVisibility: false,
-        preventClicks: true,
-        preventClicksPropagation: true,
-        slideToClickedSlide: false,
-        loopAdditionalSlides: 0,
-        noSwiping: true,
-        runCallbacksOnInit: true,
-        controlBy: 'slide',
-        controlInverse: false,
-        keyboardControl: true,
-        coverflow: {
-          rotate: 50,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
-          slideShadows: true
-        },
-        flip: {
-          slideShadows: true,
-          limitRotation: true
-        },
-        cube: {
-          slideShadows: true,
-          shadow: true,
-          shadowOffset: 20,
-          shadowScale: 0.94
-        },
-        fade: {
-          crossFade: false
-        },
-        prevSlideMessage: 'Previous slide',
-        nextSlideMessage: 'Next slide',
-        firstSlideMessage: 'This is the first slide',
-        lastSlideMessage: 'This is the last slide'
-      };
-
-      // Keep the event options separate, we dont want users
-      // overwriting these
-      const eventOptions = {
-        onSlideChangeStart: this.ionSlideWillChange.emit,
-        onSlideChangeEnd: this.ionSlideDidChange.emit,
-        onSlideNextStart: this.ionSlideNextStart.emit,
-        onSlidePrevStart: this.ionSlidePrevStart.emit,
-        onSlideNextEnd: this.ionSlideNextEnd.emit,
-        onSlidePrevEnd: this.ionSlidePrevEnd.emit,
-        onTransitionStart: this.ionSlideTransitionStart.emit,
-        onTransitionEnd: this.ionSlideTransitionEnd.emit,
-        onSliderMove: this.ionSlideDrag.emit,
-        onReachBeginning: this.ionSlideReachStart.emit,
-        onReachEnd: this.ionSlideReachEnd.emit,
-        onTouchStart: this.ionSlideTouchStart.emit,
-        onTouchEnd: this.ionSlideTouchEnd.emit
-      };
-
-      // Merge the base, user options, and events together then pas to swiper
-      return Object.assign(
-        {},
-        swiperOptions,
-        this.options,
-        eventOptions
-      );
-
-  }
-
-  componentDidLoad() {
-    let timer: number;
-    clearTimeout(timer);
-    timer = setTimeout(this.initSlides.bind(this), 10);
   }
 
   /**
@@ -389,17 +259,147 @@ export class Slides {
   /**
    * Enable or disable keyboard control.
    */
-  enableKeyboardControl(shouldEnableKeyboard: boolean) {
+  private enableKeyboardControl(shouldEnableKeyboard: boolean) {
     if (shouldEnableKeyboard) {
       return this.swiper.enableKeyboardControl();
     }
     this.swiper.disableKeyboardControl();
   }
 
-  componentDidUnload() {
-    this.init = false;
+  private normalizeOptions() {
+    // Base options, can be changed
+    const swiperOptions = {
+      effect: 'slide',
+      autoplay: 0,
+      direction: 'horizontal',
+      initialSlide: 0,
+      loop: false,
+      pager: false,
+      pagination: '.swiper-pagination',
+      paginationType: 'bullets',
+      parallax: false,
+      slidesPerView: 1,
+      spaceBetween: 0,
+      speed: 300,
+      zoom: false,
+      slidesPerColumn: 1,
+      slidesPerColumnFill: 'column',
+      slidesPerGroup: 1,
+      centeredSlides: false,
+      slidesOffsetBefore: 0,
+      slidesOffsetAfter: 0,
+      touchEventsTarget: 'container',
+      autoplayDisableOnInteraction: true,
+      autoplayStopOnLast: false,
+      freeMode: false,
+      freeModeMomentum: true,
+      freeModeMomentumRatio: 1,
+      freeModeMomentumBounce: true,
+      freeModeMomentumBounceRatio: 1,
+      freeModeMomentumVelocityRatio: 1,
+      freeModeSticky: false,
+      freeModeMinimumVelocity: 0.02,
+      autoHeight: false,
+      setWrapperSize: false,
+      zoomMax: 3,
+      zoomMin: 1,
+      zoomToggle: true,
+      touchRatio: 1,
+      touchAngle: 45,
+      simulateTouch: true,
+      shortSwipes: true,
+      longSwipes: true,
+      longSwipesRatio: 0.5,
+      longSwipesMs: 300,
+      followFinger: true,
+      onlyExternal: false,
+      threshold: 0,
+      touchMoveStopPropagation: true,
+      touchReleaseOnEdges: false,
+      iOSEdgeSwipeDetection: false,
+      iOSEdgeSwipeThreshold: 20,
+      paginationClickable: false,
+      paginationHide: false,
+      resistance: true,
+      resistanceRatio: 0.85,
+      watchSlidesProgress: false,
+      watchSlidesVisibility: false,
+      preventClicks: true,
+      preventClicksPropagation: true,
+      slideToClickedSlide: false,
+      loopAdditionalSlides: 0,
+      noSwiping: true,
+      runCallbacksOnInit: true,
+      controlBy: 'slide',
+      controlInverse: false,
+      keyboardControl: true,
+      coverflow: {
+        rotate: 50,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: true
+      },
+      flip: {
+        slideShadows: true,
+        limitRotation: true
+      },
+      cube: {
+        slideShadows: true,
+        shadow: true,
+        shadowOffset: 20,
+        shadowScale: 0.94
+      },
+      fade: {
+        crossFade: false
+      },
+      prevSlideMessage: 'Previous slide',
+      nextSlideMessage: 'Next slide',
+      firstSlideMessage: 'This is the first slide',
+      lastSlideMessage: 'This is the last slide'
+    };
 
-    this.swiper.destroy(true, true);
-    this.enableKeyboardControl(false);
+    // Keep the event options separate, we dont want users
+    // overwriting these
+    const eventOptions = {
+      onSlideChangeStart: this.ionSlideWillChange.emit,
+      onSlideChangeEnd: this.ionSlideDidChange.emit,
+      onSlideNextStart: this.ionSlideNextStart.emit,
+      onSlidePrevStart: this.ionSlidePrevStart.emit,
+      onSlideNextEnd: this.ionSlideNextEnd.emit,
+      onSlidePrevEnd: this.ionSlidePrevEnd.emit,
+      onTransitionStart: this.ionSlideTransitionStart.emit,
+      onTransitionEnd: this.ionSlideTransitionEnd.emit,
+      onSliderMove: this.ionSlideDrag.emit,
+      onReachBeginning: this.ionSlideReachStart.emit,
+      onReachEnd: this.ionSlideReachEnd.emit,
+      onTouchStart: this.ionSlideTouchStart.emit,
+      onTouchEnd: this.ionSlideTouchEnd.emit
+    };
+
+    // Merge the base, user options, and events together then pas to swiper
+    return Object.assign(
+      {},
+      swiperOptions,
+      this.options,
+      eventOptions
+    );
+
+}
+
+  render() {
+    return (
+      <div class='swiper-container' data-dir='rtl'>
+        <div class='swiper-wrapper'>
+          <slot />
+        </div>
+        <div
+          class={{
+            'swiper-pagination': true,
+            hide: !this.pager
+          }}
+        />
+      </div>
+    );
   }
 }
