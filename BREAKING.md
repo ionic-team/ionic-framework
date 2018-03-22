@@ -941,7 +941,7 @@ Previously if a `menuToggle` directive was added to an Ionic `button` in a toolb
 
 ```html
 <ion-toolbar>
-  <ion-buttons slot="start">
+  <ion-buttons slot="left">
     <ion-menu-toggle>
       <ion-button>
         <ion-icon slot="icon-only" name="menu"></ion-icon>
@@ -954,39 +954,37 @@ Previously if a `menuToggle` directive was added to an Ionic `button` in a toolb
 
 ### Attributes Renamed
 
-The attributes to position an `ion-buttons` element inside of a toolbar have been either removed or renamed, as well as the behavior of the attributes. We noticed there was some confusion behind the behavior of the `start` and `end` attributes, and with the new support for RTL we wanted to make these match RTL. In order to do this we have removed the old functionality behind the `start`/`end` attributes and renamed the `left`/`right` attributes.
+Previously to positions buttons inside of a toolbar the following attributes were used: `start`, `left`, `right`, `end`.
 
-**Old Properties:**
+These have been renamed to the following:
 
-| Old Property | Old Behavior                                                                                                     |
-|--------------|------------------------------------------------------------------------------------------------------------------|
-| `start`      | Positions element to the `left` of the content in `ios` mode, and directly to the `right` in `md` and `wp` mode. |
-| `end`        | Positions element to the `right` of the content in `ios` mode, and to the far `right` in `md` and `wp` mode.     |
-| `left`       | Positions element to the `left` of all other elements.                                                           |
-| `right`      | Positions element to the `right` of all other elements.                                                          |
-
-**New Properties:**
-
-| New Property     | New Behavior                                                                                                 |
-|------------------|--------------------------------------------------------------------------------------------------------------|
-| `slot="start"`   | Positions element to the `left` of all other elements in `LTR`, and to the `right` in `RTL`.                 |
-| `slot="end"`     | Positions element to the `right` of all other elements in `LTR`, and to the `left` in `RTL`.                 |
-
+| Old Property | New Property   | Property Behavior                                                                                                |
+|--------------|----------------|------------------------------------------------------------------------------------------------------------------|
+| `start`      | `slot="start"` | Positions element to the `left` of the content in `ios` mode, and directly to the `right` in `md` and `wp` mode. |
+| `end`        | `slot="end"`   | Positions element to the `right` of the content in `ios` mode, and to the far `right` in `md` and `wp` mode.     |
+| `left`       | `slot="left"`  | Positions element to the `left` of all other elements.                                                           |
+| `right`      | `slot="right"` | Positions element to the `right` of all other elements.                                                          |
 
 **Old Usage Example:**
 
 ```html
 <ion-toolbar>
   <ion-buttons left>
-    <button ion-button>Cancel</button>
+    <button ion-button>Left</button>
+  </ion-buttons>
+  <ion-buttons start>
+    <button ion-button>Start</button>
   </ion-buttons>
 
   <ion-title>
-    Filter Sessions
+    Title
   </ion-title>
 
+  <ion-buttons end>
+    <button ion-button>End</button>
+  </ion-buttons>
   <ion-buttons right>
-    <button ion-button>Done</button>
+    <button ion-button>Right</button>
   </ion-buttons>
 </ion-toolbar>
 ```
@@ -995,30 +993,22 @@ The attributes to position an `ion-buttons` element inside of a toolbar have bee
 
 ```html
 <ion-toolbar>
+  <ion-buttons slot="left">
+    <ion-button>Left</ion-button>
+  </ion-buttons>
   <ion-buttons slot="start">
-    <ion-button>Cancel</ion-button>
+    <ion-button>Start</ion-button>
   </ion-buttons>
 
   <ion-title>
-    Filter Sessions
+    Title
   </ion-title>
 
   <ion-buttons slot="end">
-    <ion-button>Done</ion-button>
+    <ion-button>End</ion-button>
   </ion-buttons>
-</ion-toolbar>
-```
-
-If you need to position buttons based on the mode, we recommend something like the following:
-
-```html
-<ion-toolbar>
-  <ion-buttons [slot]="mode === 'md' ? 'end' : 'start'">
-    <ion-button>Cancel</ion-button>
+  <ion-buttons slot="right">
+    <ion-button>Right</ion-button>
   </ion-buttons>
-
-  <ion-title>
-    Filter Sessions
-  </ion-title>
 </ion-toolbar>
 ```

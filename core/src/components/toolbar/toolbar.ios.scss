@@ -122,11 +122,13 @@
 // --------------------------------------------------
 
 .bar-buttons-ios {
-  @include text-align(start);
-
   order: map-get($toolbar-order-ios, buttons-start);
 
   transform: translateZ(0);
+}
+
+.bar-buttons-ios[slot="left"] {
+  order: map-get($toolbar-order-ios, buttons-left);
 }
 
 .bar-buttons-ios[slot="end"] {
@@ -134,6 +136,13 @@
 
   order: map-get($toolbar-order-ios, buttons-end);
 }
+
+.bar-buttons-ios[slot="right"] {
+  @include text-align(right);
+
+  order: map-get($toolbar-order-ios, buttons-right);
+}
+
 
 
 // iOS Toolbar Button Default
@@ -305,11 +314,6 @@
 
     font-size: 28px;
   }
-}
-
-.bar-button-menutoggle-ios[slot="mode-end"],
-.bar-button-menutoggle-ios[slot="end"] {
-  order: map-get($toolbar-order-ios, menu-toggle-end);
 }
 
 

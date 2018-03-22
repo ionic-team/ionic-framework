@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
 </head>
-<body onload="initialize()">
+<body>
   <ion-app>
     <ion-header>
       <ion-toolbar color="primary">
@@ -14,7 +14,7 @@
       </ion-toolbar>
 
       <ion-toolbar color="primary">
-        <ion-buttons slot="start" class="dynamic-slot">
+        <ion-buttons slot="start">
           <ion-button>
             <ion-icon slot="icon-only" name="contact"></ion-icon>
           </ion-button>
@@ -120,18 +120,6 @@
   </style>
 
   <script>
-    function initialize() {
-      var mode = Ionic.mode;
-
-      if (mode === 'md') {
-        var buttons = document.querySelectorAll('.dynamic-slot');
-
-        for (var i = 0; i < buttons.length; i++) {
-          buttons[i].setAttribute('slot', 'end');
-        }
-      }
-    }
-
     let items = [];
     for (var i = 0; i < 30; i++) {
       items.push( i+1 );

@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
 </head>
-<body onload="initialize()">
+<body>
   <ion-app>
     <ion-content id="content">
       <ion-toolbar no-padding>
@@ -18,7 +18,7 @@
       </ion-toolbar>
 
       <ion-toolbar>
-        <ion-buttons slot="start" class="dynamic-slot">
+        <ion-buttons slot="start">
           <ion-button>
             <ion-icon slot="icon-only" name="contact"></ion-icon>
           </ion-button>
@@ -35,7 +35,7 @@
       </ion-toolbar>
 
       <ion-toolbar>
-        <ion-buttons slot="start" class="dynamic-slot">
+        <ion-buttons slot="start">
           <ion-button>
             <ion-icon slot="icon-only" name="contact"></ion-icon>
           </ion-button>
@@ -52,7 +52,7 @@
       </ion-toolbar>
 
       <ion-toolbar>
-        <ion-buttons slot="start" class="dynamic-slot">
+        <ion-buttons slot="start">
           <ion-button class="activated">
             <ion-icon slot="icon-only" name="contact"></ion-icon>
           </ion-button>
@@ -69,7 +69,7 @@
       </ion-toolbar>
 
       <ion-toolbar>
-        <ion-buttons slot="start" class="dynamic-slot">
+        <ion-buttons slot="start">
           <ion-button fill="solid">
             <ion-icon slot="icon-only" name="contact"></ion-icon>
           </ion-button>
@@ -88,7 +88,7 @@
       </ion-toolbar>
 
       <ion-toolbar>
-        <ion-buttons slot="start" class="dynamic-slot">
+        <ion-buttons slot="start">
           <ion-button href="#" fill="solid" class="activated">
             <ion-icon slot="icon-only" name="contact"></ion-icon>
           </ion-button>
@@ -107,7 +107,7 @@
       </ion-toolbar>
 
       <ion-toolbar>
-        <ion-buttons slot="start" class="dynamic-slot">
+        <ion-buttons slot="start">
           <ion-button fill="outline">
             <ion-icon slot="icon-only" name="contact"></ion-icon>
           </ion-button>
@@ -125,7 +125,7 @@
       </ion-toolbar>
 
       <ion-toolbar>
-        <ion-buttons slot="start" class="dynamic-slot">
+        <ion-buttons slot="start">
           <ion-button fill="outline" class="activated">
             <ion-icon slot="icon-only" name="contact"></ion-icon>
           </ion-button>
@@ -143,7 +143,7 @@
       </ion-toolbar>
 
       <ion-toolbar>
-        <ion-buttons slot="start" class="dynamic-slot">
+        <ion-buttons slot="start">
           <ion-button>
             <ion-icon slot="start" name="contact"></ion-icon>
             Clear
@@ -159,7 +159,7 @@
       </ion-toolbar>
 
       <ion-toolbar>
-        <ion-buttons slot="start" class="dynamic-slot">
+        <ion-buttons slot="start">
           <ion-button>
             Go Back
           </ion-button>
@@ -173,14 +173,14 @@
       </ion-toolbar>
 
       <ion-toolbar>
-        <ion-buttons slot="start" class="dynamic-slot">
-          <ion-menu-toggle>
+        <ion-buttons slot="left">
+          <ion-menu-toggle autoHide="false">
             <ion-button>
-              <ion-icon name="menu"></ion-icon>
+              <ion-icon slot="icon-only" name="menu"></ion-icon>
             </ion-button>
           </ion-menu-toggle>
         </ion-buttons>
-        <ion-buttons slot="start" class="dynamic-slot">
+        <ion-buttons slot="start">
           <ion-button>
             <ion-icon slot="icon-only" name="star"></ion-icon>
           </ion-button>
@@ -195,10 +195,10 @@
           </ion-button>
         </ion-buttons>
         <ion-title>Right side menu toggle</ion-title>
-        <ion-buttons slot="end">
-          <ion-menu-toggle>
+        <ion-buttons slot="right">
+          <ion-menu-toggle autoHide="false">
             <ion-button>
-              <ion-icon name="menu"></ion-icon>
+              <ion-icon slot="icon-only" name="menu"></ion-icon>
             </ion-button>
           </ion-menu-toggle>
         </ion-buttons>
@@ -237,18 +237,6 @@
   </ion-app>
 
   <script>
-    function initialize() {
-      var mode = Ionic.mode;
-
-      if (mode === 'md') {
-        var buttons = document.querySelectorAll('.dynamic-slot');
-
-        for (var i = 0; i < buttons.length; i++) {
-          buttons[i].setAttribute('slot', 'end');
-        }
-      }
-    }
-
     function buttonClick(ev) {
       console.log('clicked button', ev);
     }
