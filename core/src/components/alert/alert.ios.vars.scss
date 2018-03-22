@@ -240,10 +240,10 @@ $alert-ios-checkbox-margin-bottom:              10px !default;
 $alert-ios-checkbox-margin-start:               16px !default;
 
 /// @prop - Size of the checkbox in the alert
-$alert-ios-checkbox-size:                       21px !default;
+$alert-ios-checkbox-size:                       24px !default;
 
 /// @prop - Border width of the checkbox in the alert
-$alert-ios-checkbox-border-width:               $hairlines-width !default;
+$alert-ios-checkbox-border-width:               1px !default;
 
 /// @prop - Border style of the checkbox in the alert
 $alert-ios-checkbox-border-style:               solid !default;
@@ -264,16 +264,16 @@ $alert-ios-checkbox-background-color-off:       $item-ios-background-color !defa
 $alert-ios-checkbox-background-color-on:        ion-color($colors-ios, primary, base, ios) !default;
 
 /// @prop - Top of the icon in the checkbox alert
-$alert-ios-checkbox-icon-top:                   4px !default;
+$alert-ios-checkbox-icon-top:                   $alert-ios-checkbox-size / 6 !default;
 
 /// @prop - Start of the icon in the checkbox alert
-$alert-ios-checkbox-icon-start:                 8px !default;
+$alert-ios-checkbox-icon-start:                 ($alert-ios-checkbox-size / 3) + 1px !default;
 
 /// @prop - Width of the icon in the checkbox alert
-$alert-ios-checkbox-icon-width:                 4px !default;
+$alert-ios-checkbox-icon-width:                 ($alert-ios-checkbox-size / 6) + 1px !default;
 
 /// @prop - Height of the icon in the checkbox alert
-$alert-ios-checkbox-icon-height:                9px !default;
+$alert-ios-checkbox-icon-height:                $alert-ios-checkbox-size / 2 !default;
 
 /// @prop - Border width of the icon in the checkbox alert
 $alert-ios-checkbox-icon-border-width:          $alert-ios-checkbox-border-width !default;

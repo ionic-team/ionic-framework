@@ -15,7 +15,7 @@ $checkbox-ios-background-color-on:        ion-color($colors-ios, primary, base, 
 $checkbox-ios-background-color-focused:   ion-color($colors-ios, primary, tint, ios) !default;
 
 /// @prop - Size of the checkbox icon
-$checkbox-ios-icon-size:                  21px !default;
+$checkbox-ios-icon-size:                  24px !default;
 
 /// @prop - Border color of the checkbox icon when off
 $checkbox-ios-icon-border-color-off:      $item-ios-border-color !default;
@@ -32,14 +32,26 @@ $checkbox-ios-icon-border-style:          solid !default;
 /// @prop - Border radius of the checkbox icon
 $checkbox-ios-icon-border-radius:         50% !default;
 
-/// @prop - Width of the checkbox icon checkmark
-$checkbox-ios-icon-checkmark-width:       1px !default;
+/// @prop - Width of the checkmark border in the checkbox
+$checkbox-ios-checkmark-border-width:     1px !default;
 
-/// @prop - Style of the checkbox icon checkmark
-$checkbox-ios-icon-checkmark-style:       solid !default;
+/// @prop - Style of the checkmark border in the checkbox
+$checkbox-ios-checkmark-border-style:     solid !default;
 
-/// @prop - Color of the checkbox icon checkmark
-$checkbox-ios-icon-checkmark-color:       ion-color($colors-ios, $checkbox-ios-background-color-on, contrast, ios) !default;
+/// @prop - Color of the checkmark border in the checkbox
+$checkbox-ios-checkmark-border-color:     ion-color($colors-ios, $checkbox-ios-background-color-on, contrast, ios) !default;
+
+/// @prop - Top of the checkmark in the checkbox
+$checkbox-ios-checkmark-top:              $checkbox-ios-icon-size / 6 !default;
+
+/// @prop - Start of the checkmark in the checkbox
+$checkbox-ios-checkmark-start:            ($checkbox-ios-icon-size / 3) + 1px !default;
+
+/// @prop - Width of the checkmark in the checkbox
+$checkbox-ios-checkmark-width:            ($checkbox-ios-icon-size / 6) + 1px !default;
+
+/// @prop - Height of the checkmark in the checkbox
+$checkbox-ios-checkmark-height:           $checkbox-ios-icon-size / 2 !default;
 
 /// @prop - Opacity of the disabled checkbox
 $checkbox-ios-disabled-opacity:           .3 !default;
