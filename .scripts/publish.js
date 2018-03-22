@@ -12,15 +12,16 @@ async function main() {
   try {
     const {version} = common.readPkg('core');
 
+    // repo must be clean
     await common.checkGit();
 
-    await publishProject('core', version);
-    await publishProject('angular', version);
+    // publish each project in NPM
+    await publishProjects(['core', 'angular'], version);
 
+    // push commits and tags to git remote
     await publishGit(version);
 
-    console.log(`\n @ionic/core ${version} published!! 🎉`);
-    console.log(`@ionic/angular ${version} published!! 🎉\n`);
+    console.log(`\n${version} published!! 🎉\n`);
     process.exit(0);
 
   } catch (err) {
@@ -29,12 +30,28 @@ async function main() {
   }
 }
 
-async function publishProject(project, version) {
-  const projectRoot = common.projectPath(project);
-  const listr = new Listr([{
-    title: `Publish (latest) ${project} (v${version})`,
-    task: () => execa('npm', ['publish', '--tag', 'latest'], { cwd: projectRoot })
-  }], { showSubtasks: false });
+async function publishProjects(projects, newVersion) {
+  const tasks = [];
+  projects.forEach((project) => {
+    const {name, version} = common.readPkg(project);
+    tasks.push({
+      title: `Checking version of name (must match: ${version})`,
+      task: () => {
+        if(newVersion !== version) {
+          throw new Error('version does not match');
+        }
+      }
+    });
+  });
+
+  projects.forEach((project) => {
+    const projectRoot = common.projectPath(project);
+    tasks.push({
+      title: `Publish (latest) ${project} (v${newVersion})`,
+      task: () => execa('npm', ['publish', '--tag', 'latest'], { cwd: projectRoot })
+    });
+  });
+  const listr = new Listr(tasks);
   await listr.run();
 }
 

@@ -18,10 +18,19 @@ async function main() {
 
     const version = await askVersion();
     await checkTagVersion(version);
+
+    // compiler and verify projects (read-only)
     await prepareProject('core', version);
     await prepareProject('angular', version, ['@ionic/core']);
 
+    // writes start here
+    // update package.json of each project
+    await updateVersion('core', version);
+    await updateVersion('angular', version);
+
+    // generate changelog
     await generateChangeLog(version);
+
     process.exit(0);
   } catch(err) {
     console.log('\n', chalk.red(err), '\n');
@@ -172,17 +181,21 @@ async function prepareProject(project, version, dependencies) {
     {
       title: 'Linking',
       task: () => execa('npm', ['link'], { cwd: projectRoot })
-    },
-    {
-      title: `Updating ${project}/package.json version ${chalk.dim(`(${version})`)}`,
-      task: () => execa('npm', ['version', version], { cwd: projectRoot }),
-    },
+    }
   );
 
   const listr = new Listr(tasks, { showSubtasks: false });
   await listr.run();
 }
 
+async function updateVersion(project, version) {
+  const projectRoot = common.projectPath(project);
+  const listr = new Listr([{
+    title: `Updating ${project}/package.json version ${chalk.dim(`(${version})`)}`,
+    task: () => execa('npm', ['version', version], { cwd: projectRoot }),
+  }]);
+  await listr.run();
+}
 
 async function generateChangeLog() {
   const rootDir = common.rootPath();

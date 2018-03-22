@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 ion-modal {
-  @include position(0, null, null, 0);
+  @include position(0);
 
   position: absolute;
 
