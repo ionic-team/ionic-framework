@@ -423,8 +423,7 @@ export class PickerColumnCmp {
         type='pan'
         direction='y'
         passive={false}
-        maxAngle={20}
-        threshold={10}
+        threshold={0}
         attachTo='parent'
       ></ion-gesture>,
       <div class='picker-opts' style={{maxWidth: col.optionsWidth}}>
