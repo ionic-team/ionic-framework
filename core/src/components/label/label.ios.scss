@@ -10,6 +10,11 @@
   font-family: $label-ios-font-family;
 }
 
+[text-wrap] .label-ios {
+  font-size: $label-ios-text-wrap-font-size;
+  line-height: $label-ios-text-wrap-line-height;
+}
+
 
 // iOS Default Label Inside An Input/Select Item
 // --------------------------------------------------
