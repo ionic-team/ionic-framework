@@ -114,6 +114,7 @@ export interface Config {
   get: (key: string, fallback?: any) => any;
   getBoolean: (key: string, fallback?: boolean) => boolean;
   getNumber: (key: string, fallback?: number) => number;
+  set: (key: string, value: any) => void;
 }
 
 export type CssClassMap = { [className: string]: boolean };

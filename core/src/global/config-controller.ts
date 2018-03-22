@@ -44,9 +44,14 @@ export function createConfigController(configObj: any, platforms: PlatformConfig
     return isNaN(val) ? (fallback !== undefined ? fallback : NaN) : val;
   }
 
+  function set(key: string, value: string) {
+    configObj[key] = value;
+  }
+
   return {
     get,
     getBoolean,
-    getNumber
+    getNumber,
+    set
   };
 }
