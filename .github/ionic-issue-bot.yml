@@ -2,28 +2,24 @@ triage:
   label: triage
   dryRun: false
 
-support:
-  label: "ionitron: support"
-  message: >
-    Thanks for the issue! This issue appears to be a support request. We use this issue tracker exclusively for
-    bug reports and feature requests. Please use our [forum](https://forum.ionicframework.com) or our
-    [slack channel](https://ionicworldwide.herokuapp.com/) for questions about the framework.
+closeAndLock:
+  labels:
+    - label: "ionitron: support"
+      message: >
+        Thanks for the issue! This issue appears to be a support request. We use this issue tracker exclusively for
+        bug reports and feature requests. Please use our [forum](https://forum.ionicframework.com) or our
+        [slack channel](https://ionicworldwide.herokuapp.com/) for questions about the framework.
     
     
-    Thank you for using Ionic!
-  close: true
-  lock: true
-  dryRun: false
-
-incomplete:
-  label: "ionitron: missing template"
-  message: >
-    Thanks for the issue! It appears that you have not filled out the provided issue template. We use this issue
-    template in order to gather more information and further assist you. Please create a new issue and ensure the
-    template is fully filled out.
+        Thank you for using Ionic!
+    - label: "ionitron: missing template"
+      message: >
+        Thanks for the issue! It appears that you have not filled out the provided issue template. We use this issue
+        template in order to gather more information and further assist you. Please create a new issue and ensure the
+        template is fully filled out.
     
     
-    Thank you for using Ionic!
+        Thank you for using Ionic!
   close: true
   lock: true
   dryRun: false
