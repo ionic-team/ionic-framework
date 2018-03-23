@@ -18,11 +18,11 @@ export class Scroll {
   private lastScroll = 0;
   private detail: ScrollDetail;
   private queued = false;
+
   @Element() private el: HTMLElement;
 
   @Prop({ context: 'config'}) config: Config;
   @Prop({ context: 'dom' }) dom: DomController;
-  @Prop({ context: 'isServer' }) isServer: boolean;
 
   @Prop() mode: string;
 
@@ -78,9 +78,6 @@ export class Scroll {
   }
 
   componentWillLoad() {
-    if (this.isServer) {
-      return;
-    }
     if (this.forceOverscroll === undefined) {
       this.forceOverscroll = this.mode === 'ios' && ('ontouchstart' in window);
     }
