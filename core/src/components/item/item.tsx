@@ -49,12 +49,6 @@ export class Item {
   @Prop() href: string;
 
   /**
-   * Callback function.
-   * If this property is set, a button tag will be rendered.
-   */
-  @Prop() onclick: (this: HTMLElement, ev: MouseEvent) => any;
-
-  /**
    * Whether or not this item should be tappable.
    * If true, a button tag will be rendered. Defaults to `false`.
    */
@@ -102,7 +96,7 @@ export class Item {
       childStyles = Object.assign(childStyles, this.itemStyles[key]);
     }
 
-    const clickable = !!(this.href || this.onclick || this.tappable);
+    const clickable = !!(this.href || this.el.onclick || this.tappable);
 
     const TagType = clickable
       ? this.href ? 'a' : 'button'

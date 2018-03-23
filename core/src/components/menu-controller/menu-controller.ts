@@ -237,7 +237,7 @@ export class MenuController {
     }
     if (shouldOpen) {
       const openedMenu = this.getOpen();
-      if (openedMenu && menu !== openedMenu) {
+      if (openedMenu && menu.el !== openedMenu) {
         openedMenu.setOpen(false, false);
       }
     }

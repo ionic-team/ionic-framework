@@ -13,7 +13,7 @@ export default function iosTransitionAnimation(Animation: Animation, navEl: HTML
 
   const isRTL = document.dir === 'rtl';
   const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';
-  const OFF_LEFT = isRTL ? '31%' : '-31%';
+  const OFF_LEFT = isRTL ? '33%' : '-33%';
 
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
@@ -179,7 +179,7 @@ export default function iosTransitionAnimation(Animation: Animation, navEl: HTML
 
         const leavingBackBtnText = new Animation();
         leavingBackBtnText.addElement(leavingToolBarEle.querySelector('ion-back-button .button-text'));
-        leavingBackBtnText.fromTo(TRANSLATEX, CENTER, (isRTL ? -115 : 115) + 'px');
+        leavingBackBtnText.fromTo(TRANSLATEX, CENTER, (isRTL ? -124 : 124) + 'px');
         leavingToolBar.add(leavingBackBtnText);
 
       } else {
