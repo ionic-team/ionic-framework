@@ -27,7 +27,6 @@ export class Alert implements OverlayInterface {
 
   presented = false;
   animation: Animation|undefined;
-  mode: string;
   color: string;
 
   @Element() el: HTMLElement;
@@ -35,6 +34,7 @@ export class Alert implements OverlayInterface {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config: Config;
   @Prop() overlayId: number;
+  @Prop() mode: string;
   @Prop() keyboardClose = true;
 
   /**

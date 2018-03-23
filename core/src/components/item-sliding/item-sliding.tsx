@@ -1,7 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, State } from '@stencil/core';
-
 import { GestureDetail } from '../../index';
-import { ItemOptions } from '../item-options/item-options';
 
 
 const SWIPE_MARGIN = 30;
@@ -41,8 +39,8 @@ export class ItemSliding {
   private optsWidthLeftSide = 0;
   private sides: ItemSide;
   private tmr: number;
-  private leftOptions: ItemOptions|null;
-  private rightOptions: ItemOptions|null;
+  private leftOptions: HTMLIonItemOptionsElement|null;
+  private rightOptions: HTMLIonItemOptionsElement|null;
   private optsDirty = true;
 
   @Element() private el: HTMLElement;

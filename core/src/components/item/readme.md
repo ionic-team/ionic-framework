@@ -48,14 +48,6 @@ Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
-#### onclick
-
-
-
-Callback function.
-If this property is set, a button tag will be rendered.
-
-
 #### tappable
 
 boolean
@@ -105,14 +97,6 @@ If this property is set, an anchor tag will be rendered.
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
-
-#### onclick
-
-
-
-Callback function.
-If this property is set, a button tag will be rendered.
 
 
 #### tappable

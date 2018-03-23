@@ -3,6 +3,9 @@
  * It contains typing information for all components that exist in this project
  * and imports for stencil collections that might be configured in your stencil.config.js file
  */
+
+import '@stencil/core';
+
 declare global {
   namespace JSX {
     interface Element {}
@@ -23,18 +26,51 @@ declare global {
 import 'ionicons';
 
 import {
+  ActionSheetOptions,
+  AlertOptions,
+  Animation as Animation2,
   AnimationBuilder,
   FrameworkDelegate,
+  LoadingOptions,
+  Menu,
+  ModalOptions,
   PickerColumn,
   PickerOptions,
+  PlatformConfig,
+  PopoverOptions,
+  ToastOptions,
 } from './index';
+import {
+  OverlayEventDetail,
+} from './utils/overlays';
 import {
   ActionSheetButton,
 } from './components/action-sheet/action-sheet';
 import {
+  EventEmitter,
+} from '@stencil/core';
+import {
   AlertButton,
   AlertInput,
 } from './components/alert/alert';
+import {
+  Animation,
+  AnimationBuilder as AnimationBuilder2,
+} from './components/animation-controller/animation-interface';
+import {
+  BlurEvent,
+  CheckedInputChangeEvent,
+  FocusEvent,
+  InputChangeEvent,
+  SelectInputChangeEvent,
+  StyleEvent,
+} from './utils/input-interfaces';
+import {
+  BlockerConfig,
+  BlockerDelegate,
+  GestureConfig,
+  GestureDelegate,
+} from './components/gesture-controller/gesture-controller-utils';
 import {
   GestureCallback,
   GestureDetail,
@@ -43,13 +79,40 @@ import {
   Side,
 } from './utils/helpers';
 import {
-  AnimationBuilder as AnimationBuilder2,
+  ItemSliding,
+} from './components/item-sliding/item-sliding';
+import {
+  MenuChangeEventDetail,
+} from './components/menu/menu';
+import {
+  NavOptions,
+  NavParams,
+  TransitionDoneFn,
+  TransitionInstruction,
+} from './components/nav/nav-util';
+import {
+  ViewController,
+} from './components/nav/view-controller';
+import {
+  RouteID,
+  RouterEventDetail,
+  RouteWrite,
+} from './components/router/utils/interfaces';
+import {
+  AnimationBuilder as AnimationBuilder3,
   FrameworkDelegate as FrameworkDelegate2,
 } from '.';
 import {
   PickerButton,
   PickerColumn as PickerColumn2,
 } from './components/picker/picker';
+import {
+  RouterOutletOptions,
+} from './components/router-outlet/route-outlet';
+import {
+  ScrollBaseDetail,
+  ScrollDetail,
+} from './components/scroll/scroll';
 import {
   SelectPopoverOption,
 } from './components/select-popover/select-popover';
@@ -61,3617 +124,6584 @@ import {
   NodeHeightFn,
 } from './components/virtual-scroll/virtual-scroll-utils';
 
-import {
-  ActionSheetController as IonActionSheetController
-} from './components/action-sheet-controller/action-sheet-controller';
-
 declare global {
-  interface HTMLIonActionSheetControllerElement extends IonActionSheetController, HTMLStencilElement {
+  interface HTMLIonActionSheetControllerElement extends HTMLStencilElement {
+    'create': (opts?: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>;
+    'dismiss': (data?: any, role?: string, actionSheetId?: number) => Promise<void>;
+    'getTop': () => HTMLIonActionSheetElement;
   }
   var HTMLIonActionSheetControllerElement: {
     prototype: HTMLIonActionSheetControllerElement;
     new (): HTMLIonActionSheetControllerElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-action-sheet-controller": HTMLIonActionSheetControllerElement;
+    'ion-action-sheet-controller': HTMLIonActionSheetControllerElement;
   }
   interface ElementTagNameMap {
-    "ion-action-sheet-controller": HTMLIonActionSheetControllerElement;
+    'ion-action-sheet-controller': HTMLIonActionSheetControllerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-action-sheet-controller": JSXElements.IonActionSheetControllerAttributes;
+      'ion-action-sheet-controller': JSXElements.IonActionSheetControllerAttributes;
     }
   }
   namespace JSXElements {
     export interface IonActionSheetControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  ActionSheet as IonActionSheet
-} from './components/action-sheet/action-sheet';
-
 declare global {
-  interface HTMLIonActionSheetElement extends IonActionSheet, HTMLStencilElement {
+  interface HTMLIonActionSheetElement extends HTMLStencilElement {
+    /**
+     * An array of buttons for the action sheet.
+     */
+    'buttons': ActionSheetButton[];
+    /**
+     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+     */
+    'cssClass': string;
+    /**
+     * Dismiss the action sheet overlay after it has been presented.
+     */
+    'dismiss': (data?: any, role?: string) => Promise<void>;
+    /**
+     * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
+     */
+    'enableBackdropDismiss': boolean;
+    /**
+     * Animation to use when the action sheet is presented.
+     */
+    'enterAnimation': AnimationBuilder;
+    'keyboardClose': boolean;
+    /**
+     * Animation to use when the action sheet is dismissed.
+     */
+    'leaveAnimation': AnimationBuilder;
+    /**
+     * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await actionSheet.onDidDismiss(); ```
+     */
+    'onDidDismiss': (callback?: (detail: OverlayEventDetail) => void) => Promise<OverlayEventDetail>;
+    /**
+     * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await actionSheet.onWillDismiss(); ```
+     */
+    'onWillDismiss': (callback?: (detail: OverlayEventDetail) => void) => Promise<OverlayEventDetail>;
+    'overlayId': number;
+    /**
+     * Present the action sheet overlay after it has been created.
+     */
+    'present': () => Promise<void>;
+    /**
+     * Subtitle for the action sheet.
+     */
+    'subTitle': string;
+    /**
+     * Title for the action sheet.
+     */
+    'title': string;
+    /**
+     * If true, the action sheet will be translucent. Defaults to `false`.
+     */
+    'translucent': boolean;
+    /**
+     * If true, the action sheet will animate. Defaults to `true`.
+     */
+    'willAnimate': boolean;
   }
   var HTMLIonActionSheetElement: {
     prototype: HTMLIonActionSheetElement;
     new (): HTMLIonActionSheetElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-action-sheet": HTMLIonActionSheetElement;
+    'ion-action-sheet': HTMLIonActionSheetElement;
   }
   interface ElementTagNameMap {
-    "ion-action-sheet": HTMLIonActionSheetElement;
+    'ion-action-sheet': HTMLIonActionSheetElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-action-sheet": JSXElements.IonActionSheetAttributes;
+      'ion-action-sheet': JSXElements.IonActionSheetAttributes;
     }
   }
   namespace JSXElements {
     export interface IonActionSheetAttributes extends HTMLAttributes {
-      buttons?: ActionSheetButton[];
-      cssClass?: string;
-      enableBackdropDismiss?: boolean;
-      enterAnimation?: AnimationBuilder;
-      keyboardClose?: boolean;
-      leaveAnimation?: AnimationBuilder;
-      overlayId?: number;
-      subTitle?: string;
-      title?: string;
-      translucent?: boolean;
-      willAnimate?: boolean;
+      /**
+       * An array of buttons for the action sheet.
+       */
+      'buttons'?: ActionSheetButton[];
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass'?: string;
+      /**
+       * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'enableBackdropDismiss'?: boolean;
+      /**
+       * Animation to use when the action sheet is presented.
+       */
+      'enterAnimation'?: AnimationBuilder;
+      'keyboardClose'?: boolean;
+      /**
+       * Animation to use when the action sheet is dismissed.
+       */
+      'leaveAnimation'?: AnimationBuilder;
+      /**
+       * Emitted after the alert has dismissed.
+       */
+      'onIonActionSheetDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      /**
+       * Emitted after the alert has loaded.
+       */
+      'onIonActionSheetDidLoad'?: (event: CustomEvent) => void;
+      /**
+       * Emitted after the alert has presented.
+       */
+      'onIonActionSheetDidPresent'?: (event: CustomEvent) => void;
+      /**
+       * Emitted after the alert has unloaded.
+       */
+      'onIonActionSheetDidUnload'?: (event: CustomEvent) => void;
+      /**
+       * Emitted before the alert has dismissed.
+       */
+      'onIonActionSheetWillDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      /**
+       * Emitted before the alert has presented.
+       */
+      'onIonActionSheetWillPresent'?: (event: CustomEvent) => void;
+      'overlayId'?: number;
+      /**
+       * Subtitle for the action sheet.
+       */
+      'subTitle'?: string;
+      /**
+       * Title for the action sheet.
+       */
+      'title'?: string;
+      /**
+       * If true, the action sheet will be translucent. Defaults to `false`.
+       */
+      'translucent'?: boolean;
+      /**
+       * If true, the action sheet will animate. Defaults to `true`.
+       */
+      'willAnimate'?: boolean;
     }
   }
 }
 
 
-import {
-  AlertController as IonAlertController
-} from './components/alert-controller/alert-controller';
-
 declare global {
-  interface HTMLIonAlertControllerElement extends IonAlertController, HTMLStencilElement {
+  interface HTMLIonAlertControllerElement extends HTMLStencilElement {
+    'create': (opts?: AlertOptions) => Promise<HTMLIonAlertElement>;
+    'dismiss': (data?: any, role?: string, alertId?: number) => Promise<void>;
+    'getTop': () => HTMLIonAlertElement;
   }
   var HTMLIonAlertControllerElement: {
     prototype: HTMLIonAlertControllerElement;
     new (): HTMLIonAlertControllerElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-alert-controller": HTMLIonAlertControllerElement;
+    'ion-alert-controller': HTMLIonAlertControllerElement;
   }
   interface ElementTagNameMap {
-    "ion-alert-controller": HTMLIonAlertControllerElement;
+    'ion-alert-controller': HTMLIonAlertControllerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-alert-controller": JSXElements.IonAlertControllerAttributes;
+      'ion-alert-controller': JSXElements.IonAlertControllerAttributes;
     }
   }
   namespace JSXElements {
     export interface IonAlertControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  Alert as IonAlert
-} from './components/alert/alert';
-
 declare global {
-  interface HTMLIonAlertElement extends IonAlert, HTMLStencilElement {
+  interface HTMLIonAlertElement extends HTMLStencilElement {
+    /**
+     * Array of buttons to be added to the alert.
+     */
+    'buttons': AlertButton[];
+    /**
+     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+     */
+    'cssClass': string;
+    /**
+     * Dismiss the alert overlay after it has been presented.
+     */
+    'dismiss': (data?: any, role?: string) => Promise<void>;
+    /**
+     * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
+     */
+    'enableBackdropDismiss': boolean;
+    /**
+     * Animation to use when the alert is presented.
+     */
+    'enterAnimation': AnimationBuilder;
+    /**
+     * Array of input to show in the alert.
+     */
+    'inputs': AlertInput[];
+    'keyboardClose': boolean;
+    /**
+     * Animation to use when the alert is dismissed.
+     */
+    'leaveAnimation': AnimationBuilder;
+    /**
+     * The main message to be displayed in the alert.
+     */
+    'message': string;
+    'mode': string;
+    /**
+     * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await alert.onDidDismiss(); ```
+     */
+    'onDidDismiss': (callback?: (detail: OverlayEventDetail) => void) => Promise<OverlayEventDetail>;
+    /**
+     * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await alert.onWillDismiss(); ```
+     */
+    'onWillDismiss': (callback?: (detail: OverlayEventDetail) => void) => Promise<OverlayEventDetail>;
+    'overlayId': number;
+    /**
+     * Present the alert overlay after it has been created.
+     */
+    'present': () => Promise<void>;
+    /**
+     * The subtitle in the heading of the alert. Displayed under the title.
+     */
+    'subTitle': string;
+    /**
+     * The main title in the heading of the alert.
+     */
+    'title': string;
+    /**
+     * If true, the alert will be translucent. Defaults to `false`.
+     */
+    'translucent': boolean;
+    /**
+     * If true, the alert will animate. Defaults to `true`.
+     */
+    'willAnimate': boolean;
   }
   var HTMLIonAlertElement: {
     prototype: HTMLIonAlertElement;
     new (): HTMLIonAlertElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-alert": HTMLIonAlertElement;
+    'ion-alert': HTMLIonAlertElement;
   }
   interface ElementTagNameMap {
-    "ion-alert": HTMLIonAlertElement;
+    'ion-alert': HTMLIonAlertElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-alert": JSXElements.IonAlertAttributes;
+      'ion-alert': JSXElements.IonAlertAttributes;
     }
   }
   namespace JSXElements {
     export interface IonAlertAttributes extends HTMLAttributes {
-      buttons?: AlertButton[];
-      cssClass?: string;
-      enableBackdropDismiss?: boolean;
-      enterAnimation?: AnimationBuilder;
-      inputs?: AlertInput[];
-      keyboardClose?: boolean;
-      leaveAnimation?: AnimationBuilder;
-      message?: string;
-      overlayId?: number;
-      subTitle?: string;
-      title?: string;
-      translucent?: boolean;
-      willAnimate?: boolean;
+      /**
+       * Array of buttons to be added to the alert.
+       */
+      'buttons'?: AlertButton[];
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass'?: string;
+      /**
+       * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'enableBackdropDismiss'?: boolean;
+      /**
+       * Animation to use when the alert is presented.
+       */
+      'enterAnimation'?: AnimationBuilder;
+      /**
+       * Array of input to show in the alert.
+       */
+      'inputs'?: AlertInput[];
+      'keyboardClose'?: boolean;
+      /**
+       * Animation to use when the alert is dismissed.
+       */
+      'leaveAnimation'?: AnimationBuilder;
+      /**
+       * The main message to be displayed in the alert.
+       */
+      'message'?: string;
+      'mode'?: string;
+      /**
+       * Emitted after the alert has dismissed.
+       */
+      'onIonAlertDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      /**
+       * Emitted after the alert has presented.
+       */
+      'onIonAlertDidLoad'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted after the alert has presented.
+       */
+      'onIonAlertDidPresent'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted before the alert has presented.
+       */
+      'onIonAlertDidUnload'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted before the alert has dismissed.
+       */
+      'onIonAlertWillDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      /**
+       * Emitted before the alert has presented.
+       */
+      'onIonAlertWillPresent'?: (event: CustomEvent<void>) => void;
+      'overlayId'?: number;
+      /**
+       * The subtitle in the heading of the alert. Displayed under the title.
+       */
+      'subTitle'?: string;
+      /**
+       * The main title in the heading of the alert.
+       */
+      'title'?: string;
+      /**
+       * If true, the alert will be translucent. Defaults to `false`.
+       */
+      'translucent'?: boolean;
+      /**
+       * If true, the alert will animate. Defaults to `true`.
+       */
+      'willAnimate'?: boolean;
     }
   }
 }
 
 
-import {
-  Anchor as IonAnchor
-} from './components/anchor/anchor';
-
 declare global {
-  interface HTMLIonAnchorElement extends IonAnchor, HTMLStencilElement {
+  interface HTMLIonAnchorElement extends HTMLStencilElement {
+    'href': string;
   }
   var HTMLIonAnchorElement: {
     prototype: HTMLIonAnchorElement;
     new (): HTMLIonAnchorElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-anchor": HTMLIonAnchorElement;
+    'ion-anchor': HTMLIonAnchorElement;
   }
   interface ElementTagNameMap {
-    "ion-anchor": HTMLIonAnchorElement;
+    'ion-anchor': HTMLIonAnchorElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-anchor": JSXElements.IonAnchorAttributes;
+      'ion-anchor': JSXElements.IonAnchorAttributes;
     }
   }
   namespace JSXElements {
     export interface IonAnchorAttributes extends HTMLAttributes {
-      href?: string;
+      'href'?: string;
     }
   }
 }
 
 
-import {
-  AnimationControllerImpl as IonAnimationController
-} from './components/animation-controller/animation-controller';
-
 declare global {
-  interface HTMLIonAnimationControllerElement extends IonAnimationController, HTMLStencilElement {
+  interface HTMLIonAnimationControllerElement extends HTMLStencilElement {
+    'create': (animationBuilder?: AnimationBuilder, baseEl?: any, opts?: any) => Promise<Animation>;
   }
   var HTMLIonAnimationControllerElement: {
     prototype: HTMLIonAnimationControllerElement;
     new (): HTMLIonAnimationControllerElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-animation-controller": HTMLIonAnimationControllerElement;
+    'ion-animation-controller': HTMLIonAnimationControllerElement;
   }
   interface ElementTagNameMap {
-    "ion-animation-controller": HTMLIonAnimationControllerElement;
+    'ion-animation-controller': HTMLIonAnimationControllerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-animation-controller": JSXElements.IonAnimationControllerAttributes;
+      'ion-animation-controller': JSXElements.IonAnimationControllerAttributes;
     }
   }
   namespace JSXElements {
     export interface IonAnimationControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  App as IonApp
-} from './components/app/app';
-
 declare global {
-  interface HTMLIonAppElement extends IonApp, HTMLStencilElement {
+  interface HTMLIonAppElement extends HTMLStencilElement {
+
   }
   var HTMLIonAppElement: {
     prototype: HTMLIonAppElement;
     new (): HTMLIonAppElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-app": HTMLIonAppElement;
+    'ion-app': HTMLIonAppElement;
   }
   interface ElementTagNameMap {
-    "ion-app": HTMLIonAppElement;
+    'ion-app': HTMLIonAppElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-app": JSXElements.IonAppAttributes;
+      'ion-app': JSXElements.IonAppAttributes;
     }
   }
   namespace JSXElements {
     export interface IonAppAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  Avatar as IonAvatar
-} from './components/avatar/avatar';
-
 declare global {
-  interface HTMLIonAvatarElement extends IonAvatar, HTMLStencilElement {
+  interface HTMLIonAvatarElement extends HTMLStencilElement {
+
   }
   var HTMLIonAvatarElement: {
     prototype: HTMLIonAvatarElement;
     new (): HTMLIonAvatarElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-avatar": HTMLIonAvatarElement;
+    'ion-avatar': HTMLIonAvatarElement;
   }
   interface ElementTagNameMap {
-    "ion-avatar": HTMLIonAvatarElement;
+    'ion-avatar': HTMLIonAvatarElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-avatar": JSXElements.IonAvatarAttributes;
+      'ion-avatar': JSXElements.IonAvatarAttributes;
     }
   }
   namespace JSXElements {
     export interface IonAvatarAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  BackButton as IonBackButton
-} from './components/back-button/back-button';
-
 declare global {
-  interface HTMLIonBackButtonElement extends IonBackButton, HTMLStencilElement {
+  interface HTMLIonBackButtonElement extends HTMLStencilElement {
+    'defaultHref': string;
+    'icon': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * The text property is used to provide custom text for the back button while using the default look-and-feel
+     */
+    'text': string|undefined;
   }
   var HTMLIonBackButtonElement: {
     prototype: HTMLIonBackButtonElement;
     new (): HTMLIonBackButtonElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-back-button": HTMLIonBackButtonElement;
+    'ion-back-button': HTMLIonBackButtonElement;
   }
   interface ElementTagNameMap {
-    "ion-back-button": HTMLIonBackButtonElement;
+    'ion-back-button': HTMLIonBackButtonElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-back-button": JSXElements.IonBackButtonAttributes;
+      'ion-back-button': JSXElements.IonBackButtonAttributes;
     }
   }
   namespace JSXElements {
     export interface IonBackButtonAttributes extends HTMLAttributes {
-      defaultHref?: string;
-      icon?: string;
-      mode?: 'ios' | 'md';
-      text?: string|undefined;
+      'defaultHref'?: string;
+      'icon'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * The text property is used to provide custom text for the back button while using the default look-and-feel
+       */
+      'text'?: string|undefined;
     }
   }
 }
 
 
-import {
-  Backdrop as IonBackdrop
-} from './components/backdrop/backdrop';
-
 declare global {
-  interface HTMLIonBackdropElement extends IonBackdrop, HTMLStencilElement {
+  interface HTMLIonBackdropElement extends HTMLStencilElement {
+    'stopPropagation': boolean;
+    'tappable': boolean;
+    'visible': boolean;
   }
   var HTMLIonBackdropElement: {
     prototype: HTMLIonBackdropElement;
     new (): HTMLIonBackdropElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-backdrop": HTMLIonBackdropElement;
+    'ion-backdrop': HTMLIonBackdropElement;
   }
   interface ElementTagNameMap {
-    "ion-backdrop": HTMLIonBackdropElement;
+    'ion-backdrop': HTMLIonBackdropElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-backdrop": JSXElements.IonBackdropAttributes;
+      'ion-backdrop': JSXElements.IonBackdropAttributes;
     }
   }
   namespace JSXElements {
     export interface IonBackdropAttributes extends HTMLAttributes {
-      stopPropagation?: boolean;
-      tappable?: boolean;
-      visible?: boolean;
+      'onIonBackdropTap'?: (event: CustomEvent) => void;
+      'stopPropagation'?: boolean;
+      'tappable'?: boolean;
+      'visible'?: boolean;
     }
   }
 }
 
 
-import {
-  Badge as IonBadge
-} from './components/badge/badge';
-
 declare global {
-  interface HTMLIonBadgeElement extends IonBadge, HTMLStencilElement {
+  interface HTMLIonBadgeElement extends HTMLStencilElement {
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
   }
   var HTMLIonBadgeElement: {
     prototype: HTMLIonBadgeElement;
     new (): HTMLIonBadgeElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-badge": HTMLIonBadgeElement;
+    'ion-badge': HTMLIonBadgeElement;
   }
   interface ElementTagNameMap {
-    "ion-badge": HTMLIonBadgeElement;
+    'ion-badge': HTMLIonBadgeElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-badge": JSXElements.IonBadgeAttributes;
+      'ion-badge': JSXElements.IonBadgeAttributes;
     }
   }
   namespace JSXElements {
     export interface IonBadgeAttributes extends HTMLAttributes {
-      color?: string;
-      mode?: 'ios' | 'md';
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
     }
   }
 }
 
 
-import {
-  Button as IonButton
-} from './components/button/button';
-
 declare global {
-  interface HTMLIonButtonElement extends IonButton, HTMLStencilElement {
+  interface HTMLIonButtonElement extends HTMLStencilElement {
+    /**
+     * The type of button. Possible values are: `"button"`, `"bar-button"`.
+     */
+    'buttonType': string;
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * If true, the user cannot interact with the button. Defaults to `false`.
+     */
+    'disabled': boolean;
+    /**
+     * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
+     */
+    'expand': 'full' | 'block';
+    /**
+     * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
+     */
+    'fill': 'clear' | 'outline' | 'solid' | 'default';
+    /**
+     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+     */
+    'href': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * If true, activates a button with rounded corners.
+     */
+    'round': boolean;
+    /**
+     * The button size. Possible values are: `"small"`, `"default"`, `"large"`.
+     */
+    'size': 'small' | 'default' | 'large';
+    /**
+     * If true, activates a button with a heavier font weight.
+     */
+    'strong': boolean;
+    /**
+     * The type of the button. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
+     */
+    'type': string;
   }
   var HTMLIonButtonElement: {
     prototype: HTMLIonButtonElement;
     new (): HTMLIonButtonElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-button": HTMLIonButtonElement;
+    'ion-button': HTMLIonButtonElement;
   }
   interface ElementTagNameMap {
-    "ion-button": HTMLIonButtonElement;
+    'ion-button': HTMLIonButtonElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-button": JSXElements.IonButtonAttributes;
+      'ion-button': JSXElements.IonButtonAttributes;
     }
   }
   namespace JSXElements {
     export interface IonButtonAttributes extends HTMLAttributes {
-      buttonType?: string;
-      color?: string;
-      disabled?: boolean;
-      expand?: 'full' | 'block';
-      fill?: 'clear' | 'outline' | 'solid' | 'default';
-      href?: string;
-      mode?: 'ios' | 'md';
-      round?: boolean;
-      size?: 'small' | 'default' | 'large';
-      strong?: boolean;
-      type?: string;
+      /**
+       * The type of button. Possible values are: `"button"`, `"bar-button"`.
+       */
+      'buttonType'?: string;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * If true, the user cannot interact with the button. Defaults to `false`.
+       */
+      'disabled'?: boolean;
+      /**
+       * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
+       */
+      'expand'?: 'full' | 'block';
+      /**
+       * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
+       */
+      'fill'?: 'clear' | 'outline' | 'solid' | 'default';
+      /**
+       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+       */
+      'href'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * Emitted when the button loses focus.
+       */
+      'onIonBlur'?: (event: CustomEvent<BlurEvent>) => void;
+      /**
+       * Emitted when the button has focus.
+       */
+      'onIonFocus'?: (event: CustomEvent<FocusEvent>) => void;
+      /**
+       * If true, activates a button with rounded corners.
+       */
+      'round'?: boolean;
+      /**
+       * The button size. Possible values are: `"small"`, `"default"`, `"large"`.
+       */
+      'size'?: 'small' | 'default' | 'large';
+      /**
+       * If true, activates a button with a heavier font weight.
+       */
+      'strong'?: boolean;
+      /**
+       * The type of the button. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
+       */
+      'type'?: string;
     }
   }
 }
 
 
-import {
-  Buttons as IonButtons
-} from './components/buttons/buttons';
-
 declare global {
-  interface HTMLIonButtonsElement extends IonButtons, HTMLStencilElement {
+  interface HTMLIonButtonsElement extends HTMLStencilElement {
+
   }
   var HTMLIonButtonsElement: {
     prototype: HTMLIonButtonsElement;
     new (): HTMLIonButtonsElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-buttons": HTMLIonButtonsElement;
+    'ion-buttons': HTMLIonButtonsElement;
   }
   interface ElementTagNameMap {
-    "ion-buttons": HTMLIonButtonsElement;
+    'ion-buttons': HTMLIonButtonsElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-buttons": JSXElements.IonButtonsAttributes;
+      'ion-buttons': JSXElements.IonButtonsAttributes;
     }
   }
   namespace JSXElements {
     export interface IonButtonsAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  CardContent as IonCardContent
-} from './components/card-content/card-content';
-
 declare global {
-  interface HTMLIonCardContentElement extends IonCardContent, HTMLStencilElement {
+  interface HTMLIonCardContentElement extends HTMLStencilElement {
+    /**
+     * The color to use for the text. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+     */
+    'color': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+     */
+    'mode': 'ios' | 'md';
   }
   var HTMLIonCardContentElement: {
     prototype: HTMLIonCardContentElement;
     new (): HTMLIonCardContentElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-card-content": HTMLIonCardContentElement;
+    'ion-card-content': HTMLIonCardContentElement;
   }
   interface ElementTagNameMap {
-    "ion-card-content": HTMLIonCardContentElement;
+    'ion-card-content': HTMLIonCardContentElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-card-content": JSXElements.IonCardContentAttributes;
+      'ion-card-content': JSXElements.IonCardContentAttributes;
     }
   }
   namespace JSXElements {
     export interface IonCardContentAttributes extends HTMLAttributes {
-      color?: string;
-      mode?: 'ios' | 'md';
+      /**
+       * The color to use for the text. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: 'ios' | 'md';
     }
   }
 }
 
 
-import {
-  CardHeader as IonCardHeader
-} from './components/card-header/card-header';
-
 declare global {
-  interface HTMLIonCardHeaderElement extends IonCardHeader, HTMLStencilElement {
+  interface HTMLIonCardHeaderElement extends HTMLStencilElement {
+    /**
+     * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+     */
+    'color': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * If true, the card header will be translucent. Defaults to `false`.
+     */
+    'translucent': boolean;
   }
   var HTMLIonCardHeaderElement: {
     prototype: HTMLIonCardHeaderElement;
     new (): HTMLIonCardHeaderElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-card-header": HTMLIonCardHeaderElement;
+    'ion-card-header': HTMLIonCardHeaderElement;
   }
   interface ElementTagNameMap {
-    "ion-card-header": HTMLIonCardHeaderElement;
+    'ion-card-header': HTMLIonCardHeaderElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-card-header": JSXElements.IonCardHeaderAttributes;
+      'ion-card-header': JSXElements.IonCardHeaderAttributes;
     }
   }
   namespace JSXElements {
     export interface IonCardHeaderAttributes extends HTMLAttributes {
-      color?: string;
-      mode?: 'ios' | 'md';
-      translucent?: boolean;
+      /**
+       * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * If true, the card header will be translucent. Defaults to `false`.
+       */
+      'translucent'?: boolean;
     }
   }
 }
 
 
-import {
-  CardSubtitle as IonCardSubtitle
-} from './components/card-subtitle/card-subtitle';
-
 declare global {
-  interface HTMLIonCardSubtitleElement extends IonCardSubtitle, HTMLStencilElement {
+  interface HTMLIonCardSubtitleElement extends HTMLStencilElement {
+    /**
+     * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+     */
+    'color': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+     */
+    'mode': 'ios' | 'md';
   }
   var HTMLIonCardSubtitleElement: {
     prototype: HTMLIonCardSubtitleElement;
     new (): HTMLIonCardSubtitleElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-card-subtitle": HTMLIonCardSubtitleElement;
+    'ion-card-subtitle': HTMLIonCardSubtitleElement;
   }
   interface ElementTagNameMap {
-    "ion-card-subtitle": HTMLIonCardSubtitleElement;
+    'ion-card-subtitle': HTMLIonCardSubtitleElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-card-subtitle": JSXElements.IonCardSubtitleAttributes;
+      'ion-card-subtitle': JSXElements.IonCardSubtitleAttributes;
     }
   }
   namespace JSXElements {
     export interface IonCardSubtitleAttributes extends HTMLAttributes {
-      color?: string;
-      mode?: 'ios' | 'md';
+      /**
+       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: 'ios' | 'md';
     }
   }
 }
 
 
-import {
-  CardTitle as IonCardTitle
-} from './components/card-title/card-title';
-
 declare global {
-  interface HTMLIonCardTitleElement extends IonCardTitle, HTMLStencilElement {
+  interface HTMLIonCardTitleElement extends HTMLStencilElement {
+    /**
+     * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+     */
+    'color': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+     */
+    'mode': 'ios' | 'md';
   }
   var HTMLIonCardTitleElement: {
     prototype: HTMLIonCardTitleElement;
     new (): HTMLIonCardTitleElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-card-title": HTMLIonCardTitleElement;
+    'ion-card-title': HTMLIonCardTitleElement;
   }
   interface ElementTagNameMap {
-    "ion-card-title": HTMLIonCardTitleElement;
+    'ion-card-title': HTMLIonCardTitleElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-card-title": JSXElements.IonCardTitleAttributes;
+      'ion-card-title': JSXElements.IonCardTitleAttributes;
     }
   }
   namespace JSXElements {
     export interface IonCardTitleAttributes extends HTMLAttributes {
-      color?: string;
-      mode?: 'ios' | 'md';
+      /**
+       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: 'ios' | 'md';
     }
   }
 }
 
 
-import {
-  Card as IonCard
-} from './components/card/card';
-
 declare global {
-  interface HTMLIonCardElement extends IonCard, HTMLStencilElement {
+  interface HTMLIonCardElement extends HTMLStencilElement {
+    /**
+     * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+     */
+    'color': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+     */
+    'mode': 'ios' | 'md';
   }
   var HTMLIonCardElement: {
     prototype: HTMLIonCardElement;
     new (): HTMLIonCardElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-card": HTMLIonCardElement;
+    'ion-card': HTMLIonCardElement;
   }
   interface ElementTagNameMap {
-    "ion-card": HTMLIonCardElement;
+    'ion-card': HTMLIonCardElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-card": JSXElements.IonCardAttributes;
+      'ion-card': JSXElements.IonCardAttributes;
     }
   }
   namespace JSXElements {
     export interface IonCardAttributes extends HTMLAttributes {
-      color?: string;
-      mode?: 'ios' | 'md';
+      /**
+       * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: 'ios' | 'md';
     }
   }
 }
 
 
-import {
-  Checkbox as IonCheckbox
-} from './components/checkbox/checkbox';
-
 declare global {
-  interface HTMLIonCheckboxElement extends IonCheckbox, HTMLStencilElement {
+  interface HTMLIonCheckboxElement extends HTMLStencilElement {
+    /**
+     * If true, the checkbox is selected. Defaults to `false`.
+     */
+    'checked': boolean;
+    /**
+     * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+     */
+    'color': string;
+    /**
+     * If true, the user cannot interact with the checkbox. Defaults to `false`.
+     */
+    'disabled': boolean;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * The name of the control, which is submitted with the form data.
+     */
+    'name': string;
+    /**
+     * the value of the checkbox.
+     */
+    'value': string;
   }
   var HTMLIonCheckboxElement: {
     prototype: HTMLIonCheckboxElement;
     new (): HTMLIonCheckboxElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-checkbox": HTMLIonCheckboxElement;
+    'ion-checkbox': HTMLIonCheckboxElement;
   }
   interface ElementTagNameMap {
-    "ion-checkbox": HTMLIonCheckboxElement;
+    'ion-checkbox': HTMLIonCheckboxElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-checkbox": JSXElements.IonCheckboxAttributes;
+      'ion-checkbox': JSXElements.IonCheckboxAttributes;
     }
   }
   namespace JSXElements {
     export interface IonCheckboxAttributes extends HTMLAttributes {
-      checked?: boolean;
-      color?: string;
-      disabled?: boolean;
-      mode?: 'ios' | 'md';
-      name?: string;
-      value?: string;
+      /**
+       * If true, the checkbox is selected. Defaults to `false`.
+       */
+      'checked'?: boolean;
+      /**
+       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color'?: string;
+      /**
+       * If true, the user cannot interact with the checkbox. Defaults to `false`.
+       */
+      'disabled'?: boolean;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name'?: string;
+      /**
+       * Emitted when the toggle loses focus.
+       */
+      'onIonBlur'?: (event: CustomEvent<BlurEvent>) => void;
+      /**
+       * Emitted when the checked property has changed.
+       */
+      'onIonChange'?: (event: CustomEvent<CheckedInputChangeEvent>) => void;
+      /**
+       * Emitted when the toggle has focus.
+       */
+      'onIonFocus'?: (event: CustomEvent<FocusEvent>) => void;
+      /**
+       * Emitted when the styles change.
+       */
+      'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+      /**
+       * the value of the checkbox.
+       */
+      'value'?: string;
     }
   }
 }
 
 
-import {
-  ChipButton as IonChipButton
-} from './components/chip-button/chip-button';
-
 declare global {
-  interface HTMLIonChipButtonElement extends IonChipButton, HTMLStencilElement {
+  interface HTMLIonChipButtonElement extends HTMLStencilElement {
+    /**
+     * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+     */
+    'color': string;
+    /**
+     * If true, the user cannot interact with the chip button. Defaults to `false`.
+     */
+    'disabled': boolean;
+    /**
+     * Set to `"clear"` for a transparent button style.
+     */
+    'fill': string;
+    /**
+     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+     */
+    'href': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+     */
+    'mode': 'ios' | 'md';
   }
   var HTMLIonChipButtonElement: {
     prototype: HTMLIonChipButtonElement;
     new (): HTMLIonChipButtonElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-chip-button": HTMLIonChipButtonElement;
+    'ion-chip-button': HTMLIonChipButtonElement;
   }
   interface ElementTagNameMap {
-    "ion-chip-button": HTMLIonChipButtonElement;
+    'ion-chip-button': HTMLIonChipButtonElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-chip-button": JSXElements.IonChipButtonAttributes;
+      'ion-chip-button': JSXElements.IonChipButtonAttributes;
     }
   }
   namespace JSXElements {
     export interface IonChipButtonAttributes extends HTMLAttributes {
-      color?: string;
-      disabled?: boolean;
-      fill?: string;
-      href?: string;
-      mode?: 'ios' | 'md';
+      /**
+       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color'?: string;
+      /**
+       * If true, the user cannot interact with the chip button. Defaults to `false`.
+       */
+      'disabled'?: boolean;
+      /**
+       * Set to `"clear"` for a transparent button style.
+       */
+      'fill'?: string;
+      /**
+       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+       */
+      'href'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: 'ios' | 'md';
     }
   }
 }
 
 
-import {
-  Chip as IonChip
-} from './components/chip/chip';
-
 declare global {
-  interface HTMLIonChipElement extends IonChip, HTMLStencilElement {
+  interface HTMLIonChipElement extends HTMLStencilElement {
+    /**
+     * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+     */
+    'color': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+     */
+    'mode': 'ios' | 'md';
   }
   var HTMLIonChipElement: {
     prototype: HTMLIonChipElement;
     new (): HTMLIonChipElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-chip": HTMLIonChipElement;
+    'ion-chip': HTMLIonChipElement;
   }
   interface ElementTagNameMap {
-    "ion-chip": HTMLIonChipElement;
+    'ion-chip': HTMLIonChipElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-chip": JSXElements.IonChipAttributes;
+      'ion-chip': JSXElements.IonChipAttributes;
     }
   }
   namespace JSXElements {
     export interface IonChipAttributes extends HTMLAttributes {
-      color?: string;
-      mode?: 'ios' | 'md';
+      /**
+       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: 'ios' | 'md';
     }
   }
 }
 
 
-import {
-  Col as IonCol
-} from './components/col/col';
-
 declare global {
-  interface HTMLIonColElement extends IonCol, HTMLStencilElement {
+  interface HTMLIonColElement extends HTMLStencilElement {
+
   }
   var HTMLIonColElement: {
     prototype: HTMLIonColElement;
     new (): HTMLIonColElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-col": HTMLIonColElement;
+    'ion-col': HTMLIonColElement;
   }
   interface ElementTagNameMap {
-    "ion-col": HTMLIonColElement;
+    'ion-col': HTMLIonColElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-col": JSXElements.IonColAttributes;
+      'ion-col': JSXElements.IonColAttributes;
     }
   }
   namespace JSXElements {
     export interface IonColAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  Content as IonContent
-} from './components/content/content';
-
 declare global {
-  interface HTMLIonContentElement extends IonContent, HTMLStencilElement {
+  interface HTMLIonContentElement extends HTMLStencilElement {
+    /**
+     * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
+     */
+    'forceOverscroll': boolean;
+    /**
+     * If true, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.
+     */
+    'fullscreen': boolean;
+    'scrollByPoint': (x: number, y: number, duration: number, done?: Function) => Promise<any>;
+    'scrollEnabled': boolean;
+    'scrollEvents': boolean;
+    /**
+     * Scroll to the bottom of the content component.  Duration of the scroll animation in milliseconds. Defaults to `300`. Returns a promise which is resolved when the scroll has completed.
+     */
+    'scrollToBottom': (duration?: number) => Promise<void>;
+    'scrollToPoint': (x: number, y: number, duration: number, done?: Function) => Promise<any>;
+    /**
+     * Scroll to the top of the content component.  Duration of the scroll animation in milliseconds. Defaults to `300`. Returns a promise which is resolved when the scroll has completed.
+     */
+    'scrollToTop': (duration?: number) => Promise<void>;
   }
   var HTMLIonContentElement: {
     prototype: HTMLIonContentElement;
     new (): HTMLIonContentElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-content": HTMLIonContentElement;
+    'ion-content': HTMLIonContentElement;
   }
   interface ElementTagNameMap {
-    "ion-content": HTMLIonContentElement;
+    'ion-content': HTMLIonContentElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-content": JSXElements.IonContentAttributes;
+      'ion-content': JSXElements.IonContentAttributes;
     }
   }
   namespace JSXElements {
     export interface IonContentAttributes extends HTMLAttributes {
-      forceOverscroll?: boolean;
-      fullscreen?: boolean;
-      scrollEnabled?: boolean;
-      scrollEvents?: boolean;
+      /**
+       * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
+       */
+      'forceOverscroll'?: boolean;
+      /**
+       * If true, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.
+       */
+      'fullscreen'?: boolean;
+      'scrollEnabled'?: boolean;
+      'scrollEvents'?: boolean;
     }
   }
 }
 
 
-import {
-  CordovaPlatform as IonCordovaPlatform
-} from './components/cordova-platform/cordova-platform';
-
 declare global {
-  interface HTMLIonCordovaPlatformElement extends IonCordovaPlatform, HTMLStencilElement {
+  interface HTMLIonCordovaPlatformElement extends HTMLStencilElement {
+    'exitCordovaApp': () => void;
+    'ready': () => Promise<void>;
   }
   var HTMLIonCordovaPlatformElement: {
     prototype: HTMLIonCordovaPlatformElement;
     new (): HTMLIonCordovaPlatformElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-cordova-platform": HTMLIonCordovaPlatformElement;
+    'ion-cordova-platform': HTMLIonCordovaPlatformElement;
   }
   interface ElementTagNameMap {
-    "ion-cordova-platform": HTMLIonCordovaPlatformElement;
+    'ion-cordova-platform': HTMLIonCordovaPlatformElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-cordova-platform": JSXElements.IonCordovaPlatformAttributes;
+      'ion-cordova-platform': JSXElements.IonCordovaPlatformAttributes;
     }
   }
   namespace JSXElements {
     export interface IonCordovaPlatformAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  Datetime as IonDatetime
-} from './components/datetime/datetime';
-
 declare global {
-  interface HTMLIonDatetimeElement extends IonDatetime, HTMLStencilElement {
+  interface HTMLIonDatetimeElement extends HTMLStencilElement {
+    /**
+     * The text to display on the picker's cancel button. Default: `Cancel`.
+     */
+    'cancelText': string;
+    /**
+     * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+     */
+    'dayNames': string[] | string;
+    /**
+     * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+     */
+    'dayShortNames': string[] | string;
+    /**
+     * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
+     */
+    'dayValues': number[] | number | string;
+    /**
+     * If true, the user cannot interact with the datetime. Defaults to `false`.
+     */
+    'disabled': boolean;
+    /**
+     * The display format of the date and time as text that shows within the item. When the `pickerFormat` input is not used, then the `displayFormat` is used for both display the formatted text, and determining the datetime picker's columns. See the `pickerFormat` input description for more info. Defaults to `MMM D, YYYY`.
+     */
+    'displayFormat': string;
+    /**
+     * The text to display on the picker's "Done" button. Default: `Done`.
+     */
+    'doneText': string;
+    /**
+     * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
+     */
+    'hourValues': number[] | number | string;
+    /**
+     * The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.
+     */
+    'max': string;
+    /**
+     * The minimum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), such as `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the minimum could just be the year, such as `1994`. Defaults to the beginning of the year, 100 years ago from today.
+     */
+    'min': string;
+    /**
+     * Values used to create the list of selectable minutes. By default the mintues range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.
+     */
+    'minuteValues': number[] | number | string;
+    /**
+     * Full names for each month name. This can be used to provide locale month names. Defaults to English.
+     */
+    'monthNames': string[] | string;
+    /**
+     * Short abbreviated names for each month name. This can be used to provide locale month names. Defaults to English.
+     */
+    'monthShortNames': string[] | string;
+    /**
+     * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
+     */
+    'monthValues': number[] | number | string;
+    /**
+     * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
+     */
+    'pickerFormat': string;
+    /**
+     * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
+     */
+    'pickerOptions': PickerOptions;
+    /**
+     * The text to display when there's no date selected yet. Using lowercase to match the input attribute
+     */
+    'placeholder': string;
+    /**
+     * the value of the datetime.
+     */
+    'value': string;
+    /**
+     * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
+     */
+    'yearValues': number[] | number | string;
   }
   var HTMLIonDatetimeElement: {
     prototype: HTMLIonDatetimeElement;
     new (): HTMLIonDatetimeElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-datetime": HTMLIonDatetimeElement;
+    'ion-datetime': HTMLIonDatetimeElement;
   }
   interface ElementTagNameMap {
-    "ion-datetime": HTMLIonDatetimeElement;
+    'ion-datetime': HTMLIonDatetimeElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-datetime": JSXElements.IonDatetimeAttributes;
+      'ion-datetime': JSXElements.IonDatetimeAttributes;
     }
   }
   namespace JSXElements {
     export interface IonDatetimeAttributes extends HTMLAttributes {
-      cancelText?: string;
-      dayNames?: string[] | string;
-      dayShortNames?: string[] | string;
-      dayValues?: number[] | number | string;
-      disabled?: boolean;
-      displayFormat?: string;
-      doneText?: string;
-      hourValues?: number[] | number | string;
-      max?: string;
-      min?: string;
-      minuteValues?: number[] | number | string;
-      monthNames?: string[] | string;
-      monthShortNames?: string[] | string;
-      monthValues?: number[] | number | string;
-      pickerFormat?: string;
-      pickerOptions?: PickerOptions;
-      placeholder?: string;
-      value?: string;
-      yearValues?: number[] | number | string;
+      /**
+       * The text to display on the picker's cancel button. Default: `Cancel`.
+       */
+      'cancelText'?: string;
+      /**
+       * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+       */
+      'dayNames'?: string[] | string;
+      /**
+       * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+       */
+      'dayShortNames'?: string[] | string;
+      /**
+       * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
+       */
+      'dayValues'?: number[] | number | string;
+      /**
+       * If true, the user cannot interact with the datetime. Defaults to `false`.
+       */
+      'disabled'?: boolean;
+      /**
+       * The display format of the date and time as text that shows within the item. When the `pickerFormat` input is not used, then the `displayFormat` is used for both display the formatted text, and determining the datetime picker's columns. See the `pickerFormat` input description for more info. Defaults to `MMM D, YYYY`.
+       */
+      'displayFormat'?: string;
+      /**
+       * The text to display on the picker's "Done" button. Default: `Done`.
+       */
+      'doneText'?: string;
+      /**
+       * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
+       */
+      'hourValues'?: number[] | number | string;
+      /**
+       * The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.
+       */
+      'max'?: string;
+      /**
+       * The minimum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), such as `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the minimum could just be the year, such as `1994`. Defaults to the beginning of the year, 100 years ago from today.
+       */
+      'min'?: string;
+      /**
+       * Values used to create the list of selectable minutes. By default the mintues range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.
+       */
+      'minuteValues'?: number[] | number | string;
+      /**
+       * Full names for each month name. This can be used to provide locale month names. Defaults to English.
+       */
+      'monthNames'?: string[] | string;
+      /**
+       * Short abbreviated names for each month name. This can be used to provide locale month names. Defaults to English.
+       */
+      'monthShortNames'?: string[] | string;
+      /**
+       * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
+       */
+      'monthValues'?: number[] | number | string;
+      /**
+       * Emitted when the datetime selection was cancelled.
+       */
+      'onIonCancel'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the styles change.
+       */
+      'onIonStyle'?: (event: CustomEvent) => void;
+      /**
+       * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
+       */
+      'pickerFormat'?: string;
+      /**
+       * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
+       */
+      'pickerOptions'?: PickerOptions;
+      /**
+       * The text to display when there's no date selected yet. Using lowercase to match the input attribute
+       */
+      'placeholder'?: string;
+      /**
+       * the value of the datetime.
+       */
+      'value'?: string;
+      /**
+       * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
+       */
+      'yearValues'?: number[] | number | string;
     }
   }
 }
 
 
-import {
-  FabButton as IonFabButton
-} from './components/fab-button/fab-button';
-
 declare global {
-  interface HTMLIonFabButtonElement extends IonFabButton, HTMLStencilElement {
+  interface HTMLIonFabButtonElement extends HTMLStencilElement {
+    /**
+     * If true, the fab button will be show a close icon. Defaults to `false`.
+     */
+    'activated': boolean;
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * If true, the user cannot interact with the fab button. Defaults to `false`.
+     */
+    'disabled': boolean;
+    /**
+     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+     */
+    'href': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
+    'show': boolean;
+    'toggleActive': Function;
+    /**
+     * If true, the fab button will be translucent. Defaults to `false`.
+     */
+    'translucent': boolean;
   }
   var HTMLIonFabButtonElement: {
     prototype: HTMLIonFabButtonElement;
     new (): HTMLIonFabButtonElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-fab-button": HTMLIonFabButtonElement;
+    'ion-fab-button': HTMLIonFabButtonElement;
   }
   interface ElementTagNameMap {
-    "ion-fab-button": HTMLIonFabButtonElement;
+    'ion-fab-button': HTMLIonFabButtonElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-fab-button": JSXElements.IonFabButtonAttributes;
+      'ion-fab-button': JSXElements.IonFabButtonAttributes;
     }
   }
   namespace JSXElements {
     export interface IonFabButtonAttributes extends HTMLAttributes {
-      activated?: boolean;
-      color?: string;
-      disabled?: boolean;
-      href?: string;
-      mode?: 'ios' | 'md';
-      show?: boolean;
-      toggleActive?: Function;
-      translucent?: boolean;
+      /**
+       * If true, the fab button will be show a close icon. Defaults to `false`.
+       */
+      'activated'?: boolean;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * If true, the user cannot interact with the fab button. Defaults to `false`.
+       */
+      'disabled'?: boolean;
+      /**
+       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+       */
+      'href'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
+      'show'?: boolean;
+      'toggleActive'?: Function;
+      /**
+       * If true, the fab button will be translucent. Defaults to `false`.
+       */
+      'translucent'?: boolean;
     }
   }
 }
 
 
-import {
-  FabList as IonFabList
-} from './components/fab-list/fab-list';
-
 declare global {
-  interface HTMLIonFabListElement extends IonFabList, HTMLStencilElement {
+  interface HTMLIonFabListElement extends HTMLStencilElement {
+    /**
+     * If true, the fab list will be show all fab buttons in the list. Defaults to `false`.
+     */
+    'activated': boolean;
+    /**
+     * The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
+     */
+    'side': 'left' | 'right' | 'top' | 'bottom';
   }
   var HTMLIonFabListElement: {
     prototype: HTMLIonFabListElement;
     new (): HTMLIonFabListElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-fab-list": HTMLIonFabListElement;
+    'ion-fab-list': HTMLIonFabListElement;
   }
   interface ElementTagNameMap {
-    "ion-fab-list": HTMLIonFabListElement;
+    'ion-fab-list': HTMLIonFabListElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-fab-list": JSXElements.IonFabListAttributes;
+      'ion-fab-list': JSXElements.IonFabListAttributes;
     }
   }
   namespace JSXElements {
     export interface IonFabListAttributes extends HTMLAttributes {
-      activated?: boolean;
-      side?: 'left' | 'right' | 'top' | 'bottom';
+      /**
+       * If true, the fab list will be show all fab buttons in the list. Defaults to `false`.
+       */
+      'activated'?: boolean;
+      /**
+       * The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
+       */
+      'side'?: 'left' | 'right' | 'top' | 'bottom';
     }
   }
 }
 
 
-import {
-  Fab as IonFab
-} from './components/fab/fab';
-
 declare global {
-  interface HTMLIonFabElement extends IonFab, HTMLStencilElement {
+  interface HTMLIonFabElement extends HTMLStencilElement {
+    /**
+     * Close an active FAB list container
+     */
+    'close': () => void;
+    /**
+     * If true, the fab will display on the edge of the header if `vertical` is `"top"`, and on the edge of the footer if it is `"bottom"`. Should be used with a `fixed` slot.
+     */
+    'edge': boolean;
+    /**
+     * Where to align the fab horizontally in the viewport. Possible values are: `"left"`, `"right"`, `"center"`, `"start"`, `"end"`.
+     */
+    'horizontal': 'left' | 'right' | 'center' | 'start' | 'end';
+    /**
+     * Where to align the fab vertically in the viewport. Possible values are: `"top"`, `"center"`, `"bottom"`.
+     */
+    'vertical': 'top' | 'center' | 'bottom';
   }
   var HTMLIonFabElement: {
     prototype: HTMLIonFabElement;
     new (): HTMLIonFabElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-fab": HTMLIonFabElement;
+    'ion-fab': HTMLIonFabElement;
   }
   interface ElementTagNameMap {
-    "ion-fab": HTMLIonFabElement;
+    'ion-fab': HTMLIonFabElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-fab": JSXElements.IonFabAttributes;
+      'ion-fab': JSXElements.IonFabAttributes;
     }
   }
   namespace JSXElements {
     export interface IonFabAttributes extends HTMLAttributes {
-      edge?: boolean;
-      horizontal?: 'left' | 'right' | 'center' | 'start' | 'end';
-      vertical?: 'top' | 'center' | 'bottom';
+      /**
+       * If true, the fab will display on the edge of the header if `vertical` is `"top"`, and on the edge of the footer if it is `"bottom"`. Should be used with a `fixed` slot.
+       */
+      'edge'?: boolean;
+      /**
+       * Where to align the fab horizontally in the viewport. Possible values are: `"left"`, `"right"`, `"center"`, `"start"`, `"end"`.
+       */
+      'horizontal'?: 'left' | 'right' | 'center' | 'start' | 'end';
+      /**
+       * Where to align the fab vertically in the viewport. Possible values are: `"top"`, `"center"`, `"bottom"`.
+       */
+      'vertical'?: 'top' | 'center' | 'bottom';
     }
   }
 }
 
 
-import {
-  Footer as IonFooter
-} from './components/footer/footer';
-
 declare global {
-  interface HTMLIonFooterElement extends IonFooter, HTMLStencilElement {
+  interface HTMLIonFooterElement extends HTMLStencilElement {
+    /**
+     * If true, the footer will be translucent. Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
+     */
+    'translucent': boolean;
   }
   var HTMLIonFooterElement: {
     prototype: HTMLIonFooterElement;
     new (): HTMLIonFooterElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-footer": HTMLIonFooterElement;
+    'ion-footer': HTMLIonFooterElement;
   }
   interface ElementTagNameMap {
-    "ion-footer": HTMLIonFooterElement;
+    'ion-footer': HTMLIonFooterElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-footer": JSXElements.IonFooterAttributes;
+      'ion-footer': JSXElements.IonFooterAttributes;
     }
   }
   namespace JSXElements {
     export interface IonFooterAttributes extends HTMLAttributes {
-      translucent?: boolean;
+      /**
+       * If true, the footer will be translucent. Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
+       */
+      'translucent'?: boolean;
     }
   }
 }
 
 
-import {
-  GestureController as IonGestureController
-} from './components/gesture-controller/gesture-controller';
-
 declare global {
-  interface HTMLIonGestureControllerElement extends IonGestureController, HTMLStencilElement {
+  interface HTMLIonGestureControllerElement extends HTMLStencilElement {
+    'create': (config: GestureConfig) => Promise<GestureDelegate>;
+    'createBlocker': (opts?: BlockerConfig) => BlockerDelegate;
   }
   var HTMLIonGestureControllerElement: {
     prototype: HTMLIonGestureControllerElement;
     new (): HTMLIonGestureControllerElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-gesture-controller": HTMLIonGestureControllerElement;
+    'ion-gesture-controller': HTMLIonGestureControllerElement;
   }
   interface ElementTagNameMap {
-    "ion-gesture-controller": HTMLIonGestureControllerElement;
+    'ion-gesture-controller': HTMLIonGestureControllerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-gesture-controller": JSXElements.IonGestureControllerAttributes;
+      'ion-gesture-controller': JSXElements.IonGestureControllerAttributes;
     }
   }
   namespace JSXElements {
     export interface IonGestureControllerAttributes extends HTMLAttributes {
-      
+      'onIonGestureCaptured'?: (event: CustomEvent<string>) => void;
     }
   }
 }
 
 
-import {
-  Gesture as IonGesture
-} from './components/gesture/gesture';
-
 declare global {
-  interface HTMLIonGestureElement extends IonGesture, HTMLStencilElement {
+  interface HTMLIonGestureElement extends HTMLStencilElement {
+    'attachTo': string|HTMLElement;
+    'autoBlockAll': boolean;
+    'canStart': GestureCallback;
+    'direction': string;
+    'disableScroll': boolean;
+    'disabled': boolean;
+    'gestureName': string;
+    'gesturePriority': number;
+    'maxAngle': number;
+    'notCaptured': GestureCallback;
+    'onEnd': GestureCallback;
+    'onMove': GestureCallback;
+    'onPress': GestureCallback;
+    'onStart': GestureCallback;
+    'onWillStart': (_: GestureDetail) => Promise<void>;
+    'passive': boolean;
+    'threshold': number;
+    'type': string;
   }
   var HTMLIonGestureElement: {
     prototype: HTMLIonGestureElement;
     new (): HTMLIonGestureElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-gesture": HTMLIonGestureElement;
+    'ion-gesture': HTMLIonGestureElement;
   }
   interface ElementTagNameMap {
-    "ion-gesture": HTMLIonGestureElement;
+    'ion-gesture': HTMLIonGestureElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-gesture": JSXElements.IonGestureAttributes;
+      'ion-gesture': JSXElements.IonGestureAttributes;
     }
   }
   namespace JSXElements {
     export interface IonGestureAttributes extends HTMLAttributes {
-      attachTo?: string|HTMLElement;
-      autoBlockAll?: boolean;
-      canStart?: GestureCallback;
-      direction?: string;
-      disabled?: boolean;
-      disableScroll?: boolean;
-      gestureName?: string;
-      gesturePriority?: number;
-      maxAngle?: number;
-      notCaptured?: GestureCallback;
-      onEnd?: GestureCallback;
-      onMove?: GestureCallback;
-      onPress?: GestureCallback;
-      onStart?: GestureCallback;
-      onWillStart?: (_: GestureDetail) => Promise<void>;
-      passive?: boolean;
-      threshold?: number;
-      type?: string;
+      'attachTo'?: string|HTMLElement;
+      'autoBlockAll'?: boolean;
+      'canStart'?: GestureCallback;
+      'direction'?: string;
+      'disableScroll'?: boolean;
+      'disabled'?: boolean;
+      'gestureName'?: string;
+      'gesturePriority'?: number;
+      'maxAngle'?: number;
+      'notCaptured'?: GestureCallback;
+      'onEnd'?: GestureCallback;
+      /**
+       * Emitted when the gesture ends.
+       */
+      'onIonGestureEnd'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the gesture moves.
+       */
+      'onIonGestureMove'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the gesture is not captured.
+       */
+      'onIonGestureNotCaptured'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the gesture starts.
+       */
+      'onIonGestureStart'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when press is detected.
+       */
+      'onIonPress'?: (event: CustomEvent) => void;
+      'onMove'?: GestureCallback;
+      'onPress'?: GestureCallback;
+      'onStart'?: GestureCallback;
+      'onWillStart'?: (_: GestureDetail) => Promise<void>;
+      'passive'?: boolean;
+      'threshold'?: number;
+      'type'?: string;
     }
   }
 }
 
 
-import {
-  Grid as IonGrid
-} from './components/grid/grid';
-
 declare global {
-  interface HTMLIonGridElement extends IonGrid, HTMLStencilElement {
+  interface HTMLIonGridElement extends HTMLStencilElement {
+
   }
   var HTMLIonGridElement: {
     prototype: HTMLIonGridElement;
     new (): HTMLIonGridElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-grid": HTMLIonGridElement;
+    'ion-grid': HTMLIonGridElement;
   }
   interface ElementTagNameMap {
-    "ion-grid": HTMLIonGridElement;
+    'ion-grid': HTMLIonGridElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-grid": JSXElements.IonGridAttributes;
+      'ion-grid': JSXElements.IonGridAttributes;
     }
   }
   namespace JSXElements {
     export interface IonGridAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  Header as IonHeader
-} from './components/header/header';
-
 declare global {
-  interface HTMLIonHeaderElement extends IonHeader, HTMLStencilElement {
+  interface HTMLIonHeaderElement extends HTMLStencilElement {
+    /**
+     * If true, the header will be translucent. Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
+     */
+    'translucent': boolean;
   }
   var HTMLIonHeaderElement: {
     prototype: HTMLIonHeaderElement;
     new (): HTMLIonHeaderElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-header": HTMLIonHeaderElement;
+    'ion-header': HTMLIonHeaderElement;
   }
   interface ElementTagNameMap {
-    "ion-header": HTMLIonHeaderElement;
+    'ion-header': HTMLIonHeaderElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-header": JSXElements.IonHeaderAttributes;
+      'ion-header': JSXElements.IonHeaderAttributes;
     }
   }
   namespace JSXElements {
     export interface IonHeaderAttributes extends HTMLAttributes {
-      translucent?: boolean;
+      /**
+       * If true, the header will be translucent. Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
+       */
+      'translucent'?: boolean;
     }
   }
 }
 
 
-import {
-  HideWhen as IonHideWhen
-} from './components/hide-when/hide-when';
-
 declare global {
-  interface HTMLIonHideWhenElement extends IonHideWhen, HTMLStencilElement {
+  interface HTMLIonHideWhenElement extends HTMLStencilElement {
+    'mediaQuery': string;
+    'mode': string;
+    'or': boolean;
+    'orientation': string;
+    'platform': string;
+    'size': string;
   }
   var HTMLIonHideWhenElement: {
     prototype: HTMLIonHideWhenElement;
     new (): HTMLIonHideWhenElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-hide-when": HTMLIonHideWhenElement;
+    'ion-hide-when': HTMLIonHideWhenElement;
   }
   interface ElementTagNameMap {
-    "ion-hide-when": HTMLIonHideWhenElement;
+    'ion-hide-when': HTMLIonHideWhenElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-hide-when": JSXElements.IonHideWhenAttributes;
+      'ion-hide-when': JSXElements.IonHideWhenAttributes;
     }
   }
   namespace JSXElements {
     export interface IonHideWhenAttributes extends HTMLAttributes {
-      mediaQuery?: string;
-      mode?: string;
-      or?: boolean;
-      orientation?: string;
-      platform?: string;
-      size?: string;
+      'mediaQuery'?: string;
+      'mode'?: string;
+      'or'?: boolean;
+      'orientation'?: string;
+      'platform'?: string;
+      'size'?: string;
     }
   }
 }
 
 
-import {
-  InfiniteScrollContent as IonInfiniteScrollContent
-} from './components/infinite-scroll-content/infinite-scroll-content';
-
 declare global {
-  interface HTMLIonInfiniteScrollContentElement extends IonInfiniteScrollContent, HTMLStencilElement {
+  interface HTMLIonInfiniteScrollContentElement extends HTMLStencilElement {
+    /**
+     * An animated SVG spinner that shows while loading.
+     */
+    'loadingSpinner': string;
+    /**
+     * Optional text to display while loading.
+     */
+    'loadingText': string;
   }
   var HTMLIonInfiniteScrollContentElement: {
     prototype: HTMLIonInfiniteScrollContentElement;
     new (): HTMLIonInfiniteScrollContentElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-infinite-scroll-content": HTMLIonInfiniteScrollContentElement;
+    'ion-infinite-scroll-content': HTMLIonInfiniteScrollContentElement;
   }
   interface ElementTagNameMap {
-    "ion-infinite-scroll-content": HTMLIonInfiniteScrollContentElement;
+    'ion-infinite-scroll-content': HTMLIonInfiniteScrollContentElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-infinite-scroll-content": JSXElements.IonInfiniteScrollContentAttributes;
+      'ion-infinite-scroll-content': JSXElements.IonInfiniteScrollContentAttributes;
     }
   }
   namespace JSXElements {
     export interface IonInfiniteScrollContentAttributes extends HTMLAttributes {
-      loadingSpinner?: string;
-      loadingText?: string;
+      /**
+       * An animated SVG spinner that shows while loading.
+       */
+      'loadingSpinner'?: string;
+      /**
+       * Optional text to display while loading.
+       */
+      'loadingText'?: string;
     }
   }
 }
 
 
-import {
-  InfiniteScroll as IonInfiniteScroll
-} from './components/infinite-scroll/infinite-scroll';
-
 declare global {
-  interface HTMLIonInfiniteScrollElement extends IonInfiniteScroll, HTMLStencilElement {
+  interface HTMLIonInfiniteScrollElement extends HTMLStencilElement {
+    /**
+     * Call `complete()` within the `infinite` output event handler when your async operation has completed. For example, the `loading` state is while the app is performing an asynchronous operation, such as receiving more data from an AJAX request to add more items to a data list. Once the data has been received and UI updated, you then call this method to signify that the loading has completed. This method will change the infinite scroll's state from `loading` to `enabled`.
+     */
+    'complete': () => void;
+    /**
+     * If true, the infinite scroll will be hidden and scroll event listeners will be removed.  Call `enable(false)` to disable the infinite scroll from actively trying to receive new data while scrolling. This method is useful when it is known that there is no more data that can be added, and the infinite scroll is no longer needed.
+     */
+    'disabled': boolean;
+    /**
+     * The position of the infinite scroll element. The value can be either `top` or `bottom`. Defaults to `bottom`.
+     */
+    'position': string;
+    /**
+     * The threshold distance from the bottom of the content to call the `infinite` output event when scrolled. The threshold value can be either a percent, or in pixels. For example, use the value of `10%` for the `infinite` output event to get called when the user has scrolled 10% from the bottom of the page. Use the value `100px` when the scroll is within 100 pixels from the bottom of the page. Defaults to `15%`.
+     */
+    'threshold': string;
+    /**
+     * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to change state of infiniteScroll to "complete"
+     */
+    'waitFor': (action: Promise<any>) => void;
   }
   var HTMLIonInfiniteScrollElement: {
     prototype: HTMLIonInfiniteScrollElement;
     new (): HTMLIonInfiniteScrollElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-infinite-scroll": HTMLIonInfiniteScrollElement;
+    'ion-infinite-scroll': HTMLIonInfiniteScrollElement;
   }
   interface ElementTagNameMap {
-    "ion-infinite-scroll": HTMLIonInfiniteScrollElement;
+    'ion-infinite-scroll': HTMLIonInfiniteScrollElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-infinite-scroll": JSXElements.IonInfiniteScrollAttributes;
+      'ion-infinite-scroll': JSXElements.IonInfiniteScrollAttributes;
     }
   }
   namespace JSXElements {
     export interface IonInfiniteScrollAttributes extends HTMLAttributes {
-      disabled?: boolean;
-      position?: string;
-      threshold?: string;
+      /**
+       * If true, the infinite scroll will be hidden and scroll event listeners will be removed.  Call `enable(false)` to disable the infinite scroll from actively trying to receive new data while scrolling. This method is useful when it is known that there is no more data that can be added, and the infinite scroll is no longer needed.
+       */
+      'disabled'?: boolean;
+      /**
+       * Emitted when the scroll reaches the threshold distance. From within your infinite handler, you must call the infinite scroll's `complete()` method when your async operation has completed.
+       */
+      'onIonInfinite'?: (event: CustomEvent) => void;
+      /**
+       * The position of the infinite scroll element. The value can be either `top` or `bottom`. Defaults to `bottom`.
+       */
+      'position'?: string;
+      /**
+       * The threshold distance from the bottom of the content to call the `infinite` output event when scrolled. The threshold value can be either a percent, or in pixels. For example, use the value of `10%` for the `infinite` output event to get called when the user has scrolled 10% from the bottom of the page. Use the value `100px` when the scroll is within 100 pixels from the bottom of the page. Defaults to `15%`.
+       */
+      'threshold'?: string;
     }
   }
 }
 
 
-import {
-  InputShims as IonInputShims
-} from './components/input-shims/input-shims';
-
 declare global {
-  interface HTMLIonInputShimsElement extends IonInputShims, HTMLStencilElement {
+  interface HTMLIonInputShimsElement extends HTMLStencilElement {
+
   }
   var HTMLIonInputShimsElement: {
     prototype: HTMLIonInputShimsElement;
     new (): HTMLIonInputShimsElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-input-shims": HTMLIonInputShimsElement;
+    'ion-input-shims': HTMLIonInputShimsElement;
   }
   interface ElementTagNameMap {
-    "ion-input-shims": HTMLIonInputShimsElement;
+    'ion-input-shims': HTMLIonInputShimsElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-input-shims": JSXElements.IonInputShimsAttributes;
+      'ion-input-shims': JSXElements.IonInputShimsAttributes;
     }
   }
   namespace JSXElements {
     export interface IonInputShimsAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  Input as IonInput
-} from './components/input/input';
-
 declare global {
-  interface HTMLIonInputElement extends IonInput, HTMLStencilElement {
+  interface HTMLIonInputElement extends HTMLStencilElement {
+    /**
+     * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
+     */
+    'accept': string;
+    /**
+     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
+     */
+    'autocapitalize': string;
+    /**
+     * Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
+     */
+    'autocomplete': string;
+    /**
+     * Whether autocorrection should be enabled when the user is entering/editing the text value. Defaults to `"off"`.
+     */
+    'autocorrect': string;
+    /**
+     * This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
+     */
+    'autofocus': boolean;
+    /**
+     * If true and the type is `checkbox` or `radio`, the control is selected by default. Defaults to `false`.
+     */
+    'checked': boolean;
+    /**
+     * If true, a clear icon will appear in the input when there is a value. Clicking it clears the input. Defaults to `false`.
+     */
+    'clearInput': boolean;
+    /**
+     * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+     */
+    'clearOnEdit': boolean;
+    /**
+     * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+     */
+    'debounce': number;
+    /**
+     * If true, the user cannot interact with the input. Defaults to `false`.
+     */
+    'disabled': boolean;
+    /**
+     * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
+     */
+    'inputmode': string;
+    /**
+     * The maximum value, which must not be less than its minimum (min attribute) value.
+     */
+    'max': string;
+    /**
+     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+     */
+    'maxlength': number;
+    /**
+     * The minimum value, which must not be greater than its maximum (max attribute) value.
+     */
+    'min': string;
+    /**
+     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+     */
+    'minlength': number;
+    /**
+     * If true, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
+     */
+    'multiple': boolean;
+    /**
+     * The name of the control, which is submitted with the form data.
+     */
+    'name': string;
+    /**
+     * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
+     */
+    'pattern': string;
+    /**
+     * Instructional text that shows before the input has a value.
+     */
+    'placeholder': string;
+    /**
+     * If true, the user cannot modify the value. Defaults to `false`.
+     */
+    'readonly': boolean;
+    /**
+     * If true, the user must fill in a value before submitting a form.
+     */
+    'required': boolean;
+    /**
+     * This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.
+     */
+    'results': number;
+    /**
+     * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
+     */
+    'size': number;
+    /**
+     * If true, the element will have its spelling and grammar checked. Defaults to `false`.
+     */
+    'spellcheck': boolean;
+    /**
+     * Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.
+     */
+    'step': string;
+    /**
+     * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
+     */
+    'type': string;
+    /**
+     * The value of the input.
+     */
+    'value': string;
   }
   var HTMLIonInputElement: {
     prototype: HTMLIonInputElement;
     new (): HTMLIonInputElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-input": HTMLIonInputElement;
+    'ion-input': HTMLIonInputElement;
   }
   interface ElementTagNameMap {
-    "ion-input": HTMLIonInputElement;
+    'ion-input': HTMLIonInputElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-input": JSXElements.IonInputAttributes;
+      'ion-input': JSXElements.IonInputAttributes;
     }
   }
   namespace JSXElements {
     export interface IonInputAttributes extends HTMLAttributes {
-      accept?: string;
-      autocapitalize?: string;
-      autocomplete?: string;
-      autocorrect?: string;
-      autofocus?: boolean;
-      checked?: boolean;
-      clearInput?: boolean;
-      clearOnEdit?: boolean;
-      debounce?: number;
-      disabled?: boolean;
-      inputmode?: string;
-      max?: string;
-      maxlength?: number;
-      min?: string;
-      minlength?: number;
-      multiple?: boolean;
-      name?: string;
-      pattern?: string;
-      placeholder?: string;
-      readonly?: boolean;
-      required?: boolean;
-      results?: number;
-      size?: number;
-      spellcheck?: boolean;
-      step?: string;
-      type?: string;
-      value?: string;
+      /**
+       * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
+       */
+      'accept'?: string;
+      /**
+       * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
+       */
+      'autocapitalize'?: string;
+      /**
+       * Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
+       */
+      'autocomplete'?: string;
+      /**
+       * Whether autocorrection should be enabled when the user is entering/editing the text value. Defaults to `"off"`.
+       */
+      'autocorrect'?: string;
+      /**
+       * This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
+       */
+      'autofocus'?: boolean;
+      /**
+       * If true and the type is `checkbox` or `radio`, the control is selected by default. Defaults to `false`.
+       */
+      'checked'?: boolean;
+      /**
+       * If true, a clear icon will appear in the input when there is a value. Clicking it clears the input. Defaults to `false`.
+       */
+      'clearInput'?: boolean;
+      /**
+       * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+       */
+      'clearOnEdit'?: boolean;
+      /**
+       * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+       */
+      'debounce'?: number;
+      /**
+       * If true, the user cannot interact with the input. Defaults to `false`.
+       */
+      'disabled'?: boolean;
+      /**
+       * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
+       */
+      'inputmode'?: string;
+      /**
+       * The maximum value, which must not be less than its minimum (min attribute) value.
+       */
+      'max'?: string;
+      /**
+       * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+       */
+      'maxlength'?: number;
+      /**
+       * The minimum value, which must not be greater than its maximum (max attribute) value.
+       */
+      'min'?: string;
+      /**
+       * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+       */
+      'minlength'?: number;
+      /**
+       * If true, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
+       */
+      'multiple'?: boolean;
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name'?: string;
+      /**
+       * Emitted when the input loses focus.
+       */
+      'onIonBlur'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the input has focus.
+       */
+      'onIonFocus'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the input value has changed.
+       */
+      'onIonInput'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the input has been created.
+       */
+      'onIonInputDidLoad'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the input has been removed.
+       */
+      'onIonInputDidUnload'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the styles change.
+       */
+      'onIonStyle'?: (event: CustomEvent) => void;
+      /**
+       * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
+       */
+      'pattern'?: string;
+      /**
+       * Instructional text that shows before the input has a value.
+       */
+      'placeholder'?: string;
+      /**
+       * If true, the user cannot modify the value. Defaults to `false`.
+       */
+      'readonly'?: boolean;
+      /**
+       * If true, the user must fill in a value before submitting a form.
+       */
+      'required'?: boolean;
+      /**
+       * This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.
+       */
+      'results'?: number;
+      /**
+       * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
+       */
+      'size'?: number;
+      /**
+       * If true, the element will have its spelling and grammar checked. Defaults to `false`.
+       */
+      'spellcheck'?: boolean;
+      /**
+       * Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.
+       */
+      'step'?: string;
+      /**
+       * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
+       */
+      'type'?: string;
+      /**
+       * The value of the input.
+       */
+      'value'?: string;
     }
   }
 }
 
 
-import {
-  ItemDivider as IonItemDivider
-} from './components/item-divider/item-divider';
-
 declare global {
-  interface HTMLIonItemDividerElement extends IonItemDivider, HTMLStencilElement {
+  interface HTMLIonItemDividerElement extends HTMLStencilElement {
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
   }
   var HTMLIonItemDividerElement: {
     prototype: HTMLIonItemDividerElement;
     new (): HTMLIonItemDividerElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-item-divider": HTMLIonItemDividerElement;
+    'ion-item-divider': HTMLIonItemDividerElement;
   }
   interface ElementTagNameMap {
-    "ion-item-divider": HTMLIonItemDividerElement;
+    'ion-item-divider': HTMLIonItemDividerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-item-divider": JSXElements.IonItemDividerAttributes;
+      'ion-item-divider': JSXElements.IonItemDividerAttributes;
     }
   }
   namespace JSXElements {
     export interface IonItemDividerAttributes extends HTMLAttributes {
-      color?: string;
-      mode?: 'ios' | 'md';
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
     }
   }
 }
 
 
-import {
-  ItemGroup as IonItemGroup
-} from './components/item-group/item-group';
-
 declare global {
-  interface HTMLIonItemGroupElement extends IonItemGroup, HTMLStencilElement {
+  interface HTMLIonItemGroupElement extends HTMLStencilElement {
+
   }
   var HTMLIonItemGroupElement: {
     prototype: HTMLIonItemGroupElement;
     new (): HTMLIonItemGroupElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-item-group": HTMLIonItemGroupElement;
+    'ion-item-group': HTMLIonItemGroupElement;
   }
   interface ElementTagNameMap {
-    "ion-item-group": HTMLIonItemGroupElement;
+    'ion-item-group': HTMLIonItemGroupElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-item-group": JSXElements.IonItemGroupAttributes;
+      'ion-item-group': JSXElements.IonItemGroupAttributes;
     }
   }
   namespace JSXElements {
     export interface IonItemGroupAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  ItemOption as IonItemOption
-} from './components/item-option/item-option';
-
 declare global {
-  interface HTMLIonItemOptionElement extends IonItemOption, HTMLStencilElement {
+  interface HTMLIonItemOptionElement extends HTMLStencilElement {
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * If true, the user cannot interact with the item option. Defaults to `false`.
+     */
+    'disabled': boolean;
+    /**
+     * If true, the option will expand to take up the available width and cover any other options. Defaults to `false`.
+     */
+    'expandable': boolean;
+    /**
+     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+     */
+    'href': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
   }
   var HTMLIonItemOptionElement: {
     prototype: HTMLIonItemOptionElement;
     new (): HTMLIonItemOptionElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-item-option": HTMLIonItemOptionElement;
+    'ion-item-option': HTMLIonItemOptionElement;
   }
   interface ElementTagNameMap {
-    "ion-item-option": HTMLIonItemOptionElement;
+    'ion-item-option': HTMLIonItemOptionElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-item-option": JSXElements.IonItemOptionAttributes;
+      'ion-item-option': JSXElements.IonItemOptionAttributes;
     }
   }
   namespace JSXElements {
     export interface IonItemOptionAttributes extends HTMLAttributes {
-      color?: string;
-      disabled?: boolean;
-      expandable?: boolean;
-      href?: string;
-      mode?: 'ios' | 'md';
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * If true, the user cannot interact with the item option. Defaults to `false`.
+       */
+      'disabled'?: boolean;
+      /**
+       * If true, the option will expand to take up the available width and cover any other options. Defaults to `false`.
+       */
+      'expandable'?: boolean;
+      /**
+       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+       */
+      'href'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
     }
   }
 }
 
 
-import {
-  ItemOptions as IonItemOptions
-} from './components/item-options/item-options';
-
 declare global {
-  interface HTMLIonItemOptionsElement extends IonItemOptions, HTMLStencilElement {
+  interface HTMLIonItemOptionsElement extends HTMLStencilElement {
+    'fireSwipeEvent': (value: any) => void;
+    'isRightSide': () => boolean;
+    /**
+     * The side the option button should be on. Defaults to `"right"`. If you have multiple `ion-item-options`, a side must be provided for each.
+     */
+    'side': Side;
+    'width': () => number;
   }
   var HTMLIonItemOptionsElement: {
     prototype: HTMLIonItemOptionsElement;
     new (): HTMLIonItemOptionsElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-item-options": HTMLIonItemOptionsElement;
+    'ion-item-options': HTMLIonItemOptionsElement;
   }
   interface ElementTagNameMap {
-    "ion-item-options": HTMLIonItemOptionsElement;
+    'ion-item-options': HTMLIonItemOptionsElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-item-options": JSXElements.IonItemOptionsAttributes;
+      'ion-item-options': JSXElements.IonItemOptionsAttributes;
     }
   }
   namespace JSXElements {
     export interface IonItemOptionsAttributes extends HTMLAttributes {
-      side?: Side;
+      /**
+       * Emitted when the item has been fully swiped.
+       */
+      'onIonSwipe'?: (event: CustomEvent) => void;
+      /**
+       * The side the option button should be on. Defaults to `"right"`. If you have multiple `ion-item-options`, a side must be provided for each.
+       */
+      'side'?: Side;
     }
   }
 }
 
 
-import {
-  ItemSliding as IonItemSliding
-} from './components/item-sliding/item-sliding';
-
 declare global {
-  interface HTMLIonItemSlidingElement extends IonItemSliding, HTMLStencilElement {
+  interface HTMLIonItemSlidingElement extends HTMLStencilElement {
+    /**
+     * Close the sliding item. Items can also be closed from the [List](../../list/List).
+     */
+    'close': () => void;
+    /**
+     * Close all of the sliding items in the list. Items can also be closed from the [List](../../list/List).
+     */
+    'closeOpened': () => boolean;
+    /**
+     * Get the amount the item is open in pixels.
+     */
+    'getOpenAmount': () => number;
+    /**
+     * Get the ratio of the open amount of the item compared to the width of the options. If the number returned is positive, then the options on the right side are open. If the number returned is negative, then the options on the left side are open. If the absolute value of the number is greater than 1, the item is open more than the width of the options.
+     */
+    'getSlidingRatio': () => number;
   }
   var HTMLIonItemSlidingElement: {
     prototype: HTMLIonItemSlidingElement;
     new (): HTMLIonItemSlidingElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-item-sliding": HTMLIonItemSlidingElement;
+    'ion-item-sliding': HTMLIonItemSlidingElement;
   }
   interface ElementTagNameMap {
-    "ion-item-sliding": HTMLIonItemSlidingElement;
+    'ion-item-sliding': HTMLIonItemSlidingElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-item-sliding": JSXElements.IonItemSlidingAttributes;
+      'ion-item-sliding': JSXElements.IonItemSlidingAttributes;
     }
   }
   namespace JSXElements {
     export interface IonItemSlidingAttributes extends HTMLAttributes {
-      
+      /**
+       * Emitted when the sliding position changes.
+       */
+      'onIonDrag'?: (event: CustomEvent) => void;
     }
   }
 }
 
 
-import {
-  Item as IonItem
-} from './components/item/item';
-
 declare global {
-  interface HTMLIonItemElement extends IonItem, HTMLStencilElement {
+  interface HTMLIonItemElement extends HTMLStencilElement {
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `tappable` property is present.
+     */
+    'detail': boolean;
+    /**
+     * If true, the user cannot interact with the item. Defaults to `false`.
+     */
+    'disabled': boolean;
+    /**
+     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+     */
+    'href': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
+     */
+    'tappable': boolean;
   }
   var HTMLIonItemElement: {
     prototype: HTMLIonItemElement;
     new (): HTMLIonItemElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-item": HTMLIonItemElement;
+    'ion-item': HTMLIonItemElement;
   }
   interface ElementTagNameMap {
-    "ion-item": HTMLIonItemElement;
+    'ion-item': HTMLIonItemElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-item": JSXElements.IonItemAttributes;
+      'ion-item': JSXElements.IonItemAttributes;
     }
   }
   namespace JSXElements {
     export interface IonItemAttributes extends HTMLAttributes {
-      color?: string;
-      detail?: boolean;
-      disabled?: boolean;
-      href?: string;
-      mode?: 'ios' | 'md';
-      onclick?: (this: HTMLElement, ev: MouseEvent) => any;
-      tappable?: boolean;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `tappable` property is present.
+       */
+      'detail'?: boolean;
+      /**
+       * If true, the user cannot interact with the item. Defaults to `false`.
+       */
+      'disabled'?: boolean;
+      /**
+       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+       */
+      'href'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
+       */
+      'tappable'?: boolean;
     }
   }
 }
 
 
-import {
-  Label as IonLabel
-} from './components/label/label';
-
 declare global {
-  interface HTMLIonLabelElement extends IonLabel, HTMLStencilElement {
+  interface HTMLIonLabelElement extends HTMLStencilElement {
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * If true, the label will sit alongside an input. Defaults to `false`.
+     */
+    'fixed': boolean;
+    /**
+     * If true, the label will float above an input when the value is empty or the input is focused. Defaults to `false`.
+     */
+    'floating': boolean;
+    'getText': () => string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * If true, the label will be stacked above an input. Defaults to `false`.
+     */
+    'stacked': boolean;
   }
   var HTMLIonLabelElement: {
     prototype: HTMLIonLabelElement;
     new (): HTMLIonLabelElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-label": HTMLIonLabelElement;
+    'ion-label': HTMLIonLabelElement;
   }
   interface ElementTagNameMap {
-    "ion-label": HTMLIonLabelElement;
+    'ion-label': HTMLIonLabelElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-label": JSXElements.IonLabelAttributes;
+      'ion-label': JSXElements.IonLabelAttributes;
     }
   }
   namespace JSXElements {
     export interface IonLabelAttributes extends HTMLAttributes {
-      color?: string;
-      fixed?: boolean;
-      floating?: boolean;
-      mode?: 'ios' | 'md';
-      stacked?: boolean;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * If true, the label will sit alongside an input. Defaults to `false`.
+       */
+      'fixed'?: boolean;
+      /**
+       * If true, the label will float above an input when the value is empty or the input is focused. Defaults to `false`.
+       */
+      'floating'?: boolean;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * Emitted when the styles change.
+       */
+      'onIonStyle'?: (event: CustomEvent) => void;
+      /**
+       * If true, the label will be stacked above an input. Defaults to `false`.
+       */
+      'stacked'?: boolean;
     }
   }
 }
 
 
-import {
-  ListHeader as IonListHeader
-} from './components/list-header/list-header';
-
 declare global {
-  interface HTMLIonListHeaderElement extends IonListHeader, HTMLStencilElement {
+  interface HTMLIonListHeaderElement extends HTMLStencilElement {
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
   }
   var HTMLIonListHeaderElement: {
     prototype: HTMLIonListHeaderElement;
     new (): HTMLIonListHeaderElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-list-header": HTMLIonListHeaderElement;
+    'ion-list-header': HTMLIonListHeaderElement;
   }
   interface ElementTagNameMap {
-    "ion-list-header": HTMLIonListHeaderElement;
+    'ion-list-header': HTMLIonListHeaderElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-list-header": JSXElements.IonListHeaderAttributes;
+      'ion-list-header': JSXElements.IonListHeaderAttributes;
     }
   }
   namespace JSXElements {
     export interface IonListHeaderAttributes extends HTMLAttributes {
-      color?: string;
-      mode?: 'ios' | 'md';
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
     }
   }
 }
 
 
-import {
-  List as IonList
-} from './components/list/list';
-
 declare global {
-  interface HTMLIonListElement extends IonList, HTMLStencilElement {
+  interface HTMLIonListElement extends HTMLStencilElement {
+    /**
+     * Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding).
+     */
+    'closeSlidingItems': () => boolean;
+    'getOpenedItem': () => ItemSliding;
+    'setOpenedItem': (itemSliding: ItemSliding) => void;
   }
   var HTMLIonListElement: {
     prototype: HTMLIonListElement;
     new (): HTMLIonListElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-list": HTMLIonListElement;
+    'ion-list': HTMLIonListElement;
   }
   interface ElementTagNameMap {
-    "ion-list": HTMLIonListElement;
+    'ion-list': HTMLIonListElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-list": JSXElements.IonListAttributes;
+      'ion-list': JSXElements.IonListAttributes;
     }
   }
   namespace JSXElements {
     export interface IonListAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  LoadingController as IonLoadingController
-} from './components/loading-controller/loading-controller';
-
 declare global {
-  interface HTMLIonLoadingControllerElement extends IonLoadingController, HTMLStencilElement {
+  interface HTMLIonLoadingControllerElement extends HTMLStencilElement {
+    'create': (opts?: LoadingOptions) => Promise<HTMLIonLoadingElement>;
+    'dismiss': (data?: any, role?: string, loadingId?: number) => Promise<void>;
+    'getTop': () => HTMLIonLoadingElement;
   }
   var HTMLIonLoadingControllerElement: {
     prototype: HTMLIonLoadingControllerElement;
     new (): HTMLIonLoadingControllerElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-loading-controller": HTMLIonLoadingControllerElement;
+    'ion-loading-controller': HTMLIonLoadingControllerElement;
   }
   interface ElementTagNameMap {
-    "ion-loading-controller": HTMLIonLoadingControllerElement;
+    'ion-loading-controller': HTMLIonLoadingControllerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-loading-controller": JSXElements.IonLoadingControllerAttributes;
+      'ion-loading-controller': JSXElements.IonLoadingControllerAttributes;
     }
   }
   namespace JSXElements {
     export interface IonLoadingControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  Loading as IonLoading
-} from './components/loading/loading';
-
 declare global {
-  interface HTMLIonLoadingElement extends IonLoading, HTMLStencilElement {
+  interface HTMLIonLoadingElement extends HTMLStencilElement {
+    /**
+     * Optional text content to display in the loading indicator.
+     */
+    'content': string;
+    /**
+     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+     */
+    'cssClass': string;
+    /**
+     * Dismiss the loading overlay after it has been presented.
+     */
+    'dismiss': (data?: any, role?: string) => Promise<void>;
+    /**
+     * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
+     */
+    'dismissOnPageChange': boolean;
+    /**
+     * Number of milliseconds to wait before dismissing the loading indicator.
+     */
+    'duration': number;
+    /**
+     * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
+     */
+    'enableBackdropDismiss': boolean;
+    /**
+     * Animation to use when the loading indicator is presented.
+     */
+    'enterAnimation': AnimationBuilder;
+    'keyboardClose': boolean;
+    /**
+     * Animation to use when the loading indicator is dismissed.
+     */
+    'leaveAnimation': AnimationBuilder;
+    /**
+     * Returns a promise that resolves when the loading did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await loading.onDidDismiss(); ```
+     */
+    'onDidDismiss': (callback?: (detail: OverlayEventDetail) => void) => Promise<OverlayEventDetail>;
+    /**
+     * Returns a promise that resolves when the loading will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await loading.onWillDismiss(); ```
+     */
+    'onWillDismiss': (callback?: (detail: OverlayEventDetail) => void) => Promise<OverlayEventDetail>;
+    'overlayId': number;
+    /**
+     * Present the loading overlay after it has been created.
+     */
+    'present': () => Promise<void>;
+    /**
+     * If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
+     */
+    'showBackdrop': boolean;
+    /**
+     * The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
+     */
+    'spinner': string;
+    /**
+     * If true, the loading indicator will be translucent. Defaults to `false`.
+     */
+    'translucent': boolean;
+    /**
+     * If true, the loading indicator will animate. Defaults to `true`.
+     */
+    'willAnimate': boolean;
   }
   var HTMLIonLoadingElement: {
     prototype: HTMLIonLoadingElement;
     new (): HTMLIonLoadingElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-loading": HTMLIonLoadingElement;
+    'ion-loading': HTMLIonLoadingElement;
   }
   interface ElementTagNameMap {
-    "ion-loading": HTMLIonLoadingElement;
+    'ion-loading': HTMLIonLoadingElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-loading": JSXElements.IonLoadingAttributes;
+      'ion-loading': JSXElements.IonLoadingAttributes;
     }
   }
   namespace JSXElements {
     export interface IonLoadingAttributes extends HTMLAttributes {
-      content?: string;
-      cssClass?: string;
-      dismissOnPageChange?: boolean;
-      duration?: number;
-      enableBackdropDismiss?: boolean;
-      enterAnimation?: AnimationBuilder;
-      keyboardClose?: boolean;
-      leaveAnimation?: AnimationBuilder;
-      overlayId?: number;
-      showBackdrop?: boolean;
-      spinner?: string;
-      translucent?: boolean;
-      willAnimate?: boolean;
+      /**
+       * Optional text content to display in the loading indicator.
+       */
+      'content'?: string;
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass'?: string;
+      /**
+       * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
+       */
+      'dismissOnPageChange'?: boolean;
+      /**
+       * Number of milliseconds to wait before dismissing the loading indicator.
+       */
+      'duration'?: number;
+      /**
+       * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
+       */
+      'enableBackdropDismiss'?: boolean;
+      /**
+       * Animation to use when the loading indicator is presented.
+       */
+      'enterAnimation'?: AnimationBuilder;
+      'keyboardClose'?: boolean;
+      /**
+       * Animation to use when the loading indicator is dismissed.
+       */
+      'leaveAnimation'?: AnimationBuilder;
+      /**
+       * Emitted after the loading has dismissed.
+       */
+      'onIonLoadingDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      /**
+       * Emitted after the loading has loaded.
+       */
+      'onIonLoadingDidLoad'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted after the loading has presented.
+       */
+      'onIonLoadingDidPresent'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted after the loading has unloaded.
+       */
+      'onIonLoadingDidUnload'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted before the loading has dismissed.
+       */
+      'onIonLoadingWillDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      /**
+       * Emitted before the loading has presented.
+       */
+      'onIonLoadingWillPresent'?: (event: CustomEvent<void>) => void;
+      'overlayId'?: number;
+      /**
+       * If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
+       */
+      'showBackdrop'?: boolean;
+      /**
+       * The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
+       */
+      'spinner'?: string;
+      /**
+       * If true, the loading indicator will be translucent. Defaults to `false`.
+       */
+      'translucent'?: boolean;
+      /**
+       * If true, the loading indicator will animate. Defaults to `true`.
+       */
+      'willAnimate'?: boolean;
     }
   }
 }
 
 
-import {
-  MenuButton as IonMenuButton
-} from './components/menu-button/menu-button';
-
 declare global {
-  interface HTMLIonMenuButtonElement extends IonMenuButton, HTMLStencilElement {
+  interface HTMLIonMenuButtonElement extends HTMLStencilElement {
+    /**
+     * Automatically hides the content when the corresponding menu is not active
+     */
+    'autoHide': boolean;
+    /**
+     * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
+     */
+    'menu': string;
   }
   var HTMLIonMenuButtonElement: {
     prototype: HTMLIonMenuButtonElement;
     new (): HTMLIonMenuButtonElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-menu-button": HTMLIonMenuButtonElement;
+    'ion-menu-button': HTMLIonMenuButtonElement;
   }
   interface ElementTagNameMap {
-    "ion-menu-button": HTMLIonMenuButtonElement;
+    'ion-menu-button': HTMLIonMenuButtonElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-menu-button": JSXElements.IonMenuButtonAttributes;
+      'ion-menu-button': JSXElements.IonMenuButtonAttributes;
     }
   }
   namespace JSXElements {
     export interface IonMenuButtonAttributes extends HTMLAttributes {
-      autoHide?: boolean;
-      menu?: string;
+      /**
+       * Automatically hides the content when the corresponding menu is not active
+       */
+      'autoHide'?: boolean;
+      /**
+       * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
+       */
+      'menu'?: string;
     }
   }
 }
 
 
-import {
-  MenuController as IonMenuController
-} from './components/menu-controller/menu-controller';
-
 declare global {
-  interface HTMLIonMenuControllerElement extends IonMenuController, HTMLStencilElement {
+  interface HTMLIonMenuControllerElement extends HTMLStencilElement {
+    '_register': (menu: Menu) => void;
+    '_setActiveMenu': (menu: Menu) => void;
+    '_setOpen': (menu: Menu, shouldOpen: boolean, animated: boolean) => Promise<boolean>;
+    '_unregister': (menu: Menu) => void;
+    /**
+     * Programatically close the Menu. If no `menuId` is given as the first argument then it'll close any menu which is open. If a `menuId` is given then it'll close that exact menu.
+     */
+    'close': (menuId?: string) => Promise<boolean>;
+    'createAnimation': (type: string, menuCmp: Menu) => Promise<Animation>;
+    /**
+     * Used to enable or disable a menu. For example, there could be multiple left menus, but only one of them should be able to be opened at the same time. If there are multiple menus on the same side, then enabling one menu will also automatically disable all the others that are on the same side.
+     */
+    'enable': (shouldEnable: boolean, menuId?: string) => HTMLIonMenuElement;
+    /**
+     * Used to get a menu instance. If a `menuId` is not provided then it'll return the first menu found. If a `menuId` is `left` or `right`, then it'll return the enabled menu on that side. Otherwise, if a `menuId` is provided, then it'll try to find the menu using the menu's `id` property. If a menu is not found then it'll return `null`.
+     */
+    'get': (menuId?: string) => HTMLIonMenuElement;
+    'getMenus': () => HTMLIonMenuElement[];
+    'getOpen': () => HTMLIonMenuElement;
+    'isAnimating': () => boolean;
+    'isEnabled': (menuId?: string) => boolean;
+    'isOpen': (menuId?: string) => boolean;
+    /**
+     * Programatically open the Menu.
+     */
+    'open': (menuId?: string) => Promise<boolean>;
+    /**
+     * Used to enable or disable the ability to swipe open the menu.
+     */
+    'swipeEnable': (shouldEnable: boolean, menuId?: string) => HTMLIonMenuElement;
+    /**
+     * Toggle the menu. If it's closed, it will open, and if opened, it will close.
+     */
+    'toggle': (menuId?: string) => Promise<boolean>;
   }
   var HTMLIonMenuControllerElement: {
     prototype: HTMLIonMenuControllerElement;
     new (): HTMLIonMenuControllerElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-menu-controller": HTMLIonMenuControllerElement;
+    'ion-menu-controller': HTMLIonMenuControllerElement;
   }
   interface ElementTagNameMap {
-    "ion-menu-controller": HTMLIonMenuControllerElement;
+    'ion-menu-controller': HTMLIonMenuControllerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-menu-controller": JSXElements.IonMenuControllerAttributes;
+      'ion-menu-controller': JSXElements.IonMenuControllerAttributes;
     }
   }
   namespace JSXElements {
     export interface IonMenuControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  MenuToggle as IonMenuToggle
-} from './components/menu-toggle/menu-toggle';
-
 declare global {
-  interface HTMLIonMenuToggleElement extends IonMenuToggle, HTMLStencilElement {
+  interface HTMLIonMenuToggleElement extends HTMLStencilElement {
+    /**
+     * Automatically hides the content when the corresponding menu is not active
+     */
+    'autoHide': boolean;
+    /**
+     * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
+     */
+    'menu': string;
   }
   var HTMLIonMenuToggleElement: {
     prototype: HTMLIonMenuToggleElement;
     new (): HTMLIonMenuToggleElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-menu-toggle": HTMLIonMenuToggleElement;
+    'ion-menu-toggle': HTMLIonMenuToggleElement;
   }
   interface ElementTagNameMap {
-    "ion-menu-toggle": HTMLIonMenuToggleElement;
+    'ion-menu-toggle': HTMLIonMenuToggleElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-menu-toggle": JSXElements.IonMenuToggleAttributes;
+      'ion-menu-toggle': JSXElements.IonMenuToggleAttributes;
     }
   }
   namespace JSXElements {
     export interface IonMenuToggleAttributes extends HTMLAttributes {
-      autoHide?: boolean;
-      menu?: string;
+      /**
+       * Automatically hides the content when the corresponding menu is not active
+       */
+      'autoHide'?: boolean;
+      /**
+       * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
+       */
+      'menu'?: string;
     }
   }
 }
 
 
-import {
-  Menu as IonMenu
-} from './components/menu/menu';
-
 declare global {
-  interface HTMLIonMenuElement extends IonMenu, HTMLStencilElement {
+  interface HTMLIonMenuElement extends HTMLStencilElement {
+    'close': (animated?: boolean) => Promise<boolean>;
+    /**
+     * The content's id the menu should use.
+     */
+    'contentId': string;
+    /**
+     * If true, the menu is disabled. Default `false`.
+     */
+    'disabled': boolean;
+    'isActive': () => boolean;
+    'isOpen': () => boolean;
+    'maxEdgeStart': number;
+    /**
+     * An id for the menu.
+     */
+    'menuId': string;
+    'open': (animated?: boolean) => Promise<boolean>;
+    /**
+     * If true, the menu will persist on child pages.
+     */
+    'persistent': boolean;
+    'setOpen': (shouldOpen: boolean, animated?: boolean) => Promise<boolean>;
+    /**
+     * Which side of the view the menu should be placed. Default `"start"`.
+     */
+    'side': Side;
+    /**
+     * If true, swiping the menu is enabled. Default `true`.
+     */
+    'swipeEnabled': boolean;
+    'toggle': (animated?: boolean) => Promise<boolean>;
+    /**
+     * The display type of the menu. Default varies based on the mode, see the `menuType` in the [config](../../config/Config). Available options: `"overlay"`, `"reveal"`, `"push"`.
+     */
+    'type': string;
   }
   var HTMLIonMenuElement: {
     prototype: HTMLIonMenuElement;
     new (): HTMLIonMenuElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-menu": HTMLIonMenuElement;
+    'ion-menu': HTMLIonMenuElement;
   }
   interface ElementTagNameMap {
-    "ion-menu": HTMLIonMenuElement;
+    'ion-menu': HTMLIonMenuElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-menu": JSXElements.IonMenuAttributes;
+      'ion-menu': JSXElements.IonMenuAttributes;
     }
   }
   namespace JSXElements {
     export interface IonMenuAttributes extends HTMLAttributes {
-      contentId?: string;
-      disabled?: boolean;
-      maxEdgeStart?: number;
-      menuId?: string;
-      persistent?: boolean;
-      side?: Side;
-      swipeEnabled?: boolean;
-      type?: string;
+      /**
+       * The content's id the menu should use.
+       */
+      'contentId'?: string;
+      /**
+       * If true, the menu is disabled. Default `false`.
+       */
+      'disabled'?: boolean;
+      'maxEdgeStart'?: number;
+      /**
+       * An id for the menu.
+       */
+      'menuId'?: string;
+      /**
+       * Emitted when the menu is closed.
+       */
+      'onIonClose'?: (event: CustomEvent) => void;
+      'onIonMenuChange'?: (event: CustomEvent<MenuChangeEventDetail>) => void;
+      /**
+       * Emitted when the menu is open.
+       */
+      'onIonOpen'?: (event: CustomEvent) => void;
+      /**
+       * If true, the menu will persist on child pages.
+       */
+      'persistent'?: boolean;
+      /**
+       * Which side of the view the menu should be placed. Default `"start"`.
+       */
+      'side'?: Side;
+      /**
+       * If true, swiping the menu is enabled. Default `true`.
+       */
+      'swipeEnabled'?: boolean;
+      /**
+       * The display type of the menu. Default varies based on the mode, see the `menuType` in the [config](../../config/Config). Available options: `"overlay"`, `"reveal"`, `"push"`.
+       */
+      'type'?: string;
     }
   }
 }
 
 
-import {
-  ModalController as IonModalController
-} from './components/modal-controller/modal-controller';
-
 declare global {
-  interface HTMLIonModalControllerElement extends IonModalController, HTMLStencilElement {
+  interface HTMLIonModalControllerElement extends HTMLStencilElement {
+    'create': (opts?: ModalOptions) => Promise<HTMLIonModalElement>;
+    'dismiss': (data?: any, role?: string, modalId?: number) => Promise<void>;
+    'getTop': () => HTMLIonModalElement;
   }
   var HTMLIonModalControllerElement: {
     prototype: HTMLIonModalControllerElement;
     new (): HTMLIonModalControllerElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-modal-controller": HTMLIonModalControllerElement;
+    'ion-modal-controller': HTMLIonModalControllerElement;
   }
   interface ElementTagNameMap {
-    "ion-modal-controller": HTMLIonModalControllerElement;
+    'ion-modal-controller': HTMLIonModalControllerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-modal-controller": JSXElements.IonModalControllerAttributes;
+      'ion-modal-controller': JSXElements.IonModalControllerAttributes;
     }
   }
   namespace JSXElements {
     export interface IonModalControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  Modal as IonModal
-} from './components/modal/modal';
-
 declare global {
-  interface HTMLIonModalElement extends IonModal, HTMLStencilElement {
+  interface HTMLIonModalElement extends HTMLStencilElement {
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * The component to display inside of the modal.
+     */
+    'component': any;
+    /**
+     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+     */
+    'cssClass': string;
+    /**
+     * The data to pass to the modal component.
+     */
+    'data': any;
+    'delegate': FrameworkDelegate;
+    /**
+     * Dismiss the modal overlay after it has been presented.
+     */
+    'dismiss': (data?: any, role?: string) => Promise<void>;
+    /**
+     * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
+     */
+    'enableBackdropDismiss': boolean;
+    /**
+     * Animation to use when the modal is presented.
+     */
+    'enterAnimation': AnimationBuilder;
+    'keyboardClose': boolean;
+    /**
+     * Animation to use when the modal is dismissed.
+     */
+    'leaveAnimation': AnimationBuilder;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await modal.onDidDismiss(); ```
+     */
+    'onDidDismiss': (callback?: (detail: OverlayEventDetail) => void) => Promise<OverlayEventDetail>;
+    /**
+     * Returns a promise that resolves when the modal will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await modal.onWillDismiss(); ```
+     */
+    'onWillDismiss': (callback?: (detail: OverlayEventDetail) => void) => Promise<OverlayEventDetail>;
+    'overlayId': number;
+    /**
+     * Present the modal overlay after it has been created.
+     */
+    'present': () => Promise<void>;
+    /**
+     * If true, a backdrop will be displayed behind the modal. Defaults to `true`.
+     */
+    'showBackdrop': boolean;
+    /**
+     * If true, the modal will animate. Defaults to `true`.
+     */
+    'willAnimate': boolean;
   }
   var HTMLIonModalElement: {
     prototype: HTMLIonModalElement;
     new (): HTMLIonModalElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-modal": HTMLIonModalElement;
+    'ion-modal': HTMLIonModalElement;
   }
   interface ElementTagNameMap {
-    "ion-modal": HTMLIonModalElement;
+    'ion-modal': HTMLIonModalElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-modal": JSXElements.IonModalAttributes;
+      'ion-modal': JSXElements.IonModalAttributes;
     }
   }
   namespace JSXElements {
     export interface IonModalAttributes extends HTMLAttributes {
-      color?: string;
-      component?: any;
-      cssClass?: string;
-      data?: any;
-      delegate?: FrameworkDelegate;
-      enableBackdropDismiss?: boolean;
-      enterAnimation?: AnimationBuilder;
-      keyboardClose?: boolean;
-      leaveAnimation?: AnimationBuilder;
-      mode?: 'ios' | 'md';
-      overlayId?: number;
-      showBackdrop?: boolean;
-      willAnimate?: boolean;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * The component to display inside of the modal.
+       */
+      'component'?: any;
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass'?: string;
+      /**
+       * The data to pass to the modal component.
+       */
+      'data'?: any;
+      'delegate'?: FrameworkDelegate;
+      /**
+       * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'enableBackdropDismiss'?: boolean;
+      /**
+       * Animation to use when the modal is presented.
+       */
+      'enterAnimation'?: AnimationBuilder;
+      'keyboardClose'?: boolean;
+      /**
+       * Animation to use when the modal is dismissed.
+       */
+      'leaveAnimation'?: AnimationBuilder;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * Emitted after the modal has dismissed.
+       */
+      'onIonModalDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      /**
+       * Emitted after the modal has loaded.
+       */
+      'onIonModalDidLoad'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted after the modal has presented.
+       */
+      'onIonModalDidPresent'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted after the modal has unloaded.
+       */
+      'onIonModalDidUnload'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted before the modal has dismissed.
+       */
+      'onIonModalWillDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      /**
+       * Emitted before the modal has presented.
+       */
+      'onIonModalWillPresent'?: (event: CustomEvent<void>) => void;
+      'overlayId'?: number;
+      /**
+       * If true, a backdrop will be displayed behind the modal. Defaults to `true`.
+       */
+      'showBackdrop'?: boolean;
+      /**
+       * If true, the modal will animate. Defaults to `true`.
+       */
+      'willAnimate'?: boolean;
     }
   }
 }
 
 
-import {
-  NavPop as IonNavPop
-} from './components/nav-pop/nav-pop';
-
 declare global {
-  interface HTMLIonNavPopElement extends IonNavPop, HTMLStencilElement {
+  interface HTMLIonNavPopElement extends HTMLStencilElement {
+
   }
   var HTMLIonNavPopElement: {
     prototype: HTMLIonNavPopElement;
     new (): HTMLIonNavPopElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-nav-pop": HTMLIonNavPopElement;
+    'ion-nav-pop': HTMLIonNavPopElement;
   }
   interface ElementTagNameMap {
-    "ion-nav-pop": HTMLIonNavPopElement;
+    'ion-nav-pop': HTMLIonNavPopElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-nav-pop": JSXElements.IonNavPopAttributes;
+      'ion-nav-pop': JSXElements.IonNavPopAttributes;
     }
   }
   namespace JSXElements {
     export interface IonNavPopAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  NavPush as IonNavPush
-} from './components/nav-push/nav-push';
-
 declare global {
-  interface HTMLIonNavPushElement extends IonNavPush, HTMLStencilElement {
+  interface HTMLIonNavPushElement extends HTMLStencilElement {
+    'component': any;
+    'data': any;
+    'url': string;
   }
   var HTMLIonNavPushElement: {
     prototype: HTMLIonNavPushElement;
     new (): HTMLIonNavPushElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-nav-push": HTMLIonNavPushElement;
+    'ion-nav-push': HTMLIonNavPushElement;
   }
   interface ElementTagNameMap {
-    "ion-nav-push": HTMLIonNavPushElement;
+    'ion-nav-push': HTMLIonNavPushElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-nav-push": JSXElements.IonNavPushAttributes;
+      'ion-nav-push': JSXElements.IonNavPushAttributes;
     }
   }
   namespace JSXElements {
     export interface IonNavPushAttributes extends HTMLAttributes {
-      component?: any;
-      data?: any;
-      url?: string;
+      'component'?: any;
+      'data'?: any;
+      'url'?: string;
     }
   }
 }
 
 
-import {
-  NavSetRoot as IonNavSetRoot
-} from './components/nav-set-root/nav-set-root';
-
 declare global {
-  interface HTMLIonNavSetRootElement extends IonNavSetRoot, HTMLStencilElement {
+  interface HTMLIonNavSetRootElement extends HTMLStencilElement {
+    'component': any;
+    'data': any;
+    'url': string;
   }
   var HTMLIonNavSetRootElement: {
     prototype: HTMLIonNavSetRootElement;
     new (): HTMLIonNavSetRootElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-nav-set-root": HTMLIonNavSetRootElement;
+    'ion-nav-set-root': HTMLIonNavSetRootElement;
   }
   interface ElementTagNameMap {
-    "ion-nav-set-root": HTMLIonNavSetRootElement;
+    'ion-nav-set-root': HTMLIonNavSetRootElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-nav-set-root": JSXElements.IonNavSetRootAttributes;
+      'ion-nav-set-root': JSXElements.IonNavSetRootAttributes;
     }
   }
   namespace JSXElements {
     export interface IonNavSetRootAttributes extends HTMLAttributes {
-      component?: any;
-      data?: any;
-      url?: string;
+      'component'?: any;
+      'data'?: any;
+      'url'?: string;
     }
   }
 }
 
 
-import {
-  NavControllerBase as IonNav
-} from './components/nav/nav';
-
 declare global {
-  interface HTMLIonNavElement extends IonNav, HTMLStencilElement {
+  interface HTMLIonNavElement extends HTMLStencilElement {
+    'animated': boolean;
+    'canGoBack': (view?: ViewController) => boolean;
+    'delegate': FrameworkDelegate;
+    'getActive': () => ViewController;
+    'getAllChildNavs': () => any[];
+    'getByIndex': (index: number) => ViewController;
+    'getPrevious': (view?: ViewController) => ViewController;
+    'getRouteId': () => RouteID;
+    /**
+     * Return a view controller
+     */
+    'getViewById': (id: string) => ViewController;
+    'getViews': () => ViewController[];
+    'insert': (insertIndex: number, page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'insertPages': (insertIndex: number, insertPages: any[], opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'pop': (opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'popAll': () => Promise<boolean[]>;
+    'popTo': (indexOrViewCtrl: any, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'popToRoot': (opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'push': (page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'removeIndex': (startIndex: number, removeCount?: number, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'removeView': (viewController: ViewController, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'root': any;
+    'rootParams': any;
+    'setPages': (pages: any[], opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'setRoot': (pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
+    'swipeBackEnabled': boolean;
   }
   var HTMLIonNavElement: {
     prototype: HTMLIonNavElement;
     new (): HTMLIonNavElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-nav": HTMLIonNavElement;
+    'ion-nav': HTMLIonNavElement;
   }
   interface ElementTagNameMap {
-    "ion-nav": HTMLIonNavElement;
+    'ion-nav': HTMLIonNavElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-nav": JSXElements.IonNavAttributes;
+      'ion-nav': JSXElements.IonNavAttributes;
     }
   }
   namespace JSXElements {
     export interface IonNavAttributes extends HTMLAttributes {
-      animated?: boolean;
-      delegate?: FrameworkDelegate;
-      root?: any;
-      rootParams?: any;
-      swipeBackEnabled?: boolean;
+      'animated'?: boolean;
+      'delegate'?: FrameworkDelegate;
+      'onIonNavChanged'?: (event: CustomEvent) => void;
+      'root'?: any;
+      'rootParams'?: any;
+      'swipeBackEnabled'?: boolean;
     }
   }
 }
 
 
-import {
-  Note as IonNote
-} from './components/note/note';
-
 declare global {
-  interface HTMLIonNoteElement extends IonNote, HTMLStencilElement {
+  interface HTMLIonNoteElement extends HTMLStencilElement {
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
   }
   var HTMLIonNoteElement: {
     prototype: HTMLIonNoteElement;
     new (): HTMLIonNoteElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-note": HTMLIonNoteElement;
+    'ion-note': HTMLIonNoteElement;
   }
   interface ElementTagNameMap {
-    "ion-note": HTMLIonNoteElement;
+    'ion-note': HTMLIonNoteElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-note": JSXElements.IonNoteAttributes;
+      'ion-note': JSXElements.IonNoteAttributes;
     }
   }
   namespace JSXElements {
     export interface IonNoteAttributes extends HTMLAttributes {
-      color?: string;
-      mode?: 'ios' | 'md';
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
     }
   }
 }
 
 
-import {
-  PickerColumnCmp as IonPickerColumn
-} from './components/picker-column/picker-column';
-
 declare global {
-  interface HTMLIonPickerColumnElement extends IonPickerColumn, HTMLStencilElement {
+  interface HTMLIonPickerColumnElement extends HTMLStencilElement {
+    'col': PickerColumn;
   }
   var HTMLIonPickerColumnElement: {
     prototype: HTMLIonPickerColumnElement;
     new (): HTMLIonPickerColumnElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-picker-column": HTMLIonPickerColumnElement;
+    'ion-picker-column': HTMLIonPickerColumnElement;
   }
   interface ElementTagNameMap {
-    "ion-picker-column": HTMLIonPickerColumnElement;
+    'ion-picker-column': HTMLIonPickerColumnElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-picker-column": JSXElements.IonPickerColumnAttributes;
+      'ion-picker-column': JSXElements.IonPickerColumnAttributes;
     }
   }
   namespace JSXElements {
     export interface IonPickerColumnAttributes extends HTMLAttributes {
-      col?: PickerColumn;
+      'col'?: PickerColumn;
     }
   }
 }
 
 
-import {
-  PickerController as IonPickerController
-} from './components/picker-controller/picker-controller';
-
 declare global {
-  interface HTMLIonPickerControllerElement extends IonPickerController, HTMLStencilElement {
+  interface HTMLIonPickerControllerElement extends HTMLStencilElement {
+    'create': (opts?: PickerOptions) => Promise<HTMLIonPickerElement>;
+    'dismiss': (data?: any, role?: string, pickerId?: number) => Promise<void>;
+    'getTop': () => HTMLIonPickerElement;
   }
   var HTMLIonPickerControllerElement: {
     prototype: HTMLIonPickerControllerElement;
     new (): HTMLIonPickerControllerElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-picker-controller": HTMLIonPickerControllerElement;
+    'ion-picker-controller': HTMLIonPickerControllerElement;
   }
   interface ElementTagNameMap {
-    "ion-picker-controller": HTMLIonPickerControllerElement;
+    'ion-picker-controller': HTMLIonPickerControllerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-picker-controller": JSXElements.IonPickerControllerAttributes;
+      'ion-picker-controller': JSXElements.IonPickerControllerAttributes;
     }
   }
   namespace JSXElements {
     export interface IonPickerControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  Picker as IonPicker
-} from './components/picker/picker';
-
 declare global {
-  interface HTMLIonPickerElement extends IonPicker, HTMLStencilElement {
+  interface HTMLIonPickerElement extends HTMLStencilElement {
+    'addButton': (button: PickerButton) => void;
+    'addColumn': (column: PickerColumn) => void;
+    /**
+     * Array of buttons to be displayed at the top of the picker.
+     */
+    'buttons': PickerButton[];
+    /**
+     * Array of columns to be displayed in the picker.
+     */
+    'columns': PickerColumn[];
+    /**
+     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+     */
+    'cssClass': string;
+    /**
+     * Dismiss the picker overlay after it has been presented.
+     */
+    'dismiss': (data?: any, role?: string) => Promise<void>;
+    /**
+     * Number of milliseconds to wait before dismissing the picker.
+     */
+    'duration': number;
+    /**
+     * If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
+     */
+    'enableBackdropDismiss': boolean;
+    /**
+     * Animation to use when the picker is presented.
+     */
+    'enterAnimation': AnimationBuilder;
+    'getColumn': (name: string) => PickerColumn;
+    'getColumns': () => PickerColumn[];
+    'keyboardClose': boolean;
+    /**
+     * Animation to use when the picker is dismissed.
+     */
+    'leaveAnimation': AnimationBuilder;
+    /**
+     * Returns a promise that resolves when the picker did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await picker.onDidDismiss(); ```
+     */
+    'onDidDismiss': (callback?: (detail: OverlayEventDetail) => void) => Promise<OverlayEventDetail>;
+    /**
+     * Returns a promise that resolves when the picker will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await picker.onWillDismiss(); ```
+     */
+    'onWillDismiss': (callback?: (detail: OverlayEventDetail) => void) => Promise<OverlayEventDetail>;
+    'overlayId': number;
+    /**
+     * Present the picker overlay after it has been created.
+     */
+    'present': () => Promise<void>;
+    /**
+     * If true, a backdrop will be displayed behind the picker. Defaults to `true`.
+     */
+    'showBackdrop': boolean;
+    /**
+     * If true, the picker will animate. Defaults to `true`.
+     */
+    'willAnimate': boolean;
   }
   var HTMLIonPickerElement: {
     prototype: HTMLIonPickerElement;
     new (): HTMLIonPickerElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-picker": HTMLIonPickerElement;
+    'ion-picker': HTMLIonPickerElement;
   }
   interface ElementTagNameMap {
-    "ion-picker": HTMLIonPickerElement;
+    'ion-picker': HTMLIonPickerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-picker": JSXElements.IonPickerAttributes;
+      'ion-picker': JSXElements.IonPickerAttributes;
     }
   }
   namespace JSXElements {
     export interface IonPickerAttributes extends HTMLAttributes {
-      buttons?: PickerButton[];
-      columns?: PickerColumn[];
-      cssClass?: string;
-      duration?: number;
-      enableBackdropDismiss?: boolean;
-      enterAnimation?: AnimationBuilder;
-      keyboardClose?: boolean;
-      leaveAnimation?: AnimationBuilder;
-      overlayId?: number;
-      showBackdrop?: boolean;
-      willAnimate?: boolean;
+      /**
+       * Array of buttons to be displayed at the top of the picker.
+       */
+      'buttons'?: PickerButton[];
+      /**
+       * Array of columns to be displayed in the picker.
+       */
+      'columns'?: PickerColumn[];
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass'?: string;
+      /**
+       * Number of milliseconds to wait before dismissing the picker.
+       */
+      'duration'?: number;
+      /**
+       * If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'enableBackdropDismiss'?: boolean;
+      /**
+       * Animation to use when the picker is presented.
+       */
+      'enterAnimation'?: AnimationBuilder;
+      'keyboardClose'?: boolean;
+      /**
+       * Animation to use when the picker is dismissed.
+       */
+      'leaveAnimation'?: AnimationBuilder;
+      /**
+       * Emitted after the picker has dismissed.
+       */
+      'onIonPickerDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      /**
+       * Emitted after the picker has loaded.
+       */
+      'onIonPickerDidLoad'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted after the picker has presented.
+       */
+      'onIonPickerDidPresent'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted after the picker has unloaded.
+       */
+      'onIonPickerDidUnload'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted before the picker has dismissed.
+       */
+      'onIonPickerWillDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      /**
+       * Emitted before the picker has presented.
+       */
+      'onIonPickerWillPresent'?: (event: CustomEvent<void>) => void;
+      'overlayId'?: number;
+      /**
+       * If true, a backdrop will be displayed behind the picker. Defaults to `true`.
+       */
+      'showBackdrop'?: boolean;
+      /**
+       * If true, the picker will animate. Defaults to `true`.
+       */
+      'willAnimate'?: boolean;
     }
   }
 }
 
 
-import {
-  Platform as IonPlatform
-} from './components/platform/platform';
-
 declare global {
-  interface HTMLIonPlatformElement extends IonPlatform, HTMLStencilElement {
+  interface HTMLIonPlatformElement extends HTMLStencilElement {
+    'getQueryParam': (param: string) => string;
+    /**
+     * Depending on the platform the user is on, `is(platformName)` will return `true` or `false`. Note that the same app can return `true` for more than one platform name. For example, an app running from an iPad would return `true` for the platform names: `mobile`, `ios`, `ipad`, and `tablet`. Additionally, if the app was running from Cordova then `cordova` would be true, and if it was running from a web browser on the iPad then `mobileweb` would be `true`.  * ``` import { Platform } from 'ionic-angular';
+     */
+    'is': (platformName: string) => boolean;
+    /**
+     * Returns whether the device is in landscape orientation
+     */
+    'isLandscape': () => boolean;
+    /**
+     * Returns whether the device is in portration orientation
+     */
+    'isPortrait': () => boolean;
+    'platforms': () => string[];
+    'ready': () => any;
+    'versions': () => PlatformConfig[];
   }
   var HTMLIonPlatformElement: {
     prototype: HTMLIonPlatformElement;
     new (): HTMLIonPlatformElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-platform": HTMLIonPlatformElement;
+    'ion-platform': HTMLIonPlatformElement;
   }
   interface ElementTagNameMap {
-    "ion-platform": HTMLIonPlatformElement;
+    'ion-platform': HTMLIonPlatformElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-platform": JSXElements.IonPlatformAttributes;
+      'ion-platform': JSXElements.IonPlatformAttributes;
     }
   }
   namespace JSXElements {
     export interface IonPlatformAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  PopoverController as IonPopoverController
-} from './components/popover-controller/popover-controller';
-
 declare global {
-  interface HTMLIonPopoverControllerElement extends IonPopoverController, HTMLStencilElement {
+  interface HTMLIonPopoverControllerElement extends HTMLStencilElement {
+    'create': (opts?: PopoverOptions) => Promise<HTMLIonPopoverElement>;
+    'dismiss': (data?: any, role?: string, popoverId?: number) => Promise<void>;
+    'getTop': () => HTMLIonPopoverElement;
   }
   var HTMLIonPopoverControllerElement: {
     prototype: HTMLIonPopoverControllerElement;
     new (): HTMLIonPopoverControllerElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-popover-controller": HTMLIonPopoverControllerElement;
+    'ion-popover-controller': HTMLIonPopoverControllerElement;
   }
   interface ElementTagNameMap {
-    "ion-popover-controller": HTMLIonPopoverControllerElement;
+    'ion-popover-controller': HTMLIonPopoverControllerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-popover-controller": JSXElements.IonPopoverControllerAttributes;
+      'ion-popover-controller': JSXElements.IonPopoverControllerAttributes;
     }
   }
   namespace JSXElements {
     export interface IonPopoverControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  Popover as IonPopover
-} from './components/popover/popover';
-
 declare global {
-  interface HTMLIonPopoverElement extends IonPopover, HTMLStencilElement {
+  interface HTMLIonPopoverElement extends HTMLStencilElement {
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * The component to display inside of the popover.
+     */
+    'component': string;
+    /**
+     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+     */
+    'cssClass': string;
+    /**
+     * The data to pass to the popover component.
+     */
+    'data': any;
+    'delegate': FrameworkDelegate;
+    /**
+     * Dismiss the popover overlay after it has been presented.
+     */
+    'dismiss': (data?: any, role?: string) => Promise<void>;
+    /**
+     * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
+     */
+    'enableBackdropDismiss': boolean;
+    /**
+     * Animation to use when the popover is presented.
+     */
+    'enterAnimation': AnimationBuilder;
+    /**
+     * The event to pass to the popover animation.
+     */
+    'ev': any;
+    'keyboardClose': boolean;
+    /**
+     * Animation to use when the popover is dismissed.
+     */
+    'leaveAnimation': AnimationBuilder;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * Returns a promise that resolves when the popover did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await popover.onDidDismiss(); ```
+     */
+    'onDidDismiss': (callback?: (detail: OverlayEventDetail) => void) => Promise<OverlayEventDetail>;
+    /**
+     * Returns a promise that resolves when the popover will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await popover.onWillDismiss(); ```
+     */
+    'onWillDismiss': (callback?: (detail: OverlayEventDetail) => void) => Promise<OverlayEventDetail>;
+    'overlayId': number;
+    /**
+     * Present the popover overlay after it has been created.
+     */
+    'present': () => Promise<void>;
+    /**
+     * If true, a backdrop will be displayed behind the popover. Defaults to `true`.
+     */
+    'showBackdrop': boolean;
+    /**
+     * If true, the popover will be translucent. Defaults to `false`.
+     */
+    'translucent': boolean;
+    /**
+     * If true, the popover will animate. Defaults to `true`.
+     */
+    'willAnimate': boolean;
   }
   var HTMLIonPopoverElement: {
     prototype: HTMLIonPopoverElement;
     new (): HTMLIonPopoverElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-popover": HTMLIonPopoverElement;
+    'ion-popover': HTMLIonPopoverElement;
   }
   interface ElementTagNameMap {
-    "ion-popover": HTMLIonPopoverElement;
+    'ion-popover': HTMLIonPopoverElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-popover": JSXElements.IonPopoverAttributes;
+      'ion-popover': JSXElements.IonPopoverAttributes;
     }
   }
   namespace JSXElements {
     export interface IonPopoverAttributes extends HTMLAttributes {
-      color?: string;
-      component?: string;
-      cssClass?: string;
-      data?: any;
-      delegate?: FrameworkDelegate;
-      enableBackdropDismiss?: boolean;
-      enterAnimation?: AnimationBuilder;
-      ev?: any;
-      keyboardClose?: boolean;
-      leaveAnimation?: AnimationBuilder;
-      mode?: 'ios' | 'md';
-      overlayId?: number;
-      showBackdrop?: boolean;
-      translucent?: boolean;
-      willAnimate?: boolean;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * The component to display inside of the popover.
+       */
+      'component'?: string;
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass'?: string;
+      /**
+       * The data to pass to the popover component.
+       */
+      'data'?: any;
+      'delegate'?: FrameworkDelegate;
+      /**
+       * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'enableBackdropDismiss'?: boolean;
+      /**
+       * Animation to use when the popover is presented.
+       */
+      'enterAnimation'?: AnimationBuilder;
+      /**
+       * The event to pass to the popover animation.
+       */
+      'ev'?: any;
+      'keyboardClose'?: boolean;
+      /**
+       * Animation to use when the popover is dismissed.
+       */
+      'leaveAnimation'?: AnimationBuilder;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * Emitted after the popover has dismissed.
+       */
+      'onIonPopoverDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      /**
+       * Emitted after the popover has loaded.
+       */
+      'onIonPopoverDidLoad'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted after the popover has presented.
+       */
+      'onIonPopoverDidPresent'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted after the popover has unloaded.
+       */
+      'onIonPopoverDidUnload'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted before the popover has dismissed.
+       */
+      'onIonPopoverWillDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      /**
+       * Emitted before the popover has presented.
+       */
+      'onIonPopoverWillPresent'?: (event: CustomEvent<void>) => void;
+      'overlayId'?: number;
+      /**
+       * If true, a backdrop will be displayed behind the popover. Defaults to `true`.
+       */
+      'showBackdrop'?: boolean;
+      /**
+       * If true, the popover will be translucent. Defaults to `false`.
+       */
+      'translucent'?: boolean;
+      /**
+       * If true, the popover will animate. Defaults to `true`.
+       */
+      'willAnimate'?: boolean;
     }
   }
 }
 
 
-import {
-  RadioGroup as IonRadioGroup
-} from './components/radio-group/radio-group';
-
 declare global {
-  interface HTMLIonRadioGroupElement extends IonRadioGroup, HTMLStencilElement {
+  interface HTMLIonRadioGroupElement extends HTMLStencilElement {
+    'allowEmptySelection': boolean;
+    /**
+     * Indicates that the user cannot interact with the control.
+     */
+    'disabled': boolean;
+    /**
+     * The name of the control, which is submitted with the form data.
+     */
+    'name': string;
+    /**
+     * the value of the radio group.
+     */
+    'value': string;
   }
   var HTMLIonRadioGroupElement: {
     prototype: HTMLIonRadioGroupElement;
     new (): HTMLIonRadioGroupElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-radio-group": HTMLIonRadioGroupElement;
+    'ion-radio-group': HTMLIonRadioGroupElement;
   }
   interface ElementTagNameMap {
-    "ion-radio-group": HTMLIonRadioGroupElement;
+    'ion-radio-group': HTMLIonRadioGroupElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-radio-group": JSXElements.IonRadioGroupAttributes;
+      'ion-radio-group': JSXElements.IonRadioGroupAttributes;
     }
   }
   namespace JSXElements {
     export interface IonRadioGroupAttributes extends HTMLAttributes {
-      allowEmptySelection?: boolean;
-      disabled?: boolean;
-      name?: string;
-      value?: string;
+      'allowEmptySelection'?: boolean;
+      /**
+       * Indicates that the user cannot interact with the control.
+       */
+      'disabled'?: boolean;
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name'?: string;
+      /**
+       * Emitted when the value has changed.
+       */
+      'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
+      /**
+       * the value of the radio group.
+       */
+      'value'?: string;
     }
   }
 }
 
 
-import {
-  Radio as IonRadio
-} from './components/radio/radio';
-
 declare global {
-  interface HTMLIonRadioElement extends IonRadio, HTMLStencilElement {
+  interface HTMLIonRadioElement extends HTMLStencilElement {
+    /**
+     * If true, the radio is selected. Defaults to `false`.
+     */
+    'checked': boolean;
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * Indicates that the user cannot interact with the control.
+     */
+    'disabled': boolean;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * The name of the control, which is submitted with the form data.
+     */
+    'name': string;
+    /**
+     * the value of the radio.
+     */
+    'value': string;
   }
   var HTMLIonRadioElement: {
     prototype: HTMLIonRadioElement;
     new (): HTMLIonRadioElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-radio": HTMLIonRadioElement;
+    'ion-radio': HTMLIonRadioElement;
   }
   interface ElementTagNameMap {
-    "ion-radio": HTMLIonRadioElement;
+    'ion-radio': HTMLIonRadioElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-radio": JSXElements.IonRadioAttributes;
+      'ion-radio': JSXElements.IonRadioAttributes;
     }
   }
   namespace JSXElements {
     export interface IonRadioAttributes extends HTMLAttributes {
-      checked?: boolean;
-      color?: string;
-      disabled?: boolean;
-      mode?: 'ios' | 'md';
-      name?: string;
-      value?: string;
+      /**
+       * If true, the radio is selected. Defaults to `false`.
+       */
+      'checked'?: boolean;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * Indicates that the user cannot interact with the control.
+       */
+      'disabled'?: boolean;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name'?: string;
+      /**
+       * Emitted when the radio button loses focus.
+       */
+      'onIonBlur'?: (event: CustomEvent<BlurEvent>) => void;
+      /**
+       * Emitted when the radio button has focus.
+       */
+      'onIonFocus'?: (event: CustomEvent<FocusEvent>) => void;
+      /**
+       * Emitted when the radio loads.
+       */
+      'onIonRadioDidLoad'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the radio unloads.
+       */
+      'onIonRadioDidUnload'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the radio button is selected.
+       */
+      'onIonSelect'?: (event: CustomEvent<CheckedInputChangeEvent>) => void;
+      /**
+       * Emitted when the styles change.
+       */
+      'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+      /**
+       * the value of the radio.
+       */
+      'value'?: string;
     }
   }
 }
 
 
-import {
-  RangeKnob as IonRangeKnob
-} from './components/range-knob/range-knob';
-
 declare global {
-  interface HTMLIonRangeKnobElement extends IonRangeKnob, HTMLStencilElement {
+  interface HTMLIonRangeKnobElement extends HTMLStencilElement {
+    'disabled': boolean;
+    'knob': string;
+    'labelId': string;
+    'max': number;
+    'min': number;
+    'pin': boolean;
+    'pressed': boolean;
+    'ratio': number;
+    'val': number;
   }
   var HTMLIonRangeKnobElement: {
     prototype: HTMLIonRangeKnobElement;
     new (): HTMLIonRangeKnobElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-range-knob": HTMLIonRangeKnobElement;
+    'ion-range-knob': HTMLIonRangeKnobElement;
   }
   interface ElementTagNameMap {
-    "ion-range-knob": HTMLIonRangeKnobElement;
+    'ion-range-knob': HTMLIonRangeKnobElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-range-knob": JSXElements.IonRangeKnobAttributes;
+      'ion-range-knob': JSXElements.IonRangeKnobAttributes;
     }
   }
   namespace JSXElements {
     export interface IonRangeKnobAttributes extends HTMLAttributes {
-      disabled?: boolean;
-      knob?: string;
-      labelId?: string;
-      max?: number;
-      min?: number;
-      pin?: boolean;
-      pressed?: boolean;
-      ratio?: number;
-      val?: number;
+      'disabled'?: boolean;
+      'knob'?: string;
+      'labelId'?: string;
+      'max'?: number;
+      'min'?: number;
+      'onIonDecrease'?: (event: CustomEvent) => void;
+      'onIonIncrease'?: (event: CustomEvent) => void;
+      'pin'?: boolean;
+      'pressed'?: boolean;
+      'ratio'?: number;
+      'val'?: number;
     }
   }
 }
 
 
-import {
-  Range as IonRange
-} from './components/range/range';
-
 declare global {
-  interface HTMLIonRangeElement extends IonRange, HTMLStencilElement {
+  interface HTMLIonRangeElement extends HTMLStencilElement {
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. Default `0`.
+     */
+    'debounce': number;
+    'disabled': boolean;
+    /**
+     * Show two knobs. Defaults to `false`.
+     */
+    'dualKnobs': boolean;
+    /**
+     * Maximum integer value of the range. Defaults to `100`.
+     */
+    'max': number;
+    /**
+     * Minimum integer value of the range. Defaults to `0`.
+     */
+    'min': number;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * If true, a pin with integer value is shown when the knob is pressed. Defaults to `false`.
+     */
+    'pin': boolean;
+    /**
+     * Returns the ratio of the knob's is current location, which is a number between `0` and `1`. If two knobs are used, this property represents the lower value.
+     */
+    'ratio': () => number;
+    /**
+     * Returns the ratio of the upper value's is current location, which is a number between `0` and `1`. If there is only one knob, then this will return `null`.
+     */
+    'ratioUpper': () => number;
+    /**
+     * If true, the knob snaps to tick marks evenly spaced based on the step property value. Defaults to `false`.
+     */
+    'snaps': boolean;
+    /**
+     * Specifies the value granularity. Defaults to `1`.
+     */
+    'step': number;
+    /**
+     * the value of the range.
+     */
+    'value': any;
   }
   var HTMLIonRangeElement: {
     prototype: HTMLIonRangeElement;
     new (): HTMLIonRangeElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-range": HTMLIonRangeElement;
+    'ion-range': HTMLIonRangeElement;
   }
   interface ElementTagNameMap {
-    "ion-range": HTMLIonRangeElement;
+    'ion-range': HTMLIonRangeElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-range": JSXElements.IonRangeAttributes;
+      'ion-range': JSXElements.IonRangeAttributes;
     }
   }
   namespace JSXElements {
     export interface IonRangeAttributes extends HTMLAttributes {
-      color?: string;
-      debounce?: number;
-      disabled?: boolean;
-      dualKnobs?: boolean;
-      max?: number;
-      min?: number;
-      mode?: 'ios' | 'md';
-      pin?: boolean;
-      snaps?: boolean;
-      step?: number;
-      value?: any;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. Default `0`.
+       */
+      'debounce'?: number;
+      'disabled'?: boolean;
+      /**
+       * Show two knobs. Defaults to `false`.
+       */
+      'dualKnobs'?: boolean;
+      /**
+       * Maximum integer value of the range. Defaults to `100`.
+       */
+      'max'?: number;
+      /**
+       * Minimum integer value of the range. Defaults to `0`.
+       */
+      'min'?: number;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * Emitted when the range loses focus.
+       */
+      'onIonBlur'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the value property has changed.
+       */
+      'onIonChange'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the range has focus.
+       */
+      'onIonFocus'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the styles change.
+       */
+      'onIonStyle'?: (event: CustomEvent) => void;
+      /**
+       * If true, a pin with integer value is shown when the knob is pressed. Defaults to `false`.
+       */
+      'pin'?: boolean;
+      /**
+       * If true, the knob snaps to tick marks evenly spaced based on the step property value. Defaults to `false`.
+       */
+      'snaps'?: boolean;
+      /**
+       * Specifies the value granularity. Defaults to `1`.
+       */
+      'step'?: number;
+      /**
+       * the value of the range.
+       */
+      'value'?: any;
     }
   }
 }
 
 
-import {
-  RefresherContent as IonRefresherContent
-} from './components/refresher-content/refresher-content';
-
 declare global {
-  interface HTMLIonRefresherContentElement extends IonRefresherContent, HTMLStencilElement {
+  interface HTMLIonRefresherContentElement extends HTMLStencilElement {
+    /**
+     * A static icon to display when you begin to pull down
+     */
+    'pullingIcon': string;
+    /**
+     * The text you want to display when you begin to pull down
+     */
+    'pullingText': string;
+    /**
+     * An animated SVG spinner that shows when refreshing begins
+     */
+    'refreshingSpinner': string;
+    /**
+     * The text you want to display when performing a refresh
+     */
+    'refreshingText': string;
   }
   var HTMLIonRefresherContentElement: {
     prototype: HTMLIonRefresherContentElement;
     new (): HTMLIonRefresherContentElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-refresher-content": HTMLIonRefresherContentElement;
+    'ion-refresher-content': HTMLIonRefresherContentElement;
   }
   interface ElementTagNameMap {
-    "ion-refresher-content": HTMLIonRefresherContentElement;
+    'ion-refresher-content': HTMLIonRefresherContentElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-refresher-content": JSXElements.IonRefresherContentAttributes;
+      'ion-refresher-content': JSXElements.IonRefresherContentAttributes;
     }
   }
   namespace JSXElements {
     export interface IonRefresherContentAttributes extends HTMLAttributes {
-      pullingIcon?: string;
-      pullingText?: string;
-      refreshingSpinner?: string;
-      refreshingText?: string;
+      /**
+       * A static icon to display when you begin to pull down
+       */
+      'pullingIcon'?: string;
+      /**
+       * The text you want to display when you begin to pull down
+       */
+      'pullingText'?: string;
+      /**
+       * An animated SVG spinner that shows when refreshing begins
+       */
+      'refreshingSpinner'?: string;
+      /**
+       * The text you want to display when performing a refresh
+       */
+      'refreshingText'?: string;
     }
   }
 }
 
 
-import {
-  Refresher as IonRefresher
-} from './components/refresher/refresher';
-
 declare global {
-  interface HTMLIonRefresherElement extends IonRefresher, HTMLStencilElement {
+  interface HTMLIonRefresherElement extends HTMLStencilElement {
+    /**
+     * Changes the refresher's state from `refreshing` to `cancelling`.
+     */
+    'cancel': () => void;
+    /**
+     * Time it takes to close the refresher. Defaults to `280ms`.
+     */
+    'closeDuration': string;
+    /**
+     * Call `complete()` when your async operation has completed. For example, the `refreshing` state is while the app is performing an asynchronous operation, such as receiving more data from an AJAX request. Once the data has been received, you then call this method to signify that the refreshing has completed and to close the refresher. This method also changes the refresher's state from `refreshing` to `completing`.
+     */
+    'complete': () => void;
+    /**
+     * If true, the refresher will be hidden. Defaults to `true`.
+     */
+    'disabled': boolean;
+    /**
+     * A number representing how far down the user has pulled. The number `0` represents the user hasn't pulled down at all. The number `1`, and anything greater than `1`, represents that the user has pulled far enough down that when they let go then the refresh will happen. If they let go and the number is less than `1`, then the refresh will not happen, and the content will return to it's original position.
+     */
+    'getProgress': () => number;
+    /**
+     * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
+     */
+    'pullMax': any;
+    /**
+     * The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Defaults to `60`.
+     */
+    'pullMin': number;
+    /**
+     * Time it takes the refresher to to snap back to the `refreshing` state. Defaults to `280ms`.
+     */
+    'snapbackDuration': string;
   }
   var HTMLIonRefresherElement: {
     prototype: HTMLIonRefresherElement;
     new (): HTMLIonRefresherElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-refresher": HTMLIonRefresherElement;
+    'ion-refresher': HTMLIonRefresherElement;
   }
   interface ElementTagNameMap {
-    "ion-refresher": HTMLIonRefresherElement;
+    'ion-refresher': HTMLIonRefresherElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-refresher": JSXElements.IonRefresherAttributes;
+      'ion-refresher': JSXElements.IonRefresherAttributes;
     }
   }
   namespace JSXElements {
     export interface IonRefresherAttributes extends HTMLAttributes {
-      closeDuration?: string;
-      disabled?: boolean;
-      pullMax?: any;
-      pullMin?: number;
-      snapbackDuration?: string;
+      /**
+       * Time it takes to close the refresher. Defaults to `280ms`.
+       */
+      'closeDuration'?: string;
+      /**
+       * If true, the refresher will be hidden. Defaults to `true`.
+       */
+      'disabled'?: boolean;
+      /**
+       * Emitted while the user is pulling down the content and exposing the refresher.
+       */
+      'onIonPull'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the user lets go of the content and has pulled down further than the `pullMin` or pulls the content down and exceeds the pullMax. Updates the refresher state to `refreshing`. The `complete()` method should be called when the async operation has completed.
+       */
+      'onIonRefresh'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the user begins to start pulling down.
+       */
+      'onIonStart'?: (event: CustomEvent) => void;
+      /**
+       * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
+       */
+      'pullMax'?: any;
+      /**
+       * The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Defaults to `60`.
+       */
+      'pullMin'?: number;
+      /**
+       * Time it takes the refresher to to snap back to the `refreshing` state. Defaults to `280ms`.
+       */
+      'snapbackDuration'?: string;
     }
   }
 }
 
 
-import {
-  ReorderGroup as IonReorderGroup
-} from './components/reorder-group/reorder-group';
-
 declare global {
-  interface HTMLIonReorderGroupElement extends IonReorderGroup, HTMLStencilElement {
+  interface HTMLIonReorderGroupElement extends HTMLStencilElement {
+    /**
+     * If true, the reorder will be hidden. Defaults to `true`.
+     */
+    'disabled': boolean;
   }
   var HTMLIonReorderGroupElement: {
     prototype: HTMLIonReorderGroupElement;
     new (): HTMLIonReorderGroupElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-reorder-group": HTMLIonReorderGroupElement;
+    'ion-reorder-group': HTMLIonReorderGroupElement;
   }
   interface ElementTagNameMap {
-    "ion-reorder-group": HTMLIonReorderGroupElement;
+    'ion-reorder-group': HTMLIonReorderGroupElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-reorder-group": JSXElements.IonReorderGroupAttributes;
+      'ion-reorder-group': JSXElements.IonReorderGroupAttributes;
     }
   }
   namespace JSXElements {
     export interface IonReorderGroupAttributes extends HTMLAttributes {
-      disabled?: boolean;
+      /**
+       * If true, the reorder will be hidden. Defaults to `true`.
+       */
+      'disabled'?: boolean;
     }
   }
 }
 
 
-import {
-  Reorder as IonReorder
-} from './components/reorder/reorder';
-
 declare global {
-  interface HTMLIonReorderElement extends IonReorder, HTMLStencilElement {
+  interface HTMLIonReorderElement extends HTMLStencilElement {
+
   }
   var HTMLIonReorderElement: {
     prototype: HTMLIonReorderElement;
     new (): HTMLIonReorderElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-reorder": HTMLIonReorderElement;
+    'ion-reorder': HTMLIonReorderElement;
   }
   interface ElementTagNameMap {
-    "ion-reorder": HTMLIonReorderElement;
+    'ion-reorder': HTMLIonReorderElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-reorder": JSXElements.IonReorderAttributes;
+      'ion-reorder': JSXElements.IonReorderAttributes;
     }
   }
   namespace JSXElements {
     export interface IonReorderAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  RippleEffect as IonRippleEffect
-} from './components/ripple-effect/ripple-effect';
-
 declare global {
-  interface HTMLIonRippleEffectElement extends IonRippleEffect, HTMLStencilElement {
+  interface HTMLIonRippleEffectElement extends HTMLStencilElement {
+    'addRipple': (pageX: number, pageY: number) => void;
+    'useTapClick': boolean;
   }
   var HTMLIonRippleEffectElement: {
     prototype: HTMLIonRippleEffectElement;
     new (): HTMLIonRippleEffectElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-ripple-effect": HTMLIonRippleEffectElement;
+    'ion-ripple-effect': HTMLIonRippleEffectElement;
   }
   interface ElementTagNameMap {
-    "ion-ripple-effect": HTMLIonRippleEffectElement;
+    'ion-ripple-effect': HTMLIonRippleEffectElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-ripple-effect": JSXElements.IonRippleEffectAttributes;
+      'ion-ripple-effect': JSXElements.IonRippleEffectAttributes;
     }
   }
   namespace JSXElements {
     export interface IonRippleEffectAttributes extends HTMLAttributes {
-      useTapClick?: boolean;
+      'useTapClick'?: boolean;
     }
   }
 }
 
 
-import {
-  RouteRedirect as IonRouteRedirect
-} from './components/route-redirect/route-redirect';
-
 declare global {
-  interface HTMLIonRouteRedirectElement extends IonRouteRedirect, HTMLStencilElement {
+  interface HTMLIonRouteRedirectElement extends HTMLStencilElement {
+    /**
+     * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
+     */
+    'from': string;
+    /**
+     * A redirect route, redirects "from" a URL "to" another URL. This property is that "to" URL. When the defined `ion-route-redirect` rule matches, the router will redirect to the path specified in this property.  The value of this property is always an absolute path inside the scope of routes defined in `ion-router` it can't be used with another router or to perfom a redirection to a different domain.  Note that this is a virtual redirect, it will not cause a real browser refresh, again, it's a redirect inside the context of ion-router.  When this property is not specified or his value is `undefined` the whole redirect route is noop, even if the "from" value matches.
+     */
+    'to': string|undefined;
   }
   var HTMLIonRouteRedirectElement: {
     prototype: HTMLIonRouteRedirectElement;
     new (): HTMLIonRouteRedirectElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-route-redirect": HTMLIonRouteRedirectElement;
+    'ion-route-redirect': HTMLIonRouteRedirectElement;
   }
   interface ElementTagNameMap {
-    "ion-route-redirect": HTMLIonRouteRedirectElement;
+    'ion-route-redirect': HTMLIonRouteRedirectElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-route-redirect": JSXElements.IonRouteRedirectAttributes;
+      'ion-route-redirect': JSXElements.IonRouteRedirectAttributes;
     }
   }
   namespace JSXElements {
     export interface IonRouteRedirectAttributes extends HTMLAttributes {
-      from?: string;
-      to?: string|undefined;
+      /**
+       * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
+       */
+      'from'?: string;
+      /**
+       * Internal event that fires when any value of this rule is added/removed from the DOM, or any of his public properties changes.  `ion-router` captures this event in order to update his internal registry of router rules.
+       */
+      'onIonRouteRedirectChanged'?: (event: CustomEvent) => void;
+      /**
+       * A redirect route, redirects "from" a URL "to" another URL. This property is that "to" URL. When the defined `ion-route-redirect` rule matches, the router will redirect to the path specified in this property.  The value of this property is always an absolute path inside the scope of routes defined in `ion-router` it can't be used with another router or to perfom a redirection to a different domain.  Note that this is a virtual redirect, it will not cause a real browser refresh, again, it's a redirect inside the context of ion-router.  When this property is not specified or his value is `undefined` the whole redirect route is noop, even if the "from" value matches.
+       */
+      'to'?: string|undefined;
     }
   }
 }
 
 
-import {
-  Route as IonRoute
-} from './components/route/route';
-
 declare global {
-  interface HTMLIonRouteElement extends IonRoute, HTMLStencilElement {
+  interface HTMLIonRouteElement extends HTMLStencilElement {
+    /**
+     * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in ion-tabs it actually refers to the name of the `ion-tab` to select.
+     */
+    'component': string;
+    /**
+     * Props to pass when the `component` specified in this route load.
+     */
+    'componentProps': {[key: string]: any};
+    /**
+     * Relative path that needs to match in order for this route to apply.
+     */
+    'url': string;
   }
   var HTMLIonRouteElement: {
     prototype: HTMLIonRouteElement;
     new (): HTMLIonRouteElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-route": HTMLIonRouteElement;
+    'ion-route': HTMLIonRouteElement;
   }
   interface ElementTagNameMap {
-    "ion-route": HTMLIonRouteElement;
+    'ion-route': HTMLIonRouteElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-route": JSXElements.IonRouteAttributes;
+      'ion-route': JSXElements.IonRouteAttributes;
     }
   }
   namespace JSXElements {
     export interface IonRouteAttributes extends HTMLAttributes {
-      component?: string;
-      componentProps?: {[key: string]: any};
-      url?: string;
+      /**
+       * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in ion-tabs it actually refers to the name of the `ion-tab` to select.
+       */
+      'component'?: string;
+      /**
+       * Props to pass when the `component` specified in this route load.
+       */
+      'componentProps'?: {[key: string]: any};
+      /**
+       * Used internaly by `ion-router` to know when this route did change.
+       */
+      'onIonRouteDataChanged'?: (event: CustomEvent) => void;
+      /**
+       * Relative path that needs to match in order for this route to apply.
+       */
+      'url'?: string;
     }
   }
 }
 
 
-import {
-  RouterOutlet as IonRouterOutlet
-} from './components/router-outlet/route-outlet';
-
 declare global {
-  interface HTMLIonRouterOutletElement extends IonRouterOutlet, HTMLStencilElement {
+  interface HTMLIonRouterOutletElement extends HTMLStencilElement {
+    'animated': boolean;
+    'animationBuilder': AnimationBuilder;
+    'commit': (enteringEl: HTMLElement, opts?: RouterOutletOptions) => Promise<boolean>;
+    'delegate': FrameworkDelegate;
+    'getRouteId': () => RouteID;
+    'setRoot': (component: string | HTMLElement, params?: { [key: string]: any; }, opts?: RouterOutletOptions) => Promise<boolean>;
+    'setRouteId': (id: string, data: any, direction: number) => Promise<RouteWrite>;
   }
   var HTMLIonRouterOutletElement: {
     prototype: HTMLIonRouterOutletElement;
     new (): HTMLIonRouterOutletElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-router-outlet": HTMLIonRouterOutletElement;
+    'ion-router-outlet': HTMLIonRouterOutletElement;
   }
   interface ElementTagNameMap {
-    "ion-router-outlet": HTMLIonRouterOutletElement;
+    'ion-router-outlet': HTMLIonRouterOutletElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-router-outlet": JSXElements.IonRouterOutletAttributes;
+      'ion-router-outlet': JSXElements.IonRouterOutletAttributes;
     }
   }
   namespace JSXElements {
     export interface IonRouterOutletAttributes extends HTMLAttributes {
-      animated?: boolean;
-      animationBuilder?: AnimationBuilder;
-      delegate?: FrameworkDelegate;
+      'animated'?: boolean;
+      'animationBuilder'?: AnimationBuilder;
+      'delegate'?: FrameworkDelegate;
     }
   }
 }
 
 
-import {
-  Router as IonRouter
-} from './components/router/router';
-
 declare global {
-  interface HTMLIonRouterElement extends IonRouter, HTMLStencilElement {
+  interface HTMLIonRouterElement extends HTMLStencilElement {
+    'base': string;
+    'navChanged': (isPop: boolean) => Promise<boolean>;
+    'push': (url: string, backDirection?: boolean) => Promise<boolean>;
+    'useHash': boolean;
   }
   var HTMLIonRouterElement: {
     prototype: HTMLIonRouterElement;
     new (): HTMLIonRouterElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-router": HTMLIonRouterElement;
+    'ion-router': HTMLIonRouterElement;
   }
   interface ElementTagNameMap {
-    "ion-router": HTMLIonRouterElement;
+    'ion-router': HTMLIonRouterElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-router": JSXElements.IonRouterAttributes;
+      'ion-router': JSXElements.IonRouterAttributes;
     }
   }
   namespace JSXElements {
     export interface IonRouterAttributes extends HTMLAttributes {
-      base?: string;
-      useHash?: boolean;
+      'base'?: string;
+      'onIonRouteChanged'?: (event: CustomEvent<RouterEventDetail>) => void;
+      'useHash'?: boolean;
     }
   }
 }
 
 
-import {
-  Row as IonRow
-} from './components/row/row';
-
 declare global {
-  interface HTMLIonRowElement extends IonRow, HTMLStencilElement {
+  interface HTMLIonRowElement extends HTMLStencilElement {
+
   }
   var HTMLIonRowElement: {
     prototype: HTMLIonRowElement;
     new (): HTMLIonRowElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-row": HTMLIonRowElement;
+    'ion-row': HTMLIonRowElement;
   }
   interface ElementTagNameMap {
-    "ion-row": HTMLIonRowElement;
+    'ion-row': HTMLIonRowElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-row": JSXElements.IonRowAttributes;
+      'ion-row': JSXElements.IonRowAttributes;
     }
   }
   namespace JSXElements {
     export interface IonRowAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  Scroll as IonScroll
-} from './components/scroll/scroll';
-
 declare global {
-  interface HTMLIonScrollElement extends IonScroll, HTMLStencilElement {
+  interface HTMLIonScrollElement extends HTMLStencilElement {
+    /**
+     * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionScroll, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
+     */
+    'forceOverscroll': boolean;
+    'mode': string;
+    'scrollByPoint': (x: number, y: number, duration: number, done?: Function) => Promise<any>;
+    'scrollEvents': boolean;
+    'scrollToBottom': (duration: number) => Promise<void>;
+    'scrollToPoint': (x: number, y: number, duration: number, done?: Function) => Promise<any>;
+    'scrollToTop': (duration: number) => Promise<void>;
   }
   var HTMLIonScrollElement: {
     prototype: HTMLIonScrollElement;
     new (): HTMLIonScrollElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-scroll": HTMLIonScrollElement;
+    'ion-scroll': HTMLIonScrollElement;
   }
   interface ElementTagNameMap {
-    "ion-scroll": HTMLIonScrollElement;
+    'ion-scroll': HTMLIonScrollElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-scroll": JSXElements.IonScrollAttributes;
+      'ion-scroll': JSXElements.IonScrollAttributes;
     }
   }
   namespace JSXElements {
     export interface IonScrollAttributes extends HTMLAttributes {
-      forceOverscroll?: boolean;
-      mode?: string;
-      scrollEvents?: boolean;
+      /**
+       * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionScroll, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
+       */
+      'forceOverscroll'?: boolean;
+      'mode'?: string;
+      /**
+       * Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents`
+       */
+      'onIonScroll'?: (event: CustomEvent<ScrollDetail>) => void;
+      /**
+       * Emitted when the scroll has ended.
+       */
+      'onIonScrollEnd'?: (event: CustomEvent<ScrollBaseDetail>) => void;
+      /**
+       * Emitted when the scroll has started.
+       */
+      'onIonScrollStart'?: (event: CustomEvent<ScrollBaseDetail>) => void;
+      'scrollEvents'?: boolean;
     }
   }
 }
 
 
-import {
-  Searchbar as IonSearchbar
-} from './components/searchbar/searchbar';
-
 declare global {
-  interface HTMLIonSearchbarElement extends IonSearchbar, HTMLStencilElement {
+  interface HTMLIonSearchbarElement extends HTMLStencilElement {
+    /**
+     * If true, enable searchbar animation. Default `false`.
+     */
+    'animated': boolean;
+    /**
+     * Set the input's autocomplete property. Values: `"on"`, `"off"`. Default `"off"`.
+     */
+    'autocomplete': string;
+    /**
+     * Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
+     */
+    'autocorrect': string;
+    /**
+     * Set the the cancel button text. Default: `"Cancel"`.
+     */
+    'cancelButtonText': string;
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
+     */
+    'debounce': number;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * Set the input's placeholder. Default `"Search"`.
+     */
+    'placeholder': string;
+    /**
+     * If true, show the cancel button. Default `false`.
+     */
+    'showCancelButton': boolean;
+    /**
+     * If true, enable spellcheck on the input. Default `false`.
+     */
+    'spellcheck': boolean;
+    /**
+     * Set the type of the input. Values: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, `"url"`. Default `"search"`.
+     */
+    'type': string;
+    /**
+     * the value of the searchbar.
+     */
+    'value': string;
   }
   var HTMLIonSearchbarElement: {
     prototype: HTMLIonSearchbarElement;
     new (): HTMLIonSearchbarElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-searchbar": HTMLIonSearchbarElement;
+    'ion-searchbar': HTMLIonSearchbarElement;
   }
   interface ElementTagNameMap {
-    "ion-searchbar": HTMLIonSearchbarElement;
+    'ion-searchbar': HTMLIonSearchbarElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-searchbar": JSXElements.IonSearchbarAttributes;
+      'ion-searchbar': JSXElements.IonSearchbarAttributes;
     }
   }
   namespace JSXElements {
     export interface IonSearchbarAttributes extends HTMLAttributes {
-      animated?: boolean;
-      autocomplete?: string;
-      autocorrect?: string;
-      cancelButtonText?: string;
-      color?: string;
-      debounce?: number;
-      mode?: 'ios' | 'md';
-      placeholder?: string;
-      showCancelButton?: boolean;
-      spellcheck?: boolean;
-      type?: string;
-      value?: string;
+      /**
+       * If true, enable searchbar animation. Default `false`.
+       */
+      'animated'?: boolean;
+      /**
+       * Set the input's autocomplete property. Values: `"on"`, `"off"`. Default `"off"`.
+       */
+      'autocomplete'?: string;
+      /**
+       * Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
+       */
+      'autocorrect'?: string;
+      /**
+       * Set the the cancel button text. Default: `"Cancel"`.
+       */
+      'cancelButtonText'?: string;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
+       */
+      'debounce'?: number;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * Emitted when the input loses focus.
+       */
+      'onIonBlur'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the cancel button is clicked.
+       */
+      'onIonCancel'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the clear input button is clicked.
+       */
+      'onIonClear'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the input has focus.
+       */
+      'onIonFocus'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the Searchbar input has changed, including when it's cleared.
+       */
+      'onIonInput'?: (event: CustomEvent) => void;
+      /**
+       * Set the input's placeholder. Default `"Search"`.
+       */
+      'placeholder'?: string;
+      /**
+       * If true, show the cancel button. Default `false`.
+       */
+      'showCancelButton'?: boolean;
+      /**
+       * If true, enable spellcheck on the input. Default `false`.
+       */
+      'spellcheck'?: boolean;
+      /**
+       * Set the type of the input. Values: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, `"url"`. Default `"search"`.
+       */
+      'type'?: string;
+      /**
+       * the value of the searchbar.
+       */
+      'value'?: string;
     }
   }
 }
 
 
-import {
-  SegmentButton as IonSegmentButton
-} from './components/segment-button/segment-button';
-
 declare global {
-  interface HTMLIonSegmentButtonElement extends IonSegmentButton, HTMLStencilElement {
+  interface HTMLIonSegmentButtonElement extends HTMLStencilElement {
+    'activated': boolean;
+    /**
+     * If true, the segment button is selected. Defaults to `false`.
+     */
+    'checked': boolean;
+    /**
+     * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+     */
+    'color': string;
+    'disabled': boolean;
+    /**
+     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+     */
+    'href': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * The value of the segment button.
+     */
+    'value': string;
   }
   var HTMLIonSegmentButtonElement: {
     prototype: HTMLIonSegmentButtonElement;
     new (): HTMLIonSegmentButtonElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-segment-button": HTMLIonSegmentButtonElement;
+    'ion-segment-button': HTMLIonSegmentButtonElement;
   }
   interface ElementTagNameMap {
-    "ion-segment-button": HTMLIonSegmentButtonElement;
+    'ion-segment-button': HTMLIonSegmentButtonElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-segment-button": JSXElements.IonSegmentButtonAttributes;
+      'ion-segment-button': JSXElements.IonSegmentButtonAttributes;
     }
   }
   namespace JSXElements {
     export interface IonSegmentButtonAttributes extends HTMLAttributes {
-      activated?: boolean;
-      checked?: boolean;
-      color?: string;
-      disabled?: boolean;
-      href?: string;
-      mode?: 'ios' | 'md';
-      value?: string;
+      'activated'?: boolean;
+      /**
+       * If true, the segment button is selected. Defaults to `false`.
+       */
+      'checked'?: boolean;
+      /**
+       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color'?: string;
+      'disabled'?: boolean;
+      /**
+       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+       */
+      'href'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * Emitted when the segment button is clicked.
+       */
+      'onIonClick'?: (event: CustomEvent) => void;
+      /**
+       * The value of the segment button.
+       */
+      'value'?: string;
     }
   }
 }
 
 
-import {
-  Segment as IonSegment
-} from './components/segment/segment';
-
 declare global {
-  interface HTMLIonSegmentElement extends IonSegment, HTMLStencilElement {
+  interface HTMLIonSegmentElement extends HTMLStencilElement {
+    /**
+     * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+     */
+    'color': string;
+    'disabled': boolean;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * the value of the segment.
+     */
+    'value': string;
   }
   var HTMLIonSegmentElement: {
     prototype: HTMLIonSegmentElement;
     new (): HTMLIonSegmentElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-segment": HTMLIonSegmentElement;
+    'ion-segment': HTMLIonSegmentElement;
   }
   interface ElementTagNameMap {
-    "ion-segment": HTMLIonSegmentElement;
+    'ion-segment': HTMLIonSegmentElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-segment": JSXElements.IonSegmentAttributes;
+      'ion-segment': JSXElements.IonSegmentAttributes;
     }
   }
   namespace JSXElements {
     export interface IonSegmentAttributes extends HTMLAttributes {
-      color?: string;
-      disabled?: boolean;
-      mode?: 'ios' | 'md';
-      value?: string;
+      /**
+       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color'?: string;
+      'disabled'?: boolean;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * Emitted when the value property has changed.
+       */
+      'onIonChange'?: (event: CustomEvent) => void;
+      /**
+       * the value of the segment.
+       */
+      'value'?: string;
     }
   }
 }
 
 
-import {
-  SelectOption as IonSelectOption
-} from './components/select-option/select-option';
-
 declare global {
-  interface HTMLIonSelectOptionElement extends IonSelectOption, HTMLStencilElement {
+  interface HTMLIonSelectOptionElement extends HTMLStencilElement {
+    /**
+     * If true, the user cannot interact with the select option. Defaults to `false`.
+     */
+    'disabled': boolean;
+    /**
+     * If true, the element is selected.
+     */
+    'selected': boolean;
+    /**
+     * The text value of the option.
+     */
+    'value': string|null;
   }
   var HTMLIonSelectOptionElement: {
     prototype: HTMLIonSelectOptionElement;
     new (): HTMLIonSelectOptionElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-select-option": HTMLIonSelectOptionElement;
+    'ion-select-option': HTMLIonSelectOptionElement;
   }
   interface ElementTagNameMap {
-    "ion-select-option": HTMLIonSelectOptionElement;
+    'ion-select-option': HTMLIonSelectOptionElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-select-option": JSXElements.IonSelectOptionAttributes;
+      'ion-select-option': JSXElements.IonSelectOptionAttributes;
     }
   }
   namespace JSXElements {
     export interface IonSelectOptionAttributes extends HTMLAttributes {
-      disabled?: boolean;
-      selected?: boolean;
-      value?: string|null;
+      /**
+       * If true, the user cannot interact with the select option. Defaults to `false`.
+       */
+      'disabled'?: boolean;
+      /**
+       * Emitted when the select option loads.
+       */
+      'onIonSelectOptionDidLoad'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the select option unloads.
+       */
+      'onIonSelectOptionDidUnload'?: (event: CustomEvent) => void;
+      /**
+       * If true, the element is selected.
+       */
+      'selected'?: boolean;
+      /**
+       * The text value of the option.
+       */
+      'value'?: string|null;
     }
   }
 }
 
 
-import {
-  SelectPopover as IonSelectPopover
-} from './components/select-popover/select-popover';
-
 declare global {
-  interface HTMLIonSelectPopoverElement extends IonSelectPopover, HTMLStencilElement {
+  interface HTMLIonSelectPopoverElement extends HTMLStencilElement {
+    'message': string;
+    'options': SelectPopoverOption[];
+    'subTitle': string;
+    'title': string;
   }
   var HTMLIonSelectPopoverElement: {
     prototype: HTMLIonSelectPopoverElement;
     new (): HTMLIonSelectPopoverElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-select-popover": HTMLIonSelectPopoverElement;
+    'ion-select-popover': HTMLIonSelectPopoverElement;
   }
   interface ElementTagNameMap {
-    "ion-select-popover": HTMLIonSelectPopoverElement;
+    'ion-select-popover': HTMLIonSelectPopoverElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-select-popover": JSXElements.IonSelectPopoverAttributes;
+      'ion-select-popover': JSXElements.IonSelectPopoverAttributes;
     }
   }
   namespace JSXElements {
     export interface IonSelectPopoverAttributes extends HTMLAttributes {
-      message?: string;
-      options?: SelectPopoverOption[];
-      subTitle?: string;
-      title?: string;
+      'message'?: string;
+      'options'?: SelectPopoverOption[];
+      'subTitle'?: string;
+      'title'?: string;
     }
   }
 }
 
 
-import {
-  Select as IonSelect
-} from './components/select/select';
-
 declare global {
-  interface HTMLIonSelectElement extends IonSelect, HTMLStencilElement {
+  interface HTMLIonSelectElement extends HTMLStencilElement {
+    /**
+     * The text to display on the cancel button. Default: `Cancel`.
+     */
+    'cancelText': string;
+    /**
+     * If true, the user cannot interact with the select. Defaults to `false`.
+     */
+    'disabled': boolean;
+    /**
+     * The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
+     */
+    'interface': string;
+    /**
+     * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface.
+     */
+    'interfaceOptions': any;
+    /**
+     * If true, the select can accept multiple values.
+     */
+    'multiple': boolean;
+    /**
+     * The name of the control, which is submitted with the form data.
+     */
+    'name': string;
+    /**
+     * The text to display on the ok button. Default: `OK`.
+     */
+    'okText': string;
+    /**
+     * The text to display when the select is empty.
+     */
+    'placeholder': string;
+    /**
+     * The text to display instead of the selected option's value.
+     */
+    'selectedText': string;
+    /**
+     * the value of the select.
+     */
+    'value': string | string[] | null;
   }
   var HTMLIonSelectElement: {
     prototype: HTMLIonSelectElement;
     new (): HTMLIonSelectElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-select": HTMLIonSelectElement;
+    'ion-select': HTMLIonSelectElement;
   }
   interface ElementTagNameMap {
-    "ion-select": HTMLIonSelectElement;
+    'ion-select': HTMLIonSelectElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-select": JSXElements.IonSelectAttributes;
+      'ion-select': JSXElements.IonSelectAttributes;
     }
   }
   namespace JSXElements {
     export interface IonSelectAttributes extends HTMLAttributes {
-      cancelText?: string;
-      disabled?: boolean;
-      interface?: string;
-      interfaceOptions?: any;
-      multiple?: boolean;
-      name?: string;
-      okText?: string;
-      placeholder?: string;
-      selectedText?: string;
-      value?: string | string[] | null;
+      /**
+       * The text to display on the cancel button. Default: `Cancel`.
+       */
+      'cancelText'?: string;
+      /**
+       * If true, the user cannot interact with the select. Defaults to `false`.
+       */
+      'disabled'?: boolean;
+      /**
+       * The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
+       */
+      'interface'?: string;
+      /**
+       * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface.
+       */
+      'interfaceOptions'?: any;
+      /**
+       * If true, the select can accept multiple values.
+       */
+      'multiple'?: boolean;
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name'?: string;
+      /**
+       * The text to display on the ok button. Default: `OK`.
+       */
+      'okText'?: string;
+      /**
+       * Emitted when the select loses focus.
+       */
+      'onIonBlur'?: (event: CustomEvent<BlurEvent>) => void;
+      /**
+       * Emitted when the selection is cancelled.
+       */
+      'onIonCancel'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the value has changed.
+       */
+      'onIonChange'?: (event: CustomEvent<SelectInputChangeEvent>) => void;
+      /**
+       * Emitted when the select has focus.
+       */
+      'onIonFocus'?: (event: CustomEvent<FocusEvent>) => void;
+      /**
+       * Emitted when the styles change.
+       */
+      'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+      /**
+       * The text to display when the select is empty.
+       */
+      'placeholder'?: string;
+      /**
+       * The text to display instead of the selected option's value.
+       */
+      'selectedText'?: string;
+      /**
+       * the value of the select.
+       */
+      'value'?: string | string[] | null;
     }
   }
 }
 
 
-import {
-  ShowWhen as IonShowWhen
-} from './components/show-when/show-when';
-
 declare global {
-  interface HTMLIonShowWhenElement extends IonShowWhen, HTMLStencilElement {
+  interface HTMLIonShowWhenElement extends HTMLStencilElement {
+    'mediaQuery': string;
+    'mode': string;
+    'or': boolean;
+    'orientation': string;
+    'platform': string;
+    'size': string;
   }
   var HTMLIonShowWhenElement: {
     prototype: HTMLIonShowWhenElement;
     new (): HTMLIonShowWhenElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-show-when": HTMLIonShowWhenElement;
+    'ion-show-when': HTMLIonShowWhenElement;
   }
   interface ElementTagNameMap {
-    "ion-show-when": HTMLIonShowWhenElement;
+    'ion-show-when': HTMLIonShowWhenElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-show-when": JSXElements.IonShowWhenAttributes;
+      'ion-show-when': JSXElements.IonShowWhenAttributes;
     }
   }
   namespace JSXElements {
     export interface IonShowWhenAttributes extends HTMLAttributes {
-      mediaQuery?: string;
-      mode?: string;
-      or?: boolean;
-      orientation?: string;
-      platform?: string;
-      size?: string;
+      'mediaQuery'?: string;
+      'mode'?: string;
+      'or'?: boolean;
+      'orientation'?: string;
+      'platform'?: string;
+      'size'?: string;
     }
   }
 }
 
 
-import {
-  SkeletonText as IonSkeletonText
-} from './components/skeleton-text/skeleton-text';
-
 declare global {
-  interface HTMLIonSkeletonTextElement extends IonSkeletonText, HTMLStencilElement {
+  interface HTMLIonSkeletonTextElement extends HTMLStencilElement {
+    'width': string;
   }
   var HTMLIonSkeletonTextElement: {
     prototype: HTMLIonSkeletonTextElement;
     new (): HTMLIonSkeletonTextElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-skeleton-text": HTMLIonSkeletonTextElement;
+    'ion-skeleton-text': HTMLIonSkeletonTextElement;
   }
   interface ElementTagNameMap {
-    "ion-skeleton-text": HTMLIonSkeletonTextElement;
+    'ion-skeleton-text': HTMLIonSkeletonTextElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-skeleton-text": JSXElements.IonSkeletonTextAttributes;
+      'ion-skeleton-text': JSXElements.IonSkeletonTextAttributes;
     }
   }
   namespace JSXElements {
     export interface IonSkeletonTextAttributes extends HTMLAttributes {
-      width?: string;
+      'width'?: string;
     }
   }
 }
 
 
-import {
-  Slide as IonSlide
-} from './components/slide/slide';
-
 declare global {
-  interface HTMLIonSlideElement extends IonSlide, HTMLStencilElement {
+  interface HTMLIonSlideElement extends HTMLStencilElement {
+
   }
   var HTMLIonSlideElement: {
     prototype: HTMLIonSlideElement;
     new (): HTMLIonSlideElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-slide": HTMLIonSlideElement;
+    'ion-slide': HTMLIonSlideElement;
   }
   interface ElementTagNameMap {
-    "ion-slide": HTMLIonSlideElement;
+    'ion-slide': HTMLIonSlideElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-slide": JSXElements.IonSlideAttributes;
+      'ion-slide': JSXElements.IonSlideAttributes;
     }
   }
   namespace JSXElements {
     export interface IonSlideAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  Slides as IonSlides
-} from './components/slides/slides';
-
 declare global {
-  interface HTMLIonSlidesElement extends IonSlides, HTMLStencilElement {
+  interface HTMLIonSlidesElement extends HTMLStencilElement {
+    /**
+     * Get the index of the active slide.
+     */
+    'getActiveIndex': () => number;
+    /**
+     * Get the index of the previous slide.
+     */
+    'getPreviousIndex': () => number;
+    /**
+     * Get whether or not the current slide is the first slide.
+     */
+    'isBeginning': () => boolean;
+    /**
+     * Get whether or not the current slide is the last slide.
+     */
+    'isEnd': () => boolean;
+    /**
+     * Get the total number of slides.
+     */
+    'length': () => number;
+    /**
+     * Lock or unlock the ability to slide to the next slides.
+     */
+    'lockSwipeToNext': (shouldLockSwipeToNext: boolean) => any;
+    /**
+     * Lock or unlock the ability to slide to the previous slides.
+     */
+    'lockSwipeToPrev': (shouldLockSwipeToPrev: boolean) => any;
+    /**
+     * Lock or unlock the ability to slide to change slides.
+     */
+    'lockSwipes': (shouldLockSwipes: boolean) => any;
+    /**
+     * Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options
+     */
+    'options': any;
+    /**
+     * Show or hide the pager
+     */
+    'pager': boolean;
+    /**
+     * Transition to the next slide.
+     */
+    'slideNext': (speed?: number, runCallbacks?: boolean) => void;
+    /**
+     * Transition to the previous slide.
+     */
+    'slidePrev': (speed?: number, runCallbacks?: boolean) => void;
+    /**
+     * Transition to the specified slide.
+     */
+    'slideTo': (index: number, speed?: number, runCallbacks?: boolean) => void;
+    /**
+     * Start auto play.
+     */
+    'startAutoplay': () => void;
+    /**
+     * Stop auto play.
+     */
+    'stopAutoplay': () => void;
+    /**
+     * Update the underlying slider implementation. Call this if you've added or removed child slides.
+     */
+    'update': () => void;
   }
   var HTMLIonSlidesElement: {
     prototype: HTMLIonSlidesElement;
     new (): HTMLIonSlidesElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-slides": HTMLIonSlidesElement;
+    'ion-slides': HTMLIonSlidesElement;
   }
   interface ElementTagNameMap {
-    "ion-slides": HTMLIonSlidesElement;
+    'ion-slides': HTMLIonSlidesElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-slides": JSXElements.IonSlidesAttributes;
+      'ion-slides': JSXElements.IonSlidesAttributes;
     }
   }
   namespace JSXElements {
     export interface IonSlidesAttributes extends HTMLAttributes {
-      options?: any;
-      pager?: boolean;
+      /**
+       * Emitted after the active slide has changed.
+       */
+      'onIonSlideDidChange'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the slider is actively being moved.
+       */
+      'onIonSlideDrag'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the next slide has ended.
+       */
+      'onIonSlideNextEnd'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the next slide has started.
+       */
+      'onIonSlideNextStart'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the previous slide has ended.
+       */
+      'onIonSlidePrevEnd'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the previous slide has started.
+       */
+      'onIonSlidePrevStart'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the slider is at the last slide.
+       */
+      'onIonSlideReachEnd'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the slider is at its initial position.
+       */
+      'onIonSlideReachStart'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the user releases the touch.
+       */
+      'onIonSlideTouchEnd'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the user first touches the slider.
+       */
+      'onIonSlideTouchStart'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the slide transition has ended.
+       */
+      'onIonSlideTransitionEnd'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the slide transition has started.
+       */
+      'onIonSlideTransitionStart'?: (event: CustomEvent) => void;
+      /**
+       * Emitted before the active slide has changed.
+       */
+      'onIonSlideWillChange'?: (event: CustomEvent) => void;
+      /**
+       * Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options
+       */
+      'options'?: any;
+      /**
+       * Show or hide the pager
+       */
+      'pager'?: boolean;
     }
   }
 }
 
 
-import {
-  Spinner as IonSpinner
-} from './components/spinner/spinner';
-
 declare global {
-  interface HTMLIonSpinnerElement extends IonSpinner, HTMLStencilElement {
+  interface HTMLIonSpinnerElement extends HTMLStencilElement {
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
+     */
+    'duration': number;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
+     */
+    'name': string;
+    /**
+     * If true, the spinner's animation will be paused. Defaults to `false`.
+     */
+    'paused': boolean;
   }
   var HTMLIonSpinnerElement: {
     prototype: HTMLIonSpinnerElement;
     new (): HTMLIonSpinnerElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-spinner": HTMLIonSpinnerElement;
+    'ion-spinner': HTMLIonSpinnerElement;
   }
   interface ElementTagNameMap {
-    "ion-spinner": HTMLIonSpinnerElement;
+    'ion-spinner': HTMLIonSpinnerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-spinner": JSXElements.IonSpinnerAttributes;
+      'ion-spinner': JSXElements.IonSpinnerAttributes;
     }
   }
   namespace JSXElements {
     export interface IonSpinnerAttributes extends HTMLAttributes {
-      color?: string;
-      duration?: number;
-      mode?: 'ios' | 'md';
-      name?: string;
-      paused?: boolean;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
+       */
+      'duration'?: number;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
+       */
+      'name'?: string;
+      /**
+       * If true, the spinner's animation will be paused. Defaults to `false`.
+       */
+      'paused'?: boolean;
     }
   }
 }
 
 
-import {
-  SplitPane as IonSplitPane
-} from './components/split-pane/split-pane';
-
 declare global {
-  interface HTMLIonSplitPaneElement extends IonSplitPane, HTMLStencilElement {
+  interface HTMLIonSplitPaneElement extends HTMLStencilElement {
+    /**
+     * If true, the split pane will be hidden. Defaults to `false`.
+     */
+    'disabled': boolean;
+    'isPane': (element: HTMLElement) => boolean;
+    'isVisible': () => boolean;
+    /**
+     * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
+     */
+    'when': string | boolean;
   }
   var HTMLIonSplitPaneElement: {
     prototype: HTMLIonSplitPaneElement;
     new (): HTMLIonSplitPaneElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-split-pane": HTMLIonSplitPaneElement;
+    'ion-split-pane': HTMLIonSplitPaneElement;
   }
   interface ElementTagNameMap {
-    "ion-split-pane": HTMLIonSplitPaneElement;
+    'ion-split-pane': HTMLIonSplitPaneElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-split-pane": JSXElements.IonSplitPaneAttributes;
+      'ion-split-pane': JSXElements.IonSplitPaneAttributes;
     }
   }
   namespace JSXElements {
     export interface IonSplitPaneAttributes extends HTMLAttributes {
-      disabled?: boolean;
-      when?: string | boolean;
+      /**
+       * If true, the split pane will be hidden. Defaults to `false`.
+       */
+      'disabled'?: boolean;
+      /**
+       * Emitted when the split pane is visible.
+       */
+      'onIonChange'?: (event: CustomEvent) => void;
+      /**
+       * Expression to be called when the split-pane visibility has changed
+       */
+      'onIonSplitPaneVisible'?: (event: CustomEvent) => void;
+      /**
+       * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
+       */
+      'when'?: string | boolean;
     }
   }
 }
 
 
-import {
-  StatusTap as IonStatusTap
-} from './components/status-tap/status-tap';
-
 declare global {
-  interface HTMLIonStatusTapElement extends IonStatusTap, HTMLStencilElement {
+  interface HTMLIonStatusTapElement extends HTMLStencilElement {
+    'duration': number;
   }
   var HTMLIonStatusTapElement: {
     prototype: HTMLIonStatusTapElement;
     new (): HTMLIonStatusTapElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-status-tap": HTMLIonStatusTapElement;
+    'ion-status-tap': HTMLIonStatusTapElement;
   }
   interface ElementTagNameMap {
-    "ion-status-tap": HTMLIonStatusTapElement;
+    'ion-status-tap': HTMLIonStatusTapElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-status-tap": JSXElements.IonStatusTapAttributes;
+      'ion-status-tap': JSXElements.IonStatusTapAttributes;
     }
   }
   namespace JSXElements {
     export interface IonStatusTapAttributes extends HTMLAttributes {
-      duration?: number;
+      'duration'?: number;
     }
   }
 }
 
 
-import {
-  TabButton as IonTabButton
-} from './components/tab-button/tab-button';
-
 declare global {
-  interface HTMLIonTabButtonElement extends IonTabButton, HTMLStencilElement {
+  interface HTMLIonTabButtonElement extends HTMLStencilElement {
+    'selected': boolean;
+    'tab': HTMLIonTabElement;
   }
   var HTMLIonTabButtonElement: {
     prototype: HTMLIonTabButtonElement;
     new (): HTMLIonTabButtonElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-tab-button": HTMLIonTabButtonElement;
+    'ion-tab-button': HTMLIonTabButtonElement;
   }
   interface ElementTagNameMap {
-    "ion-tab-button": HTMLIonTabButtonElement;
+    'ion-tab-button': HTMLIonTabButtonElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-tab-button": JSXElements.IonTabButtonAttributes;
+      'ion-tab-button': JSXElements.IonTabButtonAttributes;
     }
   }
   namespace JSXElements {
     export interface IonTabButtonAttributes extends HTMLAttributes {
-      selected?: boolean;
-      tab?: HTMLIonTabElement;
+      'onIonTabButtonDidLoad'?: (event: CustomEvent<void>) => void;
+      'onIonTabButtonDidUnload'?: (event: CustomEvent<void>) => void;
+      'onIonTabbarClick'?: (event: CustomEvent<HTMLIonTabElement>) => void;
+      'selected'?: boolean;
+      'tab'?: HTMLIonTabElement;
     }
   }
 }
 
 
-import {
-  Tab as IonTab
-} from './components/tab/tab';
-
 declare global {
-  interface HTMLIonTabElement extends IonTab, HTMLStencilElement {
+  interface HTMLIonTabElement extends HTMLStencilElement {
+    'active': boolean;
+    /**
+     * The badge for the tab.
+     */
+    'badge': string;
+    /**
+     * The badge color for the tab button.
+     */
+    'badgeStyle': string;
+    'btnId': string;
+    /**
+     * The component to display inside of the tab.
+     */
+    'component': any;
+    /**
+     * If true, the user cannot interact with the tab. Defaults to `false`.
+     */
+    'disabled': boolean;
+    'getTabId': () => string;
+    /**
+     * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
+     */
+    'href': string;
+    /**
+     * The icon for the tab.
+     */
+    'icon': string;
+    /**
+     * The name of the tab.
+     */
+    'name': string;
+    /**
+     * If true, the tab will be selected. Defaults to `false`.
+     */
+    'selected': boolean;
+    'setActive': () => Promise<void>;
+    /**
+     * If true, the tab button is visible within the tabbar. Defaults to `true`.
+     */
+    'show': boolean;
+    /**
+     * If true, hide the tabs on child pages.
+     */
+    'tabsHideOnSubPages': boolean;
+    /**
+     * The title of the tab.
+     */
+    'title': string;
   }
   var HTMLIonTabElement: {
     prototype: HTMLIonTabElement;
     new (): HTMLIonTabElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-tab": HTMLIonTabElement;
+    'ion-tab': HTMLIonTabElement;
   }
   interface ElementTagNameMap {
-    "ion-tab": HTMLIonTabElement;
+    'ion-tab': HTMLIonTabElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-tab": JSXElements.IonTabAttributes;
+      'ion-tab': JSXElements.IonTabAttributes;
     }
   }
   namespace JSXElements {
     export interface IonTabAttributes extends HTMLAttributes {
-      active?: boolean;
-      badge?: string;
-      badgeStyle?: string;
-      btnId?: string;
-      component?: any;
-      disabled?: boolean;
-      href?: string;
-      icon?: string;
-      name?: string;
-      selected?: boolean;
-      show?: boolean;
-      tabsHideOnSubPages?: boolean;
-      title?: string;
+      'active'?: boolean;
+      /**
+       * The badge for the tab.
+       */
+      'badge'?: string;
+      /**
+       * The badge color for the tab button.
+       */
+      'badgeStyle'?: string;
+      'btnId'?: string;
+      /**
+       * The component to display inside of the tab.
+       */
+      'component'?: any;
+      /**
+       * If true, the user cannot interact with the tab. Defaults to `false`.
+       */
+      'disabled'?: boolean;
+      /**
+       * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
+       */
+      'href'?: string;
+      /**
+       * The icon for the tab.
+       */
+      'icon'?: string;
+      /**
+       * The name of the tab.
+       */
+      'name'?: string;
+      /**
+       * Emitted when the current tab is selected.
+       */
+      'onIonSelect'?: (event: CustomEvent<void>) => void;
+      /**
+       * If true, the tab will be selected. Defaults to `false`.
+       */
+      'selected'?: boolean;
+      /**
+       * If true, the tab button is visible within the tabbar. Defaults to `true`.
+       */
+      'show'?: boolean;
+      /**
+       * If true, hide the tabs on child pages.
+       */
+      'tabsHideOnSubPages'?: boolean;
+      /**
+       * The title of the tab.
+       */
+      'title'?: string;
     }
   }
 }
 
 
-import {
-  Tabbar as IonTabbar
-} from './components/tabbar/tabbar';
-
 declare global {
-  interface HTMLIonTabbarElement extends IonTabbar, HTMLStencilElement {
+  interface HTMLIonTabbarElement extends HTMLStencilElement {
+    'highlight': boolean;
+    'layout': string;
+    'placement': string;
+    'scrollable': boolean;
+    'selectedTab': HTMLIonTabElement;
+    'tabs': HTMLIonTabElement[];
+    /**
+     * If true, the tabbar will be translucent. Defaults to `false`.
+     */
+    'translucent': boolean;
   }
   var HTMLIonTabbarElement: {
     prototype: HTMLIonTabbarElement;
     new (): HTMLIonTabbarElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-tabbar": HTMLIonTabbarElement;
+    'ion-tabbar': HTMLIonTabbarElement;
   }
   interface ElementTagNameMap {
-    "ion-tabbar": HTMLIonTabbarElement;
+    'ion-tabbar': HTMLIonTabbarElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-tabbar": JSXElements.IonTabbarAttributes;
+      'ion-tabbar': JSXElements.IonTabbarAttributes;
     }
   }
   namespace JSXElements {
     export interface IonTabbarAttributes extends HTMLAttributes {
-      highlight?: boolean;
-      layout?: string;
-      placement?: string;
-      scrollable?: boolean;
-      selectedTab?: HTMLIonTabElement;
-      tabs?: HTMLIonTabElement[];
-      translucent?: boolean;
+      'highlight'?: boolean;
+      'layout'?: string;
+      'placement'?: string;
+      'scrollable'?: boolean;
+      'selectedTab'?: HTMLIonTabElement;
+      'tabs'?: HTMLIonTabElement[];
+      /**
+       * If true, the tabbar will be translucent. Defaults to `false`.
+       */
+      'translucent'?: boolean;
     }
   }
 }
 
 
-import {
-  Tabs as IonTabs
-} from './components/tabs/tabs';
-
 declare global {
-  interface HTMLIonTabsElement extends IonTabs, HTMLStencilElement {
+  interface HTMLIonTabsElement extends HTMLStencilElement {
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    'getRouteId': () => RouteID;
+    'getSelected': () => HTMLIonTabElement;
+    'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => HTMLIonTabElement;
+    /**
+     * A unique name for the tabs
+     */
+    'name': string;
+    'scrollable': boolean;
+    'select': (tabOrIndex: number | HTMLIonTabElement) => Promise<boolean>;
+    'setRouteId': (id: string) => Promise<RouteWrite>;
+    /**
+     * If true, the tabbar
+     */
+    'tabbarHidden': boolean;
+    /**
+     * If true, show the tab highlight bar under the selected tab.
+     */
+    'tabbarHighlight': boolean;
+    /**
+     * Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
+     */
+    'tabbarLayout': string;
+    /**
+     * Set position of the tabbar: `top`, `bottom`.
+     */
+    'tabbarPlacement': string;
+    /**
+     * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
+     */
+    'translucent': boolean;
   }
   var HTMLIonTabsElement: {
     prototype: HTMLIonTabsElement;
     new (): HTMLIonTabsElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-tabs": HTMLIonTabsElement;
+    'ion-tabs': HTMLIonTabsElement;
   }
   interface ElementTagNameMap {
-    "ion-tabs": HTMLIonTabsElement;
+    'ion-tabs': HTMLIonTabsElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-tabs": JSXElements.IonTabsAttributes;
+      'ion-tabs': JSXElements.IonTabsAttributes;
     }
   }
   namespace JSXElements {
     export interface IonTabsAttributes extends HTMLAttributes {
-      color?: string;
-      name?: string;
-      scrollable?: boolean;
-      tabbarHidden?: boolean;
-      tabbarHighlight?: boolean;
-      tabbarLayout?: string;
-      tabbarPlacement?: string;
-      translucent?: boolean;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * A unique name for the tabs
+       */
+      'name'?: string;
+      /**
+       * Emitted when the tab changes.
+       */
+      'onIonChange'?: (event: CustomEvent) => void;
+      'onIonNavChanged'?: (event: CustomEvent<any>) => void;
+      'scrollable'?: boolean;
+      /**
+       * If true, the tabbar
+       */
+      'tabbarHidden'?: boolean;
+      /**
+       * If true, show the tab highlight bar under the selected tab.
+       */
+      'tabbarHighlight'?: boolean;
+      /**
+       * Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
+       */
+      'tabbarLayout'?: string;
+      /**
+       * Set position of the tabbar: `top`, `bottom`.
+       */
+      'tabbarPlacement'?: string;
+      /**
+       * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
+       */
+      'translucent'?: boolean;
     }
   }
 }
 
 
-import {
-  TapClick as IonTapClick
-} from './components/tap-click/tap-click';
-
 declare global {
-  interface HTMLIonTapClickElement extends IonTapClick, HTMLStencilElement {
+  interface HTMLIonTapClickElement extends HTMLStencilElement {
+
   }
   var HTMLIonTapClickElement: {
     prototype: HTMLIonTapClickElement;
     new (): HTMLIonTapClickElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-tap-click": HTMLIonTapClickElement;
+    'ion-tap-click': HTMLIonTapClickElement;
   }
   interface ElementTagNameMap {
-    "ion-tap-click": HTMLIonTapClickElement;
+    'ion-tap-click': HTMLIonTapClickElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-tap-click": JSXElements.IonTapClickAttributes;
+      'ion-tap-click': JSXElements.IonTapClickAttributes;
     }
   }
   namespace JSXElements {
     export interface IonTapClickAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  Text as IonText
-} from './components/text/text';
-
 declare global {
-  interface HTMLIonTextElement extends IonText, HTMLStencilElement {
+  interface HTMLIonTextElement extends HTMLStencilElement {
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
   }
   var HTMLIonTextElement: {
     prototype: HTMLIonTextElement;
     new (): HTMLIonTextElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-text": HTMLIonTextElement;
+    'ion-text': HTMLIonTextElement;
   }
   interface ElementTagNameMap {
-    "ion-text": HTMLIonTextElement;
+    'ion-text': HTMLIonTextElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-text": JSXElements.IonTextAttributes;
+      'ion-text': JSXElements.IonTextAttributes;
     }
   }
   namespace JSXElements {
     export interface IonTextAttributes extends HTMLAttributes {
-      color?: string;
-      mode?: 'ios' | 'md';
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
     }
   }
 }
 
 
-import {
-  Textarea as IonTextarea
-} from './components/textarea/textarea';
-
 declare global {
-  interface HTMLIonTextareaElement extends IonTextarea, HTMLStencilElement {
+  interface HTMLIonTextareaElement extends HTMLStencilElement {
+    /**
+     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
+     */
+    'autocapitalize': string;
+    /**
+     * Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
+     */
+    'autocomplete': string;
+    /**
+     * This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
+     */
+    'autofocus': boolean;
+    /**
+     * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+     */
+    'clearOnEdit': boolean;
+    /**
+     * The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
+     */
+    'cols': number;
+    /**
+     * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+     */
+    'debounce': number;
+    /**
+     * If true, the user cannot interact with the textarea. Defaults to `false`.
+     */
+    'disabled': boolean;
+    /**
+     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+     */
+    'maxlength': number;
+    /**
+     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+     */
+    'minlength': number;
+    /**
+     * The name of the control, which is submitted with the form data.
+     */
+    'name': string;
+    /**
+     * Instructional text that shows before the input has a value.
+     */
+    'placeholder': string;
+    /**
+     * If true, the user cannot modify the value. Defaults to `false`.
+     */
+    'readonly': boolean;
+    /**
+     * If true, the user must fill in a value before submitting a form.
+     */
+    'required': boolean;
+    /**
+     * The number of visible text lines for the control.
+     */
+    'rows': number;
+    /**
+     * If true, the element will have its spelling and grammar checked. Defaults to `false`.
+     */
+    'spellcheck': boolean;
+    /**
+     * The value of the textarea.
+     */
+    'value': string;
+    /**
+     * Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `"off"`.
+     */
+    'wrap': string;
   }
   var HTMLIonTextareaElement: {
     prototype: HTMLIonTextareaElement;
     new (): HTMLIonTextareaElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-textarea": HTMLIonTextareaElement;
+    'ion-textarea': HTMLIonTextareaElement;
   }
   interface ElementTagNameMap {
-    "ion-textarea": HTMLIonTextareaElement;
+    'ion-textarea': HTMLIonTextareaElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-textarea": JSXElements.IonTextareaAttributes;
+      'ion-textarea': JSXElements.IonTextareaAttributes;
     }
   }
   namespace JSXElements {
     export interface IonTextareaAttributes extends HTMLAttributes {
-      autocapitalize?: string;
-      autocomplete?: string;
-      autofocus?: boolean;
-      clearOnEdit?: boolean;
-      cols?: number;
-      debounce?: number;
-      disabled?: boolean;
-      maxlength?: number;
-      minlength?: number;
-      name?: string;
-      placeholder?: string;
-      readonly?: boolean;
-      required?: boolean;
-      rows?: number;
-      spellcheck?: boolean;
-      value?: string;
-      wrap?: string;
+      /**
+       * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
+       */
+      'autocapitalize'?: string;
+      /**
+       * Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
+       */
+      'autocomplete'?: string;
+      /**
+       * This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
+       */
+      'autofocus'?: boolean;
+      /**
+       * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+       */
+      'clearOnEdit'?: boolean;
+      /**
+       * The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
+       */
+      'cols'?: number;
+      /**
+       * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+       */
+      'debounce'?: number;
+      /**
+       * If true, the user cannot interact with the textarea. Defaults to `false`.
+       */
+      'disabled'?: boolean;
+      /**
+       * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+       */
+      'maxlength'?: number;
+      /**
+       * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+       */
+      'minlength'?: number;
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name'?: string;
+      /**
+       * Emitted when the input loses focus.
+       */
+      'onIonBlur'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the input has focus.
+       */
+      'onIonFocus'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the input value has changed.
+       */
+      'onIonInput'?: (event: CustomEvent) => void;
+      /**
+       * Emitted when the styles change.
+       */
+      'onIonStyle'?: (event: CustomEvent) => void;
+      /**
+       * Instructional text that shows before the input has a value.
+       */
+      'placeholder'?: string;
+      /**
+       * If true, the user cannot modify the value. Defaults to `false`.
+       */
+      'readonly'?: boolean;
+      /**
+       * If true, the user must fill in a value before submitting a form.
+       */
+      'required'?: boolean;
+      /**
+       * The number of visible text lines for the control.
+       */
+      'rows'?: number;
+      /**
+       * If true, the element will have its spelling and grammar checked. Defaults to `false`.
+       */
+      'spellcheck'?: boolean;
+      /**
+       * The value of the textarea.
+       */
+      'value'?: string;
+      /**
+       * Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `"off"`.
+       */
+      'wrap'?: string;
     }
   }
 }
 
 
-import {
-  Thumbnail as IonThumbnail
-} from './components/thumbnail/thumbnail';
-
 declare global {
-  interface HTMLIonThumbnailElement extends IonThumbnail, HTMLStencilElement {
+  interface HTMLIonThumbnailElement extends HTMLStencilElement {
+
   }
   var HTMLIonThumbnailElement: {
     prototype: HTMLIonThumbnailElement;
     new (): HTMLIonThumbnailElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-thumbnail": HTMLIonThumbnailElement;
+    'ion-thumbnail': HTMLIonThumbnailElement;
   }
   interface ElementTagNameMap {
-    "ion-thumbnail": HTMLIonThumbnailElement;
+    'ion-thumbnail': HTMLIonThumbnailElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-thumbnail": JSXElements.IonThumbnailAttributes;
+      'ion-thumbnail': JSXElements.IonThumbnailAttributes;
     }
   }
   namespace JSXElements {
     export interface IonThumbnailAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  ToolbarTitle as IonTitle
-} from './components/title/title';
-
 declare global {
-  interface HTMLIonTitleElement extends IonTitle, HTMLStencilElement {
+  interface HTMLIonTitleElement extends HTMLStencilElement {
+
   }
   var HTMLIonTitleElement: {
     prototype: HTMLIonTitleElement;
     new (): HTMLIonTitleElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-title": HTMLIonTitleElement;
+    'ion-title': HTMLIonTitleElement;
   }
   interface ElementTagNameMap {
-    "ion-title": HTMLIonTitleElement;
+    'ion-title': HTMLIonTitleElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-title": JSXElements.IonTitleAttributes;
+      'ion-title': JSXElements.IonTitleAttributes;
     }
   }
   namespace JSXElements {
     export interface IonTitleAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  ToastController as IonToastController
-} from './components/toast-controller/toast-controller';
-
 declare global {
-  interface HTMLIonToastControllerElement extends IonToastController, HTMLStencilElement {
+  interface HTMLIonToastControllerElement extends HTMLStencilElement {
+    'create': (opts?: ToastOptions) => Promise<HTMLIonToastElement>;
+    'dismiss': (data?: any, role?: string, toastId?: number) => Promise<void>;
+    'getTop': () => HTMLIonToastElement;
   }
   var HTMLIonToastControllerElement: {
     prototype: HTMLIonToastControllerElement;
     new (): HTMLIonToastControllerElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-toast-controller": HTMLIonToastControllerElement;
+    'ion-toast-controller': HTMLIonToastControllerElement;
   }
   interface ElementTagNameMap {
-    "ion-toast-controller": HTMLIonToastControllerElement;
+    'ion-toast-controller': HTMLIonToastControllerElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-toast-controller": JSXElements.IonToastControllerAttributes;
+      'ion-toast-controller': JSXElements.IonToastControllerAttributes;
     }
   }
   namespace JSXElements {
     export interface IonToastControllerAttributes extends HTMLAttributes {
-      
+
     }
   }
 }
 
 
-import {
-  Toast as IonToast
-} from './components/toast/toast';
-
 declare global {
-  interface HTMLIonToastElement extends IonToast, HTMLStencilElement {
+  interface HTMLIonToastElement extends HTMLStencilElement {
+    /**
+     * Text to display in the close button.
+     */
+    'closeButtonText': string;
+    /**
+     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+     */
+    'cssClass': string;
+    /**
+     * Dismiss the toast overlay after it has been presented.
+     */
+    'dismiss': (data?: any, role?: string) => Promise<void>;
+    /**
+     * If true, the toast will dismiss when the page changes. Defaults to `false`.
+     */
+    'dismissOnPageChange': boolean;
+    /**
+     * How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.
+     */
+    'duration': number;
+    /**
+     * Animation to use when the toast is presented.
+     */
+    'enterAnimation': AnimationBuilder;
+    'keyboardClose': boolean;
+    /**
+     * Animation to use when the toast is dismissed.
+     */
+    'leaveAnimation': AnimationBuilder;
+    /**
+     * Message to be shown in the toast.
+     */
+    'message': string;
+    /**
+     * Returns a promise that resolves when the toast did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await toast.onDidDismiss(); ```
+     */
+    'onDidDismiss': (callback?: (detail: OverlayEventDetail) => void) => Promise<OverlayEventDetail>;
+    /**
+     * Returns a promise that resolves when the toast will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await toast.onWillDismiss(); ```
+     */
+    'onWillDismiss': (callback?: (detail: OverlayEventDetail) => void) => Promise<OverlayEventDetail>;
+    'overlayId': number;
+    /**
+     * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
+     */
+    'position': string;
+    /**
+     * Present the toast overlay after it has been created.
+     */
+    'present': () => Promise<void>;
+    /**
+     * If true, the close button will be displayed. Defaults to `false`.
+     */
+    'showCloseButton': boolean;
+    /**
+     * If true, the toast will be translucent. Defaults to `false`.
+     */
+    'translucent': boolean;
+    /**
+     * If true, the toast will animate. Defaults to `true`.
+     */
+    'willAnimate': boolean;
   }
   var HTMLIonToastElement: {
     prototype: HTMLIonToastElement;
     new (): HTMLIonToastElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-toast": HTMLIonToastElement;
+    'ion-toast': HTMLIonToastElement;
   }
   interface ElementTagNameMap {
-    "ion-toast": HTMLIonToastElement;
+    'ion-toast': HTMLIonToastElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-toast": JSXElements.IonToastAttributes;
+      'ion-toast': JSXElements.IonToastAttributes;
     }
   }
   namespace JSXElements {
     export interface IonToastAttributes extends HTMLAttributes {
-      closeButtonText?: string;
-      cssClass?: string;
-      dismissOnPageChange?: boolean;
-      duration?: number;
-      enterAnimation?: AnimationBuilder;
-      keyboardClose?: boolean;
-      leaveAnimation?: AnimationBuilder;
-      message?: string;
-      overlayId?: number;
-      position?: string;
-      showCloseButton?: boolean;
-      translucent?: boolean;
-      willAnimate?: boolean;
+      /**
+       * Text to display in the close button.
+       */
+      'closeButtonText'?: string;
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass'?: string;
+      /**
+       * If true, the toast will dismiss when the page changes. Defaults to `false`.
+       */
+      'dismissOnPageChange'?: boolean;
+      /**
+       * How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.
+       */
+      'duration'?: number;
+      /**
+       * Animation to use when the toast is presented.
+       */
+      'enterAnimation'?: AnimationBuilder;
+      'keyboardClose'?: boolean;
+      /**
+       * Animation to use when the toast is dismissed.
+       */
+      'leaveAnimation'?: AnimationBuilder;
+      /**
+       * Message to be shown in the toast.
+       */
+      'message'?: string;
+      /**
+       * Emitted after the toast has dismissed.
+       */
+      'onIonToastDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      /**
+       * Emitted after the toast has loaded.
+       */
+      'onIonToastDidLoad'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted after the toast has presented.
+       */
+      'onIonToastDidPresent'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted after the toast has unloaded.
+       */
+      'onIonToastDidUnload'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted before the toast has dismissed.
+       */
+      'onIonToastWillDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      /**
+       * Emitted before the toast has presented.
+       */
+      'onIonToastWillPresent'?: (event: CustomEvent<void>) => void;
+      'overlayId'?: number;
+      /**
+       * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
+       */
+      'position'?: string;
+      /**
+       * If true, the close button will be displayed. Defaults to `false`.
+       */
+      'showCloseButton'?: boolean;
+      /**
+       * If true, the toast will be translucent. Defaults to `false`.
+       */
+      'translucent'?: boolean;
+      /**
+       * If true, the toast will animate. Defaults to `true`.
+       */
+      'willAnimate'?: boolean;
     }
   }
 }
 
 
-import {
-  Toggle as IonToggle
-} from './components/toggle/toggle';
-
 declare global {
-  interface HTMLIonToggleElement extends IonToggle, HTMLStencilElement {
+  interface HTMLIonToggleElement extends HTMLStencilElement {
+    /**
+     * If true, the toggle is selected. Defaults to `false`.
+     */
+    'checked': boolean;
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * Indicates that the user cannot interact with the control.
+     */
+    'disabled': boolean;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * The name of the control, which is submitted with the form data.
+     */
+    'name': string;
+    /**
+     * the value of the toggle.
+     */
+    'value': string;
   }
   var HTMLIonToggleElement: {
     prototype: HTMLIonToggleElement;
     new (): HTMLIonToggleElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-toggle": HTMLIonToggleElement;
+    'ion-toggle': HTMLIonToggleElement;
   }
   interface ElementTagNameMap {
-    "ion-toggle": HTMLIonToggleElement;
+    'ion-toggle': HTMLIonToggleElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-toggle": JSXElements.IonToggleAttributes;
+      'ion-toggle': JSXElements.IonToggleAttributes;
     }
   }
   namespace JSXElements {
     export interface IonToggleAttributes extends HTMLAttributes {
-      checked?: boolean;
-      color?: string;
-      disabled?: boolean;
-      mode?: 'ios' | 'md';
-      name?: string;
-      value?: string;
+      /**
+       * If true, the toggle is selected. Defaults to `false`.
+       */
+      'checked'?: boolean;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * Indicates that the user cannot interact with the control.
+       */
+      'disabled'?: boolean;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name'?: string;
+      /**
+       * Emitted when the toggle loses focus.
+       */
+      'onIonBlur'?: (event: CustomEvent<BlurEvent>) => void;
+      /**
+       * Emitted when the value property has changed.
+       */
+      'onIonChange'?: (event: CustomEvent<CheckedInputChangeEvent>) => void;
+      /**
+       * Emitted when the toggle has focus.
+       */
+      'onIonFocus'?: (event: CustomEvent<FocusEvent>) => void;
+      /**
+       * Emitted when the styles change.
+       */
+      'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
+      /**
+       * the value of the toggle.
+       */
+      'value'?: string;
     }
   }
 }
 
 
-import {
-  Toolbar as IonToolbar
-} from './components/toolbar/toolbar';
-
 declare global {
-  interface HTMLIonToolbarElement extends IonToolbar, HTMLStencilElement {
+  interface HTMLIonToolbarElement extends HTMLStencilElement {
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+     */
+    'mode': 'ios' | 'md';
+    /**
+     * If true, the toolbar will be translucent. Note: In order to scroll content behind the toolbar, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
+     */
+    'translucent': boolean;
   }
   var HTMLIonToolbarElement: {
     prototype: HTMLIonToolbarElement;
     new (): HTMLIonToolbarElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-toolbar": HTMLIonToolbarElement;
+    'ion-toolbar': HTMLIonToolbarElement;
   }
   interface ElementTagNameMap {
-    "ion-toolbar": HTMLIonToolbarElement;
+    'ion-toolbar': HTMLIonToolbarElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-toolbar": JSXElements.IonToolbarAttributes;
+      'ion-toolbar': JSXElements.IonToolbarAttributes;
     }
   }
   namespace JSXElements {
     export interface IonToolbarAttributes extends HTMLAttributes {
-      color?: string;
-      mode?: 'ios' | 'md';
-      translucent?: boolean;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode'?: 'ios' | 'md';
+      /**
+       * If true, the toolbar will be translucent. Note: In order to scroll content behind the toolbar, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
+       */
+      'translucent'?: boolean;
     }
   }
 }
 
 
-import {
-  VirtualScroll as IonVirtualScroll
-} from './components/virtual-scroll/virtual-scroll';
-
 declare global {
-  interface HTMLIonVirtualScrollElement extends IonVirtualScroll, HTMLStencilElement {
+  interface HTMLIonVirtualScrollElement extends HTMLStencilElement {
+    /**
+     * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This value can use either `px` or `%` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `100%`.
+     */
+    'approxFooterHeight': number;
+    /**
+     * The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `40px`.
+     */
+    'approxHeaderHeight': number;
+    /**
+     * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `45`.
+     */
+    'approxItemHeight': number;
+    'domRender': DomRenderFn;
+    /**
+     * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
+     */
+    'footerFn': HeaderFn;
+    /**
+     * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
+     */
+    'headerFn': HeaderFn;
+    'itemHeight': ItemHeightFn;
+    'itemRender': ItemRenderFn;
+    /**
+     * The data that builds the templates within the virtual scroll. This is the same data that you'd pass to `*ngFor`. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
+     */
+    'items': any[];
+    'markDirty': (offset: number, len?: number) => void;
+    'markDirtyTail': () => void;
+    'nodeHeight': NodeHeightFn;
+    'positionForItem': (index: number) => number;
+    'renderer': (item: any) => JSX.Element;
   }
   var HTMLIonVirtualScrollElement: {
     prototype: HTMLIonVirtualScrollElement;
     new (): HTMLIonVirtualScrollElement;
   };
   interface HTMLElementTagNameMap {
-    "ion-virtual-scroll": HTMLIonVirtualScrollElement;
+    'ion-virtual-scroll': HTMLIonVirtualScrollElement;
   }
   interface ElementTagNameMap {
-    "ion-virtual-scroll": HTMLIonVirtualScrollElement;
+    'ion-virtual-scroll': HTMLIonVirtualScrollElement;
   }
   namespace JSX {
     interface IntrinsicElements {
-      "ion-virtual-scroll": JSXElements.IonVirtualScrollAttributes;
+      'ion-virtual-scroll': JSXElements.IonVirtualScrollAttributes;
     }
   }
   namespace JSXElements {
     export interface IonVirtualScrollAttributes extends HTMLAttributes {
-      approxFooterHeight?: number;
-      approxHeaderHeight?: number;
-      approxItemHeight?: number;
-      domRender?: DomRenderFn;
-      footerFn?: HeaderFn;
-      headerFn?: HeaderFn;
-      itemHeight?: ItemHeightFn;
-      itemRender?: ItemRenderFn;
-      items?: any[];
-      nodeHeight?: NodeHeightFn;
-      renderer?: (item: any) => JSX.Element;
+      /**
+       * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This value can use either `px` or `%` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `100%`.
+       */
+      'approxFooterHeight'?: number;
+      /**
+       * The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `40px`.
+       */
+      'approxHeaderHeight'?: number;
+      /**
+       * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `45`.
+       */
+      'approxItemHeight'?: number;
+      'domRender'?: DomRenderFn;
+      /**
+       * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
+       */
+      'footerFn'?: HeaderFn;
+      /**
+       * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
+       */
+      'headerFn'?: HeaderFn;
+      'itemHeight'?: ItemHeightFn;
+      'itemRender'?: ItemRenderFn;
+      /**
+       * The data that builds the templates within the virtual scroll. This is the same data that you'd pass to `*ngFor`. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
+       */
+      'items'?: any[];
+      'nodeHeight'?: NodeHeightFn;
+      'renderer'?: (item: any) => JSX.Element;
     }
   }
 }

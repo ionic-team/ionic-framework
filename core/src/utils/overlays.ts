@@ -200,7 +200,10 @@ export interface OverlayController {
   getTop(): HTMLElement;
 }
 
-export interface HTMLIonOverlayElement extends HTMLStencilElement, OverlayInterface {}
+export interface HTMLIonOverlayElement extends HTMLStencilElement {
+  overlayId: number;
+  dismiss(data?: any, role?: string): Promise<void>;
+}
 
 export type OverlayMap = Map<number, HTMLIonOverlayElement>;
 

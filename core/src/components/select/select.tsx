@@ -3,9 +3,9 @@ import { CssClassMap } from '../../index';
 import { HTMLIonSelectOptionElementEvent } from '../select-option/select-option';
 import { BlurEvent, FocusEvent, SelectInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
 
-import { ActionSheet, ActionSheetButton, ActionSheetOptions  } from '../action-sheet/action-sheet';
-import { Alert, AlertOptions } from '../alert/alert';
-import { Popover, PopoverOptions } from '../popover/popover';
+import { ActionSheetButton, ActionSheetOptions  } from '../action-sheet/action-sheet';
+import { AlertOptions } from '../alert/alert';
+import { PopoverOptions } from '../popover/popover';
 
 import { ActionSheetController } from '../action-sheet-controller/action-sheet-controller';
 import { AlertController } from '../alert-controller/alert-controller';
@@ -27,7 +27,7 @@ export class Select {
   private childOpts: HTMLIonSelectOptionElement[] = [];
   private selectId: string;
   private labelId: string;
-  private overlay: ActionSheet | Alert | Popover | null;
+  private overlay: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined;
   private styleTmr: any;
   private mode: string;
 
@@ -436,7 +436,7 @@ export class Select {
     }
 
     const overlay = this.overlay;
-    this.overlay = null;
+    this.overlay = undefined;
 
     this.isExpanded = false;
 
