@@ -90,7 +90,7 @@ h6 {
   h5,
   h6 {
     &:first-child {
-      @include margin(-3px, null, null, null);
+      @include margin(0, null, null, null);
     }
   }
 }
