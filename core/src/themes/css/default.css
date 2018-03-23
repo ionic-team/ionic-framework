@@ -8,7 +8,7 @@
   --ion-alpha-disabled: .5;
   --ion-alpha-focused: .25;
   --ion-alpha-hover: .1;
-  --ion-alpha-lowest: .1;
+  --ion-alpha-lowest: .07;
   --ion-alpha-low: .25;
   --ion-alpha-medium: .5;
   --ion-alpha-high: .8;
@@ -146,6 +146,8 @@
   /** MD overrides **/
   --ion-alpha-md-focused: 0.1;
   --ion-alpha-md-border-low: 0.07;
+  --ion-alpha-md-border-medium: 0.13;
+  --ion-alpha-md-lowest: 0.1;
   --ion-border-md-color: #c1c4cd;
   --ion-overlay-md-background-color: #fafafa;
   --ion-tabbar-md-border-color: rgba(0, 0, 0, var(--ion-alpha-md-border-low, var(--ion-alpha-border-low, 0.07)));
@@ -154,5 +156,5 @@
   --ion-toolbar-md-color-active: #4a4a4a;
   --ion-toolbar-md-text-color: #424242;
   --ion-item-md-background-color-active: #f1f1f1;
-  --ion-item-md-border-color: #dedede;
+  --ion-item-md-border-color: rgba(0, 0, 0, var(--ion-alpha-md-border-medium, var(--ion-alpha-border-medium, 0.13)));;
 }

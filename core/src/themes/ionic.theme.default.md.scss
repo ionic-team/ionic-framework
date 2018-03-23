@@ -17,12 +17,12 @@ $font-size-md-base:                     $font-size-base !default;
 // --------------------------------------------------
 $alpha-md-activated:                    css-var($alpha-activated, alpha-md-activated) !default;
 $alpha-md-border-low:                   css-var(.07, alpha-md-border-low) !default;
-$alpha-md-border-medium:                css-var($alpha-border-medium, alpha-md-border-medium) !default;
+$alpha-md-border-medium:                css-var(.13, alpha-md-border-medium) !default;
 $alpha-md-border-high:                  css-var($alpha-border-high, alpha-md-border-high) !default;
 $alpha-md-disabled:                     css-var($alpha-disabled, alpha-md-disabled) !default;
 $alpha-md-focused:                      css-var(.1, alpha-md-focused) !default;
 $alpha-md-hover:                        css-var($alpha-hover, alpha-md-hover) !default;
-$alpha-md-lowest:                       css-var($alpha-lowest, alpha-md-lowest) !default;
+$alpha-md-lowest:                       css-var(.1, alpha-md-lowest) !default
 $alpha-md-low:                          css-var($alpha-low, alpha-md-low) !default;
 $alpha-md-medium:                       css-var($alpha-medium, alpha-md-medium) !default;
 $alpha-md-high:                         css-var($alpha-high, alpha-md-high) !default;
@@ -112,5 +112,5 @@ $toolbar-md-text-color:                 css-var(#424242, toolbar-md-text-color) 
 // --------------------------------------------------
 $item-md-background-color:              css-var($item-background-color, item-md-background-color) !default;
 $item-md-background-color-active:       css-var(#f1f1f1, item-md-background-color-active) !default;
-$item-md-border-color:                  css-var(#dedede, item-md-border-color) !default;
+$item-md-border-color:                  css-var(#000, item-md-border-color, $alpha-md-border-medium) !default;
 $item-md-text-color:                    css-var($item-text-color, item-md-text-color) !default;
