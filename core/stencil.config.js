@@ -21,7 +21,6 @@ exports.config = {
     { components: ['ion-loading', 'ion-loading-controller'] },
     { components: ['ion-menu', 'ion-menu-controller', 'ion-menu-toggle', 'ion-menu-button'] },
     { components: ['ion-modal', 'ion-modal-controller'] },
-    { components: ['ion-nav', 'ion-back-button'] },
     { components: ['ion-popover', 'ion-popover-controller'] },
     { components: ['ion-radio', 'ion-radio-group'] },
     { components: ['ion-reorder', 'ion-reorder-group'] },

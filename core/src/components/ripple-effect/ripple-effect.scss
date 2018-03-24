@@ -1,4 +1,6 @@
 @import "../../themes/ionic.globals";
+@import "../../themes/ionic.theme.default";
+
 
 // Material Design Ripple Effect
 // --------------------------------------------------
@@ -17,10 +19,10 @@ ion-ripple-effect {
   @include border-radius(50%);
   position: absolute;
 
+  background-color: $ripple-background-color;
   opacity: 0;
 
   will-change: transform, opacity;
-
   pointer-events: none;
   animation-name: rippleAnimation;
   animation-duration: 200ms;
