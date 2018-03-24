@@ -24,6 +24,7 @@ import { SelectPopoverOption } from '../select-popover/select-popover';
   }
 })
 export class Select {
+
   private childOpts: HTMLIonSelectOptionElement[] = [];
   private selectId: string;
   private labelId: string;
@@ -272,7 +273,7 @@ export class Select {
     this.emitStyle();
   }
 
-  getLabel() {
+  private getLabel() {
     const item = this.el.closest('ion-item');
     if (item) {
       return item.querySelector('ion-label');
@@ -280,7 +281,7 @@ export class Select {
     return null;
   }
 
-  open(ev: UIEvent) {
+  private open(ev: UIEvent) {
     let selectInterface = this.interface;
 
     if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {
@@ -304,7 +305,7 @@ export class Select {
     return this.openAlert();
   }
 
-  openPopover(ev: UIEvent) {
+  private async openPopover(ev: UIEvent) {
     const interfaceOptions = {...this.interfaceOptions};
 
     const popoverOpts: PopoverOptions = Object.assign(interfaceOptions, {
@@ -331,19 +332,13 @@ export class Select {
       ev: ev
     });
 
-    const popover = this.popoverCtrl.create(popoverOpts);
-
-    return popover.then(overlay => {
-      this.overlay = overlay;
-
-      return overlay.present().then(() => {
-        this.isExpanded = true;
-        return overlay;
-      });
-    });
+    const popover = this.overlay = await this.popoverCtrl.create(popoverOpts);
+    await popover.present();
+    this.isExpanded = true;
+    return popover;
   }
 
-  openActionSheet() {
+  private async openActionSheet() {
     const interfaceOptions = {...this.interfaceOptions};
 
     const actionSheetButtons = this.childOpts.map(option => {
@@ -369,17 +364,14 @@ export class Select {
       cssClass: 'select-action-sheet' + (interfaceOptions.cssClass ? ' ' + interfaceOptions.cssClass : '')
     });
 
-    const actionSheet = this.actionSheetCtrl.create(actionSheetOpts);
-    return actionSheet.then(overlay => {
-      this.overlay = overlay;
-      return overlay.present().then(() => {
-        this.isExpanded = true;
-        return overlay;
-      });
-    });
+    const actionSheet = this.overlay = await this.actionSheetCtrl.create(actionSheetOpts);
+    await actionSheet.present();
+
+    this.isExpanded = true;
+    return actionSheet;
   }
 
-  openAlert() {
+  private async openAlert() {
     const interfaceOptions = {...this.interfaceOptions};
 
     const label = this.getLabel();
@@ -416,20 +408,17 @@ export class Select {
                 (interfaceOptions.cssClass ? ' ' + interfaceOptions.cssClass : '')
     });
 
-    const alert = this.alertCtrl.create(alertOpts);
-    return alert.then(overlay => {
-      this.overlay = overlay;
-      return overlay.present().then(() => {
-        this.isExpanded = true;
-        return overlay;
-      });
-    });
+    const alert = this.overlay = await this.alertCtrl.create(alertOpts);
+    await alert.present();
+
+    this.isExpanded = true;
+    return alert;
   }
 
   /**
    * Close the select interface.
    */
-  close(): Promise<any> | void {
+  private close(): Promise<void> {
     // TODO check !this.overlay || !this.isFocus()
     if (!this.overlay) {
       return Promise.resolve();
@@ -463,7 +452,7 @@ export class Select {
     return (this.value !== null && this.value !== undefined && this.value !== '');
   }
 
-  emitStyle() {
+  private emitStyle() {
     clearTimeout(this.styleTmr);
 
     this.styleTmr = setTimeout(() => {

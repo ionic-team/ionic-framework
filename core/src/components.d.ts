@@ -117,6 +117,9 @@ import {
   SelectPopoverOption,
 } from './components/select-popover/select-popover';
 import {
+  FrameworkDelegate as FrameworkDelegate3,
+} from './utils/framework-delegate';
+import {
   DomRenderFn,
   HeaderFn,
   ItemHeightFn,
@@ -3052,6 +3055,7 @@ declare global {
      * Programatically open the Menu.
      */
     'open': (menuId?: string) => Promise<boolean>;
+    'registerAnimation': (name: string, animation: AnimationBuilder) => void;
     /**
      * Used to enable or disable the ability to swipe open the menu.
      */
@@ -5753,6 +5757,7 @@ declare global {
      * The component to display inside of the tab.
      */
     'component': any;
+    'delegate': FrameworkDelegate;
     /**
      * If true, the user cannot interact with the tab. Defaults to `false`.
      */
@@ -5819,6 +5824,7 @@ declare global {
        * The component to display inside of the tab.
        */
       'component'?: any;
+      'delegate'?: FrameworkDelegate;
       /**
        * If true, the user cannot interact with the tab. Defaults to `false`.
        */
