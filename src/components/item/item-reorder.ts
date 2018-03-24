@@ -243,6 +243,7 @@ export class ItemReorder implements ItemReorderGestureDelegate {
   }
 
   _scrollContent(scroll: number) {
+    if (!this._content) return scroll;
     const scrollTop = this._content.scrollTop + scroll;
     if (scroll !== 0) {
       this._content.scrollTo(0, scrollTop, 0);
