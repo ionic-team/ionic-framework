@@ -164,7 +164,7 @@ export class Modal implements OverlayInterface {
    * Present the modal overlay after it has been created.
    */
   @Method()
-  present(): Promise<void> {
+  async present(): Promise<void> {
     if (this.presented) {
       return Promise.resolve();
     }
@@ -177,18 +177,17 @@ export class Modal implements OverlayInterface {
       ...getClassList(this.cssClass),
       'ion-page'
     ];
-    return attachComponent(this.delegate, container, this.component, classes, data)
-      .then(el => this.usersElement = el)
-      .then(() => present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation));
+    this.usersElement = await attachComponent(this.delegate, container, this.component, classes, data);
+    return present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation);
   }
 
   /**
    * Dismiss the modal overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<void> {
-    return dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation)
-      .then(() => detachComponent(this.delegate, this.usersElement));
+  async dismiss(data?: any, role?: string): Promise<void> {
+    await dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation);
+    await detachComponent(this.delegate, this.usersElement);
   }
 
   /**

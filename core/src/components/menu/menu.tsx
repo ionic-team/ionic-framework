@@ -14,7 +14,6 @@ import { Side, assert, isRightSide } from '../../utils/helpers';
 })
 export class Menu {
 
-  private gestureBlocker: string;
   private animation: Animation|undefined;
   private isPane = false;
   private _isOpen = false;
@@ -121,10 +120,8 @@ export class Menu {
 
   @Event() protected ionMenuChange: EventEmitter<MenuChangeEventDetail>;
 
-  componentWillLoad() {
-    return this.lazyMenuCtrl.componentOnReady().then(menu => {
-      this.menuCtrl = menu;
-    });
+  async componentWillLoad() {
+    this.menuCtrl = await this.lazyMenuCtrl.componentOnReady();
   }
 
   componentDidLoad() {
@@ -212,16 +209,17 @@ export class Menu {
     return this.menuCtrl._setOpen(this, shouldOpen, animated);
   }
 
-  _setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
+  async _setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
     // If the menu is disabled or it is currenly being animated, let's do nothing
     if (!this.isActive() || this.isAnimating || (shouldOpen === this._isOpen)) {
-      return Promise.resolve(this._isOpen);
+      return this._isOpen;
     }
 
     this.beforeAnimation();
-    return this.loadAnimation()
-      .then(() => this.startAnimation(shouldOpen, animated))
-      .then(() => this.afterAnimation(shouldOpen));
+    await this.loadAnimation();
+    await this.startAnimation(shouldOpen, animated);
+    await this.afterAnimation(shouldOpen);
+    return shouldOpen;
   }
 
   @Method()
@@ -229,24 +227,22 @@ export class Menu {
     return !this.disabled && !this.isPane;
   }
 
-  private loadAnimation(): Promise<void> {
+  private async loadAnimation(): Promise<void> {
     // Menu swipe animation takes the menu's inner width as parameter,
     // If `offsetWidth` changes, we need to create a new animation.
     const width = this.menuInnerEl.offsetWidth;
     if (width === this.width && this.animation !== null) {
-      return Promise.resolve();
+      return;
     }
+    this.width = width;
+
     // Destroy existing animation
     if (this.animation) {
       this.animation.destroy();
       this.animation = null;
     }
-    this.width = width;
-
     // Create new animation
-    return this.menuCtrl.createAnimation(this.type, this).then(ani => {
-      this.animation = ani;
-    });
+    this.animation = await this.menuCtrl.createAnimation(this.type, this);
   }
 
   private startAnimation(shouldOpen: boolean, animated: boolean): Promise<Animation> {
@@ -359,7 +355,7 @@ export class Menu {
     this.isAnimating = true;
   }
 
-  private afterAnimation(isOpen: boolean): boolean {
+  private afterAnimation(isOpen: boolean) {
     assert(this.isAnimating, '_before() should be called while animating');
 
     // keep opening/closing the menu disabled for a touch more yet
@@ -373,9 +369,6 @@ export class Menu {
     this.enableListener(this, 'body:click', isOpen);
 
     if (isOpen) {
-      // disable swipe to go back gesture
-      this.gestureBlocker = GESTURE_BLOCKER;
-
       // add css class
       this.contentEl.classList.add(MENU_CONTENT_OPEN);
 
@@ -383,9 +376,6 @@ export class Menu {
       this.ionOpen.emit();
 
     } else {
-      // enable swipe to go back gesture
-      this.gestureBlocker = null;
-
       // remove css classes
       this.el.classList.remove(SHOW_MENU);
       this.contentEl.classList.remove(MENU_CONTENT_OPEN);
@@ -394,7 +384,6 @@ export class Menu {
       // emit close event
       this.ionClose.emit();
     }
-    return isOpen;
   }
 
   private updateState() {
@@ -461,7 +450,6 @@ export class Menu {
         'threshold': 10,
         'attachTo': 'window',
         'disableScroll': true,
-        'block': this.gestureBlocker
       }}/>
     ]);
   }
@@ -482,7 +470,6 @@ function checkEdgeSide(posX: number, isRightSide: boolean, maxEdgeStart: number)
 const SHOW_MENU = 'show-menu';
 const SHOW_BACKDROP = 'show-backdrop';
 const MENU_CONTENT_OPEN = 'menu-content-open';
-const GESTURE_BLOCKER = 'goback-swipe';
 
 export interface MenuChangeEvent {
   target: HTMLIonMenuElement;

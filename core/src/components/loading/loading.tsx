@@ -144,12 +144,12 @@ export class Loading implements OverlayInterface {
    * Present the loading overlay after it has been created.
    */
   @Method()
-  present(): Promise<void> {
-    return present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined).then(() => {
-      if (this.duration > 0) {
-        this.durationTimeout = setTimeout(() => this.dismiss(), this.duration + 10);
-      }
-    });
+  async present(): Promise<void> {
+    await present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined);
+
+    if (this.duration > 0) {
+      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration + 10);
+    }
   }
 
   /**

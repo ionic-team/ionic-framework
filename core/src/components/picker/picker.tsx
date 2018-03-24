@@ -144,13 +144,12 @@ export class Picker implements OverlayInterface {
    * Present the picker overlay after it has been created.
    */
   @Method()
-  present(): Promise<void> {
-    return present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined).then(() => {
-      // If there is a duration, dismiss after that amount of time
-      if (this.duration > 10) {
-        this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
-      }
-    });
+  async present(): Promise<void> {
+    await present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
+
+    if (this.duration > 0) {
+      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
+    }
   }
 
   /**

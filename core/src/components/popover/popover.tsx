@@ -174,7 +174,7 @@ export class Popover implements OverlayInterface {
    * Present the popover overlay after it has been created.
    */
   @Method()
-  present(): Promise<void> {
+  async present(): Promise<void> {
     if (this.presented) {
       return Promise.reject('df');
     }
@@ -187,18 +187,17 @@ export class Popover implements OverlayInterface {
       ...getClassList(this.cssClass),
       'popover-viewport'
     ];
-    return attachComponent(this.delegate, container, this.component, classes, data)
-      .then(el => this.usersElement = el)
-      .then(() => present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.ev));
+    this.usersElement = await attachComponent(this.delegate, container, this.component, classes, data);
+    return present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.ev);
   }
 
   /**
    * Dismiss the popover overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<void> {
-    return dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.ev)
-      .then(() => detachComponent(this.delegate, this.usersElement));
+  async dismiss(data?: any, role?: string): Promise<void> {
+    await dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.ev);
+    await detachComponent(this.delegate, this.usersElement);
   }
 
   /**

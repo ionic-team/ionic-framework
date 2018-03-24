@@ -24,31 +24,29 @@ export class MenuToggle {
   }
 
   @Listen('child:click')
-  onClick() {
-    getMenuController().then(menuCtrl => {
-      if (menuCtrl) {
-        const menu = menuCtrl.get(this.menu);
-        if (menu && menu.isActive()) {
-          return menuCtrl.toggle(this.menu);
-        }
+  async onClick() {
+    const menuCtrl = await getMenuController();
+    if (menuCtrl) {
+      const menu = menuCtrl.get(this.menu);
+      if (menu && menu.isActive()) {
+        return menuCtrl.toggle(this.menu);
       }
-      return false;
-    });
+    }
+    return false;
   }
 
   @Listen('body:ionMenuChange')
   @Listen('body:ionSplitPaneVisible')
-  updateVisibility() {
-    return getMenuController().then(menuCtrl => {
-      if (menuCtrl) {
-        const menu = menuCtrl.get(this.menu);
-        if (menu && menu.isActive()) {
-          this.visible = true;
-          return;
-        }
+  async updateVisibility() {
+    const menuCtrl = await getMenuController();
+    if (menuCtrl) {
+      const menu = menuCtrl.get(this.menu);
+      if (menu && menu.isActive()) {
+        this.visible = true;
+        return;
       }
-      this.visible = false;
-    });
+    }
+    this.visible = false;
   }
 
   hostData() {
@@ -62,10 +60,10 @@ export class MenuToggle {
 
 }
 
-function getMenuController(): Promise<HTMLIonMenuControllerElement> {
+function getMenuController(): Promise<HTMLIonMenuControllerElement|undefined> {
   const menuControllerElement = document.querySelector('ion-menu-controller');
   if (!menuControllerElement) {
-    return Promise.resolve(null);
+    return Promise.resolve(undefined);
   }
   return menuControllerElement.componentOnReady();
 }

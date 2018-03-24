@@ -53,7 +53,7 @@ export function removeLastOverlay(overlays: OverlayMap) {
   return toRemove ? toRemove.dismiss() : Promise.resolve();
 }
 
-export function present(
+export async function present(
   overlay: OverlayInterface,
   name: string,
   iosEnterAnimation: AnimationBuilder,
@@ -61,7 +61,7 @@ export function present(
   opts?: any
 ) {
   if (overlay.presented) {
-    return Promise.resolve();
+    return;
   }
   overlay.presented = true;
   overlay.willPresent.emit();
@@ -71,12 +71,12 @@ export function present(
     ? overlay.enterAnimation
     : overlay.config.get(name, overlay.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
-  return overlayAnimation(overlay, animationBuilder, overlay.el, opts).then(() => {
-    overlay.didPresent.emit();
-  });
+  await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
+
+  overlay.didPresent.emit();
 }
 
-export function dismiss(
+export async function dismiss(
   overlay: OverlayInterface,
   data: any|undefined,
   role: string|undefined,
@@ -86,7 +86,7 @@ export function dismiss(
   opts?: any
 ): Promise<void> {
   if (!overlay.presented) {
-    return Promise.resolve();
+    return;
   }
   overlay.presented = false;
 
@@ -96,36 +96,35 @@ export function dismiss(
     ? overlay.leaveAnimation
     : overlay.config.get(name, overlay.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-  return overlayAnimation(overlay, animationBuilder, overlay.el, opts).then(() => {
-    overlay.didDismiss.emit({data, role});
-    overlay.el.remove();
-  });
+  await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
+
+  overlay.didDismiss.emit({data, role});
+  overlay.el.remove();
 }
 
 
-function overlayAnimation(
+async function overlayAnimation(
   overlay: OverlayInterface,
   animationBuilder: AnimationBuilder,
   baseEl: HTMLElement,
   opts: any
 ): Promise<void> {
+  if (overlay.keyboardClose) {
+    closeKeyboard();
+  }
   if (overlay.animation) {
     overlay.animation.destroy();
     overlay.animation = undefined;
   }
-  if (overlay.keyboardClose) {
-    closeKeyboard();
+  const animation = overlay.animation = await overlay.animationCtrl.create(animationBuilder, baseEl, opts);
+  overlay.animation = animation;
+  if (!overlay.willAnimate) {
+    animation.duration(0);
   }
-  return overlay.animationCtrl.create(animationBuilder, baseEl, opts).then(animation => {
-    overlay.animation = animation;
-    if (!overlay.willAnimate) {
-      animation.duration(0);
-    }
-    return animation.playAsync();
-  }).then(animation => {
-    animation.destroy();
-    overlay.animation = undefined;
-  });
+  await animation.playAsync();
+
+  animation.destroy();
+  overlay.animation = undefined;
 }
 
 export function autoFocus(containerEl: HTMLElement): HTMLElement|null {

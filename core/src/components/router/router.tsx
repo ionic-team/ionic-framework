@@ -80,29 +80,26 @@ export class Router {
   }
 
   @Method()
-  navChanged(isPop: boolean): Promise<boolean> {
+  async navChanged(isPop: boolean): Promise<boolean> {
     if (this.busy) {
-      return Promise.resolve(false);
+      return false;
     }
     console.debug('[IN] nav changed -> update URL');
     const { ids, pivot } = readNavState(document.body);
     const chain = routerIDsToChain(ids, this.routes);
     if (!chain) {
       console.warn('no matching URL for ', ids.map(i => i.id));
-      return Promise.resolve(false);
+      return false;
     }
 
     const path = chainToPath(chain);
     this.setPath(path, isPop);
 
-    const promise = (chain.length > ids.length)
-      ? this.writeNavState(pivot, chain.slice(ids.length), 0)
-      : Promise.resolve(true);
-
-    return promise.then(() => {
-      this.emitRouteChange(path, null);
-      return true;
-    });
+    if (chain.length > ids.length) {
+      await this.writeNavState(pivot, chain.slice(ids.length), 0);
+    }
+    this.emitRouteChange(path, null);
+    return true;
   }
 
   @Method()
@@ -113,9 +110,9 @@ export class Router {
     return this.writeNavStateRoot(path, backDirection ? -1 : 1);
   }
 
-  private writeNavStateRoot(path: string[], direction: number): Promise<boolean> {
+  private async writeNavStateRoot(path: string[], direction: number): Promise<boolean> {
     if (this.busy) {
-      return Promise.resolve(false);
+      return false;
     }
     const redirect = routeRedirect(path, this.redirects);
     let redirectFrom: string[] = null;
@@ -125,23 +122,26 @@ export class Router {
       path = redirect.to;
     }
     const chain = routerPathToChain(path, this.routes);
-    return this.writeNavState(document.body, chain, direction).then(changed => {
-      if (changed) {
-        this.emitRouteChange(path, redirectFrom);
-      }
-      return changed;
-    });
+    const changed = await this.writeNavState(document.body, chain, direction);
+    if (changed) {
+      this.emitRouteChange(path, redirectFrom);
+    }
+    return changed;
   }
 
-  private writeNavState(node: any, chain: RouteChain, direction: number): Promise<boolean> {
+  private async writeNavState(node: any, chain: RouteChain, direction: number): Promise<boolean> {
     if (this.busy) {
-      return Promise.resolve(false);
+      return false;
     }
-    this.busy = true;
-    return writeNavState(node, chain, 0, direction).then(changed => {
+    try {
+      this.busy = true;
+      const changed = await writeNavState(node, chain, 0, direction);
       this.busy = false;
       return changed;
-    });
+    } catch (e) {
+      this.busy = false;
+      throw e;
+    }
   }
 
   private setPath(path: string[], isPop: boolean) {
