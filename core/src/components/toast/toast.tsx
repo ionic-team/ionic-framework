@@ -22,6 +22,8 @@ import mdLeaveAnimation from './animations/md.leave';
 })
 export class Toast implements OverlayInterface {
 
+  private durationTimeout: any;
+
   presented = false;
 
   @Element() el: HTMLElement;
@@ -142,12 +144,12 @@ export class Toast implements OverlayInterface {
    * Present the toast overlay after it has been created.
    */
   @Method()
-  present(): Promise<void> {
-    return present(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position).then(() => {
-      if (this.duration) {
-        setTimeout(() => this.dismiss(), this.duration);
-      }
-    });
+  async present(): Promise<void> {
+    await present(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
+
+    if (this.duration > 0) {
+      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
+    }
   }
 
   /**
@@ -155,6 +157,9 @@ export class Toast implements OverlayInterface {
    */
   @Method()
   dismiss(data?: any, role?: string): Promise<void> {
+    if (this.durationTimeout) {
+      clearTimeout(this.durationTimeout);
+    }
     return dismiss(this, data, role, 'toastLeave', iosLeaveAnimation, mdLeaveAnimation, this.position);
   }
 
