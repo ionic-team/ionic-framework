@@ -1,4 +1,5 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { FrameworkDelegate, attachComponent } from '../../utils/framework-delegate';
 
 @Component({
   tag: 'ion-tab'
@@ -13,6 +14,7 @@ export class Tab {
   @Prop({ mutable: true }) active = false;
 
   @Prop() btnId: string;
+  @Prop() delegate: FrameworkDelegate;
 
   /**
    * The title of the tab.
@@ -104,16 +106,15 @@ export class Tab {
   }
 
   @Method()
-  setActive(): Promise<void> {
-    return this.prepareLazyLoaded().then(() => {
-      this.active = true;
-    });
+  async setActive(): Promise<void> {
+    await this.prepareLazyLoaded();
+    this.active = true;
   }
 
   private prepareLazyLoaded(): Promise<HTMLElement|void> {
     if (!this.loaded && this.component) {
       this.loaded = true;
-      return attachViewToDom(this.el, this.component);
+      return attachComponent(this.delegate, this.el, this.component, ['ion-page']);
     }
     return Promise.resolve();
   }
@@ -128,15 +129,4 @@ export class Tab {
       }
     };
   }
-
-}
-
-function attachViewToDom(container: HTMLElement, cmp: string): Promise<HTMLElement> {
-  const el = document.createElement(cmp) as HTMLStencilElement;
-  el.classList.add('ion-page');
-  container.appendChild(el);
-  if (el.componentOnReady) {
-    return el.componentOnReady();
-  }
-  return Promise.resolve(el);
 }
