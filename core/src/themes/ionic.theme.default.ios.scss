@@ -22,7 +22,8 @@ $alpha-ios-border-high:                       css-var($alpha-border-high, alpha-
 $alpha-ios-disabled:                          css-var($alpha-disabled, alpha-ios-disabled) !default;
 $alpha-ios-focused:                           css-var($alpha-focused, alpha-ios-focused) !default;
 $alpha-ios-hover:                             css-var($alpha-hover, alpha-ios-hover) !default;
-$alpha-ios-lowest:                            css-var($alpha-lowest, alpha-ios-lowest) !default;
+$alpha-ios-input:                             css-var($alpha-input, alpha-ios-input) !default;
+$alpha-ios-lowest:                            css-var($alpha-lowest, alpha-ios-lowest) !default
 $alpha-ios-low:                               css-var($alpha-low, alpha-ios-low) !default;
 $alpha-ios-medium:                            css-var($alpha-medium, alpha-ios-medium) !default;
 $alpha-ios-high:                              css-var($alpha-high, alpha-ios-high) !default;
@@ -95,7 +96,7 @@ $overlay-ios-background-color:                css-var(#f9f9f9, overlay-ios-backg
 $tabbar-ios-background-color:                 css-var($tabbar-background-color, tabbar-ios-background-color) !default;
 $tabbar-ios-background-color-focused:         css-var($tabbar-background-color-focused, tabbar-ios-background-color-focused) !default;
 $tabbar-ios-translucent-background-color:     css-var(rgb(248,248,248), tabbar-ios-translucent-background-color, $alpha-ios-high) !default; // TODO: @color-mod: remove
-$tabbar-ios-border-color:                     css-var(rgb(0, 0, 0), tabbar-ios-border-color, $alpha-ios-border-medium) !default; // TODO: @color-mod($border-ios-color, a($alpha-ios-low))
+$tabbar-ios-border-color:                     css-var(rgb(0, 0, 0), tabbar-ios-border-color, $alpha-ios-border-medium) !default; // TODO: @color-mod
 $tabbar-ios-text-color:                       css-var($tabbar-text-color, tabbar-ios-text-color) !default;
 $tabbar-ios-text-color-active:                css-var(ion-color($colors-ios, primary, base, ios), tabbar-ios-text-color-active) !default;
 
@@ -105,7 +106,7 @@ $toolbar-ios-height:                          44px !default;
 $toolbar-ios-padding:                         4px !default;
 $toolbar-ios-background-color:                css-var($toolbar-background-color, toolbar-ios-background-color) !default;
 $toolbar-ios-translucent-background-color:    css-var(rgb(248,248,248), toolbar-ios-translucent-background-color, $alpha-ios-high) !default; // TODO: @color-mod: remove
-$toolbar-ios-border-color:                    css-var(rgb(0, 0, 0), toolbar-ios-border-color, $alpha-ios-border-medium) !default; // TODO: @color-mod($border-ios-color, a($alpha-ios-low))
+$toolbar-ios-border-color:                    css-var(rgb(0, 0, 0), toolbar-ios-border-color, $alpha-ios-border-medium) !default; // TODO: @color-mod
 $toolbar-ios-color-active:                    css-var(ion-color($colors-ios, primary, base, ios), toolbar-ios-color-active) !default;
 $toolbar-ios-color-inactive:                  css-var($toolbar-color-inactive, toolbar-ios-color-inactive) !default;
 $toolbar-ios-text-color:                      css-var($toolbar-text-color, toolbar-ios-text-color) !default;

@@ -35,6 +35,9 @@ export const THEME_VARIABLES: ThemeVariable[] = [
     property: '--ion-alpha-hover'
   },
   {
+    property: '--ion-alpha-input'
+  },
+  {
     property: '--ion-alpha-lowest'
   },
   {
@@ -558,7 +561,10 @@ export const THEME_VARIABLES: ThemeVariable[] = [
     }
   },
   {
-    property: '--ion-tabbar-background-color'
+    property: '--ion-tabbar-background-color',
+    quickPick: {
+      text: 'tab-bg'
+    }
   },
   {
     property: '--ion-tabbar-background-color-focused'
@@ -567,13 +573,19 @@ export const THEME_VARIABLES: ThemeVariable[] = [
     property: '--ion-tabbar-border-color'
   },
   {
-    property: '--ion-tabbar-text-color'
+    property: '--ion-tabbar-text-color',
+    quickPick: {
+      text: 'tab-txt'
+    }
   },
   {
     property: '--ion-tabbar-text-color-active'
   },
   {
-    property: '--ion-toolbar-background-color'
+    property: '--ion-toolbar-background-color',
+    quickPick: {
+      text: 'tb-bg'
+    }
   },
   {
     property: '--ion-toolbar-border-color'
@@ -585,10 +597,16 @@ export const THEME_VARIABLES: ThemeVariable[] = [
     property: '--ion-toolbar-color-inactive'
   },
   {
-    property: '--ion-toolbar-text-color'
+    property: '--ion-toolbar-text-color',
+    quickPick: {
+      text: 'tb-txt'
+    }
   },
   {
-    property: '--ion-item-background-color'
+    property: '--ion-item-background-color',
+    quickPick: {
+      text: 'i-bg'
+    }
   },
   {
     property: '--ion-item-background-color-active'
@@ -597,7 +615,10 @@ export const THEME_VARIABLES: ThemeVariable[] = [
     property: '--ion-item-border-color'
   },
   {
-    property: '--ion-item-text-color'
+    property: '--ion-item-text-color',
+    quickPick: {
+      text: 'i-txt'
+    }
   },
   {
     property: '--ion-placeholder-text-color'

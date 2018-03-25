@@ -8,7 +8,8 @@
   --ion-alpha-disabled: .5;
   --ion-alpha-focused: .25;
   --ion-alpha-hover: .1;
-  --ion-alpha-lowest: .07;
+  --ion-alpha-input: .07;
+  --ion-alpha-lowest: .1;
   --ion-alpha-low: .25;
   --ion-alpha-medium: .5;
   --ion-alpha-high: .8;
