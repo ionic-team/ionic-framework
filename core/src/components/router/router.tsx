@@ -5,8 +5,6 @@ import { readNavState, writeNavState } from './utils/dom';
 import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
 import { RouteChain, RouteRedirect, RouterDirection, RouterEventDetail } from './utils/interfaces';
 import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matching';
-import { printRoutes } from './utils/debug';
-
 
 @Component({
   tag: 'ion-router'
@@ -52,8 +50,7 @@ export class Router {
     }
     const tree = readRoutes(this.el);
     this.routes = flattenRouterTree(tree);
-
-    printRoutes(this.routes);
+    console.debug('[ion-router] route data changed', this.routes);
 
     // schedule write
     if (this.timer) {

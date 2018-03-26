@@ -2,7 +2,7 @@ import { generatePath } from './path';
 import { RouteChain } from './interfaces';
 
 export function printRoutes(routes: RouteChain[]) {
-  console.debug('%c[@ionic/core]', 'font-weight: bold', `ion-router registered ${routes.length} routes`);
+  console.debug('%c[ion-core]', 'font-weight: bold', `registered ${routes.length} routes`);
   for (const chain of routes) {
     const path: string[] = [];
     chain.forEach(r => path.push(...r.path));
