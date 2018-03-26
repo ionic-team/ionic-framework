@@ -23,3 +23,23 @@ closeAndLock:
   close: true
   lock: true
   dryRun: false
+  
+stale:
+  days: 365 
+  maxIssuesPerRun: 100
+  exemptLabels:
+    - good first issue
+    - triage
+  exemptProjects: true
+  exemptMilestones: true
+  label: "ionitron: stale issue"
+  message: >
+    Thanks for the issue! This issue is being closed due to inactivity. If this is still
+    an issue with the latest version of Ionic, please create a new issue and ensure the
+    template is fully filled out.
+
+
+    Thank you for using Ionic!
+  close: true
+  lock: true
+  dryRun: true
