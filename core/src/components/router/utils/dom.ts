@@ -6,7 +6,7 @@ export async function writeNavState(root: HTMLElement|undefined, chain: RouteCha
 
   // make sure we can continue interating the DOM, otherwise abort
   if (!chain || index >= chain.length || !outlet) {
-    return direction === 0;
+    return changed;
   }
   await outlet.componentOnReady();
 
