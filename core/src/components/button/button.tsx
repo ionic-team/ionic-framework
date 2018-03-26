@@ -33,7 +33,7 @@ export class Button {
    * The type of button.
    * Possible values are: `"button"`, `"bar-button"`.
    */
-  @Prop() buttonType = 'button';
+  @Prop({mutable: true}) buttonType = 'button';
 
   /**
    * The button size.
@@ -92,6 +92,12 @@ export class Button {
    * Emitted when the button loses focus.
    */
   @Event() ionBlur: EventEmitter<BlurEvent>;
+
+  componentWillLoad() {
+    if (this.el.closest('ion-buttons')) {
+      this.buttonType = 'bar-button';
+    }
+  }
 
   onFocus() {
     this.ionFocus.emit();

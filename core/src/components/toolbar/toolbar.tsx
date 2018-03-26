@@ -40,13 +40,6 @@ export class Toolbar {
    */
   @Prop() translucent = false;
 
-  componentDidLoad() {
-    const buttons = this.el.querySelectorAll('ion-button');
-    for (let i = 0; i < buttons.length; i++) {
-      buttons[i].buttonType = 'bar-button';
-    }
-  }
-
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'toolbar-translucent') : {};
 
