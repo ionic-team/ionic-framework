@@ -20,11 +20,12 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
-    "build": "npm run clean && npm run compile && npm run clean-generated",
+    "build": "npm run clean && npm run compile && npm run clean-generated && npm run ionic-core",
     "build.link": "npm run build && node scripts/link-copy.js",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
     "compile": "./node_modules/.bin/ngc",
+    "ionic-core": "stencil build --dev",
     "lint": "tslint --project .",
     "tsc": "tsc -p ."
   },
@@ -34,6 +35,7 @@
     "dist/"
   ],
   "devDependencies": {
+    "@angular/animations": "latest",
     "@angular/common": "latest",
     "@angular/compiler": "latest",
     "@angular/compiler-cli": "latest",
@@ -43,19 +45,19 @@
     "@angular/platform-browser": "latest",
     "@angular/platform-browser-dynamic": "latest",
     "@angular/router": "latest",
-    "@ionic/core": "latest",
+    "@ionic/core": "^0.1.4",
+    "@stencil/core": "^0.7.8",
     "chalk": "^2.3.2",
     "execa": "^0.9.0",
     "fs-extra": "^5.0.0",
     "glob": "7.1.2",
     "inquirer": "^5.1.0",
     "listr": "^0.13.0",
-    "rimraf": "^2.6.2",
-    "rxjs": "5.5.2",
+    "rxjs": "^5.5.2",
     "semver": "^5.5.0",
     "tslint": "^5.8.0",
     "tslint-ionic-rules": "0.0.13",
     "typescript": "^2.6.2",
-    "zone.js": "0.8.18"
+    "zone.js": "^0.8.18"
   }
 }
