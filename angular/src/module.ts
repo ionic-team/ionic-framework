@@ -1,30 +1,22 @@
+import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  APP_INITIALIZER,
-  CUSTOM_ELEMENTS_SCHEMA,
-  ModuleWithProviders,
-  NgModule
-} from '@angular/core';
 
+// inputs
 import { BooleanValueAccessor } from './control-value-accessors/boolean-value-accessor';
 import { NumericValueAccessor } from './control-value-accessors/numeric-value-accesssor';
 import { RadioValueAccessor } from './control-value-accessors/radio-value-accessor';
 import { SelectValueAccessor } from './control-value-accessors/select-value-accessor';
 import { TextValueAccessor } from './control-value-accessors/text-value-accessor';
 
-/* Navigation */
-import { IonNav } from './navigation/ion-nav';
+// navigation
+import { Nav } from './navigation/ion-nav';
+import { Tab } from './navigation/ion-tab';
+import { Tabs } from './navigation/ion-tabs';
+
+// router
 import { IonRouterOutlet } from './navigation/ion-router-outlet';
-import { IonTab } from './navigation/ion-tab';
-import { IonTabs } from './navigation/ion-tabs';
 
-/* Directives */
-import { VirtualScroll } from './directives/virtual-scroll';
-import { VirtualItem } from './directives/virtual-item';
-import { VirtualHeader } from './directives/virtual-header';
-import { VirtualFooter } from './directives/virtual-footer';
-
-/* Providers */
+// providers
 import { AngularDelegate } from './providers/angular-delegate';
 import { ActionSheetController } from './providers/action-sheet-controller';
 import { AlertController } from './providers/alert-controller';
@@ -37,28 +29,306 @@ import { Platform } from './providers/platform';
 import { PopoverController } from './providers/popover-controller';
 import { ToastController } from './providers/toast-controller';
 
+// directives
+import { Icon } from './directives/icon';
+import { VirtualScroll } from './directives/virtual-scroll';
+import { VirtualItem } from './directives/virtual-item';
+import { VirtualHeader } from './directives/virtual-header';
+import { VirtualFooter } from './directives/virtual-footer';
+
+// directive proxies
+import {
+  Anchor,
+  App,
+  Avatar,
+  BackButton,
+  Backdrop,
+  Badge,
+  Button,
+  Buttons,
+  Card,
+  CardContent,
+  CardHeader,
+  CardSubtitle,
+  CardTitle,
+  Checkbox,
+  Chip,
+  ChipButton,
+  Col,
+  Content,
+  CordovaPlatform,
+  Datetime,
+  Fab,
+  FabButton,
+  FabList,
+  Footer,
+  Gesture,
+  GestureController,
+  Grid,
+  Header,
+  HideWhen,
+  InfiniteScroll,
+  InfiniteScrollContent,
+  Input,
+  Item,
+  ItemDivider,
+  ItemGroup,
+  ItemOption,
+  ItemOptions,
+  ItemSliding,
+  Label,
+  List,
+  ListHeader,
+  Menu,
+  MenuButton,
+  MenuToggle,
+  NavPop,
+  NavPush,
+  NavSetRoot,
+  Note,
+  Radio,
+  RadioGroup,
+  Range,
+  RangeKnob,
+  Refresher,
+  RefresherContent,
+  Reorder,
+  ReorderGroup,
+  RippleEffect,
+  Route,
+  RouteRedirect,
+  Router,
+  RouterOutlet,
+  Row,
+  Scroll,
+  Searchbar,
+  Segment,
+  SegmentButton,
+  Select,
+  SelectOption,
+  SelectPopover,
+  ShowWhen,
+  SkeletonText,
+  Slide,
+  Slides,
+  Spinner,
+  SplitPane,
+  StatusTap,
+  TabButton,
+  Tabbar,
+  TapClick,
+  Text,
+  Textarea,
+  Thumbnail,
+  Toggle,
+  Toolbar,
+  ToolbarTitle,
+} from './directives/proxies';
+
+
 @NgModule({
   declarations: [
-    BooleanValueAccessor,
-    IonNav,
+    Anchor,
+    App,
+    Avatar,
+    BackButton,
+    Backdrop,
+    Badge,
+    Button,
+    Buttons,
+    Card,
+    CardContent,
+    CardHeader,
+    CardSubtitle,
+    CardTitle,
+    Checkbox,
+    Chip,
+    ChipButton,
+    Col,
+    Content,
+    CordovaPlatform,
+    Datetime,
+    Fab,
+    FabButton,
+    FabList,
+    Footer,
+    Gesture,
+    GestureController,
+    Grid,
+    Header,
+    HideWhen,
+    Icon,
+    InfiniteScroll,
+    InfiniteScrollContent,
+    Input,
+    Item,
+    ItemDivider,
+    ItemGroup,
+    ItemOption,
+    ItemOptions,
+    ItemSliding,
+    Label,
+    List,
+    ListHeader,
+    Menu,
+    MenuButton,
+    MenuToggle,
+    NavPop,
+    NavPush,
+    NavSetRoot,
+    Note,
+    Radio,
+    RadioGroup,
+    Range,
+    RangeKnob,
+    Refresher,
+    RefresherContent,
+    Reorder,
+    ReorderGroup,
+    RippleEffect,
+    Route,
+    RouteRedirect,
+    Router,
+    RouterOutlet,
+    Row,
+    Scroll,
+    Searchbar,
+    Segment,
+    SegmentButton,
+    Select,
+    SelectOption,
+    SelectPopover,
+    ShowWhen,
+    SkeletonText,
+    Slide,
+    Slides,
+    Spinner,
+    SplitPane,
+    StatusTap,
+    TabButton,
+    Tabbar,
+    TapClick,
+    Text,
+    Textarea,
+    Thumbnail,
+    Toggle,
+    Toolbar,
+    ToolbarTitle,
+
+    // navigation
+    Nav,
+    Tab,
+    Tabs,
+
+    // router
     IonRouterOutlet,
-    IonTab,
-    IonTabs,
+
+    // inputs
+    BooleanValueAccessor,
     NumericValueAccessor,
     RadioValueAccessor,
     SelectValueAccessor,
     TextValueAccessor,
+
+    // directives
     VirtualScroll,
     VirtualItem,
     VirtualHeader,
     VirtualFooter,
   ],
   exports: [
+    Anchor,
+    App,
+    Avatar,
+    BackButton,
+    Backdrop,
+    Badge,
+    Button,
+    Buttons,
+    Card,
+    CardContent,
+    CardHeader,
+    CardSubtitle,
+    CardTitle,
+    Checkbox,
+    Chip,
+    ChipButton,
+    Col,
+    Content,
+    CordovaPlatform,
+    Datetime,
+    Fab,
+    FabButton,
+    FabList,
+    Footer,
+    Gesture,
+    GestureController,
+    Grid,
+    Header,
+    HideWhen,
+    Icon,
+    InfiniteScroll,
+    InfiniteScrollContent,
+    Input,
+    Item,
+    ItemDivider,
+    ItemGroup,
+    ItemOption,
+    ItemOptions,
+    ItemSliding,
+    Label,
+    List,
+    ListHeader,
+    Menu,
+    MenuButton,
+    MenuToggle,
+    NavPop,
+    NavPush,
+    NavSetRoot,
+    Note,
+    Radio,
+    RadioGroup,
+    Range,
+    RangeKnob,
+    Refresher,
+    RefresherContent,
+    Reorder,
+    ReorderGroup,
+    RippleEffect,
+    Route,
+    RouteRedirect,
+    Router,
+    RouterOutlet,
+    Row,
+    Scroll,
+    Searchbar,
+    Segment,
+    SegmentButton,
+    Select,
+    SelectOption,
+    SelectPopover,
+    ShowWhen,
+    SkeletonText,
+    Slide,
+    Slides,
+    Spinner,
+    SplitPane,
+    StatusTap,
+    TabButton,
+    Tabbar,
+    TapClick,
+    Text,
+    Textarea,
+    Thumbnail,
+    Toggle,
+    Toolbar,
+    ToolbarTitle,
+
     BooleanValueAccessor,
-    IonNav,
+    Nav,
     IonRouterOutlet,
-    IonTab,
-    IonTabs,
+    Tab,
+    Tabs,
     NumericValueAccessor,
     RadioValueAccessor,
     SelectValueAccessor,
@@ -76,15 +346,12 @@ import { ToastController } from './providers/toast-controller';
   ],
   imports: [
     CommonModule,
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
-export class IonicAngularModule {
+export class IonicModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: IonicAngularModule,
+      ngModule: IonicModule,
       providers: [
         AlertController,
         ActionSheetController,

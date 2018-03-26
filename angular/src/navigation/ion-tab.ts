@@ -4,7 +4,7 @@ import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 @Directive({
   selector: 'ion-tab'
 })
-export class IonTab implements OnInit {
+export class Tab implements OnInit {
 
   @Input() tabLink: string;
 

@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Input, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { setIonicClasses } from './util/set-ionic-classes';
@@ -20,24 +20,24 @@ export class RadioValueAccessor implements ControlValueAccessor {
   onChange: (value: any) => void;
   onTouched: () => void;
 
-  constructor(private element: ElementRef, private renderer: Renderer2) {
+  constructor(private element: ElementRef) {
     this.onChange = () => {/**/};
     this.onTouched = () => {/**/};
   }
 
   writeValue(value: any) {
-    this.renderer.setProperty(
-      this.element.nativeElement,
-      'checked',
-      value === this.value
-    );
-    setIonicClasses(this.element);
+    this.element.nativeElement.checked = this.value = value;
+
+    requestAnimationFrame(() => {
+      setIonicClasses(this.element);
+    });
   }
 
   @HostListener('ionSelect', ['$event.target.checked'])
   _handleIonSelect(value: any) {
     this.onChange(value);
-    setTimeout(() => {
+
+    requestAnimationFrame(() => {
       setIonicClasses(this.element);
     });
   }
@@ -45,26 +45,23 @@ export class RadioValueAccessor implements ControlValueAccessor {
   @HostListener('ionBlur')
   _handleBlurEvent() {
     this.onTouched();
-    setTimeout(() => {
+
+    requestAnimationFrame(() => {
       setIonicClasses(this.element);
     });
   }
 
-  registerOnChange(fn: (value: any) => void): void {
+  registerOnChange(fn: (value: any) => void) {
     this.onChange = () => {
       fn(this.value);
     };
   }
 
-  registerOnTouched(fn: () => void): void {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    this.renderer.setProperty(
-      this.element.nativeElement,
-      'disabled',
-      isDisabled
-    );
+  setDisabledState(isDisabled: boolean) {
+    this.element.nativeElement.disabled = isDisabled;
   }
 }

@@ -1,10 +1,8 @@
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { setIonicClasses } from './util/set-ionic-classes';
 
-// NOTE: May need to look at this to see if we need anything else:
-// https://github.com/angular/angular/blob/5.0.2/packages/forms/src/directives/select_control_value_accessor.ts#L28-L158
 @Directive({
   /* tslint:disable-next-line:directive-selector */
   selector: 'ion-range, ion-select, ion-radio-group, ion-segment, ion-datetime',
@@ -17,7 +15,8 @@ import { setIonicClasses } from './util/set-ionic-classes';
   ]
 })
 export class SelectValueAccessor implements ControlValueAccessor {
-  constructor(private element: ElementRef, private renderer: Renderer2) {
+
+  constructor(private element: ElementRef) {
     this.onChange = () => {/**/};
     this.onTouched = () => {/**/};
   }
@@ -26,14 +25,18 @@ export class SelectValueAccessor implements ControlValueAccessor {
   onTouched: () => void;
 
   writeValue(value: any) {
-    this.renderer.setProperty(this.element.nativeElement, 'value', value);
-    setIonicClasses(this.element);
+    this.element.nativeElement.value = value;
+
+    requestAnimationFrame(() => {
+      setIonicClasses(this.element);
+    });
   }
 
   @HostListener('ionChange', ['$event.target.value'])
   _handleChangeEvent(value: any) {
     this.onChange(value);
-    setTimeout(() => {
+
+    requestAnimationFrame(() => {
       setIonicClasses(this.element);
     });
   }
@@ -41,7 +44,8 @@ export class SelectValueAccessor implements ControlValueAccessor {
   @HostListener('ionBlur')
   _handleBlurEvent() {
     this.onTouched();
-    setTimeout(() => {
+
+    requestAnimationFrame(() => {
       setIonicClasses(this.element);
     });
   }
@@ -54,11 +58,7 @@ export class SelectValueAccessor implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    this.renderer.setProperty(
-      this.element.nativeElement,
-      'disabled',
-      isDisabled
-    );
+  setDisabledState(isDisabled: boolean) {
+    this.element.nativeElement.disabled = isDisabled;
   }
 }

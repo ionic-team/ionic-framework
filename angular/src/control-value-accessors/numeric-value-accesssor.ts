@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { setIonicClasses } from './util/set-ionic-classes';
@@ -15,7 +15,8 @@ import { setIonicClasses } from './util/set-ionic-classes';
   ]
 })
 export class NumericValueAccessor implements ControlValueAccessor {
-  constructor(private element: ElementRef, private renderer: Renderer2) {
+
+  constructor(private element: ElementRef) {
     this.onChange = () => {/**/};
     this.onTouched = () => {/**/};
   }
@@ -23,49 +24,42 @@ export class NumericValueAccessor implements ControlValueAccessor {
   onChange: (value: any) => void;
   onTouched: () => void;
 
-  writeValue(value: any): void {
+  writeValue(value: any) {
     // The value needs to be normalized for IE9, otherwise it is set to 'null' when null
     // Probably not an issue for us, but it doesn't really cost anything either
-    const normalizedValue = value == null ? '' : value;
-    this.renderer.setProperty(
-      this.element.nativeElement,
-      'value',
-      normalizedValue
-    );
+    this.element.nativeElement.value = value == null ? '' : value;
     setIonicClasses(this.element);
   }
 
   @HostListener('input', ['$event.target.value'])
-  _handleInputEvent(value: any): void {
+  _handleInputEvent(value: any) {
     this.onChange(value);
-    setTimeout(() => {
+
+    requestAnimationFrame(() => {
       setIonicClasses(this.element);
     });
   }
 
   @HostListener('ionBlur')
-  _handleBlurEvent(): void {
+  _handleBlurEvent() {
     this.onTouched();
-    setTimeout(() => {
+
+    requestAnimationFrame(() => {
       setIonicClasses(this.element);
     });
   }
 
-  registerOnChange(fn: (_: number | null) => void): void {
+  registerOnChange(fn: (_: number | null) => void) {
     this.onChange = value => {
       fn(value === '' ? null : parseFloat(value));
     };
   }
 
-  registerOnTouched(fn: () => void): void {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    this.renderer.setProperty(
-      this.element.nativeElement,
-      'disabled',
-      isDisabled
-    );
+  setDisabledState(isDisabled: boolean) {
+    this.element.nativeElement.disabled = isDisabled;
   }
 }

@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 @Directive({
   selector: 'ion-tabs'
 })
-export class IonTabs {
+export class Tabs {
 
   constructor(private router: Router) {}
 

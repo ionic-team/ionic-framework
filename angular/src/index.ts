@@ -1,18 +1,6 @@
-export { IonicAngularModule } from './module';
+export { IonicModule } from './module';
 
-/* Navigation */
-export { IonNav } from './navigation/ion-nav';
-export { IonRouterOutlet } from './navigation/ion-router-outlet';
-export { IonTab } from './navigation/ion-tab';
-export { IonTabs } from './navigation/ion-tabs';
-
-/* Directives */
-export { VirtualScroll } from './directives/virtual-scroll';
-export { VirtualItem } from './directives/virtual-item';
-export { VirtualHeader } from './directives/virtual-header';
-export { VirtualFooter } from './directives/virtual-footer';
-
-/* Providers */
+// providers
 export { AngularDelegate } from './providers/angular-delegate';
 export { ActionSheetController } from './providers/action-sheet-controller';
 export { AlertController } from './providers/alert-controller';
@@ -25,36 +13,109 @@ export { Platform } from './providers/platform';
 export { PopoverController } from './providers/popover-controller';
 export { ToastController } from './providers/toast-controller';
 
+// navigation
+export { Nav } from './navigation/ion-nav';
+export { IonRouterOutlet } from './navigation/ion-router-outlet';
+export { Tab } from './navigation/ion-tab';
+export { Tabs } from './navigation/ion-tabs';
+
+// directives
+export { Icon } from './directives/icon';
+export { VirtualScroll } from './directives/virtual-scroll';
+export { VirtualItem } from './directives/virtual-item';
+export { VirtualHeader } from './directives/virtual-header';
+export { VirtualFooter } from './directives/virtual-footer';
+
+// directive proxies
+export {
+  Anchor,
+  App,
+  Avatar,
+  BackButton,
+  Backdrop,
+  Badge,
+  Button,
+  Buttons,
+  Card,
+  CardContent,
+  CardHeader,
+  CardSubtitle,
+  CardTitle,
+  Checkbox,
+  Chip,
+  ChipButton,
+  Col,
+  Content,
+  CordovaPlatform,
+  Datetime,
+  Fab,
+  FabButton,
+  FabList,
+  Footer,
+  Gesture,
+  GestureController,
+  Grid,
+  Header,
+  HideWhen,
+  InfiniteScroll,
+  InfiniteScrollContent,
+  Input,
+  Item,
+  ItemDivider,
+  ItemGroup,
+  ItemOption,
+  ItemOptions,
+  ItemSliding,
+  Label,
+  List,
+  ListHeader,
+  Menu,
+  MenuButton,
+  MenuToggle,
+  NavPop,
+  NavPush,
+  NavSetRoot,
+  Note,
+  Radio,
+  RadioGroup,
+  Range,
+  RangeKnob,
+  Refresher,
+  RefresherContent,
+  Reorder,
+  ReorderGroup,
+  RippleEffect,
+  Route,
+  RouteRedirect,
+  Router,
+  RouterOutlet,
+  Row,
+  Scroll,
+  Searchbar,
+  Segment,
+  SegmentButton,
+  Select,
+  SelectOption,
+  SelectPopover,
+  ShowWhen,
+  SkeletonText,
+  Slide,
+  Slides,
+  Spinner,
+  SplitPane,
+  StatusTap,
+  TabButton,
+  Tabbar,
+  TapClick,
+  Text,
+  Textarea,
+  Thumbnail,
+  Toggle,
+  Toolbar,
+  ToolbarTitle
+} from './directives/proxies';
+
 export * from './types/interfaces';
 
-
-import { IonicWindow } from './types/interfaces';
-
-const win = (window as IonicWindow);
-const Ionic = win.Ionic;
-
-if (Ionic) {
-  Ionic.ael = function ngAddEventListener(elm, eventName, cb, opts) {
-    if (elm.__zone_symbol__addEventListener) {
-      elm.__zone_symbol__addEventListener(eventName, cb, opts);
-    } else {
-      elm.addEventListener(eventName, cb, opts);
-    }
-  };
-
-  Ionic.rel = function ngRemoveEventListener(elm, eventName, cb, opts) {
-    if (elm.__zone_symbol__removeEventListener) {
-      elm.__zone_symbol__removeEventListener(eventName, cb, opts);
-    } else {
-      elm.removeEventListener(eventName, cb, opts);
-    }
-  };
-
-  Ionic.raf = function ngRequestAnimationFrame(cb: any) {
-    if (win.__zone_symbol__requestAnimationFrame) {
-      win.__zone_symbol__requestAnimationFrame(cb);
-    } else {
-      win.requestAnimationFrame(cb);
-    }
-  };
-}
+/*tslint:disable*/
+import './ionic-angular';
