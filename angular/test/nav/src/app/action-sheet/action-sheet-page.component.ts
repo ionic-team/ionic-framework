@@ -8,7 +8,7 @@ import { ActionSheetController } from '@ionic/angular';
   <ion-app>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Test</ion-title>
+        <ion-title>Action Sheet</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content padding>

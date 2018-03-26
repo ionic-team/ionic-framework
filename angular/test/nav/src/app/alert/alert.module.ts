@@ -1,15 +1,16 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { IonicModule } from '@ionic/angular';
 import { AlertPageComponent } from './alert-page.component';
 import { AlertRoutingModule } from './alert-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    IonicModule,
     AlertRoutingModule
   ],
-  declarations: [AlertPageComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  declarations: [AlertPageComponent]
 })
 export class AlertModule { }

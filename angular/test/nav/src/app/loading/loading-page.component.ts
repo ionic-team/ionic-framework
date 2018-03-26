@@ -8,7 +8,7 @@ import { LoadingController } from '@ionic/angular';
   <ion-app>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Test</ion-title>
+        <ion-title>Loading</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content padding>

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { IonicModule } from '@ionic/angular';
 import { PageOne } from './page-one';
 
 const routes: Routes = [
@@ -8,7 +9,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forChild(routes), IonicModule],
+  exports: [RouterModule, IonicModule]
 })
 export class PageOneRoutingModule { }

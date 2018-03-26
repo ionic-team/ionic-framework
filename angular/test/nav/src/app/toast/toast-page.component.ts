@@ -8,7 +8,7 @@ import { ToastController } from '@ionic/angular';
   <ion-app>
     <ion-header>
       <ion-toolbar>
-        <ion-title>Test</ion-title>
+        <ion-title>Toast</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content padding>

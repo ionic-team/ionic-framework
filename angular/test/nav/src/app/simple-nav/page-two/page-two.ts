@@ -11,12 +11,12 @@ import { Location } from '@angular/common';
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
-      Page Two - {{ts}}
+      Page Two
       <div>
-        <ion-button>Go to Page Three</ion-button>
+        <ion-button [routerLink]="['/simple-nav/page-three/paramOne/paramTwo']">Go to Page Three</ion-button>
       </div>
       <div>
-        <ion-button>Go Back</ion-button>
+        <ion-button [routerLink]="['/simple-nav/page-one']">Go to Page One</ion-button>
       </div>
     </ion-content>
   `

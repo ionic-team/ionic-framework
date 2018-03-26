@@ -1,9 +1,9 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { IonicModule } from '@ionic/angular';
 import { NoRoutingNavPageComponent } from './no-routing-nav.component';
 import { NoRoutingNavRoutingModule } from './no-routing-nav-routing.module';
-import { IonicAngularModule } from '@ionic/angular';
 
 import { PageOne } from './pages/page-one';
 import { PageTwo } from './pages/page-two';
@@ -13,7 +13,7 @@ import { PageThree } from './pages/page-three';
   imports: [
     CommonModule,
     NoRoutingNavRoutingModule,
-    IonicAngularModule,
+    IonicModule,
   ],
   declarations: [
     NoRoutingNavPageComponent,
@@ -25,7 +25,6 @@ import { PageThree } from './pages/page-three';
     PageOne,
     PageTwo,
     PageThree
-  ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  ]
 })
 export class NoRoutingNavModule { }
