@@ -32,43 +32,41 @@ export class Router {
   componentDidLoad() {
     this.init = true;
     console.debug('[ion-router] router did load');
-    this.onRedirectChanged(undefined);
-    this.onRoutesChanged(undefined);
+
+    const tree = readRoutes(this.el);
+    this.routes = flattenRouterTree(tree);
+    this.redirects = readRedirects(this.el);
+    this.writeNavStateRoot(this.getPath(), RouterDirection.None);
   }
 
   @Listen('ionRouteRedirectChanged')
-  protected onRedirectChanged(ev: Event) {
+  protected onRedirectChanged(ev: CustomEvent) {
     if (!this.init) {
       return;
     }
-    if (ev) {
-      console.debug('[ion-router] route data changed', ev.target);
-    }
+    console.debug('[ion-router] redirect data changed', ev.target);
     this.redirects = readRedirects(this.el);
   }
 
   @Listen('ionRouteDataChanged')
-  protected onRoutesChanged(ev: Event) {
+  protected onRoutesChanged(ev: CustomEvent) {
     if (!this.init) {
       return;
     }
     const tree = readRoutes(this.el);
     this.routes = flattenRouterTree(tree);
+    console.debug('[ion-router] route data changed', ev.target, ev.detail);
 
     // schedule write
     if (this.timer) {
       clearTimeout(this.timer);
       this.timer = undefined;
     }
-    if (ev) {
-      console.debug('[ion-router] route data changed', ev.target);
-      this.timer = setTimeout(() => {
-        this.timer = undefined;
-        this.writeNavStateRoot(this.getPath(), RouterDirection.None);
-      });
-    } else {
+    this.timer = setTimeout(() => {
+      this.timer = undefined;
+      console.debug('[ion-router] data changed -> update nav');
       this.writeNavStateRoot(this.getPath(), RouterDirection.None);
-    }
+    }, 100);
   }
 
   @Listen('window:popstate')

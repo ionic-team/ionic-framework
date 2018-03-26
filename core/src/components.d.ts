@@ -4685,7 +4685,7 @@ declare global {
       /**
        * Used internaly by `ion-router` to know when this route did change.
        */
-      'onIonRouteDataChanged'?: (event: CustomEvent) => void;
+      'onIonRouteDataChanged'?: (event: CustomEvent<any>) => void;
       /**
        * Relative path that needs to match in order for this route to apply.
        */
