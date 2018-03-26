@@ -13,7 +13,7 @@ import {
 
 import { ViewController, isViewController } from './view-controller';
 import { Animation, Config, DomController, FrameworkDelegate, GestureDetail, NavOutlet } from '../..';
-import { RouteID, RouteWrite } from '../router/utils/interfaces';
+import { RouteID, RouteWrite, RouterDirection } from '../router/utils/interfaces';
 import { AnimationOptions, ViewLifecycle, lifecycle, transition } from '../../utils/transition';
 import { assert } from '../../utils/helpers';
 
@@ -25,7 +25,6 @@ import mdTransitionAnimation from './animations/md.transition';
 })
 export class NavControllerBase implements NavOutlet {
 
-  private _children: NavControllerBase[] = [];
   private _ids = -1;
   private _init = false;
   private _queue: TransitionInstruction[] = [];
@@ -64,7 +63,7 @@ export class NavControllerBase implements NavOutlet {
     }
   }
 
-  @Event() ionNavChanged: EventEmitter;
+  @Event() ionNavChanged: EventEmitter<void>;
 
   componentWillLoad() {
     this.id = 'n' + (++ctrlIds);
@@ -209,27 +208,31 @@ export class NavControllerBase implements NavOutlet {
 
     let resolve: (result: RouteWrite) => void;
     const promise = new Promise<RouteWrite>((r) => resolve = r);
-
+    let finish: Promise<boolean>;
     const commonOpts: NavOptions = {
+      updateURL: false,
       viewIsReady: () => {
-        let markVisible;
-        const p = new Promise(r => markVisible = r);
+        let mark: Function;
+        const p = new Promise(r => mark = r);
         resolve({
           changed: true,
           element: this.getActive().element,
-          markVisible
+          markVisible: async () => {
+            mark();
+            await finish;
+          }
         });
         return p;
       }
     };
     if (viewController) {
-      this.popTo(viewController, {...commonOpts, direction: NavDirection.back});
+      finish = this.popTo(viewController, {...commonOpts, direction: NavDirection.Back});
     } else if (direction === 1) {
-      this.push(id, params, commonOpts);
+      finish = this.push(id, params, commonOpts);
     } else if (direction === -1) {
-      this.setRoot(id, params, {...commonOpts, direction: NavDirection.back, animate: true});
+      finish = this.setRoot(id, params, {...commonOpts, direction: NavDirection.Back, animate: true});
     } else {
-      this.setRoot(id, params, commonOpts);
+      finish = this.setRoot(id, params, commonOpts);
     }
     return promise;
   }
@@ -242,11 +245,6 @@ export class NavControllerBase implements NavOutlet {
       params: active.data,
       element: active.element
     } : undefined;
-  }
-
-  @Method()
-  getAllChildNavs(): any[] {
-    return this._children.slice();
   }
 
   @Method()
@@ -331,13 +329,6 @@ export class NavControllerBase implements NavOutlet {
     }
     this._init = true;
 
-    const isPop = result.direction === NavDirection.back;
-    if (this.useRouter) {
-      const router = document.querySelector('ion-router');
-      router && router.navChanged(isPop);
-    }
-    this.ionNavChanged.emit({isPop});
-
     if (ti.done) {
       ti.done(
         result.hasCompleted,
@@ -348,6 +339,18 @@ export class NavControllerBase implements NavOutlet {
       );
     }
     ti.resolve(result.hasCompleted);
+
+    if (ti.opts.updateURL !== false && this.useRouter) {
+      const router = document.querySelector('ion-router');
+      if (router) {
+        const direction = (result.direction === NavDirection.Back)
+          ? RouterDirection.Back
+          : RouterDirection.Forward;
+
+        router && router.navChanged(direction);
+      }
+    }
+    this.ionNavChanged.emit();
   }
 
   private _failed(rejectReason: any, ti: TransitionInstruction) {
@@ -528,7 +531,7 @@ export class NavControllerBase implements NavOutlet {
         }
       }
       // default the direction to "back"
-      opts.direction = opts.direction || NavDirection.back;
+      opts.direction = opts.direction || NavDirection.Back;
     }
 
     const finalBalance = this._views.length + (insertViews ? insertViews.length : 0) - (removeCount ? removeCount : 0);
@@ -556,7 +559,7 @@ export class NavControllerBase implements NavOutlet {
 
       if (ti.enteringRequiresTransition) {
         // default to forward if not already set
-        opts.direction = opts.direction || NavDirection.forward;
+        opts.direction = opts.direction || NavDirection.Forward;
       }
     }
 
@@ -757,7 +760,7 @@ export class NavControllerBase implements NavOutlet {
 
     // default the direction to "back";
     const opts: NavOptions = {
-      direction: NavDirection.back,
+      direction: NavDirection.Back,
       progressAnimation: true
     };
 
@@ -809,7 +812,6 @@ export class NavControllerBase implements NavOutlet {
   canSwipeBack(): boolean {
     return (
       this.swipeBackEnabled &&
-      this._children.length === 0 &&
       !this.isTransitioning &&
       this.canGoBack()
     );

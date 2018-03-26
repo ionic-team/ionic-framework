@@ -1,4 +1,5 @@
 import { CssClassMap } from '../index';
+import { RouterDirection } from '../components/router/utils/interfaces';
 
 /**
  * Create the mode and color classes for the component based on the classes passed in
@@ -65,12 +66,12 @@ export function getClassMap(classes: string | undefined): CssClassMap {
   return map;
 }
 
-export function openURL(url: string, ev: Event, isPop = false) {
+export function openURL(url: string, ev: Event, direction = RouterDirection.Forward) {
   if (url && url[0] !== '#' && url.indexOf('://') === -1) {
     const router = document.querySelector('ion-router');
     if (router) {
       ev && ev.preventDefault();
-      return router.componentOnReady().then(() => router.push(url, isPop));
+      return router.componentOnReady().then(() => router.push(url, direction));
     }
   }
   return Promise.resolve();

@@ -34,8 +34,8 @@ export const enum ViewState {
 }
 
 export const enum NavDirection {
-  back = 'back',
-  forward = 'forward'
+  Back = 'back',
+  Forward = 'forward'
 }
 
 export type NavParams = {[key: string]: any};
@@ -58,6 +58,7 @@ export interface NavOptions {
   keyboardClose?: boolean;
   progressAnimation?: boolean;
   ev?: any;
+  updateURL?: boolean;
   delegate?: FrameworkDelegate;
   viewIsReady?: () => Promise<any>;
 }

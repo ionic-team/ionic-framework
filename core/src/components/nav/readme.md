@@ -72,9 +72,6 @@ boolean
 #### getActive()
 
 
-#### getAllChildNavs()
-
-
 #### getByIndex()
 
 

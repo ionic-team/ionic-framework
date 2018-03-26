@@ -1,4 +1,4 @@
-import { RouteChain } from './interfaces';
+import { RouteChain, RouterDirection } from './interfaces';
 
 export function generatePath(segments: string[]): string {
   const path = segments
@@ -8,14 +8,14 @@ export function generatePath(segments: string[]): string {
   return '/' + path;
 }
 
-export function chainToPath(chain: RouteChain): string[] {
+export function chainToPath(chain: RouteChain): string[]|null {
   const path = [];
   for (const route of chain) {
     for (const segment of route.path) {
       if (segment[0] === ':') {
         const param = route.params && route.params[segment.slice(1)];
         if (!param) {
-          throw new Error(`missing param ${segment.slice(1)}`);
+          return null;
         }
         path.push(param);
       } else if (segment !== '') {
@@ -26,17 +26,16 @@ export function chainToPath(chain: RouteChain): string[] {
   return path;
 }
 
-export function writePath(history: History, base: string, usePath: boolean, path: string[], isPop: boolean, state: number) {
+export function writePath(history: History, base: string, usePath: boolean, path: string[], direction: RouterDirection, state: number) {
   path = [base, ...path];
   let url = generatePath(path);
   if (usePath) {
     url = '#' + url;
   }
-  if (isPop) {
-    // history.back();
-    history.replaceState(state, '', url);
-  } else {
+  if (direction === RouterDirection.Forward) {
     history.pushState(state, '', url);
+  } else {
+    history.replaceState(state, '', url);
   }
 }
 

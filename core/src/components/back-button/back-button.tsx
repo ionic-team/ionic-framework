@@ -1,6 +1,7 @@
 import { Component, Element, Prop } from '@stencil/core';
 import { Config } from '../../index';
 import { openURL } from '../../utils/theme';
+import { RouterDirection } from '../router/utils/interfaces';
 
 @Component({
   tag: 'ion-back-button',
@@ -41,7 +42,7 @@ export class BackButton {
       ev.preventDefault();
       nav.pop();
     } else if (this.defaultHref) {
-      openURL(this.defaultHref, ev, true);
+      openURL(this.defaultHref, ev, RouterDirection.Back);
     }
   }
 

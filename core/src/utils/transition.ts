@@ -121,7 +121,7 @@ function fireDidEvents(enteringEl: HTMLElement, leavingEl: HTMLElement) {
 
 function setZIndex(enteringEl: HTMLElement, leavingEl: HTMLElement, direction: NavDirection) {
   if (enteringEl) {
-    enteringEl.style.zIndex = (direction === NavDirection.back)
+    enteringEl.style.zIndex = (direction === NavDirection.Back)
       ? '99'
       : '101';
   }

@@ -1,6 +1,6 @@
 import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 import { Config, NavOutlet } from '../../index';
-import { RouteID, RouteWrite } from '../router/utils/interfaces';
+import { RouteID, RouteWrite, RouterDirection } from '../router/utils/interfaces';
 
 
 @Component({
@@ -68,7 +68,7 @@ export class Tabs implements NavOutlet {
    * Emitted when the tab changes.
    */
   @Event() ionChange: EventEmitter;
-  @Event() ionNavChanged: EventEmitter<any>;
+  @Event() ionNavChanged: EventEmitter<void>;
 
   componentWillLoad() {
     this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
@@ -105,7 +105,8 @@ export class Tabs implements NavOutlet {
     }
     await this.setActive(selectedTab);
     await this.notifyRouter();
-    return this.tabSwitch();
+    await this.tabSwitch();
+    return true;
   }
 
   @Method()
@@ -119,7 +120,7 @@ export class Tabs implements NavOutlet {
     return {
       changed: true,
       element: this.selectedTab,
-      markVisible: () => { this.tabSwitch(); }
+      markVisible: () => this.tabSwitch(),
     };
   }
 
@@ -220,14 +221,14 @@ export class Tabs implements NavOutlet {
     return selectedTab.setActive();
   }
 
-  private tabSwitch(): boolean {
+  private tabSwitch() {
     const selectedTab = this.selectedTab;
     const leavingTab = this.leavingTab;
 
     this.leavingTab = undefined;
     this.transitioning = false;
     if (!selectedTab) {
-      return false;
+      return;
     }
 
     selectedTab.selected = true;
@@ -236,17 +237,15 @@ export class Tabs implements NavOutlet {
         leavingTab.active = false;
       }
       this.ionChange.emit(selectedTab);
-      this.ionNavChanged.emit({isPop: false});
-      return true;
+      this.ionNavChanged.emit();
     }
-    return false;
   }
 
   private notifyRouter() {
     if (this.useRouter) {
       const router = document.querySelector('ion-router');
       if (router) {
-        return router.navChanged(false);
+        return router.navChanged(RouterDirection.Forward);
       }
     }
     return Promise.resolve(false);

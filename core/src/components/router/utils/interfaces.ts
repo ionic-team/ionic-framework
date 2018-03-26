@@ -10,6 +10,12 @@ export interface RouterEventDetail {
   to: string;
 }
 
+export const enum RouterDirection {
+  None = 0,
+  Forward = 1,
+  Back = -1,
+}
+
 export interface RouteRedirect {
   from: string[];
   to: string[]|undefined;

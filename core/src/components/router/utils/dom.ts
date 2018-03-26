@@ -1,6 +1,6 @@
-import { NavOutlet, NavOutletElement, RouteChain, RouteID } from './interfaces';
+import { NavOutlet, NavOutletElement, RouteChain, RouteID, RouterDirection } from './interfaces';
 
-export async function writeNavState(root: HTMLElement|undefined, chain: RouteChain|null, index: number, direction: number): Promise<boolean> {
+export async function writeNavState(root: HTMLElement|undefined, chain: RouteChain|null, direction: RouterDirection, index: number): Promise<boolean> {
   // find next navigation outlet in the DOM
   const outlet = searchNavNode(root);
 
@@ -16,11 +16,11 @@ export async function writeNavState(root: HTMLElement|undefined, chain: RouteCha
   // if the outlet changed the page, reset navigation to neutral (no direction)
   // this means nested outlets will not animate
   if (result.changed) {
-    direction = 0;
+    direction = RouterDirection.None;
   }
 
   // recursivelly set nested outlets
-  const changed = await writeNavState(result.element, chain, index + 1, direction);
+  const changed = await writeNavState(result.element, chain, direction, index + 1);
 
   // once all nested outlets are visible let's make the parent visible too,
   // using markVisible prevents flickering
@@ -30,14 +30,14 @@ export async function writeNavState(root: HTMLElement|undefined, chain: RouteCha
   return changed;
 }
 
-export function readNavState(root: HTMLElement) {
+export function readNavState(root: HTMLElement | null) {
   const ids: RouteID[] = [];
-  let pivot: NavOutlet|null;
-  let node: HTMLElement|undefined = root;
+  let outlet: NavOutlet|null;
+  let node: HTMLElement|null = root;
   while (true) {
-    pivot = searchNavNode(node);
-    if (pivot) {
-      const id = pivot.getRouteId();
+    outlet = searchNavNode(node);
+    if (outlet) {
+      const id = outlet.getRouteId();
       if (id) {
         node = id.element;
         id.element = undefined;
@@ -49,7 +49,7 @@ export function readNavState(root: HTMLElement) {
       break;
     }
   }
-  return {ids, pivot};
+  return {ids, outlet};
 }
 
 const QUERY = ':not([no-router]) ion-nav,:not([no-router]) ion-tabs, :not([no-router]) ion-router-outlet';

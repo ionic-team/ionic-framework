@@ -95,6 +95,7 @@ import {
 } from './components/nav/view-controller';
 import {
   RouteID,
+  RouterDirection,
   RouterEventDetail,
   RouteWrite,
 } from './components/router/utils/interfaces';
@@ -3502,7 +3503,6 @@ declare global {
     'canGoBack': (view?: ViewController) => boolean;
     'delegate': FrameworkDelegate;
     'getActive': () => ViewController;
-    'getAllChildNavs': () => any[];
     'getByIndex': (index: number) => ViewController;
     'getPrevious': (view?: ViewController) => ViewController;
     'getRouteId': () => RouteID;
@@ -3546,7 +3546,7 @@ declare global {
     export interface IonNavAttributes extends HTMLAttributes {
       'animated'?: boolean;
       'delegate'?: FrameworkDelegate;
-      'onIonNavChanged'?: (event: CustomEvent) => void;
+      'onIonNavChanged'?: (event: CustomEvent<void>) => void;
       'root'?: any;
       'rootParams'?: any;
       'swipeBackEnabled'?: boolean;
@@ -4733,8 +4733,8 @@ declare global {
 declare global {
   interface HTMLIonRouterElement extends HTMLStencilElement {
     'base': string;
-    'navChanged': (isPop: boolean) => Promise<boolean>;
-    'push': (url: string, backDirection?: boolean) => Promise<boolean>;
+    'navChanged': (direction: RouterDirection) => Promise<boolean>;
+    'push': (url: string, direction?: RouterDirection) => Promise<boolean>;
     'useHash': boolean;
   }
   var HTMLIonRouterElement: {
@@ -5977,7 +5977,7 @@ declare global {
        * Emitted when the tab changes.
        */
       'onIonChange'?: (event: CustomEvent) => void;
-      'onIonNavChanged'?: (event: CustomEvent<any>) => void;
+      'onIonNavChanged'?: (event: CustomEvent<void>) => void;
       'scrollable'?: boolean;
       /**
        * If true, the tabbar

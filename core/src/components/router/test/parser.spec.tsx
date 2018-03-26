@@ -20,12 +20,12 @@ describe('readRoutes', () => {
     r4.appendChild(r6);
 
     const expected: RouteTree = [
-      { path: [''], id: 'main-page', children: [], params: {router: root} },
-      { path: ['one-page'], id: 'one-page', children: [], params: {router: root} },
-      { path: ['secondpage'], id: 'second-page', params: {router: root}, children: [
-        { path: ['5', 'hola'], id: '4', params: {router: root}, children: [
-          { path: ['path', 'to', 'five'], id: '5', children: [], params: {router: root} },
-          { path: ['path', 'to', 'five2'], id: '6', children: [], params: {router: root} }
+      { path: [''], id: 'main-page', children: [], params: undefined },
+      { path: ['one-page'], id: 'one-page', children: [], params: undefined },
+      { path: ['secondpage'], id: 'second-page', params: undefined, children: [
+        { path: ['5', 'hola'], id: '4', params: undefined, children: [
+          { path: ['path', 'to', 'five'], id: '5', children: [], params: undefined },
+          { path: ['path', 'to', 'five2'], id: '6', children: [], params: undefined }
         ] }
       ] }
     ];
