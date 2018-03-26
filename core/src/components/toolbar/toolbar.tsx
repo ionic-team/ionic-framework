@@ -1,4 +1,4 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
 import { Config } from '../../index';
 
@@ -14,7 +14,6 @@ import { Config } from '../../index';
   }
 })
 export class Toolbar {
-  @Element() private el: HTMLElement;
 
   @Prop({ context: 'config' }) config: Config;
 
