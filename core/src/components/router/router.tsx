@@ -17,6 +17,7 @@ export class Router {
   private busy = false;
   private init = false;
   private state = 0;
+  private lastState = 0;
   private timer: any;
 
   @Element() el: HTMLElement;
@@ -36,7 +37,13 @@ export class Router {
     const tree = readRoutes(this.el);
     this.routes = flattenRouterTree(tree);
     this.redirects = readRedirects(this.el);
-    this.writeNavStateRoot(this.getPath(), RouterDirection.None);
+
+    this.historyDirection();
+
+    // TODO: use something else
+    requestAnimationFrame(() => {
+      this.writeNavStateRoot(this.getPath(), RouterDirection.None);
+    });
   }
 
   @Listen('ionRouteRedirectChanged')
@@ -71,17 +78,29 @@ export class Router {
 
   @Listen('window:popstate')
   protected onPopState() {
+    const direction = this.historyDirection();
+    const path = this.getPath();
+    console.debug('[ion-router] URL changed -> update nav', path, direction);
+    return this.writeNavStateRoot(path, direction);
+  }
+
+  private historyDirection() {
     if (window.history.state === null) {
       this.state++;
       window.history.replaceState(this.state, document.title, document.location.href);
     }
-    const direction = window.history.state >= this.state
-      ? RouterDirection.Forward
-      : RouterDirection.Back;
 
-    const path = this.getPath();
-    console.debug('[ion-router] URL changed -> update nav', path, direction);
-    return this.writeNavStateRoot(path, direction);
+    const state = window.history.state;
+    const lastState = this.lastState;
+    this.lastState = state;
+
+    if (state > lastState) {
+      return RouterDirection.Forward;
+    } else if (state < lastState) {
+      return RouterDirection.Back;
+    } else {
+      return RouterDirection.None;
+    }
   }
 
   @Method()
