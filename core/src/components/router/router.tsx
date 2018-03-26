@@ -31,38 +31,45 @@ export class Router {
 
   componentDidLoad() {
     this.init = true;
-    this.onRedirectChanged();
-    this.onRoutesChanged();
+    console.debug('[ion-router] router did load');
+    this.onRedirectChanged(undefined);
+    this.onRoutesChanged(undefined);
   }
 
   @Listen('ionRouteRedirectChanged')
-  protected onRedirectChanged() {
+  protected onRedirectChanged(ev: Event) {
     if (!this.init) {
       return;
+    }
+    if (ev) {
+      console.debug('[ion-router] route data changed', ev.target);
     }
     this.redirects = readRedirects(this.el);
   }
 
   @Listen('ionRouteDataChanged')
-  protected onRoutesChanged() {
+  protected onRoutesChanged(ev: Event) {
     if (!this.init) {
       return;
     }
     const tree = readRoutes(this.el);
     this.routes = flattenRouterTree(tree);
-    console.debug('[ion-router] route data changed', this.routes);
 
     // schedule write
     if (this.timer) {
-      cancelAnimationFrame(this.timer);
+      clearTimeout(this.timer);
       this.timer = undefined;
     }
-    this.timer = requestAnimationFrame(() => {
-      this.timer = undefined;
-      this.onPopState();
-    });
+    if (ev) {
+      console.debug('[ion-router] route data changed', ev.target);
+      this.timer = setTimeout(() => {
+        this.timer = undefined;
+        this.writeNavStateRoot(this.getPath(), RouterDirection.None);
+      });
+    } else {
+      this.writeNavStateRoot(this.getPath(), RouterDirection.None);
+    }
   }
-
 
   @Listen('window:popstate')
   protected onPopState() {
@@ -76,7 +83,7 @@ export class Router {
 
     const path = this.getPath();
     console.debug('[ion-router] URL changed -> update nav', path, direction);
-    this.writeNavStateRoot(path, direction);
+    return this.writeNavStateRoot(path, direction);
   }
 
   @Method()
@@ -87,13 +94,13 @@ export class Router {
     const { ids, outlet } = readNavState(document.body);
     const chain = routerIDsToChain(ids, this.routes);
     if (!chain) {
-      console.warn('no matching URL for ', ids.map(i => i.id));
+      console.warn('[ion-router] no matching URL for ', ids.map(i => i.id));
       return false;
     }
 
     const path = chainToPath(chain);
     if (!path) {
-      console.warn('router could not match path because some required param is missing');
+      console.warn('[ion-router] router could not match path because some required param is missing');
       return false;
     }
 
