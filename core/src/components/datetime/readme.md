@@ -1,27 +1,23 @@
 # ion-datetime
 
-The Datetime component is used to present an interface which makes it easy for
-users to select dates and times. Tapping on `<ion-datetime>` will display a
-picker interface that slides up from the bottom of the page. The picker then
-displays scrollable columns that can be used to individually select years,
-months, days, hours and minute values. The Datetime component is similar to the
-native `<input type="datetime-local">` element, however, Ionic's Datetime
-component makes it easy to display the date and time in a preferred format, and
-manage the datetime values.
+Datetimes present a picker interface from the bottom of a page, making it easy for users to select
+dates and times. The picker displays scrollable columns that can be used to individually select years,
+months, days, hours and minute values. Datetimes are similar to the native `input` elements of type
+`datetime-local`, however, Ionic's Datetime component makes it easy to display the date and time in a
+preferred format, and manage the datetime values.
 
 ```html
 <ion-item>
   <ion-label>Date</ion-label>
-  <ion-datetime displayFormat="MM/DD/YYYY" ></ion-datetime>
+  <ion-datetime display-format="MM/DD/YYYY"></ion-datetime>
 </ion-item>
 ```
 
 ## Display and Picker Formats
 
-The Datetime component displays the values in two places: in the
-`<ion-datetime>` component, and in the interface that is presented from the
-bottom of the screen. The following chart lists all of the formats that can be
-used.
+The datetime component displays the values in two places: in the `<ion-datetime>` component,
+and in the picker interface that is presented from the bottom of the screen. The following
+chart lists all of the formats that can be used.
 
 | Format | Description                    | Example                 |
 | ------ | ------------------------------ | ----------------------- |
@@ -54,7 +50,7 @@ different names for the month and day.
 ### Display Format
 
 The `displayFormat` input property specifies how a datetime's value should be
-printed, as formatted text, within the `ion-datetime` component.
+printed, as formatted text, within the datetime component.
 
 In the following example, the display in the `<ion-datetime>` will use the
 month's short name, the numerical day with a leading zero, a comma and the
@@ -65,7 +61,7 @@ separator. An example display using this format is: `Jun 17, 2005 11:06`.
 ```html
 <ion-item>
   <ion-label>Date</ion-label>
-  <ion-datetime displayFormat="MMM DD, YYYY HH:mm"></ion-datetime>
+  <ion-datetime display-format="MMM DD, YYYY HH:mm"></ion-datetime>
 </ion-item>
 ```
 
@@ -83,7 +79,7 @@ two columns with the month's long name, and the four-digit year.
 ```html
 <ion-item>
   <ion-label>Date</ion-label>
-  <ion-datetime displayFormat="MM/YYYY" pickerFormat="MMMM YYYY" ></ion-datetime>
+  <ion-datetime display-format="MM/YYYY" picker-format="MMMM YYYY"></ion-datetime>
 </ion-item>
 ```
 
@@ -153,8 +149,7 @@ selection between the beginning of 2016, and October 31st of 2020:
 ```html
 <ion-item>
   <ion-label>Date</ion-label>
-  <ion-datetime displayFormat="MMMM YYYY" min="2016" max="2020-10-31" >
-  </ion-datetime>
+  <ion-datetime display-format="MMMM YYYY" min="2016" max="2020-10-31"></ion-datetime>
 </ion-item>
 ```
 
@@ -181,11 +176,11 @@ the app level, or individual `ion-datetime` level.
 <ion-item>
   <ion-label>Período</ion-label>
   <ion-datetime
-    displayFormat="DDDD MMM D, YYYY"
-    monthNames="janeiro, fevereiro, mar\u00e7o, ..."
-    monthShortNames="jan, fev, mar, ..."
-    dayNames="domingo, segunda-feira, ter\u00e7a-feira, ..."
-    dayShortNames="dom, seg, ter, ...">
+    display-format="DDDD MMM D, YYYY"
+    month-names="janeiro, fevereiro, mar\u00e7o, ..."
+    month-short-names="jan, fev, mar, ..."
+    day-names="domingo, segunda-feira, ter\u00e7a-feira, ..."
+    day-short-names="dom, seg, ter, ...">
   </ion-datetime>
 </ion-item>
 ```
@@ -205,7 +200,7 @@ dates in JavaScript.
 ```html
 <ion-item>
   <ion-label>Date</ion-label>
-  <ion-datetime displayFormat="MM/DD/YYYY" >
+  <ion-datetime display-format="MM/DD/YYYY" >
   </ion-datetime>
 </ion-item>
 ```
