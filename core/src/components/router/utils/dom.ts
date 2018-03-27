@@ -1,34 +1,39 @@
 import { NavOutlet, NavOutletElement, RouteChain, RouteID, RouterDirection } from './interfaces';
 
 export async function writeNavState(root: HTMLElement|undefined, chain: RouteChain|null, direction: RouterDirection, index: number, changed = false): Promise<boolean> {
-  // find next navigation outlet in the DOM
-  const outlet = searchNavNode(root);
+  try {
+    // find next navigation outlet in the DOM
+    const outlet = searchNavNode(root);
 
-  // make sure we can continue interating the DOM, otherwise abort
-  if (!chain || index >= chain.length || !outlet) {
+    // make sure we can continue interating the DOM, otherwise abort
+    if (!chain || index >= chain.length || !outlet) {
+      return changed;
+    }
+    await outlet.componentOnReady();
+
+    const route = chain[index];
+    const result = await outlet.setRouteId(route.id, route.params, direction);
+
+    // if the outlet changed the page, reset navigation to neutral (no direction)
+    // this means nested outlets will not animate
+    if (result.changed) {
+      direction = RouterDirection.None;
+      changed = true;
+    }
+
+    // recursivelly set nested outlets
+    changed = await writeNavState(result.element, chain, direction, index + 1, changed);
+
+    // once all nested outlets are visible let's make the parent visible too,
+    // using markVisible prevents flickering
+    if (result.markVisible) {
+      await result.markVisible();
+    }
     return changed;
+  } catch (e) {
+    console.error(e);
+    return false;
   }
-  await outlet.componentOnReady();
-
-  const route = chain[index];
-  const result = await outlet.setRouteId(route.id, route.params, direction);
-
-  // if the outlet changed the page, reset navigation to neutral (no direction)
-  // this means nested outlets will not animate
-  if (result.changed) {
-    direction = RouterDirection.None;
-    changed = true;
-  }
-
-  // recursivelly set nested outlets
-  changed = await writeNavState(result.element, chain, direction, index + 1, changed);
-
-  // once all nested outlets are visible let's make the parent visible too,
-  // using markVisible prevents flickering
-  if (result.markVisible) {
-    await result.markVisible();
-  }
-  return changed;
 }
 
 export function readNavState(root: HTMLElement | null) {

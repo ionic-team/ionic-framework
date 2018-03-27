@@ -38,10 +38,9 @@ export class Router {
     this.routes = flattenRouterTree(tree);
     this.redirects = readRedirects(this.el);
 
-    this.historyDirection();
-
     // TODO: use something else
     requestAnimationFrame(() => {
+      this.historyDirection();
       this.writeNavStateRoot(this.getPath(), RouterDirection.None);
     });
   }
@@ -60,8 +59,6 @@ export class Router {
     if (!this.init) {
       return;
     }
-    const tree = readRoutes(this.el);
-    this.routes = flattenRouterTree(tree);
     console.debug('[ion-router] route data changed', ev.target, ev.detail);
 
     // schedule write
@@ -70,9 +67,11 @@ export class Router {
       this.timer = undefined;
     }
     this.timer = setTimeout(() => {
-      this.timer = undefined;
       console.debug('[ion-router] data changed -> update nav');
+      const tree = readRoutes(this.el);
+      this.routes = flattenRouterTree(tree);
       this.writeNavStateRoot(this.getPath(), RouterDirection.None);
+      this.timer = undefined;
     }, 100);
   }
 
@@ -163,16 +162,10 @@ export class Router {
     if (this.busy) {
       return false;
     }
-    try {
-      this.busy = true;
-      const changed = await writeNavState(node, chain, direction, index);
-      this.busy = false;
-      return changed;
-    } catch (e) {
-      this.busy = false;
-      console.error(e);
-      return false;
-    }
+    this.busy = true;
+    const changed = await writeNavState(node, chain, direction, index);
+    this.busy = false;
+    return changed;
   }
 
   private setPath(path: string[], direction: RouterDirection) {

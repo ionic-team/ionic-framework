@@ -1,5 +1,7 @@
 import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, OnDestroy, OnInit, Output, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET } from '@angular/router';
+import { NavController } from './ion-nav-controller';
+import { NavDirection } from '@ionic/core/dist/types/components/nav/nav-util';
 
 @Directive({
   selector: 'ion-router-outlet',
@@ -17,11 +19,13 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   @Output('deactivate') deactivateEvents = new EventEmitter<any>();
 
   constructor(
-      private parentContexts: ChildrenOutletContexts, private location: ViewContainerRef,
-      private resolver: ComponentFactoryResolver,
-      private elementRef: ElementRef,
-      @Attribute('name') name: string,
-      private changeDetector: ChangeDetectorRef) {
+    private parentContexts: ChildrenOutletContexts, private location: ViewContainerRef,
+    private resolver: ComponentFactoryResolver,
+    private elementRef: ElementRef,
+    @Attribute('name') name: string,
+    private changeDetector: ChangeDetectorRef,
+    private navCtrl: NavController
+  ) {
     this.name = name || PRIMARY_OUTLET;
     parentContexts.onChildOutletCreated(this.name, this as any);
   }
@@ -126,11 +130,13 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     if (enteringEl) {
       enteringEl.classList.add('ion-page', 'hide-page');
 
-      const navEl = this.elementRef.nativeElement;
+      const navEl = this.elementRef.nativeElement as HTMLIonRouterOutletElement;
       navEl.appendChild(enteringEl);
 
       await navEl.componentOnReady();
-      await navEl.commit(enteringEl);
+      await navEl.commit(enteringEl, {
+        direction: this.navCtrl.consumeGoBack() ? NavDirection.back : NavDirection.forward
+      });
 
       if (this.deactivated) {
         this.deactivated.destroy();

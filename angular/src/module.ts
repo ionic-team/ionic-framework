@@ -9,6 +9,8 @@ import { SelectValueAccessor } from './control-value-accessors/select-value-acce
 import { TextValueAccessor } from './control-value-accessors/text-value-accessor';
 
 // navigation
+import { GoBack } from './navigation/go-back';
+import { NavController } from './navigation/ion-nav-controller';
 import { Nav } from './navigation/ion-nav';
 import { Tab } from './navigation/ion-tab';
 import { Tabs } from './navigation/ion-tabs';
@@ -219,6 +221,7 @@ import {
     Nav,
     Tab,
     Tabs,
+    GoBack,
 
     // router
     IonRouterOutlet,
@@ -327,6 +330,7 @@ import {
     BooleanValueAccessor,
     Nav,
     IonRouterOutlet,
+    GoBack,
     Tab,
     Tabs,
     NumericValueAccessor,
@@ -353,6 +357,7 @@ export class IonicModule {
     return {
       ngModule: IonicModule,
       providers: [
+        NavController,
         AlertController,
         ActionSheetController,
         Events,
