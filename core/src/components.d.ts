@@ -4705,7 +4705,7 @@ declare global {
   interface HTMLIonRouterOutletElement extends HTMLStencilElement {
     'animated': boolean;
     'animationBuilder': AnimationBuilder;
-    'commit': (enteringEl: HTMLElement, opts?: RouterOutletOptions) => Promise<boolean>;
+    'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement, opts?: RouterOutletOptions) => Promise<boolean>;
     'delegate': FrameworkDelegate;
     'getRouteId': () => RouteID;
     'setRoot': (component: string | HTMLElement, params?: { [key: string]: any; }, opts?: RouterOutletOptions) => Promise<boolean>;

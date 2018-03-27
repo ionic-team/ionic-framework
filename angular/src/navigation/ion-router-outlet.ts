@@ -1,7 +1,6 @@
-import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, OnDestroy, OnInit, Output, ViewContainerRef } from '@angular/core';
-import { ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET } from '@angular/router';
-import { NavController } from './ion-nav-controller';
-import { NavDirection } from '@ionic/core/dist/types/components/nav/nav-util';
+import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, OnDestroy, OnInit, Optional, Output, ViewContainerRef } from '@angular/core';
+import { ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET, Router } from '@angular/router';
+import { StackController } from './router-controller';
 
 @Directive({
   selector: 'ion-router-outlet',
@@ -10,10 +9,10 @@ import { NavDirection } from '@ionic/core/dist/types/components/nav/nav-util';
 export class IonRouterOutlet implements OnDestroy, OnInit {
 
   private activated: ComponentRef<any>|null = null;
-  private deactivated: ComponentRef<any>|null = null;
 
   private _activatedRoute: ActivatedRoute|null = null;
   private name: string;
+  private stackCtrl: StackController;
 
   @Output('activate') activateEvents = new EventEmitter<any>();
   @Output('deactivate') deactivateEvents = new EventEmitter<any>();
@@ -22,13 +21,16 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     private parentContexts: ChildrenOutletContexts,
     private location: ViewContainerRef,
     private resolver: ComponentFactoryResolver,
-    private elementRef: ElementRef,
+    elementRef: ElementRef,
     @Attribute('name') name: string,
+    @Optional() @Attribute('stack') stack: any,
     private changeDetector: ChangeDetectorRef,
-    private navCtrl: NavController
+    // private navCtrl: NavController,
+    router: Router
   ) {
     this.name = name || PRIMARY_OUTLET;
     parentContexts.onChildOutletCreated(this.name, this as any);
+    this.stackCtrl = new StackController(stack != null, elementRef.nativeElement, router);
   }
 
   ngOnDestroy(): void {
@@ -55,12 +57,16 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   get isActivated(): boolean { return !!this.activated; }
 
   get component(): Object {
-    if (!this.activated) throw new Error('Outlet is not activated');
+    if (!this.activated) {
+      throw new Error('Outlet is not activated');
+    }
     return this.activated.instance;
   }
 
   get activatedRoute(): ActivatedRoute {
-    if (!this.activated) throw new Error('Outlet is not activated');
+    if (!this.activated) {
+      throw new Error('Outlet is not activated');
+    }
     return this._activatedRoute as ActivatedRoute;
   }
 
@@ -75,7 +81,9 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
    * Called when the `RouteReuseStrategy` instructs to detach the subtree
    */
   detach(): ComponentRef<any> {
-    if (!this.activated) throw new Error('Outlet is not activated');
+    if (!this.activated) {
+      throw new Error('Outlet is not activated');
+    }
     this.location.detach();
     const cmp = this.activated;
     this.activated = null;
@@ -95,7 +103,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   deactivate(): void {
     if (this.activated) {
       const c = this.component;
-      this.deactivated = this.activated;
       this.activated = null;
       this._activatedRoute = null;
       this.deactivateEvents.emit(c);
@@ -107,46 +114,38 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       throw new Error('Cannot activate an already activated outlet');
     }
     this._activatedRoute = activatedRoute;
-    const snapshot = (activatedRoute as any)._futureSnapshot;
 
-    const component = <any>snapshot.routeConfig !.component;
-    resolver = resolver || this.resolver;
+    let enteringView = this.stackCtrl.getExistingView(activatedRoute);
+    if (enteringView) {
+      this.activated = enteringView.ref;
+    } else {
+      const snapshot = (activatedRoute as any)._futureSnapshot;
 
-    const factory = resolver.resolveComponentFactory(component);
-    const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
+      const component = <any>snapshot.routeConfig !.component;
+      resolver = resolver || this.resolver;
 
-    const injector = new OutletInjector(activatedRoute, childContexts, this.location.injector);
-    this.activated = this.location.createComponent(factory, this.location.length, injector);
+      const factory = resolver.resolveComponentFactory(component);
+      const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
 
-    // Calling `markForCheck` to make sure we will run the change detection when the
-    // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
-    this.changeDetector.markForCheck();
-    await this.transition();
+      const injector = new OutletInjector(activatedRoute, childContexts, this.location.injector);
+      this.activated = this.location.createComponent(factory, this.location.length, injector);
+
+      // Calling `markForCheck` to make sure we will run the change detection when the
+      // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
+      this.changeDetector.markForCheck();
+      enteringView = this.stackCtrl.createView(this.activated, activatedRoute);
+    }
+
+    await this.stackCtrl.setActive(enteringView, undefined);
     this.activateEvents.emit(this.activated.instance);
   }
 
-  async transition() {
-    const enteringRef = this.activated;
-    const enteringEl = (enteringRef && enteringRef.location && enteringRef.location.nativeElement) as HTMLElement;
-    if (enteringEl) {
-      enteringEl.classList.add('ion-page', 'hide-page');
+  canGoBack(deep = 1) {
+    return this.stackCtrl.canGoBack(deep);
+  }
 
-      const navEl = this.elementRef.nativeElement as HTMLIonRouterOutletElement;
-      navEl.appendChild(enteringEl);
-
-      const direction = this.navCtrl.consumeDirection();
-
-      await navEl.componentOnReady();
-      await navEl.commit(enteringEl, {
-        duration: direction === 0 ? 0 : undefined,
-        direction: direction === -1 ? NavDirection.back : NavDirection.forward
-      });
-
-      if (this.deactivated) {
-        this.deactivated.destroy();
-        this.deactivated = null;
-      }
-    }
+  pop(deep = 1) {
+    return this.stackCtrl.pop(deep);
   }
 }
 

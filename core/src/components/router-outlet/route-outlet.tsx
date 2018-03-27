@@ -50,18 +50,19 @@ export class RouterOutlet implements NavOutlet {
     const leavingEl = this.activeEl;
 
     // commit animation
-    await this.commit(enteringEl, opts);
+    await this.commit(enteringEl, leavingEl, opts);
 
     // remove leaving view
+    this.activeEl = enteringEl;
     detachComponent(this.delegate, leavingEl);
 
     return true;
   }
 
   @Method()
-  async commit(enteringEl: HTMLElement, opts?: RouterOutletOptions): Promise<boolean> {
+  async commit(enteringEl: HTMLElement, leavingEl: HTMLElement, opts?: RouterOutletOptions): Promise<boolean> {
     // isTransitioning acts as a lock to prevent reentering
-    if (this.isTransitioning || this.activeEl === enteringEl) {
+    if (this.isTransitioning || leavingEl === enteringEl) {
       return false;
     }
     this.isTransitioning = true;
@@ -76,10 +77,9 @@ export class RouterOutlet implements NavOutlet {
 
       animationCtrl: this.animationCtrl,
       enteringEl: enteringEl,
-      leavingEl: this.activeEl,
+      leavingEl: leavingEl,
       baseEl: this.el,
     });
-    this.activeEl = enteringEl;
     this.isTransitioning = false;
     return true;
   }
@@ -106,7 +106,7 @@ export class RouterOutlet implements NavOutlet {
   }
 
   private getAnimationBuilder(opts: RouterOutletOptions) {
-    if (opts.duration === 0 || this.animated === false || this.activeEl === undefined) {
+    if (opts.duration === 0 || this.animated === false) {
       return undefined;
     }
     const mode = opts.mode || this.config.get('pageTransition', this.mode);

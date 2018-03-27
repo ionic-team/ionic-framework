@@ -3,10 +3,10 @@ import { NavDirection } from '../components/nav/nav-util';
 
 export let MyCustomEvent = CustomEvent;
 
-export async function transition(opts: AnimationOptions): Promise<Animation|null> {
+export function transition(opts: AnimationOptions): Promise<Animation|null> {
   beforeTransition(opts);
 
-  return (opts.enteringEl && (opts.animationBuilder || opts.animation))
+  return (opts.enteringEl && opts.leavingEl && (opts.animationBuilder || opts.animation))
     ? animation(opts)
     : noAnimation(opts); // fast path for no animation
 }

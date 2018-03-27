@@ -15,6 +15,7 @@ export { ToastController } from './providers/toast-controller';
 
 // navigation
 export { GoBack } from './navigation/go-back';
+export { IonBackButton } from './navigation/ion-back-button';
 export { NavController } from './navigation/ion-nav-controller';
 export { Nav } from './navigation/ion-nav';
 export { IonRouterOutlet } from './navigation/ion-router-outlet';

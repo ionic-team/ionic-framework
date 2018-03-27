@@ -10,6 +10,7 @@ import { TextValueAccessor } from './control-value-accessors/text-value-accessor
 
 // navigation
 import { GoBack } from './navigation/go-back';
+import { IonBackButton } from './navigation/ion-back-button';
 import { NavController } from './navigation/ion-nav-controller';
 import { Nav } from './navigation/ion-nav';
 import { Tab } from './navigation/ion-tab';
@@ -222,6 +223,7 @@ import {
     Tab,
     Tabs,
     GoBack,
+    IonBackButton,
 
     // router
     IonRouterOutlet,
@@ -331,6 +333,7 @@ import {
     Nav,
     IonRouterOutlet,
     GoBack,
+    IonBackButton,
     Tab,
     Tabs,
     NumericValueAccessor,
