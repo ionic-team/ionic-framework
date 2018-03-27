@@ -27,9 +27,9 @@ export async function transition(opts: AnimationOptions): Promise<Animation|void
   return transition;
 }
 
-async function notifyViewReady(viewIsReady: undefined | (() => Promise<any>)) {
+async function notifyViewReady(viewIsReady: undefined | ((enteringEl: HTMLElement) => Promise<any>), enteringEl: HTMLElement) {
   if (viewIsReady) {
-    await viewIsReady();
+    await viewIsReady(enteringEl);
   }
 }
 
@@ -51,7 +51,7 @@ async function waitDeepReady(opts: AnimationOptions) {
     deepReady(opts.enteringEl),
     deepReady(opts.leavingEl)
   ]);
-  await notifyViewReady(opts.viewIsReady);
+  await notifyViewReady(opts.viewIsReady, opts.enteringEl);
 }
 
 async function waitShallowReady(opts: AnimationOptions) {
@@ -59,7 +59,7 @@ async function waitShallowReady(opts: AnimationOptions) {
     shallowReady(opts.enteringEl),
     shallowReady(opts.leavingEl)
   ]);
-  await notifyViewReady(opts.viewIsReady);
+  await notifyViewReady(opts.viewIsReady, opts.enteringEl);
 }
 
 function showPages(enteringEl: HTMLElement, leavingEl: HTMLElement) {
@@ -177,7 +177,7 @@ export interface AnimationOptions {
   direction?: NavDirection;
   duration?: number;
   easing?: string;
-  viewIsReady?: () => Promise<any>;
+  viewIsReady?: (enteringEl: HTMLElement) => Promise<any>;
   showGoBack?: boolean;
   progressAnimation?: Function;
   enteringEl: HTMLElement;

@@ -79,8 +79,8 @@ export class RouterOutlet implements NavOutlet {
   }
 
   @Method()
-  async setRouteId(id: string, data: any, direction: number): Promise<RouteWrite> {
-    const changed = await this.setRoot(id, data, {
+  async setRouteId(id: string, params: any, direction: number): Promise<RouteWrite> {
+    const changed = await this.setRoot(id, params, {
       duration: direction === 0 ? 0 : undefined,
       direction: direction === -1 ? NavDirection.Back : NavDirection.Forward,
     });

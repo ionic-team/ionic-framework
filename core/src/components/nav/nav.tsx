@@ -197,9 +197,8 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  setRouteId(id: string, params: any = {}, direction: number): Promise<RouteWrite> {
+  setRouteId(id: string, params: any, direction: number): Promise<RouteWrite> {
     const active = this.getActive();
-
     if (active && active.matches(id, params)) {
       return Promise.resolve({changed: false, element: active.element});
     }
@@ -211,12 +210,12 @@ export class NavControllerBase implements NavOutlet {
     let finish: Promise<boolean>;
     const commonOpts: NavOptions = {
       updateURL: false,
-      viewIsReady: () => {
+      viewIsReady: (enteringEl) => {
         let mark: Function;
         const p = new Promise(r => mark = r);
         resolve({
           changed: true,
-          element: this.getActive().element,
+          element: enteringEl,
           markVisible: async () => {
             mark();
             await finish;

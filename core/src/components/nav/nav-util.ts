@@ -60,7 +60,7 @@ export interface NavOptions {
   ev?: any;
   updateURL?: boolean;
   delegate?: FrameworkDelegate;
-  viewIsReady?: () => Promise<any>;
+  viewIsReady?: (enteringEl: HTMLElement) => Promise<any>;
 }
 
 export interface Page extends Function {
