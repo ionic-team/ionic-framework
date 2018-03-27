@@ -14,26 +14,33 @@ import { ItemSliding } from '../item-sliding/item-sliding';
   }
 })
 export class List {
-  private openedItem: ItemSliding|null;
+  private openItem: ItemSliding | null;
 
+  /**
+   * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
+   */
   @Method()
-  getOpenedItem() {
-    return this.openedItem;
+  getOpenItem() {
+    return this.openItem;
   }
 
+  /**
+   * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
+   */
   @Method()
-  setOpenedItem(itemSliding: ItemSliding|null) {
-    this.openedItem = itemSliding;
+  setOpenItem(itemSliding: ItemSliding | null) {
+    this.openItem = itemSliding;
   }
 
   /**
    * Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding).
+   * Returns a boolean value of whether it closed an item or not.
    */
   @Method()
   closeSlidingItems(): boolean {
-    if (this.openedItem) {
-      this.openedItem.close();
-      this.openedItem = null;
+    if (this.openItem) {
+      this.openItem.close();
+      this.openItem = null;
       return true;
     }
     return false;

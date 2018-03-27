@@ -2778,11 +2778,17 @@ declare global {
 declare global {
   interface HTMLIonListElement extends HTMLStencilElement {
     /**
-     * Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding).
+     * Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding). Returns a boolean value of whether it closed an item or not.
      */
     'closeSlidingItems': () => boolean;
-    'getOpenedItem': () => ItemSliding;
-    'setOpenedItem': (itemSliding: ItemSliding) => void;
+    /**
+     * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
+     */
+    'getOpenItem': () => ItemSliding;
+    /**
+     * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
+     */
+    'setOpenItem': (itemSliding: ItemSliding) => void;
   }
   var HTMLIonListElement: {
     prototype: HTMLIonListElement;
@@ -2996,7 +3002,7 @@ declare global {
 declare global {
   interface HTMLIonMenuButtonElement extends HTMLStencilElement {
     /**
-     * Automatically hides the content when the corresponding menu is not active
+     * Automatically hides the menu button when the corresponding menu is not active
      */
     'autoHide': boolean;
     /**
@@ -3022,7 +3028,7 @@ declare global {
   namespace JSXElements {
     export interface IonMenuButtonAttributes extends HTMLAttributes {
       /**
-       * Automatically hides the content when the corresponding menu is not active
+       * Automatically hides the menu button when the corresponding menu is not active
        */
       'autoHide'?: boolean;
       /**
