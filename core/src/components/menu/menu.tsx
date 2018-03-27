@@ -52,7 +52,7 @@ export class Menu {
    * see the `menuType` in the [config](../../config/Config). Available options:
    * `"overlay"`, `"reveal"`, `"push"`.
    */
-  @Prop({ mutable: true }) type = 'overlay';
+  @Prop({ mutable: true }) type: string;
 
   @Watch('type')
   typeChanged(type: string, oldType: string | null) {
@@ -122,6 +122,9 @@ export class Menu {
 
   async componentWillLoad() {
     this.menuCtrl = await this.lazyMenuCtrl.componentOnReady();
+    if (this.type == null) {
+      this.type = this.mode === 'ios' ? 'reveal' : 'overlay';
+    }
   }
 
   componentDidLoad() {
@@ -232,7 +235,7 @@ export class Menu {
     // Menu swipe animation takes the menu's inner width as parameter,
     // If `offsetWidth` changes, we need to create a new animation.
     const width = this.menuInnerEl.offsetWidth;
-    if (width === this.width && this.animation !== null) {
+    if (width === this.width && this.animation !== undefined) {
       return;
     }
     this.width = width;
@@ -240,7 +243,7 @@ export class Menu {
     // Destroy existing animation
     if (this.animation) {
       this.animation.destroy();
-      this.animation = null;
+      this.animation = undefined;
     }
     // Create new animation
     this.animation = await this.menuCtrl.createAnimation(this.type, this);
