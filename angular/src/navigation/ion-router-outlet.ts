@@ -19,7 +19,8 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   @Output('deactivate') deactivateEvents = new EventEmitter<any>();
 
   constructor(
-    private parentContexts: ChildrenOutletContexts, private location: ViewContainerRef,
+    private parentContexts: ChildrenOutletContexts,
+    private location: ViewContainerRef,
     private resolver: ComponentFactoryResolver,
     private elementRef: ElementRef,
     @Attribute('name') name: string,
@@ -133,9 +134,12 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       const navEl = this.elementRef.nativeElement as HTMLIonRouterOutletElement;
       navEl.appendChild(enteringEl);
 
+      const direction = this.navCtrl.consumeDirection();
+
       await navEl.componentOnReady();
       await navEl.commit(enteringEl, {
-        direction: this.navCtrl.consumeGoBack() ? NavDirection.back : NavDirection.forward
+        duration: direction === 0 ? 0 : undefined,
+        direction: direction === -1 ? NavDirection.back : NavDirection.forward
       });
 
       if (this.deactivated) {
