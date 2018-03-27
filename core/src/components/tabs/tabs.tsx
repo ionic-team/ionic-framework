@@ -105,7 +105,8 @@ export class Tabs implements NavOutlet {
     }
     await this.setActive(selectedTab);
     await this.notifyRouter();
-    await this.tabSwitch();
+    this.tabSwitch();
+
     return true;
   }
 

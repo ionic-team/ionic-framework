@@ -581,12 +581,6 @@ export class NavControllerBase implements NavOutlet {
       }
     }
 
-    // set which animation it should use if it wasn't set yet
-    if (ti.requiresTransition && !opts.animation) {
-      opts.animation = isPresent(ti.removeStart)
-        ? (leavingView || enteringView).getTransitionName(opts.direction)
-        : (enteringView || leavingView).getTransitionName(opts.direction);
-    }
   }
 
   private async _transition(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction): Promise<NavResult> {

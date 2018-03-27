@@ -218,7 +218,8 @@ export class Menu {
     this.beforeAnimation();
     await this.loadAnimation();
     await this.startAnimation(shouldOpen, animated);
-    await this.afterAnimation(shouldOpen);
+    this.afterAnimation(shouldOpen);
+
     return shouldOpen;
   }
 
@@ -245,13 +246,12 @@ export class Menu {
     this.animation = await this.menuCtrl.createAnimation(this.type, this);
   }
 
-  private startAnimation(shouldOpen: boolean, animated: boolean): Promise<Animation> {
+  private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
     const ani = this.animation.reverse(!shouldOpen);
     if (animated) {
-      return ani.playAsync();
+      await ani.playAsync();
     } else {
       ani.playSync();
-      return Promise.resolve(ani);
     }
   }
 

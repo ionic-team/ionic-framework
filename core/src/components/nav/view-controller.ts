@@ -66,13 +66,6 @@ export class ViewController {
   /**
    * @hidden
    */
-  getTransitionName(_direction: string): string {
-    return this._nav && this._nav.config && this._nav.config.get('pageTransition') || 'md';
-  }
-
-  /**
-   * @hidden
-   */
   setLeavingOpts(opts: NavOptions) {
     this._leavingOpts = opts;
   }
