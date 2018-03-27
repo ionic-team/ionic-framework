@@ -50,7 +50,21 @@
     <a href="simple-nav/page-one">Simple Nav</a>
   </li>
   <li>
-    <a href="simple-tabs">Simple Tabs</a>
+    <a href="lazy-load-tabs">Lazy Loaded Route Tabs</a>
+    <ul>
+      <li>
+        <a [routerLink]="['/lazy-load-tabs', 'tabs', { outlets: { tab1: ['mustang'] } }]">Tab 1</a>
+      </li>
+      <li>
+        <a [routerLink]="['/lazy-load-tabs', 'tabs', { outlets: { tab2: ['camaro'] } }]">Tab 2</a>
+      </li>
+      <li>
+        <a [routerLink]="['/lazy-load-tabs', 'tabs', { outlets: { tab3: ['charger'] } }]">Tab 3</a>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <a href="simple-tabs">Simple Route Tabs</a>
     <ul>
       <li>
         <a [routerLink]="['/simple-tabs', 'tabs', { outlets: { tab1: ['mustang'] } }]">Tab 1</a>

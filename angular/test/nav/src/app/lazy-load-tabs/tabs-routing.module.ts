@@ -12,23 +12,23 @@ const routes: Routes = [
       {
         path: 'mustang',
         outlet: 'tab1',
-        loadChildren: 'app/simple-tabs/mustang/mustang.module#MustangModule'
+        loadChildren: 'app/lazy-load-tabs/mustang/mustang.module#MustangModule'
       },
       {
         path: 'camaro',
         outlet: 'tab2',
-        loadChildren: 'app/simple-tabs/camaro/camaro.module#CamaroModule'
+        loadChildren: 'app/lazy-load-tabs/camaro/camaro.module#CamaroModule'
       },
       {
         path: 'charger',
         outlet: 'tab3',
-        loadChildren: 'app/simple-tabs/charger/charger.module#ChargerModule'
+        loadChildren: 'app/lazy-load-tabs/charger/charger.module#ChargerModule'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/simple-tabs/tabs/(tab1:mustang)'
+    redirectTo: '/lazy-load-tabs/tabs/(tab1:mustang)'
   }
 ];
 
