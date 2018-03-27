@@ -68,7 +68,7 @@ export class ChipButton {
           <span class='chip-button-inner'>
             <slot></slot>
           </span>
-          { this.mode === 'md' && <ion-ripple-effect/> }
+          { this.mode === 'md' && <ion-ripple-effect useTapClick={true}/> }
       </TagType>
     );
   }

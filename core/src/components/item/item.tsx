@@ -133,7 +133,7 @@ export class Item {
           </div>
           <slot name='end'></slot>
         </div>
-        { clickable && this.mode === 'md' && <ion-ripple-effect/> }
+        { clickable && this.mode === 'md' && <ion-ripple-effect useTapClick={true}/> }
       </TagType>
     );
   }

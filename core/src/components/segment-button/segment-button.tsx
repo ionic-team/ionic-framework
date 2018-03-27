@@ -98,7 +98,7 @@ export class SegmentButton {
         href={this.href}
         onClick={this.segmentButtonClick.bind(this)}>
           <slot></slot>
-          { this.mode === 'md' && <ion-ripple-effect/> }
+          { this.mode === 'md' && <ion-ripple-effect useTapClick={true}/> }
       </TagType>
     ];
   }

@@ -9,6 +9,7 @@
   <style>
     .my-block {
       position: relative;
+      display: block;
       background: blue;
       color: white;
       width: 300px;
@@ -54,6 +55,18 @@
             This is just a div + effect
             <ion-ripple-effect></ion-ripple-effect>
           </div>
+
+          <a class="my-block">
+            This is just a a + effect on top
+            <ion-button onclick="buttonClicked()">Nested button</ion-button>
+            <ion-ripple-effect></ion-ripple-effect>
+          </a>
+
+          <button class="my-block">
+            This is just a button + effect on top
+            <ion-button onclick="buttonClicked()">Nested button</ion-button>
+            <ion-ripple-effect></ion-ripple-effect>
+          </button>
         </ion-content>
 
   </ion-app>
