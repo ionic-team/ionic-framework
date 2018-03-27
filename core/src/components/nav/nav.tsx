@@ -607,11 +607,8 @@ export class NavControllerBase implements NavOutlet {
 
     // we should animate (duration > 0) if the pushed page is not the first one (startup)
     // or if it is a portal (modal, actionsheet, etc.)
-    const shouldAnimate = this.animated && this._init && this._views.length > 1;
 
-    const animationBuilder = (shouldAnimate)
-      ? this.mode === 'ios' ? iosTransitionAnimation : mdTransitionAnimation
-      : undefined;
+    const animationBuilder = this.getAnimationBuilder(ti.opts);
 
     const progressAnimation = ti.opts.progressAnimation
       ? (animation: Animation) => this._sbTrns = animation
@@ -660,6 +657,14 @@ export class NavControllerBase implements NavOutlet {
       leavingView,
       direction: opts.direction
     };
+  }
+
+  private getAnimationBuilder(opts: NavOptions) {
+    if (opts.duration === 0 || !this._init || this.animated === false || this._views.length <= 1) {
+      return undefined;
+    }
+    const mode = opts.animation || this.config.get('pageTransition', this.mode);
+    return mode === 'ios' ? iosTransitionAnimation : mdTransitionAnimation;
   }
 
   private _insertViewAt(view: ViewController, index: number) {

@@ -24,9 +24,15 @@ export class RouterOutlet implements NavOutlet {
   @Prop({context: 'config'}) config: Config;
   @Prop({connect: 'ion-animation-controller'}) animationCtrl: HTMLIonAnimationControllerElement;
 
-  @Prop() animated = true;
+  @Prop() animated: boolean;
   @Prop() animationBuilder: AnimationBuilder;
   @Prop() delegate: FrameworkDelegate;
+
+  componentWillLoad() {
+    if (this.animated === undefined) {
+      this.animated = this.config.getBoolean('animate', true);
+    }
+  }
 
   componentDidUnload() {
     this.activeEl = this.activeComponent = undefined;
