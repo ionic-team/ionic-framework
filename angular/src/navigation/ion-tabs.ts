@@ -11,8 +11,6 @@ export class Tabs {
 
   @HostListener('ionTabbarClick', ['$event'])
   ionTabbarClick(ev: UIEvent) {
-    console.log('ionTabbarClick', ev);
-
     const tabElm: HTMLIonTabElement = ev.detail as any;
     if (tabElm && tabElm.href) {
       console.log('tabElm', tabElm.href);
