@@ -10,7 +10,7 @@ import { PopoverPageToPresent } from './popover-page-to-present';
       <ion-header>
         <ion-toolbar>
           <ion-title>Popover</ion-title>
-          <ion-buttons slot="end">
+          <ion-buttons slot="primary">
             <ion-button (click)="clickMe()">
               No event passed
             </ion-button>

@@ -119,25 +119,25 @@
 .bar-buttons-md {
   @include margin(0, 2px);
 
-  order: map-get($toolbar-order-md, buttons-start);
+  order: map-get($toolbar-order-md, buttons-secondary);
 
   transform: translateZ(0);
 }
 
-.bar-buttons-md[slot="left"] {
-  order: map-get($toolbar-order-md, buttons-left);
+.bar-buttons-md[slot="start"] {
+  order: map-get($toolbar-order-md, buttons-start);
+}
+
+.bar-buttons-md[slot="primary"] {
+  @include text-align(end);
+
+  order: map-get($toolbar-order-md, buttons-primary);
 }
 
 .bar-buttons-md[slot="end"] {
   @include text-align(end);
 
   order: map-get($toolbar-order-md, buttons-end);
-}
-
-.bar-buttons-md[slot="right"] {
-  @include text-align(right);
-
-  order: map-get($toolbar-order-md, buttons-right);
 }
 
 

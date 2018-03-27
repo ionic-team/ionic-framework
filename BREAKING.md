@@ -958,12 +958,12 @@ Previously to positions buttons inside of a toolbar the following attributes wer
 
 These have been renamed to the following:
 
-| Old Property | New Property   | Property Behavior                                                                                                |
-|--------------|----------------|------------------------------------------------------------------------------------------------------------------|
-| `start`      | `slot="start"` | Positions element to the `left` of the content in `ios` mode, and directly to the `right` in `md` and `wp` mode. |
-| `end`        | `slot="end"`   | Positions element to the `right` of the content in `ios` mode, and to the far `right` in `md` and `wp` mode.     |
-| `left`       | `slot="left"`  | Positions element to the `left` of all other elements.                                                           |
-| `right`      | `slot="right"` | Positions element to the `right` of all other elements.                                                          |
+| Old Property | New Property       | Property Behavior                                                                                        |
+|--------------|--------------------|----------------------------------------------------------------------------------------------------------|
+| `start`      | `slot="secondary"` | Positions element to the `left` of the content in `ios` mode, and directly to the `right` in `md` mode.  |
+| `end`        | `slot="primary"`   | Positions element to the `right` of the content in `ios` mode, and to the far `right` in `md` mode.      |
+| `left`       | `slot="start"`     | Positions to the `left` of the button in LTR, and to the `right` in RTL.                                 |
+| `right`      | `slot="end"`       | Positions to the `right` of the button in LTR, and to the `left` in RTL.                                 |
 
 **Old Usage Example:**
 
@@ -973,7 +973,7 @@ These have been renamed to the following:
     <button ion-button>Left</button>
   </ion-buttons>
   <ion-buttons start>
-    <button ion-button>Start</button>
+    <button ion-button>Secondary</button>
   </ion-buttons>
 
   <ion-title>
@@ -981,7 +981,7 @@ These have been renamed to the following:
   </ion-title>
 
   <ion-buttons end>
-    <button ion-button>End</button>
+    <button ion-button>Primary</button>
   </ion-buttons>
   <ion-buttons right>
     <button ion-button>Right</button>
@@ -993,21 +993,21 @@ These have been renamed to the following:
 
 ```html
 <ion-toolbar>
-  <ion-buttons slot="left">
+  <ion-buttons slot="start">
     <ion-button>Left</ion-button>
   </ion-buttons>
-  <ion-buttons slot="start">
-    <ion-button>Start</ion-button>
+  <ion-buttons slot="secondary">
+    <ion-button>Secondary</ion-button>
   </ion-buttons>
 
   <ion-title>
     Title
   </ion-title>
 
-  <ion-buttons slot="end">
-    <ion-button>End</ion-button>
+  <ion-buttons slot="primary">
+    <ion-button>Primary</ion-button>
   </ion-buttons>
-  <ion-buttons slot="right">
+  <ion-buttons slot="end">
     <ion-button>Right</ion-button>
   </ion-buttons>
 </ion-toolbar>
