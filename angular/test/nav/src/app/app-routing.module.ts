@@ -22,10 +22,11 @@ const routes: Routes = [
 
   { path: 'no-routing-nav', loadChildren: 'app/no-routing-nav/no-routing-nav.module#NoRoutingNavModule' },
   { path: 'simple-nav', loadChildren: 'app/simple-nav/simple-nav.module#SimpleNavModule' },
+  { path: 'static-tabs', loadChildren: 'app/static-tabs/tabs.module#TabsModule' },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
