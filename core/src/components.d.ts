@@ -488,6 +488,7 @@ declare global {
 
 declare global {
   interface HTMLIonAnchorElement extends HTMLStencilElement {
+    'goBack': boolean;
     'href': string;
   }
   var HTMLIonAnchorElement: {
@@ -507,6 +508,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAnchorAttributes extends HTMLAttributes {
+      'goBack'?: boolean;
       'href'?: string;
     }
   }
@@ -734,6 +736,7 @@ declare global {
      * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
      */
     'fill': 'clear' | 'outline' | 'solid' | 'default';
+    'goBack': boolean;
     /**
      * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
      */
@@ -796,6 +799,7 @@ declare global {
        * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
        */
       'fill'?: 'clear' | 'outline' | 'solid' | 'default';
+      'goBack'?: boolean;
       /**
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
        */
@@ -2599,6 +2603,7 @@ declare global {
      * If true, the user cannot interact with the item. Defaults to `false`.
      */
     'disabled': boolean;
+    'goBack': boolean;
     /**
      * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
      */
@@ -2641,6 +2646,7 @@ declare global {
        * If true, the user cannot interact with the item. Defaults to `false`.
        */
       'disabled'?: boolean;
+      'goBack'?: boolean;
       /**
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
        */
@@ -4703,7 +4709,7 @@ declare global {
     'delegate': FrameworkDelegate;
     'getRouteId': () => RouteID;
     'setRoot': (component: string | HTMLElement, params?: { [key: string]: any; }, opts?: RouterOutletOptions) => Promise<boolean>;
-    'setRouteId': (id: string, data: any, direction: number) => Promise<RouteWrite>;
+    'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
   }
   var HTMLIonRouterOutletElement: {
     prototype: HTMLIonRouterOutletElement;

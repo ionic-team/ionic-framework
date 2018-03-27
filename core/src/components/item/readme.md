@@ -31,6 +31,11 @@ boolean
 If true, the user cannot interact with the item. Defaults to `false`.
 
 
+#### goBack
+
+boolean
+
+
 #### href
 
 string
@@ -80,6 +85,11 @@ is `ios` and an `href`, `onclick` or `tappable` property is present.
 boolean
 
 If true, the user cannot interact with the item. Defaults to `false`.
+
+
+#### go-back
+
+boolean
 
 
 #### href

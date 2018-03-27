@@ -54,6 +54,9 @@ export class Item {
    */
   @Prop() tappable = false;
 
+  @Prop() goBack = false;
+
+
   @Listen('ionStyle')
   itemStyle(ev: UIEvent) {
     ev.stopPropagation();
@@ -122,7 +125,7 @@ export class Item {
       <TagType
         {...attrs}
         class={themedClasses}
-        onClick={(ev) => openURL(this.href, ev)}>
+        onClick={(ev) => openURL(this.href, ev, this.goBack)}>
         <slot name='start'></slot>
         <div class='item-inner'>
           <div class='input-wrapper'>

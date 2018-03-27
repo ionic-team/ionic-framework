@@ -83,6 +83,7 @@ export class Button {
    */
   @Prop() mode: 'ios' | 'md';
 
+  @Prop() goBack = false;
   /**
    * Emitted when the button has focus.
    */
@@ -148,7 +149,7 @@ export class Button {
         disabled={this.disabled}
         onFocus={this.onFocus.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
-        onClick={(ev) => openURL(this.href, ev)}
+        onClick={(ev) => openURL(this.href, ev, this.goBack)}
         onBlur={this.onBlur.bind(this)}>
           <span class='button-inner'>
             <slot name='icon-only'></slot>
