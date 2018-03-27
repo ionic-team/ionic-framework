@@ -962,8 +962,8 @@ These have been renamed to the following:
 |--------------|--------------------|----------------------------------------------------------------------------------------------------------|
 | `start`      | `slot="secondary"` | Positions element to the `left` of the content in `ios` mode, and directly to the `right` in `md` mode.  |
 | `end`        | `slot="primary"`   | Positions element to the `right` of the content in `ios` mode, and to the far `right` in `md` mode.      |
-| `left`       | `slot="start"`     | Positions to the `left` of the button in LTR, and to the `right` in RTL.                                 |
-| `right`      | `slot="end"`       | Positions to the `right` of the button in LTR, and to the `left` in RTL.                                 |
+| `left`       | `slot="start"`     | Positions to the `left` of the content in LTR, and to the `right` in RTL.                                |
+| `right`      | `slot="end"`       | Positions to the `right` of the content in LTR, and to the `left` in RTL.                                |
 
 **Old Usage Example:**
 
