@@ -660,7 +660,7 @@ export class NavControllerBase implements NavOutlet {
   }
 
   private getAnimationBuilder(opts: NavOptions) {
-    if (opts.duration === 0 || !this._init || this.animated === false || this._views.length <= 1) {
+    if (opts.duration === 0 || opts.animate === false || !this._init || this.animated === false || this._views.length <= 1) {
       return undefined;
     }
     const mode = opts.animation || this.config.get('pageTransition', this.mode);
