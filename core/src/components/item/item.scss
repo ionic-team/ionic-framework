@@ -4,6 +4,8 @@
 // --------------------------------------------------
 
 ion-item {
+  @include font-smoothing();
+
   display: block;
 }
 

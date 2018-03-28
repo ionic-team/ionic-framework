@@ -4,6 +4,8 @@
 // --------------------------------------------------
 
 ion-searchbar {
+  @include font-smoothing();
+
   box-sizing: border-box;
 
   position: relative;
