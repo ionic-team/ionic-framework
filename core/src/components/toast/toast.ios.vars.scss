@@ -9,8 +9,11 @@ $toast-ios-font-family:                           $font-family-ios-base !default
 /// @prop - Background Color of the toast wrapper
 $toast-ios-background-color:                      $background-ios-color-step-50 !default;
 
+/// @prop - Background Color alpha of the toast wrapper when translucent
+$toast-ios-translucent-background-color-alpha:    .8 !default;
+
 /// @prop - Background Color of the toast wrapper when translucent
-$toast-ios-translucent-background-color:          css-var($background-ios-color-value, background-ios-color, $alpha-ios-high) !default;
+$toast-ios-translucent-background-color:          css-var($background-ios-color-value, background-ios-color, $toast-ios-translucent-background-color-alpha) !default;
 
 /// @prop - Border radius of the toast wrapper
 $toast-ios-border-radius:                         14px !default;

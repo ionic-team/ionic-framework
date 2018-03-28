@@ -1,19 +1,28 @@
 @import "../../themes/ionic.globals.ios";
 
 /// @prop - Slides Bullet Background color
-$slides-ios-bullet-background-color:              $text-ios-color-step-400 !default;
+$slides-ios-bullet-background-color:                    $text-ios-color-step-400 !default;
 
 /// @prop - Slides Bullet Background color when Active
-$slides-ios-bullet-background-color-active:       ion-color($colors-ios, primary, base, ios) !default;
+$slides-ios-bullet-background-color-active:             ion-color($colors-ios, primary, base, ios) !default;
+
+/// @prop - Slides Progress indicator Background color alpha
+$slides-ios-progress-background-color-alpha:            .25 !default;
 
 /// @prop - Slides Progress indicator Background color
-$slides-ios-progress-background-color:            css-var($text-ios-color-value, text-ios-color, $alpha-ios-low) !default;
+$slides-ios-progress-background-color:                  css-var($text-ios-color-value, text-ios-color, $slides-ios-progress-background-color-alpha) !default;
 
 /// @prop - Slides Progress indicator bar Background color
-$slides-ios-progress-bar-background-color:        ion-color($colors-ios, primary, shade, ios) !default;
+$slides-ios-progress-bar-background-color:              ion-color($colors-ios, primary, shade, ios) !default;
+
+/// @prop - Slides Scroll bar Background color alpha
+$slides-ios-scroll-bar-background-color-alpha:          .25 !default;
 
 /// @prop - Slides Scroll bar Background color
-$slides-ios-scroll-bar-background-color:          css-var($text-ios-color-value, text-ios-color, $alpha-ios-low) !default;
+$slides-ios-scroll-bar-background-color:                css-var($text-ios-color-value, text-ios-color, $slides-ios-scroll-bar-background-color-alpha) !default;
+
+/// @prop - Slides Scroll bar drag handle Background color alpha
+$slides-ios-scroll-bar-drag-background-color-alpha:     .5 !default;
 
 /// @prop - Slides Scroll bar drag handle Background color
-$slides-ios-scroll-bar-drag-background-color:     css-var($text-ios-color-value, text-ios-color, $alpha-ios-medium) !default;
+$slides-ios-scroll-bar-drag-background-color:           css-var($text-ios-color-value, text-ios-color, $slides-ios-scroll-bar-drag-background-color-alpha) !default;

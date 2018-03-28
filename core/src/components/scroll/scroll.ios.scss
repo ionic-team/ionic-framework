@@ -18,5 +18,5 @@
 .scroll-ios hr {
   height: $hairlines-width;
 
-  background-color: css-var($background-ios-color-value, background-ios-color, $alpha-ios-low);
+  background-color: css-var($background-ios-color-value, background-ios-color, $content-ios-horizontal-rule-background-color-alpha);
 }

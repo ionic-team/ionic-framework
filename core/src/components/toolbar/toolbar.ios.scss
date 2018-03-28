@@ -61,8 +61,6 @@
 .header-translucent-ios .toolbar-background-ios,
 .footer-translucent-ios .toolbar-background-ios,
 .toolbar-translucent-ios .toolbar-background-ios {
-  // TODO: @color-mod in the future we will want to replace this with the following color-mod
-  // background-color: color-mod($toolbar-ios-background-color, a($alpha-ios-highest));
   background: $toolbar-ios-translucent-background-color;
 }
 
@@ -85,7 +83,7 @@
 @mixin ios-toolbar-theme($color-name) {
   $color-base: ion-color($colors-ios, $color-name, base, ios);
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-translucent: ion-color($colors-ios, $color-name, base, ios, $alpha-ios-highest);
+  $color-translucent: $toolbar-ios-translucent-background-color;
 
   .toolbar-ios-#{$color-name} {
 

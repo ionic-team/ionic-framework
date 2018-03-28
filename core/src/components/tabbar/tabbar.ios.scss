@@ -28,8 +28,6 @@
 // --------------------------------------------------
 
 .tabbar-translucent-ios {
-  // TODO: @color-mod in the future we will want to replace this with the following color-mod
-  // background-color: color-mod($tabbar-ios-background-color, a($alpha-ios-highest));
   background-color: $tabbar-ios-translucent-background-color;
 
   -webkit-backdrop-filter: $tabbar-ios-translucent-filter;
@@ -44,7 +42,7 @@
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
   $color-shade: ion-color($colors-ios, $color-name, shade, ios);
 
-  $translucent-background-color: ion-color($colors-ios, $color-name, base, ios, $alpha-ios-high);
+  $translucent-background-color: ion-color($colors-ios, $color-name, base, ios, $tabbar-ios-translucent-background-color-alpha);
 
   .tabbar-ios-#{$color-name} {
     border-color: $background-ios-color-step-400;

@@ -4,61 +4,64 @@
 // --------------------------------------------------
 
 /// @prop - Font family of the loading wrapper
-$loading-ios-font-family:                   $font-family-ios-base !default;
+$loading-ios-font-family:                           $font-family-ios-base !default;
 
 /// @prop - Font size of the loading wrapper
-$loading-ios-font-size:                     $font-size-ios-base !default;
+$loading-ios-font-size:                             $font-size-ios-base !default;
 
 /// @prop - Padding top of the loading wrapper
-$loading-ios-padding-top:                   24px !default;
+$loading-ios-padding-top:                           24px !default;
 
 /// @prop - Padding end of the loading wrapper
-$loading-ios-padding-end:                   34px !default;
+$loading-ios-padding-end:                           34px !default;
 
 /// @prop - Padding bottom of the loading wrapper
-$loading-ios-padding-bottom:                $loading-ios-padding-top !default;
+$loading-ios-padding-bottom:                        $loading-ios-padding-top !default;
 
 /// @prop - Padding start of the loading wrapper
-$loading-ios-padding-start:                 $loading-ios-padding-end !default;
+$loading-ios-padding-start:                         $loading-ios-padding-end !default;
 
 /// @prop - Max width of the loading wrapper
-$loading-ios-max-width:                     270px !default;
+$loading-ios-max-width:                             270px !default;
 
 /// @prop - Maximum height of the loading wrapper
-$loading-ios-max-height:                    90% !default;
+$loading-ios-max-height:                            90% !default;
 
 /// @prop - Border radius of the loading wrapper
-$loading-ios-border-radius:                 8px !default;
+$loading-ios-border-radius:                         8px !default;
 
 /// @prop - Text color of the loading wrapper
-$loading-ios-text-color:                    $text-ios-color !default;
+$loading-ios-text-color:                            $text-ios-color !default;
 
 /// @prop - Background of the loading wrapper
-$loading-ios-background-color:              $background-ios-color-step-50 !default;
+$loading-ios-background-color:                      $background-ios-color-step-50 !default;
 
-/// @prop - Background of the loading wrapper
-$loading-ios-translucent-background-color:  css-var($background-ios-color-value, background-ios-color, $alpha-ios-high) !default;
+/// @prop - Background color alpha of the translucent loading wrapper
+$loading-ios-translucent-background-color-alpha:    .8 !default;
+
+/// @prop - Background color of the translucent loading wrapper
+$loading-ios-translucent-background-color:          css-var($background-ios-color-value, background-ios-color, $loading-ios-translucent-background-color-alpha) !default;
 
 /// @prop - Font weight of the loading content
-$loading-ios-content-font-weight:           bold !default;
+$loading-ios-content-font-weight:                   bold !default;
 
 /// @prop - Color of the loading spinner
-$loading-ios-spinner-color:                 $text-ios-color-step-400 !default;
+$loading-ios-spinner-color:                         $text-ios-color-step-400 !default;
 
 /// @prop - Color of the ios loading spinner
-$loading-ios-spinner-lines-color:           $loading-ios-spinner-color !default;
+$loading-ios-spinner-lines-color:                   $loading-ios-spinner-color !default;
 
 /// @prop - Color of the bubbles loading spinner
-$loading-ios-spinner-bubbles-color:         $loading-ios-spinner-color !default;
+$loading-ios-spinner-bubbles-color:                 $loading-ios-spinner-color !default;
 
 /// @prop - Color of the circles loading spinner
-$loading-ios-spinner-circles-color:         $loading-ios-spinner-color !default;
+$loading-ios-spinner-circles-color:                 $loading-ios-spinner-color !default;
 
 /// @prop - Color of the crescent loading spinner
-$loading-ios-spinner-crescent-color:        $loading-ios-spinner-color !default;
+$loading-ios-spinner-crescent-color:                $loading-ios-spinner-color !default;
 
 /// @prop - Color of the dots loading spinner
-$loading-ios-spinner-dots-color:            $loading-ios-spinner-color !default;
+$loading-ios-spinner-dots-color:                    $loading-ios-spinner-color !default;
 
 /// @prop - Filter of the translucent loading
-$loading-ios-translucent-filter:            saturate(180%) blur(20px) !default;
+$loading-ios-translucent-filter:                    saturate(180%) blur(20px) !default;

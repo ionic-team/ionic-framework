@@ -1,19 +1,6 @@
 /** default theme **/
 
 :root {
-  --ion-alpha-activated: .1;
-  --ion-alpha-border-low: .1;
-  --ion-alpha-border-medium: .2;
-  --ion-alpha-border-high: .3;
-  --ion-alpha-disabled: .5;
-  --ion-alpha-focused: .25;
-  --ion-alpha-hover: .1;
-  --ion-alpha-input: .07;
-  --ion-alpha-lowest: .1;
-  --ion-alpha-low: .25;
-  --ion-alpha-medium: .5;
-  --ion-alpha-high: .8;
-  --ion-alpha-highest: .9;
   --ion-color-primary: #488aff;
   --ion-color-primary-rgb: 72,138,255;
   --ion-color-primary-contrast: #ffffff;

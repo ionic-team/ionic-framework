@@ -48,14 +48,20 @@ $searchbar-ios-input-placeholder-color:           $text-ios-color-step-400 !defa
 /// @prop - Color of the searchbar input text
 $searchbar-ios-input-text-color:                  $text-ios-color !default;
 
-/// @prop - Background of the searchbar input
-$searchbar-ios-input-background-color:            css-var($text-ios-color-value, text-ios-color, $alpha-ios-input) !default;
+/// @prop - Background color alpha of the searchbar input
+$searchbar-ios-input-background-color-alpha:      .07 !default;
+
+/// @prop - Background color of the searchbar input
+$searchbar-ios-input-background-color:            css-var($text-ios-color-value, text-ios-color, $searchbar-ios-input-background-color-alpha) !default;
 
 /// @prop - Transition of the searchbar input
 $searchbar-ios-input-transition:                  all 300ms ease !default;
 
 /// @prop - Transition of the searchbar input cancel button
 $searchbar-ios-cancel-transition:                 all 300ms ease !default;
+
+/// @prop - Alpha of the searchbar input icons
+$searchbar-ios-input-icon-opacity:            .5 !default;
 
 /// @prop - Color of the searchbar input clear icon
 $searchbar-ios-input-clear-icon-color:            $text-ios-color-step-400 !default;
