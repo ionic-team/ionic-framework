@@ -60,22 +60,24 @@ async function publishPackages(packages, version) {
     );
   });
 
-  // push commits and tags to git remote
-  publishGit(version);
+  // push tag to git remote
+  publishGitTag(tasks, version);
 
   const listr = new Listr(tasks);
   await listr.run();
 }
 
 
-function publishGit(tasks, version) {
+function publishGitTag(tasks, version) {
+  const tag = `v${version}`;
+
   tasks.push(
       {
-      title: 'Tagging the latest commit',
-      task: () => execa('git', ['tag', `v${version}`], { cwd: common.rootDir })
+      title: `Tag latest commit ${chalk.dim(`(${tag})`)}`,
+      task: () => execa('git', ['tag', `${tag}`], { cwd: common.rootDir })
     },
     {
-      title: 'Pushing to Github',
+      title: 'Push tag to Github',
       task: () => execa('git', ['push', '--follow-tags'], { cwd: common.rootDir })
     }
   );

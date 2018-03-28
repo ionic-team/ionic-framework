@@ -28,8 +28,10 @@
     "ionic-core": "node ../core/node_modules/.bin/stencil build",
     "ionic-core-dev": "node ../core/node_modules/.bin/stencil build --dev",
     "lint": "tslint --project .",
+    "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
     "test": "echo 'angular no tests yet'",
-    "tsc": "tsc -p ."
+    "tsc": "tsc -p .",
+    "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

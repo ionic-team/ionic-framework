@@ -4,8 +4,8 @@
   "description": "Ionic mono-repo root package.json, used mainly to execute build scripts. This package is not published to npm.",
   "private": true,
   "scripts": {
-    "prepare.deploy": "node .scripts/prepare.js",
-    "deploy": "node .scripts/publish.js",
+    "release.prepare": "node .scripts/prepare.js",
+    "release": "node .scripts/release.js",
     "changelog": "conventional-changelog -p angular -i ./CHANGELOG.md -k core -s"
   },
   "devDependencies": {
