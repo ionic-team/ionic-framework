@@ -7,6 +7,8 @@ plugin_directories: ['.scss-linters']
 scss_files: 'src/**/*.scss'
 
 exclude:
+  - '*.css'
+  - 'src/themes/ionic.functions.color.scss'
   - 'src/themes/ionic.mixins.scss'
   - 'src/themes/license.scss'
   - 'src/themes/normalize.scss'
@@ -48,6 +50,7 @@ linters:
       - z-index
       - display
       - overflow
+      - overscroll-behavior
       - clear
       -
       - flex
@@ -198,6 +201,8 @@ linters:
   PropertySpelling:
     extra_properties:
       - contain
+      - overscroll-behavior
+      - overscroll-behavior-y
     disabled_properties:
       - background-position
       - direction

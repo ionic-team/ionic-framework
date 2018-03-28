@@ -101,13 +101,13 @@
 .alert-ios .alert-checkbox-group {
   overflow: scroll;
 
+  overscroll-behavior: contain;
+
   max-height: $alert-ios-content-max-height;
 
   border-top: $alert-ios-list-border-top;
 
   -webkit-overflow-scrolling: touch;
-
-  overscroll-behavior: contain;
 }
 
 .alert-ios .alert-tappable {

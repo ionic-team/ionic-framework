@@ -11,6 +11,7 @@
 files:
   include: 'src/**/*.s+(a|c)ss'
   ignore:
+    - 'src/themes/ionic.functions.color.scss'
     - 'src/themes/ionic.mixins.scss'
     - 'src/themes/license.scss'
     - 'src/themes/normalize.scss'
@@ -18,6 +19,7 @@ files:
     - 'src/themes/version.scss'
     - 'src/platform/cordova.*.scss'
     - 'src/components/slides/slides-import.scss'
+    - 'src/components/slides/slides-vendor.scss'
 options:
   formatter: stylish
   merge-default-rules: false
@@ -46,6 +48,8 @@ rules:
     - 1
     - extra-properties:
         - contain
+        - overscroll-behavior
+        - overscroll-behavior-y
   # This doesn't allow chaining between elements and attributes, ids or classes
   # if we turn this on it breaks a lot of components
   no-qualifying-elements:
@@ -71,6 +75,7 @@ rules:
       - z-index
       - display
       - overflow
+      - overscroll-behavior
       - clear
       -
       - flex

@@ -68,11 +68,11 @@ ion-action-sheet {
 .action-sheet-group {
   overflow: scroll;
 
+  overscroll-behavior: contain;
+
   flex-shrink: 2;
 
   pointer-events: all;
-
-  overscroll-behavior: contain;
 }
 
 .action-sheet-group-cancel {

@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Box shadow of the FAB button
-$fab-ios-box-shadow:                                    0px 4px 16px rgba(0, 0, 0, .12) !default;
+$fab-ios-box-shadow:                                    0 4px 16px rgba(0, 0, 0, .12) !default;
 
 /// @prop - Box shadow of the activated FAB button
 $fab-ios-box-shadow-activated:                          $fab-ios-box-shadow !default;
