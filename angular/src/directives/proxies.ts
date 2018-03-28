@@ -748,7 +748,7 @@ export class MenuButton {
    */
   @NgInput() menu: string;
   /**
-   * Automatically hides the content when the corresponding menu is not active
+   * Automatically hides the menu button when the corresponding menu is not active
    */
   @NgInput() autoHide: boolean;
   constructor(el: ElementRef) {

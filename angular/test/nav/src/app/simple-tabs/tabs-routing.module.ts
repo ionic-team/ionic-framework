@@ -4,6 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { TabsPageComponent } from './tabs.component';
 
+import { CamaroPage } from './camaro/camaro.page';
+import { MustangPage } from './mustang/mustang.page';
+import { ChargerPage } from './charger/charger.page';
+
 const routes: Routes = [
   {
     path: 'tabs',
@@ -12,17 +16,17 @@ const routes: Routes = [
       {
         path: 'mustang',
         outlet: 'tab1',
-        loadChildren: 'app/simple-tabs/mustang/mustang.module#MustangModule'
+        component: MustangPage
       },
       {
         path: 'camaro',
         outlet: 'tab2',
-        loadChildren: 'app/simple-tabs/camaro/camaro.module#CamaroModule'
+        component: CamaroPage
       },
       {
         path: 'charger',
         outlet: 'tab3',
-        loadChildren: 'app/simple-tabs/charger/charger.module#ChargerModule'
+        component: ChargerPage
       }
     ]
   },
@@ -35,7 +39,13 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    IonicModule
+  ],
+  declarations: [
+    MustangPage,
+    CamaroPage,
+    ChargerPage
   ],
   exports: [
     RouterModule
