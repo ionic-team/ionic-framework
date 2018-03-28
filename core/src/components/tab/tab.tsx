@@ -19,7 +19,7 @@ export class Tab {
   /**
    * The title of the tab.
    */
-  @Prop() title: string;
+  @Prop() tabTitle: string;
 
   /**
    * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
@@ -29,17 +29,17 @@ export class Tab {
   /**
    * The icon for the tab.
    */
-  @Prop() icon: string;
+  @Prop() tabIcon: string;
 
   /**
    * The badge for the tab.
    */
-  @Prop() badge: string;
+  @Prop() tabBadge: string;
 
   /**
    * The badge color for the tab button.
    */
-  @Prop() badgeStyle = 'default';
+  @Prop() tabBadgeStyle = 'default';
 
   /**
    * The component to display inside of the tab.
@@ -87,7 +87,7 @@ export class Tab {
   componentWillLoad() {
     if (Build.isDev) {
       if (this.component && this.el.childElementCount > 0) {
-        console.error('You can not use a lazy-loaded component in a tab and inlineed content at the same time.' +
+        console.error('You can not use a lazy-loaded component in a tab and inlined content at the same time.' +
       `- Remove the component attribute in: <ion-tab component="${this.component}">` +
       ` or` +
       `- Remove the embeded content inside the ion-tab: <ion-tab></ion-tab>`);
