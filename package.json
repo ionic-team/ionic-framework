@@ -6,7 +6,7 @@
   "scripts": {
     "prepare.deploy": "node .scripts/prepare.js",
     "deploy": "node .scripts/publish.js",
-    "changelog": "conventional-changelog -p angular -i core/CHANGELOG.md -k core -s"
+    "changelog": "conventional-changelog -p angular -i ./CHANGELOG.md -k core -s"
   },
   "devDependencies": {
     "chalk": "^2.3.2",

@@ -12,17 +12,10 @@ async function main() {
   try {
     const {version} = common.readPkg('core');
 
-    // repo must be clean
-    await common.checkGit();
+    // publish each package in NPM
+    await publishPackages(common.packages, version);
 
-    // publish each project in NPM
-    await publishProjects(['core', 'angular'], version);
-
-    // push commits and tags to git remote
-    await publishGit(version);
-
-    console.log(`\n${version} published!! 🎉\n`);
-    process.exit(0);
+    console.log(`\nionic ${version} published!! 🎉\n`);
 
   } catch (err) {
     console.log('\n', chalk.red(err), '\n');
@@ -30,42 +23,63 @@ async function main() {
   }
 }
 
-async function publishProjects(projects, newVersion) {
+
+async function publishPackages(packages, version) {
   const tasks = [];
-  projects.forEach((project) => {
-    const {name, version} = common.readPkg(project);
-    tasks.push({
-      title: `Checking version of name (must match: ${version})`,
-      task: () => {
-        if(newVersion !== version) {
-          throw new Error('version does not match');
+
+  // repo must be clean
+  common.checkGit(tasks);
+
+  // first verify version
+  packages.forEach(package => {
+    if (package === 'core') return;
+
+    const pkg = common.readPkg(package);
+
+    tasks.push(
+      {
+        title: `${pkg.name}: check version (must match: ${version})`,
+        task: () => {
+          if (version !== pkg.version) {
+            throw new Error(`${pkg.name} version ${pkg.version} must match ${version}`);
+          }
         }
       }
-    });
+    );
   });
 
-  projects.forEach((project) => {
-    const projectRoot = common.projectPath(project);
-    tasks.push({
-      title: `Publish (latest) ${project} (v${newVersion})`,
-      task: () => execa('npm', ['publish', '--tag', 'latest'], { cwd: projectRoot })
-    });
+  // next publish
+  packages.forEach(package => {
+    const pkg = common.readPkg(package);
+
+    tasks.push(
+      {
+        title: `${pkg.name}: publish ${pkg.version}`,
+        task: () =>execa('npm', ['publish', '--tag', 'latest'], { cwd: projectRoot })
+      }
+    );
   });
+
+  // push commits and tags to git remote
+  publishGit(version);
+
   const listr = new Listr(tasks);
   await listr.run();
 }
 
-async function publishGit(version) {
-  const rootDir = common.rootPath();
-  const listr = new Listr([{
-    title: 'Tagging the latest commit',
-    task: () => execa('git', ['tag', `v${version}`], { cwd: rootDir })
-  },
-  {
-    title: 'Pushing to Github',
-    task: () => execa('git', ['push', '--follow-tags'], { cwd: rootDir })
-  }]);
-  await listr.run();
+
+function publishGit(tasks, version) {
+  tasks.push(
+      {
+      title: 'Tagging the latest commit',
+      task: () => execa('git', ['tag', `v${version}`], { cwd: common.rootDir })
+    },
+    {
+      title: 'Pushing to Github',
+      task: () => execa('git', ['push', '--follow-tags'], { cwd: common.rootDir })
+    }
+  );
 }
+
 
 main();

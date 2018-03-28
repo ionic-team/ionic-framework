@@ -24,7 +24,7 @@
     "ionicons": "4.0.0-18"
   },
   "devDependencies": {
-    "@stencil/core": "^0.7.9",
+    "@stencil/core": "0.7.9",
     "@stencil/dev-server": "latest",
     "@stencil/postcss": "0.0.2",
     "@stencil/sass": "0.0.3",
@@ -57,7 +57,8 @@
     "devapp": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server --broadcast\"",
     "e2e": "node ./scripts/e2e",
     "e2e-debug": "node --inspect --debug-brk ./scripts/e2e",
-    "lint": "npm run tslint & npm run sass-lint",
+    "lint": "npm run tslint && npm run sass-lint",
+    "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
     "sass-lint": "sass-lint -v -q",
     "set.version": "node scripts/set-version.js",
     "snapshot": "node ./scripts/e2e --snapshot",
@@ -67,11 +68,10 @@
     "theme-builder": "sd concurrent \"npm run theme-app-build\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
     "theme-builder:dev": "sd concurrent \"npm run theme-app-build -- --watch\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
     "theme-server": "node scripts/theme-builder/server.js",
+    "tsc": "./node_modules/.bin/tsc -p .",
     "tslint": "tslint --project .",
     "tslint-fix": "tslint --project . --fix",
-    "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
-    "validate": "npm i && npm run lint && npm run test && npm run build",
-    "tsc": "./node_modules/.bin/tsc -p ."
+    "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "author": "Ionic Team",
   "license": "MIT",

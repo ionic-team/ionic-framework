@@ -22,7 +22,6 @@
     "@angular/platform-browser-dynamic": "latest",
     "@angular/router": "latest",
     "@ionic/angular": "next",
-    "@ionic/core": "next",
     "body-parser": "^1.18.2",
     "core-js": "^2.4.1",
     "express": "^4.16.2",
