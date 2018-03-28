@@ -32,7 +32,6 @@
   // background-color: color-mod($tabbar-ios-background-color, a($alpha-ios-highest));
   background-color: $tabbar-ios-translucent-background-color;
 
-  -webkit-backdrop-filter: $tabbar-ios-translucent-filter;
   backdrop-filter: $tabbar-ios-translucent-filter;
 }
 

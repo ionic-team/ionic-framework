@@ -13,6 +13,7 @@
 }
 
 .back-button button {
+  @include font-smoothing();
   @include text-align(center);
   @include appearance(none);
 
@@ -38,9 +39,6 @@
 
   font-kerning: none;
   user-select: none;
-
-  font-smoothing: antialiased;
-  -webkit-font-smoothing: antialiased;
 
   display: flex;
 

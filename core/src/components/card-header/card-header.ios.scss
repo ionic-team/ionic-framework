@@ -11,6 +11,5 @@
 .card-header-translucent-ios {
   background-color: $card-ios-header-translucent-background-color;
 
-  -webkit-backdrop-filter: $card-ios-header-translucent-filter;
   backdrop-filter: $card-ios-header-translucent-filter;
 }
