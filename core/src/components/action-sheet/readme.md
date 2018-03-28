@@ -10,50 +10,6 @@ An action sheet can be created by the [Action Sheet Controller](../../action-she
 
 A button's `role` property can either be `destructive` or `cancel`. Buttons without a role property will have the default look for the platform. Buttons with the `cancel` role will always load as the bottom button, no matter where they are in the array. All other buttons will be displayed in the order they have been added to the `buttons` array. Note: We recommend that `destructive` buttons are always the first button in the array, making them the top button. Additionally, if the action sheet is dismissed by tapping the backdrop, then it will fire the handler from the button with the cancel role.
 
-```javascript
-async function presentBasic() {
-  const actionSheetController = document.querySelector('ion-action-sheet-controller');
-  await actionSheetController.componentOnReady();
-
-  const actionSheetElement = await actionSheetController.create({
-    title: "Albums",
-    buttons: [{
-      text: 'Delete',
-      role: 'destructive',
-      icon: 'trash',
-      handler: () => {
-        console.log('Delete clicked');
-      }
-    }, {
-      text: 'Share',
-      icon: 'share',
-      handler: () => {
-        console.log('Share clicked');
-      }
-    }, {
-      text: 'Play (open modal)',
-      icon: 'arrow-dropright-circle',
-      handler: () => {
-        console.log('Play clicked');
-      }
-    }, {
-      text: 'Favorite',
-      icon: 'heart',
-      handler: () => {
-        console.log('Favorite clicked');
-      }
-    }, {
-      text: 'Cancel',
-      icon: 'close',
-      role: 'cancel',
-      handler: () => {
-        console.log('Cancel clicked');
-      }
-    }]
-  });
-  await actionSheetElement.present();
-}
-```
 
 <!-- Auto Generated Below -->
 
