@@ -56,11 +56,11 @@
     "glob": "7.1.2",
     "inquirer": "^5.1.0",
     "listr": "^0.13.0",
-    "rxjs": "5.5.7",
+    "rxjs": "^5.5.8",
     "semver": "^5.5.0",
     "tslint": "^5.8.0",
     "tslint-ionic-rules": "0.0.14",
-    "typescript": "^2.6.2",
-    "zone.js": "0.8.20"
+    "typescript": "2.6.2",
+    "zone.js": "^0.8.20"
   }
 }
