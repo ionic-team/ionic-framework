@@ -30,6 +30,8 @@ import {
   AlertOptions,
   Animation as Animation2,
   AnimationBuilder,
+  ComponentProps,
+  ComponentRef,
   FrameworkDelegate,
   LoadingOptions,
   Menu,
@@ -85,11 +87,16 @@ import {
   MenuChangeEventDetail,
 } from './components/menu/menu';
 import {
+  NavComponent,
   NavOptions,
-  NavParams,
   TransitionDoneFn,
   TransitionInstruction,
 } from './components/nav/nav-util';
+import {
+  AnimationBuilder as AnimationBuilder3,
+  ComponentProps as ComponentProps2,
+  FrameworkDelegate as FrameworkDelegate2,
+} from '.';
 import {
   ViewController,
 } from './components/nav/view-controller';
@@ -99,10 +106,6 @@ import {
   RouterEventDetail,
   RouteWrite,
 } from './components/router/utils/interfaces';
-import {
-  AnimationBuilder as AnimationBuilder3,
-  FrameworkDelegate as FrameworkDelegate2,
-} from '.';
 import {
   PickerButton,
   PickerColumn as PickerColumn2,
@@ -166,7 +169,7 @@ declare global {
     /**
      * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
      */
-    'cssClass': string;
+    'cssClass': string | string[];
     /**
      * Dismiss the action sheet overlay after it has been presented.
      */
@@ -238,7 +241,7 @@ declare global {
       /**
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
-      'cssClass'?: string;
+      'cssClass'?: string | string[];
       /**
        * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
        */
@@ -336,7 +339,7 @@ declare global {
     /**
      * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
      */
-    'cssClass': string;
+    'cssClass': string | string[];
     /**
      * Dismiss the alert overlay after it has been presented.
      */
@@ -417,7 +420,7 @@ declare global {
       /**
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
-      'cssClass'?: string;
+      'cssClass'?: string | string[];
       /**
        * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
        */
@@ -2851,7 +2854,7 @@ declare global {
     /**
      * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
      */
-    'cssClass': string;
+    'cssClass': string | string[];
     /**
      * Dismiss the loading overlay after it has been presented.
      */
@@ -2931,7 +2934,7 @@ declare global {
       /**
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
-      'cssClass'?: string;
+      'cssClass'?: string | string[];
       /**
        * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
        */
@@ -3278,15 +3281,15 @@ declare global {
     /**
      * The component to display inside of the modal.
      */
-    'component': any;
-    /**
-     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-     */
-    'cssClass': string;
+    'component': ComponentRef;
     /**
      * The data to pass to the modal component.
      */
-    'data': any;
+    'componentProps': ComponentProps;
+    /**
+     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+     */
+    'cssClass': string | string[];
     'delegate': FrameworkDelegate;
     /**
      * Dismiss the modal overlay after it has been presented.
@@ -3355,15 +3358,15 @@ declare global {
       /**
        * The component to display inside of the modal.
        */
-      'component'?: any;
-      /**
-       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-       */
-      'cssClass'?: string;
+      'component'?: ComponentRef;
       /**
        * The data to pass to the modal component.
        */
-      'data'?: any;
+      'componentProps'?: ComponentProps;
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass'?: string | string[];
       'delegate'?: FrameworkDelegate;
       /**
        * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
@@ -3449,8 +3452,8 @@ declare global {
 
 declare global {
   interface HTMLIonNavPushElement extends HTMLStencilElement {
-    'component': any;
-    'data': any;
+    'component': NavComponent;
+    'componentProps': ComponentProps;
     'url': string;
   }
   var HTMLIonNavPushElement: {
@@ -3470,8 +3473,8 @@ declare global {
   }
   namespace JSXElements {
     export interface IonNavPushAttributes extends HTMLAttributes {
-      'component'?: any;
-      'data'?: any;
+      'component'?: NavComponent;
+      'componentProps'?: ComponentProps;
       'url'?: string;
     }
   }
@@ -3480,8 +3483,8 @@ declare global {
 
 declare global {
   interface HTMLIonNavSetRootElement extends HTMLStencilElement {
-    'component': any;
-    'data': any;
+    'component': NavComponent;
+    'componentProps': ComponentProps;
     'url': string;
   }
   var HTMLIonNavSetRootElement: {
@@ -3501,8 +3504,8 @@ declare global {
   }
   namespace JSXElements {
     export interface IonNavSetRootAttributes extends HTMLAttributes {
-      'component'?: any;
-      'data'?: any;
+      'component'?: NavComponent;
+      'componentProps'?: ComponentProps;
       'url'?: string;
     }
   }
@@ -3518,24 +3521,20 @@ declare global {
     'getByIndex': (index: number) => ViewController;
     'getPrevious': (view?: ViewController) => ViewController;
     'getRouteId': () => RouteID;
-    /**
-     * Return a view controller
-     */
-    'getViewById': (id: string) => ViewController;
     'getViews': () => ViewController[];
-    'insert': (insertIndex: number, page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-    'insertPages': (insertIndex: number, insertPages: any[], opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'insert': (insertIndex: number, component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'insertPages': (insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'pop': (opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'popAll': () => Promise<boolean[]>;
-    'popTo': (indexOrViewCtrl: any, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'popTo': (indexOrViewCtrl: number | ViewController, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'popToRoot': (opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-    'push': (page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'push': (component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'removeIndex': (startIndex: number, removeCount?: number, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'removeView': (viewController: ViewController, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-    'root': any;
-    'rootParams': any;
-    'setPages': (pages: any[], opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-    'setRoot': (pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'root': NavComponent;
+    'rootParams': ComponentProps;
+    'setPages': (views: any[], opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'setRoot': (component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
     'swipeBackEnabled': boolean;
   }
@@ -3559,8 +3558,8 @@ declare global {
       'animated'?: boolean;
       'delegate'?: FrameworkDelegate;
       'onIonNavChanged'?: (event: CustomEvent<void>) => void;
-      'root'?: any;
-      'rootParams'?: any;
+      'root'?: NavComponent;
+      'rootParams'?: ComponentProps;
       'swipeBackEnabled'?: boolean;
     }
   }
@@ -3679,7 +3678,7 @@ declare global {
     /**
      * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
      */
-    'cssClass': string;
+    'cssClass': string | string[];
     /**
      * Dismiss the picker overlay after it has been presented.
      */
@@ -3753,7 +3752,7 @@ declare global {
       /**
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
-      'cssClass'?: string;
+      'cssClass'?: string | string[];
       /**
        * Number of milliseconds to wait before dismissing the picker.
        */
@@ -3889,15 +3888,15 @@ declare global {
     /**
      * The component to display inside of the popover.
      */
-    'component': string;
-    /**
-     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-     */
-    'cssClass': string;
+    'component': ComponentRef;
     /**
      * The data to pass to the popover component.
      */
-    'data': any;
+    'componentProps': ComponentProps;
+    /**
+     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+     */
+    'cssClass': string | string[];
     'delegate': FrameworkDelegate;
     /**
      * Dismiss the popover overlay after it has been presented.
@@ -3974,15 +3973,15 @@ declare global {
       /**
        * The component to display inside of the popover.
        */
-      'component'?: string;
-      /**
-       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-       */
-      'cssClass'?: string;
+      'component'?: ComponentRef;
       /**
        * The data to pass to the popover component.
        */
-      'data'?: any;
+      'componentProps'?: ComponentProps;
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass'?: string | string[];
       'delegate'?: FrameworkDelegate;
       /**
        * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
@@ -6353,7 +6352,7 @@ declare global {
     /**
      * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
      */
-    'cssClass': string;
+    'cssClass': string | string[];
     /**
      * Dismiss the toast overlay after it has been presented.
      */
@@ -6433,7 +6432,7 @@ declare global {
       /**
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
-      'cssClass'?: string;
+      'cssClass'?: string | string[];
       /**
        * If true, the toast will dismiss when the page changes. Defaults to `false`.
        */

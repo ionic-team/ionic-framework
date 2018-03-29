@@ -6,21 +6,21 @@ import { CssClassMap } from '../index';
 export function createThemedClasses(mode: string, color: string, classes: string): CssClassMap {
   const classObj: CssClassMap = {};
 
-  return classes.split(' ')
-    .reduce((classObj: CssClassMap, classString: string): CssClassMap => {
-      classObj[classString] = true;
+  classes.split(' ').forEach(classString => {
+    classObj[classString] = true;
 
-      if (mode) {
-        classObj[`${classString}-${mode}`] = true;
+    if (mode) {
+      classObj[`${classString}-${mode}`] = true;
 
-        if (color) {
-          classObj[`${classString}-${color}`] = true;
-          classObj[`${classString}-${mode}-${color}`] = true;
-        }
+      if (color) {
+        classObj[`${classString}-${color}`] = true;
+        classObj[`${classString}-${mode}-${color}`] = true;
       }
+    }
 
-      return classObj;
-    }, classObj);
+    return classObj;
+  });
+  return classObj;
 }
 
 /**

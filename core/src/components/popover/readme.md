@@ -39,24 +39,24 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 #### component
 
-string
+
 
 The component to display inside of the popover.
 
 
+#### componentProps
+
+
+
+The data to pass to the popover component.
+
+
 #### cssClass
 
-string
+
 
 Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.
-
-
-#### data
-
-any
-
-The data to pass to the popover component.
 
 
 #### delegate
@@ -145,24 +145,24 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 #### component
 
-string
+
 
 The component to display inside of the popover.
 
 
+#### component-props
+
+
+
+The data to pass to the popover component.
+
+
 #### css-class
 
-string
+
 
 Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.
-
-
-#### data
-
-any
-
-The data to pass to the popover component.
 
 
 #### delegate

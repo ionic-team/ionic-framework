@@ -42,7 +42,7 @@ Optional text content to display in the loading indicator.
 
 #### cssClass
 
-string
+
 
 Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.
@@ -133,7 +133,7 @@ Optional text content to display in the loading indicator.
 
 #### css-class
 
-string
+
 
 Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.

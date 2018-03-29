@@ -32,10 +32,10 @@ export class StackController {
     return this.views.length > deep;
   }
 
-  async setActive(enteringView: RouteView, defaultDir: number|undefined) {
+  async setActive(enteringView: RouteView, direction: number | undefined) {
     const leavingView = this.getActive();
     const reused = this.insertView(enteringView);
-    const direction = defaultDir != null ? defaultDir : (reused ? -1 : 1);
+    direction = direction != null ? direction : (reused ? -1 : 1);
     await this.transition(enteringView, leavingView, direction);
 
     this.cleanup();
