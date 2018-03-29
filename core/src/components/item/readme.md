@@ -7,6 +7,14 @@
 
 ## Properties
 
+#### button
+
+boolean
+
+Whether or not this item should be tappable.
+If true, a button tag will be rendered. Defaults to `false`.
+
+
 #### color
 
 string
@@ -21,7 +29,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 boolean
 
 If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
-is `ios` and an `href`, `onclick` or `tappable` property is present.
+is `ios` and an `href`, `onclick` or `button` property is present.
 
 
 #### disabled
@@ -53,15 +61,15 @@ Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
-#### tappable
+## Attributes
+
+#### button
 
 boolean
 
 Whether or not this item should be tappable.
 If true, a button tag will be rendered. Defaults to `false`.
 
-
-## Attributes
 
 #### color
 
@@ -77,7 +85,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 boolean
 
 If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
-is `ios` and an `href`, `onclick` or `tappable` property is present.
+is `ios` and an `href`, `onclick` or `button` property is present.
 
 
 #### disabled
@@ -107,14 +115,6 @@ If this property is set, an anchor tag will be rendered.
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
-
-#### tappable
-
-boolean
-
-Whether or not this item should be tappable.
-If true, a button tag will be rendered. Defaults to `false`.
 
 
 

@@ -2592,11 +2592,15 @@ declare global {
 declare global {
   interface HTMLIonItemElement extends HTMLStencilElement {
     /**
+     * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
+     */
+    'button': boolean;
+    /**
      * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
      */
     'color': string;
     /**
-     * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `tappable` property is present.
+     * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
      */
     'detail': boolean;
     /**
@@ -2612,10 +2616,6 @@ declare global {
      * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
      */
     'mode': 'ios' | 'md';
-    /**
-     * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
-     */
-    'tappable': boolean;
   }
   var HTMLIonItemElement: {
     prototype: HTMLIonItemElement;
@@ -2635,11 +2635,15 @@ declare global {
   namespace JSXElements {
     export interface IonItemAttributes extends HTMLAttributes {
       /**
+       * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
+       */
+      'button'?: boolean;
+      /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
       'color'?: string;
       /**
-       * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `tappable` property is present.
+       * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
        */
       'detail'?: boolean;
       /**
@@ -2655,10 +2659,6 @@ declare global {
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
       'mode'?: 'ios' | 'md';
-      /**
-       * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
-       */
-      'tappable'?: boolean;
     }
   }
 }
