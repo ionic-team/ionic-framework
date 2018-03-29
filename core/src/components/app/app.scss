@@ -82,25 +82,6 @@ h6 {
   line-height: $headings-line-height;
 }
 
-[padding] {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    &:first-child {
-      @include margin(-3px, null, null, null);
-    }
-  }
-}
-
-h1 + h2,
-h1 + h3,
-h2 + h3 {
-  @include margin(-3px, null, null, null);
-}
-
 h1 {
   @include margin(20px, null, null, null);
 
