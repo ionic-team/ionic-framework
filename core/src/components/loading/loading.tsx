@@ -54,7 +54,7 @@ export class Loading implements OverlayInterface {
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string;
+  @Prop() cssClass: string | string[];
 
   /**
    * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
@@ -222,7 +222,7 @@ export class Loading implements OverlayInterface {
 export interface LoadingOptions {
   spinner?: string;
   content?: string;
-  cssClass?: string;
+  cssClass?: string | string[];
   showBackdrop?: boolean;
   dismissOnPageChange?: boolean;
   duration?: number;

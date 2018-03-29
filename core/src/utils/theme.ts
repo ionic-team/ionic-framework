@@ -50,8 +50,11 @@ export function getButtonClassMap(buttonType: string, mode: string): CssClassMap
   };
 }
 
-export function getClassList(classes: string | undefined): string[] {
+export function getClassList(classes: string | string[] | undefined): string[] {
   if (classes) {
+    if (Array.isArray(classes)) {
+      return classes;
+    }
     return classes
       .split(' ')
       .filter(c => c.trim() !== '');
@@ -59,7 +62,7 @@ export function getClassList(classes: string | undefined): string[] {
   return [];
 }
 
-export function getClassMap(classes: string | undefined): CssClassMap {
+export function getClassMap(classes: string | string[] | undefined): CssClassMap {
   const map: CssClassMap = {};
   getClassList(classes).forEach(c => map[c] = true);
   return map;

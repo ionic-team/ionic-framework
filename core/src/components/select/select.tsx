@@ -310,7 +310,7 @@ export class Select {
 
     const popoverOpts: PopoverOptions = Object.assign(interfaceOptions, {
       component: 'ion-select-popover',
-      data: {
+      componentProps: {
         title: interfaceOptions.title,
         subTitle: interfaceOptions.subTitle,
         message: interfaceOptions.message,

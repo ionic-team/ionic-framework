@@ -1,17 +1,18 @@
+import { ComponentRef } from '..';
 
 export interface FrameworkDelegate {
   attachViewToDom(container: any, component: any, propsOrDataObj?: any, cssClasses?: string[]): Promise<HTMLElement>;
   removeViewFromDom(container: any, component: any): Promise<void>;
 }
 
-export function attachComponent(delegate: FrameworkDelegate, container: Element, component: string|HTMLElement, cssClasses?: string[], params?: {[key: string]: any}): Promise<HTMLElement> {
+export function attachComponent(delegate: FrameworkDelegate, container: Element, component: ComponentRef, cssClasses?: string[], componentProps?: {[key: string]: any}): Promise<HTMLElement> {
   if (delegate) {
-    return delegate.attachViewToDom(container, component, params, cssClasses);
+    return delegate.attachViewToDom(container, component, componentProps, cssClasses);
   }
   const el = (typeof component === 'string') ? document.createElement(component) : component;
 
   cssClasses && cssClasses.forEach(c => el.classList.add(c));
-  params && Object.assign(el, params);
+  componentProps && Object.assign(el, componentProps);
 
   container.appendChild(el);
   if ((el as any).componentOnReady) {

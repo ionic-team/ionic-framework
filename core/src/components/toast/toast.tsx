@@ -56,7 +56,7 @@ export class Toast implements OverlayInterface {
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string;
+  @Prop() cssClass: string | string[];
 
   /**
    * If true, the toast will dismiss when the page changes. Defaults to `false`.
@@ -226,7 +226,7 @@ export class Toast implements OverlayInterface {
 
 export interface ToastOptions {
   message?: string;
-  cssClass?: string;
+  cssClass?: string | string[];
   duration?: number;
   showCloseButton?: boolean;
   closeButtonText?: string;

@@ -1,8 +1,8 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import {
+  NavComponent,
   NavDirection,
   NavOptions,
-  NavParams,
   NavResult,
   TransitionDoneFn,
   TransitionInstruction,
@@ -12,7 +12,7 @@ import {
 } from './nav-util';
 
 import { ViewController, isViewController } from './view-controller';
-import { Animation, Config, DomController, FrameworkDelegate, GestureDetail, NavOutlet } from '../..';
+import { Animation, ComponentProps, Config, DomController, FrameworkDelegate, GestureDetail, NavOutlet } from '../..';
 import { RouteID, RouteWrite, RouterDirection } from '../router/utils/interfaces';
 import { AnimationOptions, ViewLifecycle, lifecycle, transition } from '../../utils/transition';
 import { assert } from '../../utils/helpers';
@@ -25,21 +25,15 @@ import mdTransitionAnimation from './animations/md.transition';
 })
 export class NavControllerBase implements NavOutlet {
 
-  private _ids = -1;
   private _init = false;
   private _queue: TransitionInstruction[] = [];
   private _sbTrns: Animation;
   private useRouter = false;
   isTransitioning = false;
   private _destroyed = false;
+  private _views: ViewController[] = [];
 
-  _views: ViewController[] = [];
-
-  id: string;
-  name: string;
   mode: string;
-
-  parent: any;
 
   @Element() el: HTMLElement;
 
@@ -50,8 +44,8 @@ export class NavControllerBase implements NavOutlet {
   @Prop({ mutable: true }) swipeBackEnabled: boolean;
   @Prop({ mutable: true }) animated: boolean;
   @Prop() delegate: FrameworkDelegate;
-  @Prop() rootParams: any;
-  @Prop() root: any;
+  @Prop() rootParams: ComponentProps;
+  @Prop() root: NavComponent;
   @Watch('root')
   rootChanged() {
     if (this.root) {
@@ -66,7 +60,6 @@ export class NavControllerBase implements NavOutlet {
   @Event() ionNavChanged: EventEmitter<void>;
 
   componentWillLoad() {
-    this.id = 'n' + (++ctrlIds);
     this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
     if (this.swipeBackEnabled === undefined) {
       this.swipeBackEnabled = this.config.getBoolean('swipeBackEnabled', this.mode === 'ios');
@@ -81,32 +74,44 @@ export class NavControllerBase implements NavOutlet {
   }
 
   componentDidUnload() {
-    this.destroy();
+    const views = this._views;
+    let view: ViewController;
+    for (let i = 0; i < views.length; i++) {
+      view = views[i];
+      lifecycle(view.element, ViewLifecycle.WillUnload);
+      view._destroy();
+    }
+
+    // release swipe back gesture and transition
+    this._sbTrns && this._sbTrns.destroy();
+    this._queue = this._views = this._sbTrns = null;
+
+    this._destroyed = true;
   }
 
   @Method()
-  push(page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  push(component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     return this._queueTrns({
       insertStart: -1,
-      insertViews: [{ page: page, params: params }],
+      insertViews: [{ page: component, params: componentProps }],
       opts: opts,
     }, done);
   }
 
   @Method()
-  insert(insertIndex: number, page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  insert(insertIndex: number, component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     return this._queueTrns({
       insertStart: insertIndex,
-      insertViews: [{ page: page, params: params }],
+      insertViews: [{ page: component, params: componentProps }],
       opts: opts,
     }, done);
   }
 
   @Method()
-  insertPages(insertIndex: number, insertPages: any[], opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  insertPages(insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     return this._queueTrns({
       insertStart: insertIndex,
-      insertViews: insertPages,
+      insertViews: insertComponents,
       opts: opts,
     }, done);
   }
@@ -121,7 +126,7 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  popTo(indexOrViewCtrl: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  popTo(indexOrViewCtrl: number | ViewController, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     const config: TransitionInstruction = {
       removeStart: -1,
       removeCount: -1,
@@ -174,12 +179,12 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  setRoot(pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
-    return this.setPages([{ page: pageOrViewCtrl, params: params }], opts, done);
+  setRoot(component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+    return this.setPages([{ page: component, params: componentProps }], opts, done);
   }
 
   @Method()
-  setPages(pages: any[], opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  setPages(views: any[], opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     if (!opts) {
       opts = {};
     }
@@ -189,7 +194,7 @@ export class NavControllerBase implements NavOutlet {
     }
     return this._queueTrns({
       insertStart: 0,
-      insertViews: pages,
+      insertViews: views,
       removeStart: 0,
       removeCount: -1,
       opts: opts
@@ -252,12 +257,12 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  getActive(): ViewController {
+  getActive(): ViewController|undefined {
     return this._views[this._views.length - 1];
   }
 
   @Method()
-  getByIndex(index: number): ViewController {
+  getByIndex(index: number): ViewController|undefined {
     return this._views[index];
   }
 
@@ -269,16 +274,8 @@ export class NavControllerBase implements NavOutlet {
   }
 
   @Method()
-  getViews(): Array<ViewController> {
+  getViews(): ViewController[] {
     return this._views.slice();
-  }
-
-  /**
-   * Return a view controller
-   */
-  @Method()
-  getViewById(id: string): ViewController|undefined {
-    return this._views.find(vc => vc.id === id);
   }
 
   indexOf(viewController: ViewController) {
@@ -674,12 +671,6 @@ export class NavControllerBase implements NavOutlet {
       // create the new entering view
       view._setNav(this);
 
-      // give this inserted view an ID
-      this._ids++;
-      if (!view.id) {
-        view.id = `${this.id}-${this._ids}`;
-      }
-
       // insert the entering view into the correct index in the stack
       this._views.splice(index, 0, view);
     }
@@ -727,28 +718,6 @@ export class NavControllerBase implements NavOutlet {
         }
       }
     }
-  }
-
-  destroy() {
-    const views = this._views;
-    let view: ViewController;
-    for (let i = 0; i < views.length; i++) {
-      view = views[i];
-      lifecycle(view.element, ViewLifecycle.WillUnload);
-      view._destroy();
-    }
-
-    // release swipe back gesture and transition
-    this._sbTrns && this._sbTrns.destroy();
-    this._queue = this._views = this._sbTrns = null;
-
-    // Unregister navcontroller
-    if (this.parent && this.parent.unregisterChildNav) {
-      // TODO: event
-      this.parent.unregisterChildNav(this);
-    }
-
-    this._destroyed = true;
   }
 
   private swipeBackStart() {
@@ -837,5 +806,3 @@ export class NavControllerBase implements NavOutlet {
     return dom;
   }
 }
-
-let ctrlIds = -1;
