@@ -55,20 +55,6 @@ export class Tabs {
 boolean
 
 
-#### badge
-
-string
-
-The badge for the tab.
-
-
-#### badgeStyle
-
-string
-
-The badge color for the tab button.
-
-
 #### btnId
 
 string
@@ -79,6 +65,11 @@ string
 any
 
 The component to display inside of the tab.
+
+
+#### delegate
+
+
 
 
 #### disabled
@@ -93,13 +84,6 @@ If true, the user cannot interact with the tab. Defaults to `false`.
 string
 
 The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
-
-
-#### icon
-
-string
-
-The icon for the tab.
 
 
 #### name
@@ -123,6 +107,34 @@ boolean
 If true, the tab button is visible within the tabbar. Defaults to `true`.
 
 
+#### tabBadge
+
+string
+
+The badge for the tab.
+
+
+#### tabBadgeStyle
+
+string
+
+The badge color for the tab button.
+
+
+#### tabIcon
+
+string
+
+The icon for the tab.
+
+
+#### tabTitle
+
+string
+
+The title of the tab.
+
+
 #### tabsHideOnSubPages
 
 boolean
@@ -130,32 +142,11 @@ boolean
 If true, hide the tabs on child pages.
 
 
-#### title
-
-string
-
-The title of the tab.
-
-
 ## Attributes
 
 #### active
 
 boolean
-
-
-#### badge
-
-string
-
-The badge for the tab.
-
-
-#### badge-style
-
-string
-
-The badge color for the tab button.
 
 
 #### btn-id
@@ -170,6 +161,11 @@ any
 The component to display inside of the tab.
 
 
+#### delegate
+
+
+
+
 #### disabled
 
 boolean
@@ -182,13 +178,6 @@ If true, the user cannot interact with the tab. Defaults to `false`.
 string
 
 The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
-
-
-#### icon
-
-string
-
-The icon for the tab.
 
 
 #### name
@@ -212,18 +201,39 @@ boolean
 If true, the tab button is visible within the tabbar. Defaults to `true`.
 
 
+#### tab-badge
+
+string
+
+The badge for the tab.
+
+
+#### tab-badge-style
+
+string
+
+The badge color for the tab button.
+
+
+#### tab-icon
+
+string
+
+The icon for the tab.
+
+
+#### tab-title
+
+string
+
+The title of the tab.
+
+
 #### tabs-hide-on-sub-pages
 
 boolean
 
 If true, hide the tabs on child pages.
-
-
-#### title
-
-string
-
-The title of the tab.
 
 
 ## Events

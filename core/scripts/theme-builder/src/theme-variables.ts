@@ -243,6 +243,9 @@ export const THEME_VARIABLES: ThemeVariable[] = [
     property: '--ion-overlay-background-color'
   },
   {
+    property: '--ion-ripple-background-color'
+  },
+  {
     property: '--ion-background-color',
     quickPick: {
       text: 'bg'

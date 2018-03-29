@@ -24,9 +24,15 @@ export class RouterOutlet implements NavOutlet {
   @Prop({context: 'config'}) config: Config;
   @Prop({connect: 'ion-animation-controller'}) animationCtrl: HTMLIonAnimationControllerElement;
 
-  @Prop() animated = true;
+  @Prop() animated: boolean;
   @Prop() animationBuilder: AnimationBuilder;
   @Prop() delegate: FrameworkDelegate;
+
+  componentWillLoad() {
+    if (this.animated === undefined) {
+      this.animated = this.config.getBoolean('animate', true);
+    }
+  }
 
   componentDidUnload() {
     this.activeEl = this.activeComponent = undefined;
@@ -44,18 +50,19 @@ export class RouterOutlet implements NavOutlet {
     const leavingEl = this.activeEl;
 
     // commit animation
-    await this.commit(enteringEl, opts);
+    await this.commit(enteringEl, leavingEl, opts);
 
     // remove leaving view
+    this.activeEl = enteringEl;
     detachComponent(this.delegate, leavingEl);
 
     return true;
   }
 
   @Method()
-  async commit(enteringEl: HTMLElement, opts?: RouterOutletOptions): Promise<boolean> {
+  async commit(enteringEl: HTMLElement, leavingEl: HTMLElement, opts?: RouterOutletOptions): Promise<boolean> {
     // isTransitioning acts as a lock to prevent reentering
-    if (this.isTransitioning || this.activeEl === enteringEl) {
+    if (this.isTransitioning || leavingEl === enteringEl) {
       return false;
     }
     this.isTransitioning = true;
@@ -69,20 +76,20 @@ export class RouterOutlet implements NavOutlet {
       easing: opts.easing,
 
       animationCtrl: this.animationCtrl,
+      showGoBack: opts.showGoBack,
       enteringEl: enteringEl,
-      leavingEl: this.activeEl,
+      leavingEl: leavingEl,
       baseEl: this.el,
     });
-    this.activeEl = enteringEl;
     this.isTransitioning = false;
     return true;
   }
 
   @Method()
-  async setRouteId(id: string, data: any, direction: number): Promise<RouteWrite> {
-    const changed = await this.setRoot(id, data, {
+  async setRouteId(id: string, params: any, direction: number): Promise<RouteWrite> {
+    const changed = await this.setRoot(id, params, {
       duration: direction === 0 ? 0 : undefined,
-      direction: direction === -1 ? NavDirection.back : NavDirection.forward,
+      direction: direction === -1 ? NavDirection.Back : NavDirection.Forward,
     });
     return {
       changed,
@@ -100,7 +107,7 @@ export class RouterOutlet implements NavOutlet {
   }
 
   private getAnimationBuilder(opts: RouterOutletOptions) {
-    if (opts.duration === 0 || this.animated === false || this.activeEl === undefined) {
+    if (opts.duration === 0 || this.animated === false) {
       return undefined;
     }
     const mode = opts.mode || this.config.get('pageTransition', this.mode);
@@ -121,6 +128,7 @@ export interface RouterOutletOptions {
   animationBuilder?: AnimationBuilder;
   duration?: number;
   easing?: string;
+  showGoBack?: boolean;
   direction?: NavDirection;
   mode?: 'md' | 'ios';
 }

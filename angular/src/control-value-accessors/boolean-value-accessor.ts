@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { setIonicClasses } from './util/set-ionic-classes';
@@ -15,7 +15,8 @@ import { setIonicClasses } from './util/set-ionic-classes';
   ]
 })
 export class BooleanValueAccessor implements ControlValueAccessor {
-  constructor(private element: ElementRef, private renderer: Renderer2) {
+
+  constructor(private element: ElementRef) {
     this.onChange = () => {/**/};
     this.onTouched = () => {/**/};
   }
@@ -24,14 +25,15 @@ export class BooleanValueAccessor implements ControlValueAccessor {
   onTouched: () => void;
 
   writeValue(value: any) {
-    this.renderer.setProperty(this.element.nativeElement, 'checked', value);
+    this.element.nativeElement.checked = value;
     setIonicClasses(this.element);
   }
 
   @HostListener('ionChange', ['$event.target.checked'])
   _handleIonChange(value: any) {
     this.onChange(value);
-    setTimeout(() => {
+
+    requestAnimationFrame(() => {
       setIonicClasses(this.element);
     });
   }
@@ -39,24 +41,21 @@ export class BooleanValueAccessor implements ControlValueAccessor {
   @HostListener('ionBlur')
   _handleBlurEvent() {
     this.onTouched();
-    setTimeout(() => {
+
+    requestAnimationFrame(() => {
       setIonicClasses(this.element);
     });
   }
 
-  registerOnChange(fn: (value: any) => void): void {
+  registerOnChange(fn: (value: any) => void) {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: () => void): void {
+  registerOnTouched(fn: () => void) {
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    this.renderer.setProperty(
-      this.element.nativeElement,
-      'disabled',
-      isDisabled
-    );
+  setDisabledState(isDisabled: boolean) {
+    this.element.nativeElement.disabled = isDisabled;
   }
 }

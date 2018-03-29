@@ -36,12 +36,7 @@ export class TapClick {
     this.pointerDown(ev);
   }
 
-  @Listen('document:touchcancel', { passive: true, capture: true })
-  onTouchCancel(ev: TouchEvent) {
-    this.lastTouch = now(ev);
-    this.pointerUp(ev);
-  }
-
+  @Listen('document:touchcancel', { passive: false, capture: true })
   @Listen('document:touchend', { passive: false, capture: true })
   onTouchEnd(ev: TouchEvent) {
     this.lastTouch = now(ev);

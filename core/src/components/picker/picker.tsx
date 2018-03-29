@@ -59,7 +59,7 @@ export class Picker implements OverlayInterface {
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string;
+  @Prop() cssClass: string | string[];
 
   /**
    * Number of milliseconds to wait before dismissing the picker.
@@ -144,13 +144,12 @@ export class Picker implements OverlayInterface {
    * Present the picker overlay after it has been created.
    */
   @Method()
-  present(): Promise<void> {
-    return present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined).then(() => {
-      // If there is a duration, dismiss after that amount of time
-      if (this.duration > 10) {
-        this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
-      }
-    });
+  async present(): Promise<void> {
+    await present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
+
+    if (this.duration > 0) {
+      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
+    }
   }
 
   /**
@@ -342,14 +341,14 @@ function buttonClass(button: PickerButton): CssClassMap {
 export interface PickerButton {
   text?: string;
   role?: string;
-  cssClass?: string;
+  cssClass?: string | string[];
   handler?: (value: any) => boolean|void;
 }
 
 export interface PickerOptions {
   buttons?: PickerButton[];
   columns?: PickerColumn[];
-  cssClass?: string;
+  cssClass?: string | string[];
   enableBackdropDismiss?: boolean;
 }
 
@@ -361,7 +360,7 @@ export interface PickerColumn {
   prefix?: string;
   suffix?: string;
   options: PickerColumnOption[];
-  cssClass?: string;
+  cssClass?: string | string[];
   columnWidth?: string;
   prefixWidth?: string;
   suffixWidth?: string;

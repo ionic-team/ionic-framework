@@ -22,11 +22,7 @@ module.exports = function(config) {
     angularCli: {
       environment: 'dev'
     },
-    files: [
-      // TODO: I have not fully worked out how this will work.
-      //       Perhaps just the base include with a plugin?
-      { pattern: '../node_modules/@ionic/core/dist/ionic.js', watched: false, served: false, nocache: true, included: true }
-    ],
+    files: [],
     reporters: ['progress', 'kjhtml'],
     port: 9876,
     colors: true,

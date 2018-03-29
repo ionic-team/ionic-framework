@@ -130,7 +130,7 @@ export class ItemSliding {
   }
 
   private canStart(): boolean {
-    const selected = this.list && this.list.getOpenedItem();
+    const selected = this.list && this.list.getOpenItem();
     if (selected && selected !== this) {
       this.closeOpened();
       return false;
@@ -139,7 +139,7 @@ export class ItemSliding {
   }
 
   private onDragStart() {
-    this.list && this.list.setOpenedItem(this);
+    this.list && this.list.setOpenItem(this);
 
     if (this.tmr) {
       clearTimeout(this.tmr);
@@ -243,7 +243,7 @@ export class ItemSliding {
         this.state = SlidingState.Disabled;
         this.tmr = null;
       }, 600);
-      this.list && this.list.setOpenedItem(null);
+      this.list && this.list.setOpenItem(null);
       style.transform = '';
       return;
     }

@@ -6,21 +6,21 @@ import { CssClassMap } from '../index';
 export function createThemedClasses(mode: string, color: string, classes: string): CssClassMap {
   const classObj: CssClassMap = {};
 
-  return classes.split(' ')
-    .reduce((classObj: CssClassMap, classString: string): CssClassMap => {
-      classObj[classString] = true;
+  classes.split(' ').forEach(classString => {
+    classObj[classString] = true;
 
-      if (mode) {
-        classObj[`${classString}-${mode}`] = true;
+    if (mode) {
+      classObj[`${classString}-${mode}`] = true;
 
-        if (color) {
-          classObj[`${classString}-${color}`] = true;
-          classObj[`${classString}-${mode}-${color}`] = true;
-        }
+      if (color) {
+        classObj[`${classString}-${color}`] = true;
+        classObj[`${classString}-${mode}-${color}`] = true;
       }
+    }
 
-      return classObj;
-    }, classObj);
+    return classObj;
+  });
+  return classObj;
 }
 
 /**
@@ -50,8 +50,11 @@ export function getButtonClassMap(buttonType: string, mode: string): CssClassMap
   };
 }
 
-export function getClassList(classes: string | undefined): string[] {
+export function getClassList(classes: string | string[] | undefined): string[] {
   if (classes) {
+    if (Array.isArray(classes)) {
+      return classes;
+    }
     return classes
       .split(' ')
       .filter(c => c.trim() !== '');
@@ -59,20 +62,19 @@ export function getClassList(classes: string | undefined): string[] {
   return [];
 }
 
-export function getClassMap(classes: string | undefined): CssClassMap {
+export function getClassMap(classes: string | string[] | undefined): CssClassMap {
   const map: CssClassMap = {};
   getClassList(classes).forEach(c => map[c] = true);
   return map;
 }
 
-export function openURL(url: string, ev: Event, isPop = false) {
+export function openURL(url: string, ev: Event, goBack = false) {
   if (url && url[0] !== '#' && url.indexOf('://') === -1) {
     const router = document.querySelector('ion-router');
     if (router) {
       ev && ev.preventDefault();
-      return router.componentOnReady().then(() => router.push(url, isPop));
+      return router.componentOnReady().then(() => router.push(url, goBack ? -1 : 1));
     }
   }
   return Promise.resolve();
 }
-

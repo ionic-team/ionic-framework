@@ -119,6 +119,11 @@ button with a border, or to `"solid"`. The default style is `"solid"` except ins
 a toolbar, where the default is `"clear"`.
 
 
+#### goBack
+
+boolean
+
+
 #### href
 
 string
@@ -208,6 +213,11 @@ without left and right borders.
 Set to `"clear"` for a transparent button, to `"outline"` for a transparent
 button with a border, or to `"solid"`. The default style is `"solid"` except inside of
 a toolbar, where the default is `"clear"`.
+
+
+#### go-back
+
+boolean
 
 
 #### href

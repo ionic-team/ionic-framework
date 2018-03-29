@@ -1,15 +1,16 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { IonicModule } from '@ionic/angular';
 import { ActionSheetPageComponent } from './action-sheet-page.component';
 import { ActionSheetRoutingModule } from './action-sheet-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    IonicModule,
     ActionSheetRoutingModule
   ],
-  declarations: [ActionSheetPageComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  declarations: [ActionSheetPageComponent]
 })
 export class ActionSheetModule { }

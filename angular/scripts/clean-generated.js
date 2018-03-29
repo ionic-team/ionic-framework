@@ -2,22 +2,11 @@ const path = require('path');
 const cwd = process.cwd();
 
 const glob = require('glob');
-const rimRaf = require('rimraf');
+const fs = require('fs-extra');
 
-const distDir = path.join(cwd, 'dist');
+const distDir = path.join(__dirname, '../dist');
 
 const distGeneratedNodeModules = path.join(distDir, 'node_modules');
-
-function rimRafAsync(dir) {
-  return new Promise((resolve, reject) => {
-    rimRaf(dir, {}, err => {
-      if (err) {
-        return reject(err);
-      }
-      resolve();
-    })
-  });
-}
 
 function doGlob(globString) {
   return new Promise((resolve, reject) => {
@@ -40,15 +29,14 @@ function getCodegenedFilesToDelete() {
     const deleteFilePromises = [];
     listOfGlobResults.forEach(fileMatches => {
       fileMatches.forEach(filePath => {
-        deleteFilePromises.push(rimRafAsync(filePath));
+        deleteFilePromises.push(fs.remove(filePath));
       })
     })
     return Promise.all(deleteFilePromises);
   });
 }
 
-const taskPromises = [];
-taskPromises.push(getCodegenedFilesToDelete());
-taskPromises.push(rimRafAsync(distGeneratedNodeModules));
-
-return Promise.all(taskPromises);
+Promise.all([
+  getCodegenedFilesToDelete(),
+  fs.remove(distGeneratedNodeModules)
+]);

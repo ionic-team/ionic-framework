@@ -1,12 +1,10 @@
-import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Config, DomController } from '../../index';
 import { flattenRouterTree, readRedirects, readRoutes } from './utils/parser';
 import { readNavState, writeNavState } from './utils/dom';
 import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
-import { RouteChain, RouteRedirect, RouterEventDetail } from './utils/interfaces';
+import { RouteChain, RouteRedirect, RouterDirection, RouterEventDetail } from './utils/interfaces';
 import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matching';
-import { printRoutes } from './utils/debug';
-
 
 @Component({
   tag: 'ion-router'
@@ -19,6 +17,7 @@ export class Router {
   private busy = false;
   private init = false;
   private state = 0;
+  private lastState = 0;
   private timer: any;
 
   @Element() el: HTMLElement;
@@ -33,120 +32,145 @@ export class Router {
 
   componentDidLoad() {
     this.init = true;
-    this.onRedirectChanged();
-    this.onRoutesChanged();
+    console.debug('[ion-router] router did load');
+
+    const tree = readRoutes(this.el);
+    this.routes = flattenRouterTree(tree);
+    this.redirects = readRedirects(this.el);
+
+    // TODO: use something else
+    requestAnimationFrame(() => {
+      this.historyDirection();
+      this.writeNavStateRoot(this.getPath(), RouterDirection.None);
+    });
   }
 
   @Listen('ionRouteRedirectChanged')
-  protected onRedirectChanged() {
+  protected onRedirectChanged(ev: CustomEvent) {
     if (!this.init) {
       return;
     }
+    console.debug('[ion-router] redirect data changed', ev.target);
     this.redirects = readRedirects(this.el);
   }
 
   @Listen('ionRouteDataChanged')
-  protected onRoutesChanged() {
+  protected onRoutesChanged(ev: CustomEvent) {
     if (!this.init) {
       return;
     }
-    const tree = readRoutes(this.el);
-    this.routes = flattenRouterTree(tree);
-
-    if (Build.isDev) {
-      printRoutes(this.routes);
-    }
+    console.debug('[ion-router] route data changed', ev.target, ev.detail);
 
     // schedule write
     if (this.timer) {
-      cancelAnimationFrame(this.timer);
+      clearTimeout(this.timer);
       this.timer = undefined;
     }
-    this.timer = requestAnimationFrame(() => {
+    this.timer = setTimeout(() => {
+      console.debug('[ion-router] data changed -> update nav');
+      const tree = readRoutes(this.el);
+      this.routes = flattenRouterTree(tree);
+      this.writeNavStateRoot(this.getPath(), RouterDirection.None);
       this.timer = undefined;
-      this.onPopState();
-    });
+    }, 100);
   }
-
 
   @Listen('window:popstate')
   protected onPopState() {
+    const direction = this.historyDirection();
+    const path = this.getPath();
+    console.debug('[ion-router] URL changed -> update nav', path, direction);
+    return this.writeNavStateRoot(path, direction);
+  }
+
+  private historyDirection() {
     if (window.history.state === null) {
       this.state++;
       window.history.replaceState(this.state, document.title, document.location.href);
     }
-    const direction = window.history.state >= this.state ? 1 : -1;
-    this.writeNavStateRoot(this.getPath(), direction);
+
+    const state = window.history.state;
+    const lastState = this.lastState;
+    this.lastState = state;
+
+    if (state > lastState) {
+      return RouterDirection.Forward;
+    } else if (state < lastState) {
+      return RouterDirection.Back;
+    } else {
+      return RouterDirection.None;
+    }
   }
 
   @Method()
-  navChanged(isPop: boolean): Promise<boolean> {
+  async navChanged(direction: RouterDirection): Promise<boolean> {
     if (this.busy) {
-      return Promise.resolve(false);
+      return false;
     }
-    console.debug('[IN] nav changed -> update URL');
-    const { ids, pivot } = readNavState(document.body);
+    const { ids, outlet } = readNavState(document.body);
     const chain = routerIDsToChain(ids, this.routes);
     if (!chain) {
-      console.warn('no matching URL for ', ids.map(i => i.id));
-      return Promise.resolve(false);
+      console.warn('[ion-router] no matching URL for ', ids.map(i => i.id));
+      return false;
     }
 
     const path = chainToPath(chain);
-    this.setPath(path, isPop);
+    if (!path) {
+      console.warn('[ion-router] router could not match path because some required param is missing');
+      return false;
+    }
 
-    const promise = (chain.length > ids.length)
-      ? this.writeNavState(pivot, chain.slice(ids.length), 0)
-      : Promise.resolve(true);
-
-    return promise.then(() => {
-      this.emitRouteChange(path, null);
-      return true;
-    });
+    console.debug('[ion-router] nav changed -> update URL', ids, path);
+    this.setPath(path, direction);
+    if (outlet) {
+      console.debug('[ion-router] updating nested outlet', outlet);
+      await this.writeNavState(outlet, chain, RouterDirection.None, ids.length);
+    }
+    this.emitRouteChange(path, null);
+    return true;
   }
 
   @Method()
-  push(url: string, backDirection = false) {
+  push(url: string, direction = RouterDirection.Forward) {
     const path = parsePath(url);
-    this.setPath(path, backDirection);
+    this.setPath(path, direction);
 
-    return this.writeNavStateRoot(path, backDirection ? -1 : 1);
+    console.debug('[ion-router] URL pushed -> updating nav', url, direction);
+    return this.writeNavStateRoot(path, direction);
   }
 
-  private writeNavStateRoot(path: string[], direction: number): Promise<boolean> {
+  private async writeNavStateRoot(path: string[], direction: RouterDirection): Promise<boolean> {
     if (this.busy) {
-      return Promise.resolve(false);
+      return false;
     }
     const redirect = routeRedirect(path, this.redirects);
     let redirectFrom: string[] = null;
     if (redirect) {
-      this.setPath(redirect.to, true);
+      this.setPath(redirect.to, direction);
       redirectFrom = redirect.from;
       path = redirect.to;
     }
     const chain = routerPathToChain(path, this.routes);
-    return this.writeNavState(document.body, chain, direction).then(changed => {
-      if (changed) {
-        this.emitRouteChange(path, redirectFrom);
-      }
-      return changed;
-    });
+    const changed = await this.writeNavState(document.body, chain, direction);
+    if (changed) {
+      this.emitRouteChange(path, redirectFrom);
+    }
+    return changed;
   }
 
-  private writeNavState(node: any, chain: RouteChain, direction: number): Promise<boolean> {
+  private async writeNavState(node: any, chain: RouteChain, direction: RouterDirection, index = 0): Promise<boolean> {
     if (this.busy) {
-      return Promise.resolve(false);
+      return false;
     }
     this.busy = true;
-    return writeNavState(node, chain, 0, direction).then(changed => {
-      this.busy = false;
-      return changed;
-    });
+    const changed = await writeNavState(node, chain, direction, index);
+    this.busy = false;
+    return changed;
   }
 
-  private setPath(path: string[], isPop: boolean) {
+  private setPath(path: string[], direction: RouterDirection) {
     this.state++;
-    writePath(window.history, this.base, this.useHash, path, isPop, this.state);
+    writePath(window.history, this.base, this.useHash, path, direction, this.state);
   }
 
   private getPath(): string[] | null {
@@ -154,6 +178,7 @@ export class Router {
   }
 
   private emitRouteChange(path: string[], redirectPath: string[]|null) {
+    console.debug('[ion-router] route changed', path);
     const from = this.previousPath;
     const redirectedFrom = redirectPath ? generatePath(redirectPath) : null;
     const to = generatePath(path);

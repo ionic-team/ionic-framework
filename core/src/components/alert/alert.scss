@@ -4,6 +4,7 @@
 // --------------------------------------------------
 
 ion-alert {
+  @include font-smoothing();
   @include position(0, 0, 0, 0);
 
   position: fixed;
@@ -18,9 +19,6 @@ ion-alert {
   touch-action: none;
 
   contain: strict;
-
-  font-smoothing: antialiased;
-  -webkit-font-smoothing: antialiased;
 }
 
 ion-alert.alert-top {

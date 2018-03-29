@@ -59,7 +59,7 @@ export * from './components/modal/modal';
 export { ModalController } from './components/modal-controller/modal-controller';
 export * from './components/nav/nav';
 export { ViewController } from './components/nav/view-controller';
-export { NavParams, NavOptions, TransitionDoneFn} from './components/nav/nav-util';
+export { NavDirection, NavOptions, TransitionDoneFn} from './components/nav/nav-util';
 export { Note } from './components/note/note';
 export { PickerColumnCmp } from './components/picker-column/picker-column';
 export * from './components/picker/picker';
@@ -109,6 +109,9 @@ export * from './components';
 export { DomController, RafCallback } from './global/dom-controller';
 export { FrameworkDelegate } from './utils/framework-delegate';
 export { OverlayEventDetail } from './utils/overlays';
+
+export type ComponentRef = Function | HTMLElement | string;
+export type ComponentProps = {[key: string]: any};
 
 export interface Config {
   get: (key: string, fallback?: any) => any;

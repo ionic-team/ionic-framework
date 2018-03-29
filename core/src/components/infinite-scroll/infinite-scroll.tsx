@@ -15,10 +15,9 @@ export class InfiniteScroll {
 
   private thrPx = 0;
   private thrPc = 0;
-  private scrollEl: HTMLIonScrollElement|null = null;
+  private scrollEl: HTMLIonScrollElement|undefined;
   private didFire = false;
   private isBusy = false;
-  private init = false;
 
   @Element() private el: HTMLElement;
   @State() isLoading = false;
@@ -82,19 +81,14 @@ export class InfiniteScroll {
    */
   @Event() ionInfinite: EventEmitter;
 
-  componentWillLoad() {
+  async componentWillLoad() {
     const scrollEl = this.el.closest('ion-scroll');
-    return scrollEl.componentOnReady().then((el) => {
-      this.scrollEl = el;
-    });
+    if (scrollEl) {
+      this.scrollEl = await scrollEl.componentOnReady();
+    }
   }
 
   componentDidLoad() {
-    if (this.init) {
-      console.warn('instance was already initialized');
-      return;
-    }
-    this.init = true;
     this.thresholdChanged(this.threshold);
     this.enableScrollEvents(!this.disabled);
     if (this.position === Position.Top) {
@@ -103,7 +97,7 @@ export class InfiniteScroll {
   }
 
   componentDidUnload() {
-    this.scrollEl = null;
+    this.scrollEl = undefined;
   }
 
   @Listen('scroll', {enabled: false})

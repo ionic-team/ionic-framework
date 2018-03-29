@@ -11,8 +11,7 @@
 
 boolean
 
-Automatically hides the content when the corresponding menu is not
-active
+Automatically hides the menu button when the corresponding menu is not active
 
 
 #### menu
@@ -28,8 +27,7 @@ Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `ri
 
 boolean
 
-Automatically hides the content when the corresponding menu is not
-active
+Automatically hides the menu button when the corresponding menu is not active
 
 
 #### menu

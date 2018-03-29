@@ -1,4 +1,5 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { FrameworkDelegate, attachComponent } from '../../utils/framework-delegate';
 
 @Component({
   tag: 'ion-tab'
@@ -13,11 +14,12 @@ export class Tab {
   @Prop({ mutable: true }) active = false;
 
   @Prop() btnId: string;
+  @Prop() delegate: FrameworkDelegate;
 
   /**
    * The title of the tab.
    */
-  @Prop() title: string;
+  @Prop() tabTitle: string;
 
   /**
    * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
@@ -27,17 +29,17 @@ export class Tab {
   /**
    * The icon for the tab.
    */
-  @Prop() icon: string;
+  @Prop() tabIcon: string;
 
   /**
    * The badge for the tab.
    */
-  @Prop() badge: string;
+  @Prop() tabBadge: string;
 
   /**
    * The badge color for the tab button.
    */
-  @Prop() badgeStyle = 'default';
+  @Prop() tabBadgeStyle = 'default';
 
   /**
    * The component to display inside of the tab.
@@ -85,7 +87,7 @@ export class Tab {
   componentWillLoad() {
     if (Build.isDev) {
       if (this.component && this.el.childElementCount > 0) {
-        console.error('You can not use a lazy-loaded component in a tab and inlineed content at the same time.' +
+        console.error('You can not use a lazy-loaded component in a tab and inlined content at the same time.' +
       `- Remove the component attribute in: <ion-tab component="${this.component}">` +
       ` or` +
       `- Remove the embeded content inside the ion-tab: <ion-tab></ion-tab>`);
@@ -104,16 +106,15 @@ export class Tab {
   }
 
   @Method()
-  setActive(): Promise<void> {
-    return this.prepareLazyLoaded().then(() => {
-      this.active = true;
-    });
+  async setActive(): Promise<void> {
+    await this.prepareLazyLoaded();
+    this.active = true;
   }
 
   private prepareLazyLoaded(): Promise<HTMLElement|void> {
     if (!this.loaded && this.component) {
       this.loaded = true;
-      return attachViewToDom(this.el, this.component);
+      return attachComponent(this.delegate, this.el, this.component, ['ion-page']);
     }
     return Promise.resolve();
   }
@@ -128,15 +129,4 @@ export class Tab {
       }
     };
   }
-
-}
-
-function attachViewToDom(container: HTMLElement, cmp: string): Promise<HTMLElement> {
-  const el = document.createElement(cmp) as HTMLStencilElement;
-  el.classList.add('ion-page');
-  container.appendChild(el);
-  if (el.componentOnReady) {
-    return el.componentOnReady();
-  }
-  return Promise.resolve(el);
 }

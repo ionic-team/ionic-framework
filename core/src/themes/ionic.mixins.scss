@@ -8,6 +8,14 @@
   appearance: $val;
 }
 
+// Font smoothing
+// --------------------------------------------------
+
+@mixin font-smoothing() {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
 // Input Placeholder
 // --------------------------------------------------
 

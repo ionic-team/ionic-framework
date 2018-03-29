@@ -1,14 +1,18 @@
-import { ComponentFactoryResolver, Directive, ElementRef, Injector} from '@angular/core';
+import { ComponentFactoryResolver, Directive, ElementRef, Injector, Input} from '@angular/core';
 
-import { NavOptions, NavParams, TransitionDoneFn, ViewController } from '@ionic/core';
+import { AngularDelegate } from '../providers/angular-delegate';
+import { ComponentProps, NavOptions, TransitionDoneFn, ViewController } from '@ionic/core';
 import { proxyEl } from '../util/util';
-import { AngularDelegate } from '..';
+import { inputs } from '../directives/proxies';
 
 
 @Directive({
   selector: 'ion-nav',
 })
-export class IonNav {
+export class Nav {
+
+  @Input() root: any;
+  @Input() rootParams: any;
 
   constructor(
     private ref: ElementRef,
@@ -17,13 +21,14 @@ export class IonNav {
     angularDelegate: AngularDelegate,
   ) {
     this.ref.nativeElement.delegate = angularDelegate.create(cfr, injector);
+    inputs(this, ref, ['root', 'rootParams']);
   }
 
-  push(page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  push(page: any, params?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     return proxyEl(this.ref, 'push', page, params, opts, done);
   }
 
-  insert(insertIndex: number, page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  insert(insertIndex: number, page: any, params?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
     return proxyEl(this.ref, 'insert', insertIndex, page, params, opts, done);
   }
 

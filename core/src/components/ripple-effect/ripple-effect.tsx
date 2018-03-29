@@ -4,13 +4,7 @@ import { DomController } from '../../global/dom-controller';
 
 @Component({
   tag: 'ion-ripple-effect',
-  styleUrls: {
-    ios: 'ripple-effect.ios.scss',
-    md: 'ripple-effect.md.scss'
-  },
-  host: {
-    theme: 'ripple'
-  }
+  styleUrl: 'ripple-effect.scss',
 })
 export class RippleEffect {
 
@@ -20,7 +14,7 @@ export class RippleEffect {
   @Prop({context: 'dom'}) dom: DomController;
   @Prop({context: 'enableListener'}) enableListener: EventListenerEnable;
 
-  @Prop({ mutable: true }) useTapClick: boolean;
+  @Prop() useTapClick = false;
   @Watch('useTapClick')
   tapClickChanged(useTapClick: boolean) {
     this.enableListener(this, 'parent:ionActivated', useTapClick);
@@ -45,12 +39,6 @@ export class RippleEffect {
     const timeStamp = now(ev);
     if (this.lastClick < (timeStamp - 1000)) {
       this.addRipple(ev.pageX, ev.pageY);
-    }
-  }
-
-  componentWillLoad() {
-    if (this.useTapClick === undefined) {
-      this.useTapClick = !!document.querySelector('ion-tap-click');
     }
   }
 

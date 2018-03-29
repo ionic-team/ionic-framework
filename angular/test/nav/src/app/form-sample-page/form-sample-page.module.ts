@@ -1,7 +1,7 @@
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { IonicAngularModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
 import { FormSamplePageComponent } from './form-sample-page.component';
 import { FormSamplePageRoutingModule } from './form-sample-page-routing.module';
@@ -11,9 +11,8 @@ import { FormSamplePageRoutingModule } from './form-sample-page-routing.module';
     FormSamplePageRoutingModule,
     CommonModule,
     FormsModule,
-    IonicAngularModule
+    IonicModule
   ],
-  declarations: [FormSamplePageComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  declarations: [FormSamplePageComponent]
 })
 export class FormSamplePageModule {}

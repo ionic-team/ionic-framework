@@ -9,33 +9,29 @@
 </head>
 
 <body onload="initialize()">
+  <ion-platform></ion-platform>
   <ion-app>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Platform - basic</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Platform - basic</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <ion-content padding>
+      <h2>The Platforms are:</h2>
+      <ul class="platform-name-list"></ul>
 
-      <ion-content padding>
-        <h2>The Platforms are:</h2>
-        <ul class="platform-name-list"></ul>
+      <h2>The Platforms versions are:</h2>
+      <ul class="platform-version-list"></ul>
 
-        <h2>The Platforms versions are:</h2>
-        <ul class="platform-version-list"></ul>
+      <h2>The orientation is <span class="orientation"></span></h2>
 
-        <h2>The orientation is <span class="orientation"></span></h2>
-
-        <h2>The ready event has fired: <span class="ready"></span></h2>
-      </ion-content>
-
-
+      <h2>The ready event has fired: <span class="ready"></span></h2>
+    </ion-content>
   </ion-app>
 
   <script>
     async function initialize() {
-      const app = document.querySelector('ion-app');
-      await app.componentOnReady();
       const platform = document.querySelector('ion-platform');
       await platform.componentOnReady();
 

@@ -23,9 +23,9 @@
 }
 
 .fab-button-ios .icon {
-  fill: $fab-ios-icon-fill-color;
-
   font-size: $fab-ios-icon-font-size;
+
+  fill: $fab-ios-icon-fill-color;
 }
 
 // FAB buttons in a list
@@ -53,7 +53,6 @@
 .fab-translucent-ios {
   background-color: $fab-ios-translucent-background-color;
 
-  -webkit-backdrop-filter: $fab-ios-translucent-filter;
   backdrop-filter: $fab-ios-translucent-filter;
 }
 

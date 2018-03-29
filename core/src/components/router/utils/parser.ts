@@ -1,6 +1,5 @@
 import { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interfaces';
 import { parsePath } from './path';
-import { mergeParams } from './matching';
 
 
 export function readRedirects(root: Element): RouteRedirect[] {
@@ -16,16 +15,13 @@ export function readRedirects(root: Element): RouteRedirect[] {
 }
 
 export function readRoutes(root: Element, node = root): RouteTree {
-  const commonParams = {
-    router: root
-  };
   return (Array.from(node.children) as HTMLIonRouteElement[])
     .filter(el => el.tagName === 'ION-ROUTE' && el.component)
     .map(el => {
       return {
         path: parsePath(readProp(el, 'url')),
         id: readProp(el, 'component').toLowerCase(),
-        params: mergeParams(commonParams, el.componentProps),
+        params: el.componentProps,
         children: readRoutes(root, el)
       };
     });

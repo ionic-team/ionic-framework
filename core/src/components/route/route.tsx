@@ -1,4 +1,4 @@
-import { Component, Event, Prop } from '@stencil/core';
+import { Component, Event, Prop, Watch } from '@stencil/core';
 import { EventEmitter } from 'ionicons/dist/types/stencil.core';
 
 @Component({
@@ -28,15 +28,38 @@ export class Route {
   /**
    * Used internaly by `ion-router` to know when this route did change.
    */
-  @Event() ionRouteDataChanged: EventEmitter;
+  @Event() ionRouteDataChanged: EventEmitter<any>;
+
+  @Watch('url')
+  @Watch('component')
+  onUpdate(newValue: any) {
+    this.ionRouteDataChanged.emit(newValue);
+  }
+
+  @Watch('componentProps')
+  onComponentProps(newValue: any, oldValue: any) {
+    if (newValue === oldValue) {
+      return;
+    }
+    const keys1 = newValue ? Object.keys(newValue) : [];
+    const keys2 = oldValue ? Object.keys(oldValue) : [];
+    if (keys1.length !== keys2.length) {
+      this.onUpdate(newValue);
+      return;
+    }
+    for (let i = 0; i < keys1.length; i++) {
+      const key = keys1[i];
+      if (newValue[key] !== oldValue[key]) {
+        this.onUpdate(newValue);
+        return;
+      }
+    }
+  }
 
   componentDidLoad() {
     this.ionRouteDataChanged.emit();
   }
   componentDidUnload() {
-    this.ionRouteDataChanged.emit();
-  }
-  componentDidUpdate() {
     this.ionRouteDataChanged.emit();
   }
 }

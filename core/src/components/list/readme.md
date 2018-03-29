@@ -1,5 +1,11 @@
 # ion-list
 
+Lists are made up of multiple rows of items which can contain text, buttons, toggles,
+icons, thumbnails, and much more. Lists generally contain items with similar
+data content, such as images and text.
+
+Lists support several interactions including swiping items to reveal options, dragging to
+reorder items within the list, and deleting items.
 
 
 <!-- Auto Generated Below -->
@@ -10,12 +16,17 @@
 #### closeSlidingItems()
 
 Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding).
+Returns a boolean value of whether it closed an item or not.
 
 
-#### getOpenedItem()
+#### getOpenItem()
+
+Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
 
 
-#### setOpenedItem()
+#### setOpenItem()
+
+Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
 
 
 

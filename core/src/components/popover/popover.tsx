@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, FrameworkDelegate } from '../../index';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate } from '../../index';
 
 import { createThemedClasses, getClassList } from '../../utils/theme';
 import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
@@ -63,18 +63,18 @@ export class Popover implements OverlayInterface {
   /**
    * The component to display inside of the popover.
    */
-  @Prop() component: string;
+  @Prop() component: ComponentRef;
 
   /**
    * The data to pass to the popover component.
    */
-  @Prop() data: any = {};
+  @Prop() componentProps: ComponentProps;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string;
+  @Prop() cssClass: string | string[];
 
   /**
    * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
@@ -174,31 +174,30 @@ export class Popover implements OverlayInterface {
    * Present the popover overlay after it has been created.
    */
   @Method()
-  present(): Promise<void> {
+  async present(): Promise<void> {
     if (this.presented) {
       return Promise.reject('df');
     }
     const container = this.el.querySelector('.popover-content');
     const data = {
-      ...this.data,
+      ...this.componentProps,
       popover: this.el
     };
     const classes = [
       ...getClassList(this.cssClass),
       'popover-viewport'
     ];
-    return attachComponent(this.delegate, container, this.component, classes, data)
-      .then(el => this.usersElement = el)
-      .then(() => present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.ev));
+    this.usersElement = await attachComponent(this.delegate, container, this.component, classes, data);
+    return present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.ev);
   }
 
   /**
    * Dismiss the popover overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<void> {
-    return dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.ev)
-      .then(() => detachComponent(this.delegate, this.usersElement));
+  async dismiss(data?: any, role?: string): Promise<void> {
+    await dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.ev);
+    await detachComponent(this.delegate, this.usersElement);
   }
 
   /**
@@ -255,14 +254,14 @@ export class Popover implements OverlayInterface {
 }
 
 export interface PopoverOptions {
-  component: any;
-  data?: any;
+  component: ComponentRef;
+  componentProps?: ComponentProps;
   showBackdrop?: boolean;
   enableBackdropDismiss?: boolean;
   translucent?: boolean;
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
-  cssClass?: string;
+  cssClass?: string | string[];
   ev: Event;
   delegate?: FrameworkDelegate;
 }

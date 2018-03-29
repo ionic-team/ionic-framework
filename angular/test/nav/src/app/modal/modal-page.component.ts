@@ -9,7 +9,7 @@ import { ModalPageToPresent } from './modal-page-to-present';
   <ion-app>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Test</ion-title>
+          <ion-title>Modal</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content padding>

@@ -93,12 +93,12 @@ export class Gesture {
     };
   }
 
-  componentWillLoad() {
-    return this.gestureCtrl.create({
+  async componentWillLoad() {
+    this.gesture = await this.gestureCtrl.create({
       name: this.gestureName,
       priority: this.gesturePriority,
       disableScroll: this.disableScroll
-    }).then((gesture) => this.gesture = gesture);
+    });
   }
 
   componentDidLoad() {

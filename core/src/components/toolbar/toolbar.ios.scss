@@ -67,7 +67,6 @@
 }
 
 .toolbar-translucent-ios .toolbar-background-ios {
-  -webkit-backdrop-filter: $toolbar-ios-translucent-filter;
   backdrop-filter: $toolbar-ios-translucent-filter;
 }
 
@@ -122,25 +121,25 @@
 // --------------------------------------------------
 
 .bar-buttons-ios {
-  order: map-get($toolbar-order-ios, buttons-start);
+  order: map-get($toolbar-order-ios, buttons-secondary);
 
   transform: translateZ(0);
 }
 
-.bar-buttons-ios[slot="left"] {
-  order: map-get($toolbar-order-ios, buttons-left);
+.bar-buttons-ios[slot="start"] {
+  order: map-get($toolbar-order-ios, buttons-start);
+}
+
+.bar-buttons-ios[slot="primary"] {
+  @include text-align(end);
+
+  order: map-get($toolbar-order-ios, buttons-primary);
 }
 
 .bar-buttons-ios[slot="end"] {
   @include text-align(end);
 
   order: map-get($toolbar-order-ios, buttons-end);
-}
-
-.bar-buttons-ios[slot="right"] {
-  @include text-align(right);
-
-  order: map-get($toolbar-order-ios, buttons-right);
 }
 
 

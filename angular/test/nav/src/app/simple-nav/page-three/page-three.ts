@@ -1,40 +1,41 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'page-three',
   template: `
   <ion-header>
     <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button></ion-back-button>
+      </ion-buttons>
       <ion-title>Page Three</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content padding>
-    Page Three {{ts}}
-    <div>isProd: {{isProd}}</div>
     <div>paramOne: {{paramOne}}</div>
     <div>paramTwo: {{paramTwo}}</div>
     <div>
-      <ion-button>Go Back</ion-button>
+      <ion-button [routerLink]="['/simple-nav/page-one']">Go to Page One</ion-button>
+    </div>
+    <div>
+      <ion-button [routerLink]="['/simple-nav/page-two']">Go to Page Two</ion-button>
     </div>
   </ion-content>
   `
 })
 export class PageThree {
 
-  ts: number;
-  isProd = false;
   paramOne: any = null;
   paramTwo: any = null;
 
-  // constructor(private navController: NavController, private navParams: NavParams) {
+  constructor(private route: ActivatedRoute) {}
 
-  //   this.isProd = navParams.get('isProd');
-  //   this.paramOne = navParams.get('paramOne');
-  //   this.paramTwo = navParams.get('paramTwo');
-
-  //   setInterval(() => {
-  //     this.ts = Date.now();
-  //   }, 500);
-  // }
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+       this.paramOne = params['paramOne'];
+       this.paramTwo = params['paramTwo'];
+    });
+  }
 
 }

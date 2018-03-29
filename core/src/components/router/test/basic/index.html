@@ -99,13 +99,80 @@
       }
     }
 
+    class TabsPage extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-tabs>
+<ion-tab component="tab-one"
+  tab-title="Plain List"
+  tab-icon="star"></ion-tab>
+
+<ion-tab component="tab-two"
+  tab-title="Schedule"
+  tab-icon="globe"></ion-tab>
+
+<ion-tab name="tab3"
+  tab-title="Stopwatch"
+  tab-icon="logo-facebook"
+  component="tab-three"></ion-tab>
+
+<ion-tab name="tab4"
+  tab-title="Messages"
+  tab-icon="chatboxes"
+  name="tab-four">
+  inline tab 4
+</ion-tab>
+</ion-tabs>
+`;
+      }
+    }
+
+    class LoginPage extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Login Page</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          page one
+          <p><a href='#/two/second-page'>Go to page 2</a></p>
+          <p><a href='#/two/three/hola'>Go to page 3 (hola)</a></p>
+          <p><a href='#/two/three/something'>Go to page 3 (something)</a></p>
+        </ion-content>`;
+      }
+    }
+
+    class LoginConfirmPage extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Login Confirm Page</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content>
+          page one
+          <p><a href='#/two/second-page'>Go to page 2</a></p>
+          <p><a href='#/two/three/hola'>Go to page 3 (hola)</a></p>
+          <p><a href='#/two/three/something'>Go to page 3 (something)</a></p>
+        </ion-content>`;
+      }
+    }
+
     customElements.define('page-one', PageOne);
     customElements.define('page-two', PageTwo);
     customElements.define('page-three', PageThree);
 
+    customElements.define('tabs-page', TabsPage);
     customElements.define('tab-one', TabOne);
     customElements.define('tab-two', TabTwo);
     customElements.define('tab-three', TabThree);
+
+    customElements.define('login-page', LoginPage);
+    customElements.define('login-confirm-page', LoginConfirmPage);
+
   </script>
 </head>
 <body>
@@ -113,42 +180,23 @@
   <ion-app>
 
     <ion-router>
-      <ion-route url="/" component="tab-one"> </ion-route>
+      <ion-route url="/login" component="login-page"></ion-route>
+      <ion-route url="/login-confirm" component="login-confirm-page"></ion-route>
 
-      <ion-route url="/two" component="tab-two">
-        <ion-route component="page-one"> </ion-route>
-        <ion-route url="/second-page" component="page-two"> </ion-route>
-        <ion-route url="/three/:prop1" component="page-three"> </ion-route>
+      <ion-route url="/" component="tabs-page">
+        <ion-route url="/" component="tab-one"> </ion-route>
+        <ion-route url="/two" component="tab-two">
+          <ion-route component="page-one"> </ion-route>
+          <ion-route url="/second-page" component="page-two"> </ion-route>
+          <ion-route url="/three/:prop1" component="page-three"> </ion-route>
+        </ion-route>
+        <ion-route url="/three" component="tab3"> </ion-route>
+        <ion-route url="/four" component="tab4"> </ion-route>
       </ion-route>
-
-      <ion-route url="/three" component="tab3"> </ion-route>
-      <ion-route url="/four" component="tab4"> </ion-route>
 
     </ion-router>
 
-    <ion-tabs>
-
-      <ion-tab component="tab-one"
-        title="Plain List"
-        icon="star"></ion-tab>
-
-      <ion-tab component="tab-two"
-        title="Schedule"
-        icon="globe"></ion-tab>
-
-      <ion-tab name="tab3"
-        title="Stopwatch"
-        icon="logo-facebook"
-        component="tab-three"></ion-tab>
-
-      <ion-tab name="tab4"
-        title="Messages"
-        icon="chatboxes"
-        name="tab-four">
-        inline tab 4
-      </ion-tab>
-    </ion-tabs>
-
+    <ion-nav></ion-nav>
   </ion-app>
 
   <style>

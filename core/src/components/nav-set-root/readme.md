@@ -9,12 +9,12 @@
 
 #### component
 
-any
 
 
-#### data
 
-any
+#### componentProps
+
+
 
 
 #### url
@@ -26,12 +26,12 @@ string
 
 #### component
 
-any
 
 
-#### data
 
-any
+#### component-props
+
+
 
 
 #### url

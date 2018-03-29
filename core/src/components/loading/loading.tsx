@@ -54,7 +54,7 @@ export class Loading implements OverlayInterface {
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string;
+  @Prop() cssClass: string | string[];
 
   /**
    * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
@@ -144,12 +144,12 @@ export class Loading implements OverlayInterface {
    * Present the loading overlay after it has been created.
    */
   @Method()
-  present(): Promise<void> {
-    return present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined).then(() => {
-      if (this.duration > 0) {
-        this.durationTimeout = setTimeout(() => this.dismiss(), this.duration + 10);
-      }
-    });
+  async present(): Promise<void> {
+    await present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined);
+
+    if (this.duration > 0) {
+      this.durationTimeout = setTimeout(() => this.dismiss(), this.duration + 10);
+    }
   }
 
   /**
@@ -222,7 +222,7 @@ export class Loading implements OverlayInterface {
 export interface LoadingOptions {
   spinner?: string;
   content?: string;
-  cssClass?: string;
+  cssClass?: string | string[];
   showBackdrop?: boolean;
   dismissOnPageChange?: boolean;
   duration?: number;

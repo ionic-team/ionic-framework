@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "alwaysStrict": true,
-    "strictPropertyInitialization": false,
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
     "declaration": true,
@@ -22,6 +21,7 @@
     "outDir": ".tmp",
     "pretty": true,
     "removeComments": false,
+    "strictPropertyInitialization": false,
     "target": "es2017"
   },
   "include": [

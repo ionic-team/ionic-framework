@@ -1,10 +1,7 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import {
-  IonicAngularModule,
-} from '@ionic/angular';
-
+import { IonicModule } from '@ionic/angular';
 import { PageTwo } from './page-two';
 import { PageTwoRoutingModule } from './page-two-routing.module';
 
@@ -13,13 +10,10 @@ import { PageTwoRoutingModule } from './page-two-routing.module';
   imports: [
     CommonModule,
     PageTwoRoutingModule,
-    IonicAngularModule,
+    IonicModule,
   ],
   declarations: [
     PageTwo,
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class PageTwoModule { }

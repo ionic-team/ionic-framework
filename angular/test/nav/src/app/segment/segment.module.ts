@@ -1,7 +1,7 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicAngularModule } from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
 import { SegmentPageComponent } from './segment-page.component';
 import { SegmentRoutingModule } from './segment-routing.module';
@@ -11,9 +11,8 @@ import { SegmentRoutingModule } from './segment-routing.module';
     CommonModule,
     FormsModule,
     SegmentRoutingModule,
-    IonicAngularModule
+    IonicModule
   ],
-  declarations: [SegmentPageComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  declarations: [SegmentPageComponent]
 })
 export class SegmentModule { }

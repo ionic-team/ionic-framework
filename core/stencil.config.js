@@ -5,7 +5,7 @@ const autoprefixer = require('autoprefixer');
 exports.config = {
   namespace: 'Ionic',
   bundles: [
-    { components: ['ion-app', 'ion-content', 'ion-scroll', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
+    { components: ['ion-app', 'ion-tap-click', 'ion-content', 'ion-scroll', 'ion-footer', 'ion-header', 'ion-title', 'ion-toolbar'] },
     { components: ['ion-action-sheet', 'ion-action-sheet-controller'] },
     { components: ['ion-alert', 'ion-alert-controller'] },
     { components: ['ion-avatar', 'ion-badge', 'ion-thumbnail'] },
@@ -21,7 +21,6 @@ exports.config = {
     { components: ['ion-loading', 'ion-loading-controller'] },
     { components: ['ion-menu', 'ion-menu-controller', 'ion-menu-toggle', 'ion-menu-button'] },
     { components: ['ion-modal', 'ion-modal-controller'] },
-    { components: ['ion-nav', 'ion-back-button'] },
     { components: ['ion-popover', 'ion-popover-controller'] },
     { components: ['ion-radio', 'ion-radio-group'] },
     { components: ['ion-reorder', 'ion-reorder-group'] },
@@ -33,7 +32,7 @@ exports.config = {
     { components: ['ion-refresher', 'ion-refresher-content']},
     { components: ['ion-tabs', 'ion-tab', 'ion-tabbar', 'ion-tab-button'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
-    { components: ['ion-tap-click', 'ion-status-tap'] },
+    { components: ['ion-status-tap'] },
     { components: ['ion-platform', 'ion-cordova-platform'] },
     { components: ['ion-hide-when', 'ion-show-when'] },
   ],
@@ -55,7 +54,9 @@ exports.config = {
     })
   ],
   outputTargets: [
-    { type: 'dist' }
+    {
+      type: 'dist'
+    }
   ],
   copy: [{ src: '**/*.scss' }],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',

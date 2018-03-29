@@ -78,7 +78,7 @@ describe('chainToPath', () => {
       { id: '3', path: ['segment'], params: undefined },
       { id: '8', path: [':name'], params: undefined },
     ];
-    expect(() => chainToPath(chain)).toThrowError('missing param name');
+    expect(chainToPath(chain)).toBeNull();
   });
 
   it('should raise an exception 2', () => {
@@ -86,7 +86,7 @@ describe('chainToPath', () => {
       { id: '3', path: ['segment'], params: undefined },
       { id: '8', path: [':name', ':id'], params: {name: 'hey'} },
     ];
-    expect(() => chainToPath(chain)).toThrowError('missing param id');
+    expect(chainToPath(chain)).toBeNull();
   });
 });
 

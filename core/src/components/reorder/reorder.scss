@@ -13,7 +13,6 @@
   display: block;
 
   cursor: grab;
-  cursor: -webkit-grab;
 
   pointer-events: all;
   touch-action: none;
@@ -22,7 +21,6 @@
 .reorder-selected,
 .reorder-selected .reorder {
   cursor: grabbing;
-  cursor: -webkit-grabbing;
 }
 
 .reorder-selected {
@@ -32,7 +30,7 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, .4);
   opacity: .8;
 
-  // TODO remove !important
+  // scss-lint:disable ImportantRule
   transition: none !important;
 }
 

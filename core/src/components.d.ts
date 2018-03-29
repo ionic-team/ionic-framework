@@ -30,6 +30,8 @@ import {
   AlertOptions,
   Animation as Animation2,
   AnimationBuilder,
+  ComponentProps,
+  ComponentRef,
   FrameworkDelegate,
   LoadingOptions,
   Menu,
@@ -85,23 +87,25 @@ import {
   MenuChangeEventDetail,
 } from './components/menu/menu';
 import {
+  NavComponent,
   NavOptions,
-  NavParams,
   TransitionDoneFn,
   TransitionInstruction,
 } from './components/nav/nav-util';
+import {
+  AnimationBuilder as AnimationBuilder3,
+  ComponentProps as ComponentProps2,
+  FrameworkDelegate as FrameworkDelegate2,
+} from '.';
 import {
   ViewController,
 } from './components/nav/view-controller';
 import {
   RouteID,
+  RouterDirection,
   RouterEventDetail,
   RouteWrite,
 } from './components/router/utils/interfaces';
-import {
-  AnimationBuilder as AnimationBuilder3,
-  FrameworkDelegate as FrameworkDelegate2,
-} from '.';
 import {
   PickerButton,
   PickerColumn as PickerColumn2,
@@ -116,6 +120,9 @@ import {
 import {
   SelectPopoverOption,
 } from './components/select-popover/select-popover';
+import {
+  FrameworkDelegate as FrameworkDelegate3,
+} from './utils/framework-delegate';
 import {
   DomRenderFn,
   HeaderFn,
@@ -162,7 +169,7 @@ declare global {
     /**
      * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
      */
-    'cssClass': string;
+    'cssClass': string | string[];
     /**
      * Dismiss the action sheet overlay after it has been presented.
      */
@@ -234,7 +241,7 @@ declare global {
       /**
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
-      'cssClass'?: string;
+      'cssClass'?: string | string[];
       /**
        * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
        */
@@ -332,7 +339,7 @@ declare global {
     /**
      * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
      */
-    'cssClass': string;
+    'cssClass': string | string[];
     /**
      * Dismiss the alert overlay after it has been presented.
      */
@@ -413,7 +420,7 @@ declare global {
       /**
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
-      'cssClass'?: string;
+      'cssClass'?: string | string[];
       /**
        * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
        */
@@ -484,6 +491,7 @@ declare global {
 
 declare global {
   interface HTMLIonAnchorElement extends HTMLStencilElement {
+    'goBack': boolean;
     'href': string;
   }
   var HTMLIonAnchorElement: {
@@ -503,6 +511,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAnchorAttributes extends HTMLAttributes {
+      'goBack'?: boolean;
       'href'?: string;
     }
   }
@@ -730,6 +739,7 @@ declare global {
      * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
      */
     'fill': 'clear' | 'outline' | 'solid' | 'default';
+    'goBack': boolean;
     /**
      * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
      */
@@ -792,6 +802,7 @@ declare global {
        * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
        */
       'fill'?: 'clear' | 'outline' | 'solid' | 'default';
+      'goBack'?: boolean;
       /**
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
        */
@@ -2584,17 +2595,22 @@ declare global {
 declare global {
   interface HTMLIonItemElement extends HTMLStencilElement {
     /**
+     * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
+     */
+    'button': boolean;
+    /**
      * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
      */
     'color': string;
     /**
-     * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `tappable` property is present.
+     * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
      */
     'detail': boolean;
     /**
      * If true, the user cannot interact with the item. Defaults to `false`.
      */
     'disabled': boolean;
+    'goBack': boolean;
     /**
      * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
      */
@@ -2603,10 +2619,6 @@ declare global {
      * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
      */
     'mode': 'ios' | 'md';
-    /**
-     * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
-     */
-    'tappable': boolean;
   }
   var HTMLIonItemElement: {
     prototype: HTMLIonItemElement;
@@ -2626,17 +2638,22 @@ declare global {
   namespace JSXElements {
     export interface IonItemAttributes extends HTMLAttributes {
       /**
+       * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
+       */
+      'button'?: boolean;
+      /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
       'color'?: string;
       /**
-       * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `tappable` property is present.
+       * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
        */
       'detail'?: boolean;
       /**
        * If true, the user cannot interact with the item. Defaults to `false`.
        */
       'disabled'?: boolean;
+      'goBack'?: boolean;
       /**
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
        */
@@ -2645,10 +2662,6 @@ declare global {
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
       'mode'?: 'ios' | 'md';
-      /**
-       * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
-       */
-      'tappable'?: boolean;
     }
   }
 }
@@ -2768,11 +2781,17 @@ declare global {
 declare global {
   interface HTMLIonListElement extends HTMLStencilElement {
     /**
-     * Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding).
+     * Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding). Returns a boolean value of whether it closed an item or not.
      */
     'closeSlidingItems': () => boolean;
-    'getOpenedItem': () => ItemSliding;
-    'setOpenedItem': (itemSliding: ItemSliding) => void;
+    /**
+     * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
+     */
+    'getOpenItem': () => ItemSliding;
+    /**
+     * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
+     */
+    'setOpenItem': (itemSliding: ItemSliding) => void;
   }
   var HTMLIonListElement: {
     prototype: HTMLIonListElement;
@@ -2835,7 +2854,7 @@ declare global {
     /**
      * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
      */
-    'cssClass': string;
+    'cssClass': string | string[];
     /**
      * Dismiss the loading overlay after it has been presented.
      */
@@ -2915,7 +2934,7 @@ declare global {
       /**
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
-      'cssClass'?: string;
+      'cssClass'?: string | string[];
       /**
        * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
        */
@@ -2986,7 +3005,7 @@ declare global {
 declare global {
   interface HTMLIonMenuButtonElement extends HTMLStencilElement {
     /**
-     * Automatically hides the content when the corresponding menu is not active
+     * Automatically hides the menu button when the corresponding menu is not active
      */
     'autoHide': boolean;
     /**
@@ -3012,7 +3031,7 @@ declare global {
   namespace JSXElements {
     export interface IonMenuButtonAttributes extends HTMLAttributes {
       /**
-       * Automatically hides the content when the corresponding menu is not active
+       * Automatically hides the menu button when the corresponding menu is not active
        */
       'autoHide'?: boolean;
       /**
@@ -3052,6 +3071,7 @@ declare global {
      * Programatically open the Menu.
      */
     'open': (menuId?: string) => Promise<boolean>;
+    'registerAnimation': (name: string, animation: AnimationBuilder) => void;
     /**
      * Used to enable or disable the ability to swipe open the menu.
      */
@@ -3261,15 +3281,15 @@ declare global {
     /**
      * The component to display inside of the modal.
      */
-    'component': any;
-    /**
-     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-     */
-    'cssClass': string;
+    'component': ComponentRef;
     /**
      * The data to pass to the modal component.
      */
-    'data': any;
+    'componentProps': ComponentProps;
+    /**
+     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+     */
+    'cssClass': string | string[];
     'delegate': FrameworkDelegate;
     /**
      * Dismiss the modal overlay after it has been presented.
@@ -3338,15 +3358,15 @@ declare global {
       /**
        * The component to display inside of the modal.
        */
-      'component'?: any;
-      /**
-       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-       */
-      'cssClass'?: string;
+      'component'?: ComponentRef;
       /**
        * The data to pass to the modal component.
        */
-      'data'?: any;
+      'componentProps'?: ComponentProps;
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass'?: string | string[];
       'delegate'?: FrameworkDelegate;
       /**
        * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
@@ -3432,8 +3452,8 @@ declare global {
 
 declare global {
   interface HTMLIonNavPushElement extends HTMLStencilElement {
-    'component': any;
-    'data': any;
+    'component': NavComponent;
+    'componentProps': ComponentProps;
     'url': string;
   }
   var HTMLIonNavPushElement: {
@@ -3453,8 +3473,8 @@ declare global {
   }
   namespace JSXElements {
     export interface IonNavPushAttributes extends HTMLAttributes {
-      'component'?: any;
-      'data'?: any;
+      'component'?: NavComponent;
+      'componentProps'?: ComponentProps;
       'url'?: string;
     }
   }
@@ -3463,8 +3483,8 @@ declare global {
 
 declare global {
   interface HTMLIonNavSetRootElement extends HTMLStencilElement {
-    'component': any;
-    'data': any;
+    'component': NavComponent;
+    'componentProps': ComponentProps;
     'url': string;
   }
   var HTMLIonNavSetRootElement: {
@@ -3484,8 +3504,8 @@ declare global {
   }
   namespace JSXElements {
     export interface IonNavSetRootAttributes extends HTMLAttributes {
-      'component'?: any;
-      'data'?: any;
+      'component'?: NavComponent;
+      'componentProps'?: ComponentProps;
       'url'?: string;
     }
   }
@@ -3498,28 +3518,23 @@ declare global {
     'canGoBack': (view?: ViewController) => boolean;
     'delegate': FrameworkDelegate;
     'getActive': () => ViewController;
-    'getAllChildNavs': () => any[];
     'getByIndex': (index: number) => ViewController;
     'getPrevious': (view?: ViewController) => ViewController;
     'getRouteId': () => RouteID;
-    /**
-     * Return a view controller
-     */
-    'getViewById': (id: string) => ViewController;
     'getViews': () => ViewController[];
-    'insert': (insertIndex: number, page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-    'insertPages': (insertIndex: number, insertPages: any[], opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'insert': (insertIndex: number, component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'insertPages': (insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'pop': (opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'popAll': () => Promise<boolean[]>;
-    'popTo': (indexOrViewCtrl: any, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'popTo': (indexOrViewCtrl: number | ViewController, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'popToRoot': (opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-    'push': (page: any, params?: NavParams, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'push': (component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'removeIndex': (startIndex: number, removeCount?: number, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'removeView': (viewController: ViewController, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-    'root': any;
-    'rootParams': any;
-    'setPages': (pages: any[], opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-    'setRoot': (pageOrViewCtrl: any, params?: any, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'root': NavComponent;
+    'rootParams': ComponentProps;
+    'setPages': (views: any[], opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'setRoot': (component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
     'swipeBackEnabled': boolean;
   }
@@ -3542,9 +3557,9 @@ declare global {
     export interface IonNavAttributes extends HTMLAttributes {
       'animated'?: boolean;
       'delegate'?: FrameworkDelegate;
-      'onIonNavChanged'?: (event: CustomEvent) => void;
-      'root'?: any;
-      'rootParams'?: any;
+      'onIonNavChanged'?: (event: CustomEvent<void>) => void;
+      'root'?: NavComponent;
+      'rootParams'?: ComponentProps;
       'swipeBackEnabled'?: boolean;
     }
   }
@@ -3663,7 +3678,7 @@ declare global {
     /**
      * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
      */
-    'cssClass': string;
+    'cssClass': string | string[];
     /**
      * Dismiss the picker overlay after it has been presented.
      */
@@ -3737,7 +3752,7 @@ declare global {
       /**
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
-      'cssClass'?: string;
+      'cssClass'?: string | string[];
       /**
        * Number of milliseconds to wait before dismissing the picker.
        */
@@ -3873,15 +3888,15 @@ declare global {
     /**
      * The component to display inside of the popover.
      */
-    'component': string;
-    /**
-     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-     */
-    'cssClass': string;
+    'component': ComponentRef;
     /**
      * The data to pass to the popover component.
      */
-    'data': any;
+    'componentProps': ComponentProps;
+    /**
+     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+     */
+    'cssClass': string | string[];
     'delegate': FrameworkDelegate;
     /**
      * Dismiss the popover overlay after it has been presented.
@@ -3958,15 +3973,15 @@ declare global {
       /**
        * The component to display inside of the popover.
        */
-      'component'?: string;
-      /**
-       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-       */
-      'cssClass'?: string;
+      'component'?: ComponentRef;
       /**
        * The data to pass to the popover component.
        */
-      'data'?: any;
+      'componentProps'?: ComponentProps;
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass'?: string | string[];
       'delegate'?: FrameworkDelegate;
       /**
        * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
@@ -4681,7 +4696,7 @@ declare global {
       /**
        * Used internaly by `ion-router` to know when this route did change.
        */
-      'onIonRouteDataChanged'?: (event: CustomEvent) => void;
+      'onIonRouteDataChanged'?: (event: CustomEvent<any>) => void;
       /**
        * Relative path that needs to match in order for this route to apply.
        */
@@ -4695,11 +4710,11 @@ declare global {
   interface HTMLIonRouterOutletElement extends HTMLStencilElement {
     'animated': boolean;
     'animationBuilder': AnimationBuilder;
-    'commit': (enteringEl: HTMLElement, opts?: RouterOutletOptions) => Promise<boolean>;
+    'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement, opts?: RouterOutletOptions) => Promise<boolean>;
     'delegate': FrameworkDelegate;
     'getRouteId': () => RouteID;
     'setRoot': (component: string | HTMLElement, params?: { [key: string]: any; }, opts?: RouterOutletOptions) => Promise<boolean>;
-    'setRouteId': (id: string, data: any, direction: number) => Promise<RouteWrite>;
+    'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
   }
   var HTMLIonRouterOutletElement: {
     prototype: HTMLIonRouterOutletElement;
@@ -4729,8 +4744,8 @@ declare global {
 declare global {
   interface HTMLIonRouterElement extends HTMLStencilElement {
     'base': string;
-    'navChanged': (isPop: boolean) => Promise<boolean>;
-    'push': (url: string, backDirection?: boolean) => Promise<boolean>;
+    'navChanged': (direction: RouterDirection) => Promise<boolean>;
+    'push': (url: string, direction?: RouterDirection) => Promise<boolean>;
     'useHash': boolean;
   }
   var HTMLIonRouterElement: {
@@ -5740,19 +5755,12 @@ declare global {
 declare global {
   interface HTMLIonTabElement extends HTMLStencilElement {
     'active': boolean;
-    /**
-     * The badge for the tab.
-     */
-    'badge': string;
-    /**
-     * The badge color for the tab button.
-     */
-    'badgeStyle': string;
     'btnId': string;
     /**
      * The component to display inside of the tab.
      */
     'component': any;
+    'delegate': FrameworkDelegate;
     /**
      * If true, the user cannot interact with the tab. Defaults to `false`.
      */
@@ -5762,10 +5770,6 @@ declare global {
      * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
      */
     'href': string;
-    /**
-     * The icon for the tab.
-     */
-    'icon': string;
     /**
      * The name of the tab.
      */
@@ -5780,13 +5784,25 @@ declare global {
      */
     'show': boolean;
     /**
-     * If true, hide the tabs on child pages.
+     * The badge for the tab.
      */
-    'tabsHideOnSubPages': boolean;
+    'tabBadge': string;
+    /**
+     * The badge color for the tab button.
+     */
+    'tabBadgeStyle': string;
+    /**
+     * The icon for the tab.
+     */
+    'tabIcon': string;
     /**
      * The title of the tab.
      */
-    'title': string;
+    'tabTitle': string;
+    /**
+     * If true, hide the tabs on child pages.
+     */
+    'tabsHideOnSubPages': boolean;
   }
   var HTMLIonTabElement: {
     prototype: HTMLIonTabElement;
@@ -5806,19 +5822,12 @@ declare global {
   namespace JSXElements {
     export interface IonTabAttributes extends HTMLAttributes {
       'active'?: boolean;
-      /**
-       * The badge for the tab.
-       */
-      'badge'?: string;
-      /**
-       * The badge color for the tab button.
-       */
-      'badgeStyle'?: string;
       'btnId'?: string;
       /**
        * The component to display inside of the tab.
        */
       'component'?: any;
+      'delegate'?: FrameworkDelegate;
       /**
        * If true, the user cannot interact with the tab. Defaults to `false`.
        */
@@ -5827,10 +5836,6 @@ declare global {
        * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
        */
       'href'?: string;
-      /**
-       * The icon for the tab.
-       */
-      'icon'?: string;
       /**
        * The name of the tab.
        */
@@ -5848,13 +5853,25 @@ declare global {
        */
       'show'?: boolean;
       /**
-       * If true, hide the tabs on child pages.
+       * The badge for the tab.
        */
-      'tabsHideOnSubPages'?: boolean;
+      'tabBadge'?: string;
+      /**
+       * The badge color for the tab button.
+       */
+      'tabBadgeStyle'?: string;
+      /**
+       * The icon for the tab.
+       */
+      'tabIcon'?: string;
       /**
        * The title of the tab.
        */
-      'title'?: string;
+      'tabTitle'?: string;
+      /**
+       * If true, hide the tabs on child pages.
+       */
+      'tabsHideOnSubPages'?: boolean;
     }
   }
 }
@@ -5971,7 +5988,7 @@ declare global {
        * Emitted when the tab changes.
        */
       'onIonChange'?: (event: CustomEvent) => void;
-      'onIonNavChanged'?: (event: CustomEvent<any>) => void;
+      'onIonNavChanged'?: (event: CustomEvent<void>) => void;
       'scrollable'?: boolean;
       /**
        * If true, the tabbar
@@ -6335,7 +6352,7 @@ declare global {
     /**
      * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
      */
-    'cssClass': string;
+    'cssClass': string | string[];
     /**
      * Dismiss the toast overlay after it has been presented.
      */
@@ -6415,7 +6432,7 @@ declare global {
       /**
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
-      'cssClass'?: string;
+      'cssClass'?: string | string[];
       /**
        * If true, the toast will dismiss when the page changes. Defaults to `false`.
        */

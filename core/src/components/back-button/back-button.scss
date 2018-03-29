@@ -13,12 +13,19 @@
 }
 
 .back-button button {
+  @include font-smoothing();
   @include text-align(center);
   @include appearance(none);
 
   position: relative;
   z-index: 0;
-  display: inline-block;
+  display: flex;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+
+  align-items: center;
+  justify-content: center;
 
   border: 0;
   outline: none;
@@ -31,24 +38,14 @@
 
   white-space: nowrap;
   cursor: pointer;
+
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
 
   transition: background-color, opacity 100ms linear;
 
-  font-kerning: none;
   user-select: none;
-
-  font-smoothing: antialiased;
-  -webkit-font-smoothing: antialiased;
-
-  display: flex;
-
-  flex-flow: row nowrap;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-
+  font-kerning: none;
 }
 
 .back-button .button-inner {

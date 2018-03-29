@@ -1,5 +1,5 @@
 import { ViewController, isViewController } from './view-controller';
-import { Animation, FrameworkDelegate } from '../..';
+import { Animation, ComponentRef, FrameworkDelegate } from '../..';
 
 export function convertToView(page: any, params: any): ViewController|null {
   if (!page) {
@@ -34,11 +34,11 @@ export const enum ViewState {
 }
 
 export const enum NavDirection {
-  back = 'back',
-  forward = 'forward'
+  Back = 'back',
+  Forward = 'forward'
 }
 
-export type NavParams = {[key: string]: any};
+export type NavComponent = ComponentRef | ViewController | Function;
 
 export interface NavResult {
   hasCompleted: boolean;
@@ -58,8 +58,9 @@ export interface NavOptions {
   keyboardClose?: boolean;
   progressAnimation?: boolean;
   ev?: any;
+  updateURL?: boolean;
   delegate?: FrameworkDelegate;
-  viewIsReady?: () => Promise<any>;
+  viewIsReady?: (enteringEl: HTMLElement) => Promise<any>;
 }
 
 export interface Page extends Function {

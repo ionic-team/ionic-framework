@@ -208,15 +208,15 @@ class TabsPage extends HTMLElement {
   async connectedCallback() {
     this.innerHTML = `
 <ion-tabs>
-  <ion-tab title='Page 1' icon='chatboxes' class='tab-one'>
+  <ion-tab tab-title='Page 1' tab-icon='chatboxes' class='tab-one'>
     <ion-nav class="tab-one-nav"></ion-nav>
   </ion-tab>
 
-  <ion-tab title='Page 2' icon='map' class='tab-two'>
+  <ion-tab tab-title='Page 2' tab-icon='map' class='tab-two'>
     <ion-nav class="tab-two-nav"></ion-nav>
   </ion-tab>
 
-  <ion-tab title='Page 3' icon='person' class='tab-three'>
+  <ion-tab tab-title='Page 3' tab-icon='person' class='tab-three'>
     <ion-nav class="tab-three-nav"></ion-nav>
   </ion-tab>
 </ion-tabs>

@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, FrameworkDelegate } from '../../index';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate } from '../../index';
 
 import { createThemedClasses, getClassList } from '../../utils/theme';
 import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
@@ -64,18 +64,18 @@ export class Modal implements OverlayInterface {
   /**
    * The component to display inside of the modal.
    */
-  @Prop() component: any;
+  @Prop() component: ComponentRef;
 
   /**
    * The data to pass to the modal component.
    */
-  @Prop() data: any = {};
+  @Prop() componentProps: ComponentProps;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string;
+  @Prop() cssClass: string | string[];
 
   /**
    * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
@@ -164,31 +164,30 @@ export class Modal implements OverlayInterface {
    * Present the modal overlay after it has been created.
    */
   @Method()
-  present(): Promise<void> {
+  async present(): Promise<void> {
     if (this.presented) {
       return Promise.resolve();
     }
     const container = this.el.querySelector(`.modal-wrapper`);
-    const data = {
-      ...this.data,
+    const componentProps = {
+      ...this.componentProps,
       modal: this.el
     };
     const classes = [
       ...getClassList(this.cssClass),
       'ion-page'
     ];
-    return attachComponent(this.delegate, container, this.component, classes, data)
-      .then(el => this.usersElement = el)
-      .then(() => present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation));
+    this.usersElement = await attachComponent(this.delegate, container, this.component, classes, componentProps);
+    return present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation);
   }
 
   /**
    * Dismiss the modal overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<void> {
-    return dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation)
-      .then(() => detachComponent(this.delegate, this.usersElement));
+  async dismiss(data?: any, role?: string): Promise<void> {
+    await dismiss(this, data, role, 'modalLeave', iosLeaveAnimation, mdLeaveAnimation);
+    await detachComponent(this.delegate, this.usersElement);
   }
 
   /**
@@ -244,12 +243,12 @@ const LIFECYCLE_MAP: any = {
 };
 
 export interface ModalOptions {
-  component: any;
-  data?: any;
+  component: ComponentRef;
+  componentProps?: ComponentProps;
   showBackdrop?: boolean;
   enableBackdropDismiss?: boolean;
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
-  cssClass?: string;
+  cssClass?: string | string[];
   delegate?: FrameworkDelegate;
 }

@@ -256,7 +256,8 @@ export class MenuController {
     return this.animationCtrl.create(animationBuilder, null, menuCmp);
   }
 
-  private registerAnimation(name: string, animation: AnimationBuilder) {
+  @Method()
+  registerAnimation(name: string, animation: AnimationBuilder) {
     this.menuAnimations.set(name, animation);
   }
 

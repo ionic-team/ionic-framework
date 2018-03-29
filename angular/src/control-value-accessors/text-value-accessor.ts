@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, HostListener } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { setIonicClasses } from './util/set-ionic-classes';
@@ -15,7 +15,8 @@ import { setIonicClasses } from './util/set-ionic-classes';
   ]
 })
 export class TextValueAccessor implements ControlValueAccessor {
-  constructor(private element: ElementRef, private renderer: Renderer2) {
+
+  constructor(private element: ElementRef) {
     this.onChange = () => {/**/};
     this.onTouched = () => {/**/};
   }
@@ -24,14 +25,18 @@ export class TextValueAccessor implements ControlValueAccessor {
   onTouched: () => void;
 
   writeValue(value: any) {
-    this.renderer.setProperty(this.element.nativeElement, 'value', value);
-    setIonicClasses(this.element);
+    this.element.nativeElement.value = value;
+
+    requestAnimationFrame(() => {
+      setIonicClasses(this.element);
+    });
   }
 
   @HostListener('input', ['$event.target.value'])
   _handleInputEvent(value: any) {
     this.onChange(value);
-    setTimeout(() => {
+
+    requestAnimationFrame(() => {
       setIonicClasses(this.element);
     });
   }
@@ -39,7 +44,8 @@ export class TextValueAccessor implements ControlValueAccessor {
   @HostListener('ionBlur')
   _handleBlurEvent() {
     this.onTouched();
-    setTimeout(() => {
+
+    requestAnimationFrame(() => {
       setIonicClasses(this.element);
     });
   }
@@ -52,11 +58,7 @@ export class TextValueAccessor implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {
-    this.renderer.setProperty(
-      this.element.nativeElement,
-      'disabled',
-      isDisabled
-    );
+  setDisabledState(isDisabled: boolean) {
+    this.element.nativeElement.disabled = isDisabled;
   }
 }

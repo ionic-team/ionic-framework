@@ -7,16 +7,19 @@ import { Location } from '@angular/common';
   template: `
     <ion-header>
       <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+        </ion-buttons>
         <ion-title>Page Two</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content padding>
-      Page Two - {{ts}}
+      Page Two
       <div>
-        <ion-button>Go to Page Three</ion-button>
+        <ion-button routerLink="/simple-nav/page-three/paramOne/paramTwo">Go to Page Three</ion-button>
       </div>
       <div>
-        <ion-button>Go Back</ion-button>
+        <ion-button routerLink="/simple-nav/page-one" goBack>Go to Page One</ion-button>
       </div>
     </ion-content>
   `

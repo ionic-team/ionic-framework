@@ -1,15 +1,16 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { IonicModule } from '@ionic/angular';
 import { BadgePageComponent } from './badge-page.component';
 import { BadgeRoutingModule } from './badge-routing.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    BadgeRoutingModule
+    BadgeRoutingModule,
+    IonicModule
   ],
-  declarations: [BadgePageComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  declarations: [BadgePageComponent]
 })
 export class BadgeModule { }

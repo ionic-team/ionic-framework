@@ -66,6 +66,9 @@ property. If a menu is not found then it'll return `null`.
 Programatically open the Menu.
 
 
+#### registerAnimation()
+
+
 #### swipeEnable()
 
 Used to enable or disable the ability to swipe open the menu.

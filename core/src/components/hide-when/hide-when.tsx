@@ -38,8 +38,4 @@ export class HideWhen implements DisplayWhen {
       }
     };
   }
-
 }
-
-
-

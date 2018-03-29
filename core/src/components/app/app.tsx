@@ -39,9 +39,8 @@ export class App {
 
   render() {
     return [
-      <ion-platform />,
       this.deviceHacks && <ion-input-shims />,
-      this.isDevice && <ion-tap-click />,
+      <ion-tap-click />,
       this.isDevice && <ion-status-tap />,
       <slot></slot>
     ];

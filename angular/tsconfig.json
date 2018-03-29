@@ -4,8 +4,10 @@
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
     "declaration": true,
-    "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
+    "jsxFactory": "h",
     "lib": [
       "dom",
       "es2017"
@@ -20,8 +22,8 @@
     "pretty": true,
     "removeComments": false,
     "rootDir": "src",
-    "sourceMap": true,
-    "target": "es2015"
+    "strictPropertyInitialization": false,
+    "target": "es2017"
   },
   "files": [
     "src/index.ts"

@@ -7,12 +7,22 @@
 
 ## Properties
 
+#### goBack
+
+boolean
+
+
 #### href
 
 string
 
 
 ## Attributes
+
+#### go-back
+
+boolean
+
 
 #### href
 

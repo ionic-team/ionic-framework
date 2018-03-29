@@ -3,37 +3,47 @@ import { NavDirection } from '../components/nav/nav-util';
 
 export let MyCustomEvent = CustomEvent;
 
-export async function transition(opts: AnimationOptions): Promise<Animation|void> {
+export function transition(opts: AnimationOptions): Promise<Animation|null> {
+  beforeTransition(opts);
+
+  return (opts.enteringEl && opts.leavingEl && (opts.animationBuilder || opts.animation))
+    ? animation(opts)
+    : noAnimation(opts); // fast path for no animation
+}
+
+function beforeTransition(opts: AnimationOptions) {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
 
   setZIndex(enteringEl, leavingEl, opts.direction);
-  showPages(enteringEl, leavingEl);
-  showGoBack(enteringEl, !!opts.showGoBack);
 
-  // fast path for no animation
-  if (!opts.animationBuilder && !opts.animation) {
-    return noAnimation(opts);
+  if (enteringEl) {
+    if (opts.showGoBack) {
+      enteringEl.classList.add('can-go-back');
+    } else {
+      enteringEl.classList.remove('can-go-back');
+    }
+    enteringEl.hidden = false;
   }
+  if (leavingEl) {
+    leavingEl.hidden = false;
+  }
+}
 
-  // transition path
+async function animation(opts: AnimationOptions): Promise<Animation> {
   await waitDeepReady(opts);
+
   const transition = await createTransition(opts);
-  fireWillEvents(enteringEl, leavingEl);
+  fireWillEvents(opts.enteringEl, opts.leavingEl);
   await playTransition(transition, opts);
+
   if (transition.hasCompleted) {
-    fireDidEvents(enteringEl, leavingEl);
+    fireDidEvents(opts.enteringEl, opts.leavingEl);
   }
   return transition;
 }
 
-async function notifyViewReady(viewIsReady: undefined | (() => Promise<any>)) {
-  if (viewIsReady) {
-    await viewIsReady();
-  }
-}
-
-async function noAnimation(opts: AnimationOptions) {
+async function noAnimation(opts: AnimationOptions): Promise<null> {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
 
@@ -44,6 +54,7 @@ async function noAnimation(opts: AnimationOptions) {
 
   fireWillEvents(enteringEl, leavingEl);
   fireDidEvents(enteringEl, leavingEl);
+  return undefined;
 }
 
 async function waitDeepReady(opts: AnimationOptions) {
@@ -51,7 +62,7 @@ async function waitDeepReady(opts: AnimationOptions) {
     deepReady(opts.enteringEl),
     deepReady(opts.leavingEl)
   ]);
-  await notifyViewReady(opts.viewIsReady);
+  await notifyViewReady(opts.viewIsReady, opts.enteringEl);
 }
 
 async function waitShallowReady(opts: AnimationOptions) {
@@ -59,25 +70,12 @@ async function waitShallowReady(opts: AnimationOptions) {
     shallowReady(opts.enteringEl),
     shallowReady(opts.leavingEl)
   ]);
-  await notifyViewReady(opts.viewIsReady);
+  await notifyViewReady(opts.viewIsReady, opts.enteringEl);
 }
 
-function showPages(enteringEl: HTMLElement, leavingEl: HTMLElement) {
-  if (enteringEl) {
-    enteringEl.hidden = false;
-  }
-  if (leavingEl) {
-    leavingEl.hidden = false;
-  }
-}
-
-function showGoBack(enteringEl: HTMLElement, goBack: boolean) {
-  if (enteringEl) {
-    if (goBack) {
-      enteringEl.classList.add('can-go-back');
-    } else {
-      enteringEl.classList.remove('can-go-back');
-    }
+async function notifyViewReady(viewIsReady: undefined | ((enteringEl: HTMLElement) => Promise<any>), enteringEl: HTMLElement) {
+  if (viewIsReady) {
+    await viewIsReady(enteringEl);
   }
 }
 
@@ -119,17 +117,6 @@ function fireDidEvents(enteringEl: HTMLElement, leavingEl: HTMLElement) {
   lifecycle(leavingEl, ViewLifecycle.DidLeave);
 }
 
-function setZIndex(enteringEl: HTMLElement, leavingEl: HTMLElement, direction: NavDirection) {
-  if (enteringEl) {
-    enteringEl.style.zIndex = (direction === NavDirection.back)
-      ? '99'
-      : '101';
-  }
-  if (leavingEl) {
-    leavingEl.style.zIndex = '100';
-  }
-}
-
 export function lifecycle(el: HTMLElement, lifecycle: ViewLifecycle) {
   if (el) {
     const event = new MyCustomEvent(lifecycle, {
@@ -162,6 +149,17 @@ function deepReady(el: Element): Promise<any> {
   }
 }
 
+function setZIndex(enteringEl: HTMLElement, leavingEl: HTMLElement, direction: NavDirection) {
+  if (enteringEl) {
+    enteringEl.style.zIndex = (direction === NavDirection.Back)
+      ? '99'
+      : '101';
+  }
+  if (leavingEl) {
+    leavingEl.style.zIndex = '100';
+  }
+}
+
 export const enum ViewLifecycle {
   WillEnter = 'ionViewWillEnter',
   DidEnter = 'ionViewDidEnter',
@@ -177,7 +175,7 @@ export interface AnimationOptions {
   direction?: NavDirection;
   duration?: number;
   easing?: string;
-  viewIsReady?: () => Promise<any>;
+  viewIsReady?: (enteringEl: HTMLElement) => Promise<any>;
   showGoBack?: boolean;
   progressAnimation?: Function;
   enteringEl: HTMLElement;

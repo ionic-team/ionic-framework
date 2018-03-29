@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-nav-page',
   template: `
     <ion-app>
-      <ion-router-outlet></ion-router-outlet>
+      <ion-router-outlet stack></ion-router-outlet>
     </ion-app>
   `
 })

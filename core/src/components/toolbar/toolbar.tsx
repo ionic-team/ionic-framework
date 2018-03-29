@@ -1,4 +1,4 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
 import { Config } from '../../index';
 
@@ -14,7 +14,6 @@ import { Config } from '../../index';
   }
 })
 export class Toolbar {
-  @Element() private el: HTMLElement;
 
   @Prop({ context: 'config' }) config: Config;
 
@@ -40,13 +39,6 @@ export class Toolbar {
    */
   @Prop() translucent = false;
 
-  componentDidLoad() {
-    const buttons = this.el.querySelectorAll('ion-button');
-    for (let i = 0; i < buttons.length; i++) {
-      buttons[i].buttonType = 'bar-button';
-    }
-  }
-
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'toolbar-translucent') : {};
 
@@ -66,13 +58,13 @@ export class Toolbar {
 
     return [
       <div class={backgroundCss}></div>,
-      <slot name='left'></slot>,
       <slot name='start'></slot>,
+      <slot name='secondary'></slot>,
       <div class={contentCss}>
         <slot></slot>
       </div>,
-      <slot name='end'></slot>,
-      <slot name='right'></slot>
+      <slot name='primary'></slot>,
+      <slot name='end'></slot>
     ];
   }
 }

@@ -33,7 +33,7 @@ export class Button {
    * The type of button.
    * Possible values are: `"button"`, `"bar-button"`.
    */
-  @Prop() buttonType = 'button';
+  @Prop({mutable: true}) buttonType = 'button';
 
   /**
    * The button size.
@@ -83,6 +83,7 @@ export class Button {
    */
   @Prop() mode: 'ios' | 'md';
 
+  @Prop() goBack = false;
   /**
    * Emitted when the button has focus.
    */
@@ -92,6 +93,12 @@ export class Button {
    * Emitted when the button loses focus.
    */
   @Event() ionBlur: EventEmitter<BlurEvent>;
+
+  componentWillLoad() {
+    if (this.el.closest('ion-buttons')) {
+      this.buttonType = 'bar-button';
+    }
+  }
 
   onFocus() {
     this.ionFocus.emit();
@@ -142,7 +149,7 @@ export class Button {
         disabled={this.disabled}
         onFocus={this.onFocus.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
-        onClick={(ev) => openURL(this.href, ev)}
+        onClick={(ev) => openURL(this.href, ev, this.goBack)}
         onBlur={this.onBlur.bind(this)}>
           <span class='button-inner'>
             <slot name='icon-only'></slot>
@@ -150,7 +157,7 @@ export class Button {
             <span class='button-text'><slot></slot></span>
             <slot name='end'></slot>
           </span>
-          { this.mode === 'md' && <ion-ripple-effect/> }
+          { this.mode === 'md' && <ion-ripple-effect useTapClick={true}/> }
       </TagType>
     );
   }

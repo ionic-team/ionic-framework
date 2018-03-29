@@ -1,6 +1,7 @@
 {
-  "name": "@ionic/angular-demo",
-  "version": "0.0.0",
+  "name": "@ionic/angular-test-nav",
+  "private": true,
+  "version": "0.0.1",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -8,10 +9,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e",
-    "override-router": "rm -rf ./node_modules/@angular/router && mkdir ./node_modules/@angular/router && cp -R ./scripts/router ./node_modules/@angular"
+    "e2e": "ng e2e"
   },
-  "private": true,
   "dependencies": {
     "@angular/animations": "latest",
     "@angular/common": "latest",
@@ -23,7 +22,6 @@
     "@angular/platform-browser-dynamic": "latest",
     "@angular/router": "latest",
     "@ionic/angular": "next",
-    "@ionic/core": "next",
     "body-parser": "^1.18.2",
     "core-js": "^2.4.1",
     "express": "^4.16.2",

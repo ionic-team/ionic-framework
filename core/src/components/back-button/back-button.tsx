@@ -63,7 +63,7 @@ export class BackButton {
         onClick={(ev) => this.onClick(ev)}>
         { backButtonIcon && <ion-icon name={backButtonIcon}/> }
         { backButtonText && <span class='button-text'>{backButtonText}</span> }
-        { this.mode === 'md' && <ion-ripple-effect/> }
+        { this.mode === 'md' && <ion-ripple-effect useTapClick={true} /> }
       </button>
     );
   }
