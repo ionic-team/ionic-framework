@@ -19,12 +19,12 @@ boolean
 
 #### root
 
-any
+
 
 
 #### rootParams
 
-any
+
 
 
 #### swipeBackEnabled
@@ -46,12 +46,12 @@ boolean
 
 #### root
 
-any
+
 
 
 #### root-params
 
-any
+
 
 
 #### swipe-back-enabled
@@ -79,11 +79,6 @@ boolean
 
 
 #### getRouteId()
-
-
-#### getViewById()
-
-Return a view controller
 
 
 #### getViews()

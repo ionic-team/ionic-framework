@@ -1,3 +1,65 @@
+<a name="0.1.5"></a>
+## [0.1.5](https://github.com/ionic-team/ionic/compare/v0.1.4...v0.1.5) (2018-03-29)
+
+
+### Bug Fixes
+
+* **all:** absolute positioning ([4fcddad](https://github.com/ionic-team/ionic/commit/4fcddad))
+* **angular:** goback navigation ([7b9a00e](https://github.com/ionic-team/ionic/commit/7b9a00e))
+* **angular:** ion-back-button ([9c789ce](https://github.com/ionic-team/ionic/commit/9c789ce))
+* **angular:** stack based navigation ([726938f](https://github.com/ionic-team/ionic/commit/726938f))
+* **avatar:** adjust wide images to fill instead of squish ([b0f8ca5](https://github.com/ionic-team/ionic/commit/b0f8ca5))
+* **back-button:** empty text is a valid value ([eb0ff2f](https://github.com/ionic-team/ionic/commit/eb0ff2f))
+* **back-button:** ios style ([2b8e489](https://github.com/ionic-team/ionic/commit/2b8e489))
+* **button:** dynamic bar-button ([d0c5f53](https://github.com/ionic-team/ionic/commit/d0c5f53))
+* **checkbox:** update ios checkbox to be closer to native ([b29fce1](https://github.com/ionic-team/ionic/commit/b29fce1))
+* **components:** add font-smoothing to mixing components ([9caeec7](https://github.com/ionic-team/ionic/commit/9caeec7))
+* **covers:** absolute positioning ([ce09978](https://github.com/ionic-team/ionic/commit/ce09978))
+* **item-option:** remove outline on active/focus ([eae6869](https://github.com/ionic-team/ionic/commit/eae6869)), closes [#14191](https://github.com/ionic-team/ionic/issues/14191)
+* **label:** add missing text-wrap styles for ios ([a9bd76a](https://github.com/ionic-team/ionic/commit/a9bd76a)), closes [#13157](https://github.com/ionic-team/ionic/issues/13157)
+* **menu:** default menu mode ([c31bcde](https://github.com/ionic-team/ionic/commit/c31bcde))
+* **nav:** animated opts ([57a5d49](https://github.com/ionic-team/ionic/commit/57a5d49))
+* **nav:** no animation ([4fdfddb](https://github.com/ionic-team/ionic/commit/4fdfddb))
+* **nav:** transition name ([011a374](https://github.com/ionic-team/ionic/commit/011a374))
+* **picker:** do not scroll ([1c06bfe](https://github.com/ionic-team/ionic/commit/1c06bfe))
+* **ripple-effect:** tapclick is required in ionic ([d57122c](https://github.com/ionic-team/ionic/commit/d57122c))
+* **router:** change detection for componentProps ([a718f7e](https://github.com/ionic-team/ionic/commit/a718f7e))
+* **router:** explicit goback should not push ([7a26162](https://github.com/ionic-team/ionic/commit/7a26162))
+* **router:** fixes navChanged() ([dddaee1](https://github.com/ionic-team/ionic/commit/dddaee1))
+* **router:** ion-nav ([113af9e](https://github.com/ionic-team/ionic/commit/113af9e))
+* **router:** loging ([ffaec16](https://github.com/ionic-team/ionic/commit/ffaec16))
+* **router:** route change detection ([9e9f2a2](https://github.com/ionic-team/ionic/commit/9e9f2a2))
+* **router:** wait RAF ([b26a563](https://github.com/ionic-team/ionic/commit/b26a563))
+* **slides:** unload slides correctly ([59c6891](https://github.com/ionic-team/ionic/commit/59c6891))
+* **thumbnail:** adjust wide images to fill instead of squish ([54558c9](https://github.com/ionic-team/ionic/commit/54558c9))
+* **toast:** dismiss timeout ([44f343d](https://github.com/ionic-team/ionic/commit/44f343d))
+* **toolbar:** unused private ([c9d2a0d](https://github.com/ionic-team/ionic/commit/c9d2a0d))
+* **transition:** nav ios transition ([095f9c8](https://github.com/ionic-team/ionic/commit/095f9c8))
+
+
+### Features
+
+* **button:** goback attribute ([00fc460](https://github.com/ionic-team/ionic/commit/00fc460))
+* **config:** add set to config ([69a6f8d](https://github.com/ionic-team/ionic/commit/69a6f8d))
+* **content:** scrollEnabled ([5c2678f](https://github.com/ionic-team/ionic/commit/5c2678f))
+* **menu-controller:** expose registerAnimation ([153f8ca](https://github.com/ionic-team/ionic/commit/153f8ca))
+* **nav:** goBack directive ([862e571](https://github.com/ionic-team/ionic/commit/862e571))
+* **nav-controller:** goback best guess ([46bbd0f](https://github.com/ionic-team/ionic/commit/46bbd0f))
+* **ripple:** css variable color ([77fc792](https://github.com/ionic-team/ionic/commit/77fc792))
+* **tab:** framework support ([48d1bd4](https://github.com/ionic-team/ionic/commit/48d1bd4))
+
+
+### Performance Improvements
+
+* **app:** platform is not needed ([e681836](https://github.com/ionic-team/ionic/commit/e681836))
+
+
+### Reverts
+
+* **toolbar:** revert to use old button attributes ([574c346](https://github.com/ionic-team/ionic/commit/574c346)), closes [#14172](https://github.com/ionic-team/ionic/issues/14172)
+
+
+
 <a name="0.1.4"></a>
 ## [0.1.4](https://github.com/ionic-team/ionic/compare/v0.1.4-9...v0.1.4) (2018-03-21)
 

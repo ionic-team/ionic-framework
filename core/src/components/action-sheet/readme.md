@@ -25,7 +25,7 @@ An array of buttons for the action sheet.
 
 #### cssClass
 
-string
+
 
 Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.
@@ -101,7 +101,7 @@ An array of buttons for the action sheet.
 
 #### css-class
 
-string
+
 
 Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.

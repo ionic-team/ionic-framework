@@ -4,6 +4,7 @@
 // --------------------------------------------------
 
 ion-picker {
+  @include font-smoothing();
   @include position(0, null, null, 0);
 
   position: absolute;
@@ -14,9 +15,6 @@ ion-picker {
   height: $picker-width;
 
   contain: strict;
-
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
 }
 
 .picker-toolbar {

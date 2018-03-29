@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, FrameworkDelegate } from '../../index';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate } from '../../index';
 
 import { createThemedClasses, getClassList } from '../../utils/theme';
 import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
@@ -63,18 +63,18 @@ export class Popover implements OverlayInterface {
   /**
    * The component to display inside of the popover.
    */
-  @Prop() component: string;
+  @Prop() component: ComponentRef;
 
   /**
    * The data to pass to the popover component.
    */
-  @Prop() data: any = {};
+  @Prop() componentProps: ComponentProps;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string;
+  @Prop() cssClass: string | string[];
 
   /**
    * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
@@ -180,7 +180,7 @@ export class Popover implements OverlayInterface {
     }
     const container = this.el.querySelector('.popover-content');
     const data = {
-      ...this.data,
+      ...this.componentProps,
       popover: this.el
     };
     const classes = [
@@ -254,14 +254,14 @@ export class Popover implements OverlayInterface {
 }
 
 export interface PopoverOptions {
-  component: any;
-  data?: any;
+  component: ComponentRef;
+  componentProps?: ComponentProps;
   showBackdrop?: boolean;
   enableBackdropDismiss?: boolean;
   translucent?: boolean;
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
-  cssClass?: string;
+  cssClass?: string | string[];
   ev: Event;
   delegate?: FrameworkDelegate;
 }

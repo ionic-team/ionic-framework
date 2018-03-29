@@ -23,9 +23,10 @@
 
   font-size: $toolbar-ios-title-font-size;
   font-weight: $toolbar-ios-title-font-weight;
-  color: $toolbar-ios-title-text-color;
 
   letter-spacing: -.03em;
+
+  color: $toolbar-ios-title-text-color;
 
   pointer-events: auto;
 }

@@ -207,8 +207,8 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
       expect(nav.length()).toEqual(4);
-      expect(nav._views[0].component).toEqual(MockView4);
-      expect(nav._views[nav._views.length - 1].component).toEqual(MockView3);
+      expect(nav.getByIndex(0).component).toEqual(MockView4);
+      expect(nav.getByIndex(nav.length() - 1).component).toEqual(MockView3);
 
     }, 10000);
 
@@ -226,7 +226,7 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view2, view1, NavDirection.Forward
       );
       expect(nav.length()).toEqual(2);
-      expect(nav._views[nav._views.length - 1].component).toEqual(MockView2);
+      expect(nav.getByIndex(nav.length() - 1).component).toEqual(MockView2);
 
     }, 10000);
 
@@ -242,7 +242,7 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view2, view1, NavDirection.Forward
       );
       expect(nav.length()).toEqual(2);
-      expect(nav._views[nav._views.length - 1].component).toEqual(MockView2);
+      expect(nav.getByIndex(nav.length() - 1).component).toEqual(MockView2);
 
     }, 10000);
 
@@ -260,7 +260,7 @@ describe('NavController', () => {
         expect(err).toEqual(rejectReason);
         expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, rejectReason);
         expect(nav.length()).toEqual(1);
-        expect(nav._views[nav._views.length - 1].component).toEqual(MockView1);
+        expect(nav.getByIndex(nav.length() - 1).component).toEqual(MockView1);
         done();
       });
     }, 10000);
@@ -980,7 +980,7 @@ describe('NavController', () => {
   });
 
 
-  describe('destroy', () => {
+  describe('componentDidUnload', () => {
 
     it('should not crash when destroyed while transitioning', (done) => {
       const view1 = mockView(MockView1);
@@ -991,7 +991,7 @@ describe('NavController', () => {
         fail('should never get here');
         done();
       });
-      nav.destroy();
+      nav.componentDidUnload();
     }, 10000);
   });
 
@@ -1092,7 +1092,7 @@ function mockView(component ?: any, data ?: any) {
 }
 
 function mockViews(nav: NavControllerBase, views: ViewController[]) {
-  nav._views = views;
+  nav['_views'] = views;
   views.forEach(v => {
     v._setNav(nav);
   });

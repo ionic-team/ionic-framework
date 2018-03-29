@@ -4,6 +4,8 @@
 // --------------------------------------------------
 
 ion-item {
+  @include font-smoothing();
+
   display: block;
 }
 
@@ -98,5 +100,6 @@ ion-item-group {
 .item-disabled {
   cursor: default;
   opacity: .4;
+
   pointer-events: none;
 }

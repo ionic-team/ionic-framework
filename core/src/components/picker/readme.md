@@ -25,7 +25,7 @@ Array of columns to be displayed in the picker.
 
 #### cssClass
 
-string
+
 
 Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.
@@ -101,7 +101,7 @@ Array of columns to be displayed in the picker.
 
 #### css-class
 
-string
+
 
 Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.

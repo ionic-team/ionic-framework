@@ -30,7 +30,6 @@
 .tabbar-translucent-ios {
   background-color: $tabbar-ios-translucent-background-color;
 
-  -webkit-backdrop-filter: $tabbar-ios-translucent-filter;
   backdrop-filter: $tabbar-ios-translucent-filter;
 }
 

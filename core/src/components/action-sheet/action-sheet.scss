@@ -4,6 +4,7 @@
 // --------------------------------------------------
 
 ion-action-sheet {
+  @include font-smoothing();
   @include position(0, 0, 0, 0);
 
   position: fixed;
@@ -11,9 +12,6 @@ ion-action-sheet {
   display: block;
 
   touch-action: none;
-
-  font-smoothing: antialiased;
-  -webkit-font-smoothing: antialiased;
 }
 
 .action-sheet-wrapper {
@@ -70,11 +68,11 @@ ion-action-sheet {
 .action-sheet-group {
   overflow: scroll;
 
+  overscroll-behavior: contain;
+
   flex-shrink: 2;
 
   pointer-events: all;
-
-  overscroll-behavior: contain;
 }
 
 .action-sheet-group-cancel {

@@ -5,8 +5,8 @@
 // --------------------------------------------------
 
 ion-list-header {
+  @include font-smoothing();
   @include margin(0);
-
   @include padding(0);
 
   display: flex;

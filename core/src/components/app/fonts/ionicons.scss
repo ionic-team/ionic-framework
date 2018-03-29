@@ -20,6 +20,8 @@ $ionicons-font-path: $font-path !default;
 }
 
 ion-icon {
+  @include font-smoothing();
+
   display: inline-block;
 
   font-family: "Ionicons";
@@ -30,9 +32,6 @@ ion-icon {
   text-rendering: auto;
   text-transform: none;
   speak: none;
-
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
 
   @include rtl() {
     &[aria-label^="arrow"]::before,

@@ -6,6 +6,9 @@ import { PageTwo } from '../page-two/page-two';
   template: `
     <ion-header>
       <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+        </ion-buttons>
         <ion-title>Simple Page One</ion-title>
       </ion-toolbar>
     </ion-header>

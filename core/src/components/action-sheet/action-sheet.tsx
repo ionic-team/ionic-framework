@@ -53,7 +53,7 @@ export class ActionSheet implements OverlayInterface {
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string;
+  @Prop() cssClass: string | string[];
 
   /**
    * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.

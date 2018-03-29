@@ -4,6 +4,8 @@
 // --------------------------------------------------
 
 ion-card {
+  @include font-smoothing();
+
   position: relative;
   display: block;
   overflow: hidden;

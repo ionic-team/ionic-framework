@@ -4,6 +4,8 @@
 // --------------------------------------------------
 
 ion-segment {
+  @include font-smoothing();
+
   display: flex;
 
   flex: 1;
@@ -11,7 +13,4 @@ ion-segment {
   justify-content: center;
 
   width: 100%;
-
-  font-smoothing: antialiased;
-  -webkit-font-smoothing: antialiased;
 }

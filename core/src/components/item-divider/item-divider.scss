@@ -5,6 +5,7 @@
 // --------------------------------------------------
 
 ion-item-divider {
+  @include font-smoothing();
   @include margin(0);
   @include padding(0);
 
@@ -23,7 +24,6 @@ ion-item-divider {
 }
 
 ion-item-divider[sticky] {
-  position: -webkit-sticky;
   position: sticky;
   top: 0;
 }

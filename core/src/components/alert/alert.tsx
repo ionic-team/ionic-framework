@@ -51,7 +51,7 @@ export class Alert implements OverlayInterface {
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string;
+  @Prop() cssClass: string | string[];
 
   /**
    * The main title in the heading of the alert.
@@ -455,7 +455,7 @@ export interface AlertOptions {
   title?: string;
   subTitle?: string;
   message?: string;
-  cssClass?: string;
+  cssClass?: string | string[];
   mode?: string;
   inputs?: AlertInput[];
   buttons?: (AlertButton|string)[];
@@ -480,6 +480,6 @@ export interface AlertInput {
 export interface AlertButton {
   text: string;
   role?: string;
-  cssClass?: string;
+  cssClass?: string | string[];
   handler?: (value: any) => boolean|void;
 }

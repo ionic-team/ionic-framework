@@ -4,6 +4,7 @@
 // --------------------------------------------------
 
 .button {
+  @include font-smoothing();
   @include text-align(center);
   @include appearance(none);
 
@@ -30,9 +31,6 @@
   user-select: none;
 
   contain: content;
-
-  font-smoothing: antialiased;
-  -webkit-font-smoothing: antialiased;
 }
 
 .button:active,

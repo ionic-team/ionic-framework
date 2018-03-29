@@ -4,6 +4,8 @@
 // --------------------------------------------------
 
 ion-toolbar {
+  @include font-smoothing();
+
   box-sizing: border-box;
   position: relative;
   z-index: $z-index-toolbar;
@@ -16,9 +18,6 @@ ion-toolbar {
   justify-content: space-between;
 
   width: 100%;
-
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
 
   contain: content;
 }

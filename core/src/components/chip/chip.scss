@@ -4,6 +4,8 @@
 // --------------------------------------------------
 
 ion-chip {
+  @include font-smoothing();
+
   box-sizing: border-box;
   display: inline-flex;
 
@@ -12,9 +14,6 @@ ion-chip {
 
   font-weight: normal;
   vertical-align: middle;
-
-  -webkit-font-smoothing: antialiased;
-  font-smoothing: antialiased;
 }
 
 ion-chip > ion-icon {

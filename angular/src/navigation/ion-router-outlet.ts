@@ -1,6 +1,7 @@
 import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, OnDestroy, OnInit, Optional, Output, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET, Router } from '@angular/router';
 import { StackController } from './router-controller';
+import { NavController } from './ion-nav-controller';
 
 @Directive({
   selector: 'ion-router-outlet',
@@ -25,12 +26,12 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     @Attribute('name') name: string,
     @Optional() @Attribute('stack') stack: any,
     private changeDetector: ChangeDetectorRef,
-    // private navCtrl: NavController,
+    private navCtrl: NavController,
     router: Router
   ) {
     this.name = name || PRIMARY_OUTLET;
     parentContexts.onChildOutletCreated(this.name, this as any);
-    this.stackCtrl = new StackController(stack != null, elementRef.nativeElement, router);
+    this.stackCtrl = new StackController(stack != null, elementRef.nativeElement, router, this.navCtrl);
   }
 
   ngOnDestroy(): void {
@@ -136,7 +137,8 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       enteringView = this.stackCtrl.createView(this.activated, activatedRoute);
     }
 
-    await this.stackCtrl.setActive(enteringView, undefined);
+    const direction = this.navCtrl.consumeDirection();
+    await this.stackCtrl.setActive(enteringView, direction);
     this.activateEvents.emit(this.activated.instance);
   }
 
