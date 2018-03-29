@@ -1,27 +1,19 @@
-import { Directive } from '@angular/core';
+import { Directive, HostListener, Optional } from '@angular/core';
+import { IonRouterOutlet } from './ion-router-outlet';
 
 @Directive({
   selector: 'ion-back-button'
 })
 export class IonBackButton {
 
-  // constructor(
-  //   private navCtrl: NavController,
-  //   private router
-  //   @Optional() private routerOutlet: IonRouterOutlet,
-  // ) {
-  //   routerOutlet.
-  // }
+  constructor(
+    @Optional() private routerOutlet: IonRouterOutlet,
+  ) {}
 
-
-
-  // @HostListener('click')
-  // onClick() {
-  //   if(routerOutlet.canGoBack())
-  //   this.navCtrl.setGoback();
-  //   if (!this.routerLink) {
-  //     window.history.back();
-  //   }
-  // }
-
+  @HostListener('click')
+  onClick() {
+    if (this.routerOutlet.canGoBack()) {
+      this.routerOutlet.pop();
+    }
+  }
 }

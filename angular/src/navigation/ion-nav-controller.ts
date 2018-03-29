@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class NavController {
 
-  private direction = 1;
+  private direction = 0;
   private goBack = false;
   private stack: string[] = [];
 

@@ -76,6 +76,7 @@ export class RouterOutlet implements NavOutlet {
       easing: opts.easing,
 
       animationCtrl: this.animationCtrl,
+      showGoBack: opts.showGoBack,
       enteringEl: enteringEl,
       leavingEl: leavingEl,
       baseEl: this.el,
@@ -127,6 +128,7 @@ export interface RouterOutletOptions {
   animationBuilder?: AnimationBuilder;
   duration?: number;
   easing?: string;
+  showGoBack?: boolean;
   direction?: NavDirection;
   mode?: 'md' | 'ios';
 }

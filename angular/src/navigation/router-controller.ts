@@ -1,17 +1,19 @@
 import { ComponentRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavDirection } from '@ionic/core/dist/types/components/nav/nav-util';
+import { NavController } from './ion-nav-controller';
+import { NavDirection } from '@ionic/core';
 
 
 export class StackController {
 
-  viewsSnapshot: RouteView[] = [];
-  views: RouteView[] = [];
+  private viewsSnapshot: RouteView[] = [];
+  private views: RouteView[] = [];
 
   constructor(
     private stack: boolean,
     private containerEl: HTMLIonRouterOutletElement,
-    private router: Router
+    private router: Router,
+    private navCtrl: NavController,
   ) {}
 
   createView(enteringRef: ComponentRef<any>, route: ActivatedRoute): RouteView {
@@ -36,13 +38,14 @@ export class StackController {
     const leavingView = this.getActive();
     const reused = this.insertView(enteringView);
     direction = direction != null ? direction : (reused ? -1 : 1);
-    await this.transition(enteringView, leavingView, direction);
+    await this.transition(enteringView, leavingView, direction, this.canGoBack(1));
 
     this.cleanup();
   }
 
   pop(deep: number) {
     const view = this.views[this.views.length - deep - 1];
+    this.navCtrl.setGoback();
     this.router.navigateByUrl(view.url);
   }
 
@@ -77,7 +80,7 @@ export class StackController {
     return this.views.length > 0 ? this.views[this.views.length - 1] : null;
   }
 
-  private async transition(enteringView: RouteView, leavingView: RouteView, direction: number) {
+  private async transition(enteringView: RouteView, leavingView: RouteView, direction: number, showGoBack: boolean) {
     const enteringEl = enteringView ? enteringView.element : undefined;
     const leavingEl = leavingView ? leavingView.element : undefined;
     const containerEl = this.containerEl;
@@ -88,7 +91,8 @@ export class StackController {
       await containerEl.componentOnReady();
       await containerEl.commit(enteringEl, leavingEl, {
         duration: direction === 0 ? 0 : undefined,
-        direction: direction === -1 ? NavDirection.Back : NavDirection.Forward
+        direction: direction === -1 ? NavDirection.Back : NavDirection.Forward,
+        showGoBack
       });
     }
   }

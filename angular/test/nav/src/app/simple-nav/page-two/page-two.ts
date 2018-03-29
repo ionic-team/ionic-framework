@@ -7,6 +7,9 @@ import { Location } from '@angular/common';
   template: `
     <ion-header>
       <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+        </ion-buttons>
         <ion-title>Page Two</ion-title>
       </ion-toolbar>
     </ion-header>

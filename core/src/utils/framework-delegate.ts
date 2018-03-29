@@ -9,7 +9,13 @@ export function attachComponent(delegate: FrameworkDelegate, container: Element,
   if (delegate) {
     return delegate.attachViewToDom(container, component, componentProps, cssClasses);
   }
-  const el = (typeof component === 'string') ? document.createElement(component) : component;
+  if (typeof component !== 'string' && !(component instanceof HTMLElement)) {
+    throw new Error('framework delegate is missing');
+  }
+
+  const el = (typeof component === 'string')
+    ? document.createElement(component)
+    : component;
 
   cssClasses && cssClasses.forEach(c => el.classList.add(c));
   componentProps && Object.assign(el, componentProps);
