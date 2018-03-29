@@ -24,7 +24,7 @@ async function main() {
     console.log(`  Verify CHANGELOG.md`);
     console.log(`  git commit -m "${version}"`);
     console.log(`  git push`);
-    console.log(`  npm run deploy\n`);
+    console.log(`  npm run release\n`);
 
   } catch(err) {
     console.log('\n', chalk.red(err), '\n');

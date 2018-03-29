@@ -51,6 +51,7 @@ async function publishPackages(packages, version) {
   // next publish
   packages.forEach(package => {
     const pkg = common.readPkg(package);
+    const projectRoot = common.projectPath(package);
 
     tasks.push(
       {
