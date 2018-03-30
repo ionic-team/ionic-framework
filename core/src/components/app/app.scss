@@ -29,6 +29,7 @@ html {
 }
 
 body {
+  @include font-smoothing();
   @include margin(0);
   @include padding(0);
 
@@ -41,9 +42,6 @@ body {
   max-height: 100%;
 
   text-rendering: optimizeLegibility;
-
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
 
   -webkit-user-drag: none;
 
