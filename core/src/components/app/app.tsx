@@ -25,6 +25,8 @@ export class App {
     this.deviceHacks = this.config.getBoolean('deviceHacks', false);
   }
 
+  testing() {}
+
   hostData() {
     const mode = this.config.get('mode');
     const hoverCSS = this.config.getBoolean('hoverCSS', false);
