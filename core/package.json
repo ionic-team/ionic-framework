@@ -58,7 +58,7 @@
     "devapp": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server --broadcast\"",
     "e2e": "node ./scripts/e2e",
     "e2e-debug": "node --inspect --debug-brk ./scripts/e2e",
-    "lint": "npm run lint.ts & npm run lint.sass",
+    "lint": "npm run lint.ts && npm run lint.sass",
     "lint.sass": "sass-lint -v",
     "lint.ts": "tslint --project .",
     "lint.ts.fix": "tslint --project . --fix",
