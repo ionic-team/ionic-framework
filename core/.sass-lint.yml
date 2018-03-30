@@ -45,7 +45,7 @@ rules:
   no-duplicate-properties: 0
   no-mergeable-selectors: 1
   no-misspelled-properties:
-    - 1
+    - 2
     - extra-properties:
         - contain
         - overscroll-behavior
@@ -60,7 +60,7 @@ rules:
 
 
   property-sort-order:
-    - 1
+    - 2
     - ignore-custom-properties: false
       order:
 
@@ -203,5 +203,5 @@ rules:
       - transition-property
       - transition-timing-function
   quotes:
-    - 1
+    - 2
     - style: double
