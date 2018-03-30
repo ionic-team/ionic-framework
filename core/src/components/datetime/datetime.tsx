@@ -27,6 +27,12 @@ export class Datetime {
   datetimeMax: DatetimeData = {};
   datetimeValue: DatetimeData = {};
 
+  @Listen('body:ionPickerColChange')
+  protected ionPickerDidUnload(col: any) {
+    // this.validate();
+    console.log(col.detail.name);
+  }
+
   @State() text: any;
 
   @Prop({ connect: 'ion-picker-controller' }) pickerCtrl!: HTMLIonPickerControllerElement;
@@ -270,6 +276,8 @@ export class Datetime {
     this.picker = await this.buildPicker(pickerOptions);
     this.validate();
     await this.picker!.present();
+    const picker = document.querySelector('ion-picker');
+    if (picker) picker.addEventListener('ionPickerColChange', this.validate.bind(this));
   }
 
   private generateColumns(): PickerColumn[] {

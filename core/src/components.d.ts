@@ -4579,6 +4579,7 @@ declare global {
   namespace JSXElements {
     export interface IonPickerColumnAttributes extends HTMLAttributes {
       'col'?: PickerColumn;
+      'onIonPickerColChange'?: (event: CustomEvent) => void;
     }
   }
 }

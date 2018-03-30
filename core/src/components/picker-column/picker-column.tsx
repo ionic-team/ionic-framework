@@ -1,4 +1,4 @@
-import { Component, Element, Prop, QueueApi } from '@stencil/core';
+import { Component, Element, Prop, QueueApi, Event, EventEmitter } from '@stencil/core';
 import { GestureDetail, Mode, PickerColumn, PickerColumnOption } from '../../interface';
 import { hapticSelectionChanged } from '../../utils';
 import { clamp } from '../../utils/helpers';
@@ -30,6 +30,8 @@ export class PickerColumnCmp {
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
   @Prop() col!: PickerColumn;
+
+  @Event() ionPickerColChange!: EventEmitter;
 
   componentWillLoad() {
     let pickerRotateFactor = 0;
@@ -156,20 +158,11 @@ export class PickerColumnCmp {
       this.y = y;
     }
 
-    if (emitChange) {
-      if (this.lastIndex === undefined) {
-        // have not set a last index yet
+    if (emitChange && (this.lastIndex !== this.col.selectedIndex)) {
+      // If the emit change is true, broadcast that a column has been updated
+      if (emitChange) {
         this.lastIndex = this.col.selectedIndex;
-
-      } else if (this.lastIndex !== this.col.selectedIndex) {
-        // new selected index has changed from the last index
-        // update the lastIndex and emit that it has changed
-        this.lastIndex = this.col.selectedIndex;
-        // TODO ionChange event
-        // var ionChange = this.ionChange;
-        // if (ionChange.observers.length > 0) {
-        //   this._zone.run(ionChange.emit.bind(ionChange, this.col.options[this.col.selectedIndex]));
-        // }
+        this.ionPickerColChange.emit();
       }
     }
   }
