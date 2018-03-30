@@ -30,8 +30,11 @@ $chip-ios-font-size:                        13px !default;
 /// @prop - Text color of the chip
 $chip-ios-text-color:                       $text-ios-color-step-150 !default;
 
+/// @prop - Background color alpha of the chip
+$chip-ios-background-color-alpha:           .1 !default;
+
 /// @prop - Background color of the chip
-$chip-ios-background-color:                 css-var($text-ios-color-value, text-ios-color, $alpha-ios-lowest) !default;
+$chip-ios-background-color:                 css-var($text-ios-color-value, text-ios-color, $chip-ios-background-color-alpha) !default;
 
 /// @prop - Margin top of the label in the chip
 $chip-ios-label-margin-top:                 0 !default;

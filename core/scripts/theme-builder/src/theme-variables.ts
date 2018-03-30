@@ -14,42 +14,6 @@ export enum ComputedType {
 
 export const THEME_VARIABLES: ThemeVariable[] = [
   {
-    property: '--ion-alpha-activated'
-  },
-  {
-    property: '--ion-alpha-border-low'
-  },
-  {
-    property: '--ion-alpha-border-medium'
-  },
-  {
-    property: '--ion-alpha-border-high'
-  },
-  {
-    property: '--ion-alpha-disabled'
-  },
-  {
-    property: '--ion-alpha-focused'
-  },
-  {
-    property: '--ion-alpha-hover'
-  },
-  {
-    property: '--ion-alpha-lowest'
-  },
-  {
-    property: '--ion-alpha-low'
-  },
-  {
-    property: '--ion-alpha-medium'
-  },
-  {
-    property: '--ion-alpha-high'
-  },
-  {
-    property: '--ion-alpha-highest'
-  },
-  {
     property: '--ion-color-primary',
     quickPick: {text: 'p'}
   },
@@ -558,7 +522,10 @@ export const THEME_VARIABLES: ThemeVariable[] = [
     }
   },
   {
-    property: '--ion-tabbar-background-color'
+    property: '--ion-tabbar-background-color',
+    quickPick: {
+      text: 'tab-bg'
+    }
   },
   {
     property: '--ion-tabbar-background-color-focused'
@@ -567,13 +534,19 @@ export const THEME_VARIABLES: ThemeVariable[] = [
     property: '--ion-tabbar-border-color'
   },
   {
-    property: '--ion-tabbar-text-color'
+    property: '--ion-tabbar-text-color',
+    quickPick: {
+      text: 'tab-txt'
+    }
   },
   {
     property: '--ion-tabbar-text-color-active'
   },
   {
-    property: '--ion-toolbar-background-color'
+    property: '--ion-toolbar-background-color',
+    quickPick: {
+      text: 'tb-bg'
+    }
   },
   {
     property: '--ion-toolbar-border-color'
@@ -585,10 +558,16 @@ export const THEME_VARIABLES: ThemeVariable[] = [
     property: '--ion-toolbar-color-inactive'
   },
   {
-    property: '--ion-toolbar-text-color'
+    property: '--ion-toolbar-text-color',
+    quickPick: {
+      text: 'tb-txt'
+    }
   },
   {
-    property: '--ion-item-background-color'
+    property: '--ion-item-background-color',
+    quickPick: {
+      text: 'i-bg'
+    }
   },
   {
     property: '--ion-item-background-color-active'
@@ -597,7 +576,10 @@ export const THEME_VARIABLES: ThemeVariable[] = [
     property: '--ion-item-border-color'
   },
   {
-    property: '--ion-item-text-color'
+    property: '--ion-item-text-color',
+    quickPick: {
+      text: 'i-txt'
+    }
   },
   {
     property: '--ion-placeholder-text-color'

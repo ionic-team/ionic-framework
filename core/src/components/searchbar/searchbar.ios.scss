@@ -159,7 +159,7 @@
 @each $color-name, $color-value in $colors-ios {
   $color-base: ion-color($colors-ios, $color-name, base, ios);
   $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-contrast-alpha: ion-color($colors-ios, $color-name, contrast, ios, $alpha-ios-lowest);
+  $color-contrast-alpha: ion-color($colors-ios, $color-name, contrast, ios, $searchbar-ios-input-background-color-alpha);
   $color-tint: ion-color($colors-ios, $color-name, tint, ios);
 
   .searchbar-ios-#{$color-name} .searchbar-cancel-button-ios {
@@ -172,7 +172,7 @@
 
   .toolbar-ios-#{$color-name} .searchbar-search-icon-ios {
     @include ios-searchbar-icon($searchbar-ios-input-search-icon-svg, $color-contrast);
-    opacity: .5;
+    opacity: $searchbar-ios-input-icon-opacity;
   }
 
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-input {
@@ -183,7 +183,7 @@
 
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-clear-icon {
     @include ios-searchbar-icon($searchbar-ios-input-clear-icon-svg, $color-contrast);
-    opacity: .5;
+    opacity: $searchbar-ios-input-icon-opacity;
   }
 
   .toolbar-ios-#{$color-name} .searchbar-ios .searchbar-cancel-button-ios {

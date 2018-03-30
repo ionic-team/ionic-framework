@@ -18,8 +18,11 @@ $picker-md-background-color:                        $background-md-color !defaul
 /// @prop - Top Background Color of the picker wrapper gradient
 $picker-md-top-background-color:                    $picker-md-background-color !default;
 
+/// @prop - Bottom Background Color alpha of the picker wrapper gradient
+$picker-md-bottom-background-color-alpha:           .8 !default;
+
 /// @prop - Bottom Background Color of the picker wrapper gradient
-$picker-md-bottom-background-color:                 css-var($background-md-color-value, background-md-color, $alpha-md-high) !default;
+$picker-md-bottom-background-color:                 css-var($background-md-color-value, background-md-color, $picker-md-bottom-background-color-alpha) !default;
 
 /// @prop - Height of the picker toolbar
 $picker-md-toolbar-height:                          44px !default;

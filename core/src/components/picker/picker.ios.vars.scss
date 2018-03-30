@@ -18,8 +18,11 @@ $picker-ios-background-color:                     $background-ios-color !default
 /// @prop - Top Background Color of the picker wrapper gradient
 $picker-ios-top-background-color:                 $picker-ios-background-color !default;
 
+/// @prop - Bottom Background Color alpha of the picker wrapper gradient
+$picker-ios-bottom-background-color-alpha:        .8 !default;
+
 /// @prop - Bottom Background Color of the picker wrapper gradient
-$picker-ios-bottom-background-color:              css-var($background-ios-color-value, background-ios-color, $alpha-ios-high) !default;
+$picker-ios-bottom-background-color:              css-var($background-ios-color-value, background-ios-color, $picker-ios-bottom-background-color-alpha) !default;
 
 /// @prop - Height of the picker toolbar
 $picker-ios-toolbar-height:                       44px !default;

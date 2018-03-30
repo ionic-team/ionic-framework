@@ -158,7 +158,7 @@ button[disabled],
 
 @mixin md-button-outline($color-name) {
   $fg-color: ion-color($colors-md, $color-name, tint, md);
-  $bg-color-focused: ion-color($colors-md, $color-name, base, md, $alpha-md-focused);
+  $bg-color-focused: ion-color($colors-md, $color-name, base, md, $button-md-outline-background-color-alpha-focused);
 
   .button-outline-md-#{$color-name} {
     border-color: $fg-color;
@@ -218,7 +218,7 @@ button[disabled],
 
 @mixin md-button-clear($color-name) {
   $fg-color: ion-color($colors-md, $color-name, base, md);
-  $bg-color-focused: ion-color($colors-md, $color-name, base, md, $alpha-md-focused);
+  $bg-color-focused: ion-color($colors-md, $color-name, base, md, $button-md-clear-background-color-alpha-focused);
 
   .button-clear-md-#{$color-name} {
     border-color: $button-md-clear-border-color;

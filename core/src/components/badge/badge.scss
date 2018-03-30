@@ -5,7 +5,7 @@
 
 ion-badge {
   @include font-smoothing();
-  @include padding($badge-ios-padding-top, $badge-ios-padding-end, $badge-ios-padding-bottom, $badge-ios-padding-start);
+  @include padding($badge-padding-top, $badge-padding-end, $badge-padding-bottom, $badge-padding-start);
   @include text-align(center);
 
   display: inline-block;

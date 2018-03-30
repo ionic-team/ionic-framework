@@ -30,8 +30,11 @@ $chip-md-font-size:                        13px !default;
 /// @prop - Text color of the chip
 $chip-md-text-color:                       $text-md-color-step-150 !default;
 
+/// @prop - Background color alpha of the chip
+$chip-md-background-color-alpha:           .1 !default
+
 /// @prop - Background color of the chip
-$chip-md-background-color:                 css-var($text-md-color-value, text-md-color, $alpha-md-lowest) !default;
+$chip-md-background-color:                 css-var($text-md-color-value, text-md-color, $chip-md-background-color-alpha) !default;
 
 /// @prop - Margin top of the label in the chip
 $chip-md-label-margin-top:                 0 !default;
