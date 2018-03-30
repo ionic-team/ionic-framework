@@ -95,6 +95,7 @@ import {
 import {
   AnimationBuilder as AnimationBuilder3,
   ComponentProps as ComponentProps2,
+  ComponentRef as ComponentRef2,
   FrameworkDelegate as FrameworkDelegate2,
 } from '.';
 import {
@@ -5759,7 +5760,7 @@ declare global {
     /**
      * The component to display inside of the tab.
      */
-    'component': any;
+    'component': ComponentRef;
     'delegate': FrameworkDelegate;
     /**
      * If true, the user cannot interact with the tab. Defaults to `false`.
@@ -5826,7 +5827,7 @@ declare global {
       /**
        * The component to display inside of the tab.
        */
-      'component'?: any;
+      'component'?: ComponentRef;
       'delegate'?: FrameworkDelegate;
       /**
        * If true, the user cannot interact with the tab. Defaults to `false`.

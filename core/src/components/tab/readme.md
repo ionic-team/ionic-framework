@@ -62,7 +62,7 @@ string
 
 #### component
 
-any
+
 
 The component to display inside of the tab.
 
@@ -156,7 +156,7 @@ string
 
 #### component
 
-any
+
 
 The component to display inside of the tab.
 

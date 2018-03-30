@@ -12,31 +12,52 @@ exports.config.outputTargets = [
   {
     type: 'angular',
     directivesProxyFile: 'src/directives/proxies.ts',
+    directivesArrayFile: 'src/directives/proxies-list.txt',
     empty: false,
     excludeComponents: [
+      // overlays
       'ion-action-sheet',
       'ion-action-sheet-controller',
       'ion-alert',
       'ion-alert-controller',
-      'ion-animation-controller',
-      'ion-input-shims',
       'ion-loading',
       'ion-loading-controller',
-      'ion-platform',
-      'ion-menu-controller',
       'ion-modal',
       'ion-modal-controller',
-      'ion-nav',
       'ion-picker',
-      'ion-picker-column',
       'ion-picker-controller',
       'ion-popover',
       'ion-popover-controller',
-      'ion-tab',
-      'ion-tabs',
       'ion-toast',
       'ion-toast-controller',
       'ion-toast',
+
+      // controllers
+      'ion-menu-controller',
+      'ion-animation-controller',
+      'ion-animation-controller',
+      'ion-gesture-controller',
+      'ion-platform',
+      'ion-cordova-platform',
+
+      // navigation
+      'ion-router',
+      'ion-route',
+      'ion-route-redirect',
+      'ion-router-outlet',
+      'ion-anchor',
+      'ion-tabbar',
+      'ion-tab-button',
+
+      // auxiliar
+      'ion-gesture',
+      'ion-status-tap',
+      'ion-tap-click',
+      'ion-picker-column',
+      'ion-range-knob',
+      'ion-input-shims',
+      'ion-backdrop',
+      'ion-anchor',
       'ion-virtual-scroll'
     ]
   }

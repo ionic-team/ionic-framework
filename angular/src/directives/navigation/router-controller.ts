@@ -1,7 +1,8 @@
 import { ComponentRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavController } from './ion-nav-controller';
 import { NavDirection } from '@ionic/core';
+
+import { NavController } from '../../providers/nav-controller';
 
 
 export class StackController {

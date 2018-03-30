@@ -15,16 +15,7 @@ export function inputs(instance: any, el: ElementRef, props: string[]) {
   });
 }
 
-const accept = 'accept', activated = 'activated', allowEmptySelection = 'allowEmptySelection', animated = 'animated', autoBlockAll = 'autoBlockAll', autoHide = 'autoHide', autocapitalize = 'autocapitalize', autocomplete = 'autocomplete', autocorrect = 'autocorrect', autofocus = 'autofocus', base = 'base', button = 'button', buttonType = 'buttonType', cancelButtonText = 'cancelButtonText', cancelText = 'cancelText', checked = 'checked', clearInput = 'clearInput', clearOnEdit = 'clearOnEdit', closeDuration = 'closeDuration', color = 'color', cols = 'cols', component = 'component', contentId = 'contentId', debounce = 'debounce', defaultHref = 'defaultHref', detail = 'detail', direction = 'direction', disableScroll = 'disableScroll', disabled = 'disabled', displayFormat = 'displayFormat', doneText = 'doneText', dualKnobs = 'dualKnobs', duration = 'duration', edge = 'edge', expandable = 'expandable', fill = 'fill', fixed = 'fixed', floating = 'floating', forceOverscroll = 'forceOverscroll', from = 'from', fullscreen = 'fullscreen', gestureName = 'gestureName', gesturePriority = 'gesturePriority', goBack = 'goBack', highlight = 'highlight', href = 'href', icon = 'icon', inputmode = 'inputmode', interfaceOptions = 'interfaceOptions', ionBackdropTap = 'ionBackdropTap', ionBlur = 'ionBlur', ionCancel = 'ionCancel', ionChange = 'ionChange', ionClear = 'ionClear', ionClick = 'ionClick', ionClose = 'ionClose', ionDecrease = 'ionDecrease', ionDrag = 'ionDrag', ionFocus = 'ionFocus', ionGestureCaptured = 'ionGestureCaptured', ionGestureEnd = 'ionGestureEnd', ionGestureMove = 'ionGestureMove', ionGestureNotCaptured = 'ionGestureNotCaptured', ionGestureStart = 'ionGestureStart', ionIncrease = 'ionIncrease', ionInfinite = 'ionInfinite', ionInput = 'ionInput', ionInputDidLoad = 'ionInputDidLoad', ionInputDidUnload = 'ionInputDidUnload', ionMenuChange = 'ionMenuChange', ionOpen = 'ionOpen', ionPress = 'ionPress', ionPull = 'ionPull', ionRadioDidLoad = 'ionRadioDidLoad', ionRadioDidUnload = 'ionRadioDidUnload', ionRefresh = 'ionRefresh', ionRouteChanged = 'ionRouteChanged', ionRouteDataChanged = 'ionRouteDataChanged', ionRouteRedirectChanged = 'ionRouteRedirectChanged', ionScroll = 'ionScroll', ionScrollEnd = 'ionScrollEnd', ionScrollStart = 'ionScrollStart', ionSelect = 'ionSelect', ionSelectOptionDidLoad = 'ionSelectOptionDidLoad', ionSelectOptionDidUnload = 'ionSelectOptionDidUnload', ionSlideDidChange = 'ionSlideDidChange', ionSlideDrag = 'ionSlideDrag', ionSlideNextEnd = 'ionSlideNextEnd', ionSlideNextStart = 'ionSlideNextStart', ionSlidePrevEnd = 'ionSlidePrevEnd', ionSlidePrevStart = 'ionSlidePrevStart', ionSlideReachEnd = 'ionSlideReachEnd', ionSlideReachStart = 'ionSlideReachStart', ionSlideTouchEnd = 'ionSlideTouchEnd', ionSlideTouchStart = 'ionSlideTouchStart', ionSlideTransitionEnd = 'ionSlideTransitionEnd', ionSlideTransitionStart = 'ionSlideTransitionStart', ionSlideWillChange = 'ionSlideWillChange', ionSplitPaneVisible = 'ionSplitPaneVisible', ionStart = 'ionStart', ionStyle = 'ionStyle', ionSwipe = 'ionSwipe', ionTabButtonDidLoad = 'ionTabButtonDidLoad', ionTabButtonDidUnload = 'ionTabButtonDidUnload', ionTabbarClick = 'ionTabbarClick', knob = 'knob', labelId = 'labelId', layout = 'layout', loadingSpinner = 'loadingSpinner', loadingText = 'loadingText', max = 'max', maxAngle = 'maxAngle', maxEdgeStart = 'maxEdgeStart', maxlength = 'maxlength', mediaQuery = 'mediaQuery', menu = 'menu', menuId = 'menuId', message = 'message', min = 'min', minlength = 'minlength', mode = 'mode', multiple = 'multiple', name = 'name', okText = 'okText', options = 'options', or = 'or', orientation = 'orientation', pager = 'pager', passive = 'passive', pattern = 'pattern', paused = 'paused', persistent = 'persistent', pickerFormat = 'pickerFormat', pin = 'pin', placeholder = 'placeholder', placement = 'placement', platform = 'platform', position = 'position', pressed = 'pressed', pullMax = 'pullMax', pullMin = 'pullMin', pullingIcon = 'pullingIcon', pullingText = 'pullingText', ratio = 'ratio', readonly = 'readonly', refreshingSpinner = 'refreshingSpinner', refreshingText = 'refreshingText', required = 'required', results = 'results', round = 'round', rows = 'rows', scrollEnabled = 'scrollEnabled', scrollEvents = 'scrollEvents', scrollable = 'scrollable', selected = 'selected', selectedText = 'selectedText', show = 'show', showCancelButton = 'showCancelButton', size = 'size', snapbackDuration = 'snapbackDuration', snaps = 'snaps', spellcheck = 'spellcheck', stacked = 'stacked', step = 'step', stopPropagation = 'stopPropagation', strong = 'strong', subTitle = 'subTitle', swipeEnabled = 'swipeEnabled', tappable = 'tappable', threshold = 'threshold', title = 'title', translucent = 'translucent', type = 'type', url = 'url', useHash = 'useHash', useTapClick = 'useTapClick', val = 'val', value = 'value', visible = 'visible', width = 'width', wrap = 'wrap';
-
-@NgDirective({ selector: 'ion-anchor' })
-export class Anchor {
-  @NgInput() href: string;
-  @NgInput() goBack: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [href, goBack]);
-  }
-}
+const accept = 'accept', activated = 'activated', active = 'active', allowEmptySelection = 'allowEmptySelection', animated = 'animated', autoHide = 'autoHide', autocapitalize = 'autocapitalize', autocomplete = 'autocomplete', autocorrect = 'autocorrect', autofocus = 'autofocus', btnId = 'btnId', button = 'button', buttonType = 'buttonType', cancelButtonText = 'cancelButtonText', cancelText = 'cancelText', checked = 'checked', clearInput = 'clearInput', clearOnEdit = 'clearOnEdit', closeDuration = 'closeDuration', color = 'color', cols = 'cols', contentId = 'contentId', debounce = 'debounce', defaultHref = 'defaultHref', detail = 'detail', disabled = 'disabled', displayFormat = 'displayFormat', doneText = 'doneText', dualKnobs = 'dualKnobs', duration = 'duration', edge = 'edge', expandable = 'expandable', fill = 'fill', fixed = 'fixed', floating = 'floating', forceOverscroll = 'forceOverscroll', fullscreen = 'fullscreen', goBack = 'goBack', href = 'href', icon = 'icon', inputmode = 'inputmode', interfaceOptions = 'interfaceOptions', ionBlur = 'ionBlur', ionCancel = 'ionCancel', ionChange = 'ionChange', ionClear = 'ionClear', ionClick = 'ionClick', ionClose = 'ionClose', ionDrag = 'ionDrag', ionFocus = 'ionFocus', ionInfinite = 'ionInfinite', ionInput = 'ionInput', ionInputDidLoad = 'ionInputDidLoad', ionInputDidUnload = 'ionInputDidUnload', ionMenuChange = 'ionMenuChange', ionNavChanged = 'ionNavChanged', ionOpen = 'ionOpen', ionPull = 'ionPull', ionRadioDidLoad = 'ionRadioDidLoad', ionRadioDidUnload = 'ionRadioDidUnload', ionRefresh = 'ionRefresh', ionScroll = 'ionScroll', ionScrollEnd = 'ionScrollEnd', ionScrollStart = 'ionScrollStart', ionSelect = 'ionSelect', ionSelectOptionDidLoad = 'ionSelectOptionDidLoad', ionSelectOptionDidUnload = 'ionSelectOptionDidUnload', ionSlideDidChange = 'ionSlideDidChange', ionSlideDrag = 'ionSlideDrag', ionSlideNextEnd = 'ionSlideNextEnd', ionSlideNextStart = 'ionSlideNextStart', ionSlidePrevEnd = 'ionSlidePrevEnd', ionSlidePrevStart = 'ionSlidePrevStart', ionSlideReachEnd = 'ionSlideReachEnd', ionSlideReachStart = 'ionSlideReachStart', ionSlideTouchEnd = 'ionSlideTouchEnd', ionSlideTouchStart = 'ionSlideTouchStart', ionSlideTransitionEnd = 'ionSlideTransitionEnd', ionSlideTransitionStart = 'ionSlideTransitionStart', ionSlideWillChange = 'ionSlideWillChange', ionSplitPaneVisible = 'ionSplitPaneVisible', ionStart = 'ionStart', ionStyle = 'ionStyle', ionSwipe = 'ionSwipe', loadingSpinner = 'loadingSpinner', loadingText = 'loadingText', max = 'max', maxEdgeStart = 'maxEdgeStart', maxlength = 'maxlength', mediaQuery = 'mediaQuery', menu = 'menu', menuId = 'menuId', message = 'message', min = 'min', minlength = 'minlength', mode = 'mode', multiple = 'multiple', name = 'name', okText = 'okText', options = 'options', or = 'or', orientation = 'orientation', pager = 'pager', pattern = 'pattern', paused = 'paused', persistent = 'persistent', pickerFormat = 'pickerFormat', pin = 'pin', placeholder = 'placeholder', platform = 'platform', position = 'position', pullMax = 'pullMax', pullMin = 'pullMin', pullingIcon = 'pullingIcon', pullingText = 'pullingText', readonly = 'readonly', refreshingSpinner = 'refreshingSpinner', refreshingText = 'refreshingText', required = 'required', results = 'results', round = 'round', rows = 'rows', scrollEnabled = 'scrollEnabled', scrollEvents = 'scrollEvents', scrollable = 'scrollable', selected = 'selected', selectedText = 'selectedText', show = 'show', showCancelButton = 'showCancelButton', size = 'size', snapbackDuration = 'snapbackDuration', snaps = 'snaps', spellcheck = 'spellcheck', stacked = 'stacked', step = 'step', strong = 'strong', subTitle = 'subTitle', swipeBackEnabled = 'swipeBackEnabled', swipeEnabled = 'swipeEnabled', tabBadge = 'tabBadge', tabBadgeStyle = 'tabBadgeStyle', tabIcon = 'tabIcon', tabTitle = 'tabTitle', tabbarHidden = 'tabbarHidden', tabbarHighlight = 'tabbarHighlight', tabbarLayout = 'tabbarLayout', tabbarPlacement = 'tabbarPlacement', tabsHideOnSubPages = 'tabsHideOnSubPages', threshold = 'threshold', title = 'title', translucent = 'translucent', type = 'type', url = 'url', useTapClick = 'useTapClick', value = 'value', width = 'width', wrap = 'wrap';
 
 @NgDirective({ selector: 'ion-app' })
 export class App {
@@ -40,18 +31,6 @@ export class BackButton {
   @NgInput() defaultHref: string;
   constructor(el: ElementRef) {
     inputs(this, el, [icon, defaultHref]);
-  }
-}
-
-@NgDirective({ selector: 'ion-backdrop' })
-export class Backdrop {
-  @NgInput() visible: boolean;
-  @NgInput() tappable: boolean;
-  @NgInput() stopPropagation: boolean;
-  @NgOutput() ionBackdropTap: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [visible, tappable, stopPropagation]);
-    outputs(this, [ionBackdropTap]);
   }
 }
 
@@ -255,10 +234,6 @@ export class Content {
   }
 }
 
-@NgDirective({ selector: 'ion-cordova-platform' })
-export class CordovaPlatform {
-}
-
 @NgDirective({ selector: 'ion-datetime' })
 export class Datetime {
   /**
@@ -363,37 +338,6 @@ export class Footer {
   @NgInput() translucent: boolean;
   constructor(el: ElementRef) {
     inputs(this, el, [translucent]);
-  }
-}
-
-@NgDirective({ selector: 'ion-gesture' })
-export class Gesture {
-  @NgInput() disabled: boolean;
-  @NgInput() autoBlockAll: boolean;
-  @NgInput() disableScroll: boolean;
-  @NgInput() direction: string;
-  @NgInput() gestureName: string;
-  @NgInput() gesturePriority: number;
-  @NgInput() passive: boolean;
-  @NgInput() maxAngle: number;
-  @NgInput() threshold: number;
-  @NgInput() type: string;
-  @NgOutput() ionGestureMove: NgEventEmitter<any>;
-  @NgOutput() ionGestureStart: NgEventEmitter<any>;
-  @NgOutput() ionGestureEnd: NgEventEmitter<any>;
-  @NgOutput() ionGestureNotCaptured: NgEventEmitter<any>;
-  @NgOutput() ionPress: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [disabled, autoBlockAll, disableScroll, direction, gestureName, gesturePriority, passive, maxAngle, threshold, type]);
-    outputs(this, [ionGestureMove, ionGestureStart, ionGestureEnd, ionGestureNotCaptured, ionPress]);
-  }
-}
-
-@NgDirective({ selector: 'ion-gesture-controller' })
-export class GestureController {
-  @NgOutput() ionGestureCaptured: NgEventEmitter<any>;
-  constructor() {
-    outputs(this, [ionGestureCaptured]);
   }
 }
 
@@ -771,6 +715,17 @@ export class MenuToggle {
   }
 }
 
+@NgDirective({ selector: 'ion-nav' })
+export class NavControllerBase {
+  @NgInput() swipeBackEnabled: boolean;
+  @NgInput() animated: boolean;
+  @NgOutput() ionNavChanged: NgEventEmitter<any>;
+  constructor(el: ElementRef) {
+    inputs(this, el, [swipeBackEnabled, animated]);
+    outputs(this, [ionNavChanged]);
+  }
+}
+
 @NgDirective({ selector: 'ion-nav-pop' })
 export class NavPop {
 }
@@ -907,25 +862,6 @@ export class Range {
   }
 }
 
-@NgDirective({ selector: 'ion-range-knob' })
-export class RangeKnob {
-  @NgInput() pressed: boolean;
-  @NgInput() pin: boolean;
-  @NgInput() min: number;
-  @NgInput() max: number;
-  @NgInput() val: number;
-  @NgInput() disabled: boolean;
-  @NgInput() labelId: string;
-  @NgInput() knob: string;
-  @NgInput() ratio: number;
-  @NgOutput() ionIncrease: NgEventEmitter<any>;
-  @NgOutput() ionDecrease: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [pressed, pin, min, max, val, disabled, labelId, knob, ratio]);
-    outputs(this, [ionIncrease, ionDecrease]);
-  }
-}
-
 @NgDirective({ selector: 'ion-refresher' })
 export class Refresher {
   /**
@@ -1000,55 +936,6 @@ export class RippleEffect {
   @NgInput() useTapClick: boolean;
   constructor(el: ElementRef) {
     inputs(this, el, [useTapClick]);
-  }
-}
-
-@NgDirective({ selector: 'ion-route' })
-export class Route {
-  /**
-   * Relative path that needs to match in order for this route to apply.
-   */
-  @NgInput() url: string;
-  /**
-   * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in ion-tabs it actually refers to the name of the `ion-tab` to select.
-   */
-  @NgInput() component: string;
-  @NgOutput() ionRouteDataChanged: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [url, component]);
-    outputs(this, [ionRouteDataChanged]);
-  }
-}
-
-@NgDirective({ selector: 'ion-route-redirect' })
-export class RouteRedirect {
-  /**
-   * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
-   */
-  @NgInput() from: string;
-  @NgOutput() ionRouteRedirectChanged: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [from]);
-    outputs(this, [ionRouteRedirectChanged]);
-  }
-}
-
-@NgDirective({ selector: 'ion-router' })
-export class Router {
-  @NgInput() base: string;
-  @NgInput() useHash: boolean;
-  @NgOutput() ionRouteChanged: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [base, useHash]);
-    outputs(this, [ionRouteChanged]);
-  }
-}
-
-@NgDirective({ selector: 'ion-router-outlet' })
-export class RouterOutlet {
-  @NgInput() animated: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [animated]);
   }
 }
 
@@ -1343,43 +1230,94 @@ export class SplitPane {
   }
 }
 
-@NgDirective({ selector: 'ion-status-tap' })
-export class StatusTap {
-  @NgInput() duration: number;
-  constructor(el: ElementRef) {
-    inputs(this, el, [duration]);
-  }
-}
-
-@NgDirective({ selector: 'ion-tab-button' })
-export class TabButton {
-  @NgInput() selected: boolean;
-  @NgOutput() ionTabbarClick: NgEventEmitter<any>;
-  @NgOutput() ionTabButtonDidLoad: NgEventEmitter<any>;
-  @NgOutput() ionTabButtonDidUnload: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [selected]);
-    outputs(this, [ionTabbarClick, ionTabButtonDidLoad, ionTabButtonDidUnload]);
-  }
-}
-
-@NgDirective({ selector: 'ion-tabbar' })
-export class Tabbar {
-  @NgInput() placement: string;
-  @NgInput() scrollable: boolean;
-  @NgInput() layout: string;
-  @NgInput() highlight: boolean;
+@NgDirective({ selector: 'ion-tab' })
+export class Tab {
+  @NgInput() active: boolean;
+  @NgInput() btnId: string;
   /**
-   * If true, the tabbar will be translucent. Defaults to `false`.
+   * The title of the tab.
+   */
+  @NgInput() tabTitle: string;
+  /**
+   * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
+   */
+  @NgInput() href: string;
+  /**
+   * The icon for the tab.
+   */
+  @NgInput() tabIcon: string;
+  /**
+   * The badge for the tab.
+   */
+  @NgInput() tabBadge: string;
+  /**
+   * The badge color for the tab button.
+   */
+  @NgInput() tabBadgeStyle: string;
+  /**
+   * The name of the tab.
+   */
+  @NgInput() name: string;
+  /**
+   * If true, the user cannot interact with the tab. Defaults to `false`.
+   */
+  @NgInput() disabled: boolean;
+  /**
+   * If true, the tab will be selected. Defaults to `false`.
+   */
+  @NgInput() selected: boolean;
+  /**
+   * If true, the tab button is visible within the tabbar. Defaults to `true`.
+   */
+  @NgInput() show: boolean;
+  /**
+   * If true, hide the tabs on child pages.
+   */
+  @NgInput() tabsHideOnSubPages: boolean;
+  @NgOutput() ionSelect: NgEventEmitter<any>;
+  constructor(el: ElementRef) {
+    inputs(this, el, [active, btnId, tabTitle, href, tabIcon, tabBadge, tabBadgeStyle, name, disabled, selected, show, tabsHideOnSubPages]);
+    outputs(this, [ionSelect]);
+  }
+}
+
+@NgDirective({ selector: 'ion-tabs' })
+export class Tabs {
+  /**
+   * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+   */
+  @NgInput() color: string;
+  /**
+   * A unique name for the tabs
+   */
+  @NgInput() name: string;
+  /**
+   * If true, the tabbar
+   */
+  @NgInput() tabbarHidden: boolean;
+  /**
+   * Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
+   */
+  @NgInput() tabbarLayout: string;
+  /**
+   * Set position of the tabbar: `top`, `bottom`.
+   */
+  @NgInput() tabbarPlacement: string;
+  /**
+   * If true, show the tab highlight bar under the selected tab.
+   */
+  @NgInput() tabbarHighlight: boolean;
+  /**
+   * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
    */
   @NgInput() translucent: boolean;
+  @NgInput() scrollable: boolean;
+  @NgOutput() ionChange: NgEventEmitter<any>;
+  @NgOutput() ionNavChanged: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [placement, scrollable, layout, highlight, translucent]);
+    inputs(this, el, [color, name, tabbarHidden, tabbarLayout, tabbarPlacement, tabbarHighlight, translucent, scrollable]);
+    outputs(this, [ionChange, ionNavChanged]);
   }
-}
-
-@NgDirective({ selector: 'ion-tap-click' })
-export class TapClick {
 }
 
 @NgDirective({ selector: 'ion-text' })

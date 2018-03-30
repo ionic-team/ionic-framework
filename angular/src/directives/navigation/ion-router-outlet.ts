@@ -1,8 +1,8 @@
 import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, OnDestroy, OnInit, Optional, Output, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET, Router } from '@angular/router';
 import { StackController } from './router-controller';
-import { NavController } from './ion-nav-controller';
-import { bindLifecycleEvents } from '../providers/angular-delegate';
+import { NavController } from '../../providers/nav-controller';
+import { bindLifecycleEvents } from '../../providers/angular-delegate';
 
 @Directive({
   selector: 'ion-router-outlet',

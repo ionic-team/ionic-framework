@@ -1,5 +1,6 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 import { FrameworkDelegate, attachComponent } from '../../utils/framework-delegate';
+import { ComponentRef } from '../..';
 
 @Component({
   tag: 'ion-tab'
@@ -44,7 +45,7 @@ export class Tab {
   /**
    * The component to display inside of the tab.
    */
-  @Prop() component: any;
+  @Prop() component: ComponentRef;
 
   /**
    * The name of the tab.

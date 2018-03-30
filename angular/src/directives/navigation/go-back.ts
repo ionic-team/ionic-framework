@@ -1,5 +1,5 @@
 import { Directive, HostListener } from '@angular/core';
-import { NavController } from './ion-nav-controller';
+import { NavController } from '../../providers/nav-controller';
 
 @Directive({
   selector: '[goBack]',
