@@ -61,6 +61,6 @@
     "tslint": "^5.8.0",
     "tslint-ionic-rules": "0.0.14",
     "typescript": "2.7.2",
-    "zone.js": "0.8.20"
+    "zone.js": "^0.8.20"
   }
 }
