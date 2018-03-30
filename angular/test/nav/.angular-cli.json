@@ -61,5 +61,8 @@
   "defaults": {
     "styleExt": "scss",
     "component": {}
+  },
+  "warnings": {
+    "typescriptMismatch": false
   }
 }

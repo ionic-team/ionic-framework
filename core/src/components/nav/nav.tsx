@@ -23,7 +23,7 @@ import mdTransitionAnimation from './animations/md.transition';
 @Component({
   tag: 'ion-nav',
 })
-export class NavControllerBase implements NavOutlet {
+export class Nav implements NavOutlet {
 
   private _init = false;
   private _queue: TransitionInstruction[] = [];
@@ -470,7 +470,7 @@ export class NavControllerBase implements NavOutlet {
     for (let i = 0; i < viewControllers.length; i++) {
       const view = viewControllers[i];
       view.delegate = ti.opts.delegate;
-      const nav = view._nav;
+      const nav = view.nav;
       if (nav && nav !== this) {
         throw new Error('inserted view was already inserted');
       }
@@ -663,13 +663,13 @@ export class NavControllerBase implements NavOutlet {
     if (existingIndex > -1) {
       // this view is already in the stack!!
       // move it to its new location
-      assert(view._nav === this, 'view is not part of the nav');
+      assert(view.nav === this, 'view is not part of the nav');
       this._views.splice(index, 0, this._views.splice(existingIndex, 1)[0]);
     } else {
-      assert(!view._nav, 'nav is used');
+      assert(!view.nav, 'nav is used');
       // this is a new view to add to the stack
       // create the new entering view
-      view._setNav(this);
+      view.nav = this;
 
       // insert the entering view into the correct index in the stack
       this._views.splice(index, 0, view);

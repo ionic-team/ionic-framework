@@ -15,7 +15,7 @@ export function inputs(instance: any, el: ElementRef, props: string[]) {
   });
 }
 
-const accept = 'accept', activated = 'activated', active = 'active', allowEmptySelection = 'allowEmptySelection', animated = 'animated', autoHide = 'autoHide', autocapitalize = 'autocapitalize', autocomplete = 'autocomplete', autocorrect = 'autocorrect', autofocus = 'autofocus', btnId = 'btnId', button = 'button', buttonType = 'buttonType', cancelButtonText = 'cancelButtonText', cancelText = 'cancelText', checked = 'checked', clearInput = 'clearInput', clearOnEdit = 'clearOnEdit', closeDuration = 'closeDuration', color = 'color', cols = 'cols', contentId = 'contentId', debounce = 'debounce', defaultHref = 'defaultHref', detail = 'detail', disabled = 'disabled', displayFormat = 'displayFormat', doneText = 'doneText', dualKnobs = 'dualKnobs', duration = 'duration', edge = 'edge', expandable = 'expandable', fill = 'fill', fixed = 'fixed', floating = 'floating', forceOverscroll = 'forceOverscroll', fullscreen = 'fullscreen', goBack = 'goBack', href = 'href', icon = 'icon', inputmode = 'inputmode', interfaceOptions = 'interfaceOptions', ionBlur = 'ionBlur', ionCancel = 'ionCancel', ionChange = 'ionChange', ionClear = 'ionClear', ionClick = 'ionClick', ionClose = 'ionClose', ionDrag = 'ionDrag', ionFocus = 'ionFocus', ionInfinite = 'ionInfinite', ionInput = 'ionInput', ionInputDidLoad = 'ionInputDidLoad', ionInputDidUnload = 'ionInputDidUnload', ionMenuChange = 'ionMenuChange', ionNavChanged = 'ionNavChanged', ionOpen = 'ionOpen', ionPull = 'ionPull', ionRadioDidLoad = 'ionRadioDidLoad', ionRadioDidUnload = 'ionRadioDidUnload', ionRefresh = 'ionRefresh', ionScroll = 'ionScroll', ionScrollEnd = 'ionScrollEnd', ionScrollStart = 'ionScrollStart', ionSelect = 'ionSelect', ionSelectOptionDidLoad = 'ionSelectOptionDidLoad', ionSelectOptionDidUnload = 'ionSelectOptionDidUnload', ionSlideDidChange = 'ionSlideDidChange', ionSlideDrag = 'ionSlideDrag', ionSlideNextEnd = 'ionSlideNextEnd', ionSlideNextStart = 'ionSlideNextStart', ionSlidePrevEnd = 'ionSlidePrevEnd', ionSlidePrevStart = 'ionSlidePrevStart', ionSlideReachEnd = 'ionSlideReachEnd', ionSlideReachStart = 'ionSlideReachStart', ionSlideTouchEnd = 'ionSlideTouchEnd', ionSlideTouchStart = 'ionSlideTouchStart', ionSlideTransitionEnd = 'ionSlideTransitionEnd', ionSlideTransitionStart = 'ionSlideTransitionStart', ionSlideWillChange = 'ionSlideWillChange', ionSplitPaneVisible = 'ionSplitPaneVisible', ionStart = 'ionStart', ionStyle = 'ionStyle', ionSwipe = 'ionSwipe', loadingSpinner = 'loadingSpinner', loadingText = 'loadingText', max = 'max', maxEdgeStart = 'maxEdgeStart', maxlength = 'maxlength', mediaQuery = 'mediaQuery', menu = 'menu', menuId = 'menuId', message = 'message', min = 'min', minlength = 'minlength', mode = 'mode', multiple = 'multiple', name = 'name', okText = 'okText', options = 'options', or = 'or', orientation = 'orientation', pager = 'pager', pattern = 'pattern', paused = 'paused', persistent = 'persistent', pickerFormat = 'pickerFormat', pin = 'pin', placeholder = 'placeholder', platform = 'platform', position = 'position', pullMax = 'pullMax', pullMin = 'pullMin', pullingIcon = 'pullingIcon', pullingText = 'pullingText', readonly = 'readonly', refreshingSpinner = 'refreshingSpinner', refreshingText = 'refreshingText', required = 'required', results = 'results', round = 'round', rows = 'rows', scrollEnabled = 'scrollEnabled', scrollEvents = 'scrollEvents', scrollable = 'scrollable', selected = 'selected', selectedText = 'selectedText', show = 'show', showCancelButton = 'showCancelButton', size = 'size', snapbackDuration = 'snapbackDuration', snaps = 'snaps', spellcheck = 'spellcheck', stacked = 'stacked', step = 'step', strong = 'strong', subTitle = 'subTitle', swipeBackEnabled = 'swipeBackEnabled', swipeEnabled = 'swipeEnabled', tabBadge = 'tabBadge', tabBadgeStyle = 'tabBadgeStyle', tabIcon = 'tabIcon', tabTitle = 'tabTitle', tabbarHidden = 'tabbarHidden', tabbarHighlight = 'tabbarHighlight', tabbarLayout = 'tabbarLayout', tabbarPlacement = 'tabbarPlacement', tabsHideOnSubPages = 'tabsHideOnSubPages', threshold = 'threshold', title = 'title', translucent = 'translucent', type = 'type', url = 'url', useTapClick = 'useTapClick', value = 'value', width = 'width', wrap = 'wrap';
+const accept = 'accept', activated = 'activated', active = 'active', allowEmptySelection = 'allowEmptySelection', animated = 'animated', autoHide = 'autoHide', autocapitalize = 'autocapitalize', autocomplete = 'autocomplete', autocorrect = 'autocorrect', autofocus = 'autofocus', btnId = 'btnId', button = 'button', buttonType = 'buttonType', cancelButtonText = 'cancelButtonText', cancelText = 'cancelText', checked = 'checked', clearInput = 'clearInput', clearOnEdit = 'clearOnEdit', closeDuration = 'closeDuration', color = 'color', cols = 'cols', component = 'component', componentProps = 'componentProps', contentId = 'contentId', dayNames = 'dayNames', dayShortNames = 'dayShortNames', dayValues = 'dayValues', debounce = 'debounce', defaultHref = 'defaultHref', delegate = 'delegate', detail = 'detail', disabled = 'disabled', displayFormat = 'displayFormat', doneText = 'doneText', dualKnobs = 'dualKnobs', duration = 'duration', edge = 'edge', expand = 'expand', expandable = 'expandable', fill = 'fill', fixed = 'fixed', floating = 'floating', forceOverscroll = 'forceOverscroll', fullscreen = 'fullscreen', goBack = 'goBack', horizontal = 'horizontal', hourValues = 'hourValues', href = 'href', icon = 'icon', inputmode = 'inputmode', interfaceOptions = 'interfaceOptions', ionBlur = 'ionBlur', ionCancel = 'ionCancel', ionChange = 'ionChange', ionClear = 'ionClear', ionClick = 'ionClick', ionClose = 'ionClose', ionDrag = 'ionDrag', ionFocus = 'ionFocus', ionInfinite = 'ionInfinite', ionInput = 'ionInput', ionInputDidLoad = 'ionInputDidLoad', ionInputDidUnload = 'ionInputDidUnload', ionMenuChange = 'ionMenuChange', ionNavChanged = 'ionNavChanged', ionOpen = 'ionOpen', ionPull = 'ionPull', ionRadioDidLoad = 'ionRadioDidLoad', ionRadioDidUnload = 'ionRadioDidUnload', ionRefresh = 'ionRefresh', ionScroll = 'ionScroll', ionScrollEnd = 'ionScrollEnd', ionScrollStart = 'ionScrollStart', ionSelect = 'ionSelect', ionSelectOptionDidLoad = 'ionSelectOptionDidLoad', ionSelectOptionDidUnload = 'ionSelectOptionDidUnload', ionSlideDidChange = 'ionSlideDidChange', ionSlideDrag = 'ionSlideDrag', ionSlideNextEnd = 'ionSlideNextEnd', ionSlideNextStart = 'ionSlideNextStart', ionSlidePrevEnd = 'ionSlidePrevEnd', ionSlidePrevStart = 'ionSlidePrevStart', ionSlideReachEnd = 'ionSlideReachEnd', ionSlideReachStart = 'ionSlideReachStart', ionSlideTouchEnd = 'ionSlideTouchEnd', ionSlideTouchStart = 'ionSlideTouchStart', ionSlideTransitionEnd = 'ionSlideTransitionEnd', ionSlideTransitionStart = 'ionSlideTransitionStart', ionSlideWillChange = 'ionSlideWillChange', ionSplitPaneVisible = 'ionSplitPaneVisible', ionStart = 'ionStart', ionStyle = 'ionStyle', ionSwipe = 'ionSwipe', loadingSpinner = 'loadingSpinner', loadingText = 'loadingText', max = 'max', maxEdgeStart = 'maxEdgeStart', maxlength = 'maxlength', mediaQuery = 'mediaQuery', menu = 'menu', menuId = 'menuId', message = 'message', min = 'min', minlength = 'minlength', minuteValues = 'minuteValues', mode = 'mode', monthNames = 'monthNames', monthShortNames = 'monthShortNames', monthValues = 'monthValues', multiple = 'multiple', name = 'name', okText = 'okText', options = 'options', or = 'or', orientation = 'orientation', pager = 'pager', pattern = 'pattern', paused = 'paused', persistent = 'persistent', pickerFormat = 'pickerFormat', pickerOptions = 'pickerOptions', pin = 'pin', placeholder = 'placeholder', platform = 'platform', position = 'position', pullMax = 'pullMax', pullMin = 'pullMin', pullingIcon = 'pullingIcon', pullingText = 'pullingText', readonly = 'readonly', refreshingSpinner = 'refreshingSpinner', refreshingText = 'refreshingText', required = 'required', results = 'results', root = 'root', rootParams = 'rootParams', round = 'round', rows = 'rows', scrollEnabled = 'scrollEnabled', scrollEvents = 'scrollEvents', scrollable = 'scrollable', selected = 'selected', selectedText = 'selectedText', show = 'show', showCancelButton = 'showCancelButton', side = 'side', size = 'size', snapbackDuration = 'snapbackDuration', snaps = 'snaps', spellcheck = 'spellcheck', stacked = 'stacked', step = 'step', strong = 'strong', subTitle = 'subTitle', swipeBackEnabled = 'swipeBackEnabled', swipeEnabled = 'swipeEnabled', tabBadge = 'tabBadge', tabBadgeStyle = 'tabBadgeStyle', tabIcon = 'tabIcon', tabTitle = 'tabTitle', tabbarHidden = 'tabbarHidden', tabbarHighlight = 'tabbarHighlight', tabbarLayout = 'tabbarLayout', tabbarPlacement = 'tabbarPlacement', tabsHideOnSubPages = 'tabsHideOnSubPages', text = 'text', threshold = 'threshold', title = 'title', toggleActive = 'toggleActive', translucent = 'translucent', type = 'type', url = 'url', useTapClick = 'useTapClick', value = 'value', vertical = 'vertical', when = 'when', width = 'width', wrap = 'wrap', yearValues = 'yearValues';
 
 @NgDirective({ selector: 'ion-app' })
 export class App {
@@ -27,10 +27,18 @@ export class Avatar {
 
 @NgDirective({ selector: 'ion-back-button' })
 export class BackButton {
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
+  /**
+   * The text property is used to provide custom text for the back button while using the default look-and-feel
+   */
+  @NgInput() text: any;
   @NgInput() icon: string;
   @NgInput() defaultHref: string;
   constructor(el: ElementRef) {
-    inputs(this, el, [icon, defaultHref]);
+    inputs(this, el, [mode, text, icon, defaultHref]);
   }
 }
 
@@ -40,8 +48,12 @@ export class Badge {
    * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
   constructor(el: ElementRef) {
-    inputs(this, el, [color]);
+    inputs(this, el, [color, mode]);
   }
 }
 
@@ -60,13 +72,25 @@ export class Button {
    */
   @NgInput() buttonType: string;
   /**
+   * The button size. Possible values are: `"small"`, `"default"`, `"large"`.
+   */
+  @NgInput() size: any;
+  /**
    * If true, the user cannot interact with the button. Defaults to `false`.
    */
   @NgInput() disabled: boolean;
   /**
+   * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
+   */
+  @NgInput() fill: any;
+  /**
    * If true, activates a button with rounded corners.
    */
   @NgInput() round: boolean;
+  /**
+   * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
+   */
+  @NgInput() expand: any;
   /**
    * If true, activates a button with a heavier font weight.
    */
@@ -75,11 +99,15 @@ export class Button {
    * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
   @NgInput() goBack: boolean;
   @NgOutput() ionFocus: NgEventEmitter<any>;
   @NgOutput() ionBlur: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [type, href, buttonType, disabled, round, strong, color, goBack]);
+    inputs(this, el, [type, href, buttonType, size, disabled, fill, round, expand, strong, color, mode, goBack]);
     outputs(this, [ionFocus, ionBlur]);
   }
 }
@@ -94,8 +122,12 @@ export class Card {
    * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+   */
+  @NgInput() mode: any;
   constructor(el: ElementRef) {
-    inputs(this, el, [color]);
+    inputs(this, el, [color, mode]);
   }
 }
 
@@ -105,8 +137,12 @@ export class CardContent {
    * The color to use for the text. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+   */
+  @NgInput() mode: any;
   constructor(el: ElementRef) {
-    inputs(this, el, [color]);
+    inputs(this, el, [color, mode]);
   }
 }
 
@@ -117,11 +153,15 @@ export class CardHeader {
    */
   @NgInput() color: string;
   /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+   */
+  @NgInput() mode: any;
+  /**
    * If true, the card header will be translucent. Defaults to `false`.
    */
   @NgInput() translucent: boolean;
   constructor(el: ElementRef) {
-    inputs(this, el, [color, translucent]);
+    inputs(this, el, [color, mode, translucent]);
   }
 }
 
@@ -131,8 +171,12 @@ export class CardSubtitle {
    * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+   */
+  @NgInput() mode: any;
   constructor(el: ElementRef) {
-    inputs(this, el, [color]);
+    inputs(this, el, [color, mode]);
   }
 }
 
@@ -142,8 +186,12 @@ export class CardTitle {
    * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+   */
+  @NgInput() mode: any;
   constructor(el: ElementRef) {
-    inputs(this, el, [color]);
+    inputs(this, el, [color, mode]);
   }
 }
 
@@ -153,6 +201,10 @@ export class Checkbox {
    * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+   */
+  @NgInput() mode: any;
   /**
    * The name of the control, which is submitted with the form data.
    */
@@ -174,7 +226,7 @@ export class Checkbox {
   @NgOutput() ionBlur: NgEventEmitter<any>;
   @NgOutput() ionStyle: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [color, name, checked, disabled, value]);
+    inputs(this, el, [color, mode, name, checked, disabled, value]);
     outputs(this, [ionChange, ionFocus, ionBlur, ionStyle]);
   }
 }
@@ -185,8 +237,12 @@ export class Chip {
    * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+   */
+  @NgInput() mode: any;
   constructor(el: ElementRef) {
-    inputs(this, el, [color]);
+    inputs(this, el, [color, mode]);
   }
 }
 
@@ -196,6 +252,10 @@ export class ChipButton {
    * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+   */
+  @NgInput() mode: any;
   /**
    * If true, the user cannot interact with the chip button. Defaults to `false`.
    */
@@ -209,7 +269,7 @@ export class ChipButton {
    */
   @NgInput() href: string;
   constructor(el: ElementRef) {
-    inputs(this, el, [color, disabled, fill, href]);
+    inputs(this, el, [color, mode, disabled, fill, href]);
   }
 }
 
@@ -265,6 +325,46 @@ export class Datetime {
    */
   @NgInput() doneText: string;
   /**
+   * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
+   */
+  @NgInput() yearValues: any;
+  /**
+   * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
+   */
+  @NgInput() monthValues: any;
+  /**
+   * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
+   */
+  @NgInput() dayValues: any;
+  /**
+   * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
+   */
+  @NgInput() hourValues: any;
+  /**
+   * Values used to create the list of selectable minutes. By default the mintues range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.
+   */
+  @NgInput() minuteValues: any;
+  /**
+   * Full names for each month name. This can be used to provide locale month names. Defaults to English.
+   */
+  @NgInput() monthNames: any;
+  /**
+   * Short abbreviated names for each month name. This can be used to provide locale month names. Defaults to English.
+   */
+  @NgInput() monthShortNames: any;
+  /**
+   * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+   */
+  @NgInput() dayNames: any;
+  /**
+   * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+   */
+  @NgInput() dayShortNames: any;
+  /**
+   * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
+   */
+  @NgInput() pickerOptions: any;
+  /**
    * The text to display when there's no date selected yet. Using lowercase to match the input attribute
    */
   @NgInput() placeholder: string;
@@ -275,7 +375,7 @@ export class Datetime {
   @NgOutput() ionCancel: NgEventEmitter<any>;
   @NgOutput() ionStyle: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [disabled, min, max, displayFormat, pickerFormat, cancelText, doneText, placeholder, value]);
+    inputs(this, el, [disabled, min, max, displayFormat, pickerFormat, cancelText, doneText, yearValues, monthValues, dayValues, hourValues, minuteValues, monthNames, monthShortNames, dayNames, dayShortNames, pickerOptions, placeholder, value]);
     outputs(this, [ionCancel, ionStyle]);
   }
 }
@@ -283,11 +383,19 @@ export class Datetime {
 @NgDirective({ selector: 'ion-fab' })
 export class Fab {
   /**
+   * Where to align the fab horizontally in the viewport. Possible values are: `"left"`, `"right"`, `"center"`, `"start"`, `"end"`.
+   */
+  @NgInput() horizontal: any;
+  /**
+   * Where to align the fab vertically in the viewport. Possible values are: `"top"`, `"center"`, `"bottom"`.
+   */
+  @NgInput() vertical: any;
+  /**
    * If true, the fab will display on the edge of the header if `vertical` is `"top"`, and on the edge of the footer if it is `"bottom"`. Should be used with a `fixed` slot.
    */
   @NgInput() edge: boolean;
   constructor(el: ElementRef) {
-    inputs(this, el, [edge]);
+    inputs(this, el, [horizontal, vertical, edge]);
   }
 }
 
@@ -297,6 +405,10 @@ export class FabButton {
    * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
   /**
    * If true, the fab button will be show a close icon. Defaults to `false`.
    */
@@ -313,9 +425,10 @@ export class FabButton {
    * If true, the fab button will be translucent. Defaults to `false`.
    */
   @NgInput() translucent: boolean;
+  @NgInput() toggleActive: any;
   @NgInput() show: boolean;
   constructor(el: ElementRef) {
-    inputs(this, el, [color, activated, disabled, href, translucent, show]);
+    inputs(this, el, [color, mode, activated, disabled, href, translucent, toggleActive, show]);
   }
 }
 
@@ -325,8 +438,12 @@ export class FabList {
    * If true, the fab list will be show all fab buttons in the list. Defaults to `false`.
    */
   @NgInput() activated: boolean;
+  /**
+   * The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
+   */
+  @NgInput() side: any;
   constructor(el: ElementRef) {
-    inputs(this, el, [activated]);
+    inputs(this, el, [activated, side]);
   }
 }
 
@@ -534,6 +651,10 @@ export class Item {
    */
   @NgInput() color: string;
   /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
+  /**
    * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
    */
   @NgInput() detail: boolean;
@@ -551,7 +672,7 @@ export class Item {
   @NgInput() button: boolean;
   @NgInput() goBack: boolean;
   constructor(el: ElementRef) {
-    inputs(this, el, [color, detail, disabled, href, button, goBack]);
+    inputs(this, el, [color, mode, detail, disabled, href, button, goBack]);
   }
 }
 
@@ -561,8 +682,12 @@ export class ItemDivider {
    * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
   constructor(el: ElementRef) {
-    inputs(this, el, [color]);
+    inputs(this, el, [color, mode]);
   }
 }
 
@@ -577,6 +702,10 @@ export class ItemOption {
    */
   @NgInput() color: string;
   /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
+  /**
    * If true, the user cannot interact with the item option. Defaults to `false`.
    */
   @NgInput() disabled: boolean;
@@ -589,14 +718,19 @@ export class ItemOption {
    */
   @NgInput() href: string;
   constructor(el: ElementRef) {
-    inputs(this, el, [color, disabled, expandable, href]);
+    inputs(this, el, [color, mode, disabled, expandable, href]);
   }
 }
 
 @NgDirective({ selector: 'ion-item-options' })
 export class ItemOptions {
+  /**
+   * The side the option button should be on. Defaults to `"right"`. If you have multiple `ion-item-options`, a side must be provided for each.
+   */
+  @NgInput() side: any;
   @NgOutput() ionSwipe: NgEventEmitter<any>;
-  constructor() {
+  constructor(el: ElementRef) {
+    inputs(this, el, [side]);
     outputs(this, [ionSwipe]);
   }
 }
@@ -616,6 +750,10 @@ export class Label {
    */
   @NgInput() color: string;
   /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
+  /**
    * If true, the label will sit alongside an input. Defaults to `false`.
    */
   @NgInput() fixed: boolean;
@@ -629,7 +767,7 @@ export class Label {
   @NgInput() stacked: boolean;
   @NgOutput() ionStyle: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [color, fixed, floating, stacked]);
+    inputs(this, el, [color, mode, fixed, floating, stacked]);
     outputs(this, [ionStyle]);
   }
 }
@@ -644,8 +782,12 @@ export class ListHeader {
    * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
   constructor(el: ElementRef) {
-    inputs(this, el, [color]);
+    inputs(this, el, [color, mode]);
   }
 }
 
@@ -668,6 +810,10 @@ export class Menu {
    */
   @NgInput() disabled: boolean;
   /**
+   * Which side of the view the menu should be placed. Default `"start"`.
+   */
+  @NgInput() side: any;
+  /**
    * If true, swiping the menu is enabled. Default `true`.
    */
   @NgInput() swipeEnabled: boolean;
@@ -680,7 +826,7 @@ export class Menu {
   @NgOutput() ionClose: NgEventEmitter<any>;
   @NgOutput() ionMenuChange: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [contentId, menuId, type, disabled, swipeEnabled, persistent, maxEdgeStart]);
+    inputs(this, el, [contentId, menuId, type, disabled, side, swipeEnabled, persistent, maxEdgeStart]);
     outputs(this, [ionOpen, ionClose, ionMenuChange]);
   }
 }
@@ -716,12 +862,15 @@ export class MenuToggle {
 }
 
 @NgDirective({ selector: 'ion-nav' })
-export class NavControllerBase {
+export class Nav {
   @NgInput() swipeBackEnabled: boolean;
   @NgInput() animated: boolean;
+  @NgInput() delegate: any;
+  @NgInput() rootParams: any;
+  @NgInput() root: any;
   @NgOutput() ionNavChanged: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [swipeBackEnabled, animated]);
+    inputs(this, el, [swipeBackEnabled, animated, delegate, rootParams, root]);
     outputs(this, [ionNavChanged]);
   }
 }
@@ -732,17 +881,21 @@ export class NavPop {
 
 @NgDirective({ selector: 'ion-nav-push' })
 export class NavPush {
+  @NgInput() component: any;
+  @NgInput() componentProps: any;
   @NgInput() url: string;
   constructor(el: ElementRef) {
-    inputs(this, el, [url]);
+    inputs(this, el, [component, componentProps, url]);
   }
 }
 
 @NgDirective({ selector: 'ion-nav-set-root' })
 export class NavSetRoot {
+  @NgInput() component: any;
+  @NgInput() componentProps: any;
   @NgInput() url: string;
   constructor(el: ElementRef) {
-    inputs(this, el, [url]);
+    inputs(this, el, [component, componentProps, url]);
   }
 }
 
@@ -752,8 +905,12 @@ export class Note {
    * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
   constructor(el: ElementRef) {
-    inputs(this, el, [color]);
+    inputs(this, el, [color, mode]);
   }
 }
 
@@ -763,6 +920,10 @@ export class Radio {
    * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
   /**
    * The name of the control, which is submitted with the form data.
    */
@@ -786,7 +947,7 @@ export class Radio {
   @NgOutput() ionFocus: NgEventEmitter<any>;
   @NgOutput() ionBlur: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [color, name, disabled, checked, value]);
+    inputs(this, el, [color, mode, name, disabled, checked, value]);
     outputs(this, [ionRadioDidLoad, ionRadioDidUnload, ionStyle, ionSelect, ionFocus, ionBlur]);
   }
 }
@@ -819,6 +980,10 @@ export class Range {
    * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
   /**
    * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. Default `0`.
    */
@@ -857,7 +1022,7 @@ export class Range {
   @NgOutput() ionFocus: NgEventEmitter<any>;
   @NgOutput() ionBlur: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [color, debounce, disabled, dualKnobs, max, min, pin, snaps, step, value]);
+    inputs(this, el, [color, mode, debounce, disabled, dualKnobs, max, min, pin, snaps, step, value]);
     outputs(this, [ionChange, ionStyle, ionFocus, ionBlur]);
   }
 }
@@ -967,6 +1132,10 @@ export class Searchbar {
    */
   @NgInput() color: string;
   /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
+  /**
    * If true, enable searchbar animation. Default `false`.
    */
   @NgInput() animated: boolean;
@@ -1012,7 +1181,7 @@ export class Searchbar {
   @NgOutput() ionBlur: NgEventEmitter<any>;
   @NgOutput() ionFocus: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [color, animated, autocomplete, autocorrect, cancelButtonText, debounce, placeholder, showCancelButton, spellcheck, type, value]);
+    inputs(this, el, [color, mode, animated, autocomplete, autocorrect, cancelButtonText, debounce, placeholder, showCancelButton, spellcheck, type, value]);
     outputs(this, [ionInput, ionCancel, ionClear, ionBlur, ionFocus]);
   }
 }
@@ -1023,6 +1192,10 @@ export class Segment {
    * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+   */
+  @NgInput() mode: any;
   @NgInput() disabled: boolean;
   /**
    * the value of the segment.
@@ -1030,7 +1203,7 @@ export class Segment {
   @NgInput() value: string;
   @NgOutput() ionChange: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [color, disabled, value]);
+    inputs(this, el, [color, mode, disabled, value]);
     outputs(this, [ionChange]);
   }
 }
@@ -1042,6 +1215,10 @@ export class SegmentButton {
    * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+   */
+  @NgInput() mode: any;
   /**
    * If true, the segment button is selected. Defaults to `false`.
    */
@@ -1057,7 +1234,7 @@ export class SegmentButton {
   @NgInput() value: string;
   @NgOutput() ionClick: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [activated, color, checked, disabled, href, value]);
+    inputs(this, el, [activated, color, mode, checked, disabled, href, value]);
     outputs(this, [ionClick]);
   }
 }
@@ -1100,13 +1277,17 @@ export class Select {
    * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface.
    */
   @NgInput() interfaceOptions: any;
+  /**
+   * the value of the select.
+   */
+  @NgInput() value: any;
   @NgOutput() ionChange: NgEventEmitter<any>;
   @NgOutput() ionCancel: NgEventEmitter<any>;
   @NgOutput() ionFocus: NgEventEmitter<any>;
   @NgOutput() ionBlur: NgEventEmitter<any>;
   @NgOutput() ionStyle: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [disabled, cancelText, okText, placeholder, name, selectedText, multiple, 'interface', interfaceOptions]);
+    inputs(this, el, [disabled, cancelText, okText, placeholder, name, selectedText, multiple, 'interface', interfaceOptions, value]);
     outputs(this, [ionChange, ionCancel, ionFocus, ionBlur, ionStyle]);
   }
 }
@@ -1121,10 +1302,14 @@ export class SelectOption {
    * If true, the element is selected.
    */
   @NgInput() selected: boolean;
+  /**
+   * The text value of the option.
+   */
+  @NgInput() value: any;
   @NgOutput() ionSelectOptionDidLoad: NgEventEmitter<any>;
   @NgOutput() ionSelectOptionDidUnload: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [disabled, selected]);
+    inputs(this, el, [disabled, selected, value]);
     outputs(this, [ionSelectOptionDidLoad, ionSelectOptionDidUnload]);
   }
 }
@@ -1134,8 +1319,9 @@ export class SelectPopover {
   @NgInput() title: string;
   @NgInput() subTitle: string;
   @NgInput() message: string;
+  @NgInput() options: any;
   constructor(el: ElementRef) {
-    inputs(this, el, [title, subTitle, message]);
+    inputs(this, el, [title, subTitle, message, options]);
   }
 }
 
@@ -1200,6 +1386,10 @@ export class Spinner {
    */
   @NgInput() color: string;
   /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
+  /**
    * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
    */
   @NgInput() duration: number;
@@ -1212,7 +1402,7 @@ export class Spinner {
    */
   @NgInput() paused: boolean;
   constructor(el: ElementRef) {
-    inputs(this, el, [color, duration, name, paused]);
+    inputs(this, el, [color, mode, duration, name, paused]);
   }
 }
 
@@ -1222,10 +1412,14 @@ export class SplitPane {
    * If true, the split pane will be hidden. Defaults to `false`.
    */
   @NgInput() disabled: boolean;
+  /**
+   * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
+   */
+  @NgInput() when: any;
   @NgOutput() ionChange: NgEventEmitter<any>;
   @NgOutput() ionSplitPaneVisible: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [disabled]);
+    inputs(this, el, [disabled, when]);
     outputs(this, [ionChange, ionSplitPaneVisible]);
   }
 }
@@ -1234,6 +1428,7 @@ export class SplitPane {
 export class Tab {
   @NgInput() active: boolean;
   @NgInput() btnId: string;
+  @NgInput() delegate: any;
   /**
    * The title of the tab.
    */
@@ -1254,6 +1449,10 @@ export class Tab {
    * The badge color for the tab button.
    */
   @NgInput() tabBadgeStyle: string;
+  /**
+   * The component to display inside of the tab.
+   */
+  @NgInput() component: any;
   /**
    * The name of the tab.
    */
@@ -1276,7 +1475,7 @@ export class Tab {
   @NgInput() tabsHideOnSubPages: boolean;
   @NgOutput() ionSelect: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [active, btnId, tabTitle, href, tabIcon, tabBadge, tabBadgeStyle, name, disabled, selected, show, tabsHideOnSubPages]);
+    inputs(this, el, [active, btnId, delegate, tabTitle, href, tabIcon, tabBadge, tabBadgeStyle, component, name, disabled, selected, show, tabsHideOnSubPages]);
     outputs(this, [ionSelect]);
   }
 }
@@ -1326,8 +1525,12 @@ export class Text {
    * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @NgInput() color: string;
+  /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
   constructor(el: ElementRef) {
-    inputs(this, el, [color]);
+    inputs(this, el, [color, mode]);
   }
 }
 
@@ -1422,6 +1625,10 @@ export class Toggle {
    */
   @NgInput() color: string;
   /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
+  /**
    * The name of the control, which is submitted with the form data.
    */
   @NgInput() name: string;
@@ -1442,7 +1649,7 @@ export class Toggle {
   @NgOutput() ionBlur: NgEventEmitter<any>;
   @NgOutput() ionStyle: NgEventEmitter<any>;
   constructor(el: ElementRef) {
-    inputs(this, el, [color, name, checked, disabled, value]);
+    inputs(this, el, [color, mode, name, checked, disabled, value]);
     outputs(this, [ionChange, ionFocus, ionBlur, ionStyle]);
   }
 }
@@ -1454,11 +1661,15 @@ export class Toolbar {
    */
   @NgInput() color: string;
   /**
+   * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+   */
+  @NgInput() mode: any;
+  /**
    * If true, the toolbar will be translucent. Note: In order to scroll content behind the toolbar, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
    */
   @NgInput() translucent: boolean;
   constructor(el: ElementRef) {
-    inputs(this, el, [color, translucent]);
+    inputs(this, el, [color, mode, translucent]);
   }
 }
 

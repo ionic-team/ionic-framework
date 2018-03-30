@@ -1,5 +1,5 @@
 import { mockDocument, mockElement } from '@stencil/core/testing';
-import { NavControllerBase } from '../nav';
+import { Nav } from '../nav';
 import { ViewController } from '../view-controller';
 import { AnimationControllerImpl } from '../../animation-controller/animation-controller';
 import { createConfigController } from '../../../global/config-controller';
@@ -345,8 +345,8 @@ describe('NavController', () => {
       expect(nav.getByIndex(3).component).toEqual(MockView2);
       expect(nav.getByIndex(4).component).toEqual(MockView3);
 
-      expect(nav.getByIndex(1)._nav).toEqual(nav);
-      expect(nav.getByIndex(2)._nav).toEqual(nav);
+      expect(nav.getByIndex(1).nav).toEqual(nav);
+      expect(nav.getByIndex(2).nav).toEqual(nav);
 
     }, 10000);
   });
@@ -357,7 +357,7 @@ describe('NavController', () => {
       nav.pop(null, trnsDone).then(() => {
         fail('it should not succeed');
         done();
-      }).catch((err) => {
+      }).catch((err: any) => {
         const hasCompleted = false;
         const requiresTransition = false;
         const rejectReason = new Error('no views in the stack to be removed');
@@ -1019,7 +1019,7 @@ describe('NavController', () => {
   });
 
 
-  let nav: NavControllerBase;
+  let nav: Nav;
 
   function spyOnLifecycles(view: ViewController) {
     const element = view.element as any;
@@ -1091,15 +1091,15 @@ function mockView(component ?: any, data ?: any) {
   return view;
 }
 
-function mockViews(nav: NavControllerBase, views: ViewController[]) {
+function mockViews(nav: Nav, views: ViewController[]) {
   nav['_views'] = views;
   views.forEach(v => {
-    v._setNav(nav);
+    v.nav = nav;
   });
 }
 
-function mockNavController(): NavControllerBase {
-  const nav = new NavControllerBase() as any;
+function mockNavController(): Nav {
+  const nav = new Nav() as any;
   nav.el = mockElement('ion-nav') as HTMLElement;
   nav.ionNavChanged = {emit: function() { return; } };
   nav.animationCtrl = new AnimationControllerImpl() as any;

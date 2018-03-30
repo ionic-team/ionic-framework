@@ -1,8 +1,7 @@
 
 import { NavOptions, ViewState } from './nav-util';
-import { NavControllerBase } from './nav';
 import { assert } from '../../utils/helpers';
-import { FrameworkDelegate } from '../..';
+import { FrameworkDelegate, Nav } from '../..';
 import { attachComponent } from '../../utils/framework-delegate';
 
 /**
@@ -27,7 +26,7 @@ export class ViewController {
   private _cntDir: any;
   private _leavingOpts: NavOptions;
 
-  _nav: NavControllerBase;
+  nav: Nav;
   _state: ViewState = ViewState.New;
 
   /** @hidden */
@@ -50,17 +49,6 @@ export class ViewController {
       const component = this.component;
       this.element = await attachComponent(this.delegate, container, component, ['ion-page', 'hide-page'], this.data);
     }
-  }
-
-  _setNav(navCtrl: NavControllerBase) {
-    this._nav = navCtrl;
-  }
-
-  /**
-   * @hidden
-   */
-  getNav(): NavControllerBase {
-    return this._nav;
   }
 
   /**
@@ -115,7 +103,7 @@ export class ViewController {
         element.remove();
       }
     }
-    this._nav = this._cntDir = this._leavingOpts = null;
+    this.nav = this._cntDir = this._leavingOpts = null;
     this._state = ViewState.Destroyed;
   }
 
@@ -124,7 +112,7 @@ export class ViewController {
    * @returns {number} Returns the index of this page within its `NavController`.
    */
   get index(): number {
-    return (this._nav ? this._nav.indexOf(this) : -1);
+    return (this.nav ? this.nav.indexOf(this) : -1);
   }
 }
 

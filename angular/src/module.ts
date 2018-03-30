@@ -47,7 +47,7 @@ const DECLARATIONS = [
   d.Menu,
   d.MenuButton,
   d.MenuToggle,
-  d.NavControllerBase,
+  d.Nav,
   d.NavPop,
   d.NavPush,
   d.NavSetRoot,
