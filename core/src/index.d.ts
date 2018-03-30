@@ -109,6 +109,7 @@ export * from './components';
 export { DomController, RafCallback } from './global/dom-controller';
 export { FrameworkDelegate } from './utils/framework-delegate';
 export { OverlayEventDetail } from './utils/overlays';
+export * from './utils/transition';
 
 export type ComponentRef = Function | HTMLElement | string;
 export type ComponentProps = {[key: string]: any};

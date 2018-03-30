@@ -5,7 +5,7 @@ import {
   Injector,
 } from '@angular/core';
 
-import { FrameworkDelegate } from '@ionic/core';
+import { FrameworkDelegate, ViewLifecycle } from '@ionic/core';
 
 
 @Injectable()
@@ -44,7 +44,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
     for (const clazz of cssClasses) {
       hostElement.classList.add(clazz);
     }
-
+    bindLifecycleEvents(componentRef.instance, hostElement);
     container.appendChild(hostElement);
 
     this.appRef.attachView(componentRef.hostView);
@@ -62,3 +62,20 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
   }
 }
 
+const LIFECYCLES = [
+  ViewLifecycle.WillEnter,
+  ViewLifecycle.DidEnter,
+  ViewLifecycle.WillLeave,
+  ViewLifecycle.DidLeave,
+  ViewLifecycle.WillUnload
+];
+
+export function bindLifecycleEvents(instance: any, element: HTMLElement) {
+  LIFECYCLES.forEach(eventName => {
+    element.addEventListener(eventName, (ev: CustomEvent) => {
+      if (typeof instance[eventName] === 'function') {
+        instance[eventName](ev.detail);
+      }
+    });
+  });
+}

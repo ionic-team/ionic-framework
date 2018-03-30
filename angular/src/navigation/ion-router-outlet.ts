@@ -2,6 +2,7 @@ import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, D
 import { ActivatedRoute, ChildrenOutletContexts, PRIMARY_OUTLET, Router } from '@angular/router';
 import { StackController } from './router-controller';
 import { NavController } from './ion-nav-controller';
+import { bindLifecycleEvents } from '../providers/angular-delegate';
 
 @Directive({
   selector: 'ion-router-outlet',
@@ -129,7 +130,9 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       const childContexts = this.parentContexts.getOrCreateContext(this.name).children;
 
       const injector = new OutletInjector(activatedRoute, childContexts, this.location.injector);
-      this.activated = this.location.createComponent(factory, this.location.length, injector);
+      const cmp = this.activated = this.location.createComponent(factory, this.location.length, injector);
+
+      bindLifecycleEvents(cmp.instance, cmp.location.nativeElement);
 
       // Calling `markForCheck` to make sure we will run the change detection when the
       // `RouterOutlet` is inside a `ChangeDetectionStrategy.OnPush` component.
