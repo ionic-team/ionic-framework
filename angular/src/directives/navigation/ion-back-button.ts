@@ -12,7 +12,7 @@ export class IonBackButton {
 
   @HostListener('click')
   onClick() {
-    if (this.routerOutlet.canGoBack()) {
+    if (this.routerOutlet && this.routerOutlet.canGoBack()) {
       this.routerOutlet.pop();
     }
   }

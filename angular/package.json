@@ -20,7 +20,7 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
-    "build": "npm run clean && npm run ionic-core && npm run compile && npm run clean-generated",
+    "build": "npm run clean && npm run compile && npm run clean-generated && npm run ionic-core",
     "build.link": "npm run build && node scripts/link-copy.js",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",

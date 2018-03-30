@@ -9,6 +9,7 @@ export { GoBack } from './navigation/go-back';
 export { IonBackButton } from './navigation/ion-back-button';
 export { NavDelegate } from './navigation/nav-delegate';
 export { TabDelegate } from './navigation/tab-delegate';
+export { TabsDelegate } from './navigation/tabs-delegate';
 export { IonRouterOutlet } from './navigation/ion-router-outlet';
 
 export { Icon } from './icon';
