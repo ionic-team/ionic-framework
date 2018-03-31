@@ -1,7 +1,7 @@
 import { Component, Element, Method, Prop } from '@stencil/core';
 import { transition } from '../../utils';
 import { NavDirection } from '../nav/nav-util';
-import { AnimationBuilder, Config, FrameworkDelegate, NavOutlet } from '../..';
+import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, NavOutlet } from '../..';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { RouteID, RouteWrite } from '../router/utils/interfaces';
 
@@ -24,7 +24,7 @@ export class RouterOutlet implements NavOutlet {
   @Prop({context: 'config'}) config: Config;
   @Prop({connect: 'ion-animation-controller'}) animationCtrl: HTMLIonAnimationControllerElement;
 
-  @Prop() animated: boolean;
+  @Prop({ mutable: true }) animated: boolean;
   @Prop() animationBuilder: AnimationBuilder;
   @Prop() delegate: FrameworkDelegate;
 
@@ -39,7 +39,7 @@ export class RouterOutlet implements NavOutlet {
   }
 
   @Method()
-  async setRoot(component: HTMLElement|string, params?: {[key: string]: any}, opts?: RouterOutletOptions): Promise<boolean> {
+  async setRoot(component: ComponentRef, params?: ComponentProps, opts?: RouterOutletOptions): Promise<boolean> {
     if (this.isTransitioning || this.activeComponent === component) {
       return false;
     }
