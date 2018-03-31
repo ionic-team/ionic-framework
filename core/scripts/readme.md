@@ -20,7 +20,7 @@ Make sure you are inside the `core` directory.
 
     npm run dev
 
-With the `dev` command, Ionic components will be built with [Stencil](https://stenciljs.com/), changes to source files are warched, a local http server will startup, and http://localhost:3333/ will open in a browser.
+With the `dev` command, Ionic components will be built with [Stencil](https://stenciljs.com/), changes to source files are watched, a local http server will startup, and http://localhost:3333/ will open in a browser.
 
 ### 4. Preview
 
