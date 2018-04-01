@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'toast', loadChildren: './toast/toast.module#ToastModule' },
   { path: 'loading', loadChildren: './loading/loading.module#LoadingModule' },
   { path: 'modal', loadChildren: './modal/modal.module#ModalModule' },
+  { path: 'ng-if', loadChildren: './ng-if/ng-if.module#NgIfModule' },
   { path: 'popover', loadChildren: './popover/popover.module#PopoverModule' },
   { path: 'segment', loadChildren: './segment/segment.module#SegmentModule' },
   { path: 'virtual-scroll', loadChildren: './virtual-scroll/virtual-scroll.module#VirtualScrollModule' },
