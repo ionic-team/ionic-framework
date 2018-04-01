@@ -1,11 +1,11 @@
-import { ViewController, isViewController } from './view-controller';
+import { ViewController } from './view-controller';
 import { Animation, ComponentRef, FrameworkDelegate } from '../..';
 
 export function convertToView(page: any, params: any): ViewController|null {
   if (!page) {
     return null;
   }
-  if (isViewController(page)) {
+  if (page instanceof ViewController) {
     return page;
   }
   return new ViewController(page, params);
@@ -13,7 +13,7 @@ export function convertToView(page: any, params: any): ViewController|null {
 
 export function convertToViews(pages: any[]): ViewController[] {
   return pages.map(page => {
-    if (isViewController(page)) {
+    if (page instanceof ViewController) {
       return page;
     }
     if ('page' in page) {
@@ -21,10 +21,6 @@ export function convertToViews(pages: any[]): ViewController[] {
     }
     return convertToView(page, undefined);
   }).filter(v => v !== null) as ViewController[];
-}
-
-export function isPresent(val: any): val is any {
-  return val !== undefined && val !== null;
 }
 
 export const enum ViewState {
@@ -38,7 +34,7 @@ export const enum NavDirection {
   Forward = 'forward'
 }
 
-export type NavComponent = ComponentRef | ViewController | Function;
+export type NavComponent = ComponentRef | ViewController;
 
 export interface NavResult {
   hasCompleted: boolean;

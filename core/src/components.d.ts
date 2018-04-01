@@ -3517,23 +3517,21 @@ declare global {
   interface HTMLIonNavElement extends HTMLStencilElement {
     'animated': boolean;
     'canGoBack': (view?: ViewController) => boolean;
-    'delegate': FrameworkDelegate;
+    'delegate': FrameworkDelegate|undefined;
     'getActive': () => ViewController;
     'getByIndex': (index: number) => ViewController;
     'getPrevious': (view?: ViewController) => ViewController;
     'getRouteId': () => RouteID;
-    'getViews': () => ViewController[];
     'insert': (insertIndex: number, component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'insertPages': (insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+    'length': () => number;
     'pop': (opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-    'popAll': () => Promise<boolean[]>;
     'popTo': (indexOrViewCtrl: number | ViewController, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'popToRoot': (opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'push': (component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'removeIndex': (startIndex: number, removeCount?: number, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-    'removeView': (viewController: ViewController, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-    'root': NavComponent;
-    'rootParams': ComponentProps;
+    'root': NavComponent|undefined;
+    'rootParams': ComponentProps|undefined;
     'setPages': (views: any[], opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'setRoot': (component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
     'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
@@ -3557,10 +3555,10 @@ declare global {
   namespace JSXElements {
     export interface IonNavAttributes extends HTMLAttributes {
       'animated'?: boolean;
-      'delegate'?: FrameworkDelegate;
+      'delegate'?: FrameworkDelegate|undefined;
       'onIonNavChanged'?: (event: CustomEvent<void>) => void;
-      'root'?: NavComponent;
-      'rootParams'?: ComponentProps;
+      'root'?: NavComponent|undefined;
+      'rootParams'?: ComponentProps|undefined;
       'swipeBackEnabled'?: boolean;
     }
   }
@@ -4714,7 +4712,7 @@ declare global {
     'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement, opts?: RouterOutletOptions) => Promise<boolean>;
     'delegate': FrameworkDelegate;
     'getRouteId': () => RouteID;
-    'setRoot': (component: string | HTMLElement, params?: { [key: string]: any; }, opts?: RouterOutletOptions) => Promise<boolean>;
+    'setRoot': (component: ComponentRef, params?: ComponentProps, opts?: RouterOutletOptions) => Promise<boolean>;
     'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
   }
   var HTMLIonRouterOutletElement: {

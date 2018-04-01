@@ -81,19 +81,16 @@ boolean
 #### getRouteId()
 
 
-#### getViews()
-
-
 #### insert()
 
 
 #### insertPages()
 
 
+#### length()
+
+
 #### pop()
-
-
-#### popAll()
 
 
 #### popTo()
@@ -106,9 +103,6 @@ boolean
 
 
 #### removeIndex()
-
-
-#### removeView()
 
 
 #### setPages()

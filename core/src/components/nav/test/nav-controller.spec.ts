@@ -112,7 +112,7 @@ describe('NavController', () => {
       );
       expect(nav.length()).toEqual(1);
       expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.isTransitioning).toEqual(false);
+      expect(nav['isTransitioning']).toEqual(false);
 
     }, 10000);
 
@@ -131,7 +131,7 @@ describe('NavController', () => {
       expect(nav.length()).toEqual(2);
       expect(nav.getByIndex(0).component).toEqual(MockView1);
       expect(nav.getByIndex(1).component).toEqual(MockView2);
-      expect(nav.isTransitioning).toEqual(false);
+      expect(nav['isTransitioning']).toEqual(false);
 
     }, 10000);
 
@@ -174,16 +174,6 @@ describe('NavController', () => {
   });
 
   describe('insert', () => {
-
-    it('should not modify the view id', async () => {
-      const view = mockView(MockView4);
-      view.id = 'custom_id';
-      await nav.insert(0, view);
-
-      expect(view.id).toEqual('custom_id');
-      expect(view.id).toEqual('custom_id');
-    }, 10000);
-
 
     it('should insert at the begining with no async transition', async () => {
       const view4 = mockView(MockView4);
@@ -366,7 +356,7 @@ describe('NavController', () => {
         );
         expect(err).toEqual(rejectReason);
         expect(nav.length()).toEqual(0);
-        expect(nav.isTransitioning).toEqual(false);
+        expect(nav['isTransitioning']).toEqual(false);
         done();
       });
     }, 10000);
@@ -403,7 +393,7 @@ describe('NavController', () => {
       );
       expect(nav.length()).toEqual(1);
       expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.isTransitioning).toEqual(false);
+      expect(nav['isTransitioning']).toEqual(false);
 
 
     }, 10000);
@@ -1003,7 +993,7 @@ describe('NavController', () => {
       const view2 = mockView();
       mockViews(nav, [view1, view2]);
 
-      const result = nav.canSwipeBack();
+      const result = nav['canSwipeBack']();
       expect(result).toEqual(false);
     });
 
@@ -1013,7 +1003,7 @@ describe('NavController', () => {
       const view2 = mockView();
       mockViews(nav, [view1, view2]);
 
-      const result = nav.canSwipeBack();
+      const result = nav['canSwipeBack']();
       expect(result).toEqual(true);
     });
   });
@@ -1092,7 +1082,7 @@ function mockView(component ?: any, data ?: any) {
 }
 
 function mockViews(nav: Nav, views: ViewController[]) {
-  nav['_views'] = views;
+  nav['views'] = views;
   views.forEach(v => {
     v.nav = nav;
   });
@@ -1111,7 +1101,7 @@ function mockNavController(): Nav {
         ? mockElement(enteringView.component) as HTMLElement
         : enteringView.element = enteringView.component as HTMLElement;
     }
-    enteringView._state = ViewState.Attached;
+    enteringView.state = ViewState.Attached;
   };
   return nav;
 }
