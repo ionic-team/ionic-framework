@@ -16,7 +16,7 @@ export class TabDelegate {
     elementRef.nativeElement.delegate = angularDelegate.create(cfr, injector);
   }
 
-  @HostListener('ionNavDidChange')
+  @HostListener('ionRouterOutletActivated', ['$event'])
   async onNavChanged() {
     const tab = this.elementRef.nativeElement as HTMLIonTabElement;
     await tab.componentOnReady();

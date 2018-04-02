@@ -23,7 +23,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     private parentContexts: ChildrenOutletContexts,
     private location: ViewContainerRef,
     private resolver: ComponentFactoryResolver,
-    elementRef: ElementRef,
+    private elementRef: ElementRef,
     @Attribute('name') name: string,
     @Optional() @Attribute('stack') stack: any,
     private changeDetector: ChangeDetectorRef,
@@ -142,6 +142,8 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     const direction = this.navCtrl.consumeDirection();
     await this.stackCtrl.setActive(enteringView, direction);
     this.activateEvents.emit(this.activated.instance);
+
+    emitEvent(this.elementRef.nativeElement);
   }
 
   canGoBack(deep = 1) {
@@ -151,6 +153,15 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   pop(deep = 1) {
     return this.stackCtrl.pop(deep);
   }
+}
+
+function emitEvent(el: HTMLElement) {
+  console.log('ionRouterOutletActivated');
+  const event = new CustomEvent('ionRouterOutletActivated', {
+    bubbles: true,
+    cancelable: true,
+  });
+  el.dispatchEvent(event);
 }
 
 class OutletInjector implements Injector {

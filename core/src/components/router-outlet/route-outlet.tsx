@@ -48,9 +48,6 @@ export class RouterOutlet implements NavOutlet {
     }
     this.activeComponent = component;
 
-    // emit nav will change event
-    this.ionNavWillChange.emit();
-
     // attach entering view to DOM
     const enteringEl = await attachComponent(this.delegate, this.el, component, ['ion-page', 'hide-page'], params);
     const leavingEl = this.activeEl;
@@ -62,9 +59,6 @@ export class RouterOutlet implements NavOutlet {
     this.activeEl = enteringEl;
     detachComponent(this.delegate, leavingEl);
 
-    // emit nav changed event
-    this.ionNavDidChange.emit();
-
     return true;
   }
 
@@ -75,6 +69,9 @@ export class RouterOutlet implements NavOutlet {
       return false;
     }
     this.isTransitioning = true;
+
+    // emit nav will change event
+    this.ionNavWillChange.emit();
 
     opts = opts || {};
 
@@ -91,6 +88,9 @@ export class RouterOutlet implements NavOutlet {
       baseEl: this.el,
     });
     this.isTransitioning = false;
+
+    // emit nav changed event
+    this.ionNavDidChange.emit();
     return true;
   }
 
