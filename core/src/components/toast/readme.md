@@ -15,29 +15,6 @@ Toasts can be positioned at the top, bottom or middle of the viewport. The posit
 The toast can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the toast options. If `showCloseButton` is set to true, then the close button will dismiss the toast. To dismiss the toast after creation, call the `dismiss()` method on the instance.
 
 
-```html
-<ion-button onClick="presentToast()">
-  Show Toast
-</ion-button>
-```
-
-```javascript
-async function presentToast() {
-  const toastController = document.querySelector('ion-toast-controller');
-  await toastController.componentOnReady();
-
-  const toastElement = await toastController.create({
-    message: 'click to close',
-    duration: 300,
-    position: 'top',
-    showCloseButton: true,
-    closeButtonText: 'closing time'
-  });
-  return await toastElement.present();
-}
-```
-
-
 <!-- Auto Generated Below -->
 
 

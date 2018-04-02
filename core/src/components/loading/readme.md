@@ -13,21 +13,6 @@ Loading indicators can be created using a [Loading Controller](../../loading-con
 The loading indicator can be dismissed automatically after a specific amount of time by passing the number of milliseconds to display it in the `duration` of the loading options. By default the loading indicator will show even during page changes, but this can be disabled by setting `dismissOnPageChange` to `true`. To dismiss the loading indicator after creation, call the `dismiss()` method on the loading instance. The `onDidDismiss` function can be called to perform an action after the loading indicator is dismissed.
 
 
-```javascript
-async function presentLoading() {
-  const loadingController = document.querySelector('ion-loading-controller');
-  await loadingController.componentOnReady();
-
-  const loadingElement = await loadingController.create({
-    content: 'Please wait...',
-    spinner: 'crescent',
-    duration: 2000
-  });
-  return await loadingElement.present();
-}
-```
-
-
 <!-- Auto Generated Below -->
 
 
