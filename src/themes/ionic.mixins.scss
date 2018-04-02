@@ -26,6 +26,9 @@
     // Safari placeholder margin issue
     text-indent: $text-indent;
     color: $color;
+    // Removes flicker from overscroll
+    position: absolute;
+    transform: translateY(8px);
   }
 }
 
