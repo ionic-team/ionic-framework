@@ -1091,7 +1091,9 @@ function mockViews(nav: Nav, views: ViewController[]) {
 function mockNavController(): Nav {
   const nav = new Nav() as any;
   nav.el = mockElement('ion-nav') as HTMLElement;
-  nav.ionNavChanged = {emit: function() { return; } };
+  nav.ionNavDidChange = {emit: function() { return; } };
+  nav.ionNavWillChange = {emit: function() { return; } };
+
   nav.animationCtrl = new AnimationControllerImpl() as any;
   nav.config = createConfigController({animate: false}, []);
   nav._viewInit = function (enteringView: ViewController) {
