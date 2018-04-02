@@ -16,13 +16,9 @@ export function attachViewToDom(parentElement: HTMLElement, reactComponent: any,
 
   // mount the React component
   const reactElement = React.createElement(reactComponent, propsOrData);
-  const mountedComponentInstance = ReactDOM.render(reactElement, wrappingDiv);
+  ReactDOM.render(reactElement, wrappingDiv);
 
-  return Promise.resolve({
-    element: wrappingDiv,
-    reactElement: reactElement,
-    instance: mountedComponentInstance
-  });
+  return Promise.resolve(wrappingDiv);
 }
 
 export function removeViewFromDom(parentElement: HTMLElement, childElement: HTMLElement): Promise<any> {
