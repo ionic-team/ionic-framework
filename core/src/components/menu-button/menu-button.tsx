@@ -14,6 +14,7 @@ import { Config } from '../../index';
 export class MenuButton {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   private custom = true;
 
   @Prop({ context: 'config' }) config: Config;
@@ -21,6 +22,9 @@ export class MenuButton {
 =======
   private mode: string;
 >>>>>>> fix(): refactor back-button and menu-button
+=======
+  private mode: string;
+>>>>>>> cf45637eafa02d63c5d4eca643f83e8afe5c613d
   /**
    * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
    */
