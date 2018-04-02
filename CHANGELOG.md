@@ -1,3 +1,13 @@
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/ionic-team/ionic/compare/v0.1.6...v0.2.0) (2018-04-02)
+
+
+### Bug Fixes
+
+* **angular:** URL based tabs ([14fedb9](https://github.com/ionic-team/ionic/commit/14fedb9))
+
+
+
 <a name="0.1.6"></a>
 ## [0.1.6](https://github.com/ionic-team/ionic/compare/v0.1.5...v0.1.6) (2018-04-02)
 
