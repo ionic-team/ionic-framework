@@ -1,3 +1,19 @@
+<a name="0.1.6"></a>
+## [0.1.6](https://github.com/ionic-team/ionic/compare/v0.1.5...v0.1.6) (2018-04-02)
+
+
+### Bug Fixes
+
+* **angular:** lifecycles ([062641d](https://github.com/ionic-team/ionic/commit/062641d))
+* **angular:** modal and popover ([acd411d](https://github.com/ionic-team/ionic/commit/acd411d))
+* **angular:** module exports ([cece447](https://github.com/ionic-team/ionic/commit/cece447))
+* **angular:** proxies ([2308239](https://github.com/ionic-team/ionic/commit/2308239))
+* **angular:** tabs angular tests ([ff1ed88](https://github.com/ionic-team/ionic/commit/ff1ed88))
+* **router-outlet:** enteringEl !== leavingEl ([0d44253](https://github.com/ionic-team/ionic/commit/0d44253))
+* **router-outlet:** mutable prop ([ff06dab](https://github.com/ionic-team/ionic/commit/ff06dab))
+
+
+
 <a name="0.1.5"></a>
 ## [0.1.5](https://github.com/ionic-team/ionic/compare/v0.1.4...v0.1.5) (2018-03-29)
 
