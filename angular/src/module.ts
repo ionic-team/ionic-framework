@@ -112,9 +112,7 @@ const PROVIDERS = [
   p.ActionSheetController,
   p.AlertController,
   p.LoadingController,
-  p.ModalController,
   p.PickerController,
-  p.PopoverController,
   p.ToastController,
   p.MenuController,
   p.NavController,
@@ -126,7 +124,9 @@ const PROVIDERS = [
   declarations: DECLARATIONS,
   exports: DECLARATIONS,
   providers: [
-    p.AngularDelegate
+    p.AngularDelegate,
+    p.ModalController,
+    p.PopoverController,
   ],
   imports: [
     CommonModule,
