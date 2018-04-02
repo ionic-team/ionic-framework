@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Directive, ElementRef, Injector } from '@angular/core';
+import { ComponentFactoryResolver, Directive, ElementRef, HostListener, Injector } from '@angular/core';
 import { AngularDelegate } from '../../providers/angular-delegate';
 
 
@@ -8,12 +8,23 @@ import { AngularDelegate } from '../../providers/angular-delegate';
 export class TabDelegate {
 
   constructor(
-    ref: ElementRef,
+    private elementRef: ElementRef,
     cfr: ComponentFactoryResolver,
     injector: Injector,
     angularDelegate: AngularDelegate,
   ) {
-    ref.nativeElement.delegate = angularDelegate.create(cfr, injector);
+    elementRef.nativeElement.delegate = angularDelegate.create(cfr, injector);
+  }
+
+  @HostListener('ionNavDidChange')
+  async onNavChanged() {
+    const tab = this.elementRef.nativeElement as HTMLIonTabElement;
+    await tab.componentOnReady();
+    const tabs = tab.closest('ion-tabs');
+    if (tabs) {
+      await tabs.componentOnReady();
+      await tabs.select(tab);
+    }
   }
 
 }

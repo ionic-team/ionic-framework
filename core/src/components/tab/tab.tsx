@@ -95,6 +95,7 @@ export class Tab {
       }
     }
   }
+
   @Method()
   getTabId(): string|null {
     if (this.name) {

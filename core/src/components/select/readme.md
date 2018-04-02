@@ -71,8 +71,8 @@ For example, to change the `title` and `subTitle` of the overlay, pass it into `
 ```javascript
 var customSelect = document.getElementById('customSelect');
 customSelect.interfaceOptions = {
-  title: 'Pizza Toppings',
-  subTitle: 'Select your toppings'
+  header: 'Pizza Toppings',
+  subHeader: 'Select your toppings'
 };
 ```
 

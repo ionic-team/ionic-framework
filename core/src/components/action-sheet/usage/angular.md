@@ -13,7 +13,7 @@ export class ActionSheetExample {
 
   presentActionSheet() {
     const actionSheet = this.actionSheetController.create({
-      title: "Albums",
+      header: "Albums",
       buttons: [{
         text: 'Delete',
         role: 'destructive',

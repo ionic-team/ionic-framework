@@ -23,7 +23,7 @@ export class AlertPageComponent {
 
   async clickMe() {
     const alert = await this.alertController.create({
-      title: 'ohhhh snap',
+      header: 'ohhhh snap',
       message: 'Ive been injected via Angular keeping the old api',
       buttons: [
         {

@@ -1,4 +1,4 @@
-import { Component, Element, Method, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 import { transition } from '../../utils';
 import { NavDirection } from '../nav/nav-util';
 import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, NavOutlet } from '../..';
@@ -28,6 +28,9 @@ export class RouterOutlet implements NavOutlet {
   @Prop() animationBuilder: AnimationBuilder;
   @Prop() delegate: FrameworkDelegate;
 
+  @Event() ionNavWillChange: EventEmitter<void>;
+  @Event() ionNavDidChange: EventEmitter<void>;
+
   componentWillLoad() {
     if (this.animated === undefined) {
       this.animated = this.config.getBoolean('animate', true);
@@ -45,6 +48,9 @@ export class RouterOutlet implements NavOutlet {
     }
     this.activeComponent = component;
 
+    // emit nav will change event
+    this.ionNavWillChange.emit();
+
     // attach entering view to DOM
     const enteringEl = await attachComponent(this.delegate, this.el, component, ['ion-page', 'hide-page'], params);
     const leavingEl = this.activeEl;
@@ -55,6 +61,9 @@ export class RouterOutlet implements NavOutlet {
     // remove leaving view
     this.activeEl = enteringEl;
     detachComponent(this.delegate, leavingEl);
+
+    // emit nav changed event
+    this.ionNavDidChange.emit();
 
     return true;
   }

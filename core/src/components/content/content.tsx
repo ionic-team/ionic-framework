@@ -38,7 +38,7 @@ export class Content {
 
   @Prop() scrollEvents = false;
 
-  @Listen('body:ionNavChanged')
+  @Listen('body:ionNavDidChange')
   onNavChanged() {
     this.resize();
   }

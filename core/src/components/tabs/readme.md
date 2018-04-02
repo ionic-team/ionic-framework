@@ -149,6 +149,11 @@ attribute needs to be set on the content.
 Defaults to `false`.
 
 
+#### useRouter
+
+boolean
+
+
 ## Attributes
 
 #### color
@@ -210,6 +215,11 @@ attribute needs to be set on the content.
 Defaults to `false`.
 
 
+#### use-router
+
+boolean
+
+
 ## Events
 
 #### ionChange
@@ -217,7 +227,10 @@ Defaults to `false`.
 Emitted when the tab changes.
 
 
-#### ionNavChanged
+#### ionNavDidChange
+
+
+#### ionNavWillChange
 
 
 ## Methods

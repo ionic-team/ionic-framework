@@ -54,6 +54,13 @@ If true, the alert will be dismissed when the backdrop is clicked. Defaults to `
 Animation to use when the alert is presented.
 
 
+#### header
+
+string
+
+The main title in the heading of the alert.
+
+
 #### inputs
 
 
@@ -90,18 +97,11 @@ string
 number
 
 
-#### subTitle
+#### subHeader
 
 string
 
 The subtitle in the heading of the alert. Displayed under the title.
-
-
-#### title
-
-string
-
-The main title in the heading of the alert.
 
 
 #### translucent
@@ -149,6 +149,13 @@ If true, the alert will be dismissed when the backdrop is clicked. Defaults to `
 Animation to use when the alert is presented.
 
 
+#### header
+
+string
+
+The main title in the heading of the alert.
+
+
 #### inputs
 
 
@@ -185,18 +192,11 @@ string
 number
 
 
-#### sub-title
+#### sub-header
 
 string
 
 The subtitle in the heading of the alert. Displayed under the title.
-
-
-#### title
-
-string
-
-The main title in the heading of the alert.
 
 
 #### translucent

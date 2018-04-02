@@ -56,7 +56,8 @@ export class Nav implements NavOutlet {
     }
   }
 
-  @Event() ionNavChanged: EventEmitter<void>;
+  @Event() ionNavWillChange: EventEmitter<void>;
+  @Event() ionNavDidChange: EventEmitter<void>;
 
   componentWillLoad() {
     this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
@@ -314,7 +315,6 @@ export class Nav implements NavOutlet {
         router && router.navChanged(direction);
       }
     }
-    this.ionNavChanged.emit();
   }
 
   private failed(rejectReason: any, ti: TransitionInstruction) {
@@ -358,6 +358,7 @@ export class Nav implements NavOutlet {
   private async runTransition(ti: TransitionInstruction) {
     try {
       // set that this nav is actively transitioning
+      this.ionNavWillChange.emit();
       this.isTransitioning = true;
       this.prepareTI(ti);
 
@@ -378,6 +379,7 @@ export class Nav implements NavOutlet {
 
       const result = await this.transition(enteringView, leavingView, ti);
       this.success(result, ti);
+      this.ionNavDidChange.emit();
     } catch (rejectReason) {
       this.failed(rejectReason, ti);
     }

@@ -13,8 +13,8 @@ export class AlertExample {
 
   presentAlert() {
     const alert = this.alertController.create({
-      title: 'Alert',
-      subTitle: 'Subtitle',
+      header: 'Alert',
+      subHeader: 'Subtitle',
       message: 'This is an alert message.',
       buttons: ['OK']
     });
@@ -24,8 +24,8 @@ export class AlertExample {
 
   presentAlertMultipleButtons() {
     const alert = this.alertController.create({
-      title: 'Alert',
-      subTitle: 'Subtitle',
+      header: 'Alert',
+      subHeader: 'Subtitle',
       message: 'This is an alert message.',
       buttons: ['Cancel', 'Open Modal', 'Delete']
     });
@@ -35,7 +35,7 @@ export class AlertExample {
 
   presentAlertConfirm() {
     const alert = this.alertController.create({
-      title: 'Confirm!',
+      header: 'Confirm!',
       message: 'Message <strong>text</strong>!!!',
       buttons: [
         {
@@ -59,7 +59,7 @@ export class AlertExample {
 
   presentAlertPrompt() {
     const alert = this.alertController.create({
-      title: 'Prompt!',
+      header: 'Prompt!',
       inputs: [
         {
           placeholder: 'Placeholder 1'
@@ -121,7 +121,7 @@ export class AlertExample {
 
   presentAlertRadio() {
     const alert = this.alertController.create({
-      title: 'Radio',
+      header: 'Radio',
       inputs: [
         {
           type: 'radio',
@@ -177,7 +177,7 @@ export class AlertExample {
 
   presentAlertCheckbox() {
     const alert = this.alertController.create({
-      title: 'Checkbox',
+      header: 'Checkbox',
       inputs: [
         {
           type: 'checkbox',

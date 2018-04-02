@@ -7,6 +7,11 @@
 
 ## Properties
 
+#### header
+
+string
+
+
 #### message
 
 string
@@ -17,18 +22,18 @@ string
 
 
 
-#### subTitle
-
-string
-
-
-#### title
+#### subHeader
 
 string
 
 
 ## Attributes
 
+#### header
+
+string
+
+
 #### message
 
 string
@@ -39,12 +44,7 @@ string
 
 
 
-#### sub-title
-
-string
-
-
-#### title
+#### sub-header
 
 string
 

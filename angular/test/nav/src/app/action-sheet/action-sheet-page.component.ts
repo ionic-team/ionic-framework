@@ -25,7 +25,7 @@ export class ActionSheetPageComponent {
 
   async clickMe() {
     const actionSheet = await this.actionSheetController.create({
-      title: 'Albums',
+      header: 'Albums',
       buttons: [{
         text: 'Delete',
         role: 'destructive',

@@ -56,12 +56,12 @@ export class Alert implements OverlayInterface {
   /**
    * The main title in the heading of the alert.
    */
-  @Prop() title: string;
+  @Prop() header: string;
 
   /**
    * The subtitle in the heading of the alert. Displayed under the title.
    */
-  @Prop() subTitle: string;
+  @Prop() subHeader: string;
 
   /**
    * The main message to be displayed in the alert.
@@ -358,10 +358,10 @@ export class Alert implements OverlayInterface {
     const subHdrId = `alert-${this.overlayId}-sub-hdr`;
     const msgId = `alert-${this.overlayId}-msg`;
 
-    if (this.title || !this.subTitle) {
+    if (this.header || !this.subHeader) {
       this.hdrId = hdrId;
 
-    } else if (this.subTitle) {
+    } else if (this.subHeader) {
       this.hdrId = subHdrId;
     }
 
@@ -413,11 +413,11 @@ export class Alert implements OverlayInterface {
       <ion-backdrop tappable={this.enableBackdropDismiss}/>,
       <div class='alert-wrapper'>
         <div class='alert-head'>
-          {this.title
-            ? <h2 id={hdrId} class='alert-title'>{this.title}</h2>
+          {this.header
+            ? <h2 id={hdrId} class='alert-title'>{this.header}</h2>
             : null}
-          {this.subTitle
-            ? <h2 id={subHdrId} class='alert-sub-title'>{this.subTitle}</h2>
+          {this.subHeader
+            ? <h2 id={subHdrId} class='alert-sub-title'>{this.subHeader}</h2>
             : null}
         </div>
 
@@ -452,8 +452,8 @@ function buttonClass(button: AlertButton): CssClassMap {
 }
 
 export interface AlertOptions {
-  title?: string;
-  subTitle?: string;
+  header?: string;
+  subHeader?: string;
   message?: string;
   cssClass?: string | string[];
   mode?: string;

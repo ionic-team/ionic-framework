@@ -9,8 +9,8 @@ async function presentAlert() {
   await alertController.componentOnReady();
 
   const alert = await alertController.create({
-    title: 'Alert',
-    subTitle: 'Subtitle',
+    header: 'Alert',
+    subHeader: 'Subtitle',
     message: 'This is an alert message.',
     buttons: ['OK']
   });

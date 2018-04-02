@@ -4,8 +4,8 @@ async function presentAlert() {
   await alertController.componentOnReady();
 
   const alert = await alertController.create({
-    title: 'Alert',
-    subTitle: 'Subtitle',
+    header: 'Alert',
+    subHeader: 'Subtitle',
     message: 'This is an alert message.',
     buttons: ['OK']
   });
@@ -17,8 +17,8 @@ async function presentAlertMultipleButtons() {
   await alertController.componentOnReady();
 
   const alert = await alertController.create({
-    title: 'Alert',
-    subTitle: 'Subtitle',
+    header: 'Alert',
+    subHeader: 'Subtitle',
     message: 'This is an alert message.',
     buttons: ['Cancel', 'Open Modal', 'Delete']
   });
@@ -30,7 +30,7 @@ async function presentAlertConfirm() {
   await alertController.componentOnReady();
 
   const alert = await alertController.create({
-    title: 'Confirm!',
+    header: 'Confirm!',
     message: 'Message <strong>text</strong>!!!',
     buttons: [
       {
@@ -56,7 +56,7 @@ async function presentAlertPrompt() {
   await alertController.componentOnReady();
 
   const alert = await alertController.create({
-    title: 'Prompt!',
+    header: 'Prompt!',
     inputs: [
       {
         placeholder: 'Placeholder 1'
@@ -120,7 +120,7 @@ async function presentAlertRadio() {
   await alertController.componentOnReady();
 
   const alert = await alertController.create({
-    title: 'Radio',
+    header: 'Radio',
     inputs: [
       {
         type: 'radio',
@@ -178,7 +178,7 @@ async function presentAlertCheckbox() {
   await alertController.componentOnReady();
 
   const alert = await alertController.create({
-    title: 'Checkbox',
+    header: 'Checkbox',
     inputs: [
       {
         type: 'checkbox',

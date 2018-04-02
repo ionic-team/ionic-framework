@@ -122,7 +122,6 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       this.activated = enteringView.ref;
     } else {
       const snapshot = (activatedRoute as any)._futureSnapshot;
-
       const component = <any>snapshot.routeConfig !.component;
       resolver = resolver || this.resolver;
 

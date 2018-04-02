@@ -61,7 +61,10 @@ boolean
 
 ## Events
 
-#### ionNavChanged
+#### ionNavDidChange
+
+
+#### ionNavWillChange
 
 
 ## Methods

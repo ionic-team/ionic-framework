@@ -39,6 +39,14 @@ boolean
 
 
 
+## Events
+
+#### ionNavDidChange
+
+
+#### ionNavWillChange
+
+
 ## Methods
 
 #### commit()

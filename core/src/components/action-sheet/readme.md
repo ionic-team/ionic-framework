@@ -45,6 +45,13 @@ If true, the action sheet will be dismissed when the backdrop is clicked. Defaul
 Animation to use when the action sheet is presented.
 
 
+#### header
+
+string
+
+Title for the action sheet.
+
+
 #### keyboardClose
 
 boolean
@@ -62,18 +69,11 @@ Animation to use when the action sheet is dismissed.
 number
 
 
-#### subTitle
+#### subHeader
 
 string
 
 Subtitle for the action sheet.
-
-
-#### title
-
-string
-
-Title for the action sheet.
 
 
 #### translucent
@@ -121,6 +121,13 @@ If true, the action sheet will be dismissed when the backdrop is clicked. Defaul
 Animation to use when the action sheet is presented.
 
 
+#### header
+
+string
+
+Title for the action sheet.
+
+
 #### keyboard-close
 
 boolean
@@ -138,18 +145,11 @@ Animation to use when the action sheet is dismissed.
 number
 
 
-#### sub-title
+#### sub-header
 
 string
 
 Subtitle for the action sheet.
-
-
-#### title
-
-string
-
-Title for the action sheet.
 
 
 #### translucent

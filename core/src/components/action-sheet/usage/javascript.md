@@ -4,7 +4,7 @@ async function presentActionSheet() {
   await actionSheetController.componentOnReady();
 
   const actionSheet = await actionSheetController.create({
-    title: "Albums",
+    header: "Albums",
     buttons: [{
       text: 'Delete',
       role: 'destructive',

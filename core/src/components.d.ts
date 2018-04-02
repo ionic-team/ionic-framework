@@ -183,6 +183,10 @@ declare global {
      * Animation to use when the action sheet is presented.
      */
     'enterAnimation': AnimationBuilder;
+    /**
+     * Title for the action sheet.
+     */
+    'header': string;
     'keyboardClose': boolean;
     /**
      * Animation to use when the action sheet is dismissed.
@@ -204,11 +208,7 @@ declare global {
     /**
      * Subtitle for the action sheet.
      */
-    'subTitle': string;
-    /**
-     * Title for the action sheet.
-     */
-    'title': string;
+    'subHeader': string;
     /**
      * If true, the action sheet will be translucent. Defaults to `false`.
      */
@@ -251,6 +251,10 @@ declare global {
        * Animation to use when the action sheet is presented.
        */
       'enterAnimation'?: AnimationBuilder;
+      /**
+       * Title for the action sheet.
+       */
+      'header'?: string;
       'keyboardClose'?: boolean;
       /**
        * Animation to use when the action sheet is dismissed.
@@ -284,11 +288,7 @@ declare global {
       /**
        * Subtitle for the action sheet.
        */
-      'subTitle'?: string;
-      /**
-       * Title for the action sheet.
-       */
-      'title'?: string;
+      'subHeader'?: string;
       /**
        * If true, the action sheet will be translucent. Defaults to `false`.
        */
@@ -354,6 +354,10 @@ declare global {
      */
     'enterAnimation': AnimationBuilder;
     /**
+     * The main title in the heading of the alert.
+     */
+    'header': string;
+    /**
      * Array of input to show in the alert.
      */
     'inputs': AlertInput[];
@@ -383,11 +387,7 @@ declare global {
     /**
      * The subtitle in the heading of the alert. Displayed under the title.
      */
-    'subTitle': string;
-    /**
-     * The main title in the heading of the alert.
-     */
-    'title': string;
+    'subHeader': string;
     /**
      * If true, the alert will be translucent. Defaults to `false`.
      */
@@ -431,6 +431,10 @@ declare global {
        */
       'enterAnimation'?: AnimationBuilder;
       /**
+       * The main title in the heading of the alert.
+       */
+      'header'?: string;
+      /**
        * Array of input to show in the alert.
        */
       'inputs'?: AlertInput[];
@@ -472,11 +476,7 @@ declare global {
       /**
        * The subtitle in the heading of the alert. Displayed under the title.
        */
-      'subTitle'?: string;
-      /**
-       * The main title in the heading of the alert.
-       */
-      'title'?: string;
+      'subHeader'?: string;
       /**
        * If true, the alert will be translucent. Defaults to `false`.
        */
@@ -3556,7 +3556,8 @@ declare global {
     export interface IonNavAttributes extends HTMLAttributes {
       'animated'?: boolean;
       'delegate'?: FrameworkDelegate|undefined;
-      'onIonNavChanged'?: (event: CustomEvent<void>) => void;
+      'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
+      'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
       'root'?: NavComponent|undefined;
       'rootParams'?: ComponentProps|undefined;
       'swipeBackEnabled'?: boolean;
@@ -4735,6 +4736,8 @@ declare global {
       'animated'?: boolean;
       'animationBuilder'?: AnimationBuilder;
       'delegate'?: FrameworkDelegate;
+      'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
+      'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
     }
   }
 }
@@ -5180,10 +5183,10 @@ declare global {
 
 declare global {
   interface HTMLIonSelectPopoverElement extends HTMLStencilElement {
+    'header': string;
     'message': string;
     'options': SelectPopoverOption[];
-    'subTitle': string;
-    'title': string;
+    'subHeader': string;
   }
   var HTMLIonSelectPopoverElement: {
     prototype: HTMLIonSelectPopoverElement;
@@ -5202,10 +5205,10 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSelectPopoverAttributes extends HTMLAttributes {
+      'header'?: string;
       'message'?: string;
       'options'?: SelectPopoverOption[];
-      'subTitle'?: string;
-      'title'?: string;
+      'subHeader'?: string;
     }
   }
 }
@@ -5957,6 +5960,7 @@ declare global {
      * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
      */
     'translucent': boolean;
+    'useRouter': boolean;
   }
   var HTMLIonTabsElement: {
     prototype: HTMLIonTabsElement;
@@ -5987,7 +5991,8 @@ declare global {
        * Emitted when the tab changes.
        */
       'onIonChange'?: (event: CustomEvent) => void;
-      'onIonNavChanged'?: (event: CustomEvent<void>) => void;
+      'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
+      'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
       'scrollable'?: boolean;
       /**
        * If true, the tabbar
@@ -6009,6 +6014,7 @@ declare global {
        * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
        */
       'translucent'?: boolean;
+      'useRouter'?: boolean;
     }
   }
 }

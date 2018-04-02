@@ -18,9 +18,9 @@ export interface SelectPopoverOption {
 export class SelectPopover {
   private mode: string;
 
-  @Prop() title: string;
+  @Prop() header: string;
 
-  @Prop() subTitle: string;
+  @Prop() subHeader: string;
 
   @Prop() message: string;
 
@@ -35,11 +35,11 @@ export class SelectPopover {
   render() {
     return (
       <ion-list no-lines={this.mode === 'md'}>
-        { this.title ? <ion-list-header>{this.title}</ion-list-header> : null }
-        { this.subTitle || this.message
+        { this.header ? <ion-list-header>{this.header}</ion-list-header> : null }
+        { this.subHeader || this.message
           ? <ion-item>
               <ion-label>
-                { this.subTitle ? <h3>{this.subTitle}</h3> : null }
+                { this.subHeader ? <h3>{this.subHeader}</h3> : null }
                 { this.message ? <p>{this.message}</p> : null }
               </ion-label>
             </ion-item>

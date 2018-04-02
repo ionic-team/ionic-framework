@@ -61,14 +61,14 @@ export class ActionSheet implements OverlayInterface {
   @Prop() enableBackdropDismiss = true;
 
   /**
-   * Subtitle for the action sheet.
-   */
-  @Prop() subTitle: string;
-
-  /**
    * Title for the action sheet.
    */
-  @Prop() title: string;
+  @Prop() header: string;
+
+  /**
+   * Subtitle for the action sheet.
+   */
+  @Prop() subHeader: string;
 
   /**
    * If true, the action sheet will be translucent. Defaults to `false`.
@@ -231,11 +231,11 @@ export class ActionSheet implements OverlayInterface {
       <div class='action-sheet-wrapper' role='dialog'>
         <div class='action-sheet-container'>
           <div class='action-sheet-group'>
-            {this.title
+            {this.header
               ? <div class='action-sheet-title'>
-                {this.title}
-                {this.subTitle
-                ? <div class='action-sheet-sub-title'>{this.subTitle}</div>
+                {this.header}
+                {this.subHeader
+                ? <div class='action-sheet-sub-title'>{this.subHeader}</div>
                 : null}
               </div>
               : null}
@@ -287,8 +287,8 @@ function buttonClass(button: ActionSheetButton): CssClassMap {
 }
 
 export interface ActionSheetOptions {
-  title?: string;
-  subTitle?: string;
+  header?: string;
+  subHeader?: string;
   cssClass?: string;
   buttons?: (ActionSheetButton | string)[];
   enableBackdropDismiss?: boolean;
