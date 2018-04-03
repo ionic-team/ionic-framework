@@ -154,7 +154,7 @@ export class Button {
           <span class='button-inner'>
             <slot name='icon-only'></slot>
             <slot name='start'></slot>
-            <span class='button-text'><slot></slot></span>
+            <slot></slot>
             <slot name='end'></slot>
           </span>
           { this.mode === 'md' && <ion-ripple-effect useTapClick={true}/> }
