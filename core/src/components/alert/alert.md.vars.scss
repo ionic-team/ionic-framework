@@ -41,6 +41,9 @@ $alert-md-head-padding-start:                 $alert-md-head-padding-end !defaul
 /// @prop - Text align of the alert head
 $alert-md-head-text-align:                    start !default;
 
+/// @prop - Color of the alert title
+$alert-md-title-color:                        $text-md-color !default;
+
 /// @prop - Font size of the alert title
 $alert-md-title-font-size:                    20px !default;
 
@@ -49,6 +52,9 @@ $alert-md-title-font-weight:                  500 !default;
 
 /// @prop - Font size of the alert sub title
 $alert-md-sub-title-font-size:                16px !default;
+
+/// @prop - Text color of the alert sub title
+$alert-md-sub-title-text-color:               $text-md-color !default;
 
 /// @prop - Padding top of the alert message
 $alert-md-message-padding-top:                0 !default;

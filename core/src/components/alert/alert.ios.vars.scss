@@ -44,6 +44,9 @@ $alert-ios-head-padding-start:                          $alert-ios-head-padding-
 /// @prop - Text align of the alert head
 $alert-ios-head-text-align:                             center !default;
 
+/// @prop - Color of the alert title
+$alert-ios-title-color:                                 $text-ios-color !default;
+
 /// @prop - Margin top of the alert title
 $alert-ios-title-margin-top:                            8px !default;
 
@@ -78,7 +81,7 @@ $alert-ios-message-font-size:                           13px !default;
 $alert-ios-message-text-align:                          center !default;
 
 /// @prop - Text color of the alert message
-$alert-ios-message-text-color:                          inherit !default;
+$alert-ios-message-text-color:                          $text-ios-color !default;
 
 /// @prop - Padding top of the alert empty message
 $alert-ios-message-empty-padding-top:                   0 !default;

@@ -44,6 +44,7 @@
 .alert-ios .alert-title {
   @include margin($alert-ios-title-margin-top, null, null, null);
 
+  color: $alert-ios-title-color;
   font-size: $alert-ios-title-font-size;
   font-weight: $alert-ios-title-font-weight;
 }
