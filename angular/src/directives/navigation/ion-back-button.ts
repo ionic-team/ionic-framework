@@ -21,12 +21,14 @@ export class IonBackButton {
     private elementRef: ElementRef,
   ) {}
 
-  @HostListener('click')
-  onClick() {
+  @HostListener('click', ['$event'])
+  onClick(ev: Event) {
     if (this.routerOutlet && this.routerOutlet.canGoBack()) {
       this.routerOutlet.pop();
+      ev.preventDefault();
     } else if (this.router && this.defaultHref != null) {
       this.router.navigateByUrl(this.defaultHref);
+      ev.preventDefault();
     }
   }
 }
