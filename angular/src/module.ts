@@ -100,6 +100,7 @@ const DECLARATIONS = [
   c.NavDelegate,
   c.TabDelegate,
   c.TabsDelegate,
+  c.HrefDelegate,
 
   // virtual scroll
   c.VirtualFooter,
