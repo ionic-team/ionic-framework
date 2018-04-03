@@ -23,12 +23,13 @@ export class ReorderIndexes {
   }
 })
 export class ReorderGroup {
-  private selectedItemEl: HTMLElement|null = null;
+
+  private selectedItemEl: HTMLElement|undefined;
   private selectedItemHeight: number;
   private lastToIndex: number;
   private cachedHeights: number[] = [];
   private containerEl: HTMLElement;
-  private scrollEl: HTMLElement;
+  private scrollEl: HTMLElement|null = null;
 
   private scrollElTop: number;
   private scrollElBottom: number;
@@ -64,7 +65,7 @@ export class ReorderGroup {
   }
 
   componentDidLoad() {
-    this.containerEl = this.el.querySelector('ion-gesture');
+    this.containerEl = this.el.querySelector('ion-gesture')!;
     this.scrollEl = this.el.closest('ion-scroll');
     if (!this.disabled) {
       this.disabledChanged(false);
@@ -188,7 +189,7 @@ export class ReorderGroup {
       if (this.selectedItemEl) {
         this.selectedItemEl.style.transition = '';
         this.selectedItemEl.classList.remove(ITEM_REORDER_SELECTED);
-        this.selectedItemEl = null;
+        this.selectedItemEl = undefined;
       }
     };
     if (toIndex === fromIndex) {

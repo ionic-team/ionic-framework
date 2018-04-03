@@ -122,10 +122,10 @@ export class Menu {
   @Event() protected ionMenuChange: EventEmitter<MenuChangeEventDetail>;
 
   async componentWillLoad() {
-    this.menuCtrl = await this.lazyMenuCtrl.componentOnReady();
     if (this.type == null) {
       this.type = this.mode === 'ios' ? 'reveal' : 'overlay';
     }
+    this.menuCtrl = await this.lazyMenuCtrl.componentOnReady();
   }
 
   componentDidLoad() {
@@ -135,11 +135,12 @@ export class Menu {
     const el = this.el;
     const content = (this.contentId)
       ? document.getElementById(this.contentId)
-      : el.parentElement.querySelector('[main]');
+      : el.parentElement && el.parentElement.querySelector('[main]');
 
     if (!content || !content.tagName) {
       // requires content element
-      return console.error('Menu: must have a "content" element to listen for drag events on.');
+      console.error('Menu: must have a "content" element to listen for drag events on.');
+      return;
     }
     this.contentEl = content as HTMLElement;
 
@@ -151,13 +152,13 @@ export class Menu {
 
     let isEnabled = !this.disabled;
     if (isEnabled === true || typeof isEnabled === 'undefined') {
-      const menus = this.menuCtrl.getMenus();
+      const menus = this.menuCtrl!.getMenus();
       isEnabled = !menus.some(m => {
         return m.side === this.side && !m.disabled;
       });
     }
     // register this menu with the app's menu controller
-    this.menuCtrl._register(this);
+    this.menuCtrl!._register(this);
     this.ionMenuChange.emit({ disabled: !isEnabled, open: this._isOpen});
 
     // mask it as enabled / disabled
@@ -165,10 +166,10 @@ export class Menu {
   }
 
   componentDidUnload() {
-    this.menuCtrl._unregister(this);
+    this.menuCtrl!._unregister(this);
     this.animation && this.animation.destroy();
 
-    this.menuCtrl = this.animation = undefined;
+    this.animation = undefined;
     this.contentEl = this.backdropEl = this.menuInnerEl = undefined;
   }
 
@@ -210,7 +211,7 @@ export class Menu {
 
   @Method()
   setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
-    return this.menuCtrl._setOpen(this, shouldOpen, animated);
+    return this.menuCtrl!._setOpen(this, shouldOpen, animated);
   }
 
   async _setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
@@ -235,7 +236,7 @@ export class Menu {
   private async loadAnimation(): Promise<void> {
     // Menu swipe animation takes the menu's inner width as parameter,
     // If `offsetWidth` changes, we need to create a new animation.
-    const width = this.menuInnerEl.offsetWidth;
+    const width = this.menuInnerEl!.offsetWidth;
     if (width === this.width && this.animation !== undefined) {
       return;
     }
@@ -247,11 +248,11 @@ export class Menu {
       this.animation = undefined;
     }
     // Create new animation
-    this.animation = await this.menuCtrl.createAnimation(this.type, this);
+    this.animation = await this.menuCtrl!.createAnimation(this.type, this);
   }
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
-    const ani = this.animation.reverse(!shouldOpen);
+    const ani = this.animation!.reverse(!shouldOpen);
     if (animated) {
       await ani.playAsync();
     } else {
@@ -271,7 +272,7 @@ export class Menu {
     }
     if (this._isOpen) {
       return true;
-    } else if (this.menuCtrl.getOpen()) {
+    } else if (this.menuCtrl!.getOpen()) {
       return false;
     }
     return checkEdgeSide(detail.currentX, this.isRightSide, this.maxEdgeStart);
@@ -283,8 +284,7 @@ export class Menu {
   }
 
   private onDragStart() {
-    assert(!!this.animation, '_type is undefined');
-    if (!this.isAnimating) {
+    if (!this.isAnimating || !this.animation) {
       assert(false, 'isAnimating has to be true');
       return;
     }
@@ -296,8 +296,7 @@ export class Menu {
   }
 
   private onDragMove(detail: GestureDetail) {
-    assert(!!this.animation, '_type is undefined');
-    if (!this.isAnimating) {
+    if (!this.isAnimating || !this.animation) {
       assert(false, 'isAnimating has to be true');
       return;
     }
@@ -308,8 +307,7 @@ export class Menu {
   }
 
   private onDragEnd(detail: GestureDetail) {
-    assert(!!this.animation, '_type is undefined');
-    if (!this.isAnimating) {
+    if (!this.isAnimating || !this.animation) {
       assert(false, 'isAnimating has to be true');
       return;
     }
@@ -355,7 +353,7 @@ export class Menu {
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
     this.el.classList.add(SHOW_MENU);
-    this.backdropEl.classList.add(SHOW_BACKDROP);
+    this.backdropEl && this.backdropEl.classList.add(SHOW_BACKDROP);
     this.isAnimating = true;
   }
 
@@ -374,7 +372,7 @@ export class Menu {
 
     if (isOpen) {
       // add css class
-      this.contentEl.classList.add(MENU_CONTENT_OPEN);
+      this.contentEl && this.contentEl.classList.add(MENU_CONTENT_OPEN);
 
       // emit open event
       this.ionOpen.emit();
@@ -382,8 +380,8 @@ export class Menu {
     } else {
       // remove css classes
       this.el.classList.remove(SHOW_MENU);
-      this.contentEl.classList.remove(MENU_CONTENT_OPEN);
-      this.backdropEl.classList.remove(SHOW_BACKDROP);
+      this.contentEl && this.contentEl.classList.remove(MENU_CONTENT_OPEN);
+      this.backdropEl && this.backdropEl.classList.remove(SHOW_BACKDROP);
 
       // emit close event
       this.ionClose.emit();
@@ -438,23 +436,20 @@ export class Menu {
         tappable={false}
         stopPropagation={false}/>,
 
-      <ion-gesture {...{
-        'canStart': this.canStart.bind(this),
-        'onWillStart': this.onWillStart.bind(this),
-        'onStart': this.onDragStart.bind(this),
-        'onMove': this.onDragMove.bind(this),
-        'onEnd': this.onDragEnd.bind(this),
-        'maxEdgeStart': this.maxEdgeStart,
-        'edge': this.side,
-        'disabled': !this.isActive() || !this.swipeEnabled,
-        'gestureName': 'menu-swipe',
-        'gesturePriority': 10,
-        'type': 'pan',
-        'direction': 'x',
-        'threshold': 10,
-        'attachTo': 'window',
-        'disableScroll': true,
-      }}/>
+      <ion-gesture
+        canStart={this.canStart.bind(this)}
+        onWillStart={this.onWillStart.bind(this)}
+        onStart={this.onDragStart.bind(this)}
+        onMove={this.onDragMove.bind(this)}
+        onEnd={this.onDragEnd.bind(this)}
+        disabled={!this.isActive() || !this.swipeEnabled}
+        gestureName='menu-swipe'
+        gesturePriority={10}
+        type='pan'
+        direction='x'
+        threshold={10}
+        attachTo='window'
+        disableScroll={true} />
     ]);
   }
 }

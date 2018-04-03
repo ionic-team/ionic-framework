@@ -61,7 +61,7 @@ export class Scroll {
       scrollTop: 0,
       scrollLeft: 0,
       type: 'scroll',
-      event: undefined,
+      event: undefined!,
       startX: 0,
       startY: 0,
       startTimeStamp: 0,
@@ -132,27 +132,23 @@ export class Scroll {
     // scroll animation loop w/ easing
     // credit https://gist.github.com/dezinezync/5487119
 
-    let promise: Promise<any>;
-    if (done === undefined) {
-      // only create a promise if a done callback wasn't provided
-      // done can be a null, which avoids any functions
-      promise = new Promise(resolve => {
-        done = resolve;
-      });
-    }
+    let resolve!: Function;
+    const promise = new Promise(r => {
+      resolve = r;
+    }).then(() => done && done());
 
     const self = this;
     const el = self.el;
     if (!el) {
       // invalid element
-      done();
+      resolve();
       return promise;
     }
 
     if (duration < 32) {
       el.scrollTop = y;
       el.scrollLeft = x;
-      done();
+      resolve();
       return promise;
     }
 
@@ -172,7 +168,7 @@ export class Scroll {
       if (!self.el || stopScroll || attempts > maxAttempts) {
         self.isScrolling = false;
         el.style.transform = el.style.webkitTransform = '';
-        done();
+        resolve();
         return;
       }
 
@@ -199,7 +195,7 @@ export class Scroll {
         stopScroll = true;
         self.isScrolling = false;
         el.style.transform = el.style.webkitTransform = '';
-        done();
+        resolve();
       }
     }
 

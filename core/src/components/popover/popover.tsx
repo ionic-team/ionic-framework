@@ -176,9 +176,12 @@ export class Popover implements OverlayInterface {
   @Method()
   async present(): Promise<void> {
     if (this.presented) {
-      return Promise.reject('df');
+      return;
     }
     const container = this.el.querySelector('.popover-content');
+    if (!container) {
+      throw new Error('container is undefined');
+    }
     const data = {
       ...this.componentProps,
       popover: this.el

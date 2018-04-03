@@ -2,6 +2,7 @@
   "extends": "tslint-ionic-rules",
   "rules": {
     "no-conditional-assignment": false,
+    "no-non-null-assertion": false,
     "no-unnecessary-type-assertion": false,
     "prefer-for-of": false,
     "no-import-side-effect": false

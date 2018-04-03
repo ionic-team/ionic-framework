@@ -1,4 +1,4 @@
-import { Component, Element, Listen, Prop, State } from '@stencil/core';
+import { Component, Element, Listen, Prop } from '@stencil/core';
 import { createThemedClasses, getElementClassMap, openURL } from '../../utils/theme';
 import { CssClassMap } from '../../index';
 
@@ -11,11 +11,10 @@ import { CssClassMap } from '../../index';
   }
 })
 export class Item {
+
   private itemStyles: { [key: string]: CssClassMap } = {};
 
-  @Element() private el: HTMLElement;
-
-  @State() hasStyleChange: boolean;
+  @Element() private el: HTMLStencilElement;
 
   /**
    * The color to use from your Sass `$colors` map.
@@ -61,23 +60,24 @@ export class Item {
   itemStyle(ev: UIEvent) {
     ev.stopPropagation();
 
-    let hasChildStyleChange = false;
-
     const tagName: string = (ev.target as HTMLElement).tagName;
-    const updatedStyles: any = ev.detail;
-
-    for (const key in updatedStyles) {
-      if (('item-' + key) !== key) {
-        Object.defineProperty(updatedStyles, 'item-' + key, Object.getOwnPropertyDescriptor(updatedStyles, key));
-        delete updatedStyles[key];
-        hasChildStyleChange = true;
+    const updatedStyles = ev.detail as any;
+    const updatedKeys = Object.keys(ev.detail);
+    const newStyles = {} as any;
+    const childStyles = this.itemStyles[tagName] || {};
+    let hasStyleChange = false;
+    for (const key of updatedKeys) {
+      const itemKey = `item-${key}`;
+      const newValue = updatedStyles[key];
+      if (newValue !== childStyles[itemKey]) {
+        hasStyleChange = true;
       }
+      newStyles[itemKey] = newValue;
     }
 
-    this.itemStyles[tagName] = updatedStyles;
-
-    if (hasChildStyleChange) {
-      this.hasStyleChange = true;
+    if (hasStyleChange) {
+      this.itemStyles[tagName] = newStyles;
+      this.el.forceUpdate();
     }
   }
 
@@ -93,10 +93,9 @@ export class Item {
   }
 
   render() {
-    let childStyles = {};
-
+    const childStyles = {};
     for (const key in this.itemStyles) {
-      childStyles = Object.assign(childStyles, this.itemStyles[key]);
+      Object.assign(childStyles, this.itemStyles[key]);
     }
 
     const clickable = !!(this.href || this.el.onclick || this.button);
@@ -118,8 +117,6 @@ export class Item {
       'item-disabled': this.disabled,
       'item-detail-push': showDetail,
     };
-
-    this.hasStyleChange = false;
 
     return (
       <TagType

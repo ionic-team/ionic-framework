@@ -17,7 +17,7 @@ import { InputComponent } from './input-base';
 })
 export class Input implements InputComponent {
 
-  private nativeInput: HTMLInputElement;
+  private nativeInput: HTMLInputElement|undefined;
   mode: string;
   color: string;
 
@@ -230,7 +230,7 @@ export class Input implements InputComponent {
   }
 
   componentDidUnload() {
-    this.nativeInput = null;
+    this.nativeInput = undefined;
     this.ionInputDidUnload.emit(this.el);
   }
 
@@ -258,7 +258,7 @@ export class Input implements InputComponent {
   }
 
   inputChanged(ev: Event) {
-    this.value = ev.target && (ev.target as HTMLInputElement).value;
+    this.value = ev.target && (ev.target as HTMLInputElement).value || '';
     this.ionInput.emit(ev);
     this.emitStyle();
   }

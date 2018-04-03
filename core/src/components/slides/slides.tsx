@@ -103,9 +103,7 @@ export class Slides {
   @Prop() pager = true;
 
   componentDidLoad() {
-    let timer: number;
-    clearTimeout(timer);
-    timer = setTimeout(this.initSlides.bind(this), 10);
+    setTimeout(this.initSlides.bind(this), 10);
   }
 
   componentDidUnload() {

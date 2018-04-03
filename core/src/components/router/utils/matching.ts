@@ -81,7 +81,7 @@ export function matchesPath(path: string[], chain: RouteChain): RouteChain | nul
     return chain.map((route, i) => ({
       id: route.id,
       path: route.path,
-      params: mergeParams(route.params, allparams[i])
+      params: mergeParams(route.params, allparams![i])
     }));
   }
   return chain;

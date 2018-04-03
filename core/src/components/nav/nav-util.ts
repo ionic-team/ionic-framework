@@ -87,5 +87,4 @@ export interface TransitionInstruction {
   done?: TransitionDoneFn;
   leavingRequiresTransition?: boolean;
   enteringRequiresTransition?: boolean;
-  requiresTransition?: boolean;
 }

@@ -96,7 +96,7 @@ export class Select {
   /**
    * the value of the select.
    */
-  @Prop({ mutable: true }) value: string | string[] | null = null;
+  @Prop({ mutable: true }) value: string | string[] | undefined;
 
   /**
    * Emitted when the value has changed.
@@ -146,7 +146,7 @@ export class Select {
       const texts: string[] = [];
 
       this.childOpts.forEach(selectOption => {
-        if ((Array.isArray(this.value) && this.value.indexOf(selectOption.value) > -1) || (selectOption.value === this.value)) {
+        if ((Array.isArray(this.value) && this.value.includes(selectOption.value)) || (selectOption.value === this.value)) {
           if (!selectOption.selected && (this.multiple || !hasChecked)) {
             // correct value for this select option
             // but this select option isn't checked yet
@@ -170,7 +170,7 @@ export class Select {
         }
 
         if (selectOption.selected) {
-          texts.push(selectOption.textContent);
+          texts.push(selectOption.textContent || '');
         }
       });
 
@@ -190,7 +190,7 @@ export class Select {
     const selectOption = ev.target;
     this.childOpts = Array.from(this.el.querySelectorAll('ion-select-option'));
 
-    if (this.value !== undefined && (Array.isArray(this.value) && this.value.indexOf(selectOption.value) > -1) || (selectOption.value === this.value)) {
+    if (this.value != null && (Array.isArray(this.value) && this.value.includes(selectOption.value)) || (selectOption.value === this.value)) {
       // this select has a value and this
       // option equals the correct select value
       // so let's check this select option
@@ -267,7 +267,7 @@ export class Select {
       const checked = this.childOpts.find(o => o.selected);
       if (checked) {
         this.value = checked.value;
-        this.text = checked.textContent;
+        this.text = checked.textContent || '';
       }
     }
     this.emitStyle();
@@ -511,9 +511,19 @@ export class Select {
         <slot></slot>
         { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </button>,
-      <input type='hidden' name={this.name} value={this.value}/>
+      <input type='hidden' name={this.name} value={parseValue(this.value)}/>
     ];
   }
+}
+
+function parseValue(value: string[]|string|undefined) {
+  if (value == null) {
+    return undefined;
+  }
+  if (typeof value === 'string') {
+    return value;
+  }
+  return value.join(',');
 }
 
 let selectIds = 0;

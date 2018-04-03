@@ -13,7 +13,7 @@ export default function iosLeaveAnimation(Animation: Animation, baseEl: HTMLElem
   const wrapperAnimation = new Animation();
   const wrapperEl = baseEl.querySelector('.modal-wrapper');
   wrapperAnimation.addElement(wrapperEl);
-  const wrapperElRect = wrapperEl.getBoundingClientRect();
+  const wrapperElRect = wrapperEl!.getBoundingClientRect();
 
   wrapperAnimation.beforeStyles({ 'opacity': 1 })
                   .fromTo('translateY', '0%', `${window.innerHeight - wrapperElRect.top}px`);

@@ -36,10 +36,10 @@ export async function writeNavState(root: HTMLElement|undefined, chain: RouteCha
   }
 }
 
-export function readNavState(root: HTMLElement | null) {
+export function readNavState(root: HTMLElement | undefined) {
   const ids: RouteID[] = [];
   let outlet: NavOutlet|null;
-  let node: HTMLElement|null = root;
+  let node: HTMLElement|undefined = root;
   while (true) {
     outlet = searchNavNode(node);
     if (outlet) {

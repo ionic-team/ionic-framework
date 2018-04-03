@@ -142,7 +142,7 @@ export interface SelectInput extends BaseInput {
 
 
 export interface SelectInputChangeEvent {
-  value: string|string[];
+  value: string|string[]|undefined;
   text: string;
 }
 

@@ -6,7 +6,7 @@ export let MyCustomEvent = CustomEvent;
 export function transition(opts: AnimationOptions): Promise<Animation|null> {
   beforeTransition(opts);
 
-  return (opts.enteringEl && opts.leavingEl && (opts.animationBuilder || opts.animation))
+  return (opts.leavingEl && (opts.animationBuilder || opts.animation))
     ? animation(opts)
     : noAnimation(opts); // fast path for no animation
 }
@@ -17,14 +17,12 @@ function beforeTransition(opts: AnimationOptions) {
 
   setZIndex(enteringEl, leavingEl, opts.direction);
 
-  if (enteringEl) {
-    if (opts.showGoBack) {
-      enteringEl.classList.add('can-go-back');
-    } else {
-      enteringEl.classList.remove('can-go-back');
-    }
-    enteringEl.hidden = false;
+  if (opts.showGoBack) {
+    enteringEl.classList.add('can-go-back');
+  } else {
+    enteringEl.classList.remove('can-go-back');
   }
+  enteringEl.hidden = false;
   if (leavingEl) {
     leavingEl.hidden = false;
   }
@@ -54,7 +52,7 @@ async function noAnimation(opts: AnimationOptions): Promise<null> {
 
   fireWillEvents(enteringEl, leavingEl);
   fireDidEvents(enteringEl, leavingEl);
-  return undefined;
+  return null;
 }
 
 async function waitForReady(opts: AnimationOptions, defaultDeep: boolean) {
@@ -105,17 +103,17 @@ function playTransition(transition: Animation, opts: AnimationOptions): Promise<
   return promise;
 }
 
-function fireWillEvents(enteringEl: HTMLElement, leavingEl: HTMLElement) {
+function fireWillEvents(enteringEl: HTMLElement|undefined, leavingEl: HTMLElement|undefined) {
   lifecycle(leavingEl, ViewLifecycle.WillLeave);
   lifecycle(enteringEl, ViewLifecycle.WillEnter);
 }
 
-function fireDidEvents(enteringEl: HTMLElement, leavingEl: HTMLElement) {
+function fireDidEvents(enteringEl: HTMLElement|undefined, leavingEl: HTMLElement|undefined) {
   lifecycle(enteringEl, ViewLifecycle.DidEnter);
   lifecycle(leavingEl, ViewLifecycle.DidLeave);
 }
 
-export function lifecycle(el: HTMLElement, lifecycle: ViewLifecycle) {
+export function lifecycle(el: HTMLElement|undefined, lifecycle: ViewLifecycle) {
   if (el) {
     const event = new MyCustomEvent(lifecycle, {
       bubbles: false,
@@ -129,14 +127,14 @@ export function mockLifecycle(fn: any) {
   MyCustomEvent = fn;
 }
 
-function shallowReady(el: Element): Promise<any> {
+function shallowReady(el: Element|undefined): Promise<any> {
   if (el && (el as any).componentOnReady) {
     return (el as any).componentOnReady();
   }
   return Promise.resolve();
 }
 
-function deepReady(el: Element): Promise<any> {
+function deepReady(el: Element|undefined): Promise<any> {
   if (!el) {
     return Promise.resolve();
   }
@@ -158,7 +156,7 @@ function componentOnReady(el: Element) {
   }
 }
 
-function setZIndex(enteringEl: HTMLElement, leavingEl: HTMLElement, direction: NavDirection) {
+function setZIndex(enteringEl: HTMLElement|undefined, leavingEl: HTMLElement|undefined, direction: NavDirection | undefined) {
   if (enteringEl) {
     enteringEl.style.zIndex = (direction === NavDirection.Back)
       ? '99'
@@ -179,7 +177,7 @@ export const enum ViewLifecycle {
 
 export interface AnimationOptions {
   animationCtrl: HTMLIonAnimationControllerElement;
-  animationBuilder: AnimationBuilder;
+  animationBuilder: AnimationBuilder|undefined;
   animation?: Animation;
   direction?: NavDirection;
   duration?: number;
@@ -189,6 +187,6 @@ export interface AnimationOptions {
   showGoBack?: boolean;
   progressAnimation?: Function;
   enteringEl: HTMLElement;
-  leavingEl: HTMLElement;
+  leavingEl: HTMLElement|undefined;
   baseEl: HTMLElement;
 }

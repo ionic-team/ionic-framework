@@ -12,7 +12,7 @@ import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matc
 export class Router {
 
   private routes: RouteChain[];
-  private previousPath: string = null;
+  private previousPath: string|null = null;
   private redirects: RouteRedirect[];
   private busy = false;
   private init = false;
@@ -139,16 +139,20 @@ export class Router {
     return this.writeNavStateRoot(path, direction);
   }
 
-  private async writeNavStateRoot(path: string[], direction: RouterDirection): Promise<boolean> {
+  private async writeNavStateRoot(path: string[]|null, direction: RouterDirection): Promise<boolean> {
     if (this.busy) {
       return false;
     }
+    if (!path) {
+      console.error('[ion-router] URL is not part of the routing set');
+      return false;
+    }
     const redirect = routeRedirect(path, this.redirects);
-    let redirectFrom: string[] = null;
+    let redirectFrom: string[]|null = null;
     if (redirect) {
-      this.setPath(redirect.to, direction);
+      this.setPath(redirect.to!, direction);
       redirectFrom = redirect.from;
-      path = redirect.to;
+      path = redirect.to!;
     }
     const chain = routerPathToChain(path, this.routes);
     const changed = await this.writeNavState(document.body, chain, direction);
@@ -158,7 +162,7 @@ export class Router {
     return changed;
   }
 
-  private async writeNavState(node: any, chain: RouteChain, direction: RouterDirection, index = 0): Promise<boolean> {
+  private async writeNavState(node: any, chain: RouteChain | null, direction: RouterDirection, index = 0): Promise<boolean> {
     if (this.busy) {
       return false;
     }

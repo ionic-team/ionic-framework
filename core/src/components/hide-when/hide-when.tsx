@@ -16,11 +16,11 @@ export class HideWhen implements DisplayWhen {
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'platforms' }) calculatedPlatforms: PlatformConfig[];
 
-  @Prop() orientation: string = null;
-  @Prop() mediaQuery: string = null;
-  @Prop() size: string = null;
-  @Prop() mode: string = null;
-  @Prop() platform: string = null;
+  @Prop() orientation: string|undefined;
+  @Prop() mediaQuery: string|undefined;
+  @Prop() size: string|undefined;
+  @Prop() mode: string|undefined;
+  @Prop() platform: string|undefined;
   @Prop() or = false;
 
   @State() passesTest = false;

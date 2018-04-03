@@ -22,7 +22,7 @@ export class PickerColumnCmp {
   private pos: number[] = [];
   private rotateFactor: number;
   private scaleFactor: number;
-  private startY: number;
+  private startY: number|undefined;
   private velocity: number;
   private y = 0;
 
@@ -47,7 +47,7 @@ export class PickerColumnCmp {
 
   componentDidLoad() {
     // get the scrollable element within the column
-    const colEl = this.el.querySelector('.picker-opts');
+    const colEl = this.el.querySelector('.picker-opts')!;
 
     // get the height of one option
     this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
@@ -84,13 +84,13 @@ export class PickerColumnCmp {
     let opt: PickerColumnOption;
     let optOffset: number;
     let visible: boolean;
-    let translateY: number;
-    let translateZ: number;
+    let translateY = 0;
+    let translateZ = 0;
     let rotateX: number;
     let transform: string;
     let selected: boolean;
 
-    const parent = this.el.querySelector('.picker-opts');
+    const parent = this.el.querySelector('.picker-opts')!;
     const children = parent.children;
     const length = children.length;
     const selectedIndex = this.col.selectedIndex = Math.min(Math.max(Math.round(-y / this.optHeight), 0), length - 1);
@@ -280,7 +280,7 @@ export class PickerColumnCmp {
     const currentY = detail.currentY;
     this.pos.push(currentY, Date.now());
 
-    if (this.startY === null) {
+    if (this.startY === undefined) {
       return;
     }
 
@@ -310,7 +310,7 @@ export class PickerColumnCmp {
   }
 
   private onDragEnd(detail: GestureDetail) {
-    if (this.startY === null) {
+    if (this.startY === undefined) {
       return;
     }
 
@@ -356,7 +356,7 @@ export class PickerColumnCmp {
       this.update(y, 0, true, true);
     }
 
-    this.startY = null;
+    this.startY = undefined;
     this.decelerate();
   }
 
@@ -371,7 +371,7 @@ export class PickerColumnCmp {
       }
     }
 
-    const selectedIndex = clamp(min, this.col.selectedIndex, max);
+    const selectedIndex = clamp(min, this.col.selectedIndex!, max);
     if (this.col.prevSelected !== selectedIndex) {
       const y = (selectedIndex * this.optHeight) * -1;
       this.velocity = 0;
@@ -394,7 +394,7 @@ export class PickerColumnCmp {
   render() {
     const col = this.col;
 
-    const options = this.col.options.map(o => {
+    const options = col.options.map(o => {
       if (typeof o === 'string') {
         o = { text: o };
       }
@@ -406,7 +406,7 @@ export class PickerColumnCmp {
 
     if (col.prefix) {
       results.push(
-        <div class='picker-prefix' style={{width: col.prefixWidth}}>
+        <div class='picker-prefix' style={{width: col.prefixWidth!}}>
           {col.prefix}
         </div>
       );
@@ -426,12 +426,12 @@ export class PickerColumnCmp {
         threshold={0}
         attachTo='parent'
       ></ion-gesture>,
-      <div class='picker-opts' style={{maxWidth: col.optionsWidth}}>
+      <div class='picker-opts' style={{maxWidth: col.optionsWidth!}}>
         {options.map((o, index) =>
           <button
-            class={{'picker-opt': true, 'picker-opt-disabled': o.disabled}}
+            class={{'picker-opt': true, 'picker-opt-disabled': !!o.disabled}}
             disable-activated
-            onClick={() => this.optClick(event, index)}>
+            onClick={(event) => this.optClick(event, index)}>
             {o.text}
           </button>
         )}
@@ -440,7 +440,7 @@ export class PickerColumnCmp {
 
     if (col.suffix) {
       results.push(
-        <div class='picker-suffix' style={{width: col.suffixWidth}}>
+        <div class='picker-suffix' style={{width: col.suffixWidth!}}>
           {col.suffix}
         </div>
       );

@@ -78,7 +78,7 @@ export class MenuController {
    * @return {HTMLIonMenuElement}  Returns the instance of the menu, which is useful for chaining.
    */
   @Method()
-  enable(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement {
+  enable(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement|null {
     const menu = this.get(menuId);
     if (menu) {
       menu.disabled = !shouldEnable;
@@ -93,7 +93,7 @@ export class MenuController {
    * @return {HTMLIonMenuElement}  Returns the instance of the menu, which is useful for chaining.
    */
   @Method()
-  swipeEnable(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement {
+  swipeEnable(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement|null {
     const menu = this.get(menuId);
     if (menu) {
       menu.swipeEnabled = shouldEnable;
@@ -138,7 +138,7 @@ export class MenuController {
    * @return {HTMLIonMenuElement} Returns the instance of the menu if found, otherwise `null`.
    */
   @Method()
-  get(menuId?: string): HTMLIonMenuElement {
+  get(menuId?: string): HTMLIonMenuElement | null {
     if (menuId === 'left') {
       console.error('menu.side=left is deprecated, use "start" instead');
       return null;
@@ -179,7 +179,7 @@ export class MenuController {
    * @return {Menu} Returns the instance of the menu already opened, otherwise `null`.
    */
   @Method()
-  getOpen(): HTMLIonMenuElement {
+  getOpen(): HTMLIonMenuElement|null {
     return this.find(m => m.isOpen());
   }
 
@@ -269,7 +269,7 @@ export class MenuController {
     this.menuAnimations.set(name, animation);
   }
 
-  private find(predicate: (menu: Menu) => boolean): HTMLIonMenuElement {
+  private find(predicate: (menu: Menu) => boolean): HTMLIonMenuElement|null {
     const instance = this.menus.find(predicate);
     if (instance) {
       return instance.el;

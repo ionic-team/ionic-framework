@@ -5,7 +5,7 @@ export interface FrameworkDelegate {
   removeViewFromDom(container: any, component: any): Promise<void>;
 }
 
-export function attachComponent(delegate: FrameworkDelegate, container: Element, component: ComponentRef, cssClasses?: string[], componentProps?: {[key: string]: any}): Promise<HTMLElement> {
+export function attachComponent(delegate: FrameworkDelegate|undefined, container: Element, component: ComponentRef, cssClasses?: string[], componentProps?: {[key: string]: any}): Promise<HTMLElement> {
   if (delegate) {
     return delegate.attachViewToDom(container, component, componentProps, cssClasses);
   }
@@ -27,7 +27,7 @@ export function attachComponent(delegate: FrameworkDelegate, container: Element,
   return Promise.resolve(el);
 }
 
-export function detachComponent(delegate: FrameworkDelegate, element: HTMLElement) {
+export function detachComponent(delegate: FrameworkDelegate, element: HTMLElement|undefined) {
   if (element) {
     if (delegate) {
       const container = element.parentElement;

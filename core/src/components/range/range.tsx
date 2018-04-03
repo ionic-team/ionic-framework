@@ -222,7 +222,7 @@ export class Range implements BaseInputComponent {
     const ratio = this.ratio;
     if (this.snaps && ticks) {
       if (this.dualKnobs) {
-        const upperRatio = this.ratioUpper();
+        const upperRatio = this.ratioUpper()!;
 
         ticks.forEach(t => {
           t.active = t.ratio >= ratio && t.ratio <= upperRatio;
@@ -256,7 +256,7 @@ export class Range implements BaseInputComponent {
     }
   }
 
-  update(current: { x?: number; y?: number }, rect: ClientRect, isPressed: boolean) {
+  update(current: { x: number; y: number }, rect: ClientRect, isPressed: boolean) {
     // figure out where the pointer is currently at
     // update the knob being interacted with
     let ratio = clamp(0, (current.x - rect.left) / rect.width, 1);
@@ -365,7 +365,7 @@ export class Range implements BaseInputComponent {
     this.fireFocus();
 
     const current = { x: detail.currentX, y: detail.currentY };
-    const el = this.el.querySelector('.range-slider');
+    const el = this.el.querySelector('.range-slider')!;
     this.rect = el.getBoundingClientRect();
     const rect = this.rect;
 
@@ -432,9 +432,9 @@ export class Range implements BaseInputComponent {
         <div class='range-slider'>
           {this.ticks.map(t =>
             <div
-              style={{ left: t.left }}
+              style={{ left: t.left! }}
               role='presentation'
-              class={{ 'range-tick': true, 'range-tick-active': t.active }}
+              class={{ 'range-tick': true, 'range-tick-active': !!t.active }}
             />
           )}
 

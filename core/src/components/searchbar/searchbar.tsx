@@ -159,7 +159,7 @@ export class Searchbar {
    * Update the Searchbar input value when the input changes
    */
   inputChanged(ev: Event) {
-    this.value = ev.target && (ev.target as HTMLInputElement).value;
+    this.value = ev.target && (ev.target as HTMLInputElement).value || '';
     this.ionInput.emit(ev);
   }
 

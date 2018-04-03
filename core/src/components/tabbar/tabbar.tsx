@@ -73,10 +73,10 @@ export class Tabbar {
     const tabs: HTMLIonTabButtonElement[] = Array.from(document.querySelectorAll('ion-tab-button'));
     const scrollLeft = this.scrollEl.scrollLeft;
     const tabsWidth = this.scrollEl.clientWidth;
-    let previous: {tab: HTMLIonTabButtonElement, amount: number};
-    let next: {tab: HTMLIonTabButtonElement, amount: number};
+    let previous: {tab: HTMLIonTabButtonElement, amount: number}|undefined = undefined;
+    let next: {tab: HTMLIonTabButtonElement, amount: number}|undefined = undefined;
 
-    tabs.forEach((tab: HTMLIonTabButtonElement) => {
+    for (const tab of tabs) {
       const left = tab.offsetLeft;
       const right = left + tab.offsetWidth;
 
@@ -88,7 +88,7 @@ export class Tabbar {
         const amount = right - tabsWidth;
         next = {tab, amount};
       }
-    });
+    }
 
     return {previous, next};
   }
@@ -127,11 +127,11 @@ export class Tabbar {
 
   private scrollByTab(direction: 'left' | 'right') {
     this.dom.read(() => {
-      const {previous, next} = this.analyzeTabs(),
-        info = direction === 'right' ? next : previous,
-        amount = info && info.amount;
+      const {previous, next} = this.analyzeTabs();
+      const info = direction === 'right' ? next : previous;
+      const amount = info && info.amount;
 
-      if (info) {
+      if (info && amount) {
         this.scrollEl.scrollToPoint(amount, 0, 250).then(() => {
           this.updateBoundaries();
         });
@@ -184,7 +184,7 @@ export class Tabbar {
           <ion-icon name='arrow-dropleft'/>
         </ion-button>,
 
-        <ion-scroll forceOverscroll={false} ref={(scrollEl: HTMLIonScrollElement) => this.scrollEl = scrollEl}>
+        <ion-scroll forceOverscroll={false} ref={(scrollEl) => this.scrollEl = scrollEl as HTMLIonScrollElement}>
           {tabButtons}
           {ionTabbarHighlight}
         </ion-scroll>,

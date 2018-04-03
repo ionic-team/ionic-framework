@@ -166,9 +166,12 @@ export class Modal implements OverlayInterface {
   @Method()
   async present(): Promise<void> {
     if (this.presented) {
-      return Promise.resolve();
+      return;
     }
     const container = this.el.querySelector(`.modal-wrapper`);
+    if (!container) {
+      throw new Error('container is undefined');
+    }
     const componentProps = {
       ...this.componentProps,
       modal: this.el

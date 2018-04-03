@@ -93,12 +93,12 @@ export class Tabs implements NavOutlet {
   }
 
   @Listen('ionTabbarClick')
-  protected tabChange(ev: CustomEvent) {
-    const selectedTab = ev.detail as HTMLIonTabElement;
-    if (this.useRouter && this.selectedTab.href != null) {
+  protected tabChange(ev: CustomEvent<HTMLIonTabElement>) {
+    const selectedTab = ev.detail;
+    if (this.useRouter && selectedTab.href != null) {
       const router = document.querySelector('ion-router');
       if (router) {
-        router.push(this.selectedTab.href);
+        router.push(selectedTab.href);
       }
       return;
     }
@@ -143,7 +143,7 @@ export class Tabs implements NavOutlet {
   }
 
   @Method()
-  getTab(tabOrIndex: string | number | HTMLIonTabElement): HTMLIonTabElement {
+  getTab(tabOrIndex: string | number | HTMLIonTabElement): HTMLIonTabElement|undefined {
     if (typeof tabOrIndex === 'string') {
       return this.tabs.find(tab => tab.getTabId() === tabOrIndex);
     }
@@ -264,9 +264,9 @@ export class Tabs implements NavOutlet {
     return Promise.resolve(false);
   }
 
-  private shouldSwitch(selectedTab: HTMLIonTabElement) {
+  private shouldSwitch(selectedTab: HTMLIonTabElement|undefined): selectedTab is HTMLIonTabElement {
     const leavingTab = this.selectedTab;
-    return selectedTab && selectedTab !== leavingTab && !this.transitioning;
+    return !!(selectedTab && selectedTab !== leavingTab && !this.transitioning);
   }
 
   render() {

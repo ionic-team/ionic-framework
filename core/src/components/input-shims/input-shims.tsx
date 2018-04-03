@@ -69,12 +69,16 @@ export class InputShims {
     const scrollEl = componentEl.closest('ion-scroll');
     const contentEl = componentEl.closest('ion-content');
 
-    if (HIDE_CARET && this.hideCaret && !this.hideCaretMap.has(componentEl)) {
+    if (!inputEl) {
+      return;
+    }
+
+    if (HIDE_CARET && scrollEl && this.hideCaret && !this.hideCaretMap.has(componentEl)) {
       const rmFn = enableHideCaretOnScroll(componentEl, inputEl, scrollEl);
       this.hideCaretMap.set(componentEl, rmFn);
     }
 
-    if (SCROLL_ASSIST && this.scrollAssist && !this.scrollAssistMap.has(componentEl)) {
+    if (SCROLL_ASSIST && contentEl && this.scrollAssist && !this.scrollAssistMap.has(componentEl)) {
       const rmFn = enableScrollAssist(componentEl, inputEl, contentEl, this.keyboardHeight);
       this.scrollAssistMap.set(componentEl, rmFn);
     }

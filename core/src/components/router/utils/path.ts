@@ -50,7 +50,7 @@ export function readPath(loc: Location, base: string, useHash: boolean): string[
   return null;
 }
 
-export function parsePath(path: string|null|undefined): string[] {
+export function parsePath(path: string|undefined|null): string[] {
   if (path == null) {
     return [''];
   }

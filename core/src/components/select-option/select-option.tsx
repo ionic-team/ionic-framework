@@ -25,7 +25,7 @@ export class SelectOption {
   /**
    * The text value of the option.
    */
-  @Prop({ mutable: true }) value: string|null = null;
+  @Prop({ mutable: true }) value: string;
 
   /**
    * Emitted when the select option loads.
@@ -42,7 +42,9 @@ export class SelectOption {
   }
 
   componentWillLoad() {
-    this.value = this.value || this.el.textContent;
+    if (this.value == null) {
+      this.value = this.el.textContent || '';
+    }
   }
 
   componentDidLoad() {

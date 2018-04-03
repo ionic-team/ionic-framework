@@ -75,13 +75,14 @@ export class Nav implements NavOutlet {
 
   componentDidUnload() {
     for (const view of this.views) {
-      lifecycle(view.element, ViewLifecycle.WillUnload);
+      lifecycle(view.element!, ViewLifecycle.WillUnload);
       view._destroy();
     }
 
     // release swipe back gesture and transition
     this.sbTrns && this.sbTrns.destroy();
-    this.queue = this.views = this.sbTrns = null;
+    this.queue.length = this.views.length = 0;
+    this.sbTrns = undefined;
     this.destroyed = true;
   }
 
@@ -222,7 +223,7 @@ export class Nav implements NavOutlet {
   getRouteId(): RouteID|undefined {
     const active = this.getActive();
     return active ? {
-      id: active.element.tagName,
+      id: active.element!.tagName,
       params: active.params,
       element: active.element
     } : undefined;
@@ -245,6 +246,9 @@ export class Nav implements NavOutlet {
 
   @Method()
   getPrevious(view = this.getActive()): ViewController|undefined {
+    if (!view) {
+      return undefined;
+    }
     const views = this.views;
     const index = views.indexOf(view);
     return (index > 0) ? views[index - 1] : undefined;
@@ -303,9 +307,9 @@ export class Nav implements NavOutlet {
         result.direction
       );
     }
-    ti.resolve(result.hasCompleted);
+    ti.resolve!(result.hasCompleted);
 
-    if (ti.opts.updateURL !== false && this.useRouter) {
+    if (ti.opts!.updateURL !== false && this.useRouter) {
       const router = document.querySelector('ion-router');
       if (router) {
         const direction = (result.direction === NavDirection.Back)
@@ -333,7 +337,7 @@ export class Nav implements NavOutlet {
     if (ti.reject && !this.destroyed) {
       ti.reject(rejectReason);
     } else {
-      ti.resolve(false);
+      ti.resolve!(false);
     }
   }
 
@@ -369,15 +373,24 @@ export class Nav implements NavOutlet {
         throw new Error('no views in the stack to be removed');
       }
 
-      // Needs transition?
-      ti.requiresTransition = (ti.enteringRequiresTransition || ti.leavingRequiresTransition) && enteringView !== leavingView;
-
       if (enteringView && enteringView.state === ViewState.New) {
         await enteringView.init(this.el);
       }
       this.postViewInit(enteringView, leavingView, ti);
 
-      const result = await this.transition(enteringView, leavingView, ti);
+      // Needs transition?
+      const requiresTransition = (ti.enteringRequiresTransition || ti.leavingRequiresTransition) && enteringView !== leavingView;
+      const result = requiresTransition
+        ? await this.transition(enteringView!, leavingView, ti)
+        : {
+          // transition is not required, so we are already done!
+          // they're inserting/removing the views somewhere in the middle or
+          // beginning, so visually nothing needs to animate/transition
+          // resolve immediately because there's no animation that's happening
+          hasCompleted: true,
+          requiresTransition: false
+        };
+
       this.success(result, ti);
       this.ionNavDidChange.emit();
     } catch (rejectReason) {
@@ -403,22 +416,22 @@ export class Nav implements NavOutlet {
       if (index < 0) {
         throw new Error('removeView was not found');
       }
-      ti.removeStart += index;
+      ti.removeStart! += index;
     }
     if (ti.removeStart != null) {
       if (ti.removeStart < 0) {
         ti.removeStart = (viewsLength - 1);
       }
-      if (ti.removeCount < 0) {
+      if (ti.removeCount! < 0) {
         ti.removeCount = (viewsLength - ti.removeStart);
       }
-      ti.leavingRequiresTransition = (ti.removeCount > 0) && ((ti.removeStart + ti.removeCount) === viewsLength);
+      ti.leavingRequiresTransition = (ti.removeCount! > 0) && ((ti.removeStart + ti.removeCount!) === viewsLength);
     }
 
     if (ti.insertViews) {
       // allow -1 to be passed in to auto push it on the end
       // and clean up the index if it's larger then the size of the stack
-      if (ti.insertStart < 0 || ti.insertStart > viewsLength) {
+      if (ti.insertStart! < 0 || ti.insertStart! > viewsLength) {
         ti.insertStart = viewsLength;
       }
       ti.enteringRequiresTransition = (ti.insertStart === viewsLength);
@@ -449,7 +462,7 @@ export class Nav implements NavOutlet {
     ti.insertViews = viewControllers;
   }
 
-  private getEnteringView(ti: TransitionInstruction, leavingView: ViewController): ViewController|undefined {
+  private getEnteringView(ti: TransitionInstruction, leavingView: ViewController|undefined): ViewController|undefined {
     const insertViews = ti.insertViews;
     if (insertViews) {
       // grab the very last view of the views to be inserted
@@ -460,7 +473,7 @@ export class Nav implements NavOutlet {
     const removeStart = ti.removeStart;
     if (removeStart != null) {
       const views = this.views;
-      const removeEnd = removeStart + ti.removeCount;
+      const removeEnd = removeStart + ti.removeCount!;
       for (let i = views.length - 1; i >= 0; i--) {
         const view = views[i];
         if ((i < removeStart || i >= removeEnd) && view !== leavingView) {
@@ -471,19 +484,19 @@ export class Nav implements NavOutlet {
     return undefined;
   }
 
-  private postViewInit(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction) {
+  private postViewInit(enteringView: ViewController|undefined, leavingView: ViewController|undefined, ti: TransitionInstruction) {
     assert(leavingView || enteringView, 'Both leavingView and enteringView are null');
     assert(ti.resolve, 'resolve must be valid');
     assert(ti.reject, 'reject must be valid');
 
-    const opts = ti.opts;
+    const opts = ti.opts!;
     const insertViews = ti.insertViews;
     const removeStart = ti.removeStart;
     const removeCount = ti.removeCount;
-    let destroyQueue: ViewController[] = undefined;
+    let destroyQueue: ViewController[]|undefined = undefined;
 
     // there are views to remove
-    if (removeStart != null) {
+    if (removeStart != null && removeCount != null) {
       assert(removeStart >= 0, 'removeStart can not be negative');
       assert(removeCount >= 0, 'removeCount can not be negative');
 
@@ -511,7 +524,7 @@ export class Nav implements NavOutlet {
     // there are views to insert
     if (insertViews) {
       // add the views to the
-      let insertIndex = ti.insertStart;
+      let insertIndex = ti.insertStart!;
       for (const view of insertViews) {
         this.insertViewAt(view, insertIndex);
         insertIndex++;
@@ -542,34 +555,24 @@ export class Nav implements NavOutlet {
     }
   }
 
-  private async transition(enteringView: ViewController, leavingView: ViewController, ti: TransitionInstruction): Promise<NavResult> {
-    if (!ti.requiresTransition) {
-      // transition is not required, so we are already done!
-      // they're inserting/removing the views somewhere in the middle or
-      // beginning, so visually nothing needs to animate/transition
-      // resolve immediately because there's no animation that's happening
-      return Promise.resolve({
-        hasCompleted: true,
-        requiresTransition: false
-      });
-    }
+  private async transition(enteringView: ViewController, leavingView: ViewController|undefined, ti: TransitionInstruction): Promise<NavResult> {
     if (this.sbTrns) {
       this.sbTrns.destroy();
-      this.sbTrns = null;
+      this.sbTrns = undefined;
     }
 
     // we should animate (duration > 0) if the pushed page is not the first one (startup)
     // or if it is a portal (modal, actionsheet, etc.)
+    const opts = ti.opts!;
 
-    const animationBuilder = this.getAnimationBuilder(ti.opts);
+    const animationBuilder = this.getAnimationBuilder(opts);
 
-    const progressAnimation = ti.opts.progressAnimation
+    const progressAnimation = opts.progressAnimation
       ? (animation: Animation) => this.sbTrns = animation
       : undefined;
 
-    const opts = ti.opts;
-    const enteringEl = enteringView && enteringView.element;
-    const leavingEl = leavingView && leavingView.element;
+    const enteringEl = enteringView.element!;
+    const leavingEl = leavingView && leavingView.element!;
     const animationOpts: AnimationOptions = {
       animationCtrl: this.animationCtrl,
       animationBuilder: animationBuilder,
@@ -587,14 +590,16 @@ export class Nav implements NavOutlet {
       leavingEl
     };
     const trns = await transition(animationOpts);
-    return this.transitionFinish(trns, enteringView, leavingView, ti.opts);
+    return this.transitionFinish(trns, enteringView, leavingView, opts);
   }
 
-  private transitionFinish(transition: Animation|void, enteringView: ViewController, leavingView: ViewController, opts: NavOptions): NavResult {
+  private transitionFinish(transition: Animation|null, enteringView: ViewController, leavingView: ViewController | undefined, opts: NavOptions): NavResult {
     const hasCompleted = transition ? transition.hasCompleted : true;
 
     const cleanupView = hasCompleted ? enteringView : leavingView;
-    this.cleanup(cleanupView);
+    if (cleanupView) {
+      this.cleanup(cleanupView);
+    }
 
     // this is the root transition
     // it's safe to destroy this transition
@@ -676,7 +681,7 @@ export class Nav implements NavOutlet {
       } else if (i < activeViewIndex) {
         // this view comes before the active view
         // and it is not a portal then ensure it is hidden
-        view.element.hidden = true;
+        view.element!.hidden = true;
       }
     }
   }

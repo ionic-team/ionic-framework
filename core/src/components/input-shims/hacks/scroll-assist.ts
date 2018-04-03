@@ -10,12 +10,12 @@ export default function enableScrollAssist(
   keyboardHeight: number
 ) {
   let coord: any;
-  const touchStart = (ev: UIEvent) => {
+  const touchStart = (ev: Event) => {
     coord = pointerCoord(ev);
     console.debug(`input-base, pointerStart, type: ${ev.type}`);
   };
 
-  const touchEnd = (ev: UIEvent) => {
+  const touchEnd = (ev: Event) => {
     // input cover touchend/mouseup
     console.debug(`input-base, pointerEnd, type: ${ev.type}`);
     if (!coord) {
@@ -85,6 +85,6 @@ function hasPointerMoved(threshold: number, startCoord: PointerCoordinates, endC
 }
 
 export interface PointerCoordinates {
-  x?: number;
-  y?: number;
+  x: number;
+  y: number;
 }

@@ -14,7 +14,7 @@ import mdTransitionAnimation from '../nav/animations/md.transition';
 export class RouterOutlet implements NavOutlet {
 
   private isTransitioning = false;
-  private activeEl: HTMLElement = undefined;
+  private activeEl: HTMLElement|undefined;
   private activeComponent: any;
 
   mode: string;
@@ -63,7 +63,7 @@ export class RouterOutlet implements NavOutlet {
   }
 
   @Method()
-  async commit(enteringEl: HTMLElement, leavingEl: HTMLElement, opts?: RouterOutletOptions): Promise<boolean> {
+  async commit(enteringEl: HTMLElement, leavingEl: HTMLElement|undefined, opts?: RouterOutletOptions): Promise<boolean> {
     // isTransitioning acts as a lock to prevent reentering
     if (this.isTransitioning || leavingEl === enteringEl) {
       return false;

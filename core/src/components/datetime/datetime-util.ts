@@ -1,9 +1,7 @@
 
-export function isBlank(val: any): val is null { return val === undefined || val === null; }
-
 export function renderDatetime(template: string, value: DatetimeData, locale: LocaleData) {
   if (value === undefined) {
-    return '';
+    return undefined;
   }
 
   const tokens: string[] = [];
@@ -24,7 +22,7 @@ export function renderDatetime(template: string, value: DatetimeData, locale: Lo
   });
 
   if (!hasText) {
-    return '';
+    return undefined;
   }
 
   for (let i = 0; i < tokens.length; i += 2) {
@@ -37,9 +35,9 @@ export function renderDatetime(template: string, value: DatetimeData, locale: Lo
 
 export function renderTextFormat(format: string, value: any, date: DatetimeData|null, locale: LocaleData): string {
 
-  if (format === FORMAT_DDDD || format === FORMAT_DDD) {
+  if ((format === FORMAT_DDDD || format === FORMAT_DDD)) {
     try {
-      value = (new Date(date.year, date.month - 1, date.day)).getDay();
+      value = (new Date(date!.year!, date!.month! - 1, date!.day)).getDay();
 
       if (format === FORMAT_DDDD) {
         return (locale.dayNames ? locale.dayNames : DAY_NAMES)[value];
@@ -62,7 +60,7 @@ export function renderTextFormat(format: string, value: any, date: DatetimeData|
     return date && date.hour ? date.hour < 12 ? 'am' : 'pm' : value ? value : '';
   }
 
-  if (isBlank(value)) {
+  if (value == null) {
     return '';
   }
 
@@ -155,7 +153,7 @@ export function dateValueRange(format: string, min: DatetimeData, max: DatetimeD
   return opts;
 }
 
-export function dateSortValue(year: number, month: number, day: number, hour = 0, minute = 0): number {
+export function dateSortValue(year: number|undefined, month: number|undefined, day: number|undefined, hour = 0, minute = 0): number {
   return parseInt(`1${fourDigit(year)}${twoDigit(month)}${twoDigit(day)}${twoDigit(hour)}${twoDigit(minute)}`, 10);
 }
 
@@ -181,7 +179,7 @@ const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(
 export function parseDate(val: any): DatetimeData|null {
   // manually parse IS0 cuz Date.parse cannot be trusted
   // ISO 8601 format: 1994-12-15T13:47:20Z
-  let parse: any[] = null;
+  let parse: any[]|null = null;
 
   if (val && val !== '') {
     // try parsing for just time first, HH:MM
@@ -197,7 +195,7 @@ export function parseDate(val: any): DatetimeData|null {
     }
   }
 
-  if (isBlank(parse)) {
+  if (parse == null) {
     // wasn't able to parse the ISO datetime
     return null;
   }
@@ -316,12 +314,12 @@ export function parseTemplate(template: string): string[] {
 
 export function getValueFromFormat(date: DatetimeData, format: string) {
   if (format === FORMAT_A || format === FORMAT_a) {
-    return (date.hour < 12 ? 'am' : 'pm');
+    return (date.hour! < 12 ? 'am' : 'pm');
   }
   if (format === FORMAT_hh || format === FORMAT_h) {
-    return (date.hour > 12 ? date.hour - 12 : date.hour);
+    return (date.hour! > 12 ? date.hour! - 12 : date.hour);
   }
-  return (date as any)[convertFormatToKey(format)];
+  return (date as any)[convertFormatToKey(format)!];
 }
 
 
@@ -356,12 +354,12 @@ export function convertDataToISO(data: DatetimeData): string {
             // YYYY-MM-DDTHH:mm:SS
             rtn += `T${twoDigit(data.hour)}:${twoDigit(data.minute)}:${twoDigit(data.second)}`;
 
-            if (data.millisecond > 0) {
+            if (data.millisecond! > 0) {
               // YYYY-MM-DDTHH:mm:SS.SSS
               rtn += '.' + threeDigit(data.millisecond);
             }
 
-            if (isBlank(data.tzOffset) || data.tzOffset === 0) {
+            if (data.tzOffset == null || data.tzOffset === 0) {
               // YYYY-MM-DDTHH:mm:SSZ
               rtn += 'Z';
 
@@ -397,9 +395,9 @@ export function convertDataToISO(data: DatetimeData): string {
  * Use to convert a string of comma separated strings or
  * an array of strings, and clean up any user input
  */
-export function convertToArrayOfStrings(input: string | string[] | undefined | null, type: string): string[] {
+export function convertToArrayOfStrings(input: string | string[] | undefined | null, type: string): string[]|undefined {
   if (!input) {
-    return null;
+    return undefined;
   }
 
   if (typeof input === 'string') {
@@ -408,7 +406,7 @@ export function convertToArrayOfStrings(input: string | string[] | undefined | n
     input = input.replace(/\[|\]/g, '').split(',');
   }
 
-  let values: string[];
+  let values: string[] | undefined = undefined;
   if (Array.isArray(input)) {
     // trim up each string value
     values = input.map(val => val.toString().trim());

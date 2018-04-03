@@ -97,11 +97,11 @@ const SIZE_TO_MEDIA: any = {
 export interface DisplayWhen {
   calculatedPlatforms: PlatformConfig[];
   config: Config;
-  mediaQuery: string;
-  mode: string;
+  mediaQuery: string|undefined;
+  mode: string|undefined;
   or: boolean;
-  orientation: string;
+  orientation: string|undefined;
   passesTest: boolean;
-  platform: string;
-  size: string;
+  platform: string|undefined;
+  size: string|undefined;
 }

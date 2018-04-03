@@ -23,7 +23,7 @@ function setScrollPadding(input: HTMLElement, keyboardHeight: number) {
   if (input.tagName !== 'INPUT') {
     return;
   }
-  if (input.parentElement.tagName === 'ION-INPUT') {
+  if (input.parentElement && input.parentElement.tagName === 'ION-INPUT') {
     return;
   }
   const el = input.closest('.scroll-inner') as HTMLElement;

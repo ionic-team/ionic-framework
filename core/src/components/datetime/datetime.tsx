@@ -12,7 +12,6 @@ import {
   dateValueRange,
   daysInMonth,
   getValueFromFormat,
-  isBlank,
   parseDate,
   parseTemplate,
   renderDatetime,
@@ -67,7 +66,7 @@ export class Datetime {
    * datetime. For example, the minimum could just be the year, such as `1994`.
    * Defaults to the beginning of the year, 100 years ago from today.
    */
-  @Prop({ mutable: true }) min: string;
+  @Prop({ mutable: true }) min: string | undefined;
 
   /**
    * The maximum datetime allowed. Value must be a date string
@@ -77,7 +76,7 @@ export class Datetime {
    * datetime. For example, the maximum could just be the year, such as `1994`.
    * Defaults to the end of this year.
    */
-  @Prop({ mutable: true }) max: string;
+  @Prop({ mutable: true }) max: string | undefined;
 
   /**
    * The display format of the date and time as text that shows
@@ -96,7 +95,7 @@ export class Datetime {
    * choose an exact date from the datetime picker. Each column follows the string
    * parse format. Defaults to use `displayFormat`.
    */
-  @Prop() pickerFormat: string;
+  @Prop() pickerFormat: string | undefined;
 
   /**
    * The text to display on the picker's cancel button. Default: `Cancel`.
@@ -115,7 +114,7 @@ export class Datetime {
    * of numbers, or string of comma separated numbers. For example, to show upcoming and
    * recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
    */
-  @Prop() yearValues: number[] | number | string;
+  @Prop() yearValues: number[] | number | string | undefined;
 
   /**
    * Values used to create the list of selectable months. By default
@@ -125,7 +124,7 @@ export class Datetime {
    * input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a
    * zero-based index, meaning January's value is `1`, and December's is `12`.
    */
-  @Prop() monthValues: number[] | number | string;
+  @Prop() monthValues: number[] | number | string | undefined;
 
   /**
    * Values used to create the list of selectable days. By default
@@ -135,7 +134,7 @@ export class Datetime {
    * number for the selected month, like `31` in February, it will correctly not show
    * days which are not valid for the selected month.
    */
-  @Prop() dayValues: number[] | number | string;
+  @Prop() dayValues: number[] | number | string | undefined;
 
   /**
    * Values used to create the list of selectable hours. By default
@@ -143,7 +142,7 @@ export class Datetime {
    * to control exactly which hours to display, the `hourValues` input can take a number, an
    * array of numbers, or a string of comma separated numbers.
    */
-  @Prop() hourValues: number[] | number | string;
+  @Prop() hourValues: number[] | number | string | undefined;
 
   /**
    * Values used to create the list of selectable minutes. By default
@@ -152,31 +151,31 @@ export class Datetime {
    * separated numbers. For example, if the minute selections should only be every 15 minutes,
    * then this input value would be `minuteValues="0,15,30,45"`.
    */
-  @Prop() minuteValues: number[] | number | string;
+  @Prop() minuteValues: number[] | number | string | undefined;
 
   /**
    * Full names for each month name. This can be used to provide
    * locale month names. Defaults to English.
    */
-  @Prop() monthNames: string[] | string;
+  @Prop() monthNames: string[] | string | undefined;
 
   /**
    * Short abbreviated names for each month name. This can be used to provide
    * locale month names. Defaults to English.
    */
-  @Prop() monthShortNames: string[] | string;
+  @Prop() monthShortNames: string[] | string | undefined;
 
   /**
    * Full day of the week names. This can be used to provide
    * locale names for each day in the week. Defaults to English.
    */
-  @Prop() dayNames: string[] | string;
+  @Prop() dayNames: string[] | string | undefined;
 
   /**
    * Short abbreviated day of the week names. This can be used to provide
    * locale names for each day in the week. Defaults to English.
    */
-  @Prop() dayShortNames: string[] | string;
+  @Prop() dayShortNames: string[] | string | undefined;
 
   /**
    * Any additional options that the picker interface can accept.
@@ -191,7 +190,7 @@ export class Datetime {
    * The text to display when there's no date selected yet.
    * Using lowercase to match the input attribute
    */
-  @Prop() placeholder: string;
+  @Prop() placeholder: string | undefined;
 
   /**
    * the value of the datetime.
@@ -237,7 +236,7 @@ export class Datetime {
     this.emitStyle();
   }
 
-  emitStyle() {
+  private emitStyle() {
     clearTimeout(this.styleTmr);
 
     this.styleTmr = setTimeout(() => {
@@ -249,15 +248,12 @@ export class Datetime {
     });
   }
 
-  /**
-   * Update the datetime text and datetime value
-   */
-  updateValue() {
+  private updateValue() {
     updateDate(this.datetimeValue, this.value);
     this.updateText();
   }
 
-  buildPicker(pickerOptions: PickerOptions) {
+  private buildPicker(pickerOptions: PickerOptions) {
     console.debug('Build Datetime: Picker with', pickerOptions);
 
     // If the user has not passed in picker buttons,
@@ -293,7 +289,7 @@ export class Datetime {
     return picker;
   }
 
-  open() {
+  private open() {
     const pickerOptions = {...this.pickerOptions};
 
     // TODO check this.isFocus() || this.disabled
@@ -315,10 +311,7 @@ export class Datetime {
     });
   }
 
-
-  /**
-   */
-  generateColumns(): PickerColumn[] {
+  private generateColumns(): PickerColumn[] {
     let columns: PickerColumn[] = [];
 
     // if a picker format wasn't provided, then fallback
@@ -344,7 +337,7 @@ export class Datetime {
       parseTemplate(template).forEach((format: any) => {
         // loop through each format in the template
         // create a new picker column to build up with data
-        const key = convertFormatToKey(format);
+        const key = convertFormatToKey(format)!;
         let values: any[];
 
         // check if they have exact values to use for this date part
@@ -393,10 +386,7 @@ export class Datetime {
     return columns;
   }
 
-  /**
-   * @private
-   */
-  validate() {
+  private validate() {
     const today = new Date();
     const minCompareVal = dateDataSortValue(this.datetimeMin);
     const maxCompareVal = dateDataSortValue(this.datetimeMax);
@@ -409,10 +399,13 @@ export class Datetime {
         selectedYear = yearCol.options[0].value;
       }
 
-      const yearOpt = yearCol.options[yearCol.selectedIndex];
-      if (yearOpt) {
-        // they have a selected year value
-        selectedYear = yearOpt.value;
+      const selectedIndex = yearCol.selectedIndex;
+      if (selectedIndex != null) {
+        const yearOpt = yearCol.options[selectedIndex];
+        if (yearOpt) {
+          // they have a selected year value
+          selectedYear = yearOpt.value;
+        }
       }
     }
 
@@ -446,30 +439,27 @@ export class Datetime {
     );
   }
 
-
-  /**
-   */
-  calcMinMax(now?: Date) {
+  private calcMinMax(now?: Date) {
     const todaysYear = (now || new Date()).getFullYear();
 
     if (this.yearValues) {
       const years = convertToArrayOfNumbers(this.yearValues, 'year');
-      if (isBlank(this.min)) {
+      if (this.min == null) {
         this.min = Math.min.apply(Math, years);
       }
-      if (isBlank(this.max)) {
+      if (this.max == null) {
         this.max = Math.max.apply(Math, years);
       }
     } else {
-      if (isBlank(this.min)) {
+      if (this.min == null) {
         this.min = (todaysYear - 100).toString();
       }
-      if (isBlank(this.max)) {
+      if (this.max == null) {
         this.max = todaysYear.toString();
       }
     }
-    const min = this.datetimeMin = parseDate(this.min);
-    const max = this.datetimeMax = parseDate(this.max);
+    const min = this.datetimeMin = parseDate(this.min)!;
+    const max = this.datetimeMax = parseDate(this.max)!;
 
     min.year = min.year || todaysYear;
     max.year = max.year || todaysYear;
@@ -501,10 +491,7 @@ export class Datetime {
     }
   }
 
-
-  /**
-   */
-  validateColumn(name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): number {
+  private validateColumn(name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): number {
     const column = this.picker.getColumn(name);
     if (!column) {
       return 0;
@@ -533,7 +520,7 @@ export class Datetime {
         indexMax = Math.max(indexMax, i);
       }
     }
-    const selectedIndex = column.selectedIndex = clamp(indexMin, column.selectedIndex, indexMax);
+    const selectedIndex = column.selectedIndex = clamp(indexMin, column.selectedIndex!, indexMax);
     const opt = column.options[selectedIndex];
     if (opt) {
       return opt.value;
@@ -542,9 +529,7 @@ export class Datetime {
   }
 
 
-  /**
-   */
-  divyColumns(columns: PickerColumn[]): PickerColumn[] {
+  private divyColumns(columns: PickerColumn[]): PickerColumn[] {
     const pickerColumns = columns;
     const columnsWidth: number[] = [];
     let col: PickerColumn;
@@ -554,7 +539,7 @@ export class Datetime {
       columnsWidth.push(0);
 
       for (let j = 0; j < col.options.length; j++) {
-        width = col.options[j].text.length;
+        width = col.options[j].text!.length;
         if (width > columnsWidth[i]) {
           columnsWidth[i] = width;
         }
@@ -580,9 +565,10 @@ export class Datetime {
 
   /**
    */
-  updateText() {
+  private updateText() {
     // create the text of the formatted data
     const template = this.displayFormat || this.pickerFormat || DEFAULT_FORMAT;
+    // debugger;
     this.text = renderDatetime(template, this.datetimeValue, this.locale);
   }
 
@@ -608,9 +594,13 @@ export class Datetime {
 
     // If selected text has been passed in, use that first
     let datetimeText = this.text;
-    if (!datetimeText && this.placeholder) {
-      datetimeText = this.placeholder;
-      addPlaceholderClass = true;
+    if (datetimeText == null) {
+      if (this.placeholder) {
+        datetimeText = this.placeholder;
+        addPlaceholderClass = true;
+      } else {
+        datetimeText = '';
+      }
     }
 
     const datetimeTextClasses: CssClassMap = {

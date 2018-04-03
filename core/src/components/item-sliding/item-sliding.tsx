@@ -31,16 +31,16 @@ export const enum SlidingState {
   }
 })
 export class ItemSliding {
-  private item: HTMLIonItemElement|null;
-  private list: HTMLIonListElement|null;
+  private item: HTMLIonItemElement|null = null;
+  private list: HTMLIonListElement|null = null;
   private openAmount = 0;
   private initialOpenAmount = 0;
   private optsWidthRightSide = 0;
   private optsWidthLeftSide = 0;
   private sides: ItemSide;
-  private tmr: number;
-  private leftOptions: HTMLIonItemOptionsElement|null;
-  private rightOptions: HTMLIonItemOptionsElement|null;
+  private tmr: number|undefined;
+  private leftOptions: HTMLIonItemOptionsElement|undefined;
+  private rightOptions: HTMLIonItemOptionsElement|undefined;
   private optsDirty = true;
 
   @Element() private el: HTMLElement;
@@ -60,7 +60,8 @@ export class ItemSliding {
   }
 
   componentDidUnload() {
-    this.item = this.list = this.leftOptions = this.rightOptions = null;
+    this.item = this.list = null;
+    this.leftOptions = this.rightOptions = undefined;
   }
 
   /**
@@ -112,7 +113,7 @@ export class ItemSliding {
     let sides = 0;
 
     // Reset left and right options in case they were removed
-    this.leftOptions = this.rightOptions = null;
+    this.leftOptions = this.rightOptions = undefined;
 
     for (let i = 0; i < options.length; i++) {
       const option = options.item(i);
@@ -143,14 +144,16 @@ export class ItemSliding {
 
     if (this.tmr) {
       clearTimeout(this.tmr);
-      this.tmr = null;
+      this.tmr = undefined;
     }
     if (this.openAmount === 0) {
       this.optsDirty = true;
       this.state = SlidingState.Enabled;
     }
     this.initialOpenAmount = this.openAmount;
-    this.item.style.transition = 'none';
+    if (this.item) {
+      this.item.style.transition = 'none';
+    }
   }
 
   private onDragMove(gesture: GestureDetail) {
@@ -198,9 +201,9 @@ export class ItemSliding {
 
     this.setOpenAmount(restingPoint, true);
 
-    if (this.state & SlidingState.SwipeRight) {
+    if (this.state & SlidingState.SwipeRight && this.rightOptions) {
       this.rightOptions.fireSwipeEvent(this);
-    } else if (this.state & SlidingState.SwipeLeft) {
+    } else if (this.state & SlidingState.SwipeLeft && this.leftOptions) {
       this.leftOptions.fireSwipeEvent(this);
     }
   }
@@ -221,7 +224,10 @@ export class ItemSliding {
   private setOpenAmount(openAmount: number, isFinal: boolean) {
     if (this.tmr) {
       clearTimeout(this.tmr);
-      this.tmr = null;
+      this.tmr = undefined;
+    }
+    if (!this.item) {
+      return;
     }
     const style = this.item.style;
     this.openAmount = openAmount;
@@ -241,7 +247,7 @@ export class ItemSliding {
     } else {
       this.tmr = window.setTimeout(() => {
         this.state = SlidingState.Disabled;
-        this.tmr = null;
+        this.tmr = undefined;
       }, 600);
       this.list && this.list.setOpenItem(null);
       style.transform = '';

@@ -149,7 +149,7 @@ export class Textarea implements TextareaComponent {
    */
   @Watch('value')
   protected valueChanged() {
-    const inputEl = this.el.querySelector('textarea');
+    const inputEl = this.el.querySelector('textarea')!;
     if (inputEl.value !== this.value) {
       inputEl.value = this.value;
     }
@@ -189,7 +189,7 @@ export class Textarea implements TextareaComponent {
   }
 
   inputChanged(ev: Event) {
-    this.value = ev.target && (ev.target as HTMLInputElement).value;
+    this.value = ev.target && (ev.target as HTMLInputElement).value || '';
     this.ionInput.emit(ev);
     this.emitStyle();
   }

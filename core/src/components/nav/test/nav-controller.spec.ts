@@ -977,8 +977,8 @@ describe('NavController', () => {
       nav.push(view1).then((succeded: boolean) => {
         expect(succeded).toEqual(false);
         done();
-      }).catch(() => {
-        fail('should never get here');
+      }).catch((e) => {
+        fail(e);
         done();
       });
       nav.componentDidUnload();

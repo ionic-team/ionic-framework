@@ -17,7 +17,7 @@ export class StatusTap {
       const height = window.innerWidth;
       const el = document.elementFromPoint(width / 2, height / 2);
       if (!el) {
-        return null;
+        return;
       }
       const scrollEl = el.closest('ion-scroll');
       if (scrollEl) {

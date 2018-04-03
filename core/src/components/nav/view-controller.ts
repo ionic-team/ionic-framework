@@ -6,10 +6,10 @@ import { attachComponent } from '../../utils/framework-delegate';
 
 export class ViewController {
 
-  nav: Nav;
+  nav: Nav|undefined;
   state: ViewState = ViewState.New;
-  element: HTMLElement;
-  delegate: FrameworkDelegate;
+  element: HTMLElement|undefined;
+  delegate: FrameworkDelegate|undefined;
 
   constructor(
     public component: any,
@@ -43,12 +43,12 @@ export class ViewController {
         element.remove();
       }
     }
-    this.nav = null;
+    this.nav = undefined;
     this.state = ViewState.Destroyed;
   }
 }
 
-export function matches(view: ViewController|undefined, id: string, params: ComponentProps): boolean {
+export function matches(view: ViewController|undefined, id: string, params: ComponentProps): view is ViewController {
   if (!view) {
     return false;
   }
