@@ -149,8 +149,8 @@ export class Button {
         disabled={this.disabled}
         onFocus={this.onFocus.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
-        onClick={(ev) => openURL(this.href, ev, this.goBack)}
-        onBlur={this.onBlur.bind(this)}>
+        onBlur={this.onBlur.bind(this)}
+        onClick={(ev) => openURL(this.href, ev, this.goBack)}>
           <span class='button-inner'>
             <slot name='icon-only'></slot>
             <slot name='start'></slot>

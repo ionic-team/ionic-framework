@@ -3,6 +3,8 @@
 
 A list of the breaking changes introduced in Ionic Angular v4.
 
+- [Alert](#alert)
+- [Action Sheet](#action-sheet)
 - [Dynamic Mode](#dynamic-mode)
 - [Button](#button)
 - [Chip](#chip)
@@ -25,9 +27,57 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Select](#select)
 - [Spinner](#spinner)
 - [Text / Typography](#text--typography)
+- [Tabs](#tabs)
 - [Theming](#theming)
 - [Toolbar](#toolbar)
 
+## Alert
+
+The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectivelly.
+
+**Old Usage Example:**
+
+```js
+const alert = await alertCtrl.create({
+  title: 'This is the title',
+  subTitle: 'this is the sub title'
+});
+await alert.present();
+```
+
+**New Usage Example:**
+
+```js
+const alert = await alertCtrl.create({
+  header: 'This is the title',
+  subHeader: 'this is the sub title'
+});
+await alert.present();
+```
+
+## Action Sheet
+
+The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectivelly.
+
+**Old Usage Example:**
+
+```js
+const actionSheet = await actionSheetCtrl.create({
+  title: 'This is the title',
+  subTitle: 'this is the sub title'
+});
+await actionSheet.present();
+```
+
+**New Usage Example:**
+
+```js
+const actionSheet = await actionSheetCtrl.create({
+  header: 'This is the title',
+  subHeader: 'this is the sub title'
+});
+await actionSheet.present();
+```
 
 ## Dynamic Mode
 
@@ -871,6 +921,33 @@ Typography should now be written as an `<ion-text>` element. Previously the `ion
   He <ion-text color="primary"><i>was</i></ion-text> looking for a place called Lee Ho Fook's.
   Gonna get a <ion-text color="secondary"><a>big dish of beef chow mein.</a></ion-text>
 </p>
+```
+
+## Tab
+
+Some properties in `ion-tab` changed:
+
+- [tabTitle] -> [label]
+- [tabIcon] -> [icon]
+- [tabBadge] -> [badge]
+- [tabBadgeStyle] -> [badgeStyle]
+
+**Old Usage Example:**
+
+```html
+<ion-tabs>
+  <ion-tab tabTitle="Schedule" tabIcon="add"></ion-tab>
+  <ion-tab tabTitle="Map" tabIcon="mao" tabBadge="2"></ion-tab>
+</ion-tabs>
+```
+
+**New Usage Example:**
+
+```html
+<ion-tabs>
+  <ion-tab label="Schedule" icon="add"></ion-tab>
+  <ion-tab label="Map" icon="mao" badge="2"></ion-tab>
+</ion-tabs>
 ```
 
 
