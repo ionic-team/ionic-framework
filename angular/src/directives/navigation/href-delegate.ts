@@ -22,7 +22,7 @@ export class HrefDelegate {
   @HostListener('click', ['$event'])
   onClick(ev: Event) {
     const url = this.href;
-    if (this.router && url && url[0] !== '#' && url.indexOf('://') === -1) {
+    if (this.router && url != null && url[0] !== '#' && url.indexOf('://') === -1) {
       ev.preventDefault();
       this.router.navigateByUrl(url);
     }

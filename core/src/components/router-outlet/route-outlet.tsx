@@ -80,6 +80,7 @@ export class RouterOutlet implements NavOutlet {
       direction: opts.direction,
       duration: opts.duration,
       easing: opts.easing,
+      deepWait: opts.deepWait,
 
       animationCtrl: this.animationCtrl,
       showGoBack: opts.showGoBack,
@@ -139,5 +140,6 @@ export interface RouterOutletOptions {
   easing?: string;
   showGoBack?: boolean;
   direction?: NavDirection;
+  deepWait?: boolean;
   mode?: 'md' | 'ios';
 }

@@ -31,7 +31,7 @@ function beforeTransition(opts: AnimationOptions) {
 }
 
 async function animation(opts: AnimationOptions): Promise<Animation> {
-  await waitDeepReady(opts);
+  await waitForReady(opts, true);
 
   const transition = await createTransition(opts);
   fireWillEvents(opts.enteringEl, opts.leavingEl);
@@ -50,26 +50,24 @@ async function noAnimation(opts: AnimationOptions): Promise<null> {
   enteringEl && enteringEl.classList.remove('hide-page');
   leavingEl && leavingEl.classList.remove('hide-page');
 
-  await waitShallowReady(opts);
+  await waitForReady(opts, false);
 
   fireWillEvents(enteringEl, leavingEl);
   fireDidEvents(enteringEl, leavingEl);
   return undefined;
 }
 
-async function waitDeepReady(opts: AnimationOptions) {
-  await Promise.all([
+async function waitForReady(opts: AnimationOptions, defaultDeep: boolean) {
+  const deep = opts.deepWait != null ? opts.deepWait : defaultDeep;
+  const promises = deep ? [
     deepReady(opts.enteringEl),
     deepReady(opts.leavingEl)
-  ]);
-  await notifyViewReady(opts.viewIsReady, opts.enteringEl);
-}
-
-async function waitShallowReady(opts: AnimationOptions) {
-  await Promise.all([
+  ] : [
     shallowReady(opts.enteringEl),
     shallowReady(opts.leavingEl)
-  ]);
+  ];
+
+  await Promise.all(promises);
   await notifyViewReady(opts.viewIsReady, opts.enteringEl);
 }
 
@@ -142,6 +140,17 @@ function deepReady(el: Element): Promise<any> {
   if (!el) {
     return Promise.resolve();
   }
+  if (customElements.get) {
+    if (customElements.get(el.tagName.toLowerCase())) {
+      return componentOnReady(el);
+    } else {
+      return Promise.all(Array.from(el.children).map(deepReady));
+    }
+  }
+  return componentOnReady(el);
+}
+
+function componentOnReady(el: Element) {
   if ((el as any).componentOnReady) {
     return (el as any).componentOnReady();
   } else {
@@ -175,6 +184,7 @@ export interface AnimationOptions {
   direction?: NavDirection;
   duration?: number;
   easing?: string;
+  deepWait?: boolean;
   viewIsReady?: (enteringEl: HTMLElement) => Promise<any>;
   showGoBack?: boolean;
   progressAnimation?: Function;

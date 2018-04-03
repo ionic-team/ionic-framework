@@ -93,6 +93,7 @@ export class StackController {
       await containerEl.commit(enteringEl, leavingEl, {
         duration: direction === 0 ? 0 : undefined,
         direction: direction === -1 ? NavDirection.Back : NavDirection.Forward,
+        deepWait: true,
         showGoBack
       });
     }

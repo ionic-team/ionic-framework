@@ -95,6 +95,13 @@ export class Tabs implements NavOutlet {
   @Listen('ionTabbarClick')
   protected tabChange(ev: CustomEvent) {
     const selectedTab = ev.detail as HTMLIonTabElement;
+    if (this.useRouter && this.selectedTab.href != null) {
+      const router = document.querySelector('ion-router');
+      if (router) {
+        router.push(this.selectedTab.href);
+      }
+      return;
+    }
     this.select(selectedTab);
   }
 
