@@ -10,12 +10,12 @@ navigation controllers take a look at the [NavController API Docs](../../../navi
 See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.
 
 To add a basic tab, you can use the following markup where the `root` property
-is the page you want to load for that tab, `tabTitle` is the optional text to
-display on the tab, and `tabIcon` is the optional [icon](../../icon/Icon/).
+is the page you want to load for that tab, `label` is the optional text to
+display on the tab, and `icon` is the optional [icon](../../icon/Icon/).
 
 ```html
 <ion-tabs>
- <ion-tab [root]="chatRoot" tabTitle="Chat" tabIcon="chat"></ion-tab>
+ <ion-tab [root]="chatRoot" label="Chat" icon="chat"></ion-tab>
 </ion-tabs>
 ```
 
@@ -27,7 +27,7 @@ the tabs.
 
 ```html
 <ion-tabs>
-  <ion-tab (ionSelect)="chat()" tabTitle="Show Modal"></ion-tab>
+  <ion-tab (ionSelect)="chat()" label="Show Modal"></ion-tab>
 </ion-tabs>pop
 ```
 
@@ -53,6 +53,20 @@ export class Tabs {
 #### active
 
 boolean
+
+
+#### badge
+
+string
+
+The badge for the tab.
+
+
+#### badgeStyle
+
+string
+
+The badge color for the tab button.
 
 
 #### btnId
@@ -86,6 +100,20 @@ string
 The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
 
 
+#### icon
+
+string
+
+The icon for the tab.
+
+
+#### label
+
+string
+
+The title of the tab.
+
+
 #### name
 
 string
@@ -107,34 +135,6 @@ boolean
 If true, the tab button is visible within the tabbar. Defaults to `true`.
 
 
-#### tabBadge
-
-string
-
-The badge for the tab.
-
-
-#### tabBadgeStyle
-
-string
-
-The badge color for the tab button.
-
-
-#### tabIcon
-
-string
-
-The icon for the tab.
-
-
-#### tabTitle
-
-string
-
-The title of the tab.
-
-
 #### tabsHideOnSubPages
 
 boolean
@@ -147,6 +147,20 @@ If true, hide the tabs on child pages.
 #### active
 
 boolean
+
+
+#### badge
+
+string
+
+The badge for the tab.
+
+
+#### badge-style
+
+string
+
+The badge color for the tab button.
 
 
 #### btn-id
@@ -180,6 +194,20 @@ string
 The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
 
 
+#### icon
+
+string
+
+The icon for the tab.
+
+
+#### label
+
+string
+
+The title of the tab.
+
+
 #### name
 
 string
@@ -199,34 +227,6 @@ If true, the tab will be selected. Defaults to `false`.
 boolean
 
 If true, the tab button is visible within the tabbar. Defaults to `true`.
-
-
-#### tab-badge
-
-string
-
-The badge for the tab.
-
-
-#### tab-badge-style
-
-string
-
-The badge color for the tab button.
-
-
-#### tab-icon
-
-string
-
-The icon for the tab.
-
-
-#### tab-title
-
-string
-
-The title of the tab.
 
 
 #### tabs-hide-on-sub-pages

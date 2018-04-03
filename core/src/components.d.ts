@@ -609,7 +609,7 @@ declare global {
      */
     'mode': 'ios' | 'md';
     /**
-     * The text property is used to provide custom text for the back button while using the default look-and-feel
+     * The text property is used to provide custom text for the back button while using the default look-and-feel.
      */
     'text': string|undefined;
   }
@@ -637,7 +637,7 @@ declare global {
        */
       'mode'?: 'ios' | 'md';
       /**
-       * The text property is used to provide custom text for the back button while using the default look-and-feel
+       * The text property is used to provide custom text for the back button while using the default look-and-feel.
        */
       'text'?: string|undefined;
     }
@@ -5757,6 +5757,14 @@ declare global {
 declare global {
   interface HTMLIonTabElement extends HTMLStencilElement {
     'active': boolean;
+    /**
+     * The badge for the tab.
+     */
+    'badge': string;
+    /**
+     * The badge color for the tab button.
+     */
+    'badgeStyle': string;
     'btnId': string;
     /**
      * The component to display inside of the tab.
@@ -5773,6 +5781,14 @@ declare global {
      */
     'href': string;
     /**
+     * The icon for the tab.
+     */
+    'icon': string;
+    /**
+     * The title of the tab.
+     */
+    'label': string;
+    /**
      * The name of the tab.
      */
     'name': string;
@@ -5785,22 +5801,6 @@ declare global {
      * If true, the tab button is visible within the tabbar. Defaults to `true`.
      */
     'show': boolean;
-    /**
-     * The badge for the tab.
-     */
-    'tabBadge': string;
-    /**
-     * The badge color for the tab button.
-     */
-    'tabBadgeStyle': string;
-    /**
-     * The icon for the tab.
-     */
-    'tabIcon': string;
-    /**
-     * The title of the tab.
-     */
-    'tabTitle': string;
     /**
      * If true, hide the tabs on child pages.
      */
@@ -5824,6 +5824,14 @@ declare global {
   namespace JSXElements {
     export interface IonTabAttributes extends HTMLAttributes {
       'active'?: boolean;
+      /**
+       * The badge for the tab.
+       */
+      'badge'?: string;
+      /**
+       * The badge color for the tab button.
+       */
+      'badgeStyle'?: string;
       'btnId'?: string;
       /**
        * The component to display inside of the tab.
@@ -5838,6 +5846,14 @@ declare global {
        * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
        */
       'href'?: string;
+      /**
+       * The icon for the tab.
+       */
+      'icon'?: string;
+      /**
+       * The title of the tab.
+       */
+      'label'?: string;
       /**
        * The name of the tab.
        */
@@ -5854,22 +5870,6 @@ declare global {
        * If true, the tab button is visible within the tabbar. Defaults to `true`.
        */
       'show'?: boolean;
-      /**
-       * The badge for the tab.
-       */
-      'tabBadge'?: string;
-      /**
-       * The badge color for the tab button.
-       */
-      'tabBadgeStyle'?: string;
-      /**
-       * The icon for the tab.
-       */
-      'tabIcon'?: string;
-      /**
-       * The title of the tab.
-       */
-      'tabTitle'?: string;
       /**
        * If true, hide the tabs on child pages.
        */

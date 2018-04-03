@@ -71,7 +71,7 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 
 The text property is used to provide custom text for the back button while using the
-default look-and-feel
+default look-and-feel.
 
 
 ## Attributes
@@ -100,7 +100,7 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 
 The text property is used to provide custom text for the back button while using the
-default look-and-feel
+default look-and-feel.
 
 
 

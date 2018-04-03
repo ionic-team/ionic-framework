@@ -1,4 +1,4 @@
-import { Build, Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import { FrameworkDelegate, attachComponent } from '../../utils/framework-delegate';
 import { ComponentRef } from '../..';
 
@@ -10,8 +10,6 @@ export class Tab {
   private loaded = false;
   @Element() el: HTMLIonTabElement;
 
-  @State() init = false;
-
   @Prop({ mutable: true }) active = false;
 
   @Prop() btnId: string;
@@ -20,7 +18,7 @@ export class Tab {
   /**
    * The title of the tab.
    */
-  @Prop() tabTitle: string;
+  @Prop() label: string;
 
   /**
    * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
@@ -30,17 +28,17 @@ export class Tab {
   /**
    * The icon for the tab.
    */
-  @Prop() tabIcon: string;
+  @Prop() icon: string;
 
   /**
    * The badge for the tab.
    */
-  @Prop() tabBadge: string;
+  @Prop() badge: string;
 
   /**
    * The badge color for the tab button.
    */
-  @Prop() tabBadgeStyle = 'default';
+  @Prop() badgeStyle = 'default';
 
   /**
    * The component to display inside of the tab.

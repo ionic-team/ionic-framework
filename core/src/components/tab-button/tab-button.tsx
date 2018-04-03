@@ -51,11 +51,11 @@ export class TabButton {
   hostData() {
     const selected = this.selected;
     const tab = this.tab;
-    const hasTitle = !!tab.tabTitle;
-    const hasIcon = !!tab.tabIcon;
+    const hasTitle = !!tab.label;
+    const hasIcon = !!tab.icon;
     const hasTitleOnly = (hasTitle && !hasIcon);
     const hasIconOnly = (hasIcon && !hasTitle);
-    const hasBadge = !!tab.tabBadge;
+    const hasBadge = !!tab.badge;
     return {
       'role': 'tab',
       'id': tab.btnId,
@@ -84,9 +84,9 @@ export class TabButton {
         class='tab-cover'
         onKeyUp={this.onKeyUp.bind(this)}
         onBlur={this.onBlur.bind(this)}>
-        { tab.tabIcon && <ion-icon class='tab-button-icon' name={tab.tabIcon}></ion-icon> }
-        { tab.tabTitle && <span class='tab-button-text'>{tab.tabTitle}</span> }
-        { tab.tabBadge && <ion-badge class='tab-badge' color={tab.tabBadgeStyle}>{tab.tabBadge}</ion-badge> }
+        { tab.icon && <ion-icon class='tab-button-icon' name={tab.icon}></ion-icon> }
+        { tab.label && <span class='tab-button-text'>{tab.label}</span> }
+        { tab.badge && <ion-badge class='tab-badge' color={tab.badgeStyle}>{tab.badge}</ion-badge> }
         { this.mode === 'md' && <ion-ripple-effect useTapClick={true}/> }
       </a>
     ];

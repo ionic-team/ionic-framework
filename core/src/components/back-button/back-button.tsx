@@ -23,7 +23,7 @@ export class BackButton {
 
   /**
    * The text property is used to provide custom text for the back button while using the
-   * default look-and-feel
+   * default look-and-feel.
    */
   @Prop() text: string|undefined;
 
@@ -55,14 +55,14 @@ export class BackButton {
 
   render() {
     const backButtonIcon = this.icon || this.config.get('backButtonIcon', 'arrow-back');
-    const backButtonText = this.text != null ? this.text : this.config.get('backButtonText', this.mode === 'ios' ? 'Back' : '');
+    const backButtonText = this.text != null ? this.text : this.config.get('backButtonText', 'Back');
 
     return (
       <button
         class='back-button-inner'
         onClick={(ev) => this.onClick(ev)}>
         { backButtonIcon && <ion-icon name={backButtonIcon}/> }
-        { backButtonText && <span class='button-text'>{backButtonText}</span> }
+        { this.mode === 'ios' && backButtonText && <span class='button-text'>{backButtonText}</span> }
         { this.mode === 'md' && <ion-ripple-effect useTapClick={true} /> }
       </button>
     );
