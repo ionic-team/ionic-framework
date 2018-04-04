@@ -311,8 +311,8 @@ export class Select {
     const popoverOpts: PopoverOptions = Object.assign(interfaceOptions, {
       component: 'ion-select-popover',
       componentProps: {
-        title: interfaceOptions.title,
-        subTitle: interfaceOptions.subTitle,
+        header: interfaceOptions.header,
+        subHeader: interfaceOptions.subHeader,
         message: interfaceOptions.message,
         value: this.value,
         options: this.childOpts.map(o => {
@@ -378,7 +378,7 @@ export class Select {
     const labelText = (label) ? label.textContent : null;
 
     const alertOpts: AlertOptions = Object.assign(interfaceOptions, {
-      title: interfaceOptions.title ? interfaceOptions.title : labelText,
+      header: interfaceOptions.header ? interfaceOptions.header : labelText,
       inputs: this.childOpts.map(o => {
         return {
           type: (this.multiple ? 'checkbox' : 'radio'),
