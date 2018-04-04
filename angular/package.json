@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -39,7 +39,7 @@
     "dist/"
   ],
   "dependencies": {
-    "@ionic/core": "latest"
+    "@ionic/core": "0.2.1"
   },
   "devDependencies": {
     "@angular/animations": "latest",

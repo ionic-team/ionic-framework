@@ -1,3 +1,23 @@
+<a name="0.2.1"></a>
+## [0.2.1](https://github.com/ionic-team/ionic/compare/v0.2.0...v0.2.1) (2018-04-04)
+
+
+### Bug Fixes
+
+* **angular:** back button prevents default ([4db687e](https://github.com/ionic-team/ionic/commit/4db687e))
+* **angular:** back-button ([1f78390](https://github.com/ionic-team/ionic/commit/1f78390))
+* **angular:** back-button does not push view ([bb46b5f](https://github.com/ionic-team/ionic/commit/bb46b5f))
+* **angular:** tabs flickering ([7e97006](https://github.com/ionic-team/ionic/commit/7e97006))
+* **app:** hide elements ([11cb42f](https://github.com/ionic-team/ionic/commit/11cb42f))
+* **scripts:** update dep version ([974b949](https://github.com/ionic-team/ionic/commit/974b949))
+
+
+### Features
+
+* **angular:** href integration ([09e6b7e](https://github.com/ionic-team/ionic/commit/09e6b7e))
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/ionic-team/ionic/compare/v0.1.6...v0.2.0) (2018-04-02)
 
