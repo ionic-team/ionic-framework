@@ -177,6 +177,13 @@ function preparePackage(tasks, package, version) {
       {
         title: `${pkg.name}: npm link @ionic/core`,
         task: () => execa('npm', ['link', '@ionic/core'], { cwd: projectRoot })
+      },
+      {
+        title: `${pkg.name}: update ionic/core dep to ${version}`,
+        task: () => {
+          updateDependency(pkg, "@ionic/core", version);
+          common.writePkg(package, pkg);
+        }
       }
     );
   }
@@ -203,6 +210,15 @@ function preparePackage(tasks, package, version) {
         task: () => execa('npm', ['link'], { cwd: projectRoot })
       }
     );
+  }
+}
+
+function updateDependency(pkg, dependency, version) {
+  if (pkg.dependencies && pkg.dependencies[dependency]) {
+    pkg.dependencies[dependency] = version;
+  }
+  if (pkg.devDependencies && pkg.devDependencies[dependency]) {
+    pkg.devDependencies[dependency] = version;
   }
 }
 

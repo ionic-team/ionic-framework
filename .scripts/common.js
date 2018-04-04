@@ -12,13 +12,24 @@ const packages = [
 ];
 
 function readPkg(package) {
-  const packageJsonPath = path.join(rootDir, package, 'package.json');
+  const packageJsonPath = packagePath(package);
   return JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+}
+
+function writePkg(project, pkg) {
+  const packageJsonPath = packagePath(package);
+  const text = JSON.stringify(pkg, null, 2);
+  return fs.writeFileSync(packageJsonPath, text);
+}
+
+function packagePath(project) {
+  return path.join(rootDir, package, 'package.json');
 }
 
 function projectPath(project) {
   return path.join(rootDir, project);
 }
+
 
 function checkGit(tasks) {
   tasks.push(
@@ -55,6 +66,7 @@ const isValidVersion = input => Boolean(semver.valid(input));
 module.exports = {
   isValidVersion,
   readPkg,
+  writePkg,
   rootDir,
   projectPath,
   checkGit,

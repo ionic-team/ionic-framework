@@ -38,6 +38,9 @@
   "files": [
     "dist/"
   ],
+  "dependencies": {
+    "@ionic/core": "latest"
+  },
   "devDependencies": {
     "@angular/animations": "latest",
     "@angular/common": "latest",
@@ -49,7 +52,6 @@
     "@angular/platform-browser": "latest",
     "@angular/platform-browser-dynamic": "latest",
     "@angular/router": "latest",
-    "@ionic/core": "latest",
     "chalk": "^2.3.2",
     "execa": "^0.10.0",
     "fs-extra": "^5.0.0",
