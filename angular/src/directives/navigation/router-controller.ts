@@ -37,7 +37,8 @@ export class StackController {
 
   async setActive(enteringView: RouteView, direction: number | undefined) {
     const leavingView = this.getActive();
-    const reused = this.insertView(enteringView);
+    const forcedGoBack = direction === -1;
+    const reused = this.insertView(enteringView, forcedGoBack);
     direction = direction != null ? direction : (reused ? -1 : 1);
     await this.transition(enteringView, leavingView, direction, this.canGoBack(1));
 
@@ -50,14 +51,18 @@ export class StackController {
     this.router.navigateByUrl(view.url);
   }
 
-  private insertView(enteringView: RouteView): boolean {
+  private insertView(enteringView: RouteView, forcedGoBack: boolean): boolean {
     if (this.stack) {
       const index = this.views.indexOf(enteringView);
       if (index >= 0) {
         this.views = this.views.slice(0, index + 1);
         return true;
       } else {
-        this.views.push(enteringView);
+        if (forcedGoBack) {
+          this.views = [enteringView];
+        } else {
+          this.views.push(enteringView);
+        }
         return false;
       }
     } else {
