@@ -1,18 +1,9 @@
 @import "../../themes/ionic.globals";
 
-// Back Button
+// Menu Button
 // --------------------------------------------------
 
-.back-button {
-  display: none;
-}
-
-.can-go-back > ion-header .back-button,
-.back-button.show-back-button {
-  display: inline-block;
-}
-
-.back-button button {
+.menu-button button {
   @include font-smoothing();
   @include text-align(center);
   @include appearance(none);
@@ -20,13 +11,10 @@
   position: relative;
   z-index: 0;
   display: inline-flex;
-
   flex-flow: row nowrap;
   flex-shrink: 0;
-
   align-items: center;
   justify-content: center;
-
   border: 0;
   outline: none;
 
@@ -38,30 +26,11 @@
 
   white-space: nowrap;
   cursor: pointer;
-
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
 
   transition: background-color, opacity 100ms linear;
 
-  user-select: none;
   font-kerning: none;
-}
-
-.back-button .button-inner {
-  display: flex;
-
-  flex-flow: row nowrap;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  height: 100%;
-}
-
-.back-button-text {
-  display: flex;
-
-  align-items: center;
+  user-select: none;
 }

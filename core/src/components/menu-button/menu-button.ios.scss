@@ -1,0 +1,39 @@
+@import "./menu-button";
+@import "./menu-button.ios.vars";
+
+// iOS Menu Button
+// --------------------------------------------------
+
+.menu-button-ios .menu-button-inner {
+  @include padding(0);
+  @include margin(2px, 0, 0, 0);
+
+  z-index: $menu-button-ios-button-z-index;
+  overflow: visible;
+
+  min-height: 32px;
+
+  border: 0;
+  font-size: 17px;
+  line-height: 1;
+
+  color: $menu-button-ios-color;
+  background-color: transparent;
+
+  transform: translateZ(0);
+
+  &.activated {
+    opacity: .4;
+  }
+}
+
+.menu-button-ios ion-icon {
+  @include padding(0);
+  @include margin(0, -3px, 0, 0);
+
+  display: inherit;
+
+  font-size: 1.75em;
+
+  pointer-events: none;
+}

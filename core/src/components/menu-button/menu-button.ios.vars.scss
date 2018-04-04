@@ -1,0 +1,10 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Menu Button
+// --------------------------------------------------
+
+/// @prop - Z index of the Menu button
+$menu-button-ios-button-z-index:      $z-index-toolbar-buttons !default;
+
+/// @prop - Text color of the Menu button
+$menu-button-ios-color:               ion-color($colors-ios, primary, base, ios) !default;
