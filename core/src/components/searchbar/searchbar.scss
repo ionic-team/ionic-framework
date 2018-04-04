@@ -64,3 +64,14 @@ ion-searchbar {
 .searchbar-has-value.searchbar-has-focus .searchbar-clear-icon {
   display: block;
 }
+
+// adding rtl support 
+[dir="rtl"]  .searchbar-search-icon {
+  left: auto;
+  right: 16px;
+}
+
+[dir="rtl"] .searchbar-input{
+  direction: rtl;
+}
+
