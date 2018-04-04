@@ -73,13 +73,17 @@ function publishGitTag(tasks, version) {
   const tag = `v${version}`;
 
   tasks.push(
-      {
+    {
       title: `Tag latest commit ${chalk.dim(`(${tag})`)}`,
       task: () => execa('git', ['tag', `${tag}`], { cwd: common.rootDir })
     },
     {
-      title: 'Push tag to Github',
-      task: () => execa('git', ['push', '--follow-tags'], { cwd: common.rootDir })
+      title: 'Push branches to Github',
+      task: () => execa('git', ['push'], { cwd: common.rootDir })
+    },
+    {
+      title: 'Push tags to Github',
+      task: () => execa('git', ['push', '--tags'], { cwd: common.rootDir })
     }
   );
 }
