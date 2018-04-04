@@ -11,25 +11,24 @@ const packages = [
   'angular'
 ];
 
-function readPkg(package) {
-  const packageJsonPath = packagePath(package);
+function readPkg(project) {
+  const packageJsonPath = packagePath(project);
   return JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
 }
 
 function writePkg(project, pkg) {
-  const packageJsonPath = packagePath(package);
+  const packageJsonPath = packagePath(project);
   const text = JSON.stringify(pkg, null, 2);
   return fs.writeFileSync(packageJsonPath, text);
 }
 
 function packagePath(project) {
-  return path.join(rootDir, package, 'package.json');
+  return path.join(rootDir, project, 'package.json');
 }
 
 function projectPath(project) {
   return path.join(rootDir, project);
 }
-
 
 function checkGit(tasks) {
   tasks.push(
