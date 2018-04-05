@@ -602,16 +602,26 @@ declare global {
 
 declare global {
   interface HTMLIonBackButtonElement extends HTMLStencilElement {
+    /**
+     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+     */
+    'color': string;
+    /**
+     * The url to navigate back to by default when there is no history.
+     */
     'defaultHref': string;
+    /**
+     * The icon name to use for the back button.
+     */
     'icon': string;
     /**
      * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
      */
     'mode': 'ios' | 'md';
     /**
-     * The text property is used to provide custom text for the back button while using the default look-and-feel.
+     * The text to display in the back button.
      */
-    'text': string|undefined;
+    'text': string | undefined;
   }
   var HTMLIonBackButtonElement: {
     prototype: HTMLIonBackButtonElement;
@@ -630,16 +640,26 @@ declare global {
   }
   namespace JSXElements {
     export interface IonBackButtonAttributes extends HTMLAttributes {
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color'?: string;
+      /**
+       * The url to navigate back to by default when there is no history.
+       */
       'defaultHref'?: string;
+      /**
+       * The icon name to use for the back button.
+       */
       'icon'?: string;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
       'mode'?: 'ios' | 'md';
       /**
-       * The text property is used to provide custom text for the back button while using the default look-and-feel.
+       * The text to display in the back button.
        */
-      'text'?: string|undefined;
+      'text'?: string | undefined;
     }
   }
 }

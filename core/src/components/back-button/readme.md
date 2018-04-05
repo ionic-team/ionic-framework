@@ -1,45 +1,8 @@
 # ion-back-button
 
-A back button is a component that allows you navigate back into app history. To
-add a back button to your view, all you need is:
+The back button navigates back in the app's history upon click. It is smart enough to know what to render based on the mode and when to show based on the navigation stack.
 
-```html
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-```
-
-The back button component is smart enough to know what to render and what content to show.
-
-If, however, you want more control over what is shown in the back button, you use the
-`text` and `icon` properties.
-
-```html
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button text="Volver" icon="add"></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-```
-
-Or no button text at all:
-
-
-```html
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button text="" icon="add"></ion-back-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
-```
+To change what is displayed in the back button, use the `text` and `icon` properties.
 
 
 <!-- Auto Generated Below -->
@@ -47,14 +10,27 @@ Or no button text at all:
 
 ## Properties
 
+#### color
+
+string
+
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
+
+
 #### defaultHref
 
 string
+
+The url to navigate back to by default when there is no history.
 
 
 #### icon
 
 string
+
+The icon name to use for the back button.
 
 
 #### mode
@@ -70,20 +46,32 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 
 
-The text property is used to provide custom text for the back button while using the
-default look-and-feel.
+The text to display in the back button.
 
 
 ## Attributes
+
+#### color
+
+string
+
+The color to use from your Sass `$colors` map.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information, see [Theming your App](/docs/theming/theming-your-app).
+
 
 #### default-href
 
 string
 
+The url to navigate back to by default when there is no history.
+
 
 #### icon
 
 string
+
+The icon name to use for the back button.
 
 
 #### mode
@@ -99,8 +87,7 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 
 
-The text property is used to provide custom text for the back button while using the
-default look-and-feel.
+The text to display in the back button.
 
 
 
