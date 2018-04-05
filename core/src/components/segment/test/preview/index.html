@@ -187,6 +187,21 @@
             }
           }
 
+          const segments = document.querySelectorAll('ion-segment')
+          for (let i = 0; i < segments.length; i++) {
+            segments[i].addEventListener('ionChange', (ev) => {
+              console.log('Segment value changed', ev);
+            })
+          }
+
+          // Listen for ionClick on all segment buttons
+          const segmentButtons = document.querySelectorAll('ion-segment-button')
+          for (let i = 0; i < segmentButtons.length; i++) {
+            segmentButtons[i].addEventListener('ionClick', (ev) => {
+              console.log('Segment button clicked', ev);
+            })
+          }
+
         </script>
       </ion-content>
 
