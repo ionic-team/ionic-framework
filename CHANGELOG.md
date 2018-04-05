@@ -1,3 +1,19 @@
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/ionic-team/ionic/compare/v0.2.1...v0.2.2) (2018-04-05)
+
+
+### Bug Fixes
+
+* **back-button:** fix menu and back button alignment ([#14268](https://github.com/ionic-team/ionic/issues/14268)) ([57fbf6c](https://github.com/ionic-team/ionic/commit/57fbf6c))
+* **ripple-effect:** animation ([25c852c](https://github.com/ionic-team/ionic/commit/25c852c))
+* **sass:** add missing alert css properties ([#14269](https://github.com/ionic-team/ionic/issues/14269)) ([3471dd6](https://github.com/ionic-team/ionic/commit/3471dd6)), closes [#14258](https://github.com/ionic-team/ionic/issues/14258)
+* **script:** release script pushes tags ([d23108a](https://github.com/ionic-team/ionic/commit/d23108a))
+* **scripts:** improve script ([2215c6a](https://github.com/ionic-team/ionic/commit/2215c6a))
+* **select:** pass header and subHeader to interfaces ([2195895](https://github.com/ionic-team/ionic/commit/2195895))
+* **select:** wrap the text for the message in a popover ([0a0959b](https://github.com/ionic-team/ionic/commit/0a0959b))
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/ionic-team/ionic/compare/v0.2.0...v0.2.1) (2018-04-04)
 
