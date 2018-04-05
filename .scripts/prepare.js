@@ -111,7 +111,7 @@ async function preparePackages(packages, version) {
   // generate changelog
   generateChangeLog(tasks);
 
-  const listr = new Listr(tasks, { showSubtasks: false });
+  const listr = new Listr(tasks, { showSubtasks: true });
   await listr.run();
 }
 
@@ -154,7 +154,7 @@ function preparePackage(tasks, package, version) {
   const projectRoot = common.projectPath(package);
   const pkg = common.readPkg(package);
 
-  tasks.push(
+  const projectTasks = [
     {
       title: `${pkg.name}: validate new version`,
       task: () => {
@@ -170,10 +170,10 @@ function preparePackage(tasks, package, version) {
         await execa('npm', ['install'], { cwd: projectRoot });
       }
     }
-  );
+  ];
 
   if (package !== 'core') {
-    tasks.push(
+    projectTasks.push(
       {
         title: `${pkg.name}: npm link @ionic/core`,
         task: () => execa('npm', ['link', '@ionic/core'], { cwd: projectRoot })
@@ -188,7 +188,7 @@ function preparePackage(tasks, package, version) {
     );
   }
 
-  tasks.push(
+  projectTasks.push(
     {
       title: `${pkg.name}: lint`,
       task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot })
@@ -204,13 +204,19 @@ function preparePackage(tasks, package, version) {
   );
 
   if (package === 'core') {
-    tasks.push(
+    projectTasks.push(
       {
         title: `${pkg.name}: npm link`,
         task: () => execa('npm', ['link'], { cwd: projectRoot })
       }
     );
   }
+
+  // Add project tasks
+  tasks.push({
+    title: `Prepare ${chalk.bold(pkg.name)}`,
+    task: () => new Listr(projectTasks)
+  });
 }
 
 function updateDependency(pkg, dependency, version) {
