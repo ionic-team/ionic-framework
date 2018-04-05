@@ -2,10 +2,6 @@
 
 Backdrops are full screen components that overlay other components. They are useful behind components that transition in on top of other content and can be used to dismiss that component.
 
-```html
-<ion-backdrop></ion-backdrop>
-```
-
 
 <!-- Auto Generated Below -->
 
@@ -16,15 +12,21 @@ Backdrops are full screen components that overlay other components. They are use
 
 boolean
 
+If true, the backdrop will stop propogation on tap. Defaults to `true`.
+
 
 #### tappable
 
 boolean
 
+If true, the backdrop will can be clicked and will emit the `ionBackdropTap` event. Defaults to `true`.
+
 
 #### visible
 
 boolean
+
+If true, the backdrop will be visible. Defaults to `true`.
 
 
 ## Attributes
@@ -33,20 +35,28 @@ boolean
 
 boolean
 
+If true, the backdrop will stop propogation on tap. Defaults to `true`.
+
 
 #### tappable
 
 boolean
+
+If true, the backdrop will can be clicked and will emit the `ionBackdropTap` event. Defaults to `true`.
 
 
 #### visible
 
 boolean
 
+If true, the backdrop will be visible. Defaults to `true`.
+
 
 ## Events
 
 #### ionBackdropTap
+
+Emitted when the backdrop is tapped.
 
 
 

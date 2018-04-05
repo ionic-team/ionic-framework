@@ -15,10 +15,24 @@ export class Backdrop {
 
   private lastClick = -10000;
 
+  /**
+   * If true, the backdrop will be visible. Defaults to `true`.
+   */
   @Prop() visible = true;
+
+  /**
+   * If true, the backdrop will can be clicked and will emit the `ionBackdropTap` event. Defaults to `true`.
+   */
   @Prop() tappable = true;
+
+  /**
+   * If true, the backdrop will stop propogation on tap. Defaults to `true`.
+   */
   @Prop() stopPropagation = true;
 
+  /**
+   * Emitted when the backdrop is tapped.
+   */
   @Event() ionBackdropTap: EventEmitter;
 
   componentDidLoad() {

@@ -647,8 +647,17 @@ declare global {
 
 declare global {
   interface HTMLIonBackdropElement extends HTMLStencilElement {
+    /**
+     * If true, the backdrop will stop propogation on tap. Defaults to `true`.
+     */
     'stopPropagation': boolean;
+    /**
+     * If true, the backdrop will can be clicked and will emit the `ionBackdropTap` event. Defaults to `true`.
+     */
     'tappable': boolean;
+    /**
+     * If true, the backdrop will be visible. Defaults to `true`.
+     */
     'visible': boolean;
   }
   var HTMLIonBackdropElement: {
@@ -668,9 +677,21 @@ declare global {
   }
   namespace JSXElements {
     export interface IonBackdropAttributes extends HTMLAttributes {
+      /**
+       * Emitted when the backdrop is tapped.
+       */
       'onIonBackdropTap'?: (event: CustomEvent) => void;
+      /**
+       * If true, the backdrop will stop propogation on tap. Defaults to `true`.
+       */
       'stopPropagation'?: boolean;
+      /**
+       * If true, the backdrop will can be clicked and will emit the `ionBackdropTap` event. Defaults to `true`.
+       */
       'tappable'?: boolean;
+      /**
+       * If true, the backdrop will be visible. Defaults to `true`.
+       */
       'visible'?: boolean;
     }
   }
