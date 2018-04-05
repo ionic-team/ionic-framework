@@ -1,10 +1,10 @@
 /* angular directive proxies */
 import { Directive as NgDirective, ElementRef, EventEmitter as NgEventEmitter, Input as NgInput, Output as NgOutput } from '@angular/core';
 
-export function outputs(instance: any, events: string[]) {
-  events.forEach(eventName => {
-    instance[eventName] = new NgEventEmitter();
-  });
+
+export function method(ref: ElementRef, methodName: string, ...args: any[]) {
+  return ref.nativeElement.componentOnReady()
+    .then((el: any) => el[methodName].apply(el, args));
 }
 
 export function inputs(instance: any, el: ElementRef, props: string[]) {
@@ -14,8 +14,7 @@ export function inputs(instance: any, el: ElementRef, props: string[]) {
     });
   });
 }
-
-const accept = 'accept', activated = 'activated', active = 'active', allowEmptySelection = 'allowEmptySelection', animated = 'animated', autoHide = 'autoHide', autocapitalize = 'autocapitalize', autocomplete = 'autocomplete', autocorrect = 'autocorrect', autofocus = 'autofocus', badge = 'badge', badgeStyle = 'badgeStyle', btnId = 'btnId', button = 'button', buttonType = 'buttonType', cancelButtonText = 'cancelButtonText', cancelText = 'cancelText', checked = 'checked', clearInput = 'clearInput', clearOnEdit = 'clearOnEdit', closeDuration = 'closeDuration', color = 'color', cols = 'cols', component = 'component', componentProps = 'componentProps', contentId = 'contentId', dayNames = 'dayNames', dayShortNames = 'dayShortNames', dayValues = 'dayValues', debounce = 'debounce', defaultHref = 'defaultHref', delegate = 'delegate', detail = 'detail', disabled = 'disabled', displayFormat = 'displayFormat', doneText = 'doneText', dualKnobs = 'dualKnobs', duration = 'duration', edge = 'edge', expand = 'expand', expandable = 'expandable', fill = 'fill', fixed = 'fixed', floating = 'floating', forceOverscroll = 'forceOverscroll', fullscreen = 'fullscreen', goBack = 'goBack', header = 'header', horizontal = 'horizontal', hourValues = 'hourValues', href = 'href', icon = 'icon', inputmode = 'inputmode', interfaceOptions = 'interfaceOptions', ionBlur = 'ionBlur', ionCancel = 'ionCancel', ionChange = 'ionChange', ionClear = 'ionClear', ionClick = 'ionClick', ionClose = 'ionClose', ionDrag = 'ionDrag', ionFocus = 'ionFocus', ionInfinite = 'ionInfinite', ionInput = 'ionInput', ionInputDidLoad = 'ionInputDidLoad', ionInputDidUnload = 'ionInputDidUnload', ionMenuChange = 'ionMenuChange', ionNavDidChange = 'ionNavDidChange', ionNavWillChange = 'ionNavWillChange', ionOpen = 'ionOpen', ionPull = 'ionPull', ionRadioDidLoad = 'ionRadioDidLoad', ionRadioDidUnload = 'ionRadioDidUnload', ionRefresh = 'ionRefresh', ionScroll = 'ionScroll', ionScrollEnd = 'ionScrollEnd', ionScrollStart = 'ionScrollStart', ionSelect = 'ionSelect', ionSelectOptionDidLoad = 'ionSelectOptionDidLoad', ionSelectOptionDidUnload = 'ionSelectOptionDidUnload', ionSlideDidChange = 'ionSlideDidChange', ionSlideDrag = 'ionSlideDrag', ionSlideNextEnd = 'ionSlideNextEnd', ionSlideNextStart = 'ionSlideNextStart', ionSlidePrevEnd = 'ionSlidePrevEnd', ionSlidePrevStart = 'ionSlidePrevStart', ionSlideReachEnd = 'ionSlideReachEnd', ionSlideReachStart = 'ionSlideReachStart', ionSlideTouchEnd = 'ionSlideTouchEnd', ionSlideTouchStart = 'ionSlideTouchStart', ionSlideTransitionEnd = 'ionSlideTransitionEnd', ionSlideTransitionStart = 'ionSlideTransitionStart', ionSlideWillChange = 'ionSlideWillChange', ionSplitPaneVisible = 'ionSplitPaneVisible', ionStart = 'ionStart', ionStyle = 'ionStyle', ionSwipe = 'ionSwipe', label = 'label', loadingSpinner = 'loadingSpinner', loadingText = 'loadingText', max = 'max', maxEdgeStart = 'maxEdgeStart', maxlength = 'maxlength', mediaQuery = 'mediaQuery', menu = 'menu', menuId = 'menuId', message = 'message', min = 'min', minlength = 'minlength', minuteValues = 'minuteValues', mode = 'mode', monthNames = 'monthNames', monthShortNames = 'monthShortNames', monthValues = 'monthValues', multiple = 'multiple', name = 'name', okText = 'okText', options = 'options', or = 'or', orientation = 'orientation', pager = 'pager', pattern = 'pattern', paused = 'paused', persistent = 'persistent', pickerFormat = 'pickerFormat', pickerOptions = 'pickerOptions', pin = 'pin', placeholder = 'placeholder', platform = 'platform', position = 'position', pullMax = 'pullMax', pullMin = 'pullMin', pullingIcon = 'pullingIcon', pullingText = 'pullingText', readonly = 'readonly', refreshingSpinner = 'refreshingSpinner', refreshingText = 'refreshingText', required = 'required', results = 'results', root = 'root', rootParams = 'rootParams', round = 'round', rows = 'rows', scrollEnabled = 'scrollEnabled', scrollEvents = 'scrollEvents', scrollable = 'scrollable', selected = 'selected', selectedText = 'selectedText', show = 'show', showCancelButton = 'showCancelButton', side = 'side', size = 'size', snapbackDuration = 'snapbackDuration', snaps = 'snaps', spellcheck = 'spellcheck', stacked = 'stacked', step = 'step', strong = 'strong', subHeader = 'subHeader', swipeBackEnabled = 'swipeBackEnabled', swipeEnabled = 'swipeEnabled', tabbarHidden = 'tabbarHidden', tabbarHighlight = 'tabbarHighlight', tabbarLayout = 'tabbarLayout', tabbarPlacement = 'tabbarPlacement', tabsHideOnSubPages = 'tabsHideOnSubPages', tapClick = 'tapClick', text = 'text', threshold = 'threshold', toggleActive = 'toggleActive', translucent = 'translucent', type = 'type', url = 'url', useRouter = 'useRouter', value = 'value', vertical = 'vertical', when = 'when', width = 'width', wrap = 'wrap', yearValues = 'yearValues';
+const accept = 'accept', activated = 'activated', active = 'active', addRipple = 'addRipple', allowEmptySelection = 'allowEmptySelection', animated = 'animated', autoHide = 'autoHide', autocapitalize = 'autocapitalize', autocomplete = 'autocomplete', autocorrect = 'autocorrect', autofocus = 'autofocus', badge = 'badge', badgeStyle = 'badgeStyle', btnId = 'btnId', button = 'button', buttonType = 'buttonType', canGoBack = 'canGoBack', cancel = 'cancel', cancelButtonText = 'cancelButtonText', cancelText = 'cancelText', checked = 'checked', clearInput = 'clearInput', clearOnEdit = 'clearOnEdit', close = 'close', closeDuration = 'closeDuration', closeOpened = 'closeOpened', closeSlidingItems = 'closeSlidingItems', color = 'color', cols = 'cols', complete = 'complete', component = 'component', componentProps = 'componentProps', contentId = 'contentId', dayNames = 'dayNames', dayShortNames = 'dayShortNames', dayValues = 'dayValues', debounce = 'debounce', defaultHref = 'defaultHref', delegate = 'delegate', detail = 'detail', disabled = 'disabled', displayFormat = 'displayFormat', doneText = 'doneText', dualKnobs = 'dualKnobs', duration = 'duration', edge = 'edge', expand = 'expand', expandable = 'expandable', fill = 'fill', fireSwipeEvent = 'fireSwipeEvent', fixed = 'fixed', floating = 'floating', forceOverscroll = 'forceOverscroll', fullscreen = 'fullscreen', getActive = 'getActive', getActiveIndex = 'getActiveIndex', getByIndex = 'getByIndex', getOpenAmount = 'getOpenAmount', getOpenItem = 'getOpenItem', getPrevious = 'getPrevious', getPreviousIndex = 'getPreviousIndex', getProgress = 'getProgress', getRouteId = 'getRouteId', getSelected = 'getSelected', getSlidingRatio = 'getSlidingRatio', getTab = 'getTab', getTabId = 'getTabId', getText = 'getText', goBack = 'goBack', header = 'header', horizontal = 'horizontal', hourValues = 'hourValues', href = 'href', icon = 'icon', inputmode = 'inputmode', insert = 'insert', insertPages = 'insertPages', interfaceOptions = 'interfaceOptions', isActive = 'isActive', isBeginning = 'isBeginning', isEnd = 'isEnd', isOpen = 'isOpen', isPane = 'isPane', isRightSide = 'isRightSide', isVisible = 'isVisible', label = 'label', length = 'length', loadingSpinner = 'loadingSpinner', loadingText = 'loadingText', lockSwipeToNext = 'lockSwipeToNext', lockSwipeToPrev = 'lockSwipeToPrev', lockSwipes = 'lockSwipes', max = 'max', maxEdgeStart = 'maxEdgeStart', maxlength = 'maxlength', mediaQuery = 'mediaQuery', menu = 'menu', menuId = 'menuId', message = 'message', min = 'min', minlength = 'minlength', minuteValues = 'minuteValues', mode = 'mode', monthNames = 'monthNames', monthShortNames = 'monthShortNames', monthValues = 'monthValues', multiple = 'multiple', name = 'name', okText = 'okText', open = 'open', options = 'options', or = 'or', orientation = 'orientation', pager = 'pager', pattern = 'pattern', paused = 'paused', persistent = 'persistent', pickerFormat = 'pickerFormat', pickerOptions = 'pickerOptions', pin = 'pin', placeholder = 'placeholder', platform = 'platform', pop = 'pop', popTo = 'popTo', popToRoot = 'popToRoot', position = 'position', pullMax = 'pullMax', pullMin = 'pullMin', pullingIcon = 'pullingIcon', pullingText = 'pullingText', push = 'push', ratio = 'ratio', ratioUpper = 'ratioUpper', readonly = 'readonly', refreshingSpinner = 'refreshingSpinner', refreshingText = 'refreshingText', removeIndex = 'removeIndex', required = 'required', results = 'results', root = 'root', rootParams = 'rootParams', round = 'round', rows = 'rows', scrollByPoint = 'scrollByPoint', scrollEnabled = 'scrollEnabled', scrollEvents = 'scrollEvents', scrollToBottom = 'scrollToBottom', scrollToPoint = 'scrollToPoint', scrollToTop = 'scrollToTop', scrollable = 'scrollable', select = 'select', selected = 'selected', selectedText = 'selectedText', setActive = 'setActive', setOpen = 'setOpen', setOpenItem = 'setOpenItem', setPages = 'setPages', setRoot = 'setRoot', setRouteId = 'setRouteId', show = 'show', showCancelButton = 'showCancelButton', side = 'side', size = 'size', slideNext = 'slideNext', slidePrev = 'slidePrev', slideTo = 'slideTo', snapbackDuration = 'snapbackDuration', snaps = 'snaps', spellcheck = 'spellcheck', stacked = 'stacked', startAutoplay = 'startAutoplay', step = 'step', stopAutoplay = 'stopAutoplay', strong = 'strong', subHeader = 'subHeader', swipeBackEnabled = 'swipeBackEnabled', swipeEnabled = 'swipeEnabled', tabbarHidden = 'tabbarHidden', tabbarHighlight = 'tabbarHighlight', tabbarLayout = 'tabbarLayout', tabbarPlacement = 'tabbarPlacement', tabsHideOnSubPages = 'tabsHideOnSubPages', tapClick = 'tapClick', text = 'text', threshold = 'threshold', toggle = 'toggle', toggleActive = 'toggleActive', translucent = 'translucent', type = 'type', update = 'update', url = 'url', useRouter = 'useRouter', value = 'value', vertical = 'vertical', waitFor = 'waitFor', when = 'when', width = 'width', wrap = 'wrap', yearValues = 'yearValues';
 
 @NgDirective({ selector: 'ion-app' })
 export class App {
@@ -37,8 +36,8 @@ export class BackButton {
   @NgInput() text: any;
   @NgInput() icon: string;
   @NgInput() defaultHref: string;
-  constructor(el: ElementRef) {
-    inputs(this, el, [mode, text, icon, defaultHref]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [mode, text, icon, defaultHref]);
   }
 }
 
@@ -52,8 +51,8 @@ export class Badge {
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @NgInput() mode: any;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode]);
   }
 }
 
@@ -106,9 +105,8 @@ export class Button {
   @NgInput() goBack: boolean;
   @NgOutput() ionFocus: NgEventEmitter<any>;
   @NgOutput() ionBlur: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [type, href, buttonType, size, disabled, fill, round, expand, strong, color, mode, goBack]);
-    outputs(this, [ionFocus, ionBlur]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [type, href, buttonType, size, disabled, fill, round, expand, strong, color, mode, goBack]);
   }
 }
 
@@ -126,8 +124,8 @@ export class Card {
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
    */
   @NgInput() mode: any;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode]);
   }
 }
 
@@ -141,8 +139,8 @@ export class CardContent {
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
    */
   @NgInput() mode: any;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode]);
   }
 }
 
@@ -160,8 +158,8 @@ export class CardHeader {
    * If true, the card header will be translucent. Defaults to `false`.
    */
   @NgInput() translucent: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode, translucent]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode, translucent]);
   }
 }
 
@@ -175,8 +173,8 @@ export class CardSubtitle {
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
    */
   @NgInput() mode: any;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode]);
   }
 }
 
@@ -190,8 +188,8 @@ export class CardTitle {
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
    */
   @NgInput() mode: any;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode]);
   }
 }
 
@@ -225,9 +223,8 @@ export class Checkbox {
   @NgOutput() ionFocus: NgEventEmitter<any>;
   @NgOutput() ionBlur: NgEventEmitter<any>;
   @NgOutput() ionStyle: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode, name, checked, disabled, value]);
-    outputs(this, [ionChange, ionFocus, ionBlur, ionStyle]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode, name, checked, disabled, value]);
   }
 }
 
@@ -241,8 +238,8 @@ export class Chip {
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
    */
   @NgInput() mode: any;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode]);
   }
 }
 
@@ -268,8 +265,8 @@ export class ChipButton {
    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
    */
   @NgInput() href: string;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode, disabled, fill, href]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode, disabled, fill, href]);
   }
 }
 
@@ -289,8 +286,26 @@ export class Content {
   @NgInput() forceOverscroll: boolean;
   @NgInput() scrollEnabled: boolean;
   @NgInput() scrollEvents: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [fullscreen, forceOverscroll, scrollEnabled, scrollEvents]);
+  /**
+   * Scroll to the top of the content component.  Duration of the scroll animation in milliseconds. Defaults to `300`. Returns a promise which is resolved when the scroll has completed.
+   */
+  scrollToTop(...__args: any[]): Promise<any> {
+    return method(this.r, scrollToTop, __args);
+  }
+  /**
+   * Scroll to the bottom of the content component.  Duration of the scroll animation in milliseconds. Defaults to `300`. Returns a promise which is resolved when the scroll has completed.
+   */
+  scrollToBottom(...__args: any[]): Promise<any> {
+    return method(this.r, scrollToBottom, __args);
+  }
+  scrollByPoint(...__args: any[]): Promise<any> {
+    return method(this.r, scrollByPoint, __args);
+  }
+  scrollToPoint(...__args: any[]): Promise<any> {
+    return method(this.r, scrollToPoint, __args);
+  }
+  constructor(private r: ElementRef) {
+    inputs(this, r, [fullscreen, forceOverscroll, scrollEnabled, scrollEvents]);
   }
 }
 
@@ -374,9 +389,8 @@ export class Datetime {
   @NgInput() value: string;
   @NgOutput() ionCancel: NgEventEmitter<any>;
   @NgOutput() ionStyle: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [disabled, min, max, displayFormat, pickerFormat, cancelText, doneText, yearValues, monthValues, dayValues, hourValues, minuteValues, monthNames, monthShortNames, dayNames, dayShortNames, pickerOptions, placeholder, value]);
-    outputs(this, [ionCancel, ionStyle]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [disabled, min, max, displayFormat, pickerFormat, cancelText, doneText, yearValues, monthValues, dayValues, hourValues, minuteValues, monthNames, monthShortNames, dayNames, dayShortNames, pickerOptions, placeholder, value]);
   }
 }
 
@@ -394,8 +408,14 @@ export class Fab {
    * If true, the fab will display on the edge of the header if `vertical` is `"top"`, and on the edge of the footer if it is `"bottom"`. Should be used with a `fixed` slot.
    */
   @NgInput() edge: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [horizontal, vertical, edge]);
+  /**
+   * Close an active FAB list container
+   */
+  close(...__args: any[]): Promise<any> {
+    return method(this.r, close, __args);
+  }
+  constructor(private r: ElementRef) {
+    inputs(this, r, [horizontal, vertical, edge]);
   }
 }
 
@@ -427,8 +447,8 @@ export class FabButton {
   @NgInput() translucent: boolean;
   @NgInput() toggleActive: any;
   @NgInput() show: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode, activated, disabled, href, translucent, toggleActive, show]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode, activated, disabled, href, translucent, toggleActive, show]);
   }
 }
 
@@ -442,8 +462,8 @@ export class FabList {
    * The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
    */
   @NgInput() side: any;
-  constructor(el: ElementRef) {
-    inputs(this, el, [activated, side]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [activated, side]);
   }
 }
 
@@ -453,8 +473,8 @@ export class Footer {
    * If true, the footer will be translucent. Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
    */
   @NgInput() translucent: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [translucent]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [translucent]);
   }
 }
 
@@ -468,8 +488,8 @@ export class Header {
    * If true, the header will be translucent. Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
    */
   @NgInput() translucent: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [translucent]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [translucent]);
   }
 }
 
@@ -481,8 +501,8 @@ export class HideWhen {
   @NgInput() mode: string;
   @NgInput() platform: string;
   @NgInput() or: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [orientation, mediaQuery, size, mode, platform, or]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [orientation, mediaQuery, size, mode, platform, or]);
   }
 }
 
@@ -501,9 +521,20 @@ export class InfiniteScroll {
    */
   @NgInput() position: string;
   @NgOutput() ionInfinite: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [threshold, disabled, position]);
-    outputs(this, [ionInfinite]);
+  /**
+   * Call `complete()` within the `infinite` output event handler when your async operation has completed. For example, the `loading` state is while the app is performing an asynchronous operation, such as receiving more data from an AJAX request to add more items to a data list. Once the data has been received and UI updated, you then call this method to signify that the loading has completed. This method will change the infinite scroll's state from `loading` to `enabled`.
+   */
+  complete(...__args: any[]): Promise<any> {
+    return method(this.r, complete, __args);
+  }
+  /**
+   * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to change state of infiniteScroll to "complete"
+   */
+  waitFor(...__args: any[]): Promise<any> {
+    return method(this.r, waitFor, __args);
+  }
+  constructor(private r: ElementRef) {
+    inputs(this, r, [threshold, disabled, position]);
   }
 }
 
@@ -517,8 +548,8 @@ export class InfiniteScrollContent {
    * Optional text to display while loading.
    */
   @NgInput() loadingText: string;
-  constructor(el: ElementRef) {
-    inputs(this, el, [loadingSpinner, loadingText]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [loadingSpinner, loadingText]);
   }
 }
 
@@ -638,9 +669,8 @@ export class Input {
   @NgOutput() ionFocus: NgEventEmitter<any>;
   @NgOutput() ionInputDidLoad: NgEventEmitter<any>;
   @NgOutput() ionInputDidUnload: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [accept, autocapitalize, autocomplete, autocorrect, autofocus, checked, clearInput, clearOnEdit, debounce, disabled, inputmode, max, maxlength, min, minlength, multiple, name, pattern, placeholder, readonly, required, results, spellcheck, step, size, type, value]);
-    outputs(this, [ionInput, ionStyle, ionBlur, ionFocus, ionInputDidLoad, ionInputDidUnload]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [accept, autocapitalize, autocomplete, autocorrect, autofocus, checked, clearInput, clearOnEdit, debounce, disabled, inputmode, max, maxlength, min, minlength, multiple, name, pattern, placeholder, readonly, required, results, spellcheck, step, size, type, value]);
   }
 }
 
@@ -671,8 +701,8 @@ export class Item {
    */
   @NgInput() button: boolean;
   @NgInput() goBack: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode, detail, disabled, href, button, goBack]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode, detail, disabled, href, button, goBack]);
   }
 }
 
@@ -686,8 +716,8 @@ export class ItemDivider {
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @NgInput() mode: any;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode]);
   }
 }
 
@@ -717,8 +747,8 @@ export class ItemOption {
    * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
    */
   @NgInput() href: string;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode, disabled, expandable, href]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode, disabled, expandable, href]);
   }
 }
 
@@ -729,17 +759,48 @@ export class ItemOptions {
    */
   @NgInput() side: any;
   @NgOutput() ionSwipe: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [side]);
-    outputs(this, [ionSwipe]);
+  isRightSide(...__args: any[]): Promise<any> {
+    return method(this.r, isRightSide, __args);
+  }
+  width(...__args: any[]): Promise<any> {
+    return method(this.r, width, __args);
+  }
+  fireSwipeEvent(...__args: any[]): Promise<any> {
+    return method(this.r, fireSwipeEvent, __args);
+  }
+  constructor(private r: ElementRef) {
+    inputs(this, r, [side]);
   }
 }
 
 @NgDirective({ selector: 'ion-item-sliding' })
 export class ItemSliding {
   @NgOutput() ionDrag: NgEventEmitter<any>;
-  constructor() {
-    outputs(this, [ionDrag]);
+  /**
+   * Get the amount the item is open in pixels.
+   */
+  getOpenAmount(...__args: any[]): Promise<any> {
+    return method(this.r, getOpenAmount, __args);
+  }
+  /**
+   * Get the ratio of the open amount of the item compared to the width of the options. If the number returned is positive, then the options on the right side are open. If the number returned is negative, then the options on the left side are open. If the absolute value of the number is greater than 1, the item is open more than the width of the options.
+   */
+  getSlidingRatio(...__args: any[]): Promise<any> {
+    return method(this.r, getSlidingRatio, __args);
+  }
+  /**
+   * Close the sliding item. Items can also be closed from the [List](../../list/List).
+   */
+  close(...__args: any[]): Promise<any> {
+    return method(this.r, close, __args);
+  }
+  /**
+   * Close all of the sliding items in the list. Items can also be closed from the [List](../../list/List).
+   */
+  closeOpened(...__args: any[]): Promise<any> {
+    return method(this.r, closeOpened, __args);
+  }
+  constructor(private r: ElementRef) {
   }
 }
 
@@ -766,14 +827,36 @@ export class Label {
    */
   @NgInput() stacked: boolean;
   @NgOutput() ionStyle: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode, fixed, floating, stacked]);
-    outputs(this, [ionStyle]);
+  getText(...__args: any[]): Promise<any> {
+    return method(this.r, getText, __args);
+  }
+  constructor(private r: ElementRef) {
+    inputs(this, r, [color, mode, fixed, floating, stacked]);
   }
 }
 
 @NgDirective({ selector: 'ion-list' })
 export class List {
+  /**
+   * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
+   */
+  getOpenItem(...__args: any[]): Promise<any> {
+    return method(this.r, getOpenItem, __args);
+  }
+  /**
+   * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
+   */
+  setOpenItem(...__args: any[]): Promise<any> {
+    return method(this.r, setOpenItem, __args);
+  }
+  /**
+   * Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding). Returns a boolean value of whether it closed an item or not.
+   */
+  closeSlidingItems(...__args: any[]): Promise<any> {
+    return method(this.r, closeSlidingItems, __args);
+  }
+  constructor(private r: ElementRef) {
+  }
 }
 
 @NgDirective({ selector: 'ion-list-header' })
@@ -786,8 +869,8 @@ export class ListHeader {
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @NgInput() mode: any;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode]);
   }
 }
 
@@ -824,10 +907,29 @@ export class Menu {
   @NgInput() maxEdgeStart: number;
   @NgOutput() ionOpen: NgEventEmitter<any>;
   @NgOutput() ionClose: NgEventEmitter<any>;
+  @NgOutput() ionMenuDidLoad: NgEventEmitter<any>;
+  @NgOutput() ionMenuDidUnload: NgEventEmitter<any>;
   @NgOutput() ionMenuChange: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [contentId, menuId, type, disabled, side, swipeEnabled, persistent, maxEdgeStart]);
-    outputs(this, [ionOpen, ionClose, ionMenuChange]);
+  isOpen(...__args: any[]): Promise<any> {
+    return method(this.r, isOpen, __args);
+  }
+  open(...__args: any[]): Promise<any> {
+    return method(this.r, open, __args);
+  }
+  close(...__args: any[]): Promise<any> {
+    return method(this.r, close, __args);
+  }
+  toggle(...__args: any[]): Promise<any> {
+    return method(this.r, toggle, __args);
+  }
+  setOpen(...__args: any[]): Promise<any> {
+    return method(this.r, setOpen, __args);
+  }
+  isActive(...__args: any[]): Promise<any> {
+    return method(this.r, isActive, __args);
+  }
+  constructor(private r: ElementRef) {
+    inputs(this, r, [contentId, menuId, type, disabled, side, swipeEnabled, persistent, maxEdgeStart]);
   }
 }
 
@@ -841,8 +943,8 @@ export class MenuButton {
    * Automatically hides the menu button when the corresponding menu is not active
    */
   @NgInput() autoHide: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [menu, autoHide]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [menu, autoHide]);
   }
 }
 
@@ -856,8 +958,8 @@ export class MenuToggle {
    * Automatically hides the content when the corresponding menu is not active
    */
   @NgInput() autoHide: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [menu, autoHide]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [menu, autoHide]);
   }
 }
 
@@ -870,9 +972,56 @@ export class Nav {
   @NgInput() root: any;
   @NgOutput() ionNavWillChange: NgEventEmitter<any>;
   @NgOutput() ionNavDidChange: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [swipeBackEnabled, animated, delegate, rootParams, root]);
-    outputs(this, [ionNavWillChange, ionNavDidChange]);
+  push(...__args: any[]): Promise<any> {
+    return method(this.r, push, __args);
+  }
+  insert(...__args: any[]): Promise<any> {
+    return method(this.r, insert, __args);
+  }
+  insertPages(...__args: any[]): Promise<any> {
+    return method(this.r, insertPages, __args);
+  }
+  pop(...__args: any[]): Promise<any> {
+    return method(this.r, pop, __args);
+  }
+  popTo(...__args: any[]): Promise<any> {
+    return method(this.r, popTo, __args);
+  }
+  popToRoot(...__args: any[]): Promise<any> {
+    return method(this.r, popToRoot, __args);
+  }
+  removeIndex(...__args: any[]): Promise<any> {
+    return method(this.r, removeIndex, __args);
+  }
+  setRoot(...__args: any[]): Promise<any> {
+    return method(this.r, setRoot, __args);
+  }
+  setPages(...__args: any[]): Promise<any> {
+    return method(this.r, setPages, __args);
+  }
+  setRouteId(...__args: any[]): Promise<any> {
+    return method(this.r, setRouteId, __args);
+  }
+  getRouteId(...__args: any[]): Promise<any> {
+    return method(this.r, getRouteId, __args);
+  }
+  canGoBack(...__args: any[]): Promise<any> {
+    return method(this.r, canGoBack, __args);
+  }
+  getActive(...__args: any[]): Promise<any> {
+    return method(this.r, getActive, __args);
+  }
+  getByIndex(...__args: any[]): Promise<any> {
+    return method(this.r, getByIndex, __args);
+  }
+  getPrevious(...__args: any[]): Promise<any> {
+    return method(this.r, getPrevious, __args);
+  }
+  length(...__args: any[]): Promise<any> {
+    return method(this.r, length, __args);
+  }
+  constructor(private r: ElementRef) {
+    inputs(this, r, [swipeBackEnabled, animated, delegate, rootParams, root]);
   }
 }
 
@@ -885,8 +1034,8 @@ export class NavPush {
   @NgInput() component: any;
   @NgInput() componentProps: any;
   @NgInput() url: string;
-  constructor(el: ElementRef) {
-    inputs(this, el, [component, componentProps, url]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [component, componentProps, url]);
   }
 }
 
@@ -895,8 +1044,8 @@ export class NavSetRoot {
   @NgInput() component: any;
   @NgInput() componentProps: any;
   @NgInput() url: string;
-  constructor(el: ElementRef) {
-    inputs(this, el, [component, componentProps, url]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [component, componentProps, url]);
   }
 }
 
@@ -910,8 +1059,8 @@ export class Note {
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @NgInput() mode: any;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode]);
   }
 }
 
@@ -947,9 +1096,8 @@ export class Radio {
   @NgOutput() ionSelect: NgEventEmitter<any>;
   @NgOutput() ionFocus: NgEventEmitter<any>;
   @NgOutput() ionBlur: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode, name, disabled, checked, value]);
-    outputs(this, [ionRadioDidLoad, ionRadioDidUnload, ionStyle, ionSelect, ionFocus, ionBlur]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode, name, disabled, checked, value]);
   }
 }
 
@@ -969,9 +1117,8 @@ export class RadioGroup {
    */
   @NgInput() value: string;
   @NgOutput() ionChange: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [allowEmptySelection, disabled, name, value]);
-    outputs(this, [ionChange]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [allowEmptySelection, disabled, name, value]);
   }
 }
 
@@ -1022,9 +1169,20 @@ export class Range {
   @NgOutput() ionStyle: NgEventEmitter<any>;
   @NgOutput() ionFocus: NgEventEmitter<any>;
   @NgOutput() ionBlur: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode, debounce, disabled, dualKnobs, max, min, pin, snaps, step, value]);
-    outputs(this, [ionChange, ionStyle, ionFocus, ionBlur]);
+  /**
+   * Returns the ratio of the knob's is current location, which is a number between `0` and `1`. If two knobs are used, this property represents the lower value.
+   */
+  ratio(...__args: any[]): Promise<any> {
+    return method(this.r, ratio, __args);
+  }
+  /**
+   * Returns the ratio of the upper value's is current location, which is a number between `0` and `1`. If there is only one knob, then this will return `null`.
+   */
+  ratioUpper(...__args: any[]): Promise<any> {
+    return method(this.r, ratioUpper, __args);
+  }
+  constructor(private r: ElementRef) {
+    inputs(this, r, [color, mode, debounce, disabled, dualKnobs, max, min, pin, snaps, step, value]);
   }
 }
 
@@ -1053,9 +1211,26 @@ export class Refresher {
   @NgOutput() ionRefresh: NgEventEmitter<any>;
   @NgOutput() ionPull: NgEventEmitter<any>;
   @NgOutput() ionStart: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [pullMin, pullMax, closeDuration, snapbackDuration, disabled]);
-    outputs(this, [ionRefresh, ionPull, ionStart]);
+  /**
+   * Call `complete()` when your async operation has completed. For example, the `refreshing` state is while the app is performing an asynchronous operation, such as receiving more data from an AJAX request. Once the data has been received, you then call this method to signify that the refreshing has completed and to close the refresher. This method also changes the refresher's state from `refreshing` to `completing`.
+   */
+  complete(...__args: any[]): Promise<any> {
+    return method(this.r, complete, __args);
+  }
+  /**
+   * Changes the refresher's state from `refreshing` to `cancelling`.
+   */
+  cancel(...__args: any[]): Promise<any> {
+    return method(this.r, cancel, __args);
+  }
+  /**
+   * A number representing how far down the user has pulled. The number `0` represents the user hasn't pulled down at all. The number `1`, and anything greater than `1`, represents that the user has pulled far enough down that when they let go then the refresh will happen. If they let go and the number is less than `1`, then the refresh will not happen, and the content will return to it's original position.
+   */
+  getProgress(...__args: any[]): Promise<any> {
+    return method(this.r, getProgress, __args);
+  }
+  constructor(private r: ElementRef) {
+    inputs(this, r, [pullMin, pullMax, closeDuration, snapbackDuration, disabled]);
   }
 }
 
@@ -1077,8 +1252,8 @@ export class RefresherContent {
    * The text you want to display when performing a refresh
    */
   @NgInput() refreshingText: string;
-  constructor(el: ElementRef) {
-    inputs(this, el, [pullingIcon, pullingText, refreshingSpinner, refreshingText]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [pullingIcon, pullingText, refreshingSpinner, refreshingText]);
   }
 }
 
@@ -1092,16 +1267,19 @@ export class ReorderGroup {
    * If true, the reorder will be hidden. Defaults to `true`.
    */
   @NgInput() disabled: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [disabled]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [disabled]);
   }
 }
 
 @NgDirective({ selector: 'ion-ripple-effect' })
 export class RippleEffect {
   @NgInput() tapClick: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [tapClick]);
+  addRipple(...__args: any[]): Promise<any> {
+    return method(this.r, addRipple, __args);
+  }
+  constructor(private r: ElementRef) {
+    inputs(this, r, [tapClick]);
   }
 }
 
@@ -1120,9 +1298,20 @@ export class Scroll {
   @NgOutput() ionScrollStart: NgEventEmitter<any>;
   @NgOutput() ionScroll: NgEventEmitter<any>;
   @NgOutput() ionScrollEnd: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [mode, forceOverscroll, scrollEvents]);
-    outputs(this, [ionScrollStart, ionScroll, ionScrollEnd]);
+  scrollToTop(...__args: any[]): Promise<any> {
+    return method(this.r, scrollToTop, __args);
+  }
+  scrollToBottom(...__args: any[]): Promise<any> {
+    return method(this.r, scrollToBottom, __args);
+  }
+  scrollByPoint(...__args: any[]): Promise<any> {
+    return method(this.r, scrollByPoint, __args);
+  }
+  scrollToPoint(...__args: any[]): Promise<any> {
+    return method(this.r, scrollToPoint, __args);
+  }
+  constructor(private r: ElementRef) {
+    inputs(this, r, [mode, forceOverscroll, scrollEvents]);
   }
 }
 
@@ -1181,9 +1370,8 @@ export class Searchbar {
   @NgOutput() ionClear: NgEventEmitter<any>;
   @NgOutput() ionBlur: NgEventEmitter<any>;
   @NgOutput() ionFocus: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode, animated, autocomplete, autocorrect, cancelButtonText, debounce, placeholder, showCancelButton, spellcheck, type, value]);
-    outputs(this, [ionInput, ionCancel, ionClear, ionBlur, ionFocus]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode, animated, autocomplete, autocorrect, cancelButtonText, debounce, placeholder, showCancelButton, spellcheck, type, value]);
   }
 }
 
@@ -1203,9 +1391,8 @@ export class Segment {
    */
   @NgInput() value: string;
   @NgOutput() ionChange: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode, disabled, value]);
-    outputs(this, [ionChange]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode, disabled, value]);
   }
 }
 
@@ -1234,9 +1421,8 @@ export class SegmentButton {
    */
   @NgInput() value: string;
   @NgOutput() ionClick: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [activated, color, mode, checked, disabled, href, value]);
-    outputs(this, [ionClick]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [activated, color, mode, checked, disabled, href, value]);
   }
 }
 
@@ -1287,9 +1473,8 @@ export class Select {
   @NgOutput() ionFocus: NgEventEmitter<any>;
   @NgOutput() ionBlur: NgEventEmitter<any>;
   @NgOutput() ionStyle: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [disabled, cancelText, okText, placeholder, name, selectedText, multiple, 'interface', interfaceOptions, value]);
-    outputs(this, [ionChange, ionCancel, ionFocus, ionBlur, ionStyle]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [disabled, cancelText, okText, placeholder, name, selectedText, multiple, 'interface', interfaceOptions, value]);
   }
 }
 
@@ -1309,9 +1494,8 @@ export class SelectOption {
   @NgInput() value: any;
   @NgOutput() ionSelectOptionDidLoad: NgEventEmitter<any>;
   @NgOutput() ionSelectOptionDidUnload: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [disabled, selected, value]);
-    outputs(this, [ionSelectOptionDidLoad, ionSelectOptionDidUnload]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [disabled, selected, value]);
   }
 }
 
@@ -1321,8 +1505,8 @@ export class SelectPopover {
   @NgInput() subHeader: string;
   @NgInput() message: string;
   @NgInput() options: any;
-  constructor(el: ElementRef) {
-    inputs(this, el, [header, subHeader, message, options]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [header, subHeader, message, options]);
   }
 }
 
@@ -1334,16 +1518,16 @@ export class ShowWhen {
   @NgInput() mode: string;
   @NgInput() platform: string;
   @NgInput() or: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [orientation, mediaQuery, size, mode, platform, or]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [orientation, mediaQuery, size, mode, platform, or]);
   }
 }
 
 @NgDirective({ selector: 'ion-skeleton-text' })
 export class SkeletonText {
   @NgInput() width: string;
-  constructor(el: ElementRef) {
-    inputs(this, el, [width]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [width]);
   }
 }
 
@@ -1374,9 +1558,92 @@ export class Slides {
   @NgOutput() ionSlideReachEnd: NgEventEmitter<any>;
   @NgOutput() ionSlideTouchStart: NgEventEmitter<any>;
   @NgOutput() ionSlideTouchEnd: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [options, pager]);
-    outputs(this, [ionSlideWillChange, ionSlideDidChange, ionSlideNextStart, ionSlidePrevStart, ionSlideNextEnd, ionSlidePrevEnd, ionSlideTransitionStart, ionSlideTransitionEnd, ionSlideDrag, ionSlideReachStart, ionSlideReachEnd, ionSlideTouchStart, ionSlideTouchEnd]);
+  /**
+   * Update the underlying slider implementation. Call this if you've added or removed child slides.
+   */
+  update(...__args: any[]): Promise<any> {
+    return method(this.r, update, __args);
+  }
+  /**
+   * Transition to the specified slide.
+   */
+  slideTo(...__args: any[]): Promise<any> {
+    return method(this.r, slideTo, __args);
+  }
+  /**
+   * Transition to the next slide.
+   */
+  slideNext(...__args: any[]): Promise<any> {
+    return method(this.r, slideNext, __args);
+  }
+  /**
+   * Transition to the previous slide.
+   */
+  slidePrev(...__args: any[]): Promise<any> {
+    return method(this.r, slidePrev, __args);
+  }
+  /**
+   * Get the index of the active slide.
+   */
+  getActiveIndex(...__args: any[]): Promise<any> {
+    return method(this.r, getActiveIndex, __args);
+  }
+  /**
+   * Get the index of the previous slide.
+   */
+  getPreviousIndex(...__args: any[]): Promise<any> {
+    return method(this.r, getPreviousIndex, __args);
+  }
+  /**
+   * Get the total number of slides.
+   */
+  length(...__args: any[]): Promise<any> {
+    return method(this.r, length, __args);
+  }
+  /**
+   * Get whether or not the current slide is the last slide.
+   */
+  isEnd(...__args: any[]): Promise<any> {
+    return method(this.r, isEnd, __args);
+  }
+  /**
+   * Get whether or not the current slide is the first slide.
+   */
+  isBeginning(...__args: any[]): Promise<any> {
+    return method(this.r, isBeginning, __args);
+  }
+  /**
+   * Start auto play.
+   */
+  startAutoplay(...__args: any[]): Promise<any> {
+    return method(this.r, startAutoplay, __args);
+  }
+  /**
+   * Stop auto play.
+   */
+  stopAutoplay(...__args: any[]): Promise<any> {
+    return method(this.r, stopAutoplay, __args);
+  }
+  /**
+   * Lock or unlock the ability to slide to the next slides.
+   */
+  lockSwipeToNext(...__args: any[]): Promise<any> {
+    return method(this.r, lockSwipeToNext, __args);
+  }
+  /**
+   * Lock or unlock the ability to slide to the previous slides.
+   */
+  lockSwipeToPrev(...__args: any[]): Promise<any> {
+    return method(this.r, lockSwipeToPrev, __args);
+  }
+  /**
+   * Lock or unlock the ability to slide to change slides.
+   */
+  lockSwipes(...__args: any[]): Promise<any> {
+    return method(this.r, lockSwipes, __args);
+  }
+  constructor(private r: ElementRef) {
+    inputs(this, r, [options, pager]);
   }
 }
 
@@ -1402,8 +1669,8 @@ export class Spinner {
    * If true, the spinner's animation will be paused. Defaults to `false`.
    */
   @NgInput() paused: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode, duration, name, paused]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode, duration, name, paused]);
   }
 }
 
@@ -1419,9 +1686,14 @@ export class SplitPane {
   @NgInput() when: any;
   @NgOutput() ionChange: NgEventEmitter<any>;
   @NgOutput() ionSplitPaneVisible: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [disabled, when]);
-    outputs(this, [ionChange, ionSplitPaneVisible]);
+  isVisible(...__args: any[]): Promise<any> {
+    return method(this.r, isVisible, __args);
+  }
+  isPane(...__args: any[]): Promise<any> {
+    return method(this.r, isPane, __args);
+  }
+  constructor(private r: ElementRef) {
+    inputs(this, r, [disabled, when]);
   }
 }
 
@@ -1475,9 +1747,14 @@ export class Tab {
    */
   @NgInput() tabsHideOnSubPages: boolean;
   @NgOutput() ionSelect: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [active, btnId, delegate, label, href, icon, badge, badgeStyle, component, name, disabled, selected, show, tabsHideOnSubPages]);
-    outputs(this, [ionSelect]);
+  getTabId(...__args: any[]): Promise<any> {
+    return method(this.r, getTabId, __args);
+  }
+  setActive(...__args: any[]): Promise<any> {
+    return method(this.r, setActive, __args);
+  }
+  constructor(private r: ElementRef) {
+    inputs(this, r, [active, btnId, delegate, label, href, icon, badge, badgeStyle, component, name, disabled, selected, show, tabsHideOnSubPages]);
   }
 }
 
@@ -1516,9 +1793,23 @@ export class Tabs {
   @NgOutput() ionChange: NgEventEmitter<any>;
   @NgOutput() ionNavWillChange: NgEventEmitter<any>;
   @NgOutput() ionNavDidChange: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, name, tabbarHidden, tabbarLayout, tabbarPlacement, tabbarHighlight, translucent, scrollable, useRouter]);
-    outputs(this, [ionChange, ionNavWillChange, ionNavDidChange]);
+  select(...__args: any[]): Promise<any> {
+    return method(this.r, select, __args);
+  }
+  setRouteId(...__args: any[]): Promise<any> {
+    return method(this.r, setRouteId, __args);
+  }
+  getRouteId(...__args: any[]): Promise<any> {
+    return method(this.r, getRouteId, __args);
+  }
+  getTab(...__args: any[]): Promise<any> {
+    return method(this.r, getTab, __args);
+  }
+  getSelected(...__args: any[]): Promise<any> {
+    return method(this.r, getSelected, __args);
+  }
+  constructor(private r: ElementRef) {
+    inputs(this, r, [color, name, tabbarHidden, tabbarLayout, tabbarPlacement, tabbarHighlight, translucent, scrollable, useRouter]);
   }
 }
 
@@ -1532,8 +1823,8 @@ export class Text {
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @NgInput() mode: any;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode]);
   }
 }
 
@@ -1611,9 +1902,8 @@ export class Textarea {
   @NgOutput() ionStyle: NgEventEmitter<any>;
   @NgOutput() ionBlur: NgEventEmitter<any>;
   @NgOutput() ionFocus: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [autocapitalize, autocomplete, autofocus, clearOnEdit, debounce, disabled, maxlength, minlength, name, placeholder, readonly, required, spellcheck, cols, rows, wrap, value]);
-    outputs(this, [ionInput, ionStyle, ionBlur, ionFocus]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [autocapitalize, autocomplete, autofocus, clearOnEdit, debounce, disabled, maxlength, minlength, name, placeholder, readonly, required, spellcheck, cols, rows, wrap, value]);
   }
 }
 
@@ -1651,9 +1941,8 @@ export class Toggle {
   @NgOutput() ionFocus: NgEventEmitter<any>;
   @NgOutput() ionBlur: NgEventEmitter<any>;
   @NgOutput() ionStyle: NgEventEmitter<any>;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode, name, checked, disabled, value]);
-    outputs(this, [ionChange, ionFocus, ionBlur, ionStyle]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode, name, checked, disabled, value]);
   }
 }
 
@@ -1671,8 +1960,8 @@ export class Toolbar {
    * If true, the toolbar will be translucent. Note: In order to scroll content behind the toolbar, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
    */
   @NgInput() translucent: boolean;
-  constructor(el: ElementRef) {
-    inputs(this, el, [color, mode, translucent]);
+  constructor(r: ElementRef) {
+    inputs(this, r, [color, mode, translucent]);
   }
 }
 

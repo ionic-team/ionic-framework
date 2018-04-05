@@ -23,7 +23,6 @@ async function main() {
     console.log(`Next steps:`);
     console.log(`  Verify CHANGELOG.md`);
     console.log(`  git commit -m "${version}"`);
-    console.log(`  git push`);
     console.log(`  npm run release\n`);
 
   } catch(err) {
