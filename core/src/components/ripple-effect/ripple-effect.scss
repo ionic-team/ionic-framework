@@ -34,7 +34,7 @@ ion-ripple-effect {
 @keyframes rippleAnimation {
   0% {
     opacity: .2;
-    transform: scale(.05);
+    transform: scale(.1);
   }
 
   100% {

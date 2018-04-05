@@ -286,7 +286,7 @@ export class Alert implements OverlayInterface {
                 {i.label}
               </div>
             </div>
-            {this.mode === 'md' && <ion-ripple-effect useTapClick={true}/>}
+            { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
           </button>
         ))}
       </div>
@@ -306,7 +306,7 @@ export class Alert implements OverlayInterface {
                 {i.label}
               </div>
             </div>
-            {this.mode === 'md' && <ion-ripple-effect useTapClick={true}/>}
+            { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
           </button>
         ))}
       </div>

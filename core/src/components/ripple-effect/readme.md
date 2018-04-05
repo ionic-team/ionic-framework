@@ -7,14 +7,14 @@
 
 ## Properties
 
-#### useTapClick
+#### tapClick
 
 boolean
 
 
 ## Attributes
 
-#### use-tap-click
+#### tap-click
 
 boolean
 

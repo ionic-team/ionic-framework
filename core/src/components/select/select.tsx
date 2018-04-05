@@ -509,7 +509,7 @@ export class Select {
         onBlur={this.onBlur.bind(this)}
         class='select-cover'>
         <slot></slot>
-        {this.mode === 'md' && <ion-ripple-effect useTapClick={true}/>}
+        { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </button>,
       <input type='hidden' name={this.name} value={this.value}/>
     ];

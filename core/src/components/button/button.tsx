@@ -157,7 +157,7 @@ export class Button {
             <slot></slot>
             <slot name='end'></slot>
           </span>
-          { this.mode === 'md' && <ion-ripple-effect useTapClick={true}/> }
+          { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </TagType>
     );
   }

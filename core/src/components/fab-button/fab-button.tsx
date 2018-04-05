@@ -110,7 +110,7 @@ export class FabButton {
         <span class='fab-button-inner'>
           <slot></slot>
         </span>
-        { this.mode === 'md' && <ion-ripple-effect useTapClick={true}/> }
+        { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </TagType>
     );
   }

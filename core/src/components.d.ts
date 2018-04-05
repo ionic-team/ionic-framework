@@ -4583,7 +4583,7 @@ declare global {
 declare global {
   interface HTMLIonRippleEffectElement extends HTMLStencilElement {
     'addRipple': (pageX: number, pageY: number) => void;
-    'useTapClick': boolean;
+    'tapClick': boolean;
   }
   var HTMLIonRippleEffectElement: {
     prototype: HTMLIonRippleEffectElement;
@@ -4602,7 +4602,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRippleEffectAttributes extends HTMLAttributes {
-      'useTapClick'?: boolean;
+      'tapClick'?: boolean;
     }
   }
 }
