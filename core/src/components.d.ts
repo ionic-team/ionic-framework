@@ -648,7 +648,7 @@ declare global {
 declare global {
   interface HTMLIonBackdropElement extends HTMLStencilElement {
     /**
-     * If true, the backdrop will stop propogation on tap. Defaults to `true`.
+     * If true, the backdrop will stop propagation on tap. Defaults to `true`.
      */
     'stopPropagation': boolean;
     /**
@@ -682,7 +682,7 @@ declare global {
        */
       'onIonBackdropTap'?: (event: CustomEvent) => void;
       /**
-       * If true, the backdrop will stop propogation on tap. Defaults to `true`.
+       * If true, the backdrop will stop propagation on tap. Defaults to `true`.
        */
       'stopPropagation'?: boolean;
       /**

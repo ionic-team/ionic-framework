@@ -12,7 +12,7 @@ Backdrops are full screen components that overlay other components. They are use
 
 boolean
 
-If true, the backdrop will stop propogation on tap. Defaults to `true`.
+If true, the backdrop will stop propagation on tap. Defaults to `true`.
 
 
 #### tappable
@@ -35,7 +35,7 @@ If true, the backdrop will be visible. Defaults to `true`.
 
 boolean
 
-If true, the backdrop will stop propogation on tap. Defaults to `true`.
+If true, the backdrop will stop propagation on tap. Defaults to `true`.
 
 
 #### tappable

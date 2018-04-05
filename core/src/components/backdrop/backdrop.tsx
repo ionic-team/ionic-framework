@@ -26,7 +26,7 @@ export class Backdrop {
   @Prop() tappable = true;
 
   /**
-   * If true, the backdrop will stop propogation on tap. Defaults to `true`.
+   * If true, the backdrop will stop propagation on tap. Defaults to `true`.
    */
   @Prop() stopPropagation = true;
 
