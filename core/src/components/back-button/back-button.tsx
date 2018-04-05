@@ -1,6 +1,6 @@
 import { Component, Element, Prop } from '@stencil/core';
 import { Config } from '../../index';
-import { openURL } from '../../utils/theme';
+import { createThemedClasses, getElementClassMap, openURL } from '../../utils/theme';
 
 @Component({
   tag: 'ion-back-button',
@@ -14,6 +14,17 @@ import { openURL } from '../../utils/theme';
 })
 export class BackButton {
 
+  @Element() el: HTMLElement;
+
+  @Prop({ context: 'config' }) config: Config;
+
+  /**
+   * The color to use from your Sass `$colors` map.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   */
+  @Prop() color: string;
+
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
@@ -22,18 +33,20 @@ export class BackButton {
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * The text property is used to provide custom text for the back button while using the
-   * default look-and-feel.
+   * The url to navigate back to by default when there is no history.
    */
-  @Prop() text: string|undefined;
-
-  @Prop() icon: string;
-
   @Prop() defaultHref: string;
 
-  @Prop({ context: 'config' }) config: Config;
+  /**
+   * The icon name to use for the back button.
+   */
+  @Prop() icon: string;
 
-  @Element() el: HTMLElement;
+  /**
+   * The text to display in the back button.
+   */
+  @Prop() text: string | undefined;
+
 
   private onClick(ev: Event) {
     const nav = this.el.closest('ion-nav');
@@ -56,14 +69,22 @@ export class BackButton {
   render() {
     const backButtonIcon = this.icon || this.config.get('backButtonIcon', 'arrow-back');
     const backButtonText = this.text != null ? this.text : this.config.get('backButtonText', 'Back');
+    const themedClasses = createThemedClasses(this.mode, this.color, 'back-button');
+
+    const backButtonClasses = {
+      ...themedClasses,
+      ...getElementClassMap(this.el.classList),
+    };
 
     return (
       <button
-        class='back-button-inner'
+        class={backButtonClasses}
         onClick={(ev) => this.onClick(ev)}>
-        { backButtonIcon && <ion-icon name={backButtonIcon}/> }
-        { this.mode === 'ios' && backButtonText && <span class='button-text'>{backButtonText}</span> }
-        { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+        <span class='back-button-inner'>
+          { backButtonIcon && <ion-icon name={backButtonIcon}/> }
+          { this.mode === 'ios' && backButtonText && <span class='button-text'>{backButtonText}</span> }
+          { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+        </span>
       </button>
     );
   }

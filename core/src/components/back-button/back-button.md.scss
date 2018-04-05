@@ -4,7 +4,7 @@
 // MD Back Button
 // --------------------------------------------------
 
-.back-button-md .back-button-inner {
+.back-button-md {
   @include margin(2px, 6px, 0, 0);
   @include padding(0, 5px);
 
@@ -37,4 +37,16 @@
   line-height: .67;
 
   pointer-events: none;
+}
+
+
+// Generate Material Design Back Button Colors
+// --------------------------------------------------
+
+@each $color-name, $color-value in $colors-md {
+  $base-color: ion-color($colors-md, $color-name, base, md);
+
+  .back-button-md-#{$color-name} {
+    color: $base-color;
+  }
 }
