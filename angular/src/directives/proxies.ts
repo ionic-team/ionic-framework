@@ -2,6 +2,12 @@
 import { Directive as NgDirective, ElementRef, EventEmitter as NgEventEmitter, Input as NgInput, Output as NgOutput } from '@angular/core';
 
 
+export function outputs(instance: any, events: string[]) {
+  events.forEach(eventName => {
+    instance[eventName] = new NgEventEmitter();
+  });
+}
+
 export function method(ref: ElementRef, methodName: string, args: any[]) {
   return ref.nativeElement.componentOnReady()
     .then((el: any) => el[methodName].apply(el, args));
@@ -14,7 +20,7 @@ export function inputs(instance: any, el: ElementRef, props: string[]) {
     });
   });
 }
-const accept = 'accept', activated = 'activated', active = 'active', addRipple = 'addRipple', allowEmptySelection = 'allowEmptySelection', animated = 'animated', autoHide = 'autoHide', autocapitalize = 'autocapitalize', autocomplete = 'autocomplete', autocorrect = 'autocorrect', autofocus = 'autofocus', badge = 'badge', badgeStyle = 'badgeStyle', btnId = 'btnId', button = 'button', buttonType = 'buttonType', canGoBack = 'canGoBack', cancel = 'cancel', cancelButtonText = 'cancelButtonText', cancelText = 'cancelText', checked = 'checked', clearInput = 'clearInput', clearOnEdit = 'clearOnEdit', close = 'close', closeDuration = 'closeDuration', closeOpened = 'closeOpened', closeSlidingItems = 'closeSlidingItems', color = 'color', cols = 'cols', complete = 'complete', component = 'component', componentProps = 'componentProps', contentId = 'contentId', dayNames = 'dayNames', dayShortNames = 'dayShortNames', dayValues = 'dayValues', debounce = 'debounce', defaultHref = 'defaultHref', delegate = 'delegate', detail = 'detail', disabled = 'disabled', displayFormat = 'displayFormat', doneText = 'doneText', dualKnobs = 'dualKnobs', duration = 'duration', edge = 'edge', expand = 'expand', expandable = 'expandable', fill = 'fill', fireSwipeEvent = 'fireSwipeEvent', fixed = 'fixed', floating = 'floating', forceOverscroll = 'forceOverscroll', fullscreen = 'fullscreen', getActive = 'getActive', getActiveIndex = 'getActiveIndex', getByIndex = 'getByIndex', getOpenAmount = 'getOpenAmount', getOpenItem = 'getOpenItem', getPrevious = 'getPrevious', getPreviousIndex = 'getPreviousIndex', getProgress = 'getProgress', getRouteId = 'getRouteId', getSelected = 'getSelected', getSlidingRatio = 'getSlidingRatio', getTab = 'getTab', getTabId = 'getTabId', getText = 'getText', goBack = 'goBack', header = 'header', horizontal = 'horizontal', hourValues = 'hourValues', href = 'href', icon = 'icon', inputmode = 'inputmode', insert = 'insert', insertPages = 'insertPages', interfaceOptions = 'interfaceOptions', isActive = 'isActive', isBeginning = 'isBeginning', isEnd = 'isEnd', isOpen = 'isOpen', isPane = 'isPane', isRightSide = 'isRightSide', isVisible = 'isVisible', label = 'label', length = 'length', loadingSpinner = 'loadingSpinner', loadingText = 'loadingText', lockSwipeToNext = 'lockSwipeToNext', lockSwipeToPrev = 'lockSwipeToPrev', lockSwipes = 'lockSwipes', max = 'max', maxEdgeStart = 'maxEdgeStart', maxlength = 'maxlength', mediaQuery = 'mediaQuery', menu = 'menu', menuId = 'menuId', message = 'message', min = 'min', minlength = 'minlength', minuteValues = 'minuteValues', mode = 'mode', monthNames = 'monthNames', monthShortNames = 'monthShortNames', monthValues = 'monthValues', multiple = 'multiple', name = 'name', okText = 'okText', open = 'open', options = 'options', or = 'or', orientation = 'orientation', pager = 'pager', pattern = 'pattern', paused = 'paused', persistent = 'persistent', pickerFormat = 'pickerFormat', pickerOptions = 'pickerOptions', pin = 'pin', placeholder = 'placeholder', platform = 'platform', pop = 'pop', popTo = 'popTo', popToRoot = 'popToRoot', position = 'position', pullMax = 'pullMax', pullMin = 'pullMin', pullingIcon = 'pullingIcon', pullingText = 'pullingText', push = 'push', ratio = 'ratio', ratioUpper = 'ratioUpper', readonly = 'readonly', refreshingSpinner = 'refreshingSpinner', refreshingText = 'refreshingText', removeIndex = 'removeIndex', required = 'required', results = 'results', root = 'root', rootParams = 'rootParams', round = 'round', rows = 'rows', scrollByPoint = 'scrollByPoint', scrollEnabled = 'scrollEnabled', scrollEvents = 'scrollEvents', scrollToBottom = 'scrollToBottom', scrollToPoint = 'scrollToPoint', scrollToTop = 'scrollToTop', scrollable = 'scrollable', select = 'select', selected = 'selected', selectedText = 'selectedText', setActive = 'setActive', setOpen = 'setOpen', setOpenItem = 'setOpenItem', setPages = 'setPages', setRoot = 'setRoot', setRouteId = 'setRouteId', show = 'show', showCancelButton = 'showCancelButton', side = 'side', size = 'size', slideNext = 'slideNext', slidePrev = 'slidePrev', slideTo = 'slideTo', snapbackDuration = 'snapbackDuration', snaps = 'snaps', spellcheck = 'spellcheck', stacked = 'stacked', startAutoplay = 'startAutoplay', step = 'step', stopAutoplay = 'stopAutoplay', strong = 'strong', subHeader = 'subHeader', swipeBackEnabled = 'swipeBackEnabled', swipeEnabled = 'swipeEnabled', tabbarHidden = 'tabbarHidden', tabbarHighlight = 'tabbarHighlight', tabbarLayout = 'tabbarLayout', tabbarPlacement = 'tabbarPlacement', tabsHideOnSubPages = 'tabsHideOnSubPages', tapClick = 'tapClick', text = 'text', threshold = 'threshold', toggle = 'toggle', toggleActive = 'toggleActive', translucent = 'translucent', type = 'type', update = 'update', url = 'url', useRouter = 'useRouter', value = 'value', vertical = 'vertical', waitFor = 'waitFor', when = 'when', width = 'width', wrap = 'wrap', yearValues = 'yearValues';
+const accept = 'accept', activated = 'activated', active = 'active', addRipple = 'addRipple', allowEmptySelection = 'allowEmptySelection', animated = 'animated', autoHide = 'autoHide', autocapitalize = 'autocapitalize', autocomplete = 'autocomplete', autocorrect = 'autocorrect', autofocus = 'autofocus', badge = 'badge', badgeStyle = 'badgeStyle', btnId = 'btnId', button = 'button', buttonType = 'buttonType', canGoBack = 'canGoBack', cancel = 'cancel', cancelButtonText = 'cancelButtonText', cancelText = 'cancelText', checked = 'checked', clearInput = 'clearInput', clearOnEdit = 'clearOnEdit', close = 'close', closeDuration = 'closeDuration', closeOpened = 'closeOpened', closeSlidingItems = 'closeSlidingItems', color = 'color', cols = 'cols', complete = 'complete', component = 'component', componentProps = 'componentProps', contentId = 'contentId', dayNames = 'dayNames', dayShortNames = 'dayShortNames', dayValues = 'dayValues', debounce = 'debounce', defaultHref = 'defaultHref', delegate = 'delegate', detail = 'detail', disabled = 'disabled', displayFormat = 'displayFormat', doneText = 'doneText', dualKnobs = 'dualKnobs', duration = 'duration', edge = 'edge', expand = 'expand', expandable = 'expandable', fill = 'fill', fireSwipeEvent = 'fireSwipeEvent', fixed = 'fixed', floating = 'floating', forceOverscroll = 'forceOverscroll', fullscreen = 'fullscreen', getActive = 'getActive', getActiveIndex = 'getActiveIndex', getByIndex = 'getByIndex', getOpenAmount = 'getOpenAmount', getOpenItem = 'getOpenItem', getPrevious = 'getPrevious', getPreviousIndex = 'getPreviousIndex', getProgress = 'getProgress', getRouteId = 'getRouteId', getSelected = 'getSelected', getSlidingRatio = 'getSlidingRatio', getTab = 'getTab', getTabId = 'getTabId', getText = 'getText', goBack = 'goBack', header = 'header', horizontal = 'horizontal', hourValues = 'hourValues', href = 'href', icon = 'icon', inputmode = 'inputmode', insert = 'insert', insertPages = 'insertPages', interfaceOptions = 'interfaceOptions', ionBlur = 'ionBlur', ionCancel = 'ionCancel', ionChange = 'ionChange', ionClear = 'ionClear', ionClick = 'ionClick', ionClose = 'ionClose', ionDrag = 'ionDrag', ionFocus = 'ionFocus', ionInfinite = 'ionInfinite', ionInput = 'ionInput', ionInputDidLoad = 'ionInputDidLoad', ionInputDidUnload = 'ionInputDidUnload', ionMenuChange = 'ionMenuChange', ionNavDidChange = 'ionNavDidChange', ionNavWillChange = 'ionNavWillChange', ionOpen = 'ionOpen', ionPull = 'ionPull', ionRadioDidLoad = 'ionRadioDidLoad', ionRadioDidUnload = 'ionRadioDidUnload', ionRefresh = 'ionRefresh', ionScroll = 'ionScroll', ionScrollEnd = 'ionScrollEnd', ionScrollStart = 'ionScrollStart', ionSelect = 'ionSelect', ionSelectOptionDidLoad = 'ionSelectOptionDidLoad', ionSelectOptionDidUnload = 'ionSelectOptionDidUnload', ionSlideDidChange = 'ionSlideDidChange', ionSlideDrag = 'ionSlideDrag', ionSlideNextEnd = 'ionSlideNextEnd', ionSlideNextStart = 'ionSlideNextStart', ionSlidePrevEnd = 'ionSlidePrevEnd', ionSlidePrevStart = 'ionSlidePrevStart', ionSlideReachEnd = 'ionSlideReachEnd', ionSlideReachStart = 'ionSlideReachStart', ionSlideTouchEnd = 'ionSlideTouchEnd', ionSlideTouchStart = 'ionSlideTouchStart', ionSlideTransitionEnd = 'ionSlideTransitionEnd', ionSlideTransitionStart = 'ionSlideTransitionStart', ionSlideWillChange = 'ionSlideWillChange', ionSplitPaneVisible = 'ionSplitPaneVisible', ionStart = 'ionStart', ionStyle = 'ionStyle', ionSwipe = 'ionSwipe', isActive = 'isActive', isBeginning = 'isBeginning', isEnd = 'isEnd', isOpen = 'isOpen', isPane = 'isPane', isRightSide = 'isRightSide', isVisible = 'isVisible', label = 'label', length = 'length', loadingSpinner = 'loadingSpinner', loadingText = 'loadingText', lockSwipeToNext = 'lockSwipeToNext', lockSwipeToPrev = 'lockSwipeToPrev', lockSwipes = 'lockSwipes', max = 'max', maxEdgeStart = 'maxEdgeStart', maxlength = 'maxlength', mediaQuery = 'mediaQuery', menu = 'menu', menuId = 'menuId', message = 'message', min = 'min', minlength = 'minlength', minuteValues = 'minuteValues', mode = 'mode', monthNames = 'monthNames', monthShortNames = 'monthShortNames', monthValues = 'monthValues', multiple = 'multiple', name = 'name', okText = 'okText', open = 'open', options = 'options', or = 'or', orientation = 'orientation', pager = 'pager', pattern = 'pattern', paused = 'paused', persistent = 'persistent', pickerFormat = 'pickerFormat', pickerOptions = 'pickerOptions', pin = 'pin', placeholder = 'placeholder', platform = 'platform', pop = 'pop', popTo = 'popTo', popToRoot = 'popToRoot', position = 'position', pullMax = 'pullMax', pullMin = 'pullMin', pullingIcon = 'pullingIcon', pullingText = 'pullingText', push = 'push', ratio = 'ratio', ratioUpper = 'ratioUpper', readonly = 'readonly', refreshingSpinner = 'refreshingSpinner', refreshingText = 'refreshingText', removeIndex = 'removeIndex', required = 'required', results = 'results', root = 'root', rootParams = 'rootParams', round = 'round', rows = 'rows', scrollByPoint = 'scrollByPoint', scrollEnabled = 'scrollEnabled', scrollEvents = 'scrollEvents', scrollToBottom = 'scrollToBottom', scrollToPoint = 'scrollToPoint', scrollToTop = 'scrollToTop', scrollable = 'scrollable', select = 'select', selected = 'selected', selectedText = 'selectedText', setActive = 'setActive', setOpen = 'setOpen', setOpenItem = 'setOpenItem', setPages = 'setPages', setRoot = 'setRoot', setRouteId = 'setRouteId', show = 'show', showCancelButton = 'showCancelButton', side = 'side', size = 'size', slideNext = 'slideNext', slidePrev = 'slidePrev', slideTo = 'slideTo', snapbackDuration = 'snapbackDuration', snaps = 'snaps', spellcheck = 'spellcheck', stacked = 'stacked', startAutoplay = 'startAutoplay', step = 'step', stopAutoplay = 'stopAutoplay', strong = 'strong', subHeader = 'subHeader', swipeBackEnabled = 'swipeBackEnabled', swipeEnabled = 'swipeEnabled', tabbarHidden = 'tabbarHidden', tabbarHighlight = 'tabbarHighlight', tabbarLayout = 'tabbarLayout', tabbarPlacement = 'tabbarPlacement', tabsHideOnSubPages = 'tabsHideOnSubPages', tapClick = 'tapClick', text = 'text', threshold = 'threshold', toggle = 'toggle', toggleActive = 'toggleActive', translucent = 'translucent', type = 'type', update = 'update', url = 'url', useRouter = 'useRouter', value = 'value', vertical = 'vertical', waitFor = 'waitFor', when = 'when', width = 'width', wrap = 'wrap', yearValues = 'yearValues';
 
 @NgDirective({ selector: 'ion-app' })
 export class App {
@@ -107,6 +113,7 @@ export class Button {
   @NgOutput() ionBlur: NgEventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [type, href, buttonType, size, disabled, fill, round, expand, strong, color, mode, goBack]);
+    outputs(this, [ionFocus, ionBlur]);
   }
 }
 
@@ -225,6 +232,7 @@ export class Checkbox {
   @NgOutput() ionStyle: NgEventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode, name, checked, disabled, value]);
+    outputs(this, [ionChange, ionFocus, ionBlur, ionStyle]);
   }
 }
 
@@ -391,6 +399,7 @@ export class Datetime {
   @NgOutput() ionStyle: NgEventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [disabled, min, max, displayFormat, pickerFormat, cancelText, doneText, yearValues, monthValues, dayValues, hourValues, minuteValues, monthNames, monthShortNames, dayNames, dayShortNames, pickerOptions, placeholder, value]);
+    outputs(this, [ionCancel, ionStyle]);
   }
 }
 
@@ -535,6 +544,7 @@ export class InfiniteScroll {
   }
   constructor(private r: ElementRef) {
     inputs(this, r, [threshold, disabled, position]);
+    outputs(this, [ionInfinite]);
   }
 }
 
@@ -671,6 +681,7 @@ export class Input {
   @NgOutput() ionInputDidUnload: NgEventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [accept, autocapitalize, autocomplete, autocorrect, autofocus, checked, clearInput, clearOnEdit, debounce, disabled, inputmode, max, maxlength, min, minlength, multiple, name, pattern, placeholder, readonly, required, results, spellcheck, step, size, type, value]);
+    outputs(this, [ionInput, ionStyle, ionBlur, ionFocus, ionInputDidLoad, ionInputDidUnload]);
   }
 }
 
@@ -770,6 +781,7 @@ export class ItemOptions {
   }
   constructor(private r: ElementRef) {
     inputs(this, r, [side]);
+    outputs(this, [ionSwipe]);
   }
 }
 
@@ -801,6 +813,7 @@ export class ItemSliding {
     return method(this.r, closeOpened, __args);
   }
   constructor(private r: ElementRef) {
+    outputs(this, [ionDrag]);
   }
 }
 
@@ -832,6 +845,7 @@ export class Label {
   }
   constructor(private r: ElementRef) {
     inputs(this, r, [color, mode, fixed, floating, stacked]);
+    outputs(this, [ionStyle]);
   }
 }
 
@@ -928,6 +942,7 @@ export class Menu {
   }
   constructor(private r: ElementRef) {
     inputs(this, r, [contentId, menuId, type, disabled, side, swipeEnabled, persistent, maxEdgeStart]);
+    outputs(this, [ionOpen, ionClose, ionMenuChange]);
   }
 }
 
@@ -1020,6 +1035,7 @@ export class Nav {
   }
   constructor(private r: ElementRef) {
     inputs(this, r, [swipeBackEnabled, animated, delegate, rootParams, root]);
+    outputs(this, [ionNavWillChange, ionNavDidChange]);
   }
 }
 
@@ -1096,6 +1112,7 @@ export class Radio {
   @NgOutput() ionBlur: NgEventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode, name, disabled, checked, value]);
+    outputs(this, [ionRadioDidLoad, ionRadioDidUnload, ionStyle, ionSelect, ionFocus, ionBlur]);
   }
 }
 
@@ -1117,6 +1134,7 @@ export class RadioGroup {
   @NgOutput() ionChange: NgEventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [allowEmptySelection, disabled, name, value]);
+    outputs(this, [ionChange]);
   }
 }
 
@@ -1181,6 +1199,7 @@ export class Range {
   }
   constructor(private r: ElementRef) {
     inputs(this, r, [color, mode, debounce, disabled, dualKnobs, max, min, pin, snaps, step, value]);
+    outputs(this, [ionChange, ionStyle, ionFocus, ionBlur]);
   }
 }
 
@@ -1229,6 +1248,7 @@ export class Refresher {
   }
   constructor(private r: ElementRef) {
     inputs(this, r, [pullMin, pullMax, closeDuration, snapbackDuration, disabled]);
+    outputs(this, [ionRefresh, ionPull, ionStart]);
   }
 }
 
@@ -1310,6 +1330,7 @@ export class Scroll {
   }
   constructor(private r: ElementRef) {
     inputs(this, r, [mode, forceOverscroll, scrollEvents]);
+    outputs(this, [ionScrollStart, ionScroll, ionScrollEnd]);
   }
 }
 
@@ -1370,6 +1391,7 @@ export class Searchbar {
   @NgOutput() ionFocus: NgEventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode, animated, autocomplete, autocorrect, cancelButtonText, debounce, placeholder, showCancelButton, spellcheck, type, value]);
+    outputs(this, [ionInput, ionCancel, ionClear, ionBlur, ionFocus]);
   }
 }
 
@@ -1391,6 +1413,7 @@ export class Segment {
   @NgOutput() ionChange: NgEventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode, disabled, value]);
+    outputs(this, [ionChange]);
   }
 }
 
@@ -1421,6 +1444,7 @@ export class SegmentButton {
   @NgOutput() ionClick: NgEventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [activated, color, mode, checked, disabled, href, value]);
+    outputs(this, [ionClick]);
   }
 }
 
@@ -1473,6 +1497,7 @@ export class Select {
   @NgOutput() ionStyle: NgEventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [disabled, cancelText, okText, placeholder, name, selectedText, multiple, 'interface', interfaceOptions, value]);
+    outputs(this, [ionChange, ionCancel, ionFocus, ionBlur, ionStyle]);
   }
 }
 
@@ -1494,6 +1519,7 @@ export class SelectOption {
   @NgOutput() ionSelectOptionDidUnload: NgEventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [disabled, selected, value]);
+    outputs(this, [ionSelectOptionDidLoad, ionSelectOptionDidUnload]);
   }
 }
 
@@ -1642,6 +1668,7 @@ export class Slides {
   }
   constructor(private r: ElementRef) {
     inputs(this, r, [options, pager]);
+    outputs(this, [ionSlideWillChange, ionSlideDidChange, ionSlideNextStart, ionSlidePrevStart, ionSlideNextEnd, ionSlidePrevEnd, ionSlideTransitionStart, ionSlideTransitionEnd, ionSlideDrag, ionSlideReachStart, ionSlideReachEnd, ionSlideTouchStart, ionSlideTouchEnd]);
   }
 }
 
@@ -1692,6 +1719,7 @@ export class SplitPane {
   }
   constructor(private r: ElementRef) {
     inputs(this, r, [disabled, when]);
+    outputs(this, [ionChange, ionSplitPaneVisible]);
   }
 }
 
@@ -1753,6 +1781,7 @@ export class Tab {
   }
   constructor(private r: ElementRef) {
     inputs(this, r, [active, btnId, delegate, label, href, icon, badge, badgeStyle, component, name, disabled, selected, show, tabsHideOnSubPages]);
+    outputs(this, [ionSelect]);
   }
 }
 
@@ -1808,6 +1837,7 @@ export class Tabs {
   }
   constructor(private r: ElementRef) {
     inputs(this, r, [color, name, tabbarHidden, tabbarLayout, tabbarPlacement, tabbarHighlight, translucent, scrollable, useRouter]);
+    outputs(this, [ionChange, ionNavWillChange, ionNavDidChange]);
   }
 }
 
@@ -1902,6 +1932,7 @@ export class Textarea {
   @NgOutput() ionFocus: NgEventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [autocapitalize, autocomplete, autofocus, clearOnEdit, debounce, disabled, maxlength, minlength, name, placeholder, readonly, required, spellcheck, cols, rows, wrap, value]);
+    outputs(this, [ionInput, ionStyle, ionBlur, ionFocus]);
   }
 }
 
@@ -1941,6 +1972,7 @@ export class Toggle {
   @NgOutput() ionStyle: NgEventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode, name, checked, disabled, value]);
+    outputs(this, [ionChange, ionFocus, ionBlur, ionStyle]);
   }
 }
 
