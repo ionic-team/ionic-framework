@@ -29,6 +29,8 @@ export class SplitPane {
   @Element() private el: HTMLElement;
   @State() visible = false;
 
+  @Prop({context: 'isServer'}) isServer: boolean;
+
   /**
    * If true, the split pane will be hidden. Defaults to `false`.
    */
@@ -70,6 +72,9 @@ export class SplitPane {
 
   @Watch('when')
   protected whenChanged() {
+    if (this.isServer) {
+      return;
+    }
     this.rmL && this.rmL();
     this.rmL = null;
 
@@ -121,6 +126,9 @@ export class SplitPane {
   }
 
   private _styleChildren() {
+    if (this.isServer) {
+      return;
+    }
     const children = this.el.children;
     const nu = this.el.childElementCount;
     let foundMain = false;
