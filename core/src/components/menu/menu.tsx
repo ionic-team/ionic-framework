@@ -34,6 +34,7 @@ export class Menu {
   @State() isRightSide = false;
 
   @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'isServer' }) isServer: boolean;
   @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl: HTMLIonMenuControllerElement;
   @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
 
@@ -128,10 +129,10 @@ export class Menu {
   }
 
   componentDidLoad() {
-    assert(!!this.menuCtrl, 'menucontroller was not initialized');
-
+    if (this.isServer) {
+      return;
+    }
     const el = this.el;
-
     const content = (this.contentId)
       ? document.getElementById(this.contentId)
       : el.parentElement.querySelector('[main]');
