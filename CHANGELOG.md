@@ -1,3 +1,17 @@
+<a name="4.0.0-alpha.1"></a>
+# [4.0.0-alpha.1](https://github.com/ionic-team/ionic/compare/v0.2.2...v4.0.0-alpha.1) (2018-04-06)
+
+
+### Bug Fixes
+
+* **angular:** change detection ([79ba639](https://github.com/ionic-team/ionic/commit/79ba639))
+* **angular:** proxy methods ([5153da4](https://github.com/ionic-team/ionic/commit/5153da4))
+* **angular:** proxy outputs ([64a9497](https://github.com/ionic-team/ionic/commit/64a9497))
+* **menu:** prerender ([a3cd5db](https://github.com/ionic-team/ionic/commit/a3cd5db))
+* **split-pane:** prerender ([c6e962c](https://github.com/ionic-team/ionic/commit/c6e962c))
+
+
+
 <a name="0.2.2"></a>
 ## [0.2.2](https://github.com/ionic-team/ionic/compare/v0.2.1...v0.2.2) (2018-04-05)
 
