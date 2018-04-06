@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { PageTwo } from './page-two';
+import { Nav } from '@ionic/angular';
 
 @Component({
   selector: 'page-one',
@@ -29,9 +30,7 @@ export class PageOne {
   ionViewWillEnterDetection = 'initial';
   ionViewDidEnterDetection = 'initial';
 
-  constructor() {
-
-  }
+  constructor(private nav: Nav) {}
 
 
   ngOnInit() {
@@ -55,8 +54,7 @@ export class PageOne {
     }, 500);
   }
 
-  goToPageTwo() {
-    const nav = document.querySelector('ion-nav') as any;
-    nav.push(PageTwo).then(() => console.log('push complete'));
+  async goToPageTwo() {
+    await this.nav.push(PageTwo);
   }
 }

@@ -2,7 +2,7 @@
 import { Directive as NgDirective, ElementRef, EventEmitter as NgEventEmitter, Input as NgInput, Output as NgOutput } from '@angular/core';
 
 
-export function method(ref: ElementRef, methodName: string, ...args: any[]) {
+export function method(ref: ElementRef, methodName: string, args: any[]) {
   return ref.nativeElement.componentOnReady()
     .then((el: any) => el[methodName].apply(el, args));
 }
@@ -907,8 +907,6 @@ export class Menu {
   @NgInput() maxEdgeStart: number;
   @NgOutput() ionOpen: NgEventEmitter<any>;
   @NgOutput() ionClose: NgEventEmitter<any>;
-  @NgOutput() ionMenuDidLoad: NgEventEmitter<any>;
-  @NgOutput() ionMenuDidUnload: NgEventEmitter<any>;
   @NgOutput() ionMenuChange: NgEventEmitter<any>;
   isOpen(...__args: any[]): Promise<any> {
     return method(this.r, isOpen, __args);

@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener, Input, Optional } from '@angular/core';
-import { IonRouterOutlet } from './ion-router-outlet';
 import { Router } from '@angular/router';
-import { NavController } from '../..';
+import { NavController } from '../../providers/nav-controller';
+import { IonRouterOutlet } from './ion-router-outlet';
 
 @Directive({
   selector: 'ion-back-button'
