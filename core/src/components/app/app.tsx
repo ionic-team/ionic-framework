@@ -19,6 +19,7 @@ export class App {
   @Element() el: HTMLElement;
 
   @Prop({ context: 'config' }) config: Config;
+  mode: string;
 
   componentWillLoad() {
     this.isDevice = this.config.getBoolean('isDevice', false);
@@ -26,12 +27,11 @@ export class App {
   }
 
   hostData() {
-    const mode = this.config.get('mode');
     const hoverCSS = this.config.getBoolean('hoverCSS', false);
 
     return {
       class: {
-        [mode]: true,
+        [this.mode]: true,
         'enable-hover': hoverCSS
       }
     };
