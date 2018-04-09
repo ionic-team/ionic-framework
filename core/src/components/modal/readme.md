@@ -59,7 +59,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 #### component
 
-
+string
 
 The component to display inside of the modal.
 
@@ -73,7 +73,7 @@ The data to pass to the modal component.
 
 #### cssClass
 
-
+string
 
 Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.
@@ -112,7 +112,7 @@ Animation to use when the modal is dismissed.
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -151,7 +151,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 #### component
 
-
+string
 
 The component to display inside of the modal.
 
@@ -165,7 +165,7 @@ The data to pass to the modal component.
 
 #### css-class
 
-
+string
 
 Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.
@@ -204,7 +204,7 @@ Animation to use when the modal is dismissed.
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.

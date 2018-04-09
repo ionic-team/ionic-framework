@@ -69,7 +69,7 @@ If true, the user cannot interact with the checkbox. Defaults to `false`.
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -115,7 +115,7 @@ If true, the user cannot interact with the checkbox. Defaults to `false`.
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.

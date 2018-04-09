@@ -139,7 +139,15 @@ export class MenuController {
    */
   @Method()
   get(menuId?: string): HTMLIonMenuElement {
-    if (menuId === 'left' || menuId === 'right') {
+    if (menuId === 'left') {
+      console.error('menu.side=left is deprecated, use "start" instead');
+      return null;
+    }
+    if (menuId === 'right') {
+      console.error('menu.side=right is deprecated, use "end" instead');
+      return null;
+    }
+    if (menuId === 'start' || menuId === 'end' ) {
       // there could be more than one menu on the same side
       // so first try to get the enabled one
       const menu = this.find(m => m.side === menuId && !m.disabled);

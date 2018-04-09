@@ -17,7 +17,7 @@ The `ion-fab-list` element is a container for multiple FAB buttons. This collect
     <ion-fab-button>Twitter</ion-fab-button>
     <ion-fab-button>Youtube</ion-fab-button>
   </ion-fab-list>
-  <ion-fab-list side="left">
+  <ion-fab-list side="start">
     <ion-fab-button>Vimeo</ion-fab-button>
   </ion-fab-list>
 </ion-fab>
@@ -38,7 +38,7 @@ If true, the fab list will be show all fab buttons in the list. Defaults to `fal
 
 #### side
 
-
+string
 
 The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
 
@@ -54,7 +54,7 @@ If true, the fab list will be show all fab buttons in the list. Defaults to `fal
 
 #### side
 
-
+string
 
 The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
 

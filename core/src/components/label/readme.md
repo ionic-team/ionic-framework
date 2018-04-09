@@ -32,7 +32,7 @@ If true, the label will float above an input when the value is empty or the inpu
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -73,7 +73,7 @@ If true, the label will float above an input when the value is empty or the inpu
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.

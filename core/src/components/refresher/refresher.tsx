@@ -58,7 +58,7 @@ export class Refresher {
    * will automatically go into the `refreshing` state.
    * Defaults to the result of `pullMin + 60`.
    */
-  @Prop() pullMax = this.pullMin + 60;
+  @Prop() pullMax: number = this.pullMin + 60;
 
   // TODO: NEVER USED
   /**

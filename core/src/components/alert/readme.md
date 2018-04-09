@@ -34,7 +34,7 @@ Array of buttons to be added to the alert.
 
 #### cssClass
 
-
+string
 
 Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.
@@ -129,7 +129,7 @@ Array of buttons to be added to the alert.
 
 #### css-class
 
-
+string
 
 Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.

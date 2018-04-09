@@ -70,7 +70,7 @@ Indicates that the user cannot interact with the control.
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -118,7 +118,7 @@ Indicates that the user cannot interact with the control.
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.

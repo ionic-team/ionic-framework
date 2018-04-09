@@ -9,7 +9,7 @@ You can combine the `(ionSwipe)` event plus the `expandable` directive to create
   <ion-item>
     Item 1
   </ion-item>
-  <ion-item-options side="right" (ionSwipe)="saveItem(item)">
+  <ion-item-options side="end" (ionSwipe)="saveItem(item)">
     <ion-item-option expandable (click)="saveItem(item)">
       <ion-icon name="star"></ion-icon>
     </ion-item-option>
@@ -25,7 +25,7 @@ You can combine the `(ionSwipe)` event plus the `expandable` directive to create
 
 #### side
 
-
+string
 
 The side the option button should be on. Defaults to `"right"`.
 If you have multiple `ion-item-options`, a side must be provided for each.
@@ -35,7 +35,7 @@ If you have multiple `ion-item-options`, a side must be provided for each.
 
 #### side
 
-
+string
 
 The side the option button should be on. Defaults to `"right"`.
 If you have multiple `ion-item-options`, a side must be provided for each.

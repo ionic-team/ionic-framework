@@ -110,7 +110,7 @@ The text to display instead of the selected option's value.
 
 #### value
 
-
+string
 
 the value of the select.
 
@@ -186,7 +186,7 @@ The text to display instead of the selected option's value.
 
 #### value
 
-
+string
 
 the value of the select.
 

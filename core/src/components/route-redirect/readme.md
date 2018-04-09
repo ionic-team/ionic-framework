@@ -82,7 +82,7 @@ is not specified.
 
 #### to
 
-
+string
 
 A redirect route, redirects "from" a URL "to" another URL. This property is that "to" URL.
 When the defined `ion-route-redirect` rule matches, the router will redirect to the path
@@ -113,7 +113,7 @@ is not specified.
 
 #### to
 
-
+string
 
 A redirect route, redirects "from" a URL "to" another URL. This property is that "to" URL.
 When the defined `ion-route-redirect` rule matches, the router will redirect to the path

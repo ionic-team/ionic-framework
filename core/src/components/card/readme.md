@@ -21,7 +21,7 @@ Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"wa
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -39,7 +39,7 @@ Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"wa
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.

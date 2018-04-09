@@ -16,7 +16,7 @@ export class ItemOptions {
    * The side the option button should be on. Defaults to `"right"`.
    * If you have multiple `ion-item-options`, a side must be provided for each.
    */
-  @Prop() side: Side = 'right';
+  @Prop() side: Side = 'end';
 
   /**
    * Emitted when the item has been fully swiped.
@@ -25,7 +25,7 @@ export class ItemOptions {
 
   @Method()
   isRightSide() {
-    return isRightSide(this.side, true);
+    return isRightSide(this.side);
   }
 
   @Method()

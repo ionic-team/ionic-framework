@@ -70,7 +70,7 @@ The fab should have one main fab button. Fabs can also contain fab lists which c
     <ion-fab-button>
       <ion-icon name="settings"></ion-icon>
     </ion-fab-button>
-    <ion-fab-list side="right">
+    <ion-fab-list side="end">
       <ion-fab-button><ion-icon name="logo-vimeo"></ion-icon></ion-fab-button>
     </ion-fab-list>
   </ion-fab>
@@ -84,10 +84,10 @@ The fab should have one main fab button. Fabs can also contain fab lists which c
     <ion-fab-list side="bottom">
       <ion-fab-button><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
     </ion-fab-list>
-    <ion-fab-list side="left">
+    <ion-fab-list side="start">
       <ion-fab-button><ion-icon name="logo-googleplus"></ion-icon></ion-fab-button>
     </ion-fab-list>
-    <ion-fab-list side="right">
+    <ion-fab-list side="end">
       <ion-fab-button><ion-icon name="logo-twitter"></ion-icon></ion-fab-button>
     </ion-fab-list>
   </ion-fab>
@@ -111,7 +111,7 @@ it is `"bottom"`. Should be used with a `fixed` slot.
 
 #### horizontal
 
-
+string
 
 Where to align the fab horizontally in the viewport.
 Possible values are: `"left"`, `"right"`, `"center"`, `"start"`, `"end"`.
@@ -119,7 +119,7 @@ Possible values are: `"left"`, `"right"`, `"center"`, `"start"`, `"end"`.
 
 #### vertical
 
-
+string
 
 Where to align the fab vertically in the viewport.
 Possible values are: `"top"`, `"center"`, `"bottom"`.
@@ -138,7 +138,7 @@ it is `"bottom"`. Should be used with a `fixed` slot.
 
 #### horizontal
 
-
+string
 
 Where to align the fab horizontally in the viewport.
 Possible values are: `"left"`, `"right"`, `"center"`, `"start"`, `"end"`.
@@ -146,7 +146,7 @@ Possible values are: `"left"`, `"right"`, `"center"`, `"start"`, `"end"`.
 
 #### vertical
 
-
+string
 
 Where to align the fab vertically in the viewport.
 Possible values are: `"top"`, `"center"`, `"bottom"`.

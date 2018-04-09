@@ -43,7 +43,7 @@ If this property is set, an anchor tag will be rendered.
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -93,7 +93,7 @@ If this property is set, an anchor tag will be rendered.
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.

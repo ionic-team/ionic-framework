@@ -19,7 +19,7 @@
 
 <body>
   <ion-app>
-    <ion-menu side="left" class="e2eLeftMenu">
+    <ion-menu side="start" class="e2eLeftMenu">
 
       <ion-header>
         <ion-toolbar color="secondary">
@@ -29,7 +29,7 @@
 
       <ion-content>
         <ion-list>
-          <ion-item>Open Right Menu</ion-item>
+          <ion-item>Open end Menu</ion-item>
           <ion-item>Close Menu</ion-item>
           <ion-item>Close Menu</ion-item>
           <ion-item>Close Menu</ion-item>
@@ -52,7 +52,7 @@
 
     </ion-menu>
 
-    <ion-menu side="right">
+    <ion-menu side="end">
       <ion-header>
         <ion-toolbar>
           <ion-title>Hola</ion-title>
@@ -74,8 +74,8 @@
 
       <ion-content padding>
         <p>
-          <ion-button id="left" onclick="openLeft()">Open left menu</ion-button>
-          <ion-button onclick="openRight()">Open right menu</ion-button>
+          <ion-button id="left" onclick="openStart()">Open start menu</ion-button>
+          <ion-button onclick="openEnd()">Open end menu</ion-button>
         </p>
         <p>
           <ion-button onclick="setPush()">Set Push</ion-button>
@@ -101,28 +101,28 @@
 
   <script>
     const menu = document.querySelector('ion-menu-controller');
-    function openLeft() {
-      console.log('Open left menu');
-      menu.open('left');
+    function openStart() {
+      console.log('Open start menu');
+      menu.open('start');
     }
-    function openRight() {
-      console.log('Open right menu');
-      menu.open('right');
+    function openEnd() {
+      console.log('Open end menu');
+      menu.open('end');
     }
     function setPush() {
-      menu.get('left').type = 'push';
-      menu.get('right').type = 'push';
+      menu.get('start').type = 'push';
+      menu.get('end').type = 'push';
     }
     function setOverlay() {
-      menu.get('left').type = 'overlay';
-      menu.get('right').type = 'overlay';
+      menu.get('start').type = 'overlay';
+      menu.get('end').type = 'overlay';
     }
     function setReveal() {
-      menu.get('left').type = 'reveal';
-      menu.get('right').type = 'reveal';
+      menu.get('start').type = 'reveal';
+      menu.get('end').type = 'reveal';
     }
     function setEnabled() {
-      menu.get('left').swipeEnabled = false;
+      menu.get('start').swipeEnabled = false;
     }
   </script>
 </body>

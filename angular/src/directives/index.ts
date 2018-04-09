@@ -12,6 +12,7 @@ export { TabDelegate } from './navigation/tab-delegate';
 export { TabsDelegate } from './navigation/tabs-delegate';
 export { IonRouterOutlet } from './navigation/ion-router-outlet';
 export { HrefDelegate } from './navigation/href-delegate';
+export { NavParams } from './navigation/nav-params';
 
 export { Icon } from './icon';
 export { VirtualScroll } from './virtual-scroll/virtual-scroll';

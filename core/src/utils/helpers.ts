@@ -34,7 +34,7 @@ export function pointerCoord(ev: any): {x: number, y: number} {
   }
   return {x: 0, y: 0};
 }
-export type Side = 'left' | 'right' | 'start' | 'end';
+export type Side = 'start' | 'end';
 
 /**
  * @hidden
@@ -42,16 +42,14 @@ export type Side = 'left' | 'right' | 'start' | 'end';
  * based on the value of dir
  * @param side the side
  * @param isRTL whether the application dir is rtl
- * @param defaultRight whether the default side is right
  */
-export function isRightSide(side: Side, defaultRight = false): boolean {
+export function isRightSide(side: Side): boolean {
   const isRTL = document.dir === 'rtl';
   switch (side) {
-    case 'right': return true;
-    case 'left': return false;
-    case 'end': return !isRTL;
     case 'start': return isRTL;
-    default: return defaultRight ? !isRTL : isRTL;
+    case 'end': return !isRTL;
+    default:
+      throw new Error(`"${side}" is not a valid value for [side]. Use "start" or "end" instead.`);
   }
 }
 

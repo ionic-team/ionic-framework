@@ -35,7 +35,7 @@ The icon name to use for the back button.
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -44,7 +44,7 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 #### text
 
-
+string
 
 The text to display in the back button.
 
@@ -76,7 +76,7 @@ The icon name to use for the back button.
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -85,7 +85,7 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 #### text
 
-
+string
 
 The text to display in the back button.
 

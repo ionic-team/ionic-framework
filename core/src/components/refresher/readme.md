@@ -40,7 +40,7 @@ If true, the refresher will be hidden. Defaults to `true`.
 
 #### pullMax
 
-any
+number
 
 The maximum distance of the pull until the refresher
 will automatically go into the `refreshing` state.
@@ -80,7 +80,7 @@ If true, the refresher will be hidden. Defaults to `true`.
 
 #### pull-max
 
-any
+number
 
 The maximum distance of the pull until the refresher
 will automatically go into the `refreshing` state.

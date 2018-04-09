@@ -12,7 +12,7 @@
   <ion-app>
     <ion-split-pane id="splitPane">
 
-      <ion-menu side="left">
+      <ion-menu side="start">
 
         <ion-header>
           <ion-toolbar color="secondary">
@@ -22,7 +22,7 @@
 
         <ion-content>
           <ion-list>
-            <ion-item>Open Right Menu</ion-item>
+            <ion-item>Open end Menu</ion-item>
             <ion-item>Close Menu</ion-item>
             <ion-item>Close Menu</ion-item>
             <ion-item>Close Menu</ion-item>
@@ -78,9 +78,9 @@
 
   <script>
     const menuCtrl = document.querySelector('ion-menu-controller');
-    function openLeft() {
-      console.log('Open left menu');
-      menuCtrl.open('left');
+    function openStart() {
+      console.log('Open start menu');
+      menuCtrl.open('start');
     }
 
     function push() {

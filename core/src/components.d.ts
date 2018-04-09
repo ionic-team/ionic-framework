@@ -4497,7 +4497,7 @@ declare global {
     /**
      * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
      */
-    'pullMax': any;
+    'pullMax': number;
     /**
      * The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Defaults to `60`.
      */
@@ -4547,7 +4547,7 @@ declare global {
       /**
        * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
        */
-      'pullMax'?: any;
+      'pullMax'?: number;
       /**
        * The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Defaults to `60`.
        */

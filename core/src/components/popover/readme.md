@@ -27,7 +27,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 #### component
 
-
+string
 
 The component to display inside of the popover.
 
@@ -41,7 +41,7 @@ The data to pass to the popover component.
 
 #### cssClass
 
-
+string
 
 Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.
@@ -87,7 +87,7 @@ Animation to use when the popover is dismissed.
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -133,7 +133,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 #### component
 
-
+string
 
 The component to display inside of the popover.
 
@@ -147,7 +147,7 @@ The data to pass to the popover component.
 
 #### css-class
 
-
+string
 
 Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.
@@ -193,7 +193,7 @@ Animation to use when the popover is dismissed.
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.

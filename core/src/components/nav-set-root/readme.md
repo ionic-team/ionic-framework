@@ -9,7 +9,7 @@
 
 #### component
 
-
+string
 
 
 #### componentProps
@@ -26,7 +26,7 @@ string
 
 #### component
 
-
+string
 
 
 #### component-props

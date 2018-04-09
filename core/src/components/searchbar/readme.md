@@ -87,7 +87,7 @@ Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -177,7 +177,7 @@ Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.

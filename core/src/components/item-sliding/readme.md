@@ -8,12 +8,12 @@ A Sliding item is a component that contains an item that can be dragged to revea
     <ion-item>
       <ion-label>Item</ion-label>
     </ion-item>
-    <ion-item-options side="left">
+    <ion-item-options side="start">
       <ion-item-option onClick="favorite(item)">Favorite</ion-item-option>
       <ion-item-option color="danger" onClick="share(item)">Share</ion-item-option>
     </ion-item-options>
 
-    <ion-item-options side="right">
+    <ion-item-options side="end">
       <ion-item-option onClick="unread(item)">Unread</ion-item-option>
     </ion-item-options>
   </ion-item-sliding>
@@ -26,14 +26,14 @@ A Sliding item is a component that contains an item that can be dragged to revea
 By default, the options are revealed when the sliding item is swiped from right to left, so the buttons are placed on the right side. It's also possible to reveal them from the right side by setting the `side` attribute on the `ion-item-options` element. Up to two `ion-item-options` can be used at the same time in order to reveal two different sets of options depending on the swiping direction.
 
 ```html
-<ion-item-options side="right">
+<ion-item-options side="end">
   <ion-item-option onClick="archive(item)">
     <ion-icon name="archive"></ion-icon>
     Archive
   </ion-item-option>
 </ion-item-options>
 
-<ion-item-options side="left">
+<ion-item-options side="start">
   <ion-item-option onClick="archive(item)">
     <ion-icon name="archive"></ion-icon>
     Archive

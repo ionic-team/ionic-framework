@@ -54,7 +54,7 @@ Duration of the spinner animation in milliseconds. The default varies based on t
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -97,7 +97,7 @@ Duration of the spinner animation in milliseconds. The default varies based on t
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.

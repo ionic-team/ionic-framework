@@ -596,7 +596,7 @@ The option component should not be written as a `button` with an `ion-button` di
   <ion-item>
     <ion-label>Item 1</ion-label>
   </ion-item>
-  <ion-item-options side="right">
+  <ion-item-options side="end">
     <ion-item-option expandable>
       <ion-icon name="star"></ion-icon>
     </ion-item-option>
@@ -1018,7 +1018,7 @@ Previously if a `menuToggle` directive was added to an Ionic `button` in a toolb
 
 ```html
 <ion-toolbar>
-  <ion-buttons slot="left">
+  <ion-buttons slot="start">
     <ion-menu-toggle>
       <ion-button>
         <ion-icon slot="icon-only" name="menu"></ion-icon>

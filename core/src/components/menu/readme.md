@@ -42,7 +42,7 @@ If true, the menu will persist on child pages.
 
 #### side
 
-
+string
 
 Which side of the view the menu should be placed. Default `"start"`.
 
@@ -100,7 +100,7 @@ If true, the menu will persist on child pages.
 
 #### side
 
-
+string
 
 Which side of the view the menu should be placed. Default `"start"`.
 

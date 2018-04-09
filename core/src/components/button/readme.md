@@ -104,7 +104,7 @@ If true, the user cannot interact with the button. Defaults to `false`.
 
 #### expand
 
-
+string
 
 Set to `"block"` for a full-width button or to `"full"` for a full-width button
 without left and right borders.
@@ -112,7 +112,7 @@ without left and right borders.
 
 #### fill
 
-
+string
 
 Set to `"clear"` for a transparent button, to `"outline"` for a transparent
 button with a border, or to `"solid"`. The default style is `"solid"` except inside of
@@ -134,7 +134,7 @@ If this property is set, an anchor tag will be rendered.
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -150,7 +150,7 @@ If true, activates a button with rounded corners.
 
 #### size
 
-
+string
 
 The button size.
 Possible values are: `"small"`, `"default"`, `"large"`.
@@ -200,7 +200,7 @@ If true, the user cannot interact with the button. Defaults to `false`.
 
 #### expand
 
-
+string
 
 Set to `"block"` for a full-width button or to `"full"` for a full-width button
 without left and right borders.
@@ -208,7 +208,7 @@ without left and right borders.
 
 #### fill
 
-
+string
 
 Set to `"clear"` for a transparent button, to `"outline"` for a transparent
 button with a border, or to `"solid"`. The default style is `"solid"` except inside of
@@ -230,7 +230,7 @@ If this property is set, an anchor tag will be rendered.
 
 #### mode
 
-
+string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
@@ -246,7 +246,7 @@ If true, activates a button with rounded corners.
 
 #### size
 
-
+string
 
 The button size.
 Possible values are: `"small"`, `"default"`, `"large"`.

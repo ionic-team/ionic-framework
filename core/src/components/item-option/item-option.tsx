@@ -42,7 +42,7 @@ export class ItemOption {
    */
   @Prop() href: string;
 
-  clickedOptionButton(ev: Event): boolean {
+  private clickedOptionButton(ev: Event): boolean {
     const el = (ev.target as HTMLElement).closest('ion-item-option');
     return !!el;
   }

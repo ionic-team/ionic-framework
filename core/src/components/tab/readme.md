@@ -76,7 +76,7 @@ string
 
 #### component
 
-
+string
 
 The component to display inside of the tab.
 
@@ -170,7 +170,7 @@ string
 
 #### component
 
-
+string
 
 The component to display inside of the tab.
 

@@ -23,7 +23,7 @@ platforms.forEach(platform => {
       return page.navigate('#left');
     });
 
-    register('should open left menu', driver => {
+    register('should Open start menu', driver => {
       const page = new E2ETestPage(driver, platform);
       return page.present('left');
     });
