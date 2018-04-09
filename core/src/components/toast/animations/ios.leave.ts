@@ -11,13 +11,13 @@ export default function iosLeaveAnimation(Animation: Animation, baseEl: HTMLElem
   wrapperAnimation.addElement(wrapperEle);
   switch (position) {
     case 'top':
-      wrapperAnimation.fromTo('translateY', `${10}px`, '-100%');
+      wrapperAnimation.fromTo('translateY', 'calc(env(safe-area-inset-top) + 10px)', '-100%');
       break;
     case 'middle':
       wrapperAnimation.fromTo('opacity', 0.99, 0);
       break;
     default:
-      wrapperAnimation.fromTo('translateY', `${0 - 10}px`, '100%');
+      wrapperAnimation.fromTo('translateY', 'calc(-10px - env(safe-area-inset-bottom))', '100%');
       break;
   }
   return Promise.resolve(baseAnimation

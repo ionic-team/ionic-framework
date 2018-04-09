@@ -12,7 +12,7 @@ export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElem
 
   switch (position) {
     case 'top':
-      wrapperAnimation.fromTo('translateY', '-100%', '10px');
+      wrapperAnimation.fromTo('translateY', '-100%', 'calc(env(safe-area-inset-top) + 10px)');
       break;
     case 'middle':
       const topPosition = Math.floor(
@@ -22,7 +22,7 @@ export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElem
       wrapperAnimation.fromTo('opacity', 0.01, 1);
       break;
     default:
-      wrapperAnimation.fromTo('translateY', '100%', '-10px');
+      wrapperAnimation.fromTo('translateY', '100%', 'calc(-10px - env(safe-area-inset-bottom))');
       break;
   }
   return Promise.resolve(baseAnimation
