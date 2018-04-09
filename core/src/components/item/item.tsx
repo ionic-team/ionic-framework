@@ -106,8 +106,8 @@ export class Item {
       : 'div';
 
     const attrs = (TagType === 'button')
-      ? {type: 'button'}
-      : {href: this.href};
+      ? { type: 'button' }
+      : { href: this.href };
 
     const showDetail = this.detail != null ? this.detail : (this.mode === 'ios' && clickable);
 
