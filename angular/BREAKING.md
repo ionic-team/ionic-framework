@@ -690,7 +690,7 @@ The class has been renamed from `Option` to `SelectOption` to keep it consistent
 
 Previously radio was positioned inside of an item automatically or by using `item-left`/`item-right`. It is now required to have a `slot` to be positioned properly.
 
-** Old Usage Example **
+**Old Usage Example:**
 
 ```html
 <ion-item>
@@ -709,7 +709,7 @@ Previously radio was positioned inside of an item automatically or by using `ite
 </ion-item>
 ```
 
-** New Usage Example **
+**New Usage Example:**
 
 ```html
 <ion-item>
@@ -732,7 +732,7 @@ Previously radio was positioned inside of an item automatically or by using `ite
 
 Radio group has been changed to an element. It should now be wrapped around any `<ion-radio>` elements as `<ion-radio-group>`.
 
-** Old Usage Example **
+**Old Usage Example:**
 
 ```html
 <ion-list radio-group>
@@ -753,7 +753,7 @@ Radio group has been changed to an element. It should now be wrapped around any 
 </ion-list>
 ```
 
-** New Usage Example **
+**New Usage Example:**
 
 ```html
 <ion-list>
