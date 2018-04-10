@@ -14,7 +14,7 @@ export function attachComponent(delegate: FrameworkDelegate|undefined, container
   }
 
   const el = (typeof component === 'string')
-    ? document.createElement(component)
+    ? container.ownerDocument.createElement(component)
     : component;
 
   cssClasses && cssClasses.forEach(c => el.classList.add(c));

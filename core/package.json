@@ -24,13 +24,11 @@
     "ionicons": "4.0.0-18"
   },
   "devDependencies": {
-    "@stencil/core": "0.7.19",
+    "@stencil/core": "0.7.20",
     "@stencil/dev-server": "latest",
-    "@stencil/postcss": "0.0.2",
     "@stencil/sass": "0.0.3",
     "@stencil/utils": "latest",
     "@types/jest": "^21.1.6",
-    "autoprefixer": "^8.2.0",
     "chai": "^4.1.2",
     "chalk": "^2.3.2",
     "chromedriver": "^2.37.0",

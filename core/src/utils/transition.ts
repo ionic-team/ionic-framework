@@ -1,8 +1,6 @@
 import { Animation, AnimationBuilder } from '../';
 import { NavDirection } from '../components/nav/nav-util';
 
-export let MyCustomEvent = CustomEvent;
-
 export function transition(opts: AnimationOptions): Promise<Animation|null> {
   beforeTransition(opts);
 
@@ -31,27 +29,29 @@ function beforeTransition(opts: AnimationOptions) {
 async function animation(opts: AnimationOptions): Promise<Animation> {
   await waitForReady(opts, true);
 
-  const transition = await createTransition(opts);
-  fireWillEvents(opts.enteringEl, opts.leavingEl);
-  await playTransition(transition, opts);
+  const trns = await createTransition(opts);
+  fireWillEvents(opts.window, opts.enteringEl, opts.leavingEl);
+  await playTransition(trns, opts);
 
-  if (transition.hasCompleted) {
-    fireDidEvents(opts.enteringEl, opts.leavingEl);
+  if (trns.hasCompleted) {
+    fireDidEvents(opts.window, opts.enteringEl, opts.leavingEl);
   }
-  return transition;
+  return trns;
 }
 
 async function noAnimation(opts: AnimationOptions): Promise<null> {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
-
-  enteringEl && enteringEl.classList.remove('hide-page');
-  leavingEl && leavingEl.classList.remove('hide-page');
-
+  if (enteringEl) {
+    enteringEl.classList.remove('hide-page');
+  }
+  if (leavingEl) {
+    leavingEl.classList.remove('hide-page');
+  }
   await waitForReady(opts, false);
 
-  fireWillEvents(enteringEl, leavingEl);
-  fireDidEvents(enteringEl, leavingEl);
+  fireWillEvents(opts.window, enteringEl, leavingEl);
+  fireDidEvents(opts.window, enteringEl, leavingEl);
   return null;
 }
 
@@ -59,10 +59,10 @@ async function waitForReady(opts: AnimationOptions, defaultDeep: boolean) {
   const deep = opts.deepWait != null ? opts.deepWait : defaultDeep;
   const promises = deep ? [
     deepReady(opts.enteringEl),
-    deepReady(opts.leavingEl)
+    deepReady(opts.leavingEl),
   ] : [
     shallowReady(opts.enteringEl),
-    shallowReady(opts.leavingEl)
+    shallowReady(opts.leavingEl),
   ];
 
   await Promise.all(promises);
@@ -103,28 +103,25 @@ function playTransition(transition: Animation, opts: AnimationOptions): Promise<
   return promise;
 }
 
-function fireWillEvents(enteringEl: HTMLElement|undefined, leavingEl: HTMLElement|undefined) {
-  lifecycle(leavingEl, ViewLifecycle.WillLeave);
-  lifecycle(enteringEl, ViewLifecycle.WillEnter);
+function fireWillEvents(win: Window, enteringEl: HTMLElement|undefined, leavingEl: HTMLElement|undefined) {
+  lifecycle(win, leavingEl, ViewLifecycle.WillLeave);
+  lifecycle(win, enteringEl, ViewLifecycle.WillEnter);
 }
 
-function fireDidEvents(enteringEl: HTMLElement|undefined, leavingEl: HTMLElement|undefined) {
-  lifecycle(enteringEl, ViewLifecycle.DidEnter);
-  lifecycle(leavingEl, ViewLifecycle.DidLeave);
+function fireDidEvents(win: Window, enteringEl: HTMLElement|undefined, leavingEl: HTMLElement|undefined) {
+  lifecycle(win, enteringEl, ViewLifecycle.DidEnter);
+  lifecycle(win, leavingEl, ViewLifecycle.DidLeave);
 }
 
-export function lifecycle(el: HTMLElement|undefined, lifecycle: ViewLifecycle) {
+export function lifecycle(win: Window, el: HTMLElement|undefined, eventName: ViewLifecycle) {
   if (el) {
-    const event = new MyCustomEvent(lifecycle, {
+    const CEvent: typeof CustomEvent = (win as any).CustomEvent;
+    const event = new CEvent(eventName, {
       bubbles: false,
-      cancelable: false
+      cancelable: false,
     });
     el.dispatchEvent(event);
   }
-}
-
-export function mockLifecycle(fn: any) {
-  MyCustomEvent = fn;
 }
 
 function shallowReady(el: Element|undefined): Promise<any> {
@@ -156,7 +153,11 @@ function componentOnReady(el: Element) {
   }
 }
 
-function setZIndex(enteringEl: HTMLElement|undefined, leavingEl: HTMLElement|undefined, direction: NavDirection | undefined) {
+function setZIndex(
+  enteringEl: HTMLElement | undefined,
+  leavingEl: HTMLElement | undefined,
+  direction: NavDirection | undefined,
+) {
   if (enteringEl) {
     enteringEl.style.zIndex = (direction === NavDirection.Back)
       ? '99'
@@ -172,7 +173,7 @@ export const enum ViewLifecycle {
   DidEnter = 'ionViewDidEnter',
   WillLeave = 'ionViewWillLeave',
   DidLeave = 'ionViewDidLeave',
-  WillUnload = 'ionViewWillUnload'
+  WillUnload = 'ionViewWillUnload',
 }
 
 export interface AnimationOptions {
@@ -186,6 +187,7 @@ export interface AnimationOptions {
   viewIsReady?: (enteringEl: HTMLElement) => Promise<any>;
   showGoBack?: boolean;
   progressAnimation?: Function;
+  window: Window;
   enteringEl: HTMLElement;
   leavingEl: HTMLElement|undefined;
   baseEl: HTMLElement;

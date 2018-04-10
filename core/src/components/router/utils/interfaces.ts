@@ -27,9 +27,11 @@ export interface RouteWrite {
   markVisible?: () => void|Promise<void>;
 }
 
+
+
 export interface RouteID {
   id: string;
-  element: HTMLElement|undefined;
+  element?: HTMLElement|undefined;
   params?: any;
 }
 

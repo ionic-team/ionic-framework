@@ -165,7 +165,6 @@ export class Searchbar {
 
   inputUpdated() {
     // const inputEl = this.el.querySelector('.searchbar-input') as HTMLInputElment;
-
     // It is important not to re-assign the value if it is the same, because,
     // otherwise, the caret is moved to the end of the input
     // if (inputEl && inputEl.value !== this.value) {

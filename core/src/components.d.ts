@@ -3563,18 +3563,18 @@ declare global {
     'getByIndex': (index: number) => ViewController | undefined;
     'getPrevious': (view?: ViewController | undefined) => ViewController | undefined;
     'getRouteId': () => RouteID | undefined;
-    'insert': (insertIndex: number, component: NavComponent, componentProps?: ComponentProps | undefined, opts?: NavOptions | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'insertPages': (insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+    'insert': (insertIndex: number, component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+    'insertPages': (insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     'length': () => number;
-    'pop': (opts?: NavOptions | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'popTo': (indexOrViewCtrl: number | ViewController, opts?: NavOptions | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'popToRoot': (opts?: NavOptions | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'push': (component: NavComponent, componentProps?: ComponentProps | undefined, opts?: NavOptions | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'removeIndex': (startIndex: number, removeCount?: number, opts?: NavOptions | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+    'pop': (opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+    'popTo': (indexOrViewCtrl: number | ViewController, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+    'popToRoot': (opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+    'push': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+    'removeIndex': (startIndex: number, removeCount?: number, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     'root': NavComponent|undefined;
     'rootParams': ComponentProps|undefined;
-    'setPages': (views: any[], opts?: NavOptions | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'setRoot': (component: NavComponent, componentProps?: ComponentProps | undefined, opts?: NavOptions | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+    'setPages': (views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+    'setRoot': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
     'swipeBackEnabled': boolean;
   }

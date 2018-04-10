@@ -17,19 +17,14 @@ export function getScrollData(componentEl: HTMLElement, contentEl: HTMLElement, 
       inputSafeY: 0,
     };
   }
-  // const scrollData = (componentEl as any)[SCROLL_DATA_KEY];
-  // if (scrollData) {
-  //   return scrollData;
-  // }
+
   const itemEl = <HTMLElement>componentEl.closest('ion-item,[ion-item]') || componentEl;
-  const newScrollData = calcScrollData(
+  return calcScrollData(
     itemEl.getBoundingClientRect(),
     contentEl.getBoundingClientRect(),
     keyboardHeight,
     window.innerHeight
   );
-  // (componentEl as any)[SCROLL_DATA_KEY] = newScrollData;
-  return newScrollData;
 }
 
 

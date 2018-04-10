@@ -23,6 +23,7 @@ export class RouterOutlet implements NavOutlet {
 
   @Prop({context: 'config'}) config: Config;
   @Prop({connect: 'ion-animation-controller'}) animationCtrl: HTMLIonAnimationControllerElement;
+  @Prop({context: 'window'}) window: Window;
 
   @Prop({ mutable: true }) animated: boolean;
   @Prop() animationBuilder: AnimationBuilder;
@@ -84,6 +85,7 @@ export class RouterOutlet implements NavOutlet {
 
       animationCtrl: this.animationCtrl,
       showGoBack: opts.showGoBack,
+      window: this.window,
       enteringEl: enteringEl,
       leavingEl: leavingEl,
       baseEl: this.el,

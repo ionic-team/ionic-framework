@@ -3,7 +3,7 @@ import { routerIDsToChain, routerPathToChain } from '../utils/matching';
 import { mockRouteElement } from './parser.spec';
 import { chainToPath, generatePath, parsePath } from '../utils/path';
 import { flattenRouterTree, readRoutes } from '../utils/parser';
-import { mockElement } from '@stencil/core/dist/testing';
+import { TestWindow } from '@stencil/core/dist/testing';
 
 describe('ionic-conference-app', () => {
 
@@ -43,41 +43,44 @@ describe('ionic-conference-app', () => {
     expect(getRoutePath([
       {id: 'page-tutorial'}], routes)).toEqual('/tutorial');
   });
-});
+
+  let win: Window;
+  beforeEach(() => {
+    win = new TestWindow() as any;
+  });
 
 
 function conferenceAppRouting() {
-  const p2 = mockRouteElement('/', 'tab-schedule');
-  const p3 = mockRouteElement('/', 'PAGE-SCHEDULE');
+  const p2 = mockRouteElement(win, '/', 'tab-schedule');
+  const p3 = mockRouteElement(win, '/', 'PAGE-SCHEDULE');
   p2.appendChild(p3);
 
-  const p4 = mockRouteElement('/speaker', 'tab-speaker');
-  const p5 = mockRouteElement('/', 'page-speaker-list');
+  const p4 = mockRouteElement(win, '/speaker', 'tab-speaker');
+  const p5 = mockRouteElement(win, '/', 'page-speaker-list');
   p4.appendChild(p5);
 
-  const p6 = mockRouteElement('/map', 'page-map');
-  const p7 = mockRouteElement('/about', 'page-about');
+  const p6 = mockRouteElement(win, '/map', 'page-map');
+  const p7 = mockRouteElement(win, '/about', 'page-about');
 
-  const p1 = mockRouteElement('/', 'page-tabs');
+  const p1 = mockRouteElement(win, '/', 'page-tabs');
   p1.appendChild(p2);
   p1.appendChild(p4);
   p1.appendChild(p6);
   p1.appendChild(p7);
 
-  const p8 = mockRouteElement('/tutorial', 'page-tutorial');
-  const container = mockElement('div');
+  const p8 = mockRouteElement(win, '/tutorial', 'page-tutorial');
+  const container = win.document.createElement('div');
   container.appendChild(p1);
   container.appendChild(p8);
   return container;
 }
-
+});
 
 
 export function getRouteIDs(path: string, routes: RouteChain[]): string[] {
-  return routerPathToChain(parsePath(path), routes).map(r => r.id);
+  return routerPathToChain(parsePath(path), routes)!.map(r => r.id);
 }
 
 export function getRoutePath(ids: RouteID[], routes: RouteChain[]): string {
-  return generatePath(chainToPath(routerIDsToChain(ids, routes)));
+  return generatePath(chainToPath(routerIDsToChain(ids, routes)!)!);
 }
-

@@ -38,6 +38,7 @@ export class Nav implements NavOutlet {
 
   @Prop({context: 'dom'}) dom: DomController;
   @Prop({context: 'config'}) config: Config;
+  @Prop({context: 'window'}) win: Window;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ mutable: true }) swipeBackEnabled: boolean;
@@ -75,7 +76,7 @@ export class Nav implements NavOutlet {
 
   componentDidUnload() {
     for (const view of this.views) {
-      lifecycle(view.element!, ViewLifecycle.WillUnload);
+      lifecycle(this.win, view.element!, ViewLifecycle.WillUnload);
       view._destroy();
     }
 
@@ -87,7 +88,7 @@ export class Nav implements NavOutlet {
   }
 
   @Method()
-  push(component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  push(component: NavComponent, componentProps?: ComponentProps|null, opts?: NavOptions|null, done?: TransitionDoneFn): Promise<boolean> {
     return this.queueTrns({
       insertStart: -1,
       insertViews: [{ page: component, params: componentProps }],
@@ -96,7 +97,7 @@ export class Nav implements NavOutlet {
   }
 
   @Method()
-  insert(insertIndex: number, component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  insert(insertIndex: number, component: NavComponent, componentProps?: ComponentProps|null, opts?: NavOptions|null, done?: TransitionDoneFn): Promise<boolean> {
     return this.queueTrns({
       insertStart: insertIndex,
       insertViews: [{ page: component, params: componentProps }],
@@ -105,7 +106,7 @@ export class Nav implements NavOutlet {
   }
 
   @Method()
-  insertPages(insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  insertPages(insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions|null, done?: TransitionDoneFn): Promise<boolean> {
     return this.queueTrns({
       insertStart: insertIndex,
       insertViews: insertComponents,
@@ -114,7 +115,7 @@ export class Nav implements NavOutlet {
   }
 
   @Method()
-  pop(opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  pop(opts?: NavOptions|null, done?: TransitionDoneFn): Promise<boolean> {
     return this.queueTrns({
       removeStart: -1,
       removeCount: 1,
@@ -123,7 +124,7 @@ export class Nav implements NavOutlet {
   }
 
   @Method()
-  popTo(indexOrViewCtrl: number | ViewController, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  popTo(indexOrViewCtrl: number | ViewController, opts?: NavOptions|null, done?: TransitionDoneFn): Promise<boolean> {
     const config: TransitionInstruction = {
       removeStart: -1,
       removeCount: -1,
@@ -139,7 +140,7 @@ export class Nav implements NavOutlet {
   }
 
   @Method()
-  popToRoot(opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  popToRoot(opts?: NavOptions|null, done?: TransitionDoneFn): Promise<boolean> {
     return this.queueTrns({
       removeStart: 1,
       removeCount: -1,
@@ -148,7 +149,7 @@ export class Nav implements NavOutlet {
   }
 
   @Method()
-  removeIndex(startIndex: number, removeCount = 1, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  removeIndex(startIndex: number, removeCount = 1, opts?: NavOptions|null, done?: TransitionDoneFn): Promise<boolean> {
     return this.queueTrns({
       removeStart: startIndex,
       removeCount: removeCount,
@@ -157,12 +158,12 @@ export class Nav implements NavOutlet {
   }
 
   @Method()
-  setRoot(component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  setRoot(component: NavComponent, componentProps?: ComponentProps|null, opts?: NavOptions|null, done?: TransitionDoneFn): Promise<boolean> {
     return this.setPages([{ page: component, params: componentProps }], opts, done);
   }
 
   @Method()
-  setPages(views: any[], opts?: NavOptions, done?: TransitionDoneFn): Promise<boolean> {
+  setPages(views: any[], opts?: NavOptions|null, done?: TransitionDoneFn): Promise<boolean> {
     if (!opts) {
       opts = {};
     }
@@ -316,7 +317,7 @@ export class Nav implements NavOutlet {
           ? RouterDirection.Back
           : RouterDirection.Forward;
 
-        router && router.navChanged(direction);
+        router.navChanged(direction);
       }
     }
   }
@@ -543,9 +544,9 @@ export class Nav implements NavOutlet {
     // let's make sure, callbacks are zoned
     if (destroyQueue && destroyQueue.length > 0) {
       for (const view of destroyQueue) {
-        lifecycle(view.element, ViewLifecycle.WillLeave);
-        lifecycle(view.element, ViewLifecycle.DidLeave);
-        lifecycle(view.element, ViewLifecycle.WillUnload);
+        lifecycle(this.win, view.element, ViewLifecycle.WillLeave);
+        lifecycle(this.win, view.element, ViewLifecycle.DidLeave);
+        lifecycle(this.win, view.element, ViewLifecycle.WillUnload);
       }
 
       // once all lifecycle events has been delivered, we can safely detroy the views
@@ -585,6 +586,7 @@ export class Nav implements NavOutlet {
 
       showGoBack: this.canGoBack(enteringView),
       progressAnimation,
+      window: this.win,
       baseEl: this.el,
       enteringEl,
       leavingEl
@@ -675,7 +677,7 @@ export class Nav implements NavOutlet {
       if (i > activeViewIndex) {
         // this view comes after the active view
         // let's unload it
-        lifecycle(view.element, ViewLifecycle.WillUnload);
+        lifecycle(this.win, view.element, ViewLifecycle.WillUnload);
         this.destroyView(view);
 
       } else if (i < activeViewIndex) {

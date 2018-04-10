@@ -9,19 +9,16 @@ export class ActionSheetController implements OverlayController {
 
   private actionSheets = new Map<number, HTMLIonActionSheetElement>();
 
-
   @Listen('body:ionActionSheetWillPresent')
   protected actionSheetWillPresent(ev: any) {
     this.actionSheets.set(ev.target.overlayId, ev.target);
   }
-
 
   @Listen('body:ionActionSheetWillDismiss')
   @Listen('body:ionActionSheetDidUnload')
   protected actionSheetWillDismiss(ev: any) {
     this.actionSheets.delete(ev.target.overlayId);
   }
-
 
   @Listen('body:keyup.escape')
   protected escapeKeyUp() {

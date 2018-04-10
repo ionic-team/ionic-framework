@@ -1,11 +1,10 @@
-import { mockDocument, mockElement } from '@stencil/core/testing';
 import { Nav } from '../nav';
 import { ViewController } from '../view-controller';
 import { AnimationControllerImpl } from '../../animation-controller/animation-controller';
 import { createConfigController } from '../../../global/config-controller';
 
 import { NavDirection, NavOptions, ViewState } from '../nav-util';
-import { mockLifecycle } from '../../../utils/transition';
+import { TestWindow } from '@stencil/core/dist/testing';
 
 
 describe('NavController', () => {
@@ -31,7 +30,7 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view1, undefined, NavDirection.Forward
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
 
       // Push 2
       const view2 = mockView(MockView2);
@@ -42,8 +41,8 @@ describe('NavController', () => {
       );
 
       expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
+      expect(nav.getByIndex(1)!.component).toEqual(MockView2);
 
       // Push 3
       const view3 = mockView(MockView3);
@@ -53,9 +52,9 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view3, view2, NavDirection.Forward
       );
       expect(nav.length()).toEqual(3);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
-      expect(nav.getByIndex(2).component).toEqual(MockView3);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
+      expect(nav.getByIndex(1)!.component).toEqual(MockView2);
+      expect(nav.getByIndex(2)!.component).toEqual(MockView3);
 
       // Push 4
       const view4 = mockView(MockView4);
@@ -64,10 +63,10 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view4, view3, NavDirection.Forward
       );
       expect(nav.length()).toEqual(4);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
-      expect(nav.getByIndex(2).component).toEqual(MockView3);
-      expect(nav.getByIndex(3).component).toEqual(MockView4);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
+      expect(nav.getByIndex(1)!.component).toEqual(MockView2);
+      expect(nav.getByIndex(2)!.component).toEqual(MockView3);
+      expect(nav.getByIndex(3)!.component).toEqual(MockView4);
 
       // Pop 1
       await nav.pop({animate: false}, pop1Done);
@@ -75,9 +74,9 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view3, view4, NavDirection.Back
       );
       expect(nav.length()).toEqual(3);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
-      expect(nav.getByIndex(2).component).toEqual(MockView3);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
+      expect(nav.getByIndex(1)!.component).toEqual(MockView2);
+      expect(nav.getByIndex(2)!.component).toEqual(MockView3);
 
       // Pop 2
       await nav.pop({animate: false}, pop2Done);
@@ -85,8 +84,8 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view2, view3, NavDirection.Back
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
+      expect(nav.getByIndex(1)!.component).toEqual(MockView2);
 
       // Pop 3
       await nav.pop({animate: false}, pop3Done);
@@ -94,7 +93,7 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view1, view2, NavDirection.Back
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
 
     }, 10000);
   });
@@ -111,7 +110,7 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view1, undefined, NavDirection.Forward
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
       expect(nav['isTransitioning']).toEqual(false);
 
     }, 10000);
@@ -129,8 +128,8 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view2, view1, NavDirection.Forward
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
+      expect(nav.getByIndex(1)!.component).toEqual(MockView2);
       expect(nav['isTransitioning']).toEqual(false);
 
     }, 10000);
@@ -197,8 +196,8 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
       expect(nav.length()).toEqual(4);
-      expect(nav.getByIndex(0).component).toEqual(MockView4);
-      expect(nav.getByIndex(nav.length() - 1).component).toEqual(MockView3);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView4);
+      expect(nav.getByIndex(nav.length() - 1)!.component).toEqual(MockView3);
 
     }, 10000);
 
@@ -216,7 +215,7 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view2, view1, NavDirection.Forward
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(nav.length() - 1).component).toEqual(MockView2);
+      expect(nav.getByIndex(nav.length() - 1)!.component).toEqual(MockView2);
 
     }, 10000);
 
@@ -232,14 +231,14 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view2, view1, NavDirection.Forward
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(nav.length() - 1).component).toEqual(MockView2);
+      expect(nav.getByIndex(nav.length() - 1)!.component).toEqual(MockView2);
 
     }, 10000);
 
     it('should not insert if null view', (done) => {
       mockViews(nav, [mockView(MockView1)]);
 
-      nav.insert(-1, null, null, null, trnsDone).then(() => {
+      nav.insert(-1, null as any, null, null, trnsDone).then(() => {
         fail('it should not succeed');
         done();
 
@@ -250,7 +249,7 @@ describe('NavController', () => {
         expect(err).toEqual(rejectReason);
         expect(trnsDone).toHaveBeenCalledWith(hasCompleted, requiresTransition, rejectReason);
         expect(nav.length()).toEqual(1);
-        expect(nav.getByIndex(nav.length() - 1).component).toEqual(MockView1);
+        expect(nav.getByIndex(nav.length() - 1)!.component).toEqual(MockView1);
         done();
       });
     }, 10000);
@@ -329,14 +328,14 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
       expect(nav.length()).toEqual(5);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView4);
-      expect(nav.getByIndex(2).component).toEqual(MockView5);
-      expect(nav.getByIndex(3).component).toEqual(MockView2);
-      expect(nav.getByIndex(4).component).toEqual(MockView3);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
+      expect(nav.getByIndex(1)!.component).toEqual(MockView4);
+      expect(nav.getByIndex(2)!.component).toEqual(MockView5);
+      expect(nav.getByIndex(3)!.component).toEqual(MockView2);
+      expect(nav.getByIndex(4)!.component).toEqual(MockView3);
 
-      expect(nav.getByIndex(1).nav).toEqual(nav);
-      expect(nav.getByIndex(2).nav).toEqual(nav);
+      expect(nav.getByIndex(1)!.nav).toEqual(nav);
+      expect(nav.getByIndex(2)!.nav).toEqual(nav);
 
     }, 10000);
   });
@@ -392,7 +391,7 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view1, view2, NavDirection.Back
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
       expect(nav['isTransitioning']).toEqual(false);
 
 
@@ -416,8 +415,8 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view2, view3, NavDirection.Back
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
+      expect(nav.getByIndex(1)!.component).toEqual(MockView2);
 
 
     }, 10000);
@@ -437,8 +436,8 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view2, view4, NavDirection.Back
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
+      expect(nav.getByIndex(1)!.component).toEqual(MockView2);
 
 
     }, 10000);
@@ -495,7 +494,7 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view1, view4, NavDirection.Back
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
 
     }, 10000);
 
@@ -555,7 +554,7 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view1, view4, NavDirection.Back
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
 
 
     }, 10000);
@@ -571,7 +570,7 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
 
 
     }, 10000);
@@ -632,7 +631,7 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView4);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView4);
 
 
     }, 10000);
@@ -699,9 +698,9 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
       expect(nav.length()).toEqual(3);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
-      expect(nav.getByIndex(2).component).toEqual(MockView5);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
+      expect(nav.getByIndex(1)!.component).toEqual(MockView2);
+      expect(nav.getByIndex(2)!.component).toEqual(MockView5);
 
 
     }, 10000);
@@ -758,8 +757,8 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view2, view4, NavDirection.Back
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
-      expect(nav.getByIndex(1).component).toEqual(MockView2);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
+      expect(nav.getByIndex(1)!.component).toEqual(MockView2);
 
 
     }, 10000);
@@ -809,7 +808,7 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, undefined, undefined, undefined
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView3);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView3);
 
 
     }, 10000);
@@ -855,7 +854,7 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view2, view3, NavDirection.Back
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView2);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView2);
 
     }, 10000);
 
@@ -900,7 +899,7 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view1, view3, NavDirection.Back
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView1);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView1);
 
 
 
@@ -928,7 +927,7 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view4, view3, NavDirection.Back
       );
       expect(nav.length()).toEqual(1);
-      expect(nav.getByIndex(0).component).toEqual(MockView4);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView4);
 
 
     }, 10000);
@@ -961,28 +960,12 @@ describe('NavController', () => {
         hasCompleted, requiresTransition, view5, view2, NavDirection.Back
       );
       expect(nav.length()).toEqual(2);
-      expect(nav.getByIndex(0).component).toEqual(MockView4);
-      expect(nav.getByIndex(1).component).toEqual(MockView5);
+      expect(nav.getByIndex(0)!.component).toEqual(MockView4);
+      expect(nav.getByIndex(1)!.component).toEqual(MockView5);
 
 
     }, 10000);
 
-  });
-
-
-  describe('componentDidUnload', () => {
-
-    it('should not crash when destroyed while transitioning', (done) => {
-      const view1 = mockView(MockView1);
-      nav.push(view1).then((succeded: boolean) => {
-        expect(succeded).toEqual(false);
-        done();
-      }).catch((e) => {
-        fail(e);
-        done();
-      });
-      nav.componentDidUnload();
-    }, 10000);
   });
 
   describe('canSwipeBack', () => {
@@ -1009,8 +992,6 @@ describe('NavController', () => {
   });
 
 
-  let nav: Nav;
-
   function spyOnLifecycles(view: ViewController) {
     const element = view.element as any;
     Object.assign(element, {
@@ -1031,7 +1012,6 @@ describe('NavController', () => {
       },
     });
 
-
     const instance = {
       ionViewWillEnter: jest.spyOn(element, 'ionViewWillEnter'),
       ionViewDidEnter: jest.spyOn(element, 'ionViewDidEnter'),
@@ -1049,61 +1029,60 @@ describe('NavController', () => {
   }
 
   let trnsDone: jest.Mock;
-  beforeEach(() => {
+  let nav: Nav;
+  let win: Window;
+
+  beforeEach(async () => {
     trnsDone = jest.fn();
+    win = new TestWindow();
     nav = mockNavController();
   });
 
-});
 
-const MockView = 'mock-view';
-const MockView1 = 'mock-view1';
-const MockView2 = 'mock-view2';
-const MockView3 = 'mock-view3';
-const MockView4 = 'mock-view4';
-const MockView5 = 'mock-view5';
-const dom = mockDocument();
+  const MockView = 'mock-view';
+  const MockView1 = 'mock-view1';
+  const MockView2 = 'mock-view2';
+  const MockView3 = 'mock-view3';
+  const MockView4 = 'mock-view4';
+  const MockView5 = 'mock-view5';
 
 
-mockLifecycle(function(name: string, params: any) {
-  const event = dom.createEvent('CustomEvent');
-  event.initCustomEvent(name, false, false, params.detail);
-  return event;
-});
+  function mockView(component ?: any, data ?: any) {
+    if (!component) {
+      component = MockView;
+    }
 
-function mockView(component ?: any, data ?: any) {
-  if (!component) {
-    component = MockView;
+    const view = new ViewController(component, data);
+    view.element = win.document.createElement(component) as HTMLElement;
+    return view;
   }
 
-  const view = new ViewController(component, data);
-  view.element = mockElement(component) as HTMLElement;
-  return view;
-}
+  function mockViews(nav: Nav, views: ViewController[]) {
+    nav['views'] = views;
+    views.forEach(v => {
+      v.nav = nav;
+    });
+  }
 
-function mockViews(nav: Nav, views: ViewController[]) {
-  nav['views'] = views;
-  views.forEach(v => {
-    v.nav = nav;
-  });
-}
+  function mockNavController(): Nav {
+    const nav = new Nav() as any;
+    nav.el = win.document.createElement('ion-nav');
+    nav.win = win;
+    nav.ionNavDidChange = {emit: function() { return; } };
+    nav.ionNavWillChange = {emit: function() { return; } };
 
-function mockNavController(): Nav {
-  const nav = new Nav() as any;
-  nav.el = mockElement('ion-nav') as HTMLElement;
-  nav.ionNavDidChange = {emit: function() { return; } };
-  nav.ionNavWillChange = {emit: function() { return; } };
+    nav.animationCtrl = new AnimationControllerImpl() as any;
+    nav.config = createConfigController({animate: false}, []);
+    nav._viewInit = function (enteringView: ViewController) {
+      if (!enteringView.element) {
+        console.log(enteringView.component);
+        enteringView.element = (typeof enteringView.component === 'string')
+          ? win.document.createElement(enteringView.component)
+          : enteringView.element = enteringView.component as HTMLElement;
+      }
+      enteringView.state = ViewState.Attached;
+    };
+    return nav;
+  }
+});
 
-  nav.animationCtrl = new AnimationControllerImpl() as any;
-  nav.config = createConfigController({animate: false}, []);
-  nav._viewInit = function (enteringView: ViewController) {
-    if (!enteringView.element) {
-      console.log(enteringView.component);
-      enteringView.element = (typeof enteringView.component === 'string')
-        ? mockElement(enteringView.component) as HTMLElement
-        : enteringView.element = enteringView.component as HTMLElement;
-    }
-    enteringView.state = ViewState.Attached;
-  };
-  return nav;
-}

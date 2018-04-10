@@ -76,7 +76,7 @@ export interface TransitionDoneFn {
 }
 
 export interface TransitionInstruction {
-  opts: NavOptions|undefined;
+  opts: NavOptions|undefined|null;
   insertStart?: number;
   insertViews?: any[];
   removeView?: ViewController;

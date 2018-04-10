@@ -88,7 +88,7 @@ export class Menu {
 
   @Watch('side')
   protected sideChanged() {
-    this.isRightSide = isRightSide(this.side as Side);
+    this.isRightSide = isRightSide(this.side);
   }
 
   /**
