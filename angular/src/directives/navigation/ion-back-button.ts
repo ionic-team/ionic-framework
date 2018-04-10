@@ -1,6 +1,6 @@
 import { Directive, ElementRef, HostListener, Input, Optional } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavController } from '../../providers/nav-controller';
+import { NavController, NavIntent } from '../../providers/nav-controller';
 import { IonRouterOutlet } from './ion-router-outlet';
 
 @Directive({
@@ -29,7 +29,7 @@ export class IonBackButton {
       this.routerOutlet.pop();
       ev.preventDefault();
     } else if (this.router && this.defaultHref != null) {
-      this.navCtrl.setGoback();
+      this.navCtrl.setIntent(NavIntent.Back);
       this.router.navigateByUrl(this.defaultHref);
       ev.preventDefault();
     }

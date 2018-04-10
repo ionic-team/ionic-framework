@@ -1,5 +1,5 @@
 import { Directive, HostListener } from '@angular/core';
-import { NavController } from '../../providers/nav-controller';
+import { NavController, NavIntent } from '../../providers/nav-controller';
 
 @Directive({
   selector: '[goBack]',
@@ -12,6 +12,6 @@ export class GoBack {
 
   @HostListener('click')
   onClick() {
-    this.navCtrl.setGoback();
+    this.navCtrl.setIntent(NavIntent.Back);
   }
 }

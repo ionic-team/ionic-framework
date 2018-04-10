@@ -1,14 +1,41 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Optional } from '@angular/core';
+import { NavigationExtras, Router, UrlTree } from '@angular/router';
+
+export const enum NavIntent {
+  Auto,
+  Forward,
+  Back,
+  Root
+}
 
 @Injectable()
 export class NavController {
 
   private direction = 0;
-  private goBack = false;
+  private intent: NavIntent = NavIntent.Auto;
   private stack: string[] = [];
 
-  setGoback() {
-    this.goBack = true;
+  constructor(
+    @Optional() private router?: Router
+  ) {}
+
+  goForward(url: string | UrlTree, extras?: NavigationExtras) {
+    this.intent = NavIntent.Forward;
+    return this.router.navigateByUrl(url, extras);
+  }
+
+  goBack(url: string | UrlTree, extras?: NavigationExtras) {
+    this.intent = NavIntent.Back;
+    return this.router.navigateByUrl(url, extras);
+  }
+
+  goRoot(url: string | UrlTree, extras?: NavigationExtras) {
+    this.intent = NavIntent.Root;
+    return this.router.navigateByUrl(url, extras);
+  }
+
+  setIntent(intent: NavIntent) {
+    this.intent = intent;
   }
 
   consumeDirection() {
@@ -23,12 +50,17 @@ export class NavController {
       }
     }
 
-    const direction = this.goBack
-      ? -1
-      : this.direction;
+    const direction = directionForIntent(this.intent, this.direction);
 
-    this.goBack = false;
+    this.intent = NavIntent.Auto;
     this.direction = 0;
     return direction;
   }
+}
+
+function directionForIntent(intent: NavIntent, nav: number): number {
+  if (intent === NavIntent.Auto) {
+    return nav;
+  }
+  return intent === NavIntent.Back ? -1 : 1;
 }
