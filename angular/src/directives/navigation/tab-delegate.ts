@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Directive, ElementRef, HostListener, Injector } from '@angular/core';
+import { ComponentFactoryResolver, Directive, ElementRef, HostListener, Injector, ViewContainerRef } from '@angular/core';
 import { AngularDelegate } from '../../providers/angular-delegate';
 
 
@@ -9,11 +9,12 @@ export class TabDelegate {
 
   constructor(
     private elementRef: ElementRef,
-    cfr: ComponentFactoryResolver,
+    resolver: ComponentFactoryResolver,
     injector: Injector,
     angularDelegate: AngularDelegate,
+    location: ViewContainerRef
   ) {
-    elementRef.nativeElement.delegate = angularDelegate.create(cfr, injector);
+    elementRef.nativeElement.delegate = angularDelegate.create(resolver, injector, location);
   }
 
   @HostListener('ionRouterOutletActivated', ['$event'])

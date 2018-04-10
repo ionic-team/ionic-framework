@@ -33,17 +33,27 @@ export class Avatar {
 @NgDirective({ selector: 'ion-back-button' })
 export class BackButton {
   /**
+   * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+   */
+  @NgInput() color: string;
+  /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   /**
-   * The text property is used to provide custom text for the back button while using the default look-and-feel.
+   * The url to navigate back to by default when there is no history.
    */
-  @NgInput() text: any;
-  @NgInput() icon: string;
   @NgInput() defaultHref: string;
+  /**
+   * The icon name to use for the back button.
+   */
+  @NgInput() icon: string;
+  /**
+   * The text to display in the back button.
+   */
+  @NgInput() text: string;
   constructor(r: ElementRef) {
-    inputs(this, r, [mode, text, icon, defaultHref]);
+    inputs(this, r, [color, mode, defaultHref, icon, text]);
   }
 }
 
@@ -56,7 +66,7 @@ export class Badge {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode]);
   }
@@ -79,7 +89,7 @@ export class Button {
   /**
    * The button size. Possible values are: `"small"`, `"default"`, `"large"`.
    */
-  @NgInput() size: any;
+  @NgInput() size: string;
   /**
    * If true, the user cannot interact with the button. Defaults to `false`.
    */
@@ -87,7 +97,7 @@ export class Button {
   /**
    * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
    */
-  @NgInput() fill: any;
+  @NgInput() fill: string;
   /**
    * If true, activates a button with rounded corners.
    */
@@ -95,7 +105,7 @@ export class Button {
   /**
    * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
    */
-  @NgInput() expand: any;
+  @NgInput() expand: string;
   /**
    * If true, activates a button with a heavier font weight.
    */
@@ -107,7 +117,7 @@ export class Button {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   @NgInput() goBack: boolean;
   @NgOutput() ionFocus: NgEventEmitter<any>;
   @NgOutput() ionBlur: NgEventEmitter<any>;
@@ -130,7 +140,7 @@ export class Card {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode]);
   }
@@ -145,7 +155,7 @@ export class CardContent {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode]);
   }
@@ -160,7 +170,7 @@ export class CardHeader {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   /**
    * If true, the card header will be translucent. Defaults to `false`.
    */
@@ -179,7 +189,7 @@ export class CardSubtitle {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode]);
   }
@@ -194,7 +204,7 @@ export class CardTitle {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode]);
   }
@@ -209,7 +219,7 @@ export class Checkbox {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   /**
    * The name of the control, which is submitted with the form data.
    */
@@ -245,7 +255,7 @@ export class Chip {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode]);
   }
@@ -260,7 +270,7 @@ export class ChipButton {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   /**
    * If true, the user cannot interact with the chip button. Defaults to `false`.
    */
@@ -350,39 +360,39 @@ export class Datetime {
   /**
    * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
    */
-  @NgInput() yearValues: any;
+  @NgInput() yearValues: string;
   /**
    * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
    */
-  @NgInput() monthValues: any;
+  @NgInput() monthValues: string;
   /**
    * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
    */
-  @NgInput() dayValues: any;
+  @NgInput() dayValues: string;
   /**
    * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
    */
-  @NgInput() hourValues: any;
+  @NgInput() hourValues: string;
   /**
    * Values used to create the list of selectable minutes. By default the mintues range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.
    */
-  @NgInput() minuteValues: any;
+  @NgInput() minuteValues: string;
   /**
    * Full names for each month name. This can be used to provide locale month names. Defaults to English.
    */
-  @NgInput() monthNames: any;
+  @NgInput() monthNames: string;
   /**
    * Short abbreviated names for each month name. This can be used to provide locale month names. Defaults to English.
    */
-  @NgInput() monthShortNames: any;
+  @NgInput() monthShortNames: string;
   /**
    * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
    */
-  @NgInput() dayNames: any;
+  @NgInput() dayNames: string;
   /**
    * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
    */
-  @NgInput() dayShortNames: any;
+  @NgInput() dayShortNames: string;
   /**
    * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
    */
@@ -408,11 +418,11 @@ export class Fab {
   /**
    * Where to align the fab horizontally in the viewport. Possible values are: `"left"`, `"right"`, `"center"`, `"start"`, `"end"`.
    */
-  @NgInput() horizontal: any;
+  @NgInput() horizontal: string;
   /**
    * Where to align the fab vertically in the viewport. Possible values are: `"top"`, `"center"`, `"bottom"`.
    */
-  @NgInput() vertical: any;
+  @NgInput() vertical: string;
   /**
    * If true, the fab will display on the edge of the header if `vertical` is `"top"`, and on the edge of the footer if it is `"bottom"`. Should be used with a `fixed` slot.
    */
@@ -437,7 +447,7 @@ export class FabButton {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   /**
    * If true, the fab button will be show a close icon. Defaults to `false`.
    */
@@ -470,7 +480,7 @@ export class FabList {
   /**
    * The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
    */
-  @NgInput() side: any;
+  @NgInput() side: string;
   constructor(r: ElementRef) {
     inputs(this, r, [activated, side]);
   }
@@ -694,7 +704,7 @@ export class Item {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   /**
    * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
    */
@@ -726,7 +736,7 @@ export class ItemDivider {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode]);
   }
@@ -745,7 +755,7 @@ export class ItemOption {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   /**
    * If true, the user cannot interact with the item option. Defaults to `false`.
    */
@@ -768,7 +778,7 @@ export class ItemOptions {
   /**
    * The side the option button should be on. Defaults to `"right"`. If you have multiple `ion-item-options`, a side must be provided for each.
    */
-  @NgInput() side: any;
+  @NgInput() side: string;
   @NgOutput() ionSwipe: NgEventEmitter<any>;
   isRightSide(...__args: any[]): Promise<any> {
     return method(this.r, isRightSide, __args);
@@ -826,7 +836,7 @@ export class Label {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   /**
    * If true, the label will sit alongside an input. Defaults to `false`.
    */
@@ -882,7 +892,7 @@ export class ListHeader {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode]);
   }
@@ -909,7 +919,7 @@ export class Menu {
   /**
    * Which side of the view the menu should be placed. Default `"start"`.
    */
-  @NgInput() side: any;
+  @NgInput() side: string;
   /**
    * If true, swiping the menu is enabled. Default `true`.
    */
@@ -982,7 +992,7 @@ export class Nav {
   @NgInput() animated: boolean;
   @NgInput() delegate: any;
   @NgInput() rootParams: any;
-  @NgInput() root: any;
+  @NgInput() root: string;
   @NgOutput() ionNavWillChange: NgEventEmitter<any>;
   @NgOutput() ionNavDidChange: NgEventEmitter<any>;
   push(...__args: any[]): Promise<any> {
@@ -1045,7 +1055,7 @@ export class NavPop {
 
 @NgDirective({ selector: 'ion-nav-push' })
 export class NavPush {
-  @NgInput() component: any;
+  @NgInput() component: string;
   @NgInput() componentProps: any;
   @NgInput() url: string;
   constructor(r: ElementRef) {
@@ -1055,7 +1065,7 @@ export class NavPush {
 
 @NgDirective({ selector: 'ion-nav-set-root' })
 export class NavSetRoot {
-  @NgInput() component: any;
+  @NgInput() component: string;
   @NgInput() componentProps: any;
   @NgInput() url: string;
   constructor(r: ElementRef) {
@@ -1072,7 +1082,7 @@ export class Note {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode]);
   }
@@ -1087,7 +1097,7 @@ export class Radio {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   /**
    * The name of the control, which is submitted with the form data.
    */
@@ -1147,7 +1157,7 @@ export class Range {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   /**
    * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. Default `0`.
    */
@@ -1212,7 +1222,7 @@ export class Refresher {
   /**
    * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
    */
-  @NgInput() pullMax: any;
+  @NgInput() pullMax: number;
   /**
    * Time it takes to close the refresher. Defaults to `280ms`.
    */
@@ -1343,7 +1353,7 @@ export class Searchbar {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   /**
    * If true, enable searchbar animation. Default `false`.
    */
@@ -1404,7 +1414,7 @@ export class Segment {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   @NgInput() disabled: boolean;
   /**
    * the value of the segment.
@@ -1427,7 +1437,7 @@ export class SegmentButton {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   /**
    * If true, the segment button is selected. Defaults to `false`.
    */
@@ -1489,7 +1499,7 @@ export class Select {
   /**
    * the value of the select.
    */
-  @NgInput() value: any;
+  @NgInput() value: string;
   @NgOutput() ionChange: NgEventEmitter<any>;
   @NgOutput() ionCancel: NgEventEmitter<any>;
   @NgOutput() ionFocus: NgEventEmitter<any>;
@@ -1514,7 +1524,7 @@ export class SelectOption {
   /**
    * The text value of the option.
    */
-  @NgInput() value: any;
+  @NgInput() value: string;
   @NgOutput() ionSelectOptionDidLoad: NgEventEmitter<any>;
   @NgOutput() ionSelectOptionDidUnload: NgEventEmitter<any>;
   constructor(r: ElementRef) {
@@ -1681,7 +1691,7 @@ export class Spinner {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   /**
    * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
    */
@@ -1708,7 +1718,7 @@ export class SplitPane {
   /**
    * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
    */
-  @NgInput() when: any;
+  @NgInput() when: string;
   @NgOutput() ionChange: NgEventEmitter<any>;
   @NgOutput() ionSplitPaneVisible: NgEventEmitter<any>;
   isVisible(...__args: any[]): Promise<any> {
@@ -1751,7 +1761,7 @@ export class Tab {
   /**
    * The component to display inside of the tab.
    */
-  @NgInput() component: any;
+  @NgInput() component: string;
   /**
    * The name of the tab.
    */
@@ -1850,7 +1860,7 @@ export class Text {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode]);
   }
@@ -1949,7 +1959,7 @@ export class Toggle {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   /**
    * The name of the control, which is submitted with the form data.
    */
@@ -1985,7 +1995,7 @@ export class Toolbar {
   /**
    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @NgInput() mode: any;
+  @NgInput() mode: string;
   /**
    * If true, the toolbar will be translucent. Note: In order to scroll content behind the toolbar, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
    */

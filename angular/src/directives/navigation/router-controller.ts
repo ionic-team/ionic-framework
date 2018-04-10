@@ -47,8 +47,7 @@ export class StackController {
 
   pop(deep: number) {
     const view = this.views[this.views.length - deep - 1];
-    this.navCtrl.setGoback();
-    this.router.navigateByUrl(view.url);
+    this.navCtrl.goBack(view.url);
   }
 
   private insertView(enteringView: RouteView, forcedGoBack: boolean): boolean {

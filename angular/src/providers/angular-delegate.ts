@@ -1,4 +1,4 @@
-import { ApplicationRef, ComponentFactoryResolver, Injectable, InjectionToken, Injector, NgZone } from '@angular/core';
+import { ComponentFactoryResolver, Injectable, InjectionToken, Injector, NgZone, ViewContainerRef } from '@angular/core';
 import { FrameworkDelegate, ViewLifecycle } from '@ionic/core';
 import { NavParams } from '../directives/navigation/nav-params';
 
@@ -7,12 +7,15 @@ import { NavParams } from '../directives/navigation/nav-params';
 export class AngularDelegate {
 
   constructor(
-    private appRef: ApplicationRef,
     private zone: NgZone
   ) {}
 
-  create(cfr: ComponentFactoryResolver, injector: Injector) {
-    return new AngularFrameworkDelegate(cfr, injector, this.appRef, this.zone);
+  create(
+    resolver: ComponentFactoryResolver,
+    injector: Injector,
+    location: ViewContainerRef,
+  ) {
+    return new AngularFrameworkDelegate(resolver, injector, location, this.zone);
   }
 }
 
@@ -22,9 +25,9 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
   private elRefMap = new WeakMap<HTMLElement, any>();
 
   constructor(
-    private cfr: ComponentFactoryResolver,
+    private resolver: ComponentFactoryResolver,
     private injector: Injector,
-    private appRef: ApplicationRef,
+    private location: ViewContainerRef,
     private zone: NgZone,
   ) {}
 
@@ -32,7 +35,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
     return new Promise(resolve => {
       this.zone.run(() => {
         const el = attachView(
-          this.cfr, this.injector, this.appRef, this.elRefMap,
+          this.resolver, this.injector, this.location, this.elRefMap,
           container, component, params, cssClasses
         );
         resolve(el);
@@ -55,26 +58,25 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
 }
 
 export function attachView(
-  cfr: ComponentFactoryResolver,
+  resolver: ComponentFactoryResolver,
   injector: Injector,
-  appRef: ApplicationRef,
+  location: ViewContainerRef,
   elRefMap: WeakMap<HTMLElement, any>,
   container: any, component: any, params?: any, cssClasses?: string[]) {
-  const componentFactory = cfr.resolveComponentFactory(component);
-  const hostElement = document.createElement(componentFactory.selector);
+  const factory = resolver.resolveComponentFactory(component);
+  const childInjector = Injector.create(getProviders(params), injector);
+  const componentRef = location.createComponent(factory, location.length, childInjector);
+  const hostElement = componentRef.location.nativeElement;
   if (params) {
     Object.assign(hostElement, params);
   }
-
-  const childInjector = Injector.create(getProviders(params), injector);
-  const componentRef = componentFactory.create(childInjector, [], hostElement);
   for (const clazz of cssClasses) {
     hostElement.classList.add(clazz);
   }
   bindLifecycleEvents(componentRef.instance, hostElement);
   container.appendChild(hostElement);
 
-  appRef.attachView(componentRef.hostView);
+  componentRef.changeDetectorRef.reattach();
   elRefMap.set(hostElement, componentRef);
   return hostElement;
 }
