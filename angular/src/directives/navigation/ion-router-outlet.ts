@@ -32,7 +32,8 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   ) {
     this.name = name || PRIMARY_OUTLET;
     parentContexts.onChildOutletCreated(this.name, this as any);
-    this.stackCtrl = new StackController(stack != null, elementRef.nativeElement, router, this.navCtrl);
+    const hasStack = stack !== 'false' || stack !== false;
+    this.stackCtrl = new StackController(hasStack, elementRef.nativeElement, router, this.navCtrl);
   }
 
   ngOnDestroy(): void {
