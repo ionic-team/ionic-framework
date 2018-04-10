@@ -17,59 +17,6 @@ export class Button {
   @State() keyFocus: boolean;
 
   /**
-   * The type of the button.
-   * Possible values are: `"submit"`, `"reset"` and `"button"`.
-   * Default value is: `"button"`
-   */
-  @Prop() type = 'button';
-
-  /**
-   * Contains a URL or a URL fragment that the hyperlink points to.
-   * If this property is set, an anchor tag will be rendered.
-   */
-  @Prop() href: string;
-
-  /**
-   * The type of button.
-   * Possible values are: `"button"`, `"bar-button"`.
-   */
-  @Prop({mutable: true}) buttonType = 'button';
-
-  /**
-   * The button size.
-   * Possible values are: `"small"`, `"default"`, `"large"`.
-   */
-  @Prop() size: 'small' | 'default' | 'large';
-
-  /**
-   * If true, the user cannot interact with the button. Defaults to `false`.
-   */
-  @Prop() disabled = false;
-
-  /**
-   * Set to `"clear"` for a transparent button, to `"outline"` for a transparent
-   * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
-   * a toolbar, where the default is `"clear"`.
-   */
-  @Prop() fill: 'clear' | 'outline' | 'solid' | 'default' = 'default';
-
-  /**
-   * If true, activates a button with rounded corners.
-   */
-  @Prop() round = false;
-
-  /**
-   * Set to `"block"` for a full-width button or to `"full"` for a full-width button
-   * without left and right borders.
-   */
-  @Prop() expand: 'full' | 'block';
-
-  /**
-   * If true, activates a button with a heavier font weight.
-   */
-  @Prop() strong = false;
-
-  /**
    * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
@@ -83,7 +30,64 @@ export class Button {
    */
   @Prop() mode: 'ios' | 'md';
 
+  /**
+   * The type of button.
+   * Possible values are: `"button"`, `"bar-button"`.
+   */
+  @Prop({ mutable: true }) buttonType = 'button';
+
+  /**
+   * If true, the user cannot interact with the button. Defaults to `false`.
+   */
+  @Prop() disabled = false;
+
+  /**
+   * Set to `"block"` for a full-width button or to `"full"` for a full-width button
+   * without left and right borders.
+   */
+  @Prop() expand: 'full' | 'block';
+
+  /**
+   * Set to `"clear"` for a transparent button, to `"outline"` for a transparent
+   * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
+   * a toolbar, where the default is `"clear"`.
+   */
+  @Prop() fill: 'clear' | 'outline' | 'solid' | 'default' = 'default';
+
+  /**
+   * If true, the transition direction will be backwards upon navigation. Defaults to `false`.
+   */
   @Prop() goBack = false;
+
+  /**
+   * Contains a URL or a URL fragment that the hyperlink points to.
+   * If this property is set, an anchor tag will be rendered.
+   */
+  @Prop() href: string;
+
+  /**
+   * If true, activates a button with rounded corners.
+   */
+  @Prop() round = false;
+
+  /**
+   * The button size.
+   * Possible values are: `"small"`, `"default"`, `"large"`.
+   */
+  @Prop() size: 'small' | 'default' | 'large';
+
+  /**
+   * If true, activates a button with a heavier font weight.
+   */
+  @Prop() strong = false;
+
+  /**
+   * The type of the button.
+   * Possible values are: `"submit"`, `"reset"` and `"button"`.
+   * Default value is: `"button"`
+   */
+  @Prop() type = 'button';
+
   /**
    * Emitted when the button has focus.
    */
@@ -114,17 +118,7 @@ export class Button {
   }
 
   protected render() {
-
-    const {
-      buttonType,
-      color,
-      expand,
-      fill,
-      mode,
-      round,
-      size,
-      strong
-    } = this;
+    const { buttonType, color, expand, fill, mode, round, size, strong } = this;
 
     const TagType = this.href ? 'a' : 'button';
     const buttonClasses = {
