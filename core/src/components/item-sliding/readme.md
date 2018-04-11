@@ -23,7 +23,7 @@ A Sliding item is a component that contains an item that can be dragged to revea
 
 ### Direction
 
-By default, the options are revealed when the sliding item is swiped from right to left, so the buttons are placed on the right side. It's also possible to reveal them from the right side by setting the `side` attribute on the `ion-item-options` element. Up to two `ion-item-options` can be used at the same time in order to reveal two different sets of options depending on the swiping direction.
+By default, the buttons are placed on the `"end"` side. This means that options are revealed when the sliding item is swiped from end to start, i.e. from right to left in LTR, but from left to right in RTL. To place them on the opposite side, so that they are revealed when swiping to the opposite direction, set the `side` attribute to `"start"` on the `ion-item-options` element. Refer to [`ion-item-options` docs](https://github.com/ionic-team/ionic/blob/master/core/src/components/item-options/readme.md). Up to two `ion-item-options` can be used at the same time in order to reveal two different sets of options depending on the swiping direction.
 
 ```html
 <ion-item-options side="end">
