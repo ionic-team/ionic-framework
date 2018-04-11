@@ -17,13 +17,13 @@ The textarea component accepts the [native textarea attributes](https://develope
 
 <!-- Textarea in an item with a floating label -->
 <ion-item>
-  <ion-label floating>Description</ion-label>
+  <ion-label position="floating">Description</ion-label>
   <ion-textarea></ion-textarea>
 </ion-item>
 
 <!-- Disabled and readonly textarea in an item with a stacked label -->
 <ion-item>
-  <ion-label stacked>Summary</ion-label>
+  <ion-label position="stacked">Summary</ion-label>
   <ion-textarea
     disabled
     readonly

@@ -29,29 +29,29 @@
 // Material Design Stacked & Floating Labels
 // --------------------------------------------------
 
-.label-md[stacked] {
+.label-md-stacked {
   font-size: 12px;
 }
 
-.label-md[floating] {
+.label-md-floating {
   @include transform(translate3d(0, 27px, 0));
   @include transform-origin(start, top);
 
   transition: transform 150ms ease-in-out;
 }
 
-.label-md[stacked],
-.label-md[floating] {
+.label-md-stacked,
+.label-md-floating {
   @include margin(null, null, 0, 0);
 }
 
-.item-input-has-focus .label-md[stacked],
-.item-input-has-focus .label-md[floating] {
+.item-input-has-focus .label-md-stacked,
+.item-input-has-focus .label-md-floating {
   color: $label-md-text-color-focused;
 }
 
-.item-input-has-focus .label-md[floating],
-.item-input-has-value .label-md[floating] {
+.item-input-has-focus .label-md-floating,
+.item-input-has-value .label-md-floating {
   @include transform(translate3d(0, 0, 0), scale(.8));
 }
 
