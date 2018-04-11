@@ -3,6 +3,9 @@ const path = require('path');
 // use ionic/core's stencil config
 exports.config = require('../core/stencil.config.js').config;
 
+// user ionic core's tsconfig
+exports.config.tsconfig ='../core/tsconfig.json';
+
 // update where to find the original ionic/core src
 exports.config.srcDir = '../core/src';
 exports.config.globalScript = '../core/src/global/ionic-global.ts';

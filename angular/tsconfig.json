@@ -11,7 +11,7 @@
     "jsxFactory": "h",
     "lib": [
       "dom",
-      "es2017"
+      "es5"
     ],
     "module": "es2015",
     "moduleResolution": "node",
@@ -24,7 +24,7 @@
     "removeComments": false,
     "rootDir": "src",
     "strictPropertyInitialization": false,
-    "target": "es2017"
+    "target": "es5"
   },
   "files": [
     "src/index.ts"

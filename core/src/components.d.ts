@@ -1752,7 +1752,7 @@ declare global {
     /**
      * Where to align the fab vertically in the viewport. Possible values are: `"top"`, `"center"`, `"bottom"`.
      */
-    'vertical': 'top' | 'center' | 'bottom';
+    'vertical': 'top' | 'bottom' | 'center';
   }
   var HTMLIonFabElement: {
     prototype: HTMLIonFabElement;
@@ -1783,7 +1783,7 @@ declare global {
       /**
        * Where to align the fab vertically in the viewport. Possible values are: `"top"`, `"center"`, `"bottom"`.
        */
-      'vertical'?: 'top' | 'center' | 'bottom';
+      'vertical'?: 'top' | 'bottom' | 'center';
     }
   }
 }
