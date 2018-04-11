@@ -12,6 +12,7 @@ import { Config } from '../../index';
   }
 })
 export class App {
+  mode: string;
 
   private isDevice = false;
   private deviceHacks = false;
@@ -19,7 +20,6 @@ export class App {
   @Element() el: HTMLElement;
 
   @Prop({ context: 'config' }) config: Config;
-  mode: string;
 
   componentWillLoad() {
     this.isDevice = this.config.getBoolean('isDevice', false);
@@ -39,9 +39,9 @@ export class App {
 
   render() {
     return [
-      this.deviceHacks && <ion-input-shims />,
-      <ion-tap-click />,
-      this.isDevice && <ion-status-tap />,
+      this.deviceHacks && <ion-input-shims></ion-input-shims>,
+      <ion-tap-click></ion-tap-click>,
+      this.isDevice && <ion-status-tap></ion-status-tap>,
       <slot></slot>
     ];
   }

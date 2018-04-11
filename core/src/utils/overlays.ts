@@ -13,12 +13,12 @@ export type Requires<K extends string> = {
 export function createOverlay<T extends HTMLIonOverlayElement & Requires<keyof B>, B>
 (element: T, opts: B): Promise<T> {
   // convert the passed in overlay options into props
-  // that get passed down into the new alert
+  // that get passed down into the new overlay
   Object.assign(element, opts);
 
   element.overlayId = lastId++;
 
-  // append the alert element to the document body
+  // append the overlay element to the document body
   const appRoot = document.querySelector('ion-app') || document.body;
   appRoot.appendChild(element);
 
