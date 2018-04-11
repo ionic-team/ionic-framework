@@ -53,7 +53,11 @@ export class Item {
    */
   @Prop() button = false;
 
-  @Prop() goBack = false;
+  /**
+   * When using a router, it specifies the transition direction when navigating a
+   * another page usign `href`.
+   */
+  @Prop() routerDirection: 'forward' | 'back';
 
 
   @Listen('ionStyle')
@@ -122,7 +126,7 @@ export class Item {
       <TagType
         {...attrs}
         class={themedClasses}
-        onClick={(ev) => openURL(this.href, ev, this.goBack)}>
+        onClick={(ev) => openURL(this.href, ev, this.routerDirection)}>
         <slot name='start'></slot>
         <div class='item-inner'>
           <div class='input-wrapper'>
