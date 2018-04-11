@@ -16,6 +16,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Input](#Input)
 - [Item](#item)
 - [Item Divider](#item-divider)
+- [Item Options](#item-options)
 - [Item Sliding](#item-sliding)
 - [List Header](#list-header)
 - [Menu Toggle](#menu-toggle)
@@ -566,6 +567,21 @@ Previously an `ion-label` would automatically get added to an `ion-item-divider`
   <ion-label>Item Divider Label</ion-label>
 </ion-item-divider>
 ```
+
+
+## Item Options
+
+### Attributes Renamed
+
+Previously to position the item options inside of an `ion-item-sliding` the `side` attribute would be used with one of the following values: `"left"`, `"right"`.
+
+These values have been renamed to `"start"` and `"end"` to better align with our support for RTL.
+
+
+| Old Value       | New Value       |
+|-----------------|-----------------|
+| `side="left"`   | `side="start"`  |
+| `side="right"`  | `side="end"`    |
 
 
 ## Item Sliding
