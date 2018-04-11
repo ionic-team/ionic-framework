@@ -119,6 +119,7 @@ const PROVIDERS = [
   p.NavController,
   p.Platform,
   p.Events,
+  p.DomController
 ];
 
 @NgModule({
