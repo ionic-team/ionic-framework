@@ -16,20 +16,6 @@ Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"wa
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
-#### fixed
-
-boolean
-
-If true, the label will sit alongside an input. Defaults to `false`.
-
-
-#### floating
-
-boolean
-
-If true, the label will float above an input when the value is empty or the input is focused. Defaults to `false`.
-
-
 #### mode
 
 string
@@ -39,11 +25,12 @@ Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
-#### stacked
+#### position
 
-boolean
+string
 
-If true, the label will be stacked above an input. Defaults to `false`.
+The position determines where and how the label behaves inside an item.
+Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
 
 
 ## Attributes
@@ -57,20 +44,6 @@ Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"wa
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
-#### fixed
-
-boolean
-
-If true, the label will sit alongside an input. Defaults to `false`.
-
-
-#### floating
-
-boolean
-
-If true, the label will float above an input when the value is empty or the input is focused. Defaults to `false`.
-
-
 #### mode
 
 string
@@ -80,11 +53,12 @@ Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
-#### stacked
+#### position
 
-boolean
+string
 
-If true, the label will be stacked above an input. Defaults to `false`.
+The position determines where and how the label behaves inside an item.
+Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
 
 
 ## Events

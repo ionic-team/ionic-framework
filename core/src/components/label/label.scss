@@ -33,7 +33,7 @@ ion-label {
 // Stacked & Floating Inputs
 // --------------------------------------------------
 
-ion-label[fixed] {
+.label-fixed {
   flex: 0 0 100px;
 
   width: 100px;
@@ -49,8 +49,8 @@ ion-label[fixed] {
   max-width: 100%;
 }
 
-ion-label[stacked],
-ion-label[floating] {
+.label-stacked ,
+.label-floating {
   @include margin(null, null, 0, null);
 }
 

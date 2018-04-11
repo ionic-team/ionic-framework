@@ -29,13 +29,13 @@
 // iOS Stacked & Floating Labels
 // --------------------------------------------------
 
-.label-ios[stacked] {
+.label-ios-stacked {
   @include margin(null, null, 4px, null);
 
   font-size: 12px;
 }
 
-.label-ios[floating] {
+.label-ios-floating {
   @include margin(null, null, 0, null);
   @include transform(translate3d(0, 27px, 0));
   @include transform-origin(start, top);
@@ -43,13 +43,13 @@
   transition: transform 150ms ease-in-out;
 }
 
-.item-input-has-focus .label-ios[floating],
-.item-input-has-value .label-ios[floating] {
+.item-input-has-focus .label-ios-floating,
+.item-input-has-value .label-ios-floating {
   @include transform(translate3d(0, 0, 0), scale(.8));
 }
 
-.item-input-has-focus .label-ios[stacked],
-.item-input-has-focus .label-ios[floating] {
+.item-input-has-focus .label-ios-stacked,
+.item-input-has-focus .label-ios-floating {
   color: $label-ios-text-color-focused;
 }
 

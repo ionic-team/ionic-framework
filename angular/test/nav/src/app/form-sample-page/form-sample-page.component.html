@@ -8,7 +8,7 @@
     <ion-content padding>
       <ion-list>
         <ion-item>
-          <ion-label floating>First Name</ion-label>
+          <ion-label position="floating">First Name</ion-label>
           <ion-input name="firstName" #viewFirstName="ngModel" [(ngModel)]="firstName" required minlength="2"></ion-input>
         </ion-item>
         <ion-text *ngIf="viewFirstName.invalid && (viewFirstName.dirty || viewFirstName.touched)" color="danger">
@@ -16,7 +16,7 @@
           <small *ngIf="viewFirstName.errors['minlength']">First Name must be at least 2 characters long</small>
         </ion-text>
         <ion-item>
-          <ion-label floating>Last Name</ion-label>
+          <ion-label position="floating">Last Name</ion-label>
           <ion-input name="lastName" #viewLastName="ngModel" [(ngModel)]="lastName" required minlength="4"></ion-input>
         </ion-item>
         <ion-text *ngIf="viewLastName.invalid && (viewLastName.dirty || viewLastName.touched)" color="danger">
@@ -55,7 +55,7 @@
           <ion-toggle name="feedEngineers" color="danger" [(ngModel)]="feedEngineers"></ion-toggle>
         </ion-item>
           <ion-item>
-          <ion-label floating>Short Self Description</ion-label>
+          <ion-label position="floating">Short Self Description</ion-label>
           <ion-textarea name="selfDescription" #viewSelfDescription="ngModel" [(ngModel)]="selfDescription" required minlength="25"></ion-textarea>
         </ion-item>
         <ion-text *ngIf="viewSelfDescription.invalid && (viewSelfDescription.dirty || viewSelfDescription.touched)" color="danger">
@@ -63,7 +63,7 @@
           <small *ngIf="viewSelfDescription.errors['minlength']">Please tell us more</small>
         </ion-text>
         <ion-item>
-          <ion-label floating>Desired Salary</ion-label>
+          <ion-label position="floating">Desired Salary</ion-label>
           <ion-input name="desiredSalary" #viewSalary="ngModel" type="number" required [(ngModel)]="desiredSalary"></ion-input>
         </ion-item>
         <ion-text *ngIf="viewSalary.invalid && (viewSalary.dirty || viewSalary.touched)" color="danger">

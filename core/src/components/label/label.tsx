@@ -1,5 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
-
+import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-label',
@@ -12,14 +11,8 @@ import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/
   }
 })
 export class Label {
-  styleTmr: any;
 
   @Element() private el: HTMLElement;
-
-  /**
-   * Emitted when the styles change.
-   */
-  @Event() ionStyle: EventEmitter;
 
   /**
    * The color to use from your Sass `$colors` map.
@@ -36,41 +29,44 @@ export class Label {
   @Prop() mode: 'ios' | 'md';
 
   /**
-   * If true, the label will sit alongside an input. Defaults to `false`.
+   * The position determines where and how the label behaves inside an item.
+   * Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
    */
-  @Prop() fixed = false;
+  @Prop({mutable: true}) position: 'inline' | 'fixed' | 'stacked' | 'floating' | undefined;
 
   /**
-   * If true, the label will float above an input when the value is empty or the input is focused. Defaults to `false`.
+   * Emitted when the styles change.
    */
-  @Prop() floating = false;
-
-  /**
-   * If true, the label will be stacked above an input. Defaults to `false`.
-   */
-  @Prop() stacked = false;
+  @Event() ionStyle: EventEmitter;
 
   @Method()
   getText(): string {
     return this.el.textContent || '';
   }
 
-  componentDidLoad() {
-    this.emitStyle();
+  componentWillLoad() {
+    if (this.position === undefined) {
+      this.position = (this.mode === 'ios') ? 'inline' : 'floating';
+    }
   }
 
-  emitStyle() {
-    clearTimeout(this.styleTmr);
+  componentDidLoad() {
+    this.positionChanged();
+  }
 
-    const styles = {
-      'label-fixed': this.fixed,
-      'label-floating': this.floating,
-      'label-stacked': this.stacked
-    };
-
-    this.styleTmr = setTimeout(() => {
-      this.ionStyle.emit(styles);
+  @Watch('position')
+  positionChanged() {
+    return this.ionStyle.emit({
+      [`label-${this.position}`]: true,
     });
   }
 
+  hostData() {
+    return {
+      class: {
+        [`label-${this.position}`]: true,
+        [`label-${this.mode}-${this.position}`]: true
+      }
+    };
+  }
 }
