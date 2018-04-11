@@ -106,7 +106,7 @@ export { PlatformConfig } from './global/platform-configs';
 // export all of the component declarations that are dynamically created
 export * from './components';
 
-export { DomController, RafCallback } from './global/dom-controller';
+export { QueueController, RafCallback } from './global/queue-controller';
 export { FrameworkDelegate } from './utils/framework-delegate';
 export { OverlayEventDetail } from './utils/overlays';
 export * from './utils/transition';

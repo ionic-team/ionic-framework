@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Config, DomController } from '../../index';
+import { Config, QueueController } from '../../index';
 import { flattenRouterTree, readRedirects, readRoutes } from './utils/parser';
 import { readNavState, writeNavState } from './utils/dom';
 import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
@@ -23,7 +23,7 @@ export class Router {
   @Element() el: HTMLElement;
 
   @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop({ context: 'queue' }) queue: QueueController;
 
   @Prop() base = '';
   @Prop() useHash = true;

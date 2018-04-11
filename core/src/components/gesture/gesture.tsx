@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
 import { assert, now } from '../../utils/helpers';
-import { BlockerConfig, BlockerDelegate, DomController, GestureDelegate } from '../../index';
+import { BlockerConfig, BlockerDelegate, GestureDelegate, QueueController } from '../../index';
 import { PanRecognizer } from './recognizers';
 
 export const BLOCK_ALL: BlockerConfig = {
@@ -27,7 +27,7 @@ export class Gesture {
   private blocker: BlockerDelegate|undefined;
 
   @Prop({ connect: 'ion-gesture-controller' }) gestureCtrl: HTMLIonGestureControllerElement;
-  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop({ context: 'queue' }) queue: QueueController;
   @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
 
   @Prop() disabled = false;
@@ -232,7 +232,7 @@ export class Gesture {
       if (!this.isMoveQueued && this.hasFiredStart) {
         this.isMoveQueued = true;
         this.calcGestureData(ev);
-        this.dom.write(this.fireOnMove.bind(this));
+        this.queue.write(this.fireOnMove.bind(this));
       }
       return;
     }

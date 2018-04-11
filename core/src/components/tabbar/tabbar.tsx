@@ -1,6 +1,6 @@
 import { Component, Element, Listen, Prop, State, Watch } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
-import { DomController } from '../../index';
+import { QueueController } from '../../index';
 
 @Component({
   tag: 'ion-tabbar',
@@ -23,7 +23,7 @@ export class Tabbar {
 
   @State() hidden = false;
 
-  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop({ context: 'queue' }) queue: QueueController;
   @Prop() placement = 'bottom';
   @Prop() selectedTab: HTMLIonTabElement;
   @Prop() scrollable: boolean;
@@ -99,7 +99,7 @@ export class Tabbar {
   }
 
   protected scrollToSelectedButton() {
-    this.dom.read(() => {
+    this.queue.read(() => {
       const activeTabButton = this.getSelectedButton();
 
       if (activeTabButton) {
@@ -126,7 +126,7 @@ export class Tabbar {
   }
 
   private scrollByTab(direction: 'left' | 'right') {
-    this.dom.read(() => {
+    this.queue.read(() => {
       const {previous, next} = this.analyzeTabs();
       const info = direction === 'right' ? next : previous;
       const amount = info && info.amount;
@@ -148,7 +148,7 @@ export class Tabbar {
     if (!this.highlight) {
       return;
     }
-    this.dom.read(() => {
+    this.queue.read(() => {
       const btn = this.getSelectedButton();
       const highlight = this.el.querySelector('div.tabbar-highlight') as HTMLElement;
       if (btn && highlight) {

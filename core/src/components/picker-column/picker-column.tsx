@@ -1,6 +1,6 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { DomController, GestureDetail, PickerColumn, PickerColumnOption } from '../../index';
 import { clamp } from '../../utils/helpers';
+import { GestureDetail, PickerColumn, PickerColumnOption, QueueController } from '../../index';
 import { hapticSelectionChanged } from '../../utils';
 
 
@@ -28,7 +28,7 @@ export class PickerColumnCmp {
 
   @Element() private el: HTMLElement;
 
-  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop({ context: 'queue' }) queue: QueueController;
 
   @Prop() col: PickerColumn;
 
@@ -210,7 +210,7 @@ export class PickerColumnCmp {
 
       if (notLockedIn) {
         // isn't locked in yet, keep decelerating until it is
-        this.dom.raf(() => this.decelerate());
+        this.queue.read(() => this.decelerate());
       }
 
     } else if (this.y % this.optHeight !== 0) {

@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Config, DomController, GestureDetail } from '../../index';
+import { Config, GestureDetail, QueueController } from '../../index';
 
 @Component({
   tag: 'ion-scroll',
@@ -22,7 +22,7 @@ export class Scroll {
   @Element() private el: HTMLElement;
 
   @Prop({ context: 'config'}) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop({ context: 'queue' }) queue: QueueController;
 
   @Prop() mode: string;
 
@@ -99,7 +99,7 @@ export class Scroll {
     }
     if (!this.queued && this.scrollEvents) {
       this.queued = true;
-      this.dom.read(timeStamp => {
+      this.queue.read(timeStamp => {
         this.queued = false;
         this.detail.event = ev;
         updateScrollDetail(this.detail, this.el, timeStamp, didStart);
@@ -189,7 +189,7 @@ export class Scroll {
       if (easedT < 1) {
         // do not use DomController here
         // must use nativeRaf in order to fire in the next frame
-        self.dom.raf(step);
+        self.queue.read(step);
 
       } else {
         stopScroll = true;
@@ -203,8 +203,8 @@ export class Scroll {
     self.isScrolling = true;
 
     // chill out for a frame first
-    this.dom.write(() => {
-      this.dom.write(timeStamp => {
+    this.queue.write(() => {
+      this.queue.write(timeStamp => {
         startTime = timeStamp;
         step(timeStamp);
       });

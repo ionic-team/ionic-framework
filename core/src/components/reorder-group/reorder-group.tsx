@@ -1,5 +1,5 @@
 import { Component, Element, Prop, State, Watch } from '@stencil/core';
-import { DomController, GestureDetail } from '../../index';
+import { GestureDetail, QueueController } from '../../index';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart} from '../../utils/haptic';
 
 const AUTO_SCROLL_MARGIN = 60;
@@ -44,7 +44,7 @@ export class ReorderGroup {
 
   @Element() private el: HTMLElement;
 
-  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop({ context: 'queue' }) queue: QueueController;
 
   /**
    * If true, the reorder will be hidden. Defaults to `true`.
@@ -55,7 +55,7 @@ export class ReorderGroup {
   protected disabledChanged(disabled: boolean) {
     if (!disabled) {
       this.enabled = true;
-      this.dom.raf(() => {
+      this.queue.read(() => {
         this.iconVisible = true;
       });
     } else {

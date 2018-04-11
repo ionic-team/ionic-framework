@@ -1,10 +1,10 @@
 import { Component, Element, EventListenerEnable, Listen, Method, Prop, Watch } from '@stencil/core';
-import { DomController } from '../../index';
 import { Cell, DomRenderFn, HeaderFn, ItemHeightFn,
   ItemRenderFn, NodeHeightFn, Range, Viewport,
   VirtualNode, calcCells, calcHeightIndex, doRender,
   findCellIndex, getRange, getShouldUpdate, getViewport,
   inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
+import { QueueController } from '../../index';
 
 
 @Component({
@@ -30,7 +30,7 @@ export class VirtualScroll {
 
   @Element() el: HTMLStencilElement;
 
-  @Prop({context: 'dom'}) dom: DomController;
+  @Prop({context: 'queue'}) queue: QueueController;
   @Prop({context: 'enableListener'}) enableListener: EventListenerEnable;
 
 
@@ -206,8 +206,8 @@ export class VirtualScroll {
       this.timerUpdate = null;
     }
 
-    this.dom.read(this.readVS.bind(this));
-    this.dom.read(this.writeVS.bind(this));
+    this.queue.read(this.readVS.bind(this));
+    this.queue.read(this.writeVS.bind(this));
   }
 
   private readVS() {
