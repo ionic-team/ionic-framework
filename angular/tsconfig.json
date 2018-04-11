@@ -11,7 +11,7 @@
     "jsxFactory": "h",
     "lib": [
       "dom",
-      "es5"
+      "es2017"
     ],
     "module": "es2015",
     "moduleResolution": "node",
