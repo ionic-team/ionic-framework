@@ -305,7 +305,7 @@ Buttons inside of an `<ion-fab>` container should now be written as an `<ion-fab
 **New Usage Example:**
 
 ```html
-<ion-fab vertical="top" horizontal="right" edge>
+<ion-fab vertical="top" horizontal="end" edge>
   <ion-fab-button>
     <ion-icon name="add"></ion-icon>
   </ion-fab-button>
@@ -334,8 +334,8 @@ The attributes to align the fab horizontally are now combined under the `horizon
 
 | Old Property | New Property         | Property Behavior                                                       |
 |--------------|----------------------|-------------------------------------------------------------------------|
-| left         | `horizontal="left"`  | Positions to the left of the viewport.                                  |
-| right        | `horizontal="right"` | Positions to the right of the viewport.                                 |
+| left         | Removed              |                                                                         |
+| right        | Removed              |                                                                         |
 | center       | `horizontal="center"`| Positions to the center of the viewport.                                |
 | start        | `horizontal="start"` | Positions to the left of the viewport in LTR, and to the right in RTL.  |
 | end          | `horizontal="end"`   | Positions to the right of the viewport in LTR, and to the left in RTL.  |
@@ -360,7 +360,7 @@ _Note that `middle` has been changed to `center` for the vertical positioning._
 **New Usage Example:**
 
 ```html
-<ion-fab vertical="top" horizontal="right" edge>
+<ion-fab vertical="top" horizontal="end" edge>
   <!-- fab buttons and lists -->
 </ion-fab>
 
@@ -387,7 +387,7 @@ The `<ion-fab>` container was previously placed inside of the fixed content by d
 **New Usage Example:**
 
 ```html
-<ion-fab vertical="top" horizontal="right" edge slot="fixed">
+<ion-fab vertical="top" horizontal="end" edge slot="fixed">
   <!-- fab buttons and lists -->
 </ion-fab>
 <ion-content>

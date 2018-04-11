@@ -15,20 +15,19 @@ export class FabList {
 
   @Watch('activated')
   protected activatedChanged(activated: boolean) {
-    const fabs = this.el.querySelectorAll('ion-fab-button');
+    const fabs = Array.from(this.el.querySelectorAll('ion-fab-button'));
 
     // if showing the fabs add a timeout, else show immediately
     const timeout = activated ? 30 : 0;
-    for (let i = 0; i < fabs.length; i++) {
-      const fab = fabs[i];
+    fabs.forEach((fab, i) => {
       setTimeout(() => fab.show = activated, i * timeout);
-    }
+    });
   }
 
   /**
    * The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
    */
-  @Prop() side: 'left' | 'right' | 'top' | 'bottom' = 'bottom';
+  @Prop() side: 'start' | 'end' | 'top' | 'bottom' = 'bottom';
 
 
   hostData() {

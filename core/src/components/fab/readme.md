@@ -100,6 +100,11 @@ The fab should have one main fab button. Fabs can also contain fab lists which c
 
 ## Properties
 
+#### activated
+
+boolean
+
+
 #### edge
 
 boolean
@@ -114,7 +119,7 @@ it is `"bottom"`. Should be used with a `fixed` slot.
 string
 
 Where to align the fab horizontally in the viewport.
-Possible values are: `"left"`, `"right"`, `"center"`, `"start"`, `"end"`.
+Possible values are: `"center"`, `"start"`, `"end"`.
 
 
 #### vertical
@@ -127,6 +132,11 @@ Possible values are: `"top"`, `"center"`, `"bottom"`.
 
 ## Attributes
 
+#### activated
+
+boolean
+
+
 #### edge
 
 boolean
@@ -141,7 +151,7 @@ it is `"bottom"`. Should be used with a `fixed` slot.
 string
 
 Where to align the fab horizontally in the viewport.
-Possible values are: `"left"`, `"right"`, `"center"`, `"start"`, `"end"`.
+Possible values are: `"center"`, `"start"`, `"end"`.
 
 
 #### vertical

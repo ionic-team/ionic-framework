@@ -1635,13 +1635,12 @@ declare global {
     /**
      * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
      */
-    'href': string;
+    'href': string | undefined;
     /**
      * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
      */
     'mode': 'ios' | 'md';
     'show': boolean;
-    'toggleActive': Function;
     /**
      * If true, the fab button will be translucent. Defaults to `false`.
      */
@@ -1679,13 +1678,12 @@ declare global {
       /**
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
        */
-      'href'?: string;
+      'href'?: string | undefined;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
       'mode'?: 'ios' | 'md';
       'show'?: boolean;
-      'toggleActive'?: Function;
       /**
        * If true, the fab button will be translucent. Defaults to `false`.
        */
@@ -1704,7 +1702,7 @@ declare global {
     /**
      * The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
      */
-    'side': 'left' | 'right' | 'top' | 'bottom';
+    'side': 'start' | 'end' | 'top' | 'bottom';
   }
   var HTMLIonFabListElement: {
     prototype: HTMLIonFabListElement;
@@ -1730,7 +1728,7 @@ declare global {
       /**
        * The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
        */
-      'side'?: 'left' | 'right' | 'top' | 'bottom';
+      'side'?: 'start' | 'end' | 'top' | 'bottom';
     }
   }
 }
@@ -1738,6 +1736,7 @@ declare global {
 
 declare global {
   interface HTMLIonFabElement extends HTMLStencilElement {
+    'activated': boolean;
     /**
      * Close an active FAB list container
      */
@@ -1747,13 +1746,13 @@ declare global {
      */
     'edge': boolean;
     /**
-     * Where to align the fab horizontally in the viewport. Possible values are: `"left"`, `"right"`, `"center"`, `"start"`, `"end"`.
+     * Where to align the fab horizontally in the viewport. Possible values are: `"center"`, `"start"`, `"end"`.
      */
-    'horizontal': 'left' | 'right' | 'center' | 'start' | 'end';
+    'horizontal': 'start' | 'end' | 'center';
     /**
      * Where to align the fab vertically in the viewport. Possible values are: `"top"`, `"center"`, `"bottom"`.
      */
-    'vertical': 'top' | 'center' | 'bottom';
+    'vertical': 'top' | 'bottom' | 'center';
   }
   var HTMLIonFabElement: {
     prototype: HTMLIonFabElement;
@@ -1772,18 +1771,19 @@ declare global {
   }
   namespace JSXElements {
     export interface IonFabAttributes extends HTMLAttributes {
+      'activated'?: boolean;
       /**
        * If true, the fab will display on the edge of the header if `vertical` is `"top"`, and on the edge of the footer if it is `"bottom"`. Should be used with a `fixed` slot.
        */
       'edge'?: boolean;
       /**
-       * Where to align the fab horizontally in the viewport. Possible values are: `"left"`, `"right"`, `"center"`, `"start"`, `"end"`.
+       * Where to align the fab horizontally in the viewport. Possible values are: `"center"`, `"start"`, `"end"`.
        */
-      'horizontal'?: 'left' | 'right' | 'center' | 'start' | 'end';
+      'horizontal'?: 'start' | 'end' | 'center';
       /**
        * Where to align the fab vertically in the viewport. Possible values are: `"top"`, `"center"`, `"bottom"`.
        */
-      'vertical'?: 'top' | 'center' | 'bottom';
+      'vertical'?: 'top' | 'bottom' | 'center';
     }
   }
 }

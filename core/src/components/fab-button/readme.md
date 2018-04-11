@@ -83,11 +83,6 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 boolean
 
 
-#### toggleActive
-
-
-
-
 #### translucent
 
 boolean
@@ -140,11 +135,6 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 #### show
 
 boolean
-
-
-#### toggle-active
-
-
 
 
 #### translucent

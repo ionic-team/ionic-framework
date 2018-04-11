@@ -12,26 +12,6 @@ ion-fab {
 // FAB Horizontal Positioning
 // --------------------------------------------------
 
-.fab-horizontal-left {
-  // scss-lint:disable PropertySpelling
-  @include multi-dir() {
-    left: $fab-content-margin;
-
-    left: calc(#{$fab-content-margin} + constant(safe-area-inset-left));
-    left: calc(#{$fab-content-margin} + env(safe-area-inset-left));
-  }
-}
-
-.fab-horizontal-right {
-  // scss-lint:disable PropertySpelling
-  @include multi-dir() {
-    right: $fab-content-margin;
-
-    right: calc(#{$fab-content-margin} + constant(safe-area-inset-right));
-    right: calc(#{$fab-content-margin} + env(safe-area-inset-right));
-  }
-}
-
 .fab-horizontal-center {
   @include position(null, null, null, 50%);
   @include margin-horizontal(-$fab-size / 2, null);
