@@ -38,8 +38,8 @@ ion-fab-list {
   transform: scale(1);
 }
 
-.fab-list-side-left .fab-button-in-list,
-.fab-list-side-right .fab-button-in-list {
+.fab-list-side-start .fab-button-in-list,
+.fab-list-side-end .fab-button-in-list {
   @include margin(0, 8px);
 }
 
@@ -50,14 +50,14 @@ ion-fab-list {
   flex-direction: column-reverse;
 }
 
-.fab-list-side-left {
+.fab-list-side-start {
   @include margin(0, $fab-size + $fab-list-margin);
   @include position-horizontal(null, 0);
 
   flex-direction: row-reverse;
 }
 
-.fab-list-side-right {
+.fab-list-side-end {
   @include margin(0, $fab-size + $fab-list-margin);
   @include position(null, null, null, 0);
 

@@ -23,7 +23,7 @@
         <ion-button>Test</ion-button>
         <ion-fab-button>FAB</ion-fab-button>
 
-        <ion-fab vertical="top" horizontal="right" edge id="fab1" slot="fixed">
+        <ion-fab vertical="top" horizontal="end" edge id="fab1" slot="fixed">
           <ion-fab-button onclick="clickMainFAB('fab1')" mini class="e2eFabTopRight"><ion-icon name="add"></ion-icon></ion-fab-button>
           <ion-fab-list>
             <ion-fab-button onclick="openSocial('facebook', 'fab1')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
@@ -33,7 +33,7 @@
           </ion-fab-list>
         </ion-fab>
 
-        <ion-fab vertical="bottom" horizontal="right" edge id="fab2" slot="fixed">
+        <ion-fab vertical="bottom" horizontal="end" edge id="fab2" slot="fixed">
           <ion-fab-button onclick="clickMainFAB('fab2')" color="dark" class="e2eFabBottomRight"><ion-icon name="arrow-dropleft"></ion-icon></ion-fab-button>
           <ion-fab-list side="start">
             <ion-fab-button onclick="openSocial('facebook', 'fab2')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
@@ -43,7 +43,7 @@
           </ion-fab-list>
         </ion-fab>
 
-        <ion-fab vertical="top" horizontal="left" id="fab3" slot="fixed">
+        <ion-fab vertical="top" horizontal="start" id="fab3" slot="fixed">
           <ion-fab-button onclick="clickMainFAB('fab3')" color="secondary" class="e2eFabTopLeft"><ion-icon name="arrow-dropright"></ion-icon></ion-fab-button>
           <ion-fab-list side="end">
             <ion-fab-button onclick="openSocial('facebook', 'fab3')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
@@ -53,7 +53,7 @@
           </ion-fab-list>
         </ion-fab>
 
-        <ion-fab vertical="bottom" horizontal="left" id="fab4" slot="fixed">
+        <ion-fab vertical="bottom" horizontal="start" id="fab4" slot="fixed">
           <ion-fab-button onclick="clickMainFAB('fab4')" color="light" class="e2eFabBottomLeft"><ion-icon name="arrow-dropup"></ion-icon></ion-fab-button>
           <ion-fab-list side="top">
             <ion-fab-button onclick="openSocial('facebook', 'fab4')"><ion-icon name="logo-facebook"></ion-icon></ion-fab-button>
@@ -79,7 +79,7 @@
           </ion-fab-list>
         </ion-fab>
 
-        <ion-fab horizontal="right" vertical="center" slot="fixed">
+        <ion-fab horizontal="end" vertical="center" slot="fixed">
           <ion-fab-button color="danger" onclick="add()"><ion-icon name="add"></ion-icon></ion-fab-button>
         </ion-fab>
       </ion-content>
