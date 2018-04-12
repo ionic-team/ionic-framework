@@ -1,6 +1,5 @@
 import 'ionicons';
 import { createConfigController } from './config-controller';
-import { createDomControllerClient } from './dom-controller';
 import { PLATFORM_CONFIGS, detectPlatforms, readQueryParam } from './platform-configs';
 
 
@@ -8,12 +7,9 @@ const Ionic = (window as any).Ionic = (window as any).Ionic || {};
 
 declare const Context: any;
 
-// add dom controller, used to coordinate DOM reads and write in order to avoid
-// layout thrashing
-if (!Context.dom) {
-  const now = () => window.performance.now();
-  Context.dom = createDomControllerClient(window, now);
-}
+// queue used to coordinate DOM reads and
+// write in order to avoid layout thrashing
+Ionic.queue = Context.queue;
 
 if (!Context.platforms) {
   Context.platforms = detectPlatforms(window.location.href, window.navigator.userAgent, PLATFORM_CONFIGS, 'core');

@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { DomController } from '../../index';
+import { QueueController } from '../../index';
 
 const enum Position {
   Top = 'top',
@@ -22,7 +22,7 @@ export class InfiniteScroll {
   @Element() private el: HTMLElement;
   @State() isLoading = false;
 
-  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop({ context: 'queue' }) queue: QueueController;
   @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
 
   /**
@@ -92,7 +92,7 @@ export class InfiniteScroll {
     this.thresholdChanged(this.threshold);
     this.enableScrollEvents(!this.disabled);
     if (this.position === Position.Top) {
-      this.dom.write(() => this.scrollEl && this.scrollEl.scrollToBottom(0));
+      this.queue.write(() => this.scrollEl && this.scrollEl.scrollToBottom(0));
     }
   }
 
@@ -179,14 +179,14 @@ export class InfiniteScroll {
       const prev = scrollEl.scrollHeight - scrollEl.scrollTop;
 
       // ******** DOM READ ****************
-      this.dom.read(() => {
+      this.queue.read(() => {
         // UI has updated, save the new content dimensions
         const scrollHeight = scrollEl.scrollHeight;
         // New content was added on top, so the scroll position should be changed immediately to prevent it from jumping around
         const newScrollTop = scrollHeight - prev;
 
         // ******** DOM WRITE ****************
-        this.dom.write(() => {
+        this.queue.write(() => {
           scrollEl.scrollTop = newScrollTop;
           this.isBusy = false;
         });

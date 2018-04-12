@@ -492,8 +492,14 @@ declare global {
 
 declare global {
   interface HTMLIonAnchorElement extends HTMLStencilElement {
-    'goBack': boolean;
+    /**
+     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+     */
     'href': string;
+    /**
+     * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+     */
+    'routerDirection': 'forward' | 'back';
   }
   var HTMLIonAnchorElement: {
     prototype: HTMLIonAnchorElement;
@@ -512,8 +518,14 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAnchorAttributes extends HTMLAttributes {
-      'goBack'?: boolean;
+      /**
+       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+       */
       'href'?: string;
+      /**
+       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       */
+      'routerDirection'?: 'forward' | 'back';
     }
   }
 }
@@ -782,10 +794,6 @@ declare global {
      */
     'fill': 'clear' | 'outline' | 'solid' | 'default';
     /**
-     * If true, the transition direction will be backwards upon navigation. Defaults to `false`.
-     */
-    'goBack': boolean;
-    /**
      * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
      */
     'href': string;
@@ -797,6 +805,10 @@ declare global {
      * If true, activates a button with rounded corners.
      */
     'round': boolean;
+    /**
+     * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+     */
+    'routerDirection': 'forward' | 'back';
     /**
      * The button size. Possible values are: `"small"`, `"default"`, `"large"`.
      */
@@ -848,10 +860,6 @@ declare global {
        */
       'fill'?: 'clear' | 'outline' | 'solid' | 'default';
       /**
-       * If true, the transition direction will be backwards upon navigation. Defaults to `false`.
-       */
-      'goBack'?: boolean;
-      /**
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
        */
       'href'?: string;
@@ -871,6 +879,10 @@ declare global {
        * If true, activates a button with rounded corners.
        */
       'round'?: boolean;
+      /**
+       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       */
+      'routerDirection'?: 'forward' | 'back';
       /**
        * The button size. Possible values are: `"small"`, `"default"`, `"large"`.
        */
@@ -2658,7 +2670,6 @@ declare global {
      * If true, the user cannot interact with the item. Defaults to `false`.
      */
     'disabled': boolean;
-    'goBack': boolean;
     /**
      * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
      */
@@ -2667,6 +2678,10 @@ declare global {
      * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
      */
     'mode': 'ios' | 'md';
+    /**
+     * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+     */
+    'routerDirection': 'forward' | 'back';
   }
   var HTMLIonItemElement: {
     prototype: HTMLIonItemElement;
@@ -2701,7 +2716,6 @@ declare global {
        * If true, the user cannot interact with the item. Defaults to `false`.
        */
       'disabled'?: boolean;
-      'goBack'?: boolean;
       /**
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
        */
@@ -2710,6 +2724,10 @@ declare global {
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
       'mode'?: 'ios' | 'md';
+      /**
+       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       */
+      'routerDirection'?: 'forward' | 'back';
     }
   }
 }

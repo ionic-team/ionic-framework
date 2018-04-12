@@ -1,6 +1,6 @@
 import { Component, Element, EventListenerEnable, Listen, Method, Prop, Watch } from '@stencil/core';
 import { now } from '../../utils/helpers';
-import { DomController } from '../../global/dom-controller';
+import { QueueController } from '../../index';
 
 @Component({
   tag: 'ion-ripple-effect',
@@ -11,7 +11,7 @@ export class RippleEffect {
   private lastClick = -10000;
   @Element() el: HTMLElement;
 
-  @Prop({context: 'dom'}) dom: DomController;
+  @Prop({context: 'queue'}) queue: QueueController;
   @Prop({context: 'enableListener'}) enableListener: EventListenerEnable;
 
   @Prop() tapClick = false;
@@ -50,7 +50,7 @@ export class RippleEffect {
   addRipple(pageX: number, pageY: number) {
     let x: number, y: number, size: number;
 
-    this.dom.read(() => {
+    this.queue.read(() => {
       const rect = this.el.getBoundingClientRect();
       const width = rect.width;
       const height = rect.height;
@@ -58,7 +58,7 @@ export class RippleEffect {
       x = pageX - rect.left - (size / 2);
       y = pageY - rect.top - (size / 2);
     });
-    this.dom.write(() => {
+    this.queue.write(() => {
       const div = document.createElement('div');
       div.classList.add('ripple-effect');
       const style = div.style;

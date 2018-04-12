@@ -1,5 +1,5 @@
 import { Component, Element, Listen, Method, Prop } from '@stencil/core';
-import { Config, DomController } from '../../index';
+import { Config, QueueController } from '../../index';
 
 @Component({
   tag: 'ion-content',
@@ -18,7 +18,7 @@ export class Content {
   @Element() private el: HTMLElement;
 
   @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop({ context: 'queue' }) queue: QueueController;
 
   /**
    * If true, the content will scroll behind the headers
@@ -100,13 +100,13 @@ export class Content {
       return;
     }
     if (this.fullscreen) {
-      this.dom.raf(() => {
-        this.dom.read(this.readDimensions.bind(this));
-        this.dom.write(this.writeDimensions.bind(this));
+      this.queue.read(() => {
+        this.queue.read(this.readDimensions.bind(this));
+        this.queue.write(this.writeDimensions.bind(this));
       });
     } else {
       this.cTop = this.cBottom = -1;
-      this.dom.write(() => this.scrollEl && this.scrollEl.removeAttribute('style'));
+      this.queue.write(() => this.scrollEl && this.scrollEl.removeAttribute('style'));
     }
   }
 

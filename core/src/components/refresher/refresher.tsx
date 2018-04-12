@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State } from '@stencil/core';
-import { DomController, GestureDetail } from '../../index';
+import { GestureDetail, QueueController } from '../../index';
 
 export const enum RefresherState {
   Inactive = 1 << 0,
@@ -30,7 +30,7 @@ export class Refresher {
   private progress = 0;
   private scrollEl: HTMLElement | null = null;
 
-  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop({ context: 'queue' }) queue: QueueController;
 
   /**
    * The current state which the refresher is in. The refresher's states include:
@@ -335,7 +335,7 @@ export class Refresher {
 
   private setCss(y: number, duration: string, overflowVisible: boolean, delay: string) {
     this.appliedStyles = (y > 0);
-    this.dom.write(() => {
+    this.queue.write(() => {
       if (this.scrollEl) {
         const style = this.scrollEl.style;
         style.transform = ((y > 0) ? 'translateY(' + y + 'px) translateZ(0px)' : 'translateZ(0px)');

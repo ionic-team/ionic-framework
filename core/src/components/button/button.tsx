@@ -55,9 +55,10 @@ export class Button {
   @Prop() fill: 'clear' | 'outline' | 'solid' | 'default' = 'default';
 
   /**
-   * If true, the transition direction will be backwards upon navigation. Defaults to `false`.
+   * When using a router, it specifies the transition direction when navigating a
+   * another page usign `href`.
    */
-  @Prop() goBack = false;
+  @Prop() routerDirection: 'forward' | 'back';
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -144,7 +145,7 @@ export class Button {
         onFocus={this.onFocus.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
         onBlur={this.onBlur.bind(this)}
-        onClick={(ev) => openURL(this.href, ev, this.goBack)}>
+        onClick={(ev) => openURL(this.href, ev, this.routerDirection)}>
           <span class='button-inner'>
             <slot name='icon-only'></slot>
             <slot name='start'></slot>

@@ -11,7 +11,7 @@ import {
 } from './nav-util';
 
 import { ViewController, matches } from './view-controller';
-import { Animation, ComponentProps, Config, DomController, FrameworkDelegate, GestureDetail, NavOutlet } from '../..';
+import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, NavOutlet, QueueController } from '../..';
 import { RouteID, RouteWrite, RouterDirection } from '../router/utils/interfaces';
 import { AnimationOptions, ViewLifecycle, lifecycle, transition } from '../../utils/transition';
 import { assert } from '../../utils/helpers';
@@ -25,7 +25,7 @@ import mdTransitionAnimation from './animations/md.transition';
 export class Nav implements NavOutlet {
 
   private init = false;
-  private queue: TransitionInstruction[] = [];
+  private transInstr: TransitionInstruction[] = [];
   private sbTrns: Animation|undefined;
   private useRouter = false;
   private isTransitioning = false;
@@ -36,7 +36,7 @@ export class Nav implements NavOutlet {
 
   @Element() el: HTMLElement;
 
-  @Prop({context: 'dom'}) dom: DomController;
+  @Prop({context: 'queue'}) queue: QueueController;
   @Prop({context: 'config'}) config: Config;
   @Prop({context: 'window'}) win: Window;
 
@@ -82,7 +82,7 @@ export class Nav implements NavOutlet {
 
     // release swipe back gesture and transition
     this.sbTrns && this.sbTrns.destroy();
-    this.queue.length = this.views.length = 0;
+    this.transInstr.length = this.views.length = 0;
     this.sbTrns = undefined;
     this.destroyed = true;
   }
@@ -283,7 +283,7 @@ export class Nav implements NavOutlet {
     }
 
     // Enqueue transition instruction
-    this.queue.push(ti);
+    this.transInstr.push(ti);
 
     // if there isn't a transition already happening
     // then this will kick off this transition
@@ -293,7 +293,7 @@ export class Nav implements NavOutlet {
   }
 
   private success(result: NavResult, ti: TransitionInstruction) {
-    if (this.queue === null) {
+    if (this.transInstr === null) {
       this.fireError('nav controller was destroyed', ti);
       return;
     }
@@ -323,11 +323,11 @@ export class Nav implements NavOutlet {
   }
 
   private failed(rejectReason: any, ti: TransitionInstruction) {
-    if (this.queue === null) {
+    if (this.transInstr === null) {
       this.fireError('nav controller was destroyed', ti);
       return;
     }
-    this.queue.length = 0;
+    this.transInstr.length = 0;
     this.fireError(rejectReason, ti);
   }
 
@@ -351,7 +351,7 @@ export class Nav implements NavOutlet {
 
     // there is no transition happening right now
     // get the next instruction
-    const ti = this.queue.shift();
+    const ti = this.transInstr.shift();
     if (!ti) {
       return false;
     }
@@ -689,7 +689,7 @@ export class Nav implements NavOutlet {
   }
 
   private swipeBackStart() {
-    if (this.isTransitioning || this.queue.length > 0) {
+    if (this.isTransitioning || this.transInstr.length > 0) {
       return;
     }
 

@@ -68,12 +68,15 @@ export function getClassMap(classes: string | string[] | undefined): CssClassMap
   return map;
 }
 
-export function openURL(url: string, ev: Event, goBack = false) {
+export type RouterDirection = 'forward' | 'back';
+
+export async function openURL(url: string, ev: Event, direction: RouterDirection = 'forward') {
   if (url && url[0] !== '#' && url.indexOf('://') === -1) {
     const router = document.querySelector('ion-router');
     if (router) {
       ev && ev.preventDefault();
-      return router.componentOnReady().then(() => router.push(url, goBack ? -1 : 1));
+      await router.componentOnReady();
+      return router.push(url, direction === 'back' ? -1 : 1);
     }
   }
   return Promise.resolve();

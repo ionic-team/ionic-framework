@@ -94,9 +94,9 @@ const DECLARATIONS = [
   c.TextValueAccessor,
 
   // navigation
-  c.GoBack,
   c.IonBackButton,
   c.IonRouterOutlet,
+  c.RouterDirection,
   c.NavDelegate,
   c.TabDelegate,
   c.TabsDelegate,

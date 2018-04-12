@@ -1,18 +1,18 @@
 import { Component, Listen, Prop } from '@stencil/core';
-import { DomController } from '../..';
+import { QueueController } from '../..';
 
 @Component({
   tag: 'ion-status-tap'
 })
 export class StatusTap {
 
-  @Prop({ context: 'dom' }) dom: DomController;
+  @Prop({ context: 'queue' }) queue: QueueController;
 
   @Prop() duration = 300;
 
   @Listen('window:statusTap')
   onStatusTap() {
-    this.dom.read(() => {
+    this.queue.read(() => {
       const width = window.innerWidth;
       const height = window.innerWidth;
       const el = document.elementFromPoint(width / 2, height / 2);
@@ -22,7 +22,7 @@ export class StatusTap {
       const scrollEl = el.closest('ion-scroll');
       if (scrollEl) {
         scrollEl.componentOnReady().then(() => {
-          this.dom.write(() => {
+          this.queue.write(() => {
             scrollEl.scrollToTop(this.duration);
           });
         });
