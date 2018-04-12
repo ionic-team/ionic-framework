@@ -78,13 +78,6 @@ button with a border, or to `"solid"`. The default style is `"solid"` except ins
 a toolbar, where the default is `"clear"`.
 
 
-#### goBack
-
-boolean
-
-If true, the transition direction will be backwards upon navigation. Defaults to `false`.
-
-
 #### href
 
 string
@@ -107,6 +100,14 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 boolean
 
 If true, activates a button with rounded corners.
+
+
+#### routerDirection
+
+string
+
+When using a router, it specifies the transition direction when navigating a
+another page usign `href`.
 
 
 #### size
@@ -176,13 +177,6 @@ button with a border, or to `"solid"`. The default style is `"solid"` except ins
 a toolbar, where the default is `"clear"`.
 
 
-#### go-back
-
-boolean
-
-If true, the transition direction will be backwards upon navigation. Defaults to `false`.
-
-
 #### href
 
 string
@@ -205,6 +199,14 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 boolean
 
 If true, activates a button with rounded corners.
+
+
+#### router-direction
+
+string
+
+When using a router, it specifies the transition direction when navigating a
+another page usign `href`.
 
 
 #### size

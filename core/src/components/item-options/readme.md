@@ -34,7 +34,9 @@ You can combine the `(ionSwipe)` event plus the `expandable` directive to create
 
 string
 
-The side the option button should be on. Defaults to `"right"`.
+The side the option button should be on.
+Possible values: `"start"` and `"end"`.
+Defaults to `"end"`.
 If you have multiple `ion-item-options`, a side must be provided for each.
 
 
@@ -44,7 +46,9 @@ If you have multiple `ion-item-options`, a side must be provided for each.
 
 string
 
-The side the option button should be on. Defaults to `"right"`.
+The side the option button should be on.
+Possible values: `"start"` and `"end"`.
+Defaults to `"end"`.
 If you have multiple `ion-item-options`, a side must be provided for each.
 
 
