@@ -13,8 +13,15 @@ export class DomController {
 }
 
 function getQueue() {
-  const ionic = (window as any).Ionic;
-  return ionic.queue;
+  const Ionic = (window as any).Ionic;
+  if (Ionic && Ionic.queue) {
+    return Ionic.queue;
+  }
+
+  return {
+    read: (cb: any) => window.requestAnimationFrame(cb),
+    write: (cb: any) => window.requestAnimationFrame(cb)
+  };
 }
 
 export type RafCallback = { (timeStamp?: number): void };

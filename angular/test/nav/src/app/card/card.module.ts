@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, DomController } from '@ionic/angular';
 import { CardPageComponent } from './card-page.component';
 import { CardRoutingModule } from './card-routing.module';
 
@@ -11,6 +11,11 @@ import { CardRoutingModule } from './card-routing.module';
     IonicModule,
     CardRoutingModule
   ],
-  declarations: [CardPageComponent]
+  declarations: [
+    CardPageComponent
+  ],
+  providers: [
+    DomController
+  ]
 })
 export class CardModule { }

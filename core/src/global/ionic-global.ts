@@ -9,7 +9,9 @@ declare const Context: any;
 
 // queue used to coordinate DOM reads and
 // write in order to avoid layout thrashing
-Ionic.queue = Context.queue;
+Object.defineProperty(Ionic, 'queue', {
+  get: () => Context.queue
+});
 
 if (!Context.platforms) {
   Context.platforms = detectPlatforms(window.location.href, window.navigator.userAgent, PLATFORM_CONFIGS, 'core');
