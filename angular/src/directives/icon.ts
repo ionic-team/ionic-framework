@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input } from '@angular/core';
-import { inputs } from './proxies';
+import { inputs } from '../util/util';
 
 
 @Directive({ selector: 'ion-icon' })
