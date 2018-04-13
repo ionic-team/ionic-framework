@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Injectable, Injector, ViewContainerRef } from '@angular/core';
+import { ComponentFactoryResolver, Injectable, Injector } from '@angular/core';
 import { PopoverOptions } from '@ionic/core';
 import { OverlayBaseController } from '../util/overlay';
 import { AngularDelegate } from './angular-delegate';
@@ -10,7 +10,6 @@ export class PopoverController extends OverlayBaseController<PopoverOptions, HTM
     private angularDelegate: AngularDelegate,
     private resolver: ComponentFactoryResolver,
     private injector: Injector,
-    private location: ViewContainerRef,
   ) {
     super('ion-popover-controller');
   }
@@ -18,7 +17,7 @@ export class PopoverController extends OverlayBaseController<PopoverOptions, HTM
   create(opts?: PopoverOptions): Promise<HTMLIonPopoverElement> {
     return super.create({
       ...opts,
-      delegate: this.angularDelegate.create(this.resolver, this.injector, this.location)
+      delegate: this.angularDelegate.create(this.resolver, this.injector)
     });
   }
 }

@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Injectable, InjectionToken, Injector, NgZone, ViewContainerRef } from '@angular/core';
+import { ApplicationRef, ComponentFactoryResolver, Injectable, InjectionToken, Injector, NgZone, ViewContainerRef } from '@angular/core';
 import { FrameworkDelegate, ViewLifecycle } from '@ionic/core';
 import { NavParams } from '../directives/navigation/nav-params';
 
@@ -7,15 +7,16 @@ import { NavParams } from '../directives/navigation/nav-params';
 export class AngularDelegate {
 
   constructor(
-    private zone: NgZone
+    private zone: NgZone,
+    private appRef: ApplicationRef
   ) {}
 
   create(
     resolver: ComponentFactoryResolver,
     injector: Injector,
-    location: ViewContainerRef,
+    location?: ViewContainerRef,
   ) {
-    return new AngularFrameworkDelegate(resolver, injector, location, this.zone);
+    return new AngularFrameworkDelegate(resolver, injector, location, this.appRef, this.zone);
   }
 }
 
@@ -28,6 +29,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
     private resolver: ComponentFactoryResolver,
     private injector: Injector,
     private location: ViewContainerRef,
+    private appRef: ApplicationRef,
     private zone: NgZone,
   ) {}
 
@@ -35,7 +37,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
     return new Promise(resolve => {
       this.zone.run(() => {
         const el = attachView(
-          this.resolver, this.injector, this.location, this.elRefMap,
+          this.resolver, this.injector, this.location, this.appRef, this.elRefMap,
           container, component, params, cssClasses
         );
         resolve(el);
@@ -60,12 +62,17 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
 export function attachView(
   resolver: ComponentFactoryResolver,
   injector: Injector,
-  location: ViewContainerRef,
+  location: ViewContainerRef|undefined,
+  appRef: ApplicationRef,
   elRefMap: WeakMap<HTMLElement, any>,
-  container: any, component: any, params?: any, cssClasses?: string[]) {
+  container: any, component: any, params: any, cssClasses: string[]
+) {
   const factory = resolver.resolveComponentFactory(component);
   const childInjector = Injector.create(getProviders(params), injector);
-  const componentRef = location.createComponent(factory, location.length, childInjector);
+  const componentRef = (location)
+    ? location.createComponent(factory, location.length, childInjector)
+    : factory.create(childInjector);
+
   const hostElement = componentRef.location.nativeElement;
   if (params) {
     Object.assign(hostElement, params);
@@ -75,6 +82,10 @@ export function attachView(
   }
   bindLifecycleEvents(componentRef.instance, hostElement);
   container.appendChild(hostElement);
+
+  if (!location) {
+    appRef.attachView(componentRef.hostView);
+  }
 
   componentRef.changeDetectorRef.reattach();
   elRefMap.set(hostElement, componentRef);
