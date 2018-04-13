@@ -39,11 +39,6 @@ boolean
 If true, the user cannot interact with the item. Defaults to `false`.
 
 
-#### goBack
-
-boolean
-
-
 #### href
 
 string
@@ -59,6 +54,14 @@ string
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+
+
+#### routerDirection
+
+string
+
+When using a router, it specifies the transition direction when navigating a
+another page usign `href`.
 
 
 ## Attributes
@@ -95,11 +98,6 @@ boolean
 If true, the user cannot interact with the item. Defaults to `false`.
 
 
-#### go-back
-
-boolean
-
-
 #### href
 
 string
@@ -115,6 +113,14 @@ string
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+
+
+#### router-direction
+
+string
+
+When using a router, it specifies the transition direction when navigating a
+another page usign `href`.
 
 
 

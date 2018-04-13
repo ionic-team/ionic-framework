@@ -12,21 +12,21 @@
     "e2e": "ng e2e"
   },
   "dependencies": {
-    "@angular/animations": "latest",
-    "@angular/common": "latest",
-    "@angular/compiler": "latest",
-    "@angular/core": "latest",
-    "@angular/forms": "latest",
-    "@angular/http": "latest",
-    "@angular/platform-browser": "latest",
-    "@angular/platform-browser-dynamic": "latest",
-    "@angular/router": "latest",
+    "@angular/animations": "^6.0.0-rc.3",
+    "@angular/common": "^6.0.0-rc.3",
+    "@angular/compiler": "^6.0.0-rc.3",
+    "@angular/core": "^6.0.0-rc.3",
+    "@angular/forms": "^6.0.0-rc.3",
+    "@angular/http": "^6.0.0-rc.3",
+    "@angular/platform-browser": "^6.0.0-rc.3",
+    "@angular/platform-browser-dynamic": "^6.0.0-rc.3",
+    "@angular/router": "^6.0.0-rc.3",
     "@ionic/angular": "next",
     "body-parser": "^1.18.2",
     "core-js": "^2.4.1",
     "express": "^4.16.2",
-    "rxjs": "^5.5.2",
-    "zone.js": "^0.8.14"
+    "rxjs": "^6.0.0-terrific-rc.3",
+    "zone.js": "^0.8.20"
   },
   "devDependencies": {
     "@angular/cli": "latest",

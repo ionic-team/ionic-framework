@@ -133,11 +133,17 @@ import {
 } from './components/virtual-scroll/virtual-scroll-utils';
 
 declare global {
-  interface HTMLIonActionSheetControllerElement extends HTMLStencilElement {
-    'create': (opts?: ActionSheetOptions | undefined) => Promise<HTMLIonActionSheetElement>;
-    'dismiss': (data?: any, role?: string | undefined, actionSheetId?: number) => Promise<void>;
-    'getTop': () => HTMLIonActionSheetElement;
+
+  namespace StencilComponents {
+    interface IonActionSheetController {
+      'create': (opts?: ActionSheetOptions | undefined) => Promise<HTMLIonActionSheetElement>;
+      'dismiss': (data?: any, role?: string | undefined, actionSheetId?: number) => Promise<void>;
+      'getTop': () => HTMLIonActionSheetElement;
+    }
   }
+
+  interface HTMLIonActionSheetControllerElement extends StencilComponents.IonActionSheetController, HTMLStencilElement {}
+
   var HTMLIonActionSheetControllerElement: {
     prototype: HTMLIonActionSheetControllerElement;
     new (): HTMLIonActionSheetControllerElement;
@@ -162,62 +168,68 @@ declare global {
 
 
 declare global {
-  interface HTMLIonActionSheetElement extends HTMLStencilElement {
-    /**
-     * An array of buttons for the action sheet.
-     */
-    'buttons': ActionSheetButton[];
-    /**
-     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-     */
-    'cssClass': string | string[];
-    /**
-     * Dismiss the action sheet overlay after it has been presented.
-     */
-    'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
-    /**
-     * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
-     */
-    'enableBackdropDismiss': boolean;
-    /**
-     * Animation to use when the action sheet is presented.
-     */
-    'enterAnimation': AnimationBuilder;
-    /**
-     * Title for the action sheet.
-     */
-    'header': string;
-    'keyboardClose': boolean;
-    /**
-     * Animation to use when the action sheet is dismissed.
-     */
-    'leaveAnimation': AnimationBuilder;
-    /**
-     * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await actionSheet.onDidDismiss(); ```
-     */
-    'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
-    /**
-     * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await actionSheet.onWillDismiss(); ```
-     */
-    'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
-    'overlayId': number;
-    /**
-     * Present the action sheet overlay after it has been created.
-     */
-    'present': () => Promise<void>;
-    /**
-     * Subtitle for the action sheet.
-     */
-    'subHeader': string;
-    /**
-     * If true, the action sheet will be translucent. Defaults to `false`.
-     */
-    'translucent': boolean;
-    /**
-     * If true, the action sheet will animate. Defaults to `true`.
-     */
-    'willAnimate': boolean;
+
+  namespace StencilComponents {
+    interface IonActionSheet {
+      /**
+       * An array of buttons for the action sheet.
+       */
+      'buttons': ActionSheetButton[];
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass': string | string[];
+      /**
+       * Dismiss the action sheet overlay after it has been presented.
+       */
+      'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
+      /**
+       * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'enableBackdropDismiss': boolean;
+      /**
+       * Animation to use when the action sheet is presented.
+       */
+      'enterAnimation': AnimationBuilder;
+      /**
+       * Title for the action sheet.
+       */
+      'header': string;
+      'keyboardClose': boolean;
+      /**
+       * Animation to use when the action sheet is dismissed.
+       */
+      'leaveAnimation': AnimationBuilder;
+      /**
+       * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await actionSheet.onDidDismiss(); ```
+       */
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      /**
+       * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await actionSheet.onWillDismiss(); ```
+       */
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'overlayId': number;
+      /**
+       * Present the action sheet overlay after it has been created.
+       */
+      'present': () => Promise<void>;
+      /**
+       * Subtitle for the action sheet.
+       */
+      'subHeader': string;
+      /**
+       * If true, the action sheet will be translucent. Defaults to `false`.
+       */
+      'translucent': boolean;
+      /**
+       * If true, the action sheet will animate. Defaults to `true`.
+       */
+      'willAnimate': boolean;
+    }
   }
+
+  interface HTMLIonActionSheetElement extends StencilComponents.IonActionSheet, HTMLStencilElement {}
+
   var HTMLIonActionSheetElement: {
     prototype: HTMLIonActionSheetElement;
     new (): HTMLIonActionSheetElement;
@@ -303,11 +315,17 @@ declare global {
 
 
 declare global {
-  interface HTMLIonAlertControllerElement extends HTMLStencilElement {
-    'create': (opts?: AlertOptions | undefined) => Promise<HTMLIonAlertElement>;
-    'dismiss': (data?: any, role?: string | undefined, alertId?: number) => Promise<void>;
-    'getTop': () => HTMLIonAlertElement;
+
+  namespace StencilComponents {
+    interface IonAlertController {
+      'create': (opts?: AlertOptions | undefined) => Promise<HTMLIonAlertElement>;
+      'dismiss': (data?: any, role?: string | undefined, alertId?: number) => Promise<void>;
+      'getTop': () => HTMLIonAlertElement;
+    }
   }
+
+  interface HTMLIonAlertControllerElement extends StencilComponents.IonAlertController, HTMLStencilElement {}
+
   var HTMLIonAlertControllerElement: {
     prototype: HTMLIonAlertControllerElement;
     new (): HTMLIonAlertControllerElement;
@@ -332,71 +350,77 @@ declare global {
 
 
 declare global {
-  interface HTMLIonAlertElement extends HTMLStencilElement {
-    /**
-     * Array of buttons to be added to the alert.
-     */
-    'buttons': AlertButton[];
-    /**
-     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-     */
-    'cssClass': string | string[];
-    /**
-     * Dismiss the alert overlay after it has been presented.
-     */
-    'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
-    /**
-     * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
-     */
-    'enableBackdropDismiss': boolean;
-    /**
-     * Animation to use when the alert is presented.
-     */
-    'enterAnimation': AnimationBuilder;
-    /**
-     * The main title in the heading of the alert.
-     */
-    'header': string;
-    /**
-     * Array of input to show in the alert.
-     */
-    'inputs': AlertInput[];
-    'keyboardClose': boolean;
-    /**
-     * Animation to use when the alert is dismissed.
-     */
-    'leaveAnimation': AnimationBuilder;
-    /**
-     * The main message to be displayed in the alert.
-     */
-    'message': string;
-    'mode': string;
-    /**
-     * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await alert.onDidDismiss(); ```
-     */
-    'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
-    /**
-     * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await alert.onWillDismiss(); ```
-     */
-    'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
-    'overlayId': number;
-    /**
-     * Present the alert overlay after it has been created.
-     */
-    'present': () => Promise<void>;
-    /**
-     * The subtitle in the heading of the alert. Displayed under the title.
-     */
-    'subHeader': string;
-    /**
-     * If true, the alert will be translucent. Defaults to `false`.
-     */
-    'translucent': boolean;
-    /**
-     * If true, the alert will animate. Defaults to `true`.
-     */
-    'willAnimate': boolean;
+
+  namespace StencilComponents {
+    interface IonAlert {
+      /**
+       * Array of buttons to be added to the alert.
+       */
+      'buttons': AlertButton[];
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass': string | string[];
+      /**
+       * Dismiss the alert overlay after it has been presented.
+       */
+      'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
+      /**
+       * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'enableBackdropDismiss': boolean;
+      /**
+       * Animation to use when the alert is presented.
+       */
+      'enterAnimation': AnimationBuilder;
+      /**
+       * The main title in the heading of the alert.
+       */
+      'header': string;
+      /**
+       * Array of input to show in the alert.
+       */
+      'inputs': AlertInput[];
+      'keyboardClose': boolean;
+      /**
+       * Animation to use when the alert is dismissed.
+       */
+      'leaveAnimation': AnimationBuilder;
+      /**
+       * The main message to be displayed in the alert.
+       */
+      'message': string;
+      'mode': string;
+      /**
+       * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await alert.onDidDismiss(); ```
+       */
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      /**
+       * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await alert.onWillDismiss(); ```
+       */
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'overlayId': number;
+      /**
+       * Present the alert overlay after it has been created.
+       */
+      'present': () => Promise<void>;
+      /**
+       * The subtitle in the heading of the alert. Displayed under the title.
+       */
+      'subHeader': string;
+      /**
+       * If true, the alert will be translucent. Defaults to `false`.
+       */
+      'translucent': boolean;
+      /**
+       * If true, the alert will animate. Defaults to `true`.
+       */
+      'willAnimate': boolean;
+    }
   }
+
+  interface HTMLIonAlertElement extends StencilComponents.IonAlert, HTMLStencilElement {}
+
   var HTMLIonAlertElement: {
     prototype: HTMLIonAlertElement;
     new (): HTMLIonAlertElement;
@@ -491,16 +515,22 @@ declare global {
 
 
 declare global {
-  interface HTMLIonAnchorElement extends HTMLStencilElement {
-    /**
-     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-     */
-    'href': string;
-    /**
-     * When using a router, it specifies the transition direction when navigating a another page usign `href`.
-     */
-    'routerDirection': 'forward' | 'back';
+
+  namespace StencilComponents {
+    interface IonAnchor {
+      /**
+       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+       */
+      'href': string;
+      /**
+       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       */
+      'routerDirection': 'forward' | 'back';
+    }
   }
+
+  interface HTMLIonAnchorElement extends StencilComponents.IonAnchor, HTMLStencilElement {}
+
   var HTMLIonAnchorElement: {
     prototype: HTMLIonAnchorElement;
     new (): HTMLIonAnchorElement;
@@ -532,9 +562,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonAnimationControllerElement extends HTMLStencilElement {
-    'create': (animationBuilder?: AnimationBuilder | undefined, baseEl?: any, opts?: any) => Promise<Animation>;
+
+  namespace StencilComponents {
+    interface IonAnimationController {
+      'create': (animationBuilder?: AnimationBuilder | undefined, baseEl?: any, opts?: any) => Promise<Animation>;
+    }
   }
+
+  interface HTMLIonAnimationControllerElement extends StencilComponents.IonAnimationController, HTMLStencilElement {}
+
   var HTMLIonAnimationControllerElement: {
     prototype: HTMLIonAnimationControllerElement;
     new (): HTMLIonAnimationControllerElement;
@@ -559,9 +595,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonAppElement extends HTMLStencilElement {
 
+  namespace StencilComponents {
+    interface IonApp {
+
+    }
   }
+
+  interface HTMLIonAppElement extends StencilComponents.IonApp, HTMLStencilElement {}
+
   var HTMLIonAppElement: {
     prototype: HTMLIonAppElement;
     new (): HTMLIonAppElement;
@@ -586,9 +628,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonAvatarElement extends HTMLStencilElement {
 
+  namespace StencilComponents {
+    interface IonAvatar {
+
+    }
   }
+
+  interface HTMLIonAvatarElement extends StencilComponents.IonAvatar, HTMLStencilElement {}
+
   var HTMLIonAvatarElement: {
     prototype: HTMLIonAvatarElement;
     new (): HTMLIonAvatarElement;
@@ -613,28 +661,34 @@ declare global {
 
 
 declare global {
-  interface HTMLIonBackButtonElement extends HTMLStencilElement {
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * The url to navigate back to by default when there is no history.
-     */
-    'defaultHref': string;
-    /**
-     * The icon name to use for the back button.
-     */
-    'icon': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * The text to display in the back button.
-     */
-    'text': string | undefined;
+
+  namespace StencilComponents {
+    interface IonBackButton {
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * The url to navigate back to by default when there is no history.
+       */
+      'defaultHref': string;
+      /**
+       * The icon name to use for the back button.
+       */
+      'icon': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * The text to display in the back button.
+       */
+      'text': string | undefined;
+    }
   }
+
+  interface HTMLIonBackButtonElement extends StencilComponents.IonBackButton, HTMLStencilElement {}
+
   var HTMLIonBackButtonElement: {
     prototype: HTMLIonBackButtonElement;
     new (): HTMLIonBackButtonElement;
@@ -678,20 +732,26 @@ declare global {
 
 
 declare global {
-  interface HTMLIonBackdropElement extends HTMLStencilElement {
-    /**
-     * If true, the backdrop will stop propagation on tap. Defaults to `true`.
-     */
-    'stopPropagation': boolean;
-    /**
-     * If true, the backdrop will can be clicked and will emit the `ionBackdropTap` event. Defaults to `true`.
-     */
-    'tappable': boolean;
-    /**
-     * If true, the backdrop will be visible. Defaults to `true`.
-     */
-    'visible': boolean;
+
+  namespace StencilComponents {
+    interface IonBackdrop {
+      /**
+       * If true, the backdrop will stop propagation on tap. Defaults to `true`.
+       */
+      'stopPropagation': boolean;
+      /**
+       * If true, the backdrop will can be clicked and will emit the `ionBackdropTap` event. Defaults to `true`.
+       */
+      'tappable': boolean;
+      /**
+       * If true, the backdrop will be visible. Defaults to `true`.
+       */
+      'visible': boolean;
+    }
   }
+
+  interface HTMLIonBackdropElement extends StencilComponents.IonBackdrop, HTMLStencilElement {}
+
   var HTMLIonBackdropElement: {
     prototype: HTMLIonBackdropElement;
     new (): HTMLIonBackdropElement;
@@ -731,16 +791,22 @@ declare global {
 
 
 declare global {
-  interface HTMLIonBadgeElement extends HTMLStencilElement {
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
+
+  namespace StencilComponents {
+    interface IonBadge {
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+    }
   }
+
+  interface HTMLIonBadgeElement extends StencilComponents.IonBadge, HTMLStencilElement {}
+
   var HTMLIonBadgeElement: {
     prototype: HTMLIonBadgeElement;
     new (): HTMLIonBadgeElement;
@@ -772,56 +838,62 @@ declare global {
 
 
 declare global {
-  interface HTMLIonButtonElement extends HTMLStencilElement {
-    /**
-     * The type of button. Possible values are: `"button"`, `"bar-button"`.
-     */
-    'buttonType': string;
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * If true, the user cannot interact with the button. Defaults to `false`.
-     */
-    'disabled': boolean;
-    /**
-     * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
-     */
-    'expand': 'full' | 'block';
-    /**
-     * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
-     */
-    'fill': 'clear' | 'outline' | 'solid' | 'default';
-    /**
-     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-     */
-    'href': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * If true, activates a button with rounded corners.
-     */
-    'round': boolean;
-    /**
-     * When using a router, it specifies the transition direction when navigating a another page usign `href`.
-     */
-    'routerDirection': 'forward' | 'back';
-    /**
-     * The button size. Possible values are: `"small"`, `"default"`, `"large"`.
-     */
-    'size': 'small' | 'default' | 'large';
-    /**
-     * If true, activates a button with a heavier font weight.
-     */
-    'strong': boolean;
-    /**
-     * The type of the button. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
-     */
-    'type': string;
+
+  namespace StencilComponents {
+    interface IonButton {
+      /**
+       * The type of button. Possible values are: `"button"`, `"bar-button"`.
+       */
+      'buttonType': string;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * If true, the user cannot interact with the button. Defaults to `false`.
+       */
+      'disabled': boolean;
+      /**
+       * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
+       */
+      'expand': 'full' | 'block';
+      /**
+       * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
+       */
+      'fill': 'clear' | 'outline' | 'solid' | 'default';
+      /**
+       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+       */
+      'href': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * If true, activates a button with rounded corners.
+       */
+      'round': boolean;
+      /**
+       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       */
+      'routerDirection': 'forward' | 'back';
+      /**
+       * The button size. Possible values are: `"small"`, `"default"`, `"large"`.
+       */
+      'size': 'small' | 'default' | 'large';
+      /**
+       * If true, activates a button with a heavier font weight.
+       */
+      'strong': boolean;
+      /**
+       * The type of the button. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
+       */
+      'type': string;
+    }
   }
+
+  interface HTMLIonButtonElement extends StencilComponents.IonButton, HTMLStencilElement {}
+
   var HTMLIonButtonElement: {
     prototype: HTMLIonButtonElement;
     new (): HTMLIonButtonElement;
@@ -901,9 +973,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonButtonsElement extends HTMLStencilElement {
 
+  namespace StencilComponents {
+    interface IonButtons {
+
+    }
   }
+
+  interface HTMLIonButtonsElement extends StencilComponents.IonButtons, HTMLStencilElement {}
+
   var HTMLIonButtonsElement: {
     prototype: HTMLIonButtonsElement;
     new (): HTMLIonButtonsElement;
@@ -928,16 +1006,22 @@ declare global {
 
 
 declare global {
-  interface HTMLIonCardContentElement extends HTMLStencilElement {
-    /**
-     * The color to use for the text. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-     */
-    'color': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-     */
-    'mode': 'ios' | 'md';
+
+  namespace StencilComponents {
+    interface IonCardContent {
+      /**
+       * The color to use for the text. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': 'ios' | 'md';
+    }
   }
+
+  interface HTMLIonCardContentElement extends StencilComponents.IonCardContent, HTMLStencilElement {}
+
   var HTMLIonCardContentElement: {
     prototype: HTMLIonCardContentElement;
     new (): HTMLIonCardContentElement;
@@ -969,20 +1053,26 @@ declare global {
 
 
 declare global {
-  interface HTMLIonCardHeaderElement extends HTMLStencilElement {
-    /**
-     * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-     */
-    'color': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * If true, the card header will be translucent. Defaults to `false`.
-     */
-    'translucent': boolean;
+
+  namespace StencilComponents {
+    interface IonCardHeader {
+      /**
+       * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * If true, the card header will be translucent. Defaults to `false`.
+       */
+      'translucent': boolean;
+    }
   }
+
+  interface HTMLIonCardHeaderElement extends StencilComponents.IonCardHeader, HTMLStencilElement {}
+
   var HTMLIonCardHeaderElement: {
     prototype: HTMLIonCardHeaderElement;
     new (): HTMLIonCardHeaderElement;
@@ -1018,16 +1108,22 @@ declare global {
 
 
 declare global {
-  interface HTMLIonCardSubtitleElement extends HTMLStencilElement {
-    /**
-     * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-     */
-    'color': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-     */
-    'mode': 'ios' | 'md';
+
+  namespace StencilComponents {
+    interface IonCardSubtitle {
+      /**
+       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': 'ios' | 'md';
+    }
   }
+
+  interface HTMLIonCardSubtitleElement extends StencilComponents.IonCardSubtitle, HTMLStencilElement {}
+
   var HTMLIonCardSubtitleElement: {
     prototype: HTMLIonCardSubtitleElement;
     new (): HTMLIonCardSubtitleElement;
@@ -1059,16 +1155,22 @@ declare global {
 
 
 declare global {
-  interface HTMLIonCardTitleElement extends HTMLStencilElement {
-    /**
-     * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-     */
-    'color': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-     */
-    'mode': 'ios' | 'md';
+
+  namespace StencilComponents {
+    interface IonCardTitle {
+      /**
+       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': 'ios' | 'md';
+    }
   }
+
+  interface HTMLIonCardTitleElement extends StencilComponents.IonCardTitle, HTMLStencilElement {}
+
   var HTMLIonCardTitleElement: {
     prototype: HTMLIonCardTitleElement;
     new (): HTMLIonCardTitleElement;
@@ -1100,16 +1202,22 @@ declare global {
 
 
 declare global {
-  interface HTMLIonCardElement extends HTMLStencilElement {
-    /**
-     * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-     */
-    'color': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-     */
-    'mode': 'ios' | 'md';
+
+  namespace StencilComponents {
+    interface IonCard {
+      /**
+       * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': 'ios' | 'md';
+    }
   }
+
+  interface HTMLIonCardElement extends StencilComponents.IonCard, HTMLStencilElement {}
+
   var HTMLIonCardElement: {
     prototype: HTMLIonCardElement;
     new (): HTMLIonCardElement;
@@ -1141,32 +1249,38 @@ declare global {
 
 
 declare global {
-  interface HTMLIonCheckboxElement extends HTMLStencilElement {
-    /**
-     * If true, the checkbox is selected. Defaults to `false`.
-     */
-    'checked': boolean;
-    /**
-     * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-     */
-    'color': string;
-    /**
-     * If true, the user cannot interact with the checkbox. Defaults to `false`.
-     */
-    'disabled': boolean;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * The name of the control, which is submitted with the form data.
-     */
-    'name': string;
-    /**
-     * the value of the checkbox.
-     */
-    'value': string;
+
+  namespace StencilComponents {
+    interface IonCheckbox {
+      /**
+       * If true, the checkbox is selected. Defaults to `false`.
+       */
+      'checked': boolean;
+      /**
+       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color': string;
+      /**
+       * If true, the user cannot interact with the checkbox. Defaults to `false`.
+       */
+      'disabled': boolean;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name': string;
+      /**
+       * the value of the checkbox.
+       */
+      'value': string;
+    }
   }
+
+  interface HTMLIonCheckboxElement extends StencilComponents.IonCheckbox, HTMLStencilElement {}
+
   var HTMLIonCheckboxElement: {
     prototype: HTMLIonCheckboxElement;
     new (): HTMLIonCheckboxElement;
@@ -1230,28 +1344,34 @@ declare global {
 
 
 declare global {
-  interface HTMLIonChipButtonElement extends HTMLStencilElement {
-    /**
-     * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-     */
-    'color': string;
-    /**
-     * If true, the user cannot interact with the chip button. Defaults to `false`.
-     */
-    'disabled': boolean;
-    /**
-     * Set to `"clear"` for a transparent button style.
-     */
-    'fill': string;
-    /**
-     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-     */
-    'href': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-     */
-    'mode': 'ios' | 'md';
+
+  namespace StencilComponents {
+    interface IonChipButton {
+      /**
+       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color': string;
+      /**
+       * If true, the user cannot interact with the chip button. Defaults to `false`.
+       */
+      'disabled': boolean;
+      /**
+       * Set to `"clear"` for a transparent button style.
+       */
+      'fill': string;
+      /**
+       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+       */
+      'href': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': 'ios' | 'md';
+    }
   }
+
+  interface HTMLIonChipButtonElement extends StencilComponents.IonChipButton, HTMLStencilElement {}
+
   var HTMLIonChipButtonElement: {
     prototype: HTMLIonChipButtonElement;
     new (): HTMLIonChipButtonElement;
@@ -1295,16 +1415,22 @@ declare global {
 
 
 declare global {
-  interface HTMLIonChipElement extends HTMLStencilElement {
-    /**
-     * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-     */
-    'color': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-     */
-    'mode': 'ios' | 'md';
+
+  namespace StencilComponents {
+    interface IonChip {
+      /**
+       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': 'ios' | 'md';
+    }
   }
+
+  interface HTMLIonChipElement extends StencilComponents.IonChip, HTMLStencilElement {}
+
   var HTMLIonChipElement: {
     prototype: HTMLIonChipElement;
     new (): HTMLIonChipElement;
@@ -1336,9 +1462,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonColElement extends HTMLStencilElement {
 
+  namespace StencilComponents {
+    interface IonCol {
+
+    }
   }
+
+  interface HTMLIonColElement extends StencilComponents.IonCol, HTMLStencilElement {}
+
   var HTMLIonColElement: {
     prototype: HTMLIonColElement;
     new (): HTMLIonColElement;
@@ -1363,28 +1495,34 @@ declare global {
 
 
 declare global {
-  interface HTMLIonContentElement extends HTMLStencilElement {
-    /**
-     * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
-     */
-    'forceOverscroll': boolean;
-    /**
-     * If true, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.
-     */
-    'fullscreen': boolean;
-    'scrollByPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
-    'scrollEnabled': boolean;
-    'scrollEvents': boolean;
-    /**
-     * Scroll to the bottom of the content component.  Duration of the scroll animation in milliseconds. Defaults to `300`. Returns a promise which is resolved when the scroll has completed.
-     */
-    'scrollToBottom': (duration?: number) => Promise<void>;
-    'scrollToPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
-    /**
-     * Scroll to the top of the content component.  Duration of the scroll animation in milliseconds. Defaults to `300`. Returns a promise which is resolved when the scroll has completed.
-     */
-    'scrollToTop': (duration?: number) => Promise<void>;
+
+  namespace StencilComponents {
+    interface IonContent {
+      /**
+       * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
+       */
+      'forceOverscroll': boolean;
+      /**
+       * If true, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.
+       */
+      'fullscreen': boolean;
+      'scrollByPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
+      'scrollEnabled': boolean;
+      'scrollEvents': boolean;
+      /**
+       * Scroll to the bottom of the content component.  Duration of the scroll animation in milliseconds. Defaults to `300`. Returns a promise which is resolved when the scroll has completed.
+       */
+      'scrollToBottom': (duration?: number) => Promise<void>;
+      'scrollToPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
+      /**
+       * Scroll to the top of the content component.  Duration of the scroll animation in milliseconds. Defaults to `300`. Returns a promise which is resolved when the scroll has completed.
+       */
+      'scrollToTop': (duration?: number) => Promise<void>;
+    }
   }
+
+  interface HTMLIonContentElement extends StencilComponents.IonContent, HTMLStencilElement {}
+
   var HTMLIonContentElement: {
     prototype: HTMLIonContentElement;
     new (): HTMLIonContentElement;
@@ -1418,10 +1556,16 @@ declare global {
 
 
 declare global {
-  interface HTMLIonCordovaPlatformElement extends HTMLStencilElement {
-    'exitCordovaApp': () => void;
-    'ready': () => Promise<void>;
+
+  namespace StencilComponents {
+    interface IonCordovaPlatform {
+      'exitCordovaApp': () => void;
+      'ready': () => Promise<void>;
+    }
   }
+
+  interface HTMLIonCordovaPlatformElement extends StencilComponents.IonCordovaPlatform, HTMLStencilElement {}
+
   var HTMLIonCordovaPlatformElement: {
     prototype: HTMLIonCordovaPlatformElement;
     new (): HTMLIonCordovaPlatformElement;
@@ -1446,84 +1590,90 @@ declare global {
 
 
 declare global {
-  interface HTMLIonDatetimeElement extends HTMLStencilElement {
-    /**
-     * The text to display on the picker's cancel button. Default: `Cancel`.
-     */
-    'cancelText': string;
-    /**
-     * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
-     */
-    'dayNames': string[] | string | undefined;
-    /**
-     * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
-     */
-    'dayShortNames': string[] | string | undefined;
-    /**
-     * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
-     */
-    'dayValues': number[] | number | string | undefined;
-    /**
-     * If true, the user cannot interact with the datetime. Defaults to `false`.
-     */
-    'disabled': boolean;
-    /**
-     * The display format of the date and time as text that shows within the item. When the `pickerFormat` input is not used, then the `displayFormat` is used for both display the formatted text, and determining the datetime picker's columns. See the `pickerFormat` input description for more info. Defaults to `MMM D, YYYY`.
-     */
-    'displayFormat': string;
-    /**
-     * The text to display on the picker's "Done" button. Default: `Done`.
-     */
-    'doneText': string;
-    /**
-     * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
-     */
-    'hourValues': number[] | number | string | undefined;
-    /**
-     * The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.
-     */
-    'max': string | undefined;
-    /**
-     * The minimum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), such as `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the minimum could just be the year, such as `1994`. Defaults to the beginning of the year, 100 years ago from today.
-     */
-    'min': string | undefined;
-    /**
-     * Values used to create the list of selectable minutes. By default the mintues range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.
-     */
-    'minuteValues': number[] | number | string | undefined;
-    /**
-     * Full names for each month name. This can be used to provide locale month names. Defaults to English.
-     */
-    'monthNames': string[] | string | undefined;
-    /**
-     * Short abbreviated names for each month name. This can be used to provide locale month names. Defaults to English.
-     */
-    'monthShortNames': string[] | string | undefined;
-    /**
-     * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
-     */
-    'monthValues': number[] | number | string | undefined;
-    /**
-     * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
-     */
-    'pickerFormat': string | undefined;
-    /**
-     * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
-     */
-    'pickerOptions': PickerOptions;
-    /**
-     * The text to display when there's no date selected yet. Using lowercase to match the input attribute
-     */
-    'placeholder': string | undefined;
-    /**
-     * the value of the datetime.
-     */
-    'value': string;
-    /**
-     * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
-     */
-    'yearValues': number[] | number | string | undefined;
+
+  namespace StencilComponents {
+    interface IonDatetime {
+      /**
+       * The text to display on the picker's cancel button. Default: `Cancel`.
+       */
+      'cancelText': string;
+      /**
+       * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+       */
+      'dayNames': string[] | string | undefined;
+      /**
+       * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
+       */
+      'dayShortNames': string[] | string | undefined;
+      /**
+       * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
+       */
+      'dayValues': number[] | number | string | undefined;
+      /**
+       * If true, the user cannot interact with the datetime. Defaults to `false`.
+       */
+      'disabled': boolean;
+      /**
+       * The display format of the date and time as text that shows within the item. When the `pickerFormat` input is not used, then the `displayFormat` is used for both display the formatted text, and determining the datetime picker's columns. See the `pickerFormat` input description for more info. Defaults to `MMM D, YYYY`.
+       */
+      'displayFormat': string;
+      /**
+       * The text to display on the picker's "Done" button. Default: `Done`.
+       */
+      'doneText': string;
+      /**
+       * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
+       */
+      'hourValues': number[] | number | string | undefined;
+      /**
+       * The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.
+       */
+      'max': string | undefined;
+      /**
+       * The minimum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), such as `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the minimum could just be the year, such as `1994`. Defaults to the beginning of the year, 100 years ago from today.
+       */
+      'min': string | undefined;
+      /**
+       * Values used to create the list of selectable minutes. By default the mintues range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.
+       */
+      'minuteValues': number[] | number | string | undefined;
+      /**
+       * Full names for each month name. This can be used to provide locale month names. Defaults to English.
+       */
+      'monthNames': string[] | string | undefined;
+      /**
+       * Short abbreviated names for each month name. This can be used to provide locale month names. Defaults to English.
+       */
+      'monthShortNames': string[] | string | undefined;
+      /**
+       * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
+       */
+      'monthValues': number[] | number | string | undefined;
+      /**
+       * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
+       */
+      'pickerFormat': string | undefined;
+      /**
+       * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
+       */
+      'pickerOptions': PickerOptions;
+      /**
+       * The text to display when there's no date selected yet. Using lowercase to match the input attribute
+       */
+      'placeholder': string | undefined;
+      /**
+       * the value of the datetime.
+       */
+      'value': string;
+      /**
+       * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
+       */
+      'yearValues': number[] | number | string | undefined;
+    }
   }
+
+  interface HTMLIonDatetimeElement extends StencilComponents.IonDatetime, HTMLStencilElement {}
+
   var HTMLIonDatetimeElement: {
     prototype: HTMLIonDatetimeElement;
     new (): HTMLIonDatetimeElement;
@@ -1631,33 +1781,39 @@ declare global {
 
 
 declare global {
-  interface HTMLIonFabButtonElement extends HTMLStencilElement {
-    /**
-     * If true, the fab button will be show a close icon. Defaults to `false`.
-     */
-    'activated': boolean;
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * If true, the user cannot interact with the fab button. Defaults to `false`.
-     */
-    'disabled': boolean;
-    /**
-     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-     */
-    'href': string | undefined;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
-    'show': boolean;
-    /**
-     * If true, the fab button will be translucent. Defaults to `false`.
-     */
-    'translucent': boolean;
+
+  namespace StencilComponents {
+    interface IonFabButton {
+      /**
+       * If true, the fab button will be show a close icon. Defaults to `false`.
+       */
+      'activated': boolean;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * If true, the user cannot interact with the fab button. Defaults to `false`.
+       */
+      'disabled': boolean;
+      /**
+       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+       */
+      'href': string | undefined;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+      'show': boolean;
+      /**
+       * If true, the fab button will be translucent. Defaults to `false`.
+       */
+      'translucent': boolean;
+    }
   }
+
+  interface HTMLIonFabButtonElement extends StencilComponents.IonFabButton, HTMLStencilElement {}
+
   var HTMLIonFabButtonElement: {
     prototype: HTMLIonFabButtonElement;
     new (): HTMLIonFabButtonElement;
@@ -1706,16 +1862,22 @@ declare global {
 
 
 declare global {
-  interface HTMLIonFabListElement extends HTMLStencilElement {
-    /**
-     * If true, the fab list will be show all fab buttons in the list. Defaults to `false`.
-     */
-    'activated': boolean;
-    /**
-     * The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
-     */
-    'side': 'start' | 'end' | 'top' | 'bottom';
+
+  namespace StencilComponents {
+    interface IonFabList {
+      /**
+       * If true, the fab list will be show all fab buttons in the list. Defaults to `false`.
+       */
+      'activated': boolean;
+      /**
+       * The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
+       */
+      'side': 'start' | 'end' | 'top' | 'bottom';
+    }
   }
+
+  interface HTMLIonFabListElement extends StencilComponents.IonFabList, HTMLStencilElement {}
+
   var HTMLIonFabListElement: {
     prototype: HTMLIonFabListElement;
     new (): HTMLIonFabListElement;
@@ -1747,25 +1909,31 @@ declare global {
 
 
 declare global {
-  interface HTMLIonFabElement extends HTMLStencilElement {
-    'activated': boolean;
-    /**
-     * Close an active FAB list container
-     */
-    'close': () => void;
-    /**
-     * If true, the fab will display on the edge of the header if `vertical` is `"top"`, and on the edge of the footer if it is `"bottom"`. Should be used with a `fixed` slot.
-     */
-    'edge': boolean;
-    /**
-     * Where to align the fab horizontally in the viewport. Possible values are: `"center"`, `"start"`, `"end"`.
-     */
-    'horizontal': 'start' | 'end' | 'center';
-    /**
-     * Where to align the fab vertically in the viewport. Possible values are: `"top"`, `"center"`, `"bottom"`.
-     */
-    'vertical': 'top' | 'bottom' | 'center';
+
+  namespace StencilComponents {
+    interface IonFab {
+      'activated': boolean;
+      /**
+       * Close an active FAB list container
+       */
+      'close': () => void;
+      /**
+       * If true, the fab will display on the edge of the header if `vertical` is `"top"`, and on the edge of the footer if it is `"bottom"`. Should be used with a `fixed` slot.
+       */
+      'edge': boolean;
+      /**
+       * Where to align the fab horizontally in the viewport. Possible values are: `"center"`, `"start"`, `"end"`.
+       */
+      'horizontal': 'start' | 'end' | 'center';
+      /**
+       * Where to align the fab vertically in the viewport. Possible values are: `"top"`, `"center"`, `"bottom"`.
+       */
+      'vertical': 'top' | 'bottom' | 'center';
+    }
   }
+
+  interface HTMLIonFabElement extends StencilComponents.IonFab, HTMLStencilElement {}
+
   var HTMLIonFabElement: {
     prototype: HTMLIonFabElement;
     new (): HTMLIonFabElement;
@@ -1802,12 +1970,18 @@ declare global {
 
 
 declare global {
-  interface HTMLIonFooterElement extends HTMLStencilElement {
-    /**
-     * If true, the footer will be translucent. Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
-     */
-    'translucent': boolean;
+
+  namespace StencilComponents {
+    interface IonFooter {
+      /**
+       * If true, the footer will be translucent. Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
+       */
+      'translucent': boolean;
+    }
   }
+
+  interface HTMLIonFooterElement extends StencilComponents.IonFooter, HTMLStencilElement {}
+
   var HTMLIonFooterElement: {
     prototype: HTMLIonFooterElement;
     new (): HTMLIonFooterElement;
@@ -1835,10 +2009,16 @@ declare global {
 
 
 declare global {
-  interface HTMLIonGestureControllerElement extends HTMLStencilElement {
-    'create': (config: GestureConfig) => Promise<GestureDelegate>;
-    'createBlocker': (opts?: BlockerConfig) => BlockerDelegate;
+
+  namespace StencilComponents {
+    interface IonGestureController {
+      'create': (config: GestureConfig) => Promise<GestureDelegate>;
+      'createBlocker': (opts?: BlockerConfig) => BlockerDelegate;
+    }
   }
+
+  interface HTMLIonGestureControllerElement extends StencilComponents.IonGestureController, HTMLStencilElement {}
+
   var HTMLIonGestureControllerElement: {
     prototype: HTMLIonGestureControllerElement;
     new (): HTMLIonGestureControllerElement;
@@ -1863,26 +2043,32 @@ declare global {
 
 
 declare global {
-  interface HTMLIonGestureElement extends HTMLStencilElement {
-    'attachTo': string|HTMLElement;
-    'autoBlockAll': boolean;
-    'canStart': GestureCallback;
-    'direction': string;
-    'disableScroll': boolean;
-    'disabled': boolean;
-    'gestureName': string;
-    'gesturePriority': number;
-    'maxAngle': number;
-    'notCaptured': GestureCallback;
-    'onEnd': GestureCallback;
-    'onMove': GestureCallback;
-    'onPress': GestureCallback;
-    'onStart': GestureCallback;
-    'onWillStart': (_: GestureDetail) => Promise<void>;
-    'passive': boolean;
-    'threshold': number;
-    'type': string;
+
+  namespace StencilComponents {
+    interface IonGesture {
+      'attachTo': string|HTMLElement;
+      'autoBlockAll': boolean;
+      'canStart': GestureCallback;
+      'direction': string;
+      'disableScroll': boolean;
+      'disabled': boolean;
+      'gestureName': string;
+      'gesturePriority': number;
+      'maxAngle': number;
+      'notCaptured': GestureCallback;
+      'onEnd': GestureCallback;
+      'onMove': GestureCallback;
+      'onPress': GestureCallback;
+      'onStart': GestureCallback;
+      'onWillStart': (_: GestureDetail) => Promise<void>;
+      'passive': boolean;
+      'threshold': number;
+      'type': string;
+    }
   }
+
+  interface HTMLIonGestureElement extends StencilComponents.IonGesture, HTMLStencilElement {}
+
   var HTMLIonGestureElement: {
     prototype: HTMLIonGestureElement;
     new (): HTMLIonGestureElement;
@@ -1944,9 +2130,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonGridElement extends HTMLStencilElement {
 
+  namespace StencilComponents {
+    interface IonGrid {
+
+    }
   }
+
+  interface HTMLIonGridElement extends StencilComponents.IonGrid, HTMLStencilElement {}
+
   var HTMLIonGridElement: {
     prototype: HTMLIonGridElement;
     new (): HTMLIonGridElement;
@@ -1971,12 +2163,18 @@ declare global {
 
 
 declare global {
-  interface HTMLIonHeaderElement extends HTMLStencilElement {
-    /**
-     * If true, the header will be translucent. Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
-     */
-    'translucent': boolean;
+
+  namespace StencilComponents {
+    interface IonHeader {
+      /**
+       * If true, the header will be translucent. Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
+       */
+      'translucent': boolean;
+    }
   }
+
+  interface HTMLIonHeaderElement extends StencilComponents.IonHeader, HTMLStencilElement {}
+
   var HTMLIonHeaderElement: {
     prototype: HTMLIonHeaderElement;
     new (): HTMLIonHeaderElement;
@@ -2004,14 +2202,20 @@ declare global {
 
 
 declare global {
-  interface HTMLIonHideWhenElement extends HTMLStencilElement {
-    'mediaQuery': string|undefined;
-    'mode': string|undefined;
-    'or': boolean;
-    'orientation': string|undefined;
-    'platform': string|undefined;
-    'size': string|undefined;
+
+  namespace StencilComponents {
+    interface IonHideWhen {
+      'mediaQuery': string|undefined;
+      'mode': string|undefined;
+      'or': boolean;
+      'orientation': string|undefined;
+      'platform': string|undefined;
+      'size': string|undefined;
+    }
   }
+
+  interface HTMLIonHideWhenElement extends StencilComponents.IonHideWhen, HTMLStencilElement {}
+
   var HTMLIonHideWhenElement: {
     prototype: HTMLIonHideWhenElement;
     new (): HTMLIonHideWhenElement;
@@ -2041,16 +2245,22 @@ declare global {
 
 
 declare global {
-  interface HTMLIonInfiniteScrollContentElement extends HTMLStencilElement {
-    /**
-     * An animated SVG spinner that shows while loading.
-     */
-    'loadingSpinner': string;
-    /**
-     * Optional text to display while loading.
-     */
-    'loadingText': string;
+
+  namespace StencilComponents {
+    interface IonInfiniteScrollContent {
+      /**
+       * An animated SVG spinner that shows while loading.
+       */
+      'loadingSpinner': string;
+      /**
+       * Optional text to display while loading.
+       */
+      'loadingText': string;
+    }
   }
+
+  interface HTMLIonInfiniteScrollContentElement extends StencilComponents.IonInfiniteScrollContent, HTMLStencilElement {}
+
   var HTMLIonInfiniteScrollContentElement: {
     prototype: HTMLIonInfiniteScrollContentElement;
     new (): HTMLIonInfiniteScrollContentElement;
@@ -2082,28 +2292,34 @@ declare global {
 
 
 declare global {
-  interface HTMLIonInfiniteScrollElement extends HTMLStencilElement {
-    /**
-     * Call `complete()` within the `infinite` output event handler when your async operation has completed. For example, the `loading` state is while the app is performing an asynchronous operation, such as receiving more data from an AJAX request to add more items to a data list. Once the data has been received and UI updated, you then call this method to signify that the loading has completed. This method will change the infinite scroll's state from `loading` to `enabled`.
-     */
-    'complete': () => void;
-    /**
-     * If true, the infinite scroll will be hidden and scroll event listeners will be removed.  Call `enable(false)` to disable the infinite scroll from actively trying to receive new data while scrolling. This method is useful when it is known that there is no more data that can be added, and the infinite scroll is no longer needed.
-     */
-    'disabled': boolean;
-    /**
-     * The position of the infinite scroll element. The value can be either `top` or `bottom`. Defaults to `bottom`.
-     */
-    'position': string;
-    /**
-     * The threshold distance from the bottom of the content to call the `infinite` output event when scrolled. The threshold value can be either a percent, or in pixels. For example, use the value of `10%` for the `infinite` output event to get called when the user has scrolled 10% from the bottom of the page. Use the value `100px` when the scroll is within 100 pixels from the bottom of the page. Defaults to `15%`.
-     */
-    'threshold': string;
-    /**
-     * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to change state of infiniteScroll to "complete"
-     */
-    'waitFor': (action: Promise<any>) => void;
+
+  namespace StencilComponents {
+    interface IonInfiniteScroll {
+      /**
+       * Call `complete()` within the `infinite` output event handler when your async operation has completed. For example, the `loading` state is while the app is performing an asynchronous operation, such as receiving more data from an AJAX request to add more items to a data list. Once the data has been received and UI updated, you then call this method to signify that the loading has completed. This method will change the infinite scroll's state from `loading` to `enabled`.
+       */
+      'complete': () => void;
+      /**
+       * If true, the infinite scroll will be hidden and scroll event listeners will be removed.  Call `enable(false)` to disable the infinite scroll from actively trying to receive new data while scrolling. This method is useful when it is known that there is no more data that can be added, and the infinite scroll is no longer needed.
+       */
+      'disabled': boolean;
+      /**
+       * The position of the infinite scroll element. The value can be either `top` or `bottom`. Defaults to `bottom`.
+       */
+      'position': string;
+      /**
+       * The threshold distance from the bottom of the content to call the `infinite` output event when scrolled. The threshold value can be either a percent, or in pixels. For example, use the value of `10%` for the `infinite` output event to get called when the user has scrolled 10% from the bottom of the page. Use the value `100px` when the scroll is within 100 pixels from the bottom of the page. Defaults to `15%`.
+       */
+      'threshold': string;
+      /**
+       * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to change state of infiniteScroll to "complete"
+       */
+      'waitFor': (action: Promise<any>) => void;
+    }
   }
+
+  interface HTMLIonInfiniteScrollElement extends StencilComponents.IonInfiniteScroll, HTMLStencilElement {}
+
   var HTMLIonInfiniteScrollElement: {
     prototype: HTMLIonInfiniteScrollElement;
     new (): HTMLIonInfiniteScrollElement;
@@ -2143,9 +2359,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonInputShimsElement extends HTMLStencilElement {
 
+  namespace StencilComponents {
+    interface IonInputShims {
+
+    }
   }
+
+  interface HTMLIonInputShimsElement extends StencilComponents.IonInputShims, HTMLStencilElement {}
+
   var HTMLIonInputShimsElement: {
     prototype: HTMLIonInputShimsElement;
     new (): HTMLIonInputShimsElement;
@@ -2170,116 +2392,122 @@ declare global {
 
 
 declare global {
-  interface HTMLIonInputElement extends HTMLStencilElement {
-    /**
-     * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
-     */
-    'accept': string;
-    /**
-     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
-     */
-    'autocapitalize': string;
-    /**
-     * Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
-     */
-    'autocomplete': string;
-    /**
-     * Whether autocorrection should be enabled when the user is entering/editing the text value. Defaults to `"off"`.
-     */
-    'autocorrect': string;
-    /**
-     * This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
-     */
-    'autofocus': boolean;
-    /**
-     * If true and the type is `checkbox` or `radio`, the control is selected by default. Defaults to `false`.
-     */
-    'checked': boolean;
-    /**
-     * If true, a clear icon will appear in the input when there is a value. Clicking it clears the input. Defaults to `false`.
-     */
-    'clearInput': boolean;
-    /**
-     * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
-     */
-    'clearOnEdit': boolean;
-    /**
-     * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
-     */
-    'debounce': number;
-    /**
-     * If true, the user cannot interact with the input. Defaults to `false`.
-     */
-    'disabled': boolean;
-    /**
-     * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
-     */
-    'inputmode': string;
-    /**
-     * The maximum value, which must not be less than its minimum (min attribute) value.
-     */
-    'max': string;
-    /**
-     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
-     */
-    'maxlength': number;
-    /**
-     * The minimum value, which must not be greater than its maximum (max attribute) value.
-     */
-    'min': string;
-    /**
-     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
-     */
-    'minlength': number;
-    /**
-     * If true, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
-     */
-    'multiple': boolean;
-    /**
-     * The name of the control, which is submitted with the form data.
-     */
-    'name': string;
-    /**
-     * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
-     */
-    'pattern': string;
-    /**
-     * Instructional text that shows before the input has a value.
-     */
-    'placeholder': string;
-    /**
-     * If true, the user cannot modify the value. Defaults to `false`.
-     */
-    'readonly': boolean;
-    /**
-     * If true, the user must fill in a value before submitting a form.
-     */
-    'required': boolean;
-    /**
-     * This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.
-     */
-    'results': number;
-    /**
-     * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
-     */
-    'size': number;
-    /**
-     * If true, the element will have its spelling and grammar checked. Defaults to `false`.
-     */
-    'spellcheck': boolean;
-    /**
-     * Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.
-     */
-    'step': string;
-    /**
-     * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
-     */
-    'type': string;
-    /**
-     * The value of the input.
-     */
-    'value': string;
+
+  namespace StencilComponents {
+    interface IonInput {
+      /**
+       * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
+       */
+      'accept': string;
+      /**
+       * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
+       */
+      'autocapitalize': string;
+      /**
+       * Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
+       */
+      'autocomplete': string;
+      /**
+       * Whether autocorrection should be enabled when the user is entering/editing the text value. Defaults to `"off"`.
+       */
+      'autocorrect': string;
+      /**
+       * This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
+       */
+      'autofocus': boolean;
+      /**
+       * If true and the type is `checkbox` or `radio`, the control is selected by default. Defaults to `false`.
+       */
+      'checked': boolean;
+      /**
+       * If true, a clear icon will appear in the input when there is a value. Clicking it clears the input. Defaults to `false`.
+       */
+      'clearInput': boolean;
+      /**
+       * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+       */
+      'clearOnEdit': boolean;
+      /**
+       * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+       */
+      'debounce': number;
+      /**
+       * If true, the user cannot interact with the input. Defaults to `false`.
+       */
+      'disabled': boolean;
+      /**
+       * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
+       */
+      'inputmode': string;
+      /**
+       * The maximum value, which must not be less than its minimum (min attribute) value.
+       */
+      'max': string;
+      /**
+       * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+       */
+      'maxlength': number;
+      /**
+       * The minimum value, which must not be greater than its maximum (max attribute) value.
+       */
+      'min': string;
+      /**
+       * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+       */
+      'minlength': number;
+      /**
+       * If true, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
+       */
+      'multiple': boolean;
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name': string;
+      /**
+       * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
+       */
+      'pattern': string;
+      /**
+       * Instructional text that shows before the input has a value.
+       */
+      'placeholder': string;
+      /**
+       * If true, the user cannot modify the value. Defaults to `false`.
+       */
+      'readonly': boolean;
+      /**
+       * If true, the user must fill in a value before submitting a form.
+       */
+      'required': boolean;
+      /**
+       * This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.
+       */
+      'results': number;
+      /**
+       * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
+       */
+      'size': number;
+      /**
+       * If true, the element will have its spelling and grammar checked. Defaults to `false`.
+       */
+      'spellcheck': boolean;
+      /**
+       * Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.
+       */
+      'step': string;
+      /**
+       * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
+       */
+      'type': string;
+      /**
+       * The value of the input.
+       */
+      'value': string;
+    }
   }
+
+  interface HTMLIonInputElement extends StencilComponents.IonInput, HTMLStencilElement {}
+
   var HTMLIonInputElement: {
     prototype: HTMLIonInputElement;
     new (): HTMLIonInputElement;
@@ -2435,16 +2663,22 @@ declare global {
 
 
 declare global {
-  interface HTMLIonItemDividerElement extends HTMLStencilElement {
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
+
+  namespace StencilComponents {
+    interface IonItemDivider {
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+    }
   }
+
+  interface HTMLIonItemDividerElement extends StencilComponents.IonItemDivider, HTMLStencilElement {}
+
   var HTMLIonItemDividerElement: {
     prototype: HTMLIonItemDividerElement;
     new (): HTMLIonItemDividerElement;
@@ -2476,9 +2710,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonItemGroupElement extends HTMLStencilElement {
 
+  namespace StencilComponents {
+    interface IonItemGroup {
+
+    }
   }
+
+  interface HTMLIonItemGroupElement extends StencilComponents.IonItemGroup, HTMLStencilElement {}
+
   var HTMLIonItemGroupElement: {
     prototype: HTMLIonItemGroupElement;
     new (): HTMLIonItemGroupElement;
@@ -2503,28 +2743,34 @@ declare global {
 
 
 declare global {
-  interface HTMLIonItemOptionElement extends HTMLStencilElement {
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * If true, the user cannot interact with the item option. Defaults to `false`.
-     */
-    'disabled': boolean;
-    /**
-     * If true, the option will expand to take up the available width and cover any other options. Defaults to `false`.
-     */
-    'expandable': boolean;
-    /**
-     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-     */
-    'href': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
+
+  namespace StencilComponents {
+    interface IonItemOption {
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * If true, the user cannot interact with the item option. Defaults to `false`.
+       */
+      'disabled': boolean;
+      /**
+       * If true, the option will expand to take up the available width and cover any other options. Defaults to `false`.
+       */
+      'expandable': boolean;
+      /**
+       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+       */
+      'href': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+    }
   }
+
+  interface HTMLIonItemOptionElement extends StencilComponents.IonItemOption, HTMLStencilElement {}
+
   var HTMLIonItemOptionElement: {
     prototype: HTMLIonItemOptionElement;
     new (): HTMLIonItemOptionElement;
@@ -2568,15 +2814,21 @@ declare global {
 
 
 declare global {
-  interface HTMLIonItemOptionsElement extends HTMLStencilElement {
-    'fireSwipeEvent': (value: any) => void;
-    'isRightSide': () => boolean;
-    /**
-     * The side the option button should be on. Defaults to `"right"`. If you have multiple `ion-item-options`, a side must be provided for each.
-     */
-    'side': Side;
-    'width': () => number;
+
+  namespace StencilComponents {
+    interface IonItemOptions {
+      'fireSwipeEvent': (value: any) => void;
+      'isRightSide': () => boolean;
+      /**
+       * The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
+       */
+      'side': Side;
+      'width': () => number;
+    }
   }
+
+  interface HTMLIonItemOptionsElement extends StencilComponents.IonItemOptions, HTMLStencilElement {}
+
   var HTMLIonItemOptionsElement: {
     prototype: HTMLIonItemOptionsElement;
     new (): HTMLIonItemOptionsElement;
@@ -2599,7 +2851,7 @@ declare global {
        */
       'onIonSwipe'?: (event: CustomEvent) => void;
       /**
-       * The side the option button should be on. Defaults to `"right"`. If you have multiple `ion-item-options`, a side must be provided for each.
+       * The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
        */
       'side'?: Side;
     }
@@ -2608,24 +2860,30 @@ declare global {
 
 
 declare global {
-  interface HTMLIonItemSlidingElement extends HTMLStencilElement {
-    /**
-     * Close the sliding item. Items can also be closed from the [List](../../list/List).
-     */
-    'close': () => void;
-    /**
-     * Close all of the sliding items in the list. Items can also be closed from the [List](../../list/List).
-     */
-    'closeOpened': () => boolean;
-    /**
-     * Get the amount the item is open in pixels.
-     */
-    'getOpenAmount': () => number;
-    /**
-     * Get the ratio of the open amount of the item compared to the width of the options. If the number returned is positive, then the options on the right side are open. If the number returned is negative, then the options on the left side are open. If the absolute value of the number is greater than 1, the item is open more than the width of the options.
-     */
-    'getSlidingRatio': () => number;
+
+  namespace StencilComponents {
+    interface IonItemSliding {
+      /**
+       * Close the sliding item. Items can also be closed from the [List](../../list/List).
+       */
+      'close': () => void;
+      /**
+       * Close all of the sliding items in the list. Items can also be closed from the [List](../../list/List).
+       */
+      'closeOpened': () => boolean;
+      /**
+       * Get the amount the item is open in pixels.
+       */
+      'getOpenAmount': () => number;
+      /**
+       * Get the ratio of the open amount of the item compared to the width of the options. If the number returned is positive, then the options on the right side are open. If the number returned is negative, then the options on the left side are open. If the absolute value of the number is greater than 1, the item is open more than the width of the options.
+       */
+      'getSlidingRatio': () => number;
+    }
   }
+
+  interface HTMLIonItemSlidingElement extends StencilComponents.IonItemSliding, HTMLStencilElement {}
+
   var HTMLIonItemSlidingElement: {
     prototype: HTMLIonItemSlidingElement;
     new (): HTMLIonItemSlidingElement;
@@ -2653,36 +2911,42 @@ declare global {
 
 
 declare global {
-  interface HTMLIonItemElement extends HTMLStencilElement {
-    /**
-     * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
-     */
-    'button': boolean;
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
-     */
-    'detail': boolean;
-    /**
-     * If true, the user cannot interact with the item. Defaults to `false`.
-     */
-    'disabled': boolean;
-    /**
-     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-     */
-    'href': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * When using a router, it specifies the transition direction when navigating a another page usign `href`.
-     */
-    'routerDirection': 'forward' | 'back';
+
+  namespace StencilComponents {
+    interface IonItem {
+      /**
+       * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
+       */
+      'button': boolean;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
+       */
+      'detail': boolean;
+      /**
+       * If true, the user cannot interact with the item. Defaults to `false`.
+       */
+      'disabled': boolean;
+      /**
+       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+       */
+      'href': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       */
+      'routerDirection': 'forward' | 'back';
+    }
   }
+
+  interface HTMLIonItemElement extends StencilComponents.IonItem, HTMLStencilElement {}
+
   var HTMLIonItemElement: {
     prototype: HTMLIonItemElement;
     new (): HTMLIonItemElement;
@@ -2734,29 +2998,27 @@ declare global {
 
 
 declare global {
-  interface HTMLIonLabelElement extends HTMLStencilElement {
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * If true, the label will sit alongside an input. Defaults to `false`.
-     */
-    'fixed': boolean;
-    /**
-     * If true, the label will float above an input when the value is empty or the input is focused. Defaults to `false`.
-     */
-    'floating': boolean;
-    'getText': () => string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * If true, the label will be stacked above an input. Defaults to `false`.
-     */
-    'stacked': boolean;
+
+  namespace StencilComponents {
+    interface IonLabel {
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      'getText': () => string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * The position determines where and how the label behaves inside an item. Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
+       */
+      'position': 'inline' | 'fixed' | 'stacked' | 'floating' | undefined;
+    }
   }
+
+  interface HTMLIonLabelElement extends StencilComponents.IonLabel, HTMLStencilElement {}
+
   var HTMLIonLabelElement: {
     prototype: HTMLIonLabelElement;
     new (): HTMLIonLabelElement;
@@ -2779,14 +3041,6 @@ declare global {
        */
       'color'?: string;
       /**
-       * If true, the label will sit alongside an input. Defaults to `false`.
-       */
-      'fixed'?: boolean;
-      /**
-       * If true, the label will float above an input when the value is empty or the input is focused. Defaults to `false`.
-       */
-      'floating'?: boolean;
-      /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
       'mode'?: 'ios' | 'md';
@@ -2795,25 +3049,31 @@ declare global {
        */
       'onIonStyle'?: (event: CustomEvent) => void;
       /**
-       * If true, the label will be stacked above an input. Defaults to `false`.
+       * The position determines where and how the label behaves inside an item. Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
        */
-      'stacked'?: boolean;
+      'position'?: 'inline' | 'fixed' | 'stacked' | 'floating' | undefined;
     }
   }
 }
 
 
 declare global {
-  interface HTMLIonListHeaderElement extends HTMLStencilElement {
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
+
+  namespace StencilComponents {
+    interface IonListHeader {
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+    }
   }
+
+  interface HTMLIonListHeaderElement extends StencilComponents.IonListHeader, HTMLStencilElement {}
+
   var HTMLIonListHeaderElement: {
     prototype: HTMLIonListHeaderElement;
     new (): HTMLIonListHeaderElement;
@@ -2845,20 +3105,26 @@ declare global {
 
 
 declare global {
-  interface HTMLIonListElement extends HTMLStencilElement {
-    /**
-     * Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding). Returns a boolean value of whether it closed an item or not.
-     */
-    'closeSlidingItems': () => boolean;
-    /**
-     * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
-     */
-    'getOpenItem': () => ItemSliding | null;
-    /**
-     * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
-     */
-    'setOpenItem': (itemSliding: ItemSliding | null) => void;
+
+  namespace StencilComponents {
+    interface IonList {
+      /**
+       * Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding). Returns a boolean value of whether it closed an item or not.
+       */
+      'closeSlidingItems': () => boolean;
+      /**
+       * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
+       */
+      'getOpenItem': () => ItemSliding | null;
+      /**
+       * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
+       */
+      'setOpenItem': (itemSliding: ItemSliding | null) => void;
+    }
   }
+
+  interface HTMLIonListElement extends StencilComponents.IonList, HTMLStencilElement {}
+
   var HTMLIonListElement: {
     prototype: HTMLIonListElement;
     new (): HTMLIonListElement;
@@ -2883,11 +3149,17 @@ declare global {
 
 
 declare global {
-  interface HTMLIonLoadingControllerElement extends HTMLStencilElement {
-    'create': (opts?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>;
-    'dismiss': (data?: any, role?: string | undefined, loadingId?: number) => Promise<void>;
-    'getTop': () => HTMLIonLoadingElement;
+
+  namespace StencilComponents {
+    interface IonLoadingController {
+      'create': (opts?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>;
+      'dismiss': (data?: any, role?: string | undefined, loadingId?: number) => Promise<void>;
+      'getTop': () => HTMLIonLoadingElement;
+    }
   }
+
+  interface HTMLIonLoadingControllerElement extends StencilComponents.IonLoadingController, HTMLStencilElement {}
+
   var HTMLIonLoadingControllerElement: {
     prototype: HTMLIonLoadingControllerElement;
     new (): HTMLIonLoadingControllerElement;
@@ -2912,70 +3184,76 @@ declare global {
 
 
 declare global {
-  interface HTMLIonLoadingElement extends HTMLStencilElement {
-    /**
-     * Optional text content to display in the loading indicator.
-     */
-    'content': string;
-    /**
-     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-     */
-    'cssClass': string | string[];
-    /**
-     * Dismiss the loading overlay after it has been presented.
-     */
-    'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
-    /**
-     * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
-     */
-    'dismissOnPageChange': boolean;
-    /**
-     * Number of milliseconds to wait before dismissing the loading indicator.
-     */
-    'duration': number;
-    /**
-     * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
-     */
-    'enableBackdropDismiss': boolean;
-    /**
-     * Animation to use when the loading indicator is presented.
-     */
-    'enterAnimation': AnimationBuilder;
-    'keyboardClose': boolean;
-    /**
-     * Animation to use when the loading indicator is dismissed.
-     */
-    'leaveAnimation': AnimationBuilder;
-    /**
-     * Returns a promise that resolves when the loading did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await loading.onDidDismiss(); ```
-     */
-    'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
-    /**
-     * Returns a promise that resolves when the loading will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await loading.onWillDismiss(); ```
-     */
-    'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
-    'overlayId': number;
-    /**
-     * Present the loading overlay after it has been created.
-     */
-    'present': () => Promise<void>;
-    /**
-     * If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
-     */
-    'showBackdrop': boolean;
-    /**
-     * The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
-     */
-    'spinner': string;
-    /**
-     * If true, the loading indicator will be translucent. Defaults to `false`.
-     */
-    'translucent': boolean;
-    /**
-     * If true, the loading indicator will animate. Defaults to `true`.
-     */
-    'willAnimate': boolean;
+
+  namespace StencilComponents {
+    interface IonLoading {
+      /**
+       * Optional text content to display in the loading indicator.
+       */
+      'content': string;
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass': string | string[];
+      /**
+       * Dismiss the loading overlay after it has been presented.
+       */
+      'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
+      /**
+       * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
+       */
+      'dismissOnPageChange': boolean;
+      /**
+       * Number of milliseconds to wait before dismissing the loading indicator.
+       */
+      'duration': number;
+      /**
+       * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
+       */
+      'enableBackdropDismiss': boolean;
+      /**
+       * Animation to use when the loading indicator is presented.
+       */
+      'enterAnimation': AnimationBuilder;
+      'keyboardClose': boolean;
+      /**
+       * Animation to use when the loading indicator is dismissed.
+       */
+      'leaveAnimation': AnimationBuilder;
+      /**
+       * Returns a promise that resolves when the loading did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await loading.onDidDismiss(); ```
+       */
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      /**
+       * Returns a promise that resolves when the loading will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await loading.onWillDismiss(); ```
+       */
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'overlayId': number;
+      /**
+       * Present the loading overlay after it has been created.
+       */
+      'present': () => Promise<void>;
+      /**
+       * If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
+       */
+      'showBackdrop': boolean;
+      /**
+       * The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
+       */
+      'spinner': string;
+      /**
+       * If true, the loading indicator will be translucent. Defaults to `false`.
+       */
+      'translucent': boolean;
+      /**
+       * If true, the loading indicator will animate. Defaults to `true`.
+       */
+      'willAnimate': boolean;
+    }
   }
+
+  interface HTMLIonLoadingElement extends StencilComponents.IonLoading, HTMLStencilElement {}
+
   var HTMLIonLoadingElement: {
     prototype: HTMLIonLoadingElement;
     new (): HTMLIonLoadingElement;
@@ -3069,16 +3347,22 @@ declare global {
 
 
 declare global {
-  interface HTMLIonMenuButtonElement extends HTMLStencilElement {
-    /**
-     * Automatically hides the menu button when the corresponding menu is not active
-     */
-    'autoHide': boolean;
-    /**
-     * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
-     */
-    'menu': string;
+
+  namespace StencilComponents {
+    interface IonMenuButton {
+      /**
+       * Automatically hides the menu button when the corresponding menu is not active
+       */
+      'autoHide': boolean;
+      /**
+       * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
+       */
+      'menu': string;
+    }
   }
+
+  interface HTMLIonMenuButtonElement extends StencilComponents.IonMenuButton, HTMLStencilElement {}
+
   var HTMLIonMenuButtonElement: {
     prototype: HTMLIonMenuButtonElement;
     new (): HTMLIonMenuButtonElement;
@@ -3110,43 +3394,49 @@ declare global {
 
 
 declare global {
-  interface HTMLIonMenuControllerElement extends HTMLStencilElement {
-    '_register': (menu: Menu) => void;
-    '_setActiveMenu': (menu: Menu) => void;
-    '_setOpen': (menu: Menu, shouldOpen: boolean, animated: boolean) => Promise<boolean>;
-    '_unregister': (menu: Menu) => void;
-    /**
-     * Programatically close the Menu. If no `menuId` is given as the first argument then it'll close any menu which is open. If a `menuId` is given then it'll close that exact menu.
-     */
-    'close': (menuId?: string | undefined) => Promise<boolean>;
-    'createAnimation': (type: string, menuCmp: Menu) => Promise<Animation>;
-    /**
-     * Used to enable or disable a menu. For example, there could be multiple left menus, but only one of them should be able to be opened at the same time. If there are multiple menus on the same side, then enabling one menu will also automatically disable all the others that are on the same side.
-     */
-    'enable': (shouldEnable: boolean, menuId?: string | undefined) => HTMLIonMenuElement | null;
-    /**
-     * Used to get a menu instance. If a `menuId` is not provided then it'll return the first menu found. If a `menuId` is `left` or `right`, then it'll return the enabled menu on that side. Otherwise, if a `menuId` is provided, then it'll try to find the menu using the menu's `id` property. If a menu is not found then it'll return `null`.
-     */
-    'get': (menuId?: string | undefined) => HTMLIonMenuElement | null;
-    'getMenus': () => HTMLIonMenuElement[];
-    'getOpen': () => HTMLIonMenuElement | null;
-    'isAnimating': () => boolean;
-    'isEnabled': (menuId?: string | undefined) => boolean;
-    'isOpen': (menuId?: string | undefined) => boolean;
-    /**
-     * Programatically open the Menu.
-     */
-    'open': (menuId?: string | undefined) => Promise<boolean>;
-    'registerAnimation': (name: string, animation: AnimationBuilder) => void;
-    /**
-     * Used to enable or disable the ability to swipe open the menu.
-     */
-    'swipeEnable': (shouldEnable: boolean, menuId?: string | undefined) => HTMLIonMenuElement | null;
-    /**
-     * Toggle the menu. If it's closed, it will open, and if opened, it will close.
-     */
-    'toggle': (menuId?: string | undefined) => Promise<boolean>;
+
+  namespace StencilComponents {
+    interface IonMenuController {
+      '_register': (menu: Menu) => void;
+      '_setActiveMenu': (menu: Menu) => void;
+      '_setOpen': (menu: Menu, shouldOpen: boolean, animated: boolean) => Promise<boolean>;
+      '_unregister': (menu: Menu) => void;
+      /**
+       * Programatically close the Menu. If no `menuId` is given as the first argument then it'll close any menu which is open. If a `menuId` is given then it'll close that exact menu.
+       */
+      'close': (menuId?: string | undefined) => Promise<boolean>;
+      'createAnimation': (type: string, menuCmp: Menu) => Promise<Animation>;
+      /**
+       * Used to enable or disable a menu. For example, there could be multiple left menus, but only one of them should be able to be opened at the same time. If there are multiple menus on the same side, then enabling one menu will also automatically disable all the others that are on the same side.
+       */
+      'enable': (shouldEnable: boolean, menuId?: string | undefined) => HTMLIonMenuElement | null;
+      /**
+       * Used to get a menu instance. If a `menuId` is not provided then it'll return the first menu found. If a `menuId` is `left` or `right`, then it'll return the enabled menu on that side. Otherwise, if a `menuId` is provided, then it'll try to find the menu using the menu's `id` property. If a menu is not found then it'll return `null`.
+       */
+      'get': (menuId?: string | undefined) => HTMLIonMenuElement | null;
+      'getMenus': () => HTMLIonMenuElement[];
+      'getOpen': () => HTMLIonMenuElement | null;
+      'isAnimating': () => boolean;
+      'isEnabled': (menuId?: string | undefined) => boolean;
+      'isOpen': (menuId?: string | undefined) => boolean;
+      /**
+       * Programatically open the Menu.
+       */
+      'open': (menuId?: string | undefined) => Promise<boolean>;
+      'registerAnimation': (name: string, animation: AnimationBuilder) => void;
+      /**
+       * Used to enable or disable the ability to swipe open the menu.
+       */
+      'swipeEnable': (shouldEnable: boolean, menuId?: string | undefined) => HTMLIonMenuElement | null;
+      /**
+       * Toggle the menu. If it's closed, it will open, and if opened, it will close.
+       */
+      'toggle': (menuId?: string | undefined) => Promise<boolean>;
+    }
   }
+
+  interface HTMLIonMenuControllerElement extends StencilComponents.IonMenuController, HTMLStencilElement {}
+
   var HTMLIonMenuControllerElement: {
     prototype: HTMLIonMenuControllerElement;
     new (): HTMLIonMenuControllerElement;
@@ -3171,16 +3461,22 @@ declare global {
 
 
 declare global {
-  interface HTMLIonMenuToggleElement extends HTMLStencilElement {
-    /**
-     * Automatically hides the content when the corresponding menu is not active
-     */
-    'autoHide': boolean;
-    /**
-     * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
-     */
-    'menu': string;
+
+  namespace StencilComponents {
+    interface IonMenuToggle {
+      /**
+       * Automatically hides the content when the corresponding menu is not active
+       */
+      'autoHide': boolean;
+      /**
+       * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
+       */
+      'menu': string;
+    }
   }
+
+  interface HTMLIonMenuToggleElement extends StencilComponents.IonMenuToggle, HTMLStencilElement {}
+
   var HTMLIonMenuToggleElement: {
     prototype: HTMLIonMenuToggleElement;
     new (): HTMLIonMenuToggleElement;
@@ -3212,43 +3508,49 @@ declare global {
 
 
 declare global {
-  interface HTMLIonMenuElement extends HTMLStencilElement {
-    'close': (animated?: boolean) => Promise<boolean>;
-    /**
-     * The content's id the menu should use.
-     */
-    'contentId': string;
-    /**
-     * If true, the menu is disabled. Default `false`.
-     */
-    'disabled': boolean;
-    'isActive': () => boolean;
-    'isOpen': () => boolean;
-    'maxEdgeStart': number;
-    /**
-     * An id for the menu.
-     */
-    'menuId': string;
-    'open': (animated?: boolean) => Promise<boolean>;
-    /**
-     * If true, the menu will persist on child pages.
-     */
-    'persistent': boolean;
-    'setOpen': (shouldOpen: boolean, animated?: boolean) => Promise<boolean>;
-    /**
-     * Which side of the view the menu should be placed. Default `"start"`.
-     */
-    'side': Side;
-    /**
-     * If true, swiping the menu is enabled. Default `true`.
-     */
-    'swipeEnabled': boolean;
-    'toggle': (animated?: boolean) => Promise<boolean>;
-    /**
-     * The display type of the menu. Default varies based on the mode, see the `menuType` in the [config](../../config/Config). Available options: `"overlay"`, `"reveal"`, `"push"`.
-     */
-    'type': string;
+
+  namespace StencilComponents {
+    interface IonMenu {
+      'close': (animated?: boolean) => Promise<boolean>;
+      /**
+       * The content's id the menu should use.
+       */
+      'contentId': string;
+      /**
+       * If true, the menu is disabled. Default `false`.
+       */
+      'disabled': boolean;
+      'isActive': () => boolean;
+      'isOpen': () => boolean;
+      'maxEdgeStart': number;
+      /**
+       * An id for the menu.
+       */
+      'menuId': string;
+      'open': (animated?: boolean) => Promise<boolean>;
+      /**
+       * If true, the menu will persist on child pages.
+       */
+      'persistent': boolean;
+      'setOpen': (shouldOpen: boolean, animated?: boolean) => Promise<boolean>;
+      /**
+       * Which side of the view the menu should be placed. Default `"start"`.
+       */
+      'side': Side;
+      /**
+       * If true, swiping the menu is enabled. Default `true`.
+       */
+      'swipeEnabled': boolean;
+      'toggle': (animated?: boolean) => Promise<boolean>;
+      /**
+       * The display type of the menu. Default varies based on the mode, see the `menuType` in the [config](../../config/Config). Available options: `"overlay"`, `"reveal"`, `"push"`.
+       */
+      'type': string;
+    }
   }
+
+  interface HTMLIonMenuElement extends StencilComponents.IonMenu, HTMLStencilElement {}
+
   var HTMLIonMenuElement: {
     prototype: HTMLIonMenuElement;
     new (): HTMLIonMenuElement;
@@ -3310,11 +3612,17 @@ declare global {
 
 
 declare global {
-  interface HTMLIonModalControllerElement extends HTMLStencilElement {
-    'create': (opts?: ModalOptions | undefined) => Promise<HTMLIonModalElement>;
-    'dismiss': (data?: any, role?: string | undefined, modalId?: number) => Promise<void>;
-    'getTop': () => HTMLIonModalElement;
+
+  namespace StencilComponents {
+    interface IonModalController {
+      'create': (opts?: ModalOptions | undefined) => Promise<HTMLIonModalElement>;
+      'dismiss': (data?: any, role?: string | undefined, modalId?: number) => Promise<void>;
+      'getTop': () => HTMLIonModalElement;
+    }
   }
+
+  interface HTMLIonModalControllerElement extends StencilComponents.IonModalController, HTMLStencilElement {}
+
   var HTMLIonModalControllerElement: {
     prototype: HTMLIonModalControllerElement;
     new (): HTMLIonModalControllerElement;
@@ -3339,67 +3647,73 @@ declare global {
 
 
 declare global {
-  interface HTMLIonModalElement extends HTMLStencilElement {
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * The component to display inside of the modal.
-     */
-    'component': ComponentRef;
-    /**
-     * The data to pass to the modal component.
-     */
-    'componentProps': ComponentProps;
-    /**
-     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-     */
-    'cssClass': string | string[];
-    'delegate': FrameworkDelegate;
-    /**
-     * Dismiss the modal overlay after it has been presented.
-     */
-    'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
-    /**
-     * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
-     */
-    'enableBackdropDismiss': boolean;
-    /**
-     * Animation to use when the modal is presented.
-     */
-    'enterAnimation': AnimationBuilder;
-    'keyboardClose': boolean;
-    /**
-     * Animation to use when the modal is dismissed.
-     */
-    'leaveAnimation': AnimationBuilder;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await modal.onDidDismiss(); ```
-     */
-    'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
-    /**
-     * Returns a promise that resolves when the modal will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await modal.onWillDismiss(); ```
-     */
-    'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
-    'overlayId': number;
-    /**
-     * Present the modal overlay after it has been created.
-     */
-    'present': () => Promise<void>;
-    /**
-     * If true, a backdrop will be displayed behind the modal. Defaults to `true`.
-     */
-    'showBackdrop': boolean;
-    /**
-     * If true, the modal will animate. Defaults to `true`.
-     */
-    'willAnimate': boolean;
+
+  namespace StencilComponents {
+    interface IonModal {
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * The component to display inside of the modal.
+       */
+      'component': ComponentRef;
+      /**
+       * The data to pass to the modal component.
+       */
+      'componentProps': ComponentProps;
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass': string | string[];
+      'delegate': FrameworkDelegate;
+      /**
+       * Dismiss the modal overlay after it has been presented.
+       */
+      'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
+      /**
+       * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'enableBackdropDismiss': boolean;
+      /**
+       * Animation to use when the modal is presented.
+       */
+      'enterAnimation': AnimationBuilder;
+      'keyboardClose': boolean;
+      /**
+       * Animation to use when the modal is dismissed.
+       */
+      'leaveAnimation': AnimationBuilder;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await modal.onDidDismiss(); ```
+       */
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      /**
+       * Returns a promise that resolves when the modal will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await modal.onWillDismiss(); ```
+       */
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'overlayId': number;
+      /**
+       * Present the modal overlay after it has been created.
+       */
+      'present': () => Promise<void>;
+      /**
+       * If true, a backdrop will be displayed behind the modal. Defaults to `true`.
+       */
+      'showBackdrop': boolean;
+      /**
+       * If true, the modal will animate. Defaults to `true`.
+       */
+      'willAnimate': boolean;
+    }
   }
+
+  interface HTMLIonModalElement extends StencilComponents.IonModal, HTMLStencilElement {}
+
   var HTMLIonModalElement: {
     prototype: HTMLIonModalElement;
     new (): HTMLIonModalElement;
@@ -3490,9 +3804,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonNavPopElement extends HTMLStencilElement {
 
+  namespace StencilComponents {
+    interface IonNavPop {
+
+    }
   }
+
+  interface HTMLIonNavPopElement extends StencilComponents.IonNavPop, HTMLStencilElement {}
+
   var HTMLIonNavPopElement: {
     prototype: HTMLIonNavPopElement;
     new (): HTMLIonNavPopElement;
@@ -3517,11 +3837,17 @@ declare global {
 
 
 declare global {
-  interface HTMLIonNavPushElement extends HTMLStencilElement {
-    'component': NavComponent;
-    'componentProps': ComponentProps;
-    'url': string;
+
+  namespace StencilComponents {
+    interface IonNavPush {
+      'component': NavComponent;
+      'componentProps': ComponentProps;
+      'url': string;
+    }
   }
+
+  interface HTMLIonNavPushElement extends StencilComponents.IonNavPush, HTMLStencilElement {}
+
   var HTMLIonNavPushElement: {
     prototype: HTMLIonNavPushElement;
     new (): HTMLIonNavPushElement;
@@ -3548,11 +3874,17 @@ declare global {
 
 
 declare global {
-  interface HTMLIonNavSetRootElement extends HTMLStencilElement {
-    'component': NavComponent;
-    'componentProps': ComponentProps;
-    'url': string;
+
+  namespace StencilComponents {
+    interface IonNavSetRoot {
+      'component': NavComponent;
+      'componentProps': ComponentProps;
+      'url': string;
+    }
   }
+
+  interface HTMLIonNavSetRootElement extends StencilComponents.IonNavSetRoot, HTMLStencilElement {}
+
   var HTMLIonNavSetRootElement: {
     prototype: HTMLIonNavSetRootElement;
     new (): HTMLIonNavSetRootElement;
@@ -3579,29 +3911,35 @@ declare global {
 
 
 declare global {
-  interface HTMLIonNavElement extends HTMLStencilElement {
-    'animated': boolean;
-    'canGoBack': (view?: ViewController | undefined) => boolean;
-    'delegate': FrameworkDelegate|undefined;
-    'getActive': () => ViewController | undefined;
-    'getByIndex': (index: number) => ViewController | undefined;
-    'getPrevious': (view?: ViewController | undefined) => ViewController | undefined;
-    'getRouteId': () => RouteID | undefined;
-    'insert': (insertIndex: number, component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'insertPages': (insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'length': () => number;
-    'pop': (opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'popTo': (indexOrViewCtrl: number | ViewController, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'popToRoot': (opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'push': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'removeIndex': (startIndex: number, removeCount?: number, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'root': NavComponent|undefined;
-    'rootParams': ComponentProps|undefined;
-    'setPages': (views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'setRoot': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
-    'swipeBackEnabled': boolean;
+
+  namespace StencilComponents {
+    interface IonNav {
+      'animated': boolean;
+      'canGoBack': (view?: ViewController | undefined) => boolean;
+      'delegate': FrameworkDelegate|undefined;
+      'getActive': () => ViewController | undefined;
+      'getByIndex': (index: number) => ViewController | undefined;
+      'getPrevious': (view?: ViewController | undefined) => ViewController | undefined;
+      'getRouteId': () => RouteID | undefined;
+      'insert': (insertIndex: number, component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      'insertPages': (insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      'length': () => number;
+      'pop': (opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      'popTo': (indexOrViewCtrl: number | ViewController, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      'popToRoot': (opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      'push': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      'removeIndex': (startIndex: number, removeCount?: number, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      'root': NavComponent|undefined;
+      'rootParams': ComponentProps|undefined;
+      'setPages': (views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      'setRoot': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
+      'swipeBackEnabled': boolean;
+    }
   }
+
+  interface HTMLIonNavElement extends StencilComponents.IonNav, HTMLStencilElement {}
+
   var HTMLIonNavElement: {
     prototype: HTMLIonNavElement;
     new (): HTMLIonNavElement;
@@ -3632,16 +3970,22 @@ declare global {
 
 
 declare global {
-  interface HTMLIonNoteElement extends HTMLStencilElement {
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
+
+  namespace StencilComponents {
+    interface IonNote {
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+    }
   }
+
+  interface HTMLIonNoteElement extends StencilComponents.IonNote, HTMLStencilElement {}
+
   var HTMLIonNoteElement: {
     prototype: HTMLIonNoteElement;
     new (): HTMLIonNoteElement;
@@ -3673,9 +4017,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonPickerColumnElement extends HTMLStencilElement {
-    'col': PickerColumn;
+
+  namespace StencilComponents {
+    interface IonPickerColumn {
+      'col': PickerColumn;
+    }
   }
+
+  interface HTMLIonPickerColumnElement extends StencilComponents.IonPickerColumn, HTMLStencilElement {}
+
   var HTMLIonPickerColumnElement: {
     prototype: HTMLIonPickerColumnElement;
     new (): HTMLIonPickerColumnElement;
@@ -3700,11 +4050,17 @@ declare global {
 
 
 declare global {
-  interface HTMLIonPickerControllerElement extends HTMLStencilElement {
-    'create': (opts?: PickerOptions | undefined) => Promise<HTMLIonPickerElement>;
-    'dismiss': (data?: any, role?: string | undefined, pickerId?: number) => Promise<void>;
-    'getTop': () => HTMLIonPickerElement;
+
+  namespace StencilComponents {
+    interface IonPickerController {
+      'create': (opts?: PickerOptions | undefined) => Promise<HTMLIonPickerElement>;
+      'dismiss': (data?: any, role?: string | undefined, pickerId?: number) => Promise<void>;
+      'getTop': () => HTMLIonPickerElement;
+    }
   }
+
+  interface HTMLIonPickerControllerElement extends StencilComponents.IonPickerController, HTMLStencilElement {}
+
   var HTMLIonPickerControllerElement: {
     prototype: HTMLIonPickerControllerElement;
     new (): HTMLIonPickerControllerElement;
@@ -3729,66 +4085,72 @@ declare global {
 
 
 declare global {
-  interface HTMLIonPickerElement extends HTMLStencilElement {
-    'addButton': (button: PickerButton) => void;
-    'addColumn': (column: PickerColumn) => void;
-    /**
-     * Array of buttons to be displayed at the top of the picker.
-     */
-    'buttons': PickerButton[];
-    /**
-     * Array of columns to be displayed in the picker.
-     */
-    'columns': PickerColumn[];
-    /**
-     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-     */
-    'cssClass': string | string[];
-    /**
-     * Dismiss the picker overlay after it has been presented.
-     */
-    'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
-    /**
-     * Number of milliseconds to wait before dismissing the picker.
-     */
-    'duration': number;
-    /**
-     * If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
-     */
-    'enableBackdropDismiss': boolean;
-    /**
-     * Animation to use when the picker is presented.
-     */
-    'enterAnimation': AnimationBuilder;
-    'getColumn': (name: string) => PickerColumn | undefined;
-    'getColumns': () => PickerColumn[];
-    'keyboardClose': boolean;
-    /**
-     * Animation to use when the picker is dismissed.
-     */
-    'leaveAnimation': AnimationBuilder;
-    /**
-     * Returns a promise that resolves when the picker did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await picker.onDidDismiss(); ```
-     */
-    'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
-    /**
-     * Returns a promise that resolves when the picker will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await picker.onWillDismiss(); ```
-     */
-    'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
-    'overlayId': number;
-    /**
-     * Present the picker overlay after it has been created.
-     */
-    'present': () => Promise<void>;
-    /**
-     * If true, a backdrop will be displayed behind the picker. Defaults to `true`.
-     */
-    'showBackdrop': boolean;
-    /**
-     * If true, the picker will animate. Defaults to `true`.
-     */
-    'willAnimate': boolean;
+
+  namespace StencilComponents {
+    interface IonPicker {
+      'addButton': (button: PickerButton) => void;
+      'addColumn': (column: PickerColumn) => void;
+      /**
+       * Array of buttons to be displayed at the top of the picker.
+       */
+      'buttons': PickerButton[];
+      /**
+       * Array of columns to be displayed in the picker.
+       */
+      'columns': PickerColumn[];
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass': string | string[];
+      /**
+       * Dismiss the picker overlay after it has been presented.
+       */
+      'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
+      /**
+       * Number of milliseconds to wait before dismissing the picker.
+       */
+      'duration': number;
+      /**
+       * If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'enableBackdropDismiss': boolean;
+      /**
+       * Animation to use when the picker is presented.
+       */
+      'enterAnimation': AnimationBuilder;
+      'getColumn': (name: string) => PickerColumn | undefined;
+      'getColumns': () => PickerColumn[];
+      'keyboardClose': boolean;
+      /**
+       * Animation to use when the picker is dismissed.
+       */
+      'leaveAnimation': AnimationBuilder;
+      /**
+       * Returns a promise that resolves when the picker did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await picker.onDidDismiss(); ```
+       */
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      /**
+       * Returns a promise that resolves when the picker will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await picker.onWillDismiss(); ```
+       */
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'overlayId': number;
+      /**
+       * Present the picker overlay after it has been created.
+       */
+      'present': () => Promise<void>;
+      /**
+       * If true, a backdrop will be displayed behind the picker. Defaults to `true`.
+       */
+      'showBackdrop': boolean;
+      /**
+       * If true, the picker will animate. Defaults to `true`.
+       */
+      'willAnimate': boolean;
+    }
   }
+
+  interface HTMLIonPickerElement extends StencilComponents.IonPicker, HTMLStencilElement {}
+
   var HTMLIonPickerElement: {
     prototype: HTMLIonPickerElement;
     new (): HTMLIonPickerElement;
@@ -3874,24 +4236,30 @@ declare global {
 
 
 declare global {
-  interface HTMLIonPlatformElement extends HTMLStencilElement {
-    'getQueryParam': (param: string) => string;
-    /**
-     * Depending on the platform the user is on, `is(platformName)` will return `true` or `false`. Note that the same app can return `true` for more than one platform name. For example, an app running from an iPad would return `true` for the platform names: `mobile`, `ios`, `ipad`, and `tablet`. Additionally, if the app was running from Cordova then `cordova` would be true, and if it was running from a web browser on the iPad then `mobileweb` would be `true`.  * ``` import { Platform } from 'ionic-angular';
-     */
-    'is': (platformName: string) => boolean;
-    /**
-     * Returns whether the device is in landscape orientation
-     */
-    'isLandscape': () => boolean;
-    /**
-     * Returns whether the device is in portration orientation
-     */
-    'isPortrait': () => boolean;
-    'platforms': () => string[];
-    'ready': () => any;
-    'versions': () => PlatformConfig[];
+
+  namespace StencilComponents {
+    interface IonPlatform {
+      'getQueryParam': (param: string) => string;
+      /**
+       * Depending on the platform the user is on, `is(platformName)` will return `true` or `false`. Note that the same app can return `true` for more than one platform name. For example, an app running from an iPad would return `true` for the platform names: `mobile`, `ios`, `ipad`, and `tablet`. Additionally, if the app was running from Cordova then `cordova` would be true, and if it was running from a web browser on the iPad then `mobileweb` would be `true`.  * ``` import { Platform } from 'ionic-angular';
+       */
+      'is': (platformName: string) => boolean;
+      /**
+       * Returns whether the device is in landscape orientation
+       */
+      'isLandscape': () => boolean;
+      /**
+       * Returns whether the device is in portration orientation
+       */
+      'isPortrait': () => boolean;
+      'platforms': () => string[];
+      'ready': () => any;
+      'versions': () => PlatformConfig[];
+    }
   }
+
+  interface HTMLIonPlatformElement extends StencilComponents.IonPlatform, HTMLStencilElement {}
+
   var HTMLIonPlatformElement: {
     prototype: HTMLIonPlatformElement;
     new (): HTMLIonPlatformElement;
@@ -3916,11 +4284,17 @@ declare global {
 
 
 declare global {
-  interface HTMLIonPopoverControllerElement extends HTMLStencilElement {
-    'create': (opts?: PopoverOptions | undefined) => Promise<HTMLIonPopoverElement>;
-    'dismiss': (data?: any, role?: string | undefined, popoverId?: number) => Promise<void>;
-    'getTop': () => HTMLIonPopoverElement;
+
+  namespace StencilComponents {
+    interface IonPopoverController {
+      'create': (opts?: PopoverOptions | undefined) => Promise<HTMLIonPopoverElement>;
+      'dismiss': (data?: any, role?: string | undefined, popoverId?: number) => Promise<void>;
+      'getTop': () => HTMLIonPopoverElement;
+    }
   }
+
+  interface HTMLIonPopoverControllerElement extends StencilComponents.IonPopoverController, HTMLStencilElement {}
+
   var HTMLIonPopoverControllerElement: {
     prototype: HTMLIonPopoverControllerElement;
     new (): HTMLIonPopoverControllerElement;
@@ -3945,75 +4319,81 @@ declare global {
 
 
 declare global {
-  interface HTMLIonPopoverElement extends HTMLStencilElement {
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * The component to display inside of the popover.
-     */
-    'component': ComponentRef;
-    /**
-     * The data to pass to the popover component.
-     */
-    'componentProps': ComponentProps;
-    /**
-     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-     */
-    'cssClass': string | string[];
-    'delegate': FrameworkDelegate;
-    /**
-     * Dismiss the popover overlay after it has been presented.
-     */
-    'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
-    /**
-     * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
-     */
-    'enableBackdropDismiss': boolean;
-    /**
-     * Animation to use when the popover is presented.
-     */
-    'enterAnimation': AnimationBuilder;
-    /**
-     * The event to pass to the popover animation.
-     */
-    'ev': any;
-    'keyboardClose': boolean;
-    /**
-     * Animation to use when the popover is dismissed.
-     */
-    'leaveAnimation': AnimationBuilder;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * Returns a promise that resolves when the popover did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await popover.onDidDismiss(); ```
-     */
-    'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
-    /**
-     * Returns a promise that resolves when the popover will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await popover.onWillDismiss(); ```
-     */
-    'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
-    'overlayId': number;
-    /**
-     * Present the popover overlay after it has been created.
-     */
-    'present': () => Promise<void>;
-    /**
-     * If true, a backdrop will be displayed behind the popover. Defaults to `true`.
-     */
-    'showBackdrop': boolean;
-    /**
-     * If true, the popover will be translucent. Defaults to `false`.
-     */
-    'translucent': boolean;
-    /**
-     * If true, the popover will animate. Defaults to `true`.
-     */
-    'willAnimate': boolean;
+
+  namespace StencilComponents {
+    interface IonPopover {
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * The component to display inside of the popover.
+       */
+      'component': ComponentRef;
+      /**
+       * The data to pass to the popover component.
+       */
+      'componentProps': ComponentProps;
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass': string | string[];
+      'delegate': FrameworkDelegate;
+      /**
+       * Dismiss the popover overlay after it has been presented.
+       */
+      'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
+      /**
+       * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'enableBackdropDismiss': boolean;
+      /**
+       * Animation to use when the popover is presented.
+       */
+      'enterAnimation': AnimationBuilder;
+      /**
+       * The event to pass to the popover animation.
+       */
+      'ev': any;
+      'keyboardClose': boolean;
+      /**
+       * Animation to use when the popover is dismissed.
+       */
+      'leaveAnimation': AnimationBuilder;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * Returns a promise that resolves when the popover did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await popover.onDidDismiss(); ```
+       */
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      /**
+       * Returns a promise that resolves when the popover will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await popover.onWillDismiss(); ```
+       */
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'overlayId': number;
+      /**
+       * Present the popover overlay after it has been created.
+       */
+      'present': () => Promise<void>;
+      /**
+       * If true, a backdrop will be displayed behind the popover. Defaults to `true`.
+       */
+      'showBackdrop': boolean;
+      /**
+       * If true, the popover will be translucent. Defaults to `false`.
+       */
+      'translucent': boolean;
+      /**
+       * If true, the popover will animate. Defaults to `true`.
+       */
+      'willAnimate': boolean;
+    }
   }
+
+  interface HTMLIonPopoverElement extends StencilComponents.IonPopover, HTMLStencilElement {}
+
   var HTMLIonPopoverElement: {
     prototype: HTMLIonPopoverElement;
     new (): HTMLIonPopoverElement;
@@ -4112,21 +4492,27 @@ declare global {
 
 
 declare global {
-  interface HTMLIonRadioGroupElement extends HTMLStencilElement {
-    'allowEmptySelection': boolean;
-    /**
-     * Indicates that the user cannot interact with the control.
-     */
-    'disabled': boolean;
-    /**
-     * The name of the control, which is submitted with the form data.
-     */
-    'name': string;
-    /**
-     * the value of the radio group.
-     */
-    'value': string;
+
+  namespace StencilComponents {
+    interface IonRadioGroup {
+      'allowEmptySelection': boolean;
+      /**
+       * Indicates that the user cannot interact with the control.
+       */
+      'disabled': boolean;
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name': string;
+      /**
+       * the value of the radio group.
+       */
+      'value': string;
+    }
   }
+
+  interface HTMLIonRadioGroupElement extends StencilComponents.IonRadioGroup, HTMLStencilElement {}
+
   var HTMLIonRadioGroupElement: {
     prototype: HTMLIonRadioGroupElement;
     new (): HTMLIonRadioGroupElement;
@@ -4167,32 +4553,38 @@ declare global {
 
 
 declare global {
-  interface HTMLIonRadioElement extends HTMLStencilElement {
-    /**
-     * If true, the radio is selected. Defaults to `false`.
-     */
-    'checked': boolean;
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * Indicates that the user cannot interact with the control.
-     */
-    'disabled': boolean;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * The name of the control, which is submitted with the form data.
-     */
-    'name': string;
-    /**
-     * the value of the radio.
-     */
-    'value': string;
+
+  namespace StencilComponents {
+    interface IonRadio {
+      /**
+       * If true, the radio is selected. Defaults to `false`.
+       */
+      'checked': boolean;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * Indicates that the user cannot interact with the control.
+       */
+      'disabled': boolean;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name': string;
+      /**
+       * the value of the radio.
+       */
+      'value': string;
+    }
   }
+
+  interface HTMLIonRadioElement extends StencilComponents.IonRadio, HTMLStencilElement {}
+
   var HTMLIonRadioElement: {
     prototype: HTMLIonRadioElement;
     new (): HTMLIonRadioElement;
@@ -4264,17 +4656,23 @@ declare global {
 
 
 declare global {
-  interface HTMLIonRangeKnobElement extends HTMLStencilElement {
-    'disabled': boolean;
-    'knob': string;
-    'labelId': string;
-    'max': number;
-    'min': number;
-    'pin': boolean;
-    'pressed': boolean;
-    'ratio': number;
-    'val': number;
+
+  namespace StencilComponents {
+    interface IonRangeKnob {
+      'disabled': boolean;
+      'knob': string;
+      'labelId': string;
+      'max': number;
+      'min': number;
+      'pin': boolean;
+      'pressed': boolean;
+      'ratio': number;
+      'val': number;
+    }
   }
+
+  interface HTMLIonRangeKnobElement extends StencilComponents.IonRangeKnob, HTMLStencilElement {}
+
   var HTMLIonRangeKnobElement: {
     prototype: HTMLIonRangeKnobElement;
     new (): HTMLIonRangeKnobElement;
@@ -4309,57 +4707,63 @@ declare global {
 
 
 declare global {
-  interface HTMLIonRangeElement extends HTMLStencilElement {
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. Default `0`.
-     */
-    'debounce': number;
-    'disabled': boolean;
-    /**
-     * Show two knobs. Defaults to `false`.
-     */
-    'dualKnobs': boolean;
-    /**
-     * Maximum integer value of the range. Defaults to `100`.
-     */
-    'max': number;
-    /**
-     * Minimum integer value of the range. Defaults to `0`.
-     */
-    'min': number;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * If true, a pin with integer value is shown when the knob is pressed. Defaults to `false`.
-     */
-    'pin': boolean;
-    /**
-     * Returns the ratio of the knob's is current location, which is a number between `0` and `1`. If two knobs are used, this property represents the lower value.
-     */
-    'ratio': () => number;
-    /**
-     * Returns the ratio of the upper value's is current location, which is a number between `0` and `1`. If there is only one knob, then this will return `null`.
-     */
-    'ratioUpper': () => number | null;
-    /**
-     * If true, the knob snaps to tick marks evenly spaced based on the step property value. Defaults to `false`.
-     */
-    'snaps': boolean;
-    /**
-     * Specifies the value granularity. Defaults to `1`.
-     */
-    'step': number;
-    /**
-     * the value of the range.
-     */
-    'value': any;
+
+  namespace StencilComponents {
+    interface IonRange {
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. Default `0`.
+       */
+      'debounce': number;
+      'disabled': boolean;
+      /**
+       * Show two knobs. Defaults to `false`.
+       */
+      'dualKnobs': boolean;
+      /**
+       * Maximum integer value of the range. Defaults to `100`.
+       */
+      'max': number;
+      /**
+       * Minimum integer value of the range. Defaults to `0`.
+       */
+      'min': number;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * If true, a pin with integer value is shown when the knob is pressed. Defaults to `false`.
+       */
+      'pin': boolean;
+      /**
+       * Returns the ratio of the knob's is current location, which is a number between `0` and `1`. If two knobs are used, this property represents the lower value.
+       */
+      'ratio': () => number;
+      /**
+       * Returns the ratio of the upper value's is current location, which is a number between `0` and `1`. If there is only one knob, then this will return `null`.
+       */
+      'ratioUpper': () => number | null;
+      /**
+       * If true, the knob snaps to tick marks evenly spaced based on the step property value. Defaults to `false`.
+       */
+      'snaps': boolean;
+      /**
+       * Specifies the value granularity. Defaults to `1`.
+       */
+      'step': number;
+      /**
+       * the value of the range.
+       */
+      'value': any;
+    }
   }
+
+  interface HTMLIonRangeElement extends StencilComponents.IonRange, HTMLStencilElement {}
+
   var HTMLIonRangeElement: {
     prototype: HTMLIonRangeElement;
     new (): HTMLIonRangeElement;
@@ -4440,24 +4844,30 @@ declare global {
 
 
 declare global {
-  interface HTMLIonRefresherContentElement extends HTMLStencilElement {
-    /**
-     * A static icon to display when you begin to pull down
-     */
-    'pullingIcon': string;
-    /**
-     * The text you want to display when you begin to pull down
-     */
-    'pullingText': string;
-    /**
-     * An animated SVG spinner that shows when refreshing begins
-     */
-    'refreshingSpinner': string;
-    /**
-     * The text you want to display when performing a refresh
-     */
-    'refreshingText': string;
+
+  namespace StencilComponents {
+    interface IonRefresherContent {
+      /**
+       * A static icon to display when you begin to pull down
+       */
+      'pullingIcon': string;
+      /**
+       * The text you want to display when you begin to pull down
+       */
+      'pullingText': string;
+      /**
+       * An animated SVG spinner that shows when refreshing begins
+       */
+      'refreshingSpinner': string;
+      /**
+       * The text you want to display when performing a refresh
+       */
+      'refreshingText': string;
+    }
   }
+
+  interface HTMLIonRefresherContentElement extends StencilComponents.IonRefresherContent, HTMLStencilElement {}
+
   var HTMLIonRefresherContentElement: {
     prototype: HTMLIonRefresherContentElement;
     new (): HTMLIonRefresherContentElement;
@@ -4497,40 +4907,46 @@ declare global {
 
 
 declare global {
-  interface HTMLIonRefresherElement extends HTMLStencilElement {
-    /**
-     * Changes the refresher's state from `refreshing` to `cancelling`.
-     */
-    'cancel': () => void;
-    /**
-     * Time it takes to close the refresher. Defaults to `280ms`.
-     */
-    'closeDuration': string;
-    /**
-     * Call `complete()` when your async operation has completed. For example, the `refreshing` state is while the app is performing an asynchronous operation, such as receiving more data from an AJAX request. Once the data has been received, you then call this method to signify that the refreshing has completed and to close the refresher. This method also changes the refresher's state from `refreshing` to `completing`.
-     */
-    'complete': () => void;
-    /**
-     * If true, the refresher will be hidden. Defaults to `true`.
-     */
-    'disabled': boolean;
-    /**
-     * A number representing how far down the user has pulled. The number `0` represents the user hasn't pulled down at all. The number `1`, and anything greater than `1`, represents that the user has pulled far enough down that when they let go then the refresh will happen. If they let go and the number is less than `1`, then the refresh will not happen, and the content will return to it's original position.
-     */
-    'getProgress': () => number;
-    /**
-     * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
-     */
-    'pullMax': number;
-    /**
-     * The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Defaults to `60`.
-     */
-    'pullMin': number;
-    /**
-     * Time it takes the refresher to to snap back to the `refreshing` state. Defaults to `280ms`.
-     */
-    'snapbackDuration': string;
+
+  namespace StencilComponents {
+    interface IonRefresher {
+      /**
+       * Changes the refresher's state from `refreshing` to `cancelling`.
+       */
+      'cancel': () => void;
+      /**
+       * Time it takes to close the refresher. Defaults to `280ms`.
+       */
+      'closeDuration': string;
+      /**
+       * Call `complete()` when your async operation has completed. For example, the `refreshing` state is while the app is performing an asynchronous operation, such as receiving more data from an AJAX request. Once the data has been received, you then call this method to signify that the refreshing has completed and to close the refresher. This method also changes the refresher's state from `refreshing` to `completing`.
+       */
+      'complete': () => void;
+      /**
+       * If true, the refresher will be hidden. Defaults to `true`.
+       */
+      'disabled': boolean;
+      /**
+       * A number representing how far down the user has pulled. The number `0` represents the user hasn't pulled down at all. The number `1`, and anything greater than `1`, represents that the user has pulled far enough down that when they let go then the refresh will happen. If they let go and the number is less than `1`, then the refresh will not happen, and the content will return to it's original position.
+       */
+      'getProgress': () => number;
+      /**
+       * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
+       */
+      'pullMax': number;
+      /**
+       * The minimum distance the user must pull down until the refresher will go into the `refreshing` state. Defaults to `60`.
+       */
+      'pullMin': number;
+      /**
+       * Time it takes the refresher to to snap back to the `refreshing` state. Defaults to `280ms`.
+       */
+      'snapbackDuration': string;
+    }
   }
+
+  interface HTMLIonRefresherElement extends StencilComponents.IonRefresher, HTMLStencilElement {}
+
   var HTMLIonRefresherElement: {
     prototype: HTMLIonRefresherElement;
     new (): HTMLIonRefresherElement;
@@ -4586,12 +5002,18 @@ declare global {
 
 
 declare global {
-  interface HTMLIonReorderGroupElement extends HTMLStencilElement {
-    /**
-     * If true, the reorder will be hidden. Defaults to `true`.
-     */
-    'disabled': boolean;
+
+  namespace StencilComponents {
+    interface IonReorderGroup {
+      /**
+       * If true, the reorder will be hidden. Defaults to `true`.
+       */
+      'disabled': boolean;
+    }
   }
+
+  interface HTMLIonReorderGroupElement extends StencilComponents.IonReorderGroup, HTMLStencilElement {}
+
   var HTMLIonReorderGroupElement: {
     prototype: HTMLIonReorderGroupElement;
     new (): HTMLIonReorderGroupElement;
@@ -4619,9 +5041,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonReorderElement extends HTMLStencilElement {
 
+  namespace StencilComponents {
+    interface IonReorder {
+
+    }
   }
+
+  interface HTMLIonReorderElement extends StencilComponents.IonReorder, HTMLStencilElement {}
+
   var HTMLIonReorderElement: {
     prototype: HTMLIonReorderElement;
     new (): HTMLIonReorderElement;
@@ -4646,10 +5074,16 @@ declare global {
 
 
 declare global {
-  interface HTMLIonRippleEffectElement extends HTMLStencilElement {
-    'addRipple': (pageX: number, pageY: number) => void;
-    'tapClick': boolean;
+
+  namespace StencilComponents {
+    interface IonRippleEffect {
+      'addRipple': (pageX: number, pageY: number) => void;
+      'tapClick': boolean;
+    }
   }
+
+  interface HTMLIonRippleEffectElement extends StencilComponents.IonRippleEffect, HTMLStencilElement {}
+
   var HTMLIonRippleEffectElement: {
     prototype: HTMLIonRippleEffectElement;
     new (): HTMLIonRippleEffectElement;
@@ -4674,16 +5108,22 @@ declare global {
 
 
 declare global {
-  interface HTMLIonRouteRedirectElement extends HTMLStencilElement {
-    /**
-     * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
-     */
-    'from': string;
-    /**
-     * A redirect route, redirects "from" a URL "to" another URL. This property is that "to" URL. When the defined `ion-route-redirect` rule matches, the router will redirect to the path specified in this property.  The value of this property is always an absolute path inside the scope of routes defined in `ion-router` it can't be used with another router or to perfom a redirection to a different domain.  Note that this is a virtual redirect, it will not cause a real browser refresh, again, it's a redirect inside the context of ion-router.  When this property is not specified or his value is `undefined` the whole redirect route is noop, even if the "from" value matches.
-     */
-    'to': string|undefined;
+
+  namespace StencilComponents {
+    interface IonRouteRedirect {
+      /**
+       * A redirect route, redirects "from" a URL "to" another URL. This property is that "from" URL. It needs to be an exact match of the navigated URL in order to apply.  The path specified in this value is always an absolute path, even if the initial `/` slash is not specified.
+       */
+      'from': string;
+      /**
+       * A redirect route, redirects "from" a URL "to" another URL. This property is that "to" URL. When the defined `ion-route-redirect` rule matches, the router will redirect to the path specified in this property.  The value of this property is always an absolute path inside the scope of routes defined in `ion-router` it can't be used with another router or to perfom a redirection to a different domain.  Note that this is a virtual redirect, it will not cause a real browser refresh, again, it's a redirect inside the context of ion-router.  When this property is not specified or his value is `undefined` the whole redirect route is noop, even if the "from" value matches.
+       */
+      'to': string|undefined;
+    }
   }
+
+  interface HTMLIonRouteRedirectElement extends StencilComponents.IonRouteRedirect, HTMLStencilElement {}
+
   var HTMLIonRouteRedirectElement: {
     prototype: HTMLIonRouteRedirectElement;
     new (): HTMLIonRouteRedirectElement;
@@ -4719,20 +5159,26 @@ declare global {
 
 
 declare global {
-  interface HTMLIonRouteElement extends HTMLStencilElement {
-    /**
-     * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in ion-tabs it actually refers to the name of the `ion-tab` to select.
-     */
-    'component': string;
-    /**
-     * Props to pass when the `component` specified in this route load.
-     */
-    'componentProps': {[key: string]: any};
-    /**
-     * Relative path that needs to match in order for this route to apply.
-     */
-    'url': string;
+
+  namespace StencilComponents {
+    interface IonRoute {
+      /**
+       * Name of the component to load/select in the navigation outlet (`ion-tabs`, `ion-nav`) when the route matches.  The value of this property is not always the tagname of the component to load, in ion-tabs it actually refers to the name of the `ion-tab` to select.
+       */
+      'component': string;
+      /**
+       * Props to pass when the `component` specified in this route load.
+       */
+      'componentProps': {[key: string]: any};
+      /**
+       * Relative path that needs to match in order for this route to apply.
+       */
+      'url': string;
+    }
   }
+
+  interface HTMLIonRouteElement extends StencilComponents.IonRoute, HTMLStencilElement {}
+
   var HTMLIonRouteElement: {
     prototype: HTMLIonRouteElement;
     new (): HTMLIonRouteElement;
@@ -4772,15 +5218,21 @@ declare global {
 
 
 declare global {
-  interface HTMLIonRouterOutletElement extends HTMLStencilElement {
-    'animated': boolean;
-    'animationBuilder': AnimationBuilder;
-    'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
-    'delegate': FrameworkDelegate;
-    'getRouteId': () => RouteID | undefined;
-    'setRoot': (component: ComponentRef, params?: ComponentProps | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
-    'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
+
+  namespace StencilComponents {
+    interface IonRouterOutlet {
+      'animated': boolean;
+      'animationBuilder': AnimationBuilder;
+      'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
+      'delegate': FrameworkDelegate;
+      'getRouteId': () => RouteID | undefined;
+      'setRoot': (component: ComponentRef, params?: ComponentProps | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
+      'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
+    }
   }
+
+  interface HTMLIonRouterOutletElement extends StencilComponents.IonRouterOutlet, HTMLStencilElement {}
+
   var HTMLIonRouterOutletElement: {
     prototype: HTMLIonRouterOutletElement;
     new (): HTMLIonRouterOutletElement;
@@ -4809,12 +5261,18 @@ declare global {
 
 
 declare global {
-  interface HTMLIonRouterElement extends HTMLStencilElement {
-    'base': string;
-    'navChanged': (direction: RouterDirection) => Promise<boolean>;
-    'push': (url: string, direction?: RouterDirection) => Promise<boolean>;
-    'useHash': boolean;
+
+  namespace StencilComponents {
+    interface IonRouter {
+      'base': string;
+      'navChanged': (direction: RouterDirection) => Promise<boolean>;
+      'push': (url: string, direction?: RouterDirection) => Promise<boolean>;
+      'useHash': boolean;
+    }
   }
+
+  interface HTMLIonRouterElement extends StencilComponents.IonRouter, HTMLStencilElement {}
+
   var HTMLIonRouterElement: {
     prototype: HTMLIonRouterElement;
     new (): HTMLIonRouterElement;
@@ -4841,9 +5299,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonRowElement extends HTMLStencilElement {
 
+  namespace StencilComponents {
+    interface IonRow {
+
+    }
   }
+
+  interface HTMLIonRowElement extends StencilComponents.IonRow, HTMLStencilElement {}
+
   var HTMLIonRowElement: {
     prototype: HTMLIonRowElement;
     new (): HTMLIonRowElement;
@@ -4868,18 +5332,24 @@ declare global {
 
 
 declare global {
-  interface HTMLIonScrollElement extends HTMLStencilElement {
-    /**
-     * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionScroll, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
-     */
-    'forceOverscroll': boolean;
-    'mode': string;
-    'scrollByPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
-    'scrollEvents': boolean;
-    'scrollToBottom': (duration: number) => Promise<void>;
-    'scrollToPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
-    'scrollToTop': (duration: number) => Promise<void>;
+
+  namespace StencilComponents {
+    interface IonScroll {
+      /**
+       * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionScroll, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
+       */
+      'forceOverscroll': boolean;
+      'mode': string;
+      'scrollByPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
+      'scrollEvents': boolean;
+      'scrollToBottom': (duration: number) => Promise<void>;
+      'scrollToPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
+      'scrollToTop': (duration: number) => Promise<void>;
+    }
   }
+
+  interface HTMLIonScrollElement extends StencilComponents.IonScroll, HTMLStencilElement {}
+
   var HTMLIonScrollElement: {
     prototype: HTMLIonScrollElement;
     new (): HTMLIonScrollElement;
@@ -4921,56 +5391,62 @@ declare global {
 
 
 declare global {
-  interface HTMLIonSearchbarElement extends HTMLStencilElement {
-    /**
-     * If true, enable searchbar animation. Default `false`.
-     */
-    'animated': boolean;
-    /**
-     * Set the input's autocomplete property. Values: `"on"`, `"off"`. Default `"off"`.
-     */
-    'autocomplete': string;
-    /**
-     * Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
-     */
-    'autocorrect': string;
-    /**
-     * Set the the cancel button text. Default: `"Cancel"`.
-     */
-    'cancelButtonText': string;
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
-     */
-    'debounce': number;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * Set the input's placeholder. Default `"Search"`.
-     */
-    'placeholder': string;
-    /**
-     * If true, show the cancel button. Default `false`.
-     */
-    'showCancelButton': boolean;
-    /**
-     * If true, enable spellcheck on the input. Default `false`.
-     */
-    'spellcheck': boolean;
-    /**
-     * Set the type of the input. Values: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, `"url"`. Default `"search"`.
-     */
-    'type': string;
-    /**
-     * the value of the searchbar.
-     */
-    'value': string;
+
+  namespace StencilComponents {
+    interface IonSearchbar {
+      /**
+       * If true, enable searchbar animation. Default `false`.
+       */
+      'animated': boolean;
+      /**
+       * Set the input's autocomplete property. Values: `"on"`, `"off"`. Default `"off"`.
+       */
+      'autocomplete': string;
+      /**
+       * Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
+       */
+      'autocorrect': string;
+      /**
+       * Set the the cancel button text. Default: `"Cancel"`.
+       */
+      'cancelButtonText': string;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
+       */
+      'debounce': number;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * Set the input's placeholder. Default `"Search"`.
+       */
+      'placeholder': string;
+      /**
+       * If true, show the cancel button. Default `false`.
+       */
+      'showCancelButton': boolean;
+      /**
+       * If true, enable spellcheck on the input. Default `false`.
+       */
+      'spellcheck': boolean;
+      /**
+       * Set the type of the input. Values: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, `"url"`. Default `"search"`.
+       */
+      'type': string;
+      /**
+       * the value of the searchbar.
+       */
+      'value': string;
+    }
   }
+
+  interface HTMLIonSearchbarElement extends StencilComponents.IonSearchbar, HTMLStencilElement {}
+
   var HTMLIonSearchbarElement: {
     prototype: HTMLIonSearchbarElement;
     new (): HTMLIonSearchbarElement;
@@ -5062,30 +5538,36 @@ declare global {
 
 
 declare global {
-  interface HTMLIonSegmentButtonElement extends HTMLStencilElement {
-    'activated': boolean;
-    /**
-     * If true, the segment button is selected. Defaults to `false`.
-     */
-    'checked': boolean;
-    /**
-     * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-     */
-    'color': string;
-    'disabled': boolean;
-    /**
-     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-     */
-    'href': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * The value of the segment button.
-     */
-    'value': string;
+
+  namespace StencilComponents {
+    interface IonSegmentButton {
+      'activated': boolean;
+      /**
+       * If true, the segment button is selected. Defaults to `false`.
+       */
+      'checked': boolean;
+      /**
+       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color': string;
+      'disabled': boolean;
+      /**
+       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
+       */
+      'href': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * The value of the segment button.
+       */
+      'value': string;
+    }
   }
+
+  interface HTMLIonSegmentButtonElement extends StencilComponents.IonSegmentButton, HTMLStencilElement {}
+
   var HTMLIonSegmentButtonElement: {
     prototype: HTMLIonSegmentButtonElement;
     new (): HTMLIonSegmentButtonElement;
@@ -5135,21 +5617,27 @@ declare global {
 
 
 declare global {
-  interface HTMLIonSegmentElement extends HTMLStencilElement {
-    /**
-     * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-     */
-    'color': string;
-    'disabled': boolean;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * the value of the segment.
-     */
-    'value': string;
+
+  namespace StencilComponents {
+    interface IonSegment {
+      /**
+       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color': string;
+      'disabled': boolean;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * the value of the segment.
+       */
+      'value': string;
+    }
   }
+
+  interface HTMLIonSegmentElement extends StencilComponents.IonSegment, HTMLStencilElement {}
+
   var HTMLIonSegmentElement: {
     prototype: HTMLIonSegmentElement;
     new (): HTMLIonSegmentElement;
@@ -5190,20 +5678,26 @@ declare global {
 
 
 declare global {
-  interface HTMLIonSelectOptionElement extends HTMLStencilElement {
-    /**
-     * If true, the user cannot interact with the select option. Defaults to `false`.
-     */
-    'disabled': boolean;
-    /**
-     * If true, the element is selected.
-     */
-    'selected': boolean;
-    /**
-     * The text value of the option.
-     */
-    'value': string;
+
+  namespace StencilComponents {
+    interface IonSelectOption {
+      /**
+       * If true, the user cannot interact with the select option. Defaults to `false`.
+       */
+      'disabled': boolean;
+      /**
+       * If true, the element is selected.
+       */
+      'selected': boolean;
+      /**
+       * The text value of the option.
+       */
+      'value': string;
+    }
   }
+
+  interface HTMLIonSelectOptionElement extends StencilComponents.IonSelectOption, HTMLStencilElement {}
+
   var HTMLIonSelectOptionElement: {
     prototype: HTMLIonSelectOptionElement;
     new (): HTMLIonSelectOptionElement;
@@ -5247,12 +5741,18 @@ declare global {
 
 
 declare global {
-  interface HTMLIonSelectPopoverElement extends HTMLStencilElement {
-    'header': string;
-    'message': string;
-    'options': SelectPopoverOption[];
-    'subHeader': string;
+
+  namespace StencilComponents {
+    interface IonSelectPopover {
+      'header': string;
+      'message': string;
+      'options': SelectPopoverOption[];
+      'subHeader': string;
+    }
   }
+
+  interface HTMLIonSelectPopoverElement extends StencilComponents.IonSelectPopover, HTMLStencilElement {}
+
   var HTMLIonSelectPopoverElement: {
     prototype: HTMLIonSelectPopoverElement;
     new (): HTMLIonSelectPopoverElement;
@@ -5280,48 +5780,54 @@ declare global {
 
 
 declare global {
-  interface HTMLIonSelectElement extends HTMLStencilElement {
-    /**
-     * The text to display on the cancel button. Default: `Cancel`.
-     */
-    'cancelText': string;
-    /**
-     * If true, the user cannot interact with the select. Defaults to `false`.
-     */
-    'disabled': boolean;
-    /**
-     * The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
-     */
-    'interface': string;
-    /**
-     * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface.
-     */
-    'interfaceOptions': any;
-    /**
-     * If true, the select can accept multiple values.
-     */
-    'multiple': boolean;
-    /**
-     * The name of the control, which is submitted with the form data.
-     */
-    'name': string;
-    /**
-     * The text to display on the ok button. Default: `OK`.
-     */
-    'okText': string;
-    /**
-     * The text to display when the select is empty.
-     */
-    'placeholder': string;
-    /**
-     * The text to display instead of the selected option's value.
-     */
-    'selectedText': string;
-    /**
-     * the value of the select.
-     */
-    'value': string | string[] | undefined;
+
+  namespace StencilComponents {
+    interface IonSelect {
+      /**
+       * The text to display on the cancel button. Default: `Cancel`.
+       */
+      'cancelText': string;
+      /**
+       * If true, the user cannot interact with the select. Defaults to `false`.
+       */
+      'disabled': boolean;
+      /**
+       * The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
+       */
+      'interface': string;
+      /**
+       * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface.
+       */
+      'interfaceOptions': any;
+      /**
+       * If true, the select can accept multiple values.
+       */
+      'multiple': boolean;
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name': string;
+      /**
+       * The text to display on the ok button. Default: `OK`.
+       */
+      'okText': string;
+      /**
+       * The text to display when the select is empty.
+       */
+      'placeholder': string;
+      /**
+       * The text to display instead of the selected option's value.
+       */
+      'selectedText': string;
+      /**
+       * the value of the select.
+       */
+      'value': string | string[] | undefined;
+    }
   }
+
+  interface HTMLIonSelectElement extends StencilComponents.IonSelect, HTMLStencilElement {}
+
   var HTMLIonSelectElement: {
     prototype: HTMLIonSelectElement;
     new (): HTMLIonSelectElement;
@@ -5405,14 +5911,20 @@ declare global {
 
 
 declare global {
-  interface HTMLIonShowWhenElement extends HTMLStencilElement {
-    'mediaQuery': string;
-    'mode': string;
-    'or': boolean;
-    'orientation': string;
-    'platform': string;
-    'size': string;
+
+  namespace StencilComponents {
+    interface IonShowWhen {
+      'mediaQuery': string;
+      'mode': string;
+      'or': boolean;
+      'orientation': string;
+      'platform': string;
+      'size': string;
+    }
   }
+
+  interface HTMLIonShowWhenElement extends StencilComponents.IonShowWhen, HTMLStencilElement {}
+
   var HTMLIonShowWhenElement: {
     prototype: HTMLIonShowWhenElement;
     new (): HTMLIonShowWhenElement;
@@ -5442,9 +5954,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonSkeletonTextElement extends HTMLStencilElement {
-    'width': string;
+
+  namespace StencilComponents {
+    interface IonSkeletonText {
+      'width': string;
+    }
   }
+
+  interface HTMLIonSkeletonTextElement extends StencilComponents.IonSkeletonText, HTMLStencilElement {}
+
   var HTMLIonSkeletonTextElement: {
     prototype: HTMLIonSkeletonTextElement;
     new (): HTMLIonSkeletonTextElement;
@@ -5469,9 +5987,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonSlideElement extends HTMLStencilElement {
 
+  namespace StencilComponents {
+    interface IonSlide {
+
+    }
   }
+
+  interface HTMLIonSlideElement extends StencilComponents.IonSlide, HTMLStencilElement {}
+
   var HTMLIonSlideElement: {
     prototype: HTMLIonSlideElement;
     new (): HTMLIonSlideElement;
@@ -5496,72 +6020,78 @@ declare global {
 
 
 declare global {
-  interface HTMLIonSlidesElement extends HTMLStencilElement {
-    /**
-     * Get the index of the active slide.
-     */
-    'getActiveIndex': () => number;
-    /**
-     * Get the index of the previous slide.
-     */
-    'getPreviousIndex': () => number;
-    /**
-     * Get whether or not the current slide is the first slide.
-     */
-    'isBeginning': () => boolean;
-    /**
-     * Get whether or not the current slide is the last slide.
-     */
-    'isEnd': () => boolean;
-    /**
-     * Get the total number of slides.
-     */
-    'length': () => number;
-    /**
-     * Lock or unlock the ability to slide to the next slides.
-     */
-    'lockSwipeToNext': (shouldLockSwipeToNext: boolean) => any;
-    /**
-     * Lock or unlock the ability to slide to the previous slides.
-     */
-    'lockSwipeToPrev': (shouldLockSwipeToPrev: boolean) => any;
-    /**
-     * Lock or unlock the ability to slide to change slides.
-     */
-    'lockSwipes': (shouldLockSwipes: boolean) => any;
-    /**
-     * Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options
-     */
-    'options': any;
-    /**
-     * Show or hide the pager
-     */
-    'pager': boolean;
-    /**
-     * Transition to the next slide.
-     */
-    'slideNext': (speed?: number | undefined, runCallbacks?: boolean | undefined) => void;
-    /**
-     * Transition to the previous slide.
-     */
-    'slidePrev': (speed?: number | undefined, runCallbacks?: boolean | undefined) => void;
-    /**
-     * Transition to the specified slide.
-     */
-    'slideTo': (index: number, speed?: number | undefined, runCallbacks?: boolean | undefined) => void;
-    /**
-     * Start auto play.
-     */
-    'startAutoplay': () => void;
-    /**
-     * Stop auto play.
-     */
-    'stopAutoplay': () => void;
-    /**
-     * Update the underlying slider implementation. Call this if you've added or removed child slides.
-     */
-    'update': () => void;
+
+  namespace StencilComponents {
+    interface IonSlides {
+      /**
+       * Get the index of the active slide.
+       */
+      'getActiveIndex': () => number;
+      /**
+       * Get the index of the previous slide.
+       */
+      'getPreviousIndex': () => number;
+      /**
+       * Get whether or not the current slide is the first slide.
+       */
+      'isBeginning': () => boolean;
+      /**
+       * Get whether or not the current slide is the last slide.
+       */
+      'isEnd': () => boolean;
+      /**
+       * Get the total number of slides.
+       */
+      'length': () => number;
+      /**
+       * Lock or unlock the ability to slide to the next slides.
+       */
+      'lockSwipeToNext': (shouldLockSwipeToNext: boolean) => any;
+      /**
+       * Lock or unlock the ability to slide to the previous slides.
+       */
+      'lockSwipeToPrev': (shouldLockSwipeToPrev: boolean) => any;
+      /**
+       * Lock or unlock the ability to slide to change slides.
+       */
+      'lockSwipes': (shouldLockSwipes: boolean) => any;
+      /**
+       * Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options
+       */
+      'options': any;
+      /**
+       * Show or hide the pager
+       */
+      'pager': boolean;
+      /**
+       * Transition to the next slide.
+       */
+      'slideNext': (speed?: number | undefined, runCallbacks?: boolean | undefined) => void;
+      /**
+       * Transition to the previous slide.
+       */
+      'slidePrev': (speed?: number | undefined, runCallbacks?: boolean | undefined) => void;
+      /**
+       * Transition to the specified slide.
+       */
+      'slideTo': (index: number, speed?: number | undefined, runCallbacks?: boolean | undefined) => void;
+      /**
+       * Start auto play.
+       */
+      'startAutoplay': () => void;
+      /**
+       * Stop auto play.
+       */
+      'stopAutoplay': () => void;
+      /**
+       * Update the underlying slider implementation. Call this if you've added or removed child slides.
+       */
+      'update': () => void;
+    }
   }
+
+  interface HTMLIonSlidesElement extends StencilComponents.IonSlides, HTMLStencilElement {}
+
   var HTMLIonSlidesElement: {
     prototype: HTMLIonSlidesElement;
     new (): HTMLIonSlidesElement;
@@ -5645,28 +6175,34 @@ declare global {
 
 
 declare global {
-  interface HTMLIonSpinnerElement extends HTMLStencilElement {
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
-     */
-    'duration': number;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
-     */
-    'name': string;
-    /**
-     * If true, the spinner's animation will be paused. Defaults to `false`.
-     */
-    'paused': boolean;
+
+  namespace StencilComponents {
+    interface IonSpinner {
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
+       */
+      'duration': number;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
+       */
+      'name': string;
+      /**
+       * If true, the spinner's animation will be paused. Defaults to `false`.
+       */
+      'paused': boolean;
+    }
   }
+
+  interface HTMLIonSpinnerElement extends StencilComponents.IonSpinner, HTMLStencilElement {}
+
   var HTMLIonSpinnerElement: {
     prototype: HTMLIonSpinnerElement;
     new (): HTMLIonSpinnerElement;
@@ -5710,18 +6246,24 @@ declare global {
 
 
 declare global {
-  interface HTMLIonSplitPaneElement extends HTMLStencilElement {
-    /**
-     * If true, the split pane will be hidden. Defaults to `false`.
-     */
-    'disabled': boolean;
-    'isPane': (element: HTMLElement) => boolean;
-    'isVisible': () => boolean;
-    /**
-     * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
-     */
-    'when': string | boolean;
+
+  namespace StencilComponents {
+    interface IonSplitPane {
+      /**
+       * If true, the split pane will be hidden. Defaults to `false`.
+       */
+      'disabled': boolean;
+      'isPane': (element: HTMLElement) => boolean;
+      'isVisible': () => boolean;
+      /**
+       * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
+       */
+      'when': string | boolean;
+    }
   }
+
+  interface HTMLIonSplitPaneElement extends StencilComponents.IonSplitPane, HTMLStencilElement {}
+
   var HTMLIonSplitPaneElement: {
     prototype: HTMLIonSplitPaneElement;
     new (): HTMLIonSplitPaneElement;
@@ -5761,9 +6303,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonStatusTapElement extends HTMLStencilElement {
-    'duration': number;
+
+  namespace StencilComponents {
+    interface IonStatusTap {
+      'duration': number;
+    }
   }
+
+  interface HTMLIonStatusTapElement extends StencilComponents.IonStatusTap, HTMLStencilElement {}
+
   var HTMLIonStatusTapElement: {
     prototype: HTMLIonStatusTapElement;
     new (): HTMLIonStatusTapElement;
@@ -5788,10 +6336,16 @@ declare global {
 
 
 declare global {
-  interface HTMLIonTabButtonElement extends HTMLStencilElement {
-    'selected': boolean;
-    'tab': HTMLIonTabElement;
+
+  namespace StencilComponents {
+    interface IonTabButton {
+      'selected': boolean;
+      'tab': HTMLIonTabElement;
+    }
   }
+
+  interface HTMLIonTabButtonElement extends StencilComponents.IonTabButton, HTMLStencilElement {}
+
   var HTMLIonTabButtonElement: {
     prototype: HTMLIonTabButtonElement;
     new (): HTMLIonTabButtonElement;
@@ -5820,57 +6374,63 @@ declare global {
 
 
 declare global {
-  interface HTMLIonTabElement extends HTMLStencilElement {
-    'active': boolean;
-    /**
-     * The badge for the tab.
-     */
-    'badge': string;
-    /**
-     * The badge color for the tab button.
-     */
-    'badgeStyle': string;
-    'btnId': string;
-    /**
-     * The component to display inside of the tab.
-     */
-    'component': ComponentRef;
-    'delegate': FrameworkDelegate;
-    /**
-     * If true, the user cannot interact with the tab. Defaults to `false`.
-     */
-    'disabled': boolean;
-    'getTabId': () => string | null;
-    /**
-     * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
-     */
-    'href': string;
-    /**
-     * The icon for the tab.
-     */
-    'icon': string;
-    /**
-     * The title of the tab.
-     */
-    'label': string;
-    /**
-     * The name of the tab.
-     */
-    'name': string;
-    /**
-     * If true, the tab will be selected. Defaults to `false`.
-     */
-    'selected': boolean;
-    'setActive': () => Promise<void>;
-    /**
-     * If true, the tab button is visible within the tabbar. Defaults to `true`.
-     */
-    'show': boolean;
-    /**
-     * If true, hide the tabs on child pages.
-     */
-    'tabsHideOnSubPages': boolean;
+
+  namespace StencilComponents {
+    interface IonTab {
+      'active': boolean;
+      /**
+       * The badge for the tab.
+       */
+      'badge': string;
+      /**
+       * The badge color for the tab button.
+       */
+      'badgeStyle': string;
+      'btnId': string;
+      /**
+       * The component to display inside of the tab.
+       */
+      'component': ComponentRef;
+      'delegate': FrameworkDelegate;
+      /**
+       * If true, the user cannot interact with the tab. Defaults to `false`.
+       */
+      'disabled': boolean;
+      'getTabId': () => string | null;
+      /**
+       * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
+       */
+      'href': string;
+      /**
+       * The icon for the tab.
+       */
+      'icon': string;
+      /**
+       * The title of the tab.
+       */
+      'label': string;
+      /**
+       * The name of the tab.
+       */
+      'name': string;
+      /**
+       * If true, the tab will be selected. Defaults to `false`.
+       */
+      'selected': boolean;
+      'setActive': () => Promise<void>;
+      /**
+       * If true, the tab button is visible within the tabbar. Defaults to `true`.
+       */
+      'show': boolean;
+      /**
+       * If true, hide the tabs on child pages.
+       */
+      'tabsHideOnSubPages': boolean;
+    }
   }
+
+  interface HTMLIonTabElement extends StencilComponents.IonTab, HTMLStencilElement {}
+
   var HTMLIonTabElement: {
     prototype: HTMLIonTabElement;
     new (): HTMLIonTabElement;
@@ -5945,18 +6505,24 @@ declare global {
 
 
 declare global {
-  interface HTMLIonTabbarElement extends HTMLStencilElement {
-    'highlight': boolean;
-    'layout': string;
-    'placement': string;
-    'scrollable': boolean;
-    'selectedTab': HTMLIonTabElement;
-    'tabs': HTMLIonTabElement[];
-    /**
-     * If true, the tabbar will be translucent. Defaults to `false`.
-     */
-    'translucent': boolean;
+
+  namespace StencilComponents {
+    interface IonTabbar {
+      'highlight': boolean;
+      'layout': string;
+      'placement': string;
+      'scrollable': boolean;
+      'selectedTab': HTMLIonTabElement;
+      'tabs': HTMLIonTabElement[];
+      /**
+       * If true, the tabbar will be translucent. Defaults to `false`.
+       */
+      'translucent': boolean;
+    }
   }
+
+  interface HTMLIonTabbarElement extends StencilComponents.IonTabbar, HTMLStencilElement {}
+
   var HTMLIonTabbarElement: {
     prototype: HTMLIonTabbarElement;
     new (): HTMLIonTabbarElement;
@@ -5990,43 +6556,49 @@ declare global {
 
 
 declare global {
-  interface HTMLIonTabsElement extends HTMLStencilElement {
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    'getRouteId': () => RouteID | undefined;
-    'getSelected': () => HTMLIonTabElement | undefined;
-    'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => HTMLIonTabElement | undefined;
-    /**
-     * A unique name for the tabs
-     */
-    'name': string;
-    'scrollable': boolean;
-    'select': (tabOrIndex: number | HTMLIonTabElement) => Promise<boolean>;
-    'setRouteId': (id: string) => Promise<RouteWrite>;
-    /**
-     * If true, the tabbar
-     */
-    'tabbarHidden': boolean;
-    /**
-     * If true, show the tab highlight bar under the selected tab.
-     */
-    'tabbarHighlight': boolean;
-    /**
-     * Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
-     */
-    'tabbarLayout': string;
-    /**
-     * Set position of the tabbar: `top`, `bottom`.
-     */
-    'tabbarPlacement': string;
-    /**
-     * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
-     */
-    'translucent': boolean;
-    'useRouter': boolean;
+
+  namespace StencilComponents {
+    interface IonTabs {
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      'getRouteId': () => RouteID | undefined;
+      'getSelected': () => HTMLIonTabElement | undefined;
+      'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => HTMLIonTabElement | undefined;
+      /**
+       * A unique name for the tabs
+       */
+      'name': string;
+      'scrollable': boolean;
+      'select': (tabOrIndex: number | HTMLIonTabElement) => Promise<boolean>;
+      'setRouteId': (id: string) => Promise<RouteWrite>;
+      /**
+       * If true, the tabbar
+       */
+      'tabbarHidden': boolean;
+      /**
+       * If true, show the tab highlight bar under the selected tab.
+       */
+      'tabbarHighlight': boolean;
+      /**
+       * Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
+       */
+      'tabbarLayout': string;
+      /**
+       * Set position of the tabbar: `top`, `bottom`.
+       */
+      'tabbarPlacement': string;
+      /**
+       * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
+       */
+      'translucent': boolean;
+      'useRouter': boolean;
+    }
   }
+
+  interface HTMLIonTabsElement extends StencilComponents.IonTabs, HTMLStencilElement {}
+
   var HTMLIonTabsElement: {
     prototype: HTMLIonTabsElement;
     new (): HTMLIonTabsElement;
@@ -6086,9 +6658,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonTapClickElement extends HTMLStencilElement {
 
+  namespace StencilComponents {
+    interface IonTapClick {
+
+    }
   }
+
+  interface HTMLIonTapClickElement extends StencilComponents.IonTapClick, HTMLStencilElement {}
+
   var HTMLIonTapClickElement: {
     prototype: HTMLIonTapClickElement;
     new (): HTMLIonTapClickElement;
@@ -6113,16 +6691,22 @@ declare global {
 
 
 declare global {
-  interface HTMLIonTextElement extends HTMLStencilElement {
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
+
+  namespace StencilComponents {
+    interface IonText {
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+    }
   }
+
+  interface HTMLIonTextElement extends StencilComponents.IonText, HTMLStencilElement {}
+
   var HTMLIonTextElement: {
     prototype: HTMLIonTextElement;
     new (): HTMLIonTextElement;
@@ -6154,76 +6738,82 @@ declare global {
 
 
 declare global {
-  interface HTMLIonTextareaElement extends HTMLStencilElement {
-    /**
-     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
-     */
-    'autocapitalize': string;
-    /**
-     * Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
-     */
-    'autocomplete': string;
-    /**
-     * This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
-     */
-    'autofocus': boolean;
-    /**
-     * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
-     */
-    'clearOnEdit': boolean;
-    /**
-     * The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
-     */
-    'cols': number;
-    /**
-     * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
-     */
-    'debounce': number;
-    /**
-     * If true, the user cannot interact with the textarea. Defaults to `false`.
-     */
-    'disabled': boolean;
-    /**
-     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
-     */
-    'maxlength': number;
-    /**
-     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
-     */
-    'minlength': number;
-    /**
-     * The name of the control, which is submitted with the form data.
-     */
-    'name': string;
-    /**
-     * Instructional text that shows before the input has a value.
-     */
-    'placeholder': string;
-    /**
-     * If true, the user cannot modify the value. Defaults to `false`.
-     */
-    'readonly': boolean;
-    /**
-     * If true, the user must fill in a value before submitting a form.
-     */
-    'required': boolean;
-    /**
-     * The number of visible text lines for the control.
-     */
-    'rows': number;
-    /**
-     * If true, the element will have its spelling and grammar checked. Defaults to `false`.
-     */
-    'spellcheck': boolean;
-    /**
-     * The value of the textarea.
-     */
-    'value': string;
-    /**
-     * Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `"off"`.
-     */
-    'wrap': string;
+
+  namespace StencilComponents {
+    interface IonTextarea {
+      /**
+       * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
+       */
+      'autocapitalize': string;
+      /**
+       * Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
+       */
+      'autocomplete': string;
+      /**
+       * This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
+       */
+      'autofocus': boolean;
+      /**
+       * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
+       */
+      'clearOnEdit': boolean;
+      /**
+       * The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
+       */
+      'cols': number;
+      /**
+       * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+       */
+      'debounce': number;
+      /**
+       * If true, the user cannot interact with the textarea. Defaults to `false`.
+       */
+      'disabled': boolean;
+      /**
+       * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
+       */
+      'maxlength': number;
+      /**
+       * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+       */
+      'minlength': number;
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name': string;
+      /**
+       * Instructional text that shows before the input has a value.
+       */
+      'placeholder': string;
+      /**
+       * If true, the user cannot modify the value. Defaults to `false`.
+       */
+      'readonly': boolean;
+      /**
+       * If true, the user must fill in a value before submitting a form.
+       */
+      'required': boolean;
+      /**
+       * The number of visible text lines for the control.
+       */
+      'rows': number;
+      /**
+       * If true, the element will have its spelling and grammar checked. Defaults to `false`.
+       */
+      'spellcheck': boolean;
+      /**
+       * The value of the textarea.
+       */
+      'value': string;
+      /**
+       * Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `"off"`.
+       */
+      'wrap': string;
+    }
   }
+
+  interface HTMLIonTextareaElement extends StencilComponents.IonTextarea, HTMLStencilElement {}
+
   var HTMLIonTextareaElement: {
     prototype: HTMLIonTextareaElement;
     new (): HTMLIonTextareaElement;
@@ -6331,9 +6921,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonThumbnailElement extends HTMLStencilElement {
 
+  namespace StencilComponents {
+    interface IonThumbnail {
+
+    }
   }
+
+  interface HTMLIonThumbnailElement extends StencilComponents.IonThumbnail, HTMLStencilElement {}
+
   var HTMLIonThumbnailElement: {
     prototype: HTMLIonThumbnailElement;
     new (): HTMLIonThumbnailElement;
@@ -6358,9 +6954,15 @@ declare global {
 
 
 declare global {
-  interface HTMLIonTitleElement extends HTMLStencilElement {
 
+  namespace StencilComponents {
+    interface IonTitle {
+
+    }
   }
+
+  interface HTMLIonTitleElement extends StencilComponents.IonTitle, HTMLStencilElement {}
+
   var HTMLIonTitleElement: {
     prototype: HTMLIonTitleElement;
     new (): HTMLIonTitleElement;
@@ -6385,11 +6987,17 @@ declare global {
 
 
 declare global {
-  interface HTMLIonToastControllerElement extends HTMLStencilElement {
-    'create': (opts?: ToastOptions | undefined) => Promise<HTMLIonToastElement>;
-    'dismiss': (data?: any, role?: string | undefined, toastId?: number) => Promise<void>;
-    'getTop': () => HTMLIonToastElement;
+
+  namespace StencilComponents {
+    interface IonToastController {
+      'create': (opts?: ToastOptions | undefined) => Promise<HTMLIonToastElement>;
+      'dismiss': (data?: any, role?: string | undefined, toastId?: number) => Promise<void>;
+      'getTop': () => HTMLIonToastElement;
+    }
   }
+
+  interface HTMLIonToastControllerElement extends StencilComponents.IonToastController, HTMLStencilElement {}
+
   var HTMLIonToastControllerElement: {
     prototype: HTMLIonToastControllerElement;
     new (): HTMLIonToastControllerElement;
@@ -6414,70 +7022,76 @@ declare global {
 
 
 declare global {
-  interface HTMLIonToastElement extends HTMLStencilElement {
-    /**
-     * Text to display in the close button.
-     */
-    'closeButtonText': string;
-    /**
-     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
-     */
-    'cssClass': string | string[];
-    /**
-     * Dismiss the toast overlay after it has been presented.
-     */
-    'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
-    /**
-     * If true, the toast will dismiss when the page changes. Defaults to `false`.
-     */
-    'dismissOnPageChange': boolean;
-    /**
-     * How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.
-     */
-    'duration': number;
-    /**
-     * Animation to use when the toast is presented.
-     */
-    'enterAnimation': AnimationBuilder;
-    'keyboardClose': boolean;
-    /**
-     * Animation to use when the toast is dismissed.
-     */
-    'leaveAnimation': AnimationBuilder;
-    /**
-     * Message to be shown in the toast.
-     */
-    'message': string;
-    /**
-     * Returns a promise that resolves when the toast did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await toast.onDidDismiss(); ```
-     */
-    'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
-    /**
-     * Returns a promise that resolves when the toast will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await toast.onWillDismiss(); ```
-     */
-    'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
-    'overlayId': number;
-    /**
-     * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
-     */
-    'position': string;
-    /**
-     * Present the toast overlay after it has been created.
-     */
-    'present': () => Promise<void>;
-    /**
-     * If true, the close button will be displayed. Defaults to `false`.
-     */
-    'showCloseButton': boolean;
-    /**
-     * If true, the toast will be translucent. Defaults to `false`.
-     */
-    'translucent': boolean;
-    /**
-     * If true, the toast will animate. Defaults to `true`.
-     */
-    'willAnimate': boolean;
+
+  namespace StencilComponents {
+    interface IonToast {
+      /**
+       * Text to display in the close button.
+       */
+      'closeButtonText': string;
+      /**
+       * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
+       */
+      'cssClass': string | string[];
+      /**
+       * Dismiss the toast overlay after it has been presented.
+       */
+      'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
+      /**
+       * If true, the toast will dismiss when the page changes. Defaults to `false`.
+       */
+      'dismissOnPageChange': boolean;
+      /**
+       * How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.
+       */
+      'duration': number;
+      /**
+       * Animation to use when the toast is presented.
+       */
+      'enterAnimation': AnimationBuilder;
+      'keyboardClose': boolean;
+      /**
+       * Animation to use when the toast is dismissed.
+       */
+      'leaveAnimation': AnimationBuilder;
+      /**
+       * Message to be shown in the toast.
+       */
+      'message': string;
+      /**
+       * Returns a promise that resolves when the toast did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await toast.onDidDismiss(); ```
+       */
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      /**
+       * Returns a promise that resolves when the toast will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await toast.onWillDismiss(); ```
+       */
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'overlayId': number;
+      /**
+       * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
+       */
+      'position': string;
+      /**
+       * Present the toast overlay after it has been created.
+       */
+      'present': () => Promise<void>;
+      /**
+       * If true, the close button will be displayed. Defaults to `false`.
+       */
+      'showCloseButton': boolean;
+      /**
+       * If true, the toast will be translucent. Defaults to `false`.
+       */
+      'translucent': boolean;
+      /**
+       * If true, the toast will animate. Defaults to `true`.
+       */
+      'willAnimate': boolean;
+    }
   }
+
+  interface HTMLIonToastElement extends StencilComponents.IonToast, HTMLStencilElement {}
+
   var HTMLIonToastElement: {
     prototype: HTMLIonToastElement;
     new (): HTMLIonToastElement;
@@ -6571,32 +7185,38 @@ declare global {
 
 
 declare global {
-  interface HTMLIonToggleElement extends HTMLStencilElement {
-    /**
-     * If true, the toggle is selected. Defaults to `false`.
-     */
-    'checked': boolean;
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * Indicates that the user cannot interact with the control.
-     */
-    'disabled': boolean;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * The name of the control, which is submitted with the form data.
-     */
-    'name': string;
-    /**
-     * the value of the toggle.
-     */
-    'value': string;
+
+  namespace StencilComponents {
+    interface IonToggle {
+      /**
+       * If true, the toggle is selected. Defaults to `false`.
+       */
+      'checked': boolean;
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * Indicates that the user cannot interact with the control.
+       */
+      'disabled': boolean;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name': string;
+      /**
+       * the value of the toggle.
+       */
+      'value': string;
+    }
   }
+
+  interface HTMLIonToggleElement extends StencilComponents.IonToggle, HTMLStencilElement {}
+
   var HTMLIonToggleElement: {
     prototype: HTMLIonToggleElement;
     new (): HTMLIonToggleElement;
@@ -6660,20 +7280,26 @@ declare global {
 
 
 declare global {
-  interface HTMLIonToolbarElement extends HTMLStencilElement {
-    /**
-     * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-     */
-    'color': string;
-    /**
-     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-     */
-    'mode': 'ios' | 'md';
-    /**
-     * If true, the toolbar will be translucent. Note: In order to scroll content behind the toolbar, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
-     */
-    'translucent': boolean;
+
+  namespace StencilComponents {
+    interface IonToolbar {
+      /**
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       */
+      'color': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       */
+      'mode': 'ios' | 'md';
+      /**
+       * If true, the toolbar will be translucent. Note: In order to scroll content behind the toolbar, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
+       */
+      'translucent': boolean;
+    }
   }
+
+  interface HTMLIonToolbarElement extends StencilComponents.IonToolbar, HTMLStencilElement {}
+
   var HTMLIonToolbarElement: {
     prototype: HTMLIonToolbarElement;
     new (): HTMLIonToolbarElement;
@@ -6709,40 +7335,46 @@ declare global {
 
 
 declare global {
-  interface HTMLIonVirtualScrollElement extends HTMLStencilElement {
-    /**
-     * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This value can use either `px` or `%` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `100%`.
-     */
-    'approxFooterHeight': number;
-    /**
-     * The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `40px`.
-     */
-    'approxHeaderHeight': number;
-    /**
-     * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `45`.
-     */
-    'approxItemHeight': number;
-    'domRender': DomRenderFn;
-    /**
-     * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
-     */
-    'footerFn': HeaderFn;
-    /**
-     * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
-     */
-    'headerFn': HeaderFn;
-    'itemHeight': ItemHeightFn;
-    'itemRender': ItemRenderFn;
-    /**
-     * The data that builds the templates within the virtual scroll. This is the same data that you'd pass to `*ngFor`. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
-     */
-    'items': any[];
-    'markDirty': (offset: number, len?: number) => void;
-    'markDirtyTail': () => void;
-    'nodeHeight': NodeHeightFn;
-    'positionForItem': (index: number) => number;
-    'renderer': (item: any) => JSX.Element;
+
+  namespace StencilComponents {
+    interface IonVirtualScroll {
+      /**
+       * The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This value can use either `px` or `%` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `100%`.
+       */
+      'approxFooterHeight': number;
+      /**
+       * The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `40px`.
+       */
+      'approxHeaderHeight': number;
+      /**
+       * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `45`.
+       */
+      'approxItemHeight': number;
+      'domRender': DomRenderFn;
+      /**
+       * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
+       */
+      'footerFn': HeaderFn;
+      /**
+       * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
+       */
+      'headerFn': HeaderFn;
+      'itemHeight': ItemHeightFn;
+      'itemRender': ItemRenderFn;
+      /**
+       * The data that builds the templates within the virtual scroll. This is the same data that you'd pass to `*ngFor`. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
+       */
+      'items': any[];
+      'markDirty': (offset: number, len?: number) => void;
+      'markDirtyTail': () => void;
+      'nodeHeight': NodeHeightFn;
+      'positionForItem': (index: number) => number;
+      'renderer': (item: any) => JSX.Element;
+    }
   }
+
+  interface HTMLIonVirtualScrollElement extends StencilComponents.IonVirtualScroll, HTMLStencilElement {}
+
   var HTMLIonVirtualScrollElement: {
     prototype: HTMLIonVirtualScrollElement;
     new (): HTMLIonVirtualScrollElement;

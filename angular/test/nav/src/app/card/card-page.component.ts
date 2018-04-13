@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DomController } from '@ionic/angular';
 
 @Component({
   selector: 'app-card-page',
@@ -60,8 +61,27 @@ import { Component } from '@angular/core';
   `
 })
 export class CardPageComponent {
-  constructor() {
 
+  constructor(public domCtrl: DomController) {
+    this.domControllerTest('constructor');
+  }
+
+  ngOnInit() {
+    this.domControllerTest('ngOnInit');
+
+    setTimeout(() => {
+      this.domControllerTest('setTimeout');
+    }, 5000);
+  }
+
+  domControllerTest(test: string) {
+    this.domCtrl.read(readTimeStamp => {
+      console.log('DomController read:', test, readTimeStamp);
+
+      this.domCtrl.write(writeTimeStamp => {
+        console.log('DomController write:', test, writeTimeStamp);
+      });
+    });
   }
 
   toggleColor() {

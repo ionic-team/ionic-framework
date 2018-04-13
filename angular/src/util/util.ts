@@ -1,3 +1,14 @@
+import { ElementRef } from '@angular/core';
+
+export function inputs(instance: any, el: ElementRef, props: string[]) {
+  props.forEach(propName => {
+    Object.defineProperty(instance, propName, {
+      get: () => el.nativeElement[propName], set: (val: any) => el.nativeElement[propName] = val
+    });
+  });
+}
+
+
 export function proxyMethod(ctrlName: string, methodName: string, ...args: any[]) {
   const controller = ensureElementInBody(ctrlName);
   return controller.componentOnReady()
