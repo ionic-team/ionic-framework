@@ -32,7 +32,7 @@ export class Label {
    * The position determines where and how the label behaves inside an item.
    * Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
    */
-  @Prop({mutable: true}) position: 'inline' | 'fixed' | 'stacked' | 'floating' | undefined;
+  @Prop() position?: 'fixed' | 'stacked' | 'floating';
 
   /**
    * Emitted when the styles change.
@@ -44,28 +44,24 @@ export class Label {
     return this.el.textContent || '';
   }
 
-  componentWillLoad() {
-    if (this.position === undefined) {
-      this.position = (this.mode === 'ios') ? 'inline' : 'floating';
-    }
-  }
-
   componentDidLoad() {
     this.positionChanged();
   }
 
   @Watch('position')
   positionChanged() {
+    const position = this.position;
     return this.ionStyle.emit({
-      [`label-${this.position}`]: true,
+      [`label-${position}`]: !!position,
     });
   }
 
   hostData() {
+    const position = this.position;
     return {
       class: {
-        [`label-${this.position}`]: true,
-        [`label-${this.mode}-${this.position}`]: true
+        [`label-${position}`]: !!position,
+        [`label-${this.mode}-${position}`]: !!position
       }
     };
   }

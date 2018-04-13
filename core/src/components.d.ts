@@ -3013,7 +3013,7 @@ declare global {
       /**
        * The position determines where and how the label behaves inside an item. Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
        */
-      'position': 'inline' | 'fixed' | 'stacked' | 'floating' | undefined;
+      'position': 'fixed' | 'stacked' | 'floating';
     }
   }
 
@@ -3051,7 +3051,7 @@ declare global {
       /**
        * The position determines where and how the label behaves inside an item. Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
        */
-      'position'?: 'inline' | 'fixed' | 'stacked' | 'floating' | undefined;
+      'position'?: 'fixed' | 'stacked' | 'floating';
     }
   }
 }
