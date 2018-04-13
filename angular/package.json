@@ -20,8 +20,7 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
-    "build":
-      "npm run clean && npm run compile && npm run clean-generated && npm run ionic-core",
+    "build": "npm run clean && npm run compile && npm run clean-generated && npm run ionic-core",
     "build.link": "npm run build && node scripts/link-copy.js",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
@@ -29,15 +28,16 @@
     "ionic-core": "node ../core/node_modules/.bin/stencil build",
     "ionic-core-dev": "node ../core/node_modules/.bin/stencil build --dev",
     "lint": "tslint --project .",
-    "prerelease":
-      "npm run validate && np prerelease --yolo --any-branch --tag next",
+    "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
     "test": "echo 'angular no tests yet'",
     "tsc": "tsc -p .",
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "files": ["dist/"],
+  "files": [
+    "dist/"
+  ],
   "dependencies": {
     "@ionic/core": "4.0.0-alpha.1"
   },
