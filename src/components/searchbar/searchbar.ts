@@ -342,7 +342,10 @@ export class Searchbar extends BaseInput<string> {
         this.ionInput.emit(ev);
       }
     }, 16 * 4);
-    this._shouldBlur = false;
+    //Go back to input focus if clear has been pressed with input already focused
+    if(this._isFocus && ev.type === "mousedown"){
+        this._shouldBlur = false;
+    }
   }
 
   /**
