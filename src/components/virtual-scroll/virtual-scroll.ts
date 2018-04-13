@@ -716,9 +716,16 @@ export class VirtualScroll implements DoCheck, OnChanges, AfterContentInit, OnDe
    * @hidden
    */
   scrollUpdate(ev: ScrollEvent) {
-    // set the scroll top from the scroll event
-    this._data.scrollTop = ev.scrollTop;
-
+    // set the scroll top from the scroll event minus the height other nodes in the scrollarea
+    let scrollHeightAboveVirtualScroll: number = 0;
+    for (let i: number = 0; i < ev.scrollElement.children.length; i++) {
+      if (ev.scrollElement.children[i] == this._elementRef.nativeElement) {
+        break;
+      } else {
+        scrollHeightAboveVirtualScroll += ev.scrollElement.children[i].scrollHeight;
+      }
+    }
+    this._data.scrollTop = ev.scrollTop - scrollHeightAboveVirtualScroll;
     // there is a queue system so that we can
     // spread out the work over multiple frames
     const queue = this._queue;
