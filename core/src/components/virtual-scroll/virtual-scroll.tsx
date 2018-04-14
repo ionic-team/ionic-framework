@@ -207,7 +207,7 @@ export class VirtualScroll {
     }
 
     this.queue.read(this.readVS.bind(this));
-    this.queue.read(this.writeVS.bind(this));
+    this.queue.write(this.writeVS.bind(this));
   }
 
   private readVS() {
