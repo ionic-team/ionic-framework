@@ -140,8 +140,8 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       enteringView = this.stackCtrl.createView(this.activated, activatedRoute);
     }
 
-    const direction = this.navCtrl.consumeDirection();
-    await this.stackCtrl.setActive(enteringView, direction);
+    const {direction, animated} = this.navCtrl.consumeTransition();
+    await this.stackCtrl.setActive(enteringView, direction, animated);
     this.activateEvents.emit(this.activated.instance);
 
     emitEvent(this.elementRef.nativeElement);
