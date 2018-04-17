@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate } from '../../index';
 
-import { createThemedClasses, getClassList } from '../../utils/theme';
+import { createThemedClasses, getClassMap } from '../../utils/theme';
 import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 
@@ -176,11 +176,7 @@ export class Modal implements OverlayInterface {
       ...this.componentProps,
       modal: this.el
     };
-    const classes = [
-      ...getClassList(this.cssClass),
-      'ion-page'
-    ];
-    this.usersElement = await attachComponent(this.delegate, container, this.component, classes, componentProps);
+    this.usersElement = await attachComponent(this.delegate, container, this.component, ['ion-page'], componentProps);
     return present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation);
   }
 
@@ -222,6 +218,7 @@ export class Modal implements OverlayInterface {
   hostData() {
     return {
       'no-router': true,
+      class: getClassMap(this.cssClass),
       style: {
         zIndex: 20000 + this.overlayId,
       }
