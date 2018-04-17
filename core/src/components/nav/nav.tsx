@@ -48,10 +48,11 @@ export class Nav implements NavOutlet {
   @Prop() root: NavComponent|undefined;
   @Watch('root')
   rootChanged() {
+    const isDev = Build.isDev;
     if (this.root) {
       if (!this.useRouter) {
         this.setRoot(this.root, this.rootParams);
-      } else if (Build.isDev) {
+      } else if (isDev) {
         console.warn('<ion-nav> does not support a root attribute when using ion-router.');
       }
     }
