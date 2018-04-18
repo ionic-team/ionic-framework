@@ -270,9 +270,9 @@ and what data to give to the header template. The function must return
 
 
 The data that builds the templates within the virtual scroll.
-This is the same data that you'd pass to `*ngFor`. It's important to note
-that when this data has changed, then the entire virtual scroll is reset,
-which is an expensive operation and should be avoided if possible.
+It's important to note that when this data has changed, then the
+entire virtual scroll is reset, which is an expensive operation and
+should be avoided if possible.
 
 
 #### nodeHeight
@@ -374,9 +374,9 @@ and what data to give to the header template. The function must return
 
 
 The data that builds the templates within the virtual scroll.
-This is the same data that you'd pass to `*ngFor`. It's important to note
-that when this data has changed, then the entire virtual scroll is reset,
-which is an expensive operation and should be avoided if possible.
+It's important to note that when this data has changed, then the
+entire virtual scroll is reset, which is an expensive operation and
+should be avoided if possible.
 
 
 #### node-height
