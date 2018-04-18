@@ -106,8 +106,8 @@ If true, activates a button with rounded corners.
 
 string
 
-When using a router, it specifies the transition direction when navigating a
-another page usign `href`.
+When using a router, it specifies the transition direction when navigating to
+another page using `href`.
 
 
 #### size
@@ -205,8 +205,8 @@ If true, activates a button with rounded corners.
 
 string
 
-When using a router, it specifies the transition direction when navigating a
-another page usign `href`.
+When using a router, it specifies the transition direction when navigating to
+another page using `href`.
 
 
 #### size

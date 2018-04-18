@@ -55,8 +55,8 @@ export class Button {
   @Prop() fill: 'clear' | 'outline' | 'solid' | 'default' = 'default';
 
   /**
-   * When using a router, it specifies the transition direction when navigating a
-   * another page usign `href`.
+   * When using a router, it specifies the transition direction when navigating to
+   * another page using `href`.
    */
   @Prop() routerDirection: 'forward' | 'back';
 

@@ -14,8 +14,8 @@ export class Anchor {
   @Prop() href: string;
 
   /**
-   * When using a router, it specifies the transition direction when navigating a
-   * another page usign `href`.
+   * When using a router, it specifies the transition direction when navigating to
+   * another page using `href`.
    */
   @Prop() routerDirection: 'forward' | 'back';
 

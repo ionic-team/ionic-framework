@@ -523,7 +523,7 @@ declare global {
        */
       'href': string;
       /**
-       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection': 'forward' | 'back';
     }
@@ -553,7 +553,7 @@ declare global {
        */
       'href'?: string;
       /**
-       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection'?: 'forward' | 'back';
     }
@@ -874,7 +874,7 @@ declare global {
        */
       'round': boolean;
       /**
-       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection': 'forward' | 'back';
       /**
@@ -952,7 +952,7 @@ declare global {
        */
       'round'?: boolean;
       /**
-       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection'?: 'forward' | 'back';
       /**
@@ -2915,7 +2915,7 @@ declare global {
   namespace StencilComponents {
     interface IonItem {
       /**
-       * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
+       * If true, a button tag will be rendered and the item will be tappable. Defaults to `false`.
        */
       'button': boolean;
       /**
@@ -2939,7 +2939,7 @@ declare global {
        */
       'mode': 'ios' | 'md';
       /**
-       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection': 'forward' | 'back';
     }
@@ -2965,7 +2965,7 @@ declare global {
   namespace JSXElements {
     export interface IonItemAttributes extends HTMLAttributes {
       /**
-       * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
+       * If true, a button tag will be rendered and the item will be tappable. Defaults to `false`.
        */
       'button'?: boolean;
       /**
@@ -2989,7 +2989,7 @@ declare global {
        */
       'mode'?: 'ios' | 'md';
       /**
-       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection'?: 'forward' | 'back';
     }
@@ -7362,7 +7362,7 @@ declare global {
       'itemHeight': ItemHeightFn;
       'itemRender': ItemRenderFn;
       /**
-       * The data that builds the templates within the virtual scroll. This is the same data that you'd pass to `*ngFor`. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
+       * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
        */
       'items': any[];
       'markDirty': (offset: number, len?: number) => void;
@@ -7416,7 +7416,7 @@ declare global {
       'itemHeight'?: ItemHeightFn;
       'itemRender'?: ItemRenderFn;
       /**
-       * The data that builds the templates within the virtual scroll. This is the same data that you'd pass to `*ngFor`. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
+       * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
        */
       'items'?: any[];
       'nodeHeight'?: NodeHeightFn;
