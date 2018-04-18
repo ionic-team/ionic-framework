@@ -101,26 +101,18 @@ export { ToastController } from './components/toast-controller/toast-controller'
 export { Toggle } from './components/toggle/toggle';
 export { Toolbar } from './components/toolbar/toolbar';
 
-export { PlatformConfig } from './global/platform-configs';
-
 // export all of the component declarations that are dynamically created
 export * from './components';
 
+export { Config } from './global/config';
 export { QueueController, RafCallback } from './global/queue-controller';
 export { FrameworkDelegate } from './utils/framework-delegate';
 export { OverlayEventDetail } from './utils/overlays';
+export * from './utils/platform';
 export * from './utils/transition';
 
 export type ComponentRef = Function | HTMLElement | string;
 export type ComponentProps = {[key: string]: any};
-
-export interface Config {
-  get: (key: string, fallback?: any) => any;
-  getBoolean: (key: string, fallback?: boolean) => boolean;
-  getNumber: (key: string, fallback?: number) => number;
-  set: (key: string, value: any) => void;
-}
-
 export type CssClassMap = { [className: string]: boolean };
 
 export interface BaseInputComponent {

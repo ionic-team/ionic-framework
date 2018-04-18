@@ -42,13 +42,8 @@ export class Toolbar {
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'toolbar-translucent') : {};
 
-    const hostClasses = {
-      ...themedClasses,
-      'statusbar-padding': this.config.getBoolean('statusbarPadding')
-    };
-
     return {
-      class: hostClasses
+      class: themedClasses
     };
   }
 

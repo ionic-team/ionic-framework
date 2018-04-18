@@ -1,5 +1,6 @@
 import { Component, Element, Prop } from '@stencil/core';
 import { Config } from '../../index';
+import { isDevice, isHybrid, needInputShims } from '../../utils/platform';
 
 @Component({
   tag: 'ion-app',
@@ -12,36 +13,36 @@ import { Config } from '../../index';
   }
 })
 export class App {
-  mode: string;
 
-  private isDevice = false;
-  private deviceHacks = false;
+  mode: string;
 
   @Element() el: HTMLElement;
 
+  @Prop({ context: 'window' }) win: Window;
   @Prop({ context: 'config' }) config: Config;
 
-  componentWillLoad() {
-    this.isDevice = this.config.getBoolean('isDevice', false);
-    this.deviceHacks = this.config.getBoolean('deviceHacks', false);
-  }
-
   hostData() {
-    const hoverCSS = this.config.getBoolean('hoverCSS', false);
+    const hybrid = isHybrid(this.win);
+    const hoverCSS = this.config.getBoolean('hoverCSS', !hybrid);
+    const statusBar = this.config.getBoolean('statusbarPadding', hybrid);
 
     return {
       class: {
         [this.mode]: true,
+        'statusbar-padding': statusBar,
         'enable-hover': hoverCSS
       }
     };
   }
 
   render() {
+    const device = this.config.getBoolean('isDevice', isDevice(this.win));
+    const inputShims = this.config.getBoolean('inputShims', needInputShims(this.win));
+
     return [
-      this.deviceHacks && <ion-input-shims></ion-input-shims>,
+      inputShims && <ion-input-shims></ion-input-shims>,
       <ion-tap-click></ion-tap-click>,
-      this.isDevice && <ion-status-tap></ion-status-tap>,
+      device && <ion-status-tap></ion-status-tap>,
       <slot></slot>
     ];
   }

@@ -1,9 +1,8 @@
 import { Component, Element, Listen, Prop, State } from '@stencil/core';
-import { Config, PlatformConfig } from '../../index';
+import { Config } from '../../index';
 
 import {
-  DisplayWhen,
-  updateTestResults,
+  DisplayWhen, PLATFORM_CONFIGS, PlatformConfig, detectPlatforms, updateTestResults,
 } from '../../utils/show-hide-when-utils';
 
 @Component({
@@ -12,9 +11,11 @@ import {
 })
 export class ShowWhen implements DisplayWhen {
 
+  calculatedPlatforms: PlatformConfig[];
+
   @Element() element: HTMLElement;
   @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'platforms' }) calculatedPlatforms: PlatformConfig[];
+  @Prop({ context: 'window'}) win: Window;
 
   @Prop() orientation: string;
   @Prop() mediaQuery: string;
@@ -25,9 +26,14 @@ export class ShowWhen implements DisplayWhen {
 
   @State() passesTest = false;
 
-  @Listen('window:resize')
   componentWillLoad() {
-    return updateTestResults(this);
+    this.calculatedPlatforms = detectPlatforms(this.win, PLATFORM_CONFIGS);
+    this.onResize();
+  }
+
+  @Listen('window:resize')
+  onResize() {
+    updateTestResults(this);
   }
 
   hostData() {

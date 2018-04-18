@@ -38,7 +38,6 @@ import {
   ModalOptions,
   PickerColumn,
   PickerOptions,
-  PlatformConfig,
   PopoverOptions,
   ToastOptions,
 } from './index';
@@ -1558,40 +1557,6 @@ declare global {
 declare global {
 
   namespace StencilComponents {
-    interface IonCordovaPlatform {
-      'exitCordovaApp': () => void;
-      'ready': () => Promise<void>;
-    }
-  }
-
-  interface HTMLIonCordovaPlatformElement extends StencilComponents.IonCordovaPlatform, HTMLStencilElement {}
-
-  var HTMLIonCordovaPlatformElement: {
-    prototype: HTMLIonCordovaPlatformElement;
-    new (): HTMLIonCordovaPlatformElement;
-  };
-  interface HTMLElementTagNameMap {
-    'ion-cordova-platform': HTMLIonCordovaPlatformElement;
-  }
-  interface ElementTagNameMap {
-    'ion-cordova-platform': HTMLIonCordovaPlatformElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      'ion-cordova-platform': JSXElements.IonCordovaPlatformAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonCordovaPlatformAttributes extends HTMLAttributes {
-
-    }
-  }
-}
-
-
-declare global {
-
-  namespace StencilComponents {
     interface IonDatetime {
       /**
        * The text to display on the picker's cancel button. Default: `Cancel`.
@@ -2205,12 +2170,12 @@ declare global {
 
   namespace StencilComponents {
     interface IonHideWhen {
-      'mediaQuery': string|undefined;
-      'mode': string|undefined;
+      'mediaQuery': string;
+      'mode': string;
       'or': boolean;
-      'orientation': string|undefined;
-      'platform': string|undefined;
-      'size': string|undefined;
+      'orientation': string;
+      'platform': string;
+      'size': string;
     }
   }
 
@@ -2233,12 +2198,12 @@ declare global {
   }
   namespace JSXElements {
     export interface IonHideWhenAttributes extends HTMLAttributes {
-      'mediaQuery'?: string|undefined;
-      'mode'?: string|undefined;
+      'mediaQuery'?: string;
+      'mode'?: string;
       'or'?: boolean;
-      'orientation'?: string|undefined;
-      'platform'?: string|undefined;
-      'size'?: string|undefined;
+      'orientation'?: string;
+      'platform'?: string;
+      'size'?: string;
     }
   }
 }
@@ -4230,54 +4195,6 @@ declare global {
        * If true, the picker will animate. Defaults to `true`.
        */
       'willAnimate'?: boolean;
-    }
-  }
-}
-
-
-declare global {
-
-  namespace StencilComponents {
-    interface IonPlatform {
-      'getQueryParam': (param: string) => string;
-      /**
-       * Depending on the platform the user is on, `is(platformName)` will return `true` or `false`. Note that the same app can return `true` for more than one platform name. For example, an app running from an iPad would return `true` for the platform names: `mobile`, `ios`, `ipad`, and `tablet`. Additionally, if the app was running from Cordova then `cordova` would be true, and if it was running from a web browser on the iPad then `mobileweb` would be `true`.  * ``` import { Platform } from 'ionic-angular';
-       */
-      'is': (platformName: string) => boolean;
-      /**
-       * Returns whether the device is in landscape orientation
-       */
-      'isLandscape': () => boolean;
-      /**
-       * Returns whether the device is in portration orientation
-       */
-      'isPortrait': () => boolean;
-      'platforms': () => string[];
-      'ready': () => any;
-      'versions': () => PlatformConfig[];
-    }
-  }
-
-  interface HTMLIonPlatformElement extends StencilComponents.IonPlatform, HTMLStencilElement {}
-
-  var HTMLIonPlatformElement: {
-    prototype: HTMLIonPlatformElement;
-    new (): HTMLIonPlatformElement;
-  };
-  interface HTMLElementTagNameMap {
-    'ion-platform': HTMLIonPlatformElement;
-  }
-  interface ElementTagNameMap {
-    'ion-platform': HTMLIonPlatformElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      'ion-platform': JSXElements.IonPlatformAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonPlatformAttributes extends HTMLAttributes {
-
     }
   }
 }

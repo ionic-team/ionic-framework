@@ -130,14 +130,6 @@ export class Content {
     }
   }
 
-  hostData() {
-    return {
-      class: {
-        'statusbar-padding': this.config.getBoolean('statusbarPadding')
-      }
-    };
-  }
-
   render() {
     this.resize();
 

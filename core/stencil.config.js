@@ -31,7 +31,6 @@ exports.config = {
     { components: ['ion-tabs', 'ion-tab', 'ion-tabbar', 'ion-tab-button'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
     { components: ['ion-status-tap'] },
-    { components: ['ion-platform', 'ion-cordova-platform'] },
     { components: ['ion-hide-when', 'ion-show-when'] },
   ],
   plugins: [

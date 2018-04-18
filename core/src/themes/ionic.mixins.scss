@@ -706,23 +706,14 @@
 // --------------------------------------------------------------------------------
 @mixin toolbar-statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $statusbar-padding) {
 
-  > .toolbar.statusbar-padding:first-child {
-    @include padding(calc(#{$statusbar-padding} + #{$toolbar-padding}), null, null, null);
-    @include safe-area-padding($toolbar-padding, null, null, null);
+  .statusbar-padding {
+    > .toolbar:first-child {
+      @include padding(calc(#{$statusbar-padding} + #{$toolbar-padding}), null, null, null);
+      @include safe-area-padding($toolbar-padding, null, null, null);
 
-    min-height: calc(#{$toolbar-height} + #{$statusbar-padding});
-    @include safe-area-sizing(min-height, safe-area-inset-top, $toolbar-height);
-  }
-
-  > ion-content.statusbar-padding:first-child .scroll-content {
-    @include padding($statusbar-padding, null, null, null);
-    @include safe-area-padding(0px, null, null, null);
-  }
-
-  > ion-content.statusbar-padding:first-child[padding] .scroll-content,
-  > ion-content.statusbar-padding:first-child[padding-top] .scroll-content {
-    @include padding(calc(#{$content-padding} + #{$statusbar-padding}), null, null, null);
-    @include safe-area-padding(0px, null, null, null);
+      min-height: calc(#{$toolbar-height} + #{$statusbar-padding});
+      @include safe-area-sizing(min-height, safe-area-inset-top, $toolbar-height);
+    }
   }
 
 }
@@ -738,21 +729,23 @@
 // --------------------------------------------------------------------------------
 @mixin toolbar-title-statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $statusbar-padding) {
 
-  > .toolbar.statusbar-padding:first-child ion-segment,
-  > .toolbar.statusbar-padding:first-child ion-title {
-    @include padding($statusbar-padding, null, null, null);
-    @include safe-area-padding(0px, null, null, null);
+  .statusbar-padding {
+    > .toolbar:first-child ion-segment,
+    > .toolbar:first-child ion-title {
+      @include padding($statusbar-padding, null, null, null);
+      @include safe-area-padding(0px, null, null, null);
 
-    height: calc(#{$toolbar-height} + #{$statusbar-padding});
-    @include safe-area-sizing(height, safe-area-inset-top, $toolbar-height);
+      height: calc(#{$toolbar-height} + #{$statusbar-padding});
+      @include safe-area-sizing(height, safe-area-inset-top, $toolbar-height);
 
-    min-height: calc(#{$toolbar-height} + #{$statusbar-padding});
-    @include safe-area-sizing(min-height, safe-area-inset-top, $toolbar-height)
-  }
+      min-height: calc(#{$toolbar-height} + #{$statusbar-padding});
+      @include safe-area-sizing(min-height, safe-area-inset-top, $toolbar-height)
+    }
 
-  > ion-content.statusbar-padding:first-child ion-scroll {
-    @include padding($statusbar-padding, null, null, null);
-    @include safe-area-padding(0px, null, null, null);
+    > ion-content:first-child ion-scroll {
+      @include padding($statusbar-padding, null, null, null);
+      @include safe-area-padding(0px, null, null, null);
+    }
   }
 
 }
