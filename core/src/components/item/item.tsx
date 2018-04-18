@@ -31,6 +31,11 @@ export class Item {
   @Prop() mode: 'ios' | 'md';
 
   /**
+   * If true, a button tag will be rendered and the item will be tappable. Defaults to `false`.
+   */
+  @Prop() button = false;
+
+  /**
    * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
    * is `ios` and an `href`, `onclick` or `button` property is present.
    */
@@ -48,14 +53,8 @@ export class Item {
   @Prop() href: string;
 
   /**
-   * Whether or not this item should be tappable.
-   * If true, a button tag will be rendered. Defaults to `false`.
-   */
-  @Prop() button = false;
-
-  /**
-   * When using a router, it specifies the transition direction when navigating a
-   * another page usign `href`.
+   * When using a router, it specifies the transition direction when navigating to
+   * another page using `href`.
    */
   @Prop() routerDirection: 'forward' | 'back';
 
