@@ -444,7 +444,7 @@ $input-highlight-color-valid:       #32db64;
 
 ### Markup Changed
 
-Item should now be written as an `<ion-item>` element. Ionic will determine when to render an anchor tag based on the presence of an `href` attribute, and a button tag based on the presence of an `onclick` or `tappable` attribute. Otherwise, it will render a div.
+Item should now be written as an `<ion-item>` element. Ionic will determine when to render an anchor tag based on the presence of an `href` attribute, and a button tag based on the presence of an `onclick` or `button` attribute. Otherwise, it will render a div.
 
 **Old Usage Example:**
 
@@ -466,15 +466,21 @@ Item should now be written as an `<ion-item>` element. Ionic will determine when
 
 ```html
 <ion-item>
-  Default Item
+  <ion-label>
+    Default Item
+  </ion-label>
 </ion-item>
 
-<ion-item tappable (click)="doSomething()">
-  Button Item
+<ion-item button (click)="doSomething()">
+  <ion-label>
+    Button Item
+  </ion-label>
 </ion-item>
 
 <ion-item href="#">
-  Anchor Item
+  <ion-label>
+    Anchor Item
+  </ion-label>
 </ion-item>
 ```
 
@@ -484,7 +490,9 @@ Previously an `ion-label` would automatically get added to an `ion-item` if one 
 
 ```html
 <ion-item>
-  <ion-label>Item Label</ion-label>
+  <ion-label>
+    Item Label
+  </ion-label>
 </ion-item>
 ```
 
@@ -545,7 +553,7 @@ The attributes to show/hide the detail arrows on items have been converted to a 
 **New Usage Example:**
 
 ```html
-<ion-item tappable detail="false">
+<ion-item button detail="false">
   <ion-label>Item Label</ion-label>
 </ion-item>
 
