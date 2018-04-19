@@ -10,7 +10,7 @@ export class PickerController implements OverlayController {
 
   private pickers = new Map<number, HTMLIonPickerElement>();
 
-  @Prop({ context: 'document' }) doc: Document;
+  @Prop({ context: 'document' }) doc!: Document;
 
   @Listen('body:ionPickerWillPresent')
   protected pickerWillPresent(ev: any) {

@@ -1,5 +1,5 @@
 import { EventEmitter } from '@stencil/core';
-import { Animation, AnimationBuilder, Config } from '..';
+import { Animation, AnimationBuilder, Config, Mode } from '..';
 
 let lastId = 1;
 
@@ -168,18 +168,18 @@ export interface OverlayEventDetail {
 }
 
 export interface OverlayInterface {
-  mode: string;
+  mode: Mode;
   el: HTMLElement;
   willAnimate: boolean;
   keyboardClose: boolean;
   config: Config;
   overlayId: number;
   presented: boolean;
-  animation: Animation|undefined;
+  animation?: Animation;
   animationCtrl: HTMLIonAnimationControllerElement;
 
-  enterAnimation: AnimationBuilder;
-  leaveAnimation: AnimationBuilder;
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
 
   didPresent: EventEmitter;
   willPresent: EventEmitter;

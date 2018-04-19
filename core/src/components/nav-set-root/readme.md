@@ -17,11 +17,6 @@ string
 
 
 
-#### url
-
-string
-
-
 ## Attributes
 
 #### component
@@ -32,11 +27,6 @@ string
 #### component-props
 
 
-
-
-#### url
-
-string
 
 
 

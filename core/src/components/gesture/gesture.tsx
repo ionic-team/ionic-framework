@@ -16,19 +16,19 @@ export class Gesture {
 
   private detail: GestureDetail;
   private positions: number[] = [];
-  private gesture: GestureDelegate;
+  private gesture!: GestureDelegate;
   private lastTouch = 0;
-  private pan: PanRecognizer;
+  private pan?: PanRecognizer; // TODO
   private hasCapturedPan = false;
   private hasPress = false;
   private hasStartedPan = false;
   private hasFiredStart = true;
   private isMoveQueued = false;
-  private blocker: BlockerDelegate|undefined;
+  private blocker?: BlockerDelegate;
 
-  @Prop({ connect: 'ion-gesture-controller' }) gestureCtrl: HTMLIonGestureControllerElement;
-  @Prop({ context: 'queue' }) queue: QueueController;
-  @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
+  @Prop({ connect: 'ion-gesture-controller' }) gestureCtrl!: HTMLIonGestureControllerElement;
+  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
 
   @Prop() disabled = false;
   @Prop() attachTo: string|HTMLElement = 'child';
@@ -42,38 +42,38 @@ export class Gesture {
   @Prop() threshold = 10;
   @Prop() type = 'pan';
 
-  @Prop() canStart: GestureCallback;
-  @Prop() onWillStart: (_: GestureDetail) => Promise<void>;
-  @Prop() onStart: GestureCallback;
-  @Prop() onMove: GestureCallback;
-  @Prop() onEnd: GestureCallback;
-  @Prop() onPress: GestureCallback;
-  @Prop() notCaptured: GestureCallback;
+  @Prop() canStart?: GestureCallback;
+  @Prop() onWillStart?: (_: GestureDetail) => Promise<void>;
+  @Prop() onStart?: GestureCallback;
+  @Prop() onMove?: GestureCallback;
+  @Prop() onEnd?: GestureCallback;
+  @Prop() onPress?: GestureCallback;
+  @Prop() notCaptured?: GestureCallback;
 
   /**
    * Emitted when the gesture moves.
    */
-  @Event() ionGestureMove: EventEmitter;
+  @Event() ionGestureMove!: EventEmitter;
 
   /**
    * Emitted when the gesture starts.
    */
-  @Event() ionGestureStart: EventEmitter;
+  @Event() ionGestureStart!: EventEmitter;
 
   /**
    * Emitted when the gesture ends.
    */
-  @Event() ionGestureEnd: EventEmitter;
+  @Event() ionGestureEnd!: EventEmitter;
 
   /**
    * Emitted when the gesture is not captured.
    */
-  @Event() ionGestureNotCaptured: EventEmitter;
+  @Event() ionGestureNotCaptured!: EventEmitter;
 
   /**
    * Emitted when press is detected.
    */
-  @Event() ionPress: EventEmitter;
+  @Event() ionPress!: EventEmitter;
 
   constructor() {
     this.detail = {
@@ -224,7 +224,10 @@ export class Gesture {
   }
 
   private pointerMove(ev: UIEvent) {
-    assert(!!this.pan, 'pan must be non null');
+    if (!this.pan) {
+      assert(false, 'pan must be non null');
+      return;
+    }
 
     // fast path, if gesture is currently captured
     // do minimun job to get user-land even dispatched

@@ -5,18 +5,18 @@ import { Component, Event, EventEmitter, Listen, Prop } from '@stencil/core';
 })
 export class RangeKnob {
 
-  @Prop() pressed: boolean;
-  @Prop() pin: boolean;
-  @Prop() min: number;
-  @Prop() max: number;
-  @Prop() val: number;
-  @Prop() disabled: boolean;
-  @Prop() labelId: string;
-  @Prop() knob: string;
-  @Prop() ratio: number;
+  @Prop() pressed = false;
+  @Prop() pin = false;
+  @Prop() min!: number;
+  @Prop() max!: number;
+  @Prop() val!: number;
+  @Prop() disabled = false;
+  @Prop() labelId!: string;
+  @Prop() knob!: string;
+  @Prop() ratio!: number;
 
-  @Event() ionIncrease: EventEmitter;
-  @Event() ionDecrease: EventEmitter;
+  @Event() ionIncrease!: EventEmitter;
+  @Event() ionDecrease!: EventEmitter;
 
   @Listen('keydown')
   handleKeyBoard(ev: KeyboardEvent) {

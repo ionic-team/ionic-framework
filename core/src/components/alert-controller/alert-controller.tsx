@@ -9,7 +9,7 @@ export class AlertController implements OverlayController {
 
   private alerts = new Map<number, HTMLIonAlertElement>();
 
-  @Prop({ context: 'document' }) doc: Document;
+  @Prop({ context: 'document' }) doc!: Document;
 
   @Listen('body:ionAlertWillPresent')
   protected alertWillPresent(ev: any) {

@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
-import { CssClassMap } from '../../index';
+import { CssClassMap, Mode } from '../../index';
 import { HTMLIonSelectOptionElementEvent } from '../select-option/select-option';
 import { BlurEvent, FocusEvent, SelectInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
 
@@ -26,23 +26,21 @@ import { SelectPopoverOption } from '../select-popover/select-popover';
 export class Select {
 
   private childOpts: HTMLIonSelectOptionElement[] = [];
-  private selectId: string;
-  private labelId: string;
-  private overlay: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | undefined;
+  private selectId = `ion-sel-${selectIds++}`;
+  private labelId?: string;
+  private overlay?: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
   private styleTmr: any;
-  private mode: string;
+  mode!: Mode;
 
-  @Element() private el: HTMLIonSelectElement;
+  @Element() el!: HTMLIonSelectElement;
+
+  @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl!: ActionSheetController;
+  @Prop({ connect: 'ion-alert-controller' }) alertCtrl!: AlertController;
+  @Prop({ connect: 'ion-popover-controller' }) popoverCtrl!: PopoverController;
 
   @State() isExpanded = false;
-
-  @State() keyFocus: boolean;
-
-  @State() text: string;
-
-  @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl: ActionSheetController;
-  @Prop({ connect: 'ion-alert-controller' }) alertCtrl: AlertController;
-  @Prop({ connect: 'ion-popover-controller' }) popoverCtrl: PopoverController;
+  @State() keyFocus = false;
+  @State() text?: string;
 
   /**
    * If true, the user cannot interact with the select. Defaults to `false`.
@@ -62,22 +60,22 @@ export class Select {
   /**
    * The text to display when the select is empty.
    */
-  @Prop() placeholder: string;
+  @Prop() placeholder?: string;
 
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop({ mutable: true }) name: string;
+  @Prop({ mutable: true }) name?: string;
 
   /**
    * The text to display instead of the selected option's value.
    */
-  @Prop() selectedText: string;
+  @Prop() selectedText?: string;
 
   /**
    * If true, the select can accept multiple values.
    */
-  @Prop() multiple: boolean;
+  @Prop() multiple = false;
 
   /**
    * The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
@@ -96,32 +94,32 @@ export class Select {
   /**
    * the value of the select.
    */
-  @Prop({ mutable: true }) value: string | string[] | undefined;
+  @Prop({ mutable: true }) value?: string | string[];
 
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange: EventEmitter<SelectInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<SelectInputChangeEvent>;
 
   /**
    * Emitted when the selection is cancelled.
    */
-  @Event() ionCancel: EventEmitter;
+  @Event() ionCancel!: EventEmitter;
 
   /**
    * Emitted when the select has focus.
    */
-  @Event() ionFocus: EventEmitter<FocusEvent>;
+  @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the select loses focus.
    */
-  @Event() ionBlur: EventEmitter<BlurEvent>;
+  @Event() ionBlur!: EventEmitter<BlurEvent>;
 
   /**
    * Emitted when the styles change.
    */
-  @Event() ionStyle: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
 
 
   @Watch('disabled')
@@ -233,9 +231,6 @@ export class Select {
     });
   }
 
-  constructor() {
-    this.selectId = 'ion-sel-' + (selectIds++);
-  }
 
   componentWillLoad() {
     if (!this.value) {

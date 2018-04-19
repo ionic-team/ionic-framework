@@ -216,9 +216,9 @@ export function inplaceUpdate(dst: Cell[], src: Cell[], offset: number) {
 export function calcCells(
   items: any[],
 
-  itemHeight: ItemHeightFn,
-  headerFn: HeaderFn,
-  footerFn: HeaderFn,
+  itemHeight: ItemHeightFn | undefined,
+  headerFn: HeaderFn | undefined,
+  footerFn: HeaderFn | undefined,
 
   approxHeaderHeight: number,
   approxFooterHeight: number,
@@ -286,7 +286,7 @@ export function calcHeightIndex(buf: Uint32Array, cells: Cell[], index: number):
 }
 
 
-export function resizeBuffer(buf: Uint32Array, len: number) {
+export function resizeBuffer(buf: Uint32Array | undefined, len: number) {
   if (!buf) {
     return new Uint32Array(len);
   }

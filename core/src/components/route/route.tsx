@@ -18,17 +18,17 @@ export class Route {
    * The value of this property is not always the tagname of the component to load,
    * in ion-tabs it actually refers to the name of the `ion-tab` to select.
    */
-  @Prop() component: string;
+  @Prop() component!: string;
 
   /**
    * Props to pass when the `component` specified in this route load.
    */
-  @Prop() componentProps: {[key: string]: any};
+  @Prop() componentProps?: {[key: string]: any};
 
   /**
    * Used internaly by `ion-router` to know when this route did change.
    */
-  @Event() ionRouteDataChanged: EventEmitter<any>;
+  @Event() ionRouteDataChanged!: EventEmitter<any>;
 
   @Watch('url')
   @Watch('component')

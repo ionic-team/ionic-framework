@@ -1,6 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
-import { Config } from '../../index';
+import { Config, Mode } from '../../index';
 import { SPINNERS, SpinnerConfig } from './spinner-configs';
 
 
@@ -15,33 +15,33 @@ import { SPINNERS, SpinnerConfig } from './spinner-configs';
   }
 })
 export class Spinner {
-  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
    */
-  @Prop() duration: number;
+  @Prop() duration?: number;
 
   /**
    * The name of the SVG spinner to use. If a name is not provided, the platform's default
    * spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`,
    * `"circles"`, `"crescent"`.
    */
-  @Prop() name: string;
+  @Prop() name?: string;
 
   /**
    * If true, the spinner's animation will be paused. Defaults to `false`.

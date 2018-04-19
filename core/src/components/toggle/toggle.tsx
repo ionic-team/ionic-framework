@@ -1,6 +1,6 @@
 import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
 import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { GestureDetail } from '../../index';
+import { GestureDetail, Mode } from '../../index';
 import { hapticSelection } from '../../utils/haptic';
 import { deferEvent } from '../../utils/helpers';
 
@@ -17,34 +17,33 @@ import { deferEvent } from '../../utils/helpers';
 })
 export class Toggle implements CheckboxInput {
 
-  private didLoad: boolean;
+  private inputId = `ion-tg-${toggleIds++}`;
   private gestureConfig: any;
-  private inputId: string;
-  private nativeInput: HTMLInputElement;
-  private pivotX: number;
+  private nativeInput!: HTMLInputElement;
+  private pivotX = 0;
 
   @State() activated = false;
 
-  @State() keyFocus: boolean;
+  @State() keyFocus = false;
 
   /**
    * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop({ mutable: true }) name: string;
+  @Prop() name: string = this.inputId;
 
   /**
    * If true, the toggle is selected. Defaults to `false`.
@@ -57,6 +56,7 @@ export class Toggle implements CheckboxInput {
   @Prop({ mutable: true }) disabled = false;
 
   /**
+   * // TODO!
    * the value of the toggle.
    */
   @Prop() value = 'on';
@@ -64,23 +64,41 @@ export class Toggle implements CheckboxInput {
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange: EventEmitter<CheckedInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<CheckedInputChangeEvent>;
 
   /**
    * Emitted when the toggle has focus.
    */
-  @Event() ionFocus: EventEmitter<FocusEvent>;
+  @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the toggle loses focus.
    */
-  @Event() ionBlur: EventEmitter<BlurEvent>;
+  @Event() ionBlur!: EventEmitter<BlurEvent>;
 
   /**
    * Emitted when the styles change.
    */
-  @Event() ionStyle: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
 
+
+  @Watch('checked')
+  checkedChanged(isChecked: boolean) {
+    this.ionChange.emit({
+      checked: isChecked,
+      value: this.value
+    });
+    this.emitStyle();
+  }
+
+  @Watch('disabled')
+  emitStyle() {
+    this.ionStyle.emit({
+      'toggle-disabled': this.disabled,
+      'toggle-checked': this.checked,
+      'toggle-activated': this.activated
+    });
+  }
 
   constructor() {
     this.gestureConfig = {
@@ -99,16 +117,10 @@ export class Toggle implements CheckboxInput {
 
   componentWillLoad() {
     this.ionStyle = deferEvent(this.ionStyle);
-    this.inputId = `ion-tg-${toggleIds++}`;
-    if (this.name === undefined) {
-      this.name = this.inputId;
-    }
     this.emitStyle();
   }
 
   componentDidLoad() {
-    this.didLoad = true;
-
     const parentItem = this.nativeInput.closest('ion-item');
     if (parentItem) {
       const itemLabel = parentItem.querySelector('ion-label');
@@ -117,26 +129,6 @@ export class Toggle implements CheckboxInput {
         this.nativeInput.setAttribute('aria-labelledby', itemLabel.id);
       }
     }
-  }
-
-  @Watch('checked')
-  checkedChanged(isChecked: boolean) {
-    if (this.didLoad) {
-      this.ionChange.emit({
-        checked: isChecked,
-        value: this.value
-      });
-    }
-    this.emitStyle();
-  }
-
-  @Watch('disabled')
-  emitStyle() {
-    this.ionStyle.emit({
-      'toggle-disabled': this.disabled,
-      'toggle-checked': this.checked,
-      'toggle-activated': this.activated
-    });
   }
 
   private onDragStart(detail: GestureDetail) {
@@ -168,19 +160,19 @@ export class Toggle implements CheckboxInput {
     this.nativeInput.focus();
   }
 
-  onChange() {
+  private onChange() {
     this.checked = !this.checked;
   }
 
-  onKeyUp() {
+  private onKeyUp() {
     this.keyFocus = true;
   }
 
-  onFocus() {
+  private onFocus() {
     this.ionFocus.emit();
   }
 
-  onBlur() {
+  private onBlur() {
     this.keyFocus = false;
     this.ionBlur.emit();
   }

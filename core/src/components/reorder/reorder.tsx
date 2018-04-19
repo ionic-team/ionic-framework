@@ -15,7 +15,7 @@ export class Reorder {
 
   private custom = true;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   componentWillLoad() {
     this.custom = this.el.childElementCount > 0;

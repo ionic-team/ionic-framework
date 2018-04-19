@@ -3,6 +3,7 @@ import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/c
 import { debounceEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 import { TextareaComponent } from '../input/input-base';
+import { Mode } from '../..';
 
 
 @Component({
@@ -21,33 +22,33 @@ import { TextareaComponent } from '../input/input-base';
   }
 })
 export class Textarea implements TextareaComponent {
-  mode: string;
-  color: string;
+  mode!: Mode;
+  color!: string;
 
-  didBlurAfterEdit: boolean;
-  styleTmr: number;
+  didBlurAfterEdit = false;
+  styleTmr?: number;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /**
    * Emitted when the input value has changed.
    */
-  @Event() ionInput: EventEmitter;
+  @Event() ionInput!: EventEmitter;
 
   /**
    * Emitted when the styles change.
    */
-  @Event() ionStyle: EventEmitter;
+  @Event() ionStyle!: EventEmitter;
 
   /**
    * Emitted when the input loses focus.
    */
-  @Event() ionBlur: EventEmitter;
+  @Event() ionBlur!: EventEmitter;
 
   /**
    * Emitted when the input has focus.
    */
-  @Event() ionFocus: EventEmitter;
+  @Event() ionFocus!: EventEmitter;
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
@@ -67,7 +68,7 @@ export class Textarea implements TextareaComponent {
   /**
    * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
-  @Prop({ mutable: true }) clearOnEdit: boolean;
+  @Prop({ mutable: true }) clearOnEdit = false;
 
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
@@ -92,22 +93,22 @@ export class Textarea implements TextareaComponent {
   /**
    * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
    */
-  @Prop() maxlength: number;
+  @Prop() maxlength?: number;
 
   /**
    * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
    */
-  @Prop() minlength: number;
+  @Prop() minlength?: number;
 
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop() name: string;
+  @Prop() name?: string;
 
   /**
    * Instructional text that shows before the input has a value.
    */
-  @Prop() placeholder: string;
+  @Prop() placeholder?: string;
 
   /**
    * If true, the user cannot modify the value. Defaults to `false`.
@@ -127,22 +128,22 @@ export class Textarea implements TextareaComponent {
   /**
    * The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
    */
-  @Prop() cols: number;
+  @Prop() cols?: number;
 
   /**
    * The number of visible text lines for the control.
    */
-  @Prop() rows: number;
+  @Prop() rows?: number;
 
   /**
    * Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `"off"`.
    */
-  @Prop() wrap: string;
+  @Prop() wrap?: string;
 
   /**
    * The value of the textarea.
    */
-  @Prop({ mutable: true }) value: string;
+  @Prop({ mutable: true }) value = '';
 
   /**
    * Update the native input element when the value changes

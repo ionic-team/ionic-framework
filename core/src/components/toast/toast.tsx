@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config } from '../../index';
+import { Animation, AnimationBuilder, Config, Mode } from '../../index';
 
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 import { OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
@@ -26,58 +26,53 @@ export class Toast implements OverlayInterface {
 
   presented = false;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  mode: string;
-  color: string;
+  mode!: Mode;
+  color!: string;
   animation: Animation | undefined;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
-  @Prop({ context: 'config' }) config: Config;
-  @Prop() overlayId: number;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop() overlayId!: number;
   @Prop() keyboardClose = false;
 
   /**
    * Animation to use when the toast is presented.
    */
-  @Prop() enterAnimation: AnimationBuilder;
+  @Prop() enterAnimation?: AnimationBuilder;
 
   /**
    * Animation to use when the toast is dismissed.
    */
-  @Prop() leaveAnimation: AnimationBuilder;
+  @Prop() leaveAnimation?: AnimationBuilder;
 
   /**
    * Text to display in the close button.
    */
-  @Prop() closeButtonText: string;
+  @Prop() closeButtonText?: string;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string | string[];
-
-  /**
-   * If true, the toast will dismiss when the page changes. Defaults to `false`.
-   */
-  @Prop() dismissOnPageChange: boolean;
+  @Prop() cssClass?: string | string[];
 
   /**
    * How many milliseconds to wait before hiding the toast. By default, it will show
    * until `dismiss()` is called.
    */
-  @Prop() duration: number;
+  @Prop() duration?: number;
 
   /**
    * Message to be shown in the toast.
    */
-  @Prop() message: string;
+  @Prop() message?: string;
 
   /**
    * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
    */
-  @Prop() position: string;
+  @Prop() position?: string;
 
   /**
    * If true, the close button will be displayed. Defaults to `false`.
@@ -97,32 +92,32 @@ export class Toast implements OverlayInterface {
   /**
    * Emitted after the toast has loaded.
    */
-  @Event() ionToastDidLoad: EventEmitter<void>;
+  @Event() ionToastDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted after the toast has presented.
    */
-  @Event({eventName: 'ionToastDidPresent'}) didPresent: EventEmitter<void>;
+  @Event({eventName: 'ionToastDidPresent'}) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the toast has presented.
    */
-  @Event({eventName: 'ionToastWillPresent'}) willPresent: EventEmitter<void>;
+  @Event({eventName: 'ionToastWillPresent'}) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the toast has dismissed.
    */
-  @Event({eventName: 'ionToastWillDismiss'}) willDismiss: EventEmitter<OverlayEventDetail>;
+  @Event({eventName: 'ionToastWillDismiss'}) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the toast has dismissed.
    */
-  @Event({eventName: 'ionToastDidDismiss'}) didDismiss: EventEmitter<OverlayEventDetail>;
+  @Event({eventName: 'ionToastDidDismiss'}) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the toast has unloaded.
    */
-  @Event() ionToastDidUnload: EventEmitter<void>;
+  @Event() ionToastDidUnload!: EventEmitter<void>;
 
   componentDidLoad() {
     this.ionToastDidLoad.emit();
@@ -147,7 +142,7 @@ export class Toast implements OverlayInterface {
   async present(): Promise<void> {
     await present(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
 
-    if (this.duration > 0) {
+    if (this.duration) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
     }
   }
@@ -230,7 +225,6 @@ export interface ToastOptions {
   duration?: number;
   showCloseButton?: boolean;
   closeButtonText?: string;
-  dismissOnPageChange?: boolean;
   position?: string;
   translucent?: boolean;
   enterAnimation?: AnimationBuilder;

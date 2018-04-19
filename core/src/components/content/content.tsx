@@ -1,5 +1,6 @@
 import { Component, Element, Listen, Method, Prop } from '@stencil/core';
-import { Config, QueueController } from '../../index';
+import { Config, Mode, QueueController } from '../../index';
+
 
 @Component({
   tag: 'ion-content',
@@ -10,15 +11,15 @@ export class Content {
   private cTop = -1;
   private cBottom = -1;
   private dirty = false;
-  private scrollEl: HTMLIonScrollElement;
+  private scrollEl?: HTMLIonScrollElement;
 
-  mode: string;
-  color: string;
+  mode!: Mode;
+  color!: string;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'queue' }) queue: QueueController;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop({ context: 'queue' }) queue!: QueueController;
 
   /**
    * If true, the content will scroll behind the headers
@@ -32,7 +33,7 @@ export class Content {
    * If the content exceeds the bounds of ionContent, nothing will change.
    * Note, the does not disable the system bounce on iOS. That is an OS level setting.
    */
-  @Prop() forceOverscroll: boolean;
+  @Prop() forceOverscroll?: boolean;
 
   @Prop() scrollEnabled = true;
 

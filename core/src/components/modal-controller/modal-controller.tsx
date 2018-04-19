@@ -10,7 +10,7 @@ export class ModalController implements OverlayController {
 
   private modals = new Map<number, HTMLIonModalElement>();
 
-  @Prop({ context: 'document' }) doc: Document;
+  @Prop({ context: 'document' }) doc!: Document;
 
   @Listen('body:ionModalWillPresent')
   protected modalWillPresent(ev: any) {

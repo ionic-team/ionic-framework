@@ -1,4 +1,5 @@
 import { Component, Prop } from '@stencil/core';
+import { Mode } from '../..';
 
 
 @Component({
@@ -17,14 +18,14 @@ export class ItemOption {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * If true, the user cannot interact with the item option. Defaults to `false`.
@@ -40,7 +41,7 @@ export class ItemOption {
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href: string;
+  @Prop() href?: string;
 
   private clickedOptionButton(ev: Event): boolean {
     const el = (ev.target as HTMLElement).closest('ion-item-option');

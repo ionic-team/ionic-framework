@@ -2,6 +2,7 @@ import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@st
 
 import { createThemedClasses } from '../../utils/theme';
 import { debounceEvent } from '../../utils/helpers';
+import { Mode } from '../..';
 
 
 @Component({
@@ -19,9 +20,9 @@ export class Searchbar {
   private shouldBlur = true;
   private shouldAlignLeft = true;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({ context: 'document' }) doc: Document;
+  @Prop({ context: 'document' }) doc!: Document;
 
   @State() activated = false;
 
@@ -32,14 +33,14 @@ export class Searchbar {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * If true, enable searchbar animation. Default `false`.
@@ -94,32 +95,32 @@ export class Searchbar {
   /**
    * the value of the searchbar.
    */
-  @Prop({ mutable: true }) value: string;
+  @Prop({ mutable: true }) value = '';
 
   /**
    * Emitted when the Searchbar input has changed, including when it's cleared.
    */
-  @Event() ionInput: EventEmitter;
+  @Event() ionInput!: EventEmitter;
 
   /**
    * Emitted when the cancel button is clicked.
    */
-  @Event() ionCancel: EventEmitter;
+  @Event() ionCancel!: EventEmitter;
 
   /**
    * Emitted when the clear input button is clicked.
    */
-  @Event() ionClear: EventEmitter;
+  @Event() ionClear!: EventEmitter;
 
   /**
    * Emitted when the input loses focus.
    */
-  @Event() ionBlur: EventEmitter;
+  @Event() ionBlur!: EventEmitter;
 
   /**
    * Emitted when the input has focus.
    */
-  @Event() ionFocus: EventEmitter;
+  @Event() ionFocus!: EventEmitter;
 
   componentDidLoad() {
     this.positionElements();

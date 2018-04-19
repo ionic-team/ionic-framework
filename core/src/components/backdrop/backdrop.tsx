@@ -15,7 +15,7 @@ export class Backdrop {
 
   private lastClick = -10000;
 
-  @Prop({ context: 'document' }) doc: Document;
+  @Prop({ context: 'document' }) doc!: Document;
 
   /**
    * If true, the backdrop will be visible. Defaults to `true`.
@@ -35,7 +35,7 @@ export class Backdrop {
   /**
    * Emitted when the backdrop is tapped.
    */
-  @Event() ionBackdropTap: EventEmitter;
+  @Event() ionBackdropTap!: EventEmitter;
 
   componentDidLoad() {
     registerBackdrop(this.doc, this);

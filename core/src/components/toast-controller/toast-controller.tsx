@@ -10,7 +10,7 @@ export class ToastController implements OverlayController {
 
   private toasts = new Map<number, HTMLIonToastElement>();
 
-  @Prop({ context: 'document' }) doc: Document;
+  @Prop({ context: 'document' }) doc!: Document;
 
   @Listen('body:ionToastWillPresent')
   protected toastWillPresent(ev: any) {

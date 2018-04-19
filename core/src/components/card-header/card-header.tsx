@@ -1,6 +1,7 @@
 import { Component, Prop } from '@stencil/core';
 
 import { createThemedClasses } from '../../utils/theme';
+import { Mode } from '../..';
 
 @Component({
   tag: 'ion-card-header',
@@ -17,13 +18,13 @@ export class CardHeader {
    * The color to use for the background.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * If true, the card header will be translucent. Defaults to `false`.

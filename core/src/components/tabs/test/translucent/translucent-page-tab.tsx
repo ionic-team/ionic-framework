@@ -10,7 +10,7 @@ export interface Route {
 })
 export class TranslucentPageTab {
 
-  @Element() element: HTMLElement;
+  @Element() element!: HTMLElement;
 
   getTabs() {
     return this.element.closest('ion-tabs');

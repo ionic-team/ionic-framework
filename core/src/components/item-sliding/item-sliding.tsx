@@ -37,20 +37,20 @@ export class ItemSliding {
   private initialOpenAmount = 0;
   private optsWidthRightSide = 0;
   private optsWidthLeftSide = 0;
-  private sides: ItemSide;
+  private sides = ItemSide.None;
   private tmr: number|undefined;
   private leftOptions: HTMLIonItemOptionsElement|undefined;
   private rightOptions: HTMLIonItemOptionsElement|undefined;
   private optsDirty = true;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @State() state: SlidingState = SlidingState.Disabled;
 
   /**
    * Emitted when the sliding position changes.
    */
-  @Event() ionDrag: EventEmitter;
+  @Event() ionDrag!: EventEmitter;
 
   componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
@@ -249,7 +249,7 @@ export class ItemSliding {
         this.state = SlidingState.Disabled;
         this.tmr = undefined;
       }, 600);
-      this.list && this.list.setOpenItem(null);
+      this.list && this.list.setOpenItem(undefined);
       style.transform = '';
       return;
     }

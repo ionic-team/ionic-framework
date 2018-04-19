@@ -9,7 +9,7 @@ export class ViewController {
   nav: Nav|undefined;
   state: ViewState = ViewState.New;
   element: HTMLElement|undefined;
-  delegate: FrameworkDelegate|undefined;
+  delegate?: FrameworkDelegate|undefined;
 
   constructor(
     public component: any,

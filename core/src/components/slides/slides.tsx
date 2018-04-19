@@ -13,76 +13,75 @@ import { Swiper } from './vendor/swiper.js';
 })
 export class Slides {
 
-  private container: HTMLElement;
-  private init: boolean;
+  private container!: HTMLElement;
   private swiper: any;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /**
    * Emitted before the active slide has changed.
    */
-  @Event() ionSlideWillChange: EventEmitter;
+  @Event() ionSlideWillChange!: EventEmitter;
 
   /**
    * Emitted after the active slide has changed.
    */
-  @Event() ionSlideDidChange: EventEmitter;
+  @Event() ionSlideDidChange!: EventEmitter;
 
   /**
    * Emitted when the next slide has started.
    */
-  @Event() ionSlideNextStart: EventEmitter;
+  @Event() ionSlideNextStart!: EventEmitter;
 
   /**
    * Emitted when the previous slide has started.
    */
-  @Event() ionSlidePrevStart: EventEmitter;
+  @Event() ionSlidePrevStart!: EventEmitter;
 
   /**
    * Emitted when the next slide has ended.
    */
-  @Event() ionSlideNextEnd: EventEmitter;
+  @Event() ionSlideNextEnd!: EventEmitter;
 
   /**
    * Emitted when the previous slide has ended.
    */
-  @Event() ionSlidePrevEnd: EventEmitter;
+  @Event() ionSlidePrevEnd!: EventEmitter;
 
   /**
    * Emitted when the slide transition has started.
    */
-  @Event() ionSlideTransitionStart: EventEmitter;
+  @Event() ionSlideTransitionStart!: EventEmitter;
 
   /**
    * Emitted when the slide transition has ended.
    */
-  @Event() ionSlideTransitionEnd: EventEmitter;
+  @Event() ionSlideTransitionEnd!: EventEmitter;
 
   /**
    * Emitted when the slider is actively being moved.
    */
-  @Event() ionSlideDrag: EventEmitter;
+  @Event() ionSlideDrag!: EventEmitter;
 
   /**
    * Emitted when the slider is at its initial position.
    */
-  @Event() ionSlideReachStart: EventEmitter;
+  @Event() ionSlideReachStart!: EventEmitter;
 
   /**
    * Emitted when the slider is at the last slide.
    */
-  @Event() ionSlideReachEnd: EventEmitter;
+  @Event() ionSlideReachEnd!: EventEmitter;
 
   /**
    * Emitted when the user first touches the slider.
    */
-  @Event() ionSlideTouchStart: EventEmitter;
+  @Event() ionSlideTouchStart!: EventEmitter;
 
   /**
    * Emitted when the user releases the touch.
    */
-  @Event() ionSlideTouchEnd: EventEmitter;
+  @Event() ionSlideTouchEnd!: EventEmitter;
 
   /**
    * Options to pass to the swiper instance.
@@ -107,27 +106,21 @@ export class Slides {
   }
 
   componentDidUnload() {
-    this.init = false;
-
     this.enableKeyboardControl(false);
     this.swiper.destroy(true, true);
   }
 
   private initSlides() {
-    if (!this.init) {
-      console.debug(`ion-slides, init`);
+    console.debug(`ion-slides, init`);
 
-      this.container = this.el.children[0] as HTMLElement;
-      const finalOptions = this.normalizeOptions();
-      // init swiper core
-      this.swiper = new Swiper(this.container, finalOptions);
+    this.container = this.el.children[0] as HTMLElement;
+    const finalOptions = this.normalizeOptions();
+    // init swiper core
+    this.swiper = new Swiper(this.container, finalOptions);
 
-      if (finalOptions.keyboardControl) {
-        // init keyboard event listeners
-        this.enableKeyboardControl(true);
-      }
-
-      this.init = true;
+    if (finalOptions.keyboardControl) {
+      // init keyboard event listeners
+      this.enableKeyboardControl(true);
     }
   }
 

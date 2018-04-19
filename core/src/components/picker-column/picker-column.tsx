@@ -1,7 +1,7 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { clamp } from '../../utils/helpers';
-import { GestureDetail, PickerColumn, PickerColumnOption, QueueController } from '../../index';
+import { GestureDetail, Mode, PickerColumn, PickerColumnOption, QueueController } from '../../index';
 import { hapticSelectionChanged } from '../../utils';
+import { clamp } from '../../utils/helpers';
 
 
 @Component({
@@ -11,26 +11,26 @@ import { hapticSelectionChanged } from '../../utils';
   }
 })
 export class PickerColumnCmp {
-  private mode: string;
+  mode!: Mode;
 
-  private bounceFrom: number;
-  private lastIndex: number;
-  private lastTempIndex: number;
-  private minY: number;
-  private maxY: number;
-  private optHeight: number;
+  private bounceFrom!: number;
+  private lastIndex?: number;
+  private lastTempIndex?: number;
+  private minY!: number;
+  private maxY!: number;
+  private optHeight = 0;
   private pos: number[] = [];
-  private rotateFactor: number;
-  private scaleFactor: number;
-  private startY: number|undefined;
-  private velocity: number;
+  private rotateFactor = 0;
+  private scaleFactor = 1;
+  private startY?: number;
+  private velocity = 0;
   private y = 0;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueController;
 
-  @Prop() col: PickerColumn;
+  @Prop() col!: PickerColumn;
 
   componentWillLoad() {
     let pickerRotateFactor = 0;

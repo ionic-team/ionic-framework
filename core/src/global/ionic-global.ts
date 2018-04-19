@@ -5,7 +5,6 @@ import { configFromURL, isIOS } from '../utils/platform';
 const Ionic = (window as any).Ionic = (window as any).Ionic || {};
 declare const Context: any;
 
-debugger;
 // queue used to coordinate DOM reads and
 // write in order to avoid layout thrashing
 Object.defineProperty(Ionic, 'queue', {

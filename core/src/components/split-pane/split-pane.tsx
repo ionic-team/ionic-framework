@@ -26,11 +26,11 @@ export class SplitPane {
 
   private rmL: any;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
   @State() visible = false;
 
-  @Prop({ context: 'isServer'}) isServer: boolean;
-  @Prop({ context: 'window' }) win: Window;
+  @Prop({context: 'isServer'}) isServer!: boolean;
+  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * If true, the split pane will be hidden. Defaults to `false`.
@@ -47,12 +47,12 @@ export class SplitPane {
   /**
    * Emitted when the split pane is visible.
    */
-  @Event() ionChange: EventEmitter;
+  @Event() ionChange!: EventEmitter;
 
   /**
    * Expression to be called when the split-pane visibility has changed
    */
-  @Event() protected ionSplitPaneVisible: EventEmitter;
+  @Event() protected ionSplitPaneVisible!: EventEmitter;
 
   @Watch('visible')
   visibleChanged(visible: boolean) {

@@ -25,26 +25,26 @@ export class ReorderIndexes {
 export class ReorderGroup {
 
   private selectedItemEl: HTMLElement|undefined;
-  private selectedItemHeight: number;
-  private lastToIndex: number;
+  private selectedItemHeight!: number;
+  private lastToIndex!: number;
   private cachedHeights: number[] = [];
-  private containerEl: HTMLElement;
+  private containerEl!: HTMLElement;
   private scrollEl: HTMLElement|null = null;
 
-  private scrollElTop: number;
-  private scrollElBottom: number;
-  private scrollElInitial: number;
+  private scrollElTop = 0;
+  private scrollElBottom = 0;
+  private scrollElInitial = 0;
 
-  private containerTop: number;
-  private containerBottom: number;
+  private containerTop = 0;
+  private containerBottom = 0;
 
   @State() enabled = false;
   @State() iconVisible = false;
   @State() activated = false;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueController;
 
   /**
    * If true, the reorder will be hidden. Defaults to `true`.

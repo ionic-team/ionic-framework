@@ -69,6 +69,8 @@ How long, in milliseconds, to wait to trigger the
 
 boolean
 
+Indicates that the user cannot interact with the control.
+
 
 #### dualKnobs
 
@@ -98,6 +100,13 @@ string
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+
+
+#### name
+
+string
+
+The name of the control, which is submitted with the form data.
 
 
 #### pin
@@ -153,6 +162,8 @@ How long, in milliseconds, to wait to trigger the
 
 boolean
 
+Indicates that the user cannot interact with the control.
+
 
 #### dual-knobs
 
@@ -182,6 +193,13 @@ string
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+
+
+#### name
+
+string
+
+The name of the control, which is submitted with the form data.
 
 
 #### pin

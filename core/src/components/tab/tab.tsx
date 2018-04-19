@@ -8,32 +8,32 @@ import { ComponentRef } from '../..';
 export class Tab {
 
   private loaded = false;
-  @Element() el: HTMLIonTabElement;
+  @Element() el!: HTMLIonTabElement;
 
   @Prop({ mutable: true }) active = false;
 
-  @Prop() btnId: string;
-  @Prop() delegate: FrameworkDelegate;
+  @Prop() btnId?: string;
+  @Prop() delegate?: FrameworkDelegate;
 
   /**
    * The title of the tab.
    */
-  @Prop() label: string;
+  @Prop() label?: string;
 
   /**
    * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
    */
-  @Prop() href: string;
+  @Prop() href?: string;
 
   /**
    * The icon for the tab.
    */
-  @Prop() icon: string;
+  @Prop() icon?: string;
 
   /**
    * The badge for the tab.
    */
-  @Prop() badge: string;
+  @Prop() badge?: string;
 
   /**
    * The badge color for the tab button.
@@ -43,12 +43,12 @@ export class Tab {
   /**
    * The component to display inside of the tab.
    */
-  @Prop() component: ComponentRef;
+  @Prop() component?: ComponentRef;
 
   /**
    * The name of the tab.
    */
-  @Prop() name: string;
+  @Prop() name?: string;
 
   /**
    * If true, the user cannot interact with the tab. Defaults to `false`.
@@ -81,7 +81,7 @@ export class Tab {
   /**
    * Emitted when the current tab is selected.
    */
-  @Event() ionSelect: EventEmitter<void>;
+  @Event() ionSelect!: EventEmitter<void>;
 
   componentWillLoad() {
     if (Build.isDev) {

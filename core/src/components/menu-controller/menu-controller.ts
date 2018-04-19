@@ -13,7 +13,7 @@ export class MenuController {
   private menus: Menu[] = [];
   private menuAnimations = new Map<string, AnimationBuilder>();
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
 
   constructor() {
     this.registerAnimation('reveal', MenuRevealAnimation);

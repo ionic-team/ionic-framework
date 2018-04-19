@@ -6,14 +6,14 @@ import { Component, Listen, Prop, State } from '@stencil/core';
 })
 export class MenuToggle {
 
-  @Prop({ context: 'document' }) doc: Document;
+  @Prop({ context: 'document' }) doc!: Document;
 
   @State() visible = false;
 
   /**
    * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
    */
-  @Prop() menu: string;
+  @Prop() menu?: string;
 
   /**
    * Automatically hides the content when the corresponding menu is not

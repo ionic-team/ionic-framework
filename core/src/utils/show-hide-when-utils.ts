@@ -1,5 +1,5 @@
 import { isAndroid, isCordova, isElectron, isIOS, isIpad, isIphone, isPhablet, isTablet } from './platform';
-import { Config } from '..';
+import { Config, Mode } from '..';
 
 export function updateTestResults(displayWhen: DisplayWhen) {
   displayWhen.passesTest = getTestResult(displayWhen);
@@ -143,12 +143,12 @@ export interface DisplayWhen {
   calculatedPlatforms: PlatformConfig[];
   config: Config;
   win: Window;
-  mediaQuery: string|undefined;
-  mode: string|undefined;
+  mediaQuery?: string;
+  mode: Mode;
   or: boolean;
-  orientation: string|undefined;
+  orientation?: string;
   passesTest: boolean;
-  platform: string|undefined;
-  size: string|undefined;
+  platform?: string;
+  size?: string;
 }
 

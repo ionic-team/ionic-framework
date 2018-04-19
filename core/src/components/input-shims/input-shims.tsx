@@ -23,8 +23,8 @@ export class InputShims {
   private hideCaretMap = new WeakMap<HTMLElement, Function>();
   private scrollAssistMap = new WeakMap<HTMLElement, Function>();
 
-  @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'document' }) doc: Document;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop({ context: 'document' }) doc!: Document;
 
   componentDidLoad() {
     this.keyboardHeight = this.config.getNumber('keyboardHeight', 290);

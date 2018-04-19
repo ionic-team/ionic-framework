@@ -14,17 +14,17 @@ import { Config } from '../../index';
 })
 export class InfiniteScrollContent {
 
-  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * An animated SVG spinner that shows while loading.
    */
-  @Prop({ mutable: true }) loadingSpinner: string;
+  @Prop({ mutable: true }) loadingSpinner?: string;
 
   /**
    * Optional text to display while loading.
    */
-  @Prop() loadingText: string;
+  @Prop() loadingText?: string;
 
 
   componentDidLoad() {

@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { Animation, Config, GestureDetail } from '../../index';
+import { Animation, Config, GestureDetail, Mode } from '../../index';
 import { Side, assert, isRightSide } from '../../utils/helpers';
 
 @Component({
@@ -19,41 +19,41 @@ export class Menu {
   private _isOpen = false;
   private lastOnEnd = 0;
 
-  mode: string;
-  color: string;
+  mode!: Mode;
+  color!: string;
   isAnimating = false;
-  width: number;
+  width!: number; // TOOD
 
   backdropEl: HTMLElement|undefined;
   menuInnerEl: HTMLElement|undefined;
   contentEl: HTMLElement|undefined;
   menuCtrl: HTMLIonMenuControllerElement|undefined;
 
-  @Element() el: HTMLIonMenuElement;
+  @Element() el!: HTMLIonMenuElement;
 
   @State() isRightSide = false;
 
-  @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'isServer' }) isServer: boolean;
-  @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl: HTMLIonMenuControllerElement;
-  @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
-  @Prop({ context: 'window' }) win: Window;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop({ context: 'isServer' }) isServer!: boolean;
+  @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl!: HTMLIonMenuControllerElement;
+  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
+  @Prop({ context: 'window' }) win!: Window;
   /**
    * The content's id the menu should use.
    */
-  @Prop() contentId: string;
+  @Prop() contentId?: string;
 
   /**
    * An id for the menu.
    */
-  @Prop() menuId: string;
+  @Prop() menuId?: string;
 
   /**
    * The display type of the menu. Default varies based on the mode,
    * see the `menuType` in the [config](../../config/Config). Available options:
    * `"overlay"`, `"reveal"`, `"push"`.
    */
-  @Prop({ mutable: true }) type: string;
+  @Prop({ mutable: true }) type!: string;
 
   @Watch('type')
   typeChanged(type: string, oldType: string | null) {
@@ -111,15 +111,15 @@ export class Menu {
   /**
    * Emitted when the menu is open.
    */
-  @Event() ionOpen: EventEmitter;
+  @Event() ionOpen!: EventEmitter;
 
   /**
    * Emitted when the menu is closed.
    */
-  @Event() ionClose: EventEmitter;
+  @Event() ionClose!: EventEmitter;
 
 
-  @Event() protected ionMenuChange: EventEmitter<MenuChangeEventDetail>;
+  @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
   async componentWillLoad() {
     if (this.type == null) {
@@ -133,9 +133,10 @@ export class Menu {
       return;
     }
     const el = this.el;
+    const parent = el.parentNode as any;
     const content = (this.contentId)
-      ? this.win.document.getElementById(this.contentId)
-      : el.parentElement && el.parentElement.querySelector('[main]');
+      ? document.getElementById(this.contentId)
+      : parent && parent.querySelector && parent.querySelector('[main]');
 
     if (!content || !content.tagName) {
       // requires content element

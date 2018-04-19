@@ -1,5 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { CssClassMap } from '../../index';
+import { CssClassMap, Mode } from '../../index';
 import { getButtonClassMap, getElementClassMap } from '../../utils/theme';
 
 @Component({
@@ -10,19 +10,19 @@ import { getButtonClassMap, getElementClassMap } from '../../utils/theme';
   },
 })
 export class ChipButton {
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /**
    * The color to use.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * If true, the user cannot interact with the chip button. Defaults to `false`.
@@ -32,13 +32,13 @@ export class ChipButton {
   /**
    * Set to `"clear"` for a transparent button style.
    */
-  @Prop() fill: string;
+  @Prop() fill?: string;
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href: string;
+  @Prop() href?: string;
 
   /**
    * Get the classes for the style
@@ -77,7 +77,7 @@ export class ChipButton {
 /**
  * Get the classes for the color
  */
-function getColorClassMap(color: string, buttonType: string, style: string, mode: string): CssClassMap {
+function getColorClassMap(color: string, buttonType: string, style: string, mode: Mode): CssClassMap {
   const className = (style === 'default') ? `${buttonType}` : `${buttonType}-${style}`;
 
   const map: CssClassMap = {

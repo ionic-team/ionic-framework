@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
 import { createThemedClasses, getElementClassMap } from '../../utils/theme';
+import { Mode } from '../..';
 
 let ids = 0;
 
@@ -13,7 +14,7 @@ let ids = 0;
 export class SegmentButton {
   styleTmr: any;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @Prop({ mutable: true }) activated = false;
 
@@ -21,13 +22,13 @@ export class SegmentButton {
    * The color to use for the text color.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * If true, the segment button is selected. Defaults to `false`.
@@ -43,20 +44,20 @@ export class SegmentButton {
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href: string;
+  @Prop() href?: string;
 
   /**
    * The value of the segment button.
    */
-  @Prop({ mutable: true }) value: string;
+  @Prop({ mutable: true }) value!: string;
 
   /**
    * Emitted when the segment button is clicked.
    */
-  @Event() ionClick: EventEmitter;
+  @Event() ionClick!: EventEmitter;
 
   componentWillLoad() {
-    if (!this.value) {
+    if (this.value === undefined) {
       this.value = `ion-sb-${ids++}`;
     }
   }

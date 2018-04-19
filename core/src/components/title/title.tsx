@@ -1,5 +1,6 @@
 import { Component } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
+import { Mode } from '../..';
 
 
 @Component({
@@ -13,8 +14,8 @@ import { createThemedClasses } from '../../utils/theme';
   }
 })
 export class ToolbarTitle {
-  mode: string;
-  color: string;
+  mode!: Mode;
+  color!: string;
 
   render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'toolbar-title');

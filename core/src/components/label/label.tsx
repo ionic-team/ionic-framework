@@ -1,4 +1,6 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+import { Mode } from '../..';
+
 
 @Component({
   tag: 'ion-label',
@@ -12,21 +14,21 @@ import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@s
 })
 export class Label {
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /**
    * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * The position determines where and how the label behaves inside an item.
@@ -37,7 +39,7 @@ export class Label {
   /**
    * Emitted when the styles change.
    */
-  @Event() ionStyle: EventEmitter;
+  @Event() ionStyle!: EventEmitter;
 
   @Method()
   getText(): string {

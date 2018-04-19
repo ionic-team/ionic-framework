@@ -9,7 +9,7 @@ export class PopoverController implements OverlayController {
 
   private popovers = new Map<number, HTMLIonPopoverElement>();
 
-  @Prop({ context: 'document' }) doc: Document;
+  @Prop({ context: 'document' }) doc!: Document;
 
   @Listen('body:ionPopoverWillPresent')
   protected popoverWillPresent(ev: any) {

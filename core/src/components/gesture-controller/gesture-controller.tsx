@@ -13,7 +13,7 @@ export class GestureController {
   private disabledScroll = new Set<number>();
   private capturedId: number|null = null;
 
-  @Event() ionGestureCaptured: EventEmitter<string>;
+  @Event() ionGestureCaptured!: EventEmitter<string>;
 
   @Method()
   create(config: GestureConfig): Promise<GestureDelegate> {

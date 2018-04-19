@@ -1,5 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { Config } from '../../index';
+import { Config, Mode } from '../../index';
 import { isDevice, isHybrid, needInputShims } from '../../utils/platform';
 
 @Component({
@@ -14,12 +14,12 @@ import { isDevice, isHybrid, needInputShims } from '../../utils/platform';
 })
 export class App {
 
-  mode: string;
+  mode!: Mode;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({ context: 'window' }) win: Window;
-  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'window' }) win!: Window;
+  @Prop({ context: 'config' }) config!: Config;
 
   hostData() {
     const hybrid = isHybrid(this.win);

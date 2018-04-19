@@ -10,7 +10,7 @@ export class LoadingController implements OverlayController {
 
   private loadings = new Map<number, HTMLIonLoadingElement>();
 
-  @Prop({ context: 'document' }) doc: Document;
+  @Prop({ context: 'document' }) doc!: Document;
 
   @Listen('body:ionLoadingWillPresent')
   protected loadingWillPresent(ev: any) {

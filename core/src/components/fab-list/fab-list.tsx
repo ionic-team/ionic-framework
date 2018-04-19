@@ -6,7 +6,7 @@ import { Component, Element, Prop, Watch } from '@stencil/core';
   styleUrl: 'fab-list.scss'
 })
 export class FabList {
-  @Element() private el: HTMLIonFabElement;
+  @Element() el!: HTMLIonFabElement;
 
   /**
    * If true, the fab list will be show all fab buttons in the list. Defaults to `false`.

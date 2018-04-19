@@ -16,21 +16,20 @@ export interface BaseInput {
    */
   readOnly?: boolean;
 
-  /**
-   * Reflects the value of the form control.
-   */
-  value: string;
-
+  name: string;
 }
 
 
 export interface CheckboxInput extends BaseInput {
   /**
+   * Reflects the value of the form control.
+   */
+  value: string;
+
+  /**
    * Returns / Sets the current state of the element when type is checkbox or radio.
    */
   checked: boolean;
-
-  name: string;
 
   /**
    * The change event is fired when the value of has changed.
@@ -59,11 +58,14 @@ export interface CheckboxInput extends BaseInput {
 
 export interface RadioButtonInput extends BaseInput {
   /**
+   * Reflects the value of the form control.
+   */
+  value: string;
+
+  /**
    * Returns / Sets the current state of the element when type is checkbox or radio.
    */
   checked: boolean;
-
-  name: string;
 
   /**
    * A single radio button fires an ionSelect event, whereas
@@ -83,15 +85,10 @@ export interface RadioButtonInput extends BaseInput {
   ionFocus: EventEmitter<FocusEvent>;
 }
 
-
-export interface InputChangeEvent {
-  value: string;
+export interface RadioGroupInput extends BaseInput {
+  ionChange: EventEmitter<InputChangeEvent>;
 }
 
-
-export interface CheckedInputChangeEvent extends InputChangeEvent {
-  checked: boolean;
-}
 
 
 export interface SelectInput extends BaseInput {
@@ -111,8 +108,6 @@ export interface SelectInput extends BaseInput {
    * whether multiple items can be selected.
    */
   multiple: boolean;
-
-  name: string;
 
   /**
    * The change event is fired when the value of has changed.
@@ -140,19 +135,12 @@ export interface SelectInput extends BaseInput {
   ionStyle: EventEmitter<StyleEvent>;
 }
 
-
-export interface SelectInputChangeEvent {
-  value: string|string[]|undefined;
-  text: string;
-}
-
-
-export interface RadioGroupInput extends BaseInput {
-  ionChange: EventEmitter<InputChangeEvent>;
-}
-
-
 export interface TextInput extends BaseInput {
+  /**
+   * Reflects the value of the form control.
+   */
+  value: string;
+
   /**
    * The change event is fired when the value of has changed.
    * This is actually more similar to the native "input" event
@@ -208,13 +196,23 @@ export interface TextMultiLineInput extends TextInput {
 }
 
 
+export interface InputChangeEvent {
+  value: string | undefined;
+}
+
+export interface CheckedInputChangeEvent extends InputChangeEvent {
+  checked: boolean;
+}
+
+export interface SelectInputChangeEvent {
+  value: string|string[]|undefined;
+  text: string;
+}
+
 export interface StyleEvent {
   [styleName: string]: boolean;
 }
 
-
 export interface FocusEvent {}
 
-
 export interface BlurEvent {}
-

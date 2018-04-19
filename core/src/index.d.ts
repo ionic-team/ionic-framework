@@ -111,18 +111,10 @@ export { OverlayEventDetail } from './utils/overlays';
 export * from './utils/platform';
 export * from './utils/transition';
 
+export type Mode = 'ios' | 'md';
 export type ComponentRef = Function | HTMLElement | string;
 export type ComponentProps = {[key: string]: any};
 export type CssClassMap = { [className: string]: boolean };
-
-export interface BaseInputComponent {
-  disabled: boolean;
-  hasFocus: boolean;
-  value: string;
-
-  fireFocus: () => void;
-  fireBlur: () => void;
-}
 
 declare global {
 

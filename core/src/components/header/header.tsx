@@ -1,6 +1,7 @@
 import { Component, Prop } from '@stencil/core';
 
 import { createThemedClasses } from '../../utils/theme';
+import { Mode } from '../..';
 
 @Component({
   tag: 'ion-header',
@@ -13,8 +14,8 @@ import { createThemedClasses } from '../../utils/theme';
   }
 })
 export class Header {
-  mode: string;
-  color: string;
+  mode!: Mode;
+  color!: string;
 
   /**
    * If true, the header will be translucent.

@@ -1,4 +1,5 @@
 import {Component, Element, Event, EventEmitter, Listen, Prop, State} from '@stencil/core';
+import { Mode } from '../..';
 
 
 @Component({
@@ -10,18 +11,18 @@ import {Component, Element, Event, EventEmitter, Listen, Prop, State} from '@ste
 })
 export class TabButton {
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  mode: string;
+  mode!: Mode;
 
   @State() keyFocus = false;
 
   @Prop() selected = false;
-  @Prop() tab: HTMLIonTabElement;
+  @Prop() tab!: HTMLIonTabElement;
 
-  @Event() ionTabbarClick: EventEmitter<HTMLIonTabElement>;
-  @Event() ionTabButtonDidLoad: EventEmitter<void>;
-  @Event() ionTabButtonDidUnload: EventEmitter<void>;
+  @Event() ionTabbarClick!: EventEmitter<HTMLIonTabElement>;
+  @Event() ionTabButtonDidLoad!: EventEmitter<void>;
+  @Event() ionTabButtonDidUnload!: EventEmitter<void>;
 
   componentDidLoad() {
     this.ionTabButtonDidLoad.emit();

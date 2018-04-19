@@ -1,5 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { Config } from '../../index';
+import { Config, Mode } from '../../index';
 import { createThemedClasses, getElementClassMap, openURL } from '../../utils/theme';
 
 @Component({
@@ -14,39 +14,39 @@ import { createThemedClasses, getElementClassMap, openURL } from '../../utils/th
 })
 export class BackButton {
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'window' }) win: Window;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * The url to navigate back to by default when there is no history.
    */
-  @Prop() defaultHref: string;
+  @Prop() defaultHref?: string;
 
   /**
    * The icon name to use for the back button.
    */
-  @Prop() icon: string;
+  @Prop() icon?: string;
 
   /**
    * The text to display in the back button.
    */
-  @Prop() text: string | undefined;
+  @Prop() text?: string;
 
 
   private onClick(ev: Event) {

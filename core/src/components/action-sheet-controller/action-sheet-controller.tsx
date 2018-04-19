@@ -9,7 +9,7 @@ export class ActionSheetController implements OverlayController {
 
   private actionSheets = new Map<number, HTMLIonActionSheetElement>();
 
-  @Prop({ context: 'document' }) doc: Document;
+  @Prop({ context: 'document' }) doc!: Document;
 
   @Listen('body:ionActionSheetWillPresent')
   protected actionSheetWillPresent(ev: any) {
