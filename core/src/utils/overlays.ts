@@ -19,7 +19,8 @@ export function createOverlay<T extends HTMLIonOverlayElement & Requires<keyof B
   element.overlayId = lastId++;
 
   // append the overlay element to the document body
-  const appRoot = document.querySelector('ion-app') || document.body;
+  const doc = element.ownerDocument;
+  const appRoot = doc.querySelector('ion-app') || doc.body;
   appRoot.appendChild(element);
 
   return element.componentOnReady();
@@ -110,7 +111,8 @@ async function overlayAnimation(
   opts: any
 ): Promise<void> {
   if (overlay.keyboardClose) {
-    closeKeyboard();
+    const activeElement = baseEl.ownerDocument.activeElement as HTMLElement;
+    activeElement && activeElement.blur && activeElement.blur();
   }
   if (overlay.animation) {
     overlay.animation.destroy();
@@ -154,11 +156,6 @@ export function onceEvent(element: HTMLElement, eventName: string, callback: (ev
     callback(ev);
   };
   element.addEventListener(eventName, handler);
-}
-
-function closeKeyboard() {
-  const activeElement = document.activeElement as HTMLElement;
-  activeElement && activeElement.blur && activeElement.blur();
 }
 
 export function isCancel(role: string|undefined): boolean {

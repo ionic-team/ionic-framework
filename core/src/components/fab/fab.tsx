@@ -28,7 +28,7 @@ export class Fab {
    */
   @Prop() edge = false;
 
-  @Prop({mutable: true}) activated = false;
+  @Prop({ mutable: true }) activated = false;
   @Watch('activated')
   activatedChanged() {
     const activated = this.activated;

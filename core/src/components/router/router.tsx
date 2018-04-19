@@ -24,6 +24,7 @@ export class Router {
 
   @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'queue' }) queue: QueueController;
+  @Prop({ context: 'window' }) win: Window;
 
   @Prop() base = '';
   @Prop() useHash = true;
@@ -84,12 +85,12 @@ export class Router {
   }
 
   private historyDirection() {
-    if (window.history.state === null) {
+    if (this.win.history.state === null) {
       this.state++;
-      window.history.replaceState(this.state, document.title, document.location.href);
+      this.win.history.replaceState(this.state, this.win.document.title, this.win.document.location.href);
     }
 
-    const state = window.history.state;
+    const state = this.win.history.state;
     const lastState = this.lastState;
     this.lastState = state;
 
@@ -107,7 +108,7 @@ export class Router {
     if (this.busy) {
       return false;
     }
-    const { ids, outlet } = readNavState(document.body);
+    const { ids, outlet } = readNavState(this.win.document.body);
     const chain = routerIDsToChain(ids, this.routes);
     if (!chain) {
       console.warn('[ion-router] no matching URL for ', ids.map(i => i.id));
@@ -155,7 +156,7 @@ export class Router {
       path = redirect.to!;
     }
     const chain = routerPathToChain(path, this.routes);
-    const changed = await this.writeNavState(document.body, chain, direction);
+    const changed = await this.writeNavState(this.win.document.body, chain, direction);
     if (changed) {
       this.emitRouteChange(path, redirectFrom);
     }
@@ -174,11 +175,11 @@ export class Router {
 
   private setPath(path: string[], direction: RouterDirection) {
     this.state++;
-    writePath(window.history, this.base, this.useHash, path, direction, this.state);
+    writePath(this.win.history, this.base, this.useHash, path, direction, this.state);
   }
 
   private getPath(): string[] | null {
-    return readPath(window.location, this.base, this.useHash);
+    return readPath(this.win.location, this.base, this.useHash);
   }
 
   private emitRouteChange(path: string[], redirectPath: string[]|null) {

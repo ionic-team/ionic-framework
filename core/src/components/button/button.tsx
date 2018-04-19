@@ -12,7 +12,10 @@ import { getButtonClassMap, getElementClassMap, openURL } from '../../utils/them
   }
 })
 export class Button {
+
   @Element() private el: HTMLElement;
+
+  @Prop({ context: 'window' }) win: Window;
 
   @State() keyFocus: boolean;
 
@@ -145,7 +148,7 @@ export class Button {
         onFocus={this.onFocus.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
         onBlur={this.onBlur.bind(this)}
-        onClick={(ev) => openURL(this.href, ev, this.routerDirection)}>
+        onClick={(ev) => openURL(this.win, this.href, ev, this.routerDirection)}>
           <span class='button-inner'>
             <slot name='icon-only'></slot>
             <slot name='start'></slot>

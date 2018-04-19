@@ -37,7 +37,7 @@ export class Menu {
   @Prop({ context: 'isServer' }) isServer: boolean;
   @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl: HTMLIonMenuControllerElement;
   @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
-
+  @Prop({ context: 'window' }) win: Window;
   /**
    * The content's id the menu should use.
    */
@@ -88,7 +88,7 @@ export class Menu {
 
   @Watch('side')
   protected sideChanged() {
-    this.isRightSide = isRightSide(this.side);
+    this.isRightSide = isRightSide(this.win, this.side);
   }
 
   /**
@@ -134,7 +134,7 @@ export class Menu {
     }
     const el = this.el;
     const content = (this.contentId)
-      ? document.getElementById(this.contentId)
+      ? this.win.document.getElementById(this.contentId)
       : el.parentElement && el.parentElement.querySelector('[main]');
 
     if (!content || !content.tagName) {
@@ -275,7 +275,7 @@ export class Menu {
     } else if (this.menuCtrl!.getOpen()) {
       return false;
     }
-    return checkEdgeSide(detail.currentX, this.isRightSide, this.maxEdgeStart);
+    return checkEdgeSide(this.win, detail.currentX, this.isRightSide, this.maxEdgeStart);
   }
 
   private onWillStart(): Promise<void> {
@@ -458,9 +458,9 @@ function computeDelta(deltaX: number, isOpen: boolean, isRightSide: boolean): nu
   return Math.max(0, (isOpen !== isRightSide) ? -deltaX : deltaX);
 }
 
-function checkEdgeSide(posX: number, isRightSide: boolean, maxEdgeStart: number): boolean {
+function checkEdgeSide(win: Window, posX: number, isRightSide: boolean, maxEdgeStart: number): boolean {
   if (isRightSide) {
-    return posX >= window.innerWidth - maxEdgeStart;
+    return posX >= win.innerWidth - maxEdgeStart;
   } else {
     return posX <= maxEdgeStart;
   }

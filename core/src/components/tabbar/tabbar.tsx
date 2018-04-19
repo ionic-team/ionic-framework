@@ -18,12 +18,15 @@ export class Tabbar {
 
   @Element() el: HTMLElement;
 
+  @Prop({ context: 'queue' }) queue: QueueController;
+  @Prop({ context: 'document' }) doc: Document;
+
+
   @State() canScrollLeft = false;
   @State() canScrollRight = false;
 
   @State() hidden = false;
 
-  @Prop({ context: 'queue' }) queue: QueueController;
   @Prop() placement = 'bottom';
   @Prop() selectedTab: HTMLIonTabElement;
   @Prop() scrollable: boolean;
@@ -70,7 +73,7 @@ export class Tabbar {
   }
 
   protected analyzeTabs() {
-    const tabs: HTMLIonTabButtonElement[] = Array.from(document.querySelectorAll('ion-tab-button'));
+    const tabs: HTMLIonTabButtonElement[] = Array.from(this.doc.querySelectorAll('ion-tab-button'));
     const scrollLeft = this.scrollEl.scrollLeft;
     const tabsWidth = this.scrollEl.clientWidth;
     let previous: {tab: HTMLIonTabButtonElement, amount: number}|undefined = undefined;

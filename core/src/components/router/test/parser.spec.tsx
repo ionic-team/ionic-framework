@@ -95,15 +95,15 @@ export class TestWindow2 {
 export declare interface TestWindow2 extends Window {}
 
 
-export function mockRouteElement(window: Window, path: string, component: string) {
-  const el = window.document.createElement('ion-route');
+export function mockRouteElement(win: Window, path: string, component: string) {
+  const el = win.document.createElement('ion-route');
   el.setAttribute('url', path);
   (el as any).component = component;
   return el;
 }
 
-export function mockRedirectElement(window: Window, from: string|undefined, to: string|undefined|null) {
-  const el = window.document.createElement('ion-route-redirect');
+export function mockRedirectElement(win: Window, from: string|undefined, to: string|undefined|null) {
+  const el = win.document.createElement('ion-route-redirect');
   if (from != null) {
     el.setAttribute('from', from);
   }

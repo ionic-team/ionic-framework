@@ -1,4 +1,4 @@
-import { Component, Listen, Method } from '@stencil/core';
+import { Component, Listen, Method, Prop } from '@stencil/core';
 import { ToastOptions } from '../../index';
 import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
@@ -9,6 +9,8 @@ import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, remove
 export class ToastController implements OverlayController {
 
   private toasts = new Map<number, HTMLIonToastElement>();
+
+  @Prop({ context: 'document' }) doc: Document;
 
   @Listen('body:ionToastWillPresent')
   protected toastWillPresent(ev: any) {
@@ -31,7 +33,7 @@ export class ToastController implements OverlayController {
    */
   @Method()
   create(opts?: ToastOptions): Promise<HTMLIonToastElement> {
-    return createOverlay(document.createElement('ion-toast'), opts);
+    return createOverlay(this.doc.createElement('ion-toast'), opts);
   }
 
   /*

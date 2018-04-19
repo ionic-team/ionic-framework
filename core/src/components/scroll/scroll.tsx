@@ -21,8 +21,9 @@ export class Scroll {
 
   @Element() private el: HTMLElement;
 
-  @Prop({ context: 'config'}) config: Config;
+  @Prop({ context: 'config' }) config: Config;
   @Prop({ context: 'queue' }) queue: QueueController;
+  @Prop({ context: 'window' }) win: Window;
 
   @Prop() mode: string;
 
@@ -32,7 +33,7 @@ export class Scroll {
    * If the content exceeds the bounds of ionScroll, nothing will change.
    * Note, the does not disable the system bounce on iOS. That is an OS level setting.
    */
-  @Prop({mutable: true}) forceOverscroll: boolean;
+  @Prop({ mutable: true }) forceOverscroll: boolean;
 
   @Prop() scrollEvents = false;
 
@@ -79,7 +80,7 @@ export class Scroll {
 
   componentWillLoad() {
     if (this.forceOverscroll === undefined) {
-      this.forceOverscroll = this.mode === 'ios' && ('ontouchstart' in window);
+      this.forceOverscroll = this.mode === 'ios' && ('ontouchstart' in this.win);
     }
   }
 

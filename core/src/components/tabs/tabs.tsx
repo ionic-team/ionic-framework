@@ -20,6 +20,7 @@ export class Tabs implements NavOutlet {
   @State() selectedTab: HTMLIonTabElement | undefined;
 
   @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'document' }) doc: Document;
 
   /**
    * The color to use from your Sass `$colors` map.
@@ -63,7 +64,7 @@ export class Tabs implements NavOutlet {
 
   @Prop() scrollable = false;
 
-  @Prop({mutable: true}) useRouter: boolean;
+  @Prop({ mutable: true }) useRouter: boolean;
 
   /**
    * Emitted when the tab changes.
@@ -74,7 +75,7 @@ export class Tabs implements NavOutlet {
 
   componentWillLoad() {
     if (!this.useRouter) {
-      this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
+      this.useRouter = !!this.doc.querySelector('ion-router') && !this.el.closest('[no-router]');
     }
 
     this.loadConfig('tabsPlacement', 'bottom');
@@ -96,7 +97,7 @@ export class Tabs implements NavOutlet {
   protected tabChange(ev: CustomEvent<HTMLIonTabElement>) {
     const selectedTab = ev.detail;
     if (this.useRouter && selectedTab.href != null) {
-      const router = document.querySelector('ion-router');
+      const router = this.doc.querySelector('ion-router');
       if (router) {
         router.push(selectedTab.href);
       }
@@ -256,7 +257,7 @@ export class Tabs implements NavOutlet {
 
   private notifyRouter() {
     if (this.useRouter) {
-      const router = document.querySelector('ion-router');
+      const router = this.doc.querySelector('ion-router');
       if (router) {
         return router.navChanged(RouterDirection.Forward);
       }

@@ -15,6 +15,8 @@ export class Backdrop {
 
   private lastClick = -10000;
 
+  @Prop({ context: 'document' }) doc: Document;
+
   /**
    * If true, the backdrop will be visible. Defaults to `true`.
    */
@@ -36,11 +38,11 @@ export class Backdrop {
   @Event() ionBackdropTap: EventEmitter;
 
   componentDidLoad() {
-    registerBackdrop(this);
+    registerBackdrop(this.doc, this);
   }
 
   componentDidUnload() {
-    unregisterBackdrop(this);
+    unregisterBackdrop(this.doc, this);
   }
 
   @Listen('touchstart', {passive: false, capture: true})
@@ -80,14 +82,14 @@ export class Backdrop {
 const BACKDROP_NO_SCROLL = 'backdrop-no-scroll';
 const activeBackdrops = new Set();
 
-function registerBackdrop(backdrop: any) {
+function registerBackdrop(doc: Document, backdrop: any) {
   activeBackdrops.add(backdrop);
-  document.body.classList.add(BACKDROP_NO_SCROLL);
+  doc.body.classList.add(BACKDROP_NO_SCROLL);
 }
 
-function unregisterBackdrop(backdrop: any) {
+function unregisterBackdrop(doc: Document, backdrop: any) {
   activeBackdrops.delete(backdrop);
   if (activeBackdrops.size === 0) {
-    document.body.classList.remove(BACKDROP_NO_SCROLL);
+    doc.body.classList.remove(BACKDROP_NO_SCROLL);
   }
 }

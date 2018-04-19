@@ -30,8 +30,9 @@ export class VirtualScroll {
 
   @Element() el: HTMLStencilElement;
 
-  @Prop({context: 'queue'}) queue: QueueController;
-  @Prop({context: 'enableListener'}) enableListener: EventListenerEnable;
+  @Prop({ context: 'queue' }) queue: QueueController;
+  @Prop({ context: 'enableListener'}) enableListener: EventListenerEnable;
+  @Prop({ context: 'window' }) win: Window;
 
 
   /**
@@ -268,7 +269,7 @@ export class VirtualScroll {
   private updateCellHeight(cell: Cell, node: HTMLStencilElement | HTMLElement) {
     const update = () => {
       if ((node as any)['$ionCell'] === cell) {
-        const style = window.getComputedStyle(node);
+        const style = this.win.getComputedStyle(node);
         const height = node.offsetHeight + parseFloat(style.getPropertyValue('margin-bottom'));
         this.setCellHeight(cell, height);
       }

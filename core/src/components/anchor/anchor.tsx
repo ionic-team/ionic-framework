@@ -7,6 +7,8 @@ import { openURL } from '../../utils/theme';
 })
 export class Anchor {
 
+  @Prop({ context: 'window' }) win: Window;
+
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
@@ -22,7 +24,7 @@ export class Anchor {
   render() {
     return <a
       href={this.href}
-      onClick={(ev) => openURL(this.href, ev, this.routerDirection)}>
+      onClick={(ev) => openURL(this.win, this.href, ev, this.routerDirection)}>
         <slot/>
       </a>;
   }

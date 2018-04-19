@@ -15,7 +15,7 @@ export class HideWhen implements DisplayWhen {
 
   @Element() element: HTMLElement;
   @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'window'}) win: Window;
+  @Prop({ context: 'window' }) win: Window;
 
   @Prop() orientation: string;
   @Prop() mediaQuery: string;

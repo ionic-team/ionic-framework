@@ -70,9 +70,9 @@ export function getClassMap(classes: string | string[] | undefined): CssClassMap
 
 export type RouterDirection = 'forward' | 'back';
 
-export async function openURL(url: string, ev: Event, direction: RouterDirection = 'forward') {
+export async function openURL(win: Window, url: string, ev: Event, direction: RouterDirection = 'forward') {
   if (url && url[0] !== '#' && url.indexOf('://') === -1) {
-    const router = document.querySelector('ion-router');
+    const router = win.document.querySelector('ion-router');
     if (router) {
       ev && ev.preventDefault();
       await router.componentOnReady();

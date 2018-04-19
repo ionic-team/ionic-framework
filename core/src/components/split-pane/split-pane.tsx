@@ -29,7 +29,8 @@ export class SplitPane {
   @Element() private el: HTMLElement;
   @State() visible = false;
 
-  @Prop({context: 'isServer'}) isServer: boolean;
+  @Prop({ context: 'isServer'}) isServer: boolean;
+  @Prop({ context: 'window' }) win: Window;
 
   /**
    * If true, the split pane will be hidden. Defaults to `false`.
@@ -105,7 +106,7 @@ export class SplitPane {
 
     // Listen on media query
     const callback = (q: MediaQueryList) => this.visible = q.matches;
-    const mediaList = window.matchMedia(mediaQuery);
+    const mediaList = this.win.matchMedia(mediaQuery);
     mediaList.addListener(callback);
     this.rmL = () => mediaList.removeListener(callback);
     this.visible = mediaList.matches;

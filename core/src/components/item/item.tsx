@@ -16,6 +16,8 @@ export class Item {
 
   @Element() private el: HTMLStencilElement;
 
+  @Prop({ context: 'window' }) win: Window;
+
   /**
    * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -125,7 +127,7 @@ export class Item {
       <TagType
         {...attrs}
         class={themedClasses}
-        onClick={(ev) => openURL(this.href, ev, this.routerDirection)}>
+        onClick={(ev) => openURL(this.win, this.href, ev, this.routerDirection)}>
         <slot name='start'></slot>
         <div class='item-inner'>
           <div class='input-wrapper'>

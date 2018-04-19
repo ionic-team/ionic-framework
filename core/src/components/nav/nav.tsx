@@ -36,9 +36,9 @@ export class Nav implements NavOutlet {
 
   @Element() el: HTMLElement;
 
-  @Prop({context: 'queue'}) queue: QueueController;
-  @Prop({context: 'config'}) config: Config;
-  @Prop({context: 'window'}) win: Window;
+  @Prop({ context: 'queue' }) queue: QueueController;
+  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'window' }) win: Window;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
   @Prop({ mutable: true }) swipeBackEnabled: boolean;
@@ -62,7 +62,7 @@ export class Nav implements NavOutlet {
   @Event() ionNavDidChange: EventEmitter<void>;
 
   componentWillLoad() {
-    this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
+    this.useRouter = !!this.win.document.querySelector('ion-router') && !this.el.closest('[no-router]');
     if (this.swipeBackEnabled === undefined) {
       this.swipeBackEnabled = this.config.getBoolean('swipeBackEnabled', this.mode === 'ios');
     }
@@ -312,7 +312,7 @@ export class Nav implements NavOutlet {
     ti.resolve!(result.hasCompleted);
 
     if (ti.opts!.updateURL !== false && this.useRouter) {
-      const router = document.querySelector('ion-router');
+      const router = this.win.document.querySelector('ion-router');
       if (router) {
         const direction = (result.direction === NavDirection.Back)
           ? RouterDirection.Back
@@ -714,7 +714,7 @@ export class Nav implements NavOutlet {
 
       // set the transition animation's progress
       const delta = detail.deltaX;
-      const stepValue = delta / window.innerWidth;
+      const stepValue = delta / this.win.innerWidth;
       // set the transition animation's progress
       this.sbTrns.progressStep(stepValue);
     }
@@ -724,7 +724,7 @@ export class Nav implements NavOutlet {
     if (this.sbTrns) {
       // the swipe back gesture has ended
       const delta = detail.deltaX;
-      const width = window.innerWidth;
+      const width = this.win.innerWidth;
       const stepValue = delta / width;
       const velocity = detail.velocityX;
       const z = width / 2.0;

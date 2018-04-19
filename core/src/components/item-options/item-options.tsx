@@ -12,6 +12,8 @@ import { Side, isRightSide } from '../../utils/helpers';
 export class ItemOptions {
   @Element() private el: HTMLElement;
 
+  @Prop({ context: 'window' }) win: Window;
+
   /**
    * The side the option button should be on.
    * Possible values: `"start"` and `"end"`.
@@ -27,7 +29,7 @@ export class ItemOptions {
 
   @Method()
   isRightSide() {
-    return isRightSide(this.side);
+    return isRightSide(this.win, this.side);
   }
 
   @Method()

@@ -21,6 +21,8 @@ export class Searchbar {
 
   @Element() private el: HTMLElement;
 
+  @Prop({ context: 'document' }) doc: Document;
+
   @State() activated = false;
 
   @State() focused = false;
@@ -235,7 +237,7 @@ export class Searchbar {
    * Positions the input placeholder
    */
   positionPlaceholder() {
-    const isRTL = document.dir === 'rtl';
+    const isRTL = this.doc.dir === 'rtl';
     const inputEl = this.el.querySelector('.searchbar-input') as HTMLInputElement;
     const iconEl = this.el.querySelector('.searchbar-search-icon') as HTMLElement;
 
@@ -245,13 +247,14 @@ export class Searchbar {
 
     } else {
       // Create a dummy span to get the placeholder width
-      const tempSpan = document.createElement('span');
+      const doc = this.doc;
+      const tempSpan = doc.createElement('span');
       tempSpan.innerHTML = this.placeholder;
-      document.body.appendChild(tempSpan);
+      doc.body.appendChild(tempSpan);
 
       // Get the width of the span then remove it
       const textWidth = tempSpan.offsetWidth;
-      document.body.removeChild(tempSpan);
+      tempSpan.remove();
 
       // Calculate the input padding
       const inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';
@@ -274,7 +277,7 @@ export class Searchbar {
    * Show the iOS Cancel button on focus, hide it offscreen otherwise
    */
   positionCancelButton() {
-    const isRTL = document.dir === 'rtl';
+    const isRTL = this.doc.dir === 'rtl';
     const cancelButton = this.el.querySelector('.searchbar-cancel-button-ios') as HTMLElement;
     const shouldShowCancel = this.focused;
 

@@ -17,6 +17,7 @@ export class BackButton {
   @Element() el: HTMLElement;
 
   @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'window' }) win: Window;
 
   /**
    * The color to use from your Sass `$colors` map.
@@ -54,7 +55,7 @@ export class BackButton {
       ev.preventDefault();
       nav.pop();
     } else if (this.defaultHref) {
-      openURL(this.defaultHref, ev, 'back');
+      openURL(this.win, this.defaultHref, ev, 'back');
     }
   }
 
