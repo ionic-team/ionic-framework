@@ -1,7 +1,8 @@
 
 import { PlatformConfig } from '@ionic/core';
-import { HostListener } from '@angular/core';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class Platform {
 
   private _platforms: PlatformConfig[] = [];
