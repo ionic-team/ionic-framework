@@ -89,11 +89,6 @@ describe('parser', () => {
     win = new TestWindow();
   });
 });
-export class TestWindow2 {
-
-}
-export declare interface TestWindow2 extends Window {}
-
 
 export function mockRouteElement(win: Window, path: string, component: string) {
   const el = win.document.createElement('ion-route');

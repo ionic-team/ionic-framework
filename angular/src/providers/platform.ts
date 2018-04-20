@@ -1,15 +1,24 @@
 
 import { PlatformConfig } from '@ionic/core';
+import { HostListener } from '@angular/core';
 
 export class Platform {
 
-  private _platforms: PlatformConfig[];
+  private _platforms: PlatformConfig[] = [];
   private _readyPromise: Promise<any>;
-  private _readyResolve: any;
 
   constructor() {
-    this._readyPromise = new Promise(res => { this._readyResolve = res; } );
+    let readyResolve: Function;
+    this._readyPromise = new Promise(res => { readyResolve = res; } );
+    if ((window as any)['cordova']) {
+      window.addEventListener('deviceready', () => {
+        readyResolve();
+      });
+    } else {
+      readyResolve();
+    }
   }
+
   /**
    * @returns {boolean} returns true/false based on platform.
    * @description
@@ -102,7 +111,7 @@ export class Platform {
   }
 
 
-  ready(): Promise<string> {
+  ready(): Promise<void> {
     return this._readyPromise;
   }
 

@@ -20,9 +20,10 @@ import mdLeaveAnimation from './animations/md.leave';
 })
 export class ActionSheet implements OverlayInterface {
 
-  presented = false;
   mode!: Mode;
   color!: string;
+
+  presented = false;
   animation?: Animation;
 
   @Element() el!: HTMLElement;
