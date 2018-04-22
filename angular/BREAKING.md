@@ -3,13 +3,14 @@
 
 A list of the breaking changes introduced in Ionic Angular v4.
 
-- [Alert](#alert)
 - [Action Sheet](#action-sheet)
-- [Dynamic Mode](#dynamic-mode)
+- [Alert](#alert)
+- [Back Button](#back-button)
 - [Button](#button)
 - [Chip](#chip)
 - [Colors](#colors)
 - [Datetime](#datetime)
+- [Dynamic Mode](#dynamic-mode)
 - [FAB](#fab)
 - [Fixed Content](#fixed-content)
 - [Icon](#icon)
@@ -21,40 +22,18 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [List Header](#list-header)
 - [Menu Toggle](#menu-toggle)
 - [Nav](#nav)
+- [Navbar](#navbar)
 - [Option](#option)
 - [Radio](#radio)
 - [Range](#range)
 - [Segment](#segment)
 - [Select](#select)
 - [Spinner](#spinner)
-- [Text / Typography](#text--typography)
 - [Tabs](#tabs)
+- [Text / Typography](#text--typography)
 - [Theming](#theming)
 - [Toolbar](#toolbar)
 
-## Alert
-
-The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectivelly.
-
-**Old Usage Example:**
-
-```js
-const alert = await alertCtrl.create({
-  title: 'This is the title',
-  subTitle: 'this is the sub title'
-});
-await alert.present();
-```
-
-**New Usage Example:**
-
-```js
-const alert = await alertCtrl.create({
-  header: 'This is the title',
-  subHeader: 'this is the sub title'
-});
-await alert.present();
-```
 
 ## Action Sheet
 
@@ -80,9 +59,56 @@ const actionSheet = await actionSheetCtrl.create({
 await actionSheet.present();
 ```
 
-## Dynamic Mode
 
-Components are no longer able to have their mode changed dynamically. You can change the mode before the first render, but after that it will not style properly because only the initial mode's styles are included.
+## Alert
+
+The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectivelly.
+
+**Old Usage Example:**
+
+```js
+const alert = await alertCtrl.create({
+  title: 'This is the title',
+  subTitle: 'this is the sub title'
+});
+await alert.present();
+```
+
+**New Usage Example:**
+
+```js
+const alert = await alertCtrl.create({
+  header: 'This is the title',
+  subHeader: 'this is the sub title'
+});
+await alert.present();
+```
+
+
+## Back Button
+
+The back button is no longer added by default to a navigation bar. It should be explicitly written in a toolbar:
+
+**Old Usage Example:**
+
+```html
+<ion-navbar>
+  <ion-title>Back Button Example</ion-title>
+</ion-navbar>
+```
+
+**New Usage Example:**
+
+```html
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button></ion-back-button>
+  </ion-buttons>
+  <ion-title>Back Button Example</ion-title>
+</ion-toolbar>
+```
+
+See the [back button documentation](https://github.com/ionic-team/ionic/blob/master/core/src/components/back-button) for more usage examples.
 
 ## Button
 
@@ -271,6 +297,12 @@ import { DateTime } from 'ionic-angular';
 ```javascript
 import { Datetime } from 'ionic-angular';
 ```
+
+
+## Dynamic Mode
+
+Components are no longer able to have their mode changed dynamically. You can change the mode before the first render, but after that it will not style properly because only the initial mode's styles are included.
+
 
 ## FAB
 
@@ -678,6 +710,32 @@ The `remove` method has been renamed to `removeIndex` to avoid conflicts with HT
 
 The `getActiveChildNavs` method has been renamed to `getChildNavs`.
 
+
+## Navbar
+
+The `<ion-navbar>` component has been removed in favor of always using an `<ion-toolbar>` with an added back button:
+
+**Old Usage Example:**
+
+```html
+<ion-navbar>
+  <ion-title>My Navigation Bar</ion-title>
+</ion-navbar>
+```
+
+**New Usage Example:**
+
+```html
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button></ion-back-button>
+  </ion-buttons>
+  <ion-title>My Navigation Bar</ion-title>
+</ion-toolbar>
+```
+
+See the [back button](#back-button) changes for more information.
+
 ## Option
 
 ### Markup Changed
@@ -901,6 +959,34 @@ The `ios` and `ios-small` spinner's have been renamed to `lines` and `lines-smal
 ```
 
 
+## Tabs
+
+Some properties in `ion-tab` changed:
+
+- [tabTitle] -> [label]
+- [tabIcon] -> [icon]
+- [tabBadge] -> [badge]
+- [tabBadgeStyle] -> [badgeStyle]
+
+**Old Usage Example:**
+
+```html
+<ion-tabs>
+  <ion-tab tabTitle="Schedule" tabIcon="add"></ion-tab>
+  <ion-tab tabTitle="Map" tabIcon="mao" tabBadge="2"></ion-tab>
+</ion-tabs>
+```
+
+**New Usage Example:**
+
+```html
+<ion-tabs>
+  <ion-tab label="Schedule" icon="add"></ion-tab>
+  <ion-tab label="Map" icon="mao" badge="2"></ion-tab>
+</ion-tabs>
+```
+
+
 ## Text / Typography
 
 ### Markup Changed
@@ -945,33 +1031,6 @@ Typography should now be written as an `<ion-text>` element. Previously the `ion
   He <ion-text color="primary"><i>was</i></ion-text> looking for a place called Lee Ho Fook's.
   Gonna get a <ion-text color="secondary"><a>big dish of beef chow mein.</a></ion-text>
 </p>
-```
-
-## Tab
-
-Some properties in `ion-tab` changed:
-
-- [tabTitle] -> [label]
-- [tabIcon] -> [icon]
-- [tabBadge] -> [badge]
-- [tabBadgeStyle] -> [badgeStyle]
-
-**Old Usage Example:**
-
-```html
-<ion-tabs>
-  <ion-tab tabTitle="Schedule" tabIcon="add"></ion-tab>
-  <ion-tab tabTitle="Map" tabIcon="mao" tabBadge="2"></ion-tab>
-</ion-tabs>
-```
-
-**New Usage Example:**
-
-```html
-<ion-tabs>
-  <ion-tab label="Schedule" icon="add"></ion-tab>
-  <ion-tab label="Map" icon="mao" badge="2"></ion-tab>
-</ion-tabs>
 ```
 
 
