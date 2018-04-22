@@ -136,10 +136,10 @@ export class Checkbox implements CheckboxInput {
 
     return [
       <div class={checkboxClasses}>
-        <div class='checkbox-inner'></div>
+        <div class="checkbox-inner"></div>
       </div>,
       <input
-        type='checkbox'
+        type="checkbox"
         id={this.inputId}
         aria-labelledby={this.labelId}
         onChange={this.onChange.bind(this)}

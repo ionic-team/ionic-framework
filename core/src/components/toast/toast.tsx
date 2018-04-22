@@ -203,12 +203,12 @@ export class Toast implements OverlayInterface {
     };
     return (
       <div class={wrapperClass}>
-        <div class='toast-container'>
+        <div class="toast-container">
           {this.message
-            ? <div class='toast-message'>{this.message}</div>
+            ? <div class="toast-message">{this.message}</div>
             : null}
           {this.showCloseButton
-            ? <ion-button fill='clear' color='light' class='toast-button' onClick={() => this.dismiss()}>
+            ? <ion-button fill="clear" color="light" class="toast-button" onClick={() => this.dismiss()}>
                 {this.closeButtonText || 'Close'}
               </ion-button>
             : null}

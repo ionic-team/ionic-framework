@@ -484,17 +484,17 @@ export class Select {
 
     return [
       <div
-        role='textbox'
-        aria-multiline='false'
+        role="textbox"
+        aria-multiline="false"
         class={ selectTextClasses }>{ selectText }
       </div>,
-      <div class='select-icon' role='presentation'>
-        <div class='select-icon-inner'></div>
+      <div class="select-icon" role="presentation">
+        <div class="select-icon-inner"></div>
       </div>,
       <button
-        type='button'
-        role='combobox'
-        aria-haspopup='dialog'
+        type="button"
+        role="combobox"
+        aria-haspopup="dialog"
         aria-expanded={this.isExpanded}
         aria-labelledby={this.labelId}
         aria-disabled={this.disabled ? 'true' : false}
@@ -502,11 +502,11 @@ export class Select {
         onKeyUp={this.onKeyUp.bind(this)}
         onFocus={this.onFocus.bind(this)}
         onBlur={this.onBlur.bind(this)}
-        class='select-cover'>
+        class="select-cover">
         <slot></slot>
         { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </button>,
-      <input type='hidden' name={this.name} value={parseValue(this.value)}/>
+      <input type="hidden" name={this.name} value={parseValue(this.value)}/>
     ];
   }
 }

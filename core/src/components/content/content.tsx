@@ -143,8 +143,8 @@ export class Content {
           forceOverscroll={this.forceOverscroll}>
           <slot></slot>
         </ion-scroll>
-      : <div class='scroll-inner'><slot></slot></div>,
-      <slot name='fixed'></slot>
+      : <div class="scroll-inner"><slot></slot></div>,
+      <slot name="fixed"></slot>
     ];
   }
 }

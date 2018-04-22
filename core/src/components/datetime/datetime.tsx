@@ -599,13 +599,13 @@ export class Datetime {
     return [
       <div class={ datetimeTextClasses }>{ datetimeText }</div>,
       <button
-        type='button'
-        aria-haspopup='true'
+        type="button"
+        aria-haspopup="true"
         id={this.datetimeId}
         aria-labelledby={this.labelId}
         aria-disabled={this.disabled ? 'true' : false}
         onClick={this.open.bind(this)}
-        class='datetime-cover'>
+        class="datetime-cover">
         { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </button>
     ];

@@ -148,11 +148,11 @@ export class Button {
         onKeyUp={this.onKeyUp.bind(this)}
         onBlur={this.onBlur.bind(this)}
         onClick={(ev) => openURL(this.win, this.href, ev, this.routerDirection)}>
-          <span class='button-inner'>
-            <slot name='icon-only'></slot>
-            <slot name='start'></slot>
+          <span class="button-inner">
+            <slot name="icon-only"></slot>
+            <slot name="start"></slot>
             <slot></slot>
-            <slot name='end'></slot>
+            <slot name="end"></slot>
           </span>
           { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </TagType>

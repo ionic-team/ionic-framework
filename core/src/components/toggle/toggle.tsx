@@ -192,13 +192,13 @@ export class Toggle implements CheckboxInput {
     return [
       <ion-gesture {...this.gestureConfig}
         disabled={this.disabled} tabIndex={-1}>
-        <div class='toggle-icon'>
-          <div class='toggle-inner'/>
+        <div class="toggle-icon">
+          <div class="toggle-inner"/>
         </div>
-        <div class='toggle-cover'/>
+        <div class="toggle-cover"/>
       </ion-gesture>,
       <input
-        type='checkbox'
+        type="checkbox"
         onChange={this.onChange.bind(this)}
         onFocus={this.onFocus.bind(this)}
         onBlur={this.onBlur.bind(this)}

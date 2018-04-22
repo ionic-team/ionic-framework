@@ -1,6 +1,7 @@
 import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 import { Config, NavOutlet } from '../../index';
 import { RouteID, RouteWrite, RouterDirection } from '../router/utils/interfaces';
+import { TabbarLayout, TabbarPlacement } from '../tabbar/tabbar';
 
 
 @Component({
@@ -42,12 +43,12 @@ export class Tabs implements NavOutlet {
   /**
    * Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
    */
-  @Prop({ mutable: true }) tabbarLayout?: string;
+  @Prop({ mutable: true }) tabbarLayout?: TabbarLayout;
 
   /**
    * Set position of the tabbar: `top`, `bottom`.
    */
-  @Prop({ mutable: true }) tabbarPlacement?: string;
+  @Prop({ mutable: true }) tabbarPlacement?: TabbarPlacement;
 
   /**
    * If true, show the tab highlight bar under the selected tab.
@@ -78,9 +79,9 @@ export class Tabs implements NavOutlet {
       this.useRouter = !!this.doc.querySelector('ion-router') && !this.el.closest('[no-router]');
     }
 
-    this.loadConfig('tabsPlacement', 'bottom');
-    this.loadConfig('tabsLayout', 'icon-top');
-    this.loadConfig('tabsHighlight', true);
+    this.loadConfig('tabbarLayout', 'bottom');
+    this.loadConfig('tabbarLayout', 'icon-top');
+    this.loadConfig('tabbarHighlight', false);
   }
 
   async componentDidLoad() {
@@ -272,7 +273,7 @@ export class Tabs implements NavOutlet {
 
   render() {
     const dom = [
-      <div class='tabs-inner'>
+      <div class="tabs-inner">
         <slot></slot>
       </div>
     ];

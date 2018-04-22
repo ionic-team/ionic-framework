@@ -253,7 +253,7 @@ export class Scroll {
   render() {
     return [
       // scroll-inner is used to keep custom user padding
-      <div class='scroll-inner'>
+      <div class="scroll-inner">
         <slot></slot>
       </div>
     ];

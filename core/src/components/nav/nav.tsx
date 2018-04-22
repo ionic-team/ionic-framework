@@ -750,13 +750,13 @@ export class Nav implements NavOutlet {
           onStart={this.swipeBackStart.bind(this)}
           onMove={this.swipeBackProgress.bind(this)}
           onEnd={this.swipeBackEnd.bind(this)}
-          gestureName='goback-swipe'
+          gestureName="goback-swipe"
           gesturePriority={10}
-          type='pan'
-          direction='x'
+          type="pan"
+          direction="x"
           threshold={10}
-          attachTo='body'/>,
-      this.mode === 'ios' && <div class='nav-decor'/>,
+          attachTo="body"/>,
+      this.mode === 'ios' && <div class="nav-decor"/>,
       <slot></slot>
     ];
   }

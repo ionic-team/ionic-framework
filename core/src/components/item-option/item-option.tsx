@@ -61,17 +61,17 @@ export class ItemOption {
 
     return (
       <TagType
-        class='item-option-button'
+        class="item-option-button"
         disabled={this.disabled}
         href={this.href}
         onClick={this.clickedOptionButton.bind(this)}>
-        <span class='item-option-button-inner'>
-          <slot name='start'></slot>
-          <slot name='top'></slot>
-          <slot name='icon-only'></slot>
+        <span class="item-option-button-inner">
+          <slot name="start"></slot>
+          <slot name="top"></slot>
+          <slot name="icon-only"></slot>
           <slot></slot>
-          <slot name='bottom'></slot>
-          <slot name='end'></slot>
+          <slot name="bottom"></slot>
+          <slot name="end"></slot>
         </span>
       </TagType>
     );

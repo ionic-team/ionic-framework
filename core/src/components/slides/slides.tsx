@@ -380,8 +380,8 @@ export class Slides {
 
   render() {
     return (
-      <div class='swiper-container' data-dir='rtl'>
-        <div class='swiper-wrapper'>
+      <div class="swiper-container" data-dir="rtl">
+        <div class="swiper-wrapper">
           <slot />
         </div>
         <div

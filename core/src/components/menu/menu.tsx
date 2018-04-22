@@ -427,13 +427,13 @@ export class Menu {
 
   render() {
     return ([
-      <div class='menu-inner' ref={el => this.menuInnerEl = el}>
+      <div class="menu-inner" ref={el => this.menuInnerEl = el}>
         <slot></slot>
       </div>,
 
       <ion-backdrop
         ref={el => this.backdropEl = el}
-        class='menu-backdrop'
+        class="menu-backdrop"
         tappable={false}
         stopPropagation={false}/>,
 
@@ -444,12 +444,12 @@ export class Menu {
         onMove={this.onDragMove.bind(this)}
         onEnd={this.onDragEnd.bind(this)}
         disabled={!this.isActive() || !this.swipeEnabled}
-        gestureName='menu-swipe'
+        gestureName="menu-swipe"
         gesturePriority={10}
-        type='pan'
-        direction='x'
+        type="pan"
+        direction="x"
         threshold={10}
-        attachTo='window'
+        attachTo="window"
         disableScroll={true} />
     ]);
   }

@@ -126,6 +126,10 @@ import {
   FrameworkDelegate as FrameworkDelegate3,
 } from './utils/framework-delegate';
 import {
+  TabbarLayout,
+  TabbarPlacement,
+} from './components/tabbar/tabbar';
+import {
   DomRenderFn,
   HeaderFn,
   ItemHeightFn,
@@ -6432,8 +6436,8 @@ declare global {
   namespace StencilComponents {
     interface IonTabbar {
       'highlight': boolean;
-      'layout': string;
-      'placement': string;
+      'layout': TabbarLayout;
+      'placement': TabbarPlacement;
       'scrollable': boolean;
       'selectedTab': HTMLIonTabElement;
       'tabs': HTMLIonTabElement[];
@@ -6464,8 +6468,8 @@ declare global {
   namespace JSXElements {
     export interface IonTabbarAttributes extends HTMLAttributes {
       'highlight'?: boolean;
-      'layout'?: string;
-      'placement'?: string;
+      'layout'?: TabbarLayout;
+      'placement'?: TabbarPlacement;
       'scrollable'?: boolean;
       'selectedTab'?: HTMLIonTabElement;
       'tabs'?: HTMLIonTabElement[];
@@ -6507,11 +6511,11 @@ declare global {
       /**
        * Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
        */
-      'tabbarLayout': string;
+      'tabbarLayout': TabbarLayout;
       /**
        * Set position of the tabbar: `top`, `bottom`.
        */
-      'tabbarPlacement': string;
+      'tabbarPlacement': TabbarPlacement;
       /**
        * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
        */
@@ -6565,11 +6569,11 @@ declare global {
       /**
        * Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
        */
-      'tabbarLayout'?: string;
+      'tabbarLayout'?: TabbarLayout;
       /**
        * Set position of the tabbar: `top`, `bottom`.
        */
-      'tabbarPlacement'?: string;
+      'tabbarPlacement'?: TabbarPlacement;
       /**
        * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
        */

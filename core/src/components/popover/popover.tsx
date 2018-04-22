@@ -246,8 +246,8 @@ export class Popover implements OverlayInterface {
     return [
       <ion-backdrop tappable={this.enableBackdropDismiss}/>,
       <div class={wrapperClasses}>
-        <div class='popover-arrow'></div>
-        <div class='popover-content'></div>
+        <div class="popover-arrow"></div>
+        <div class="popover-content"></div>
       </div>
     ];
   }

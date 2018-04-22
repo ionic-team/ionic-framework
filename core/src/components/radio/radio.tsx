@@ -189,10 +189,10 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
     };
     return [
       <div class={radioClasses}>
-        <div class='radio-inner'/>
+        <div class="radio-inner"/>
       </div>,
       <input
-        type='radio'
+        type="radio"
         onClick={this.onClick.bind(this)}
         onChange={this.onChange.bind(this)}
         onFocus={this.onFocus.bind(this)}

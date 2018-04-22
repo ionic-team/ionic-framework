@@ -2,6 +2,9 @@ import { Component, Element, Listen, Prop, State, Watch } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
 import { Mode, QueueController } from '../../index';
 
+export type TabbarLayout = 'icon-top' | 'icon-start' | 'icon-end' | 'icon-bottom' | 'icon-hide' | 'title-hide';
+export type TabbarPlacement = 'top' | 'bottom';
+
 @Component({
   tag: 'ion-tabbar',
   styleUrls: {
@@ -28,7 +31,8 @@ export class Tabbar {
   @State() canScrollRight = false;
   @State() hidden = false;
 
-  @Prop() placement = 'bottom';
+  @Prop() layout: TabbarLayout = 'icon-top';
+  @Prop() placement: TabbarPlacement = 'bottom';
   @Prop() selectedTab?: HTMLIonTabElement;
   @Prop() scrollable = false;
   @Prop() tabs: HTMLIonTabElement[] = [];
@@ -39,7 +43,6 @@ export class Tabbar {
     this.highlight && this.updateHighlight();
   }
 
-  @Prop() layout = 'icon-top';
   @Prop() highlight = false;
 
   /**
@@ -181,14 +184,14 @@ export class Tabbar {
 
   render() {
     const selectedTab = this.selectedTab;
-    const ionTabbarHighlight = this.highlight ? <div class='animated tabbar-highlight'/> as HTMLElement : null;
+    const ionTabbarHighlight = this.highlight ? <div class="animated tabbar-highlight"/> as HTMLElement : null;
     const buttonClasses = createThemedClasses(this.mode, this.color, 'tab-button');
     const tabButtons = this.tabs.map(tab => <ion-tab-button class={buttonClasses} tab={tab} selected={selectedTab === tab}/>);
 
     if (this.scrollable) {
       return [
-        <ion-button onClick={() => this.scrollByTab('left')} fill='clear' class={{inactive: !this.canScrollLeft}}>
-          <ion-icon name='arrow-dropleft'/>
+        <ion-button onClick={() => this.scrollByTab('left')} fill="clear" class={{inactive: !this.canScrollLeft}}>
+          <ion-icon name="arrow-dropleft"/>
         </ion-button>,
 
         <ion-scroll forceOverscroll={false} ref={(scrollEl) => this.scrollEl = scrollEl as HTMLIonScrollElement}>
@@ -196,8 +199,8 @@ export class Tabbar {
           {ionTabbarHighlight}
         </ion-scroll>,
 
-        <ion-button onClick={() => this.scrollByTab('right')} fill='clear' class={{inactive: !this.canScrollRight}}>
-          <ion-icon name='arrow-dropright'/>
+        <ion-button onClick={() => this.scrollByTab('right')} fill="clear" class={{inactive: !this.canScrollRight}}>
+          <ion-icon name="arrow-dropright"/>
         </ion-button>
       ];
     } else {

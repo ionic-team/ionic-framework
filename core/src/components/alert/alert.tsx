@@ -307,12 +307,12 @@ export class Alert implements OverlayInterface {
       return null;
     }
     return (
-      <div class='alert-checkbox-group' aria-labelledby={labelledby}>
+      <div class="alert-checkbox-group" aria-labelledby={labelledby}>
         { inputs.map((i) => (
-          <button onClick={() => this.cbClick(i)} aria-checked={i.checked} id={i.id} disabled={i.disabled} tabIndex={0} role='checkbox' class='alert-tappable alert-checkbox alert-checkbox-button'>
-            <div class='alert-button-inner'>
-              <div class='alert-checkbox-icon'><div class='alert-checkbox-inner'></div></div>
-              <div class='alert-checkbox-label'>
+          <button onClick={() => this.cbClick(i)} aria-checked={i.checked} id={i.id} disabled={i.disabled} tabIndex={0} role="checkbox" class="alert-tappable alert-checkbox alert-checkbox-button">
+            <div class="alert-button-inner">
+              <div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>
+              <div class="alert-checkbox-label">
                 {i.label}
               </div>
             </div>
@@ -329,12 +329,12 @@ export class Alert implements OverlayInterface {
       return null;
     }
     return (
-      <div class='alert-radio-group' role='radiogroup' aria-labelledby={labelledby} aria-activedescendant={this.activeId}>
+      <div class="alert-radio-group" role="radiogroup" aria-labelledby={labelledby} aria-activedescendant={this.activeId}>
         { inputs.map((i) => (
-          <button onClick={() => this.rbClick(i)} aria-checked={i.checked} disabled={i.disabled} id={i.id} tabIndex={0} class='alert-radio-button alert-tappable alert-radio' role='radio'>
-            <div class='alert-button-inner'>
-              <div class='alert-radio-icon'><div class='alert-radio-inner'></div></div>
-              <div class='alert-radio-label'>
+          <button onClick={() => this.rbClick(i)} aria-checked={i.checked} disabled={i.disabled} id={i.id} tabIndex={0} class="alert-radio-button alert-tappable alert-radio" role="radio">
+            <div class="alert-button-inner">
+              <div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>
+              <div class="alert-radio-label">
                 {i.label}
               </div>
             </div>
@@ -351,9 +351,9 @@ export class Alert implements OverlayInterface {
       return null;
     }
     return (
-      <div class='alert-input-group' aria-labelledby={labelledby}>
+      <div class="alert-input-group" aria-labelledby={labelledby}>
         { inputs.map(i => (
-          <div class='alert-input-wrapper'>
+          <div class="alert-input-wrapper">
             <input
               placeholder={i.placeholder}
               value={i.value}
@@ -364,7 +364,7 @@ export class Alert implements OverlayInterface {
               id={i.id}
               disabled={i.disabled}
               tabIndex={0}
-              class='alert-input'/>
+              class="alert-input"/>
           </div>
         ))}
       </div>
@@ -414,21 +414,21 @@ export class Alert implements OverlayInterface {
     return [
       <ion-backdrop tappable={this.enableBackdropDismiss}/>,
 
-      <div class='alert-wrapper'>
+      <div class="alert-wrapper">
 
-        <div class='alert-head'>
-          { this.header && <h2 id={hdrId} class='alert-title'>{this.header}</h2> }
-          { this.subHeader && <h2 id={subHdrId} class='alert-sub-title'>{this.subHeader}</h2> }
+        <div class="alert-head">
+          { this.header && <h2 id={hdrId} class="alert-title">{this.header}</h2> }
+          { this.subHeader && <h2 id={subHdrId} class="alert-sub-title">{this.subHeader}</h2> }
         </div>
 
-        <div id={msgId} class='alert-message' innerHTML={this.message}></div>
+        <div id={msgId} class="alert-message" innerHTML={this.message}></div>
 
         { this.renderAlertInputs(labelledById) }
 
         <div class={alertButtonGroupClass}>
           {buttons.map(button =>
             <button class={buttonClass(button)} tabIndex={0} onClick={() => this.buttonClick(button)}>
-              <span class='alert-button-inner'>
+              <span class="alert-button-inner">
                 {button.text}
               </span>
             </button>

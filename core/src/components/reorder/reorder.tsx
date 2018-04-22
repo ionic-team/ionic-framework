@@ -34,7 +34,7 @@ export class Reorder {
   render() {
     return (this.custom)
       ? <slot/>
-      : <ion-icon class='reorder-icon' name='reorder'/>;
+      : <ion-icon class="reorder-icon" name="reorder"/>;
   }
 
 }

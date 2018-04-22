@@ -40,24 +40,24 @@ export class RefresherContent {
 
   protected render() {
     return [
-      <div class='refresher-pulling'>
+      <div class="refresher-pulling">
         {this.pullingIcon &&
-          <div class='refresher-pulling-icon'>
+          <div class="refresher-pulling-icon">
             <ion-icon name={this.pullingIcon}></ion-icon>
           </div>
         }
         {this.pullingText &&
-          <div class='refresher-pulling-text' innerHTML={this.pullingText}></div>
+          <div class="refresher-pulling-text" innerHTML={this.pullingText}></div>
         }
       </div>,
-      <div class='refresher-refreshing'>
+      <div class="refresher-refreshing">
         {this.refreshingSpinner &&
-          <div class='refresher-refreshing-icon'>
+          <div class="refresher-refreshing-icon">
             <ion-spinner name={this.refreshingSpinner}></ion-spinner>
           </div>
         }
         {this.refreshingText &&
-          <div class='refresher-refreshing-text' innerHTML={this.refreshingText}></div>
+          <div class="refresher-refreshing-text" innerHTML={this.refreshingText}></div>
         }
       </div>
     ];

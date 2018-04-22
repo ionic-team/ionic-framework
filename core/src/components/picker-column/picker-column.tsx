@@ -406,7 +406,7 @@ export class PickerColumnCmp {
 
     if (col.prefix) {
       results.push(
-        <div class='picker-prefix' style={{width: col.prefixWidth!}}>
+        <div class="picker-prefix" style={{width: col.prefixWidth!}}>
           {col.prefix}
         </div>
       );
@@ -418,15 +418,15 @@ export class PickerColumnCmp {
         onStart={this.onDragStart.bind(this)}
         onMove={this.onDragMove.bind(this)}
         onEnd={this.onDragEnd.bind(this)}
-        gestureName='picker-swipe'
+        gestureName="picker-swipe"
         gesturePriority={10}
-        type='pan'
-        direction='y'
+        type="pan"
+        direction="y"
         passive={false}
         threshold={0}
-        attachTo='parent'
+        attachTo="parent"
       ></ion-gesture>,
-      <div class='picker-opts' style={{maxWidth: col.optionsWidth!}}>
+      <div class="picker-opts" style={{maxWidth: col.optionsWidth!}}>
         {options.map((o, index) =>
           <button
             class={{'picker-opt': true, 'picker-opt-disabled': !!o.disabled}}
@@ -440,7 +440,7 @@ export class PickerColumnCmp {
 
     if (col.suffix) {
       results.push(
-        <div class='picker-suffix' style={{width: col.suffixWidth!}}>
+        <div class="picker-suffix" style={{width: col.suffixWidth!}}>
           {col.suffix}
         </div>
       );

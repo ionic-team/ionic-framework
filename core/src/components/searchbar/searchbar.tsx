@@ -324,23 +324,23 @@ export class Searchbar {
     const cancelButton =
       this.showCancelButton
         ? <button
-          type='button'
+          type="button"
           tabindex={this.mode === 'ios' && !this.activated ? -1 : undefined}
           onClick={this.cancelSearchbar.bind(this)}
           onMouseDown={this.cancelSearchbar.bind(this)}
           class={cancelButtonClasses}>
             { this.mode === 'md'
-              ? <ion-icon name='md-arrow-back'></ion-icon>
+              ? <ion-icon name="md-arrow-back"></ion-icon>
               : this.cancelButtonText }
         </button>
         : null;
 
     const searchbar: JSX.Element[] = [
-      <div class='searchbar-input-container'>
+      <div class="searchbar-input-container">
         { this.mode === 'md' ? cancelButton : null }
         <div class={searchIconClasses}></div>
         <input
-          class='searchbar-input'
+          class="searchbar-input"
           onInput={this.inputChanged.bind(this)}
           onBlur={this.inputBlurred.bind(this)}
           onFocus={this.inputFocused.bind(this)}
@@ -351,8 +351,8 @@ export class Searchbar {
           autoCorrect={this.autocorrect}
           spellCheck={this.spellcheck}/>
         <button
-          type='button'
-          class='searchbar-clear-icon'
+          type="button"
+          class="searchbar-clear-icon"
           onClick={this.clearInput.bind(this)}
           onMouseDown={this.clearInput.bind(this)}>
         </button>

@@ -40,7 +40,7 @@ export class MenuButton {
         <ion-button>
           {this.custom
             ? <slot/>
-            : <ion-icon slot='icon-only' name={menuIcon}/>}
+            : <ion-icon slot="icon-only" name={menuIcon}/>}
         </ion-button>
       </ion-menu-toggle>
     );

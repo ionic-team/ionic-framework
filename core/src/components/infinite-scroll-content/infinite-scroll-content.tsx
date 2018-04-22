@@ -35,14 +35,14 @@ export class InfiniteScrollContent {
 
   render() {
     return (
-      <div class='infinite-loading'>
+      <div class="infinite-loading">
         {this.loadingSpinner &&
-          <div class='infinite-loading-spinner'>
+          <div class="infinite-loading-spinner">
             <ion-spinner name={this.loadingSpinner}></ion-spinner>
           </div>
         }
         {this.loadingText &&
-          <div class='infinite-loading-text' innerHTML={this.loadingText}></div>
+          <div class="infinite-loading-text" innerHTML={this.loadingText}></div>
         }
       </div>
     );

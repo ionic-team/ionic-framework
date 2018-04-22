@@ -299,8 +299,8 @@ export class Picker implements OverlayInterface {
 
     return [
       <ion-backdrop visible={this.showBackdrop} tappable={this.enableBackdropDismiss}/>,
-      <div class='picker-wrapper' role='dialog'>
-        <div class='picker-toolbar'>
+      <div class="picker-wrapper" role="dialog">
+        <div class="picker-toolbar">
           {buttons.map(b =>
             <div class={buttonWrapperClass(b)}>
               <button onClick={() => this.buttonClick(b)} class={buttonClass(b)}>
@@ -309,12 +309,12 @@ export class Picker implements OverlayInterface {
             </div>
           )}
         </div>
-        <div class='picker-columns'>
-          <div class='picker-above-highlight'></div>
+        <div class="picker-columns">
+          <div class="picker-above-highlight"></div>
           {columns.map(c =>
             <ion-picker-column col={c}></ion-picker-column>
           )}
-          <div class='picker-below-highlight'></div>
+          <div class="picker-below-highlight"></div>
         </div>
       </div>
     ];

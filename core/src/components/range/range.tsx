@@ -414,40 +414,40 @@ export class Range implements BaseInput {
 
   render() {
     return [
-      <slot name='start'></slot>,
+      <slot name="start"></slot>,
       <ion-gesture
         disableScroll={true}
         onStart={this.onDragStart.bind(this)}
         onMove={this.onDragMove.bind(this)}
         onEnd={this.onDragEnd.bind(this)}
         disabled={this.disabled}
-        gestureName='range'
+        gestureName="range"
         gesturePriority={30}
-        type='pan'
-        direction='x'
+        type="pan"
+        direction="x"
         threshold={0}>
 
-        <div class='range-slider'>
+        <div class="range-slider">
           {this.ticks.map(t =>
             <div
               style={{ left: t.left! }}
-              role='presentation'
+              role="presentation"
               class={{ 'range-tick': true, 'range-tick-active': !!t.active }}
             />
           )}
 
-          <div class='range-bar' role='presentation' />
+          <div class="range-bar" role="presentation" />
           <div
-            class='range-bar range-bar-active'
-            role='presentation'
+            class="range-bar range-bar-active"
+            role="presentation"
             style={{
               left: this.barL,
               right: this.barR
             }}
           />
           <ion-range-knob
-            class='range-knob-handle'
-            knob='knobA'
+            class="range-knob-handle"
+            knob="knobA"
             pressed={this.pressedA}
             ratio={this.ratioA}
             val={this.valA}
@@ -458,8 +458,8 @@ export class Range implements BaseInput {
 
           {this.dualKnobs
             ? <ion-range-knob
-                class='range-knob-handle'
-                knob='knobB'
+                class="range-knob-handle"
+                knob="knobB"
                 pressed={this.pressedB}
                 ratio={this.ratioB}
                 val={this.valB}
@@ -470,7 +470,7 @@ export class Range implements BaseInput {
             : null}
         </div>
       </ion-gesture>,
-      <slot name='end'></slot>
+      <slot name="end"></slot>
     ];
   }
 }

@@ -230,7 +230,7 @@ export class Modal implements OverlayInterface {
 
     return [
       <ion-backdrop visible={this.showBackdrop} tappable={this.enableBackdropDismiss}/>,
-      <div role='dialog' class={dialogClasses}></div>
+      <div role="dialog" class={dialogClasses}></div>
     ];
   }
 }

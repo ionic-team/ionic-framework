@@ -42,12 +42,12 @@ export class ItemDivider {
 
   render() {
     return [
-      <slot name='start'></slot>,
-      <div class='item-divider-inner'>
-        <div class='item-divider-wrapper'>
+      <slot name="start"></slot>,
+      <div class="item-divider-inner">
+        <div class="item-divider-wrapper">
           <slot></slot>
         </div>
-        <slot name='end'></slot>
+        <slot name="end"></slot>
       </div>
     ];
   }

@@ -227,22 +227,22 @@ export class ActionSheet implements OverlayInterface {
 
     return [
       <ion-backdrop tappable={this.enableBackdropDismiss}/>,
-      <div class='action-sheet-wrapper' role='dialog'>
-        <div class='action-sheet-container'>
-          <div class='action-sheet-group'>
+      <div class="action-sheet-wrapper" role="dialog">
+        <div class="action-sheet-container">
+          <div class="action-sheet-group">
             {this.header
-              ? <div class='action-sheet-title'>
+              ? <div class="action-sheet-title">
                 {this.header}
                 {this.subHeader
-                ? <div class='action-sheet-sub-title'>{this.subHeader}</div>
+                ? <div class="action-sheet-sub-title">{this.subHeader}</div>
                 : null}
               </div>
               : null}
             {buttons.map(b =>
               <button class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
-                <span class='action-sheet-button-inner'>
+                <span class="action-sheet-button-inner">
                   {b.icon
-                    ? <ion-icon name={b.icon} class='action-sheet-icon' />
+                    ? <ion-icon name={b.icon} class="action-sheet-icon" />
                     : null}
                   {b.text}
                 </span>
@@ -250,16 +250,16 @@ export class ActionSheet implements OverlayInterface {
             )}
           </div>
           {cancelButton
-            ? <div class='action-sheet-group action-sheet-group-cancel'>
+            ? <div class="action-sheet-group action-sheet-group-cancel">
                 <button
                   class={buttonClass(cancelButton)}
                   onClick={() => this.buttonClick(cancelButton)}
                 >
-                  <span class='action-sheet-button-inner'>
+                  <span class="action-sheet-button-inner">
                     {cancelButton.icon
                       ? <ion-icon
                           name={cancelButton.icon}
-                          class='action-sheet-icon'
+                          class="action-sheet-icon"
                         />
                       : null}
                     {cancelButton.text}

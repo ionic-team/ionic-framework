@@ -128,12 +128,12 @@ export class Item {
         {...attrs}
         class={themedClasses}
         onClick={(ev) => openURL(this.win, this.href, ev, this.routerDirection)}>
-        <slot name='start'></slot>
-        <div class='item-inner'>
-          <div class='input-wrapper'>
+        <slot name="start"></slot>
+        <div class="item-inner">
+          <div class="input-wrapper">
             <slot></slot>
           </div>
-          <slot name='end'></slot>
+          <slot name="end"></slot>
         </div>
         { clickable && this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </TagType>
