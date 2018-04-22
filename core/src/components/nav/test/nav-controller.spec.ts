@@ -1,10 +1,10 @@
 import { Nav } from '../nav';
 import { ViewController } from '../view-controller';
 import { AnimationControllerImpl } from '../../animation-controller/animation-controller';
-import { createConfigController } from '../../../global/config-controller';
 
 import { NavDirection, NavOptions, ViewState } from '../nav-util';
 import { TestWindow } from '@stencil/core/dist/testing';
+import { Config } from '../../../global/config';
 
 
 describe('NavController', () => {
@@ -1072,7 +1072,7 @@ describe('NavController', () => {
     nav.ionNavWillChange = {emit: function() { return; } };
 
     nav.animationCtrl = new AnimationControllerImpl() as any;
-    nav.config = createConfigController({animate: false}, []);
+    nav.config = new Config({animate: false});
     nav._viewInit = function (enteringView: ViewController) {
       if (!enteringView.element) {
         console.log(enteringView.component);

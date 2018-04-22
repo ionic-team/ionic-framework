@@ -1,6 +1,6 @@
 const PADDING_TIMER_KEY = '$ionPaddingTimer';
 
-export default function enableScrollPadding(keyboardHeight: number) {
+export default function enableScrollPadding(doc: Document, keyboardHeight: number) {
   console.debug('Input: enableScrollPadding');
 
   function onFocusin(ev: any) {
@@ -10,12 +10,12 @@ export default function enableScrollPadding(keyboardHeight: number) {
     setScrollPadding(ev.target, 0);
   }
 
-  document.addEventListener('focusin', onFocusin);
-  document.addEventListener('focusout', onFocusout);
+  doc.addEventListener('focusin', onFocusin);
+  doc.addEventListener('focusout', onFocusout);
 
   return () => {
-    document.removeEventListener('focusin', onFocusin);
-    document.removeEventListener('focusout', onFocusout);
+    doc.removeEventListener('focusin', onFocusin);
+    doc.removeEventListener('focusout', onFocusout);
   };
 }
 

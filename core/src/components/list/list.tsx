@@ -14,7 +14,8 @@ import { ItemSliding } from '../item-sliding/item-sliding';
   }
 })
 export class List {
-  private openItem: ItemSliding | null;
+
+  private openItem?: ItemSliding;
 
   /**
    * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
@@ -28,7 +29,7 @@ export class List {
    * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
    */
   @Method()
-  setOpenItem(itemSliding: ItemSliding | null) {
+  setOpenItem(itemSliding: ItemSliding | undefined) {
     this.openItem = itemSliding;
   }
 
@@ -40,7 +41,7 @@ export class List {
   closeSlidingItems(): boolean {
     if (this.openItem) {
       this.openItem.close();
-      this.openItem = null;
+      this.openItem = undefined;
       return true;
     }
     return false;

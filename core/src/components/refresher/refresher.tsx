@@ -30,7 +30,7 @@ export class Refresher {
   private progress = 0;
   private scrollEl: HTMLElement | null = null;
 
-  @Prop({ context: 'queue' }) queue: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueController;
 
   /**
    * The current state which the refresher is in. The refresher's states include:
@@ -45,7 +45,7 @@ export class Refresher {
   @State() state: RefresherState = RefresherState.Inactive;
 
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /**
    * The minimum distance the user must pull down until the
@@ -82,17 +82,17 @@ export class Refresher {
    * Updates the refresher state to `refreshing`. The `complete()` method should be
    * called when the async operation has completed.
    */
-  @Event() ionRefresh: EventEmitter;
+  @Event() ionRefresh!: EventEmitter;
 
   /**
    * Emitted while the user is pulling down the content and exposing the refresher.
    */
-  @Event() ionPull: EventEmitter;
+  @Event() ionPull!: EventEmitter;
 
   /**
    * Emitted when the user begins to start pulling down.
    */
-  @Event() ionStart: EventEmitter;
+  @Event() ionStart!: EventEmitter;
 
   constructor() {
     this.gestureConfig = {

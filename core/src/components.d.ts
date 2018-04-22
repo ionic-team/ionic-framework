@@ -36,9 +36,9 @@ import {
   LoadingOptions,
   Menu,
   ModalOptions,
+  Mode,
   PickerColumn,
   PickerOptions,
-  PlatformConfig,
   PopoverOptions,
   ToastOptions,
 } from './index';
@@ -59,6 +59,13 @@ import {
   Animation,
   AnimationBuilder as AnimationBuilder2,
 } from './components/animation-controller/animation-interface';
+import {
+  AnimationBuilder as AnimationBuilder3,
+  ComponentProps as ComponentProps2,
+  ComponentRef as ComponentRef2,
+  FrameworkDelegate as FrameworkDelegate2,
+  Mode as Mode2,
+} from '.';
 import {
   BlurEvent,
   CheckedInputChangeEvent,
@@ -93,12 +100,6 @@ import {
   TransitionInstruction,
 } from './components/nav/nav-util';
 import {
-  AnimationBuilder as AnimationBuilder3,
-  ComponentProps as ComponentProps2,
-  ComponentRef as ComponentRef2,
-  FrameworkDelegate as FrameworkDelegate2,
-} from '.';
-import {
   ViewController,
 } from './components/nav/view-controller';
 import {
@@ -124,6 +125,10 @@ import {
 import {
   FrameworkDelegate as FrameworkDelegate3,
 } from './utils/framework-delegate';
+import {
+  TabbarLayout,
+  TabbarPlacement,
+} from './components/tabbar/tabbar';
 import {
   DomRenderFn,
   HeaderFn,
@@ -390,7 +395,6 @@ declare global {
        * The main message to be displayed in the alert.
        */
       'message': string;
-      'mode': string;
       /**
        * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await alert.onDidDismiss(); ```
        */
@@ -471,7 +475,6 @@ declare global {
        * The main message to be displayed in the alert.
        */
       'message'?: string;
-      'mode'?: string;
       /**
        * Emitted after the alert has dismissed.
        */
@@ -523,7 +526,7 @@ declare global {
        */
       'href': string;
       /**
-       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection': 'forward' | 'back';
     }
@@ -553,7 +556,7 @@ declare global {
        */
       'href'?: string;
       /**
-       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection'?: 'forward' | 'back';
     }
@@ -679,11 +682,11 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       /**
        * The text to display in the back button.
        */
-      'text': string | undefined;
+      'text': string;
     }
   }
 
@@ -721,11 +724,11 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       /**
        * The text to display in the back button.
        */
-      'text'?: string | undefined;
+      'text'?: string;
     }
   }
 }
@@ -801,7 +804,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
     }
   }
 
@@ -831,7 +834,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
     }
   }
 }
@@ -868,13 +871,13 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       /**
        * If true, activates a button with rounded corners.
        */
       'round': boolean;
       /**
-       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection': 'forward' | 'back';
       /**
@@ -938,7 +941,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       /**
        * Emitted when the button loses focus.
        */
@@ -952,7 +955,7 @@ declare global {
        */
       'round'?: boolean;
       /**
-       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection'?: 'forward' | 'back';
       /**
@@ -1016,7 +1019,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
     }
   }
 
@@ -1046,7 +1049,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
     }
   }
 }
@@ -1063,7 +1066,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       /**
        * If true, the card header will be translucent. Defaults to `false`.
        */
@@ -1097,7 +1100,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       /**
        * If true, the card header will be translucent. Defaults to `false`.
        */
@@ -1118,7 +1121,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
     }
   }
 
@@ -1148,7 +1151,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
     }
   }
 }
@@ -1165,7 +1168,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
     }
   }
 
@@ -1195,7 +1198,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
     }
   }
 }
@@ -1212,7 +1215,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
     }
   }
 
@@ -1242,7 +1245,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
     }
   }
 }
@@ -1267,7 +1270,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       /**
        * The name of the control, which is submitted with the form data.
        */
@@ -1313,7 +1316,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       /**
        * The name of the control, which is submitted with the form data.
        */
@@ -1366,7 +1369,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
     }
   }
 
@@ -1408,7 +1411,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
     }
   }
 }
@@ -1425,7 +1428,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
     }
   }
 
@@ -1455,7 +1458,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
     }
   }
 }
@@ -1558,40 +1561,6 @@ declare global {
 declare global {
 
   namespace StencilComponents {
-    interface IonCordovaPlatform {
-      'exitCordovaApp': () => void;
-      'ready': () => Promise<void>;
-    }
-  }
-
-  interface HTMLIonCordovaPlatformElement extends StencilComponents.IonCordovaPlatform, HTMLStencilElement {}
-
-  var HTMLIonCordovaPlatformElement: {
-    prototype: HTMLIonCordovaPlatformElement;
-    new (): HTMLIonCordovaPlatformElement;
-  };
-  interface HTMLElementTagNameMap {
-    'ion-cordova-platform': HTMLIonCordovaPlatformElement;
-  }
-  interface ElementTagNameMap {
-    'ion-cordova-platform': HTMLIonCordovaPlatformElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      'ion-cordova-platform': JSXElements.IonCordovaPlatformAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonCordovaPlatformAttributes extends HTMLAttributes {
-
-    }
-  }
-}
-
-
-declare global {
-
-  namespace StencilComponents {
     interface IonDatetime {
       /**
        * The text to display on the picker's cancel button. Default: `Cancel`.
@@ -1600,15 +1569,15 @@ declare global {
       /**
        * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
        */
-      'dayNames': string[] | string | undefined;
+      'dayNames': string[] | string;
       /**
        * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
        */
-      'dayShortNames': string[] | string | undefined;
+      'dayShortNames': string[] | string;
       /**
        * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
        */
-      'dayValues': number[] | number | string | undefined;
+      'dayValues': number[] | number | string;
       /**
        * If true, the user cannot interact with the datetime. Defaults to `false`.
        */
@@ -1624,7 +1593,7 @@ declare global {
       /**
        * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
        */
-      'hourValues': number[] | number | string | undefined;
+      'hourValues': number[] | number | string;
       /**
        * The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.
        */
@@ -1636,23 +1605,23 @@ declare global {
       /**
        * Values used to create the list of selectable minutes. By default the mintues range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.
        */
-      'minuteValues': number[] | number | string | undefined;
+      'minuteValues': number[] | number | string;
       /**
        * Full names for each month name. This can be used to provide locale month names. Defaults to English.
        */
-      'monthNames': string[] | string | undefined;
+      'monthNames': string[] | string;
       /**
        * Short abbreviated names for each month name. This can be used to provide locale month names. Defaults to English.
        */
-      'monthShortNames': string[] | string | undefined;
+      'monthShortNames': string[] | string;
       /**
        * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
        */
-      'monthValues': number[] | number | string | undefined;
+      'monthValues': number[] | number | string;
       /**
        * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
        */
-      'pickerFormat': string | undefined;
+      'pickerFormat': string;
       /**
        * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
        */
@@ -1660,7 +1629,7 @@ declare global {
       /**
        * The text to display when there's no date selected yet. Using lowercase to match the input attribute
        */
-      'placeholder': string | undefined;
+      'placeholder': string;
       /**
        * the value of the datetime.
        */
@@ -1668,7 +1637,7 @@ declare global {
       /**
        * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
        */
-      'yearValues': number[] | number | string | undefined;
+      'yearValues': number[] | number | string;
     }
   }
 
@@ -1698,15 +1667,15 @@ declare global {
       /**
        * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
        */
-      'dayNames'?: string[] | string | undefined;
+      'dayNames'?: string[] | string;
       /**
        * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
        */
-      'dayShortNames'?: string[] | string | undefined;
+      'dayShortNames'?: string[] | string;
       /**
        * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
        */
-      'dayValues'?: number[] | number | string | undefined;
+      'dayValues'?: number[] | number | string;
       /**
        * If true, the user cannot interact with the datetime. Defaults to `false`.
        */
@@ -1722,7 +1691,7 @@ declare global {
       /**
        * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
        */
-      'hourValues'?: number[] | number | string | undefined;
+      'hourValues'?: number[] | number | string;
       /**
        * The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.
        */
@@ -1734,19 +1703,19 @@ declare global {
       /**
        * Values used to create the list of selectable minutes. By default the mintues range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.
        */
-      'minuteValues'?: number[] | number | string | undefined;
+      'minuteValues'?: number[] | number | string;
       /**
        * Full names for each month name. This can be used to provide locale month names. Defaults to English.
        */
-      'monthNames'?: string[] | string | undefined;
+      'monthNames'?: string[] | string;
       /**
        * Short abbreviated names for each month name. This can be used to provide locale month names. Defaults to English.
        */
-      'monthShortNames'?: string[] | string | undefined;
+      'monthShortNames'?: string[] | string;
       /**
        * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
        */
-      'monthValues'?: number[] | number | string | undefined;
+      'monthValues'?: number[] | number | string;
       /**
        * Emitted when the datetime selection was cancelled.
        */
@@ -1758,7 +1727,7 @@ declare global {
       /**
        * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
        */
-      'pickerFormat'?: string | undefined;
+      'pickerFormat'?: string;
       /**
        * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
        */
@@ -1766,7 +1735,7 @@ declare global {
       /**
        * The text to display when there's no date selected yet. Using lowercase to match the input attribute
        */
-      'placeholder'?: string | undefined;
+      'placeholder'?: string;
       /**
        * the value of the datetime.
        */
@@ -1774,7 +1743,7 @@ declare global {
       /**
        * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
        */
-      'yearValues'?: number[] | number | string | undefined;
+      'yearValues'?: number[] | number | string;
     }
   }
 }
@@ -1799,11 +1768,11 @@ declare global {
       /**
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
        */
-      'href': string | undefined;
+      'href': string;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       'show': boolean;
       /**
        * If true, the fab button will be translucent. Defaults to `false`.
@@ -1846,11 +1815,11 @@ declare global {
       /**
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
        */
-      'href'?: string | undefined;
+      'href'?: string;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       'show'?: boolean;
       /**
        * If true, the fab button will be translucent. Defaults to `false`.
@@ -2205,12 +2174,11 @@ declare global {
 
   namespace StencilComponents {
     interface IonHideWhen {
-      'mediaQuery': string|undefined;
-      'mode': string|undefined;
+      'mediaQuery': string;
       'or': boolean;
-      'orientation': string|undefined;
-      'platform': string|undefined;
-      'size': string|undefined;
+      'orientation': string;
+      'platform': string;
+      'size': string;
     }
   }
 
@@ -2233,12 +2201,11 @@ declare global {
   }
   namespace JSXElements {
     export interface IonHideWhenAttributes extends HTMLAttributes {
-      'mediaQuery'?: string|undefined;
-      'mode'?: string|undefined;
+      'mediaQuery'?: string;
       'or'?: boolean;
-      'orientation'?: string|undefined;
-      'platform'?: string|undefined;
-      'size'?: string|undefined;
+      'orientation'?: string;
+      'platform'?: string;
+      'size'?: string;
     }
   }
 }
@@ -2673,7 +2640,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
     }
   }
 
@@ -2703,7 +2670,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
     }
   }
 }
@@ -2765,7 +2732,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
     }
   }
 
@@ -2807,7 +2774,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
     }
   }
 }
@@ -2915,7 +2882,7 @@ declare global {
   namespace StencilComponents {
     interface IonItem {
       /**
-       * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
+       * If true, a button tag will be rendered and the item will be tappable. Defaults to `false`.
        */
       'button': boolean;
       /**
@@ -2937,9 +2904,9 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       /**
-       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection': 'forward' | 'back';
     }
@@ -2965,7 +2932,7 @@ declare global {
   namespace JSXElements {
     export interface IonItemAttributes extends HTMLAttributes {
       /**
-       * Whether or not this item should be tappable. If true, a button tag will be rendered. Defaults to `false`.
+       * If true, a button tag will be rendered and the item will be tappable. Defaults to `false`.
        */
       'button'?: boolean;
       /**
@@ -2987,9 +2954,9 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       /**
-       * When using a router, it specifies the transition direction when navigating a another page usign `href`.
+       * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection'?: 'forward' | 'back';
     }
@@ -3009,7 +2976,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       /**
        * The position determines where and how the label behaves inside an item. Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
        */
@@ -3043,7 +3010,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       /**
        * Emitted when the styles change.
        */
@@ -3068,7 +3035,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
     }
   }
 
@@ -3098,7 +3065,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
     }
   }
 }
@@ -3115,11 +3082,11 @@ declare global {
       /**
        * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
        */
-      'getOpenItem': () => ItemSliding | null;
+      'getOpenItem': () => ItemSliding | undefined;
       /**
        * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
        */
-      'setOpenItem': (itemSliding: ItemSliding | null) => void;
+      'setOpenItem': (itemSliding: ItemSliding | undefined) => void;
     }
   }
 
@@ -3687,7 +3654,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       /**
        * Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await modal.onDidDismiss(); ```
        */
@@ -3764,7 +3731,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       /**
        * Emitted after the modal has dismissed.
        */
@@ -3842,7 +3809,6 @@ declare global {
     interface IonNavPush {
       'component': NavComponent;
       'componentProps': ComponentProps;
-      'url': string;
     }
   }
 
@@ -3867,7 +3833,6 @@ declare global {
     export interface IonNavPushAttributes extends HTMLAttributes {
       'component'?: NavComponent;
       'componentProps'?: ComponentProps;
-      'url'?: string;
     }
   }
 }
@@ -3879,7 +3844,6 @@ declare global {
     interface IonNavSetRoot {
       'component': NavComponent;
       'componentProps': ComponentProps;
-      'url': string;
     }
   }
 
@@ -3904,7 +3868,6 @@ declare global {
     export interface IonNavSetRootAttributes extends HTMLAttributes {
       'component'?: NavComponent;
       'componentProps'?: ComponentProps;
-      'url'?: string;
     }
   }
 }
@@ -3980,7 +3943,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
     }
   }
 
@@ -4010,7 +3973,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
     }
   }
 }
@@ -4238,54 +4201,6 @@ declare global {
 declare global {
 
   namespace StencilComponents {
-    interface IonPlatform {
-      'getQueryParam': (param: string) => string;
-      /**
-       * Depending on the platform the user is on, `is(platformName)` will return `true` or `false`. Note that the same app can return `true` for more than one platform name. For example, an app running from an iPad would return `true` for the platform names: `mobile`, `ios`, `ipad`, and `tablet`. Additionally, if the app was running from Cordova then `cordova` would be true, and if it was running from a web browser on the iPad then `mobileweb` would be `true`.  * ``` import { Platform } from 'ionic-angular';
-       */
-      'is': (platformName: string) => boolean;
-      /**
-       * Returns whether the device is in landscape orientation
-       */
-      'isLandscape': () => boolean;
-      /**
-       * Returns whether the device is in portration orientation
-       */
-      'isPortrait': () => boolean;
-      'platforms': () => string[];
-      'ready': () => any;
-      'versions': () => PlatformConfig[];
-    }
-  }
-
-  interface HTMLIonPlatformElement extends StencilComponents.IonPlatform, HTMLStencilElement {}
-
-  var HTMLIonPlatformElement: {
-    prototype: HTMLIonPlatformElement;
-    new (): HTMLIonPlatformElement;
-  };
-  interface HTMLElementTagNameMap {
-    'ion-platform': HTMLIonPlatformElement;
-  }
-  interface ElementTagNameMap {
-    'ion-platform': HTMLIonPlatformElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      'ion-platform': JSXElements.IonPlatformAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonPlatformAttributes extends HTMLAttributes {
-
-    }
-  }
-}
-
-
-declare global {
-
-  namespace StencilComponents {
     interface IonPopoverController {
       'create': (opts?: PopoverOptions | undefined) => Promise<HTMLIonPopoverElement>;
       'dismiss': (data?: any, role?: string | undefined, popoverId?: number) => Promise<void>;
@@ -4363,7 +4278,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       /**
        * Returns a promise that resolves when the popover did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await popover.onDidDismiss(); ```
        */
@@ -4448,7 +4363,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       /**
        * Emitted after the popover has dismissed.
        */
@@ -4571,7 +4486,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       /**
        * The name of the control, which is submitted with the form data.
        */
@@ -4617,7 +4532,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       /**
        * The name of the control, which is submitted with the form data.
        */
@@ -4718,6 +4633,9 @@ declare global {
        * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. Default `0`.
        */
       'debounce': number;
+      /**
+       * Indicates that the user cannot interact with the control.
+       */
       'disabled': boolean;
       /**
        * Show two knobs. Defaults to `false`.
@@ -4734,7 +4652,11 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name': string;
       /**
        * If true, a pin with integer value is shown when the knob is pressed. Defaults to `false`.
        */
@@ -4789,6 +4711,9 @@ declare global {
        * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. Default `0`.
        */
       'debounce'?: number;
+      /**
+       * Indicates that the user cannot interact with the control.
+       */
       'disabled'?: boolean;
       /**
        * Show two knobs. Defaults to `false`.
@@ -4805,7 +4730,11 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
+      /**
+       * The name of the control, which is submitted with the form data.
+       */
+      'name'?: string;
       /**
        * Emitted when the range loses focus.
        */
@@ -5339,7 +5268,7 @@ declare global {
        * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionScroll, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
        */
       'forceOverscroll': boolean;
-      'mode': string;
+      'mode': Mode;
       'scrollByPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
       'scrollEvents': boolean;
       'scrollToBottom': (duration: number) => Promise<void>;
@@ -5371,7 +5300,7 @@ declare global {
        * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionScroll, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
        */
       'forceOverscroll'?: boolean;
-      'mode'?: string;
+      'mode'?: Mode;
       /**
        * Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents`
        */
@@ -5421,7 +5350,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       /**
        * Set the input's placeholder. Default `"Search"`.
        */
@@ -5491,7 +5420,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       /**
        * Emitted when the input loses focus.
        */
@@ -5558,7 +5487,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       /**
        * The value of the segment button.
        */
@@ -5602,7 +5531,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       /**
        * Emitted when the segment button is clicked.
        */
@@ -5628,7 +5557,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       /**
        * the value of the segment.
        */
@@ -5663,7 +5592,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       /**
        * Emitted when the value property has changed.
        */
@@ -5822,7 +5751,7 @@ declare global {
       /**
        * the value of the select.
        */
-      'value': string | string[] | undefined;
+      'value': string | string[];
     }
   }
 
@@ -5904,7 +5833,7 @@ declare global {
       /**
        * the value of the select.
        */
-      'value'?: string | string[] | undefined;
+      'value'?: string | string[];
     }
   }
 }
@@ -5915,7 +5844,6 @@ declare global {
   namespace StencilComponents {
     interface IonShowWhen {
       'mediaQuery': string;
-      'mode': string;
       'or': boolean;
       'orientation': string;
       'platform': string;
@@ -5943,7 +5871,6 @@ declare global {
   namespace JSXElements {
     export interface IonShowWhenAttributes extends HTMLAttributes {
       'mediaQuery'?: string;
-      'mode'?: string;
       'or'?: boolean;
       'orientation'?: string;
       'platform'?: string;
@@ -6189,7 +6116,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       /**
        * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
        */
@@ -6231,7 +6158,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       /**
        * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
        */
@@ -6509,8 +6436,8 @@ declare global {
   namespace StencilComponents {
     interface IonTabbar {
       'highlight': boolean;
-      'layout': string;
-      'placement': string;
+      'layout': TabbarLayout;
+      'placement': TabbarPlacement;
       'scrollable': boolean;
       'selectedTab': HTMLIonTabElement;
       'tabs': HTMLIonTabElement[];
@@ -6541,8 +6468,8 @@ declare global {
   namespace JSXElements {
     export interface IonTabbarAttributes extends HTMLAttributes {
       'highlight'?: boolean;
-      'layout'?: string;
-      'placement'?: string;
+      'layout'?: TabbarLayout;
+      'placement'?: TabbarPlacement;
       'scrollable'?: boolean;
       'selectedTab'?: HTMLIonTabElement;
       'tabs'?: HTMLIonTabElement[];
@@ -6584,11 +6511,11 @@ declare global {
       /**
        * Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
        */
-      'tabbarLayout': string;
+      'tabbarLayout': TabbarLayout;
       /**
        * Set position of the tabbar: `top`, `bottom`.
        */
-      'tabbarPlacement': string;
+      'tabbarPlacement': TabbarPlacement;
       /**
        * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
        */
@@ -6642,11 +6569,11 @@ declare global {
       /**
        * Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
        */
-      'tabbarLayout'?: string;
+      'tabbarLayout'?: TabbarLayout;
       /**
        * Set position of the tabbar: `top`, `bottom`.
        */
-      'tabbarPlacement'?: string;
+      'tabbarPlacement'?: TabbarPlacement;
       /**
        * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
        */
@@ -6701,7 +6628,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
     }
   }
 
@@ -6731,7 +6658,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
     }
   }
 }
@@ -7038,10 +6965,6 @@ declare global {
        */
       'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
       /**
-       * If true, the toast will dismiss when the page changes. Defaults to `false`.
-       */
-      'dismissOnPageChange': boolean;
-      /**
        * How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.
        */
       'duration': number;
@@ -7117,10 +7040,6 @@ declare global {
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
       'cssClass'?: string | string[];
-      /**
-       * If true, the toast will dismiss when the page changes. Defaults to `false`.
-       */
-      'dismissOnPageChange'?: boolean;
       /**
        * How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.
        */
@@ -7203,13 +7122,13 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       /**
        * The name of the control, which is submitted with the form data.
        */
       'name': string;
       /**
-       * the value of the toggle.
+       * // TODO! the value of the toggle.
        */
       'value': string;
     }
@@ -7249,7 +7168,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       /**
        * The name of the control, which is submitted with the form data.
        */
@@ -7271,7 +7190,7 @@ declare global {
        */
       'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
       /**
-       * the value of the toggle.
+       * // TODO! the value of the toggle.
        */
       'value'?: string;
     }
@@ -7290,7 +7209,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode': 'ios' | 'md';
+      'mode': Mode;
       /**
        * If true, the toolbar will be translucent. Note: In order to scroll content behind the toolbar, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
        */
@@ -7324,7 +7243,7 @@ declare global {
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
-      'mode'?: 'ios' | 'md';
+      'mode'?: Mode;
       /**
        * If true, the toolbar will be translucent. Note: In order to scroll content behind the toolbar, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
        */
@@ -7362,7 +7281,7 @@ declare global {
       'itemHeight': ItemHeightFn;
       'itemRender': ItemRenderFn;
       /**
-       * The data that builds the templates within the virtual scroll. This is the same data that you'd pass to `*ngFor`. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
+       * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
        */
       'items': any[];
       'markDirty': (offset: number, len?: number) => void;
@@ -7416,7 +7335,7 @@ declare global {
       'itemHeight'?: ItemHeightFn;
       'itemRender'?: ItemRenderFn;
       /**
-       * The data that builds the templates within the virtual scroll. This is the same data that you'd pass to `*ngFor`. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
+       * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
        */
       'items'?: any[];
       'nodeHeight'?: NodeHeightFn;

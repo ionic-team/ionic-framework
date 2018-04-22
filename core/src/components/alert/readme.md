@@ -87,11 +87,6 @@ string
 The main message to be displayed in the alert.
 
 
-#### mode
-
-string
-
-
 #### overlayId
 
 number
@@ -180,11 +175,6 @@ Animation to use when the alert is dismissed.
 string
 
 The main message to be displayed in the alert.
-
-
-#### mode
-
-string
 
 
 #### overlay-id

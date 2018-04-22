@@ -14,7 +14,7 @@ example, the following code works because the items are grouped in the
 
  ```html
  <ion-list reorder="true">
-   <ion-itemngFor="let item of items">{% raw %}{{ item }}{% endraw %}</ion-item>
+   <ion-item *ngFor="let item of items">{% raw %}{{ item }}{% endraw %}</ion-item>
  </ion-list>
  ```
 
@@ -23,7 +23,7 @@ However, the below list includes a header that shouldn't be reordered:
  ```html
  <ion-list reorder="true">
    <ion-list-header>Header</ion-list-header>
-   <ion-itemngFor="let item of items">{% raw %}{{ item }}{% endraw %}</ion-item>
+   <ion-item *ngFor="let item of items">{% raw %}{{ item }}{% endraw %}</ion-item>
  </ion-list>
  ```
 
@@ -34,7 +34,7 @@ group the reorderable items:
  <ion-list>
    <ion-list-header>Header</ion-list-header>
    <ion-item-group reorder="true">
-     <ion-itemngFor="let item of items">{% raw %}{{ item }}{% endraw %}</ion-item>
+     <ion-item *ngFor="let item of items">{% raw %}{{ item }}{% endraw %}</ion-item>
    </ion-item-group>
  </ion-list>
  ```
@@ -59,7 +59,7 @@ See usage below for some examples.
 <ion-list>
   <ion-list-header>Header</ion-list-header>
   <ion-item-group reorder="true" (ionItemReorder)="reorderItems($event)">
-    <ion-itemngFor="let item of items">{% raw %}{{ item }}{% endraw %}</ion-item>
+    <ion-item *ngFor="let item of items">{% raw %}{{ item }}{% endraw %}</ion-item>
   </ion-item-group>
 </ion-list>
 ```
@@ -109,7 +109,7 @@ Alternatevely you can execute helper function inside template:
 <ion-list>
   <ion-list-header>Header</ion-list-header>
   <ion-item-group reorder="true" (ionItemReorder)="$event.applyTo(items)">
-    <ion-itemngFor="let item of items">{% raw %}{{ item }}{% endraw %}</ion-item>
+    <ion-item *ngFor="let item of items">{% raw %}{{ item }}{% endraw %}</ion-item>
   </ion-item-group>
 </ion-list>
 ```

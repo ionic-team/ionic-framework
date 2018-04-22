@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
-import { CssClassMap } from '../../index';
+import { CssClassMap, Mode } from '../../index';
 import { BlurEvent, FocusEvent } from '../../utils/input-interfaces';
 import { getButtonClassMap, getElementClassMap, openURL } from '../../utils/theme';
 
@@ -12,23 +12,25 @@ import { getButtonClassMap, getElementClassMap, openURL } from '../../utils/them
   }
 })
 export class Button {
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @State() keyFocus: boolean;
+  @Prop({ context: 'window' }) win!: Window;
+
+  @State() keyFocus = false;
 
   /**
    * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * The type of button.
@@ -45,7 +47,7 @@ export class Button {
    * Set to `"block"` for a full-width button or to `"full"` for a full-width button
    * without left and right borders.
    */
-  @Prop() expand: 'full' | 'block';
+  @Prop() expand?: 'full' | 'block';
 
   /**
    * Set to `"clear"` for a transparent button, to `"outline"` for a transparent
@@ -55,16 +57,16 @@ export class Button {
   @Prop() fill: 'clear' | 'outline' | 'solid' | 'default' = 'default';
 
   /**
-   * When using a router, it specifies the transition direction when navigating a
-   * another page usign `href`.
+   * When using a router, it specifies the transition direction when navigating to
+   * another page using `href`.
    */
-  @Prop() routerDirection: 'forward' | 'back';
+  @Prop() routerDirection?: 'forward' | 'back';
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href: string;
+  @Prop() href?: string;
 
   /**
    * If true, activates a button with rounded corners.
@@ -75,7 +77,7 @@ export class Button {
    * The button size.
    * Possible values are: `"small"`, `"default"`, `"large"`.
    */
-  @Prop() size: 'small' | 'default' | 'large';
+  @Prop() size?: 'small' | 'default' | 'large';
 
   /**
    * If true, activates a button with a heavier font weight.
@@ -92,12 +94,12 @@ export class Button {
   /**
    * Emitted when the button has focus.
    */
-  @Event() ionFocus: EventEmitter<FocusEvent>;
+  @Event() ionFocus!: EventEmitter<FocusEvent>;
 
   /**
    * Emitted when the button loses focus.
    */
-  @Event() ionBlur: EventEmitter<BlurEvent>;
+  @Event() ionBlur!: EventEmitter<BlurEvent>;
 
   componentWillLoad() {
     if (this.el.closest('ion-buttons')) {
@@ -126,8 +128,8 @@ export class Button {
       ...getButtonClassMap(buttonType, mode),
       ...getButtonTypeClassMap(buttonType, expand, mode),
       ...getButtonTypeClassMap(buttonType, size, mode),
-      ...getButtonTypeClassMap(buttonType, round ? 'round' : null, mode),
-      ...getButtonTypeClassMap(buttonType, strong ? 'strong' : null, mode),
+      ...getButtonTypeClassMap(buttonType, round ? 'round' : undefined, mode),
+      ...getButtonTypeClassMap(buttonType, strong ? 'strong' : undefined, mode),
       ...getColorClassMap(buttonType, color, fill, mode),
       ...getElementClassMap(this.el.classList),
       'focused': this.keyFocus
@@ -145,12 +147,12 @@ export class Button {
         onFocus={this.onFocus.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
         onBlur={this.onBlur.bind(this)}
-        onClick={(ev) => openURL(this.href, ev, this.routerDirection)}>
-          <span class='button-inner'>
-            <slot name='icon-only'></slot>
-            <slot name='start'></slot>
+        onClick={(ev) => openURL(this.win, this.href, ev, this.routerDirection)}>
+          <span class="button-inner">
+            <slot name="icon-only"></slot>
+            <slot name="start"></slot>
             <slot></slot>
-            <slot name='end'></slot>
+            <slot name="end"></slot>
           </span>
           { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </TagType>
@@ -163,7 +165,7 @@ export class Button {
  * Get the classes based on the type
  * e.g. block, full, round, large
  */
-function getButtonTypeClassMap(buttonType: string, type: string|null, mode: string): CssClassMap {
+function getButtonTypeClassMap(buttonType: string, type: string|undefined, mode: Mode): CssClassMap {
   if (!type) {
     return {};
   }
@@ -174,7 +176,7 @@ function getButtonTypeClassMap(buttonType: string, type: string|null, mode: stri
   };
 }
 
-function getColorClassMap(buttonType: string, color: string, fill: string, mode: string): CssClassMap {
+function getColorClassMap(buttonType: string, color: string, fill: string, mode: Mode): CssClassMap {
   let className = buttonType;
 
   if (buttonType !== 'bar-button' && fill === 'solid') {

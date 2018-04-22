@@ -1,6 +1,6 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
 import { createThemedClasses, getElementClassMap, openURL } from '../../utils/theme';
-import { CssClassMap } from '../../index';
+import { CssClassMap, Mode } from '../../index';
 
 
 @Component({
@@ -14,27 +14,34 @@ export class Item {
 
   private itemStyles: { [key: string]: CssClassMap } = {};
 
-  @Element() private el: HTMLStencilElement;
+  @Element() el!: HTMLStencilElement;
+
+  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
+
+  /**
+   * If true, a button tag will be rendered and the item will be tappable. Defaults to `false`.
+   */
+  @Prop() button = false;
 
   /**
    * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
    * is `ios` and an `href`, `onclick` or `button` property is present.
    */
-  @Prop() detail: boolean;
+  @Prop() detail?: boolean;
 
   /**
    * If true, the user cannot interact with the item. Defaults to `false`.
@@ -45,19 +52,13 @@ export class Item {
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href: string;
+  @Prop() href?: string;
 
   /**
-   * Whether or not this item should be tappable.
-   * If true, a button tag will be rendered. Defaults to `false`.
+   * When using a router, it specifies the transition direction when navigating to
+   * another page using `href`.
    */
-  @Prop() button = false;
-
-  /**
-   * When using a router, it specifies the transition direction when navigating a
-   * another page usign `href`.
-   */
-  @Prop() routerDirection: 'forward' | 'back';
+  @Prop() routerDirection?: 'forward' | 'back';
 
 
   @Listen('ionStyle')
@@ -126,13 +127,13 @@ export class Item {
       <TagType
         {...attrs}
         class={themedClasses}
-        onClick={(ev) => openURL(this.href, ev, this.routerDirection)}>
-        <slot name='start'></slot>
-        <div class='item-inner'>
-          <div class='input-wrapper'>
+        onClick={(ev) => openURL(this.win, this.href, ev, this.routerDirection)}>
+        <slot name="start"></slot>
+        <div class="item-inner">
+          <div class="input-wrapper">
             <slot></slot>
           </div>
-          <slot name='end'></slot>
+          <slot name="end"></slot>
         </div>
         { clickable && this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </TagType>

@@ -19,11 +19,11 @@ export class InfiniteScroll {
   private didFire = false;
   private isBusy = false;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
   @State() isLoading = false;
 
-  @Prop({ context: 'queue' }) queue: QueueController;
-  @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
+  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
 
   /**
    * The threshold distance from the bottom
@@ -79,7 +79,7 @@ export class InfiniteScroll {
    * you must call the infinite scroll's `complete()` method when
    * your async operation has completed.
    */
-  @Event() ionInfinite: EventEmitter;
+  @Event() ionInfinite!: EventEmitter;
 
   async componentWillLoad() {
     const scrollEl = this.el.closest('ion-scroll');

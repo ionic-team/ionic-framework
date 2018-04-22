@@ -98,7 +98,7 @@
 
         <ion-item>
           <ion-label>ion-item right fill="clear" button</ion-label>
-          <ion-button secondary fill="clear" slot="end" onclick="testClick(event)">
+          <ion-button color="secondary" fill="clear" slot="end" onclick="testClick(event)">
             Edit
           </ion-button>
         </ion-item>
@@ -112,13 +112,13 @@
           <ion-button fill="outline" slot="end" onclick="testClick(event)">View</ion-button>
         </ion-item>
 
-        <ion-item *ngFor="let data of [0,1,2,3,4]; let i = index" [class.activated]="i == 1" onclick="testClick(event)">
+        <ion-item onclick="testClick(event)">
           <ion-avatar slot="start">
             <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
           </ion-avatar>
-          <ion-label><h3>ng-for {{i}}</h3></ion-label>
+          <ion-label><h3>Avatar Start</h3></ion-label>
           <ion-badge slot="end">260k</ion-badge>
-        </ion-button>
+        </ion-item>
 
         <ion-item onclick="testClickOutsize(event)">
           <div>

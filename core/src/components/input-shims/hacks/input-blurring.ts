@@ -1,7 +1,7 @@
 
 const SKIP_BLURRING = ['INPUT', 'TEXTAREA', 'ION-INPUT', 'ION-TEXTAREA'];
 
-export default function enableInputBlurring() {
+export default function enableInputBlurring(doc: Document) {
   console.debug('Input: enableInputBlurring');
 
   let focused = true;
@@ -21,7 +21,7 @@ export default function enableInputBlurring() {
       didScroll = false;
       return;
     }
-    const active = document.activeElement as HTMLElement;
+    const active = doc.activeElement as HTMLElement;
     if (!active) {
       return;
     }
@@ -53,13 +53,13 @@ export default function enableInputBlurring() {
     }, 50);
   }
 
-  document.addEventListener('ionScrollStart', onScroll);
-  document.addEventListener('focusin', onFocusin, true);
-  document.addEventListener('touchend', onTouchend, false);
+  doc.addEventListener('ionScrollStart', onScroll);
+  doc.addEventListener('focusin', onFocusin, true);
+  doc.addEventListener('touchend', onTouchend, false);
 
   return () => {
-    document.removeEventListener('ionScrollStart', onScroll, true);
-    document.removeEventListener('focusin', onFocusin, true);
-    document.removeEventListener('touchend', onTouchend, false);
+    doc.removeEventListener('ionScrollStart', onScroll, true);
+    doc.removeEventListener('focusin', onFocusin, true);
+    doc.removeEventListener('touchend', onTouchend, false);
   };
 }

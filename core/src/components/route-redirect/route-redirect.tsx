@@ -38,7 +38,7 @@ export class RouteRedirect {
    *
    * `ion-router` captures this event in order to update his internal registry of router rules.
    */
-  @Event() ionRouteRedirectChanged: EventEmitter;
+  @Event() ionRouteRedirectChanged!: EventEmitter;
 
   componentDidLoad() {
     this.ionRouteRedirectChanged.emit();

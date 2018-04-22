@@ -1,5 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { Config } from '../../index';
+import { Config, Mode } from '../../index';
 import { createThemedClasses, getElementClassMap, openURL } from '../../utils/theme';
 
 @Component({
@@ -14,38 +14,39 @@ import { createThemedClasses, getElementClassMap, openURL } from '../../utils/th
 })
 export class BackButton {
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * The url to navigate back to by default when there is no history.
    */
-  @Prop() defaultHref: string;
+  @Prop() defaultHref?: string;
 
   /**
    * The icon name to use for the back button.
    */
-  @Prop() icon: string;
+  @Prop() icon?: string;
 
   /**
    * The text to display in the back button.
    */
-  @Prop() text: string | undefined;
+  @Prop() text?: string;
 
 
   private onClick(ev: Event) {
@@ -54,7 +55,7 @@ export class BackButton {
       ev.preventDefault();
       nav.pop();
     } else if (this.defaultHref) {
-      openURL(this.defaultHref, ev, 'back');
+      openURL(this.win, this.defaultHref, ev, 'back');
     }
   }
 
@@ -80,9 +81,9 @@ export class BackButton {
       <button
         class={backButtonClasses}
         onClick={(ev) => this.onClick(ev)}>
-        <span class='back-button-inner'>
+        <span class="back-button-inner">
           { backButtonIcon && <ion-icon name={backButtonIcon}/> }
-          { this.mode === 'ios' && backButtonText && <span class='button-text'>{backButtonText}</span> }
+          { this.mode === 'ios' && backButtonText && <span class="button-text">{backButtonText}</span> }
           { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
         </span>
       </button>

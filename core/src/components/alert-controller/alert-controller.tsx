@@ -1,4 +1,4 @@
-import { Component, Listen, Method } from '@stencil/core';
+import { Component, Listen, Method, Prop } from '@stencil/core';
 import { AlertOptions } from '../../index';
 import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
@@ -8,6 +8,8 @@ import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, remove
 export class AlertController implements OverlayController {
 
   private alerts = new Map<number, HTMLIonAlertElement>();
+
+  @Prop({ context: 'document' }) doc!: Document;
 
   @Listen('body:ionAlertWillPresent')
   protected alertWillPresent(ev: any) {
@@ -30,7 +32,7 @@ export class AlertController implements OverlayController {
    */
   @Method()
   create(opts?: AlertOptions): Promise<HTMLIonAlertElement> {
-    return createOverlay(document.createElement('ion-alert'), opts);
+    return createOverlay(this.doc.createElement('ion-alert'), opts);
   }
 
   /*

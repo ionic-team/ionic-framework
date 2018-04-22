@@ -15,7 +15,7 @@ export class Reorder {
 
   private custom = true;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   componentWillLoad() {
     this.custom = this.el.childElementCount > 0;
@@ -34,7 +34,7 @@ export class Reorder {
   render() {
     return (this.custom)
       ? <slot/>
-      : <ion-icon class='reorder-icon' name='reorder'/>;
+      : <ion-icon class="reorder-icon" name="reorder"/>;
   }
 
 }

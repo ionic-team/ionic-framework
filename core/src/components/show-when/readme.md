@@ -12,11 +12,6 @@
 string
 
 
-#### mode
-
-string
-
-
 #### or
 
 boolean
@@ -40,11 +35,6 @@ string
 ## Attributes
 
 #### media-query
-
-string
-
-
-#### mode
 
 string
 

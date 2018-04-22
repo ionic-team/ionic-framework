@@ -27,7 +27,7 @@ export function attachComponent(delegate: FrameworkDelegate|undefined, container
   return Promise.resolve(el);
 }
 
-export function detachComponent(delegate: FrameworkDelegate, element: HTMLElement|undefined) {
+export function detachComponent(delegate: FrameworkDelegate|undefined, element: HTMLElement|undefined) {
   if (element) {
     if (delegate) {
       const container = element.parentElement;

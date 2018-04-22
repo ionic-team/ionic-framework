@@ -17,17 +17,17 @@ enum DefaultCSSDuplicateMode {
 })
 
 export class ThemeSelector {
-  @Element() el: HTMLThemeSelectorElement;
+  @Element() el!: HTMLThemeSelectorElement;
   @State() generateContrast: boolean = false;
   @State() generateSteps: boolean = true;
   @State() generateVariations: boolean = true;
   @State() palettes: any[];
   @Prop() propertiesUsed: string[] = [];
-  @Event() propertyHoverStart: EventEmitter;
-  @Event() propertyHoverStop: EventEmitter;
+  @Event() propertyHoverStart!: EventEmitter;
+  @Event() propertyHoverStop!: EventEmitter;
   @State() searchMode: boolean;
   @State() showSteps: boolean = true;
-  @Event() themeCssChange: EventEmitter;
+  @Event() themeCssChange!: EventEmitter;
   @Prop() themeData: { name: string }[];
   @State() themeName: string;
   @State() themeVariables: ThemeVariable[] = [];

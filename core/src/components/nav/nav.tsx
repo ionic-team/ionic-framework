@@ -1,23 +1,14 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
-import {
-  NavComponent,
-  NavDirection,
-  NavOptions,
-  NavResult,
-  TransitionDoneFn,
-  TransitionInstruction,
-  ViewState,
-  convertToViews,
-} from './nav-util';
-
-import { ViewController, matches } from './view-controller';
-import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, NavOutlet, QueueController } from '../..';
-import { RouteID, RouteWrite, RouterDirection } from '../router/utils/interfaces';
-import { AnimationOptions, ViewLifecycle, lifecycle, transition } from '../../utils/transition';
+import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, Mode, NavOutlet, QueueController } from '../..';
 import { assert } from '../../utils/helpers';
-
+import { AnimationOptions, ViewLifecycle, lifecycle, transition } from '../../utils/transition';
+import { RouteID, RouteWrite, RouterDirection } from '../router/utils/interfaces';
 import iosTransitionAnimation from './animations/ios.transition';
 import mdTransitionAnimation from './animations/md.transition';
+import { NavComponent, NavDirection, NavOptions, NavResult, TransitionDoneFn, TransitionInstruction, ViewState, convertToViews } from './nav-util';
+import { ViewController, matches } from './view-controller';
+
+
 
 @Component({
   tag: 'ion-nav',
@@ -32,36 +23,37 @@ export class Nav implements NavOutlet {
   private destroyed = false;
   private views: ViewController[] = [];
 
-  mode: string;
+  mode!: Mode;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({context: 'queue'}) queue: QueueController;
-  @Prop({context: 'config'}) config: Config;
-  @Prop({context: 'window'}) win: Window;
+  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop({ context: 'window' }) win!: Window;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
-  @Prop({ mutable: true }) swipeBackEnabled: boolean;
-  @Prop({ mutable: true }) animated: boolean;
-  @Prop() delegate: FrameworkDelegate|undefined;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+  @Prop({ mutable: true }) swipeBackEnabled?: boolean;
+  @Prop({ mutable: true }) animated?: boolean;
+  @Prop() delegate?: FrameworkDelegate|undefined;
   @Prop() rootParams: ComponentProps|undefined;
   @Prop() root: NavComponent|undefined;
   @Watch('root')
   rootChanged() {
+    const isDev = Build.isDev;
     if (this.root) {
       if (!this.useRouter) {
         this.setRoot(this.root, this.rootParams);
-      } else if (Build.isDev) {
+      } else if (isDev) {
         console.warn('<ion-nav> does not support a root attribute when using ion-router.');
       }
     }
   }
 
-  @Event() ionNavWillChange: EventEmitter<void>;
-  @Event() ionNavDidChange: EventEmitter<void>;
+  @Event() ionNavWillChange!: EventEmitter<void>;
+  @Event() ionNavDidChange!: EventEmitter<void>;
 
   componentWillLoad() {
-    this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
+    this.useRouter = !!this.win.document.querySelector('ion-router') && !this.el.closest('[no-router]');
     if (this.swipeBackEnabled === undefined) {
       this.swipeBackEnabled = this.config.getBoolean('swipeBackEnabled', this.mode === 'ios');
     }
@@ -311,7 +303,7 @@ export class Nav implements NavOutlet {
     ti.resolve!(result.hasCompleted);
 
     if (ti.opts!.updateURL !== false && this.useRouter) {
-      const router = document.querySelector('ion-router');
+      const router = this.win.document.querySelector('ion-router');
       if (router) {
         const direction = (result.direction === NavDirection.Back)
           ? RouterDirection.Back
@@ -713,7 +705,7 @@ export class Nav implements NavOutlet {
 
       // set the transition animation's progress
       const delta = detail.deltaX;
-      const stepValue = delta / window.innerWidth;
+      const stepValue = delta / this.win.innerWidth;
       // set the transition animation's progress
       this.sbTrns.progressStep(stepValue);
     }
@@ -723,7 +715,7 @@ export class Nav implements NavOutlet {
     if (this.sbTrns) {
       // the swipe back gesture has ended
       const delta = detail.deltaX;
-      const width = window.innerWidth;
+      const width = this.win.innerWidth;
       const stepValue = delta / width;
       const velocity = detail.velocityX;
       const z = width / 2.0;
@@ -744,7 +736,7 @@ export class Nav implements NavOutlet {
 
   private canSwipeBack(): boolean {
     return (
-      this.swipeBackEnabled &&
+      !!this.swipeBackEnabled &&
       !this.isTransitioning &&
       this.canGoBack()
     );
@@ -758,13 +750,13 @@ export class Nav implements NavOutlet {
           onStart={this.swipeBackStart.bind(this)}
           onMove={this.swipeBackProgress.bind(this)}
           onEnd={this.swipeBackEnd.bind(this)}
-          gestureName='goback-swipe'
+          gestureName="goback-swipe"
           gesturePriority={10}
-          type='pan'
-          direction='x'
+          type="pan"
+          direction="x"
           threshold={10}
-          attachTo='body'/>,
-      this.mode === 'ios' && <div class='nav-decor'/>,
+          attachTo="body"/>,
+      this.mode === 'ios' && <div class="nav-decor"/>,
       <slot></slot>
     ];
   }

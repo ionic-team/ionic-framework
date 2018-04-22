@@ -5,7 +5,7 @@ import { Component, Element, Listen } from '@stencil/core';
 })
 export class NavPop {
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @Listen('child:click')
   pop(): Promise<any> {

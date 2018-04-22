@@ -1,9 +1,9 @@
-import { CssClassMap } from '../index';
+import { CssClassMap, Mode } from '../index';
 
 /**
  * Create the mode and color classes for the component based on the classes passed in
  */
-export function createThemedClasses(mode: string, color: string, classes: string): CssClassMap {
+export function createThemedClasses(mode: Mode, color: string, classes: string): CssClassMap {
   const classObj: CssClassMap = {};
 
   classes.split(' ').forEach(classString => {
@@ -40,7 +40,7 @@ export function getElementClassMap(classList: DOMTokenList | string[]): CssClass
  * Get the classes based on the button type
  * e.g. alert-button, action-sheet-button
  */
-export function getButtonClassMap(buttonType: string, mode: string): CssClassMap {
+export function getButtonClassMap(buttonType: string, mode: Mode): CssClassMap {
   if (!buttonType) {
     return {};
   }
@@ -70,9 +70,9 @@ export function getClassMap(classes: string | string[] | undefined): CssClassMap
 
 export type RouterDirection = 'forward' | 'back';
 
-export async function openURL(url: string, ev: Event, direction: RouterDirection = 'forward') {
+export async function openURL(win: Window, url: string|undefined, ev: Event, direction: RouterDirection = 'forward') {
   if (url && url[0] !== '#' && url.indexOf('://') === -1) {
-    const router = document.querySelector('ion-router');
+    const router = win.document.querySelector('ion-router');
     if (router) {
       ev && ev.preventDefault();
       await router.componentOnReady();

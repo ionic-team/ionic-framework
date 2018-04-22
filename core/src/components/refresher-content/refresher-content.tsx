@@ -6,27 +6,27 @@ import { Config } from '../../index';
 })
 export class RefresherContent {
 
-  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * A static icon to display when you begin to pull down
    */
-  @Prop({ mutable: true }) pullingIcon: string;
+  @Prop({ mutable: true }) pullingIcon?: string;
 
   /**
    * The text you want to display when you begin to pull down
    */
-  @Prop() pullingText: string;
+  @Prop() pullingText?: string;
 
   /**
    * An animated SVG spinner that shows when refreshing begins
    */
-  @Prop({ mutable: true }) refreshingSpinner: string;
+  @Prop({ mutable: true }) refreshingSpinner?: string;
 
   /**
    * The text you want to display when performing a refresh
    */
-  @Prop() refreshingText: string;
+  @Prop() refreshingText?: string;
 
 
   protected componentDidLoad() {
@@ -40,24 +40,24 @@ export class RefresherContent {
 
   protected render() {
     return [
-      <div class='refresher-pulling'>
+      <div class="refresher-pulling">
         {this.pullingIcon &&
-          <div class='refresher-pulling-icon'>
+          <div class="refresher-pulling-icon">
             <ion-icon name={this.pullingIcon}></ion-icon>
           </div>
         }
         {this.pullingText &&
-          <div class='refresher-pulling-text' innerHTML={this.pullingText}></div>
+          <div class="refresher-pulling-text" innerHTML={this.pullingText}></div>
         }
       </div>,
-      <div class='refresher-refreshing'>
+      <div class="refresher-refreshing">
         {this.refreshingSpinner &&
-          <div class='refresher-refreshing-icon'>
+          <div class="refresher-refreshing-icon">
             <ion-spinner name={this.refreshingSpinner}></ion-spinner>
           </div>
         }
         {this.refreshingText &&
-          <div class='refresher-refreshing-text' innerHTML={this.refreshingText}></div>
+          <div class="refresher-refreshing-text" innerHTML={this.refreshingText}></div>
         }
       </div>
     ];

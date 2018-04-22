@@ -35,13 +35,6 @@ Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.
 
 
-#### dismissOnPageChange
-
-boolean
-
-If true, the toast will dismiss when the page changes. Defaults to `false`.
-
-
 #### duration
 
 number
@@ -124,13 +117,6 @@ string
 
 Additional classes to apply for custom CSS. If multiple classes are
 provided they should be separated by spaces.
-
-
-#### dismiss-on-page-change
-
-boolean
-
-If true, the toast will dismiss when the page changes. Defaults to `false`.
 
 
 #### duration

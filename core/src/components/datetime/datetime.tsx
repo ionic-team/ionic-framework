@@ -18,8 +18,9 @@ import {
   renderTextFormat,
   updateDate
 } from './datetime-util';
-import { clamp } from '../../utils/helpers';
-import { Picker, PickerColumn, PickerController, PickerOptions } from '../../index';
+
+import { clamp, deferEvent } from '../../utils/helpers';
+import { PickerColumn, PickerController, PickerOptions } from '../../index';
 
 
 @Component({
@@ -35,9 +36,10 @@ import { Picker, PickerColumn, PickerController, PickerOptions } from '../../ind
 export class Datetime {
   [key: string]: any;
 
-  private datetimeId: string;
-  private labelId: string;
-  private picker: Picker;
+  private inputId = `ion-dt-${datetimeIds++}`;
+  private labelId = `${this.inputId}-lbl`;
+
+  private picker?: HTMLIonPickerElement;
 
   locale: LocaleData = {};
   datetimeMin: DatetimeData = {};
@@ -46,7 +48,7 @@ export class Datetime {
 
   @State() text: any;
 
-  @Prop({ connect: 'ion-picker-controller' }) pickerCtrl: PickerController;
+  @Prop({ connect: 'ion-picker-controller' }) pickerCtrl!: PickerController;
 
   /**
    * If true, the user cannot interact with the datetime. Defaults to `false`.
@@ -95,7 +97,7 @@ export class Datetime {
    * choose an exact date from the datetime picker. Each column follows the string
    * parse format. Defaults to use `displayFormat`.
    */
-  @Prop() pickerFormat: string | undefined;
+  @Prop() pickerFormat?: string;
 
   /**
    * The text to display on the picker's cancel button. Default: `Cancel`.
@@ -114,7 +116,7 @@ export class Datetime {
    * of numbers, or string of comma separated numbers. For example, to show upcoming and
    * recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
    */
-  @Prop() yearValues: number[] | number | string | undefined;
+  @Prop() yearValues?: number[] | number | string;
 
   /**
    * Values used to create the list of selectable months. By default
@@ -124,7 +126,7 @@ export class Datetime {
    * input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a
    * zero-based index, meaning January's value is `1`, and December's is `12`.
    */
-  @Prop() monthValues: number[] | number | string | undefined;
+  @Prop() monthValues?: number[] | number | string;
 
   /**
    * Values used to create the list of selectable days. By default
@@ -134,7 +136,7 @@ export class Datetime {
    * number for the selected month, like `31` in February, it will correctly not show
    * days which are not valid for the selected month.
    */
-  @Prop() dayValues: number[] | number | string | undefined;
+  @Prop() dayValues?: number[] | number | string;
 
   /**
    * Values used to create the list of selectable hours. By default
@@ -142,7 +144,7 @@ export class Datetime {
    * to control exactly which hours to display, the `hourValues` input can take a number, an
    * array of numbers, or a string of comma separated numbers.
    */
-  @Prop() hourValues: number[] | number | string | undefined;
+  @Prop() hourValues?: number[] | number | string;
 
   /**
    * Values used to create the list of selectable minutes. By default
@@ -151,31 +153,31 @@ export class Datetime {
    * separated numbers. For example, if the minute selections should only be every 15 minutes,
    * then this input value would be `minuteValues="0,15,30,45"`.
    */
-  @Prop() minuteValues: number[] | number | string | undefined;
+  @Prop() minuteValues?: number[] | number | string;
 
   /**
    * Full names for each month name. This can be used to provide
    * locale month names. Defaults to English.
    */
-  @Prop() monthNames: string[] | string | undefined;
+  @Prop() monthNames?: string[] | string;
 
   /**
    * Short abbreviated names for each month name. This can be used to provide
    * locale month names. Defaults to English.
    */
-  @Prop() monthShortNames: string[] | string | undefined;
+  @Prop() monthShortNames?: string[] | string;
 
   /**
    * Full day of the week names. This can be used to provide
    * locale names for each day in the week. Defaults to English.
    */
-  @Prop() dayNames: string[] | string | undefined;
+  @Prop() dayNames?: string[] | string;
 
   /**
    * Short abbreviated day of the week names. This can be used to provide
    * locale names for each day in the week. Defaults to English.
    */
-  @Prop() dayShortNames: string[] | string | undefined;
+  @Prop() dayShortNames?: string[] | string;
 
   /**
    * Any additional options that the picker interface can accept.
@@ -190,12 +192,12 @@ export class Datetime {
    * The text to display when there's no date selected yet.
    * Using lowercase to match the input attribute
    */
-  @Prop() placeholder: string | undefined;
+  @Prop() placeholder?: string;
 
   /**
    * the value of the datetime.
    */
-  @Prop({ mutable: true }) value: string;
+  @Prop({ mutable: true }) value?: string;
 
   /**
    * Update the datetime value when the value changes
@@ -209,18 +211,19 @@ export class Datetime {
   /**
    * Emitted when the datetime selection was cancelled.
    */
-  @Event() ionCancel: EventEmitter;
+  @Event() ionCancel!: EventEmitter;
 
   /**
    * Emitted when the styles change.
    */
-  @Event() ionStyle: EventEmitter;
+  @Event() ionStyle!: EventEmitter;
 
 
   componentWillLoad() {
     // first see if locale names were provided in the inputs
     // then check to see if they're in the config
     // if neither were provided then it will use default English names
+    this.ionStyle = deferEvent(this.ionStyle);
     this.locale = {
       // this.locale[type] = convertToArrayOfStrings((this[type] ? this[type] : this.config.get(type), type);
       monthNames: convertToArrayOfStrings(this.monthNames, 'monthNames'),
@@ -237,14 +240,10 @@ export class Datetime {
   }
 
   private emitStyle() {
-    clearTimeout(this.styleTmr);
-
-    this.styleTmr = setTimeout(() => {
-      this.ionStyle.emit({
-        'datetime': true,
-        'datetime-disabled': this.disabled,
-        'input-has-value': this.hasValue()
-      });
+    this.ionStyle.emit({
+      'datetime': true,
+      'datetime-disabled': this.disabled,
+      'input-has-value': this.hasValue()
     });
   }
 
@@ -289,26 +288,15 @@ export class Datetime {
     return picker;
   }
 
-  private open() {
-    const pickerOptions = {...this.pickerOptions};
-
+  private async open() {
     // TODO check this.isFocus() || this.disabled
     if (this.disabled) {
       return;
     }
-
-    let controller: Promise<any>;
-
-    controller = this.buildPicker(pickerOptions);
-
-    controller.then((component: any) => {
-      // Update picker status before presenting
-      this.picker = component;
-
-      this.validate();
-
-      component.present();
-    });
+    const pickerOptions = {...this.pickerOptions};
+    this.picker = await this.buildPicker(pickerOptions);
+    this.validate();
+    await this.picker.present();
   }
 
   private generateColumns(): PickerColumn[] {
@@ -390,7 +378,7 @@ export class Datetime {
     const today = new Date();
     const minCompareVal = dateDataSortValue(this.datetimeMin);
     const maxCompareVal = dateDataSortValue(this.datetimeMax);
-    const yearCol = this.picker.getColumn('year');
+    const yearCol = this.picker!.getColumn('year');
 
     let selectedYear: number = today.getFullYear();
     if (yearCol) {
@@ -492,7 +480,7 @@ export class Datetime {
   }
 
   private validateColumn(name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): number {
-    const column = this.picker.getColumn(name);
+    const column = this.picker!.getColumn(name);
     if (!column) {
       return 0;
     }
@@ -611,17 +599,19 @@ export class Datetime {
     return [
       <div class={ datetimeTextClasses }>{ datetimeText }</div>,
       <button
-        type='button'
-        aria-haspopup='true'
+        type="button"
+        aria-haspopup="true"
         id={this.datetimeId}
         aria-labelledby={this.labelId}
         aria-disabled={this.disabled ? 'true' : false}
         onClick={this.open.bind(this)}
-        class='datetime-cover'>
+        class="datetime-cover">
         { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </button>
     ];
   }
 }
+
+let datetimeIds = 0;
 
 const DEFAULT_FORMAT = 'MMM D, YYYY';

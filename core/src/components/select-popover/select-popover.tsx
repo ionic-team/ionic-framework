@@ -1,4 +1,5 @@
 import { Component, Listen, Prop } from '@stencil/core';
+import { Mode } from '../..';
 
 
 export interface SelectPopoverOption {
@@ -16,13 +17,13 @@ export interface SelectPopoverOption {
   }}
 )
 export class SelectPopover {
-  private mode: string;
+  mode!: Mode;
 
-  @Prop() header: string;
+  @Prop() header?: string;
 
-  @Prop() subHeader: string;
+  @Prop() subHeader?: string;
 
-  @Prop() message: string;
+  @Prop() message?: string;
 
   @Prop() options: SelectPopoverOption[] = [];
 

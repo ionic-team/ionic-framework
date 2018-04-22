@@ -9,7 +9,7 @@ import { deleteCssUrl, getThemeUrl, saveCssUrl, STORED_THEME_KEY } from '../help
 export class CssText {
 
   @Prop() cssText: string;
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
   @Prop() themeName: string;
 
   createNew (ev: UIEvent) {

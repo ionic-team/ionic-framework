@@ -1,15 +1,10 @@
 
-export function isTextInputFocused(): boolean {
-  const activeElement = document.activeElement;
+export function isTextInputFocused(doc: Document): boolean {
+  const activeElement = doc.activeElement;
   if (isTextInput(activeElement) && activeElement.parentElement) {
     return activeElement.parentElement.querySelector(':focus') === activeElement;
   }
   return false;
-}
-
-export function closeKeyboard() {
-  const activeElement = document.activeElement as HTMLElement;
-  activeElement && activeElement.blur && activeElement.blur();
 }
 
 const NON_TEXT_INPUT_REGEX = /^(radio|checkbox|range|file|submit|reset|color|image|button)$/i;

@@ -1,4 +1,5 @@
 import { Component, Prop } from '@stencil/core';
+import { Mode } from '../..';
 
 
 @Component({
@@ -16,12 +17,12 @@ export class Chip {
    * The color to use.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
 }
