@@ -1,6 +1,7 @@
 
 import { PlatformConfig } from '@ionic/core';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
+import { proxyEvent } from '../util/util';
 
 @Injectable()
 export class Platform {
@@ -8,7 +9,40 @@ export class Platform {
   private _platforms: PlatformConfig[] = [];
   private _readyPromise: Promise<any>;
 
+  /**
+   * @hidden
+   */
+  backButton = new EventEmitter<Event>();
+
+  /**
+   * The pause event emits when the native platform puts the application
+   * into the background, typically when the user switches to a different
+   * application. This event would emit when a Cordova app is put into
+   * the background, however, it would not fire on a standard web browser.
+   */
+  pause = new EventEmitter<Event>();
+
+  /**
+   * The resume event emits when the native platform pulls the application
+   * out from the background. This event would emit when a Cordova app comes
+   * out from the background, however, it would not fire on a standard web browser.
+   */
+  resume = new EventEmitter<Event>();
+
+  /**
+   * The resize event emits when the browser window has changed dimensions. This
+   * could be from a browser window being physically resized, or from a device
+   * changing orientation.
+   */
+  resize = new EventEmitter<Event>();
+
   constructor() {
+
+    proxyEvent(this.pause, document, 'pause');
+    proxyEvent(this.resume, document, 'resume');
+    proxyEvent(this.backButton, document, 'backbutton');
+    proxyEvent(this.resize, document, 'resize');
+
     let readyResolve: Function;
     this._readyPromise = new Promise(res => { readyResolve = res; } );
     if ((window as any)['cordova']) {

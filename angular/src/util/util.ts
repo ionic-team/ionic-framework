@@ -8,6 +8,12 @@ export function inputs(instance: any, el: ElementRef, props: string[]) {
   });
 }
 
+export function proxyEvent(emitter: any, el: Node, eventName: string) {
+  el.addEventListener(eventName, (ev) => {
+    emitter.emit(ev);
+  });
+}
+
 
 export function proxyMethod(ctrlName: string, methodName: string, ...args: any[]) {
   const controller = ensureElementInBody(ctrlName);
