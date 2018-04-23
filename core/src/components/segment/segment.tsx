@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 import { Mode } from '../..';
+import { InputChangeEvent } from '../../utils/input-interfaces';
 
 
 @Component({
@@ -47,9 +48,9 @@ export class Segment {
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange!: EventEmitter;
+  @Event() ionChange!: EventEmitter<InputChangeEvent>;
 
-  @Listen('ionClick')
+  @Listen('ionSelect')
   segmentClick(ev: CustomEvent) {
     const selectedButton = ev.target as HTMLIonSegmentButtonElement;
     this.value = selectedButton.value;

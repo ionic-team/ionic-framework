@@ -2,10 +2,10 @@
 ```html
 <!-- Segment buttons with text and click listeners -->
 <ion-segment>
-  <ion-segment-button (ionClick)="segmentButtonClicked($event)">
+  <ion-segment-button (ionSelect)="segmentButtonClicked($event)">
     Friends
   </ion-segment-button>
-  <ion-segment-button (ionClick)="segmentButtonClicked($event)">
+  <ion-segment-button (ionSelect)="segmentButtonClicked($event)">
     Enemies
   </ion-segment-button>
 </ion-segment>

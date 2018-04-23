@@ -1,6 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 import { CssClassMap, Mode } from '../../index';
-import { BlurEvent, FocusEvent } from '../../utils/input-interfaces';
 import { getButtonClassMap, getElementClassMap, openURL } from '../../utils/theme';
 
 
@@ -94,12 +93,12 @@ export class Button {
   /**
    * Emitted when the button has focus.
    */
-  @Event() ionFocus!: EventEmitter<FocusEvent>;
+  @Event() ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the button loses focus.
    */
-  @Event() ionBlur!: EventEmitter<BlurEvent>;
+  @Event() ionBlur!: EventEmitter<void>;
 
   componentWillLoad() {
     if (this.el.closest('ion-buttons')) {

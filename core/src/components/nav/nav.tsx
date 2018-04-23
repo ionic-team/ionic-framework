@@ -752,7 +752,6 @@ export class Nav implements NavOutlet {
           onEnd={this.swipeBackEnd.bind(this)}
           gestureName="goback-swipe"
           gesturePriority={10}
-          type="pan"
           direction="x"
           threshold={10}
           attachTo="body"/>,

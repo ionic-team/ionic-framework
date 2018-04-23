@@ -67,7 +67,7 @@ export { PickerController } from './components/picker-controller/picker-controll
 export * from './components/popover/popover';
 export { PopoverController } from './components/popover-controller/popover-controller';
 export { RadioGroup } from './components/radio-group/radio-group';
-export { Radio, HTMLIonRadioElementEvent } from './components/radio/radio';
+export { Radio } from './components/radio/radio';
 export { Range, RangeEvent } from './components/range/range';
 export { RangeKnob } from './components/range-knob/range-knob';
 export { ReorderGroup, reorderArray } from './components/reorder-group/reorder-group';

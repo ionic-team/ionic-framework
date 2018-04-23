@@ -31,12 +31,12 @@ export class SelectOption {
   /**
    * Emitted when the select option loads.
    */
-  @Event() ionSelectOptionDidLoad!: EventEmitter;
+  @Event() ionSelectOptionDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted when the select option unloads.
    */
-  @Event() ionSelectOptionDidUnload!: EventEmitter;
+  @Event() ionSelectOptionDidUnload!: EventEmitter<void>;
 
   componentWillLoad() {
     if (this.value === undefined) {

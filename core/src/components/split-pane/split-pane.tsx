@@ -47,7 +47,7 @@ export class SplitPane {
   /**
    * Emitted when the split pane is visible.
    */
-  @Event() ionChange!: EventEmitter;
+  @Event() ionChange!: EventEmitter<{visible: boolean}>;
 
   /**
    * Expression to be called when the split-pane visibility has changed

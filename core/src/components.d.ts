@@ -67,10 +67,9 @@ import {
   Mode as Mode2,
 } from '.';
 import {
-  BlurEvent,
   CheckedInputChangeEvent,
-  FocusEvent,
   InputChangeEvent,
+  RangeInputChangeEvent,
   SelectInputChangeEvent,
   StyleEvent,
 } from './utils/input-interfaces';
@@ -284,15 +283,15 @@ declare global {
       /**
        * Emitted after the alert has loaded.
        */
-      'onIonActionSheetDidLoad'?: (event: CustomEvent) => void;
+      'onIonActionSheetDidLoad'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted after the alert has presented.
        */
-      'onIonActionSheetDidPresent'?: (event: CustomEvent) => void;
+      'onIonActionSheetDidPresent'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted after the alert has unloaded.
        */
-      'onIonActionSheetDidUnload'?: (event: CustomEvent) => void;
+      'onIonActionSheetDidUnload'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted before the alert has dismissed.
        */
@@ -300,7 +299,7 @@ declare global {
       /**
        * Emitted before the alert has presented.
        */
-      'onIonActionSheetWillPresent'?: (event: CustomEvent) => void;
+      'onIonActionSheetWillPresent'?: (event: CustomEvent<void>) => void;
       'overlayId'?: number;
       /**
        * Subtitle for the action sheet.
@@ -775,7 +774,7 @@ declare global {
       /**
        * Emitted when the backdrop is tapped.
        */
-      'onIonBackdropTap'?: (event: CustomEvent) => void;
+      'onIonBackdropTap'?: (event: CustomEvent<void>) => void;
       /**
        * If true, the backdrop will stop propagation on tap. Defaults to `true`.
        */
@@ -945,11 +944,11 @@ declare global {
       /**
        * Emitted when the button loses focus.
        */
-      'onIonBlur'?: (event: CustomEvent<BlurEvent>) => void;
+      'onIonBlur'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the button has focus.
        */
-      'onIonFocus'?: (event: CustomEvent<FocusEvent>) => void;
+      'onIonFocus'?: (event: CustomEvent<void>) => void;
       /**
        * If true, activates a button with rounded corners.
        */
@@ -1324,7 +1323,7 @@ declare global {
       /**
        * Emitted when the toggle loses focus.
        */
-      'onIonBlur'?: (event: CustomEvent<BlurEvent>) => void;
+      'onIonBlur'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the checked property has changed.
        */
@@ -1332,7 +1331,7 @@ declare global {
       /**
        * Emitted when the toggle has focus.
        */
-      'onIonFocus'?: (event: CustomEvent<FocusEvent>) => void;
+      'onIonFocus'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the styles change.
        */
@@ -1719,11 +1718,11 @@ declare global {
       /**
        * Emitted when the datetime selection was cancelled.
        */
-      'onIonCancel'?: (event: CustomEvent) => void;
+      'onIonCancel'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the styles change.
        */
-      'onIonStyle'?: (event: CustomEvent) => void;
+      'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
       /**
        * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
        */
@@ -2015,7 +2014,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonGesture {
-      'attachTo': string|HTMLElement;
+      'attachTo': string | HTMLElement;
       'autoBlockAll': boolean;
       'canStart': GestureCallback;
       'direction': string;
@@ -2027,12 +2026,10 @@ declare global {
       'notCaptured': GestureCallback;
       'onEnd': GestureCallback;
       'onMove': GestureCallback;
-      'onPress': GestureCallback;
       'onStart': GestureCallback;
       'onWillStart': (_: GestureDetail) => Promise<void>;
       'passive': boolean;
       'threshold': number;
-      'type': string;
     }
   }
 
@@ -2055,7 +2052,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonGestureAttributes extends HTMLAttributes {
-      'attachTo'?: string|HTMLElement;
+      'attachTo'?: string | HTMLElement;
       'autoBlockAll'?: boolean;
       'canStart'?: GestureCallback;
       'direction'?: string;
@@ -2066,33 +2063,11 @@ declare global {
       'maxAngle'?: number;
       'notCaptured'?: GestureCallback;
       'onEnd'?: GestureCallback;
-      /**
-       * Emitted when the gesture ends.
-       */
-      'onIonGestureEnd'?: (event: CustomEvent) => void;
-      /**
-       * Emitted when the gesture moves.
-       */
-      'onIonGestureMove'?: (event: CustomEvent) => void;
-      /**
-       * Emitted when the gesture is not captured.
-       */
-      'onIonGestureNotCaptured'?: (event: CustomEvent) => void;
-      /**
-       * Emitted when the gesture starts.
-       */
-      'onIonGestureStart'?: (event: CustomEvent) => void;
-      /**
-       * Emitted when press is detected.
-       */
-      'onIonPress'?: (event: CustomEvent) => void;
       'onMove'?: GestureCallback;
-      'onPress'?: GestureCallback;
       'onStart'?: GestureCallback;
       'onWillStart'?: (_: GestureDetail) => Promise<void>;
       'passive'?: boolean;
       'threshold'?: number;
-      'type'?: string;
     }
   }
 }
@@ -2273,7 +2248,7 @@ declare global {
       /**
        * The position of the infinite scroll element. The value can be either `top` or `bottom`. Defaults to `bottom`.
        */
-      'position': string;
+      'position': 'top' | 'bottom';
       /**
        * The threshold distance from the bottom of the content to call the `infinite` output event when scrolled. The threshold value can be either a percent, or in pixels. For example, use the value of `10%` for the `infinite` output event to get called when the user has scrolled 10% from the bottom of the page. Use the value `100px` when the scroll is within 100 pixels from the bottom of the page. Defaults to `15%`.
        */
@@ -2311,11 +2286,11 @@ declare global {
       /**
        * Emitted when the scroll reaches the threshold distance. From within your infinite handler, you must call the infinite scroll's `complete()` method when your async operation has completed.
        */
-      'onIonInfinite'?: (event: CustomEvent) => void;
+      'onIonInfinite'?: (event: CustomEvent<void>) => void;
       /**
        * The position of the infinite scroll element. The value can be either `top` or `bottom`. Defaults to `bottom`.
        */
-      'position'?: string;
+      'position'?: 'top' | 'bottom';
       /**
        * The threshold distance from the bottom of the content to call the `infinite` output event when scrolled. The threshold value can be either a percent, or in pixels. For example, use the value of `10%` for the `infinite` output event to get called when the user has scrolled 10% from the bottom of the page. Use the value `100px` when the scroll is within 100 pixels from the bottom of the page. Defaults to `15%`.
        */
@@ -2383,10 +2358,6 @@ declare global {
        */
       'autofocus': boolean;
       /**
-       * If true and the type is `checkbox` or `radio`, the control is selected by default. Defaults to `false`.
-       */
-      'checked': boolean;
-      /**
        * If true, a clear icon will appear in the input when there is a value. Clicking it clears the input. Defaults to `false`.
        */
       'clearInput': boolean;
@@ -2395,7 +2366,7 @@ declare global {
        */
       'clearOnEdit': boolean;
       /**
-       * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+       * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
        */
       'debounce': number;
       /**
@@ -2513,10 +2484,6 @@ declare global {
        */
       'autofocus'?: boolean;
       /**
-       * If true and the type is `checkbox` or `radio`, the control is selected by default. Defaults to `false`.
-       */
-      'checked'?: boolean;
-      /**
        * If true, a clear icon will appear in the input when there is a value. Clicking it clears the input. Defaults to `false`.
        */
       'clearInput'?: boolean;
@@ -2525,7 +2492,7 @@ declare global {
        */
       'clearOnEdit'?: boolean;
       /**
-       * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+       * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
        */
       'debounce'?: number;
       /**
@@ -2563,27 +2530,31 @@ declare global {
       /**
        * Emitted when the input loses focus.
        */
-      'onIonBlur'?: (event: CustomEvent) => void;
+      'onIonBlur'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted when the value has changed.
+       */
+      'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
       /**
        * Emitted when the input has focus.
        */
-      'onIonFocus'?: (event: CustomEvent) => void;
+      'onIonFocus'?: (event: CustomEvent<void>) => void;
       /**
-       * Emitted when the input value has changed.
+       * Emitted when a keyboard input ocurred.
        */
-      'onIonInput'?: (event: CustomEvent) => void;
+      'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
       /**
        * Emitted when the input has been created.
        */
-      'onIonInputDidLoad'?: (event: CustomEvent) => void;
+      'onIonInputDidLoad'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the input has been removed.
        */
-      'onIonInputDidUnload'?: (event: CustomEvent) => void;
+      'onIonInputDidUnload'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the styles change.
        */
-      'onIonStyle'?: (event: CustomEvent) => void;
+      'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
       /**
        * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
        */
@@ -2784,7 +2755,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonItemOptions {
-      'fireSwipeEvent': (value: any) => void;
+      'fireSwipeEvent': () => void;
       'isRightSide': () => boolean;
       /**
        * The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
@@ -2816,7 +2787,7 @@ declare global {
       /**
        * Emitted when the item has been fully swiped.
        */
-      'onIonSwipe'?: (event: CustomEvent) => void;
+      'onIonSwipe'?: (event: CustomEvent<void>) => void;
       /**
        * The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
        */
@@ -3014,7 +2985,7 @@ declare global {
       /**
        * Emitted when the styles change.
        */
-      'onIonStyle'?: (event: CustomEvent) => void;
+      'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
       /**
        * The position determines where and how the label behaves inside an item. Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
        */
@@ -3551,12 +3522,12 @@ declare global {
       /**
        * Emitted when the menu is closed.
        */
-      'onIonClose'?: (event: CustomEvent) => void;
+      'onIonClose'?: (event: CustomEvent<void>) => void;
       'onIonMenuChange'?: (event: CustomEvent<MenuChangeEventDetail>) => void;
       /**
        * Emitted when the menu is open.
        */
-      'onIonOpen'?: (event: CustomEvent) => void;
+      'onIonOpen'?: (event: CustomEvent<void>) => void;
       /**
        * If true, the menu will persist on child pages.
        */
@@ -4540,19 +4511,19 @@ declare global {
       /**
        * Emitted when the radio button loses focus.
        */
-      'onIonBlur'?: (event: CustomEvent<BlurEvent>) => void;
+      'onIonBlur'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the radio button has focus.
        */
-      'onIonFocus'?: (event: CustomEvent<FocusEvent>) => void;
+      'onIonFocus'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the radio loads.
        */
-      'onIonRadioDidLoad'?: (event: CustomEvent) => void;
+      'onIonRadioDidLoad'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the radio unloads.
        */
-      'onIonRadioDidUnload'?: (event: CustomEvent) => void;
+      'onIonRadioDidUnload'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the radio button is selected.
        */
@@ -4738,19 +4709,19 @@ declare global {
       /**
        * Emitted when the range loses focus.
        */
-      'onIonBlur'?: (event: CustomEvent) => void;
+      'onIonBlur'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the value property has changed.
        */
-      'onIonChange'?: (event: CustomEvent) => void;
+      'onIonChange'?: (event: CustomEvent<RangeInputChangeEvent>) => void;
       /**
        * Emitted when the range has focus.
        */
-      'onIonFocus'?: (event: CustomEvent) => void;
+      'onIonFocus'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the styles change.
        */
-      'onIonStyle'?: (event: CustomEvent) => void;
+      'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
       /**
        * If true, a pin with integer value is shown when the knob is pressed. Defaults to `false`.
        */
@@ -4904,15 +4875,15 @@ declare global {
       /**
        * Emitted while the user is pulling down the content and exposing the refresher.
        */
-      'onIonPull'?: (event: CustomEvent) => void;
+      'onIonPull'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the user lets go of the content and has pulled down further than the `pullMin` or pulls the content down and exceeds the pullMax. Updates the refresher state to `refreshing`. The `complete()` method should be called when the async operation has completed.
        */
-      'onIonRefresh'?: (event: CustomEvent) => void;
+      'onIonRefresh'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the user begins to start pulling down.
        */
-      'onIonStart'?: (event: CustomEvent) => void;
+      'onIonStart'?: (event: CustomEvent<void>) => void;
       /**
        * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
        */
@@ -5344,7 +5315,7 @@ declare global {
        */
       'color': string;
       /**
-       * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
+       * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `250`.
        */
       'debounce': number;
       /**
@@ -5414,7 +5385,7 @@ declare global {
        */
       'color'?: string;
       /**
-       * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
+       * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `250`.
        */
       'debounce'?: number;
       /**
@@ -5424,23 +5395,27 @@ declare global {
       /**
        * Emitted when the input loses focus.
        */
-      'onIonBlur'?: (event: CustomEvent) => void;
+      'onIonBlur'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the cancel button is clicked.
        */
-      'onIonCancel'?: (event: CustomEvent) => void;
+      'onIonCancel'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted when the value has changed.
+       */
+      'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
       /**
        * Emitted when the clear input button is clicked.
        */
-      'onIonClear'?: (event: CustomEvent) => void;
+      'onIonClear'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the input has focus.
        */
-      'onIonFocus'?: (event: CustomEvent) => void;
+      'onIonFocus'?: (event: CustomEvent<void>) => void;
       /**
-       * Emitted when the Searchbar input has changed, including when it's cleared.
+       * Emitted when a keyboard input ocurred.
        */
-      'onIonInput'?: (event: CustomEvent) => void;
+      'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
       /**
        * Set the input's placeholder. Default `"Search"`.
        */
@@ -5535,7 +5510,7 @@ declare global {
       /**
        * Emitted when the segment button is clicked.
        */
-      'onIonClick'?: (event: CustomEvent) => void;
+      'onIonSelect'?: (event: CustomEvent<void>) => void;
       /**
        * The value of the segment button.
        */
@@ -5596,7 +5571,7 @@ declare global {
       /**
        * Emitted when the value property has changed.
        */
-      'onIonChange'?: (event: CustomEvent) => void;
+      'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
       /**
        * the value of the segment.
        */
@@ -5651,11 +5626,11 @@ declare global {
       /**
        * Emitted when the select option loads.
        */
-      'onIonSelectOptionDidLoad'?: (event: CustomEvent) => void;
+      'onIonSelectOptionDidLoad'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the select option unloads.
        */
-      'onIonSelectOptionDidUnload'?: (event: CustomEvent) => void;
+      'onIonSelectOptionDidUnload'?: (event: CustomEvent<void>) => void;
       /**
        * If true, the element is selected.
        */
@@ -5805,11 +5780,11 @@ declare global {
       /**
        * Emitted when the select loses focus.
        */
-      'onIonBlur'?: (event: CustomEvent<BlurEvent>) => void;
+      'onIonBlur'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the selection is cancelled.
        */
-      'onIonCancel'?: (event: CustomEvent) => void;
+      'onIonCancel'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the value has changed.
        */
@@ -5817,7 +5792,7 @@ declare global {
       /**
        * Emitted when the select has focus.
        */
-      'onIonFocus'?: (event: CustomEvent<FocusEvent>) => void;
+      'onIonFocus'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the styles change.
        */
@@ -6215,7 +6190,7 @@ declare global {
       /**
        * Emitted when the split pane is visible.
        */
-      'onIonChange'?: (event: CustomEvent) => void;
+      'onIonChange'?: (event: CustomEvent<{visible: boolean}>) => void;
       /**
        * Expression to be called when the split-pane visibility has changed
        */
@@ -6554,7 +6529,7 @@ declare global {
       /**
        * Emitted when the tab changes.
        */
-      'onIonChange'?: (event: CustomEvent) => void;
+      'onIonChange'?: (event: CustomEvent<{tab: HTMLIonTabElement}>) => void;
       'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
       'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
       'scrollable'?: boolean;
@@ -6689,7 +6664,7 @@ declare global {
        */
       'cols': number;
       /**
-       * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+       * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
        */
       'debounce': number;
       /**
@@ -6779,7 +6754,7 @@ declare global {
        */
       'cols'?: number;
       /**
-       * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+       * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
        */
       'debounce'?: number;
       /**
@@ -6801,19 +6776,23 @@ declare global {
       /**
        * Emitted when the input loses focus.
        */
-      'onIonBlur'?: (event: CustomEvent) => void;
-      /**
-       * Emitted when the input has focus.
-       */
-      'onIonFocus'?: (event: CustomEvent) => void;
+      'onIonBlur'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the input value has changed.
        */
-      'onIonInput'?: (event: CustomEvent) => void;
+      'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
+      /**
+       * Emitted when the input has focus.
+       */
+      'onIonFocus'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted when a keyboard input ocurred.
+       */
+      'onIonInput'?: (event: CustomEvent<KeyboardEvent>) => void;
       /**
        * Emitted when the styles change.
        */
-      'onIonStyle'?: (event: CustomEvent) => void;
+      'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
       /**
        * Instructional text that shows before the input has a value.
        */
@@ -7128,7 +7107,7 @@ declare global {
        */
       'name': string;
       /**
-       * // TODO! the value of the toggle.
+       * the value of the toggle.
        */
       'value': string;
     }
@@ -7176,7 +7155,7 @@ declare global {
       /**
        * Emitted when the toggle loses focus.
        */
-      'onIonBlur'?: (event: CustomEvent<BlurEvent>) => void;
+      'onIonBlur'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the value property has changed.
        */
@@ -7184,13 +7163,13 @@ declare global {
       /**
        * Emitted when the toggle has focus.
        */
-      'onIonFocus'?: (event: CustomEvent<FocusEvent>) => void;
+      'onIonFocus'?: (event: CustomEvent<void>) => void;
       /**
        * Emitted when the styles change.
        */
       'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
       /**
-       * // TODO! the value of the toggle.
+       * the value of the toggle.
        */
       'value'?: string;
     }

@@ -1,4 +1,4 @@
-import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
+import { CheckboxInput, CheckedInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { CssClassMap, Mode } from '../../index';
 import { deferEvent } from '../../utils/helpers';
@@ -63,12 +63,12 @@ export class Checkbox implements CheckboxInput {
   /**
    * Emitted when the toggle has focus.
    */
-  @Event() ionFocus!: EventEmitter<FocusEvent>;
+  @Event() ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the toggle loses focus.
    */
-  @Event() ionBlur!: EventEmitter<BlurEvent>;
+  @Event() ionBlur!: EventEmitter<void>;
 
   /**
    * Emitted when the styles change.

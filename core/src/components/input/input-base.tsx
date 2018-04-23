@@ -1,11 +1,12 @@
 // Shared Interfaces
 
 import { EventEmitter } from '@stencil/core';
+import { StyleEvent } from '../../utils/input-interfaces';
 
 export interface InputBaseComponent {
-  ionStyle: EventEmitter;
-  ionBlur: EventEmitter;
-  ionFocus: EventEmitter;
+  ionStyle: EventEmitter<StyleEvent>;
+  ionBlur: EventEmitter<void>;
+  ionFocus: EventEmitter<void>;
 
   clearOnEdit: boolean;
   didBlurAfterEdit: boolean;

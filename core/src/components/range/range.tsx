@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { GestureDetail, Mode } from '../../index';
 import { clamp, debounceEvent, deferEvent } from '../../utils/helpers';
-import { BaseInput } from '../../utils/input-interfaces';
+import { BaseInput, RangeInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
 
 export interface Tick {
   ratio: number | (() => number);
@@ -116,32 +116,32 @@ export class Range implements BaseInput {
    */
   @Prop({ mutable: true }) value: any;
   @Watch('value')
-  protected valueChanged(val: boolean) {
-    this.ionChange.emit({value: val});
+  protected valueChanged(value: any) {
     this.inputUpdated();
     this.emitStyle();
+    this.ionChange.emit({value});
   }
 
 
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange!: EventEmitter;
+  @Event() ionChange!: EventEmitter<RangeInputChangeEvent>;
 
   /**
    * Emitted when the styles change.
    */
-  @Event() ionStyle!: EventEmitter;
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
 
   /**
    * Emitted when the range has focus.
    */
-  @Event() ionFocus!: EventEmitter;
+  @Event() ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the range loses focus.
    */
-  @Event() ionBlur!: EventEmitter;
+  @Event() ionBlur!: EventEmitter<void>;
 
 
   componentWillLoad() {
@@ -423,7 +423,6 @@ export class Range implements BaseInput {
         disabled={this.disabled}
         gestureName="range"
         gesturePriority={30}
-        type="pan"
         direction="x"
         threshold={0}>
 

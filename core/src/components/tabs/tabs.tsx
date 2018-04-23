@@ -70,7 +70,7 @@ export class Tabs implements NavOutlet {
   /**
    * Emitted when the tab changes.
    */
-  @Event() ionChange!: EventEmitter;
+  @Event() ionChange!: EventEmitter<{tab: HTMLIonTabElement}>;
   @Event() ionNavWillChange!: EventEmitter<void>;
   @Event() ionNavDidChange!: EventEmitter<void>;
 
@@ -251,7 +251,7 @@ export class Tabs implements NavOutlet {
       if (leavingTab) {
         leavingTab.active = false;
       }
-      this.ionChange.emit(selectedTab);
+      this.ionChange.emit({tab: selectedTab});
       this.ionNavDidChange.emit();
     }
   }

@@ -1,12 +1,6 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { QueueController } from '../../index';
 
-const enum Position {
-  Top = 'top',
-  Bottom = 'bottom',
-}
-
-
 @Component({
   tag: 'ion-infinite-scroll',
   styleUrl: 'infinite-scroll.scss'
@@ -15,7 +9,7 @@ export class InfiniteScroll {
 
   private thrPx = 0;
   private thrPc = 0;
-  private scrollEl: HTMLIonScrollElement|undefined;
+  private scrollEl?: HTMLIonScrollElement;
   private didFire = false;
   private isBusy = false;
 
@@ -71,7 +65,7 @@ export class InfiniteScroll {
    * The value can be either `top` or `bottom`.
    * Defaults to `bottom`.
    */
-  @Prop() position: string = Position.Bottom;
+  @Prop() position: 'top' | 'bottom' = 'bottom';
 
   /**
    * Emitted when the scroll reaches
@@ -79,7 +73,7 @@ export class InfiniteScroll {
    * you must call the infinite scroll's `complete()` method when
    * your async operation has completed.
    */
-  @Event() ionInfinite!: EventEmitter;
+  @Event() ionInfinite!: EventEmitter<void>;
 
   async componentWillLoad() {
     const scrollEl = this.el.closest('ion-scroll');
@@ -91,7 +85,7 @@ export class InfiniteScroll {
   componentDidLoad() {
     this.thresholdChanged(this.threshold);
     this.enableScrollEvents(!this.disabled);
-    if (this.position === Position.Top) {
+    if (this.position === 'top') {
       this.queue.write(() => this.scrollEl && this.scrollEl.scrollToBottom(0));
     }
   }
@@ -117,7 +111,7 @@ export class InfiniteScroll {
     const height = scrollEl.offsetHeight;
     const threshold = this.thrPc ? (height * this.thrPc) : this.thrPx;
 
-    const distanceFromInfinite = (this.position === Position.Bottom)
+    const distanceFromInfinite = (this.position === 'bottom')
       ? scrollHeight - infiniteHeight - scrollTop - threshold - height
       : scrollTop - infiniteHeight - threshold;
 
@@ -125,7 +119,7 @@ export class InfiniteScroll {
       if (!this.didFire) {
         this.isLoading = true;
         this.didFire = true;
-        this.ionInfinite.emit(this);
+        this.ionInfinite.emit();
         return 3;
       }
     } else {
@@ -153,7 +147,7 @@ export class InfiniteScroll {
     }
     this.isLoading = false;
 
-    if (this.position === Position.Top) {
+    if (this.position === 'top') {
       /**
        * New content is being added at the top, but the scrollTop position stays the same,
        * which causes a scroll jump visually. This algorithm makes sure to prevent this.

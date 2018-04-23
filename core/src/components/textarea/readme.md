@@ -89,7 +89,7 @@ The visible width of the text control, in average character widths. If it is spe
 
 number
 
-Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
 
 
 #### disabled
@@ -210,7 +210,7 @@ The visible width of the text control, in average character widths. If it is spe
 
 number
 
-Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
 
 
 #### disabled
@@ -297,6 +297,11 @@ Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `
 Emitted when the input loses focus.
 
 
+#### ionChange
+
+Emitted when the input value has changed.
+
+
 #### ionFocus
 
 Emitted when the input has focus.
@@ -304,7 +309,7 @@ Emitted when the input has focus.
 
 #### ionInput
 
-Emitted when the input value has changed.
+Emitted when a keyboard input ocurred.
 
 
 #### ionStyle

@@ -1,5 +1,4 @@
 import { Component, ComponentDidLoad, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
-import { HTMLIonRadioElementEvent } from '../radio/radio';
 import { InputChangeEvent, RadioGroupInput } from '../../utils/input-interfaces';
 
 
@@ -53,8 +52,8 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
   @Event() ionChange!: EventEmitter<InputChangeEvent>;
 
   @Listen('ionRadioDidLoad')
-  onRadioDidLoad(ev: HTMLIonRadioElementEvent) {
-    const radio = ev.target;
+  onRadioDidLoad(ev: Event) {
+    const radio = ev.target as HTMLIonRadioElement;
     radio.name = this.name;
 
     // add radio to internal list
@@ -71,16 +70,16 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
   }
 
   @Listen('ionRadioDidUnload')
-  onRadioDidUnload(ev: HTMLIonRadioElementEvent) {
-    const index = this.radios.indexOf(ev.target);
+  onRadioDidUnload(ev: Event) {
+    const index = this.radios.indexOf(ev.target as HTMLIonRadioElement);
     if (index > -1) {
       this.radios.splice(index, 1);
     }
   }
 
   @Listen('ionSelect')
-  onRadioSelect(ev: HTMLIonRadioElementEvent) {
-    const selectedRadio = ev.target;
+  onRadioSelect(ev: Event) {
+    const selectedRadio = ev.target as HTMLIonRadioElement;
     if (selectedRadio) {
       this.value = selectedRadio.value;
     }

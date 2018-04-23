@@ -1,4 +1,4 @@
-import { BlurEvent, CheckedInputChangeEvent, FocusEvent, RadioButtonInput, StyleEvent } from '../../utils/input-interfaces';
+import { CheckedInputChangeEvent, RadioButtonInput, StyleEvent } from '../../utils/input-interfaces';
 import { Component, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
 import { CssClassMap, Mode } from '../../index';
@@ -59,12 +59,12 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
   /**
    * Emitted when the radio loads.
    */
-  @Event() ionRadioDidLoad!: EventEmitter;
+  @Event() ionRadioDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted when the radio unloads.
    */
-  @Event() ionRadioDidUnload!: EventEmitter;
+  @Event() ionRadioDidUnload!: EventEmitter<void>;
 
   /**
    * Emitted when the styles change.
@@ -79,12 +79,12 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
   /**
    * Emitted when the radio button has focus.
    */
-  @Event() ionFocus!: EventEmitter<FocusEvent>;
+  @Event() ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the radio button loses focus.
    */
-  @Event() ionBlur!: EventEmitter<BlurEvent>;
+  @Event() ionBlur!: EventEmitter<void>;
 
 
   componentWillLoad() {
@@ -98,7 +98,7 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
   }
 
   componentDidLoad() {
-    this.ionRadioDidLoad.emit({ radio: this });
+    this.ionRadioDidLoad.emit();
     this.nativeInput.checked = this.checked;
 
     const parentItem = this.nativeInput.closest('ion-item');
@@ -112,7 +112,7 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
   }
 
   componentDidUnload() {
-    this.ionRadioDidUnload.emit({ radio: this });
+    this.ionRadioDidUnload.emit();
   }
 
   @Watch('color')
@@ -205,11 +205,6 @@ export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUn
         ref={r => this.nativeInput = (r as any)}/>
     ];
   }
-}
-
-
-export interface HTMLIonRadioElementEvent extends CustomEvent {
-  target: HTMLIonRadioElement;
 }
 
 let radioButtonIds = 0;

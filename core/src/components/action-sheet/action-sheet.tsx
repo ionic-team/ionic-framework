@@ -82,22 +82,22 @@ export class ActionSheet implements OverlayInterface {
   /**
    * Emitted after the alert has loaded.
    */
-  @Event() ionActionSheetDidLoad!: EventEmitter;
+  @Event() ionActionSheetDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted after the alert has unloaded.
    */
-  @Event() ionActionSheetDidUnload!: EventEmitter;
+  @Event() ionActionSheetDidUnload!: EventEmitter<void>;
 
   /**
    * Emitted after the alert has presented.
    */
-  @Event({eventName: 'ionActionSheetDidPresent'}) didPresent!: EventEmitter;
+  @Event({eventName: 'ionActionSheetDidPresent'}) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the alert has presented.
    */
-  @Event({eventName: 'ionActionSheetWillPresent'}) willPresent!: EventEmitter;
+  @Event({eventName: 'ionActionSheetWillPresent'}) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the alert has dismissed.

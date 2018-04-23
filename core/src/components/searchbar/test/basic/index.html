@@ -105,7 +105,7 @@
 
           const searchbars = document.querySelectorAll('ion-searchbar')
           for (let i = 0; i < searchbars.length; i++) {
-            searchbars[i].addEventListener('ionInput', (ev) => {
+            searchbars[i].addEventListener('ionChange', (ev) => {
               console.log(ev);
             })
           }

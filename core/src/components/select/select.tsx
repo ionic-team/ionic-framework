@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
 import { CssClassMap, Mode } from '../../index';
 import { HTMLIonSelectOptionElementEvent } from '../select-option/select-option';
-import { BlurEvent, FocusEvent, SelectInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
+import { SelectInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
 
 import { ActionSheetButton, ActionSheetOptions  } from '../action-sheet/action-sheet';
 import { AlertOptions } from '../alert/alert';
@@ -104,17 +104,17 @@ export class Select {
   /**
    * Emitted when the selection is cancelled.
    */
-  @Event() ionCancel!: EventEmitter;
+  @Event() ionCancel!: EventEmitter<void>;
 
   /**
    * Emitted when the select has focus.
    */
-  @Event() ionFocus!: EventEmitter<FocusEvent>;
+  @Event() ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the select loses focus.
    */
-  @Event() ionBlur!: EventEmitter<BlurEvent>;
+  @Event() ionBlur!: EventEmitter<void>;
 
   /**
    * Emitted when the styles change.
@@ -350,7 +350,7 @@ export class Select {
       text: this.cancelText,
       role: 'cancel',
       handler: () => {
-        this.ionCancel.emit(this);
+        this.ionCancel.emit();
       }
     });
 
@@ -388,7 +388,7 @@ export class Select {
           text: this.cancelText,
           role: 'cancel',
           handler: () => {
-            this.ionCancel.emit(this);
+            this.ionCancel.emit();
           }
         },
         {

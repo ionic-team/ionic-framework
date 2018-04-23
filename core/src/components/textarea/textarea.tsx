@@ -1,18 +1,14 @@
 import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
-import { debounceEvent } from '../../utils/helpers';
+import { debounceEvent, deferEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 import { TextareaComponent } from '../input/input-base';
 import { Mode } from '../..';
+import { InputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
 
 
 @Component({
   tag: 'ion-textarea',
-
-  // TODO: separate textarea from input scss
-  // right now we're cheating by knowing ion-input
-  // css is bundled with ion-textarea
-
   styleUrls: {
     ios: 'textarea.ios.scss',
     md: 'textarea.md.scss'
@@ -22,6 +18,7 @@ import { Mode } from '../..';
   }
 })
 export class Textarea implements TextareaComponent {
+
   mode!: Mode;
   color!: string;
 
@@ -33,22 +30,27 @@ export class Textarea implements TextareaComponent {
   /**
    * Emitted when the input value has changed.
    */
-  @Event() ionInput!: EventEmitter;
+  @Event() ionChange!: EventEmitter<InputChangeEvent>;
+
+  /**
+   * Emitted when a keyboard input ocurred.
+   */
+  @Event() ionInput!: EventEmitter<KeyboardEvent>;
 
   /**
    * Emitted when the styles change.
    */
-  @Event() ionStyle!: EventEmitter;
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
 
   /**
    * Emitted when the input loses focus.
    */
-  @Event() ionBlur!: EventEmitter;
+  @Event() ionBlur!: EventEmitter<void>;
 
   /**
    * Emitted when the input has focus.
    */
-  @Event() ionFocus!: EventEmitter;
+  @Event() ionFocus!: EventEmitter<void>;
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
@@ -71,13 +73,13 @@ export class Textarea implements TextareaComponent {
   @Prop({ mutable: true }) clearOnEdit = false;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
    */
   @Prop() debounce = 0;
 
   @Watch('debounce')
   protected debounceChanged() {
-    this.ionInput = debounceEvent(this.ionInput, this.debounce);
+    this.ionChange = debounceEvent(this.ionChange, this.debounce);
   }
 
   /**
@@ -151,65 +153,62 @@ export class Textarea implements TextareaComponent {
   @Watch('value')
   protected valueChanged() {
     const inputEl = this.el.querySelector('textarea')!;
-    if (inputEl.value !== this.value) {
-      inputEl.value = this.value;
+    const value = this.value;
+    if (inputEl.value !== value) {
+      inputEl.value = value;
     }
+    this.ionChange.emit({value});
   }
 
   componentDidLoad() {
+    this.ionStyle = deferEvent(this.ionStyle);
     this.debounceChanged();
     this.emitStyle();
   }
 
   private emitStyle() {
-    clearTimeout(this.styleTmr);
-
-    const styles = {
+    this.ionStyle.emit({
       'textarea': true,
       'input': true,
       'input-disabled': this.disabled,
       'input-has-value': this.hasValue(),
       'input-has-focus': this.hasFocus()
-    };
-
-    this.styleTmr = setTimeout(() => {
-      this.ionStyle.emit(styles);
     });
   }
 
-  clearTextInput(ev: Event) {
+  private clearTextInput() {
     this.value = '';
-    this.ionInput.emit(ev);
   }
 
-  inputBlurred(ev: Event) {
-    this.ionBlur.emit(ev);
-
-    this.focusChange(this.hasFocus());
-    this.emitStyle();
-  }
-
-  inputChanged(ev: Event) {
+  private onInput(ev: KeyboardEvent) {
     this.value = ev.target && (ev.target as HTMLInputElement).value || '';
+    this.emitStyle();
     this.ionInput.emit(ev);
-    this.emitStyle();
   }
 
-  inputFocused(ev: Event) {
-    this.ionFocus.emit(ev);
-
-    this.focusChange(this.hasFocus());
+  private onFocus() {
+    this.focusChange();
     this.emitStyle();
+
+    this.ionFocus.emit();
   }
 
-  inputKeydown(ev: Event) {
-    this.checkClearOnEdit(ev);
+  private onBlur() {
+    this.focusChange();
+    this.emitStyle();
+
+    this.ionBlur.emit();
+  }
+
+
+  private onKeyDown() {
+    this.checkClearOnEdit();
   }
 
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  checkClearOnEdit(ev: Event) {
+  private checkClearOnEdit() {
     if (!this.clearOnEdit) {
       return;
     }
@@ -217,27 +216,27 @@ export class Textarea implements TextareaComponent {
     // Did the input value change after it was blurred and edited?
     if (this.didBlurAfterEdit && this.hasValue()) {
       // Clear the input
-      this.clearTextInput(ev);
+      this.clearTextInput();
     }
 
     // Reset the flag
     this.didBlurAfterEdit = false;
   }
 
-  focusChange(inputHasFocus: boolean) {
+  private focusChange() {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this.clearOnEdit && !inputHasFocus && this.hasValue()) {
+    if (this.clearOnEdit && !this.hasFocus() && this.hasValue()) {
       this.didBlurAfterEdit = true;
     }
   }
 
-  hasFocus(): boolean {
+  private hasFocus(): boolean {
     // check if an input has focus or not
     return this.el && (this.el.querySelector(':focus') === this.el.querySelector('textarea'));
   }
 
-  hasValue(): boolean {
-    return (this.value !== null && this.value !== undefined && this.value !== '');
+  private hasValue(): boolean {
+    return this.value !== '';
   }
 
   render() {
@@ -261,10 +260,10 @@ export class Textarea implements TextareaComponent {
         rows={this.rows}
         wrap={this.wrap}
         class={themedClasses}
-        onBlur={this.inputBlurred.bind(this)}
-        onInput={this.inputChanged.bind(this)}
-        onFocus={this.inputFocused.bind(this)}
-        onKeyDown={this.inputKeydown.bind(this)}
+        onInput={this.onInput.bind(this)}
+        onBlur={this.onBlur.bind(this)}
+        onFocus={this.onFocus.bind(this)}
+        onKeyDown={this.onKeyDown.bind(this)}
       >
         {this.value}
       </textarea>

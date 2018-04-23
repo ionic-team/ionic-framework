@@ -21,6 +21,7 @@ import {
 
 import { clamp, deferEvent } from '../../utils/helpers';
 import { PickerColumn, PickerController, PickerOptions } from '../../index';
+import { StyleEvent } from '../../utils/input-interfaces';
 
 
 @Component({
@@ -211,12 +212,12 @@ export class Datetime {
   /**
    * Emitted when the datetime selection was cancelled.
    */
-  @Event() ionCancel!: EventEmitter;
+  @Event() ionCancel!: EventEmitter<void>;
 
   /**
    * Emitted when the styles change.
    */
-  @Event() ionStyle!: EventEmitter;
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
 
 
   componentWillLoad() {
@@ -263,7 +264,7 @@ export class Datetime {
         {
           text: this.cancelText,
           role: 'cancel',
-          handler: () => this.ionCancel.emit(this)
+          handler: () => this.ionCancel.emit()
         },
         {
           text: this.doneText,

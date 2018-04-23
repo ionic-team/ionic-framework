@@ -42,13 +42,6 @@ boolean
 This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
 
 
-#### checked
-
-boolean
-
-If true and the type is `checkbox` or `radio`, the control is selected by default. Defaults to `false`.
-
-
 #### clearInput
 
 boolean
@@ -67,7 +60,7 @@ If true, the value will be cleared after focus upon edit. Defaults to `true` whe
 
 number
 
-Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
 
 
 #### disabled
@@ -233,13 +226,6 @@ boolean
 This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
 
 
-#### checked
-
-boolean
-
-If true and the type is `checkbox` or `radio`, the control is selected by default. Defaults to `false`.
-
-
 #### clear-input
 
 boolean
@@ -258,7 +244,7 @@ If true, the value will be cleared after focus upon edit. Defaults to `true` whe
 
 number
 
-Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
 
 
 #### disabled
@@ -394,6 +380,11 @@ The value of the input.
 Emitted when the input loses focus.
 
 
+#### ionChange
+
+Emitted when the value has changed.
+
+
 #### ionFocus
 
 Emitted when the input has focus.
@@ -401,7 +392,7 @@ Emitted when the input has focus.
 
 #### ionInput
 
-Emitted when the input value has changed.
+Emitted when a keyboard input ocurred.
 
 
 #### ionInputDidLoad

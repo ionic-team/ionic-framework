@@ -12,7 +12,6 @@ let ids = 0;
   }
 })
 export class SegmentButton {
-  styleTmr: any;
 
   @Element() el!: HTMLElement;
 
@@ -49,30 +48,19 @@ export class SegmentButton {
   /**
    * The value of the segment button.
    */
-  @Prop({ mutable: true }) value!: string;
+  @Prop() value: string = 'ion-sb-' + (ids++);
 
   /**
    * Emitted when the segment button is clicked.
    */
-  @Event() ionClick!: EventEmitter;
-
-  componentWillLoad() {
-    if (this.value === undefined) {
-      this.value = `ion-sb-${ids++}`;
-    }
-  }
+  @Event() ionSelect!: EventEmitter<void>;
 
   /**
    * Emit the click event to the parent segment
    */
-  private segmentButtonClick() {
-    clearTimeout(this.styleTmr);
-
-    this.styleTmr = setTimeout(() => {
-      this.ionClick.emit();
-    });
+  private onClick() {
+    this.ionSelect.emit();
   }
-
 
   render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'segment-button');
@@ -97,7 +85,7 @@ export class SegmentButton {
         class={buttonClasses}
         disabled={this.disabled}
         href={this.href}
-        onClick={this.segmentButtonClick.bind(this)}>
+        onClick={this.onClick.bind(this)}>
           <slot></slot>
           { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </TagType>

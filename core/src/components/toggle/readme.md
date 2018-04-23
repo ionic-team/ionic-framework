@@ -88,7 +88,6 @@ The name of the control, which is submitted with the form data.
 
 string
 
-// TODO!
 the value of the toggle.
 
 
@@ -137,7 +136,6 @@ The name of the control, which is submitted with the form data.
 
 string
 
-// TODO!
 the value of the toggle.
 
 

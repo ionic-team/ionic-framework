@@ -1,4 +1,4 @@
-import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
+import { CheckboxInput, CheckedInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
 import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { GestureDetail, Mode } from '../../index';
 import { hapticSelection } from '../../utils/haptic';
@@ -18,7 +18,6 @@ import { deferEvent } from '../../utils/helpers';
 export class Toggle implements CheckboxInput {
 
   private inputId = `ion-tg-${toggleIds++}`;
-  private gestureConfig: any;
   private nativeInput!: HTMLInputElement;
   private pivotX = 0;
 
@@ -53,10 +52,9 @@ export class Toggle implements CheckboxInput {
   /*
    * If true, the user cannot interact with the toggle. Default false.
    */
-  @Prop({ mutable: true }) disabled = false;
+  @Prop() disabled = false;
 
   /**
-   * // TODO!
    * the value of the toggle.
    */
   @Prop() value = 'on';
@@ -69,12 +67,12 @@ export class Toggle implements CheckboxInput {
   /**
    * Emitted when the toggle has focus.
    */
-  @Event() ionFocus!: EventEmitter<FocusEvent>;
+  @Event() ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the toggle loses focus.
    */
-  @Event() ionBlur!: EventEmitter<BlurEvent>;
+  @Event() ionBlur!: EventEmitter<void>;
 
   /**
    * Emitted when the styles change.
@@ -98,21 +96,6 @@ export class Toggle implements CheckboxInput {
       'toggle-checked': this.checked,
       'toggle-activated': this.activated
     });
-  }
-
-  constructor() {
-    this.gestureConfig = {
-      'onStart': this.onDragStart.bind(this),
-      'onMove': this.onDragMove.bind(this),
-      'onEnd': this.onDragEnd.bind(this),
-      'gestureName': 'toggle',
-      'passive': false,
-      'gesturePriority': 30,
-      'type': 'pan',
-      'direction': 'x',
-      'threshold': 0,
-      'attachTo': 'parent'
-    };
   }
 
   componentWillLoad() {
@@ -190,8 +173,18 @@ export class Toggle implements CheckboxInput {
 
   render() {
     return [
-      <ion-gesture {...this.gestureConfig}
-        disabled={this.disabled} tabIndex={-1}>
+      <ion-gesture
+        onStart={this.onDragStart.bind(this)}
+        onMove={this.onDragMove.bind(this)}
+        onEnd={this.onDragEnd.bind(this)}
+        gestureName="toggle"
+        passive={false}
+        gesturePriority={30}
+        direction="x"
+        threshold={0}
+        attachTo="parent"
+        disabled={this.disabled}
+        tabIndex={-1}>
         <div class="toggle-icon">
           <div class="toggle-inner"/>
         </div>

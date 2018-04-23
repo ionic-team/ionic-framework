@@ -197,7 +197,7 @@
           // Listen for ionClick on all segment buttons
           const segmentButtons = document.querySelectorAll('ion-segment-button')
           for (let i = 0; i < segmentButtons.length; i++) {
-            segmentButtons[i].addEventListener('ionClick', (ev) => {
+            segmentButtons[i].addEventListener('ionSelect', (ev) => {
               console.log('Segment button clicked', ev);
             })
           }

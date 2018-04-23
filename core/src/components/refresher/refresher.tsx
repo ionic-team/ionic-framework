@@ -82,17 +82,17 @@ export class Refresher {
    * Updates the refresher state to `refreshing`. The `complete()` method should be
    * called when the async operation has completed.
    */
-  @Event() ionRefresh!: EventEmitter;
+  @Event() ionRefresh!: EventEmitter<void>;
 
   /**
    * Emitted while the user is pulling down the content and exposing the refresher.
    */
-  @Event() ionPull!: EventEmitter;
+  @Event() ionPull!: EventEmitter<void>;
 
   /**
    * Emitted when the user begins to start pulling down.
    */
-  @Event() ionStart!: EventEmitter;
+  @Event() ionStart!: EventEmitter<void>;
 
   constructor() {
     this.gestureConfig = {
@@ -260,11 +260,11 @@ export class Refresher {
     // emit "start" if it hasn't started yet
     if (!this.didStart) {
       this.didStart = true;
-      this.ionStart.emit(this);
+      this.ionStart.emit();
     }
 
     // emit "pulling" on every move
-    this.ionPull.emit(this);
+    this.ionPull.emit();
 
     // do nothing if the delta is less than the pull threshold
     if (deltaY < pullMin) {
@@ -312,7 +312,7 @@ export class Refresher {
 
     // emit "refresh" because it was pulled down far enough
     // and they let go to begin refreshing
-    this.ionRefresh.emit(this);
+    this.ionRefresh.emit();
   }
 
   private close(state: RefresherState, delay: string) {

@@ -39,8 +39,8 @@ export class ItemSliding {
   private optsWidthLeftSide = 0;
   private sides = ItemSide.None;
   private tmr: number|undefined;
-  private leftOptions: HTMLIonItemOptionsElement|undefined;
-  private rightOptions: HTMLIonItemOptionsElement|undefined;
+  private leftOptions?: HTMLIonItemOptionsElement;
+  private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
 
   @Element() el!: HTMLElement;
@@ -202,9 +202,9 @@ export class ItemSliding {
     this.setOpenAmount(restingPoint, true);
 
     if (this.state & SlidingState.SwipeRight && this.rightOptions) {
-      this.rightOptions.fireSwipeEvent(this);
+      this.rightOptions.fireSwipeEvent();
     } else if (this.state & SlidingState.SwipeLeft && this.leftOptions) {
-      this.leftOptions.fireSwipeEvent(this);
+      this.leftOptions.fireSwipeEvent();
     }
   }
 
@@ -255,7 +255,9 @@ export class ItemSliding {
     }
 
     style.transform = `translate3d(${-openAmount}px,0,0)`;
-    this.ionDrag.emit(this);
+    this.ionDrag.emit({
+      amount: openAmount
+    });
   }
 
   hostData() {

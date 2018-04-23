@@ -39,12 +39,12 @@ export interface CheckboxInput extends BaseInput {
   /**
    * Removes focus from input; keystrokes will subsequently go nowhere.
    */
-  ionBlur: EventEmitter<BlurEvent>;
+  ionBlur: EventEmitter<void>;
 
   /**
    * Focus on the input element; keystrokes will subsequently go to this element.
    */
-  ionFocus: EventEmitter<FocusEvent>;
+  ionFocus: EventEmitter<void>;
 
   /**
    * Emitted when the styles change. This is useful for parent
@@ -77,12 +77,12 @@ export interface RadioButtonInput extends BaseInput {
   /**
    * Removes focus from input; keystrokes will subsequently go nowhere.
    */
-  ionBlur: EventEmitter<BlurEvent>;
+  ionBlur: EventEmitter<void>;
 
   /**
    * Focus on the input element; keystrokes will subsequently go to this element.
    */
-  ionFocus: EventEmitter<FocusEvent>;
+  ionFocus: EventEmitter<void>;
 }
 
 export interface RadioGroupInput extends BaseInput {
@@ -119,12 +119,12 @@ export interface SelectInput extends BaseInput {
   /**
    * Removes focus from input; keystrokes will subsequently go nowhere.
    */
-  ionBlur: EventEmitter<BlurEvent>;
+  ionBlur: EventEmitter<void>;
 
   /**
    * Focus on the input element; keystrokes will subsequently go to this element.
    */
-  ionFocus: EventEmitter<FocusEvent>;
+  ionFocus: EventEmitter<void>;
 
   /**
    * Emitted when the styles change. This is useful for parent
@@ -151,12 +151,12 @@ export interface TextInput extends BaseInput {
   /**
    * Removes focus from input; keystrokes will subsequently go nowhere.
    */
-  ionBlur: EventEmitter<BlurEvent>;
+  ionBlur: EventEmitter<void>;
 
   /**
    * Focus on the input element; keystrokes will subsequently go to this element.
    */
-  ionFocus: EventEmitter<FocusEvent>;
+  ionFocus: EventEmitter<void>;
 
   /**
    * Emitted when the styles change. This is useful for parent
@@ -179,12 +179,12 @@ export interface TextMultiLineInput extends TextInput {
   /**
    * Removes focus from input; keystrokes will subsequently go nowhere.
    */
-  ionBlur: EventEmitter<BlurEvent>;
+  ionBlur: EventEmitter<void>;
 
   /**
    * Focus on the input element; keystrokes will subsequently go to this element.
    */
-  ionFocus: EventEmitter<FocusEvent>;
+  ionFocus: EventEmitter<void>;
 
   /**
    * Emitted when the styles change. This is useful for parent
@@ -204,6 +204,11 @@ export interface CheckedInputChangeEvent extends InputChangeEvent {
   checked: boolean;
 }
 
+export interface RangeInputChangeEvent {
+  value: any;
+}
+
+
 export interface SelectInputChangeEvent {
   value: string|string[]|undefined;
   text: string;
@@ -212,7 +217,3 @@ export interface SelectInputChangeEvent {
 export interface StyleEvent {
   [styleName: string]: boolean;
 }
-
-export interface FocusEvent {}
-
-export interface BlurEvent {}

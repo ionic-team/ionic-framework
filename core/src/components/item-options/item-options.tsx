@@ -25,7 +25,7 @@ export class ItemOptions {
   /**
    * Emitted when the item has been fully swiped.
    */
-  @Event() ionSwipe!: EventEmitter;
+  @Event() ionSwipe!: EventEmitter<void>;
 
   @Method()
   isRightSide() {
@@ -38,8 +38,8 @@ export class ItemOptions {
   }
 
   @Method()
-  fireSwipeEvent(value: any) {
-    this.ionSwipe.emit(value);
+  fireSwipeEvent() {
+    this.ionSwipe.emit();
   }
 
   hostData() {

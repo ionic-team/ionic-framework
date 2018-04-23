@@ -181,10 +181,10 @@ export interface OverlayInterface {
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
 
-  didPresent: EventEmitter;
-  willPresent: EventEmitter;
-  willDismiss: EventEmitter;
-  didDismiss: EventEmitter;
+  didPresent: EventEmitter<void>;
+  willPresent: EventEmitter<void>;
+  willDismiss: EventEmitter<OverlayEventDetail>;
+  didDismiss: EventEmitter<OverlayEventDetail>;
 
   present(): Promise<void>;
   dismiss(data?: any, role?: string): Promise<void>;

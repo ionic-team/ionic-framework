@@ -420,7 +420,6 @@ export class PickerColumnCmp {
         onEnd={this.onDragEnd.bind(this)}
         gestureName="picker-swipe"
         gesturePriority={10}
-        type="pan"
         direction="y"
         passive={false}
         threshold={0}

@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import { Mode } from '../..';
+import { StyleEvent } from '../../utils/input-interfaces';
 
 
 @Component({
@@ -39,7 +40,7 @@ export class Label {
   /**
    * Emitted when the styles change.
    */
-  @Event() ionStyle!: EventEmitter;
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
 
   @Method()
   getText(): string {

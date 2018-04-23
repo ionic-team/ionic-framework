@@ -111,12 +111,12 @@ export class Menu {
   /**
    * Emitted when the menu is open.
    */
-  @Event() ionOpen!: EventEmitter;
+  @Event() ionOpen!: EventEmitter<void>;
 
   /**
    * Emitted when the menu is closed.
    */
-  @Event() ionClose!: EventEmitter;
+  @Event() ionClose!: EventEmitter<void>;
 
 
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
@@ -446,7 +446,6 @@ export class Menu {
         disabled={!this.isActive() || !this.swipeEnabled}
         gestureName="menu-swipe"
         gesturePriority={10}
-        type="pan"
         direction="x"
         threshold={10}
         attachTo="window"

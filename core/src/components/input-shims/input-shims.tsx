@@ -54,14 +54,14 @@ export class InputShims {
   @Listen('body:ionInputDidLoad')
   protected onInputDidLoad(event: any) {
     if (this.didLoad) {
-      this.registerInput(event.detail);
+      this.registerInput(event.target);
     }
   }
 
   @Listen('body:ionInputDidUnload')
   protected onInputDidUnload(event: any) {
     if (this.didLoad) {
-      this.unregisterInput(event.detail);
+      this.unregisterInput(event.target);
     }
   }
 
