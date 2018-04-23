@@ -19,7 +19,12 @@ export class IonicRouteStrategy implements RouteReuseStrategy {
   }
 
   shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-    if (objectValues(future.params) && objectValues(curr.params)) {
+    // checking router params
+    const futureParams = objectValues(future.params);
+    const currParams = objectValues(curr.params);
+
+    if (futureParams && !!futureParams.length && currParams && currParams.length > 0) {
+      // If the router params do not match, render the new component
       return deepEqual(future.params, curr.params);
     } else {
       return future.routeConfig === curr.routeConfig;
