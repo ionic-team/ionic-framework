@@ -1,7 +1,11 @@
 
-import { PlatformConfig } from '@ionic/core';
 import { EventEmitter, Injectable } from '@angular/core';
 import { proxyEvent } from '../util/util';
+
+export interface PlatformConfig {
+  name: string;
+  isMatch: (win: Window) => boolean;
+}
 
 @Injectable()
 export class Platform {

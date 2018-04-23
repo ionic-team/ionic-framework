@@ -246,6 +246,11 @@ Emitted when the clear input button is clicked.
 Emitted when the input has focus.
 
 
+#### ionInput
+
+Emitted when a keyboard input ocurred.
+
+
 
 ----------------------------------------------
 
