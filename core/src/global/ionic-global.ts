@@ -1,6 +1,6 @@
 import 'ionicons';
-import { Config } from './config';
-import { configFromURL, isIOS } from '../utils/platform';
+import { Config, configFromURL } from '../utils/config';
+import { isIOS } from '../utils/platform';
 
 const Ionic = (window as any).Ionic = (window as any).Ionic || {};
 declare const Context: any;

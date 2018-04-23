@@ -63,16 +63,3 @@ export function needInputShims(win: Window) {
 export function testUserAgent(win: Window, expr: RegExp) {
   return expr.test(win.navigator.userAgent);
 }
-
-export function configFromURL(win: Window) {
-  const config: any = {};
-  win.location.search.slice(1)
-    .split('&')
-    .filter(entryText => entryText.startsWith('ionic:'))
-    .map(entryText => entryText.split('='))
-    .forEach(entry => {
-      config[entry[0].slice(6)] = decodeURIComponent(entry[1]);
-    });
-
-  return config;
-}

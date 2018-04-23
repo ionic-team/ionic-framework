@@ -104,8 +104,7 @@ export { Toolbar } from './components/toolbar/toolbar';
 // export all of the component declarations that are dynamically created
 export * from './components';
 
-export { Config } from './global/config';
-export { QueueController, RafCallback } from './global/queue-controller';
+export { Config } from './utils/config';
 export { FrameworkDelegate } from './utils/framework-delegate';
 export { OverlayEventDetail } from './utils/overlays';
 export * from './utils/platform';
@@ -115,6 +114,20 @@ export type Mode = 'ios' | 'md';
 export type ComponentRef = Function | HTMLElement | string;
 export type ComponentProps = {[key: string]: any};
 export type CssClassMap = { [className: string]: boolean };
+
+export interface QueueController {
+  read: DomControllerCallback;
+  write: DomControllerCallback;
+}
+
+export interface RafCallback {
+  (timeStamp: number): void;
+}
+
+export interface DomControllerCallback {
+  (cb: RafCallback): void;
+}
+
 
 declare global {
 
