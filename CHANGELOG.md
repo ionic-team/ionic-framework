@@ -1,3 +1,29 @@
+<a name="4.0.0-alpha.3"></a>
+# [4.0.0-alpha.3](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.2...v4.0.0-alpha.3) (2018-04-23)
+
+
+### Bug Fixes
+
+* **all:** strong typed events ([d5129df](https://github.com/ionic-team/ionic/commit/d5129df))
+* **angular:** adds missing events ([c929dad](https://github.com/ionic-team/ionic/commit/c929dad))
+* **angular:** Config provider ([c87f0c5](https://github.com/ionic-team/ionic/commit/c87f0c5))
+* **angular:** platform ready() ([2b3c14b](https://github.com/ionic-team/ionic/commit/2b3c14b))
+* **overlay:** cssClasses applied to overlay ([43d7538](https://github.com/ionic-team/ionic/commit/43d7538))
+* **prerender:** local references to window/document ([78bd146](https://github.com/ionic-team/ionic/commit/78bd146))
+* **virtual-scroll:** queue.write ([c1cbbc5](https://github.com/ionic-team/ionic/commit/c1cbbc5))
+
+
+### Features
+
+* **angular:** animation is explicit ([099b3ed](https://github.com/ionic-team/ionic/commit/099b3ed))
+
+
+### Performance Improvements
+
+* **platform:** remove from critical path ([86a6cde](https://github.com/ionic-team/ionic/commit/86a6cde))
+
+
+
 <a name="4.0.0-alpha.2"></a>
 # [4.0.0-alpha.2](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.1...v4.0.0-alpha.2) (2018-04-13)
 
