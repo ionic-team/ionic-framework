@@ -1,5 +1,5 @@
 import { Component, Listen, Method, Prop } from '@stencil/core';
-import { ActionSheetOptions } from '../../index';
+import { ActionSheetOptions } from '../../interface';
 import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({

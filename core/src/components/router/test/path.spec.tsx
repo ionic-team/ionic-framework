@@ -1,5 +1,5 @@
 import { chainToPath, generatePath, parsePath } from '../utils/path';
-import { RouteChain } from '../utils/interfaces';
+import { RouteChain } from '../utils/interface';
 
 describe('parseURL', () => {
   it('should parse empty path', () => {

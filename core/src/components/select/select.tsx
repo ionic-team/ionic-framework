@@ -1,16 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
-import { CssClassMap, Mode } from '../../index';
-import { HTMLIonSelectOptionElementEvent } from '../select-option/select-option';
-import { SelectInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
-
-import { ActionSheetButton, ActionSheetOptions  } from '../action-sheet/action-sheet';
-import { AlertOptions } from '../alert/alert';
-import { PopoverOptions } from '../popover/popover';
-
-import { ActionSheetController } from '../action-sheet-controller/action-sheet-controller';
-import { AlertController } from '../alert-controller/alert-controller';
-import { PopoverController } from '../popover-controller/popover-controller';
-import { SelectPopoverOption } from '../select-popover/select-popover';
+import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap,
+  Mode, PopoverOptions, SelectInputChangeEvent, SelectPopoverOption, StyleEvent
+} from '../../interface';
 
 
 @Component({
@@ -34,9 +25,9 @@ export class Select {
 
   @Element() el!: HTMLIonSelectElement;
 
-  @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl!: ActionSheetController;
-  @Prop({ connect: 'ion-alert-controller' }) alertCtrl!: AlertController;
-  @Prop({ connect: 'ion-popover-controller' }) popoverCtrl!: PopoverController;
+  @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl!: HTMLIonActionSheetControllerElement;
+  @Prop({ connect: 'ion-alert-controller' }) alertCtrl!: HTMLIonAlertControllerElement;
+  @Prop({ connect: 'ion-popover-controller' }) popoverCtrl!: HTMLIonPopoverControllerElement;
 
   @State() isExpanded = false;
   @State() keyFocus = false;
@@ -184,8 +175,8 @@ export class Select {
   }
 
   @Listen('ionSelectOptionDidLoad')
-  optLoad(ev: HTMLIonSelectOptionElementEvent) {
-    const selectOption = ev.target;
+  optLoad(ev: CustomEvent) {
+    const selectOption = ev.target as HTMLIonSelectOptionElement;
     this.childOpts = Array.from(this.el.querySelectorAll('ion-select-option'));
 
     if (this.value != null && (Array.isArray(this.value) && this.value.includes(selectOption.value)) || (selectOption.value === this.value)) {
@@ -212,15 +203,15 @@ export class Select {
   }
 
   @Listen('ionSelectOptionDidUnload')
-  optUnload(ev: HTMLIonSelectOptionElementEvent) {
-    const index = this.childOpts.indexOf(ev.target);
+  optUnload(ev: CustomEvent) {
+    const index = this.childOpts.indexOf(ev.target as HTMLIonSelectOptionElement);
     if (index > -1) {
       this.childOpts.splice(index, 1);
     }
   }
 
   @Listen('ionSelect')
-  onSelect(ev: HTMLIonSelectOptionElementEvent) {
+  onSelect(ev: CustomEvent) {
     // ionSelect only come from the checked select option
     this.childOpts.forEach(selectOption => {
       if (selectOption === ev.target) {

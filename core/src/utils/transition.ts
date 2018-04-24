@@ -1,5 +1,5 @@
-import { Animation, AnimationBuilder } from '../';
-import { NavDirection } from '../components/nav/nav-util';
+import { Animation, AnimationBuilder, NavDirection } from '../interface';
+
 
 export function transition(opts: AnimationOptions): Promise<Animation|null> {
   beforeTransition(opts);
@@ -159,7 +159,7 @@ function setZIndex(
   direction: NavDirection | undefined,
 ) {
   if (enteringEl) {
-    enteringEl.style.zIndex = (direction === NavDirection.Back)
+    enteringEl.style.zIndex = (direction === 'back')
       ? '99'
       : '101';
   }

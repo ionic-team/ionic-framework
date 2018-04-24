@@ -26,104 +26,70 @@ declare global {
 import 'ionicons';
 
 import {
+  ActionSheetButton,
   ActionSheetOptions,
+  AlertButton,
+  AlertInput,
   AlertOptions,
-  Animation as Animation2,
+  Animation,
   AnimationBuilder,
+  BlockerConfig,
+  CheckedInputChangeEvent,
   ComponentProps,
   ComponentRef,
   FrameworkDelegate,
+  GestureCallback,
+  GestureConfig,
+  GestureDetail,
+  InputChangeEvent,
   LoadingOptions,
   Menu,
+  MenuChangeEventDetail,
   ModalOptions,
   Mode,
+  NavComponent,
+  NavOptions,
+  PickerButton,
   PickerColumn,
   PickerOptions,
   PopoverOptions,
+  RangeInputChangeEvent,
+  RouteID,
+  RouteWrite,
+  SelectInputChangeEvent,
+  SelectPopoverOption,
+  StyleEvent,
   ToastOptions,
-} from './index';
+  TransitionDoneFn,
+  TransitionInstruction,
+} from './interface';
 import {
   OverlayEventDetail,
 } from './utils/overlays';
 import {
-  ActionSheetButton,
-} from './components/action-sheet/action-sheet';
-import {
   EventEmitter,
 } from '@stencil/core';
 import {
-  AlertButton,
-  AlertInput,
-} from './components/alert/alert';
-import {
-  Animation,
-  AnimationBuilder as AnimationBuilder2,
-} from './components/animation-controller/animation-interface';
-import {
-  AnimationBuilder as AnimationBuilder3,
-  ComponentProps as ComponentProps2,
-  ComponentRef as ComponentRef2,
-  FrameworkDelegate as FrameworkDelegate2,
-  Mode as Mode2,
-} from '.';
-import {
-  CheckedInputChangeEvent,
-  InputChangeEvent,
-  RangeInputChangeEvent,
-  SelectInputChangeEvent,
-  StyleEvent,
-} from './utils/input-interfaces';
-import {
-  BlockerConfig,
   BlockerDelegate,
-  GestureConfig,
   GestureDelegate,
 } from './components/gesture-controller/gesture-controller-utils';
-import {
-  GestureCallback,
-  GestureDetail,
-} from './components/gesture/gesture';
 import {
   Side,
 } from './utils/helpers';
 import {
-  ItemSliding,
-} from './components/item-sliding/item-sliding';
-import {
-  MenuChangeEventDetail,
-} from './components/menu/menu';
-import {
-  NavComponent,
-  NavOptions,
-  TransitionDoneFn,
-  TransitionInstruction,
-} from './components/nav/nav-util';
-import {
   ViewController,
 } from './components/nav/view-controller';
-import {
-  RouteID,
-  RouterDirection,
-  RouterEventDetail,
-  RouteWrite,
-} from './components/router/utils/interfaces';
-import {
-  PickerButton,
-  PickerColumn as PickerColumn2,
-} from './components/picker/picker';
 import {
   RouterOutletOptions,
 } from './components/router-outlet/route-outlet';
 import {
+  RouterDirection,
+  RouterEventDetail,
+} from './components/router/utils/interface';
+import {
   ScrollBaseDetail,
   ScrollDetail,
 } from './components/scroll/scroll';
-import {
-  SelectPopoverOption,
-} from './components/select-popover/select-popover';
-import {
-  FrameworkDelegate as FrameworkDelegate3,
-} from './utils/framework-delegate';
 import {
   TabbarLayout,
   TabbarPlacement,
@@ -3053,11 +3019,11 @@ declare global {
       /**
        * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
        */
-      'getOpenItem': () => ItemSliding | undefined;
+      'getOpenItem': () => HTMLIonItemSlidingElement | undefined;
       /**
        * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
        */
-      'setOpenItem': (itemSliding: ItemSliding | undefined) => void;
+      'setOpenItem': (itemSliding: HTMLIonItemSlidingElement | undefined) => void;
     }
   }
 
@@ -3850,7 +3816,7 @@ declare global {
     interface IonNav {
       'animated': boolean;
       'canGoBack': (view?: ViewController | undefined) => boolean;
-      'delegate': FrameworkDelegate|undefined;
+      'delegate': FrameworkDelegate;
       'getActive': () => ViewController | undefined;
       'getByIndex': (index: number) => ViewController | undefined;
       'getPrevious': (view?: ViewController | undefined) => ViewController | undefined;
@@ -3863,8 +3829,8 @@ declare global {
       'popToRoot': (opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
       'push': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
       'removeIndex': (startIndex: number, removeCount?: number, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-      'root': NavComponent|undefined;
-      'rootParams': ComponentProps|undefined;
+      'root': NavComponent;
+      'rootParams': ComponentProps;
       'setPages': (views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
       'setRoot': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
       'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
@@ -3892,11 +3858,11 @@ declare global {
   namespace JSXElements {
     export interface IonNavAttributes extends HTMLAttributes {
       'animated'?: boolean;
-      'delegate'?: FrameworkDelegate|undefined;
+      'delegate'?: FrameworkDelegate;
       'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
       'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
-      'root'?: NavComponent|undefined;
-      'rootParams'?: ComponentProps|undefined;
+      'root'?: NavComponent;
+      'rootParams'?: ComponentProps;
       'swipeBackEnabled'?: boolean;
     }
   }

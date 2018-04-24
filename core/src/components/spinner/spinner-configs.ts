@@ -2,7 +2,7 @@
 
 export const SPINNERS: SpinnerConfigs = {
 
-  lines: {
+  'lines': {
     dur: 1000,
     lines: 12,
     fn: (dur: number, index: number, total: number) => {
@@ -40,7 +40,7 @@ export const SPINNERS: SpinnerConfigs = {
     }
   },
 
-  bubbles: {
+  'bubbles': {
     dur: 1000,
     circles: 9,
     fn: (dur: number, index: number, total: number) => {
@@ -57,7 +57,7 @@ export const SPINNERS: SpinnerConfigs = {
     }
   },
 
-  circles: {
+  'circles': {
     dur: 1000,
     circles: 8,
     fn: (dur: number, index: number, total: number) => {
@@ -74,7 +74,7 @@ export const SPINNERS: SpinnerConfigs = {
     }
   },
 
-  crescent: {
+  'crescent': {
     dur: 750,
     circles: 1,
     fn: () => {
@@ -85,7 +85,7 @@ export const SPINNERS: SpinnerConfigs = {
     }
   },
 
-  dots: {
+  'dots': {
     dur: 750,
     circles: 3,
     fn: (dur: number, index: number) => {
@@ -100,7 +100,6 @@ export const SPINNERS: SpinnerConfigs = {
       };
     }
   }
-
 };
 
 
@@ -108,14 +107,12 @@ export interface SpinnerConfigs {
   [spinnerName: string]: SpinnerConfig;
 }
 
-
 export interface SpinnerConfig {
   dur: number;
   circles?: number;
   lines?: number;
   fn: (dur: number, index: number, total: number) => SpinnerData;
 }
-
 
 export interface SpinnerData {
   r?: number;

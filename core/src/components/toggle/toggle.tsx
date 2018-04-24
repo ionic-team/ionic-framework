@@ -1,6 +1,5 @@
-import { CheckboxInput, CheckedInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
 import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { GestureDetail, Mode } from '../../index';
+import { CheckboxInput, CheckedInputChangeEvent, GestureDetail, Mode, StyleEvent } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
 import { deferEvent } from '../../utils/helpers';
 

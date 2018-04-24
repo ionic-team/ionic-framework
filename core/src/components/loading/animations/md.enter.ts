@@ -1,4 +1,4 @@
-import { Animation } from '../../../index';
+import { Animation } from '../../../interface';
 
 /**
  * Md Loading Enter Animation

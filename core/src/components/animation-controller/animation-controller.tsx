@@ -1,5 +1,5 @@
 import { Component, Method } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController } from './animation-interface';
+import { Animation, AnimationBuilder, AnimationController } from '../../interface';
 import { Animator } from './animator';
 
 

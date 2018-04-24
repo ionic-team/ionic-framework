@@ -1,38 +1,9 @@
 import { ViewController } from './view-controller';
-import { Animation, ComponentRef, FrameworkDelegate } from '../..';
+import { Animation, ComponentRef, FrameworkDelegate } from '../../interface';
 
-export function convertToView(page: any, params: any): ViewController|null {
-  if (!page) {
-    return null;
-  }
-  if (page instanceof ViewController) {
-    return page;
-  }
-  return new ViewController(page, params);
-}
+export { Nav } from './nav';
 
-export function convertToViews(pages: any[]): ViewController[] {
-  return pages.map(page => {
-    if (page instanceof ViewController) {
-      return page;
-    }
-    if ('page' in page) {
-      return convertToView(page.page, page.params);
-    }
-    return convertToView(page, undefined);
-  }).filter(v => v !== null) as ViewController[];
-}
-
-export const enum ViewState {
-  New = 1,
-  Attached,
-  Destroyed
-}
-
-export const enum NavDirection {
-  Back = 'back',
-  Forward = 'forward'
-}
+export type NavDirection = 'back' | 'forward';
 
 export type NavComponent = ComponentRef | ViewController;
 
@@ -41,13 +12,13 @@ export interface NavResult {
   requiresTransition: boolean;
   enteringView?: ViewController;
   leavingView?: ViewController;
-  direction?: string;
+  direction?: NavDirection;
 }
 
 export interface NavOptions {
   animate?: boolean;
   animation?: string;
-  direction?: string;
+  direction?: NavDirection;
   duration?: number;
   easing?: string;
   id?: string;

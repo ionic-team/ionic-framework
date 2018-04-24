@@ -1,9 +1,7 @@
 import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
-import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, NavOutlet } from '../..';
+import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, NavDirection, NavOutlet, RouteID, RouteWrite } from '../../interface';
 import { transition } from '../../utils';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { NavDirection } from '../nav/nav-util';
-import { RouteID, RouteWrite } from '../router/utils/interfaces';
 
 import iosTransitionAnimation from '../nav/animations/ios.transition';
 import mdTransitionAnimation from '../nav/animations/md.transition';
@@ -102,7 +100,7 @@ export class RouterOutlet implements NavOutlet {
   async setRouteId(id: string, params: any, direction: number): Promise<RouteWrite> {
     const changed = await this.setRoot(id, params, {
       duration: direction === 0 ? 0 : undefined,
-      direction: direction === -1 ? NavDirection.Back : NavDirection.Forward,
+      direction: direction === -1 ? 'back' : 'forward',
     });
     return {
       changed,

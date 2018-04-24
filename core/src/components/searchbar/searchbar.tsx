@@ -2,8 +2,7 @@ import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@st
 
 import { createThemedClasses } from '../../utils/theme';
 import { debounceEvent } from '../../utils/helpers';
-import { Mode } from '../..';
-import { InputChangeEvent } from '../../utils/input-interfaces';
+import { InputChangeEvent, Mode } from '../../interface';
 
 
 @Component({

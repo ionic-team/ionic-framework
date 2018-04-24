@@ -1,7 +1,7 @@
 // Shared Interfaces
 
 import { EventEmitter } from '@stencil/core';
-import { StyleEvent } from '../../utils/input-interfaces';
+import { StyleEvent } from '../../interface';
 
 export interface InputBaseComponent {
   ionStyle: EventEmitter<StyleEvent>;
@@ -44,7 +44,6 @@ export interface InputComponent extends InputBaseComponent {
 }
 
 export interface TextareaComponent extends InputBaseComponent {
-
   // Textarea Attributes
   cols?: number;
   rows?: number;

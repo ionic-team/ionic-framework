@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Config, GestureDetail, Mode, QueueController } from '../../index';
+import { Config, GestureDetail, Mode, QueueController } from '../../interface';
 
 @Component({
   tag: 'ion-scroll',

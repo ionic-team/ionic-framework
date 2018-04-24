@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, Mode } from '../../index';
+import { Animation, AnimationBuilder, Config, Mode } from '../../interface';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
 
@@ -217,14 +217,4 @@ export class Loading implements OverlayInterface {
       </div>
     ];
   }
-}
-
-export interface LoadingOptions {
-  spinner?: string;
-  content?: string;
-  cssClass?: string | string[];
-  showBackdrop?: boolean;
-  dismissOnPageChange?: boolean;
-  duration?: number;
-  translucent?: boolean;
 }

@@ -1,5 +1,5 @@
 import { Component, Listen, Prop } from '@stencil/core';
-import { Config } from '../..';
+import { Config } from '../../interface';
 
 import enableHideCaretOnScroll from './hacks/hide-caret';
 import enableInputBlurring from './hacks/input-blurring';

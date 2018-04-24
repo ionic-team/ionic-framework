@@ -1,6 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
-import { Mode } from '../..';
-import { InputChangeEvent } from '../../utils/input-interfaces';
+import { InputChangeEvent, Mode } from '../../interface';
 
 
 @Component({

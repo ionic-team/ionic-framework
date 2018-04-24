@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { Animation, Config, GestureDetail, Mode } from '../../index';
+import { Animation, Config, GestureDetail, MenuChangeEventDetail, Mode } from '../../interface';
 import { Side, assert, isRightSide } from '../../utils/helpers';
 
 @Component({
@@ -14,7 +14,7 @@ import { Side, assert, isRightSide } from '../../utils/helpers';
 })
 export class Menu {
 
-  private animation: Animation|undefined;
+  private animation?: Animation;
   private isPane = false;
   private _isOpen = false;
   private lastOnEnd = 0;
@@ -24,10 +24,10 @@ export class Menu {
   isAnimating = false;
   width!: number; // TOOD
 
-  backdropEl: HTMLElement|undefined;
-  menuInnerEl: HTMLElement|undefined;
-  contentEl: HTMLElement|undefined;
-  menuCtrl: HTMLIonMenuControllerElement|undefined;
+  backdropEl?: HTMLElement;
+  menuInnerEl?: HTMLElement;
+  contentEl?: HTMLElement;
+  menuCtrl?: HTMLIonMenuControllerElement;
 
   @Element() el!: HTMLIonMenuElement;
 
@@ -38,6 +38,7 @@ export class Menu {
   @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl!: HTMLIonMenuControllerElement;
   @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
   @Prop({ context: 'window' }) win!: Window;
+
   /**
    * The content's id the menu should use.
    */
@@ -469,13 +470,3 @@ function checkEdgeSide(win: Window, posX: number, isRightSide: boolean, maxEdgeS
 const SHOW_MENU = 'show-menu';
 const SHOW_BACKDROP = 'show-backdrop';
 const MENU_CONTENT_OPEN = 'menu-content-open';
-
-export interface MenuChangeEvent {
-  target: HTMLIonMenuElement;
-  detail: MenuChangeEventDetail;
-}
-
-export interface MenuChangeEventDetail {
-  disabled: boolean;
-  open: boolean;
-}

@@ -1,5 +1,5 @@
 import { Component, Prop } from '@stencil/core';
-import { Config } from '../../index';
+import { Config } from '../../interface';
 
 @Component({
   tag: 'ion-refresher-content'

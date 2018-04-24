@@ -1,4 +1,4 @@
-import { Animation } from '../../../index';
+import { Animation } from '../../../interface';
 
 /**
  * iOS Alert Enter Animation

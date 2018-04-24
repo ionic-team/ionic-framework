@@ -1,6 +1,7 @@
 import 'ionicons';
-import { Config, configFromURL } from '../utils/config';
+import { Config } from './config';
 import { isIOS } from '../utils/platform';
+import { configFromURL } from '../utils/config';
 
 const Ionic = (window as any).Ionic = (window as any).Ionic || {};
 declare const Context: any;
@@ -14,8 +15,8 @@ Object.defineProperty(Ionic, 'queue', {
 // create the Ionic.config from raw config object (if it exists)
 // and convert Ionic.config into a ConfigApi that has a get() fn
 const config = Ionic.config = Context.config = new Config({
-  ...configFromURL(window),
   ...Ionic.config,
+  ...configFromURL()
 });
 
 // first see if the mode was set as an attribute on <html>
