@@ -1,6 +1,5 @@
 import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Config, NavOutlet } from '../../index';
-import { RouteID, RouteWrite, RouterDirection } from '../router/utils/interfaces';
+import { Config, NavOutlet, RouteID, RouteWrite, RouterDirection } from '../../interface';
 import { TabbarLayout, TabbarPlacement } from '../tabbar/tabbar';
 
 

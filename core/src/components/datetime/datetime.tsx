@@ -1,5 +1,4 @@
 import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { CssClassMap } from '../../index';
 
 import {
   DatetimeData,
@@ -20,8 +19,7 @@ import {
 } from './datetime-util';
 
 import { clamp, deferEvent } from '../../utils/helpers';
-import { PickerColumn, PickerController, PickerOptions } from '../../index';
-import { StyleEvent } from '../../utils/input-interfaces';
+import { CssClassMap, PickerColumn, PickerOptions, StyleEvent } from '../../interface';
 
 
 @Component({
@@ -49,7 +47,7 @@ export class Datetime {
 
   @State() text: any;
 
-  @Prop({ connect: 'ion-picker-controller' }) pickerCtrl!: PickerController;
+  @Prop({ connect: 'ion-picker-controller' }) pickerCtrl!: HTMLIonPickerControllerElement;
 
   /**
    * If true, the user cannot interact with the datetime. Defaults to `false`.

@@ -208,7 +208,6 @@ export interface RangeInputChangeEvent {
   value: any;
 }
 
-
 export interface SelectInputChangeEvent {
   value: string|string[]|undefined;
   text: string;

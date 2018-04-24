@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State } from '@stencil/core';
-import { GestureDetail, QueueController } from '../../index';
+import { GestureDetail, QueueController } from '../../interface';
 
-export const enum RefresherState {
+const enum RefresherState {
   Inactive = 1 << 0,
   Pulling = 1 << 1,
   Ready = 1 << 2,
@@ -42,7 +42,7 @@ export class Refresher {
    * - `refreshing` - The refresher is actively waiting on the async operation to end. Once the refresh handler calls `complete()` it will begin the `completing` state.
    * - `completing` - The `refreshing` state has finished and the refresher is in the process of closing itself. Once closed, the refresher will go back to the `inactive` state.
    */
-  @State() state: RefresherState = RefresherState.Inactive;
+  @State() private state: RefresherState = RefresherState.Inactive;
 
 
   @Element() el!: HTMLElement;

@@ -1,5 +1,5 @@
 import { Component, Listen, Method, Prop } from '@stencil/core';
-import { ToastOptions } from '../../index';
+import { ToastOptions } from '../../interface';
 import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 

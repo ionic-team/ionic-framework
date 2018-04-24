@@ -1,5 +1,5 @@
 import { Component, Element, Listen, Prop, State } from '@stencil/core';
-import { Config, Mode } from '../../index';
+import { Config, Mode } from '../../interface';
 
 import {
   DisplayWhen, PLATFORM_CONFIGS, PlatformConfig, detectPlatforms, updateTestResults,

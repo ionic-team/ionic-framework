@@ -1,5 +1,5 @@
 import { Component, Listen, Prop } from '@stencil/core';
-import { QueueController } from '../..';
+import { QueueController } from '../../interface';
 
 @Component({
   tag: 'ion-status-tap'

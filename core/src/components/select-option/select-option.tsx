@@ -58,12 +58,6 @@ export class SelectOption {
       'id': this.inputId
     };
   }
-
-}
-
-
-export interface HTMLIonSelectOptionElementEvent extends CustomEvent {
-  target: HTMLIonSelectOptionElement;
 }
 
 let selectOptionIds = 0;

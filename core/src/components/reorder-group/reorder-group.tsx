@@ -1,19 +1,7 @@
 import { Component, Element, Prop, State, Watch } from '@stencil/core';
-import { GestureDetail, QueueController } from '../../index';
+import { GestureDetail, QueueController } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart} from '../../utils/haptic';
 
-const AUTO_SCROLL_MARGIN = 60;
-const SCROLL_JUMP = 10;
-const ITEM_REORDER_SELECTED = 'reorder-selected';
-
-
-export class ReorderIndexes {
-  constructor(public from: number, public to: number) {}
-
-  applyTo(array: any) {
-    reorderArray(array, this);
-  }
-}
 
 @Component({
   tag: 'ion-reorder-group',
@@ -300,10 +288,6 @@ function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement
   return null;
 }
 
-export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {
-  const element = array[indexes.from];
-  array.splice(indexes.from, 1);
-  array.splice(indexes.to, 0, element);
-  return array;
-}
-
+const AUTO_SCROLL_MARGIN = 60;
+const SCROLL_JUMP = 10;
+const ITEM_REORDER_SELECTED = 'reorder-selected';

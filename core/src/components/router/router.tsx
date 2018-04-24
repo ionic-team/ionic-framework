@@ -1,9 +1,9 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Config, QueueController } from '../../index';
+import { Config, QueueController } from '../../interface';
 import { flattenRouterTree, readRedirects, readRoutes } from './utils/parser';
 import { readNavState, writeNavState } from './utils/dom';
 import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
-import { RouteChain, RouteRedirect, RouterDirection, RouterEventDetail } from './utils/interfaces';
+import { RouteChain, RouteRedirect, RouterDirection, RouterEventDetail } from './utils/interface';
 import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matching';
 
 @Component({

@@ -1,10 +1,15 @@
 import { EventEmitter } from '@stencil/core';
 
+export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {
+  const element = array[indexes.from];
+  array.splice(indexes.from, 1);
+  array.splice(indexes.to, 0, element);
+  return array;
+}
+
 export function clamp(min: number, n: number, max: number) {
   return Math.max(min, Math.min(n, max));
 }
-
-export function isDef(v: any): boolean { return v !== undefined && v !== null; }
 
 export function assert(actual: any, reason: string) {
   if (!actual) {

@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, Mode } from '../../index';
+import { Animation, AnimationBuilder, Config, Mode } from '../../interface';
 
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 import { OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
@@ -216,17 +216,4 @@ export class Toast implements OverlayInterface {
       </div>
     );
   }
-
-}
-
-export interface ToastOptions {
-  message?: string;
-  cssClass?: string | string[];
-  duration?: number;
-  showCloseButton?: boolean;
-  closeButtonText?: string;
-  position?: string;
-  translucent?: boolean;
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
 }

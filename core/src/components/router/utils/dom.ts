@@ -1,4 +1,4 @@
-import { NavOutlet, NavOutletElement, RouteChain, RouteID, RouterDirection } from './interfaces';
+import { NavOutlet, NavOutletElement, RouteChain, RouteID, RouterDirection } from './interface';
 
 export async function writeNavState(root: HTMLElement|undefined, chain: RouteChain|null, direction: RouterDirection, index: number, changed = false): Promise<boolean> {
   try {

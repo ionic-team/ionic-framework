@@ -1,7 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
-import { Mode } from '../..';
+import { InputChangeEvent, Mode, StyleEvent  } from '../../interface';
 import { debounceEvent, deferEvent } from '../../utils/helpers';
-import { InputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
 import { createThemedClasses } from '../../utils/theme';
 import { InputComponent } from './input-base';
 

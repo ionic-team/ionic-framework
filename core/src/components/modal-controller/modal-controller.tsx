@@ -1,5 +1,5 @@
 import { Component, Listen, Method, Prop } from '@stencil/core';
-import { ModalOptions } from '../../index';
+import { ModalOptions } from '../../interface';
 import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 

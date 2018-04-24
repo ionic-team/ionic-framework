@@ -1,5 +1,5 @@
 
-import { Animation } from '../../../index';
+import { Animation } from '../../../interface';
 
 /**
  * MD Action Sheet Enter Animation

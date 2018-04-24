@@ -1,13 +1,12 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
-import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, Mode, NavOutlet, QueueController } from '../..';
+import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, Mode, NavOutlet, QueueController, RouteID, RouteWrite, RouterDirection } from '../../interface';
 import { assert } from '../../utils/helpers';
 import { AnimationOptions, ViewLifecycle, lifecycle, transition } from '../../utils/transition';
-import { RouteID, RouteWrite, RouterDirection } from '../router/utils/interfaces';
+import { NavComponent, NavDirection, NavOptions, NavResult, TransitionDoneFn, TransitionInstruction } from '../../interface';
+import { ViewController, ViewState, convertToViews, matches } from './view-controller';
+
 import iosTransitionAnimation from './animations/ios.transition';
 import mdTransitionAnimation from './animations/md.transition';
-import { NavComponent, NavDirection, NavOptions, NavResult, TransitionDoneFn, TransitionInstruction, ViewState, convertToViews } from './nav-util';
-import { ViewController, matches } from './view-controller';
-
 
 
 @Component({
@@ -17,7 +16,7 @@ export class Nav implements NavOutlet {
 
   private init = false;
   private transInstr: TransitionInstruction[] = [];
-  private sbTrns: Animation|undefined;
+  private sbTrns?: Animation;
   private useRouter = false;
   private isTransitioning = false;
   private destroyed = false;
@@ -34,9 +33,9 @@ export class Nav implements NavOutlet {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ mutable: true }) swipeBackEnabled?: boolean;
   @Prop({ mutable: true }) animated?: boolean;
-  @Prop() delegate?: FrameworkDelegate|undefined;
-  @Prop() rootParams: ComponentProps|undefined;
-  @Prop() root: NavComponent|undefined;
+  @Prop() delegate?: FrameworkDelegate;
+  @Prop() rootParams?: ComponentProps;
+  @Prop() root?: NavComponent;
   @Watch('root')
   rootChanged() {
     const isDev = Build.isDev;
@@ -201,11 +200,11 @@ export class Nav implements NavOutlet {
       }
     };
     if (viewController) {
-      finish = this.popTo(viewController, {...commonOpts, direction: NavDirection.Back});
+      finish = this.popTo(viewController, {...commonOpts, direction: 'back'});
     } else if (direction === 1) {
       finish = this.push(id, params, commonOpts);
     } else if (direction === -1) {
-      finish = this.setRoot(id, params, {...commonOpts, direction: NavDirection.Back, animate: true});
+      finish = this.setRoot(id, params, {...commonOpts, direction: 'back', animate: true});
     } else {
       finish = this.setRoot(id, params, commonOpts);
     }
@@ -305,7 +304,7 @@ export class Nav implements NavOutlet {
     if (ti.opts!.updateURL !== false && this.useRouter) {
       const router = this.win.document.querySelector('ion-router');
       if (router) {
-        const direction = (result.direction === NavDirection.Back)
+        const direction = (result.direction === 'back')
           ? RouterDirection.Back
           : RouterDirection.Forward;
 
@@ -501,7 +500,7 @@ export class Nav implements NavOutlet {
         }
       }
       // default the direction to "back"
-      opts.direction = opts.direction || NavDirection.Back;
+      opts.direction = opts.direction || 'back';
     }
 
     const finalBalance = this.views.length + (insertViews ? insertViews.length : 0) - (removeCount ? removeCount : 0);
@@ -525,7 +524,7 @@ export class Nav implements NavOutlet {
 
       if (ti.enteringRequiresTransition) {
         // default to forward if not already set
-        opts.direction = opts.direction || NavDirection.Forward;
+        opts.direction = opts.direction || 'forward';
       }
     }
 
@@ -687,7 +686,7 @@ export class Nav implements NavOutlet {
 
     // default the direction to "back";
     const opts: NavOptions = {
-      direction: NavDirection.Back,
+      direction: 'back',
       progressAnimation: true
     };
 

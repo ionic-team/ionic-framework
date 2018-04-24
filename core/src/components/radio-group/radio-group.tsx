@@ -1,5 +1,5 @@
 import { Component, ComponentDidLoad, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
-import { InputChangeEvent, RadioGroupInput } from '../../utils/input-interfaces';
+import { InputChangeEvent, RadioGroupInput } from '../../interface';
 
 
 @Component({

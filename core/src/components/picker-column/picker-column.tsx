@@ -1,5 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { GestureDetail, Mode, PickerColumn, PickerColumnOption, QueueController } from '../../index';
+import { GestureDetail, Mode, PickerColumn, PickerColumnOption, QueueController } from '../../interface';
 import { hapticSelectionChanged } from '../../utils';
 import { clamp } from '../../utils/helpers';
 

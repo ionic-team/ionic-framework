@@ -1,7 +1,7 @@
-import { GestureController } from '../..';
+import { GestureController } from '../../interface';
 
 export class GestureDelegate {
-  private ctrl: GestureController|undefined;
+  private ctrl?: GestureController;
 
   constructor(
     ctrl: any,
@@ -58,10 +58,9 @@ export class GestureDelegate {
   }
 }
 
-
 export class BlockerDelegate {
 
-  private ctrl: GestureController|undefined;
+  private ctrl?: GestureController;
 
   constructor(
     private id: number,
@@ -105,15 +104,4 @@ export class BlockerDelegate {
     this.unblock();
     this.ctrl = undefined;
   }
-}
-
-export interface GestureConfig {
-  name: string;
-  priority?: number;
-  disableScroll?: boolean;
-}
-
-export interface BlockerConfig {
-  disable?: string[];
-  disableScroll?: boolean;
 }

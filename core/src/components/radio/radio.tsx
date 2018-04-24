@@ -1,8 +1,7 @@
-import { CheckedInputChangeEvent, RadioButtonInput, StyleEvent } from '../../utils/input-interfaces';
-import { Component, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { createThemedClasses } from '../../utils/theme';
-import { CssClassMap, Mode } from '../../index';
+import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { CheckedInputChangeEvent, CssClassMap, Mode, RadioButtonInput, StyleEvent } from '../../interface';
 import { deferEvent } from '../../utils/helpers';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
@@ -15,7 +14,7 @@ import { deferEvent } from '../../utils/helpers';
     theme: 'radio'
   }
 })
-export class Radio implements RadioButtonInput, ComponentDidLoad, ComponentDidUnload, ComponentWillLoad {
+export class Radio implements RadioButtonInput {
 
   private inputId = `ion-rb-${radioButtonIds++}`;
   private nativeInput!: HTMLInputElement;

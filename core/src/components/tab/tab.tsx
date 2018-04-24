@@ -1,6 +1,6 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
-import { FrameworkDelegate, attachComponent } from '../../utils/framework-delegate';
-import { ComponentRef } from '../..';
+import { ComponentRef, FrameworkDelegate } from '../../interface';
+import { attachComponent } from '../../utils/framework-delegate';
 
 @Component({
   tag: 'ion-tab'
