@@ -1,6 +1,5 @@
-import { CheckboxInput, CheckedInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { CssClassMap, Mode } from '../../index';
+import { CheckboxInput, CheckedInputChangeEvent, CssClassMap, Mode, StyleEvent } from '../../interface';
 import { deferEvent } from '../../utils/helpers';
 
 

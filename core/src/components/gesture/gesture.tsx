@@ -1,13 +1,12 @@
 import { Component, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
+import { BlockerConfig, BlockerDelegate , GestureCallback, GestureDelegate, GestureDetail, QueueController } from '../../interface';
 import { assert, now } from '../../utils/helpers';
-import { BlockerConfig, BlockerDelegate, GestureDelegate, QueueController } from '../../index';
 import { PanRecognizer } from './recognizers';
 
 export const BLOCK_ALL: BlockerConfig = {
   disable: ['menu-swipe', 'goback-swipe'],
   disableScroll: true
 };
-
 
 @Component({
   tag: 'ion-gesture'
@@ -387,26 +386,6 @@ export class Gesture {
 }
 
 const MOUSE_WAIT = 2500;
-
-export interface GestureDetail {
-  type: string;
-  startX: number;
-  startY: number;
-  startTimeStamp: number;
-  currentX: number;
-  currentY: number;
-  velocityX: number;
-  velocityY: number;
-  deltaX: number;
-  deltaY: number;
-  timeStamp: number;
-  event: UIEvent;
-  data?: any;
-}
-
-export interface GestureCallback {
-  (detail?: GestureDetail): boolean|void;
-}
 
 function updateDetail(ev: any, detail: GestureDetail) {
   // get X coordinates for either a mouse click

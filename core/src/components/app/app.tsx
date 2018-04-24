@@ -1,5 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { Config, Mode } from '../../index';
+import { Config, Mode } from '../../interface';
 import { isDevice, isHybrid, needInputShims } from '../../utils/platform';
 
 @Component({

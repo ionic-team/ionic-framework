@@ -1,4 +1,4 @@
-import { RouteChain, RouteID } from '../utils/interfaces';
+import { RouteChain, RouteID } from '../utils/interface';
 import { routerIDsToChain, routerPathToChain } from '../utils/matching';
 import { mockRouteElement } from './parser.spec';
 import { chainToPath, generatePath, parsePath } from '../utils/path';

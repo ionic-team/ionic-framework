@@ -1,4 +1,4 @@
-import { RouteChain, RouteID, RouteRedirect } from './interfaces';
+import { RouteChain, RouteID, RouteRedirect } from './interface';
 
 
 export function matchesRedirect(input: string[], route: RouteRedirect): boolean {

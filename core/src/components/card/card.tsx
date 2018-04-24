@@ -1,5 +1,5 @@
 import { Component, Prop } from '@stencil/core';
-import { Mode } from '../..';
+import { Mode } from '../../interface';
 
 @Component({
   tag: 'ion-card',

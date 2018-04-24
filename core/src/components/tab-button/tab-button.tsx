@@ -1,5 +1,5 @@
 import {Component, Element, Event, EventEmitter, Listen, Prop, State} from '@stencil/core';
-import { Mode } from '../..';
+import { Mode } from '../../interface';
 
 
 @Component({

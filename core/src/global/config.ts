@@ -3,8 +3,8 @@ export class Config {
 
   private m: Map<string, any>;
 
-  constructor(configObj: {[key: string]: any}|undefined) {
-    this.m = new Map<string, any>(configObj ? Object.entries(configObj) : undefined);
+  constructor(configObj: {[key: string]: any}) {
+    this.m = new Map<string, any>(Object.entries(configObj));
   }
 
   get(key: string, fallback?: any): any {

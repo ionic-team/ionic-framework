@@ -1,7 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { GestureDetail, Mode } from '../../index';
+import { BaseInput, GestureDetail, Mode, RangeInputChangeEvent, StyleEvent } from '../../interface';
 import { clamp, debounceEvent, deferEvent } from '../../utils/helpers';
-import { BaseInput, RangeInputChangeEvent, StyleEvent } from '../../utils/input-interfaces';
 
 export interface Tick {
   ratio: number | (() => number);

@@ -1,5 +1,5 @@
 import { Component, Element, Listen, Method, Prop } from '@stencil/core';
-import { Config, Mode, QueueController } from '../../index';
+import { Config, Mode, QueueController } from '../../interface';
 
 
 @Component({

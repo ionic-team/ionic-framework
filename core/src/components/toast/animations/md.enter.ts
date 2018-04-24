@@ -1,4 +1,4 @@
-import { Animation } from '../../../index';
+import { Animation } from '../../../interface';
 
 /**
  * MD Toast Enter Animation

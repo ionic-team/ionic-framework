@@ -1,6 +1,6 @@
 import 'ionicons';
 import { Config } from './config';
-import { configFromURL, isIOS } from '../utils/platform';
+import { isIOS } from '../utils/platform';
 
 const Ionic = (window as any).Ionic = (window as any).Ionic || {};
 declare const Context: any;
@@ -14,7 +14,6 @@ Object.defineProperty(Ionic, 'queue', {
 // create the Ionic.config from raw config object (if it exists)
 // and convert Ionic.config into a ConfigApi that has a get() fn
 const config = Ionic.config = Context.config = new Config({
-  ...configFromURL(window),
   ...Ionic.config,
 });
 

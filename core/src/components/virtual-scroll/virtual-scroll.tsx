@@ -4,7 +4,7 @@ import { Cell, DomRenderFn, HeaderFn, ItemHeightFn,
   VirtualNode, calcCells, calcHeightIndex, doRender,
   findCellIndex, getRange, getShouldUpdate, getViewport,
   inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
-import { QueueController } from '../../index';
+import { QueueController } from '../../interface';
 
 
 @Component({

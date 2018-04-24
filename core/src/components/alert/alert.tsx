@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, CssClassMap, Mode } from '../../index';
+import { AlertButton, AlertInput, Animation, AnimationBuilder, Config, CssClassMap, Mode } from '../../interface';
 import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
@@ -444,37 +444,4 @@ function buttonClass(button: AlertButton): CssClassMap {
     'alert-button': true,
     ...getClassMap(button.cssClass)
   };
-}
-
-export interface AlertOptions {
-  header?: string;
-  subHeader?: string;
-  message?: string;
-  cssClass?: string | string[];
-  mode?: string;
-  inputs?: AlertInput[];
-  buttons?: (AlertButton|string)[];
-  enableBackdropDismiss?: boolean;
-  translucent?: boolean;
-}
-
-export interface AlertInput {
-  type: string;
-  name: string | number;
-  placeholder?: string;
-  value?: string;
-  label?: string;
-  checked?: boolean;
-  disabled?: boolean;
-  id?: string;
-  handler?: Function;
-  min?: string | number;
-  max?: string | number;
-}
-
-export interface AlertButton {
-  text: string;
-  role?: string;
-  cssClass?: string | string[];
-  handler?: (value: any) => boolean|void;
 }

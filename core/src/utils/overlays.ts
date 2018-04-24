@@ -1,5 +1,5 @@
 import { EventEmitter } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, Mode } from '..';
+import { Animation, AnimationBuilder, Config, Mode } from '../interface';
 
 let lastId = 1;
 

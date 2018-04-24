@@ -1,5 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { Mode } from '../..';
+import { Mode } from '../../interface';
 
 
 @Component({

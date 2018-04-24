@@ -1,6 +1,5 @@
 import { ComponentRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavDirection } from '@ionic/core';
 
 import { NavController } from '../../providers/nav-controller';
 
@@ -106,7 +105,7 @@ export class StackController {
       await containerEl.componentOnReady();
       await containerEl.commit(enteringEl, leavingEl, {
         duration: !animated ? 0 : undefined,
-        direction: direction === 1 ? NavDirection.Forward : NavDirection.Back,
+        direction: direction === 1 ? 'forward' : 'back',
         deepWait: true,
         showGoBack
       });

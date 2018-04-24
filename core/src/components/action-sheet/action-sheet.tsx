@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, CssClassMap, Mode } from '../../index';
+import { ActionSheetButton, Animation, AnimationBuilder, Config, CssClassMap, Mode } from '../../interface';
 import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
@@ -283,22 +283,5 @@ function buttonClass(button: ActionSheetButton): CssClassMap {
     buttonClasses[`action-sheet-${button.role}`] = true;
   }
   return buttonClasses;
-}
-
-export interface ActionSheetOptions {
-  header?: string;
-  subHeader?: string;
-  cssClass?: string;
-  buttons: (ActionSheetButton | string)[];
-  enableBackdropDismiss?: boolean;
-  translucent?: boolean;
-}
-
-export interface ActionSheetButton {
-  text?: string;
-  role?: 'cancel' | 'destructive' | 'selected' | string;
-  icon?: string;
-  cssClass?: string;
-  handler?: () => boolean | void;
 }
 

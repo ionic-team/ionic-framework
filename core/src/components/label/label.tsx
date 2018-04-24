@@ -1,6 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
-import { Mode } from '../..';
-import { StyleEvent } from '../../utils/input-interfaces';
+import { Mode, StyleEvent } from '../../interface';
 
 
 @Component({

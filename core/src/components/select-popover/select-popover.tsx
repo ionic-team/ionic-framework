@@ -1,14 +1,6 @@
 import { Component, Listen, Prop } from '@stencil/core';
-import { Mode } from '../..';
+import { Mode, SelectPopoverOption } from '../../interface';
 
-
-export interface SelectPopoverOption {
-  text: string;
-  value: string;
-  disabled: boolean;
-  checked: boolean;
-  handler?: Function;
-}
 
 @Component({
   tag: 'ion-select-popover',

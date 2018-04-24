@@ -1,6 +1,5 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
-import { ComponentProps } from '../..';
-import { NavComponent } from '../nav/nav-util';
+import { ComponentProps, NavComponent } from '../../interface';
 
 @Component({
   tag: 'ion-nav-push',

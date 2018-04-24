@@ -1,4 +1,4 @@
-import { RouteChain, RouterDirection } from './interfaces';
+import { RouteChain, RouterDirection } from './interface';
 
 export function generatePath(segments: string[]): string {
   const path = segments

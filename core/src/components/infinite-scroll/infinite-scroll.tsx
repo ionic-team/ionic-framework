@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { QueueController } from '../../index';
+import { QueueController } from '../../interface';
 
 @Component({
   tag: 'ion-infinite-scroll',

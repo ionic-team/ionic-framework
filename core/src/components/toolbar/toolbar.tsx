@@ -1,6 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
-import { Config, Mode } from '../../index';
+import { Config, Mode } from '../../interface';
 
 
 @Component({
