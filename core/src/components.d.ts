@@ -856,7 +856,7 @@ declare global {
       /**
        * The type of the button. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
        */
-      'type': string;
+      'type': 'submit' | 'reset' | 'button';
     }
   }
 
@@ -934,7 +934,7 @@ declare global {
       /**
        * The type of the button. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
        */
-      'type'?: string;
+      'type'?: 'submit' | 'reset' | 'button';
     }
   }
 }

@@ -15,7 +15,7 @@ export class Gesture {
 
   private detail: GestureDetail;
   private positions: number[] = [];
-  private gesture!: GestureDelegate;
+  private gesture?: GestureDelegate;
   private lastTouch = 0;
   private pan!: PanRecognizer;
   private hasCapturedPan = false;
@@ -27,6 +27,7 @@ export class Gesture {
   @Prop({ connect: 'ion-gesture-controller' }) gestureCtrl!: HTMLIonGestureControllerElement;
   @Prop({ context: 'queue' }) queue!: QueueController;
   @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
+  @Prop({ context: 'isServer' }) isServer!: boolean;
 
   @Prop() disabled = false;
   @Prop() attachTo: string | HTMLElement = 'child';
@@ -65,6 +66,9 @@ export class Gesture {
   }
 
   async componentWillLoad() {
+    if (this.isServer) {
+      return;
+    }
     this.gesture = await this.gestureCtrl.create({
       name: this.gestureName,
       priority: this.gesturePriority,
@@ -73,6 +77,9 @@ export class Gesture {
   }
 
   componentDidLoad() {
+    if (this.isServer) {
+      return;
+    }
     // in this case, we already know the GestureController and Gesture are already
     // apart of the same bundle, so it's safe to load it this way
     // only create one instance of GestureController, and reuse the same one later
@@ -91,7 +98,9 @@ export class Gesture {
       this.blocker.destroy();
       this.blocker = undefined;
     }
-    this.gesture.destroy();
+    if (this.gesture) {
+      this.gesture.destroy();
+    }
   }
 
   @Watch('disabled')
@@ -267,7 +276,7 @@ export class Gesture {
   }
 
   private tryToCapturePan(): boolean {
-    if (!this.gesture.capture()) {
+    if (this.gesture && !this.gesture.capture()) {
       return false;
     }
     this.hasCapturedPan = true;

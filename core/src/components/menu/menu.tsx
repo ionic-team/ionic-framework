@@ -126,7 +126,11 @@ export class Menu {
     if (this.type == null) {
       this.type = this.mode === 'ios' ? 'reveal' : 'overlay';
     }
-    this.menuCtrl = await this.lazyMenuCtrl.componentOnReady();
+    if (this.isServer) {
+      this.disabled = true;
+    } else {
+      this.menuCtrl = await this.lazyMenuCtrl.componentOnReady();
+    }
   }
 
   componentDidLoad() {

@@ -88,7 +88,7 @@ export class Button {
    * Possible values are: `"submit"`, `"reset"` and `"button"`.
    * Default value is: `"button"`
    */
-  @Prop() type = 'button';
+  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
   /**
    * Emitted when the button has focus.

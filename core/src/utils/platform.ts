@@ -35,7 +35,7 @@ export function isTablet(win: Window) {
 }
 
 export function isDevice(win: Window) {
-  return win.matchMedia('(any-pointer:coarse)').matches;
+  return matchMedia(win, '(any-pointer:coarse)');
 }
 
 export function isHybrid(win: Window) {
@@ -62,4 +62,10 @@ export function needInputShims(win: Window) {
 
 export function testUserAgent(win: Window, expr: RegExp) {
   return expr.test(win.navigator.userAgent);
+}
+
+export function matchMedia(win: Window, query: string, fallback = false): boolean {
+  return win.matchMedia
+    ? win.matchMedia(query).matches
+    : fallback;
 }

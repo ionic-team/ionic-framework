@@ -1,4 +1,4 @@
-import { isAndroid, isCordova, isElectron, isIOS, isIpad, isIphone, isPhablet, isTablet } from './platform';
+import { isAndroid, isCordova, isElectron, isIOS, isIpad, isIphone, isPhablet, isTablet, matchMedia } from './platform';
 import { Config, Mode } from '../interface';
 
 export function updateTestResults(displayWhen: DisplayWhen) {
@@ -29,7 +29,7 @@ export function isSizeMatch(win: Window, multiSizeString: string) {
   const sizes = multiSizeString.replace(/\s/g, '').split(',');
   for (const size of sizes) {
     const mediaQuery = SIZE_TO_MEDIA[size];
-    if (mediaQuery && win.matchMedia(mediaQuery).matches) {
+    if (mediaQuery && matchMedia(win, mediaQuery)) {
       return true;
     }
   }
@@ -39,7 +39,7 @@ export function isSizeMatch(win: Window, multiSizeString: string) {
 export function getTestResult(displayWhen: DisplayWhen) {
   const resultsToConsider: boolean[] = [];
   if (displayWhen.mediaQuery) {
-    resultsToConsider.push(displayWhen.win.matchMedia(displayWhen.mediaQuery).matches);
+    resultsToConsider.push(matchMedia(displayWhen.win, displayWhen.mediaQuery));
   }
   if (displayWhen.size) {
     resultsToConsider.push(isSizeMatch(displayWhen.win, displayWhen.size));
@@ -80,8 +80,9 @@ export function isOrientationMatch(win: Window, orientation: string) {
 }
 
 export function isPortrait(win: Window): boolean {
-  return win.matchMedia('(orientation: portrait)').matches;
+  return matchMedia(win, '(orientation: portrait)');
 }
+
 
 const SIZE_TO_MEDIA: any = {
   'xs': '(min-width: 0px)',

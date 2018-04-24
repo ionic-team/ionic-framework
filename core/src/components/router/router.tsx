@@ -25,25 +25,37 @@ export class Router {
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'queue' }) queue!: QueueController;
   @Prop({ context: 'window' }) win!: Window;
+  @Prop({ context: 'isServer' }) isServer!: boolean;
 
   @Prop() base = '';
   @Prop() useHash = true;
 
   @Event() ionRouteChanged!: EventEmitter<RouterEventDetail>;
 
-  componentDidLoad() {
-    this.init = true;
-    console.debug('[ion-router] router did load');
+  componentWillLoad() {
+    console.debug('[ion-router] router will load');
 
     const tree = readRoutes(this.el);
     this.routes = flattenRouterTree(tree);
     this.redirects = readRedirects(this.el);
 
-    // TODO: use something else
-    requestAnimationFrame(() => {
-      this.historyDirection();
-      this.writeNavStateRoot(this.getPath(), RouterDirection.None);
-    });
+    return this.writeNavStateRoot(this.getPath(), RouterDirection.None);
+  }
+
+  componentDidLoad() {
+    this.init = true;
+
+    console.debug('[ion-router] router did load');
+
+    // const tree = readRoutes(this.el);
+    // this.routes = flattenRouterTree(tree);
+    // this.redirects = readRedirects(this.el);
+
+    // // TODO: use something else
+    // requestAnimationFrame(() => {
+    //   this.historyDirection();
+    //   this.writeNavStateRoot(this.getPath(), RouterDirection.None);
+    // });
   }
 
   @Listen('ionRouteRedirectChanged')

@@ -9,14 +9,14 @@ import { DATA_URL, STORED_DEMO_MODE_KEY, STORED_DEMO_URL_KEY } from '../helpers'
 })
 export class ThemeBuilder {
 
-  @State() cssText: string = '';
+  @State() cssText = '';
   demoData: { name: string, url: string }[];
   @State() demoMode: string;
   @State() demoUrl: string;
   @State() hoverProperty: string;
   @State() propertiesUsed: string[];
   themeData: { name: string }[];
-  @State() themeName: string = '';
+  @State() themeName = '';
 
   componentWillLoad () {
     return fetch(DATA_URL).then(rsp => {
