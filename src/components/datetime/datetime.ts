@@ -150,7 +150,7 @@ import {
  * | Complete Date        | YYYY-MM-DD             | 1994-12-15                   |
  * | Date and Time        | YYYY-MM-DDTHH:mm       | 1994-12-15T13:47             |
  * | UTC Timezone         | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20.789Z     |
- * | Timezone Offset      | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20.789+5:00 |
+ * | Timezone Offset      | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20.789+05:00 |
  * | Hour and Minute      | HH:mm                  | 13:47                        |
  * | Hour, Minute, Second | HH:mm:ss               | 13:47:20                     |
  *
