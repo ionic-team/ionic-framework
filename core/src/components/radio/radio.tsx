@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { CheckedInputChangeEvent, CssClassMap, Mode, RadioButtonInput, StyleEvent } from '../../interface';
+import { CheckedInputChangeEvent, Mode, RadioButtonInput, StyleEvent } from '../../interface';
 import { deferEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -182,12 +182,8 @@ export class Radio implements RadioButtonInput {
   }
 
   render() {
-    const radioClasses: CssClassMap = {
-      'radio-icon': true,
-      'radio-checked': this.checked
-    };
     return [
-      <div class={radioClasses}>
+      <div class="radio-icon">
         <div class="radio-inner"/>
       </div>,
       <input
