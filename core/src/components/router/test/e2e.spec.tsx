@@ -1,9 +1,9 @@
+import { TestWindow } from '@stencil/core/dist/testing';
 import { RouteChain, RouteID } from '../utils/interface';
 import { routerIDsToChain, routerPathToChain } from '../utils/matching';
-import { mockRouteElement } from './parser.spec';
-import { chainToPath, generatePath, parsePath } from '../utils/path';
 import { flattenRouterTree, readRoutes } from '../utils/parser';
-import { TestWindow } from '@stencil/core/dist/testing';
+import { chainToPath, generatePath, parsePath } from '../utils/path';
+import { mockRouteElement } from './parser.spec';
 
 describe('ionic-conference-app', () => {
 

@@ -1,5 +1,5 @@
-import { ViewController } from './view-controller';
 import { Animation, ComponentRef, FrameworkDelegate } from '../../interface';
+import { ViewController } from './view-controller';
 
 export { Nav } from './nav';
 

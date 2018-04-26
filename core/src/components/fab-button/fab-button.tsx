@@ -1,6 +1,6 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 import { CssClassMap, Mode } from '../../interface';
+import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 
 
 @Component({

@@ -1,9 +1,9 @@
 import { TestWindow } from '@stencil/core/dist/testing';
+import { Config } from '../../../global/config';
 import { AnimationControllerImpl } from '../../animation-controller/animation-controller';
 import { Nav } from '../nav';
 import { NavOptions } from '../nav-interface';
 import { ViewController, ViewState } from '../view-controller';
-import { Config } from '../../../global/config';
 
 
 

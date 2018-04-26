@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, Config, Mode } from '../../interface';
-import { createThemedClasses, getClassMap } from '../../utils/theme';
 import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
+import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import iosEnterAnimation from './animations/ios.enter';
 import iosLeaveAnimation from './animations/ios.leave';

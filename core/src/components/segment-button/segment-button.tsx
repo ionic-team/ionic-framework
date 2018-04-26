@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
-import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 import { Mode } from '../../interface';
+import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 
 let ids = 0;
 

@@ -5,6 +5,9 @@
     "no-non-null-assertion": false,
     "no-unnecessary-type-assertion": false,
     "prefer-for-of": false,
-    "no-import-side-effect": false
+    "no-import-side-effect": false,
+    "ordered-imports": [true, {
+      "named-imports-order": "lowercase-last"
+    }]
   }
 }

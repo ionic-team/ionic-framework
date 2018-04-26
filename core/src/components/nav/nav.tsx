@@ -1,8 +1,8 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, Mode, NavOutlet, QueueController, RouteID, RouteWrite, RouterDirection } from '../../interface';
+import { NavComponent, NavDirection, NavOptions, NavResult, TransitionDoneFn, TransitionInstruction } from '../../interface';
 import { assert } from '../../utils/helpers';
 import { AnimationOptions, ViewLifecycle, lifecycle, transition } from '../../utils/transition';
-import { NavComponent, NavDirection, NavOptions, NavResult, TransitionDoneFn, TransitionInstruction } from '../../interface';
 import { ViewController, ViewState, convertToViews, matches } from './view-controller';
 
 import iosTransitionAnimation from './animations/ios.transition';

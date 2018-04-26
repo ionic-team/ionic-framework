@@ -1,6 +1,6 @@
-import { flattenRouterTree, readRedirects, readRoutes } from '../utils/parser';
-import { RouteRedirect, RouteTree } from '../utils/interface';
 import { TestWindow } from '@stencil/core/dist/testing';
+import { RouteRedirect, RouteTree } from '../utils/interface';
+import { flattenRouterTree, readRedirects, readRoutes } from '../utils/parser';
 
 describe('parser', () => {
 

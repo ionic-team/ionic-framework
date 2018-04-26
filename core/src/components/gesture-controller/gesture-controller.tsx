@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, Method } from '@stencil/core';
-import { BlockerDelegate, GestureDelegate } from './gesture-controller-utils';
 import { BlockerConfig, GestureConfig } from '../../interface';
+import { BlockerDelegate, GestureDelegate } from './gesture-controller-utils';
 
 
 @Component({

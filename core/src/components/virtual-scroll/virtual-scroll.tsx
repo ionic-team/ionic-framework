@@ -1,10 +1,10 @@
 import { Component, Element, EventListenerEnable, Listen, Method, Prop, Watch } from '@stencil/core';
+import { QueueController } from '../../interface';
 import { Cell, DomRenderFn, HeaderFn, ItemHeightFn,
   ItemRenderFn, NodeHeightFn, Range,
   VirtualNode, calcCells, calcHeightIndex, doRender,
   findCellIndex, getRange, getShouldUpdate, getViewport,
   inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
-import { QueueController } from '../../interface';
 
 
 @Component({

@@ -18,8 +18,8 @@ import {
   updateDate
 } from './datetime-util';
 
-import { clamp, deferEvent } from '../../utils/helpers';
 import { CssClassMap, PickerColumn, PickerOptions, StyleEvent } from '../../interface';
+import { clamp, deferEvent } from '../../utils/helpers';
 
 
 @Component({
