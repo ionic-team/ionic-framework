@@ -1,10 +1,12 @@
+import { entries } from '../utils/helpers';
 
 export class Config {
 
   private m: Map<string, any>;
 
   constructor(configObj: {[key: string]: any}) {
-    this.m = new Map<string, any>(Object.entries(configObj));
+    this.m = new Map<string, any>(entries(configObj));
+
   }
 
   get(key: string, fallback?: any): any {
