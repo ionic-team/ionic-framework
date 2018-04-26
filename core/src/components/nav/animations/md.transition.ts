@@ -1,4 +1,4 @@
-import { Animation } from '../../../index';
+import { Animation } from '../../../interface';
 import { AnimationOptions } from '../../../utils/transition';
 
 const TRANSLATEY = 'translateY';

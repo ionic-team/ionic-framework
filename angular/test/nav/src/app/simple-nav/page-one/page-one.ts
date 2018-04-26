@@ -16,6 +16,11 @@ import { PageTwo } from '../page-two/page-two';
       Page One - {{ts}}
       <div>
         <ion-button [routerLink]="['/simple-nav/page-two']">Go to Page Two</ion-button>
+
+        <ion-button routerLink="/simple-nav/page-two" routerDirection="forward">FORWARD (Page Two)</ion-button>
+        <ion-button routerLink="/simple-nav/page-two" routerDirection="back">BACK (Page Two)</ion-button>
+        <ion-button routerLink="/simple-nav/page-two" routerDirection="root">ROOT (Page Two)</ion-button>
+
       </div>
     </ion-content>
   `

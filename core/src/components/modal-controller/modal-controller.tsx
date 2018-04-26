@@ -1,5 +1,5 @@
-import { Component, Listen, Method } from '@stencil/core';
-import { ModalOptions } from '../../index';
+import { Component, Listen, Method, Prop } from '@stencil/core';
+import { ModalOptions } from '../../interface';
 import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 
@@ -9,6 +9,8 @@ import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, remove
 export class ModalController implements OverlayController {
 
   private modals = new Map<number, HTMLIonModalElement>();
+
+  @Prop({ context: 'document' }) doc!: Document;
 
   @Listen('body:ionModalWillPresent')
   protected modalWillPresent(ev: any) {
@@ -31,7 +33,7 @@ export class ModalController implements OverlayController {
    */
   @Method()
   create(opts?: ModalOptions): Promise<HTMLIonModalElement> {
-    return createOverlay(document.createElement('ion-modal'), opts);
+    return createOverlay(this.doc.createElement('ion-modal'), opts);
   }
 
   /*

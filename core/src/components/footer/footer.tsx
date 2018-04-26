@@ -1,6 +1,7 @@
 import { Component, Prop } from '@stencil/core';
 
 import { createThemedClasses } from '../../utils/theme';
+import { Mode } from '../../interface';
 
 @Component({
   tag: 'ion-footer',
@@ -13,8 +14,8 @@ import { createThemedClasses } from '../../utils/theme';
   }
 })
 export class Footer {
-  mode: string;
-  color: string;
+  mode!: Mode;
+  color!: string;
 
   /**
    * If true, the footer will be translucent.

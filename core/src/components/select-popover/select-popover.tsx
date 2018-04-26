@@ -1,13 +1,6 @@
 import { Component, Listen, Prop } from '@stencil/core';
+import { Mode, SelectPopoverOption } from '../../interface';
 
-
-export interface SelectPopoverOption {
-  text: string;
-  value: string;
-  disabled: boolean;
-  checked: boolean;
-  handler?: Function;
-}
 
 @Component({
   tag: 'ion-select-popover',
@@ -16,13 +9,13 @@ export interface SelectPopoverOption {
   }}
 )
 export class SelectPopover {
-  private mode: string;
+  mode!: Mode;
 
-  @Prop() header: string;
+  @Prop() header?: string;
 
-  @Prop() subHeader: string;
+  @Prop() subHeader?: string;
 
-  @Prop() message: string;
+  @Prop() message?: string;
 
   @Prop() options: SelectPopoverOption[] = [];
 

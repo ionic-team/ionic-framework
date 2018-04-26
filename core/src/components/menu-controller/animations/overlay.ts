@@ -1,4 +1,4 @@
-import { Animation, Menu } from '../../../index';
+import { Animation, Menu } from '../../../interface';
 import baseAnimation from './base';
 
 const BOX_SHADOW_WIDTH = 8;

@@ -27,28 +27,28 @@ const raf = window.requestAnimationFrame || ((f: Function) => f());
 
 export class Animator {
 
-  private _afterAddClasses: string[] | undefined;
-  private _afterRemoveClasses: string[] | undefined;
-  private _afterStyles: { [property: string]: any; } | undefined;
-  private _beforeAddClasses: string[] | undefined;
-  private _beforeRemoveClasses: string[] | undefined;
-  private _beforeStyles: { [property: string]: any; } | undefined;
-  private _childAnimations: Animator[] | undefined;
-  private _duration: number | undefined;
-  private _easingName: string | undefined;
-  private _elements: HTMLElement[] | undefined;
-  private _fxProperties: EffectProperty[] | undefined;
+  private _afterAddClasses?: string[];
+  private _afterRemoveClasses?: string[];
+  private _afterStyles?: { [property: string]: any; };
+  private _beforeAddClasses?: string[];
+  private _beforeRemoveClasses?: string[];
+  private _beforeStyles?: { [property: string]: any; };
+  private _childAnimations?: Animator[];
+  private _duration?: number;
+  private _easingName?: string;
+  private _elements?: HTMLElement[];
+  private _fxProperties?: EffectProperty[];
   private _hasDur = false;
   private _hasTweenEffect = false;
   private _isAsync = false;
   private _isReverse = false;
-  private _onFinishCallbacks: Function[] | undefined;
-  private _onFinishOneTimeCallbacks: Function[] | undefined;
-  private _readCallbacks: Function[] | undefined;
-  private _reversedEasingName: string | undefined;
-  private _timerId: any | undefined;
-  private _unregisterTrnsEnd: Function | undefined;
-  private _writeCallbacks: Function[] | undefined;
+  private _onFinishCallbacks?: Function[];
+  private _onFinishOneTimeCallbacks?: Function[];
+  private _readCallbacks?: Function[];
+  private _reversedEasingName?: string;
+  private _timerId?: any;
+  private _unregisterTrnsEnd?: Function;
+  private _writeCallbacks?: Function[];
   private _destroyed = false;
 
   parent: Animator|undefined;

@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State } from '@stencil/core';
-import { GestureDetail, QueueController } from '../../index';
+import { GestureDetail, QueueController } from '../../interface';
 
-export const enum RefresherState {
+const enum RefresherState {
   Inactive = 1 << 0,
   Pulling = 1 << 1,
   Ready = 1 << 2,
@@ -30,7 +30,7 @@ export class Refresher {
   private progress = 0;
   private scrollEl: HTMLElement | null = null;
 
-  @Prop({ context: 'queue' }) queue: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueController;
 
   /**
    * The current state which the refresher is in. The refresher's states include:
@@ -42,10 +42,10 @@ export class Refresher {
    * - `refreshing` - The refresher is actively waiting on the async operation to end. Once the refresh handler calls `complete()` it will begin the `completing` state.
    * - `completing` - The `refreshing` state has finished and the refresher is in the process of closing itself. Once closed, the refresher will go back to the `inactive` state.
    */
-  @State() state: RefresherState = RefresherState.Inactive;
+  @State() private state: RefresherState = RefresherState.Inactive;
 
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /**
    * The minimum distance the user must pull down until the
@@ -82,17 +82,17 @@ export class Refresher {
    * Updates the refresher state to `refreshing`. The `complete()` method should be
    * called when the async operation has completed.
    */
-  @Event() ionRefresh: EventEmitter;
+  @Event() ionRefresh!: EventEmitter<void>;
 
   /**
    * Emitted while the user is pulling down the content and exposing the refresher.
    */
-  @Event() ionPull: EventEmitter;
+  @Event() ionPull!: EventEmitter<void>;
 
   /**
    * Emitted when the user begins to start pulling down.
    */
-  @Event() ionStart: EventEmitter;
+  @Event() ionStart!: EventEmitter<void>;
 
   constructor() {
     this.gestureConfig = {
@@ -260,11 +260,11 @@ export class Refresher {
     // emit "start" if it hasn't started yet
     if (!this.didStart) {
       this.didStart = true;
-      this.ionStart.emit(this);
+      this.ionStart.emit();
     }
 
     // emit "pulling" on every move
-    this.ionPull.emit(this);
+    this.ionPull.emit();
 
     // do nothing if the delta is less than the pull threshold
     if (deltaY < pullMin) {
@@ -312,7 +312,7 @@ export class Refresher {
 
     // emit "refresh" because it was pulled down far enough
     // and they let go to begin refreshing
-    this.ionRefresh.emit(this);
+    this.ionRefresh.emit();
   }
 
   private close(state: RefresherState, delay: string) {

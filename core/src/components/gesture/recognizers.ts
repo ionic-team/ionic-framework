@@ -1,7 +1,8 @@
 
 export class PanRecognizer {
-  private startX: number;
-  private startY: number;
+
+  private startX!: number;
+  private startY!: number;
 
   private dirty = false;
   private threshold: number;

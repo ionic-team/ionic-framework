@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, CssClassMap } from '../../index';
+import { Animation, AnimationBuilder, Config, CssClassMap, Mode, PickerButton, PickerColumn } from '../../interface';
 
 import { getClassMap } from '../../utils/theme';
 import { OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
@@ -21,29 +21,29 @@ export class Picker implements OverlayInterface {
 
   private durationTimeout: any;
 
-  mode: string;
+  mode!: Mode;
   presented = false;
-  animation: Animation;
+  animation?: Animation;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @State() private showSpinner: boolean|undefined;
-  @State() private spinner: string;
+  @State() private showSpinner!: boolean;
+  @State() private spinner!: string;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
-  @Prop({ context: 'config' }) config: Config;
-  @Prop() overlayId: number;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop() overlayId!: number;
   @Prop() keyboardClose = true;
 
   /**
    * Animation to use when the picker is presented.
    */
-  @Prop() enterAnimation: AnimationBuilder;
+  @Prop() enterAnimation?: AnimationBuilder;
 
   /**
    * Animation to use when the picker is dismissed.
    */
-  @Prop() leaveAnimation: AnimationBuilder;
+  @Prop() leaveAnimation?: AnimationBuilder;
 
   /**
    * Array of buttons to be displayed at the top of the picker.
@@ -59,12 +59,12 @@ export class Picker implements OverlayInterface {
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string | string[];
+  @Prop() cssClass?: string | string[];
 
   /**
    * Number of milliseconds to wait before dismissing the picker.
    */
-  @Prop() duration: number;
+  @Prop() duration?: number;
 
   /**
    * If true, a backdrop will be displayed behind the picker. Defaults to `true`.
@@ -84,32 +84,32 @@ export class Picker implements OverlayInterface {
   /**
    * Emitted after the picker has loaded.
    */
-  @Event() ionPickerDidLoad: EventEmitter<void>;
+  @Event() ionPickerDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted after the picker has presented.
    */
-  @Event({eventName: 'ionPickerDidPresent'}) didPresent: EventEmitter<void>;
+  @Event({eventName: 'ionPickerDidPresent'}) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the picker has presented.
    */
-  @Event({eventName: 'ionPickerWillPresent'}) willPresent: EventEmitter<void>;
+  @Event({eventName: 'ionPickerWillPresent'}) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the picker has dismissed.
    */
-  @Event({eventName: 'ionPickerWillDismiss'}) willDismiss: EventEmitter<OverlayEventDetail>;
+  @Event({eventName: 'ionPickerWillDismiss'}) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the picker has dismissed.
    */
-  @Event({eventName: 'ionPickerDidDismiss'}) didDismiss: EventEmitter<OverlayEventDetail>;
+  @Event({eventName: 'ionPickerDidDismiss'}) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the picker has unloaded.
    */
-  @Event() ionPickerDidUnload: EventEmitter<void>;
+  @Event() ionPickerDidUnload!: EventEmitter<void>;
 
 
   componentWillLoad() {
@@ -147,7 +147,7 @@ export class Picker implements OverlayInterface {
   async present(): Promise<void> {
     await present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
 
-    if (this.duration > 0) {
+    if (this.duration) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
     }
   }
@@ -299,8 +299,8 @@ export class Picker implements OverlayInterface {
 
     return [
       <ion-backdrop visible={this.showBackdrop} tappable={this.enableBackdropDismiss}/>,
-      <div class='picker-wrapper' role='dialog'>
-        <div class='picker-toolbar'>
+      <div class="picker-wrapper" role="dialog">
+        <div class="picker-toolbar">
           {buttons.map(b =>
             <div class={buttonWrapperClass(b)}>
               <button onClick={() => this.buttonClick(b)} class={buttonClass(b)}>
@@ -309,12 +309,12 @@ export class Picker implements OverlayInterface {
             </div>
           )}
         </div>
-        <div class='picker-columns'>
-          <div class='picker-above-highlight'></div>
+        <div class="picker-columns">
+          <div class="picker-above-highlight"></div>
           {columns.map(c =>
             <ion-picker-column col={c}></ion-picker-column>
           )}
-          <div class='picker-below-highlight'></div>
+          <div class="picker-below-highlight"></div>
         </div>
       </div>
     ];
@@ -336,43 +336,4 @@ function buttonClass(button: PickerButton): CssClassMap {
     'picker-button': true,
     ...getClassMap(button.cssClass)
   };
-}
-
-export interface PickerButton {
-  text?: string;
-  role?: string;
-  cssClass?: string | string[];
-  handler?: (value: any) => boolean|void;
-}
-
-export interface PickerOptions {
-  buttons?: PickerButton[];
-  columns?: PickerColumn[];
-  cssClass?: string | string[];
-  enableBackdropDismiss?: boolean;
-}
-
-export interface PickerColumn {
-  name: string;
-  align?: string;
-  selectedIndex?: number;
-  prevSelected?: number;
-  prefix?: string;
-  suffix?: string;
-  options: PickerColumnOption[];
-  cssClass?: string | string[];
-  columnWidth?: string;
-  prefixWidth?: string;
-  suffixWidth?: string;
-  optionsWidth?: string;
-  refresh?: () => void;
-}
-
-export interface PickerColumnOption {
-  text?: string;
-  value?: any;
-  disabled?: boolean;
-  duration?: number;
-  transform?: string;
-  selected?: boolean;
 }

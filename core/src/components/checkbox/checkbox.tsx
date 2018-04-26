@@ -1,6 +1,5 @@
-import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
-import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { CssClassMap } from '../../index';
+import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { CheckboxInput, CheckedInputChangeEvent, CssClassMap, Mode, StyleEvent } from '../../interface';
 import { deferEvent } from '../../utils/helpers';
 
 
@@ -15,28 +14,30 @@ import { deferEvent } from '../../utils/helpers';
   }
 })
 export class Checkbox implements CheckboxInput {
-  private didLoad: boolean;
-  private inputId: string;
-  private nativeInput: HTMLInputElement;
 
-  @State() keyFocus: boolean;
+  private inputId = `ion-cb-${checkboxIds++}`;
+  private labelId = `${this.inputId}-lbl`;
+
+  @Element() el!: HTMLElement;
+
+  @State() keyFocus = false;
 
   /**
    * The color to use.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop({ mutable: true }) name: string;
+  @Prop() name: string = this.inputId;
 
   /**
    * If true, the checkbox is selected. Defaults to `false`.
@@ -56,53 +57,38 @@ export class Checkbox implements CheckboxInput {
   /**
    * Emitted when the checked property has changed.
    */
-  @Event() ionChange: EventEmitter<CheckedInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<CheckedInputChangeEvent>;
 
   /**
    * Emitted when the toggle has focus.
    */
-  @Event() ionFocus: EventEmitter<FocusEvent>;
+  @Event() ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the toggle loses focus.
    */
-  @Event() ionBlur: EventEmitter<BlurEvent>;
+  @Event() ionBlur!: EventEmitter<void>;
 
   /**
    * Emitted when the styles change.
    */
-  @Event() ionStyle: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
+
 
   componentWillLoad() {
-    this.inputId = `ion-cb-${checkboxIds++}`;
-    if (this.name === undefined) {
-      this.name = this.inputId;
-    }
     this.emitStyle();
   }
 
   componentDidLoad() {
     this.ionStyle = deferEvent(this.ionStyle);
-    this.didLoad = true;
-
-    const parentItem = this.nativeInput.closest('ion-item');
-    if (parentItem) {
-      const itemLabel = parentItem.querySelector('ion-label');
-      if (itemLabel) {
-        itemLabel.id = this.inputId + '-lbl';
-        this.nativeInput.setAttribute('aria-labelledby', itemLabel.id);
-      }
-    }
   }
 
   @Watch('checked')
   checkedChanged(isChecked: boolean) {
-    if (this.didLoad) {
-      this.ionChange.emit({
-        checked: isChecked,
-        value: this.value
-      });
-    }
+    this.ionChange.emit({
+      checked: isChecked,
+      value: this.value
+    });
     this.emitStyle();
   }
 
@@ -149,20 +135,20 @@ export class Checkbox implements CheckboxInput {
 
     return [
       <div class={checkboxClasses}>
-        <div class='checkbox-inner'></div>
+        <div class="checkbox-inner"></div>
       </div>,
       <input
-        type='checkbox'
+        type="checkbox"
+        id={this.inputId}
+        aria-labelledby={this.labelId}
         onChange={this.onChange.bind(this)}
         onFocus={this.onFocus.bind(this)}
         onBlur={this.onBlur.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
         checked={this.checked}
-        id={this.inputId}
         name={this.name}
         value={this.value}
-        disabled={this.disabled}
-        ref={r => this.nativeInput = (r as any)}/>
+        disabled={this.disabled} />
     ];
   }
 }

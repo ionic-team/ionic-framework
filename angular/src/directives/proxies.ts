@@ -20,15 +20,17 @@ function methods(instance: any, ref: ElementRef, methods: string[]) {
   methods.forEach(methodName => {
     Object.defineProperty(instance, methodName, {
       get: function() {
-        const args = arguments;
-        return el.componentOnReady()
-          .then((el: any) => el[methodName].apply(el, args));
+        return function() {
+          const args = arguments;
+          return el.componentOnReady()
+            .then((el: any) => el[methodName].apply(el, args));
+        };
       }
     });
   });
 }
 
-const accept = 'accept', activated = 'activated', active = 'active', addRipple = 'addRipple', allowEmptySelection = 'allowEmptySelection', animated = 'animated', autoHide = 'autoHide', autocapitalize = 'autocapitalize', autocomplete = 'autocomplete', autocorrect = 'autocorrect', autofocus = 'autofocus', badge = 'badge', badgeStyle = 'badgeStyle', btnId = 'btnId', button = 'button', buttonType = 'buttonType', canGoBack = 'canGoBack', cancel = 'cancel', cancelButtonText = 'cancelButtonText', cancelText = 'cancelText', checked = 'checked', clearInput = 'clearInput', clearOnEdit = 'clearOnEdit', close = 'close', closeDuration = 'closeDuration', closeOpened = 'closeOpened', closeSlidingItems = 'closeSlidingItems', color = 'color', cols = 'cols', complete = 'complete', component = 'component', componentProps = 'componentProps', contentId = 'contentId', dayNames = 'dayNames', dayShortNames = 'dayShortNames', dayValues = 'dayValues', debounce = 'debounce', defaultHref = 'defaultHref', delegate = 'delegate', detail = 'detail', disabled = 'disabled', displayFormat = 'displayFormat', doneText = 'doneText', dualKnobs = 'dualKnobs', duration = 'duration', edge = 'edge', expand = 'expand', expandable = 'expandable', fill = 'fill', fireSwipeEvent = 'fireSwipeEvent', fixed = 'fixed', floating = 'floating', forceOverscroll = 'forceOverscroll', fullscreen = 'fullscreen', getActive = 'getActive', getActiveIndex = 'getActiveIndex', getByIndex = 'getByIndex', getOpenAmount = 'getOpenAmount', getOpenItem = 'getOpenItem', getPrevious = 'getPrevious', getPreviousIndex = 'getPreviousIndex', getProgress = 'getProgress', getRouteId = 'getRouteId', getSelected = 'getSelected', getSlidingRatio = 'getSlidingRatio', getTab = 'getTab', getTabId = 'getTabId', getText = 'getText', header = 'header', horizontal = 'horizontal', hourValues = 'hourValues', href = 'href', icon = 'icon', inputmode = 'inputmode', insert = 'insert', insertPages = 'insertPages', interfaceOptions = 'interfaceOptions', ionBlur = 'ionBlur', ionCancel = 'ionCancel', ionChange = 'ionChange', ionClear = 'ionClear', ionClick = 'ionClick', ionClose = 'ionClose', ionDrag = 'ionDrag', ionFocus = 'ionFocus', ionInfinite = 'ionInfinite', ionInput = 'ionInput', ionInputDidLoad = 'ionInputDidLoad', ionInputDidUnload = 'ionInputDidUnload', ionMenuChange = 'ionMenuChange', ionNavDidChange = 'ionNavDidChange', ionNavWillChange = 'ionNavWillChange', ionOpen = 'ionOpen', ionPull = 'ionPull', ionRadioDidLoad = 'ionRadioDidLoad', ionRadioDidUnload = 'ionRadioDidUnload', ionRefresh = 'ionRefresh', ionScroll = 'ionScroll', ionScrollEnd = 'ionScrollEnd', ionScrollStart = 'ionScrollStart', ionSelect = 'ionSelect', ionSelectOptionDidLoad = 'ionSelectOptionDidLoad', ionSelectOptionDidUnload = 'ionSelectOptionDidUnload', ionSlideDidChange = 'ionSlideDidChange', ionSlideDrag = 'ionSlideDrag', ionSlideNextEnd = 'ionSlideNextEnd', ionSlideNextStart = 'ionSlideNextStart', ionSlidePrevEnd = 'ionSlidePrevEnd', ionSlidePrevStart = 'ionSlidePrevStart', ionSlideReachEnd = 'ionSlideReachEnd', ionSlideReachStart = 'ionSlideReachStart', ionSlideTouchEnd = 'ionSlideTouchEnd', ionSlideTouchStart = 'ionSlideTouchStart', ionSlideTransitionEnd = 'ionSlideTransitionEnd', ionSlideTransitionStart = 'ionSlideTransitionStart', ionSlideWillChange = 'ionSlideWillChange', ionSplitPaneVisible = 'ionSplitPaneVisible', ionStart = 'ionStart', ionStyle = 'ionStyle', ionSwipe = 'ionSwipe', isActive = 'isActive', isBeginning = 'isBeginning', isEnd = 'isEnd', isOpen = 'isOpen', isPane = 'isPane', isRightSide = 'isRightSide', isVisible = 'isVisible', label = 'label', length = 'length', loadingSpinner = 'loadingSpinner', loadingText = 'loadingText', lockSwipeToNext = 'lockSwipeToNext', lockSwipeToPrev = 'lockSwipeToPrev', lockSwipes = 'lockSwipes', max = 'max', maxEdgeStart = 'maxEdgeStart', maxlength = 'maxlength', mediaQuery = 'mediaQuery', menu = 'menu', menuId = 'menuId', message = 'message', min = 'min', minlength = 'minlength', minuteValues = 'minuteValues', mode = 'mode', monthNames = 'monthNames', monthShortNames = 'monthShortNames', monthValues = 'monthValues', multiple = 'multiple', name = 'name', okText = 'okText', open = 'open', options = 'options', or = 'or', orientation = 'orientation', pager = 'pager', pattern = 'pattern', paused = 'paused', persistent = 'persistent', pickerFormat = 'pickerFormat', pickerOptions = 'pickerOptions', pin = 'pin', placeholder = 'placeholder', platform = 'platform', pop = 'pop', popTo = 'popTo', popToRoot = 'popToRoot', position = 'position', pullMax = 'pullMax', pullMin = 'pullMin', pullingIcon = 'pullingIcon', pullingText = 'pullingText', push = 'push', ratio = 'ratio', ratioUpper = 'ratioUpper', readonly = 'readonly', refreshingSpinner = 'refreshingSpinner', refreshingText = 'refreshingText', removeIndex = 'removeIndex', required = 'required', results = 'results', root = 'root', rootParams = 'rootParams', round = 'round', routerDirection = 'routerDirection', rows = 'rows', scrollByPoint = 'scrollByPoint', scrollEnabled = 'scrollEnabled', scrollEvents = 'scrollEvents', scrollToBottom = 'scrollToBottom', scrollToPoint = 'scrollToPoint', scrollToTop = 'scrollToTop', scrollable = 'scrollable', select = 'select', selected = 'selected', selectedText = 'selectedText', setActive = 'setActive', setOpen = 'setOpen', setOpenItem = 'setOpenItem', setPages = 'setPages', setRoot = 'setRoot', setRouteId = 'setRouteId', show = 'show', showCancelButton = 'showCancelButton', side = 'side', size = 'size', slideNext = 'slideNext', slidePrev = 'slidePrev', slideTo = 'slideTo', snapbackDuration = 'snapbackDuration', snaps = 'snaps', spellcheck = 'spellcheck', stacked = 'stacked', startAutoplay = 'startAutoplay', step = 'step', stopAutoplay = 'stopAutoplay', strong = 'strong', subHeader = 'subHeader', swipeBackEnabled = 'swipeBackEnabled', swipeEnabled = 'swipeEnabled', tabbarHidden = 'tabbarHidden', tabbarHighlight = 'tabbarHighlight', tabbarLayout = 'tabbarLayout', tabbarPlacement = 'tabbarPlacement', tabsHideOnSubPages = 'tabsHideOnSubPages', tapClick = 'tapClick', text = 'text', threshold = 'threshold', toggle = 'toggle', translucent = 'translucent', type = 'type', update = 'update', url = 'url', useRouter = 'useRouter', value = 'value', vertical = 'vertical', waitFor = 'waitFor', when = 'when', width = 'width', wrap = 'wrap', yearValues = 'yearValues';
+const accept = 'accept', activated = 'activated', active = 'active', addRipple = 'addRipple', allowEmptySelection = 'allowEmptySelection', animated = 'animated', autoHide = 'autoHide', autocapitalize = 'autocapitalize', autocomplete = 'autocomplete', autocorrect = 'autocorrect', autofocus = 'autofocus', badge = 'badge', badgeStyle = 'badgeStyle', btnId = 'btnId', button = 'button', buttonType = 'buttonType', canGoBack = 'canGoBack', cancel = 'cancel', cancelButtonText = 'cancelButtonText', cancelText = 'cancelText', checked = 'checked', clearInput = 'clearInput', clearOnEdit = 'clearOnEdit', close = 'close', closeDuration = 'closeDuration', closeOpened = 'closeOpened', closeSlidingItems = 'closeSlidingItems', color = 'color', cols = 'cols', complete = 'complete', component = 'component', componentProps = 'componentProps', contentId = 'contentId', dayNames = 'dayNames', dayShortNames = 'dayShortNames', dayValues = 'dayValues', debounce = 'debounce', defaultHref = 'defaultHref', delegate = 'delegate', detail = 'detail', disabled = 'disabled', displayFormat = 'displayFormat', doneText = 'doneText', dualKnobs = 'dualKnobs', duration = 'duration', edge = 'edge', expand = 'expand', expandable = 'expandable', fill = 'fill', fireSwipeEvent = 'fireSwipeEvent', forceOverscroll = 'forceOverscroll', fullscreen = 'fullscreen', getActive = 'getActive', getActiveIndex = 'getActiveIndex', getByIndex = 'getByIndex', getOpenAmount = 'getOpenAmount', getOpenItem = 'getOpenItem', getPrevious = 'getPrevious', getPreviousIndex = 'getPreviousIndex', getProgress = 'getProgress', getRouteId = 'getRouteId', getSelected = 'getSelected', getSlidingRatio = 'getSlidingRatio', getTab = 'getTab', getTabId = 'getTabId', getText = 'getText', header = 'header', horizontal = 'horizontal', hourValues = 'hourValues', href = 'href', icon = 'icon', inputmode = 'inputmode', insert = 'insert', insertPages = 'insertPages', interfaceOptions = 'interfaceOptions', ionBlur = 'ionBlur', ionCancel = 'ionCancel', ionChange = 'ionChange', ionClear = 'ionClear', ionClose = 'ionClose', ionDrag = 'ionDrag', ionFocus = 'ionFocus', ionInfinite = 'ionInfinite', ionInput = 'ionInput', ionInputDidLoad = 'ionInputDidLoad', ionInputDidUnload = 'ionInputDidUnload', ionMenuChange = 'ionMenuChange', ionNavDidChange = 'ionNavDidChange', ionNavWillChange = 'ionNavWillChange', ionOpen = 'ionOpen', ionPull = 'ionPull', ionRadioDidLoad = 'ionRadioDidLoad', ionRadioDidUnload = 'ionRadioDidUnload', ionRefresh = 'ionRefresh', ionScroll = 'ionScroll', ionScrollEnd = 'ionScrollEnd', ionScrollStart = 'ionScrollStart', ionSelect = 'ionSelect', ionSelectOptionDidLoad = 'ionSelectOptionDidLoad', ionSelectOptionDidUnload = 'ionSelectOptionDidUnload', ionSlideDidChange = 'ionSlideDidChange', ionSlideDrag = 'ionSlideDrag', ionSlideNextEnd = 'ionSlideNextEnd', ionSlideNextStart = 'ionSlideNextStart', ionSlidePrevEnd = 'ionSlidePrevEnd', ionSlidePrevStart = 'ionSlidePrevStart', ionSlideReachEnd = 'ionSlideReachEnd', ionSlideReachStart = 'ionSlideReachStart', ionSlideTouchEnd = 'ionSlideTouchEnd', ionSlideTouchStart = 'ionSlideTouchStart', ionSlideTransitionEnd = 'ionSlideTransitionEnd', ionSlideTransitionStart = 'ionSlideTransitionStart', ionSlideWillChange = 'ionSlideWillChange', ionSplitPaneVisible = 'ionSplitPaneVisible', ionStart = 'ionStart', ionStyle = 'ionStyle', ionSwipe = 'ionSwipe', isActive = 'isActive', isBeginning = 'isBeginning', isEnd = 'isEnd', isOpen = 'isOpen', isPane = 'isPane', isRightSide = 'isRightSide', isVisible = 'isVisible', label = 'label', length = 'length', loadingSpinner = 'loadingSpinner', loadingText = 'loadingText', lockSwipeToNext = 'lockSwipeToNext', lockSwipeToPrev = 'lockSwipeToPrev', lockSwipes = 'lockSwipes', max = 'max', maxEdgeStart = 'maxEdgeStart', maxlength = 'maxlength', mediaQuery = 'mediaQuery', menu = 'menu', menuId = 'menuId', message = 'message', min = 'min', minlength = 'minlength', minuteValues = 'minuteValues', mode = 'mode', monthNames = 'monthNames', monthShortNames = 'monthShortNames', monthValues = 'monthValues', multiple = 'multiple', name = 'name', okText = 'okText', open = 'open', options = 'options', or = 'or', orientation = 'orientation', pager = 'pager', pattern = 'pattern', paused = 'paused', persistent = 'persistent', pickerFormat = 'pickerFormat', pickerOptions = 'pickerOptions', pin = 'pin', placeholder = 'placeholder', platform = 'platform', pop = 'pop', popTo = 'popTo', popToRoot = 'popToRoot', position = 'position', pullMax = 'pullMax', pullMin = 'pullMin', pullingIcon = 'pullingIcon', pullingText = 'pullingText', push = 'push', ratio = 'ratio', ratioUpper = 'ratioUpper', readonly = 'readonly', refreshingSpinner = 'refreshingSpinner', refreshingText = 'refreshingText', removeIndex = 'removeIndex', required = 'required', results = 'results', root = 'root', rootParams = 'rootParams', round = 'round', routerDirection = 'routerDirection', rows = 'rows', scrollByPoint = 'scrollByPoint', scrollEnabled = 'scrollEnabled', scrollEvents = 'scrollEvents', scrollToBottom = 'scrollToBottom', scrollToPoint = 'scrollToPoint', scrollToTop = 'scrollToTop', scrollable = 'scrollable', select = 'select', selected = 'selected', selectedText = 'selectedText', setActive = 'setActive', setOpen = 'setOpen', setOpenItem = 'setOpenItem', setPages = 'setPages', setRoot = 'setRoot', setRouteId = 'setRouteId', show = 'show', showCancelButton = 'showCancelButton', side = 'side', size = 'size', slideNext = 'slideNext', slidePrev = 'slidePrev', slideTo = 'slideTo', snapbackDuration = 'snapbackDuration', snaps = 'snaps', spellcheck = 'spellcheck', startAutoplay = 'startAutoplay', step = 'step', stopAutoplay = 'stopAutoplay', strong = 'strong', subHeader = 'subHeader', swipeBackEnabled = 'swipeBackEnabled', swipeEnabled = 'swipeEnabled', tabbarHidden = 'tabbarHidden', tabbarHighlight = 'tabbarHighlight', tabbarLayout = 'tabbarLayout', tabbarPlacement = 'tabbarPlacement', tabsHideOnSubPages = 'tabsHideOnSubPages', tapClick = 'tapClick', text = 'text', threshold = 'threshold', toggle = 'toggle', translucent = 'translucent', type = 'type', update = 'update', useRouter = 'useRouter', value = 'value', vertical = 'vertical', waitFor = 'waitFor', when = 'when', width = 'width', wrap = 'wrap', yearValues = 'yearValues';
 
 export declare interface App extends StencilComponents.IonApp {}
 @Directive({selector: 'ion-app'})
@@ -213,10 +215,10 @@ export class Header {
 }
 
 export declare interface HideWhen extends StencilComponents.IonHideWhen {}
-@Directive({selector: 'ion-hide-when', inputs: [orientation, mediaQuery, size, mode, platform, or]})
+@Directive({selector: 'ion-hide-when', inputs: [orientation, mediaQuery, size, platform, or]})
 export class HideWhen {
   constructor(r: ElementRef) {
-    inputs(this, r, [orientation, mediaQuery, size, mode, platform, or]);
+    inputs(this, r, [orientation, mediaQuery, size, platform, or]);
   }
 }
 
@@ -240,25 +242,26 @@ export class InfiniteScrollContent {
 }
 
 export declare interface Input extends StencilComponents.IonInput {}
-@Directive({selector: 'ion-input', inputs: [accept, autocapitalize, autocomplete, autocorrect, autofocus, checked, clearInput, clearOnEdit, debounce, disabled, inputmode, max, maxlength, min, minlength, multiple, name, pattern, placeholder, readonly, required, results, spellcheck, step, size, type, value], outputs: [ionInput, ionStyle, ionBlur, ionFocus, ionInputDidLoad, ionInputDidUnload]})
+@Directive({selector: 'ion-input', inputs: [accept, autocapitalize, autocomplete, autocorrect, autofocus, clearInput, clearOnEdit, debounce, disabled, inputmode, max, maxlength, min, minlength, multiple, name, pattern, placeholder, readonly, required, results, spellcheck, step, size, type, value], outputs: [ionInput, ionChange, ionStyle, ionBlur, ionFocus, ionInputDidLoad, ionInputDidUnload]})
 export class Input {
   ionInput: EventEmitter<any>;
+  ionChange: EventEmitter<any>;
   ionStyle: EventEmitter<any>;
   ionBlur: EventEmitter<any>;
   ionFocus: EventEmitter<any>;
   ionInputDidLoad: EventEmitter<any>;
   ionInputDidUnload: EventEmitter<any>;
   constructor(r: ElementRef) {
-    inputs(this, r, [accept, autocapitalize, autocomplete, autocorrect, autofocus, checked, clearInput, clearOnEdit, debounce, disabled, inputmode, max, maxlength, min, minlength, multiple, name, pattern, placeholder, readonly, required, results, spellcheck, step, size, type, value]);
-    outputs(this, [ionInput, ionStyle, ionBlur, ionFocus, ionInputDidLoad, ionInputDidUnload]);
+    inputs(this, r, [accept, autocapitalize, autocomplete, autocorrect, autofocus, clearInput, clearOnEdit, debounce, disabled, inputmode, max, maxlength, min, minlength, multiple, name, pattern, placeholder, readonly, required, results, spellcheck, step, size, type, value]);
+    outputs(this, [ionInput, ionChange, ionStyle, ionBlur, ionFocus, ionInputDidLoad, ionInputDidUnload]);
   }
 }
 
 export declare interface Item extends StencilComponents.IonItem {}
-@Directive({selector: 'ion-item', inputs: [color, mode, detail, disabled, href, button, routerDirection]})
+@Directive({selector: 'ion-item', inputs: [color, mode, button, detail, disabled, href, routerDirection]})
 export class Item {
   constructor(r: ElementRef) {
-    inputs(this, r, [color, mode, detail, disabled, href, button, routerDirection]);
+    inputs(this, r, [color, mode, button, detail, disabled, href, routerDirection]);
   }
 }
 
@@ -305,12 +308,12 @@ export class ItemSliding {
 }
 
 export declare interface Label extends StencilComponents.IonLabel {}
-@Directive({selector: 'ion-label', inputs: [color, mode, fixed, floating, stacked], outputs: [ionStyle]})
+@Directive({selector: 'ion-label', inputs: [color, mode, position], outputs: [ionStyle]})
 export class Label {
   ionStyle: EventEmitter<any>;
   constructor(r: ElementRef) {
     methods(this, r, [getText]);
-    inputs(this, r, [color, mode, fixed, floating, stacked]);
+    inputs(this, r, [color, mode, position]);
     outputs(this, [ionStyle]);
   }
 }
@@ -378,18 +381,18 @@ export class NavPop {
 }
 
 export declare interface NavPush extends StencilComponents.IonNavPush {}
-@Directive({selector: 'ion-nav-push', inputs: [component, componentProps, url]})
+@Directive({selector: 'ion-nav-push', inputs: [component, componentProps]})
 export class NavPush {
   constructor(r: ElementRef) {
-    inputs(this, r, [component, componentProps, url]);
+    inputs(this, r, [component, componentProps]);
   }
 }
 
 export declare interface NavSetRoot extends StencilComponents.IonNavSetRoot {}
-@Directive({selector: 'ion-nav-set-root', inputs: [component, componentProps, url]})
+@Directive({selector: 'ion-nav-set-root', inputs: [component, componentProps]})
 export class NavSetRoot {
   constructor(r: ElementRef) {
-    inputs(this, r, [component, componentProps, url]);
+    inputs(this, r, [component, componentProps]);
   }
 }
 
@@ -417,17 +420,17 @@ export class Radio {
 }
 
 export declare interface RadioGroup extends StencilComponents.IonRadioGroup {}
-@Directive({selector: 'ion-radio-group', inputs: [allowEmptySelection, disabled, name, value], outputs: [ionChange]})
+@Directive({selector: 'ion-radio-group', inputs: [allowEmptySelection, name, disabled, value], outputs: [ionChange]})
 export class RadioGroup {
   ionChange: EventEmitter<any>;
   constructor(r: ElementRef) {
-    inputs(this, r, [allowEmptySelection, disabled, name, value]);
+    inputs(this, r, [allowEmptySelection, name, disabled, value]);
     outputs(this, [ionChange]);
   }
 }
 
 export declare interface Range extends StencilComponents.IonRange {}
-@Directive({selector: 'ion-range', inputs: [color, mode, debounce, disabled, dualKnobs, max, min, pin, snaps, step, value], outputs: [ionChange, ionStyle, ionFocus, ionBlur]})
+@Directive({selector: 'ion-range', inputs: [color, mode, debounce, name, dualKnobs, max, min, pin, snaps, step, disabled, value], outputs: [ionChange, ionStyle, ionFocus, ionBlur]})
 export class Range {
   ionChange: EventEmitter<any>;
   ionStyle: EventEmitter<any>;
@@ -435,7 +438,7 @@ export class Range {
   ionBlur: EventEmitter<any>;
   constructor(r: ElementRef) {
     methods(this, r, [ratio, ratioUpper]);
-    inputs(this, r, [color, mode, debounce, disabled, dualKnobs, max, min, pin, snaps, step, value]);
+    inputs(this, r, [color, mode, debounce, name, dualKnobs, max, min, pin, snaps, step, disabled, value]);
     outputs(this, [ionChange, ionStyle, ionFocus, ionBlur]);
   }
 }
@@ -502,16 +505,17 @@ export class Scroll {
 }
 
 export declare interface Searchbar extends StencilComponents.IonSearchbar {}
-@Directive({selector: 'ion-searchbar', inputs: [color, mode, animated, autocomplete, autocorrect, cancelButtonText, debounce, placeholder, showCancelButton, spellcheck, type, value], outputs: [ionInput, ionCancel, ionClear, ionBlur, ionFocus]})
+@Directive({selector: 'ion-searchbar', inputs: [color, mode, animated, autocomplete, autocorrect, cancelButtonText, debounce, placeholder, showCancelButton, spellcheck, type, value], outputs: [ionInput, ionChange, ionCancel, ionClear, ionBlur, ionFocus]})
 export class Searchbar {
   ionInput: EventEmitter<any>;
+  ionChange: EventEmitter<any>;
   ionCancel: EventEmitter<any>;
   ionClear: EventEmitter<any>;
   ionBlur: EventEmitter<any>;
   ionFocus: EventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [color, mode, animated, autocomplete, autocorrect, cancelButtonText, debounce, placeholder, showCancelButton, spellcheck, type, value]);
-    outputs(this, [ionInput, ionCancel, ionClear, ionBlur, ionFocus]);
+    outputs(this, [ionInput, ionChange, ionCancel, ionClear, ionBlur, ionFocus]);
   }
 }
 
@@ -526,12 +530,12 @@ export class Segment {
 }
 
 export declare interface SegmentButton extends StencilComponents.IonSegmentButton {}
-@Directive({selector: 'ion-segment-button', inputs: [activated, color, mode, checked, disabled, href, value], outputs: [ionClick]})
+@Directive({selector: 'ion-segment-button', inputs: [activated, color, mode, checked, disabled, href, value], outputs: [ionSelect]})
 export class SegmentButton {
-  ionClick: EventEmitter<any>;
+  ionSelect: EventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [activated, color, mode, checked, disabled, href, value]);
-    outputs(this, [ionClick]);
+    outputs(this, [ionSelect]);
   }
 }
 
@@ -569,10 +573,10 @@ export class SelectPopover {
 }
 
 export declare interface ShowWhen extends StencilComponents.IonShowWhen {}
-@Directive({selector: 'ion-show-when', inputs: [orientation, mediaQuery, size, mode, platform, or]})
+@Directive({selector: 'ion-show-when', inputs: [orientation, mediaQuery, size, platform, or]})
 export class ShowWhen {
   constructor(r: ElementRef) {
-    inputs(this, r, [orientation, mediaQuery, size, mode, platform, or]);
+    inputs(this, r, [orientation, mediaQuery, size, platform, or]);
   }
 }
 
@@ -665,15 +669,16 @@ export class Text {
 }
 
 export declare interface Textarea extends StencilComponents.IonTextarea {}
-@Directive({selector: 'ion-textarea', inputs: [autocapitalize, autocomplete, autofocus, clearOnEdit, debounce, disabled, maxlength, minlength, name, placeholder, readonly, required, spellcheck, cols, rows, wrap, value], outputs: [ionInput, ionStyle, ionBlur, ionFocus]})
+@Directive({selector: 'ion-textarea', inputs: [autocapitalize, autocomplete, autofocus, clearOnEdit, debounce, disabled, maxlength, minlength, name, placeholder, readonly, required, spellcheck, cols, rows, wrap, value], outputs: [ionChange, ionInput, ionStyle, ionBlur, ionFocus]})
 export class Textarea {
+  ionChange: EventEmitter<any>;
   ionInput: EventEmitter<any>;
   ionStyle: EventEmitter<any>;
   ionBlur: EventEmitter<any>;
   ionFocus: EventEmitter<any>;
   constructor(r: ElementRef) {
     inputs(this, r, [autocapitalize, autocomplete, autofocus, clearOnEdit, debounce, disabled, maxlength, minlength, name, placeholder, readonly, required, spellcheck, cols, rows, wrap, value]);
-    outputs(this, [ionInput, ionStyle, ionBlur, ionFocus]);
+    outputs(this, [ionChange, ionInput, ionStyle, ionBlur, ionFocus]);
   }
 }
 

@@ -21,7 +21,8 @@ export function relocateInput(
     // before it receives the actual focus event
     // We hide the focused input (with the visible caret) invisiable by making it scale(0),
     cloneInputComponent(componentEl, inputEl);
-    const tx = document.dir === 'rtl' ? 9999 : -9999;
+    const doc = componentEl.ownerDocument;
+    const tx = doc.dir === 'rtl' ? 9999 : -9999;
     inputEl.style.transform = `translate3d(${tx}px,${inputRelativeY}px,0)`;
     // TODO
     // inputEle.style.opacity = '0';
@@ -33,7 +34,7 @@ export function relocateInput(
 
 
 export function isFocused(input: HTMLInputElement): boolean {
-  return input === document.activeElement;
+  return input === input.ownerDocument.activeElement;
 }
 
 function removeClone(componentEl: HTMLElement, inputEl: HTMLElement) {
@@ -56,6 +57,7 @@ function cloneInputComponent(componentEl: HTMLElement, inputEl: HTMLInputElement
   // find its parent wrapping component like <ion-input> or <ion-textarea>
   // then clone the entire component
   const parentElement = componentEl.parentElement;
+  const doc = componentEl.ownerDocument;
   if (componentEl && parentElement) {
     // DOM READ
     const srcTop = componentEl.offsetTop;
@@ -65,7 +67,7 @@ function cloneInputComponent(componentEl: HTMLElement, inputEl: HTMLInputElement
 
     // DOM WRITE
     // not using deep clone so we don't pull in unnecessary nodes
-    const clonedComponentEle = document.createElement('div');
+    const clonedComponentEle = doc.createElement('div');
     const clonedStyle = clonedComponentEle.style;
     clonedComponentEle.classList.add(...Array.from(componentEl.classList));
     clonedComponentEle.classList.add('cloned-input');
@@ -77,7 +79,7 @@ function cloneInputComponent(componentEl: HTMLElement, inputEl: HTMLInputElement
     clonedStyle.width = srcWidth + 'px';
     clonedStyle.height = srcHeight + 'px';
 
-    const clonedInputEl = document.createElement('input');
+    const clonedInputEl = doc.createElement('input');
     clonedInputEl.classList.add(...Array.from(inputEl.classList));
     clonedInputEl.value = inputEl.value;
     clonedInputEl.type = inputEl.type;

@@ -1,5 +1,5 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, CssClassMap } from '../../index';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
+import { AlertButton, AlertInput, Animation, AnimationBuilder, Config, CssClassMap, Mode } from '../../interface';
 import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
@@ -20,52 +20,53 @@ import mdLeaveAnimation from './animations/md.leave';
 })
 export class Alert implements OverlayInterface {
 
-  private activeId: string | undefined;
-  private inputType: string | undefined;
-  private hdrId: string;
+  private activeId?: string;
+  private inputType?: string;
+  private processedInputs: AlertInput[] = [];
 
   presented = false;
-  animation: Animation|undefined;
-  color: string;
+  animation?: Animation;
 
-  @Element() el: HTMLElement;
+  color!: string;
+  mode!: Mode;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
-  @Prop({ context: 'config' }) config: Config;
-  @Prop() overlayId: number;
-  @Prop() mode: string;
+  @Element() el!: HTMLStencilElement;
+
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop() overlayId!: number;
   @Prop() keyboardClose = true;
 
   /**
    * Animation to use when the alert is presented.
    */
-  @Prop() enterAnimation: AnimationBuilder;
+  @Prop() enterAnimation?: AnimationBuilder;
 
   /**
    * Animation to use when the alert is dismissed.
    */
-  @Prop() leaveAnimation: AnimationBuilder;
+  @Prop() leaveAnimation?: AnimationBuilder;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string | string[];
+  @Prop() cssClass?: string | string[];
 
   /**
    * The main title in the heading of the alert.
    */
-  @Prop() header: string;
+  @Prop() header?: string;
 
   /**
    * The subtitle in the heading of the alert. Displayed under the title.
    */
-  @Prop() subHeader: string;
+  @Prop() subHeader?: string;
 
   /**
    * The main message to be displayed in the alert.
    */
-  @Prop() message: string;
+  @Prop() message?: string;
 
   /**
    * Array of buttons to be added to the alert.
@@ -95,33 +96,62 @@ export class Alert implements OverlayInterface {
   /**
    * Emitted after the alert has presented.
    */
-  @Event() ionAlertDidLoad: EventEmitter<void>;
+  @Event() ionAlertDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted before the alert has presented.
    */
-  @Event() ionAlertDidUnload: EventEmitter<void>;
+  @Event() ionAlertDidUnload!: EventEmitter<void>;
 
   /**
    * Emitted after the alert has presented.
    */
-  @Event({eventName: 'ionAlertDidPresent'}) didPresent: EventEmitter<void>;
+  @Event({eventName: 'ionAlertDidPresent'}) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the alert has presented.
    */
-  @Event({eventName: 'ionAlertWillPresent'}) willPresent: EventEmitter<void>;
+  @Event({eventName: 'ionAlertWillPresent'}) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the alert has dismissed.
    */
-  @Event({eventName: 'ionAlertWillDismiss'}) willDismiss: EventEmitter<OverlayEventDetail>;
+  @Event({eventName: 'ionAlertWillDismiss'}) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the alert has dismissed.
    */
-  @Event({eventName: 'ionAlertDidDismiss'}) didDismiss: EventEmitter<OverlayEventDetail>;
+  @Event({eventName: 'ionAlertDidDismiss'}) didDismiss!: EventEmitter<OverlayEventDetail>;
 
+  @Watch('inputs')
+  inputsChanged() {
+    const inputs = this.inputs;
+
+    // An alert can be created with several different inputs. Radios,
+    // checkboxes and inputs are all accepted, but they cannot be mixed.
+    const inputTypes = new Set(inputs.map(i => i.type));
+    if (inputTypes.has('checkbox') || inputTypes.has('radio')) {
+      console.warn(`Alert cannot mix input types: ${(Array.from(inputTypes.values()).join('/'))}. Please see alert docs for more info.`);
+    }
+    this.inputType = inputTypes.values().next().value;
+    this.processedInputs = inputs.map((i, index) => ({
+        type: i.type || 'text',
+        name: i.name ? i.name : index + '',
+        placeholder: i.placeholder ? i.placeholder : '',
+        value: i.value ? i.value : '',
+        label: i.label,
+        checked: !!i.checked,
+        disabled: !!i.disabled,
+        id: i.id ? i.id : `alert-input-${this.overlayId}-${index}`,
+        handler: i.handler ? i.handler : null,
+        min: i.min ? i.min : null,
+        max: i.max ? i.max : null
+    }) as AlertInput);
+  }
+
+  componentWillLoad() {
+    this.inputsChanged();
+  }
 
   componentDidLoad() {
     this.ionAlertDidLoad.emit();
@@ -187,32 +217,23 @@ export class Alert implements OverlayInterface {
     return eventMethod(this.el, 'ionAlertWillDismiss', callback);
   }
 
-  private rbClick(inputIndex: number) {
-    this.inputs = this.inputs.map((input, index) => {
-      input.checked = (inputIndex === index);
-      return input;
-    });
-
-    const rbButton = this.inputs[inputIndex];
-    this.activeId = rbButton.id;
-
-    if (rbButton.handler) {
-      rbButton.handler(rbButton);
+  private rbClick(selectedInput: AlertInput) {
+    for (const input of this.processedInputs) {
+      input.checked = input === selectedInput;
     }
+    this.activeId = selectedInput.id;
+    if (selectedInput.handler) {
+      selectedInput.handler(selectedInput);
+    }
+    this.el.forceUpdate();
   }
 
-  private cbClick(inputIndex: number) {
-    this.inputs = this.inputs.map((input, index) => {
-      if (inputIndex === index) {
-        input.checked = !input.checked;
-      }
-      return input;
-    });
-
-    const cbButton = this.inputs[inputIndex];
-    if (cbButton.handler) {
-      cbButton.handler(cbButton);
+  private cbClick(selectedInput: AlertInput) {
+    selectedInput.checked = !selectedInput.checked;
+    if (selectedInput.handler) {
+      selectedInput.handler(selectedInput);
     }
+    this.el.forceUpdate();
   }
 
   private buttonClick(button: AlertButton) {
@@ -243,7 +264,7 @@ export class Alert implements OverlayInterface {
     if (this.inputType === 'radio') {
       // this is an alert with radio buttons (single value select)
       // return the one value which is checked, otherwise undefined
-      const checkedInput = this.inputs.find(i => i.checked === true);
+      const checkedInput = this.processedInputs.find(i => i.checked === true);
       console.debug('returning', checkedInput ? checkedInput.value : undefined);
       return checkedInput ? checkedInput.value : undefined;
     }
@@ -251,11 +272,11 @@ export class Alert implements OverlayInterface {
     if (this.inputType === 'checkbox') {
       // this is an alert with checkboxes (multiple value select)
       // return an array of all the checked values
-      console.debug('returning', this.inputs.filter(i => i.checked).map(i => i.value));
-      return this.inputs.filter(i => i.checked).map(i => i.value);
+      console.debug('returning', this.processedInputs.filter(i => i.checked).map(i => i.value));
+      return this.processedInputs.filter(i => i.checked).map(i => i.value);
     }
 
-    if (this.inputs.length === 0) {
+    if (this.processedInputs.length === 0) {
       // this is an alert without any options/inputs at all
       console.debug('returning', 'undefined');
       return undefined;
@@ -264,7 +285,7 @@ export class Alert implements OverlayInterface {
     // this is an alert with text inputs
     // return an object of all the values with the input name as the key
     const values: {[k: string]: string} = {};
-    this.inputs.forEach(i => {
+    this.processedInputs.forEach(i => {
       values[i.name] = i.value || '';
     });
 
@@ -272,16 +293,26 @@ export class Alert implements OverlayInterface {
     return values;
   }
 
-  private renderCheckbox(inputs: AlertInput[]) {
-    if (inputs.length === 0) return null;
+  private renderAlertInputs(labelledBy: string | undefined) {
+    switch (this.inputType) {
+      case 'checkbox': return this.renderCheckbox(labelledBy);
+      case 'radio': return this.renderRadio(labelledBy);
+      default: return this.renderInput(labelledBy);
+    }
+  }
 
+  private renderCheckbox(labelledby: string | undefined) {
+    const inputs = this.processedInputs;
+    if (inputs.length === 0) {
+      return null;
+    }
     return (
-      <div class='alert-checkbox-group'>
-        { inputs.map((i, index) => (
-          <button onClick={() => this.cbClick(index)} aria-checked={i.checked} id={i.id} disabled={i.disabled} tabIndex={0} role='checkbox' class='alert-tappable alert-checkbox alert-checkbox-button'>
-            <div class='alert-button-inner'>
-              <div class='alert-checkbox-icon'><div class='alert-checkbox-inner'></div></div>
-              <div class='alert-checkbox-label'>
+      <div class="alert-checkbox-group" aria-labelledby={labelledby}>
+        { inputs.map((i) => (
+          <button onClick={() => this.cbClick(i)} aria-checked={i.checked} id={i.id} disabled={i.disabled} tabIndex={0} role="checkbox" class="alert-tappable alert-checkbox alert-checkbox-button">
+            <div class="alert-button-inner">
+              <div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>
+              <div class="alert-checkbox-label">
                 {i.label}
               </div>
             </div>
@@ -292,16 +323,18 @@ export class Alert implements OverlayInterface {
     );
   }
 
-  private renderRadio(inputs: AlertInput[]) {
-    if (inputs.length === 0) return null;
-
+  private renderRadio(labelledby: string | undefined) {
+    const inputs = this.processedInputs;
+    if (inputs.length === 0) {
+      return null;
+    }
     return (
-      <div class='alert-radio-group' role='radiogroup' aria-labelledby={this.hdrId} aria-activedescendant={this.activeId}>
-        { inputs.map((i, index) => (
-          <button onClick={() => this.rbClick(index)} aria-checked={i.checked} disabled={i.disabled} id={i.id} tabIndex={0} class='alert-radio-button alert-tappable alert-radio' role='radio'>
-            <div class='alert-button-inner'>
-              <div class='alert-radio-icon'><div class='alert-radio-inner'></div></div>
-              <div class='alert-radio-label'>
+      <div class="alert-radio-group" role="radiogroup" aria-labelledby={labelledby} aria-activedescendant={this.activeId}>
+        { inputs.map((i) => (
+          <button onClick={() => this.rbClick(i)} aria-checked={i.checked} disabled={i.disabled} id={i.id} tabIndex={0} class="alert-radio-button alert-tappable alert-radio" role="radio">
+            <div class="alert-button-inner">
+              <div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>
+              <div class="alert-radio-label">
                 {i.label}
               </div>
             </div>
@@ -312,13 +345,15 @@ export class Alert implements OverlayInterface {
     );
   }
 
-  private renderInput(inputs: AlertInput[]) {
-    if (inputs.length === 0) return null;
-
+  private renderInput(labelledby: string | undefined) {
+    const inputs = this.processedInputs;
+    if (inputs.length === 0) {
+      return null;
+    }
     return (
-      <div class='alert-input-group'>
+      <div class="alert-input-group" aria-labelledby={labelledby}>
         { inputs.map(i => (
-          <div class='alert-input-wrapper'>
+          <div class="alert-input-wrapper">
             <input
               placeholder={i.placeholder}
               value={i.value}
@@ -329,7 +364,7 @@ export class Alert implements OverlayInterface {
               id={i.id}
               disabled={i.disabled}
               tabIndex={0}
-              class='alert-input'/>
+              class="alert-input"/>
           </div>
         ))}
       </div>
@@ -347,8 +382,7 @@ export class Alert implements OverlayInterface {
       class: {
         ...themedClasses,
         ...getClassMap(this.cssClass)
-      },
-      id: this.overlayId
+      }
     };
   }
 
@@ -357,17 +391,12 @@ export class Alert implements OverlayInterface {
     const subHdrId = `alert-${this.overlayId}-sub-hdr`;
     const msgId = `alert-${this.overlayId}-msg`;
 
-    if (this.header || !this.subHeader) {
-      this.hdrId = hdrId;
-
+    let labelledById: string|undefined = undefined;
+    if (this.header) {
+      labelledById = hdrId;
     } else if (this.subHeader) {
-      this.hdrId = subHdrId;
+      labelledById = subHdrId;
     }
-
-    const alertButtonGroupClass = {
-      'alert-button-group': true,
-      'alert-button-group-vertical': this.buttons.length > 2
-    };
 
     const buttons = this.buttons.map(b => {
       if (typeof b === 'string') {
@@ -377,63 +406,30 @@ export class Alert implements OverlayInterface {
     })
     .filter(b => b !== null);
 
-    this.inputs = this.inputs.map((i, index) => {
-      return {
-        type: i.type || 'text',
-        name: i.name ? i.name : index + '',
-        placeholder: i.placeholder ? i.placeholder : '',
-        value: i.value ? i.value : '',
-        label: i.label,
-        checked: !!i.checked,
-        disabled: !!i.disabled,
-        id: i.id ? i.id : `alert-input-${this.overlayId}-${index}`,
-        handler: i.handler ? i.handler : null,
-        min: i.min ? i.min : null,
-        max: i.max ? i.max : null
-      } as AlertInput;
-    }).filter(i => i !== null);
-
-    // An alert can be created with several different inputs. Radios,
-    // checkboxes and inputs are all accepted, but they cannot be mixed.
-    const inputTypes: string[] = [];
-    this.inputs.forEach(i => {
-      if (inputTypes.indexOf(i.type) < 0) {
-        inputTypes.push(i.type);
-      }
-    });
-
-    if (inputTypes.length > 1 && (inputTypes.indexOf('checkbox') > -1 || inputTypes.indexOf('radio') > -1)) {
-      console.warn(`Alert cannot mix input types: ${(inputTypes.join('/'))}. Please see alert docs for more info.`);
-    }
-
-    this.inputType = inputTypes.length > 0 ? inputTypes[0] : undefined;
+    const alertButtonGroupClass = {
+      'alert-button-group': true,
+      'alert-button-group-vertical': buttons.length > 2
+    };
 
     return [
       <ion-backdrop tappable={this.enableBackdropDismiss}/>,
-      <div class='alert-wrapper'>
-        <div class='alert-head'>
-          {this.header
-            ? <h2 id={hdrId} class='alert-title'>{this.header}</h2>
-            : null}
-          {this.subHeader
-            ? <h2 id={subHdrId} class='alert-sub-title'>{this.subHeader}</h2>
-            : null}
+
+      <div class="alert-wrapper">
+
+        <div class="alert-head">
+          { this.header && <h2 id={hdrId} class="alert-title">{this.header}</h2> }
+          { this.subHeader && <h2 id={subHdrId} class="alert-sub-title">{this.subHeader}</h2> }
         </div>
 
-        <div id={msgId} class='alert-message' innerHTML={this.message}></div>
-        {(() => {
-          switch (this.inputType) {
-            case 'checkbox': return this.renderCheckbox(this.inputs);
-            case 'radio': return this.renderRadio(this.inputs);
-            default: return this.renderInput(this.inputs);
-          }
-        })()}
+        <div id={msgId} class="alert-message" innerHTML={this.message}></div>
+
+        { this.renderAlertInputs(labelledById) }
 
         <div class={alertButtonGroupClass}>
-          {buttons.map(b =>
-            <button class={buttonClass(b)} tabIndex={0} onClick={() => this.buttonClick(b)}>
-              <span class='alert-button-inner'>
-                {b.text}
+          {buttons.map(button =>
+            <button class={buttonClass(button)} tabIndex={0} onClick={() => this.buttonClick(button)}>
+              <span class="alert-button-inner">
+                {button.text}
               </span>
             </button>
           )}
@@ -448,37 +444,4 @@ function buttonClass(button: AlertButton): CssClassMap {
     'alert-button': true,
     ...getClassMap(button.cssClass)
   };
-}
-
-export interface AlertOptions {
-  header?: string;
-  subHeader?: string;
-  message?: string;
-  cssClass?: string | string[];
-  mode?: string;
-  inputs?: AlertInput[];
-  buttons?: (AlertButton|string)[];
-  enableBackdropDismiss?: boolean;
-  translucent?: boolean;
-}
-
-export interface AlertInput {
-  type: string;
-  name: string | number;
-  placeholder?: string;
-  value?: string;
-  label?: string;
-  checked?: boolean;
-  disabled?: boolean;
-  id?: string;
-  handler?: Function;
-  min?: string | number;
-  max?: string | number;
-}
-
-export interface AlertButton {
-  text: string;
-  role?: string;
-  cssClass?: string | string[];
-  handler?: (value: any) => boolean|void;
 }

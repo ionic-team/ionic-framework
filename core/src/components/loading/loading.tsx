@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config } from '../../index';
+import { Animation, AnimationBuilder, Config, Mode } from '../../interface';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
 
@@ -24,37 +24,37 @@ export class Loading implements OverlayInterface {
   private durationTimeout: any;
 
   presented = false;
-  animation: Animation;
-  color: string;
-  mode: string;
+  animation?: Animation;
+  color!: string;
+  mode!: Mode;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
-  @Prop({ context: 'config' }) config: Config;
-  @Prop() overlayId: number;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop() overlayId!: number;
   @Prop() keyboardClose = true;
 
   /**
    * Animation to use when the loading indicator is presented.
    */
-  @Prop() enterAnimation: AnimationBuilder;
+  @Prop() enterAnimation?: AnimationBuilder;
 
   /**
    * Animation to use when the loading indicator is dismissed.
    */
-  @Prop() leaveAnimation: AnimationBuilder;
+  @Prop() leaveAnimation?: AnimationBuilder;
 
   /**
    * Optional text content to display in the loading indicator.
    */
-  @Prop() content: string;
+  @Prop() content?: string;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string | string[];
+  @Prop() cssClass?: string | string[];
 
   /**
    * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
@@ -64,7 +64,7 @@ export class Loading implements OverlayInterface {
   /**
    * Number of milliseconds to wait before dismissing the loading indicator.
    */
-  @Prop() duration: number;
+  @Prop() duration?: number;
 
   /**
    * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
@@ -80,7 +80,7 @@ export class Loading implements OverlayInterface {
    * The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`,
    * `"bubbles"`, `"circles"`, `"crescent"`.
    */
-  @Prop() spinner: string;
+  @Prop() spinner?: string;
 
   /**
    * If true, the loading indicator will be translucent. Defaults to `false`.
@@ -95,32 +95,32 @@ export class Loading implements OverlayInterface {
   /**
    * Emitted after the loading has unloaded.
    */
-  @Event() ionLoadingDidUnload: EventEmitter<void>;
+  @Event() ionLoadingDidUnload!: EventEmitter<void>;
 
   /**
    * Emitted after the loading has loaded.
    */
-  @Event() ionLoadingDidLoad: EventEmitter<void>;
+  @Event() ionLoadingDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted after the loading has presented.
    */
-  @Event({eventName: 'ionLoadingDidPresent'}) didPresent: EventEmitter<void>;
+  @Event({eventName: 'ionLoadingDidPresent'}) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the loading has presented.
    */
-  @Event({eventName: 'ionLoadingWillPresent'}) willPresent: EventEmitter<void>;
+  @Event({eventName: 'ionLoadingWillPresent'}) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the loading has dismissed.
    */
-  @Event({eventName: 'ionLoadingWillDismiss'}) willDismiss: EventEmitter<OverlayEventDetail>;
+  @Event({eventName: 'ionLoadingWillDismiss'}) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the loading has dismissed.
    */
-  @Event({eventName: 'ionLoadingDidDismiss'}) didDismiss: EventEmitter<OverlayEventDetail>;
+  @Event({eventName: 'ionLoadingDidDismiss'}) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   componentWillLoad() {
     if (!this.spinner) {
@@ -147,7 +147,7 @@ export class Loading implements OverlayInterface {
   async present(): Promise<void> {
     await present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined);
 
-    if (this.duration > 0) {
+    if (this.duration) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration + 10);
     }
   }
@@ -206,25 +206,15 @@ export class Loading implements OverlayInterface {
   render() {
     return [
       <ion-backdrop visible={this.showBackdrop} tappable={false} />,
-      <div class='loading-wrapper' role='dialog'>
+      <div class="loading-wrapper" role="dialog">
 
         { this.spinner !== 'hide' &&
-        <div class='loading-spinner'>
+        <div class="loading-spinner">
           <ion-spinner name={this.spinner}></ion-spinner>
         </div>}
 
-        { this.content && <div class='loading-content'>{this.content}</div>}
+        { this.content && <div class="loading-content">{this.content}</div>}
       </div>
     ];
   }
-}
-
-export interface LoadingOptions {
-  spinner?: string;
-  content?: string;
-  cssClass?: string | string[];
-  showBackdrop?: boolean;
-  dismissOnPageChange?: boolean;
-  duration?: number;
-  translucent?: boolean;
 }

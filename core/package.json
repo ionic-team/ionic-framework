@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "4.0.0-alpha.1",
+  "version": "4.0.0-alpha.3",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -14,8 +14,9 @@
     "progressive web app",
     "pwa"
   ],
+  "module": "dist/collection/index.js",
   "main": "dist/ionic.js",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/types/interface.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "files": [
     "dist/"
@@ -24,27 +25,20 @@
     "ionicons": "4.0.0-19"
   },
   "devDependencies": {
-    "@stencil/core": "0.7.23",
+    "@stencil/core": "0.7.27-0",
     "@stencil/dev-server": "latest",
     "@stencil/sass": "0.0.3",
     "@stencil/utils": "latest",
-    "@types/jest": "^21.1.6",
+    "@types/jest": "^22.2.3",
     "chai": "^4.1.2",
-    "chalk": "^2.3.2",
     "chromedriver": "^2.37.0",
-    "execa": "^0.9.0",
-    "fs-extra": "^5.0.0",
-    "glob": "^7.1.2",
-    "inquirer": "^5.2.0",
-    "jest": "^21.2.1",
-    "listr": "^0.13.0",
+    "jest": "^22.4.3",
     "mocha": "^4.0.1",
     "np": "^2.17.0",
     "sass-lint": "^1.12.1",
     "selenium-webdriver": "^3.6.0",
-    "semver": "^5.5.0",
     "tslint": "^5.8.0",
-    "tslint-ionic-rules": "0.0.13",
+    "tslint-ionic-rules": "0.0.14",
     "yargs": "^10.0.3"
   },
   "scripts": {

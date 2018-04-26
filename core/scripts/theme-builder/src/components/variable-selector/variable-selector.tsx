@@ -10,9 +10,9 @@ import { Color }                                                         from '.
 })
 export class VariableSelector {
 
-  @Event() colorChange: EventEmitter;
-  @Element() el: HTMLElement;
-  @Event() generateColors: EventEmitter;
+  @Event() colorChange!: EventEmitter;
+  @Element() el!: HTMLElement;
+  @Event() generateColors!: EventEmitter;
   @Prop() isRgb: boolean;
   @Prop() property: string;
   @Prop() type: 'color' | 'percent';

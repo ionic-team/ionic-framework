@@ -1,5 +1,5 @@
-import { Component, Listen, Method } from '@stencil/core';
-import { LoadingOptions } from '../../index';
+import { Component, Listen, Method, Prop } from '@stencil/core';
+import { LoadingOptions } from '../../interface';
 import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 
@@ -9,6 +9,8 @@ import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, remove
 export class LoadingController implements OverlayController {
 
   private loadings = new Map<number, HTMLIonLoadingElement>();
+
+  @Prop({ context: 'document' }) doc!: Document;
 
   @Listen('body:ionLoadingWillPresent')
   protected loadingWillPresent(ev: any) {
@@ -31,7 +33,7 @@ export class LoadingController implements OverlayController {
    */
   @Method()
   create(opts?: LoadingOptions): Promise<HTMLIonLoadingElement> {
-    return createOverlay(document.createElement('ion-loading'), opts);
+    return createOverlay(this.doc.createElement('ion-loading'), opts);
   }
 
   /*

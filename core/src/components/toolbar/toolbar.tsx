@@ -1,6 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 import { createThemedClasses } from '../../utils/theme';
-import { Config } from '../../index';
+import { Config, Mode } from '../../interface';
 
 
 @Component({
@@ -15,21 +15,21 @@ import { Config } from '../../index';
 })
 export class Toolbar {
 
-  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * If true, the toolbar will be translucent.
@@ -42,13 +42,8 @@ export class Toolbar {
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'toolbar-translucent') : {};
 
-    const hostClasses = {
-      ...themedClasses,
-      'statusbar-padding': this.config.getBoolean('statusbarPadding')
-    };
-
     return {
-      class: hostClasses
+      class: themedClasses
     };
   }
 
@@ -58,13 +53,13 @@ export class Toolbar {
 
     return [
       <div class={backgroundCss}></div>,
-      <slot name='start'></slot>,
-      <slot name='secondary'></slot>,
+      <slot name="start"></slot>,
+      <slot name="secondary"></slot>,
       <div class={contentCss}>
         <slot></slot>
       </div>,
-      <slot name='primary'></slot>,
-      <slot name='end'></slot>
+      <slot name="primary"></slot>,
+      <slot name="end"></slot>
     ];
   }
 }

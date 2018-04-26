@@ -1,6 +1,6 @@
 import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Config, NavOutlet } from '../../index';
-import { RouteID, RouteWrite, RouterDirection } from '../router/utils/interfaces';
+import { Config, NavOutlet, RouteID, RouteWrite, RouterDirection } from '../../interface';
+import { TabbarLayout, TabbarPlacement } from '../tabbar/tabbar';
 
 
 @Component({
@@ -11,27 +11,28 @@ export class Tabs implements NavOutlet {
 
   private ids = -1;
   private transitioning = false;
-  private tabsId: number = (++tabIds);
-  private leavingTab: HTMLIonTabElement | undefined;
+  private tabsId = (++tabIds);
+  private leavingTab?: HTMLIonTabElement;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @State() tabs: HTMLIonTabElement[] = [];
-  @State() selectedTab: HTMLIonTabElement | undefined;
+  @State() selectedTab?: HTMLIonTabElement;
 
-  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop({ context: 'document' }) doc!: Document;
 
   /**
    * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * A unique name for the tabs
    */
-  @Prop() name: string;
+  @Prop() name?: string;
 
   /**
    * If true, the tabbar
@@ -41,17 +42,17 @@ export class Tabs implements NavOutlet {
   /**
    * Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
    */
-  @Prop({ mutable: true }) tabbarLayout: string;
+  @Prop({ mutable: true }) tabbarLayout?: TabbarLayout;
 
   /**
    * Set position of the tabbar: `top`, `bottom`.
    */
-  @Prop({ mutable: true }) tabbarPlacement: string;
+  @Prop({ mutable: true }) tabbarPlacement?: TabbarPlacement;
 
   /**
    * If true, show the tab highlight bar under the selected tab.
    */
-  @Prop({ mutable: true }) tabbarHighlight: boolean;
+  @Prop({ mutable: true }) tabbarHighlight?: boolean;
 
   /**
    * If true, the tabs will be translucent.
@@ -63,23 +64,23 @@ export class Tabs implements NavOutlet {
 
   @Prop() scrollable = false;
 
-  @Prop({mutable: true}) useRouter: boolean;
+  @Prop({ mutable: true }) useRouter = false;
 
   /**
    * Emitted when the tab changes.
    */
-  @Event() ionChange: EventEmitter;
-  @Event() ionNavWillChange: EventEmitter<void>;
-  @Event() ionNavDidChange: EventEmitter<void>;
+  @Event() ionChange!: EventEmitter<{tab: HTMLIonTabElement}>;
+  @Event() ionNavWillChange!: EventEmitter<void>;
+  @Event() ionNavDidChange!: EventEmitter<void>;
 
   componentWillLoad() {
     if (!this.useRouter) {
-      this.useRouter = !!document.querySelector('ion-router') && !this.el.closest('[no-router]');
+      this.useRouter = !!this.doc.querySelector('ion-router') && !this.el.closest('[no-router]');
     }
 
-    this.loadConfig('tabsPlacement', 'bottom');
-    this.loadConfig('tabsLayout', 'icon-top');
-    this.loadConfig('tabsHighlight', true);
+    this.loadConfig('tabbarLayout', 'bottom');
+    this.loadConfig('tabbarLayout', 'icon-top');
+    this.loadConfig('tabbarHighlight', false);
   }
 
   async componentDidLoad() {
@@ -96,7 +97,7 @@ export class Tabs implements NavOutlet {
   protected tabChange(ev: CustomEvent<HTMLIonTabElement>) {
     const selectedTab = ev.detail;
     if (this.useRouter && selectedTab.href != null) {
-      const router = document.querySelector('ion-router');
+      const router = this.doc.querySelector('ion-router');
       if (router) {
         router.push(selectedTab.href);
       }
@@ -249,14 +250,14 @@ export class Tabs implements NavOutlet {
       if (leavingTab) {
         leavingTab.active = false;
       }
-      this.ionChange.emit(selectedTab);
+      this.ionChange.emit({tab: selectedTab});
       this.ionNavDidChange.emit();
     }
   }
 
   private notifyRouter() {
     if (this.useRouter) {
-      const router = document.querySelector('ion-router');
+      const router = this.doc.querySelector('ion-router');
       if (router) {
         return router.navChanged(RouterDirection.Forward);
       }
@@ -271,7 +272,7 @@ export class Tabs implements NavOutlet {
 
   render() {
     const dom = [
-      <div class='tabs-inner'>
+      <div class="tabs-inner">
         <slot></slot>
       </div>
     ];

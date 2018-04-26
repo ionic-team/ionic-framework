@@ -1,5 +1,5 @@
 import { Component, Listen, Prop } from '@stencil/core';
-import { Config } from '../..';
+import { Config } from '../../interface';
 
 import enableHideCaretOnScroll from './hacks/hide-caret';
 import enableInputBlurring from './hacks/input-blurring';
@@ -23,7 +23,8 @@ export class InputShims {
   private hideCaretMap = new WeakMap<HTMLElement, Function>();
   private scrollAssistMap = new WeakMap<HTMLElement, Function>();
 
-  @Prop({context: 'config'}) config: Config;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop({ context: 'document' }) doc!: Document;
 
   componentDidLoad() {
     this.keyboardHeight = this.config.getNumber('keyboardHeight', 290);
@@ -32,18 +33,18 @@ export class InputShims {
 
     const inputBlurring = this.config.getBoolean('inputBlurring', true);
     if (inputBlurring && INPUT_BLURRING) {
-      enableInputBlurring();
+      enableInputBlurring(this.doc);
     }
 
     const scrollPadding = this.config.getBoolean('scrollPadding', true);
     if (scrollPadding && SCROLL_PADDING) {
-      enableScrollPadding(this.keyboardHeight);
+      enableScrollPadding(this.doc, this.keyboardHeight);
     }
 
     // Input might be already loaded in the DOM before ion-device-hacks did.
     // At this point we need to look for all the ion-inputs not registered yet
     // and register them.
-    const inputs = Array.from(document.querySelectorAll('ion-input'));
+    const inputs = Array.from(this.doc.querySelectorAll('ion-input'));
     for (const input of inputs) {
       this.registerInput(input);
     }
@@ -53,14 +54,14 @@ export class InputShims {
   @Listen('body:ionInputDidLoad')
   protected onInputDidLoad(event: any) {
     if (this.didLoad) {
-      this.registerInput(event.detail);
+      this.registerInput(event.target);
     }
   }
 
   @Listen('body:ionInputDidUnload')
   protected onInputDidUnload(event: any) {
     if (this.didLoad) {
-      this.unregisterInput(event.detail);
+      this.unregisterInput(event.target);
     }
   }
 

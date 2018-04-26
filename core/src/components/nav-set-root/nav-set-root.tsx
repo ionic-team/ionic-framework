@@ -1,22 +1,20 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
-import { ComponentProps } from '../..';
-import { NavComponent } from '../nav/nav-util';
+import { ComponentProps, NavComponent } from '../../interface';
 
 @Component({
   tag: 'ion-nav-set-root',
 })
 export class NavSetRoot {
 
-  @Element() el: HTMLElement;
-  @Prop() component: NavComponent;
-  @Prop() componentProps: ComponentProps;
-  @Prop() url: string;
+  @Element() el!: HTMLElement;
+  @Prop() component?: NavComponent;
+  @Prop() componentProps?: ComponentProps;
 
   @Listen('child:click')
   push(): Promise<any> {
     const nav = this.el.closest('ion-nav');
-    if (nav) {
-      const toPush = this.url || this.component;
+    const toPush = this.component;
+    if (nav && toPush) {
       return nav.setRoot(toPush, this.componentProps);
     }
     return Promise.resolve(null);

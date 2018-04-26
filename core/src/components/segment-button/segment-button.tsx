@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
 import { createThemedClasses, getElementClassMap } from '../../utils/theme';
+import { Mode } from '../../interface';
 
 let ids = 0;
 
@@ -11,9 +12,8 @@ let ids = 0;
   }
 })
 export class SegmentButton {
-  styleTmr: any;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @Prop({ mutable: true }) activated = false;
 
@@ -21,13 +21,13 @@ export class SegmentButton {
    * The color to use for the text color.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * If true, the segment button is selected. Defaults to `false`.
@@ -43,35 +43,24 @@ export class SegmentButton {
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
-  @Prop() href: string;
+  @Prop() href?: string;
 
   /**
    * The value of the segment button.
    */
-  @Prop({ mutable: true }) value: string;
+  @Prop() value: string = 'ion-sb-' + (ids++);
 
   /**
    * Emitted when the segment button is clicked.
    */
-  @Event() ionClick: EventEmitter;
-
-  componentWillLoad() {
-    if (!this.value) {
-      this.value = `ion-sb-${ids++}`;
-    }
-  }
+  @Event() ionSelect!: EventEmitter<void>;
 
   /**
    * Emit the click event to the parent segment
    */
-  private segmentButtonClick() {
-    clearTimeout(this.styleTmr);
-
-    this.styleTmr = setTimeout(() => {
-      this.ionClick.emit();
-    });
+  private onClick() {
+    this.ionSelect.emit();
   }
-
 
   render() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'segment-button');
@@ -96,7 +85,7 @@ export class SegmentButton {
         class={buttonClasses}
         disabled={this.disabled}
         href={this.href}
-        onClick={this.segmentButtonClick.bind(this)}>
+        onClick={this.onClick.bind(this)}>
           <slot></slot>
           { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </TagType>

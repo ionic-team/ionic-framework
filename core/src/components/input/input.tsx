@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
-
-import { debounceEvent } from '../../utils/helpers';
+import { InputChangeEvent, Mode, StyleEvent  } from '../../interface';
+import { debounceEvent, deferEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 import { InputComponent } from './input-base';
 
@@ -18,48 +18,52 @@ import { InputComponent } from './input-base';
 export class Input implements InputComponent {
 
   private nativeInput: HTMLInputElement|undefined;
-  mode: string;
-  color: string;
+  didBlurAfterEdit = false;
 
-  didBlurAfterEdit: boolean;
-  styleTmr: number;
+  mode!: Mode;
+  color!: string;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /**
-   * Emitted when the input value has changed.
+   * Emitted when a keyboard input ocurred.
    */
-  @Event() ionInput: EventEmitter;
+  @Event() ionInput!: EventEmitter<KeyboardEvent>;
+
+  /**
+   * Emitted when the value has changed.
+   */
+  @Event() ionChange!: EventEmitter<InputChangeEvent>;
 
   /**
    * Emitted when the styles change.
    */
-  @Event() ionStyle: EventEmitter;
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
 
   /**
    * Emitted when the input loses focus.
    */
-  @Event() ionBlur: EventEmitter;
+  @Event() ionBlur!: EventEmitter<void>;
 
   /**
    * Emitted when the input has focus.
    */
-  @Event() ionFocus: EventEmitter;
+  @Event() ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the input has been created.
    */
-  @Event() ionInputDidLoad: EventEmitter;
+  @Event() ionInputDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted when the input has been removed.
    */
-  @Event() ionInputDidUnload: EventEmitter;
+  @Event() ionInputDidUnload!: EventEmitter<void>;
 
   /**
    * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
    */
-  @Prop() accept: string;
+  @Prop() accept?: string;
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
@@ -82,16 +86,6 @@ export class Input implements InputComponent {
   @Prop() autofocus = false;
 
   /**
-   * If true and the type is `checkbox` or `radio`, the control is selected by default. Defaults to `false`.
-   */
-  @Prop() checked = false;
-
-  @Watch('checked')
-  protected checkedChanged() {
-    this.emitStyle();
-  }
-
-  /**
    * If true, a clear icon will appear in the input when there is a value. Clicking it clears the input. Defaults to `false`.
    */
   @Prop() clearInput = false;
@@ -99,16 +93,16 @@ export class Input implements InputComponent {
   /**
    * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
-  @Prop({ mutable: true }) clearOnEdit: boolean;
+  @Prop({ mutable: true }) clearOnEdit!: boolean;
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `0`.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
    */
   @Prop() debounce = 0;
 
   @Watch('debounce')
   protected debounceChanged() {
-    this.ionInput = debounceEvent(this.ionInput, this.debounce);
+    this.ionChange = debounceEvent(this.ionChange, this.debounce);
   }
 
   /**
@@ -124,47 +118,47 @@ export class Input implements InputComponent {
   /**
    * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
    */
-  @Prop() inputmode: string;
+  @Prop() inputmode?: string;
 
   /**
    * The maximum value, which must not be less than its minimum (min attribute) value.
    */
-  @Prop() max: string;
+  @Prop() max?: string;
 
   /**
    * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
    */
-  @Prop() maxlength: number;
+  @Prop() maxlength?: number;
 
   /**
    * The minimum value, which must not be greater than its maximum (max attribute) value.
    */
-  @Prop() min: string;
+  @Prop() min?: string;
 
   /**
    * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
    */
-  @Prop() minlength: number;
+  @Prop() minlength?: number;
 
   /**
    * If true, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
    */
-  @Prop() multiple: boolean;
+  @Prop() multiple?: boolean;
 
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop() name: string;
+  @Prop() name?: string;
 
   /**
    * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
    */
-  @Prop() pattern: string;
+  @Prop() pattern?: string;
 
   /**
    * Instructional text that shows before the input has a value.
    */
-  @Prop() placeholder: string;
+  @Prop() placeholder?: string;
 
   /**
    * If true, the user cannot modify the value. Defaults to `false`.
@@ -179,7 +173,7 @@ export class Input implements InputComponent {
   /**
    * This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.
    */
-  @Prop() results: number;
+  @Prop() results?: number;
 
   /**
    * If true, the element will have its spelling and grammar checked. Defaults to `false`.
@@ -189,12 +183,12 @@ export class Input implements InputComponent {
   /**
    * Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.
    */
-  @Prop() step: string;
+  @Prop() step?: string;
 
   /**
    * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
    */
-  @Prop() size: number;
+  @Prop() size?: number;
 
   /**
    * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
@@ -204,7 +198,7 @@ export class Input implements InputComponent {
   /**
    * The value of the input.
    */
-  @Prop({ mutable: true }) value: string;
+  @Prop({ mutable: true }) value = '';
 
 
   /**
@@ -213,78 +207,80 @@ export class Input implements InputComponent {
   @Watch('value')
   protected valueChanged() {
     const inputEl = this.nativeInput;
-    if (inputEl && inputEl.value !== this.value) {
-      inputEl.value = this.value;
+    const value = this.value;
+    if (inputEl && inputEl.value !== value) {
+      inputEl.value = value;
+    }
+    this.emitStyle();
+    this.ionChange.emit({value});
+  }
+
+  componentWillLoad() {
+    // By default, password inputs clear after focus when they have content
+    if (this.clearOnEdit === undefined && this.type === 'password') {
+      this.clearOnEdit = true;
     }
   }
 
   componentDidLoad() {
+    this.ionStyle = deferEvent(this.ionStyle);
     this.debounceChanged();
     this.emitStyle();
 
-    // By default, password inputs clear after focus when they have content
-    if (this.type === 'password' && this.clearOnEdit !== false) {
-      this.clearOnEdit = true;
-    }
-    this.ionInputDidLoad.emit(this.el);
+    this.ionInputDidLoad.emit();
   }
 
   componentDidUnload() {
     this.nativeInput = undefined;
-    this.ionInputDidUnload.emit(this.el);
+    this.ionInputDidUnload.emit();
   }
 
   private emitStyle() {
-    clearTimeout(this.styleTmr);
-
-    const styles = {
+    this.ionStyle.emit({
       'input': true,
-      'input-checked': this.checked,
       'input-disabled': this.disabled,
       'input-has-value': this.hasValue(),
       'input-has-focus': this.hasFocus()
-    };
-
-    this.styleTmr = setTimeout(() => {
-      this.ionStyle.emit(styles);
     });
   }
 
-  inputBlurred(ev: Event) {
-    this.ionBlur.emit(ev);
-
-    this.focusChange(this.hasFocus());
-    this.emitStyle();
-  }
-
-  inputChanged(ev: Event) {
-    this.value = ev.target && (ev.target as HTMLInputElement).value || '';
+  private onInput(ev: KeyboardEvent) {
+    const input = ev.target as HTMLInputElement;
+    if (input) {
+      this.value = ev.target && (ev.target as HTMLInputElement).value || '';
+    }
     this.ionInput.emit(ev);
-    this.emitStyle();
   }
 
-  inputFocused(ev: Event) {
-    this.ionFocus.emit(ev);
-
-    this.focusChange(this.hasFocus());
+  private onBlur() {
+    this.focusChanged();
     this.emitStyle();
+
+    this.ionBlur.emit();
   }
 
-  focusChange(inputHasFocus: boolean) {
+  private onFocus() {
+    this.focusChanged();
+    this.emitStyle();
+
+    this.ionFocus.emit();
+  }
+
+  private focusChanged() {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this.clearOnEdit && !inputHasFocus && this.hasValue()) {
+    if (this.clearOnEdit && !this.hasFocus() && this.hasValue()) {
       this.didBlurAfterEdit = true;
     }
   }
 
-  inputKeydown(ev: Event) {
-    this.checkClearOnEdit(ev);
+  private inputKeydown() {
+    this.checkClearOnEdit();
   }
 
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  checkClearOnEdit(ev: Event) {
+  private checkClearOnEdit() {
     if (!this.clearOnEdit) {
       return;
     }
@@ -292,25 +288,24 @@ export class Input implements InputComponent {
     // Did the input value change after it was blurred and edited?
     if (this.didBlurAfterEdit && this.hasValue()) {
       // Clear the input
-      this.clearTextInput(ev);
+      this.clearTextInput();
     }
 
     // Reset the flag
     this.didBlurAfterEdit = false;
   }
 
-  clearTextInput(ev: Event) {
+  private clearTextInput() {
     this.value = '';
-    this.ionInput.emit(ev);
   }
 
-  hasFocus(): boolean {
+  private hasFocus(): boolean {
     // check if an input has focus or not
     return this.nativeInput === document.activeElement;
   }
 
-  hasValue(): boolean {
-    return (this.value !== null && this.value !== undefined && this.value !== '');
+  private hasValue(): boolean {
+    return (this.value !== '');
   }
 
   render() {
@@ -326,7 +321,6 @@ export class Input implements InputComponent {
         autoComplete={this.autocomplete}
         autoCorrect={this.autocorrect}
         autoFocus={this.autofocus}
-        checked={this.checked}
         class={themedClasses}
         disabled={this.disabled}
         inputMode={this.inputmode}
@@ -346,15 +340,15 @@ export class Input implements InputComponent {
         size={this.size}
         type={this.type}
         value={this.value}
-        onBlur={this.inputBlurred.bind(this)}
-        onInput={this.inputChanged.bind(this)}
-        onFocus={this.inputFocused.bind(this)}
+        onInput={this.onInput.bind(this)}
+        onBlur={this.onBlur.bind(this)}
+        onFocus={this.onFocus.bind(this)}
         onKeyDown={this.inputKeydown.bind(this)}
       />,
       <button
-        type='button'
-        class='input-clear-icon'
-        hidden={this.clearInput !== true}
+        type="button"
+        class="input-clear-icon"
+        hidden={!this.clearInput}
         onClick={this.clearTextInput.bind(this)}
         onMouseDown={this.clearTextInput.bind(this)}/>
     ];

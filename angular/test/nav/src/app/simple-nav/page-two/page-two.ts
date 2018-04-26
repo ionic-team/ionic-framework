@@ -21,6 +21,20 @@ import { Location } from '@angular/common';
       <div>
         <ion-button routerLink="/simple-nav/page-one" goBack>Go to Page One</ion-button>
       </div>
+
+      <ion-list>
+        <ion-item href="/simple-nav/page-one" routerDirection="forward">
+          FORWARD (Page one)
+        </ion-item>
+
+        <ion-item href="/simple-nav/page-one" routerDirection="back">
+          BACK (Page one)
+        </ion-item>
+
+        <ion-item href="/simple-nav/page-one" routerDirection="root">
+          ROOT (Page one)
+        </ion-item>
+      </ion-list>
     </ion-content>
   `
 })

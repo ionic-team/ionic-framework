@@ -1,10 +1,15 @@
 import { EventEmitter } from '@stencil/core';
 
+export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {
+  const element = array[indexes.from];
+  array.splice(indexes.from, 1);
+  array.splice(indexes.to, 0, element);
+  return array;
+}
+
 export function clamp(min: number, n: number, max: number) {
   return Math.max(min, Math.min(n, max));
 }
-
-export function isDef(v: any): boolean { return v !== undefined && v !== null; }
 
 export function assert(actual: any, reason: string) {
   if (!actual) {
@@ -36,6 +41,15 @@ export function pointerCoord(ev: any): {x: number, y: number} {
 }
 export type Side = 'start' | 'end';
 
+export function entries<T>(obj: {[s: string]: T}): [string, T][] {
+  const ownProps = Object.keys( obj );
+  let i = ownProps.length;
+  const resArray = new Array(i);
+  while (i--)
+    resArray[i] = [ownProps[i], obj[ownProps[i]]];
+  return resArray;
+}
+
 /**
  * @hidden
  * Given a side, return if it should be on the right
@@ -43,8 +57,8 @@ export type Side = 'start' | 'end';
  * @param side the side
  * @param isRTL whether the application dir is rtl
  */
-export function isRightSide(side: Side): boolean {
-  const isRTL = document.dir === 'rtl';
+export function isRightSide(win: Window, side: Side): boolean {
+  const isRTL = win.document.dir === 'rtl';
   switch (side) {
     case 'start': return isRTL;
     case 'end': return !isRTL;

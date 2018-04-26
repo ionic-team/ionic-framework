@@ -1,5 +1,5 @@
 import { generatePath } from './path';
-import { RouteChain } from './interfaces';
+import { RouteChain } from './interface';
 
 export function printRoutes(routes: RouteChain[]) {
   console.debug('%c[ion-core]', 'font-weight: bold', `registered ${routes.length} routes`);

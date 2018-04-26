@@ -1,5 +1,5 @@
-import { Component, Element, Prop } from '@stencil/core';
-import { Config } from '../../index';
+import { Component, Prop } from '@stencil/core';
+import { Config } from '../../interface';
 
 @Component({
   tag: 'ion-menu-button',
@@ -13,34 +13,26 @@ import { Config } from '../../index';
 })
 export class MenuButton {
 
-  private custom = true;
-
-  @Prop({ context: 'config' }) config: Config;
+  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
    */
-  @Prop() menu: string;
+  @Prop() menu?: string;
 
   /**
    * Automatically hides the menu button when the corresponding menu is not active
    */
   @Prop() autoHide = true;
 
-  @Element() el: HTMLElement;
-
-  componentWillLoad() {
-    this.custom = this.el.childElementCount > 0;
-  }
-
   render() {
     const menuIcon = this.config.get('menuIcon', 'menu');
     return (
       <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
         <ion-button>
-          {this.custom
-            ? <slot/>
-            : <ion-icon slot='icon-only' name={menuIcon}/>}
+          <slot>
+            <ion-icon slot="icon-only" name={menuIcon}/>
+          </slot>
         </ion-button>
       </ion-menu-toggle>
     );

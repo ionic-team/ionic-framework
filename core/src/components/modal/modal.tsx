@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate } from '../../index';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode } from '../../interface';
 
-import { createThemedClasses, getClassList } from '../../utils/theme';
+import { createThemedClasses, getClassMap } from '../../utils/theme';
 import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 
@@ -23,18 +23,18 @@ import mdLeaveAnimation from './animations/md.leave';
 })
 export class Modal implements OverlayInterface {
 
-  private usersElement: HTMLElement;
+  private usersElement?: HTMLElement;
 
   animation: Animation|undefined;
   presented = false;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl: HTMLIonAnimationControllerElement;
-  @Prop({ context: 'config' }) config: Config;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+  @Prop({ context: 'config' }) config!: Config;
 
-  @Prop() overlayId: number;
-  @Prop() delegate: FrameworkDelegate;
+  @Prop() overlayId!: number;
+  @Prop() delegate?: FrameworkDelegate;
   @Prop() keyboardClose = true;
 
   /**
@@ -42,40 +42,40 @@ export class Modal implements OverlayInterface {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * Animation to use when the modal is presented.
    */
-  @Prop() enterAnimation: AnimationBuilder;
+  @Prop() enterAnimation?: AnimationBuilder;
 
   /**
    * Animation to use when the modal is dismissed.
    */
-  @Prop() leaveAnimation: AnimationBuilder;
+  @Prop() leaveAnimation?: AnimationBuilder;
 
   /**
    * The component to display inside of the modal.
    */
-  @Prop() component: ComponentRef;
+  @Prop() component!: ComponentRef;
 
   /**
    * The data to pass to the modal component.
    */
-  @Prop() componentProps: ComponentProps;
+  @Prop() componentProps?: ComponentProps;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
    * provided they should be separated by spaces.
    */
-  @Prop() cssClass: string | string[];
+  @Prop() cssClass?: string | string[];
 
   /**
    * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
@@ -95,32 +95,32 @@ export class Modal implements OverlayInterface {
   /**
    * Emitted after the modal has loaded.
    */
-  @Event() ionModalDidLoad: EventEmitter<void>;
+  @Event() ionModalDidLoad!: EventEmitter<void>;
 
   /**
    * Emitted after the modal has unloaded.
    */
-  @Event() ionModalDidUnload: EventEmitter<void>;
+  @Event() ionModalDidUnload!: EventEmitter<void>;
 
   /**
    * Emitted after the modal has presented.
    */
-  @Event({eventName: 'ionModalDidPresent'}) didPresent: EventEmitter<void>;
+  @Event({eventName: 'ionModalDidPresent'}) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the modal has presented.
    */
-  @Event({eventName: 'ionModalWillPresent'}) willPresent: EventEmitter<void>;
+  @Event({eventName: 'ionModalWillPresent'}) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the modal has dismissed.
    */
-  @Event({eventName: 'ionModalWillDismiss'}) willDismiss: EventEmitter<OverlayEventDetail>;
+  @Event({eventName: 'ionModalWillDismiss'}) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the modal has dismissed.
    */
-  @Event({eventName: 'ionModalDidDismiss'}) didDismiss: EventEmitter<OverlayEventDetail>;
+  @Event({eventName: 'ionModalDidDismiss'}) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   componentDidLoad() {
     this.ionModalDidLoad.emit();
@@ -176,11 +176,7 @@ export class Modal implements OverlayInterface {
       ...this.componentProps,
       modal: this.el
     };
-    const classes = [
-      ...getClassList(this.cssClass),
-      'ion-page'
-    ];
-    this.usersElement = await attachComponent(this.delegate, container, this.component, classes, componentProps);
+    this.usersElement = await attachComponent(this.delegate, container, this.component, ['ion-page'], componentProps);
     return present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation);
   }
 
@@ -222,6 +218,7 @@ export class Modal implements OverlayInterface {
   hostData() {
     return {
       'no-router': true,
+      class: getClassMap(this.cssClass),
       style: {
         zIndex: 20000 + this.overlayId,
       }
@@ -233,7 +230,7 @@ export class Modal implements OverlayInterface {
 
     return [
       <ion-backdrop visible={this.showBackdrop} tappable={this.enableBackdropDismiss}/>,
-      <div role='dialog' class={dialogClasses}></div>
+      <div role="dialog" class={dialogClasses}></div>
     ];
   }
 }

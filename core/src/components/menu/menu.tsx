@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { Animation, Config, GestureDetail } from '../../index';
+import { Animation, Config, GestureDetail, MenuChangeEventDetail, Mode } from '../../interface';
 import { Side, assert, isRightSide } from '../../utils/helpers';
 
 @Component({
@@ -14,46 +14,47 @@ import { Side, assert, isRightSide } from '../../utils/helpers';
 })
 export class Menu {
 
-  private animation: Animation|undefined;
+  private animation?: Animation;
   private isPane = false;
   private _isOpen = false;
   private lastOnEnd = 0;
 
-  mode: string;
-  color: string;
+  mode!: Mode;
+  color!: string;
   isAnimating = false;
-  width: number;
+  width!: number; // TOOD
 
-  backdropEl: HTMLElement|undefined;
-  menuInnerEl: HTMLElement|undefined;
-  contentEl: HTMLElement|undefined;
-  menuCtrl: HTMLIonMenuControllerElement|undefined;
+  backdropEl?: HTMLElement;
+  menuInnerEl?: HTMLElement;
+  contentEl?: HTMLElement;
+  menuCtrl?: HTMLIonMenuControllerElement;
 
-  @Element() el: HTMLIonMenuElement;
+  @Element() el!: HTMLIonMenuElement;
 
   @State() isRightSide = false;
 
-  @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'isServer' }) isServer: boolean;
-  @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl: HTMLIonMenuControllerElement;
-  @Prop({ context: 'enableListener' }) enableListener: EventListenerEnable;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop({ context: 'isServer' }) isServer!: boolean;
+  @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl!: HTMLIonMenuControllerElement;
+  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
+  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The content's id the menu should use.
    */
-  @Prop() contentId: string;
+  @Prop() contentId?: string;
 
   /**
    * An id for the menu.
    */
-  @Prop() menuId: string;
+  @Prop() menuId?: string;
 
   /**
    * The display type of the menu. Default varies based on the mode,
    * see the `menuType` in the [config](../../config/Config). Available options:
    * `"overlay"`, `"reveal"`, `"push"`.
    */
-  @Prop({ mutable: true }) type: string;
+  @Prop({ mutable: true }) type!: string;
 
   @Watch('type')
   typeChanged(type: string, oldType: string | null) {
@@ -88,7 +89,7 @@ export class Menu {
 
   @Watch('side')
   protected sideChanged() {
-    this.isRightSide = isRightSide(this.side);
+    this.isRightSide = isRightSide(this.win, this.side);
   }
 
   /**
@@ -111,21 +112,25 @@ export class Menu {
   /**
    * Emitted when the menu is open.
    */
-  @Event() ionOpen: EventEmitter;
+  @Event() ionOpen!: EventEmitter<void>;
 
   /**
    * Emitted when the menu is closed.
    */
-  @Event() ionClose: EventEmitter;
+  @Event() ionClose!: EventEmitter<void>;
 
 
-  @Event() protected ionMenuChange: EventEmitter<MenuChangeEventDetail>;
+  @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
   async componentWillLoad() {
     if (this.type == null) {
       this.type = this.mode === 'ios' ? 'reveal' : 'overlay';
     }
-    this.menuCtrl = await this.lazyMenuCtrl.componentOnReady();
+    if (this.isServer) {
+      this.disabled = true;
+    } else {
+      this.menuCtrl = await this.lazyMenuCtrl.componentOnReady();
+    }
   }
 
   componentDidLoad() {
@@ -133,9 +138,10 @@ export class Menu {
       return;
     }
     const el = this.el;
+    const parent = el.parentNode as any;
     const content = (this.contentId)
       ? document.getElementById(this.contentId)
-      : el.parentElement && el.parentElement.querySelector('[main]');
+      : parent && parent.querySelector && parent.querySelector('[main]');
 
     if (!content || !content.tagName) {
       // requires content element
@@ -275,7 +281,7 @@ export class Menu {
     } else if (this.menuCtrl!.getOpen()) {
       return false;
     }
-    return checkEdgeSide(detail.currentX, this.isRightSide, this.maxEdgeStart);
+    return checkEdgeSide(this.win, detail.currentX, this.isRightSide, this.maxEdgeStart);
   }
 
   private onWillStart(): Promise<void> {
@@ -426,13 +432,13 @@ export class Menu {
 
   render() {
     return ([
-      <div class='menu-inner' ref={el => this.menuInnerEl = el}>
+      <div class="menu-inner" ref={el => this.menuInnerEl = el}>
         <slot></slot>
       </div>,
 
       <ion-backdrop
         ref={el => this.backdropEl = el}
-        class='menu-backdrop'
+        class="menu-backdrop"
         tappable={false}
         stopPropagation={false}/>,
 
@@ -443,12 +449,11 @@ export class Menu {
         onMove={this.onDragMove.bind(this)}
         onEnd={this.onDragEnd.bind(this)}
         disabled={!this.isActive() || !this.swipeEnabled}
-        gestureName='menu-swipe'
+        gestureName="menu-swipe"
         gesturePriority={10}
-        type='pan'
-        direction='x'
+        direction="x"
         threshold={10}
-        attachTo='window'
+        attachTo="window"
         disableScroll={true} />
     ]);
   }
@@ -458,9 +463,9 @@ function computeDelta(deltaX: number, isOpen: boolean, isRightSide: boolean): nu
   return Math.max(0, (isOpen !== isRightSide) ? -deltaX : deltaX);
 }
 
-function checkEdgeSide(posX: number, isRightSide: boolean, maxEdgeStart: number): boolean {
+function checkEdgeSide(win: Window, posX: number, isRightSide: boolean, maxEdgeStart: number): boolean {
   if (isRightSide) {
-    return posX >= window.innerWidth - maxEdgeStart;
+    return posX >= win.innerWidth - maxEdgeStart;
   } else {
     return posX <= maxEdgeStart;
   }
@@ -469,13 +474,3 @@ function checkEdgeSide(posX: number, isRightSide: boolean, maxEdgeStart: number)
 const SHOW_MENU = 'show-menu';
 const SHOW_BACKDROP = 'show-backdrop';
 const MENU_CONTENT_OPEN = 'menu-content-open';
-
-export interface MenuChangeEvent {
-  target: HTMLIonMenuElement;
-  detail: MenuChangeEventDetail;
-}
-
-export interface MenuChangeEventDetail {
-  disabled: boolean;
-  open: boolean;
-}

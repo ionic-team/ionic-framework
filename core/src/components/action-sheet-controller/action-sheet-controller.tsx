@@ -1,5 +1,5 @@
-import { Component, Listen, Method } from '@stencil/core';
-import { ActionSheetOptions } from '../../index';
+import { Component, Listen, Method, Prop } from '@stencil/core';
+import { ActionSheetOptions } from '../../interface';
 import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({
@@ -8,6 +8,8 @@ import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, remove
 export class ActionSheetController implements OverlayController {
 
   private actionSheets = new Map<number, HTMLIonActionSheetElement>();
+
+  @Prop({ context: 'document' }) doc!: Document;
 
   @Listen('body:ionActionSheetWillPresent')
   protected actionSheetWillPresent(ev: any) {
@@ -30,7 +32,7 @@ export class ActionSheetController implements OverlayController {
    */
   @Method()
   create(opts?: ActionSheetOptions): Promise<HTMLIonActionSheetElement> {
-    return createOverlay(document.createElement('ion-action-sheet'), opts);
+    return createOverlay(this.doc.createElement('ion-action-sheet'), opts);
   }
 
   /*

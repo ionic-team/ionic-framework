@@ -1,6 +1,6 @@
-import { Component, Listen, Method } from '@stencil/core';
-import { PickerOptions } from '../../index';
+import { Component, Listen, Method, Prop } from '@stencil/core';
 import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+import { PickerOptions } from '../../interface';
 
 
 @Component({
@@ -9,6 +9,8 @@ import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, remove
 export class PickerController implements OverlayController {
 
   private pickers = new Map<number, HTMLIonPickerElement>();
+
+  @Prop({ context: 'document' }) doc!: Document;
 
   @Listen('body:ionPickerWillPresent')
   protected pickerWillPresent(ev: any) {
@@ -31,7 +33,7 @@ export class PickerController implements OverlayController {
    */
   @Method()
   create(opts?: PickerOptions): Promise<HTMLIonPickerElement> {
-    return createOverlay(document.createElement('ion-picker'), opts);
+    return createOverlay(this.doc.createElement('ion-picker'), opts);
   }
 
   /*

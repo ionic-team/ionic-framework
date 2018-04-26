@@ -1,7 +1,7 @@
 
 export function waitUntilVisible(el: HTMLElement, callback?: Function) {
   return new Promise((resolve) => {
-    if ('IntersectionObserver' in window) {
+    if (IntersectionObserver) {
       const io = new IntersectionObserver(data => {
         if (data[0].isIntersecting) {
           resolve();

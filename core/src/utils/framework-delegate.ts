@@ -1,9 +1,4 @@
-import { ComponentRef } from '..';
-
-export interface FrameworkDelegate {
-  attachViewToDom(container: any, component: any, propsOrDataObj?: any, cssClasses?: string[]): Promise<HTMLElement>;
-  removeViewFromDom(container: any, component: any): Promise<void>;
-}
+import { ComponentRef, FrameworkDelegate } from '../interface';
 
 export function attachComponent(delegate: FrameworkDelegate|undefined, container: Element, component: ComponentRef, cssClasses?: string[], componentProps?: {[key: string]: any}): Promise<HTMLElement> {
   if (delegate) {
@@ -27,7 +22,7 @@ export function attachComponent(delegate: FrameworkDelegate|undefined, container
   return Promise.resolve(el);
 }
 
-export function detachComponent(delegate: FrameworkDelegate, element: HTMLElement|undefined) {
+export function detachComponent(delegate: FrameworkDelegate|undefined, element: HTMLElement|undefined) {
   if (element) {
     if (delegate) {
       const container = element.parentElement;

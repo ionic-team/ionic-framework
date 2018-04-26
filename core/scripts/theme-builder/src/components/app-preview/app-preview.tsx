@@ -15,7 +15,7 @@ export class AppPreview {
   hasIframeListener: boolean = false;
   @Prop() hoverProperty: string;
   iframe: HTMLIFrameElement;
-  @Event() propertiesUsed: EventEmitter;
+  @Event() propertiesUsed!: EventEmitter;
 
   applyStyles () {
     if (this.iframe && this.iframe.contentDocument && this.iframe.contentDocument.documentElement) {

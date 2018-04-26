@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import * as c from './directives';
@@ -119,7 +119,7 @@ const PROVIDERS = [
   p.NavController,
   p.Platform,
   p.Events,
-  p.DomController
+  p.DomController,
 ];
 
 @NgModule({
@@ -135,12 +135,22 @@ const PROVIDERS = [
   ]
 })
 export class IonicModule {
-  static forRoot(): ModuleWithProviders {
+  static forRoot(config?: {[key: string]: any}): ModuleWithProviders {
     return {
       ngModule: IonicModule,
       providers: [
+        // Load config with defualt values
+        { provide: ConfigToken, useValue: config },
+        { provide: p.Config, useFactory: setupConfig, deps: [ ConfigToken ] },
+
         ...PROVIDERS,
       ]
     };
   }
+}
+
+export const ConfigToken = new InjectionToken<any>('USERCONFIG');
+export function setupConfig(userConfig: any): p.Config {
+  const config = new p.Config(userConfig);
+  return config;
 }

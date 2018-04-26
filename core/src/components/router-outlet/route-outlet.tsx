@@ -1,12 +1,11 @@
 import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, NavDirection, NavOutlet, RouteID, RouteWrite } from '../../interface';
 import { transition } from '../../utils';
-import { NavDirection } from '../nav/nav-util';
-import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, NavOutlet } from '../..';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { RouteID, RouteWrite } from '../router/utils/interfaces';
 
 import iosTransitionAnimation from '../nav/animations/ios.transition';
 import mdTransitionAnimation from '../nav/animations/md.transition';
+
 
 @Component({
   tag: 'ion-router-outlet'
@@ -17,20 +16,20 @@ export class RouterOutlet implements NavOutlet {
   private activeEl: HTMLElement|undefined;
   private activeComponent: any;
 
-  mode: string;
+  mode!: Mode;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({context: 'config'}) config: Config;
-  @Prop({connect: 'ion-animation-controller'}) animationCtrl: HTMLIonAnimationControllerElement;
-  @Prop({context: 'window'}) window: Window;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+  @Prop({ context: 'window' }) win!: Window;
 
-  @Prop({ mutable: true }) animated: boolean;
-  @Prop() animationBuilder: AnimationBuilder;
-  @Prop() delegate: FrameworkDelegate;
+  @Prop({ mutable: true }) animated?: boolean;
+  @Prop() animationBuilder?: AnimationBuilder;
+  @Prop() delegate?: FrameworkDelegate;
 
-  @Event() ionNavWillChange: EventEmitter<void>;
-  @Event() ionNavDidChange: EventEmitter<void>;
+  @Event() ionNavWillChange!: EventEmitter<void>;
+  @Event() ionNavDidChange!: EventEmitter<void>;
 
   componentWillLoad() {
     if (this.animated === undefined) {
@@ -85,7 +84,7 @@ export class RouterOutlet implements NavOutlet {
 
       animationCtrl: this.animationCtrl,
       showGoBack: opts.showGoBack,
-      window: this.window,
+      window: this.win,
       enteringEl: enteringEl,
       leavingEl: leavingEl,
       baseEl: this.el,
@@ -101,7 +100,7 @@ export class RouterOutlet implements NavOutlet {
   async setRouteId(id: string, params: any, direction: number): Promise<RouteWrite> {
     const changed = await this.setRoot(id, params, {
       duration: direction === 0 ? 0 : undefined,
-      direction: direction === -1 ? NavDirection.Back : NavDirection.Forward,
+      direction: direction === -1 ? 'back' : 'forward',
     });
     return {
       changed,
@@ -130,7 +129,7 @@ export class RouterOutlet implements NavOutlet {
 
   render() {
     return [
-      this.mode === 'ios' && <div class='nav-decor'/>,
+      this.mode === 'ios' && <div class="nav-decor"/>,
       <slot/>
     ];
   }

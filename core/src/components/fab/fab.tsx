@@ -7,19 +7,19 @@ import { Component, Element, Listen, Method, Prop, Watch } from '@stencil/core';
 })
 export class Fab {
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   /**
    * Where to align the fab horizontally in the viewport.
    * Possible values are: `"center"`, `"start"`, `"end"`.
    */
-  @Prop() horizontal: 'start' | 'end' | 'center';
+  @Prop() horizontal?: 'start' | 'end' | 'center';
 
   /**
    * Where to align the fab vertically in the viewport.
    * Possible values are: `"top"`, `"center"`, `"bottom"`.
    */
-  @Prop() vertical: 'top' | 'bottom' | 'center';
+  @Prop() vertical?: 'top' | 'bottom' | 'center';
 
   /**
    * If true, the fab will display on the edge of the header if
@@ -28,7 +28,7 @@ export class Fab {
    */
   @Prop() edge = false;
 
-  @Prop({mutable: true}) activated = false;
+  @Prop({ mutable: true }) activated = false;
   @Watch('activated')
   activatedChanged() {
     const activated = this.activated;

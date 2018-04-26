@@ -1,4 +1,5 @@
-import { Config, PlatformConfig } from '../index';
+import { isAndroid, isCordova, isElectron, isIOS, isIpad, isIphone, isPhablet, isTablet, matchMedia } from './platform';
+import { Config, Mode } from '../interface';
 
 export function updateTestResults(displayWhen: DisplayWhen) {
   displayWhen.passesTest = getTestResult(displayWhen);
@@ -24,15 +25,11 @@ export function isModeMatch(config: Config, multiModeString: string) {
 }
 
 
-export function isMediaQueryMatch(mediaQuery: string) {
-  return window.matchMedia(mediaQuery).matches;
-}
-
-export function isSizeMatch(multiSizeString: string) {
+export function isSizeMatch(win: Window, multiSizeString: string) {
   const sizes = multiSizeString.replace(/\s/g, '').split(',');
   for (const size of sizes) {
     const mediaQuery = SIZE_TO_MEDIA[size];
-    if (mediaQuery && window.matchMedia(mediaQuery).matches) {
+    if (mediaQuery && matchMedia(win, mediaQuery)) {
       return true;
     }
   }
@@ -42,10 +39,10 @@ export function isSizeMatch(multiSizeString: string) {
 export function getTestResult(displayWhen: DisplayWhen) {
   const resultsToConsider: boolean[] = [];
   if (displayWhen.mediaQuery) {
-    resultsToConsider.push(isMediaQueryMatch(displayWhen.mediaQuery));
+    resultsToConsider.push(matchMedia(displayWhen.win, displayWhen.mediaQuery));
   }
   if (displayWhen.size) {
-    resultsToConsider.push(isSizeMatch(displayWhen.size));
+    resultsToConsider.push(isSizeMatch(displayWhen.win, displayWhen.size));
   }
   if (displayWhen.mode) {
     resultsToConsider.push(isModeMatch(displayWhen.config, displayWhen.mode));
@@ -55,7 +52,7 @@ export function getTestResult(displayWhen: DisplayWhen) {
     resultsToConsider.push(isPlatformMatch(platformNames, displayWhen.platform));
   }
   if (displayWhen.orientation) {
-    resultsToConsider.push(isOrientationMatch(displayWhen.orientation));
+    resultsToConsider.push(isOrientationMatch(displayWhen.win, displayWhen.orientation));
   }
 
   if (!resultsToConsider.length) {
@@ -72,19 +69,20 @@ export function getTestResult(displayWhen: DisplayWhen) {
   });
 }
 
-export function isOrientationMatch(orientation: string) {
+export function isOrientationMatch(win: Window, orientation: string) {
   if (orientation === 'portrait') {
-    return isPortrait();
+    return isPortrait(win);
   } else if (orientation === 'landscape') {
-    return !isPortrait();
+    return !isPortrait(win);
   }
   // it's an invalid orientation, so just return it
   return false;
 }
 
-export function isPortrait(): boolean {
-  return window.matchMedia('(orientation: portrait)').matches;
+export function isPortrait(win: Window): boolean {
+  return matchMedia(win, '(orientation: portrait)');
 }
+
 
 const SIZE_TO_MEDIA: any = {
   'xs': '(min-width: 0px)',
@@ -94,14 +92,64 @@ const SIZE_TO_MEDIA: any = {
   'xl': '(min-width: 1200px)',
 };
 
+// order from most specifc to least specific
+export const PLATFORM_CONFIGS: PlatformConfig[] = [
+
+  {
+    name: 'ipad',
+    isMatch: isIpad
+  },
+  {
+    name: 'iphone',
+    isMatch: isIphone
+  },
+  {
+    name: 'ios',
+    isMatch: isIOS
+  },
+  {
+    name: 'android',
+    isMatch: isAndroid
+  },
+  {
+    name: 'phablet',
+    isMatch: isPhablet
+  },
+  {
+    name: 'tablet',
+    isMatch: isTablet
+  },
+  {
+    name: 'cordova',
+    isMatch: isCordova
+  },
+  {
+    name: 'electron',
+    isMatch: isElectron
+  }
+
+];
+
+export interface PlatformConfig {
+  name: string;
+  isMatch: (win: Window) => boolean;
+}
+
+export function detectPlatforms(win: Window, platforms: PlatformConfig[]) {
+  // bracket notation to ensure they're not property renamed
+  return platforms.filter(p => p.isMatch(win));
+}
+
 export interface DisplayWhen {
   calculatedPlatforms: PlatformConfig[];
   config: Config;
-  mediaQuery: string|undefined;
-  mode: string|undefined;
+  win: Window;
+  mediaQuery?: string;
+  mode: Mode;
   or: boolean;
-  orientation: string|undefined;
+  orientation?: string;
   passesTest: boolean;
-  platform: string|undefined;
-  size: string|undefined;
+  platform?: string;
+  size?: string;
 }
+

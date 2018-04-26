@@ -1,4 +1,4 @@
-import { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interfaces';
+import { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interface';
 import { parsePath } from './path';
 
 

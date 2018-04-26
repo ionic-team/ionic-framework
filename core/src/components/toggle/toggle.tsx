@@ -1,6 +1,5 @@
-import { BlurEvent, CheckboxInput, CheckedInputChangeEvent, FocusEvent, StyleEvent } from '../../utils/input-interfaces';
 import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { GestureDetail } from '../../index';
+import { CheckboxInput, CheckedInputChangeEvent, GestureDetail, Mode, StyleEvent } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
 import { deferEvent } from '../../utils/helpers';
 
@@ -17,34 +16,32 @@ import { deferEvent } from '../../utils/helpers';
 })
 export class Toggle implements CheckboxInput {
 
-  private didLoad: boolean;
-  private gestureConfig: any;
-  private inputId: string;
-  private nativeInput: HTMLInputElement;
-  private pivotX: number;
+  private inputId = `ion-tg-${toggleIds++}`;
+  private nativeInput!: HTMLInputElement;
+  private pivotX = 0;
 
   @State() activated = false;
 
-  @State() keyFocus: boolean;
+  @State() keyFocus = false;
 
   /**
    * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop({ mutable: true }) name: string;
+  @Prop() name: string = this.inputId;
 
   /**
    * If true, the toggle is selected. Defaults to `false`.
@@ -54,7 +51,7 @@ export class Toggle implements CheckboxInput {
   /*
    * If true, the user cannot interact with the toggle. Default false.
    */
-  @Prop({ mutable: true }) disabled = false;
+  @Prop() disabled = false;
 
   /**
    * the value of the toggle.
@@ -64,69 +61,30 @@ export class Toggle implements CheckboxInput {
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange: EventEmitter<CheckedInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<CheckedInputChangeEvent>;
 
   /**
    * Emitted when the toggle has focus.
    */
-  @Event() ionFocus: EventEmitter<FocusEvent>;
+  @Event() ionFocus!: EventEmitter<void>;
 
   /**
    * Emitted when the toggle loses focus.
    */
-  @Event() ionBlur: EventEmitter<BlurEvent>;
+  @Event() ionBlur!: EventEmitter<void>;
 
   /**
    * Emitted when the styles change.
    */
-  @Event() ionStyle: EventEmitter<StyleEvent>;
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
 
-
-  constructor() {
-    this.gestureConfig = {
-      'onStart': this.onDragStart.bind(this),
-      'onMove': this.onDragMove.bind(this),
-      'onEnd': this.onDragEnd.bind(this),
-      'gestureName': 'toggle',
-      'passive': false,
-      'gesturePriority': 30,
-      'type': 'pan',
-      'direction': 'x',
-      'threshold': 0,
-      'attachTo': 'parent'
-    };
-  }
-
-  componentWillLoad() {
-    this.ionStyle = deferEvent(this.ionStyle);
-    this.inputId = `ion-tg-${toggleIds++}`;
-    if (this.name === undefined) {
-      this.name = this.inputId;
-    }
-    this.emitStyle();
-  }
-
-  componentDidLoad() {
-    this.didLoad = true;
-
-    const parentItem = this.nativeInput.closest('ion-item');
-    if (parentItem) {
-      const itemLabel = parentItem.querySelector('ion-label');
-      if (itemLabel) {
-        itemLabel.id = this.inputId + '-lbl';
-        this.nativeInput.setAttribute('aria-labelledby', itemLabel.id);
-      }
-    }
-  }
 
   @Watch('checked')
   checkedChanged(isChecked: boolean) {
-    if (this.didLoad) {
-      this.ionChange.emit({
-        checked: isChecked,
-        value: this.value
-      });
-    }
+    this.ionChange.emit({
+      checked: isChecked,
+      value: this.value
+    });
     this.emitStyle();
   }
 
@@ -137,6 +95,22 @@ export class Toggle implements CheckboxInput {
       'toggle-checked': this.checked,
       'toggle-activated': this.activated
     });
+  }
+
+  componentWillLoad() {
+    this.ionStyle = deferEvent(this.ionStyle);
+    this.emitStyle();
+  }
+
+  componentDidLoad() {
+    const parentItem = this.nativeInput.closest('ion-item');
+    if (parentItem) {
+      const itemLabel = parentItem.querySelector('ion-label');
+      if (itemLabel) {
+        itemLabel.id = this.inputId + '-lbl';
+        this.nativeInput.setAttribute('aria-labelledby', itemLabel.id);
+      }
+    }
   }
 
   private onDragStart(detail: GestureDetail) {
@@ -168,19 +142,19 @@ export class Toggle implements CheckboxInput {
     this.nativeInput.focus();
   }
 
-  onChange() {
+  private onChange() {
     this.checked = !this.checked;
   }
 
-  onKeyUp() {
+  private onKeyUp() {
     this.keyFocus = true;
   }
 
-  onFocus() {
+  private onFocus() {
     this.ionFocus.emit();
   }
 
-  onBlur() {
+  private onBlur() {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
@@ -198,15 +172,25 @@ export class Toggle implements CheckboxInput {
 
   render() {
     return [
-      <ion-gesture {...this.gestureConfig}
-        disabled={this.disabled} tabIndex={-1}>
-        <div class='toggle-icon'>
-          <div class='toggle-inner'/>
+      <ion-gesture
+        onStart={this.onDragStart.bind(this)}
+        onMove={this.onDragMove.bind(this)}
+        onEnd={this.onDragEnd.bind(this)}
+        gestureName="toggle"
+        passive={false}
+        gesturePriority={30}
+        direction="x"
+        threshold={0}
+        attachTo="parent"
+        disabled={this.disabled}
+        tabIndex={-1}>
+        <div class="toggle-icon">
+          <div class="toggle-inner"/>
         </div>
-        <div class='toggle-cover'/>
+        <div class="toggle-cover"/>
       </ion-gesture>,
       <input
-        type='checkbox'
+        type="checkbox"
         onChange={this.onChange.bind(this)}
         onFocus={this.onFocus.bind(this)}
         onBlur={this.onBlur.bind(this)}

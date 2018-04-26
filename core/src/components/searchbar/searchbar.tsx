@@ -2,6 +2,7 @@ import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@st
 
 import { createThemedClasses } from '../../utils/theme';
 import { debounceEvent } from '../../utils/helpers';
+import { InputChangeEvent, Mode } from '../../interface';
 
 
 @Component({
@@ -15,11 +16,15 @@ import { debounceEvent } from '../../utils/helpers';
   }
 })
 export class Searchbar {
+
+  private nativeInput!: HTMLInputElement;
   private isCancelVisible = false;
   private shouldBlur = true;
   private shouldAlignLeft = true;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLElement;
+
+  @Prop({ context: 'document' }) doc!: Document;
 
   @State() activated = false;
 
@@ -30,14 +35,14 @@ export class Searchbar {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color: string;
+  @Prop() color!: string;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
-  @Prop() mode: 'ios' | 'md';
+  @Prop() mode!: Mode;
 
   /**
    * If true, enable searchbar animation. Default `false`.
@@ -60,13 +65,13 @@ export class Searchbar {
   @Prop() cancelButtonText = 'Cancel';
 
   /**
-   * Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
+   * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `250`.
    */
   @Prop() debounce = 250;
 
   @Watch('debounce')
   protected debounceChanged() {
-    this.ionInput = debounceEvent(this.ionInput, this.debounce);
+    this.ionChange = debounceEvent(this.ionChange, this.debounce);
   }
 
   /**
@@ -92,32 +97,47 @@ export class Searchbar {
   /**
    * the value of the searchbar.
    */
-  @Prop({ mutable: true }) value: string;
+  @Prop({ mutable: true }) value = '';
 
   /**
-   * Emitted when the Searchbar input has changed, including when it's cleared.
+   * Emitted when a keyboard input ocurred.
    */
-  @Event() ionInput: EventEmitter;
+  @Event() ionInput!: EventEmitter<KeyboardEvent>;
+
+  /**
+   * Emitted when the value has changed.
+   */
+  @Event() ionChange!: EventEmitter<InputChangeEvent>;
 
   /**
    * Emitted when the cancel button is clicked.
    */
-  @Event() ionCancel: EventEmitter;
+  @Event() ionCancel!: EventEmitter<void>;
 
   /**
    * Emitted when the clear input button is clicked.
    */
-  @Event() ionClear: EventEmitter;
+  @Event() ionClear!: EventEmitter<void>;
 
   /**
    * Emitted when the input loses focus.
    */
-  @Event() ionBlur: EventEmitter;
+  @Event() ionBlur!: EventEmitter<void>;
 
   /**
    * Emitted when the input has focus.
    */
-  @Event() ionFocus: EventEmitter;
+  @Event() ionFocus!: EventEmitter<void>;
+
+  @Watch('value')
+  protected valueChanged() {
+    const inputEl = this.nativeInput;
+    const value = this.value;
+    if (inputEl && inputEl.value !== value) {
+      inputEl.value = value;
+    }
+    this.ionChange.emit({value});
+  }
 
   componentDidLoad() {
     this.positionElements();
@@ -127,8 +147,8 @@ export class Searchbar {
   /**
    * Clears the input field and triggers the control change.
    */
-  clearInput(ev: UIEvent) {
-    this.ionClear.emit({event: ev});
+  private clearInput() {
+    this.ionClear.emit();
 
     // setTimeout() fixes https://github.com/ionic-team/ionic/issues/7527
     // wait for 4 frames
@@ -136,7 +156,6 @@ export class Searchbar {
       const value = this.value;
       if (value !== undefined && value !== '') {
         this.value = '';
-        this.ionInput.emit({event: ev});
       }
     }, 16 * 4);
     this.shouldBlur = false;
@@ -147,10 +166,10 @@ export class Searchbar {
    * the clearInput function doesn't want the input to blur
    * then calls the custom cancel function if the user passed one in.
    */
-  cancelSearchbar(ev: UIEvent) {
-    this.ionCancel.emit({event: ev});
+  private cancelSearchbar() {
+    this.ionCancel.emit();
 
-    this.clearInput(ev);
+    this.clearInput();
     this.shouldBlur = true;
     this.activated = false;
   }
@@ -158,12 +177,15 @@ export class Searchbar {
   /**
    * Update the Searchbar input value when the input changes
    */
-  inputChanged(ev: Event) {
-    this.value = ev.target && (ev.target as HTMLInputElement).value || '';
+  private onInput(ev: KeyboardEvent) {
+    const input = ev.target as HTMLInputElement;
+    if (input) {
+      this.value = input.value;
+    }
     this.ionInput.emit(ev);
   }
 
-  inputUpdated() {
+  private inputUpdated() {
     // const inputEl = this.el.querySelector('.searchbar-input') as HTMLInputElment;
     // It is important not to re-assign the value if it is the same, because,
     // otherwise, the caret is moved to the end of the input
@@ -179,7 +201,7 @@ export class Searchbar {
    * Sets the Searchbar to not focused and checks if it should align left
    * based on whether there is a value in the searchbar or not.
    */
-  inputBlurred() {
+  private onBlur() {
     const inputEl = this.el.querySelector('.searchbar-input') as HTMLInputElement;
 
     // shouldBlur determines if it should blur
@@ -187,7 +209,7 @@ export class Searchbar {
     if (this.shouldBlur === false) {
       inputEl.focus();
       this.shouldBlur = true;
-      this.ionBlur.emit({this: this});
+      this.ionBlur.emit();
       this.inputUpdated();
       return;
     }
@@ -199,11 +221,11 @@ export class Searchbar {
   /**
    * Sets the Searchbar to focused and active on input focus.
    */
-  inputFocused() {
+  private onFocus() {
     this.activated = true;
 
     this.focused = true;
-    this.ionFocus.emit({this: this});
+    this.ionFocus.emit();
     this.inputUpdated();
 
     this.positionElements();
@@ -213,7 +235,7 @@ export class Searchbar {
    * Positions the input search icon, placeholder, and the cancel button
    * based on the input value and if it is focused. (ios only)
    */
-  positionElements() {
+  private positionElements() {
     const prevAlignLeft = this.shouldAlignLeft;
     const shouldAlignLeft = (!this.animated || (this.value && this.value.toString().trim() !== '') || this.focused === true);
     this.shouldAlignLeft = shouldAlignLeft;
@@ -234,8 +256,8 @@ export class Searchbar {
   /**
    * Positions the input placeholder
    */
-  positionPlaceholder() {
-    const isRTL = document.dir === 'rtl';
+  private positionPlaceholder() {
+    const isRTL = this.doc.dir === 'rtl';
     const inputEl = this.el.querySelector('.searchbar-input') as HTMLInputElement;
     const iconEl = this.el.querySelector('.searchbar-search-icon') as HTMLElement;
 
@@ -245,13 +267,14 @@ export class Searchbar {
 
     } else {
       // Create a dummy span to get the placeholder width
-      const tempSpan = document.createElement('span');
+      const doc = this.doc;
+      const tempSpan = doc.createElement('span');
       tempSpan.innerHTML = this.placeholder;
-      document.body.appendChild(tempSpan);
+      doc.body.appendChild(tempSpan);
 
       // Get the width of the span then remove it
       const textWidth = tempSpan.offsetWidth;
-      document.body.removeChild(tempSpan);
+      tempSpan.remove();
 
       // Calculate the input padding
       const inputLeft = 'calc(50% - ' + (textWidth / 2) + 'px)';
@@ -273,8 +296,8 @@ export class Searchbar {
   /**
    * Show the iOS Cancel button on focus, hide it offscreen otherwise
    */
-  positionCancelButton() {
-    const isRTL = document.dir === 'rtl';
+  private positionCancelButton() {
+    const isRTL = this.doc.dir === 'rtl';
     const cancelButton = this.el.querySelector('.searchbar-cancel-button-ios') as HTMLElement;
     const shouldShowCancel = this.focused;
 
@@ -305,7 +328,7 @@ export class Searchbar {
       class: {
         'searchbar-active': this.activated,
         'searchbar-animated': this.animated,
-        'searchbar-has-value': (this.value !== undefined && this.value !== ''),
+        'searchbar-has-value': (this.value !== ''),
         'searchbar-show-cancel': this.showCancelButton,
         'searchbar-left-aligned': this.shouldAlignLeft,
         'searchbar-has-focus': this.focused
@@ -317,48 +340,43 @@ export class Searchbar {
     const cancelButtonClasses = createThemedClasses(this.mode, this.color, 'searchbar-cancel-button');
     const searchIconClasses = createThemedClasses(this.mode, this.color, 'searchbar-search-icon');
 
-    const cancelButton =
-      this.showCancelButton
-        ? <button
-          type='button'
-          tabindex={this.mode === 'ios' && !this.activated ? -1 : undefined}
-          onClick={this.cancelSearchbar.bind(this)}
-          onMouseDown={this.cancelSearchbar.bind(this)}
-          class={cancelButtonClasses}>
-            { this.mode === 'md'
-              ? <ion-icon name='md-arrow-back'></ion-icon>
-              : this.cancelButtonText }
-        </button>
-        : null;
+    const cancelButton = (this.showCancelButton)
+      ? <button
+        type="button"
+        tabindex={this.mode === 'ios' && !this.activated ? -1 : undefined}
+        onClick={this.cancelSearchbar.bind(this)}
+        onMouseDown={this.cancelSearchbar.bind(this)}
+        class={cancelButtonClasses}>
+          { this.mode === 'md'
+            ? <ion-icon name="md-arrow-back"></ion-icon>
+            : this.cancelButtonText }
+      </button>
+      : null;
 
-    const searchbar: JSX.Element[] = [
-      <div class='searchbar-input-container'>
-        { this.mode === 'md' ? cancelButton : null }
+    return [
+      <div class="searchbar-input-container">
+        { this.mode === 'md' && cancelButton }
         <div class={searchIconClasses}></div>
         <input
-          class='searchbar-input'
-          onInput={this.inputChanged.bind(this)}
-          onBlur={this.inputBlurred.bind(this)}
-          onFocus={this.inputFocused.bind(this)}
+          ref={(el) => this.nativeInput = el as HTMLInputElement}
+          class="searchbar-input"
+          onInput={this.onInput.bind(this)}
+          onBlur={this.onBlur.bind(this)}
+          onFocus={this.onFocus.bind(this)}
           placeholder={this.placeholder}
           type={this.type}
           value={this.value}
           autoComplete={this.autocomplete}
           autoCorrect={this.autocorrect}
           spellCheck={this.spellcheck}/>
+
         <button
-          type='button'
-          class='searchbar-clear-icon'
+          type="button"
+          class="searchbar-clear-icon"
           onClick={this.clearInput.bind(this)}
-          onMouseDown={this.clearInput.bind(this)}>
-        </button>
-      </div>
+          onMouseDown={this.clearInput.bind(this)}/>
+      </div>,
+      this.mode === 'ios' && cancelButton
     ];
-
-    if (cancelButton && this.mode === 'ios') {
-      searchbar.push(cancelButton);
-    }
-
-    return searchbar;
   }
 }

@@ -11,15 +11,15 @@ export class TapClick {
   private lastActivated = 0;
   private cancelled = false;
 
-  private activatableEle: HTMLElement | null;
+  private activatableEle?: HTMLElement;
   private activeDefer: any;
 
   private clearDefers = new WeakMap<HTMLElement, any>();
 
-  @Prop({context: 'isServer'}) isServer: boolean;
-  @Prop({context: 'enableListener'}) enableListener: EventListenerEnable;
+  @Prop({ context: 'isServer'}) isServer!: boolean;
+  @Prop({ context: 'enableListener'}) enableListener!: EventListenerEnable;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
   @Listen('body:click', {passive: false, capture: true})
   onBodyClick(ev: Event) {
@@ -65,7 +65,7 @@ export class TapClick {
     clearTimeout(this.activeDefer);
     if (this.activatableEle) {
       this.removeActivated(false);
-      this.activatableEle = null;
+      this.activatableEle = undefined;
     }
     this.cancelled = true;
   }
@@ -79,20 +79,20 @@ export class TapClick {
   }
 
   private pointerUp(ev: UIEvent) {
-    this.setActivatedElement(null, ev);
+    this.setActivatedElement(undefined, ev);
     if (this.cancelled && ev.cancelable) {
       ev.preventDefault();
     }
   }
 
-  private setActivatedElement(el: HTMLElement | null, ev: UIEvent) {
+  private setActivatedElement(el: HTMLElement | undefined, ev: UIEvent) {
     // do nothing
     const activatableEle = this.activatableEle;
     if (el && el === activatableEle) {
       return;
     }
     clearTimeout(this.activeDefer);
-    this.activeDefer = null;
+    this.activeDefer = undefined;
 
     const {x, y} = pointerCoord(ev);
 
@@ -118,7 +118,7 @@ export class TapClick {
       el.classList.remove(ACTIVATED);
       this.activeDefer = setTimeout(() => {
         this.addActivated(el, x, y);
-        this.activeDefer = null;
+        this.activeDefer = undefined;
       }, ADD_ACTIVATED_DEFERS);
     }
     this.activatableEle = el;

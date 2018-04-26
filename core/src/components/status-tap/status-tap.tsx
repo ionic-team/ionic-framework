@@ -1,21 +1,22 @@
 import { Component, Listen, Prop } from '@stencil/core';
-import { QueueController } from '../..';
+import { QueueController } from '../../interface';
 
 @Component({
   tag: 'ion-status-tap'
 })
 export class StatusTap {
 
-  @Prop({ context: 'queue' }) queue: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'window' }) win!: Window;
 
   @Prop() duration = 300;
 
   @Listen('window:statusTap')
   onStatusTap() {
     this.queue.read(() => {
-      const width = window.innerWidth;
-      const height = window.innerWidth;
-      const el = document.elementFromPoint(width / 2, height / 2);
+      const width = this.win.innerWidth;
+      const height = this.win.innerWidth;
+      const el = this.win.document.elementFromPoint(width / 2, height / 2);
       if (!el) {
         return;
       }

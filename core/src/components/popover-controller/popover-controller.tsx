@@ -1,5 +1,5 @@
-import { Component, Listen, Method } from '@stencil/core';
-import { PopoverOptions } from '../../index';
+import { Component, Listen, Method, Prop } from '@stencil/core';
+import { PopoverOptions } from '../../interface';
 import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({
@@ -8,6 +8,8 @@ import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, remove
 export class PopoverController implements OverlayController {
 
   private popovers = new Map<number, HTMLIonPopoverElement>();
+
+  @Prop({ context: 'document' }) doc!: Document;
 
   @Listen('body:ionPopoverWillPresent')
   protected popoverWillPresent(ev: any) {
@@ -30,7 +32,7 @@ export class PopoverController implements OverlayController {
    */
   @Method()
   create(opts?: PopoverOptions): Promise<HTMLIonPopoverElement> {
-    return createOverlay(document.createElement('ion-popover'), opts);
+    return createOverlay(this.doc.createElement('ion-popover'), opts);
   }
 
   /*

@@ -1,18 +1,18 @@
 import { Component, Element, Event, EventEmitter, Method, State } from '@stencil/core';
-import { GestureDetail } from '../../index';
+import { GestureDetail } from '../../interface';
 
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
 
-export const enum ItemSide {
+const enum ItemSide {
   None = 0,
   Left = 1 << 0,
   Right = 1 << 1,
   Both = Left | Right
 }
 
-export const enum SlidingState {
+const enum SlidingState {
   Disabled = 1 << 1,
   Enabled = 1 << 2,
   Right = 1 << 3,
@@ -37,20 +37,20 @@ export class ItemSliding {
   private initialOpenAmount = 0;
   private optsWidthRightSide = 0;
   private optsWidthLeftSide = 0;
-  private sides: ItemSide;
+  private sides = ItemSide.None;
   private tmr: number|undefined;
-  private leftOptions: HTMLIonItemOptionsElement|undefined;
-  private rightOptions: HTMLIonItemOptionsElement|undefined;
+  private leftOptions?: HTMLIonItemOptionsElement;
+  private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
 
-  @Element() private el: HTMLElement;
+  @Element() el!: HTMLIonItemSlidingElement;
 
-  @State() state: SlidingState = SlidingState.Disabled;
+  @State() private state: SlidingState = SlidingState.Disabled;
 
   /**
    * Emitted when the sliding position changes.
    */
-  @Event() ionDrag: EventEmitter;
+  @Event() ionDrag!: EventEmitter;
 
   componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
@@ -132,7 +132,7 @@ export class ItemSliding {
 
   private canStart(): boolean {
     const selected = this.list && this.list.getOpenItem();
-    if (selected && selected !== this) {
+    if (selected && selected !== this.el) {
       this.closeOpened();
       return false;
     }
@@ -140,7 +140,7 @@ export class ItemSliding {
   }
 
   private onDragStart() {
-    this.list && this.list.setOpenItem(this);
+    this.list && this.list.setOpenItem(this.el);
 
     if (this.tmr) {
       clearTimeout(this.tmr);
@@ -202,9 +202,9 @@ export class ItemSliding {
     this.setOpenAmount(restingPoint, true);
 
     if (this.state & SlidingState.SwipeRight && this.rightOptions) {
-      this.rightOptions.fireSwipeEvent(this);
+      this.rightOptions.fireSwipeEvent();
     } else if (this.state & SlidingState.SwipeLeft && this.leftOptions) {
-      this.leftOptions.fireSwipeEvent(this);
+      this.leftOptions.fireSwipeEvent();
     }
   }
 
@@ -249,13 +249,15 @@ export class ItemSliding {
         this.state = SlidingState.Disabled;
         this.tmr = undefined;
       }, 600);
-      this.list && this.list.setOpenItem(null);
+      this.list && this.list.setOpenItem(undefined);
       style.transform = '';
       return;
     }
 
     style.transform = `translate3d(${-openAmount}px,0,0)`;
-    this.ionDrag.emit(this);
+    this.ionDrag.emit({
+      amount: openAmount
+    });
   }
 
   hostData() {

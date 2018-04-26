@@ -1,5 +1,5 @@
 import { EventEmitter } from '@stencil/core';
-import { Animation, AnimationBuilder, Config } from '..';
+import { Animation, AnimationBuilder, Config, Mode } from '../interface';
 
 let lastId = 1;
 
@@ -19,7 +19,8 @@ export function createOverlay<T extends HTMLIonOverlayElement & Requires<keyof B
   element.overlayId = lastId++;
 
   // append the overlay element to the document body
-  const appRoot = document.querySelector('ion-app') || document.body;
+  const doc = element.ownerDocument;
+  const appRoot = doc.querySelector('ion-app') || doc.body;
   appRoot.appendChild(element);
 
   return element.componentOnReady();
@@ -110,7 +111,8 @@ async function overlayAnimation(
   opts: any
 ): Promise<void> {
   if (overlay.keyboardClose) {
-    closeKeyboard();
+    const activeElement = baseEl.ownerDocument.activeElement as HTMLElement;
+    activeElement && activeElement.blur && activeElement.blur();
   }
   if (overlay.animation) {
     overlay.animation.destroy();
@@ -156,11 +158,6 @@ export function onceEvent(element: HTMLElement, eventName: string, callback: (ev
   element.addEventListener(eventName, handler);
 }
 
-function closeKeyboard() {
-  const activeElement = document.activeElement as HTMLElement;
-  activeElement && activeElement.blur && activeElement.blur();
-}
-
 export function isCancel(role: string|undefined): boolean {
   return role === 'cancel' || role === BACKDROP;
 }
@@ -171,23 +168,23 @@ export interface OverlayEventDetail {
 }
 
 export interface OverlayInterface {
-  mode: string;
+  mode: Mode;
   el: HTMLElement;
   willAnimate: boolean;
   keyboardClose: boolean;
   config: Config;
   overlayId: number;
   presented: boolean;
-  animation: Animation|undefined;
+  animation?: Animation;
   animationCtrl: HTMLIonAnimationControllerElement;
 
-  enterAnimation: AnimationBuilder;
-  leaveAnimation: AnimationBuilder;
+  enterAnimation?: AnimationBuilder;
+  leaveAnimation?: AnimationBuilder;
 
-  didPresent: EventEmitter;
-  willPresent: EventEmitter;
-  willDismiss: EventEmitter;
-  didDismiss: EventEmitter;
+  didPresent: EventEmitter<void>;
+  willPresent: EventEmitter<void>;
+  willDismiss: EventEmitter<OverlayEventDetail>;
+  didDismiss: EventEmitter<OverlayEventDetail>;
 
   present(): Promise<void>;
   dismiss(data?: any, role?: string): Promise<void>;

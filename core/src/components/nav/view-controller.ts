@@ -1,15 +1,20 @@
-import { ViewState } from './nav-util';
-import { assert } from '../../utils/helpers';
-import { ComponentProps, FrameworkDelegate, Nav } from '../..';
+import { ComponentProps, FrameworkDelegate, Nav } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
+import { assert } from '../../utils/helpers';
 
+
+export const enum ViewState {
+  New = 1,
+  Attached,
+  Destroyed
+}
 
 export class ViewController {
 
-  nav: Nav|undefined;
   state: ViewState = ViewState.New;
-  element: HTMLElement|undefined;
-  delegate: FrameworkDelegate|undefined;
+  nav?: Nav;
+  element?: HTMLElement;
+  delegate?: FrameworkDelegate;
 
   constructor(
     public component: any,
@@ -79,4 +84,26 @@ export function matches(view: ViewController|undefined, id: string, params: Comp
     }
   }
   return true;
+}
+
+export function convertToView(page: any, params: any): ViewController|null {
+  if (!page) {
+    return null;
+  }
+  if (page instanceof ViewController) {
+    return page;
+  }
+  return new ViewController(page, params);
+}
+
+export function convertToViews(pages: any[]): ViewController[] {
+  return pages.map(page => {
+    if (page instanceof ViewController) {
+      return page;
+    }
+    if ('page' in page) {
+      return convertToView(page.page, page.params);
+    }
+    return convertToView(page, undefined);
+  }).filter(v => v !== null) as ViewController[];
 }

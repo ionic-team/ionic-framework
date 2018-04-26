@@ -11,56 +11,75 @@ export const enum NavIntent {
 @Injectable()
 export class NavController {
 
-  private direction = 0;
   private intent: NavIntent = NavIntent.Auto;
+  private animated = true;
   private stack: string[] = [];
 
   constructor(
     @Optional() private router?: Router
   ) {}
 
-  goForward(url: string | UrlTree, extras?: NavigationExtras) {
-    this.intent = NavIntent.Forward;
+  goForward(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
+    this.setIntent(NavIntent.Forward, animated);
     return this.router.navigateByUrl(url, extras);
   }
 
-  goBack(url: string | UrlTree, extras?: NavigationExtras) {
-    this.intent = NavIntent.Back;
+  goBack(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
+    this.setIntent(NavIntent.Back, animated);
     return this.router.navigateByUrl(url, extras);
   }
 
-  goRoot(url: string | UrlTree, extras?: NavigationExtras) {
-    this.intent = NavIntent.Root;
+  goRoot(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
+    this.setIntent(NavIntent.Root, animated);
     return this.router.navigateByUrl(url, extras);
   }
 
-  setIntent(intent: NavIntent) {
+  setIntent(intent: NavIntent, animated?: boolean) {
     this.intent = intent;
+    this.animated = (animated === undefined)
+      ? intent !== NavIntent.Root
+      : animated;
   }
 
-  consumeDirection() {
-    if (this.direction === 0) {
-      const index = this.stack.indexOf(document.location.href);
-      if (index === -1) {
-        this.stack.push(document.location.href);
-        this.direction = 1;
-      } else if (index < this.stack.length - 1) {
-        this.stack = this.stack.slice(0, index + 1);
-        this.direction = -1;
-      }
+  consumeTransition() {
+    const guessDirection = this.guessDirection();
+
+    let direction = 0;
+    let animated = false;
+
+    if (this.intent === NavIntent.Auto) {
+      direction = guessDirection;
+      animated = direction !== 0;
+    } else {
+      animated = this.animated;
+      direction = intentToDirection(this.intent);
     }
-
-    const direction = directionForIntent(this.intent, this.direction);
-
     this.intent = NavIntent.Auto;
-    this.direction = 0;
-    return direction;
+    this.animated = true;
+
+    return {
+      direction,
+      animated
+    };
+  }
+
+  private guessDirection() {
+    const index = this.stack.indexOf(document.location.href);
+    if (index === -1) {
+      this.stack.push(document.location.href);
+      return 1;
+    } else if (index < this.stack.length - 1) {
+      this.stack = this.stack.slice(0, index + 1);
+      return -1;
+    }
+    return 0;
   }
 }
 
-function directionForIntent(intent: NavIntent, nav: number): number {
-  if (intent === NavIntent.Auto) {
-    return nav;
+function intentToDirection(intent: NavIntent): number {
+  switch (intent) {
+    case NavIntent.Forward: return 1;
+    case NavIntent.Back: return -1;
+    default: return 0;
   }
-  return intent === NavIntent.Back ? -1 : 1;
 }

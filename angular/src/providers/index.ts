@@ -12,3 +12,4 @@ export { PopoverController } from './popover-controller';
 export { ToastController } from './toast-controller';
 export { NavController } from './nav-controller';
 export { DomController } from './dom-controller';
+export { Config } from './config';

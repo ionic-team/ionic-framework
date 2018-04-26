@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Tab - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script src="/dist/ionic.js"></script>
+</head>
+<body>
+
+  <ion-app>
+    <ion-tabs tabbar-placement="top">
+      <ion-tab icon="star">
+
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab One</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content padding>
+          Tab One
+        </ion-content>
+
+      </ion-tab>
+
+      <ion-tab icon="globe">
+
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab Two</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content padding>
+          Tab Two
+        </ion-content>
+
+      </ion-tab>
+
+      <ion-tab icon="logo-facebook">
+
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Tab Three</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content padding>
+          Tab Three
+        </ion-content>
+
+      </ion-tab>
+
+      <ion-tab disabled icon="chatboxes" component="page-one"></ion-tab>
+    </ion-tabs>
+  </ion-app>
+</body>
+</html>

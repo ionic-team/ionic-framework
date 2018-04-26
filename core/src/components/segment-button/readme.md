@@ -108,7 +108,7 @@ The value of the segment button.
 
 ## Events
 
-#### ionClick
+#### ionSelect
 
 Emitted when the segment button is clicked.
 

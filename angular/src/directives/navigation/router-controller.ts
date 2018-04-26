@@ -1,6 +1,5 @@
 import { ComponentRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NavDirection } from '@ionic/core';
 
 import { NavController } from '../../providers/nav-controller';
 
@@ -35,12 +34,10 @@ export class StackController {
     return this.views.length > deep;
   }
 
-  async setActive(enteringView: RouteView, direction: number | undefined) {
+  async setActive(enteringView: RouteView, direction: number, animated: boolean) {
     const leavingView = this.getActive();
-    const forcedGoBack = direction === -1;
-    const reused = this.insertView(enteringView, forcedGoBack);
-    direction = direction != null ? direction : (reused ? -1 : 1);
-    await this.transition(enteringView, leavingView, direction, this.canGoBack(1));
+    this.insertView(enteringView, direction);
+    await this.transition(enteringView, leavingView, direction, animated, this.canGoBack(1));
 
     this.cleanup();
   }
@@ -50,23 +47,29 @@ export class StackController {
     this.navCtrl.goBack(view.url);
   }
 
-  private insertView(enteringView: RouteView, forcedGoBack: boolean): boolean {
-    if (this.stack) {
-      const index = this.views.indexOf(enteringView);
-      if (index >= 0) {
-        this.views = this.views.slice(0, index + 1);
-        return true;
-      } else {
-        if (forcedGoBack) {
-          this.views = [enteringView];
-        } else {
-          this.views.push(enteringView);
-        }
-        return false;
-      }
-    } else {
+  private insertView(enteringView: RouteView, direction: number) {
+    // no stack
+    if (!this.stack) {
       this.views = [enteringView];
-      return false;
+      return;
+    }
+
+    // stack setRoot
+    if (direction === 0) {
+      this.views = [enteringView];
+      return;
+    }
+
+    // stack
+    const index = this.views.indexOf(enteringView);
+    if (index >= 0) {
+      this.views = this.views.slice(0, index + 1);
+    } else {
+      if (direction === 1) {
+        this.views.push(enteringView);
+      } else {
+        this.views = [enteringView];
+      }
     }
   }
 
@@ -85,7 +88,13 @@ export class StackController {
     return this.views.length > 0 ? this.views[this.views.length - 1] : null;
   }
 
-  private async transition(enteringView: RouteView, leavingView: RouteView, direction: number, showGoBack: boolean) {
+  private async transition(
+    enteringView: RouteView,
+    leavingView: RouteView,
+    direction: number,
+    animated: boolean,
+    showGoBack: boolean
+  ) {
     const enteringEl = enteringView ? enteringView.element : undefined;
     const leavingEl = leavingView ? leavingView.element : undefined;
     const containerEl = this.containerEl;
@@ -95,8 +104,8 @@ export class StackController {
 
       await containerEl.componentOnReady();
       await containerEl.commit(enteringEl, leavingEl, {
-        duration: direction === 0 ? 0 : undefined,
-        direction: direction === -1 ? NavDirection.Back : NavDirection.Forward,
+        duration: !animated ? 0 : undefined,
+        direction: direction === 1 ? 'forward' : 'back',
         deepWait: true,
         showGoBack
       });

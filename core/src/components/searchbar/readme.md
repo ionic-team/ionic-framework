@@ -82,7 +82,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 number
 
-Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
+Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `250`.
 
 
 #### mode
@@ -172,7 +172,7 @@ For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 number
 
-Set the amount of time, in milliseconds, to wait to trigger the `ionInput` event after each keystroke. Default `250`.
+Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `250`.
 
 
 #### mode
@@ -231,6 +231,11 @@ Emitted when the input loses focus.
 Emitted when the cancel button is clicked.
 
 
+#### ionChange
+
+Emitted when the value has changed.
+
+
 #### ionClear
 
 Emitted when the clear input button is clicked.
@@ -243,7 +248,7 @@ Emitted when the input has focus.
 
 #### ionInput
 
-Emitted when the Searchbar input has changed, including when it's cleared.
+Emitted when a keyboard input ocurred.
 
 
 

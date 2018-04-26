@@ -10,9 +10,9 @@ export class DemoSelection {
 
   @Prop() demoData: { name: string, url: string }[];
   @Prop() demoMode: string;
-  @Event() demoModeChange: EventEmitter;
+  @Event() demoModeChange!: EventEmitter;
   @Prop() demoUrl: string;
-  @Event() demoUrlChange: EventEmitter;
+  @Event() demoUrlChange!: EventEmitter;
 
   onChangeMode (ev) {
     this.demoModeChange.emit(ev.currentTarget.value);

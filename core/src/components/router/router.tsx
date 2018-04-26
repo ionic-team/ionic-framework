@@ -1,9 +1,9 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Config, QueueController } from '../../index';
+import { Config, QueueController } from '../../interface';
 import { flattenRouterTree, readRedirects, readRoutes } from './utils/parser';
 import { readNavState, writeNavState } from './utils/dom';
 import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
-import { RouteChain, RouteRedirect, RouterDirection, RouterEventDetail } from './utils/interfaces';
+import { RouteChain, RouteRedirect, RouterDirection, RouterEventDetail } from './utils/interface';
 import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matching';
 
 @Component({
@@ -11,38 +11,51 @@ import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matc
 })
 export class Router {
 
-  private routes: RouteChain[];
+  private routes: RouteChain[] = [];
   private previousPath: string|null = null;
-  private redirects: RouteRedirect[];
+  private redirects: RouteRedirect[] = [];
   private busy = false;
   private init = false;
   private state = 0;
   private lastState = 0;
   private timer: any;
 
-  @Element() el: HTMLElement;
+  @Element() el!: HTMLElement;
 
-  @Prop({ context: 'config' }) config: Config;
-  @Prop({ context: 'queue' }) queue: QueueController;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'window' }) win!: Window;
+  @Prop({ context: 'isServer' }) isServer!: boolean;
 
   @Prop() base = '';
   @Prop() useHash = true;
 
-  @Event() ionRouteChanged: EventEmitter<RouterEventDetail>;
+  @Event() ionRouteChanged!: EventEmitter<RouterEventDetail>;
 
-  componentDidLoad() {
-    this.init = true;
-    console.debug('[ion-router] router did load');
+  componentWillLoad() {
+    console.debug('[ion-router] router will load');
 
     const tree = readRoutes(this.el);
     this.routes = flattenRouterTree(tree);
     this.redirects = readRedirects(this.el);
 
-    // TODO: use something else
-    requestAnimationFrame(() => {
-      this.historyDirection();
-      this.writeNavStateRoot(this.getPath(), RouterDirection.None);
-    });
+    return this.writeNavStateRoot(this.getPath(), RouterDirection.None);
+  }
+
+  componentDidLoad() {
+    this.init = true;
+
+    console.debug('[ion-router] router did load');
+
+    // const tree = readRoutes(this.el);
+    // this.routes = flattenRouterTree(tree);
+    // this.redirects = readRedirects(this.el);
+
+    // // TODO: use something else
+    // requestAnimationFrame(() => {
+    //   this.historyDirection();
+    //   this.writeNavStateRoot(this.getPath(), RouterDirection.None);
+    // });
   }
 
   @Listen('ionRouteRedirectChanged')
@@ -84,12 +97,12 @@ export class Router {
   }
 
   private historyDirection() {
-    if (window.history.state === null) {
+    if (this.win.history.state === null) {
       this.state++;
-      window.history.replaceState(this.state, document.title, document.location.href);
+      this.win.history.replaceState(this.state, this.win.document.title, this.win.document.location.href);
     }
 
-    const state = window.history.state;
+    const state = this.win.history.state;
     const lastState = this.lastState;
     this.lastState = state;
 
@@ -107,7 +120,7 @@ export class Router {
     if (this.busy) {
       return false;
     }
-    const { ids, outlet } = readNavState(document.body);
+    const { ids, outlet } = readNavState(this.win.document.body);
     const chain = routerIDsToChain(ids, this.routes);
     if (!chain) {
       console.warn('[ion-router] no matching URL for ', ids.map(i => i.id));
@@ -155,7 +168,7 @@ export class Router {
       path = redirect.to!;
     }
     const chain = routerPathToChain(path, this.routes);
-    const changed = await this.writeNavState(document.body, chain, direction);
+    const changed = await this.writeNavState(this.win.document.body, chain, direction);
     if (changed) {
       this.emitRouteChange(path, redirectFrom);
     }
@@ -174,11 +187,11 @@ export class Router {
 
   private setPath(path: string[], direction: RouterDirection) {
     this.state++;
-    writePath(window.history, this.base, this.useHash, path, direction, this.state);
+    writePath(this.win.history, this.base, this.useHash, path, direction, this.state);
   }
 
   private getPath(): string[] | null {
-    return readPath(window.location, this.base, this.useHash);
+    return readPath(this.win.location, this.base, this.useHash);
   }
 
   private emitRouteChange(path: string[], redirectPath: string[]|null) {

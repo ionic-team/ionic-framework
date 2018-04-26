@@ -1,5 +1,6 @@
 import { Component, Event, EventEmitter, Method } from '@stencil/core';
-import { BlockerConfig, BlockerDelegate, GestureConfig, GestureDelegate } from './gesture-controller-utils';
+import { BlockerDelegate, GestureDelegate } from './gesture-controller-utils';
+import { BlockerConfig, GestureConfig } from '../../interface';
 
 
 @Component({
@@ -13,7 +14,7 @@ export class GestureController {
   private disabledScroll = new Set<number>();
   private capturedId: number|null = null;
 
-  @Event() ionGestureCaptured: EventEmitter<string>;
+  @Event() ionGestureCaptured!: EventEmitter<string>;
 
   @Method()
   create(config: GestureConfig): Promise<GestureDelegate> {
