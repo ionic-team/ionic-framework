@@ -30,7 +30,7 @@ export class RouteRedirect {
    * When this property is not specified or his value is `undefined` the whole redirect route is noop,
    * even if the "from" value matches.
    */
-  @Prop() to: string|undefined;
+  @Prop() to?: string;
 
   /**
    * Internal event that fires when any value of this rule is added/removed from the DOM,

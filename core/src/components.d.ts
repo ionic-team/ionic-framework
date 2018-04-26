@@ -4984,7 +4984,7 @@ declare global {
       /**
        * A redirect route, redirects "from" a URL "to" another URL. This property is that "to" URL. When the defined `ion-route-redirect` rule matches, the router will redirect to the path specified in this property.  The value of this property is always an absolute path inside the scope of routes defined in `ion-router` it can't be used with another router or to perfom a redirection to a different domain.  Note that this is a virtual redirect, it will not cause a real browser refresh, again, it's a redirect inside the context of ion-router.  When this property is not specified or his value is `undefined` the whole redirect route is noop, even if the "from" value matches.
        */
-      'to': string|undefined;
+      'to': string;
     }
   }
 
@@ -5018,7 +5018,7 @@ declare global {
       /**
        * A redirect route, redirects "from" a URL "to" another URL. This property is that "to" URL. When the defined `ion-route-redirect` rule matches, the router will redirect to the path specified in this property.  The value of this property is always an absolute path inside the scope of routes defined in `ion-router` it can't be used with another router or to perfom a redirection to a different domain.  Note that this is a virtual redirect, it will not cause a real browser refresh, again, it's a redirect inside the context of ion-router.  When this property is not specified or his value is `undefined` the whole redirect route is noop, even if the "from" value matches.
        */
-      'to'?: string|undefined;
+      'to'?: string;
     }
   }
 }
@@ -5033,11 +5033,11 @@ declare global {
        */
       'component': string;
       /**
-       * Props to pass when the `component` specified in this route load.
+       * A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed to the defined component when rendered.
        */
       'componentProps': {[key: string]: any};
       /**
-       * Relative path that needs to match in order for this route to apply.
+       * Relative path that needs to match in order for this route to apply.  Accepts paths similar to expressjs so that you can define parameters in the url /foo/:bar where bar would be available in incoming props.
        */
       'url': string;
     }
@@ -5067,7 +5067,7 @@ declare global {
        */
       'component'?: string;
       /**
-       * Props to pass when the `component` specified in this route load.
+       * A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed to the defined component when rendered.
        */
       'componentProps'?: {[key: string]: any};
       /**
@@ -5075,7 +5075,7 @@ declare global {
        */
       'onIonRouteDataChanged'?: (event: CustomEvent<any>) => void;
       /**
-       * Relative path that needs to match in order for this route to apply.
+       * Relative path that needs to match in order for this route to apply.  Accepts paths similar to expressjs so that you can define parameters in the url /foo/:bar where bar would be available in incoming props.
        */
       'url'?: string;
     }
@@ -5130,9 +5130,15 @@ declare global {
 
   namespace StencilComponents {
     interface IonRouter {
-      'base': string;
       'navChanged': (direction: RouterDirection) => Promise<boolean>;
       'push': (url: string, direction?: RouterDirection) => Promise<boolean>;
+      /**
+       * By default `ion-router` will match the routes at the root path ("/"). That can be changed when  T
+       */
+      'root': string;
+      /**
+       * The router can work in two "modes": - With hash: `/index.html#/path/to/page` - Without hash: `/path/to/page`  Using one or another might depend in the requirements of your app and/or where it's deployed.  Usually "hash-less" navigation works better for SEO and it's more user friendly too, but it might requires aditional server-side configuration in order to properly work.  On the otherside hash-navigation is much easier to deploy, it even works over the file protocol.  By default, this property is `true`, change to `false` to allow hash-less URLs.
+       */
       'useHash': boolean;
     }
   }
@@ -5156,8 +5162,14 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRouterAttributes extends HTMLAttributes {
-      'base'?: string;
       'onIonRouteChanged'?: (event: CustomEvent<RouterEventDetail>) => void;
+      /**
+       * By default `ion-router` will match the routes at the root path ("/"). That can be changed when  T
+       */
+      'root'?: string;
+      /**
+       * The router can work in two "modes": - With hash: `/index.html#/path/to/page` - Without hash: `/path/to/page`  Using one or another might depend in the requirements of your app and/or where it's deployed.  Usually "hash-less" navigation works better for SEO and it's more user friendly too, but it might requires aditional server-side configuration in order to properly work.  On the otherside hash-navigation is much easier to deploy, it even works over the file protocol.  By default, this property is `true`, change to `false` to allow hash-less URLs.
+       */
       'useHash'?: boolean;
     }
   }

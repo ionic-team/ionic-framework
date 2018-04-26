@@ -8,6 +8,9 @@ export class Route {
 
   /**
    * Relative path that needs to match in order for this route to apply.
+   *
+   * Accepts paths similar to expressjs so that you can define parameters
+   * in the url /foo/:bar where bar would be available in incoming props.
    */
   @Prop() url = '';
 
@@ -21,7 +24,8 @@ export class Route {
   @Prop() component!: string;
 
   /**
-   * Props to pass when the `component` specified in this route load.
+   * A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed
+   * to the defined component when rendered.
    */
   @Prop() componentProps?: {[key: string]: any};
 
