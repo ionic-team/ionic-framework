@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import * as c from './directives';
 import * as d from './directives/proxies';
 import * as p from './providers';
+import { setupConfig } from '@ionic/core';
 
 
 const DECLARATIONS = [
@@ -120,6 +121,7 @@ const PROVIDERS = [
   p.Platform,
   p.Events,
   p.DomController,
+  p.Config
 ];
 
 @NgModule({
@@ -136,21 +138,12 @@ const PROVIDERS = [
 })
 export class IonicModule {
   static forRoot(config?: {[key: string]: any}): ModuleWithProviders {
+    setupConfig(config);
     return {
       ngModule: IonicModule,
-      providers: [
-        // Load config with defualt values
-        { provide: ConfigToken, useValue: config },
-        { provide: p.Config, useFactory: setupConfig, deps: [ ConfigToken ] },
-
-        ...PROVIDERS,
-      ]
+      providers: PROVIDERS
     };
   }
 }
 
 export const ConfigToken = new InjectionToken<any>('USERCONFIG');
-export function setupConfig(userConfig: any): p.Config {
-  const config = new p.Config(userConfig);
-  return config;
-}
