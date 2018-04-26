@@ -21,7 +21,7 @@
 // iOS Radio Checkmark: Checked
 // -----------------------------------------
 
-.radio-ios .radio-checked .radio-inner {
+.radio-ios.radio-checked .radio-inner {
   @include position(4px, null, null, 7px);
 
   position: absolute;
@@ -108,11 +108,11 @@
     color: $color-base;
   }
 
-  .radio-ios-#{$color-name} .radio-checked {
+  .radio-ios-#{$color-name}.radio-checked {
     color: $color-base;
   }
 
-  .radio-ios-#{$color-name} .radio-checked  .radio-inner {
+  .radio-ios-#{$color-name}.radio-checked .radio-inner {
     border-color: $color-base;
   }
 }
