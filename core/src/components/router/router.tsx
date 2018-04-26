@@ -67,16 +67,6 @@ export class Router {
     this.init = true;
 
     console.debug('[ion-router] router did load');
-
-    // const tree = readRoutes(this.el);
-    // this.routes = flattenRouterTree(tree);
-    // this.redirects = readRedirects(this.el);
-
-    // // TODO: use something else
-    // requestAnimationFrame(() => {
-    //   this.historyDirection();
-    //   this.writeNavStateRoot(this.getPath(), RouterDirection.None);
-    // });
   }
 
   @Listen('ionRouteRedirectChanged')

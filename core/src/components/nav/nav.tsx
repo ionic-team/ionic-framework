@@ -154,8 +154,8 @@ export class Nav implements NavOutlet {
       opts = {};
     }
     // if animation wasn't set to true then default it to NOT animate
-    if (opts.animate !== true) {
-      opts.animate = false;
+    if (opts.animated !== true) {
+      opts.animated = false;
     }
     return this.queueTrns({
       insertStart: 0,
@@ -199,7 +199,7 @@ export class Nav implements NavOutlet {
     } else if (direction === 1) {
       finish = this.push(id, params, commonOpts);
     } else if (direction === -1) {
-      finish = this.setRoot(id, params, {...commonOpts, direction: 'back', animate: true});
+      finish = this.setRoot(id, params, {...commonOpts, direction: 'back', animated: true});
     } else {
       finish = this.setRoot(id, params, commonOpts);
     }
@@ -559,7 +559,7 @@ export class Nav implements NavOutlet {
     const leavingEl = leavingView && leavingView.element!;
     const animationOpts: TransitionOptions = {
       mode: this.mode,
-      animate: this.animated,
+      animated: this.animated,
       showGoBack: this.canGoBack(enteringView),
       animationCtrl: this.animationCtrl,
       progressCallback,

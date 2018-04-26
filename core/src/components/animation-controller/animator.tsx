@@ -702,11 +702,8 @@ export class Animator {
 
         } else if (tweenEffect) {
           // EVERYTHING IN BETWEEN
-          let valNum = (((toNum - fromNum) * stepValue) + fromNum);
+          const valNum = (((toNum - fromNum) * stepValue) + fromNum);
           const unit = fx.to.effectUnit;
-          if (unit === 'px') {
-            valNum = valNum;
-          }
           val = valNum + unit;
         }
 
@@ -819,7 +816,6 @@ export class Animator {
     const addClasses = this._beforeAddClasses;
     const removeClasses = this._beforeRemoveClasses;
 
-    let prop: string;
     for (let i = 0; i < elements.length; i++) {
       const el = elements[i];
       const elementClassList = el.classList;
@@ -834,6 +830,7 @@ export class Animator {
 
       // css classes to remove before the animation
       if (removeClasses) {
+
         for (let j = 0; j < removeClasses.length; j++) {
           // ******** DOM WRITE ****************
           elementClassList.remove(removeClasses[j]);
@@ -842,7 +839,7 @@ export class Animator {
 
       // inline styles to add before the animation
       if (this._beforeStyles) {
-        for (prop in this._beforeStyles) {
+        for (const prop in this._beforeStyles) {
           // ******** DOM WRITE ****************
           (el as any).style[prop] = this._beforeStyles[prop];
         }
@@ -919,24 +916,27 @@ export class Animator {
         // finished in reverse direction
 
         // css classes that were added before the animation should be removed
-        if (this._beforeAddClasses) {
-          for (j = 0; j < this._beforeAddClasses.length; j++) {
+        const beforeAddClasses = this._beforeAddClasses;
+        if (beforeAddClasses) {
+          for (j = 0; j < beforeAddClasses.length; j++) {
             // ******** DOM WRITE ****************
-            elementClassList.remove(this._beforeAddClasses[j]);
+            elementClassList.remove(beforeAddClasses[j]);
           }
         }
 
         // css classes that were removed before the animation should be added
-        if (this._beforeRemoveClasses) {
-          for (j = 0; j < this._beforeRemoveClasses.length; j++) {
+        const beforeRemoveClasses = this._beforeRemoveClasses;
+        if (beforeRemoveClasses) {
+          for (j = 0; j < beforeRemoveClasses.length; j++) {
             // ******** DOM WRITE ****************
-            elementClassList.add(this._beforeRemoveClasses[j]);
+            elementClassList.add(beforeRemoveClasses[j]);
           }
         }
 
         // inline styles that were added before the animation should be removed
-        if (this._beforeStyles) {
-          for (prop in this._beforeStyles) {
+        const beforeStyles = this._beforeStyles;
+        if (beforeStyles) {
+          for (prop in beforeStyles) {
             // ******** DOM WRITE ****************
             (el as any).style[prop] = '';
           }
@@ -946,26 +946,29 @@ export class Animator {
         // finished in forward direction
 
         // css classes to add after the animation
-        if (this._afterAddClasses) {
-          for (j = 0; j < this._afterAddClasses.length; j++) {
+        const afterAddClasses = this._afterAddClasses;
+        if (afterAddClasses) {
+          for (j = 0; j < afterAddClasses.length; j++) {
             // ******** DOM WRITE ****************
-            elementClassList.add(this._afterAddClasses[j]);
+            elementClassList.add(afterAddClasses[j]);
           }
         }
 
         // css classes to remove after the animation
-        if (this._afterRemoveClasses) {
-          for (j = 0; j < this._afterRemoveClasses.length; j++) {
+        const afterRemoveClasses = this._afterRemoveClasses;
+        if (afterRemoveClasses) {
+          for (j = 0; j < afterRemoveClasses.length; j++) {
             // ******** DOM WRITE ****************
-            elementClassList.remove(this._afterRemoveClasses[j]);
+            elementClassList.remove(afterRemoveClasses[j]);
           }
         }
 
         // inline styles to add after the animation
-        if (this._afterStyles) {
-          for (prop in this._afterStyles) {
+        const afterStyles = this._afterStyles;
+        if (afterStyles) {
+          for (prop in afterStyles) {
             // ******** DOM WRITE ****************
-            (el as any).style[prop] = this._afterStyles[prop];
+            (el as any).style[prop] = afterStyles[prop];
           }
         }
       }

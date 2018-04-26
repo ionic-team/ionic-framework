@@ -13,7 +13,7 @@ export function transition(opts: TransitionOptions): Promise<Animation|null> {
 }
 
 function getAnimationBuilder(opts: TransitionOptions): AnimationBuilder | undefined {
-  if (!opts.leavingEl || opts.animate === false || opts.duration === 0) {
+  if (!opts.leavingEl || opts.animated === false || opts.duration === 0) {
     return undefined;
   }
   if (opts.animationBuilder) {

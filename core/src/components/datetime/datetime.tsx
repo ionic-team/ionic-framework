@@ -274,15 +274,6 @@ export class Datetime {
 
     const picker = this.pickerCtrl.create(pickerOptions);
 
-    // picker.ionChange.subscribe(() => {
-    //   this.validate();
-    //   picker.refresh();
-    // });
-
-    // picker.onDidDismiss(() => {
-    //   this._fireBlur();
-    // });
-
     console.debug('Built Datetime: Picker with', pickerOptions);
     return picker;
   }

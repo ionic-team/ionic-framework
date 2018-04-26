@@ -74,7 +74,7 @@ export class RouterOutlet implements NavOutlet {
 
     await transition({
       mode: this.mode,
-      animate: this.animated,
+      animated: this.animated,
       animationCtrl: this.animationCtrl,
       window: this.win,
       enteringEl: enteringEl,

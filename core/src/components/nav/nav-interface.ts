@@ -16,7 +16,7 @@ export interface NavResult {
 }
 
 export interface RouterOutletOptions {
-  animate?: boolean;
+  animated?: boolean;
   animationBuilder?: AnimationBuilder;
   duration?: number;
   easing?: string;
