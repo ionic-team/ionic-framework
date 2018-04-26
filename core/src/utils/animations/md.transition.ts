@@ -1,11 +1,11 @@
-import { Animation } from '../../../interface';
-import { AnimationOptions } from '../../../utils/transition';
+import { Animation } from '../../interface';
+import { TransitionOptions } from '../../utils/transition';
 
 const TRANSLATEY = 'translateY';
 const OFF_BOTTOM = '40px';
 const CENTER = '0px';
 
-export default function mdTransitionAnimation(Animation: Animation, _: HTMLElement, opts: AnimationOptions): Promise<Animation> {
+export default function mdTransitionAnimation(Animation: Animation, _: HTMLElement, opts: TransitionOptions): Promise<Animation> {
 
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;

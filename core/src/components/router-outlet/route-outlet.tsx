@@ -1,10 +1,7 @@
 import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
-import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, NavDirection, NavOutlet, RouteID, RouteWrite } from '../../interface';
+import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, NavOutlet, RouteID, RouteWrite, RouterOutletOptions } from '../../interface';
 import { transition } from '../../utils';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-
-import iosTransitionAnimation from '../nav/animations/ios.transition';
-import mdTransitionAnimation from '../nav/animations/md.transition';
 
 
 @Component({
@@ -76,18 +73,15 @@ export class RouterOutlet implements NavOutlet {
     opts = opts || {};
 
     await transition({
-      animationBuilder: this.getAnimationBuilder(opts),
-      direction: opts.direction,
-      duration: opts.duration,
-      easing: opts.easing,
-      deepWait: opts.deepWait,
-
+      mode: this.mode,
+      animate: this.animated,
       animationCtrl: this.animationCtrl,
-      showGoBack: opts.showGoBack,
       window: this.win,
       enteringEl: enteringEl,
       leavingEl: leavingEl,
       baseEl: this.el,
+
+      ...opts
     });
     this.isTransitioning = false;
 
@@ -117,30 +111,10 @@ export class RouterOutlet implements NavOutlet {
     } : undefined;
   }
 
-  private getAnimationBuilder(opts: RouterOutletOptions) {
-    if (opts.duration === 0 || this.animated === false) {
-      return undefined;
-    }
-    const mode = opts.mode || this.config.get('pageTransition', this.mode);
-    return opts.animationBuilder
-      || this.animationBuilder
-      || mode === 'ios' ? iosTransitionAnimation : mdTransitionAnimation;
-  }
-
   render() {
     return [
       this.mode === 'ios' && <div class="nav-decor"/>,
       <slot/>
     ];
   }
-}
-
-export interface RouterOutletOptions {
-  animationBuilder?: AnimationBuilder;
-  duration?: number;
-  easing?: string;
-  showGoBack?: boolean;
-  direction?: NavDirection;
-  deepWait?: boolean;
-  mode?: 'md' | 'ios';
 }

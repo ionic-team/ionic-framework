@@ -55,6 +55,7 @@ import {
   PopoverOptions,
   RangeInputChangeEvent,
   RouteID,
+  RouterOutletOptions,
   RouteWrite,
   SelectInputChangeEvent,
   SelectPopoverOption,
@@ -79,9 +80,6 @@ import {
 import {
   ViewController,
 } from './components/nav/view-controller';
-import {
-  RouterOutletOptions,
-} from './components/router-outlet/route-outlet';
 import {
   RouterDirection,
   RouterEventDetail,

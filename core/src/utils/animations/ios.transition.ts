@@ -1,5 +1,5 @@
-import { Animation } from '../../../interface';
-import { AnimationOptions } from '../../../utils/transition';
+import { Animation } from '../../interface';
+import { TransitionOptions } from '../../utils/transition';
 
 const DURATION = 500;
 const EASING = 'cubic-bezier(0.36,0.66,0.04,1)';
@@ -9,7 +9,7 @@ const TRANSLATEX = 'translateX';
 const CENTER = '0%';
 const OFF_OPACITY = 0.8;
 
-export default function iosTransitionAnimation(Animation: Animation, navEl: HTMLElement, opts: AnimationOptions): Promise<Animation> {
+export default function iosTransitionAnimation(Animation: Animation, navEl: HTMLElement, opts: TransitionOptions): Promise<Animation> {
 
   const isRTL = document.dir === 'rtl';
   const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';

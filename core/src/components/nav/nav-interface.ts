@@ -1,4 +1,4 @@
-import { Animation, ComponentRef, FrameworkDelegate } from '../../interface';
+import { Animation, AnimationBuilder, ComponentRef, FrameworkDelegate, Mode } from '../../interface';
 import { ViewController } from './view-controller';
 
 export { Nav } from './nav';
@@ -15,16 +15,20 @@ export interface NavResult {
   direction?: NavDirection;
 }
 
-export interface NavOptions {
+export interface RouterOutletOptions {
   animate?: boolean;
-  animation?: string;
-  direction?: NavDirection;
+  animationBuilder?: AnimationBuilder;
   duration?: number;
   easing?: string;
-  id?: string;
+  showGoBack?: boolean;
+  direction?: NavDirection;
+  deepWait?: boolean;
+  mode?: Mode;
   keyboardClose?: boolean;
+}
+
+export interface NavOptions extends RouterOutletOptions {
   progressAnimation?: boolean;
-  ev?: any;
   updateURL?: boolean;
   delegate?: FrameworkDelegate;
   viewIsReady?: (enteringEl: HTMLElement) => Promise<any>;
