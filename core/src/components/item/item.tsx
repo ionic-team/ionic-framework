@@ -55,6 +55,11 @@ export class Item {
   @Prop() href?: string;
 
   /**
+   * How the bottom border should be displayed on the item.
+   */
+  @Prop() lines?: 'full' | 'inset' | 'none';
+
+  /**
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
@@ -121,6 +126,8 @@ export class Item {
       ...getElementClassMap(this.el.classList),
       'item-disabled': this.disabled,
       'item-detail-push': showDetail,
+      [`item-lines-${this.lines}`]: this.lines,
+      [`item-${this.mode}-lines-${this.lines}`]: this.lines
     };
 
     return (

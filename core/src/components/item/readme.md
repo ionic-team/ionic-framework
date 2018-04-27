@@ -84,6 +84,13 @@ Contains a URL or a URL fragment that the hyperlink points to.
 If this property is set, an anchor tag will be rendered.
 
 
+#### lines
+
+string
+
+How the bottom border should be displayed on the item.
+
+
 #### mode
 
 string
@@ -140,6 +147,13 @@ string
 
 Contains a URL or a URL fragment that the hyperlink points to.
 If this property is set, an anchor tag will be rendered.
+
+
+#### lines
+
+string
+
+How the bottom border should be displayed on the item.
 
 
 #### mode

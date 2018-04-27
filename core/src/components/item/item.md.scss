@@ -20,6 +20,10 @@
   transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
 }
 
+.item-md .item-inner {
+  @include padding-horizontal(null, ($item-md-padding-end / 2));
+}
+
 .item-md.activated {
   background-color: $item-md-background-color-active;
 }
@@ -64,43 +68,59 @@
   color: $item-md-paragraph-text-color;
 }
 
-.item-md .item-inner {
-  @include padding-horizontal(null, ($item-md-padding-end / 2));
 
-  border-bottom: 1px solid $item-md-border-color;
+// Material Design Item Lines
+// --------------------------------------------------
+
+// Default item has no border bottom
+.item-md,
+.item-md .item-inner {
+  border-bottom-width: 0;
+  border-bottom-style: $item-md-border-bottom-style;
+  border-bottom-color: $item-md-border-bottom-color;
+}
+
+// Full lines - apply the border to the item
+// Inset lines - apply the border to the item inner
+.item-md-lines-full,
+.item-md-lines-inset .item-inner {
+  border-bottom-width: $item-md-border-bottom-width;
+}
+
+// Full lines - remove the border from the item inner (inset list items)
+// Inset lines - remove the border on the item (full list items)
+// No lines - remove the border on both (full / inset list items)
+.item-md-lines-inset,
+.item-md-lines-full .item-inner,
+.item-md-lines-none,
+.item-md-lines-none .item-inner {
+  border-bottom-width: 0;
 }
 
 
 // Material Design Items in Lists
 // --------------------------------------------------
-// Removed the requirement that their immmediate
-// parent is listed this adds support for other list components
 
 ion-list,
 ion-reorder-group > ion-gesture {
-  > ion-item:first-child .item-md,
-  > ion-item-sliding:first-child .item-md {
-    border-top: 1px solid $item-md-border-color;
-  }
 
-  > ion-item:last-child .item-md,
-  > ion-item-sliding:last-child .item-md {
-    border-bottom: 1px solid $item-md-border-color;
-  }
+  // TODO
+  // > ion-item:first-child .item-md,
+  // > ion-item-sliding:first-child .item-md {
+  //   border-top: $item-md-border-bottom;
+  // }
 
-  > ion-item:last-child .item-md .item-inner,
-  > ion-item-sliding:last-child .item-md .item-inner {
-    border-bottom: 0;
-  }
+  // > ion-item:last-child .item-md,
+  // > ion-item-sliding:last-child .item-md {
+  //   border-bottom: $item-md-border-bottom;
+  // }
+
+  // > ion-item:last-child .item-md .item-inner,
+  // > ion-item-sliding:last-child .item-md .item-inner {
+  //   border-bottom: 0;
+  // }
 }
 
-// If the item has the no-lines attribute remove the bottom border from:
-// the item itself (for last-child items)
-// the item-inner class (if it is not last)
-ion-item[no-lines],
-ion-item[no-lines] .item-inner {
-  border-width: 0;
-}
 
 
 // Material Design Item Detail Push
@@ -197,6 +217,8 @@ ion-item[no-lines] .item-inner {
   .item-md-#{$color-name} {
     color: $color-contrast;
     background-color: $color-base;
+
+    border-bottom-color: $color-shade;
 
     .item-inner {
       border-bottom-color: $color-shade;
