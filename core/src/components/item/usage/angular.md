@@ -58,7 +58,7 @@ List Items
     Item
   </ion-item>
 
-  <ion-item no-lines>
+  <ion-item lines="none">
     No Lines Item
   </ion-item>
 

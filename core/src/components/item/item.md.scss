@@ -28,10 +28,6 @@
   background-color: $item-md-background-color-active;
 }
 
-.item-md[no-lines] {
-  border-width: 0;
-}
-
 .item-md h1 {
   @include margin(0, 0, 2px);
 
