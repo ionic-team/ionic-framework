@@ -211,10 +211,10 @@ ion-reorder-group > ion-gesture {
   $color-tint: ion-color($colors-md, $color-name, tint, md);
 
   .item-md-#{$color-name} {
+    border-bottom-color: $color-shade;
+
     color: $color-contrast;
     background-color: $color-base;
-
-    border-bottom-color: $color-shade;
 
     .item-inner {
       border-bottom-color: $color-shade;

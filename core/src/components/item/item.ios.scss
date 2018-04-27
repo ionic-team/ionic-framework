@@ -218,10 +218,10 @@
   $color-tint: ion-color($colors-ios, $color-name, tint, ios);
 
   .item-ios-#{$color-name} {
+    border-bottom-color: $color-shade;
+
     color: $color-contrast;
     background-color: $color-base;
-
-    border-bottom-color: $color-shade;
 
     .item-inner {
       border-bottom-color: $color-shade;
