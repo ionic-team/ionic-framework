@@ -11,7 +11,7 @@ export interface PlatformConfig {
 export class Platform {
 
   private _platforms: PlatformConfig[] = [];
-  private _readyPromise: Promise<any>;
+  private _readyPromise: Promise<string>;
 
   /**
    * @hidden
@@ -47,14 +47,14 @@ export class Platform {
     proxyEvent(this.backButton, document, 'backbutton');
     proxyEvent(this.resize, document, 'resize');
 
-    let readyResolve: Function;
+    let readyResolve: (value: string) => void;
     this._readyPromise = new Promise(res => { readyResolve = res; } );
     if ((window as any)['cordova']) {
       window.addEventListener('deviceready', () => {
-        readyResolve();
-      });
+        readyResolve('cordova');
+      }, {once: true});
     } else {
-      readyResolve();
+      readyResolve('dom');
     }
   }
 
@@ -150,7 +150,7 @@ export class Platform {
   }
 
 
-  ready(): Promise<void> {
+  ready(): Promise<string> {
     return this._readyPromise;
   }
 
