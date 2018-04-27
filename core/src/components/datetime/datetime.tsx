@@ -18,8 +18,8 @@ import {
   updateDate
 } from './datetime-util';
 
-import { clamp, deferEvent } from '../../utils/helpers';
 import { CssClassMap, PickerColumn, PickerOptions, StyleEvent } from '../../interface';
+import { clamp, deferEvent } from '../../utils/helpers';
 
 
 @Component({
@@ -273,15 +273,6 @@ export class Datetime {
     pickerOptions.columns = this.generateColumns();
 
     const picker = this.pickerCtrl.create(pickerOptions);
-
-    // picker.ionChange.subscribe(() => {
-    //   this.validate();
-    //   picker.refresh();
-    // });
-
-    // picker.onDidDismiss(() => {
-    //   this._fireBlur();
-    // });
 
     console.debug('Built Datetime: Picker with', pickerOptions);
     return picker;

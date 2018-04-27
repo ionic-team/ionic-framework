@@ -1,6 +1,6 @@
 import { Component, Element, EventListenerEnable, Listen, Method, Prop, Watch } from '@stencil/core';
-import { now } from '../../utils/helpers';
 import { QueueController } from '../../interface';
+import { now } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-ripple-effect',

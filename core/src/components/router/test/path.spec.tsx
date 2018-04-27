@@ -1,9 +1,14 @@
-import { chainToPath, generatePath, parsePath } from '../utils/path';
 import { RouteChain } from '../utils/interface';
+import { chainToPath, generatePath, parsePath, readPath } from '../utils/path';
 
 describe('parseURL', () => {
   it('should parse empty path', () => {
     expect(parsePath('')).toEqual(['']);
+  });
+
+  it('should parse slash path', () => {
+    expect(parsePath('/')).toEqual(['']);
+    expect(parsePath(' / ')).toEqual(['']);
   });
 
   it('should parse empty path (2)', () => {
@@ -16,6 +21,13 @@ describe('parseURL', () => {
 
   it('should parse undefined path', () => {
     expect(parsePath(undefined)).toEqual(['']);
+  });
+
+  it('should parse single segment', () => {
+    expect(parsePath('path')).toEqual(['path']);
+    expect(parsePath('path/')).toEqual(['path']);
+    expect(parsePath('/path/')).toEqual(['path']);
+    expect(parsePath('/path')).toEqual(['path']);
   });
 
   it('should parse relative path', () => {
@@ -89,4 +101,85 @@ describe('chainToPath', () => {
     expect(chainToPath(chain)).toBeNull();
   });
 });
+
+describe('readPath', () => {
+  it('should read the URL from root (no hash)', () => {
+    const loc = mockLocation('/', '');
+    expect(readPath(loc, '', false)).toEqual(['']);
+    expect(readPath(loc, '/', false)).toEqual(['']);
+    expect(readPath(loc, '  / ', false)).toEqual(['']);
+
+    expect(readPath(loc, '', true)).toEqual(['']);
+    expect(readPath(loc, '/', true)).toEqual(['']);
+    expect(readPath(loc, '  /  ', true)).toEqual(['']);
+  });
+
+  it('should read the URL from root (hash)', () => {
+    const loc = mockLocation('/', '#');
+    expect(readPath(loc, '', true)).toEqual(['']);
+    expect(readPath(loc, '/', true)).toEqual(['']);
+    expect(readPath(loc, '  /  ', true)).toEqual(['']);
+
+    const loc2 = mockLocation('/', '#/');
+    expect(readPath(loc2, '', true)).toEqual(['']);
+    expect(readPath(loc2, '/', true)).toEqual(['']);
+    expect(readPath(loc2, '  /  ', true)).toEqual(['']);
+  });
+
+  it('should not read the URL from root', () => {
+    const loc = mockLocation('/', '');
+    expect(readPath(loc, '/hola', false)).toBeNull();
+    expect(readPath(loc, 'hola', false)).toBeNull();
+
+    expect(readPath(loc, '/hola', true)).toBeNull();
+    expect(readPath(loc, 'hola', true)).toBeNull();
+  });
+
+  it('should read the URL from non root (no hash)', () => {
+    const loc = mockLocation('/path/to/component', '#hello');
+    expect(readPath(loc, '', false)).toEqual(['path', 'to', 'component']);
+    expect(readPath(loc, '/', false)).toEqual(['path', 'to', 'component']);
+    expect(readPath(loc, 'path', false)).toEqual(['to', 'component']);
+    expect(readPath(loc, '/path', false)).toEqual(['to', 'component']);
+    expect(readPath(loc, '/path/', false)).toEqual(['to', 'component']);
+    expect(readPath(loc, '/path/to', false)).toEqual(['component']);
+    expect(readPath(loc, '/path/to/component', false)).toEqual(['']);
+    expect(readPath(loc, '/path/to/component/', false)).toEqual(['']);
+    expect(readPath(loc, '/path/to/component/path', false)).toBeNull();
+  });
+
+  it('should read the URL from non root (hash)', () => {
+    const loc = mockLocation('/index.html', '#path/to/component');
+    expect(readPath(loc, '', true)).toEqual(['path', 'to', 'component']);
+    expect(readPath(loc, '/', true)).toEqual(['path', 'to', 'component']);
+    expect(readPath(loc, 'path', true)).toEqual(['to', 'component']);
+    expect(readPath(loc, '/path', true)).toEqual(['to', 'component']);
+    expect(readPath(loc, '/path/', true)).toEqual(['to', 'component']);
+    expect(readPath(loc, '/path/to', true)).toEqual(['component']);
+    expect(readPath(loc, '/path/to/component', true)).toEqual(['']);
+    expect(readPath(loc, '/path/to/component/', true)).toEqual(['']);
+    expect(readPath(loc, '/path/to/component/path', true)).toBeNull();
+    expect(readPath(loc, '/path/to/component2', true)).toBeNull();
+  });
+
+  it('should read the URL from non root (hash) 2', () => {
+    const loc = mockLocation('/index.html', '#/path/to/component');
+    expect(readPath(loc, '', true)).toEqual(['path', 'to', 'component']);
+    expect(readPath(loc, '/', true)).toEqual(['path', 'to', 'component']);
+    expect(readPath(loc, 'path', true)).toEqual(['to', 'component']);
+    expect(readPath(loc, '/path', true)).toEqual(['to', 'component']);
+    expect(readPath(loc, '/path/', true)).toEqual(['to', 'component']);
+    expect(readPath(loc, '/path/to', true)).toEqual(['component']);
+    expect(readPath(loc, '/path/to/component', true)).toEqual(['']);
+    expect(readPath(loc, '/path/to/component/', true)).toEqual(['']);
+    expect(readPath(loc, '/path/to/component/path', true)).toBeNull();
+  });
+});
+
+function mockLocation(pathname: string, hash: string): Location {
+  return {
+    pathname,
+    hash
+  } as Location;
+}
 

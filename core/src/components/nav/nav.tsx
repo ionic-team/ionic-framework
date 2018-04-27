@@ -1,20 +1,15 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, Mode, NavOutlet, QueueController, RouteID, RouteWrite, RouterDirection } from '../../interface';
+import { NavComponent, NavOptions, NavResult, TransitionDoneFn, TransitionInstruction } from '../../interface';
 import { assert } from '../../utils/helpers';
-import { AnimationOptions, ViewLifecycle, lifecycle, transition } from '../../utils/transition';
-import { NavComponent, NavDirection, NavOptions, NavResult, TransitionDoneFn, TransitionInstruction } from '../../interface';
+import { TransitionOptions, ViewLifecycle, lifecycle, transition } from '../../utils/transition';
 import { ViewController, ViewState, convertToViews, matches } from './view-controller';
-
-import iosTransitionAnimation from './animations/ios.transition';
-import mdTransitionAnimation from './animations/md.transition';
-
 
 @Component({
   tag: 'ion-nav',
 })
 export class Nav implements NavOutlet {
 
-  private init = false;
   private transInstr: TransitionInstruction[] = [];
   private sbTrns?: Animation;
   private useRouter = false;
@@ -159,8 +154,8 @@ export class Nav implements NavOutlet {
       opts = {};
     }
     // if animation wasn't set to true then default it to NOT animate
-    if (opts.animate !== true) {
-      opts.animate = false;
+    if (opts.animated !== true) {
+      opts.animated = false;
     }
     return this.queueTrns({
       insertStart: 0,
@@ -204,7 +199,7 @@ export class Nav implements NavOutlet {
     } else if (direction === 1) {
       finish = this.push(id, params, commonOpts);
     } else if (direction === -1) {
-      finish = this.setRoot(id, params, {...commonOpts, direction: 'back', animate: true});
+      finish = this.setRoot(id, params, {...commonOpts, direction: 'back', animated: true});
     } else {
       finish = this.setRoot(id, params, commonOpts);
     }
@@ -288,7 +283,6 @@ export class Nav implements NavOutlet {
       this.fireError('nav controller was destroyed', ti);
       return;
     }
-    this.init = true;
 
     if (ti.done) {
       ti.done(
@@ -557,30 +551,24 @@ export class Nav implements NavOutlet {
     // or if it is a portal (modal, actionsheet, etc.)
     const opts = ti.opts!;
 
-    const animationBuilder = this.getAnimationBuilder(opts);
-
-    const progressAnimation = opts.progressAnimation
-      ? (animation: Animation) => this.sbTrns = animation
+    const progressCallback = opts.progressAnimation
+      ? (animation: Animation) => { this.sbTrns = animation; }
       : undefined;
 
     const enteringEl = enteringView.element!;
     const leavingEl = leavingView && leavingView.element!;
-    const animationOpts: AnimationOptions = {
-      animationCtrl: this.animationCtrl,
-      animationBuilder: animationBuilder,
-      animation: undefined,
-
-      direction: opts.direction as NavDirection,
-      duration: opts.duration,
-      easing: opts.easing,
-      viewIsReady: opts.viewIsReady,
-
+    const animationOpts: TransitionOptions = {
+      mode: this.mode,
+      animated: this.animated,
       showGoBack: this.canGoBack(enteringView),
-      progressAnimation,
+      animationCtrl: this.animationCtrl,
+      progressCallback,
       window: this.win,
       baseEl: this.el,
       enteringEl,
-      leavingEl
+      leavingEl,
+
+      ...opts
     };
     const trns = await transition(animationOpts);
     return this.transitionFinish(trns, enteringView, leavingView, opts);
@@ -605,14 +593,6 @@ export class Nav implements NavOutlet {
       leavingView,
       direction: opts.direction
     };
-  }
-
-  private getAnimationBuilder(opts: NavOptions) {
-    if (opts.duration === 0 || opts.animate === false || !this.init || this.animated === false || this.views.length <= 1) {
-      return undefined;
-    }
-    const mode = opts.animation || this.config.get('pageTransition', this.mode);
-    return mode === 'ios' ? iosTransitionAnimation : mdTransitionAnimation;
   }
 
   private insertViewAt(view: ViewController, index: number) {

@@ -1,15 +1,29 @@
-import { Animation, AnimationBuilder, NavDirection } from '../interface';
+import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../interface';
 
+import iosTransitionAnimation from './animations/ios.transition';
+import mdTransitionAnimation from './animations/md.transition';
 
-export function transition(opts: AnimationOptions): Promise<Animation|null> {
+export function transition(opts: TransitionOptions): Promise<Animation|null> {
   beforeTransition(opts);
 
-  return (opts.leavingEl && (opts.animationBuilder || opts.animation))
-    ? animation(opts)
+  const animationBuilder = getAnimationBuilder(opts);
+  return (animationBuilder)
+    ? animation(animationBuilder, opts)
     : noAnimation(opts); // fast path for no animation
 }
 
-function beforeTransition(opts: AnimationOptions) {
+function getAnimationBuilder(opts: TransitionOptions): AnimationBuilder | undefined {
+  if (!opts.leavingEl || opts.animated === false || opts.duration === 0) {
+    return undefined;
+  }
+  if (opts.animationBuilder) {
+    return opts.animationBuilder;
+  }
+  return opts.mode === 'ios' ? iosTransitionAnimation : mdTransitionAnimation;
+
+}
+
+function beforeTransition(opts: TransitionOptions) {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
 
@@ -26,10 +40,10 @@ function beforeTransition(opts: AnimationOptions) {
   }
 }
 
-async function animation(opts: AnimationOptions): Promise<Animation> {
+async function animation(animationBuilder: AnimationBuilder, opts: TransitionOptions): Promise<Animation> {
   await waitForReady(opts, true);
 
-  const trns = await createTransition(opts);
+  const trns = await opts.animationCtrl.create(animationBuilder, opts.baseEl, opts);
   fireWillEvents(opts.window, opts.enteringEl, opts.leavingEl);
   await playTransition(trns, opts);
 
@@ -39,7 +53,7 @@ async function animation(opts: AnimationOptions): Promise<Animation> {
   return trns;
 }
 
-async function noAnimation(opts: AnimationOptions): Promise<null> {
+async function noAnimation(opts: TransitionOptions): Promise<null> {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
   if (enteringEl) {
@@ -55,7 +69,7 @@ async function noAnimation(opts: AnimationOptions): Promise<null> {
   return null;
 }
 
-async function waitForReady(opts: AnimationOptions, defaultDeep: boolean) {
+async function waitForReady(opts: TransitionOptions, defaultDeep: boolean) {
   const deep = opts.deepWait != null ? opts.deepWait : defaultDeep;
   const promises = deep ? [
     deepReady(opts.enteringEl),
@@ -75,23 +89,17 @@ async function notifyViewReady(viewIsReady: undefined | ((enteringEl: HTMLElemen
   }
 }
 
-function createTransition(opts: AnimationOptions) {
-  if (opts.animation) {
-    return opts.animation;
-  }
-  return opts.animationCtrl.create(opts.animationBuilder, opts.baseEl, opts);
-}
 
-function playTransition(transition: Animation, opts: AnimationOptions): Promise<Animation> {
-  const progressAnimation = opts.progressAnimation;
+function playTransition(transition: Animation, opts: TransitionOptions): Promise<Animation> {
+  const progressCallback = opts.progressCallback;
   const promise = new Promise<Animation>(resolve => transition.onFinish(resolve));
 
   // cool, let's do this, start the transition
-  if (progressAnimation) {
+  if (progressCallback) {
     // this is a swipe to go back, just get the transition progress ready
     // kick off the swipe animation start
     transition.progressStart();
-    progressAnimation(transition);
+    progressCallback(transition);
 
   } else {
     // only the top level transition should actually start "play"
@@ -176,19 +184,11 @@ export const enum ViewLifecycle {
   WillUnload = 'ionViewWillUnload',
 }
 
-export interface AnimationOptions {
+export interface TransitionOptions extends NavOptions {
   animationCtrl: HTMLIonAnimationControllerElement;
-  animationBuilder: AnimationBuilder|undefined;
-  animation?: Animation;
-  direction?: NavDirection;
-  duration?: number;
-  easing?: string;
-  deepWait?: boolean;
-  viewIsReady?: (enteringEl: HTMLElement) => Promise<any>;
-  showGoBack?: boolean;
-  progressAnimation?: Function;
+  progressCallback?: ((ani: Animation) => void);
   window: Window;
+  baseEl: HTMLElement;
   enteringEl: HTMLElement;
   leavingEl: HTMLElement|undefined;
-  baseEl: HTMLElement;
 }

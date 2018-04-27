@@ -1,18 +1,8 @@
 import { Config as CoreConfig } from '@ionic/core';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class Config {
-
-  constructor(defaultConfig: {[key: string]: any}) {
-    const Ionic = (window as any).Ionic;
-    if (Ionic.config && Ionic.config.constructor.name !== 'Object') {
-      console.error('ionic config was already initialized');
-      return;
-    }
-    Ionic.config = {
-      ...Ionic.config,
-      ...defaultConfig
-    };
-  }
 
   get(key: string, fallback?: any): any {
     return getConfig().get(key, fallback);

@@ -22,7 +22,8 @@ in ion-tabs it actually refers to the name of the `ion-tab` to select.
 
 
 
-Props to pass when the `component` specified in this route load.
+A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed
+to the defined component when rendered.
 
 
 #### url
@@ -30,6 +31,9 @@ Props to pass when the `component` specified in this route load.
 string
 
 Relative path that needs to match in order for this route to apply.
+
+Accepts paths similar to expressjs so that you can define parameters
+in the url /foo/:bar where bar would be available in incoming props.
 
 
 ## Attributes
@@ -49,7 +53,8 @@ in ion-tabs it actually refers to the name of the `ion-tab` to select.
 
 
 
-Props to pass when the `component` specified in this route load.
+A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed
+to the defined component when rendered.
 
 
 #### url
@@ -57,6 +62,9 @@ Props to pass when the `component` specified in this route load.
 string
 
 Relative path that needs to match in order for this route to apply.
+
+Accepts paths similar to expressjs so that you can define parameters
+in the url /foo/:bar where bar would be available in incoming props.
 
 
 ## Events

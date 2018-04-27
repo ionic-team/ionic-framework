@@ -1,6 +1,7 @@
 import { GestureController, } from '../gesture-controller';
 
 describe('gesture controller', () => {
+
   it('should create an instance of GestureController', () => {
     const c = new GestureController();
     expect(c.isCaptured()).toEqual(false);

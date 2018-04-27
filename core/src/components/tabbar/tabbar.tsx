@@ -1,6 +1,6 @@
 import { Component, Element, Listen, Prop, State, Watch } from '@stencil/core';
-import { createThemedClasses } from '../../utils/theme';
 import { Mode, QueueController } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 export type TabbarLayout = 'icon-top' | 'icon-start' | 'icon-end' | 'icon-bottom' | 'icon-hide' | 'title-hide';
 export type TabbarPlacement = 'top' | 'bottom';

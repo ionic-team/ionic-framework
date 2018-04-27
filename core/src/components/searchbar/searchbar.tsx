@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
-import { createThemedClasses } from '../../utils/theme';
-import { debounceEvent } from '../../utils/helpers';
 import { InputChangeEvent, Mode } from '../../interface';
+import { debounceEvent } from '../../utils/helpers';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({

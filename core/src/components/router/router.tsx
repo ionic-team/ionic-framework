@@ -1,10 +1,10 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Config, QueueController } from '../../interface';
-import { flattenRouterTree, readRedirects, readRoutes } from './utils/parser';
 import { readNavState, writeNavState } from './utils/dom';
-import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
 import { RouteChain, RouteRedirect, RouterDirection, RouterEventDetail } from './utils/interface';
 import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matching';
+import { flattenRouterTree, readRedirects, readRoutes } from './utils/parser';
+import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
 
 @Component({
   tag: 'ion-router'
@@ -27,7 +27,28 @@ export class Router {
   @Prop({ context: 'window' }) win!: Window;
   @Prop({ context: 'isServer' }) isServer!: boolean;
 
-  @Prop() base = '';
+  /**
+   * By default `ion-router` will match the routes at the root path ("/").
+   * That can be changed when
+   *
+   * T
+   */
+  @Prop() root = '/';
+
+  /**
+   * The router can work in two "modes":
+   * - With hash: `/index.html#/path/to/page`
+   * - Without hash: `/path/to/page`
+   *
+   * Using one or another might depend in the requirements of your app and/or where it's deployed.
+   *
+   * Usually "hash-less" navigation works better for SEO and it's more user friendly too, but it might
+   * requires aditional server-side configuration in order to properly work.
+   *
+   * On the otherside hash-navigation is much easier to deploy, it even works over the file protocol.
+   *
+   * By default, this property is `true`, change to `false` to allow hash-less URLs.
+   */
   @Prop() useHash = true;
 
   @Event() ionRouteChanged!: EventEmitter<RouterEventDetail>;
@@ -46,16 +67,6 @@ export class Router {
     this.init = true;
 
     console.debug('[ion-router] router did load');
-
-    // const tree = readRoutes(this.el);
-    // this.routes = flattenRouterTree(tree);
-    // this.redirects = readRedirects(this.el);
-
-    // // TODO: use something else
-    // requestAnimationFrame(() => {
-    //   this.historyDirection();
-    //   this.writeNavStateRoot(this.getPath(), RouterDirection.None);
-    // });
   }
 
   @Listen('ionRouteRedirectChanged')
@@ -187,11 +198,11 @@ export class Router {
 
   private setPath(path: string[], direction: RouterDirection) {
     this.state++;
-    writePath(this.win.history, this.base, this.useHash, path, direction, this.state);
+    writePath(this.win.history, this.root, this.useHash, path, direction, this.state);
   }
 
   private getPath(): string[] | null {
-    return readPath(this.win.location, this.base, this.useHash);
+    return readPath(this.win.location, this.root, this.useHash);
   }
 
   private emitRouteChange(path: string[], redirectPath: string[]|null) {

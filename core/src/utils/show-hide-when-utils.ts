@@ -1,5 +1,5 @@
-import { isAndroid, isCordova, isElectron, isIOS, isIpad, isIphone, isPhablet, isTablet, matchMedia } from './platform';
 import { Config, Mode } from '../interface';
+import { isAndroid, isCordova, isElectron, isIOS, isIpad, isIphone, isPhablet, isTablet, matchMedia } from './platform';
 
 export function updateTestResults(displayWhen: DisplayWhen) {
   displayWhen.passesTest = getTestResult(displayWhen);
