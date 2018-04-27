@@ -1,4 +1,5 @@
-import { Component, Method } from '@stencil/core';
+import { Component, Method, Prop } from '@stencil/core';
+import { Mode } from '../../interface';
 
 @Component({
   tag: 'ion-list',
@@ -11,8 +12,13 @@ import { Component, Method } from '@stencil/core';
   }
 })
 export class List {
-
+  private mode!: Mode;
   private openItem?: HTMLIonItemSlidingElement;
+
+  /**
+   * How the bottom border should be displayed on all items.
+   */
+  @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
    * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
@@ -42,6 +48,15 @@ export class List {
       return true;
     }
     return false;
+  }
+
+  hostData() {
+    return {
+      class: {
+        [`list-lines-${this.lines}`]: this.lines,
+        [`list-${this.mode}-lines-${this.lines}`]: this.lines
+      }
+    };
   }
 
 }

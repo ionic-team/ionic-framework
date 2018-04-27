@@ -61,8 +61,38 @@
 // iOS No Lines List
 // --------------------------------------------------
 
-.list-ios[no-lines] ion-list-header,
-.list-ios[no-lines] .item,
-.list-ios[no-lines] .item-inner {
-  border-width: 0;
+.list-ios-lines-none .item-ios,
+.list-ios-lines-none .item-ios .item-inner {
+  border-bottom-width: 0;
+}
+
+
+// iOS Full Lines List
+// --------------------------------------------------
+
+.list-ios-lines-full .item-ios,
+.list-ios .item-ios-lines-full {
+  border-bottom-width: $list-ios-item-border-bottom-width;
+}
+
+.list-ios-lines-full .item-ios .item-inner {
+  border-bottom-width: 0;
+}
+
+
+// iOS Inset Lines List
+// --------------------------------------------------
+
+.list-ios-lines-inset .item-ios .item-inner,
+.list-ios .item-ios-lines-inset .item-inner {
+  border-bottom-width: $list-ios-item-border-bottom-width;
+}
+
+
+// Remove the border from items in lists
+// if they are explicitly styled by the item
+// to be different than the list
+.list-ios .item-ios-lines-full .item-inner,
+.list-ios .item-ios-lines-inset {
+  border-bottom-width: 0;
 }
