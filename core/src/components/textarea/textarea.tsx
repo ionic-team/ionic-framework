@@ -22,7 +22,6 @@ export class Textarea implements TextareaComponent {
   color!: string;
 
   didBlurAfterEdit = false;
-  styleTmr?: number;
 
   @Element() el!: HTMLElement;
 
