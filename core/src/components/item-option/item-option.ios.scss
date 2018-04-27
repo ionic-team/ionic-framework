@@ -10,11 +10,11 @@
   background-color: $item-option-button-ios-background-color;
 }
 
-.list-ios .item-options-right ion-item-option:last-child {
+.list-ios .item-options-end ion-item-option:last-child {
   @include safe-area-padding-horizontal(null, .7em);
 }
 
-.list-ios .item-options-left ion-item-option:first-child {
+.list-ios .item-options-start ion-item-option:first-child {
   @include safe-area-padding-horizontal(.7em, null);
 }
 

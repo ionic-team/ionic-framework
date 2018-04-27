@@ -26,7 +26,7 @@ ion-item-options {
   @include rtl() {
     justify-content: flex-start;
 
-    &:not(.item-options-right) {
+    &:not(.item-options-end) {
       // scss-lint:disable PropertySpelling
       right: auto;
       left: 0;
@@ -40,7 +40,7 @@ ion-item-options {
   }
 }
 
-.item-options-left {
+.item-options-start {
   @include multi-dir() {
     // scss-lint:disable PropertySpelling
     right: auto;
@@ -58,7 +58,7 @@ ion-item-options {
 
 .item-sliding-active-slide {
   @include rtl() {
-    &.item-sliding-active-options-left ion-item-options:not(.item-options-right) {
+    &.item-sliding-active-options-left ion-item-options:not(.item-options-end) {
       width: 100%;
 
       visibility: visible;
@@ -69,8 +69,8 @@ ion-item-options {
     display: flex;
   }
 
-  &.item-sliding-active-options-left .item-options-left,
-  &.item-sliding-active-options-right ion-item-options:not(.item-options-left) {
+  &.item-sliding-active-options-left .item-options-start,
+  &.item-sliding-active-options-right ion-item-options:not(.item-options-start) {
     width: 100%;
 
     visibility: visible;
