@@ -12,6 +12,7 @@ export * from './components/loading/loading-interface';
 export * from './components/popover/popover-interface';
 export * from './components/nav/nav-interface';
 export * from './components/router/utils/interface';
+export * from './components/select/select-interface';
 export * from './components/select-popover/select-popover-interface';
 export * from './components/toast/toast-interface';
 

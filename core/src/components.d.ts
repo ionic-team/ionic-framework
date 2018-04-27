@@ -58,6 +58,7 @@ import {
   RouterOutletOptions,
   RouteWrite,
   SelectInputChangeEvent,
+  SelectInterface,
   SelectPopoverOption,
   StyleEvent,
   ToastOptions,
@@ -5689,7 +5690,7 @@ declare global {
       /**
        * The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
        */
-      'interface': string;
+      'interface': SelectInterface;
       /**
        * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface.
        */
@@ -5751,7 +5752,7 @@ declare global {
       /**
        * The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
        */
-      'interface'?: string;
+      'interface'?: SelectInterface;
       /**
        * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface.
        */

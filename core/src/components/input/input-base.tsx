@@ -10,7 +10,6 @@ export interface InputBaseComponent {
 
   clearOnEdit: boolean;
   didBlurAfterEdit: boolean;
-  styleTmr?: number;
 
   // Shared Attributes
   autocapitalize?: string;

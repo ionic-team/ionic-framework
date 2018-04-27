@@ -52,12 +52,11 @@ export function getButtonClassMap(buttonType: string, mode: Mode): CssClassMap {
 
 export function getClassList(classes: string | string[] | undefined): string[] {
   if (classes) {
-    if (Array.isArray(classes)) {
-      return classes;
-    }
-    return classes
-      .split(' ')
-      .filter(c => c.trim() !== '');
+    const array = Array.isArray(classes) ? classes : classes.split(' ');
+    return array
+      .filter(c => c != null)
+      .map(c => c.trim())
+      .filter(c => c !== '');
   }
   return [];
 }

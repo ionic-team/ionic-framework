@@ -1,7 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
-import { ActionSheetButton, ActionSheetOptions, AlertOptions, CssClassMap,
-  Mode, PopoverOptions, SelectInputChangeEvent, SelectPopoverOption, StyleEvent
+import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions,
+  CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent
 } from '../../interface';
+import { deferEvent } from '../../utils/helpers';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class Select {
   private selectId = `ion-sel-${selectIds++}`;
   private labelId?: string;
   private overlay?: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
-  private styleTmr: any;
+
   mode!: Mode;
 
   @Element() el!: HTMLIonSelectElement;
@@ -71,7 +72,7 @@ export class Select {
   /**
    * The interface the select should use: `action-sheet`, `popover` or `alert`. Default: `alert`.
    */
-  @Prop() interface = 'alert';
+  @Prop() interface: SelectInterface = 'alert';
 
   /**
    * Any additional options that the `alert`, `action-sheet` or `popover` interface
@@ -231,6 +232,8 @@ export class Select {
   }
 
   componentDidLoad() {
+    this.ionStyle = deferEvent(this.ionStyle);
+
     const label = this.getLabel();
     if (label) {
       this.labelId = label.id = this.name + '-lbl';
@@ -292,9 +295,11 @@ export class Select {
   }
 
   private async openPopover(ev: UIEvent) {
-    const interfaceOptions = {...this.interfaceOptions};
+    const interfaceOptions = this.interfaceOptions;
 
-    const popoverOpts: PopoverOptions = Object.assign(interfaceOptions, {
+    const popoverOpts: PopoverOptions = {
+      ...interfaceOptions,
+
       component: 'ion-select-popover',
       componentProps: {
         header: interfaceOptions.header,
@@ -314,9 +319,9 @@ export class Select {
           } as SelectPopoverOption;
         })
       },
-      cssClass: 'select-popover' + (interfaceOptions.cssClass ? ' ' + interfaceOptions.cssClass : ''),
+      cssClass: ['select-popover', interfaceOptions.cssClass],
       ev: ev
-    });
+    };
 
     const popover = this.overlay = await this.popoverCtrl.create(popoverOpts);
     await popover.present();
@@ -325,8 +330,6 @@ export class Select {
   }
 
   private async openActionSheet() {
-    const interfaceOptions = {...this.interfaceOptions};
-
     const actionSheetButtons = this.childOpts.map(option => {
       return {
         role: (option.selected ? 'selected' : ''),
@@ -345,10 +348,13 @@ export class Select {
       }
     });
 
-    const actionSheetOpts: ActionSheetOptions = Object.assign(interfaceOptions, {
+    const interfaceOptions = this.interfaceOptions;
+    const actionSheetOpts: ActionSheetOptions = {
+      ...interfaceOptions,
+
       buttons: actionSheetButtons,
-      cssClass: 'select-action-sheet' + (interfaceOptions.cssClass ? ' ' + interfaceOptions.cssClass : '')
-    });
+      cssClass: ['select-action-sheet', interfaceOptions.cssClass]
+    };
 
     const actionSheet = this.overlay = await this.actionSheetCtrl.create(actionSheetOpts);
     await actionSheet.present();
@@ -358,12 +364,14 @@ export class Select {
   }
 
   private async openAlert() {
-    const interfaceOptions = {...this.interfaceOptions};
 
     const label = this.getLabel();
     const labelText = (label) ? label.textContent : null;
 
-    const alertOpts: AlertOptions = Object.assign(interfaceOptions, {
+    const interfaceOptions = this.interfaceOptions;
+    const alertOpts: AlertOptions = {
+      ...interfaceOptions,
+
       header: interfaceOptions.header ? interfaceOptions.header : labelText,
       inputs: this.childOpts.map(o => {
         return {
@@ -372,27 +380,23 @@ export class Select {
           value: o.value,
           checked: o.selected,
           disabled: o.disabled
-        };
+        } as AlertInput;
       }),
-      buttons: [
-        {
-          text: this.cancelText,
-          role: 'cancel',
-          handler: () => {
-            this.ionCancel.emit();
-          }
-        },
-        {
-          text: this.okText,
-          handler: (selectedValues: any) => {
-            this.value = selectedValues;
-          }
+      buttons: [{
+        text: this.cancelText,
+        role: 'cancel',
+        handler: () => {
+          this.ionCancel.emit();
         }
-      ],
-      cssClass: 'select-alert ' +
-                (this.multiple ? 'multiple-select-alert' : 'single-select-alert') +
-                (interfaceOptions.cssClass ? ' ' + interfaceOptions.cssClass : '')
-    });
+      }, {
+        text: this.okText,
+        handler: (selectedValues: any) => {
+          this.value = selectedValues;
+        }
+      }],
+      cssClass: ['select-alert', interfaceOptions.cssClass,
+                (this.multiple ? 'multiple-select-alert' : 'single-select-alert')]
+    };
 
     const alert = this.overlay = await this.alertCtrl.create(alertOpts);
     await alert.present();
@@ -412,7 +416,6 @@ export class Select {
 
     const overlay = this.overlay;
     this.overlay = undefined;
-
     this.isExpanded = false;
 
     return overlay.dismiss();
@@ -439,14 +442,10 @@ export class Select {
   }
 
   private emitStyle() {
-    clearTimeout(this.styleTmr);
-
-    this.styleTmr = setTimeout(() => {
-      this.ionStyle.emit({
-        'select': true,
-        'select-disabled': this.disabled,
-        'input-has-value': this.hasValue()
-      });
+    this.ionStyle.emit({
+      'select': true,
+      'select-disabled': this.disabled,
+      'input-has-value': this.hasValue()
     });
   }
 
