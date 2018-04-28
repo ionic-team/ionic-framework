@@ -5,16 +5,32 @@
 const chalk = require('chalk');
 const execa = require('execa');
 const Listr = require('listr');
+const octokit = require('@octokit/rest')()
 const common = require('./common');
+const fs = require('fs-extra');
 
 
 async function main() {
   try {
-    const {version} = common.readPkg('core');
+    if (!process.env.GH_TOKEN) {
+      throw new Error('env.GH_TOKEN is undefined');
+    }
+
+    const tasks = [];
+    const { version } = common.readPkg('core');
+    const changelog = findChangelog();
+
+    // repo must be clean
+    common.checkGit(tasks);
 
     // publish each package in NPM
-    await publishPackages(common.packages, version);
+    publishPackages(tasks, common.packages, version);
 
+    // push tag to git remote
+    publishGit(tasks, version);
+
+    const listr = new Listr(tasks);
+    await listr.run();
     console.log(`\nionic ${version} published!! 🎉\n`);
 
   } catch (err) {
@@ -24,28 +40,22 @@ async function main() {
 }
 
 
-async function publishPackages(packages, version) {
-  const tasks = [];
-
-  // repo must be clean
-  common.checkGit(tasks);
-
+async function publishPackages(tasks, packages, version) {
   // first verify version
   packages.forEach(package => {
-    if (package === 'core') return;
+    if (package === 'core') {
+      return;
+    }
 
     const pkg = common.readPkg(package);
-
-    tasks.push(
-      {
-        title: `${pkg.name}: check version (must match: ${version})`,
-        task: () => {
-          if (version !== pkg.version) {
-            throw new Error(`${pkg.name} version ${pkg.version} must match ${version}`);
-          }
+    tasks.push({
+      title: `${pkg.name}: check version (must match: ${version})`,
+      task: () => {
+        if (version !== pkg.version) {
+          throw new Error(`${pkg.name} version ${pkg.version} must match ${version}`);
         }
       }
-    );
+    });
   });
 
   // next publish
@@ -53,23 +63,14 @@ async function publishPackages(packages, version) {
     const pkg = common.readPkg(package);
     const projectRoot = common.projectPath(package);
 
-    tasks.push(
-      {
-        title: `${pkg.name}: publish ${pkg.version}`,
-        task: () =>execa('npm', ['publish', '--tag', 'latest'], { cwd: projectRoot })
-      }
-    );
+    tasks.push({
+      title: `${pkg.name}: publish ${pkg.version}`,
+      task: () => execa('npm', ['publish', '--tag', 'latest'], { cwd: projectRoot })
+    });
   });
-
-  // push tag to git remote
-  publishGitTag(tasks, version);
-
-  const listr = new Listr(tasks);
-  await listr.run();
 }
 
-
-function publishGitTag(tasks, version) {
+function publishGit(tasks, version, changelog) {
   const tag = `v${version}`;
 
   tasks.push(
@@ -78,15 +79,57 @@ function publishGitTag(tasks, version) {
       task: () => execa('git', ['tag', `${tag}`], { cwd: common.rootDir })
     },
     {
-      title: 'Push branches to Github',
+      title: 'Push branches to remote',
       task: () => execa('git', ['push'], { cwd: common.rootDir })
     },
     {
-      title: 'Push tags to Github',
+      title: 'Push tags to remove',
       task: () => execa('git', ['push', '--tags'], { cwd: common.rootDir })
+    },
+    {
+      title: 'Publish Github release',
+      tash: () => publishGithub(version, tag, changelog)
     }
   );
 }
 
+function findChangelog() {
+  const lines = fs.readFileSync('CHANGELOG.md', 'utf-8').toString().split('\n');
+  let start = -1;
+  let end = -1;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (line.startsWith('# [')) {
+      if (start === -1) {
+        start = i + 1;
+      } else {
+        end = i - 1;
+        break;
+      }
+    }
+  }
+
+  if(start === -1 || end === -1) {
+    throw new Error('changelog diff was not found');
+  }
+  return lines.slice(start, end).join('\n').trim();
+}
+
+async function publishGithub(version, tag, changelog) {
+  octokit.authenticate({
+    type: 'oauth',
+    token: process.env.GH_TOKEN
+  });
+
+  await octokit.repos.createRelease({
+    owner: 'ionic-team',
+    repo: 'ionic',
+    target_commitish: 'master',
+    tag_name: tag,
+    name: version,
+    body: changelog,
+  });
+}
 
 main();
