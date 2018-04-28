@@ -5422,7 +5422,6 @@ declare global {
 
   namespace StencilComponents {
     interface IonSegmentButton {
-      'activated': boolean;
       /**
        * If true, the segment button is selected. Defaults to `false`.
        */
@@ -5466,7 +5465,6 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSegmentButtonAttributes extends HTMLAttributes {
-      'activated'?: boolean;
       /**
        * If true, the segment button is selected. Defaults to `false`.
        */

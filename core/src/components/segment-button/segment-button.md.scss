@@ -31,7 +31,7 @@
   }
 
   &.activated,
-  &.segment-activated {
+  &.segment-checked {
     border-color: $segment-button-md-border-color-activated;
     opacity: $segment-button-md-opacity-activated;
   }
@@ -58,7 +58,7 @@
     color: $color-base;
 
     &.activated,
-    &.segment-activated {
+    &.segment-checked {
       border-color: $color-base;
       color: $color-base;
     }

@@ -8,11 +8,6 @@ Segment buttons are groups of related buttons inside of a [Segment](../../segmen
 
 ## Properties
 
-#### activated
-
-boolean
-
-
 #### checked
 
 boolean
@@ -57,11 +52,6 @@ The value of the segment button.
 
 
 ## Attributes
-
-#### activated
-
-boolean
-
 
 #### checked
 
