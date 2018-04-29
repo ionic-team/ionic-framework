@@ -53,14 +53,17 @@ export class Router {
 
   @Event() ionRouteChanged!: EventEmitter<RouterEventDetail>;
 
-  componentWillLoad() {
+  async componentWillLoad() {
     console.debug('[ion-router] router will load');
 
     const tree = readRoutes(this.el);
     this.routes = flattenRouterTree(tree);
     this.redirects = readRedirects(this.el);
 
-    return this.writeNavStateRoot(this.getPath(), RouterDirection.None);
+    const changed = await this.writeNavStateRoot(this.getPath(), RouterDirection.None);
+    if (!changed) {
+      console.error('[ion-router] did not change on will load');
+    }
   }
 
   componentDidLoad() {
