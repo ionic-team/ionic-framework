@@ -58,7 +58,16 @@ export function readNavState(root: HTMLElement | undefined) {
   return {ids, outlet};
 }
 
-const QUERY = ':not([no-router]) ion-nav,:not([no-router]) ion-tabs, :not([no-router]) ion-router-outlet';
+export function waitUntilNavNode(win: Window) {
+  if (searchNavNode(win.document.body)) {
+    return Promise.resolve();
+  }
+  return new Promise((resolve) => {
+    win.addEventListener('ionNavWillLoad', resolve, { once: true });
+  });
+}
+
+const QUERY = ':not([no-router]) ion-nav, :not([no-router]) ion-tabs, :not([no-router]) ion-router-outlet';
 
 function searchNavNode(root: HTMLElement|undefined): NavOutletElement|null {
   if (!root) {
