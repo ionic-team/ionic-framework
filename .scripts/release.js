@@ -88,7 +88,7 @@ function publishGit(tasks, version, changelog) {
     },
     {
       title: 'Publish Github release',
-      tash: () => publishGithub(version, tag, changelog)
+      task: () => publishGithub(version, tag, changelog)
     }
   );
 }
