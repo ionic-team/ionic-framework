@@ -139,7 +139,10 @@ By default, this property is `true`, change to `false` to allow hash-less URLs.
 
 ## Events
 
-#### ionRouteChanged
+#### ionRouteDidChange
+
+
+#### ionRouteWillChange
 
 
 ## Methods
