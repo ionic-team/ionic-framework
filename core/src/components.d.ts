@@ -3860,6 +3860,7 @@ declare global {
       'delegate'?: FrameworkDelegate;
       'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
       'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
+      'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
       'root'?: NavComponent;
       'rootParams'?: ComponentProps;
       'swipeBackEnabled'?: boolean;
@@ -5120,6 +5121,7 @@ declare global {
       'delegate'?: FrameworkDelegate;
       'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
       'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
+      'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
     }
   }
 }
@@ -6507,6 +6509,7 @@ declare global {
       'onIonChange'?: (event: CustomEvent<{tab: HTMLIonTabElement}>) => void;
       'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
       'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
+      'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
       'scrollable'?: boolean;
       /**
        * If true, the tabbar

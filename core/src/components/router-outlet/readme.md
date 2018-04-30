@@ -47,6 +47,9 @@ boolean
 #### ionNavWillChange
 
 
+#### ionNavWillLoad
+
+
 ## Methods
 
 #### commit()

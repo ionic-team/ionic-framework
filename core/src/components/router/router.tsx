@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Config, QueueController } from '../../interface';
-import { readNavState, writeNavState } from './utils/dom';
+import { readNavState, waitUntilNavNode, writeNavState } from './utils/dom';
 import { RouteChain, RouteRedirect, RouterDirection, RouterEventDetail } from './utils/interface';
 import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matching';
 import { flattenRouterTree, readRedirects, readRoutes } from './utils/parser';
@@ -55,6 +55,8 @@ export class Router {
 
   async componentWillLoad() {
     console.debug('[ion-router] router will load');
+    await waitUntilNavNode(this.win);
+    console.debug('[ion-router] found nav');
 
     const tree = readRoutes(this.el);
     this.routes = flattenRouterTree(tree);
@@ -68,7 +70,6 @@ export class Router {
 
   componentDidLoad() {
     this.init = true;
-
     console.debug('[ion-router] router did load');
   }
 

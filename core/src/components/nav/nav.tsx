@@ -43,6 +43,7 @@ export class Nav implements NavOutlet {
     }
   }
 
+  @Event() ionNavWillLoad!: EventEmitter<void>;
   @Event() ionNavWillChange!: EventEmitter<void>;
   @Event() ionNavDidChange!: EventEmitter<void>;
 
@@ -54,6 +55,7 @@ export class Nav implements NavOutlet {
     if (this.animated === undefined) {
       this.animated = this.config.getBoolean('animate', true);
     }
+    this.ionNavWillLoad.emit();
   }
 
   componentDidLoad() {
