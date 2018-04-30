@@ -29,8 +29,7 @@ export class Datetime {
 
   @Listen('body:ionPickerColChange')
   protected ionPickerDidUnload(col: any) {
-    // this.validate();
-    console.log(col.detail.name);
+      this.validate();
   }
 
   @State() text: any;
