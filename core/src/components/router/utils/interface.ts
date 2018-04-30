@@ -8,6 +8,7 @@ export interface RouterEventDetail {
   from: string|null;
   redirectedFrom: string|null;
   to: string;
+  changed?: boolean;
 }
 
 export const enum RouterDirection {
@@ -29,7 +30,7 @@ export interface RouteWrite {
 
 export interface RouteID {
   id: string;
-  element?: HTMLElement|undefined;
+  element: HTMLElement | undefined;
   params?: any;
 }
 

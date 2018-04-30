@@ -5163,7 +5163,8 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRouterAttributes extends HTMLAttributes {
-      'onIonRouteChanged'?: (event: CustomEvent<RouterEventDetail>) => void;
+      'onIonRouteDidChange'?: (event: CustomEvent<RouterEventDetail>) => void;
+      'onIonRouteWillChange'?: (event: CustomEvent<RouterEventDetail>) => void;
       /**
        * By default `ion-router` will match the routes at the root path ("/"). That can be changed when  T
        */

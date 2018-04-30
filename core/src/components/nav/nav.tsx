@@ -172,7 +172,10 @@ export class Nav implements NavOutlet {
   setRouteId(id: string, params: any, direction: number): Promise<RouteWrite> {
     const active = this.getActive();
     if (matches(active, id, params)) {
-      return Promise.resolve({changed: false, element: active.element});
+      return Promise.resolve({
+        changed: false,
+        element: active.element
+      });
     }
 
     const viewController = this.views.find(v => matches(v, id, params));

@@ -25,7 +25,6 @@ export class Router {
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'queue' }) queue!: QueueController;
   @Prop({ context: 'window' }) win!: Window;
-  @Prop({ context: 'isServer' }) isServer!: boolean;
 
   /**
    * By default `ion-router` will match the routes at the root path ("/").
@@ -51,7 +50,8 @@ export class Router {
    */
   @Prop() useHash = true;
 
-  @Event() ionRouteChanged!: EventEmitter<RouterEventDetail>;
+  @Event() ionRouteWillChange!: EventEmitter<RouterEventDetail>;
+  @Event() ionRouteDidChange!: EventEmitter<RouterEventDetail>;
 
   async componentWillLoad() {
     console.debug('[ion-router] router will load');
@@ -150,11 +150,8 @@ export class Router {
 
     console.debug('[ion-router] nav changed -> update URL', ids, path);
     this.setPath(path, direction);
-    if (outlet) {
-      console.debug('[ion-router] updating nested outlet', outlet);
-      await this.writeNavState(outlet, chain, RouterDirection.None, ids.length);
-    }
-    this.emitRouteChange(path, null);
+
+    await this.writeNavState(outlet, chain, RouterDirection.None, path, null, ids.length);
     return true;
   }
 
@@ -175,6 +172,8 @@ export class Router {
       console.error('[ion-router] URL is not part of the routing set');
       return false;
     }
+
+    // lookup redirect rule
     const redirect = routeRedirect(path, this.redirects);
     let redirectFrom: string[]|null = null;
     if (redirect) {
@@ -182,21 +181,38 @@ export class Router {
       redirectFrom = redirect.from;
       path = redirect.to!;
     }
+
+    // lookup route chain
     const chain = routerPathToChain(path, this.routes);
-    const changed = await this.writeNavState(this.win.document.body, chain, direction);
-    if (changed) {
-      this.emitRouteChange(path, redirectFrom);
+    if (!chain) {
+      console.error('[ion-router] the path does not match any route');
+      return false;
     }
-    return changed;
+
+    // write DOM give
+    return this.writeNavState(this.win.document.body, chain, direction, path, redirectFrom);
   }
 
-  private async writeNavState(node: any, chain: RouteChain | null, direction: RouterDirection, index = 0): Promise<boolean> {
+  private async writeNavState(
+    node: HTMLElement|undefined, chain: RouteChain, direction: RouterDirection,
+    path: string[], redirectFrom: string[] | null,
+    index = 0
+  ): Promise<boolean> {
     if (this.busy) {
       return false;
     }
     this.busy = true;
+
+    // generate route event and emit will change
+    const event = this.routeChangeEvent(path, redirectFrom);
+    this.ionRouteWillChange.emit(event);
+
     const changed = await writeNavState(node, chain, direction, index);
     this.busy = false;
+
+    // emit did change
+    this.emitRouteDidChange(event, changed);
+
     return changed;
   }
 
@@ -209,16 +225,23 @@ export class Router {
     return readPath(this.win.location, this.root, this.useHash);
   }
 
-  private emitRouteChange(path: string[], redirectPath: string[]|null) {
-    console.debug('[ion-router] route changed', path);
+  private emitRouteDidChange(event: RouterEventDetail, changed: boolean) {
+    console.debug('[ion-router] route changed', event.to);
+    this.previousPath = event.to;
+    this.ionRouteDidChange.emit({
+      ...event,
+      changed
+    });
+  }
+
+  private routeChangeEvent(path: string[], redirectFromPath: string[]|null) {
     const from = this.previousPath;
-    const redirectedFrom = redirectPath ? generatePath(redirectPath) : null;
     const to = generatePath(path);
-    this.previousPath = to;
-    this.ionRouteChanged.emit({
+    const redirectedFrom = redirectFromPath ? generatePath(redirectFromPath) : null;
+    return {
       from,
       redirectedFrom,
-      to: to
-    });
+      to,
+    };
   }
 }
