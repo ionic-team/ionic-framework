@@ -67,6 +67,9 @@ boolean
 #### ionNavWillChange
 
 
+#### ionNavWillLoad
+
+
 ## Methods
 
 #### canGoBack()

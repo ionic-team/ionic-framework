@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 import { Mode } from '../../interface';
 import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 
@@ -15,8 +15,6 @@ export class SegmentButton {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ mutable: true }) activated = false;
-
   /**
    * The color to use for the text color.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
@@ -32,7 +30,7 @@ export class SegmentButton {
   /**
    * If true, the segment button is selected. Defaults to `false`.
    */
-  @Prop() checked = false;
+  @Prop({mutable: true}) checked = false;
 
   /*
    * If true, the user cannot interact with the segment button. Default false.
@@ -55,11 +53,11 @@ export class SegmentButton {
    */
   @Event() ionSelect!: EventEmitter<void>;
 
-  /**
-   * Emit the click event to the parent segment
-   */
-  private onClick() {
-    this.ionSelect.emit();
+  @Watch('checked')
+  checkedChanged(checked: boolean, prev: boolean) {
+    if (checked && !prev) {
+      this.ionSelect.emit();
+    }
   }
 
   render() {
@@ -68,7 +66,7 @@ export class SegmentButton {
 
     const buttonClasses = {
       'segment-button-disabled': this.disabled,
-      'segment-activated': this.activated,
+      'segment-checked': this.checked,
       ...themedClasses,
       ...hostClasses,
     };
@@ -81,11 +79,11 @@ export class SegmentButton {
     return [
       <TagType
        {...attrs}
-        aria-pressed={this.activated}
+        aria-pressed={this.checked}
         class={buttonClasses}
         disabled={this.disabled}
         href={this.href}
-        onClick={this.onClick.bind(this)}>
+        onClick={() => this.checked = true }>
           <slot></slot>
           { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </TagType>

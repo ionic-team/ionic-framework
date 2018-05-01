@@ -25,6 +25,7 @@ export class RouterOutlet implements NavOutlet {
   @Prop() animationBuilder?: AnimationBuilder;
   @Prop() delegate?: FrameworkDelegate;
 
+  @Event() ionNavWillLoad!: EventEmitter<void>;
   @Event() ionNavWillChange!: EventEmitter<void>;
   @Event() ionNavDidChange!: EventEmitter<void>;
 
@@ -32,6 +33,8 @@ export class RouterOutlet implements NavOutlet {
     if (this.animated === undefined) {
       this.animated = this.config.getBoolean('animate', true);
     }
+
+    this.ionNavWillLoad.emit();
   }
 
   componentDidUnload() {

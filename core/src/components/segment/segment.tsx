@@ -40,7 +40,7 @@ export class Segment {
 
   @Watch('value')
   protected valueChanged(value: string | undefined) {
-    this.selectButton();
+    this.update();
     this.ionChange.emit({value});
   }
 
@@ -56,20 +56,21 @@ export class Segment {
   }
 
   componentDidLoad() {
-    this.selectButton();
+    if (this.value === undefined) {
+      const buttons = Array.from(this.el.querySelectorAll('ion-segment-button'));
+      const checked = buttons.find(b => b.checked);
+      if (checked) {
+        this.value = checked.value;
+      }
+    }
+    this.update();
   }
 
-  private selectButton() {
+  private update() {
     const value = this.value;
     const buttons = Array.from(this.el.querySelectorAll('ion-segment-button'));
     for (const button of buttons) {
-      button.activated = (button.value === value);
-
-      // If there is no value set on the segment and a button
-      // is checked we should activate it
-      if (!value && button.checked) {
-        button.activated = button.checked;
-      }
+      button.checked = (button.value === value);
     }
   }
 

@@ -233,6 +233,9 @@ Emitted when the tab changes.
 #### ionNavWillChange
 
 
+#### ionNavWillLoad
+
+
 ## Methods
 
 #### getRouteId()

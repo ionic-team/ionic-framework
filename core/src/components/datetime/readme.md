@@ -235,7 +235,7 @@ locale names for each day in the week. Defaults to English.
 
 #### dayValues
 
-string
+any
 
 Values used to create the list of selectable days. By default
 every day is shown for the given month. However, to control exactly which days of
@@ -272,7 +272,7 @@ The text to display on the picker's "Done" button. Default: `Done`.
 
 #### hourValues
 
-string
+any
 
 Values used to create the list of selectable hours. By default
 the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However,
@@ -306,7 +306,7 @@ Defaults to the beginning of the year, 100 years ago from today.
 
 #### minuteValues
 
-string
+any
 
 Values used to create the list of selectable minutes. By default
 the mintues range from `0` to `59`. However, to control exactly which minutes to display,
@@ -333,7 +333,7 @@ locale month names. Defaults to English.
 
 #### monthValues
 
-string
+any
 
 Values used to create the list of selectable months. By default
 the month values range from `1` to `12`. However, to control exactly which months to
@@ -380,7 +380,7 @@ the value of the datetime.
 
 #### yearValues
 
-string
+any
 
 Values used to create the list of selectable years. By default
 the year values range between the `min` and `max` datetime inputs. However, to
@@ -416,7 +416,7 @@ locale names for each day in the week. Defaults to English.
 
 #### day-values
 
-string
+any
 
 Values used to create the list of selectable days. By default
 every day is shown for the given month. However, to control exactly which days of
@@ -453,7 +453,7 @@ The text to display on the picker's "Done" button. Default: `Done`.
 
 #### hour-values
 
-string
+any
 
 Values used to create the list of selectable hours. By default
 the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However,
@@ -487,7 +487,7 @@ Defaults to the beginning of the year, 100 years ago from today.
 
 #### minute-values
 
-string
+any
 
 Values used to create the list of selectable minutes. By default
 the mintues range from `0` to `59`. However, to control exactly which minutes to display,
@@ -514,7 +514,7 @@ locale month names. Defaults to English.
 
 #### month-values
 
-string
+any
 
 Values used to create the list of selectable months. By default
 the month values range from `1` to `12`. However, to control exactly which months to
@@ -561,7 +561,7 @@ the value of the datetime.
 
 #### year-values
 
-string
+any
 
 Values used to create the list of selectable years. By default
 the year values range between the `min` and `max` datetime inputs. However, to

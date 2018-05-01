@@ -47,7 +47,7 @@
 // Material Design Radio Outer Circle: Checked
 // -----------------------------------------
 
-.radio-md .radio-checked {
+.radio-md.radio-checked .radio-icon {
   border-color: $radio-md-color-on;
 }
 
@@ -55,7 +55,7 @@
 // Material Design Radio Inner Circle: Checked
 // -----------------------------------------
 
-.radio-md .radio-checked .radio-inner {
+.radio-md.radio-checked .radio-inner {
   transform: scale3d(1, 1, 1);
 }
 
@@ -130,7 +130,7 @@
     color: $color-base;
   }
 
-  .radio-md-#{$color-name} .radio-checked {
+  .radio-md-#{$color-name}.radio-checked .radio-icon {
     border-color: $color-base;
   }
 

@@ -43,6 +43,7 @@ export class Nav implements NavOutlet {
     }
   }
 
+  @Event() ionNavWillLoad!: EventEmitter<void>;
   @Event() ionNavWillChange!: EventEmitter<void>;
   @Event() ionNavDidChange!: EventEmitter<void>;
 
@@ -54,6 +55,7 @@ export class Nav implements NavOutlet {
     if (this.animated === undefined) {
       this.animated = this.config.getBoolean('animate', true);
     }
+    this.ionNavWillLoad.emit();
   }
 
   componentDidLoad() {
@@ -170,7 +172,10 @@ export class Nav implements NavOutlet {
   setRouteId(id: string, params: any, direction: number): Promise<RouteWrite> {
     const active = this.getActive();
     if (matches(active, id, params)) {
-      return Promise.resolve({changed: false, element: active.element});
+      return Promise.resolve({
+        changed: false,
+        element: active.element
+      });
     }
 
     const viewController = this.views.find(v => matches(v, id, params));

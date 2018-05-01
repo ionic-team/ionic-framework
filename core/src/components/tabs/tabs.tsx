@@ -70,6 +70,7 @@ export class Tabs implements NavOutlet {
    * Emitted when the tab changes.
    */
   @Event() ionChange!: EventEmitter<{tab: HTMLIonTabElement}>;
+  @Event() ionNavWillLoad!: EventEmitter<void>;
   @Event() ionNavWillChange!: EventEmitter<void>;
   @Event() ionNavDidChange!: EventEmitter<void>;
 
@@ -81,6 +82,8 @@ export class Tabs implements NavOutlet {
     this.loadConfig('tabbarLayout', 'bottom');
     this.loadConfig('tabbarLayout', 'icon-top');
     this.loadConfig('tabbarHighlight', false);
+
+    this.ionNavWillLoad.emit();
   }
 
   async componentDidLoad() {
