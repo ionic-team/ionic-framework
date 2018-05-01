@@ -79,6 +79,28 @@ List Items
     </ion-label>
   </ion-item>
 
+  <ion-item lines="full">
+    Item with Full Lines
+  </ion-item>
+
+</ion-list>
+
+<ion-list lines="full">
+  <ion-list-header>
+    Full Lines List
+  </ion-list-header>
+
+  <ion-item>
+    Item
+  </ion-item>
+
+  <ion-item>
+    Item
+  </ion-item>
+
+  <ion-item>
+    Item
+  </ion-item>
 </ion-list>
 ```
 
