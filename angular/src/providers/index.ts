@@ -1,4 +1,3 @@
-
 export { AngularDelegate } from './angular-delegate';
 export { ActionSheetController } from './action-sheet-controller';
 export { AlertController } from './alert-controller';
@@ -12,4 +11,4 @@ export { PopoverController } from './popover-controller';
 export { ToastController } from './toast-controller';
 export { NavController } from './nav-controller';
 export { DomController } from './dom-controller';
-export { Config } from './config';
+export { Config, ConfigToken } from './config';
