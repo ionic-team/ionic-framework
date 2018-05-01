@@ -76,6 +76,11 @@
   border-bottom-color: $item-md-border-bottom-color;
 }
 
+// Default input items have a border
+.item-md.item-input {
+  border-bottom-width: $item-md-border-bottom-width;
+}
+
 // Full lines - apply the border to the item
 // Inset lines - apply the border to the item inner
 .item-md-lines-full,
