@@ -1,11 +1,10 @@
-import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import * as c from './directives';
 import * as d from './directives/proxies';
 import * as p from './providers';
 import { setupConfig } from '@ionic/core';
-
 
 const DECLARATIONS = [
   // proxies
@@ -107,7 +106,7 @@ const DECLARATIONS = [
   c.VirtualFooter,
   c.VirtualHeader,
   c.VirtualItem,
-  c.VirtualScroll,
+  c.VirtualScroll
 ];
 
 const PROVIDERS = [
@@ -120,30 +119,28 @@ const PROVIDERS = [
   p.NavController,
   p.Platform,
   p.Events,
-  p.DomController,
-  p.Config
+  p.DomController
 ];
 
 @NgModule({
   declarations: DECLARATIONS,
   exports: DECLARATIONS,
-  providers: [
-    p.AngularDelegate,
-    p.ModalController,
-    p.PopoverController,
-  ],
-  imports: [
-    CommonModule,
-  ]
+  providers: [p.AngularDelegate, p.ModalController, p.PopoverController],
+  imports: [CommonModule]
 })
 export class IonicModule {
-  static forRoot(config?: {[key: string]: any}): ModuleWithProviders {
-    setupConfig(config);
+  static forRoot(config?: { [key: string]: any }): ModuleWithProviders {
     return {
       ngModule: IonicModule,
-      providers: PROVIDERS
+      providers: [
+        ...PROVIDERS,
+        { provide: p.ConfigToken, useValue: config },
+        {
+          provide: p.Config,
+          useFactory: setupConfig,
+          deps: [p.ConfigToken, p.Platform]
+        }
+      ]
     };
   }
 }
-
-export const ConfigToken = new InjectionToken<any>('USERCONFIG');
