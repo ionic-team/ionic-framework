@@ -124,7 +124,7 @@ If true, the split pane will be hidden. Defaults to `false`.
 
 #### when
 
-string
+any
 
 When the split-pane should be shown.
 Can be a CSS media query expression, or a shortcut expression.
@@ -142,7 +142,7 @@ If true, the split pane will be hidden. Defaults to `false`.
 
 #### when
 
-string
+any
 
 When the split-pane should be shown.
 Can be a CSS media query expression, or a shortcut expression.
