@@ -14,6 +14,10 @@ const path = require('path');
 
 async function main() {
   try {
+    if (!process.env.GH_TOKEN) {
+      throw new Error('env.GH_TOKEN is undefined');
+    }
+
     const version = await askVersion();
 
     // compile and verify packages
@@ -250,12 +254,10 @@ function updatePackageVersion(tasks, package, version) {
 
 
 async function generateChangeLog(tasks) {
-  tasks.push(
-    {
-      title: `Generate CHANGELOG.md`,
-      task: () => execa('npm', ['run', 'changelog'], { cwd: common.rootDir }),
-    }
-  );
+  tasks.push({
+    title: `Generate CHANGELOG.md`,
+    task: () => execa('npm', ['run', 'changelog'], { cwd: common.rootDir }),
+  });
 }
 
 

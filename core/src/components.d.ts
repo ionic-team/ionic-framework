@@ -3875,6 +3875,7 @@ declare global {
       'delegate'?: FrameworkDelegate;
       'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
       'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
+      'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
       'root'?: NavComponent;
       'rootParams'?: ComponentProps;
       'swipeBackEnabled'?: boolean;
@@ -5135,6 +5136,7 @@ declare global {
       'delegate'?: FrameworkDelegate;
       'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
       'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
+      'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
     }
   }
 }
@@ -5176,7 +5178,8 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRouterAttributes extends HTMLAttributes {
-      'onIonRouteChanged'?: (event: CustomEvent<RouterEventDetail>) => void;
+      'onIonRouteDidChange'?: (event: CustomEvent<RouterEventDetail>) => void;
+      'onIonRouteWillChange'?: (event: CustomEvent<RouterEventDetail>) => void;
       /**
        * By default `ion-router` will match the routes at the root path ("/"). That can be changed when  T
        */
@@ -5437,7 +5440,6 @@ declare global {
 
   namespace StencilComponents {
     interface IonSegmentButton {
-      'activated': boolean;
       /**
        * If true, the segment button is selected. Defaults to `false`.
        */
@@ -5481,7 +5483,6 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSegmentButtonAttributes extends HTMLAttributes {
-      'activated'?: boolean;
       /**
        * If true, the segment button is selected. Defaults to `false`.
        */
@@ -6524,6 +6525,7 @@ declare global {
       'onIonChange'?: (event: CustomEvent<{tab: HTMLIonTabElement}>) => void;
       'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
       'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
+      'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
       'scrollable'?: boolean;
       /**
        * If true, the tabbar

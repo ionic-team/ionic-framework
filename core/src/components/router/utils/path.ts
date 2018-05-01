@@ -26,10 +26,12 @@ export function chainToPath(chain: RouteChain): string[]|null {
   return path;
 }
 
-export function writePath(history: History, base: string, usePath: boolean, path: string[], direction: RouterDirection, state: number) {
-  path = [base, ...path];
-  let url = generatePath(path);
-  if (usePath) {
+export function writePath(history: History, root: string, useHash: boolean, path: string[], direction: RouterDirection, state: number) {
+  let url = generatePath([
+    ...parsePath(root),
+    ...path
+  ]);
+  if (useHash) {
     url = '#' + url;
   }
   if (direction === RouterDirection.Forward) {

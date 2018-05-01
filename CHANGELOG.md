@@ -1,3 +1,35 @@
+<a name="4.0.0-alpha.4"></a>
+# [4.0.0-alpha.4](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.3...v4.0.0-alpha.4) (2018-04-30)
+
+
+### Bug Fixes
+
+* **angular:** compare router params length ([b3a9c7f](https://github.com/ionic-team/ionic/commit/b3a9c7f))
+* **angular:** Config provider ([329a348](https://github.com/ionic-team/ionic/commit/329a348))
+* **angular:** platform.ready() returns type ([c0ec02e](https://github.com/ionic-team/ionic/commit/c0ec02e))
+* **angular:** update proxies ([da0bfc7](https://github.com/ionic-team/ionic/commit/da0bfc7))
+* **config:** add object.entries polyfil ([c917a3c](https://github.com/ionic-team/ionic/commit/c917a3c))
+* **config:** add setupConfig util ([0c1476e](https://github.com/ionic-team/ionic/commit/0c1476e))
+* **lint:** import order ([8b1452c](https://github.com/ionic-team/ionic/commit/8b1452c))
+* **nav:** rename animate to animated ([98a3519](https://github.com/ionic-team/ionic/commit/98a3519))
+* **prerender:** router compatible with prerender ([9c7b0ca](https://github.com/ionic-team/ionic/commit/9c7b0ca))
+* **router:** error when it can't initialize property ([e56b2ee](https://github.com/ionic-team/ionic/commit/e56b2ee))
+* **router:** initial load waits until outlet attaches ([c905ba4](https://github.com/ionic-team/ionic/commit/c905ba4))
+* **router:** root prop ([89d5a35](https://github.com/ionic-team/ionic/commit/89d5a35))
+* **router:** writeURL() for non root base ([af4bcb8](https://github.com/ionic-team/ionic/commit/af4bcb8))
+* **scripts:** github release ([545d3c2](https://github.com/ionic-team/ionic/commit/545d3c2))
+* **segment:** checked can be changed dynamically ([78454b4](https://github.com/ionic-team/ionic/commit/78454b4))
+* **select:** cssClass + strong typed ([826e02b](https://github.com/ionic-team/ionic/commit/826e02b))
+* **toast:** only use constant and env if supported ([#14399](https://github.com/ionic-team/ionic/issues/14399)) ([9bee0f0](https://github.com/ionic-team/ionic/commit/9bee0f0))
+* **validate:** fix type errors ([3328314](https://github.com/ionic-team/ionic/commit/3328314))
+
+
+### Features
+
+* **router:** add willChange event ([d613411](https://github.com/ionic-team/ionic/commit/d613411))
+
+
+
 <a name="4.0.0-alpha.3"></a>
 # [4.0.0-alpha.3](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.2...v4.0.0-alpha.3) (2018-04-23)
 

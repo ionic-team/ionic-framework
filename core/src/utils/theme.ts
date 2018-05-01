@@ -3,10 +3,9 @@ import { CssClassMap, Mode } from '../interface';
 /**
  * Create the mode and color classes for the component based on the classes passed in
  */
-export function createThemedClasses(mode: Mode, color: string, classes: string): CssClassMap {
+export function createThemedClasses(mode: Mode | undefined, color: string | undefined, classes: string): CssClassMap {
   const classObj: CssClassMap = {};
-
-  classes.split(' ').forEach(classString => {
+  getClassList(classes).forEach(classString => {
     classObj[classString] = true;
 
     if (mode) {
@@ -17,8 +16,6 @@ export function createThemedClasses(mode: Mode, color: string, classes: string):
         classObj[`${classString}-${mode}-${color}`] = true;
       }
     }
-
-    return classObj;
   });
   return classObj;
 }
@@ -40,7 +37,7 @@ export function getElementClassMap(classList: DOMTokenList | string[]): CssClass
  * Get the classes based on the button type
  * e.g. alert-button, action-sheet-button
  */
-export function getButtonClassMap(buttonType: string, mode: Mode): CssClassMap {
+export function getButtonClassMap(buttonType: string | undefined, mode: Mode): CssClassMap {
   if (!buttonType) {
     return {};
   }
