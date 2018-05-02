@@ -13,8 +13,16 @@ import { Component, Prop } from '@stencil/core';
 })
 export class SkeletonText {
   @Prop() width = '100%';
+  @Prop() height = 'auto';
+  @Prop() radius = '0';
 
   render () {
-    return <span style={{width: this.width}}>&nbsp;</span>;
+    const themedStyles = {
+      'width': this.width,
+      'height': this.height,
+      'border-radius': this.radius,
+    };
+
+    return <span style={themedStyles}>&nbsp;</span>;
   }
 }
