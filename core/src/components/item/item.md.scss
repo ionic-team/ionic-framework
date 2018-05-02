@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 .item-md {
-  @include padding-horizontal($item-md-padding-start, 0);
+  @include padding-horizontal($item-md-padding-start, null);
 
   position: relative;
 
