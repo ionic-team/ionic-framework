@@ -16,12 +16,14 @@
   background-color: $background-md-color;
 
   // TODO this can be simplified
-  .ion-page,
-  .ion-page > ion-header,
-  ion-tab ion-nav .ion-page > ion-header,
-  ion-menu > .menu-inner,
-  ion-menu > .menu-inner > ion-header {
-    @include toolbar-statusbar-padding($toolbar-md-height, $toolbar-md-padding, $content-md-padding, $app-md-statusbar-padding);
+  &.statusbar-padding {
+    .ion-page,
+    .ion-page > ion-header,
+    ion-tab ion-nav .ion-page > ion-header,
+    ion-menu > .menu-inner,
+    ion-menu > .menu-inner > ion-header {
+      @include toolbar-statusbar-padding($toolbar-md-height, $toolbar-md-padding, $content-md-padding, $app-md-statusbar-padding);
+    }
   }
 }
 
