@@ -20,7 +20,7 @@ The Ionic Core package contains the Web Components that make up the reusable UI 
 
 Easiest way to start using Ionic Core is by adding a script tag to the CDN:
 
-    <script src="https://unpkg.com/@ionic/core@latest/dist/ionic.js"></script>
+    <script src="https://unpkg.com/@ionic/core@4.0.0-alpha.4/dist/ionic.js"></script>
 
 Any Ionic component added to the webpage will automatically load. This includes writing the component tag directly in HTML, or using JavaScript such as `document.createElement('ion-toggle')`.
 
