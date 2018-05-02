@@ -39,7 +39,7 @@
     background: $color-shade;
   }
 
-  .enable-hover .tabbar-md-#{$color-name} .tab-button:hover,
+  .tabbar-md-#{$color-name} .tab-button:hover,
   .tabbar-md-#{$color-name} .tab-button.tab-selected {
     color: $color-contrast;
 

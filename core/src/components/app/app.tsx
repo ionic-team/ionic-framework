@@ -23,14 +23,12 @@ export class App {
 
   hostData() {
     const hybrid = isHybrid(this.win);
-    const hoverCSS = this.config.getBoolean('hoverCSS', !hybrid);
     const statusBar = this.config.getBoolean('statusbarPadding', hybrid);
 
     return {
       class: {
         [this.mode]: true,
-        'statusbar-padding': statusBar,
-        'enable-hover': hoverCSS
+        'statusbar-padding': statusBar
       }
     };
   }
