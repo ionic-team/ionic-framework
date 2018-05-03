@@ -12,6 +12,14 @@ closeAndLock:
     
     
         Thank you for using Ionic!
+    - label: "ionitron: ionic pro"
+      message: >
+        Thanks for the issue! This issue appears to be related to Ionic Pro. We use this issue tracker exclusively for
+        bug reports and feature requests. Please use the [Ionic Pro Support Forum](https://ionic.zendesk.com/hc/en-us/requests/new)
+        to report this issue.
+    
+    
+        Thank you for using Ionic!
     - label: "ionitron: missing template"
       message: >
         Thanks for the issue! It appears that you have not filled out the provided issue template. We use this issue
