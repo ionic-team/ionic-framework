@@ -1,6 +1,26 @@
 import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
+<<<<<<< HEAD
 import { DatetimeData, LocaleData, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
+=======
+import {
+  DatetimeData,
+  LocaleData,
+  convertFormatToKey,
+  convertToArrayOfNumbers,
+  convertToArrayOfStrings,
+  dateDataSortValue,
+  dateSortValue,
+  dateValueRange,
+  daysInMonth,
+  getValueFromFormat,
+  parseDate,
+  parseTemplate,
+  renderDatetime,
+  renderTextFormat,
+  updateDate
+} from './datetime-util';
+>>>>>>> addeventlistener to the rescue
 
 import { CssClassMap, PickerColumn, PickerOptions, StyleEvent } from '../../interface';
 import { clamp, deferEvent } from '../../utils/helpers';
@@ -26,11 +46,6 @@ export class Datetime {
   datetimeMin: DatetimeData = {};
   datetimeMax: DatetimeData = {};
   datetimeValue: DatetimeData = {};
-
-  @Listen('body:ionPickerColChange')
-  protected ionPickerDidUnload(col: any) {
-      this.validate();
-  }
 
   @State() text: any;
 
@@ -274,7 +289,11 @@ export class Datetime {
     const pickerOptions = {...this.pickerOptions};
     this.picker = await this.buildPicker(pickerOptions);
     this.validate();
+<<<<<<< HEAD
     await this.picker!.present();
+=======
+    await this.picker.present();
+>>>>>>> addeventlistener to the rescue
     const picker = document.querySelector('ion-picker');
     if (picker) picker.addEventListener('ionPickerColChange', this.validate.bind(this));
   }
