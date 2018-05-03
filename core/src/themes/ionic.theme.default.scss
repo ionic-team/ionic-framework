@@ -49,7 +49,7 @@ $ion-colors:  (
   ),
   warning: (
     base:             $warning,
-    contrast:         #000,
+    contrast:         #fff,
     shade:            get-color-shade($warning),
     tint:             get-color-tint($warning)
   ),
@@ -67,7 +67,7 @@ $ion-colors:  (
   ),
   medium: (
     base:             $medium,
-    contrast:         #000,
+    contrast:         #fff,
     shade:            get-color-shade($medium),
     tint:             get-color-tint($medium)
   ),
@@ -78,7 +78,7 @@ $ion-colors:  (
     tint:             get-color-tint($dark)
   )
 );
-$colors:                                            ion-extend-colors($ion-colors, $colors);
+$colors:              ion-extend-colors($ion-colors, $colors);
 
 // Default General
 // --------------------------------------------------
