@@ -21,13 +21,10 @@
   }
 }
 
-ion-item-options .item-option-button-inner {
-  flex-direction: column;
-}
-
 .item-option-button-inner {
   display: flex;
 
+  flex-direction: column;
   flex-flow: row nowrap;
   flex-shrink: 0;
   align-items: center;
@@ -57,7 +54,7 @@ ion-item-options .item-option-button-inner {
   transition-timing-function: cubic-bezier(.65, .05, .36, 1);
 }
 
-.item-sliding-active-swipe-right .item-options-right .item-option-expandable {
+.item-sliding-active-swipe-right .item-options-end .item-option-expandable {
   transition-duration: .6s;
   transition-property: padding-left;
 
@@ -75,7 +72,7 @@ ion-item-options .item-option-button-inner {
   }
 }
 
-.item-sliding-active-swipe-left .item-options-left .item-option-expandable {
+.item-sliding-active-swipe-left .item-options-start .item-option-expandable {
   transition-duration: .6s;
   transition-property: padding-right;
 

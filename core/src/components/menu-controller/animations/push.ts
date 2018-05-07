@@ -12,7 +12,7 @@ export default function(Animation: Animation, _: HTMLElement, menu: Menu): Promi
   let contentOpenedX: string, menuClosedX: string;
   const width = menu.width;
 
-  if (menu.isRightSide) {
+  if (menu.isEndSide) {
     contentOpenedX = -width + 'px';
     menuClosedX = width + 'px';
 

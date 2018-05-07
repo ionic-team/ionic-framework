@@ -11,7 +11,7 @@ const BOX_SHADOW_WIDTH = 8;
 export default function(Animation: Animation, _: HTMLElement, menu: Menu): Promise<Animation> {
   let closedX: string, openedX: string;
   const width = menu.width + BOX_SHADOW_WIDTH;
-  if (menu.isRightSide) {
+  if (menu.isEndSide) {
     // right side
     closedX = width + 'px';
     openedX = '0px';

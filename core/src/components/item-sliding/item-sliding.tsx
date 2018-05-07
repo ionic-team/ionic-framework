@@ -118,7 +118,7 @@ export class ItemSliding {
     for (let i = 0; i < options.length; i++) {
       const option = options.item(i);
 
-      if (option.isRightSide()) {
+      if (option.isEndSide()) {
         this.rightOptions = option;
         sides |= ItemSide.Right;
       } else {

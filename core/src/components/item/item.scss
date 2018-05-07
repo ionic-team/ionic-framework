@@ -62,11 +62,6 @@ ion-item {
   text-overflow: ellipsis;
 }
 
-.item[no-lines],
-.item.item[no-lines] .item-inner {
-  border: 0;
-}
-
 ion-item-group {
   display: block;
 }

@@ -54,6 +54,18 @@ $item-ios-padding-bottom:                    11px !default;
 /// @prop - Padding start for the item content
 $item-ios-padding-start:                     16px !default;
 
+/// @prop - Border bottom width for the item when lines are displayed
+$item-ios-border-bottom-width:               $hairlines-width !default;
+
+/// @prop - Border bottom style for the item when lines are displayed
+$item-ios-border-bottom-style:               solid !default;
+
+/// @prop - Border bottom color for the item when lines are displayed
+$item-ios-border-bottom-color:               $item-ios-border-color !default;
+
+/// @prop - Border bottom for the item
+$item-ios-border-bottom:                     $item-ios-border-bottom-width $item-ios-border-bottom-style $item-ios-border-bottom-color !default;
+
 
 // Item Slots
 // --------------------------------------------------

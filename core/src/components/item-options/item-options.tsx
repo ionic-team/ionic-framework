@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
-import { Side, isRightSide } from '../../utils/helpers';
+import { Side, isEndSide } from '../../utils/helpers';
 
 
 @Component({
@@ -7,6 +7,9 @@ import { Side, isRightSide } from '../../utils/helpers';
   styleUrls: {
     ios: 'item-options.ios.scss',
     md: 'item-options.md.scss'
+  },
+  host: {
+    theme: 'item-options'
   }
 })
 export class ItemOptions {
@@ -28,8 +31,8 @@ export class ItemOptions {
   @Event() ionSwipe!: EventEmitter<void>;
 
   @Method()
-  isRightSide() {
-    return isRightSide(this.win, this.side);
+  isEndSide() {
+    return isEndSide(this.win, this.side);
   }
 
   @Method()
@@ -45,8 +48,8 @@ export class ItemOptions {
   hostData() {
     return {
       class: {
-        'item-options-left': !this.isRightSide(),
-        'item-options-right': this.isRightSide()
+        'item-options-start': !this.isEndSide(),
+        'item-options-end': this.isEndSide()
       }
     };
   }

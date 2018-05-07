@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { Animation, Config, GestureDetail, MenuChangeEventDetail, Mode } from '../../interface';
-import { Side, assert, isRightSide } from '../../utils/helpers';
+import { Side, assert, isEndSide } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-menu',
@@ -31,7 +31,7 @@ export class Menu {
 
   @Element() el!: HTMLIonMenuElement;
 
-  @State() isRightSide = false;
+  @State() isEndSide = false;
 
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'isServer' }) isServer!: boolean;
@@ -89,7 +89,7 @@ export class Menu {
 
   @Watch('side')
   protected sideChanged() {
-    this.isRightSide = isRightSide(this.win, this.side);
+    this.isEndSide = isEndSide(this.win, this.side);
   }
 
   /**
@@ -281,7 +281,7 @@ export class Menu {
     } else if (this.menuCtrl!.getOpen()) {
       return false;
     }
-    return checkEdgeSide(this.win, detail.currentX, this.isRightSide, this.maxEdgeStart);
+    return checkEdgeSide(this.win, detail.currentX, this.isEndSide, this.maxEdgeStart);
   }
 
   private onWillStart(): Promise<void> {
@@ -307,7 +307,7 @@ export class Menu {
       return;
     }
 
-    const delta = computeDelta(detail.deltaX, this._isOpen, this.isRightSide);
+    const delta = computeDelta(detail.deltaX, this._isOpen, this.isEndSide);
     const stepValue = delta / this.width;
     this.animation.progressStep(stepValue);
   }
@@ -318,8 +318,8 @@ export class Menu {
       return;
     }
     const isOpen = this._isOpen;
-    const isRightSide = this.isRightSide;
-    const delta = computeDelta(detail.deltaX, isOpen, isRightSide);
+    const isEndSide = this.isEndSide;
+    const delta = computeDelta(detail.deltaX, isOpen, isEndSide);
     const width = this.width;
     const stepValue = delta / width;
     const velocity = detail.velocityX;
@@ -331,8 +331,8 @@ export class Menu {
       && (velocity < -0.2 || detail.deltaX < -z);
 
     const shouldComplete = (isOpen)
-      ? isRightSide ? shouldCompleteRight : shouldCompleteLeft
-      : isRightSide ? shouldCompleteLeft : shouldCompleteRight;
+      ? isEndSide ? shouldCompleteRight : shouldCompleteLeft
+      : isEndSide ? shouldCompleteLeft : shouldCompleteRight;
 
     let shouldOpen = (!isOpen && shouldComplete);
     if (isOpen && !shouldComplete) {
@@ -418,14 +418,14 @@ export class Menu {
   }
 
   hostData() {
-    const isRightSide = this.isRightSide;
+    const isEndSide = this.isEndSide;
     return {
       role: 'complementary',
       class: {
         [`menu-type-${this.type}`]: true,
         'menu-enabled': !this.disabled,
-        'menu-side-right': isRightSide,
-        'menu-side-left': !isRightSide,
+        'menu-side-right': isEndSide,
+        'menu-side-left': !isEndSide,
       }
     };
   }
@@ -459,12 +459,12 @@ export class Menu {
   }
 }
 
-function computeDelta(deltaX: number, isOpen: boolean, isRightSide: boolean): number {
-  return Math.max(0, (isOpen !== isRightSide) ? -deltaX : deltaX);
+function computeDelta(deltaX: number, isOpen: boolean, isEndSide: boolean): number {
+  return Math.max(0, (isOpen !== isEndSide) ? -deltaX : deltaX);
 }
 
-function checkEdgeSide(win: Window, posX: number, isRightSide: boolean, maxEdgeStart: number): boolean {
-  if (isRightSide) {
+function checkEdgeSide(win: Window, posX: number, isEndSide: boolean, maxEdgeStart: number): boolean {
+  if (isEndSide) {
     return posX >= win.innerWidth - maxEdgeStart;
   } else {
     return posX <= maxEdgeStart;

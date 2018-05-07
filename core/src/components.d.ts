@@ -2721,7 +2721,7 @@ declare global {
   namespace StencilComponents {
     interface IonItemOptions {
       'fireSwipeEvent': () => void;
-      'isRightSide': () => boolean;
+      'isEndSide': () => boolean;
       /**
        * The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
        */
@@ -2838,6 +2838,10 @@ declare global {
        */
       'href': string;
       /**
+       * How the bottom border should be displayed on the item.
+       */
+      'lines': 'full' | 'inset' | 'none';
+      /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
       'mode': Mode;
@@ -2887,6 +2891,10 @@ declare global {
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
        */
       'href'?: string;
+      /**
+       * How the bottom border should be displayed on the item.
+       */
+      'lines'?: 'full' | 'inset' | 'none';
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
@@ -3020,6 +3028,10 @@ declare global {
        */
       'getOpenItem': () => HTMLIonItemSlidingElement | undefined;
       /**
+       * How the bottom border should be displayed on all items.
+       */
+      'lines': 'full' | 'inset' | 'none';
+      /**
        * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
        */
       'setOpenItem': (itemSliding: HTMLIonItemSlidingElement | undefined) => void;
@@ -3045,7 +3057,10 @@ declare global {
   }
   namespace JSXElements {
     export interface IonListAttributes extends HTMLAttributes {
-
+      /**
+       * How the bottom border should be displayed on all items.
+       */
+      'lines'?: 'full' | 'inset' | 'none';
     }
   }
 }
