@@ -53,8 +53,8 @@ export class List {
   hostData() {
     return {
       class: {
-        [`list-lines-${this.lines}`]: this.lines,
-        [`list-${this.mode}-lines-${this.lines}`]: this.lines
+        [`list-lines-${this.lines}`]: !!this.lines,
+        [`list-${this.mode}-lines-${this.lines}`]: !!this.lines
       }
     };
   }
