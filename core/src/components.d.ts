@@ -5114,6 +5114,7 @@ declare global {
   namespace StencilComponents {
     interface IonRouter {
       'navChanged': (direction: RouterDirection) => Promise<boolean>;
+      'printDebug': () => void;
       'push': (url: string, direction?: RouterDirection) => Promise<boolean>;
       /**
        * By default `ion-router` will match the routes at the root path ("/"). That can be changed when  T
