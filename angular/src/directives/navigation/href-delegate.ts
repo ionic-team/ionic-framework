@@ -7,6 +7,11 @@ import { Router } from '@angular/router';
 export class HrefDelegate {
 
   @Input()
+  set routerLink(_: any) {
+    this.elementRef.nativeElement.href = '#';
+  }
+
+  @Input()
   set href(value: string) {
     this.elementRef.nativeElement.href = value;
   }
