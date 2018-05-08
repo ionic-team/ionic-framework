@@ -6,7 +6,7 @@
 
 // class E2ETestPage extends Page {
 //   constructor(driver, platform) {
-//     super(driver, `http://localhost:3333/src/components/app/test/cordova?ionicplatform=${platform}&ts=${Date.now()}`);
+//     super(driver, `http://localhost:3333/src/components/app/test/cordova?ionic:mode=${platform}&ts=${Date.now()}`);
 //   }
 // }
 

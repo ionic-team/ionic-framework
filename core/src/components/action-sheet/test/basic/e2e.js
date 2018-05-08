@@ -5,7 +5,7 @@ const { Page, platforms, register } = require('../../../../../scripts/e2e');
 
 class E2ETestPage extends Page {
   constructor(driver, platform) {
-    super(driver, `http://localhost:3333/src/components/action-sheet/test/basic?ionicplatform=${platform}`);
+    super(driver, `http://localhost:3333/src/components/action-sheet/test/basic?ionic:mode=${platform}`);
   }
 
   async present(buttonId) {

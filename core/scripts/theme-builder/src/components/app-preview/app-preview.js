@@ -32,7 +32,7 @@ let AppPreview = class AppPreview {
   }
 
   render () {
-    const url = `${this.demoUrl}?ionicplatform=${this.demoMode}`;
+    const url = `${this.demoUrl}?ionic:mode=${this.demoMode}`;
     return [
       h("div", null,
         h("iframe", {src: url, ref: el => this.iframe = el, onLoad: this.onIframeLoad.bind(this)}))

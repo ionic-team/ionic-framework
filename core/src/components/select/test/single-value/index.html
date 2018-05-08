@@ -192,7 +192,12 @@
 
         year.appendChild(option);
       }
-      year.value = 1994;
+
+      debugger;
+      year.componentOnReady().then(() => {
+        year.value = 1994;
+      });
+
       setResults(year);
 
       var currencies = [

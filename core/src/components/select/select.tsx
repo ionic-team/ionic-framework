@@ -86,7 +86,7 @@ export class Select {
   /**
    * the value of the select.
    */
-  @Prop({ mutable: true }) value?: string | string[];
+  @Prop({ mutable: true }) value?: any;
 
   /**
    * Emitted when the value has changed.
@@ -502,14 +502,14 @@ export class Select {
   }
 }
 
-function parseValue(value: string[]|string|undefined) {
+function parseValue(value: any) {
   if (value == null) {
     return undefined;
   }
-  if (typeof value === 'string') {
-    return value;
+  if (Array.isArray(value)) {
+    return value.join(',');
   }
-  return value.join(',');
+  return value.toString();
 }
 
 let selectIds = 0;

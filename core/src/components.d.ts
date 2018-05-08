@@ -5719,7 +5719,7 @@ declare global {
       /**
        * the value of the select.
        */
-      'value': string | string[];
+      'value': any;
     }
   }
 
@@ -5801,7 +5801,7 @@ declare global {
       /**
        * the value of the select.
        */
-      'value'?: string | string[];
+      'value'?: any;
     }
   }
 }
