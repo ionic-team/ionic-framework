@@ -4,7 +4,7 @@ import { Animation } from '../../../interface';
 /**
  * MD Action Sheet Enter Animation
  */
-export default function mdEnterAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
+export function mdEnterAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();

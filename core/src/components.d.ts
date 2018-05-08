@@ -2268,39 +2268,6 @@ declare global {
 declare global {
 
   namespace StencilComponents {
-    interface IonInputShims {
-
-    }
-  }
-
-  interface HTMLIonInputShimsElement extends StencilComponents.IonInputShims, HTMLStencilElement {}
-
-  var HTMLIonInputShimsElement: {
-    prototype: HTMLIonInputShimsElement;
-    new (): HTMLIonInputShimsElement;
-  };
-  interface HTMLElementTagNameMap {
-    'ion-input-shims': HTMLIonInputShimsElement;
-  }
-  interface ElementTagNameMap {
-    'ion-input-shims': HTMLIonInputShimsElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      'ion-input-shims': JSXElements.IonInputShimsAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonInputShimsAttributes extends HTMLAttributes {
-
-    }
-  }
-}
-
-
-declare global {
-
-  namespace StencilComponents {
     interface IonInput {
       /**
        * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.

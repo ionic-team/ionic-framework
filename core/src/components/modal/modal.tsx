@@ -5,11 +5,11 @@ import { attachComponent, detachComponent } from '../../utils/framework-delegate
 import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
-import iosEnterAnimation from './animations/ios.enter';
-import iosLeaveAnimation from './animations/ios.leave';
+import { iosEnterAnimation } from './animations/ios.enter';
+import { iosLeaveAnimation } from './animations/ios.leave';
 
-import mdEnterAnimation from './animations/md.enter';
-import mdLeaveAnimation from './animations/md.leave';
+import { mdEnterAnimation } from './animations/md.enter';
+import { mdLeaveAnimation } from './animations/md.leave';
 
 @Component({
   tag: 'ion-modal',

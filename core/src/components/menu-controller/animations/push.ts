@@ -1,5 +1,5 @@
 import { Animation, Menu } from '../../../interface';
-import baseAnimation from './base';
+import { baseAnimation } from './base';
 
 /**
  * @hidden
@@ -7,7 +7,7 @@ import baseAnimation from './base';
  * The content slides over to reveal the menu underneath.
  * The menu itself also slides over to reveal its bad self.
  */
-export default function(Animation: Animation, _: HTMLElement, menu: Menu): Promise<Animation> {
+export function menuPushAnimation(Animation: Animation, _: HTMLElement, menu: Menu): Promise<Animation> {
 
   let contentOpenedX: string, menuClosedX: string;
   const width = menu.width;

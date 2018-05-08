@@ -6,7 +6,7 @@ import { Animation } from '../../../interface';
  * type will provide their own animations for open and close
  * and registers itself with Menu.
  */
-export default function baseAnimation(Animation: Animation): Promise<Animation> {
+export function baseAnimation(Animation: Animation): Promise<Animation> {
   // https://material.io/guidelines/motion/movement.html#movement-movement-in-out-of-screen-bounds
   // https://material.io/guidelines/motion/duration-easing.html#duration-easing-natural-easing-curves
 

@@ -4,7 +4,7 @@ import { Animation } from '../../../interface';
 /**
  * iOS Modal Enter Animation
  */
-export default function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
+export function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();

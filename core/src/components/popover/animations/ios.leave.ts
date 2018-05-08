@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * iOS Popover Leave Animation
  */
-export default function iosLeaveAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
+export function iosLeaveAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const backdropAnimation = new Animation();

@@ -1,5 +1,5 @@
 import { Animation, Menu } from '../../../interface';
-import baseAnimation from './base';
+import { baseAnimation } from './base';
 
 /**
  * @hidden
@@ -7,7 +7,7 @@ import baseAnimation from './base';
  * The content slides over to reveal the menu underneath.
  * The menu itself, which is under the content, does not move.
  */
-export default function(Animation: Animation, _: HTMLElement, menu: Menu): Promise<Animation> {
+export function menuRevealAnimation(Animation: Animation, _: HTMLElement, menu: Menu): Promise<Animation> {
   const openedX = (menu.width * (menu.isEndSide ? -1 : 1)) + 'px';
 
   const contentOpen = new Animation()

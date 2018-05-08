@@ -1,7 +1,7 @@
 
 const SKIP_BLURRING = ['INPUT', 'TEXTAREA', 'ION-INPUT', 'ION-TEXTAREA'];
 
-export default function enableInputBlurring(doc: Document) {
+export function enableInputBlurring(doc: Document) {
   console.debug('Input: enableInputBlurring');
 
   let focused = true;

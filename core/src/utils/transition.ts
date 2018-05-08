@@ -1,26 +1,29 @@
 import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../interface';
 
-import iosTransitionAnimation from './animations/ios.transition';
-import mdTransitionAnimation from './animations/md.transition';
+const iosTransitionAnimation = () => import('./animations/ios.transition');
+const mdTransitionAnimation = () => import('./animations/md.transition');
 
-export function transition(opts: TransitionOptions): Promise<Animation|null> {
+export async function transition(opts: TransitionOptions): Promise<Animation|null> {
   beforeTransition(opts);
 
-  const animationBuilder = getAnimationBuilder(opts);
+  const animationBuilder = await getAnimationBuilder(opts);
   return (animationBuilder)
     ? animation(animationBuilder, opts)
     : noAnimation(opts); // fast path for no animation
 }
 
-function getAnimationBuilder(opts: TransitionOptions): AnimationBuilder | undefined {
+async function getAnimationBuilder(opts: TransitionOptions): Promise<AnimationBuilder | undefined> {
   if (!opts.leavingEl || opts.animated === false || opts.duration === 0) {
     return undefined;
   }
   if (opts.animationBuilder) {
     return opts.animationBuilder;
   }
-  return opts.mode === 'ios' ? iosTransitionAnimation : mdTransitionAnimation;
+  const builder = (opts.mode === 'ios')
+    ? (await iosTransitionAnimation()).iosTransitionAnimation
+    : (await mdTransitionAnimation()).mdTransitionAnimation;
 
+  return builder;
 }
 
 function beforeTransition(opts: TransitionOptions) {

@@ -4,8 +4,8 @@ import { Animation, AnimationBuilder, Config, CssClassMap, Mode, PickerButton, P
 import { OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
-import iosEnterAnimation from './animations/ios.enter';
-import iosLeaveAnimation from './animations/ios.leave';
+import { iosEnterAnimation } from './animations/ios.enter';
+import { iosLeaveAnimation } from './animations/ios.leave';
 
 @Component({
   tag: 'ion-picker',

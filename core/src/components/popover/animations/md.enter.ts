@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * Md Popover Enter Animation
  */
-export default function mdEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
+export function mdEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
   let originY = 'top';
   let originX = 'left';
 
