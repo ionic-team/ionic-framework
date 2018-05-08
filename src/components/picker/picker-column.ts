@@ -388,11 +388,7 @@ export class PickerColumnCmp {
     }
 
     if (emitChange) {
-      if (this.lastIndex === undefined) {
-        // have not set a last index yet
-        this.lastIndex = this.col.selectedIndex;
-
-      } else if (this.lastIndex !== this.col.selectedIndex) {
+      if (this.lastIndex !== this.col.selectedIndex) {
         // new selected index has changed from the last index
         // update the lastIndex and emit that it has changed
         this.lastIndex = this.col.selectedIndex;
