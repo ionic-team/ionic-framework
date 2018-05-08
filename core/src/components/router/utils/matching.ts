@@ -1,7 +1,7 @@
 import { RouteChain, RouteID, RouteRedirect } from './interface';
 
 
-export function matchesRedirect(input: string[], route: RouteRedirect): boolean {
+export function matchesRedirect(input: string[], route: RouteRedirect): route is Required<RouteRedirect> {
   const {from, to} = route;
   if (to === undefined) {
     return false;
@@ -23,13 +23,8 @@ export function matchesRedirect(input: string[], route: RouteRedirect): boolean 
   return from.length === input.length;
 }
 
-export function routeRedirect(path: string[], routes: RouteRedirect[]): RouteRedirect|null {
-  for (const route of routes) {
-    if (matchesRedirect(path, route)) {
-      return route;
-    }
-  }
-  return null;
+export function routeRedirect(path: string[], routes: RouteRedirect[]) {
+  return routes.find(route => matchesRedirect(path, route)) as Required<RouteRedirect> | undefined;
 }
 
 

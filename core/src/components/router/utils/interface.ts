@@ -19,7 +19,7 @@ export const enum RouterDirection {
 
 export interface RouteRedirect {
   from: string[];
-  to: string[]|undefined;
+  to?: string[];
 }
 
 export interface RouteWrite {

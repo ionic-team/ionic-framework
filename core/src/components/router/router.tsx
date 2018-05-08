@@ -3,9 +3,9 @@ import { Config, QueueController } from '../../interface';
 import { debounce } from '../../utils/helpers';
 import { printRedirects, printRoutes } from './utils/debug';
 import { readNavState, waitUntilNavNode, writeNavState } from './utils/dom';
-import { RouteChain, RouteRedirect, RouterDirection, RouterEventDetail } from './utils/interface';
+import { RouteChain, RouterDirection, RouterEventDetail } from './utils/interface';
 import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matching';
-import { flattenRouterTree, readRedirects, readRoutes } from './utils/parser';
+import { readRedirects, readRoutes } from './utils/parser';
 import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
 
 
@@ -14,9 +14,7 @@ import { chainToPath, generatePath, parsePath, readPath, writePath } from './uti
 })
 export class Router {
 
-  private routes: RouteChain[] = [];
   private previousPath: string|null = null;
-  private redirects: RouteRedirect[] = [];
   private busy = false;
   private state = 0;
   private lastState = 0;
@@ -59,17 +57,11 @@ export class Router {
     await waitUntilNavNode(this.win);
     console.debug('[ion-router] found nav');
 
-    const tree = readRoutes(this.el);
-    this.routes = flattenRouterTree(tree);
-    this.redirects = readRedirects(this.el);
+    await this.onRoutesChanged();
 
     this.win.addEventListener('ionRouteRedirectChanged', debounce(this.onRedirectChanged.bind(this), 10));
     this.win.addEventListener('ionRouteDataChanged', debounce(this.onRoutesChanged.bind(this), 100));
-
-    const changed = await this.writeNavStateRoot(this.getPath(), RouterDirection.None);
-    if (!changed) {
-      console.error('[ion-router] did not change on will load');
-    }
+    this.onRedirectChanged();
   }
 
   @Listen('window:popstate')
@@ -81,17 +73,14 @@ export class Router {
   }
 
   private onRedirectChanged() {
-    this.redirects = readRedirects(this.el);
     const path = this.getPath();
-    if (path && routeRedirect(path, this.redirects)) {
+    if (path && routeRedirect(path, readRedirects(this.el))) {
       this.writeNavStateRoot(path, RouterDirection.None);
     }
   }
 
   private onRoutesChanged() {
-    const tree = readRoutes(this.el);
-    this.routes = flattenRouterTree(tree);
-    this.writeNavStateRoot(this.getPath(), RouterDirection.None);
+    return this.writeNavStateRoot(this.getPath(), RouterDirection.None);
   }
 
   private historyDirection() {
@@ -117,8 +106,8 @@ export class Router {
   printDebug() {
     console.debug('CURRENT PATH', this.getPath());
     console.debug('PREVIOUS PATH', this.previousPath);
-    printRoutes(this.routes);
-    printRedirects(this.redirects);
+    printRoutes(readRoutes(this.el));
+    printRedirects(readRedirects(this.el));
   }
 
   @Method()
@@ -127,7 +116,8 @@ export class Router {
       return false;
     }
     const { ids, outlet } = readNavState(this.win.document.body);
-    const chain = routerIDsToChain(ids, this.routes);
+    const routes = readRoutes(this.el);
+    const chain = routerIDsToChain(ids, routes);
     if (!chain) {
       console.warn('[ion-router] no matching URL for ', ids.map(i => i.id));
       return false;
@@ -149,9 +139,9 @@ export class Router {
   @Method()
   push(url: string, direction = RouterDirection.Forward) {
     const path = parsePath(url);
-    this.setPath(path, direction);
-
     console.debug('[ion-router] URL pushed -> updating nav', url, direction);
+
+    this.setPath(path, direction);
     return this.writeNavStateRoot(path, direction);
   }
 
@@ -165,16 +155,18 @@ export class Router {
     }
 
     // lookup redirect rule
-    const redirect = routeRedirect(path, this.redirects);
+    const redirects = readRedirects(this.el);
+    const redirect = routeRedirect(path, redirects);
     let redirectFrom: string[]|null = null;
     if (redirect) {
-      this.setPath(redirect.to!, direction);
+      this.setPath(redirect.to, direction);
       redirectFrom = redirect.from;
-      path = redirect.to!;
+      path = redirect.to;
     }
 
     // lookup route chain
-    const chain = routerPathToChain(path, this.routes);
+    const routes = readRoutes(this.el);
+    const chain = routerPathToChain(path, routes);
     if (!chain) {
       console.error('[ion-router] the path does not match any route');
       return false;
