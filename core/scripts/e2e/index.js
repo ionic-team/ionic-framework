@@ -10,7 +10,7 @@ const argv = require('yargs').argv;
 const Page = require('./page');
 const Snapshot = require('./snapshot');
 
-const platforms = ['android', 'ios'];
+const platforms = ['md', 'ios'];
 
 let driver;
 let snapshot;
