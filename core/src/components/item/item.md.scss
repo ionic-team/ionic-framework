@@ -77,7 +77,7 @@
 }
 
 // Default input items have a border
-.item-md.item-input {
+.item-md.item-interactive {
   border-bottom-width: $item-md-border-bottom-width;
 }
 
@@ -127,7 +127,7 @@
 }
 
 .item-md > ion-icon[slot="start"] + .item-inner,
-.item-md > ion-icon[slot="start"] + .item-input {
+.item-md > ion-icon[slot="start"] + .item-interactive {
   @include margin-horizontal($item-md-padding-start + ($item-md-padding-start / 2), null);
 }
 

@@ -443,7 +443,7 @@ export class Select {
 
   private emitStyle() {
     this.ionStyle.emit({
-      'input': true,
+      'interactive': true,
       'select': true,
       'select-disabled': this.disabled,
       'input-has-value': this.hasValue()

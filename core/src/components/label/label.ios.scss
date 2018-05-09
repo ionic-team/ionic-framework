@@ -19,9 +19,7 @@
 // iOS Default Label Inside An Input/Select Item
 // --------------------------------------------------
 
-.item-input .label-ios,
-.item-select .label-ios,
-.item-datetime .label-ios {
+.item-interactive .label-ios {
   color: $label-ios-text-color;
 }
 
@@ -61,9 +59,7 @@
   $color-base: ion-color($colors-ios, $color-name, base, ios);
 
   .label-ios-#{$color-name},
-  .item-input .label-ios-#{$color-name},
-  .item-select .label-ios-#{$color-name},
-  .item-datetime .label-ios-#{$color-name} {
+  .item-interactive .label-ios-#{$color-name} {
     color: $color-base;
   }
 }

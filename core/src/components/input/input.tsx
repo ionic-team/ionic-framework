@@ -237,6 +237,7 @@ export class Input implements InputComponent {
 
   private emitStyle() {
     this.ionStyle.emit({
+      'interactive': true,
       'input': true,
       'input-disabled': this.disabled,
       'input-has-value': this.hasValue(),

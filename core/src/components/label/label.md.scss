@@ -19,9 +19,7 @@
 // Material Design Default Label Inside An Input/Select Item
 // --------------------------------------------------
 
-.item-input .label-md,
-.item-select .label-md,
-.item-datetime .label-md {
+.item-interactive .label-md {
   color: $label-md-text-color;
 }
 
@@ -63,9 +61,7 @@
   $color-base: ion-color($colors-md, $color-name, base, md);
 
   .label-md-#{$color-name},
-  .item-input .label-md-#{$color-name},
-  .item-select .label-md-#{$color-name},
-  .item-datetime .label-md-#{$color-name} {
+  .item-interactive .label-md-#{$color-name} {
     color: $color-base;
   }
 }

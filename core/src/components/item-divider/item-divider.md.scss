@@ -35,7 +35,7 @@
 }
 
 .item-divider-md ion-icon[slot="start"] + .item-inner,
-.item-divider-md ion-icon[slot="start"] + .item-input {
+.item-divider-md ion-icon[slot="start"] + .item-interactive {
   @include margin-horizontal($item-md-padding-start + ($item-md-padding-start / 2), null);
 }
 

@@ -166,6 +166,7 @@ export class Textarea implements TextareaComponent {
 
   private emitStyle() {
     this.ionStyle.emit({
+      'interactive': true,
       'textarea': true,
       'input': true,
       'input-disabled': this.disabled,
