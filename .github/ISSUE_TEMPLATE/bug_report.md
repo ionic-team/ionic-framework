@@ -10,7 +10,9 @@ PLEASE HELP US PROCESS GITHUB ISSUES FASTER BY PROVIDING THE FOLLOWING INFORMATI
 ISSUES MISSING IMPORTANT INFORMATION MAY BE CLOSED WITHOUT INVESTIGATION.
 -->
 
-**Ionic Info** 
+# Bug Report
+
+**Ionic Info**
 Run `ionic info` from a terminal/cmd prompt and paste the output below.
 
 ```
