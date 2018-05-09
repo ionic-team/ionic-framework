@@ -112,7 +112,7 @@ export class AppPreview {
   }
 
   render () {
-    const url = `${this.demoUrl}?ionicplatform=${this.demoMode}`;
+    const url = `${this.demoUrl}?ionic:mode=${this.demoMode}`;
 
     return [
       <div>

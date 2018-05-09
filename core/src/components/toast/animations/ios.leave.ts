@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * iOS Toast Leave Animation
  */
-export default function iosLeaveAnimation(Animation: Animation, baseEl: HTMLElement, position: string): Promise<Animation> {
+export function iosLeaveAnimation(Animation: Animation, baseEl: HTMLElement, position: string): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const wrapperAnimation = new Animation();

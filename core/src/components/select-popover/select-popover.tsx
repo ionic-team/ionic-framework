@@ -27,7 +27,7 @@ export class SelectPopover {
 
   render() {
     return (
-      <ion-list no-lines={this.mode === 'md'}>
+      <ion-list>
         { this.header ? <ion-list-header>{this.header}</ion-list-header> : null }
         { this.subHeader || this.message
           ? <ion-item text-wrap>

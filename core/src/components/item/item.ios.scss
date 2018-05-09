@@ -75,33 +75,41 @@
   @media screen and (orientation: landscape) {
     @include safe-area-padding-horizontal(null, $item-ios-padding-end / 2);
   }
-
-  border-bottom: $hairlines-width solid $item-ios-border-color;
 }
 
 
-// iOS Items in Lists
+// iOS Item Lines
 // --------------------------------------------------
-// Removed the requirement that their immmediate
-// parent is listed this adds support for other list components
 
-ion-list,
-ion-reorder-group > ion-gesture {
-  > ion-item:first-child .item-ios,
-  > ion-item-sliding:first-child .item-ios {
-    border-top: $hairlines-width solid $item-ios-border-color;
-  }
-
-  > ion-item:last-child .item-ios,
-  > ion-item-sliding:last-child .item-ios {
-    border-bottom: $hairlines-width solid $item-ios-border-color;
-  }
-
-  > ion-item:last-child .item-ios .item-inner,
-  > ion-item-sliding:last-child .item-ios .item-inner {
-    border-bottom: 0;
-  }
+.item-ios,
+.item-ios .item-inner {
+  border-bottom-width: 0;
+  border-bottom-style: $item-ios-border-bottom-style;
+  border-bottom-color: $item-ios-border-bottom-color;
 }
+
+// Default item has inset border bottom
+.item-ios .item-inner {
+  border-bottom-width: $item-ios-border-bottom-width;
+}
+
+// Full lines - apply the border to the item
+// Inset lines - apply the border to the item inner
+.item-ios-lines-full,
+.item-ios-lines-inset .item-inner {
+  border-bottom-width: $item-ios-border-bottom-width;
+}
+
+// Full lines - remove the border from the item inner (inset list items)
+// Inset lines - remove the border on the item (full list items)
+// No lines - remove the border on both (full / inset list items)
+.item-ios-lines-inset,
+.item-ios-lines-full .item-inner,
+.item-ios-lines-none,
+.item-ios-lines-none .item-inner {
+  border-bottom-width: 0;
+}
+
 
 // iOS Item Slots
 // --------------------------------------------------
@@ -189,6 +197,8 @@ ion-reorder-group > ion-gesture {
   $color-tint: ion-color($colors-ios, $color-name, tint, ios);
 
   .item-ios-#{$color-name} {
+    border-bottom-color: $color-shade;
+
     color: $color-contrast;
     background-color: $color-base;
 

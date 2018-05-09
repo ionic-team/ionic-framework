@@ -21,29 +21,35 @@ export class App {
   @Prop({ context: 'window' }) win!: Window;
   @Prop({ context: 'config' }) config!: Config;
 
+  componentDidLoad() {
+    loadInputShims(this.win, this.config);
+  }
+
   hostData() {
     const hybrid = isHybrid(this.win);
-    const hoverCSS = this.config.getBoolean('hoverCSS', !hybrid);
     const statusBar = this.config.getBoolean('statusbarPadding', hybrid);
 
     return {
       class: {
         [this.mode]: true,
-        'statusbar-padding': statusBar,
-        'enable-hover': hoverCSS
+        'statusbar-padding': statusBar
       }
     };
   }
 
   render() {
     const device = this.config.getBoolean('isDevice', isDevice(this.win));
-    const inputShims = this.config.getBoolean('inputShims', needInputShims(this.win));
-
     return [
-      inputShims && <ion-input-shims></ion-input-shims>,
       <ion-tap-click></ion-tap-click>,
       device && <ion-status-tap></ion-status-tap>,
       <slot></slot>
     ];
+  }
+}
+
+async function loadInputShims(win: Window, config: Config) {
+  const inputShims = config.getBoolean('inputShims', needInputShims(win));
+  if (inputShims) {
+    (await import('../../utils/input-shims/input-shims')).startInputShims(win.document, config);
   }
 }

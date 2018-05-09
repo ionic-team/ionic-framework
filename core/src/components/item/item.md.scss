@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 .item-md {
-  @include padding-horizontal($item-md-padding-start, 0);
+  @include padding-horizontal($item-md-padding-start, null);
 
   position: relative;
 
@@ -20,12 +20,12 @@
   transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
 }
 
-.item-md.activated {
-  background-color: $item-md-background-color-active;
+.item-md .item-inner {
+  @include padding-horizontal(null, ($item-md-padding-end / 2));
 }
 
-.item-md[no-lines] {
-  border-width: 0;
+.item-md.activated {
+  background-color: $item-md-background-color-active;
 }
 
 .item-md h1 {
@@ -64,42 +64,38 @@
   color: $item-md-paragraph-text-color;
 }
 
-.item-md .item-inner {
-  @include padding-horizontal(null, ($item-md-padding-end / 2));
 
-  border-bottom: 1px solid $item-md-border-color;
-}
-
-
-// Material Design Items in Lists
+// Material Design Item Lines
 // --------------------------------------------------
-// Removed the requirement that their immmediate
-// parent is listed this adds support for other list components
 
-ion-list,
-ion-reorder-group > ion-gesture {
-  > ion-item:first-child .item-md,
-  > ion-item-sliding:first-child .item-md {
-    border-top: 1px solid $item-md-border-color;
-  }
-
-  > ion-item:last-child .item-md,
-  > ion-item-sliding:last-child .item-md {
-    border-bottom: 1px solid $item-md-border-color;
-  }
-
-  > ion-item:last-child .item-md .item-inner,
-  > ion-item-sliding:last-child .item-md .item-inner {
-    border-bottom: 0;
-  }
+// Default item has no border bottom
+.item-md,
+.item-md .item-inner {
+  border-bottom-width: 0;
+  border-bottom-style: $item-md-border-bottom-style;
+  border-bottom-color: $item-md-border-bottom-color;
 }
 
-// If the item has the no-lines attribute remove the bottom border from:
-// the item itself (for last-child items)
-// the item-inner class (if it is not last)
-ion-item[no-lines],
-ion-item[no-lines] .item-inner {
-  border-width: 0;
+// Default input items have a border
+.item-md.item-input {
+  border-bottom-width: $item-md-border-bottom-width;
+}
+
+// Full lines - apply the border to the item
+// Inset lines - apply the border to the item inner
+.item-md-lines-full,
+.item-md-lines-inset .item-inner {
+  border-bottom-width: $item-md-border-bottom-width;
+}
+
+// Full lines - remove the border from the item inner (inset list items)
+// Inset lines - remove the border on the item (full list items)
+// No lines - remove the border on both (full / inset list items)
+.item-md-lines-inset,
+.item-md-lines-full .item-inner,
+.item-md-lines-none,
+.item-md-lines-none .item-inner {
+  border-bottom-width: 0;
 }
 
 
@@ -195,6 +191,8 @@ ion-item[no-lines] .item-inner {
   $color-tint: ion-color($colors-md, $color-name, tint, md);
 
   .item-md-#{$color-name} {
+    border-bottom-color: $color-shade;
+
     color: $color-contrast;
     background-color: $color-base;
 

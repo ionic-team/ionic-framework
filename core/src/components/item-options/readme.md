@@ -64,7 +64,7 @@ Emitted when the item has been fully swiped.
 #### fireSwipeEvent()
 
 
-#### isRightSide()
+#### isEndSide()
 
 
 #### width()

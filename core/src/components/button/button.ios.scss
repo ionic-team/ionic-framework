@@ -33,7 +33,7 @@
   background-color: $button-ios-background-color-focused;
 }
 
-.enable-hover .button-ios:hover {
+.button-ios:hover {
   opacity: $button-ios-opacity-hover;
 }
 
@@ -182,7 +182,7 @@ button[disabled],
   background-color: $button-ios-clear-background-color-focused;
 }
 
-.enable-hover .button-clear-ios:hover {
+.button-clear-ios:hover {
   color: $button-ios-clear-text-color-hover;
   opacity: $button-ios-clear-opacity-hover;
 }
@@ -209,7 +209,7 @@ button[disabled],
     background-color: $bg-color-focused;
   }
 
-  .enable-hover .button-clear-ios-#{$color-name}:hover {
+  .button-clear-ios-#{$color-name}:hover {
     color: $fg-color;
   }
 }

@@ -4,7 +4,7 @@
 // ----------------------------------
 $colors-md:      () !default;
 $ion-colors-md:  ();
-$colors-md:                                  ion-extend-colors($colors, $ion-colors-md, $colors-md);
+$colors-md:                                 ion-extend-colors($colors, $ion-colors-md, $colors-md);
 
 // Material Design General
 // --------------------------------------------------

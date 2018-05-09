@@ -5,7 +5,7 @@ const { register, Page, platforms } = require('../../../../../scripts/e2e');
 
 class E2ETestPage extends Page {
   constructor(driver, platform) {
-    super(driver, `http://localhost:3333/src/components/searchbar/test/standalone?ionicplatform=${platform}`);
+    super(driver, `http://localhost:3333/src/components/searchbar/test/standalone?ionic:mode=${platform}`);
   }
 }
 

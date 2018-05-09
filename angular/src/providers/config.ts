@@ -1,7 +1,6 @@
 import { Config as CoreConfig } from '@ionic/core';
-import { Injectable } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
-@Injectable()
 export class Config {
 
   get(key: string, fallback?: any): any {
@@ -20,6 +19,8 @@ export class Config {
     getConfig().set(key, value);
   }
 }
+
+export const ConfigToken = new InjectionToken<any>('USERCONFIG');
 
 function getConfig(): CoreConfig {
   const Ionic = (window as any).Ionic;

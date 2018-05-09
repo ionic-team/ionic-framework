@@ -2268,39 +2268,6 @@ declare global {
 declare global {
 
   namespace StencilComponents {
-    interface IonInputShims {
-
-    }
-  }
-
-  interface HTMLIonInputShimsElement extends StencilComponents.IonInputShims, HTMLStencilElement {}
-
-  var HTMLIonInputShimsElement: {
-    prototype: HTMLIonInputShimsElement;
-    new (): HTMLIonInputShimsElement;
-  };
-  interface HTMLElementTagNameMap {
-    'ion-input-shims': HTMLIonInputShimsElement;
-  }
-  interface ElementTagNameMap {
-    'ion-input-shims': HTMLIonInputShimsElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      'ion-input-shims': JSXElements.IonInputShimsAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonInputShimsAttributes extends HTMLAttributes {
-
-    }
-  }
-}
-
-
-declare global {
-
-  namespace StencilComponents {
     interface IonInput {
       /**
        * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
@@ -2721,7 +2688,7 @@ declare global {
   namespace StencilComponents {
     interface IonItemOptions {
       'fireSwipeEvent': () => void;
-      'isRightSide': () => boolean;
+      'isEndSide': () => boolean;
       /**
        * The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
        */
@@ -2838,6 +2805,10 @@ declare global {
        */
       'href': string;
       /**
+       * How the bottom border should be displayed on the item.
+       */
+      'lines': 'full' | 'inset' | 'none';
+      /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
       'mode': Mode;
@@ -2887,6 +2858,10 @@ declare global {
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
        */
       'href'?: string;
+      /**
+       * How the bottom border should be displayed on the item.
+       */
+      'lines'?: 'full' | 'inset' | 'none';
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
@@ -3020,6 +2995,10 @@ declare global {
        */
       'getOpenItem': () => HTMLIonItemSlidingElement | undefined;
       /**
+       * How the bottom border should be displayed on all items.
+       */
+      'lines': 'full' | 'inset' | 'none';
+      /**
        * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
        */
       'setOpenItem': (itemSliding: HTMLIonItemSlidingElement | undefined) => void;
@@ -3045,7 +3024,10 @@ declare global {
   }
   namespace JSXElements {
     export interface IonListAttributes extends HTMLAttributes {
-
+      /**
+       * How the bottom border should be displayed on all items.
+       */
+      'lines'?: 'full' | 'inset' | 'none';
     }
   }
 }
@@ -5132,6 +5114,7 @@ declare global {
   namespace StencilComponents {
     interface IonRouter {
       'navChanged': (direction: RouterDirection) => Promise<boolean>;
+      'printDebug': () => void;
       'push': (url: string, direction?: RouterDirection) => Promise<boolean>;
       /**
        * By default `ion-router` will match the routes at the root path ("/"). That can be changed when  T
@@ -5704,7 +5687,7 @@ declare global {
       /**
        * the value of the select.
        */
-      'value': string | string[];
+      'value': any;
     }
   }
 
@@ -5786,7 +5769,7 @@ declare global {
       /**
        * the value of the select.
        */
-      'value'?: string | string[];
+      'value'?: any;
     }
   }
 }

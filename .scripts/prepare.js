@@ -114,6 +114,9 @@ async function preparePackages(packages, version) {
   // generate changelog
   generateChangeLog(tasks);
 
+  // update core readme with version number
+  updateCoreReadme(tasks, version);
+
   const listr = new Listr(tasks, { showSubtasks: true });
   await listr.run();
 }
@@ -253,10 +256,18 @@ function updatePackageVersion(tasks, package, version) {
 }
 
 
-async function generateChangeLog(tasks) {
+function generateChangeLog(tasks) {
   tasks.push({
     title: `Generate CHANGELOG.md`,
     task: () => execa('npm', ['run', 'changelog'], { cwd: common.rootDir }),
+  });
+}
+
+
+function updateCoreReadme(tasks, version) {
+  tasks.push({
+    title: `Update core README.md`,
+    task: () => execa('node', ['update-readme.js', version], { cwd: path.join(common.rootDir, 'core', 'scripts') }),
   });
 }
 

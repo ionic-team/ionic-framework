@@ -1,7 +1,7 @@
 import { TestWindow } from '@stencil/core/dist/testing';
 import { RouteChain, RouteID } from '../utils/interface';
 import { routerIDsToChain, routerPathToChain } from '../utils/matching';
-import { flattenRouterTree, readRoutes } from '../utils/parser';
+import { readRoutes } from '../utils/parser';
 import { chainToPath, generatePath, parsePath } from '../utils/path';
 import { mockRouteElement } from './parser.spec';
 
@@ -9,8 +9,7 @@ describe('ionic-conference-app', () => {
 
   it('should match conference-app routing', () => {
     const root = conferenceAppRouting();
-    const tree = readRoutes(root);
-    const routes = flattenRouterTree(tree);
+    const routes = readRoutes(root);
 
     expect(getRouteIDs('/', routes)).toEqual(['page-tabs', 'tab-schedule', 'page-schedule']);
     expect(getRouteIDs('/speaker', routes)).toEqual(['page-tabs', 'tab-speaker', 'page-speaker-list']);

@@ -11,6 +11,24 @@ reorder items within the list, and deleting items.
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+#### lines
+
+string
+
+How the bottom border should be displayed on all items.
+
+
+## Attributes
+
+#### lines
+
+string
+
+How the bottom border should be displayed on all items.
+
+
 ## Methods
 
 #### closeSlidingItems()

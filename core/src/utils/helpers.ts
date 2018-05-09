@@ -43,12 +43,12 @@ export type Side = 'start' | 'end';
 
 /**
  * @hidden
- * Given a side, return if it should be on the right
+ * Given a side, return if it should be on the end
  * based on the value of dir
  * @param side the side
  * @param isRTL whether the application dir is rtl
  */
-export function isRightSide(win: Window, side: Side): boolean {
+export function isEndSide(win: Window, side: Side): boolean {
   const isRTL = win.document.dir === 'rtl';
   switch (side) {
     case 'start': return isRTL;

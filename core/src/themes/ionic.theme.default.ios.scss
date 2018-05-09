@@ -4,7 +4,7 @@
 // ----------------------------------
 $colors-ios:      () !default;
 $ion-colors-ios:  ();
-$colors-ios:                                  ion-extend-colors($colors, $ion-colors-ios, $colors-ios);
+$colors-ios:                                        ion-extend-colors($colors, $ion-colors-ios, $colors-ios);
 
 // iOS General
 // --------------------------------------------------

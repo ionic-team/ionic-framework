@@ -3,7 +3,7 @@ import { isFocused, relocateInput } from './common';
 import { getScrollData } from './scroll-data';
 
 
-export default function enableScrollAssist(
+export function enableScrollAssist(
   componentEl: HTMLElement,
   inputEl: HTMLInputElement,
   contentEl: HTMLIonContentElement,

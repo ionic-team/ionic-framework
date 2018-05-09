@@ -171,9 +171,9 @@
     }
   }
 
-  .enable-hover .bar-button-#{$color-name}-ios:hover,
-  .enable-hover .bar-button-clear-ios-#{$color-name}:hover,
-  .enable-hover .bar-button-ios-#{$color-name}:hover {
+  .bar-button-#{$color-name}-ios:hover,
+  .bar-button-clear-ios-#{$color-name}:hover,
+  .bar-button-ios-#{$color-name}:hover {
     color: $color-base;
   }
 
@@ -203,7 +203,7 @@
   }
 }
 
-.enable-hover .bar-button-outline-ios:hover {
+.bar-button-outline-ios:hover {
   opacity: .4;
 }
 
@@ -243,7 +243,7 @@
   }
 }
 
-.enable-hover .bar-button-solid-ios:hover {
+.bar-button-solid-ios:hover {
   opacity: .4;
 }
 

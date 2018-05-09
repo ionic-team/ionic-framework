@@ -103,12 +103,12 @@ class Snapshot {
     // TODO remove the modified url/description once we're happy with the comparison to v3
     let platform = 'android';
 
-    if (url.indexOf('ionicplatform') > -1) {
-      platform = this._getQueryString('ionicplatform', url);
+    if (url.indexOf('ionic:mode') > -1) {
+      platform = this._getQueryString('ionic:mode', url);
     }
 
-    let replacedUrl = url.replace('3333', '8876').replace('src/components', '/e2e').replace('test/', '').replace(`?ionicplatform=${platform}`, '');
-    url = replacedUrl + `/index.html?ionicplatform=${platform}&ionicOverlayCreatedDiff=0&snapshot=true`;
+    let replacedUrl = url.replace('3333', '8876').replace('src/components', '/e2e').replace('test/', '').replace(`?ionic:mode=${platform}`, '');
+    url = replacedUrl + `/index.html?ionic:mode=${platform}&ionicOverlayCreatedDiff=0&snapshot=true`;
 
     let description = options.name.replace(': ', `: ${platform} `) + '.';
 

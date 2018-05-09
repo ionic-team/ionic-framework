@@ -1,6 +1,6 @@
 import { TestWindow } from '@stencil/core/dist/testing';
 import { RouteRedirect, RouteTree } from '../utils/interface';
-import { flattenRouterTree, readRedirects, readRoutes } from '../utils/parser';
+import { flattenRouterTree, readRedirects, readRouteNodes } from '../utils/parser';
 
 describe('parser', () => {
 
@@ -31,7 +31,7 @@ describe('parser', () => {
           ] }
         ] }
       ];
-      expect(readRoutes(root)).toEqual(expected);
+      expect(readRouteNodes(root)).toEqual(expected);
     });
   });
 

@@ -1,9 +1,9 @@
 import { Component, Method, Prop } from '@stencil/core';
 import { Animation, AnimationBuilder, Menu } from '../../interface';
 
-import MenuOverlayAnimation from './animations/overlay';
-import MenuPushAnimation from './animations/push';
-import MenuRevealAnimation from './animations/reveal';
+import { menuOverlayAnimation } from './animations/overlay';
+import { menuPushAnimation } from './animations/push';
+import { menuRevealAnimation } from './animations/reveal';
 
 @Component({
   tag: 'ion-menu-controller'
@@ -16,9 +16,9 @@ export class MenuController {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
 
   constructor() {
-    this.registerAnimation('reveal', MenuRevealAnimation);
-    this.registerAnimation('push', MenuPushAnimation);
-    this.registerAnimation('overlay', MenuOverlayAnimation);
+    this.registerAnimation('reveal', menuRevealAnimation);
+    this.registerAnimation('push', menuPushAnimation);
+    this.registerAnimation('overlay', menuOverlayAnimation);
   }
 
   /**
@@ -279,4 +279,4 @@ export class MenuController {
 
 }
 
-export { MenuOverlayAnimation, MenuPushAnimation, MenuRevealAnimation };
+export { menuOverlayAnimation, menuPushAnimation, menuRevealAnimation };

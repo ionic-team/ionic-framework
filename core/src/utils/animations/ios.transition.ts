@@ -9,7 +9,7 @@ const TRANSLATEX = 'translateX';
 const CENTER = '0%';
 const OFF_OPACITY = 0.8;
 
-export default function iosTransitionAnimation(Animation: Animation, navEl: HTMLElement, opts: TransitionOptions): Promise<Animation> {
+export function iosTransitionAnimation(Animation: Animation, navEl: HTMLElement, opts: TransitionOptions): Promise<Animation> {
 
   const isRTL = document.dir === 'rtl';
   const OFF_RIGHT = isRTL ? '-99.5%' : '99.5%';

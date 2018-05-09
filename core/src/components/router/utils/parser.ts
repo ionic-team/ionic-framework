@@ -14,7 +14,11 @@ export function readRedirects(root: Element): RouteRedirect[] {
     });
 }
 
-export function readRoutes(root: Element, node = root): RouteTree {
+export function readRoutes(root: Element): RouteChain[] {
+  return flattenRouterTree(readRouteNodes(root));
+}
+
+export function readRouteNodes(root: Element, node = root): RouteTree {
   return (Array.from(node.children) as HTMLIonRouteElement[])
     .filter(el => el.tagName === 'ION-ROUTE' && el.component)
     .map(el => {
@@ -26,7 +30,7 @@ export function readRoutes(root: Element, node = root): RouteTree {
         path: parsePath(readProp(el, 'url')),
         id: component.toLowerCase(),
         params: el.componentProps,
-        children: readRoutes(root, el)
+        children: readRouteNodes(root, el)
       };
     });
 }

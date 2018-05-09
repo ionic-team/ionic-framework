@@ -6,7 +6,7 @@
 
 // class E2ETestPage extends Page {
 //   constructor(driver, platform) {
-//     super(driver, `http://localhost:3333/src/components/nav/test/simple-nested-navs?ionicplatform=${platform}`);
+//     super(driver, `http://localhost:3333/src/components/nav/test/simple-nested-navs?ionic:mode=${platform}`);
 //   }
 // }
 

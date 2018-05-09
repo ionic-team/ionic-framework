@@ -706,16 +706,18 @@
 // --------------------------------------------------------------------------------
 @mixin toolbar-statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $statusbar-padding) {
 
-  .statusbar-padding {
-    > .toolbar:first-child {
-      @include padding(calc(#{$statusbar-padding} + #{$toolbar-padding}), null, null, null);
-      @include safe-area-padding($toolbar-padding, null, null, null);
+  > .toolbar:first-child {
+    @include padding(calc(#{$statusbar-padding} + #{$toolbar-padding}), null, null, null);
+    @include safe-area-padding($toolbar-padding, null, null, null);
 
-      min-height: calc(#{$toolbar-height} + #{$statusbar-padding});
-      @include safe-area-sizing(min-height, safe-area-inset-top, $toolbar-height);
-    }
+    min-height: calc(#{$toolbar-height} + #{$statusbar-padding});
+    @include safe-area-sizing(min-height, safe-area-inset-top, $toolbar-height);
   }
 
+  > ion-content:first-child ion-scroll {
+    @include padding($statusbar-padding, null, null, null);
+    @include safe-area-padding(0px, null, null, null);
+  }
 }
 
 
@@ -729,23 +731,15 @@
 // --------------------------------------------------------------------------------
 @mixin toolbar-title-statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $statusbar-padding) {
 
-  .statusbar-padding {
-    > .toolbar:first-child ion-segment,
-    > .toolbar:first-child ion-title {
-      @include padding($statusbar-padding, null, null, null);
-      @include safe-area-padding(0px, null, null, null);
+  > .toolbar:first-child ion-segment,
+  > .toolbar:first-child ion-title {
+    @include padding($statusbar-padding, null, null, null);
+    @include safe-area-padding(0px, null, null, null);
 
-      height: calc(#{$toolbar-height} + #{$statusbar-padding});
-      @include safe-area-sizing(height, safe-area-inset-top, $toolbar-height);
+    height: calc(#{$toolbar-height} + #{$statusbar-padding});
+    @include safe-area-sizing(height, safe-area-inset-top, $toolbar-height);
 
-      min-height: calc(#{$toolbar-height} + #{$statusbar-padding});
-      @include safe-area-sizing(min-height, safe-area-inset-top, $toolbar-height)
-    }
-
-    > ion-content:first-child ion-scroll {
-      @include padding($statusbar-padding, null, null, null);
-      @include safe-area-padding(0px, null, null, null);
-    }
+    min-height: calc(#{$toolbar-height} + #{$statusbar-padding});
+    @include safe-area-sizing(min-height, safe-area-inset-top, $toolbar-height)
   }
-
 }

@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * MD Toast Enter Animation
  */
-export default function mdEnterAnimation(Animation: Animation, baseEl: HTMLElement, position: string): Promise<Animation> {
+export function mdEnterAnimation(Animation: Animation, baseEl: HTMLElement, position: string): Promise<Animation> {
   const baseAnimation = new Animation();
 
   const wrapperAnimation = new Animation();

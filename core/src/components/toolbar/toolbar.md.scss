@@ -174,9 +174,9 @@
     background-color: transparent;
   }
 
-  .enable-hover .bar-button-#{$color-name}-md:hover,
-  .enable-hover .bar-button-clear-md-#{$color-name}:hover,
-  .enable-hover .bar-button-md-#{$color-name}:hover {
+  .bar-button-#{$color-name}-md:hover,
+  .bar-button-clear-md-#{$color-name}:hover,
+  .bar-button-md-#{$color-name}:hover {
     color: $color-base;
   }
 }
@@ -209,7 +209,7 @@
   }
 }
 
-.enable-hover .bar-button-outline-md:hover {
+.bar-button-outline-md:hover {
   opacity: .4;
 }
 
@@ -245,7 +245,7 @@
   }
 }
 
-.enable-hover .bar-button-solid-md:hover {
+.bar-button-solid-md:hover {
   color: $toolbar-md-button-background-color;
 }
 

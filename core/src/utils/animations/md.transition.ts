@@ -5,7 +5,7 @@ const TRANSLATEY = 'translateY';
 const OFF_BOTTOM = '40px';
 const CENTER = '0px';
 
-export default function mdTransitionAnimation(Animation: Animation, _: HTMLElement, opts: TransitionOptions): Promise<Animation> {
+export function mdTransitionAnimation(Animation: Animation, _: HTMLElement, opts: TransitionOptions): Promise<Animation> {
 
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
