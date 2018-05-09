@@ -240,7 +240,7 @@ export class Datetime {
 
   private emitStyle() {
     this.ionStyle.emit({
-      'input': true,
+      'interactive': true,
       'datetime': true,
       'datetime-disabled': this.disabled,
       'input-has-value': this.hasValue()
