@@ -94,7 +94,7 @@ export class Refresher {
    */
   @Event() ionStart!: EventEmitter<void>;
 
-  constructor() {
+  componentWillLoad() {
     this.gestureConfig = {
       'canStart': this.canStart.bind(this),
       'onStart': this.onStart.bind(this),
@@ -106,7 +106,7 @@ export class Refresher {
       'passive': false,
       'direction': 'y',
       'threshold': 0,
-      'attachTo': 'window'
+      'attachTo': this.el.closest('ion-content')
     };
   }
 
