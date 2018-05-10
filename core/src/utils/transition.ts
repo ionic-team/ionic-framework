@@ -1,4 +1,5 @@
-import { Animation, AnimationBuilder, NavDirection, NavOptions, ViewLifecycle } from '../interface';
+import { ViewLifecycle } from '..';
+import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../interface';
 
 const iosTransitionAnimation = () => import('./animations/ios.transition');
 const mdTransitionAnimation = () => import('./animations/md.transition');
