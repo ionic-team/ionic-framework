@@ -14,7 +14,7 @@ import { chainToPath, generatePath, parsePath, readPath, writePath } from './uti
 })
 export class Router {
 
-  private previousPath: string|null = null;
+  private previousPath: string | null = null;
   private busy = false;
   private state = 0;
   private lastState = 0;
@@ -187,14 +187,18 @@ export class Router {
     this.busy = true;
 
     // generate route event and emit will change
-    const event = this.routeChangeEvent(path, redirectFrom);
-    this.ionRouteWillChange.emit(event);
+    const routeEvent = this.routeChangeEvent(path, redirectFrom);
+    routeEvent && this.ionRouteWillChange.emit(routeEvent);
 
     const changed = await writeNavState(node, chain, direction, index);
     this.busy = false;
 
+    if (changed) {
+      console.debug('[ion-router] route changed', path);
+    }
+
     // emit did change
-    this.emitRouteDidChange(event, changed);
+    routeEvent && this.ionRouteDidChange.emit(routeEvent);
 
     return changed;
   }
@@ -208,18 +212,13 @@ export class Router {
     return readPath(this.win.location, this.root, this.useHash);
   }
 
-  private emitRouteDidChange(event: RouterEventDetail, changed: boolean) {
-    console.debug('[ion-router] route changed', event.to);
-    this.previousPath = event.to;
-    this.ionRouteDidChange.emit({
-      ...event,
-      changed
-    });
-  }
-
-  private routeChangeEvent(path: string[], redirectFromPath: string[]|null) {
+  private routeChangeEvent(path: string[], redirectFromPath: string[]|null): RouterEventDetail | null {
     const from = this.previousPath;
     const to = generatePath(path);
+    this.previousPath = to;
+    if (to === from) {
+      return null;
+    }
     const redirectedFrom = redirectFromPath ? generatePath(redirectFromPath) : null;
     return {
       from,

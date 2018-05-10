@@ -8,7 +8,6 @@ export interface RouterEventDetail {
   from: string|null;
   redirectedFrom: string|null;
   to: string;
-  changed?: boolean;
 }
 
 export const enum RouterDirection {
