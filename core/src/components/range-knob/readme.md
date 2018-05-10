@@ -14,7 +14,7 @@ boolean
 
 #### knob
 
-string
+number
 
 
 #### labelId
@@ -47,7 +47,7 @@ boolean
 number
 
 
-#### val
+#### value
 
 number
 
@@ -61,7 +61,7 @@ boolean
 
 #### knob
 
-string
+number
 
 
 #### label-id
@@ -94,7 +94,7 @@ boolean
 number
 
 
-#### val
+#### value
 
 number
 

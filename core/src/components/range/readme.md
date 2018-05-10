@@ -254,22 +254,6 @@ Emitted when the range has focus.
 Emitted when the styles change.
 
 
-## Methods
-
-#### ratio()
-
-Returns the ratio of the knob's is current location, which is a number
-between `0` and `1`. If two knobs are used, this property represents
-the lower value.
-
-
-#### ratioUpper()
-
-Returns the ratio of the upper value's is current location, which is
-a number between `0` and `1`. If there is only one knob, then this
-will return `null`.
-
-
 
 ----------------------------------------------
 

@@ -42,6 +42,7 @@ import {
   GestureConfig,
   GestureDetail,
   InputChangeEvent,
+  Knob,
   LoadingOptions,
   Menu,
   MenuChangeEventDetail,
@@ -4494,14 +4495,14 @@ declare global {
   namespace StencilComponents {
     interface IonRangeKnob {
       'disabled': boolean;
-      'knob': string;
+      'knob': Knob;
       'labelId': string;
       'max': number;
       'min': number;
       'pin': boolean;
       'pressed': boolean;
       'ratio': number;
-      'val': number;
+      'value': number;
     }
   }
 
@@ -4525,7 +4526,7 @@ declare global {
   namespace JSXElements {
     export interface IonRangeKnobAttributes extends HTMLAttributes {
       'disabled'?: boolean;
-      'knob'?: string;
+      'knob'?: Knob;
       'labelId'?: string;
       'max'?: number;
       'min'?: number;
@@ -4534,7 +4535,7 @@ declare global {
       'pin'?: boolean;
       'pressed'?: boolean;
       'ratio'?: number;
-      'val'?: number;
+      'value'?: number;
     }
   }
 }
@@ -4580,14 +4581,6 @@ declare global {
        * If true, a pin with integer value is shown when the knob is pressed. Defaults to `false`.
        */
       'pin': boolean;
-      /**
-       * Returns the ratio of the knob's is current location, which is a number between `0` and `1`. If two knobs are used, this property represents the lower value.
-       */
-      'ratio': () => number;
-      /**
-       * Returns the ratio of the upper value's is current location, which is a number between `0` and `1`. If there is only one knob, then this will return `null`.
-       */
-      'ratioUpper': () => number | null;
       /**
        * If true, the knob snaps to tick marks evenly spaced based on the step property value. Defaults to `false`.
        */

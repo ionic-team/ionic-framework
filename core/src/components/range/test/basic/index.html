@@ -26,10 +26,10 @@
             <ion-range value="20"></ion-range>
           </ion-item>
           <ion-item>
-            <ion-range value="60" color="light"></ion-range>
+            <ion-range value="60" color="light" step="10" pin="true"></ion-range>
           </ion-item>
           <ion-item>
-            <ion-range value="80" color="dark"></ion-range>
+            <ion-range value="80" color="dark" step="10" snaps="true" pin="true"></ion-range>
           </ion-item>
           <ion-item>
             <ion-range pin="true" color="secondary" value="86">
@@ -48,7 +48,7 @@
             Dynamic Value
           </ion-list-header>
           <ion-item>
-            <ion-range pin="true" color="secondary" id="progressValue"></ion-range>
+            <ion-range pin="true"  step="0" color="secondary" id="progressValue"></ion-range>
             <div id="progressValueResult" slot="end"></div>
           </ion-item>
           <ion-item>
@@ -103,21 +103,32 @@
   </ion-app>
 
   <script>
-    var ranges = ['progressValue', 'brightnessValue', 'contrastValue'];
+    const progressValue = document.getElementById('progressValue');
+    const brightnessValue = document.getElementById('brightnessValue');
+    const contrastValue = document.getElementById('contrastValue');
+
+    const ranges = [progressValue, brightnessValue, contrastValue];
 
     for (var i = 0; i < ranges.length; i++) {
-      var el = document.getElementById(ranges[i]);
+      var el = ranges[i];
       el.value = (i + 1) * 10;
       updateRangeResult(el);
 
       el.addEventListener('ionChange', function(ev) {
-        updateRangeResult(ev.currentTarget);
+        updateRangeResult(ev.target);
       });
     }
 
+    progressValue.addEventListener('ionChange', function(ev) {
+      console.log(ev.detail.value);
+      brightnessValue.value = ev.detail.value;
+      contrastValue.value = ev.target.value;
+    });
+
+
     function updateRangeResult(el) {
       var resultEl = document.getElementById(`${el.id}Result`);
-      resultEl.innerHTML = el.value;
+      resultEl.innerHTML = Math.round(el.value);
     }
 
     function increaseRangeValues() {

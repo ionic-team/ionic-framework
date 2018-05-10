@@ -1,19 +1,20 @@
 import { Component, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+import { Knob } from '../../interface';
 
 @Component({
   tag: `ion-range-knob`
 })
 export class RangeKnob {
 
-  @Prop() pressed = false;
-  @Prop() pin = false;
+  @Prop() pressed!: boolean;
+  @Prop() pin!: boolean;
   @Prop() min!: number;
   @Prop() max!: number;
-  @Prop() val!: number;
-  @Prop() disabled = false;
-  @Prop() labelId!: string;
-  @Prop() knob!: string;
+  @Prop() value!: number;
   @Prop() ratio!: number;
+  @Prop() disabled!: boolean;
+  @Prop() labelId!: string;
+  @Prop() knob!: Knob;
 
   @Event() ionIncrease!: EventEmitter;
   @Event() ionDecrease!: EventEmitter;
@@ -25,6 +26,7 @@ export class RangeKnob {
       this.ionDecrease.emit({isIncrease: false, knob: this.knob});
       ev.preventDefault();
       ev.stopPropagation();
+
     } else if (keyCode === KEY_RIGHT || keyCode === KEY_UP) {
       this.ionIncrease.emit({isIncrease: true, knob: this.knob});
       ev.preventDefault();
@@ -32,34 +34,33 @@ export class RangeKnob {
     }
   }
 
-  leftPos(val: number) {
-    return `${val * 100}%`;
-  }
-
   hostData() {
+    const {value, min, max} = this;
+    const pos = this.ratio * 100;
     return {
       class: {
+        'range-knob-handle': true,
         'range-knob-pressed': this.pressed,
-        'range-knob-min': this.val === this.min || this.val === undefined,
-        'range-knob-max': this.val === this.max
+        'range-knob-min': value === min,
+        'range-knob-max': value === max
       },
       style: {
-        'left': this.leftPos(this.ratio)
+        'left': `${pos}%`
       },
       'role': 'slider',
       'tabindex': this.disabled ? -1 : 0,
-      'aria-valuemin': this.min,
-      'aria-valuemax': this.max,
+      'aria-valuemin': min,
+      'aria-valuemax': max,
       'aria-disabled': this.disabled,
       'aria-labelledby': this.labelId,
-      'aria-valuenow': this.val
+      'aria-valuenow': value
     };
   }
 
   render() {
     if (this.pin) {
       return [
-        <div class="range-pin" role="presentation">{this.val}</div>,
+        <div class="range-pin" role="presentation">{Math.round(this.value)}</div>,
         <div class="range-knob" role="presentation" />
       ];
     }
