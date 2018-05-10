@@ -39,7 +39,7 @@ export function isDevice(win: Window) {
 }
 
 export function isHybrid(win: Window) {
-  return isCordova(win) || isCapacitor(win);
+  return isCordova(win) || isCapacitorNative(win);
 }
 
 export function isCordova(window: Window): boolean {
@@ -47,9 +47,10 @@ export function isCordova(window: Window): boolean {
   return !!(win['cordova'] || win['phonegap'] || win['PhoneGap']);
 }
 
-export function isCapacitor(window: Window): boolean {
+export function isCapacitorNative(window: Window): boolean {
   const win = window as any;
-  return !!(win['Capacitor']);
+  const capacitor = win['Capacitor'];
+  return !!(capacitor && capacitor.isNative);
 }
 
 export function isElectron(win: Window): boolean {
