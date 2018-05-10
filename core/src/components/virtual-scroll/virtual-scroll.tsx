@@ -1,10 +1,10 @@
 import { Component, Element, EventListenerEnable, Listen, Method, Prop, Watch } from '@stencil/core';
 import { QueueController } from '../../interface';
-import { Cell, DomRenderFn, HeaderFn, ItemHeightFn,
+import { Cell, CellType, DomRenderFn, HeaderFn, ItemHeightFn,
   ItemRenderFn, Range,
   VirtualNode, calcCells, calcHeightIndex, doRender,
   findCellIndex, getRange, getShouldUpdate, getViewport,
-  inplaceUpdate, positionForIndex, resizeBuffer, updateVDom, CellType } from './virtual-scroll-utils';
+  inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
 
 
 @Component({
@@ -376,7 +376,7 @@ export class VirtualScroll {
 
   renderVirtualNode(node: VirtualNode) {
     const cell = node.cell;
-    switch(cell.type) {
+    switch (cell.type) {
       case CellType.Item: return this.renderItem!(cell.value, cell.index);
       case CellType.Header: return this.renderHeader!(cell.value, cell.index);
       case CellType.Footer: return this.renderFooter!(cell.value, cell.index);
