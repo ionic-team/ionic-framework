@@ -1,4 +1,4 @@
-import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../interface';
+import { Animation, AnimationBuilder, NavDirection, NavOptions, ViewLifecycle } from '../interface';
 
 const iosTransitionAnimation = () => import('./animations/ios.transition');
 const mdTransitionAnimation = () => import('./animations/md.transition');
@@ -177,14 +177,6 @@ function setZIndex(
   if (leavingEl) {
     leavingEl.style.zIndex = '100';
   }
-}
-
-export const enum ViewLifecycle {
-  WillEnter = 'ionViewWillEnter',
-  DidEnter = 'ionViewDidEnter',
-  WillLeave = 'ionViewWillLeave',
-  DidLeave = 'ionViewDidLeave',
-  WillUnload = 'ionViewWillUnload',
 }
 
 export interface TransitionOptions extends NavOptions {
