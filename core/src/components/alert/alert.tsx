@@ -201,7 +201,7 @@ export class Alert implements OverlayInterface {
    */
   @Method()
   onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionAlerDidDismiss', callback);
+    return eventMethod(this.el, 'ionAlertDidDismiss', callback);
   }
 
   /**
