@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 .back-button-md {
-  @include margin(2px, 6px, 0, 0);
+  @include margin(1px, 6px, 0, 0);
   @include padding(0, 5px);
 
   min-width: 44px;

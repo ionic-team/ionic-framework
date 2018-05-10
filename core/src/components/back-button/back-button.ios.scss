@@ -6,7 +6,7 @@
 
 .back-button-ios {
   @include padding(0);
-  @include margin(2px, 0, 0, 0);
+  @include margin(0, 0, 0, 0);
 
   z-index: $back-button-ios-button-z-index;
   overflow: visible;
