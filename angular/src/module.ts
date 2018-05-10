@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import * as c from './directives';
 import * as d from './directives/proxies';
 import * as p from './providers';
-import { setupConfig } from '@ionic/core';
 
 const DECLARATIONS = [
   // proxies
@@ -129,17 +128,11 @@ const PROVIDERS = [
   imports: [CommonModule]
 })
 export class IonicModule {
-  static forRoot(config?: { [key: string]: any }): ModuleWithProviders {
+  static forRoot(_config?: { [key: string]: any }): ModuleWithProviders {
     return {
       ngModule: IonicModule,
       providers: [
         ...PROVIDERS,
-        { provide: p.ConfigToken, useValue: config },
-        {
-          provide: p.Config,
-          useFactory: setupConfig,
-          deps: [p.ConfigToken, p.Platform]
-        }
       ]
     };
   }
