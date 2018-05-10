@@ -40,7 +40,6 @@ export interface VirtualNode {
 const MIN_READS = 2;
 
 
-export type NodeHeightFn = (node: VirtualNode, index: number) => number;
 export type HeaderFn = (item: any, index: number, items: any[]) => string | null;
 export type ItemHeightFn = (item: any, index?: number) => number;
 export type ItemRenderFn = (el: HTMLElement|null, cell: Cell, domIndex?: number) => HTMLElement;
@@ -104,7 +103,7 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
 
 export function doRender(
   el: HTMLElement,
-  itemRender: ItemRenderFn,
+  nodeRender: ItemRenderFn,
   dom: VirtualNode[],
   updateCellHeight: Function
 ) {
@@ -119,9 +118,9 @@ export function doRender(
     if (node.change === NodeChange.Cell) {
       if (i < childrenNu) {
         child = children[i] as HTMLElement;
-        itemRender(child, cell, i);
+        nodeRender(child, cell, i);
       } else {
-        child = itemRender(null, cell, i);
+        child = nodeRender(null, cell, i);
         child.classList.add('virtual-item');
         el.appendChild(child);
       }

@@ -99,7 +99,6 @@ import {
   HeaderFn,
   ItemHeightFn,
   ItemRenderFn,
-  NodeHeightFn,
 } from './components/virtual-scroll/virtual-scroll-utils';
 
 declare global {
@@ -7213,16 +7212,17 @@ declare global {
        */
       'headerFn': HeaderFn;
       'itemHeight': ItemHeightFn;
-      'itemRender': ItemRenderFn;
       /**
        * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
        */
       'items': any[];
       'markDirty': (offset: number, len?: number) => void;
       'markDirtyTail': () => void;
-      'nodeHeight': NodeHeightFn;
+      'nodeRender': ItemRenderFn;
       'positionForItem': (index: number) => number;
-      'renderer': (item: any) => JSX.Element;
+      'renderFooter': (item: any, index: number) => JSX.Element;
+      'renderHeader': (item: any, index: number) => JSX.Element;
+      'renderItem': (item: any, index: number) => JSX.Element;
     }
   }
 
@@ -7267,13 +7267,14 @@ declare global {
        */
       'headerFn'?: HeaderFn;
       'itemHeight'?: ItemHeightFn;
-      'itemRender'?: ItemRenderFn;
       /**
        * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
        */
       'items'?: any[];
-      'nodeHeight'?: NodeHeightFn;
-      'renderer'?: (item: any) => JSX.Element;
+      'nodeRender'?: ItemRenderFn;
+      'renderFooter'?: (item: any, index: number) => JSX.Element;
+      'renderHeader'?: (item: any, index: number) => JSX.Element;
+      'renderItem'?: (item: any, index: number) => JSX.Element;
     }
   }
 }

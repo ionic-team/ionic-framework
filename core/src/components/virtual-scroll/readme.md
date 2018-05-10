@@ -260,11 +260,6 @@ and what data to give to the header template. The function must return
 
 
 
-#### itemRender
-
-
-
-
 #### items
 
 
@@ -275,12 +270,22 @@ entire virtual scroll is reset, which is an expensive operation and
 should be avoided if possible.
 
 
-#### nodeHeight
+#### nodeRender
 
 
 
 
-#### renderer
+#### renderFooter
+
+
+
+
+#### renderHeader
+
+
+
+
+#### renderItem
 
 
 
@@ -364,11 +369,6 @@ and what data to give to the header template. The function must return
 
 
 
-#### item-render
-
-
-
-
 #### items
 
 
@@ -379,12 +379,22 @@ entire virtual scroll is reset, which is an expensive operation and
 should be avoided if possible.
 
 
-#### node-height
+#### node-render
 
 
 
 
-#### renderer
+#### render-footer
+
+
+
+
+#### render-header
+
+
+
+
+#### render-item
 
 
 

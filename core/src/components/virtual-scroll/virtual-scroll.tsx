@@ -1,10 +1,10 @@
 import { Component, Element, EventListenerEnable, Listen, Method, Prop, Watch } from '@stencil/core';
 import { QueueController } from '../../interface';
 import { Cell, DomRenderFn, HeaderFn, ItemHeightFn,
-  ItemRenderFn, NodeHeightFn, Range,
+  ItemRenderFn, Range,
   VirtualNode, calcCells, calcHeightIndex, doRender,
   findCellIndex, getRange, getShouldUpdate, getViewport,
-  inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
+  inplaceUpdate, positionForIndex, resizeBuffer, updateVDom, CellType } from './virtual-scroll-utils';
 
 
 @Component({
@@ -98,11 +98,15 @@ export class VirtualScroll {
    * should be avoided if possible.
    */
   @Prop() items?: any[];
-
-  @Prop() renderer?: (item: any) => JSX.Element;
-  @Prop() nodeHeight?: NodeHeightFn;
   @Prop() itemHeight?: ItemHeightFn;
-  @Prop() itemRender?: ItemRenderFn;
+
+  // JSX API
+  @Prop() renderItem?: (item: any, index: number) => JSX.Element;
+  @Prop() renderHeader?: (item: any, index: number) => JSX.Element;
+  @Prop() renderFooter?: (item: any, index: number) => JSX.Element;
+
+  // Low level API
+  @Prop() nodeRender?: ItemRenderFn;
   @Prop() domRender?: DomRenderFn;
 
   @Watch('itemHeight')
@@ -255,11 +259,11 @@ export class VirtualScroll {
     );
 
     // write DOM
-    if (this.itemRender) {
-      doRender(this.el, this.itemRender, this.virtualDom, this.updateCellHeight.bind(this));
+    if (this.nodeRender) {
+      doRender(this.el, this.nodeRender, this.virtualDom, this.updateCellHeight.bind(this));
     } else if (this.domRender) {
       this.domRender(this.virtualDom);
-    } else if (this.renderer) {
+    } else if (this.renderItem) {
       this.el.forceUpdate();
     }
     if (this.heightChanged) {
@@ -370,24 +374,33 @@ export class VirtualScroll {
     }
   }
 
+  renderVirtualNode(node: VirtualNode) {
+    const cell = node.cell;
+    switch(cell.type) {
+      case CellType.Item: return this.renderItem!(cell.value, cell.index);
+      case CellType.Header: return this.renderHeader!(cell.value, cell.index);
+      case CellType.Footer: return this.renderFooter!(cell.value, cell.index);
+    }
+  }
+
   render() {
-    const renderer = this.renderer;
-    if (renderer) {
-      return this.virtualDom.map((dom) => {
-        const item = renderer(dom.cell.value) as any;
+    const renderItem = this.renderItem;
+    if (renderItem) {
+      return this.virtualDom.map((node) => {
+        const item = this.renderVirtualNode(node) as any;
         const classes = ['virtual-item'];
         if (!item.vattrs) {
           item.vattrs = {};
         }
         item.vattrs.class += ' virtual-item';
-        if (!dom.visible) {
+        if (!node.visible) {
           classes.push('virtual-loading');
         }
         item.vattrs.class += ' ' + classes.join(' ');
         if (!item.vattrs.style) {
           item.vattrs.style = {};
         }
-        item.vattrs.style['transform'] = `translate3d(0,${dom.top}px,0)`;
+        item.vattrs.style['transform'] = `translate3d(0,${node.top}px,0)`;
         return item;
       });
     }

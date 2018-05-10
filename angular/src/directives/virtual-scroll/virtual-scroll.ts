@@ -17,10 +17,10 @@ export class VirtualScroll {
     private el: ElementRef,
     public cd: ChangeDetectorRef,
   ) {
-    this.el.nativeElement.itemRender = this.itemRender.bind(this);
+    this.el.nativeElement.nodeRender = this.nodeRender.bind(this);
   }
 
-  private itemRender(el: HTMLElement|null, cell: any, index?: number) {
+  private nodeRender(el: HTMLElement|null, cell: any, index?: number) {
     if (!el) {
       const node = this.itmTmp.viewContainer.createEmbeddedView(
         this.getComponent(cell.type),
