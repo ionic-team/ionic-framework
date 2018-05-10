@@ -1,3 +1,13 @@
+<a name="4.0.0-alpha.6"></a>
+# [4.0.0-alpha.6](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.5...v4.0.0-alpha.6) (2018-05-10)
+
+
+### Bug Fixes
+
+* **angular:** aot ([714f4a6](https://github.com/ionic-team/ionic/commit/714f4a6))
+
+
+
 <a name="4.0.0-alpha.5"></a>
 # [4.0.0-alpha.5](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.4...v4.0.0-alpha.5) (2018-05-10)
 
