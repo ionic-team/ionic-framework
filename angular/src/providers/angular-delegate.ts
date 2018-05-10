@@ -73,14 +73,15 @@ export function attachView(
     ? location.createComponent(factory, location.length, childInjector)
     : factory.create(childInjector);
 
+  const instance = componentRef.instance;
   const hostElement = componentRef.location.nativeElement;
   if (params) {
-    Object.assign(hostElement, params);
+    Object.assign(instance, params);
   }
   for (const clazz of cssClasses) {
     hostElement.classList.add(clazz);
   }
-  bindLifecycleEvents(componentRef.instance, hostElement);
+  bindLifecycleEvents(instance, hostElement);
   container.appendChild(hostElement);
 
   if (!location) {
