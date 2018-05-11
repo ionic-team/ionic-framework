@@ -1,0 +1,36 @@
+@import "../themes/ionic.globals";
+@import "../themes/ionic.mixins";
+
+$screen-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+
+// Creates text transform attributes based on screen size
+@each $breakpoint in map-keys($screen-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    // Provide `[float-{bp}]` attributes for floating the element based
+    // on the breakpoint
+    [float#{$infix}-left] {
+      @include float(left, !important);
+    }
+
+    [float#{$infix}-right] {
+      @include float(right, !important);
+    }
+
+    [float#{$infix}-start] {
+      @include float(start, !important);
+    }
+
+    [float#{$infix}-end] {
+      @include float(end, !important);
+    }
+  }
+}

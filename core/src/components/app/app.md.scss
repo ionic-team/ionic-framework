@@ -30,14 +30,3 @@
 a {
   color: $app-md-link-color;
 }
-
-// Material Design Content Padding
-// --------------------------------------------------
-
-@include app-padding("md", $content-md-padding);
-
-
-// Material Design Content Margin
-// --------------------------------------------------
-
-@include app-margin("md", $content-md-margin);

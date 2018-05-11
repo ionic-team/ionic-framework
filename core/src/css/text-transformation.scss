@@ -1,0 +1,35 @@
+@import "../themes/ionic.globals";
+@import "../themes/ionic.mixins";
+
+$screen-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+
+// Creates text transform attributes based on screen size
+@each $breakpoint in map-keys($screen-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    // Provide `[text-{bp}]` attributes for transforming the text based
+    // on the breakpoint
+    [text#{$infix}-uppercase] {
+      // scss-lint:disable ImportantRule
+      text-transform: uppercase !important;
+    }
+
+    [text#{$infix}-lowercase] {
+      // scss-lint:disable ImportantRule
+      text-transform: lowercase !important;
+    }
+
+    [text#{$infix}-capitalize] {
+      // scss-lint:disable ImportantRule
+      text-transform: capitalize !important;
+    }
+  }
+}

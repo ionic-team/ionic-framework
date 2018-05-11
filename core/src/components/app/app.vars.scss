@@ -32,22 +32,6 @@ $h5-font-size:                 18px !default;
 $h6-font-size:                 16px !default;
 
 
-// Responsive Utilities
-// --------------------------------------------------
-
-/// @prop - Whether to include all of the responsive utility attributes
-$include-responsive-utilities:          true !default;
-
-/// @prop - Whether to include all of the responsive text alignment attributes
-$include-text-alignment-utilities:      $include-responsive-utilities !default;
-
-/// @prop - Whether to include all of the responsive text transform attributes
-$include-text-transform-utilities:      $include-responsive-utilities !default;
-
-/// @prop - Whether to include all of the responsive float attributes
-$include-float-element-utilities:       $include-responsive-utilities !default;
-
-
 // Screen Breakpoints
 // --------------------------------------------------
 

@@ -42,7 +42,8 @@
     "yargs": "^10.0.3"
   },
   "scripts": {
-    "build": "npm run clean && stencil build --docs",
+    "build": "npm run clean && stencil build --docs && npm run build-css",
+    "build-css": "node-sass --output-style compressed --output ./dist/css ./src/css/",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "clean": "node scripts/clean.js",
