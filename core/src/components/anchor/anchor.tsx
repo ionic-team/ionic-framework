@@ -1,5 +1,6 @@
 import { Component, Prop } from '@stencil/core';
-import { RouterDirection, openURL } from '../../utils/theme';
+import { RouterDirection } from '../../interface';
+import { openURL } from '../../utils/theme';
 
 
 @Component({

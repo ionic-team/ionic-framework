@@ -1,4 +1,4 @@
-import { RouteChain, RouterDirection } from './interface';
+import { RouteChain, RouterIntent } from '../../../interface';
 
 export function generatePath(segments: string[]): string {
   const path = segments
@@ -26,7 +26,7 @@ export function chainToPath(chain: RouteChain): string[]|null {
   return path;
 }
 
-export function writePath(history: History, root: string, useHash: boolean, path: string[], direction: RouterDirection, state: number) {
+export function writePath(history: History, root: string, useHash: boolean, path: string[], intent: RouterIntent, state: number) {
   let url = generatePath([
     ...parsePath(root),
     ...path
@@ -34,7 +34,7 @@ export function writePath(history: History, root: string, useHash: boolean, path
   if (useHash) {
     url = '#' + url;
   }
-  if (direction === RouterDirection.Forward) {
+  if (intent === RouterIntent.Forward) {
     history.pushState(state, '', url);
   } else {
     history.replaceState(state, '', url);

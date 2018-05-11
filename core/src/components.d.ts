@@ -56,6 +56,9 @@ import {
   PopoverOptions,
   RangeInputChangeEvent,
   RouteID,
+  RouterDirection,
+  RouterEventDetail,
+  RouterIntent,
   RouterOutletOptions,
   RouteWrite,
   SelectInputChangeEvent,
@@ -82,10 +85,6 @@ import {
 import {
   ViewController,
 } from './components/nav/view-controller';
-import {
-  RouterDirection,
-  RouterEventDetail,
-} from './components/router/utils/interface';
 import {
   ScrollBaseDetail,
   ScrollDetail,
@@ -492,7 +491,7 @@ declare global {
       /**
        * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
-      'routerDirection': 'forward' | 'back';
+      'routerDirection': RouterDirection;
     }
   }
 
@@ -522,7 +521,7 @@ declare global {
       /**
        * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
-      'routerDirection'?: 'forward' | 'back';
+      'routerDirection'?: RouterDirection;
     }
   }
 }
@@ -839,7 +838,7 @@ declare global {
       /**
        * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
-      'routerDirection': 'forward' | 'back';
+      'routerDirection': RouterDirection;
       /**
        * The button shape. Possible values are: `"round"`.
        */
@@ -917,7 +916,7 @@ declare global {
       /**
        * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
-      'routerDirection'?: 'forward' | 'back';
+      'routerDirection'?: RouterDirection;
       /**
        * The button shape. Possible values are: `"round"`.
        */
@@ -2863,7 +2862,7 @@ declare global {
       /**
        * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
-      'routerDirection': 'forward' | 'back';
+      'routerDirection': RouterDirection;
     }
   }
 
@@ -2917,7 +2916,7 @@ declare global {
       /**
        * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
-      'routerDirection'?: 'forward' | 'back';
+      'routerDirection'?: RouterDirection;
     }
   }
 }
@@ -3862,7 +3861,7 @@ declare global {
       'rootParams': ComponentProps;
       'setPages': (views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
       'setRoot': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-      'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
+      'setRouteId': (id: string, params: any, direction: RouterIntent) => Promise<RouteWrite>;
       'swipeBackEnabled': boolean;
     }
   }
@@ -5153,7 +5152,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonRouter {
-      'navChanged': (direction: RouterDirection) => Promise<boolean>;
+      'navChanged': (intent: RouterIntent) => Promise<boolean>;
       'printDebug': () => void;
       'push': (url: string, direction?: RouterDirection) => Promise<boolean>;
       /**

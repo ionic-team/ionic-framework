@@ -1,5 +1,5 @@
 import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Config, NavOutlet, RouteID, RouteWrite, RouterDirection } from '../../interface';
+import { Config, NavOutlet, RouteID, RouteWrite, RouterIntent } from '../../interface';
 import { TabbarLayout, TabbarPlacement } from '../tabbar/tabbar';
 
 
@@ -262,7 +262,7 @@ export class Tabs implements NavOutlet {
     if (this.useRouter) {
       const router = this.doc.querySelector('ion-router');
       if (router) {
-        return router.navChanged(RouterDirection.Forward);
+        return router.navChanged(RouterIntent.Forward);
       }
     }
     return Promise.resolve(false);

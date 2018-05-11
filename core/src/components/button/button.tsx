@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
-import { CssClassMap, Mode } from '../../interface';
-import { RouterDirection, getButtonClassMap, getElementClassMap, openURL } from '../../utils/theme';
+import { CssClassMap, Mode, RouterDirection } from '../../interface';
+import { getButtonClassMap, getElementClassMap, openURL } from '../../utils/theme';
 
 
 @Component({

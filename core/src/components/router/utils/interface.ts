@@ -1,6 +1,6 @@
 
 export interface NavOutlet {
-  setRouteId(id: string, data: any, direction: number): Promise<RouteWrite>;
+  setRouteId(id: string, data: any, direction: RouterIntent): Promise<RouteWrite>;
   getRouteId(): RouteID|undefined;
 }
 
@@ -10,7 +10,9 @@ export interface RouterEventDetail {
   to: string;
 }
 
-export const enum RouterDirection {
+export type RouterDirection = 'forward' | 'back' | 'root';
+
+export const enum RouterIntent {
   None = 0,
   Forward = 1,
   Back = -1,

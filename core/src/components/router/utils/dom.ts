@@ -1,6 +1,6 @@
-import { NavOutletElement, RouteChain, RouteID, RouterDirection } from './interface';
+import { NavOutletElement, RouteChain, RouteID, RouterIntent } from '../../../interface';
 
-export async function writeNavState(root: HTMLElement | undefined, chain: RouteChain, direction: RouterDirection, index: number, changed = false): Promise<boolean> {
+export async function writeNavState(root: HTMLElement | undefined, chain: RouteChain, intent: RouterIntent, index: number, changed = false): Promise<boolean> {
   try {
     // find next navigation outlet in the DOM
     const outlet = searchNavNode(root);
@@ -12,17 +12,17 @@ export async function writeNavState(root: HTMLElement | undefined, chain: RouteC
     await outlet.componentOnReady();
 
     const route = chain[index];
-    const result = await outlet.setRouteId(route.id, route.params, direction);
+    const result = await outlet.setRouteId(route.id, route.params, intent);
 
     // if the outlet changed the page, reset navigation to neutral (no direction)
     // this means nested outlets will not animate
     if (result.changed) {
-      direction = RouterDirection.None;
+      intent = RouterIntent.None;
       changed = true;
     }
 
     // recursivelly set nested outlets
-    changed = await writeNavState(result.element, chain, direction, index + 1, changed);
+    changed = await writeNavState(result.element, chain, intent, index + 1, changed);
 
     // once all nested outlets are visible let's make the parent visible too,
     // using markVisible prevents flickering
