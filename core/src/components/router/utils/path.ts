@@ -1,4 +1,5 @@
-import { RouteChain, RouterIntent } from '../../../interface';
+import { RouteChain } from '../../../interface';
+import { RouterIntent } from './interface';
 
 export function generatePath(segments: string[]): string {
   const path = segments

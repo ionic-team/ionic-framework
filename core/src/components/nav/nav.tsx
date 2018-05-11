@@ -310,8 +310,8 @@ export class Nav implements NavOutlet {
       const router = this.win.document.querySelector('ion-router');
       if (router) {
         const direction = (result.direction === 'back')
-          ? RouterIntent.Back
-          : RouterIntent.Forward;
+          ? -1
+          : 1;
 
         router.navChanged(direction);
       }
