@@ -48,4 +48,8 @@ ion-scroll {
   &.overscroll::after {
     top: -1px;
   }
+
+  > .scroll-inner {
+    min-height: 100%;
+  }
 }

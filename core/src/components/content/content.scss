@@ -15,4 +15,8 @@ ion-content {
 
   margin: 0 !important; // scss-lint:disable all
   padding: 0 !important; // scss-lint:disable all
+
+  > .scroll-inner {
+    min-height: 100%;
+  }
 }
