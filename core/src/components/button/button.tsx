@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 import { CssClassMap, Mode } from '../../interface';
-import { getButtonClassMap, getElementClassMap, openURL } from '../../utils/theme';
+import { RouterDirection, getButtonClassMap, getElementClassMap, openURL } from '../../utils/theme';
 
 
 @Component({
@@ -59,7 +59,7 @@ export class Button {
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection?: 'forward' | 'back';
+  @Prop() routerDirection?: RouterDirection;
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.

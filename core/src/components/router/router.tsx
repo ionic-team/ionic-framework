@@ -72,34 +72,13 @@ export class Router {
     return this.writeNavStateRoot(path, direction);
   }
 
-  private onRedirectChanged() {
-    const path = this.getPath();
-    if (path && routeRedirect(path, readRedirects(this.el))) {
-      this.writeNavStateRoot(path, RouterDirection.None);
-    }
-  }
+  @Method()
+  push(url: string, direction = RouterDirection.Forward) {
+    const path = parsePath(url);
+    console.debug('[ion-router] URL pushed -> updating nav', url, direction);
 
-  private onRoutesChanged() {
-    return this.writeNavStateRoot(this.getPath(), RouterDirection.None);
-  }
-
-  private historyDirection() {
-    if (this.win.history.state === null) {
-      this.state++;
-      this.win.history.replaceState(this.state, this.win.document.title, this.win.document.location.href);
-    }
-
-    const state = this.win.history.state;
-    const lastState = this.lastState;
-    this.lastState = state;
-
-    if (state > lastState) {
-      return RouterDirection.Forward;
-    } else if (state < lastState) {
-      return RouterDirection.Back;
-    } else {
-      return RouterDirection.None;
-    }
+    this.setPath(path, direction);
+    return this.writeNavStateRoot(path, direction);
   }
 
   @Method()
@@ -136,14 +115,36 @@ export class Router {
     return true;
   }
 
-  @Method()
-  push(url: string, direction = RouterDirection.Forward) {
-    const path = parsePath(url);
-    console.debug('[ion-router] URL pushed -> updating nav', url, direction);
-
-    this.setPath(path, direction);
-    return this.writeNavStateRoot(path, direction);
+  private onRedirectChanged() {
+    const path = this.getPath();
+    if (path && routeRedirect(path, readRedirects(this.el))) {
+      this.writeNavStateRoot(path, RouterDirection.None);
+    }
   }
+
+  private onRoutesChanged() {
+    return this.writeNavStateRoot(this.getPath(), RouterDirection.None);
+  }
+
+  private historyDirection() {
+    if (this.win.history.state === null) {
+      this.state++;
+      this.win.history.replaceState(this.state, this.win.document.title, this.win.document.location.href);
+    }
+
+    const state = this.win.history.state;
+    const lastState = this.lastState;
+    this.lastState = state;
+
+    if (state > lastState) {
+      return RouterDirection.Forward;
+    } else if (state < lastState) {
+      return RouterDirection.Back;
+    } else {
+      return RouterDirection.None;
+    }
+  }
+
 
   private async writeNavStateRoot(path: string[]|null, direction: RouterDirection): Promise<boolean> {
     if (this.busy) {

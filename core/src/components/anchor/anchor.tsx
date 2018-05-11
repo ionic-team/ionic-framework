@@ -1,5 +1,5 @@
 import { Component, Prop } from '@stencil/core';
-import { openURL } from '../../utils/theme';
+import { RouterDirection, openURL } from '../../utils/theme';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class Anchor {
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection?: 'forward' | 'back';
+  @Prop() routerDirection?: RouterDirection;
 
   render() {
     return <a

@@ -181,8 +181,6 @@ export class Nav implements NavOutlet {
       });
     }
 
-    const viewController = this.views.find(v => matches(v, id, params));
-
     let resolve: (result: RouteWrite) => void;
     const promise = new Promise<RouteWrite>((r) => resolve = r);
     let finish: Promise<boolean>;
@@ -202,14 +200,19 @@ export class Nav implements NavOutlet {
         return p;
       }
     };
-    if (viewController) {
-      finish = this.popTo(viewController, {...commonOpts, direction: 'back'});
-    } else if (direction === 1) {
-      finish = this.push(id, params, commonOpts);
-    } else if (direction === -1) {
-      finish = this.setRoot(id, params, {...commonOpts, direction: 'back', animated: true});
-    } else {
+
+    if (direction === 0) {
       finish = this.setRoot(id, params, commonOpts);
+    } else {
+      const viewController = this.views.find(v => matches(v, id, params));
+
+      if (viewController) {
+        finish = this.popTo(viewController, {...commonOpts, direction: 'back'});
+      } else if (direction === 1) {
+        finish = this.push(id, params, commonOpts);
+      } else if (direction === -1) {
+        finish = this.setRoot(id, params, {...commonOpts, direction: 'back', animated: true});
+      }
     }
     return promise;
   }

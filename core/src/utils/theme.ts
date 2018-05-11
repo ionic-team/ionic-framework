@@ -64,7 +64,7 @@ export function getClassMap(classes: string | string[] | undefined): CssClassMap
   return map;
 }
 
-export type RouterDirection = 'forward' | 'back';
+export type RouterDirection = 'forward' | 'back' | 'root';
 
 export async function openURL(win: Window, url: string|undefined, ev: Event, direction: RouterDirection = 'forward') {
   if (url && url[0] !== '#' && url.indexOf('://') === -1) {
@@ -72,8 +72,14 @@ export async function openURL(win: Window, url: string|undefined, ev: Event, dir
     if (router) {
       ev && ev.preventDefault();
       await router.componentOnReady();
-      return router.push(url, direction === 'back' ? -1 : 1);
+      return router.push(url, DIRECTION_MAP[direction]);
     }
   }
   return Promise.resolve();
 }
+
+const DIRECTION_MAP = {
+  'back': -1,
+  'root': 0,
+  'forward': 1
+};

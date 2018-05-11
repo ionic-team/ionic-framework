@@ -1,6 +1,6 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
 import { CssClassMap, Mode } from '../../interface';
-import { createThemedClasses, getElementClassMap, openURL } from '../../utils/theme';
+import { RouterDirection, createThemedClasses, getElementClassMap, openURL } from '../../utils/theme';
 
 
 @Component({
@@ -63,7 +63,7 @@ export class Item {
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
-  @Prop() routerDirection?: 'forward' | 'back';
+  @Prop() routerDirection?: RouterDirection;
 
 
   @Listen('ionStyle')
