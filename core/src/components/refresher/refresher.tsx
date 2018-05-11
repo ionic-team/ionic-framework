@@ -26,7 +26,6 @@ export class Refresher {
 
   private appliedStyles = false;
   private didStart = false;
-  private gestureConfig: any;
   private progress = 0;
   private scrollEl: HTMLElement | null = null;
 
@@ -93,22 +92,6 @@ export class Refresher {
    * Emitted when the user begins to start pulling down.
    */
   @Event() ionStart!: EventEmitter<void>;
-
-  componentWillLoad() {
-    this.gestureConfig = {
-      'canStart': this.canStart.bind(this),
-      'onStart': this.onStart.bind(this),
-      'onMove': this.onMove.bind(this),
-      'onEnd': this.onEnd.bind(this),
-      'gestureName': 'refresher',
-      'gesturePriority': 10,
-      'type': 'pan',
-      'passive': false,
-      'direction': 'y',
-      'threshold': 0,
-      'attachTo': this.el.closest('ion-content')
-    };
-  }
 
   componentDidLoad() {
     if (this.el.getAttribute('slot') !== 'fixed') {
@@ -241,6 +224,7 @@ export class Refresher {
     }
 
     // prevent native scroll events
+    console.log('preventDefault');
     ev.preventDefault();
 
     // the refresher is actively pulling at this point
@@ -360,7 +344,17 @@ export class Refresher {
   }
 
   render() {
-    return <ion-gesture {...this.gestureConfig}
+    return <ion-gesture
+      canStart={this.canStart.bind(this)}
+      onStart={this.onStart.bind(this)}
+      onMove={this.onMove.bind(this)}
+      onEnd={this.onEnd.bind(this)}
+      gestureName="refresher"
+      gesturePriority={10}
+      passive={false}
+      direction="y"
+      threshold={5}
+      attachTo={this.el.closest('ion-content') as any}
       disabled={this.disabled}>
       <slot></slot>
     </ion-gesture>;
