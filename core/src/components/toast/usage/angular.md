@@ -11,16 +11,16 @@ export class ToastExample {
 
   constructor(public toastController: ToastController) {}
 
-  presentToast() {
-    const toast = this.toastController.create({
+  async presentToast() {
+    const toast = await this.toastController.create({
       message: 'Your settings have been saved.',
       duration: 2000
     });
     toast.present();
   }
 
-  presentToastWithOptions() {
-    const toast = this.toastController.create({
+  async presentToastWithOptions() {
+    const toast = await this.toastController.create({
       message: 'Click to Close',
       showCloseButton: true,
       position: 'top',
