@@ -837,13 +837,13 @@ declare global {
        */
       'mode': Mode;
       /**
-       * If true, activates a button with rounded corners.
-       */
-      'round': boolean;
-      /**
        * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection': 'forward' | 'back';
+      /**
+       * The button shape. Possible values are: `"round"`.
+       */
+      'shape': 'round';
       /**
        * The button size. Possible values are: `"small"`, `"default"`, `"large"`.
        */
@@ -915,13 +915,13 @@ declare global {
        */
       'onIonFocus'?: (event: CustomEvent<void>) => void;
       /**
-       * If true, activates a button with rounded corners.
-       */
-      'round'?: boolean;
-      /**
        * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection'?: 'forward' | 'back';
+      /**
+       * The button shape. Possible values are: `"round"`.
+       */
+      'shape'?: 'round';
       /**
        * The button size. Possible values are: `"small"`, `"default"`, `"large"`.
        */

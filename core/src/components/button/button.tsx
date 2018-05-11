@@ -68,9 +68,10 @@ export class Button {
   @Prop() href?: string;
 
   /**
-   * If true, activates a button with rounded corners.
+   * The button shape.
+   * Possible values are: `"round"`.
    */
-  @Prop() round = false;
+  @Prop() shape?: 'round';
 
   /**
    * The button size.
@@ -120,14 +121,14 @@ export class Button {
   }
 
   protected render() {
-    const { buttonType, color, expand, fill, mode, round, size, strong } = this;
+    const { buttonType, color, expand, fill, mode, shape, size, strong } = this;
 
     const TagType = this.href ? 'a' : 'button';
     const buttonClasses = {
       ...getButtonClassMap(buttonType, mode),
       ...getButtonTypeClassMap(buttonType, expand, mode),
       ...getButtonTypeClassMap(buttonType, size, mode),
-      ...getButtonTypeClassMap(buttonType, round ? 'round' : undefined, mode),
+      ...getButtonTypeClassMap(buttonType, shape, mode),
       ...getButtonTypeClassMap(buttonType, strong ? 'strong' : undefined, mode),
       ...getColorClassMap(buttonType, color, fill, mode),
       ...getElementClassMap(this.el.classList),

@@ -95,19 +95,20 @@ Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
-#### round
-
-boolean
-
-If true, activates a button with rounded corners.
-
-
 #### routerDirection
 
 string
 
 When using a router, it specifies the transition direction when navigating to
 another page using `href`.
+
+
+#### shape
+
+string
+
+The button shape.
+Possible values are: `"round"`.
 
 
 #### size
@@ -194,19 +195,20 @@ Possible values are: `"ios"` or `"md"`.
 For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
-#### round
-
-boolean
-
-If true, activates a button with rounded corners.
-
-
 #### router-direction
 
 string
 
 When using a router, it specifies the transition direction when navigating to
 another page using `href`.
+
+
+#### shape
+
+string
+
+The button shape.
+Possible values are: `"round"`.
 
 
 #### size
