@@ -8,6 +8,7 @@ That means the ion-router never touches the DOM, it does NOT show the components
 
 In order to configure this relationship between components (to load/select) and URLs, ion-router uses a declarative syntax using JSX/HTML to define a tree of routes.
 
+If you're using Angular, please see [ion-router-outlet](../router-outlet) instead.
 
 ## Ecosystem of components
 
