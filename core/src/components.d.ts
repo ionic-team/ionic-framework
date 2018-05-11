@@ -2154,6 +2154,54 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface IonImg {
+      /**
+       * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
+       */
+      'alt': string;
+      /**
+       * The image URL. This attribute is mandatory for the <img> element.
+       */
+      'src': string;
+    }
+  }
+
+  interface HTMLIonImgElement extends StencilComponents.IonImg, HTMLStencilElement {}
+
+  var HTMLIonImgElement: {
+    prototype: HTMLIonImgElement;
+    new (): HTMLIonImgElement;
+  };
+  interface HTMLElementTagNameMap {
+    'ion-img': HTMLIonImgElement;
+  }
+  interface ElementTagNameMap {
+    'ion-img': HTMLIonImgElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'ion-img': JSXElements.IonImgAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonImgAttributes extends HTMLAttributes {
+      /**
+       * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
+       */
+      'alt'?: string;
+      'onIonImgDidLoad'?: (event: CustomEvent<void>) => void;
+      /**
+       * The image URL. This attribute is mandatory for the <img> element.
+       */
+      'src'?: string;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface IonInfiniteScrollContent {
       /**
        * An animated SVG spinner that shows while loading.

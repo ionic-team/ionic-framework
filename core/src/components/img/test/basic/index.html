@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Floating Action Button - Basic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script src="/dist/ionic.js"></script>
+</head>
+<body>
+  <ion-app>
+
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Img - Basic</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content padding>
+        <f></f>
+        <f></f>
+        <ion-img src="https://i.ytimg.com/vi/rq6M3imPgW4/maxresdefault.jpg"></ion-img>
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+        <f></f>
+        <ion-img id="hidden-car" src="https://www.ericpetersautos.com/wp-content/uploads/2017/11/1961-Ferrari-250-GT-SWB-Berlinetta-by-Scaglietti_Erik-Fuller-c-2016-Courtesy-RM-Sothebys-1.jpg"></ion-img>
+
+      </ion-content>
+
+      <ion-footer>
+        <ion-toolbar>
+          <ion-title>Footer</ion-title>
+        </ion-toolbar>
+      </ion-footer>
+
+    <style>
+      f {
+        display: block;
+        margin: 15px auto;
+        max-width: 150px;
+        height: 150px;
+        background: blue;
+      }
+
+      #hidden-car {
+        width: 300px;
+      }
+
+      f:last-of-type {
+        background: yellow;
+      }
+    </style>
+  </ion-app>
+  <script>
+    document.body.addEventListener('ionImgDidLoad', (event) => {
+      console.log('image did load', event.target);
+    });
+  </script>
+</body>
+</html>
