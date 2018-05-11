@@ -45,37 +45,6 @@
 }
 
 
-// Check that the given map values are in ascending order
-// ---------------------------------------------------------------------------------
-
-@mixin assert-ascending($map, $map-name) {
-  $prev-key: null;
-  $prev-num: null;
-  @each $key, $num in $map {
-    @if $prev-num == null {
-      // Do nothing
-    } @else if not comparable($prev-num, $num) {
-      @warn "Potentially invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} whose unit makes it incomparable to #{$prev-num}, the value of the previous key '#{$prev-key}' !";
-    } @else if $prev-num >= $num {
-      @warn "Invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} which isn't greater than #{$prev-num}, the value of the previous key '#{$prev-key}' !";
-    }
-    $prev-key: $key;
-    $prev-num: $num;
-  }
-}
-
-// Check that the first value in the given map starts at 0
-// ---------------------------------------------------------------------------------
-
-@mixin assert-starts-at-zero($map, $map-name) {
-  $values: map-values($map);
-  $first-value: nth($values, 1);
-  @if $first-value != 0 {
-    @warn "First value in `#{$map-name}` must start at 0, but starts at #{$first-value}.";
-  }
-}
-
-
 // Breakpoint Mixins
 // ---------------------------------------------------------------------------------
 

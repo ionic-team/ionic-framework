@@ -8,7 +8,7 @@
 // ---------------------------------------------------------------------------------
 
 @mixin make-grid($padding-width: $grid-padding-width) {
-  @include padding($padding-width / 2);
+  @include padding(calc(#{$padding-width} / 2));
   @include margin-horizontal(auto);
 
   display: flex;
@@ -101,7 +101,7 @@
 
 @mixin make-column-base($padding-width: $grid-padding-width) {
   @include margin(0);
-  @include padding($padding-width / 2);
+  @include padding(calc(#{$padding-width} / 2));
 
   position: relative;
 
@@ -136,13 +136,18 @@
 // Create an individual column
 // ---------------------------------------------------------------------------------
 
-@mixin make-column($size, $columns: $grid-columns) {
-  flex: 0 0 percentage($size / $columns);
-  width: percentage($size / $columns);
+@mixin make-column($i, $columns: $grid-columns) {
+  flex: 0 0 calc(calc(#{$i} / var(--grid-columns, 12)) * 100%);
+  width: calc(calc(#{$i} / var(--grid-columns, 12)) * 100%);
+  max-width: calc(calc(#{$i} / var(--grid-columns, 12)) * 100%);
+
+  // flex: 0 0 percentage($i / $columns);
+  // width: percentage($i / $columns);
+
   // Add a `max-width` to ensure content within each column does not blow out
   // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
   // do not appear to require this.
-  max-width: percentage($size / $columns);
+  // max-width: percentage($i / $columns);
 }
 
 
@@ -153,7 +158,7 @@
   @each $breakpoint in map-keys($padding-widths) {
     @include media-breakpoint-up($breakpoint) {
       $padding-width: map-get($padding-widths, $breakpoint);
-      @include padding($padding-width / 2);
+      @include padding(calc(#{$padding-width} / 2));
     }
   }
 }
@@ -162,38 +167,38 @@
 // Offset the column using margin-start
 // ---------------------------------------------------------------------------------
 
-@mixin make-column-offset($size, $columns: $grid-columns) {
-  @include margin-horizontal(percentage($size / $columns), null);
+@mixin make-column-offset($i, $columns: $grid-columns) {
+  @include margin-horizontal(percentage($i / $columns), null);
 }
 
 
 // Push the column using left
 // ---------------------------------------------------------------------------------
 
-@mixin make-column-push($size, $columns: $grid-columns) {
-  @include position(null, null, null, if($size > 0, percentage($size / $columns), auto));
+@mixin make-column-push($i, $columns: $grid-columns) {
+  @include position(null, null, null, if($i > 0, percentage($i / $columns), auto));
 }
 
 
 // Pull the column using right
 // ---------------------------------------------------------------------------------
 
-@mixin make-column-pull($size, $columns: $grid-columns) {
-  @include position(null, if($size > 0, percentage($size / $columns), auto), null, null);
+@mixin make-column-pull($i, $columns: $grid-columns) {
+  @include position(null, if($i > 0, percentage($i / $columns), auto), null, null);
 }
 
 
 // Determine which modifier to add
 // ---------------------------------------------------------------------------------
 
-@mixin make-column-modifier($type, $size, $columns) {
+@mixin make-column-modifier($type, $i, $columns) {
   // Work around the lack of dynamic mixin @include support (https://github.com/sass/sass/issues/626)
   @if $type == push {
-    @include make-column-push($size, $columns);
+    @include make-column-push($i, $columns);
   } @else if $type == pull {
-    @include make-column-pull($size, $columns);
+    @include make-column-pull($i, $columns);
   } @else if $type == offset {
-    @include make-column-offset($size, $columns);
+    @include make-column-offset($i, $columns);
   }
 }
 
