@@ -1,16 +1,53 @@
 
 import { EventEmitter, Injectable } from '@angular/core';
 import { proxyEvent } from '../util/util';
+import { isAndroid, isCordova, isElectron, isIOS, isIpad, isIphone, isPhablet, isTablet } from '@ionic/core';
 
 export interface PlatformConfig {
   name: string;
   isMatch: (win: Window) => boolean;
 }
 
+export const PLATFORM_CONFIGS: PlatformConfig[] = [
+  {
+    name: 'ipad',
+    isMatch: isIpad
+  },
+  {
+    name: 'iphone',
+    isMatch: isIphone
+  },
+  {
+    name: 'ios',
+    isMatch: isIOS
+  },
+  {
+    name: 'android',
+    isMatch: isAndroid
+  },
+  {
+    name: 'phablet',
+    isMatch: isPhablet
+  },
+  {
+    name: 'tablet',
+    isMatch: isTablet
+  },
+  {
+    name: 'cordova',
+    isMatch: isCordova
+  },
+  {
+    name: 'electron',
+    isMatch: isElectron
+  }
+
+];
+
 @Injectable()
 export class Platform {
 
-  private _platforms: PlatformConfig[] = [];
+  private _platforms: PlatformConfig[] = PLATFORM_CONFIGS;
   private _readyPromise: Promise<string>;
 
   /**
@@ -51,9 +88,11 @@ export class Platform {
     this._readyPromise = new Promise(res => { readyResolve = res; } );
     if ((window as any)['cordova']) {
       window.addEventListener('deviceready', () => {
+        this._platforms = this.detectPlatforms(window, this._platforms);
         readyResolve('cordova');
       }, {once: true});
     } else {
+      this._platforms = this.detectPlatforms(window, this._platforms);
       readyResolve('dom');
     }
   }
@@ -102,6 +141,19 @@ export class Platform {
    */
   is(platformName: string): boolean {
     return this._platforms.some(p => p.name === platformName);
+  }
+
+  /**
+   * @param {Window} win the window object
+   * @param {PlatformConfig[]} platforms an array of platforms (platform configs)
+   * to get the appropriate platforms according to the configs provided.
+   * @description
+   * Detects the platforms using window and the platforms config provided.
+   * Populates the platforms array so they can be used later on for platform detection.
+   */
+  detectPlatforms(win: Window, platforms: PlatformConfig[]) {
+    // bracket notation to ensure they're not property renamed
+    return platforms.filter(p => p.isMatch(win));
   }
 
   /**
