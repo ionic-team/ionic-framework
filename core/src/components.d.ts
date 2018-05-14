@@ -6207,39 +6207,6 @@ declare global {
 declare global {
 
   namespace StencilComponents {
-    interface IonStatusTap {
-      'duration': number;
-    }
-  }
-
-  interface HTMLIonStatusTapElement extends StencilComponents.IonStatusTap, HTMLStencilElement {}
-
-  var HTMLIonStatusTapElement: {
-    prototype: HTMLIonStatusTapElement;
-    new (): HTMLIonStatusTapElement;
-  };
-  interface HTMLElementTagNameMap {
-    'ion-status-tap': HTMLIonStatusTapElement;
-  }
-  interface ElementTagNameMap {
-    'ion-status-tap': HTMLIonStatusTapElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      'ion-status-tap': JSXElements.IonStatusTapAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonStatusTapAttributes extends HTMLAttributes {
-      'duration'?: number;
-    }
-  }
-}
-
-
-declare global {
-
-  namespace StencilComponents {
     interface IonTabButton {
       'selected': boolean;
       'tab': HTMLIonTabElement;

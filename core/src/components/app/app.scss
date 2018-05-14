@@ -1,128 +1,5 @@
 @import "./app.vars";
 
-// Normalize
-// --------------------------------------------------
-@import "../../themes/normalize";
-
-// App Structure
-// --------------------------------------------------
-
-* {
-  box-sizing: border-box;
-
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-  -webkit-tap-highlight-color: transparent;
-  -webkit-touch-callout: none;
-}
-
-html {
-  width: 100%;
-  height: 100%;
-
-  text-size-adjust: 100%;
-}
-
-body {
-  @include font-smoothing();
-  @include margin(0);
-  @include padding(0);
-
-  position: fixed;
-  overflow: hidden;
-
-  width: 100%;
-  max-width: 100%;
-  height: 100%;
-  max-height: 100%;
-
-  text-rendering: optimizeLegibility;
-
-  -webkit-user-drag: none;
-
-  -ms-content-zooming: none;
-  touch-action: manipulation;
-
-  word-wrap: break-word;
-
-  overscroll-behavior-y: contain;
-
-  text-size-adjust: none;
-  user-select: none;
-}
-
-
-// App Typography
-// --------------------------------------------------
-
-a {
-  background-color: transparent;
-}
-
-a:not(.button):hover {
-  opacity: .7;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  @include margin(16px, null, 10px, null);
-
-  font-weight: $headings-font-weight;
-  line-height: $headings-line-height;
-}
-
-h1 {
-  @include margin(20px, null, null, null);
-
-  font-size: $h1-font-size;
-}
-
-h2 {
-  @include margin(18px, null, null, null);
-
-  font-size: $h2-font-size;
-}
-
-h3 {
-  font-size: $h3-font-size;
-}
-
-h4 {
-  font-size: $h4-font-size;
-}
-
-h5 {
-  font-size: $h5-font-size;
-}
-
-h6 {
-  font-size: $h6-font-size;
-}
-
-small {
-  font-size: 75%;
-}
-
-sub,
-sup {
-  position: relative;
-
-  font-size: 75%;
-  line-height: 0;
-  vertical-align: baseline;
-}
-
-sup {
-  top: -.5em;
-}
-
-sub {
-  bottom: -.25em;
-}
-
 // Page Container Structure
 // --------------------------------------------------
 
@@ -157,10 +34,6 @@ ion-app,
 
 $navigation-ios-transition-background: #000 !default;
 
-.nav-decor {
-  display: none;
-}
-
 .show-decor > .nav-decor {
   @include position(0, 0, 0, 0);
 
@@ -179,8 +52,6 @@ $navigation-ios-transition-background: #000 !default;
 // --------------------------------------------------
 
 ion-tap-click,
-ion-status-tap,
-ion-input-shims,
 ion-route,
 ion-route-controller,
 ion-animation-controller,
@@ -192,9 +63,6 @@ ion-loading-controller,
 ion-modal-controller,
 ion-picker-controller,
 ion-toast-controller,
-[app-viewport],
-[overlay-portal],
-[nav-viewport],
-[tab-portal] {
+.nav-decor {
   display: none;
 }

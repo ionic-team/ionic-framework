@@ -3,8 +3,9 @@ import { Component } from '@stencil/core';
 
 @Component({
   tag: 'ion-buttons',
-  host: {
-    theme: 'bar-buttons'
+  styleUrls: {
+    ios: 'buttons.ios.scss',
+    md: 'buttons.md.scss'
   }
 })
 export class Buttons {}

@@ -1,5 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { Config, Mode } from '../../interface';
+import { Config, Mode, QueueController } from '../../interface';
 import { isDevice, isHybrid, needInputShims } from '../../utils/platform';
 
 @Component({
@@ -20,9 +20,11 @@ export class App {
 
   @Prop({ context: 'window' }) win!: Window;
   @Prop({ context: 'config' }) config!: Config;
+  @Prop({ context: 'queue' }) queue!: QueueController;
 
   componentDidLoad() {
-    loadInputShims(this.win, this.config);
+    importInputShims(this.win, this.config);
+    importStatusTap(this.win, this.config, this.queue);
   }
 
   hostData() {
@@ -38,16 +40,21 @@ export class App {
   }
 
   render() {
-    const device = this.config.getBoolean('isDevice', isDevice(this.win));
     return [
       <ion-tap-click></ion-tap-click>,
-      device && <ion-status-tap></ion-status-tap>,
       <slot></slot>
     ];
   }
 }
 
-async function loadInputShims(win: Window, config: Config) {
+async function importStatusTap(win: Window, config: Config, queue: QueueController) {
+  const device = config.getBoolean('isDevice', isDevice(win));
+  if (device) {
+    (await import('../../utils/status-tap')).startStatusTap(win, queue);
+  }
+}
+
+async function importInputShims(win: Window, config: Config) {
   const inputShims = config.getBoolean('inputShims', needInputShims(win));
   if (inputShims) {
     (await import('../../utils/input-shims/input-shims')).startInputShims(win.document, config);

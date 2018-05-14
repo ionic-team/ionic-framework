@@ -30,7 +30,6 @@ exports.config = {
     { components: ['ion-refresher', 'ion-refresher-content']},
     { components: ['ion-tabs', 'ion-tab', 'ion-tabbar', 'ion-tab-button'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
-    { components: ['ion-status-tap'] },
     { components: ['ion-hide-when', 'ion-show-when'] },
   ],
   plugins: [

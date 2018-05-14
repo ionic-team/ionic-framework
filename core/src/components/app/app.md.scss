@@ -4,29 +4,29 @@
 // Material Design App
 // --------------------------------------------------
 
-.app-md {
+// .app-md {
 
-  @include footer-safe-area(
-    $toolbar-md-height,
-    $toolbar-md-padding,
-    $tabbar-md-height);
+//   @include footer-safe-area(
+//     $toolbar-md-height,
+//     $toolbar-md-padding,
+//     $tabbar-md-height);
 
-  font-family: $font-family-md-base;
-  font-size: $font-size-md-base;
-  background-color: $background-md-color;
+//   font-family: $font-family-md-base;
+//   font-size: $font-size-md-base;
+//   background-color: $background-md-color;
 
-  // TODO this can be simplified
-  &.statusbar-padding {
-    .ion-page,
-    .ion-page > ion-header,
-    ion-tab ion-nav .ion-page > ion-header,
-    ion-menu > .menu-inner,
-    ion-menu > .menu-inner > ion-header {
-      @include toolbar-statusbar-padding($toolbar-md-height, $toolbar-md-padding, $content-md-padding, $app-md-statusbar-padding);
-    }
-  }
-}
+//   // TODO this can be simplified
+//   &.statusbar-padding {
+//     .ion-page,
+//     .ion-page > ion-header,
+//     ion-tab ion-nav .ion-page > ion-header,
+//     ion-menu > .menu-inner,
+//     ion-menu > .menu-inner > ion-header {
+//       @include toolbar-statusbar-padding($toolbar-md-height, $toolbar-md-padding, $content-md-padding, $app-md-statusbar-padding);
+//     }
+//   }
+// }
 
-a {
-  color: $app-md-link-color;
-}
+// a {
+//   color: $app-md-link-color;
+// }
