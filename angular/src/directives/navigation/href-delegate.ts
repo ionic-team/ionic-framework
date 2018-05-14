@@ -8,7 +8,7 @@ export class HrefDelegate {
 
   @Input()
   set routerLink(_: any) {
-    this.elementRef.nativeElement.href = '#';
+    this.elementRef.nativeElement.button = true;
   }
 
   @Input()
