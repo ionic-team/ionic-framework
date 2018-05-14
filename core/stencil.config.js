@@ -35,16 +35,15 @@ exports.config = {
   plugins: [
     sass(),
   ],
-  outputTargets: [
-    {
-      type: 'dist'
-    }
-  ],
+  outputTargets: [{
+    type: 'dist',
+    empty: false
+  }],
   copy: [{ src: '**/*.scss' }],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',
   buildStats: true,
-  enableCache: false
+  enableCache: false,
 };
 
 exports.devServer = {
