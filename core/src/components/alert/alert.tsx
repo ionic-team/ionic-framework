@@ -28,7 +28,7 @@ export class Alert implements OverlayInterface {
   animation?: Animation;
 
   color!: string;
-  mode!: Mode;
+  @Prop() mode!: Mode;
 
   @Element() el!: HTMLStencilElement;
 

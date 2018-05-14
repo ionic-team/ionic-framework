@@ -358,6 +358,7 @@ declare global {
        * The main message to be displayed in the alert.
        */
       'message': string;
+      'mode': Mode;
       /**
        * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await alert.onDidDismiss(); ```
        */
@@ -438,6 +439,7 @@ declare global {
        * The main message to be displayed in the alert.
        */
       'message'?: string;
+      'mode'?: Mode;
       /**
        * Emitted after the alert has dismissed.
        */
