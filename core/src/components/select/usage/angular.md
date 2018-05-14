@@ -105,7 +105,7 @@
 </ion-list>
 ```
 
-```javascript
+```typescript
 import { Component } from '@angular/core';
 
 @Component({
