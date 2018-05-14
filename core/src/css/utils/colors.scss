@@ -1,0 +1,28 @@
+@import "../../themes/ionic.theme.default";
+
+@mixin generate-color($color-name) {
+  $value: map-get($colors, $color-name);
+
+  $base: map-get($value, "base");
+  $contrast: map-get($value, "contrast");
+  $shade: map-get($value, "shade");
+  $tint: map-get($value, "tint");
+
+  --ion-color: var(--ion-color-#{$color-name}, $base);
+  --ion-color-rgb: var(--ion-color-#{$color-name}-rgb, color-to-rgb-list($base));
+  --ion-color-contrast: var(--ion-color-#{$color-name}-contrast, $contrast);
+  --ion-color-contrast-rgb: var(--ion-color-#{$color-name}-contrast-rgb, color-to-rgb-list($contrast));
+  --ion-color-shade: var(--ion-color-#{$color-name}-shade, $shade);
+  --ion-color-tint: var(--ion-color-#{$color-name}-tint, $tint);
+}
+
+:root {
+  @include generate-color("primary")
+}
+
+@each $color-name, $value in $colors {
+  .color-#{$color-name} {
+    @include generate-color($color-name);
+  }
+}
+

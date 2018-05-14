@@ -202,6 +202,7 @@ function getColorClassMap(buttonType: string, color: string | undefined, fill: s
   };
   if (color) {
     map[`${className}-${mode}-${color}`] = true;
+    map[`color-${color}`] = true;
   }
   return map;
 }
