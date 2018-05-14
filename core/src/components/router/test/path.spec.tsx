@@ -1,4 +1,4 @@
-import { RouteChain, RouterDirection } from '../utils/interface';
+import { RouteChain, RouterIntent } from '../utils/interface';
 import { chainToPath, generatePath, parsePath, readPath, writePath } from '../utils/path';
 
 describe('parseURL', () => {
@@ -179,62 +179,62 @@ describe('readPath', () => {
 describe('writePath', () => {
   it('should write root path (no hash)', () => {
     const history = mockHistory();
-    writePath(history, '', false, [''], RouterDirection.Forward, 123);
+    writePath(history, '', false, [''], RouterIntent.Forward, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '/');
 
-    writePath(history, '', false, ['schedule'], RouterDirection.Forward, 123);
+    writePath(history, '', false, ['schedule'], RouterIntent.Forward, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '/schedule');
 
-    writePath(history, '/', false, [''], RouterDirection.Forward, 123);
+    writePath(history, '/', false, [''], RouterIntent.Forward, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '/');
 
-    writePath(history, '/', false, ['to', 'schedule'], RouterDirection.Forward, 123);
+    writePath(history, '/', false, ['to', 'schedule'], RouterIntent.Forward, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '/to/schedule');
   });
 
 
   it('should write non root path (no hash)', () => {
     const history = mockHistory();
-    writePath(history, '/path', false, [''], RouterDirection.Forward, 2);
+    writePath(history, '/path', false, [''], RouterIntent.Forward, 2);
     expect(history.pushState).toHaveBeenCalledWith(2, '', '/path');
 
-    writePath(history, '/path', false, ['to', 'page'], RouterDirection.Forward, 2);
+    writePath(history, '/path', false, ['to', 'page'], RouterIntent.Forward, 2);
     expect(history.pushState).toHaveBeenCalledWith(2, '', '/path/to/page');
 
-    writePath(history, 'path/to', false, ['second', 'page'], RouterDirection.Forward, 2);
+    writePath(history, 'path/to', false, ['second', 'page'], RouterIntent.Forward, 2);
     expect(history.pushState).toHaveBeenCalledWith(2, '', '/path/to/second/page');
 
-    writePath(history, '/path/to/', false, ['second', 'page'], RouterDirection.Forward, 2);
+    writePath(history, '/path/to/', false, ['second', 'page'], RouterIntent.Forward, 2);
     expect(history.pushState).toHaveBeenCalledWith(2, '', '/path/to/second/page');
   });
 
   it('should write root path (no hash)', () => {
     const history = mockHistory();
-    writePath(history, '', true, [''], RouterDirection.Forward, 123);
+    writePath(history, '', true, [''], RouterIntent.Forward, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/');
 
-    writePath(history, '', true, ['schedule'], RouterDirection.Forward, 123);
+    writePath(history, '', true, ['schedule'], RouterIntent.Forward, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/schedule');
 
-    writePath(history, '/', true, [''], RouterDirection.Forward, 123);
+    writePath(history, '/', true, [''], RouterIntent.Forward, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/');
 
-    writePath(history, '/', true, ['to', 'schedule'], RouterDirection.Forward, 123);
+    writePath(history, '/', true, ['to', 'schedule'], RouterIntent.Forward, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/to/schedule');
   });
 
   it('should write non root path (no hash)', () => {
     const history = mockHistory();
-    writePath(history, '/path', true, [''], RouterDirection.Forward, 123);
+    writePath(history, '/path', true, [''], RouterIntent.Forward, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/path');
 
-    writePath(history, '/path', true, ['to', 'page'], RouterDirection.Forward, 123);
+    writePath(history, '/path', true, ['to', 'page'], RouterIntent.Forward, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/path/to/page');
 
-    writePath(history, 'path/to', true, ['second', 'page'], RouterDirection.Forward, 123);
+    writePath(history, 'path/to', true, ['second', 'page'], RouterIntent.Forward, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/path/to/second/page');
 
-    writePath(history, '/path/to/', true, ['second', 'page'], RouterDirection.Forward, 123);
+    writePath(history, '/path/to/', true, ['second', 'page'], RouterIntent.Forward, 123);
     expect(history.pushState).toHaveBeenCalledWith(123, '', '#/path/to/second/page');
   });
 });

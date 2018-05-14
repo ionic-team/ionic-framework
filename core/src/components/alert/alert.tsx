@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
-import { AlertButton, AlertInput, Animation, AnimationBuilder, Config, CssClassMap, Mode } from '../../interface';
+import { AlertButton, AlertInput, Animation, AnimationBuilder, Color, Config, CssClassMap, Mode } from '../../interface';
 import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
@@ -27,8 +27,8 @@ export class Alert implements OverlayInterface {
   presented = false;
   animation?: Animation;
 
-  color!: string;
-  mode!: Mode;
+  color!: Color;
+  @Prop() mode!: Mode;
 
   @Element() el!: HTMLStencilElement;
 

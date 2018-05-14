@@ -1,5 +1,5 @@
 import { Component, Prop } from '@stencil/core';
-import { Mode } from '../../interface';
+import { Color, Mode } from '../../interface';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class Note {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color!: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.

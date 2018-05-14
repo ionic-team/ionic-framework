@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
-import { InputChangeEvent, Mode, StyleEvent  } from '../../interface';
+import { Color, InputChangeEvent, Mode, StyleEvent  } from '../../interface';
 import { debounceEvent, deferEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 import { InputComponent } from './input-base';
@@ -21,7 +21,7 @@ export class Input implements InputComponent {
   didBlurAfterEdit = false;
 
   mode!: Mode;
-  color!: string;
+  color?: Color;
 
   @Element() el!: HTMLElement;
 

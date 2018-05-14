@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, Mode } from '../../interface';
+import { Animation, AnimationBuilder, Color, Config, Mode } from '../../interface';
 import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
@@ -25,7 +25,7 @@ export class Loading implements OverlayInterface {
 
   presented = false;
   animation?: Animation;
-  color!: string;
+  color?: Color;
   mode!: Mode;
 
   @Element() el!: HTMLElement;

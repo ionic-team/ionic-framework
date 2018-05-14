@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
-import { CssClassMap, Mode, RouterDirection } from '../../interface';
+import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
 import { getButtonClassMap, getElementClassMap, openURL } from '../../utils/theme';
 
 
@@ -22,7 +22,7 @@ export class Button {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color!: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
@@ -176,7 +176,7 @@ function getButtonTypeClassMap(buttonType: string, type: string|undefined, mode:
   };
 }
 
-function getColorClassMap(buttonType: string, color: string, fill: string, mode: Mode): CssClassMap {
+function getColorClassMap(buttonType: string, color: string | undefined, fill: string, mode: Mode): CssClassMap {
   let className = buttonType;
 
   if (buttonType !== 'bar-button' && fill === 'solid') {

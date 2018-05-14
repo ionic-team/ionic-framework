@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, Mode } from '../../interface';
+import { Animation, AnimationBuilder, Color, Config, Mode } from '../../interface';
 
 import { OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
@@ -29,7 +29,7 @@ export class Toast implements OverlayInterface {
   @Element() el!: HTMLElement;
 
   mode!: Mode;
-  color!: string;
+  color?: Color;
   animation: Animation | undefined;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;

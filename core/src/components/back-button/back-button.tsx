@@ -1,5 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { Config, Mode } from '../../interface';
+import { Color, Config, Mode } from '../../interface';
 import { createThemedClasses, getElementClassMap, openURL } from '../../utils/theme';
 
 @Component({
@@ -24,7 +24,7 @@ export class BackButton {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color!: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.

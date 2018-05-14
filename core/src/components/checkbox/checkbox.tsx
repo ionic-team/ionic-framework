@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { CheckboxInput, CheckedInputChangeEvent, CssClassMap, Mode, StyleEvent } from '../../interface';
+import { CheckboxInput, CheckedInputChangeEvent, Color, CssClassMap, Mode, StyleEvent } from '../../interface';
 import { deferEvent } from '../../utils/helpers';
 
 
@@ -26,7 +26,7 @@ export class Checkbox implements CheckboxInput {
    * The color to use.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
-  @Prop() color!: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.

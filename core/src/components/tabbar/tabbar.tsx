@@ -1,5 +1,5 @@
 import { Component, Element, Listen, Prop, State, Watch } from '@stencil/core';
-import { Mode, QueueController } from '../../interface';
+import { Color, Mode, QueueController } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 export type TabbarLayout = 'icon-top' | 'icon-start' | 'icon-end' | 'icon-bottom' | 'icon-hide' | 'title-hide';
@@ -20,7 +20,7 @@ export class Tabbar {
   private scrollEl?: HTMLIonScrollElement;
 
   mode!: Mode;
-  color!: string;
+  color?: Color;
 
   @Element() el!: HTMLElement;
 

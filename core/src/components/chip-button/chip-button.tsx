@@ -1,5 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { CssClassMap, Mode } from '../../interface';
+import { Color, CssClassMap, Mode } from '../../interface';
 import { getButtonClassMap, getElementClassMap } from '../../utils/theme';
 
 @Component({
@@ -16,7 +16,7 @@ export class ChipButton {
    * The color to use.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
-  @Prop() color!: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
@@ -77,7 +77,7 @@ export class ChipButton {
 /**
  * Get the classes for the color
  */
-function getColorClassMap(color: string, buttonType: string, style: string, mode: Mode): CssClassMap {
+function getColorClassMap(color: string | undefined, buttonType: string, style: string, mode: Mode): CssClassMap {
   const className = (style === 'default') ? `${buttonType}` : `${buttonType}-${style}`;
 
   const map: CssClassMap = {

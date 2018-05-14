@@ -1,5 +1,5 @@
 import { Component, Element, Listen, Method, Prop } from '@stencil/core';
-import { Config, Mode, QueueController } from '../../interface';
+import { Color, Config, Mode, QueueController } from '../../interface';
 
 
 @Component({
@@ -14,7 +14,7 @@ export class Content {
   private scrollEl?: HTMLIonScrollElement;
 
   mode!: Mode;
-  color!: string;
+  color?: Color;
 
   @Element() el!: HTMLElement;
 

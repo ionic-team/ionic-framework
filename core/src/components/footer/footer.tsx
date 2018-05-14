@@ -1,6 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { Color, Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({
@@ -15,7 +15,7 @@ import { createThemedClasses } from '../../utils/theme';
 })
 export class Footer {
   mode!: Mode;
-  color!: string;
+  color?: Color;
 
   /**
    * If true, the footer will be translucent.

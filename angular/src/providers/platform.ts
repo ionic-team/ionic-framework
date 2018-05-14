@@ -1,16 +1,12 @@
 
 import { EventEmitter, Injectable } from '@angular/core';
 import { proxyEvent } from '../util/util';
-
-export interface PlatformConfig {
-  name: string;
-  isMatch: (win: Window) => boolean;
-}
+import { PlatformConfig, detectPlatforms } from '@ionic/core';
 
 @Injectable()
 export class Platform {
 
-  private _platforms: PlatformConfig[] = [];
+  private _platforms = detectPlatforms(window);
   private _readyPromise: Promise<string>;
 
   /**
@@ -102,6 +98,18 @@ export class Platform {
    */
   is(platformName: string): boolean {
     return this._platforms.some(p => p.name === platformName);
+  }
+
+  /**
+   * @param {Window} win the window object
+   * @param {PlatformConfig[]} platforms an array of platforms (platform configs)
+   * to get the appropriate platforms according to the configs provided.
+   * @description
+   * Detects the platforms using window and the platforms config provided.
+   * Populates the platforms array so they can be used later on for platform detection.
+   */
+  detectPlatforms(platforms: PlatformConfig[]) {
+    return detectPlatforms(window, platforms);
   }
 
   /**
