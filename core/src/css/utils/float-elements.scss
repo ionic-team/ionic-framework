@@ -1,14 +1,6 @@
 @import "../../themes/ionic.globals";
 @import "../../themes/ionic.mixins";
 
-$screen-breakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px
-) !default;
-
 
 // Creates text transform attributes based on screen size
 @each $breakpoint in map-keys($screen-breakpoints) {

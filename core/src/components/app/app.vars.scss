@@ -30,17 +30,3 @@ $h5-font-size:                 18px !default;
 
 /// @prop - Font size of heading level 6
 $h6-font-size:                 16px !default;
-
-
-// Screen Breakpoints
-// --------------------------------------------------
-
-/// @prop - The minimum dimensions at which your layout will change,
-/// adapting to different screen sizes, for use in media queries
-$screen-breakpoints: (
-  xs: 0,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px
-) !default;

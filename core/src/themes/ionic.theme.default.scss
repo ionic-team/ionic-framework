@@ -14,15 +14,12 @@ $light:           #f4f5f8;
 $medium:          #989aa2;
 $dark:            #222428;
 
-// Allows users to override an individual color
-$colors:              () !default;
-
 // Primary color map should provide
 //   - base: main color to be used.
 //   - contrast: Color that will provide readable text against the base color
 //   - shade: 12% darker version of the base color (mix with black)
 //   - tint: 10% lighter version of the base color (mix with white)
-$ion-colors:  (
+$colors:  (
   primary: (
     base:             $primary,
     contrast:         #fff,
@@ -78,7 +75,6 @@ $ion-colors:  (
     tint:             get-color-tint($dark)
   )
 );
-$colors:              ion-extend-colors($ion-colors, $colors);
 
 // Default General
 // --------------------------------------------------

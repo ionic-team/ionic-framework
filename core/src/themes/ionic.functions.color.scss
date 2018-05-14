@@ -1,6 +1,3 @@
-@import "./ionic.functions.list";
-@import "./ionic.functions.string";
-
 $css-variable-prefix: "--ion-" !default;
 $default-color-variation: base !default;
 $default-color-prefix: color- !default;
@@ -10,20 +7,35 @@ $modes: (ios, md) !default;
 // Private
 $css-variables: ();
 
+@function remove-nth($list, $index) {
+  $result: null;
+
+  @if type-of($index) != number {
+    @warn "$index: #{quote($index)} is not a number for `remove-nth`.";
+  } @else if $index == 0 {
+    @warn "List index 0 must be a non-zero integer for `remove-nth`.";
+  } @else if abs($index) > length($list) {
+    @warn "List index is #{$index} but list is only #{length($list)} item long for `remove-nth`.";
+  } @else {
+    $result: ();
+    $index: if($index < 0, length($list) + $index + 1, $index);
+
+    @for $i from 1 through length($list) {
+      @if $i != $index {
+        $result: append($result, nth($list, $i));
+      }
+    }
+  }
+
+  @return $result;
+}
+
 @function get-color-shade($color) {
   @return mix(#000, $color, 12%);
 }
 
 @function get-color-tint($color) {
   @return mix(#fff, $color, 10%);
-}
-
-@function force-hex($color) {
-  @if type-of($color) == "color" {
-    $hex: str-slice(ie-hex-str($color), 4);
-    @return unquote("\##{to-lower-case($hex)}");
-  }
-  @return $color;
 }
 
 @function get-mode($name) {
@@ -37,7 +49,6 @@ $css-variables: ();
 }
 
 // Parses a color into its name/variation pairs from the color map
-// @private
 @function color-to-name-variation($colors, $color, $variation: null) {
   $results: ();
   $found: false;
@@ -67,7 +78,6 @@ $css-variables: ();
 }
 
 // Parses a css variable string into its original name/variation pair
-// @private
 @function css-variable-to-name-variation($variable) {
   // Determine the name of this color from the CSS Variable
   $prefix: #{$css-variable-prefix}#{$default-color-prefix};
@@ -173,7 +183,7 @@ $css-variables: ();
         $variation: map-get($results, variation);
       } @else {
         @if ($variation) {
-          @warn "Color '#{$name}' does not exist in map. Unable to set to variation '#{$variation}'"
+          @warn "Color '#{$name}' does not exist in map. Unable to set to variation '#{$variation}'";
         }
       }
     }
@@ -219,53 +229,11 @@ $css-variables: ();
     }
 
     @if $alpha {
-      @return css-var($color, $name, $alpha)
+      @return css-var($color, $name, $alpha);
     }
 
     @return css-var($color, $name);
   }
 
   @error "Unknown Color: '#{$name}' with variation '#{$variation}'";
-}
-
-@function ion-extend-colors($parent, $children...) {
-  $result: map-merge($parent, ());
-
-  @each $child in $children {
-    @each $key, $value in $child {
-      @if type-of($value) == map {
-        $obj: ();
-        @if (map-has-key($result, $key)) {
-          $obj: map-get($result, $key);
-
-          @if (type-of($obj) == color) {
-            $obj: (base: $obj);
-          }
-        }
-        $result: map-merge($result, ($key: ion-extend-colors($obj, $value)));
-      } @else {
-        $result: map-merge($result, ($key: $value));
-      }
-    }
-  }
-  @return $result;
-}
-
-@mixin css-variables-to-root($colors) {
-  @each $name, $value in $colors {
-    @each $variation, $color in $value {
-      @if ($variation == 'base') {
-        $test: css-var(force-hex($color), unquote("color-#{$name}"));
-        $test: css-var("#{red($color)},#{green($color)},#{blue($color)}", unquote("color-#{$name}-rgb"));
-      } @else {
-        $test: css-var(force-hex($color), unquote("color-#{$name}-#{$variation}"));
-      }
-    }
-  }
-
-  :root {
-    @each $name, $color in $css-variables {
-      #{$name}: $color;
-    }
-  }
 }
