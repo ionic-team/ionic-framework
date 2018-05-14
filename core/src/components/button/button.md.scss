@@ -89,19 +89,23 @@ button[disabled],
 // --------------------------------------------------
 
 .button-large-md {
-  @include padding($button-md-large-padding-top, $button-md-large-padding-end, $button-md-large-padding-bottom, $button-md-large-padding-start);
+  --ion-button-padding-top: $button-md-large-padding-top;
+  --ion-button-padding-start: $button-md-large-padding-start;
+  --ion-button-padding-end: $button-md-large-padding-end;
+  --ion-button-padding-bottom: $button-md-large-padding-bottom;
 
-  height: $button-md-large-height;
-
-  font-size: $button-md-large-font-size;
+  --ion-button-height: $button-md-large-height;
+  --ion-button-font-size: $button-md-large-font-size;
 }
 
 .button-small-md {
-  @include padding($button-md-small-padding-top, $button-md-small-padding-end, $button-md-small-padding-bottom, $button-md-small-padding-start);
+  --ion-button-padding-top: $button-md-small-padding-top;
+  --ion-button-padding-start: $button-md-small-padding-start;
+  --ion-button-padding-end: $button-md-small-padding-end;
+  --ion-button-padding-bottom: $button-md-small-padding-bottom;
 
-  height: $button-md-small-height;
-
-  font-size: $button-md-small-font-size;
+  --ion-button-height: $button-md-small-height;
+  --ion-button-font-size: $button-md-small-font-size;
 }
 
 // Material Design Block Button

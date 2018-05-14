@@ -7,40 +7,40 @@
 $button-md-font-family:                                 $font-family-md-base !default;
 
 /// @prop - Margin top of the button
-$button-md-margin-top:                                  4px !default;
+$button-md-margin-top:                                  var(--ion-button-margin-top, 4px) !default;
 
 /// @prop - Margin end of the button
-$button-md-margin-end:                                  2px !default;
+$button-md-margin-end:                                  var(--ion-button-margin-end, 2px) !default;
 
 /// @prop - Margin bottom of the button
-$button-md-margin-bottom:                               4px !default;
+$button-md-margin-bottom:                               var(--ion-button-margin-bottom, 4px) !default;
 
 /// @prop - Margin start of the button
-$button-md-margin-start:                                2px !default;
+$button-md-margin-start:                                var(--ion-button-margin-start, 2px) !default;
 
 /// @prop - Padding top of the button
-$button-md-padding-top:                                 0 !default;
+$button-md-padding-top:                                 var(--ion-button-padding-top, 0) !default;
 
 /// @prop - Padding end of the button
-$button-md-padding-end:                                 1.1em !default;
+$button-md-padding-end:                                 var(--ion-button-padding-end, 1.1em) !default;
 
 /// @prop - Padding bottom of the button
-$button-md-padding-bottom:                              $button-md-padding-top !default;
+$button-md-padding-bottom:                              var(--ion-button-padding-bottom, 0) !default;
 
 /// @prop - Padding start of the button
-$button-md-padding-start:                               $button-md-padding-end !default;
+$button-md-padding-start:                               var(--ion-button-padding-start, 1.1em) !default;
 
 /// @prop - Height of the button
-$button-md-height:                                      36px !default;
+$button-md-height:                                      var(--ion-button-height, 36px) !default;
 
 /// @prop - Border radius of the button
-$button-md-border-radius:                               2px !default;
+$button-md-border-radius:                               var(--ion-button-border-radius, 2px) !default;
 
 /// @prop - Font size of the button text
-$button-md-font-size:                                   14px !default;
+$button-md-font-size:                                   var(--ion-button-font-size, 14px) !default;
 
 /// @prop - Font weight of the button text
-$button-md-font-weight:                                 500 !default;
+$button-md-font-weight:                                 var(--ion-button-font-weight, 500) !default;
 
 /// @prop - Capitalization of the button text
 $button-md-text-transform:                              uppercase !default;
@@ -52,7 +52,7 @@ $button-md-background-color:                            ion-color($colors-md, pr
 $button-md-text-color:                                  ion-color($colors-md, $button-md-background-color, contrast, md) !default;
 
 /// @prop - Box shadow of the button
-$button-md-box-shadow:                                  0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12) !default;
+$button-md-box-shadow:                                  var(--ion-button-box-shadow, 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12)) !default;
 
 /// @prop - Duration of the transition of the button
 $button-md-transition-duration:                         300ms !default;

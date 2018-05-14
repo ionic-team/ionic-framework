@@ -82,10 +82,10 @@ $colors:              ion-extend-colors($ion-colors, $colors);
 
 // Default General
 // --------------------------------------------------
-$content-margin:                              16px !default;
-$content-padding:                             16px !default;
-$font-family-base:                            -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif !default;
-$font-size-base:                              14px !default; // TODO: remove
+$content-margin:                              var(--ion-content-margin, 16px) !default;
+$content-padding:                             var(--ion-content-padding, 16px) !default;
+$font-family-base:                            var(--ion-font-family, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif) !default;
+$font-size-base:                              var(--ion-font-size-base, 14px) !default; // TODO: remove
 
 // Default Foreground and Background Colors values
 // Allows users to override an foreground / background colors

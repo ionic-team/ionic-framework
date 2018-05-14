@@ -7,40 +7,40 @@
 $button-ios-font-family:                              $font-family-ios-base !default;
 
 /// @prop - Margin top of the button
-$button-ios-margin-top:                               4px !default;
+$button-ios-margin-top:                               var(--ion-button-margin-top, 4px) !default;
 
 /// @prop - Margin end of the button
-$button-ios-margin-end:                               2px !default;
+$button-ios-margin-end:                               var(--ion-button-margin-end, 2px) !default;
 
 /// @prop - Margin bottom of the button
-$button-ios-margin-bottom:                            4px !default;
+$button-ios-margin-bottom:                            var(--ion-button-margin-bottom, 4px) !default;
 
 /// @prop - Margin start of the button
-$button-ios-margin-start:                             2px !default;
+$button-ios-margin-start:                             var(--ion-button-margin-start, 2px) !default;
 
 /// @prop - Padding top of the button
-$button-ios-padding-top:                              0 !default;
+$button-ios-padding-top:                              var(--ion-button-padding-top, 0) !default;
 
 /// @prop - Padding end of the button
-$button-ios-padding-end:                              1em !default;
+$button-ios-padding-end:                              var(--ion-button-padding-end, 1em) !default;
 
 /// @prop - Padding bottom of the button
-$button-ios-padding-bottom:                           $button-ios-padding-top !default;
+$button-ios-padding-bottom:                           var(--ion-button-padding-bottom, 0) !default;
 
 /// @prop - Padding start of the button
-$button-ios-padding-start:                            $button-ios-padding-end !default;
+$button-ios-padding-start:                            var(--ion-button-padding-start, 1em) !default;
 
 /// @prop - Height of the button
-$button-ios-height:                                   2.8em !default;
+$button-ios-height:                                   var(--ion-button-height, 2.8em) !default;
 
 /// @prop - Border radius of the button
-$button-ios-border-radius:                            8px !default;
+$button-ios-border-radius:                            var(--ion-button-border-radius, 8px) !default;
 
 /// @prop - Font size of the button text
-$button-ios-font-size:                                16px !default;
+$button-ios-font-size:                                var(--ion-button-font-size, 16px) !default;
 
 /// @prop - Font weight of the button text
-$button-ios-font-weight:                              500 !default;
+$button-ios-font-weight:                              var(--ion-button-font-size, 500) !default;
 
 /// @prop - Letter spacing of the button text
 $button-ios-letter-spacing:                           -.03em !default;
@@ -58,7 +58,7 @@ $button-ios-background-color-activated:               ion-color($colors-ios, $bu
 $button-ios-opacity-activated:                        1 !default;
 
 /// @prop - Opacity of the button on hover
-$button-ios-opacity-hover:                            .8 !default;
+$button-ios-opacity-hover:                            var(--ion-button-opacity-hover, .8) !default;
 
 /// @prop - Background color of the focused button
 $button-ios-background-color-focused:                 ion-color($colors-ios, $button-ios-background-color, shade, ios) !default;
