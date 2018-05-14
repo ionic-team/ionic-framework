@@ -70,3 +70,48 @@ export function matchMedia(win: Window, query: string, fallback = false): boolea
     ? win.matchMedia(query).matches
     : fallback;
 }
+
+export interface PlatformConfig {
+  name: string;
+  isMatch: (win: Window) => boolean;
+}
+
+export const PLATFORM_CONFIGS: PlatformConfig[] = [
+  {
+    name: 'ipad',
+    isMatch: isIpad
+  },
+  {
+    name: 'iphone',
+    isMatch: isIphone
+  },
+  {
+    name: 'ios',
+    isMatch: isIOS
+  },
+  {
+    name: 'android',
+    isMatch: isAndroid
+  },
+  {
+    name: 'phablet',
+    isMatch: isPhablet
+  },
+  {
+    name: 'tablet',
+    isMatch: isTablet
+  },
+  {
+    name: 'cordova',
+    isMatch: isCordova
+  },
+  {
+    name: 'electron',
+    isMatch: isElectron
+  }
+];
+
+export function detectPlatforms(win: Window, platforms: PlatformConfig[] = PLATFORM_CONFIGS) {
+  // bracket notation to ensure they're not property renamed
+  return platforms.filter(p => p.isMatch(win));
+}
