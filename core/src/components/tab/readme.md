@@ -62,7 +62,7 @@ string
 The badge for the tab.
 
 
-#### badgeStyle
+#### badgeColor
 
 string
 
@@ -156,7 +156,7 @@ string
 The badge for the tab.
 
 
-#### badge-style
+#### badge-color
 
 string
 

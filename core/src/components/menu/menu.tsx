@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { Animation, Config, GestureDetail, MenuChangeEventDetail, Mode } from '../../interface';
+import { Animation, Color, Config, GestureDetail, MenuChangeEventDetail, Mode } from '../../interface';
 import { Side, assert, isEndSide } from '../../utils/helpers';
 
 @Component({
@@ -20,7 +20,7 @@ export class Menu {
   private lastOnEnd = 0;
 
   mode!: Mode;
-  color!: string;
+  color?: Color;
   isAnimating = false;
   width!: number; // TOOD
 

@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { CheckboxInput, CheckedInputChangeEvent, GestureDetail, Mode, StyleEvent } from '../../interface';
+import { CheckboxInput, CheckedInputChangeEvent, Color, GestureDetail, Mode, StyleEvent } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
 import { deferEvent } from '../../utils/helpers';
 
@@ -29,7 +29,7 @@ export class Toggle implements CheckboxInput {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color!: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.

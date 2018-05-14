@@ -1,5 +1,5 @@
 import { Component, Prop} from '@stencil/core';
-import { Mode } from '../../interface';
+import { Color, Mode } from '../../interface';
 
 
 @Component({
@@ -17,7 +17,7 @@ export class CardSubtitle {
    * The color to use for the text color.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
-  @Prop() color!: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.

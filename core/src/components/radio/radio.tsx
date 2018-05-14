@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { CheckedInputChangeEvent, Mode, RadioButtonInput, StyleEvent } from '../../interface';
+import { CheckedInputChangeEvent, Color, Mode, RadioButtonInput, StyleEvent } from '../../interface';
 import { deferEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -26,7 +26,7 @@ export class Radio implements RadioButtonInput {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color!: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.

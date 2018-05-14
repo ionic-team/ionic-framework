@@ -24,6 +24,7 @@ export * from './global/config';
 // export index
 export * from './index';
 
+export type Color = 'default'| 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
 export type Mode = 'ios' | 'md';
 export type ComponentRef = Function | HTMLElement | string;
 export type ComponentProps = {[key: string]: any};

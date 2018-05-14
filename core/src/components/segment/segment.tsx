@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
-import { InputChangeEvent, Mode } from '../../interface';
+import { Color, InputChangeEvent, Mode } from '../../interface';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class Segment {
    * The color to use for the text color.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
-  @Prop() color!: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.

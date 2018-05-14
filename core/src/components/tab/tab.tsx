@@ -1,5 +1,5 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
-import { ComponentRef, FrameworkDelegate } from '../../interface';
+import { Color, ComponentRef, FrameworkDelegate } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 
 @Component({
@@ -38,7 +38,7 @@ export class Tab {
   /**
    * The badge color for the tab button.
    */
-  @Prop() badgeStyle = 'default';
+  @Prop() badgeColor: Color = 'default';
 
   /**
    * The component to display inside of the tab.

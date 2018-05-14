@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
-import { Mode } from '../../interface';
+import { Color, Mode } from '../../interface';
 import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 
 let ids = 0;
@@ -19,7 +19,7 @@ export class SegmentButton {
    * The color to use for the text color.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
-  @Prop() color!: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.

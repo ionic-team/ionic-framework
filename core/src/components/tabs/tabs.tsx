@@ -1,5 +1,5 @@
 import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Config, NavOutlet, RouteID, RouteWrite } from '../../interface';
+import { Color, Config, NavOutlet, RouteID, RouteWrite } from '../../interface';
 import { TabbarLayout, TabbarPlacement } from '../tabbar/tabbar';
 
 
@@ -27,7 +27,7 @@ export class Tabs implements NavOutlet {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color!: string;
+  @Prop() color?: Color;
 
   /**
    * A unique name for the tabs

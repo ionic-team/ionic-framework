@@ -1,6 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 
-import { Mode } from '../../interface';
+import { Color, Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({
@@ -18,7 +18,7 @@ export class CardHeader {
    * The color to use for the background.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
-  @Prop() color!: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.

@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
-import { Mode, StyleEvent } from '../../interface';
+import { Color, Mode, StyleEvent } from '../../interface';
 
 
 @Component({
@@ -21,7 +21,7 @@ export class Label {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color!: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.

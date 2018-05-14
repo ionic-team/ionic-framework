@@ -35,6 +35,7 @@ import {
   AnimationBuilder,
   BlockerConfig,
   CheckedInputChangeEvent,
+  Color,
   ComponentProps,
   ComponentRef,
   FrameworkDelegate,
@@ -635,7 +636,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * The url to navigate back to by default when there is no history.
        */
@@ -677,7 +678,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The url to navigate back to by default when there is no history.
        */
@@ -765,7 +766,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
@@ -795,7 +796,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
@@ -816,7 +817,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * If true, the user cannot interact with the button. Defaults to `false`.
        */
@@ -886,7 +887,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * If true, the user cannot interact with the button. Defaults to `false`.
        */
@@ -980,7 +981,7 @@ declare global {
       /**
        * The color to use for the text. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color': string;
+      'color': Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
@@ -1010,7 +1011,7 @@ declare global {
       /**
        * The color to use for the text. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
@@ -1027,7 +1028,7 @@ declare global {
       /**
        * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color': string;
+      'color': Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
@@ -1061,7 +1062,7 @@ declare global {
       /**
        * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
@@ -1082,7 +1083,7 @@ declare global {
       /**
        * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color': string;
+      'color': Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
@@ -1112,7 +1113,7 @@ declare global {
       /**
        * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
@@ -1129,7 +1130,7 @@ declare global {
       /**
        * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color': string;
+      'color': Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
@@ -1159,7 +1160,7 @@ declare global {
       /**
        * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
@@ -1176,7 +1177,7 @@ declare global {
       /**
        * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color': string;
+      'color': Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
@@ -1206,7 +1207,7 @@ declare global {
       /**
        * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
@@ -1227,7 +1228,7 @@ declare global {
       /**
        * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color': string;
+      'color': Color;
       /**
        * If true, the user cannot interact with the checkbox. Defaults to `false`.
        */
@@ -1273,7 +1274,7 @@ declare global {
       /**
        * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * If true, the user cannot interact with the checkbox. Defaults to `false`.
        */
@@ -1318,7 +1319,7 @@ declare global {
       /**
        * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color': string;
+      'color': Color;
       /**
        * If true, the user cannot interact with the chip button. Defaults to `false`.
        */
@@ -1360,7 +1361,7 @@ declare global {
       /**
        * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * If true, the user cannot interact with the chip button. Defaults to `false`.
        */
@@ -1389,7 +1390,7 @@ declare global {
       /**
        * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color': string;
+      'color': Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
@@ -1419,7 +1420,7 @@ declare global {
       /**
        * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
@@ -1725,7 +1726,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * If true, the user cannot interact with the fab button. Defaults to `false`.
        */
@@ -1772,7 +1773,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * If true, the user cannot interact with the fab button. Defaults to `false`.
        */
@@ -2588,7 +2589,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
@@ -2618,7 +2619,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
@@ -2668,7 +2669,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * If true, the user cannot interact with the item option. Defaults to `false`.
        */
@@ -2710,7 +2711,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * If true, the user cannot interact with the item option. Defaults to `false`.
        */
@@ -2840,7 +2841,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
        */
@@ -2894,7 +2895,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
        */
@@ -2931,7 +2932,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       'getText': () => string;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
@@ -2966,7 +2967,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
@@ -2991,7 +2992,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
@@ -3021,7 +3022,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
@@ -3587,7 +3588,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * The component to display inside of the modal.
        */
@@ -3668,7 +3669,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The component to display inside of the modal.
        */
@@ -3907,7 +3908,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
@@ -3937,7 +3938,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
@@ -4208,7 +4209,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * The component to display inside of the popover.
        */
@@ -4297,7 +4298,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The component to display inside of the popover.
        */
@@ -4446,7 +4447,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * Indicates that the user cannot interact with the control.
        */
@@ -4492,7 +4493,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * Indicates that the user cannot interact with the control.
        */
@@ -4596,7 +4597,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. Default `0`.
        */
@@ -4666,7 +4667,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. Default `0`.
        */
@@ -5317,7 +5318,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `250`.
        */
@@ -5387,7 +5388,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `250`.
        */
@@ -5456,7 +5457,7 @@ declare global {
       /**
        * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color': string;
+      'color': Color;
       'disabled': boolean;
       /**
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
@@ -5499,7 +5500,7 @@ declare global {
       /**
        * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color'?: string;
+      'color'?: Color;
       'disabled'?: boolean;
       /**
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
@@ -5529,7 +5530,7 @@ declare global {
       /**
        * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color': string;
+      'color': Color;
       'disabled': boolean;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
@@ -5564,7 +5565,7 @@ declare global {
       /**
        * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
-      'color'?: string;
+      'color'?: Color;
       'disabled'?: boolean;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
@@ -6085,7 +6086,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
        */
@@ -6127,7 +6128,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
        */
@@ -6289,7 +6290,7 @@ declare global {
       /**
        * The badge color for the tab button.
        */
-      'badgeStyle': string;
+      'badgeColor': Color;
       'btnId': string;
       /**
        * The component to display inside of the tab.
@@ -6360,7 +6361,7 @@ declare global {
       /**
        * The badge color for the tab button.
        */
-      'badgeStyle'?: string;
+      'badgeColor'?: Color;
       'btnId'?: string;
       /**
        * The component to display inside of the tab.
@@ -6466,7 +6467,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       'getRouteId': () => RouteID | undefined;
       'getSelected': () => HTMLIonTabElement | undefined;
       'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => HTMLIonTabElement | undefined;
@@ -6523,7 +6524,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * A unique name for the tabs
        */
@@ -6602,7 +6603,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
@@ -6632,7 +6633,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
@@ -6866,7 +6867,8 @@ declare global {
 
   namespace StencilComponents {
     interface IonTitle {
-
+      'color': Color;
+      'mode': Mode;
     }
   }
 
@@ -6889,7 +6891,8 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTitleAttributes extends HTMLAttributes {
-
+      'color'?: Color;
+      'mode'?: Mode;
     }
   }
 }
@@ -7096,7 +7099,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * Indicates that the user cannot interact with the control.
        */
@@ -7142,7 +7145,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * Indicates that the user cannot interact with the control.
        */
@@ -7187,7 +7190,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color': string;
+      'color': Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */
@@ -7221,7 +7224,7 @@ declare global {
       /**
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
-      'color'?: string;
+      'color'?: Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
        */

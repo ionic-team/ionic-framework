@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
-import { InputChangeEvent, Mode } from '../../interface';
+import { Color, InputChangeEvent, Mode } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -35,7 +35,7 @@ export class Searchbar {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color!: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.

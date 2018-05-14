@@ -1,5 +1,5 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
-import { CssClassMap, Mode, RouterDirection } from '../../interface';
+import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
 import { createThemedClasses, getElementClassMap, openURL } from '../../utils/theme';
 
 
@@ -23,7 +23,7 @@ export class Item {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color!: string;
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
