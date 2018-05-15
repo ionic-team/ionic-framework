@@ -10,7 +10,7 @@ The `ion-fab-list` element is a container for multiple FAB buttons. This collect
 ```
 
 ```html
-<ion-fab bottom right>
+<ion-fab vertical="bottom" horizontal="end">
   <ion-fab-button>Share</ion-fab-button>
   <ion-fab-list side="top">
     <ion-fab-button>Facebook</ion-fab-button>
