@@ -11,7 +11,7 @@ export function renderDatetime(template: string, value: DatetimeData, locale: Lo
       const token = '{' + index + '}';
       const text = renderTextFormat(format.f, (value as any)[format.k], value, locale);
 
-      if (!hasText && text && (value as any)[format.k]) {
+      if (!hasText && text && ((value as any)[format.k] || (value as any)[format.k] === 0)) {
         hasText = true;
       }
 
