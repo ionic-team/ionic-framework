@@ -5,12 +5,12 @@ The `ion-fab-list` element is a container for multiple FAB buttons. This collect
 ```
 [top] - Show the list of buttons above the main FAB button
 [bottom] - Show the list of buttons under the main FAB button
-[left] - Show the list of buttons to the left of the main FAB button
-[right] - Show the list of buttons to the right of the main FAB button
+[start] - Show the list of buttons on the start side of the main FAB button (i.e. on the left in LTR, on the right in RTL)
+[end] - Show the list of buttons on the end side of the main FAB button (i.e. on the right in LTR, on the left in RTL)
 ```
 
 ```html
-<ion-fab bottom right>
+<ion-fab vertical="bottom" horizontal="end">
   <ion-fab-button>Share</ion-fab-button>
   <ion-fab-list side="top">
     <ion-fab-button>Facebook</ion-fab-button>
