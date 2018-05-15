@@ -1,4 +1,4 @@
-```javascript
+```typescript
 import { Component } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
