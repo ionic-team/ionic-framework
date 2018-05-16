@@ -7,12 +7,22 @@
 
 ## Properties
 
+#### parent
+
+string
+
+
 #### tapClick
 
 boolean
 
 
 ## Attributes
+
+#### parent
+
+string
+
 
 #### tap-click
 

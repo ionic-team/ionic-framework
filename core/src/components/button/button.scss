@@ -3,7 +3,7 @@
 // Button
 // --------------------------------------------------
 
-.button {
+.button-container {
   @include font-smoothing();
   @include text-align(center);
   @include appearance(none);
@@ -22,6 +22,7 @@
 
   white-space: nowrap;
   cursor: pointer;
+
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
 
@@ -33,8 +34,44 @@
   contain: content;
 }
 
-.button:active,
-.button:focus {
+.button-container {
+  @include border-radius($button-border-radius);
+  @include margin($button-margin-top, $button-margin-end, $button-margin-bottom, $button-margin-start);
+  @include padding($button-padding-top, $button-padding-end, $button-padding-bottom, $button-padding-start);
+
+  overflow: hidden;
+
+  height: $button-height;
+
+  border-width: $button-border-width;
+  border-style: $button-border-style;
+  border-color: $button-border-color;
+
+  font-family: $button-font-family;
+  font-size: $button-font-size;
+  font-weight: $button-font-weight;
+  letter-spacing: $button-letter-spacing;
+  text-transform: $button-text-transform;
+  color: $button-text-color;
+  background-color: $button-background;
+  box-shadow: $button-box-shadow;
+  opacity: $button-opacity;
+  transition: $button-transition;
+}
+
+.button-container:hover {
+  opacity: $button-opacity-hover;
+}
+
+.button-container[disabled] {
+  cursor: default;
+  opacity: $button-opacity-disabled;
+
+  pointer-events: none;
+}
+
+.button-container:active,
+.button-container:focus {
   outline: none;
 }
 
@@ -51,19 +88,12 @@
 }
 
 
-a[disabled],
-button[disabled],
-.button[disabled] {
-  cursor: default;
-
-  pointer-events: none;
-}
-
-
 // Block Button
 // --------------------------------------------------
 
-.button-block {
+:host(.button-block) > .button-container {
+  @include margin-horizontal(0);
+
   display: block;
   clear: both;
 
@@ -72,7 +102,7 @@ button[disabled],
   contain: strict;
 }
 
-.button-block::after {
+:host(.button-block::after) {
   clear: both;
 }
 
@@ -80,7 +110,7 @@ button[disabled],
 // Full Button
 // --------------------------------------------------
 
-.button-full {
+:host(.button-full) > .button-container {
   display: block;
 
   width: 100%;
@@ -89,10 +119,24 @@ button[disabled],
 }
 
 
-// Full Outline Button
+// Material Design Clear Button
 // --------------------------------------------------
 
-.button-full.button-outline {
+:host(.button-full.button-outline) {
+  --border-radius: 0;
+
+  > .button-container {
+    border-right-width: 0;
+    border-left-width: 0;
+  }
+}
+
+
+// iOS Full Button
+// --------------------------------------------------
+
+:host(.button-full) {
+  @include margin-horizontal(0);
   @include border-radius(0);
 
   border-right-width: 0;
@@ -103,20 +147,28 @@ button[disabled],
 // Button Icons
 // --------------------------------------------------
 
-.button ion-icon {
+ion-icon {
   font-size: 1.4em;
 
   pointer-events: none;
 }
 
-.button ion-icon[slot="start"] {
+ion-icon[slot="start"] {
   @include margin(0, .3em, 0, -.3em);
 }
 
-.button ion-icon[slot="end"] {
+ion-icon[slot="end"] {
   @include margin(0, -.2em, 0, .3em);
 }
 
-.button ion-icon[slot="icon-only"] {
+ion-icon[slot="icon-only"] {
   font-size: 1.8em;
+}
+
+
+// Button Ripple effect
+// --------------------------------------------------
+
+ion-ripple-effect {
+  --color: $button-ripple-color;
 }

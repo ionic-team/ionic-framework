@@ -8,8 +8,8 @@
   $shade: map-get($value, "shade");
   $tint: map-get($value, "tint");
 
-  --ion-color: var(--ion-color-#{$color-name}, $base);
-  --ion-color-rgb: var(--ion-color-#{$color-name}-rgb, color-to-rgb-list($base));
+  --ion-color-base: var(--ion-color-#{$color-name}, $base);
+  --ion-color-base-rgb: var(--ion-color-#{$color-name}-rgb, color-to-rgb-list($base));
   --ion-color-contrast: var(--ion-color-#{$color-name}-contrast, $contrast);
   --ion-color-contrast-rgb: var(--ion-color-#{$color-name}-contrast-rgb, color-to-rgb-list($contrast));
   --ion-color-shade: var(--ion-color-#{$color-name}-shade, $shade);

@@ -945,7 +945,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonButtons {
-
+      'side': 'start' | 'end' | 'primary' | 'secundary';
     }
   }
 
@@ -968,7 +968,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonButtonsAttributes extends HTMLAttributes {
-
+      'side'?: 'start' | 'end' | 'primary' | 'secundary';
     }
   }
 }
@@ -1908,10 +1908,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonFooter {
-      /**
-       * If true, the footer will be translucent. Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
-       */
-      'translucent': boolean;
+
     }
   }
 
@@ -1934,10 +1931,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonFooterAttributes extends HTMLAttributes {
-      /**
-       * If true, the footer will be translucent. Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
-       */
-      'translucent'?: boolean;
+
     }
   }
 }
@@ -2077,10 +2071,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonHeader {
-      /**
-       * If true, the header will be translucent. Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
-       */
-      'translucent': boolean;
+
     }
   }
 
@@ -2103,10 +2094,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonHeaderAttributes extends HTMLAttributes {
-      /**
-       * If true, the header will be translucent. Note: In order to scroll content behind the header, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
-       */
-      'translucent'?: boolean;
+
     }
   }
 }
@@ -4968,6 +4956,7 @@ declare global {
   namespace StencilComponents {
     interface IonRippleEffect {
       'addRipple': (pageX: number, pageY: number) => void;
+      'parent': HTMLElement | string;
       'tapClick': boolean;
     }
   }
@@ -4991,6 +4980,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRippleEffectAttributes extends HTMLAttributes {
+      'parent'?: HTMLElement | string;
       'tapClick'?: boolean;
     }
   }
@@ -6834,8 +6824,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonTitle {
-      'color': Color;
-      'mode': Mode;
+
     }
   }
 
@@ -6858,8 +6847,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTitleAttributes extends HTMLAttributes {
-      'color'?: Color;
-      'mode'?: Mode;
+
     }
   }
 }

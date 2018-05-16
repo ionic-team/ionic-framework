@@ -2,16 +2,13 @@ import { Component, Prop } from '@stencil/core';
 import { Color, Config, Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
-
 @Component({
   tag: 'ion-toolbar',
   styleUrls: {
     ios: 'toolbar.ios.scss',
     md: 'toolbar.md.scss'
   },
-  host: {
-    theme: 'toolbar'
-  }
+  shadow: true
 })
 export class Toolbar {
 
@@ -40,26 +37,21 @@ export class Toolbar {
   @Prop() translucent = false;
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'toolbar-translucent') : {};
-
     return {
-      class: themedClasses
+      class: {
+        ...createThemedClasses(this.mode, this.color, 'toolbar'),
+        'toolbar-translucent': this.translucent
+      }
     };
   }
 
   render() {
-    const backgroundCss = createThemedClasses(this.mode, this.color, 'toolbar-background');
-    const contentCss = createThemedClasses(this.mode, this.color, 'toolbar-content');
-
     return [
-      <div class={backgroundCss}></div>,
-      <slot name="start"></slot>,
-      <slot name="secondary"></slot>,
-      <div class={contentCss}>
+      <div class="toolbar-background"></div>,
+      <slot name="buttons"></slot>,
+      <div class="toolbar-content">
         <slot></slot>
       </div>,
-      <slot name="primary"></slot>,
-      <slot name="end"></slot>
     ];
   }
 }

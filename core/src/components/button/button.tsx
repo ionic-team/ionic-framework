@@ -8,7 +8,8 @@ import { getButtonClassMap, getElementClassMap, openURL } from '../../utils/them
   styleUrls: {
     ios: 'button.ios.scss',
     md: 'button.md.scss'
-  }
+  },
+  shadow: true
 })
 export class Button {
   @Element() el!: HTMLElement;
@@ -46,14 +47,14 @@ export class Button {
    * Set to `"block"` for a full-width button or to `"full"` for a full-width button
    * without left and right borders.
    */
-  @Prop() expand?: 'full' | 'block';
+  @Prop({reflectToAttr: true}) expand?: 'full' | 'block';
 
   /**
    * Set to `"clear"` for a transparent button, to `"outline"` for a transparent
    * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
    * a toolbar, where the default is `"clear"`.
    */
-  @Prop() fill: 'clear' | 'outline' | 'solid' | 'default' = 'default';
+  @Prop({reflectToAttr: true}) fill: 'clear' | 'outline' | 'solid' | 'default' = 'default';
 
   /**
    * When using a router, it specifies the transition direction when navigating to
@@ -71,13 +72,13 @@ export class Button {
    * The button shape.
    * Possible values are: `"round"`.
    */
-  @Prop() shape?: 'round';
+  @Prop({reflectToAttr: true}) shape?: 'round';
 
   /**
    * The button size.
    * Possible values are: `"small"`, `"default"`, `"large"`.
    */
-  @Prop() size?: 'small' | 'default' | 'large';
+  @Prop({reflectToAttr: true}) size?: 'small' | 'default' | 'large';
 
   /**
    * If true, activates a button with a heavier font weight.
@@ -120,10 +121,8 @@ export class Button {
     this.ionBlur.emit();
   }
 
-  protected render() {
+  hostData() {
     const { buttonType, color, expand, fill, mode, shape, size, strong } = this;
-
-    const TagType = this.href ? 'a' : 'button';
     const buttonClasses = {
       ...getButtonClassMap(buttonType, mode),
       ...getButtonTypeClassMap(buttonType, expand, mode),
@@ -132,9 +131,17 @@ export class Button {
       ...getButtonTypeClassMap(buttonType, strong ? 'strong' : undefined, mode),
       ...getColorClassMap(buttonType, color, fill, mode),
       ...getElementClassMap(this.el.classList),
-      'focused': this.keyFocus
+      'focused': this.keyFocus,
     };
+    return {
+      tappable: '',
+      class: buttonClasses
+    };
+  }
 
+  protected render() {
+
+    const TagType = this.href ? 'a' : 'button';
     const attrs = (TagType === 'button')
       ? { type: this.type }
       : { href: this.href };
@@ -142,7 +149,7 @@ export class Button {
     return (
       <TagType
         {...attrs}
-        class={buttonClasses}
+        class="button-container"
         disabled={this.disabled}
         onFocus={this.onFocus.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
@@ -154,7 +161,7 @@ export class Button {
             <slot></slot>
             <slot name="end"></slot>
           </span>
-          { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+         { this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el}/> }
       </TagType>
     );
   }
@@ -176,7 +183,7 @@ function getButtonTypeClassMap(buttonType: string, type: string|undefined, mode:
   };
 }
 
-function getColorClassMap(buttonType: string, color: string | undefined, fill: string, mode: Mode): CssClassMap {
+function getColorClassMap(buttonType: string, color = 'primary', fill: string, mode: Mode): CssClassMap {
   let className = buttonType;
 
   if (buttonType !== 'bar-button' && fill === 'solid') {
@@ -200,9 +207,7 @@ function getColorClassMap(buttonType: string, color: string | undefined, fill: s
     [className]: true,
     [`${className}-${mode}`]: true,
   };
-  if (color) {
-    map[`${className}-${mode}-${color}`] = true;
-    map[`color-${color}`] = true;
-  }
+  map[`${className}-${mode}-${color}`] = true;
+  map[`color-${color}`] = true;
   return map;
 }

@@ -4,103 +4,48 @@
 // iOS Toolbar
 // --------------------------------------------------
 
-.toolbar-ios {
+:host(.toolbar-ios) {
   @include padding($toolbar-ios-padding);
 
   min-height: $toolbar-ios-height;
 
   font-family: $toolbar-ios-font-family;
 
-  @media screen and (orientation: landscape) {
-    @include safe-area-padding-horizontal($toolbar-ios-padding);
-  }
+  // default color / background
+  --ion-toolbar-text-color: $toolbar-ios-text-color;
+  --ion-toolbar-background: $toolbar-ios-background-color;
+
+  --border-color: $toolbar-ios-border-color;
+  --translucent-filter: $toolbar-ios-translucent-filter;
+  --translucent-background: $toolbar-ios-translucent-background-color;
 }
-
-.header-ios {
-  min-height: $toolbar-ios-height;
-}
-
-
-// iOS Toolbar Background
-// --------------------------------------------------
-
-.toolbar-background-ios {
-  background: $toolbar-ios-background-color;
-}
-
-
-// iOS Header / Footer Borders
-// --------------------------------------------------
-
-.header-ios .toolbar-background-ios,
-.footer-ios .toolbar-background-ios {
-  border-style: solid;
-  border-color: $toolbar-ios-border-color;
-}
-
-.header-ios .toolbar-ios:last-child .toolbar-background-ios {
-  border-width: 0 0 $hairlines-width;
-}
-
-.footer-ios .toolbar-ios:first-child .toolbar-background-ios {
-  border-width: $hairlines-width 0 0;
-}
-
-.header-ios[no-border] .toolbar-ios:last-child .toolbar-background-ios {
-  border-bottom-width: 0;
-}
-
-.footer-ios[no-border] .toolbar-ios:first-child .toolbar-background-ios {
-  border-top-width: 0;
-}
-
-
-// iOS Translucent Toolbar
-// --------------------------------------------------
-
-.header-translucent-ios .toolbar-background-ios,
-.footer-translucent-ios .toolbar-background-ios,
-.toolbar-translucent-ios .toolbar-background-ios {
-  background: $toolbar-ios-translucent-background-color;
-}
-
-.toolbar-translucent-ios .toolbar-background-ios {
-  backdrop-filter: $toolbar-ios-translucent-filter;
-}
-
 
 // iOS Toolbar Content
 // --------------------------------------------------
 
-.toolbar-content-ios {
+.toolbar-content {
   flex: 1;
   order: map-get($toolbar-order-ios, content);
 
   min-width: 0;
 }
 
-@mixin ios-toolbar-theme($color-name) {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-translucent: $toolbar-ios-translucent-background-color;
+::slotted(ion-title) {
+  @include position(0, null, null, 0);
+  @include padding(0, 90px, 1px);
+  @include text-align($toolbar-ios-title-text-align);
 
-  .toolbar-ios-#{$color-name} {
-    .toolbar-background-ios {
-      background: $color-base;
-    }
-  }
+  box-sizing: border-box;
+  position: absolute;
 
-  // Colored toolbars with translucency
-  .header-translucent-ios .toolbar-ios-#{$color-name},
-  .footer-translucent-ios .toolbar-ios-#{$color-name},
-  .toolbar-translucent-ios-#{$color-name} {
+  width: 100%;
+  height: 100%;
 
-    .toolbar-background-ios {
-      background: $color-translucent;
-    }
-  }
-}
+  transform: translateZ(0);
 
-@each $color-name, $color-value in $colors-ios {
-  @include ios-toolbar-theme($color-name);
+  pointer-events: none;
+
+  font-size: $toolbar-ios-title-font-size;
+  font-weight: $toolbar-ios-title-font-weight;
+  letter-spacing: -.03em;
 }

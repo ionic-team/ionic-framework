@@ -1,4 +1,4 @@
-import { Component } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 
 
 @Component({
@@ -8,4 +8,16 @@ import { Component } from '@stencil/core';
     md: 'buttons.md.scss'
   }
 })
-export class Buttons {}
+export class Buttons {
+
+  @Prop() side: 'start' | 'end' | 'primary' | 'secundary' = 'start';
+
+  hostData() {
+    return {
+      'slot': 'buttons',
+      class: {
+        [`buttons-${this.side}`]: true
+      }
+    };
+  }
+}

@@ -4,14 +4,14 @@
 </ion-toolbar>
 
 <ion-toolbar>
-  <ion-buttons slot="start">
+  <ion-buttons side="start">
     <ion-back-button></ion-back-button>
   </ion-buttons>
   <ion-title>Back Button</ion-title>
 </ion-toolbar>
 
 <ion-toolbar>
-  <ion-buttons slot="secondary">
+  <ion-buttons side="secondary">
     <ion-button>
       <ion-icon slot="icon-only" name="contact"></ion-icon>
     </ion-button>
@@ -19,7 +19,7 @@
       <ion-icon slot="icon-only" name="search"></ion-icon>
     </ion-button>
   </ion-buttons>
-  <ion-buttons slot="primary">
+  <ion-buttons side="primary">
     <ion-button color="secondary">
       <ion-icon slot="icon-only" name="more"></ion-icon>
     </ion-button>
@@ -28,14 +28,14 @@
 </ion-toolbar>
 
 <ion-toolbar>
-  <ion-buttons slot="secondary">
+  <ion-buttons side="secondary">
     <ion-button fill="solid">
       <ion-icon slot="start" name="contact"></ion-icon>
       Contact
     </ion-button>
   </ion-buttons>
   <ion-title>Solid Buttons</ion-title>
-  <ion-buttons slot="primary">
+  <ion-buttons side="primary">
     <ion-button fill="solid" color="secondary">
       Help
       <ion-icon slot="end" name="help-circle"></ion-icon>
@@ -44,14 +44,14 @@
 </ion-toolbar>
 
 <ion-toolbar>
-  <ion-buttons slot="secondary">
+  <ion-buttons side="secondary">
     <ion-button fill="outline">
       <ion-icon slot="start" name="star"></ion-icon>
       Star
     </ion-button>
   </ion-buttons>
   <ion-title>Outline Buttons</ion-title>
-  <ion-buttons slot="primary">
+  <ion-buttons side="primary">
     <ion-button color="danger" fill="outline">
       Edit
       <ion-icon slot="end" name="create"></ion-icon>
@@ -60,12 +60,12 @@
 </ion-toolbar>
 
 <ion-toolbar>
-  <ion-buttons slot="secondary">
+  <ion-buttons side="secondary">
     <ion-button>
       Account
     </ion-button>
   </ion-buttons>
-  <ion-buttons slot="primary">
+  <ion-buttons side="primary">
     <ion-button color="danger">
       Edit
     </ion-button>
@@ -74,14 +74,14 @@
 </ion-toolbar>
 
 <ion-toolbar>
-  <ion-buttons slot="start">
+  <ion-buttons side="start">
     <ion-menu-toggle auto-hide="false">
       <ion-button>
         <ion-icon slot="icon-only" name="menu"></ion-icon>
       </ion-button>
     </ion-menu-toggle>
   </ion-buttons>
-  <ion-buttons slot="secondary">
+  <ion-buttons side="secondary">
     <ion-button>
       <ion-icon slot="icon-only" name="star"></ion-icon>
     </ion-button>
@@ -90,13 +90,13 @@
 </ion-toolbar>
 
 <ion-toolbar>
-  <ion-buttons slot="primary">
+  <ion-buttons side="primary">
     <ion-button onclick="clickedStar()">
       <ion-icon slot="icon-only" name="star"></ion-icon>
     </ion-button>
   </ion-buttons>
   <ion-title>Right side menu toggle</ion-title>
-  <ion-buttons slot="end">
+  <ion-buttons side="end">
     <ion-menu-toggle auto-hide="false">
       <ion-button>
         <ion-icon slot="icon-only" name="menu"></ion-icon>
@@ -106,7 +106,7 @@
 </ion-toolbar>
 
 <ion-toolbar>
-  <ion-buttons slot="primary">
+  <ion-buttons side="primary">
     <ion-button onclick="clickedSearch()">
       <ion-icon slot="icon-only" name="search"></ion-icon>
     </ion-button>
@@ -126,7 +126,7 @@
 </ion-toolbar>
 
 <ion-toolbar color="secondary">
-  <ion-buttons slot="secondary">
+  <ion-buttons side="secondary">
     <ion-button>
       <ion-icon slot="icon-only" name="contact"></ion-icon>
     </ion-button>
@@ -134,7 +134,7 @@
       <ion-icon slot="icon-only" name="search"></ion-icon>
     </ion-button>
   </ion-buttons>
-  <ion-buttons slot="primary">
+  <ion-buttons side="primary">
     <ion-button color="primary">
       <ion-icon slot="icon-only" name="more"></ion-icon>
     </ion-button>
@@ -143,7 +143,7 @@
 </ion-toolbar>
 
 <ion-toolbar color="dark">
-  <ion-buttons slot="secondary">
+  <ion-buttons side="secondary">
     <ion-button>
       <ion-icon slot="icon-only" name="contact"></ion-icon>
     </ion-button>
@@ -151,7 +151,7 @@
       <ion-icon slot="icon-only" name="search"></ion-icon>
     </ion-button>
   </ion-buttons>
-  <ion-buttons slot="primary">
+  <ion-buttons side="primary">
     <ion-button color="danger">
       <ion-icon slot="icon-only" name="more"></ion-icon>
     </ion-button>

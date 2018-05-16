@@ -2,33 +2,6 @@
 @import "./buttons";
 
 
-@mixin ios-toolbar-theme($color-name) {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-translucent: $toolbar-ios-translucent-background-color;
-
-  .toolbar-ios-#{$color-name} {
-
-    .bar-button-clear-ios,
-    .back-button-ios .back-button-inner,
-    .bar-button-default-ios {
-      color: $color-contrast;
-    }
-
-  }
-
-  // Colored toolbars with translucency
-  .header-translucent-ios .toolbar-ios-#{$color-name},
-  .footer-translucent-ios .toolbar-ios-#{$color-name},
-  .toolbar-translucent-ios-#{$color-name} {
-
-    .toolbar-background-ios {
-      background: $color-translucent;
-    }
-  }
-}
-
-
 // iOS Toolbar Button Placement
 // --------------------------------------------------
 
@@ -38,59 +11,41 @@
   transform: translateZ(0);
 }
 
-.bar-buttons-ios[slot="start"] {
+.buttons-start {
   order: map-get($toolbar-order-ios, buttons-start);
 }
 
-.bar-buttons-ios[slot="primary"] {
+.buttons-primary {
   @include text-align(end);
 
   order: map-get($toolbar-order-ios, buttons-primary);
 }
 
-.bar-buttons-ios[slot="end"] {
+.buttons-end {
   @include text-align(end);
 
   order: map-get($toolbar-order-ios, buttons-end);
 }
 
-
+.buttons-secondary {
+  order: map-get($toolbar-order-ios, buttons-secondary);
+}
 
 // iOS Toolbar Button Default
 // --------------------------------------------------
 
 .bar-button-ios {
-  @include padding(0, 4px);
-  @include border-radius($toolbar-ios-button-border-radius);
-
-  height: 32px;
-
-  border: 0;
   font-size: $toolbar-ios-button-font-size;
-}
 
-@mixin ios-bar-button-default($color-name, $color-base: null) {
-  @if ($color-base == null) {
-    $color-base: ion-color($colors-ios, $color-name, base, ios);
-  }
+  --padding-top: 0;
+  --pading-bottom: 0;
+  --padding-start: 4px;
+  --padding-end: 4px;
 
-  .bar-button-#{$color-name}-ios,
-  .bar-button-clear-ios-#{$color-name},
-  .bar-button-ios-#{$color-name} {
-    color: $color-base;
-    background-color: transparent;
+  --border-radius: $toolbar-ios-button-border-radius;
 
-    &.activated {
-      opacity: .4;
-    }
-  }
-
-  .bar-button-#{$color-name}-ios:hover,
-  .bar-button-clear-ios-#{$color-name}:hover,
-  .bar-button-ios-#{$color-name}:hover {
-    color: $color-base;
-  }
-
+  --height: 32px;
+  --border-width: 0;
 }
 
 // iOS Toolbar Button Icon
@@ -225,20 +180,6 @@
 
     font-size: 28px;
   }
-}
-
-
-// iOS Toolbar Color Generation
-// --------------------------------------------------
-
-@include ios-bar-button-default(default, $toolbar-ios-button-color);
-@include ios-bar-button-default(clear, $toolbar-ios-button-color);
-
-@each $color-name, $color-value in $colors-ios {
-  @include ios-toolbar-theme($color-name);
-  @include ios-bar-button-default($color-name);
-  @include ios-bar-button-outline($color-name);
-  @include ios-bar-button-solid($color-name);
 }
 
 

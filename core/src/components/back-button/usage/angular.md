@@ -2,7 +2,7 @@
 <!-- Default back button -->
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons side="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
@@ -11,7 +11,7 @@
 <!-- Back button with a default href -->
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons side="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
@@ -20,7 +20,7 @@
 <!-- Back button with custom text and icon -->
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons side="start">
       <ion-back-button text="Volver" icon="close"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
@@ -29,7 +29,7 @@
 <!-- Back button with no text and custom icon -->
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons side="start">
       <ion-back-button text="" icon="add"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
@@ -38,7 +38,7 @@
 <!-- Danger back button next to a menu button -->
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
+    <ion-buttons side="start">
       <ion-menu-button></ion-menu-button>
       <ion-back-button color="danger"></ion-back-button>
     </ion-buttons>

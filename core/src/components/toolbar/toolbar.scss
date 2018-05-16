@@ -3,7 +3,7 @@
 // Toolbar
 // --------------------------------------------------
 
-ion-toolbar {
+:host {
   @include font-smoothing();
 
   box-sizing: border-box;
@@ -19,11 +19,16 @@ ion-toolbar {
 
   width: 100%;
 
-  contain: content;
-}
+  color: $color-contrast;
 
-ion-toolbar ion-title {
-  box-sizing: border-box;
+  contain: content;
+
+  --ion-color-base: var(--ion-toolbar-background);
+  --ion-color-contrast: var(--ion-toolbar-text-color);
+
+  --border-width: 0;
+  --border-style: solid;
+  --background: $color-base;
 }
 
 .toolbar-background {
@@ -32,7 +37,10 @@ ion-toolbar ion-title {
   position: absolute;
   z-index: $z-index-toolbar-background;
 
-  border: 0;
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+  background: var(--background);
   transform: translateZ(0);
 
   pointer-events: none;
@@ -43,7 +51,13 @@ ion-toolbar ion-title {
 // Transparent Toolbar
 // --------------------------------------------------
 
-.toolbar[transparent] .toolbar-background {
-  border-color: transparent;
-  background: transparent;
+:host(.toolbar-translucent) {
+  --border-color: transparent;
+  --background: transparent;
+
+  .toolbar-background {
+    background: var(--translucent-background);
+
+    backdrop-filter: var(--translucent-filter);
+  }
 }

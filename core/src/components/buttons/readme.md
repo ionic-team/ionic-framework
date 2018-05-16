@@ -15,6 +15,20 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+#### side
+
+string
+
+
+## Attributes
+
+#### side
+
+string
+
+
 
 ----------------------------------------------
 

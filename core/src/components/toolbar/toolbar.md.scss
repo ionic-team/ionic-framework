@@ -4,67 +4,24 @@
 // Material Design Toolbar
 // --------------------------------------------------
 
-.toolbar-md {
+:host(.toolbar-md) {
   @include padding($toolbar-md-padding);
 
   min-height: $toolbar-md-height;
 
   font-family: $toolbar-md-font-family;
+
+  --ion-toolbar-text-color: $toolbar-md-text-color;
+  --ion-toolbar-background: $toolbar-md-background-color;
+
+  --border-color: $toolbar-md-border-color;
 }
 
-
-// Material Design Toolbar Background
-// --------------------------------------------------
-
-.toolbar-background-md {
-  border-color: $toolbar-md-border-color;
-  background: $toolbar-md-background-color;
-}
-
-
-// Material Design Header / Footer / Tabs Box Shadow
-// --------------------------------------------------
-
-.header-md::after,
-.tabs-md[tabsPlacement="top"] > .tabbar::after,
-.footer-md::before,
-.tabs-md[tabsPlacement="bottom"] > .tabbar::before {
-  // using datauri png background image for improved scroll performance
-  // rather than using `box-shadow: 0 2px 5px rgba(0,0,0,0.26);`
-  // noticable performance difference on older Android devices
-  @include position(null, null, -5px, 0);
-  @include background-position(start, 0, top, -2px);
-
-  position: absolute;
-
-  width: 100%;
-  height: 5px;
-
-  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAHBAMAAADzDtBxAAAAD1BMVEUAAAAAAAAAAAAAAAAAAABPDueNAAAABXRSTlMUCS0gBIh/TXEAAAAaSURBVAjXYxCEAgY4UIICBmMogMsgFLtAAQCNSwXZKOdPxgAAAABJRU5ErkJggg==");
-  background-repeat: repeat-x;
-
-  content: "";
-}
-
-.footer-md::before,
-.tabs-md[tabsPlacement="bottom"] > .tabbar::before {
-  @include position(-2px, null, auto, null);
-  @include background-position(start, 0, top, 0);
-
-  height: 2px;
-}
-
-.header-md[no-border]::after,
-.footer-md[no-border]::before,
-.tabs-md[tabsPlacement="top"][no-border] > .tabbar::after,
-.tabs-md[tabsPlacement="bottom"][no-border] > .tabbar::before {
-  display: none;
-}
 
 // Material Design Toolbar Content
 // --------------------------------------------------
 
-.toolbar-content-md {
+.toolbar-content {
   flex: 1;
   order: map-get($toolbar-order-md, content);
 
@@ -72,22 +29,9 @@
   max-width: 100%;
 }
 
+::slotted(ion-title) {
+  @include padding(0, 12px);
 
-@mixin md-toolbar-theme($color-name) {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
-
-  .toolbar-md-#{$color-name} {
-    .toolbar-background-md {
-      background: $color-base;
-    }
-
-    .toolbar-title-md {
-      color: $color-contrast;
-    }
-  }
-}
-
-@each $color-name, $color-value in $colors-md {
-  @include md-toolbar-theme($color-name);
+  font-size: $toolbar-md-title-font-size;
+  font-weight: 500;
 }

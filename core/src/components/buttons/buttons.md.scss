@@ -42,20 +42,24 @@
   transform: translateZ(0);
 }
 
-.bar-buttons-md[slot="start"] {
+.buttons-start {
   order: map-get($toolbar-order-md, buttons-start);
 }
 
-.bar-buttons-md[slot="primary"] {
+.buttons-primary {
   @include text-align(end);
 
   order: map-get($toolbar-order-md, buttons-primary);
 }
 
-.bar-buttons-md[slot="end"] {
+.buttons-end {
   @include text-align(end);
 
   order: map-get($toolbar-order-md, buttons-end);
+}
+
+.buttons-secondary {
+  order: map-get($toolbar-order-md, buttons-secondary);
 }
 
 
@@ -63,42 +67,19 @@
 // --------------------------------------------------
 
 .bar-button-md {
-  @include padding(0, 5px);
-  @include border-radius($toolbar-md-button-border-radius);
-
-  height: 32px;
-
-  border: 0;
   font-size: $toolbar-md-button-font-size;
   font-weight: 500;
   text-transform: uppercase;
+
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 5px;
+  --padding-end: 5px;
+
+  --border-radius: $toolbar-md-button-border-radius;
+  --height: 32px;
+  --border-width: 0;
 }
-
-.bar-button-solid-md,
-.bar-button-outline-md {
-  // restrict the ripple to button size
-  overflow: hidden;
-}
-
-@mixin md-bar-button-default($color-name, $color-base: null) {
-  @if($color-base == null) {
-    $color-base: ion-color($colors-md, $color-name, base, md);
-  }
-
-  .bar-button-#{$color-name}-md,
-  .bar-button-clear-md-#{$color-name},
-  .bar-button-md-#{$color-name} {
-    color: $color-base;
-    background-color: transparent;
-  }
-
-  .bar-button-#{$color-name}-md:hover,
-  .bar-button-clear-md-#{$color-name}:hover,
-  .bar-button-md-#{$color-name}:hover {
-    color: $color-base;
-  }
-}
-
 
 // Material Design Toolbar Button Icon
 // --------------------------------------------------
@@ -112,76 +93,24 @@
 // --------------------------------------------------
 
 .bar-button-outline-md {
-  border-width: 1px;
-  border-style: solid;
-  border-color: $toolbar-md-button-color;
-  color: $toolbar-md-button-color;
-  background-color: transparent;
-
-  &.activated {
-    background-color: transparent;
-  }
-
-  .ripple-effect {
-    background-color: $toolbar-md-button-color;
-  }
+  --border-width: 1px;
+  --border-style: solid;
+  --border-color: $toolbar-md-button-color;
+  --background: transparent;
 }
 
-.bar-button-outline-md:hover {
-  opacity: .4;
-}
-
-@mixin md-bar-button-outline($color-name) {
-  $color-shade: ion-color($colors-md, $color-name, tint, md);
-
-  .bar-button-outline-md-#{$color-name} {
-    border-color: $color-shade;
-    color: $color-shade;
-    background-color: transparent;
-
-    &.activated {
-      background-color: transparent;
-    }
-
-    .ripple-effect {
-      background-color: $color-shade;
-    }
-  }
-}
+// .bar-button-outline-md:hover {
+//   opacity: .4;
+// }
 
 
 // Material Design Toolbar Button Solid
 // --------------------------------------------------
 
 .bar-button-solid-md {
-  color: $toolbar-md-button-background-color;
-  background-color: $toolbar-md-button-color;
-
-  &.activated {
-    color: $toolbar-md-button-background-color;
-    background-color: $toolbar-md-button-background-color-activated;
-  }
+  --text-color: $toolbar-md-button-background-color;
+  --background: $toolbar-md-button-color;
 }
-
-.bar-button-solid-md:hover {
-  color: $toolbar-md-button-background-color;
-}
-
-@mixin md-bar-button-solid($color-name) {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
-
-  .bar-button-solid-md-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-
-    &.activated {
-      color: $color-contrast;
-      background-color: ion-color($colors-md, $color-base, tint, md);
-    }
-  }
-}
-
 
 // Material Design Toolbar Button Icon
 // --------------------------------------------------
@@ -227,21 +156,6 @@
 
   font-size: 24px;
 }
-
-
-// Material Design Toolbar Color Generation
-// --------------------------------------------------
-
-@include md-bar-button-default(default, $toolbar-md-button-color);
-@include md-bar-button-default(clear, $toolbar-md-button-color);
-
-@each $color-name, $color-value in $colors-md {
-  @include md-toolbar-theme($color-name);
-  @include md-bar-button-default($color-name);
-  @include md-bar-button-outline($color-name);
-  @include md-bar-button-solid($color-name);
-}
-
 
 // MD strong Button
 // --------------------------------------------------

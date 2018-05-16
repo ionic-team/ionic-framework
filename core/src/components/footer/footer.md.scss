@@ -1,4 +1,12 @@
 @import "./footer";
 
-// Material Design Footer
+// MD Borders
 // --------------------------------------------------
+
+.footer-md ion-toolbar:last-child {
+  --border-width: $hairlines-width 0 0;
+}
+
+.footer-md[no-border] ion-toolbar:last-child {
+  --border-width: 0;
+}

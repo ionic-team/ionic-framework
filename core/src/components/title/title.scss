@@ -3,7 +3,7 @@
 // Title
 // --------------------------------------------------
 
-ion-title {
+:host {
   display: flex;
 
   flex: 1;
@@ -20,4 +20,6 @@ ion-title {
 
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  pointer-events: auto;
 }

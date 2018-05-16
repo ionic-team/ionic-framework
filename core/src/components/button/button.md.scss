@@ -4,121 +4,86 @@
 // Material Design Button
 // --------------------------------------------------
 
-.button-md {
-  @include border-radius($button-md-border-radius);
+:host(.button-md) {
+  --text-transform: $button-md-text-transform;
 
-  @include margin($button-md-margin-top, $button-md-margin-end, $button-md-margin-bottom, $button-md-margin-start);
-
-  @include padding($button-md-padding-top, $button-md-padding-end, $button-md-padding-bottom, $button-md-padding-start);
-
-  overflow: hidden;
-
-  height: $button-md-height;
-
-  font-family: $button-md-font-family;
-  font-size: $button-md-font-size;
-  font-weight: $button-md-font-weight;
-
-  text-transform: $button-md-text-transform;
-  color: var(--ion-color-contrast);
-  background-color: var(--ion-color);
-  box-shadow: $button-md-box-shadow;
-
-  transition: box-shadow $button-md-transition-duration $button-md-transition-timing-function,
+  --transition: box-shadow $button-md-transition-duration $button-md-transition-timing-function,
               background-color $button-md-transition-duration $button-md-transition-timing-function,
               color $button-md-transition-duration $button-md-transition-timing-function;
+
+  --font-family: $button-md-font-family;
+  --font-weight: $button-md-font-weight;
+  --font-size: $button-md-font-size;
+
+  --border-radius: $button-md-border-radius;
+
+  --margin-top: $button-md-margin-top;
+  --margin-bottom: $button-md-margin-bottom;
+  --margin-start: $button-md-margin-start;
+  --margin-end: $button-md-margin-end;
+
+  --padding-top: $button-md-padding-top;
+  --padding-bottom: $button-md-padding-bottom;
+  --padding-start: $button-md-padding-start;
+  --padding-end: $button-md-padding-end;
+
+  --height: $button-md-height;
+  --letter-spacing: $button-md-letter-spacing;
+
+  --box-shadow: $button-md-box-shadow;
 }
 
-.button-md:hover {
-  background-color: var(--ion-color-tint);
+:host(.button-md.activated) {
+  --box-shadow: $button-md-box-shadow-activated;
 }
 
-.button-md.activated {
-  background-color: var(--ion-color-shade);
-  box-shadow: $button-md-box-shadow-activated;
-}
-
-.button-md.focused {
-  background-color: var(--ion-color-shade);
-}
-
-.button-md .ripple-effect {
-  background-color: var(--ion-color-contrast);
-}
-
-a[disabled],
-button[disabled],
-.button[disabled] {
-  opacity: $button-md-opacity-disabled;
-}
 
 // Material Design Button Sizes
 // --------------------------------------------------
 
-.button-large-md {
-  --ion-button-padding-top: $button-md-large-padding-top;
-  --ion-button-padding-start: $button-md-large-padding-start;
-  --ion-button-padding-end: $button-md-large-padding-end;
-  --ion-button-padding-bottom: $button-md-large-padding-bottom;
+:host(.button-large-md) {
+  --padding-top: $button-md-large-padding-top;
+  --padding-start: $button-md-large-padding-start;
+  --padding-end: $button-md-large-padding-end;
+  --padding-bottom: $button-md-large-padding-bottom;
 
-  --ion-button-height: $button-md-large-height;
-  --ion-button-font-size: $button-md-large-font-size;
+  --height: $button-md-large-height;
+  --font-size: $button-md-large-font-size;
 }
 
-.button-small-md {
-  --ion-button-padding-top: $button-md-small-padding-top;
-  --ion-button-padding-start: $button-md-small-padding-start;
-  --ion-button-padding-end: $button-md-small-padding-end;
-  --ion-button-padding-bottom: $button-md-small-padding-bottom;
+:host(.button-small-md) {
+  --padding-top: $button-md-small-padding-top;
+  --padding-start: $button-md-small-padding-start;
+  --padding-end: $button-md-small-padding-end;
+  --padding-bottom: $button-md-small-padding-bottom;
 
-  --ion-button-height: $button-md-small-height;
-  --ion-button-font-size: $button-md-small-font-size;
+  --height: $button-md-small-height;
+  --font-size: $button-md-small-font-size;
 }
 
-// Material Design Block Button
-// --------------------------------------------------
-
-.button-block-md {
-  @include margin-horizontal(0);
-}
-
-// Material Design Full Button
-// --------------------------------------------------
-
-.button-full-md {
-  @include margin-horizontal(0);
-  @include border-radius(0);
-
-  border-right-width: 0;
-  border-left-width: 0;
-}
 
 // Material Design Outline Button
 // --------------------------------------------------
 
-.button-outline-md {
-  border-width: $button-md-outline-border-width;
-  border-style: $button-md-outline-border-style;
-  border-color: var(--ion-color);
+:host(.button-outline-md) {
+  --border-width: $button-md-outline-border-width;
+  --border-style: $button-md-outline-border-style;
+  --box-shadow: $button-md-outline-box-shadow;
+  --border-color: $color-base;
 
-  color: var(--ion-color);
-  background-color: $button-md-outline-background-color;
-  box-shadow: $button-md-outline-box-shadow;
+  --ripple-color: $color-base;
+  --text-color: $color-base;
+  --background: transparent;
 }
 
-.button-outline-md:hover {
-  background-color: $button-md-outline-background-color-hover;
+:host(.button-outline-md:hover) {
+  --background: $button-md-outline-background-color-hover;
 }
 
-.button-outline-md.activated {
-  background-color: $button-md-outline-background-color-activated;
-  box-shadow: $button-md-outline-box-shadow-activated;
-  opacity: $button-md-outline-opacity-activated;
-}
-
-.button-outline-md.focused,
-.button-outline-md .ripple-effect {
-  background-color: var(--ion-color);
+:host(.button-outline-md.activated) {
+  --background: $button-md-outline-background-color-activated;
+  --box-shadow: $button-md-outline-box-shadow-activated;
+  --opacity: $button-md-outline-opacity-activated;
 }
 
 
@@ -126,47 +91,49 @@ button[disabled],
 // Material Design Clear Button
 // --------------------------------------------------
 
-.button-clear-md {
-  border-color: $button-md-clear-border-color;
-  color: var(--ion-color);
-  background-color: $button-md-clear-background-color;
-  box-shadow: $button-md-clear-box-shadow;
-  opacity: $button-md-clear-opacity;
+:host(.button-clear-md) {
+  --border-color: $button-md-clear-border-color;
+  --text-color: $color-base;
+  --box-shadow: $button-md-clear-box-shadow;
+  --background: transparent;
+  --opacity: $button-md-clear-opacity;
+
+  --ripple-color: $button-md-clear-ripple-background-color;
 }
 
-.button-clear-md.activated {
-  background-color: $button-md-clear-background-color-activated;
-  box-shadow: $button-md-clear-box-shadow-activated;
+:host(.button-clear-md.activated) {
+  --background-color: $button-md-clear-background-color-activated;
+  --box-shadow: $button-md-clear-box-shadow-activated;
 }
 
-.button-clear-md.focused {
-  background-color: $button-md-clear-background-color-focused;
+:host(.button-clear-md.focused) {
+  --background-color: $button-md-clear-background-color-focused;
 }
 
-.button-clear-md:hover {
-  background-color: $button-md-clear-background-color-hover;
+:host(.button-clear-md:hover) {
+  --background-color: $button-md-clear-background-color-hover;
 }
 
-.button-clear-md .ripple-effect {
-  background-color: $button-md-clear-ripple-background-color;
-}
 
 // Material Design Round Button
 // --------------------------------------------------
 
-.button-round-md {
-  @include border-radius($button-md-round-border-radius);
+:host(.button-round-md) {
+  --border-radius: $button-md-round-border-radius;
 
-  @include padding($button-md-round-padding-top, $button-md-round-padding-end, $button-md-round-padding-bottom, $button-md-round-padding-start);
+  --padding-top: $button-md-round-padding-top;
+  --padding-start: $button-md-round-padding-start;
+  --padding-end: $button-md-round-padding-end;
+  --padding-bottom: $button-md-round-padding-bottom;
 }
 
-.button-md ion-icon[slot="icon-only"] {
+:host(.button-md) ion-icon[slot="icon-only"] {
   @include padding(0);
 }
 
 // MD strong Button
 // --------------------------------------------------
 
-.button-strong-md {
-  font-weight: $button-md-strong-font-weight;
+:host(.button-strong-md) {
+  --font-weight: $button-md-strong-font-weight;
 }

@@ -17,6 +17,9 @@ export function createThemedClasses(mode: Mode | undefined, color: string | unde
       }
     }
   });
+  if (color) {
+    classObj[`color-${color}`] = true;
+  }
   return classObj;
 }
 

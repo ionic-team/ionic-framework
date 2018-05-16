@@ -16,30 +16,6 @@
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-#### color
-
-string
-
-
-#### mode
-
-string
-
-
-## Attributes
-
-#### color
-
-string
-
-
-#### mode
-
-string
-
-
 
 ----------------------------------------------
 

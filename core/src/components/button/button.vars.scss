@@ -3,6 +3,40 @@
 // Button
 // --------------------------------------------------
 
+$button-border-radius: var(--border-radius);
+
+$button-margin-top: var(--margin-top);
+$button-margin-bottom: var(--margin-bottom);
+$button-margin-start: var(--margin-start);
+$button-margin-end: var(--margin-end);
+
+$button-padding-top: var(--padding-top);
+$button-padding-bottom: var(--padding-bottom);
+$button-padding-start: var(--padding-start);
+$button-padding-end: var(--padding-end);
+
+$button-height: var(--height);
+$button-font-family: var(--ion-font-family);
+$button-font-size: var(--font-size);
+$button-font-weight: var(--font-weight);
+$button-letter-spacing: var(--letter-spacing);
+$button-text-color: var(--text-color, $color-contrast);
+$button-background: var(--background, $color-base);
+
+$button-box-shadow: var(--box-shadow);
+
+$button-opacity-hover: var(--opacity-hover);
+$button-opacity: var(--opacity);
+$button-border-width: var(--border-width);
+$button-border-style: var(--border-style);
+$button-border-color: var(--border-color);
+
+$button-transition: var(--transition);
+$button-text-transform: var(--text-transform);
+
+$button-opacity-disabled: var(--opacity-disabled, .5) !default;
+$button-ripple-color: var(--ripple-color, $color-contrast) !default;
+
 /// @prop - Padding top of the round button
 $button-round-padding-top:        0 !default;
 
@@ -19,4 +53,3 @@ $button-round-padding-start:      $button-round-padding-end !default;
 $button-round-border-radius:      64px !default;
 
 /// @prop - Opacity of the button when disabled
-$button-opacity-disabled:         var(--ion-button-opacity-disabled, .5) !default;
