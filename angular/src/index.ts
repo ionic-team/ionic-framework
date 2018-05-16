@@ -13,5 +13,5 @@ export * from './providers';
 // ionic types
 export * from './types/interfaces';
 
-// ionic oute reuse strategy
+// ionic route reuse strategy
 export * from './util/ionic-router-reuse-strategy';
