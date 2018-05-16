@@ -1,7 +1,7 @@
-
 import { EventEmitter, Injectable } from '@angular/core';
-import { proxyEvent } from '../util/util';
 import { PlatformConfig, detectPlatforms } from '@ionic/core';
+import { proxyEvent } from '../util/util';
+
 
 @Injectable()
 export class Platform {
@@ -37,7 +37,6 @@ export class Platform {
   resize = new EventEmitter<Event>();
 
   constructor() {
-
     proxyEvent(this.pause, document, 'pause');
     proxyEvent(this.resume, document, 'resume');
     proxyEvent(this.backButton, document, 'backbutton');

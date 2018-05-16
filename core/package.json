@@ -14,21 +14,21 @@
     "progressive web app",
     "pwa"
   ],
-  "module": "dist/collection/index.js",
-  "main": "dist/ionic.js",
-  "types": "dist/types/interface.d.ts",
+  "module": "dist/esm/index.js",
+  "main": "dist/index.js",
+  "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "files": [
     "dist/"
   ],
   "dependencies": {
     "clean-css-cli": "^4.1.11",
-    "ionicons": "4.0.0-19"
+    "ionicons": "4.1.1"
   },
   "devDependencies": {
-    "@stencil/core": "0.8.2",
+    "@stencil/core": "^0.9.1",
     "@stencil/dev-server": "latest",
-    "@stencil/sass": "0.0.3",
+    "@stencil/sass": "latest",
     "@stencil/utils": "latest",
     "@types/jest": "^22.2.3",
     "chai": "^4.1.2",
@@ -45,6 +45,7 @@
   "scripts": {
     "build": "npm run clean && npm run build-css && stencil build --docs",
     "build-css": "sh ./scripts/css.sh",
+    "build.debug": "npm run clean && stencil build --debug",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "clean": "node scripts/clean.js",

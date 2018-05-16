@@ -15,7 +15,7 @@
 <ion-backdrop [tappable]="enableBackdropDismiss" [visible]="showBackdrop" [stopPropagation]="shouldPropagate"></ion-backdrop>
 ```
 
-```javascript
+```typescript
 import { Component } from '@angular/core';
 
 @Component({

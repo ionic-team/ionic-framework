@@ -47,7 +47,7 @@
 </ion-segment>
 ```
 
-```javascript
+```typescript
 import { Component } from '@angular/core';
 
 @Component({

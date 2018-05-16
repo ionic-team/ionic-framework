@@ -3,19 +3,20 @@ import { configFromURL } from '../utils/config';
 import { isIOS } from '../utils/platform';
 import { Config } from './config';
 
-const Ionic = (window as any).Ionic = (window as any).Ionic || {};
+
+const Ionic = (window as any)['Ionic'] = (window as any)['Ionic'] || {};
 declare const Context: any;
 
 // queue used to coordinate DOM reads and
 // write in order to avoid layout thrashing
 Object.defineProperty(Ionic, 'queue', {
-  get: () => Context.queue
+  get: () => Context['queue']
 });
 
 // create the Ionic.config from raw config object (if it exists)
 // and convert Ionic.config into a ConfigApi that has a get() fn
-const config = Ionic.config = Context.config = new Config({
-  ...Ionic.config,
+const config = Ionic['config'] = Context['config'] = new Config({
+  ...Ionic['config'],
   ...configFromURL()
 });
 

@@ -1,11 +1,22 @@
 import { ChangeDetectorRef, ContentChild, Directive, ElementRef, EmbeddedViewRef } from '@angular/core';
+import { proxyInputs } from '../proxies';
 import { VirtualItem } from './virtual-item';
 import { VirtualHeader } from './virtual-header';
 import { VirtualFooter } from './virtual-footer';
 import { VirtualContext } from './virtual-utils';
 
+
 @Directive({
-  selector: 'ion-virtual-scroll'
+  selector: 'ion-virtual-scroll',
+  inputs: [
+    'approxItemHeight',
+    'approxHeaderHeight',
+    'approxFooterHeight',
+    'headerFn',
+    'footerFn',
+    'items',
+    'itemHeight'
+  ]
 })
 export class VirtualScroll {
 
@@ -17,7 +28,17 @@ export class VirtualScroll {
     private el: ElementRef,
     public cd: ChangeDetectorRef,
   ) {
-    this.el.nativeElement.nodeRender = this.nodeRender.bind(this);
+    el.nativeElement.nodeRender = this.nodeRender.bind(this);
+
+    proxyInputs(this, this.el, [
+      'approxItemHeight',
+      'approxHeaderHeight',
+      'approxFooterHeight',
+      'headerFn',
+      'footerFn',
+      'items',
+      'itemHeight'
+    ]);
   }
 
   private nodeRender(el: HTMLElement|null, cell: any, index?: number) {
