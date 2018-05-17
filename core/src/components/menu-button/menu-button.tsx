@@ -31,7 +31,7 @@ export class MenuButton {
       <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
         <ion-button>
           <slot>
-            <ion-icon slot="icon-only" name={menuIcon}/>
+            <ion-icon icon={menuIcon} slot="icon-only" />
           </slot>
         </ion-button>
       </ion-menu-toggle>
