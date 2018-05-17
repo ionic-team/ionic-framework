@@ -1,3 +1,29 @@
+<a name="4.0.0-alpha.7"></a>
+# [4.0.0-alpha.7](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.6...v4.0.0-alpha.7) (2018-05-17)
+
+
+### Bug Fixes
+
+* **all:** strong typing for color ([618f708](https://github.com/ionic-team/ionic/commit/618f708))
+* **angula:** platform logic belongs to core ([af5db2f](https://github.com/ionic-team/ionic/commit/af5db2f))
+* **angular:** build script ([a88e1e8](https://github.com/ionic-team/ionic/commit/a88e1e8))
+* **angular:** params are assigned to props ([7fa6e43](https://github.com/ionic-team/ionic/commit/7fa6e43))
+* **angular:** populated the platforms array ([#14466](https://github.com/ionic-team/ionic/issues/14466)) ([d177087](https://github.com/ionic-team/ionic/commit/d177087))
+* **angular:** Required<> is not available ([8aa6965](https://github.com/ionic-team/ionic/commit/8aa6965))
+* **angular:** routerLink integration ([ed8ff4f](https://github.com/ionic-team/ionic/commit/ed8ff4f))
+* **content:** scrol-inner takes all height ([3da0c98](https://github.com/ionic-team/ionic/commit/3da0c98))
+* **nav:** Remove console.log ([#14467](https://github.com/ionic-team/ionic/issues/14467)) ([d93b1d5](https://github.com/ionic-team/ionic/commit/d93b1d5))
+* **refresher:** adds threshold ([34ae904](https://github.com/ionic-team/ionic/commit/34ae904))
+* **router:** accepts root direction ([ae9d0c7](https://github.com/ionic-team/ionic/commit/ae9d0c7))
+* **router:** fix push() public interface ([875b9d0](https://github.com/ionic-team/ionic/commit/875b9d0))
+
+
+### Features
+
+* **img:** adds lazy load image ([b06c65f](https://github.com/ionic-team/ionic/commit/b06c65f))
+
+
+
 <a name="4.0.0-alpha.6"></a>
 # [4.0.0-alpha.6](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.5...v4.0.0-alpha.6) (2018-05-10)
 
