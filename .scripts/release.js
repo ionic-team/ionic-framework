@@ -27,7 +27,7 @@ async function main() {
     publishPackages(tasks, common.packages, version);
 
     // push tag to git remote
-    publishGit(tasks, version);
+    publishGit(tasks, version, changelog);
 
     const listr = new Listr(tasks);
     await listr.run();
