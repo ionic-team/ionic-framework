@@ -8,8 +8,7 @@ import { getButtonClassMap, getElementClassMap, openURL } from '../../utils/them
   styleUrls: {
     ios: 'button.ios.scss',
     md: 'button.md.scss'
-  },
-  shadow: true
+  }
 })
 export class Button {
   @Element() el!: HTMLElement;
@@ -23,7 +22,7 @@ export class Button {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color?: Color;
+  @Prop() color?: Color = 'primary';
 
   /**
    * The mode determines which platform styles to use.
@@ -183,7 +182,7 @@ function getButtonTypeClassMap(buttonType: string, type: string|undefined, mode:
   };
 }
 
-function getColorClassMap(buttonType: string, color = 'primary', fill: string, mode: Mode): CssClassMap {
+function getColorClassMap(buttonType: string, color: string | undefined, fill: string, mode: Mode): CssClassMap {
   let className = buttonType;
 
   if (buttonType !== 'bar-button' && fill === 'solid') {

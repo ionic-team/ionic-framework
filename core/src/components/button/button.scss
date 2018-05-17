@@ -3,6 +3,10 @@
 // Button
 // --------------------------------------------------
 
+.button {
+  --ripple-color: $color-contrast;
+}
+
 .button-container {
   @include font-smoothing();
   @include text-align(center);
@@ -35,37 +39,47 @@
 }
 
 .button-container {
-  @include border-radius($button-border-radius);
-  @include margin($button-margin-top, $button-margin-end, $button-margin-bottom, $button-margin-start);
-  @include padding($button-padding-top, $button-padding-end, $button-padding-bottom, $button-padding-start);
+  @include border-radius(var(--border-radius));
+  @include margin(
+    var(--margin-top),
+    var(--margin-end),
+    var(--margin-bottom),
+    var(--margin-start)
+  );
+  @include padding(
+    var(--padding-top),
+    var(--padding-end),
+    var(--padding-bottom),
+    var(--padding-start)
+  );
 
   overflow: hidden;
 
-  height: $button-height;
+  height: var(--height);
 
-  border-width: $button-border-width;
-  border-style: $button-border-style;
-  border-color: $button-border-color;
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
 
-  font-family: $button-font-family;
-  font-size: $button-font-size;
-  font-weight: $button-font-weight;
-  letter-spacing: $button-letter-spacing;
-  text-transform: $button-text-transform;
-  color: $button-text-color;
-  background-color: $button-background;
-  box-shadow: $button-box-shadow;
-  opacity: $button-opacity;
-  transition: $button-transition;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  font-weight: var(--font-weight);
+  letter-spacing: var(--letter-spacing);
+  text-transform: var(--text-transform);
+  color: var(--text-color);
+  background: var(--background);
+  box-shadow: var(--box-shadow);
+  opacity: var(--opacity);
+  transition: var(--transition);
 }
 
 .button-container:hover {
-  opacity: $button-opacity-hover;
+  opacity: var(--opacity-hover);
 }
 
 .button-container[disabled] {
   cursor: default;
-  opacity: $button-opacity-disabled;
+  opacity: var(--opacity-disabled);
 
   pointer-events: none;
 }
@@ -91,7 +105,7 @@
 // Block Button
 // --------------------------------------------------
 
-:host(.button-block) > .button-container {
+.button-block > .button-container {
   @include margin-horizontal(0);
 
   display: block;
@@ -102,7 +116,7 @@
   contain: strict;
 }
 
-:host(.button-block::after) {
+.button-block::after {
   clear: both;
 }
 
@@ -110,7 +124,7 @@
 // Full Button
 // --------------------------------------------------
 
-:host(.button-full) > .button-container {
+.button-full > .button-container {
   display: block;
 
   width: 100%;
@@ -122,7 +136,7 @@
 // Material Design Clear Button
 // --------------------------------------------------
 
-:host(.button-full.button-outline) {
+.button-full.button-outline {
   --border-radius: 0;
 
   > .button-container {
@@ -135,7 +149,7 @@
 // iOS Full Button
 // --------------------------------------------------
 
-:host(.button-full) {
+.button-full {
   @include margin-horizontal(0);
   @include border-radius(0);
 
@@ -147,21 +161,21 @@
 // Button Icons
 // --------------------------------------------------
 
-ion-icon {
+.button ion-icon {
   font-size: 1.4em;
 
   pointer-events: none;
 }
 
-ion-icon[slot="start"] {
+.button ion-icon[slot="start"] {
   @include margin(0, .3em, 0, -.3em);
 }
 
-ion-icon[slot="end"] {
+.button ion-icon[slot="end"] {
   @include margin(0, -.2em, 0, .3em);
 }
 
-ion-icon[slot="icon-only"] {
+.button ion-icon[slot="icon-only"] {
   font-size: 1.8em;
 }
 
@@ -169,6 +183,6 @@ ion-icon[slot="icon-only"] {
 // Button Ripple effect
 // --------------------------------------------------
 
-ion-ripple-effect {
-  --color: $button-ripple-color;
+.button ion-ripple-effect {
+  --color: var(--ripple-color);
 }

@@ -7,7 +7,7 @@
 $button-md-font-family:                                 $font-family-md-base !default;
 
 /// @prop - Margin top of the button
-$button-md-margin-top:                                  4px !default;
+$button-md-margin-top:                                  4px;
 
 /// @prop - Margin end of the button
 $button-md-margin-end:                                  2px !default;
@@ -66,7 +66,7 @@ $button-md-box-shadow-activated:                        0 3px 5px rgba(0, 0, 0, 
 $button-md-ripple-background-color:                     $text-md-color-step-400 !default;
 
 /// @prop - Opacity of the button when disabled
-$button-md-opacity-disabled:                            $button-opacity-disabled !default;
+$button-md-opacity-disabled:                           0.5 !default;
 
 // Material Design Large Button
 // --------------------------------------------------
