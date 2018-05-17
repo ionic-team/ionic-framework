@@ -56,6 +56,8 @@ Title for the action sheet.
 
 boolean
 
+If the actionSheet should close the keyboard
+
 
 #### leaveAnimation
 
@@ -67,6 +69,8 @@ Animation to use when the action sheet is dismissed.
 #### overlayId
 
 number
+
+Unique ID to be used with the overlay. Internal only
 
 
 #### subHeader
@@ -132,6 +136,8 @@ Title for the action sheet.
 
 boolean
 
+If the actionSheet should close the keyboard
+
 
 #### leave-animation
 
@@ -143,6 +149,8 @@ Animation to use when the action sheet is dismissed.
 #### overlay-id
 
 number
+
+Unique ID to be used with the overlay. Internal only
 
 
 #### sub-header

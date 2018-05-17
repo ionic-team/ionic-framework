@@ -164,6 +164,9 @@ declare global {
        * Title for the action sheet.
        */
       'header': string;
+      /**
+       * If the actionSheet should close the keyboard
+       */
       'keyboardClose': boolean;
       /**
        * Animation to use when the action sheet is dismissed.
@@ -177,6 +180,9 @@ declare global {
        * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await actionSheet.onWillDismiss(); ```
        */
       'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      /**
+       * Unique ID to be used with the overlay. Internal only
+       */
       'overlayId': number;
       /**
        * Present the action sheet overlay after it has been created.
@@ -236,6 +242,9 @@ declare global {
        * Title for the action sheet.
        */
       'header'?: string;
+      /**
+       * If the actionSheet should close the keyboard
+       */
       'keyboardClose'?: boolean;
       /**
        * Animation to use when the action sheet is dismissed.
@@ -265,6 +274,9 @@ declare global {
        * Emitted before the alert has presented.
        */
       'onIonActionSheetWillPresent'?: (event: CustomEvent<void>) => void;
+      /**
+       * Unique ID to be used with the overlay. Internal only
+       */
       'overlayId'?: number;
       /**
        * Subtitle for the action sheet.

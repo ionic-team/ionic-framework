@@ -11,8 +11,8 @@ export class ActionSheetExample {
 
   constructor(public actionSheetController: ActionSheetController) {}
 
-  presentActionSheet() {
-    const actionSheet = this.actionSheetController.create({
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
       header: "Albums",
       buttons: [{
         text: 'Delete',
@@ -48,8 +48,7 @@ export class ActionSheetExample {
         }
       }]
     });
-
-    actionSheet.present();
+    await actionSheet.present();
   }
 
 }
