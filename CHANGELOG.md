@@ -5,7 +5,7 @@
 ### Bug Fixes
 
 * **all:** strong typing for color ([618f708](https://github.com/ionic-team/ionic/commit/618f708))
-* **angula:** platform logic belongs to core ([af5db2f](https://github.com/ionic-team/ionic/commit/af5db2f))
+* **angular:** platform logic belongs to core ([af5db2f](https://github.com/ionic-team/ionic/commit/af5db2f))
 * **angular:** build script ([a88e1e8](https://github.com/ionic-team/ionic/commit/a88e1e8))
 * **angular:** params are assigned to props ([7fa6e43](https://github.com/ionic-team/ionic/commit/7fa6e43))
 * **angular:** populated the platforms array ([#14466](https://github.com/ionic-team/ionic/issues/14466)) ([d177087](https://github.com/ionic-team/ionic/commit/d177087))
