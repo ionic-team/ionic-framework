@@ -12,6 +12,9 @@
   height: $toggle-ios-height;
 
   contain: strict;
+
+  --checked-background: var(--checked-color);
+  --checked-knob: var(--checked-color);
 }
 
 
@@ -78,7 +81,7 @@
 // -----------------------------------------
 
 .toggle-ios.toggle-checked .toggle-icon {
-  background-color: $toggle-ios-background-color-on;
+  background-color: var(--checked-knob);
 }
 
 
@@ -146,24 +149,4 @@
 
 .item-ios .toggle-ios[slot="start"] {
   @include padding($toggle-ios-item-start-padding-top, $toggle-ios-item-start-padding-end, $toggle-ios-item-start-padding-bottom, $toggle-ios-item-start-padding-start);
-}
-
-
-// iOS Toggle Color Mixin
-// --------------------------------------------------
-
-@mixin ios-toggle-theme($color-name) {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-
-  .toggle-ios-#{$color-name}.toggle-checked .toggle-icon {
-    background-color: $color-base;
-  }
-}
-
-
-// Generate iOS Toggle Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  @include ios-toggle-theme($color-name);
 }

@@ -4,13 +4,7 @@ import { Color, Mode } from '../../interface';
 
 @Component({
   tag: 'ion-text',
-  styleUrls: {
-    ios: 'text.ios.scss',
-    md: 'text.md.scss'
-  },
-  host: {
-    theme: 'text'
-  }
+  styleUrl: 'text.scss'
 })
 export class Text {
 
@@ -28,4 +22,11 @@ export class Text {
    */
   @Prop() mode!: Mode;
 
+  hostData() {
+    return {
+      class: {
+        [`color-${this.color}`]: !!this.color
+      }
+    };
+  }
 }

@@ -1,0 +1,11 @@
+@import "../../themes/ionic.theme.default";
+
+ion-text {
+  --ion-color-base: currentColor;
+}
+
+ion-text,
+ion-text a,
+ion-text p {
+  color: #{$color-base};
+}

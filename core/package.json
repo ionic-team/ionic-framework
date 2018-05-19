@@ -51,6 +51,7 @@
     "clean": "node scripts/clean.js",
     "watch": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server\"",
     "dev": "npm run clean && npm run build-css && npm run watch",
+    "dev-prod": "npm run clean && npm run build-css && npm run watch --prod",
     "e2e": "node ./scripts/e2e",
     "e2e-debug": "node --inspect --debug-brk ./scripts/e2e",
     "lint": "npm run lint.ts && npm run lint.sass",

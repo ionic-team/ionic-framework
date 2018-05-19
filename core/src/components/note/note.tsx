@@ -1,5 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
@@ -7,9 +8,6 @@ import { Color, Mode } from '../../interface';
   styleUrls: {
     ios: 'note.ios.scss',
     md: 'note.md.scss'
-  },
-  host: {
-    theme: 'note'
   }
 })
 export class Note {
@@ -27,5 +25,13 @@ export class Note {
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode!: Mode;
+
+  hostData() {
+    return {
+      class: {
+        ...createThemedClasses(this.mode, this.color, 'note')
+      }
+    };
+  }
 
 }

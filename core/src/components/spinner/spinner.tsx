@@ -9,9 +9,6 @@ import { SPINNERS, SpinnerConfig } from './spinner-configs';
   styleUrls: {
     ios: 'spinner.ios.scss',
     md: 'spinner.md.scss'
-  },
-  host: {
-    theme: 'spinner'
   }
 })
 export class Spinner {

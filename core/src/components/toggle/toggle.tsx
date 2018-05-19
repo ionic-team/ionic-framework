@@ -2,6 +2,7 @@ import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/cor
 import { CheckboxInput, CheckedInputChangeEvent, Color, GestureDetail, Mode, StyleEvent } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
 import { deferEvent } from '../../utils/helpers';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
@@ -9,9 +10,6 @@ import { deferEvent } from '../../utils/helpers';
   styleUrls: {
     ios: 'toggle.ios.scss',
     md: 'toggle.md.scss'
-  },
-  host: {
-    theme: 'toggle'
   }
 })
 export class Toggle implements CheckboxInput {
@@ -162,6 +160,8 @@ export class Toggle implements CheckboxInput {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, this.color, 'toggle'),
+
         'toggle-activated': this.activated,
         'toggle-checked': this.checked,
         'toggle-disabled': this.disabled,

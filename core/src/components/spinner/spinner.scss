@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals";
+@import "../../themes/ionic.theme.default";
 
 // Spinners
 // --------------------------------------------------
@@ -9,6 +10,8 @@ ion-spinner {
 
   width: 28px;
   height: 28px;
+
+  --color: #{$color-base};
 }
 
 ion-spinner svg {
@@ -34,6 +37,7 @@ ion-spinner.spinner-paused svg {
 .spinner-lines-small line {
   stroke-width: 4px;
   stroke-linecap: round;
+  stroke: var(--color);
 }
 
 .spinner-lines svg,
@@ -47,6 +51,7 @@ ion-spinner.spinner-paused svg {
 
 .spinner-bubbles svg {
   animation: spinner-scale-out 1s linear infinite;
+  fill: var(--color);
 }
 
 
@@ -55,6 +60,7 @@ ion-spinner.spinner-paused svg {
 
 .spinner-circles svg {
   animation: spinner-fade-out 1s linear infinite;
+  fill: var(--color);
 }
 
 
@@ -66,6 +72,8 @@ ion-spinner.spinner-paused svg {
   stroke-width: 4px;
   stroke-dasharray: 128px;
   stroke-dashoffset: 82px;
+
+  stroke: var(--color);
 }
 
 .spinner-crescent svg {
@@ -78,6 +86,7 @@ ion-spinner.spinner-paused svg {
 
 .spinner-dots circle {
   stroke-width: 0;
+  fill: var(--color);
 }
 
 .spinner-dots svg {

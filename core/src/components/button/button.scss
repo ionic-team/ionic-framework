@@ -10,7 +10,7 @@
   --ion-color-shade: #{get-color(primary, shade)};
 }
 
-.button-container {
+.button > .button-container {
   @include font-smoothing();
   @include text-align(center);
   @include appearance(none);
@@ -63,19 +63,19 @@
   contain: content;
 }
 
-.button-container:hover {
+.button > .button-container:hover {
   opacity: var(--opacity-hover);
 }
 
-.button-container[disabled] {
+.button > .button-container[disabled] {
   cursor: default;
   opacity: var(--opacity-disabled);
 
   pointer-events: none;
 }
 
-.button-container:active,
-.button-container:focus {
+.button > .button-container:active,
+.button > .button-container:focus {
   outline: none;
 }
 
@@ -142,7 +142,7 @@
   contain: strict;
 }
 
-.button-block::after {
+.button-block > .button-container::after {
   clear: both;
 }
 

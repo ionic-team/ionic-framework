@@ -1,9 +1,28 @@
 @import "./fab-button.vars";
+@import "../../themes/ionic.theme.default";
 
 // Floating Action Buttons
 // --------------------------------------------------
 
-.fab-button {
+ion-fab-button {
+  font-size: 14px;
+  color: #{$color-contrast};
+
+  // default values
+  --ion-color-base: #{get-color(primary, base)};
+  --ion-color-contrast: #{get-color(primary, contrast)};
+  --ion-color-tint: #{get-color(primary, tint)};
+
+  --size: #{$fab-size};
+  --background: #{$color-base};
+  --transition: background-color, opacity 100ms linear;
+}
+
+ion-fab-button.activated {
+  --background: #{$color-tint};
+}
+
+.fab-button-container {
   @include text-align(center);
   @include appearance(none);
   @include border-radius(50%);
@@ -13,21 +32,23 @@
   display: block;
   overflow: hidden;
 
-  width: $fab-size;
-  height: $fab-size;
+  width: var(--size);
+  height: var(--size);
 
   border: 0;
-
-  font-size: 14px;
-  line-height: $fab-size;
+  color: inherit;
+  line-height: var(--size);
   text-overflow: ellipsis;
   text-transform: none;
   white-space: nowrap;
   cursor: pointer;
-  transition: background-color, opacity 100ms linear;
+  transition: var(--transition);
 
+  background: var(--background);
   background-clip: padding-box;
+  box-shadow: var(--box-shadow);
   font-kerning: none;
+  transform: var(--transform);
   user-select: none;
 
   contain: strict;
@@ -65,10 +86,7 @@
 ion-fab-button[mini] .fab-button {
   @include margin(($fab-size - $fab-mini-size) / 2);
 
-  width: $fab-mini-size;
-  height: $fab-mini-size;
-
-  line-height: $fab-mini-size;
+  --size: #{$fab-mini-size};
 }
 
 // FAB Close Icon
@@ -104,4 +122,8 @@ ion-fab-button[mini] .fab-button {
 .fab-button-close-active .fab-button-inner {
   opacity: 0;
   transform: scale(.4) rotateZ(45deg);
+}
+
+.fab-button ion-ripple-effect {
+  --color: var(--ripple-color);
 }

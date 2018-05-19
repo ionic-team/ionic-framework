@@ -1,6 +1,6 @@
 import { Component, Element, Prop } from '@stencil/core';
 import { Color, CssClassMap, Mode } from '../../interface';
-import { createThemedClasses, getElementClassMap } from '../../utils/theme';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
@@ -73,21 +73,25 @@ export class FabButton {
     };
   }
 
-  render() {
+  hostData() {
     const themedClasses = createThemedClasses(this.mode, this.color, 'fab-button');
     const translucentClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'fab-button-translucent') : {};
-    const hostClasses = getElementClassMap(this.el.classList);
-    const TagType = this.href ? 'a' : 'button';
-    const fabClasses = {
-      ...this.getFabClassMap(),
-      ...themedClasses,
-      ...translucentClasses,
-      ...hostClasses,
+
+    return {
+      class: {
+        ...this.getFabClassMap(),
+        ...themedClasses,
+        ...translucentClasses,
+      }
     };
+  }
+
+  render() {
+    const TagType = this.href ? 'a' : 'button';
 
     return (
       <TagType
-        class={fabClasses}
+        class="fab-button-container"
         disabled={this.disabled}
         href={this.href}>
         <ion-icon name="close" class="fab-button-close-icon"></ion-icon>
