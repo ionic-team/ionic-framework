@@ -43,7 +43,7 @@ export class RefresherContent {
       <div class="refresher-pulling">
         {this.pullingIcon &&
           <div class="refresher-pulling-icon">
-            <ion-icon name={this.pullingIcon}></ion-icon>
+            <ion-icon icon={this.pullingIcon}></ion-icon>
           </div>
         }
         {this.pullingText &&

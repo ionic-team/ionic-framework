@@ -30,7 +30,15 @@ export class ActionSheet implements OverlayInterface {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
+
+  /**
+   * Unique ID to be used with the overlay. Internal only
+   */
   @Prop() overlayId!: number;
+
+  /**
+   * If the actionSheet should close the keyboard
+   */
   @Prop() keyboardClose = true;
 
   /**
@@ -242,7 +250,7 @@ export class ActionSheet implements OverlayInterface {
               <button class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
                 <span class="action-sheet-button-inner">
                   {b.icon
-                    ? <ion-icon name={b.icon} class="action-sheet-icon" />
+                    ? <ion-icon icon={b.icon} class="action-sheet-icon" />
                     : null}
                   {b.text}
                 </span>
@@ -258,7 +266,7 @@ export class ActionSheet implements OverlayInterface {
                   <span class="action-sheet-button-inner">
                     {cancelButton.icon
                       ? <ion-icon
-                          name={cancelButton.icon}
+                          icon={cancelButton.icon}
                           class="action-sheet-icon"
                         />
                       : null}

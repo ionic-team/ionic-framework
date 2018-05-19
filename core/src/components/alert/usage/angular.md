@@ -11,30 +11,30 @@ export class AlertExample {
 
   constructor(public alertController: AlertController) {}
 
-  presentAlert() {
-    const alert = this.alertController.create({
+  async presentAlert() {
+    const alert = await this.alertController.create({
       header: 'Alert',
       subHeader: 'Subtitle',
       message: 'This is an alert message.',
       buttons: ['OK']
     });
 
-    alert.present();
+    await alert.present();
   }
 
-  presentAlertMultipleButtons() {
-    const alert = this.alertController.create({
+  async presentAlertMultipleButtons() {
+    const alert = await this.alertController.create({
       header: 'Alert',
       subHeader: 'Subtitle',
       message: 'This is an alert message.',
       buttons: ['Cancel', 'Open Modal', 'Delete']
     });
 
-    alert.present();
+    await alert.present();
   }
 
-  presentAlertConfirm() {
-    const alert = this.alertController.create({
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
       header: 'Confirm!',
       message: 'Message <strong>text</strong>!!!',
       buttons: [
@@ -54,11 +54,11 @@ export class AlertExample {
       ]
     });
 
-    alert.present();
+    await alert.present();
   }
 
-  presentAlertPrompt() {
-    const alert = this.alertController.create({
+  async presentAlertPrompt() {
+    const alert = await this.alertController.create({
       header: 'Prompt!',
       inputs: [
         {
@@ -116,11 +116,11 @@ export class AlertExample {
       ]
     });
 
-    alert.present();
+    await alert.present();
   }
 
-  presentAlertRadio() {
-    const alert = this.alertController.create({
+  async presentAlertRadio() {
+    const alert = await this.alertController.create({
       header: 'Radio',
       inputs: [
         {
@@ -172,11 +172,11 @@ export class AlertExample {
       ]
     });
 
-    alert.present();
+    await alert.present();
   }
 
-  presentAlertCheckbox() {
-    const alert = this.alertController.create({
+  async presentAlertCheckbox() {
+    const alert = await this.alertController.create({
       header: 'Checkbox',
       inputs: [
         {
@@ -233,7 +233,7 @@ export class AlertExample {
       ]
     });
 
-    alert.present();
+    await alert.present();
   }
 
 }
