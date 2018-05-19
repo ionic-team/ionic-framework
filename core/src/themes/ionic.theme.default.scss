@@ -76,6 +76,11 @@ $colors:  (
   )
 );
 
+@function get-color($name, $variation) {
+  $values: map-get($colors, $name);
+  @return var(--ion-color-#{$name}-#{$variation}, map-get($values, $variation));
+}
+
 // Default General
 // --------------------------------------------------
 $content-margin:                              var(--ion-content-margin, 16px) !default;

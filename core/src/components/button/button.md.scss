@@ -5,36 +5,36 @@
 // --------------------------------------------------
 
 .button-md {
-  --text-transform: $button-md-text-transform;
+  font-family: #{$button-md-font-family};
+  font-weight: #{$button-md-font-weight};
+  font-size: #{$button-md-font-size};
 
-  --transition: box-shadow $button-md-transition-duration $button-md-transition-timing-function,
-              background-color $button-md-transition-duration $button-md-transition-timing-function,
-              color $button-md-transition-duration $button-md-transition-timing-function;
+  --text-transform: #{$button-md-text-transform};
 
-  --font-family: $button-md-font-family;
-  --font-weight: $button-md-font-weight;
-  --font-size: $button-md-font-size;
+  --transition: box-shadow #{$button-md-transition-duration} #{$button-md-transition-timing-function},
+              background-color #{$button-md-transition-duration} #{$button-md-transition-timing-function},
+              color #{$button-md-transition-duration} #{$button-md-transition-timing-function};
 
-  --border-radius: $button-md-border-radius;
+  --border-radius: #{$button-md-border-radius};
 
-  --margin-top: $button-md-margin-top;
-  --margin-bottom: $button-md-margin-bottom;
-  --margin-start: $button-md-margin-start;
-  --margin-end: $button-md-margin-end;
+  --margin-top: #{$button-md-margin-top};
+  --margin-bottom: #{$button-md-margin-bottom};
+  --margin-start: #{$button-md-margin-start};
+  --margin-end: #{$button-md-margin-end};
 
-  --padding-top: $button-md-padding-top;
-  --padding-bottom: $button-md-padding-bottom;
-  --padding-start: $button-md-padding-start;
-  --padding-end: $button-md-padding-end;
+  --padding-top: #{$button-md-padding-top};
+  --padding-bottom: #{$button-md-padding-bottom};
+  --padding-start: #{$button-md-padding-start};
+  --padding-end: #{$button-md-padding-end};
 
-  --height: $button-md-height;
-  --letter-spacing: $button-md-letter-spacing;
+  --height: #{$button-md-height};
+  --letter-spacing: #{$button-md-letter-spacing};
 
-  --box-shadow: $button-md-box-shadow;
+  --box-shadow: #{$button-md-box-shadow};
 }
 
 .button-md.activated {
-  --box-shadow: $button-md-box-shadow-activated;
+  --box-shadow: #{$button-md-box-shadow-activated};
 }
 
 
@@ -42,23 +42,25 @@
 // --------------------------------------------------
 
 .button-large-md {
-  --padding-top: $button-md-large-padding-top;
-  --padding-start: $button-md-large-padding-start;
-  --padding-end: $button-md-large-padding-end;
-  --padding-bottom: $button-md-large-padding-bottom;
+  font-size: #{$button-md-large-font-size};
 
-  --height: $button-md-large-height;
-  --font-size: $button-md-large-font-size;
+  --padding-top: #{$button-md-large-padding-top};
+  --padding-start: #{$button-md-large-padding-start};
+  --padding-end: #{$button-md-large-padding-end};
+  --padding-bottom: #{$button-md-large-padding-bottom};
+
+  --height: #{$button-md-large-height};
 }
 
 .button-small-md {
-  --padding-top: $button-md-small-padding-top;
-  --padding-start: $button-md-small-padding-start;
-  --padding-end: $button-md-small-padding-end;
-  --padding-bottom: $button-md-small-padding-bottom;
+  font-size: #{$button-md-small-font-size};
 
-  --height: $button-md-small-height;
-  --font-size: $button-md-small-font-size;
+  --padding-top: #{$button-md-small-padding-top};
+  --padding-start: #{$button-md-small-padding-start};
+  --padding-end: #{$button-md-small-padding-end};
+  --padding-bottom: #{$button-md-small-padding-bottom};
+
+  --height: #{$button-md-small-height};
 }
 
 
@@ -66,24 +68,25 @@
 // --------------------------------------------------
 
 .button-outline-md {
-  --border-width: $button-md-outline-border-width;
-  --border-style: $button-md-outline-border-style;
-  --box-shadow: $button-md-outline-box-shadow;
-  --border-color: $color-base;
+  color: #{$color-base};
 
-  --ripple-color: $color-base;
-  --text-color: $color-base;
+  --border-width: #{$button-md-outline-border-width};
+  --border-style: #{$button-md-outline-border-style};
+  --box-shadow: #{$button-md-outline-box-shadow};
+  --border-color: #{$color-base};
+
+  --ripple-color: #{$color-base};
   --background: transparent;
 }
 
 .button-outline-md:hover {
-  --background: $button-md-outline-background-color-hover;
+  --background: #{$button-md-outline-background-color-hover};
 }
 
 .button-outline-md.activated {
-  --background: $button-md-outline-background-color-activated;
-  --box-shadow: $button-md-outline-box-shadow-activated;
-  --opacity: $button-md-outline-opacity-activated;
+  --background: #{$button-md-outline-background-color-activated};
+  --box-shadow: #{$button-md-outline-box-shadow-activated};
+  --opacity: #{$button-md-outline-opacity-activated};
 }
 
 
@@ -92,26 +95,27 @@
 // --------------------------------------------------
 
 .button-clear-md {
-  --border-color: $button-md-clear-border-color;
-  --text-color: $color-base;
-  --box-shadow: $button-md-clear-box-shadow;
-  --background: transparent;
-  --opacity: $button-md-clear-opacity;
+  color: #{$color-base};
 
-  --ripple-color: $button-md-clear-ripple-background-color;
+  --border-color: #{$button-md-clear-border-color};
+  --box-shadow: #{$button-md-clear-box-shadow};
+  --background: transparent;
+  --opacity: #{$button-md-clear-opacity};
+
+  --ripple-color: #{$button-md-clear-ripple-background-color};
 }
 
 .button-clear-md.activated {
-  --background-color: $button-md-clear-background-color-activated;
-  --box-shadow: $button-md-clear-box-shadow-activated;
+  --background-color: #{$button-md-clear-background-color-activated};
+  --box-shadow: #{$button-md-clear-box-shadow-activated};
 }
 
 .button-clear-md.focused {
-  --background-color: $button-md-clear-background-color-focused;
+  --background-color: #{$button-md-clear-background-color-focused};
 }
 
 .button-clear-md:hover {
-  --background-color: $button-md-clear-background-color-hover;
+  --background-color: #{$button-md-clear-background-color-hover};
 }
 
 
@@ -119,12 +123,12 @@
 // --------------------------------------------------
 
 .button-round-md {
-  --border-radius: $button-md-round-border-radius;
+  --border-radius: #{$button-md-round-border-radius};
 
-  --padding-top: $button-md-round-padding-top;
-  --padding-start: $button-md-round-padding-start;
-  --padding-end: $button-md-round-padding-end;
-  --padding-bottom: $button-md-round-padding-bottom;
+  --padding-top: #{$button-md-round-padding-top};
+  --padding-start: #{$button-md-round-padding-start};
+  --padding-end: #{$button-md-round-padding-end};
+  --padding-bottom: #{$button-md-round-padding-bottom};
 }
 
 .button-md ion-icon[slot="icon-only"] {
@@ -135,5 +139,5 @@
 // --------------------------------------------------
 
 .button-strong-md {
-  --font-weight: $button-md-strong-font-weight;
+  font-weight: #{$button-md-strong-font-weight};
 }

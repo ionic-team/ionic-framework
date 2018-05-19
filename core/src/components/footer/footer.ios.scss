@@ -3,10 +3,10 @@
 // iOS Borders
 // --------------------------------------------------
 
-.footer-ios ion-toolbar:last-child {
-  --border-width: $hairlines-width 0 0;
+.footer-ios ion-toolbar:first-child {
+  --border-width: #{$hairlines-width} 0 0;
 }
 
-.footer-ios[no-border] ion-toolbar:last-child {
+.footer-ios[no-border] ion-toolbar:first-child {
   --border-width: 0;
 }

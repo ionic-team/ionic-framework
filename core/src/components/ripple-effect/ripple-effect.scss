@@ -4,10 +4,8 @@
 
 // Material Design Ripple Effect
 // --------------------------------------------------
-// Only Material uses the button effect, so by default
-// it's display none, and .md sets to display block.
 
-:host {
+ion-ripple-effect {
   @include position(0, 0, 0, 0);
 
   position: absolute;

@@ -1,10 +1,13 @@
+@import "../../themes/ionic.theme.default";
 @import "./button.vars";
 
 // Button
 // --------------------------------------------------
 
 .button {
-  --ripple-color: $color-contrast;
+  --ion-color-base: #{get-color(primary, base)};
+  --ion-color-contrast: #{get-color(primary, contrast)};
+  --ion-color-shade: #{get-color(primary, shade)};
 }
 
 .button-container {
@@ -61,12 +64,11 @@
   border-style: var(--border-style);
   border-color: var(--border-color);
 
-  font-family: var(--font-family);
-  font-size: var(--font-size);
-  font-weight: var(--font-weight);
   letter-spacing: var(--letter-spacing);
   text-transform: var(--text-transform);
-  color: var(--text-color);
+  color: inherit;
+  font-weight: inherit;
+  font-family: inherit;
   background: var(--background);
   box-shadow: var(--box-shadow);
   opacity: var(--opacity);
@@ -101,6 +103,16 @@
   height: 100%;
 }
 
+// Solid Button
+// --------------------------------------------------
+
+.button-solid {
+  --background: #{$color-base};
+  --ripple-color: #{$color-contrast};
+
+  color: #{$color-contrast};
+}
+
 
 // Block Button
 // --------------------------------------------------
@@ -125,6 +137,8 @@
 // --------------------------------------------------
 
 .button-full > .button-container {
+  @include margin-horizontal(0);
+
   display: block;
 
   width: 100%;
@@ -132,25 +146,7 @@
   contain: strict;
 }
 
-
-// Material Design Clear Button
-// --------------------------------------------------
-
-.button-full.button-outline {
-  --border-radius: 0;
-
-  > .button-container {
-    border-right-width: 0;
-    border-left-width: 0;
-  }
-}
-
-
-// iOS Full Button
-// --------------------------------------------------
-
-.button-full {
-  @include margin-horizontal(0);
+.button-full:not(.button-round) > .button-container {
   @include border-radius(0);
 
   border-right-width: 0;

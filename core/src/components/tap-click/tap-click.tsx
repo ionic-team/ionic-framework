@@ -154,7 +154,7 @@ export class TapClick {
 }
 
 function getActivatableTarget(el: HTMLElement): any {
-  return el.closest('a,button,[tappable]');
+  return el.closest('a:not(.button-container),button:not(.button-container),[tappable], ion-button');
 }
 
 const ACTIVATED = 'activated';

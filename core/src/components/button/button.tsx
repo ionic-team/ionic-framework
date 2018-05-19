@@ -22,7 +22,7 @@ export class Button {
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
-  @Prop() color?: Color = 'primary';
+  @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
@@ -53,7 +53,7 @@ export class Button {
    * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
    * a toolbar, where the default is `"clear"`.
    */
-  @Prop({reflectToAttr: true}) fill: 'clear' | 'outline' | 'solid' | 'default' = 'default';
+  @Prop({reflectToAttr: true, mutable: true}) fill?: 'clear' | 'outline' | 'solid' | 'default';
 
   /**
    * When using a router, it specifies the transition direction when navigating to
@@ -102,8 +102,8 @@ export class Button {
   @Event() ionBlur!: EventEmitter<void>;
 
   componentWillLoad() {
-    if (this.el.closest('ion-buttons')) {
-      this.buttonType = 'bar-button';
+    if (this.fill === undefined) {
+      this.fill = this.el.closest('ion-buttons') ? 'clear' : 'solid';
     }
   }
 
@@ -133,7 +133,6 @@ export class Button {
       'focused': this.keyFocus,
     };
     return {
-      tappable: '',
       class: buttonClasses
     };
   }
@@ -160,7 +159,7 @@ export class Button {
             <slot></slot>
             <slot name="end"></slot>
           </span>
-         { this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el}/> }
+         { this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el} /> }
       </TagType>
     );
   }
@@ -182,31 +181,19 @@ function getButtonTypeClassMap(buttonType: string, type: string|undefined, mode:
   };
 }
 
-function getColorClassMap(buttonType: string, color: string | undefined, fill: string, mode: Mode): CssClassMap {
+function getColorClassMap(buttonType: string, color: string | undefined, fill: string | undefined, mode: Mode): CssClassMap {
   let className = buttonType;
 
-  if (buttonType !== 'bar-button' && fill === 'solid') {
-    fill = 'default';
-  }
-
-  if (fill && fill !== 'default') {
+  if (fill) {
     className += `-${fill.toLowerCase()}`;
   }
 
-  // special case for a default bar button
-  // if the bar button is default it should get the fill
-  // but if a color is passed the fill shouldn't be added
-  if (buttonType === 'bar-button' && fill === 'default') {
-    className = buttonType;
-    if (!color) {
-      className += '-' + fill.toLowerCase();
-    }
-  }
   const map: CssClassMap = {
     [className]: true,
     [`${className}-${mode}`]: true,
   };
-  map[`${className}-${mode}-${color}`] = true;
-  map[`color-${color}`] = true;
+  if (color) {
+    map[`color-${color}`] = true;
+  }
   return map;
 }

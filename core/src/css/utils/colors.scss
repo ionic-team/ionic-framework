@@ -4,20 +4,16 @@
   $value: map-get($colors, $color-name);
 
   $base: map-get($value, base);
-  $contrast: map-get($value, base);
+  $contrast: map-get($value, contrast);
   $shade: map-get($value, shade);
   $tint: map-get($value, tint);
 
-  --ion-color-base: var(--ion-color-#{$color-name}, #{$base});
-  --ion-color-base-rgb: var(--ion-color-#{$color-name}-rgb, #{color-to-rgb-list($base)});
-  --ion-color-contrast: var(--ion-color-#{$color-name}-contrast, #{$contrast});
-  --ion-color-contrast-rgb: var(--ion-color-#{$color-name}-contrast-rgb, #{color-to-rgb-list($contrast)});
-  --ion-color-shade: var(--ion-color-#{$color-name}-shade, #{$shade});
-  --ion-color-tint: var(--ion-color-#{$color-name}-tint, #{$tint});
-}
-
-:root {
-  @include generate-color("primary")
+  --ion-color-base: var(--ion-color-#{$color-name}, #{$base}) !important;
+  --ion-color-base-rgb: var(--ion-color-#{$color-name}-rgb, #{color-to-rgb-list($base)}) !important;
+  --ion-color-contrast: var(--ion-color-#{$color-name}-contrast, #{$contrast}) !important;
+  --ion-color-contrast-rgb: var(--ion-color-#{$color-name}-contrast-rgb, #{color-to-rgb-list($contrast)}) !important;
+  --ion-color-shade: var(--ion-color-#{$color-name}-shade, #{$shade}) !important;
+  --ion-color-tint: var(--ion-color-#{$color-name}-tint, #{$tint}) !important;
 }
 
 @each $color-name, $value in $colors {

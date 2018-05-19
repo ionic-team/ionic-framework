@@ -5,7 +5,6 @@ import { now } from '../../utils/helpers';
 @Component({
   tag: 'ion-ripple-effect',
   styleUrl: 'ripple-effect.scss',
-  shadow: true
 })
 export class RippleEffect {
 
@@ -73,14 +72,9 @@ export class RippleEffect {
       style.height = size + 'px';
       style.animationDuration = duration + 'ms';
 
-      this.el.shadowRoot!.appendChild(div);
+      this.el.appendChild(div);
       setTimeout(() => div.remove(), duration + 50);
     });
-  }
-
-  render() {
-    // TODO: remove when https://github.com/ionic-team/stencil/pull/809 is fixed
-    return null;
   }
 }
 

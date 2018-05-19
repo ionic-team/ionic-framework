@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 .header-md ion-toolbar:last-child {
-  --border-width: 0 0 $hairlines-width;
+  --border-width: 0 0 1px;
 }
 
 .header-md[no-border] ion-toolbar:last-child {

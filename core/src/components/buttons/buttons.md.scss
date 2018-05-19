@@ -1,32 +1,69 @@
 @import "./buttons.md.vars";
 @import "./buttons";
 
-@mixin md-toolbar-theme($color-name) {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
+// Material Design Toolbar Button Default
+// --------------------------------------------------
 
-  .toolbar-md-#{$color-name} {
+.bar-buttons-md {
+  @include margin(0, 2px);
 
-    .bar-button-clear-md,
-    .back-button-md .back-button-inner,
-    .bar-button-default-md,
-    .bar-button-outline-md {
-      color: $color-contrast;
-    }
+  .button-md {
+    font-size: #{$toolbar-md-button-font-size};
+    font-weight: 500;
 
-    .bar-button-clear-md,
-    .back-button-md .back-button-inner,
-    .bar-button-default-md,
-    .bar-button-outline-md {
-      .ripple-effect {
-        background-color: $color-contrast;
-      }
-    }
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --padding-start: 5px;
+    --padding-end: 5px;
 
-    .bar-button-outline-md {
-      border-color: $color-contrast;
-    }
+    --border-radius: #{$toolbar-md-button-border-radius};
+    --height: 32px;
+  }
 
+
+  // Material Design Toolbar Button Icon
+  // --------------------------------------------------
+
+  .button-md ion-icon[slot="start"] {
+    @include padding-horizontal(null, .3em);
+
+    font-size: 1.4em;
+
+    pointer-events: none;
+  }
+
+  .button-md ion-icon[slot="end"] {
+    @include padding-horizontal(.4em, null);
+
+    font-size: 1.4em;
+
+    pointer-events: none;
+  }
+
+  .button-md ion-icon[slot="icon-only"] {
+    @include padding(0);
+
+    font-size: 1.8em;
+
+    pointer-events: none;
+  }
+
+
+  // Material Design Toolbar Menu Toggle
+  // --------------------------------------------------
+
+  .button-menutoggle-md {
+    @include padding(0, 2px);
+
+    order: map-get($toolbar-order-md, menu-toggle-start);
+
+    min-width: 44px;
+  }
+
+  .button-menutoggle-md ion-icon {
+    @include padding(0, 6px);
+
+    font-size: 24px;
   }
 }
 
@@ -34,132 +71,22 @@
 // Material Design Toolbar Button Placement
 // --------------------------------------------------
 
-.bar-buttons-md {
-  @include margin(0, 2px);
-
-  order: map-get($toolbar-order-md, buttons-secondary);
-
-  transform: translateZ(0);
-}
-
-.buttons-start {
+.bar-buttons-md[slot="start"] {
   order: map-get($toolbar-order-md, buttons-start);
 }
 
-.buttons-primary {
+.bar-buttons-md[slot="secondary"] {
+  order: map-get($toolbar-order-md, buttons-secondary);
+}
+
+.bar-buttons-md[slot="primary"] {
   @include text-align(end);
 
   order: map-get($toolbar-order-md, buttons-primary);
 }
 
-.buttons-end {
+.bar-buttons-md[slot="end"] {
   @include text-align(end);
 
   order: map-get($toolbar-order-md, buttons-end);
-}
-
-.buttons-secondary {
-  order: map-get($toolbar-order-md, buttons-secondary);
-}
-
-
-// Material Design Toolbar Button Default
-// --------------------------------------------------
-
-.bar-button-md {
-  font-size: $toolbar-md-button-font-size;
-  font-weight: 500;
-  text-transform: uppercase;
-
-  --padding-top: 0;
-  --padding-bottom: 0;
-  --padding-start: 5px;
-  --padding-end: 5px;
-
-  --border-radius: $toolbar-md-button-border-radius;
-  --height: 32px;
-  --border-width: 0;
-}
-
-// Material Design Toolbar Button Icon
-// --------------------------------------------------
-
-.bar-button-md .icon {
-  fill: $toolbar-md-button-icon-fill-color;
-}
-
-
-// Material Design Toolbar Button Outline
-// --------------------------------------------------
-
-.bar-button-outline-md {
-  --border-width: 1px;
-  --border-style: solid;
-  --border-color: $toolbar-md-button-color;
-  --background: transparent;
-}
-
-// .bar-button-outline-md:hover {
-//   opacity: .4;
-// }
-
-
-// Material Design Toolbar Button Solid
-// --------------------------------------------------
-
-.bar-button-solid-md {
-  --text-color: $toolbar-md-button-background-color;
-  --background: $toolbar-md-button-color;
-}
-
-// Material Design Toolbar Button Icon
-// --------------------------------------------------
-
-.bar-button-md ion-icon[slot="start"] {
-  @include padding-horizontal(null, .3em);
-
-  font-size: 1.4em;
-
-  pointer-events: none;
-}
-
-.bar-button-md ion-icon[slot="end"] {
-  @include padding-horizontal(.4em, null);
-
-  font-size: 1.4em;
-
-  pointer-events: none;
-}
-
-.bar-button-md ion-icon[slot="icon-only"] {
-  @include padding(0);
-
-  font-size: 1.8em;
-
-  pointer-events: none;
-}
-
-
-// Material Design Toolbar Menu Toggle
-// --------------------------------------------------
-
-.bar-button-menutoggle-md {
-  @include padding(0, 2px);
-
-  order: map-get($toolbar-order-md, menu-toggle-start);
-
-  min-width: 44px;
-}
-
-.bar-button-menutoggle-md ion-icon {
-  @include padding(0, 6px);
-
-  font-size: 24px;
-}
-
-// MD strong Button
-// --------------------------------------------------
-
-.bar-button-strong-md {
-  font-weight: $toolbar-md-button-strong-font-weight;
 }

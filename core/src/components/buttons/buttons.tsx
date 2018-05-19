@@ -1,23 +1,13 @@
-import { Component, Prop } from '@stencil/core';
-
+import { Component } from '@stencil/core';
 
 @Component({
   tag: 'ion-buttons',
   styleUrls: {
     ios: 'buttons.ios.scss',
     md: 'buttons.md.scss'
+  },
+  host: {
+    theme: 'bar-buttons'
   }
 })
-export class Buttons {
-
-  @Prop() side: 'start' | 'end' | 'primary' | 'secundary' = 'start';
-
-  hostData() {
-    return {
-      'slot': 'buttons',
-      class: {
-        [`buttons-${this.side}`]: true
-      }
-    };
-  }
-}
+export class Buttons {}

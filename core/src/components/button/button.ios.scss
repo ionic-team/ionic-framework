@@ -1,4 +1,4 @@
-@import "./button.vars";
+@import "./button";
 @import "./button.ios.vars";
 
 
@@ -6,53 +6,54 @@
 // --------------------------------------------------
 
 .button-ios {
+  font-family: #{$button-ios-font-family};
+  font-size: #{$button-ios-font-size};
+  font-weight: #{$button-ios-font-weight};
 
-  --font-family: $button-ios-font-family;
-  --font-weight: $button-ios-font-weight;
-  --font-size: $button-ios-font-size;
+  --border-radius: #{$button-ios-border-radius};
 
-  --border-radius: $button-ios-border-radius;
+  --margin-top: #{$button-ios-margin-top};
+  --margin-bottom: #{$button-ios-margin-bottom};
+  --margin-start: #{$button-ios-margin-start};
+  --margin-end: #{$button-ios-margin-end};
 
-  --margin-top: $button-ios-margin-top;
-  --margin-bottom: $button-ios-margin-bottom;
-  --margin-start: $button-ios-margin-start;
-  --margin-end: $button-ios-margin-end;
+  --padding-top: #{$button-ios-padding-top};
+  --padding-bottom: #{$button-ios-padding-bottom};
+  --padding-start: #{$button-ios-padding-start};
+  --padding-end: #{$button-ios-padding-end};
 
-  --padding-top: $button-ios-padding-top;
-  --padding-bottom: $button-ios-padding-bottom;
-  --padding-start: $button-ios-padding-start;
-  --padding-end: $button-ios-padding-end;
-
-  --height: $button-ios-height;
-  --letter-spacing: $button-ios-letter-spacing;
+  --height: #{$button-ios-height};
+  --letter-spacing: #{$button-ios-letter-spacing};
 }
 
 .button-ios.activated,
 .button-ios.focused {
-  --background: $color-shade;
+  --background: #{$color-shade};
 }
 
 // iOS Button Sizes
 // --------------------------------------------------
 
 .button-large-ios {
-  --padding-top: $button-ios-large-padding-top;
-  --padding-start: $button-ios-large-padding-start;
-  --padding-end: $button-ios-large-padding-end;
-  --padding-bottom: $button-ios-large-padding-bottom;
+  font-size: #{$button-ios-large-font-size};
 
-  --height: $button-ios-large-height;
-  --font-size: $button-ios-large-font-size;
+  --padding-top: #{$button-ios-large-padding-top};
+  --padding-start: #{$button-ios-large-padding-start};
+  --padding-end: #{$button-ios-large-padding-end};
+  --padding-bottom: #{$button-ios-large-padding-bottom};
+
+  --height: #{$button-ios-large-height};
 }
 
 .button-small-ios {
-  --padding-top: $button-ios-small-padding-top;
-  --padding-start: $button-ios-small-padding-start;
-  --padding-end: $button-ios-small-padding-end;
-  --padding-bottom: $button-ios-small-padding-bottom;
+  font-size: #{$button-ios-small-font-size};
 
-  --height: $button-ios-small-height;
-  --font-size: $button-ios-small-font-size;
+  --padding-top: #{$button-ios-small-padding-top};
+  --padding-start: #{$button-ios-small-padding-start};
+  --padding-end: #{$button-ios-small-padding-end};
+  --padding-bottom: #{$button-ios-small-padding-bottom};
+
+  --height: #{$button-ios-small-height};
 }
 
 
@@ -60,27 +61,29 @@
 // --------------------------------------------------
 
 .button-outline-ios {
-  --border-radius: $button-ios-outline-border-radius;
-  --border-width: $button-ios-outline-border-width;
-  --border-style: $button-ios-outline-border-style;
-  --border-color: $color-base;
+  color: #{$color-base};
 
-  --text-color: $color-base;
+  --border-radius: #{$button-ios-outline-border-radius};
+  --border-width: #{$button-ios-outline-border-width};
+  --border-style: #{$button-ios-outline-border-style};
+  --border-color: #{$color-base};
+
   --background: transparent;
 }
 
 .button-outline-ios.activated {
-  --opacity: $button-ios-outline-opacity-activated;
-  --text-color: $color-shade;
+  color: #{$color-shade};
+
+  --opacity: #{$button-ios-outline-opacity-activated};
 }
 
 .button-outline-ios.focused {
-  --background: $button-ios-outline-background-color-focused;
+  --background: #{$button-ios-outline-background-color-focused};
 }
 
 .button-outline-ios.activated.focused {
-  --border-color: $color-shade;
-  --background: $color-shade;
+  --border-color: #{$color-shade};
+  --background: #{$color-shade};
 }
 
 
@@ -88,18 +91,19 @@
 // --------------------------------------------------
 
 .button-clear-ios {
+  color: #{$color-base};
+
   --border-width: 0;
-  --text-color: $color-base;
   --background: transparent;
 }
 
 .button-clear-ios.activated {
-  --background: $button-ios-clear-background-color-activated;
-  --opacity: $button-ios-clear-opacity-activated;
+  --background: #{$button-ios-clear-background-color-activated};
+  --opacity: #{$button-ios-clear-opacity-activated};
 }
 
 .button-clear-ios.focused {
-  --background: $button-ios-clear-background-color-focused;
+  --background: #{$button-ios-clear-background-color-focused};
 }
 
 // :host(.button-clear-ios):hover {
@@ -112,12 +116,12 @@
 // --------------------------------------------------
 
 .button-round-ios {
-  --border-radius: $button-ios-round-border-radius;
+  --border-radius: #{$button-ios-round-border-radius};
 
-  --padding-top: $button-ios-round-padding-top;
-  --padding-start: $button-ios-round-padding-start;
-  --padding-end: $button-ios-round-padding-end;
-  --padding-bottom: $button-ios-round-padding-bottom;
+  --padding-top: #{$button-ios-round-padding-top};
+  --padding-start: #{$button-ios-round-padding-start};
+  --padding-end: #{$button-ios-round-padding-end};
+  --padding-bottom: #{$button-ios-round-padding-bottom};
 }
 
 
@@ -125,5 +129,5 @@
 // --------------------------------------------------
 
 .button-strong-ios {
-  --font-weight: $button-ios-strong-font-weight;
+  font-weight: #{$button-ios-strong-font-weight};
 }

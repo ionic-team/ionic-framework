@@ -7,8 +7,7 @@ import { createThemedClasses } from '../../utils/theme';
   styleUrls: {
     ios: 'toolbar.ios.scss',
     md: 'toolbar.md.scss'
-  },
-  shadow: true
+  }
 })
 export class Toolbar {
 
@@ -48,10 +47,13 @@ export class Toolbar {
   render() {
     return [
       <div class="toolbar-background"></div>,
-      <slot name="buttons"></slot>,
+      <slot name="start"></slot>,
+      <slot name="secondary"></slot>,
       <div class="toolbar-content">
         <slot></slot>
       </div>,
+      <slot name="primary"></slot>,
+      <slot name="end"></slot>
     ];
   }
 }

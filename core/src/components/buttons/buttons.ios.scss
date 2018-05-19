@@ -2,190 +2,124 @@
 @import "./buttons";
 
 
+// iOS Toolbar Button Default
+// --------------------------------------------------
+.bar-buttons-ios {
+
+  .button {
+    font-size: #{$toolbar-ios-button-font-size};
+
+    --padding-top: 0;
+    --pading-bottom: 0;
+    --padding-start: 4px;
+    --padding-end: 4px;
+
+    --border-radius: #{$toolbar-ios-button-border-radius};
+
+    --height: 32px;
+  }
+
+  // iOS Toolbar Button Solid
+  // --------------------------------------------------
+
+  // .button-solid-ios {
+
+  //   // &:hover {
+  //   //   color: $toolbar-ios-button-background-color;
+  //   //   opacity: .4;
+  //   // }
+
+  //   // &.activated {
+  //   //   color: $toolbar-ios-button-background-color;
+  //   //   background-color: $toolbar-ios-button-background-color-activated;
+  //   //   opacity: .4;
+  //   // }
+  // }
+
+  .button-solid-ios:hover {
+    opacity: .4;
+  }
+
+
+  // iOS Toolbar Button Icon
+  // --------------------------------------------------
+
+  .button ion-icon[slot="start"] {
+    @include padding-horizontal(null, .3em);
+    @include margin(0);
+
+    font-size: 1.4em;
+    line-height: .67;
+
+    pointer-events: none;
+  }
+
+  .button ion-icon[slot="end"] {
+    @include padding-horizontal(.4em, null);
+    @include margin(0);
+
+    font-size: 1.4em;
+    line-height: .67;
+
+    pointer-events: none;
+  }
+
+  .button ion-icon[slot="icon-only"] {
+    @include padding(0);
+    @include margin(0);
+
+    font-size: 1.8em;
+    line-height: .67;
+
+    pointer-events: none;
+  }
+
+
+  // iOS Toolbar Menu Toggle
+  // --------------------------------------------------
+
+  .button-menutoggle-ios {
+    order: map-get($toolbar-order-ios, menu-toggle-start);
+
+    min-width: 36px;
+
+    --margin-top: 0;
+    --margin-bottom: 0;
+    --margin-start: 6px;
+    --margin-end: 6px;
+
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+
+    ion-icon {
+      @include padding(0, 6px);
+
+      font-size: 28px;
+    }
+  }
+}
+
 // iOS Toolbar Button Placement
 // --------------------------------------------------
 
-.bar-buttons-ios {
-  order: map-get($toolbar-order-ios, buttons-secondary);
-
-  transform: translateZ(0);
-}
-
-.buttons-start {
+.bar-buttons-ios[slot="start"] {
   order: map-get($toolbar-order-ios, buttons-start);
 }
 
-.buttons-primary {
+.bar-buttons-ios[slot="secondary"] {
+  order: map-get($toolbar-order-ios, buttons-secondary);
+}
+
+.bar-buttons-ios[slot="primary"] {
   @include text-align(end);
 
   order: map-get($toolbar-order-ios, buttons-primary);
 }
 
-.buttons-end {
+.bar-buttons-ios[slot="end"] {
   @include text-align(end);
 
   order: map-get($toolbar-order-ios, buttons-end);
-}
-
-.buttons-secondary {
-  order: map-get($toolbar-order-ios, buttons-secondary);
-}
-
-// iOS Toolbar Button Default
-// --------------------------------------------------
-
-.bar-button-ios {
-  font-size: $toolbar-ios-button-font-size;
-
-  --padding-top: 0;
-  --pading-bottom: 0;
-  --padding-start: 4px;
-  --padding-end: 4px;
-
-  --border-radius: $toolbar-ios-button-border-radius;
-
-  --height: 32px;
-  --border-width: 0;
-}
-
-// iOS Toolbar Button Icon
-// --------------------------------------------------
-
-.bar-button-ios .icon {
-  fill: $toolbar-ios-button-icon-fill-color;
-}
-
-
-// iOS Toolbar Button Outline
-// --------------------------------------------------
-
-.bar-button-outline-ios {
-  border-width: 1px;
-  border-style: solid;
-  border-color: $toolbar-ios-button-color;
-  color: $toolbar-ios-button-color;
-  background-color: transparent;
-
-  &.activated {
-    color: $toolbar-ios-background-color;
-    background-color: $toolbar-ios-button-color;
-  }
-}
-
-.bar-button-outline-ios:hover {
-  opacity: .4;
-}
-
-@mixin ios-bar-button-outline($color-name) {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-
-  .bar-button-outline-ios-#{$color-name} {
-    border-color: $color-base;
-    color: $color-base;
-    background-color: transparent;
-
-    &.activated {
-      color: $color-contrast;
-      background-color: $color-base;
-    }
-  }
-}
-
-
-// iOS Toolbar Button Solid
-// --------------------------------------------------
-
-.bar-button-solid-ios {
-  color: $toolbar-ios-button-background-color;
-  background-color: $toolbar-ios-button-color;
-
-  &:hover:not(.disable-hover) {
-    color: $toolbar-ios-button-background-color;
-    opacity: .4;
-  }
-
-  &.activated {
-    color: $toolbar-ios-button-background-color;
-    background-color: $toolbar-ios-button-background-color-activated;
-    opacity: .4;
-  }
-}
-
-.bar-button-solid-ios:hover {
-  opacity: .4;
-}
-
-@mixin ios-bar-button-solid($color-name) {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-shade: ion-color($colors-ios, $color-name, tint, ios);
-
-  .bar-button-solid-ios-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-
-    &.activated {
-      color: $color-contrast;
-      background-color: $color-shade;
-    }
-  }
-}
-
-
-// iOS Toolbar Button Icon
-// --------------------------------------------------
-
-.bar-button-ios ion-icon[slot="start"] {
-  @include padding-horizontal(null, .3em);
-
-  font-size: 1.4em;
-  line-height: .67;
-
-  pointer-events: none;
-}
-
-.bar-button-ios ion-icon[slot="end"] {
-  @include padding-horizontal(.4em, null);
-
-  font-size: 1.4em;
-  line-height: .67;
-
-  pointer-events: none;
-}
-
-.bar-button-ios ion-icon[slot="icon-only"] {
-  @include padding(0);
-
-  font-size: 1.8em;
-  line-height: .67;
-
-  pointer-events: none;
-}
-
-
-// iOS Toolbar Menu Toggle
-// --------------------------------------------------
-
-.bar-button-menutoggle-ios {
-  @include margin(0, 6px);
-  @include padding(0);
-
-  order: map-get($toolbar-order-ios, menu-toggle-start);
-
-  min-width: 36px;
-
-  ion-icon {
-    @include padding(0, 6px);
-
-    font-size: 28px;
-  }
-}
-
-
-// iOS strong Button
-// --------------------------------------------------
-
-.bar-button-strong-ios {
-  font-weight: $toolbar-ios-button-strong-font-weight;
 }

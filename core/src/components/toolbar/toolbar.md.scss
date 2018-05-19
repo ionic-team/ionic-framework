@@ -4,24 +4,25 @@
 // Material Design Toolbar
 // --------------------------------------------------
 
-:host(.toolbar-md) {
+.toolbar-md {
   @include padding($toolbar-md-padding);
 
-  min-height: $toolbar-md-height;
+  min-height: #{$toolbar-md-height};
 
-  font-family: $toolbar-md-font-family;
+  font-family: #{$toolbar-md-font-family};
 
-  --ion-toolbar-text-color: $toolbar-md-text-color;
-  --ion-toolbar-background: $toolbar-md-background-color;
+  // default color / background
+  --ion-color-base: var(--ion-toolbar-background, #{$toolbar-md-background-color});
+  --ion-color-contrast: var(--ion-toolbar-text-color, #{$toolbar-md-text-color});
 
-  --border-color: $toolbar-md-border-color;
+  --border-color: #{$toolbar-md-border-color};
 }
 
 
 // Material Design Toolbar Content
 // --------------------------------------------------
 
-.toolbar-content {
+.toolbar-md > .toolbar-content {
   flex: 1;
   order: map-get($toolbar-order-md, content);
 
@@ -29,7 +30,7 @@
   max-width: 100%;
 }
 
-::slotted(ion-title) {
+.toolbar-md ion-title {
   @include padding(0, 12px);
 
   font-size: $toolbar-md-title-font-size;

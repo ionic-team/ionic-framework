@@ -2,8 +2,7 @@ import { Component } from '@stencil/core';
 
 @Component({
   tag: 'ion-title',
-  styleUrl: 'title.scss',
-  shadow: true
+  styleUrl: 'title.scss'
 })
 export class ToolbarTitle {
   render() {

@@ -945,7 +945,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonButtons {
-      'side': 'start' | 'end' | 'primary' | 'secundary';
+
     }
   }
 
@@ -968,7 +968,7 @@ declare global {
   }
   namespace JSXElements {
     export interface IonButtonsAttributes extends HTMLAttributes {
-      'side'?: 'start' | 'end' | 'primary' | 'secundary';
+
     }
   }
 }

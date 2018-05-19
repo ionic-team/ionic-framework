@@ -59,7 +59,7 @@
     background: $color-shade;
   }
 
-  .tabbar-ios-#{$color-name} .tab-button:hover:not(.disable-hover),
+  .tabbar-ios-#{$color-name} .tab-button:hover,
   .tabbar-ios-#{$color-name} .tab-selected {
     font-weight: bold;
 
