@@ -14,34 +14,6 @@
   @include font-smoothing();
   @include text-align(center);
   @include appearance(none);
-
-  position: relative;
-  z-index: 0;
-  display: inline-block;
-
-  border: 0;
-
-  line-height: 1;
-
-  text-decoration: none;
-  text-overflow: ellipsis;
-  text-transform: none;
-
-  white-space: nowrap;
-  cursor: pointer;
-
-  vertical-align: top; // the better option for most scenarios
-  vertical-align: -webkit-baseline-middle; // the best for those that support it
-
-  transition: background-color, opacity 100ms linear;
-
-  font-kerning: none;
-  user-select: none;
-
-  contain: content;
-}
-
-.button-container {
   @include border-radius(var(--border-radius));
   @include margin(
     var(--margin-top),
@@ -49,6 +21,7 @@
     var(--margin-bottom),
     var(--margin-start)
   );
+
   @include padding(
     var(--padding-top),
     var(--padding-end),
@@ -56,23 +29,38 @@
     var(--padding-start)
   );
 
+  position: relative;
+  z-index: 0;
+  display: inline-block;
   overflow: hidden;
 
   height: var(--height);
 
+  border: 0;
   border-width: var(--border-width);
   border-style: var(--border-style);
   border-color: var(--border-color);
-
-  letter-spacing: var(--letter-spacing);
-  text-transform: var(--text-transform);
-  color: inherit;
-  font-weight: inherit;
   font-family: inherit;
+  font-weight: inherit;
+  letter-spacing: var(--letter-spacing);
+  line-height: 1;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  text-transform: var(--text-transform);
+  white-space: nowrap;
+  color: inherit;
   background: var(--background);
   box-shadow: var(--box-shadow);
+  cursor: pointer;
   opacity: var(--opacity);
+  vertical-align: top; // the better option for most scenarios
+  vertical-align: -webkit-baseline-middle; // the best for those that support it
   transition: var(--transition);
+
+  font-kerning: none;
+  user-select: none;
+
+  contain: content;
 }
 
 .button-container:hover {
@@ -107,10 +95,36 @@
 // --------------------------------------------------
 
 .button-solid {
+  color: #{$color-contrast};
+
   --background: #{$color-base};
   --ripple-color: #{$color-contrast};
+}
 
-  color: #{$color-contrast};
+.button-solid.activated {
+  --background: #{$color-shade};
+}
+
+// Outline Button
+// --------------------------------------------------
+
+.button-outline {
+  color: #{$color-base};
+
+  --border-color: #{$color-base};
+  --ripple-color: #{$color-base};
+  --background: transparent;
+}
+
+
+// Clear Button
+// --------------------------------------------------
+
+.button-clear {
+  color: #{$color-base};
+
+  --border-width: 0;
+  --background: transparent;
 }
 
 

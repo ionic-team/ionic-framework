@@ -16,19 +16,19 @@ $h-step:                       var(--ion-header-step, 2px) !default;
 $h1-font-size:                 var(--ion-header-size, 26px) !default;
 
 /// @prop - Font size of heading level 2
-$h2-font-size:                 calc($h1-font-size - $h-step) !default;
+$h2-font-size:                 calc(#{$h1-font-size} - #{$h-step}) !default;
 
 /// @prop - Font size of heading level 3
-$h3-font-size:                 calc($h1-font-size - $h-step * 2) !default;
+$h3-font-size:                 calc(#{$h1-font-size} - #{$h-step} * 2) !default;
 
 /// @prop - Font size of heading level 4
-$h4-font-size:                 calc($h1-font-size - $h-step * 3) !default;
+$h4-font-size:                 calc(#{$h1-font-size} - #{$h-step} * 3) !default;
 
 /// @prop - Font size of heading level 5
-$h5-font-size:                 calc($h1-font-size - $h-step * 4) !default;
+$h5-font-size:                 calc(#{$h1-font-size} - #{$h-step} * 4) !default;
 
 /// @prop - Font size of heading level 6
-$h6-font-size:                 calc($h1-font-size - $h-step * 5) !default;
+$h6-font-size:                 calc(#{$h1-font-size} - #{$h-step} * 5) !default;
 
 a {
   background-color: transparent;

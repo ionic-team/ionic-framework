@@ -24,11 +24,8 @@
 
   --height: #{$button-ios-height};
   --letter-spacing: #{$button-ios-letter-spacing};
-}
 
-.button-ios.activated,
-.button-ios.focused {
-  --background: #{$color-shade};
+  --transition: background-color, opacity 100ms linear;
 }
 
 // iOS Button Sizes
@@ -56,49 +53,26 @@
   --height: #{$button-ios-small-height};
 }
 
-
 // iOS Outline Button
 // --------------------------------------------------
 
 .button-outline-ios {
-  color: #{$color-base};
-
   --border-radius: #{$button-ios-outline-border-radius};
   --border-width: #{$button-ios-outline-border-width};
   --border-style: #{$button-ios-outline-border-style};
-  --border-color: #{$color-base};
-
-  --background: transparent;
 }
 
 .button-outline-ios.activated {
-  color: #{$color-shade};
+  color: #{$color-contrast};
 
-  --opacity: #{$button-ios-outline-opacity-activated};
-}
-
-.button-outline-ios.focused {
-  --background: #{$button-ios-outline-background-color-focused};
-}
-
-.button-outline-ios.activated.focused {
-  --border-color: #{$color-shade};
-  --background: #{$color-shade};
+  --background: #{$color-base};
 }
 
 
 // iOS Clear Button
 // --------------------------------------------------
 
-.button-clear-ios {
-  color: #{$color-base};
-
-  --border-width: 0;
-  --background: transparent;
-}
-
 .button-clear-ios.activated {
-  --background: #{$button-ios-clear-background-color-activated};
   --opacity: #{$button-ios-clear-opacity-activated};
 }
 

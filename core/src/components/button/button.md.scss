@@ -6,8 +6,8 @@
 
 .button-md {
   font-family: #{$button-md-font-family};
-  font-weight: #{$button-md-font-weight};
   font-size: #{$button-md-font-size};
+  font-weight: #{$button-md-font-weight};
 
   --text-transform: #{$button-md-text-transform};
 
@@ -29,12 +29,6 @@
 
   --height: #{$button-md-height};
   --letter-spacing: #{$button-md-letter-spacing};
-
-  --box-shadow: #{$button-md-box-shadow};
-}
-
-.button-md.activated {
-  --box-shadow: #{$button-md-box-shadow-activated};
 }
 
 
@@ -64,59 +58,39 @@
 }
 
 
+// Material Design Solid Button
+// --------------------------------------------------
+
+.button-solid-md {
+  --box-shadow: #{$button-md-box-shadow};
+}
+
+.button-solid-md.activated {
+  --box-shadow: #{$button-md-box-shadow-activated};
+}
+
 // Material Design Outline Button
 // --------------------------------------------------
 
 .button-outline-md {
-  color: #{$color-base};
-
   --border-width: #{$button-md-outline-border-width};
   --border-style: #{$button-md-outline-border-style};
   --box-shadow: #{$button-md-outline-box-shadow};
-  --border-color: #{$color-base};
+}
 
-  --ripple-color: #{$color-base};
+.button-outline-ios.activated {
   --background: transparent;
 }
-
-.button-outline-md:hover {
-  --background: #{$button-md-outline-background-color-hover};
-}
-
-.button-outline-md.activated {
-  --background: #{$button-md-outline-background-color-activated};
-  --box-shadow: #{$button-md-outline-box-shadow-activated};
-  --opacity: #{$button-md-outline-opacity-activated};
-}
-
 
 
 // Material Design Clear Button
 // --------------------------------------------------
 
 .button-clear-md {
-  color: #{$color-base};
-
-  --border-color: #{$button-md-clear-border-color};
-  --box-shadow: #{$button-md-clear-box-shadow};
-  --background: transparent;
   --opacity: #{$button-md-clear-opacity};
-
   --ripple-color: #{$button-md-clear-ripple-background-color};
 }
 
-.button-clear-md.activated {
-  --background-color: #{$button-md-clear-background-color-activated};
-  --box-shadow: #{$button-md-clear-box-shadow-activated};
-}
-
-.button-clear-md.focused {
-  --background-color: #{$button-md-clear-background-color-focused};
-}
-
-.button-clear-md:hover {
-  --background-color: #{$button-md-clear-background-color-hover};
-}
 
 
 // Material Design Round Button

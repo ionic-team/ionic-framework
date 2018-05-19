@@ -1,12 +1,1 @@
 @import "./footer";
-
-// MD Borders
-// --------------------------------------------------
-
-.footer-md ion-toolbar:first-child {
-  --border-width: 1px 0 0;
-}
-
-.footer-md[no-border] ion-toolbar:first-child {
-  --border-width: 0;
-}

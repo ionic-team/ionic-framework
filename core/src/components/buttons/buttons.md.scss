@@ -26,6 +26,7 @@
 
   .button-md ion-icon[slot="start"] {
     @include padding-horizontal(null, .3em);
+    @include margin(0);
 
     font-size: 1.4em;
 
@@ -34,6 +35,7 @@
 
   .button-md ion-icon[slot="end"] {
     @include padding-horizontal(.4em, null);
+    @include margin(0);
 
     font-size: 1.4em;
 
@@ -42,6 +44,7 @@
 
   .button-md ion-icon[slot="icon-only"] {
     @include padding(0);
+    @include margin(0);
 
     font-size: 1.8em;
 

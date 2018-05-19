@@ -137,11 +137,14 @@
 // --------------------------------------------------
 
 .item-ios .button-small-ios {
-  @include padding(0, .5em);
-
-  height: 24px;
-
   font-size: 13px;
+
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: .5em;
+  --padding-end: .5em;
+
+  --height: 24px;
 }
 
 .item-ios .button-small-ios ion-icon[slot="icon-only"] {

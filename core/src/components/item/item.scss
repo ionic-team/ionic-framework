@@ -89,7 +89,10 @@ ion-item-group {
 }
 
 .item .button {
-  @include margin(0);
+  --margin-top: 0;
+  --margin-bottom: 0;
+  --margin-start: 0;
+  --margin-end: 0;
 }
 
 .item-disabled {
