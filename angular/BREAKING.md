@@ -1,4 +1,3 @@
-
 # Breaking Changes
 
 A list of the breaking changes introduced in Ionic Angular v4.
@@ -37,7 +36,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 
 ## Action Sheet
 
-The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectivelly.
+The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectively.
 
 **Old Usage Example:**
 
@@ -146,10 +145,10 @@ Previously to style icons inside of a button the following attributes were used:
 
 These have been renamed to the following, and moved from the button element to the icon itself:
 
-| Old Property              | New Property   | Property Behavior                                                     |
-|---------------------------|----------------|-----------------------------------------------------------------------|
-| `icon-left`, `icon-start` | `slot="start"` | Positions to the left of the button in LTR, and to the right in RTL.  |
-| `icon-right`, `icon-end`  | `slot="end"`   | Positions to the right of the button in LTR, and to the left in RTL.  |
+| Old Property              | New Property   | Property Behavior                                                    |
+| ------------------------- | -------------- | -------------------------------------------------------------------- |
+| `icon-left`, `icon-start` | `slot="start"` | Positions to the left of the button in LTR, and to the right in RTL. |
+| `icon-right`, `icon-end`  | `slot="end"`   | Positions to the right of the button in LTR, and to the left in RTL. |
 
 In addition, several sets of mutually exclusive boolean attributes have been combined into a single string attribute.
 
@@ -159,8 +158,7 @@ The `small` and `large` attributes are now combined under the `size` attribute. 
 | --------------------------- | ------------ | --------------------------- |
 | `small`, `large`            | `size`       | Sets the button size.       |
 | `clear`, `outline`, `solid` | `fill`       | Sets the button fill style. |
-| `full`, `block`             | `expand`     | Sets the button width.      |
-
+| `full`, `block`             | `expand`     | Sets the button width.      |
 
 **Old Usage Example:**
 
@@ -252,7 +250,6 @@ Buttons inside of an `<ion-chip>` container should now be written as an `<ion-ch
 </ion-chip>
 ```
 
-
 ## Colors
 
 The default Ionic theme colors have changed. Previously we had:
@@ -280,7 +277,6 @@ dark:            #222428
 ```
 
 The `secondary` color saw the largest change. If you were previously using our `secondary` color we recommend switching to `success` instead.
-
 
 ## Datetime
 
@@ -364,16 +360,16 @@ The mutually exclusive boolean attributes to position the fab have been combined
 
 The attributes to align the fab horizontally are now combined under the `horizontal` attribute and the attributes to align the fab vertically are now combined under the `vertical` attribute:
 
-| Old Property | New Property         | Property Behavior                                                       |
-|--------------|----------------------|-------------------------------------------------------------------------|
-| left         | Removed              |                                                                         |
-| right        | Removed              |                                                                         |
-| center       | `horizontal="center"`| Positions to the center of the viewport.                                |
-| start        | `horizontal="start"` | Positions to the left of the viewport in LTR, and to the right in RTL.  |
-| end          | `horizontal="end"`   | Positions to the right of the viewport in LTR, and to the left in RTL.  |
-| top          | `vertical="top"`     | Positions at the top of the viewport.                                   |
-| bottom       | `vertical="bottom"`  | Positions at the bottom of the viewport.                                |
-| middle       | `vertical="center"`  | Positions at the center of the viewport.                                |
+| Old Property | New Property          | Property Behavior                                                      |
+| ------------ | --------------------- | ---------------------------------------------------------------------- |
+| left         | Removed               |                                                                        |
+| right        | Removed               |                                                                        |
+| center       | `horizontal="center"` | Positions to the center of the viewport.                               |
+| start        | `horizontal="start"`  | Positions to the left of the viewport in LTR, and to the right in RTL. |
+| end          | `horizontal="end"`    | Positions to the right of the viewport in LTR, and to the left in RTL. |
+| top          | `vertical="top"`      | Positions at the top of the viewport.                                  |
+| bottom       | `vertical="bottom"`   | Positions at the bottom of the viewport.                               |
+| middle       | `vertical="center"`   | Positions at the center of the viewport.                               |
 
 _Note that `middle` has been changed to `center` for the vertical positioning._
 
@@ -431,7 +427,7 @@ The `<ion-fab>` container was previously placed inside of the fixed content by d
 
 ### Fonts Removed
 
-Icons have been refactored to use SVGs instead of fonts. Ionic will only fetch the SVG for the icon when it is needed, instead of having a large font file that is always loaded in.
+Icons have been refactored to use SVG's instead of fonts. Ionic will only fetch the SVG for the icon when it is needed, instead of having a large font file that is always loaded in.
 
 If any `CSS` is being overridden for an icon it will need to change to override the SVG itself. Below is a usage example of the differences in changing the icon color.
 
@@ -462,15 +458,14 @@ The Sass variables were all renamed from having `$text-input` as the prefix to `
 **Old Usage Example:**
 
 ```css
-$text-input-highlight-color-valid:       #32db64;
+$text-input-highlight-color-valid: #32db64;
 ```
 
 **New Usage Example:**
 
 ```css
-$input-highlight-color-valid:       #32db64;
+$input-highlight-color-valid: #32db64;
 ```
-
 
 ## Item
 
@@ -534,11 +529,10 @@ Previously to position elements inside of an `ion-item` the following attributes
 
 These have been renamed to the following:
 
-| Old Property              | New Property   | Property Behavior                                                   |
-|---------------------------|----------------|---------------------------------------------------------------------|
-| `item-left`, `item-start` | `slot="start"` | Positions to the left of the item in LTR, and to the right in RTL.  |
-| `item-right`, `item-end`  | `slot="end"`   | Positions to the right of the item in LTR, and to the left in RTL.  |
-
+| Old Property              | New Property   | Property Behavior                                                  |
+| ------------------------- | -------------- | ------------------------------------------------------------------ |
+| `item-left`, `item-start` | `slot="start"` | Positions to the left of the item in LTR, and to the right in RTL. |
+| `item-right`, `item-end`  | `slot="end"`   | Positions to the right of the item in LTR, and to the left in RTL. |
 
 **Old Usage Example:**
 
@@ -608,7 +602,6 @@ Previously an `ion-label` would automatically get added to an `ion-item-divider`
 </ion-item-divider>
 ```
 
-
 ## Item Options
 
 ### Attributes Renamed
@@ -617,12 +610,10 @@ Previously to position the item options inside of an `ion-item-sliding` the `sid
 
 These values have been renamed to `"start"` and `"end"` to better align with our support for RTL.
 
-
-| Old Value       | New Value       |
-|-----------------|-----------------|
-| `side="left"`   | `side="start"`  |
-| `side="right"`  | `side="end"`    |
-
+| Old Value      | New Value      |
+| -------------- | -------------- |
+| `side="left"`  | `side="start"` |
+| `side="right"` | `side="end"`   |
 
 ## Item Sliding
 
@@ -664,7 +655,6 @@ The option component should not be written as a `button` with an `ion-button` di
 
 The `getSlidingPercent` method has been renamed to `getSlidingRatio` since the function is returning a ratio of the open amount of the item compared to the width of the options.
 
-
 ## List Header
 
 ### Label Required
@@ -700,7 +690,6 @@ The `menuToggle` attribute should not be added to an element anymore. Elements t
   </ion-button>
 </ion-menu-toggle>
 ```
-
 
 ## Nav
 
@@ -858,7 +847,6 @@ Radio group has been changed to an element. It should now be wrapped around any 
 </ion-list>
 ```
 
-
 ## Range
 
 ### Attributes Renamed
@@ -867,11 +855,10 @@ Previously to place content inside of a range the following attributes were used
 
 These have been renamed to the following:
 
-| Old Property                | New Property   | Property Behavior                                                     |
-|-----------------------------|----------------|-----------------------------------------------------------------------|
-| `range-left`, `range-start` | `slot="start"` | Positions to the left of the range in LTR, and to the right in RTL.   |
-| `range-right`, `range-end`  | `slot="end"`   | Positions to the right of the range in LTR, and to the left in RTL.   |
-
+| Old Property                | New Property   | Property Behavior                                                   |
+| --------------------------- | -------------- | ------------------------------------------------------------------- |
+| `range-left`, `range-start` | `slot="start"` | Positions to the left of the range in LTR, and to the right in RTL. |
+| `range-right`, `range-end`  | `slot="end"`   | Positions to the right of the range in LTR, and to the left in RTL. |
 
 **Old Usage Example:**
 
@@ -896,11 +883,9 @@ These have been renamed to the following:
 </ion-range>
 ```
 
-
 ## Segment
 
 The markup hasn't changed for Segments, but now writing `<ion-segment-button>` will render a native button element inside of it.
-
 
 ## Select
 
@@ -958,7 +943,6 @@ The `ios` and `ios-small` spinner's have been renamed to `lines` and `lines-smal
 <ion-spinner name="lines-small"></ion-spinner>
 ```
 
-
 ## Tabs
 
 Some properties in `ion-tab` changed:
@@ -985,8 +969,6 @@ Some properties in `ion-tab` changed:
   <ion-tab label="Map" icon="mao" badge="2"></ion-tab>
 </ion-tabs>
 ```
-
-
 ## Text / Typography
 
 ### Markup Changed
@@ -1033,6 +1015,32 @@ Typography should now be written as an `<ion-text>` element. Previously the `ion
 </p>
 ```
 
+## Tab
+
+Some properties in `ion-tab` changed:
+
+* [tabTitle] -> [label]
+* [tabIcon] -> [icon]
+* [tabBadge] -> [badge]
+* [tabBadgeStyle] -> [badgeStyle]
+
+**Old Usage Example:**
+
+```html
+<ion-tabs>
+  <ion-tab tabTitle="Schedule" tabIcon="add"></ion-tab>
+  <ion-tab tabTitle="Map" tabIcon="mao" tabBadge="2"></ion-tab>
+</ion-tabs>
+```
+
+**New Usage Example:**
+
+```html
+<ion-tabs>
+  <ion-tab label="Schedule" icon="add"></ion-tab>
+  <ion-tab label="Map" icon="mao" badge="2"></ion-tab>
+</ion-tabs>
+```
 
 ## Theming
 
@@ -1060,7 +1068,6 @@ p {
 }
 ```
 
-
 ### Sass Variables
 
 Sass variables for changing the cordova statusbar have been renamed to app:
@@ -1068,17 +1075,16 @@ Sass variables for changing the cordova statusbar have been renamed to app:
 **Old Usage Example:**
 
 ```css
-$cordova-ios-statusbar-padding:   20px;
-$cordova-md-statusbar-padding:    20px;
+$cordova-ios-statusbar-padding: 20px;
+$cordova-md-statusbar-padding: 20px;
 ```
 
 **New Usage Example:**
 
 ```css
-$app-ios-statusbar-padding:   20px;
-$app-md-statusbar-padding:    20px;
+$app-ios-statusbar-padding: 20px;
+$app-md-statusbar-padding: 20px;
 ```
-
 
 ## Toolbar
 
@@ -1118,12 +1124,12 @@ Previously to positions buttons inside of a toolbar the following attributes wer
 
 These have been renamed to the following:
 
-| Old Property | New Property       | Property Behavior                                                                                        |
-|--------------|--------------------|----------------------------------------------------------------------------------------------------------|
-| `start`      | `slot="secondary"` | Positions element to the `left` of the content in `ios` mode, and directly to the `right` in `md` mode.  |
-| `end`        | `slot="primary"`   | Positions element to the `right` of the content in `ios` mode, and to the far `right` in `md` mode.      |
-| `left`       | `slot="start"`     | Positions to the `left` of the content in LTR, and to the `right` in RTL.                                |
-| `right`      | `slot="end"`       | Positions to the `right` of the content in LTR, and to the `left` in RTL.                                |
+| Old Property | New Property       | Property Behavior                                                                                       |
+| ------------ | ------------------ | ------------------------------------------------------------------------------------------------------- |
+| `start`      | `slot="secondary"` | Positions element to the `left` of the content in `ios` mode, and directly to the `right` in `md` mode. |
+| `end`        | `slot="primary"`   | Positions element to the `right` of the content in `ios` mode, and to the far `right` in `md` mode.     |
+| `left`       | `slot="start"`     | Positions to the `left` of the content in LTR, and to the `right` in RTL.                               |
+| `right`      | `slot="end"`       | Positions to the `right` of the content in LTR, and to the `left` in RTL.                               |
 
 **Old Usage Example:**
 
