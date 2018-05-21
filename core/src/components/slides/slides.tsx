@@ -118,7 +118,6 @@ export class Slides {
 
   private initSlides() {
     console.debug(`ion-slides, init`);
-    console.debug(this.el.children[0])
     this.container = this.el.children[0] as HTMLElement;
     const finalOptions = this.normalizeOptions();
     // init swiper core
