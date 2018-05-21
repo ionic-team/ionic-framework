@@ -22,10 +22,10 @@
     "dist/"
   ],
   "dependencies": {
-    "ionicons": "^4.1.1"
+    "ionicons": "^4.1.2"
   },
   "devDependencies": {
-    "@stencil/core": "^0.9.1",
+    "@stencil/core": "^0.9.2",
     "@stencil/dev-server": "latest",
     "@stencil/sass": "latest",
     "@stencil/utils": "latest",
