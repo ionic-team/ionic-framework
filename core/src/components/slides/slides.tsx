@@ -1,5 +1,13 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
-import { Swiper } from './vendor/swiper.js';
+import {
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  Method,
+  Prop,
+  Watch
+} from '@stencil/core';
+import { Swiper }  from './vendor/swiper.js';
 @Component({
   tag: 'ion-slides',
   styleUrls: {
@@ -12,7 +20,6 @@ import { Swiper } from './vendor/swiper.js';
   assetsDir: 'vendor'
 })
 export class Slides {
-
   private container!: HTMLElement;
   private swiper: any;
 
@@ -106,22 +113,16 @@ export class Slides {
   }
 
   componentDidUnload() {
-    this.enableKeyboardControl(false);
     this.swiper.destroy(true, true);
   }
 
   private initSlides() {
     console.debug(`ion-slides, init`);
-
+    console.debug(this.el.children[0])
     this.container = this.el.children[0] as HTMLElement;
     const finalOptions = this.normalizeOptions();
     // init swiper core
     this.swiper = new Swiper(this.container, finalOptions);
-
-    if (finalOptions.keyboardControl) {
-      // init keyboard event listeners
-      this.enableKeyboardControl(true);
-    }
   }
 
   /**
@@ -203,7 +204,7 @@ export class Slides {
    */
   @Method()
   startAutoplay(): void {
-    this.swiper.startAutoplay();
+    this.swiper.autoplay.start();
   }
 
   /**
@@ -211,7 +212,7 @@ export class Slides {
    */
   @Method()
   stopAutoplay(): void {
-    this.swiper.stopAutoplay();
+    this.swiper.autoplay.stop();
   }
 
   /**
@@ -247,21 +248,10 @@ export class Slides {
     this.swiper.unlockSwipes();
   }
 
-  /**
-   * Enable or disable keyboard control.
-   */
-  private enableKeyboardControl(shouldEnableKeyboard: boolean) {
-    if (shouldEnableKeyboard) {
-      return this.swiper.enableKeyboardControl();
-    }
-    this.swiper.disableKeyboardControl();
-  }
-
   private normalizeOptions() {
     // Base options, can be changed
     const swiperOptions = {
       effect: 'slide',
-      autoplay: 0,
       direction: 'horizontal',
       initialSlide: 0,
       loop: false,
@@ -323,7 +313,6 @@ export class Slides {
       runCallbacksOnInit: true,
       controlBy: 'slide',
       controlInverse: false,
-      keyboardControl: true,
       coverflow: {
         rotate: 50,
         stretch: 0,
@@ -369,18 +358,12 @@ export class Slides {
     };
 
     // Merge the base, user options, and events together then pas to swiper
-    return Object.assign(
-      {},
-      swiperOptions,
-      this.options,
-      eventOptions
-    );
-
-}
+    return Object.assign({}, swiperOptions, this.options, eventOptions);
+  }
 
   render() {
     return (
-      <div class="swiper-container" data-dir="rtl">
+      <div class="swiper-container">
         <div class="swiper-wrapper">
           <slot />
         </div>
