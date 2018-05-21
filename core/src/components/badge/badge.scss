@@ -25,8 +25,8 @@ ion-badge {
 
   contain: content;
 
-  --ion-color-base: #{get-colot(primary, base)};
-  --ion-color-contrast: #{get-colot(primary, contrast)};
+  --ion-color-base: #{get-color(primary, base)};
+  --ion-color-contrast: #{get-color(primary, contrast)};
 }
 
 ion-badge:empty {

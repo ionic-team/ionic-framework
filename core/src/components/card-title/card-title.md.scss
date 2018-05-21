@@ -9,8 +9,8 @@
 
   @include padding($card-md-title-padding-top, $card-md-title-padding-end, $card-md-title-padding-bottom, $card-md-title-padding-start);
 
-  display: block;
-
   font-size: $card-md-title-font-size;
   line-height: 1.2;
+
+  --ion-color-base: #{$card-md-title-text-color};
 }

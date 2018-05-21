@@ -25,7 +25,7 @@ export class Text {
   hostData() {
     return {
       class: {
-        [`color-${this.color}`]: !!this.color
+        [`ion-color-${this.color}`]: !!this.color
       }
     };
   }

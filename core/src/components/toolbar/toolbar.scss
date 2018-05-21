@@ -54,6 +54,7 @@
 
   .toolbar-background {
     background: var(--translucent-background);
+
     backdrop-filter: var(--translucent-filter);
   }
 }

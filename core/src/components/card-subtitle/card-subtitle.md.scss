@@ -9,4 +9,6 @@
   @include padding($card-md-subtitle-padding-top, $card-md-subtitle-padding-end, $card-md-subtitle-padding-bottom, $card-md-subtitle-padding-start);
 
   font-size: $card-md-subtitle-font-size;
+
+  --ion-color-base: #{$card-md-subtitle-color};
 }

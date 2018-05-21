@@ -18,7 +18,8 @@ export function createThemedClasses(mode: Mode | undefined, color: string | unde
     }
   });
   if (color) {
-    classObj[`color-${color}`] = true;
+    classObj[`ion-color`] = true;
+    classObj[`ion-color-${color}`] = true;
   }
   return classObj;
 }

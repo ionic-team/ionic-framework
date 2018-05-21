@@ -1,5 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
@@ -7,9 +8,6 @@ import { Color, Mode } from '../../interface';
   styleUrls: {
     ios: 'badge.ios.scss',
     md: 'badge.md.scss'
-  },
-  host: {
-    theme: 'badge'
   }
 })
 export class Badge {
@@ -27,5 +25,11 @@ export class Badge {
    * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode!: Mode;
+
+  hostData() {
+    return {
+      class: createThemedClasses(this.mode, this.color, 'badge')
+    };
+  }
 
 }

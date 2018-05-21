@@ -1,14 +1,12 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-card',
   styleUrls: {
     ios: 'card.ios.scss',
     md: 'card.md.scss'
-  },
-  host: {
-    theme: 'card'
   }
 })
 export class Card {
@@ -24,5 +22,11 @@ export class Card {
    * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
+
+  hostData() {
+    return {
+      class: createThemedClasses(this.mode, this.color, 'card')
+    };
+  }
 
 }

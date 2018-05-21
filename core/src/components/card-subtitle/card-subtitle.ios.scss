@@ -12,4 +12,6 @@
   font-weight: $card-ios-subtitle-font-weight;
   letter-spacing: $card-ios-subtitle-letter-spacing;
   text-transform: $card-ios-subtitle-text-transform;
+
+  --ion-color-base: #{$card-ios-subtitle-color};
 }

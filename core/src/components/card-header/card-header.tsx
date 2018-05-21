@@ -8,9 +8,6 @@ import { createThemedClasses } from '../../utils/theme';
   styleUrls: {
     ios: 'card-header.ios.scss',
     md: 'card-header.md.scss'
-  },
-  host: {
-    theme: 'card-header'
   }
 })
 export class CardHeader {
@@ -34,12 +31,11 @@ export class CardHeader {
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'card-header-translucent') : {};
 
-    const hostClasses = {
-      ...themedClasses
-    };
-
     return {
-      class: hostClasses
+      class: {
+        ...themedClasses,
+        ...createThemedClasses(this.mode, this.color, 'card-content')
+      }
     };
   }
 

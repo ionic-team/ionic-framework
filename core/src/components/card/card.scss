@@ -13,6 +13,13 @@ ion-card {
 
   color: #{$color-contrast};
   background: #{$color-base};
+
+  --ion-card-text: currentColor;
+}
+
+ion-card.ion-color ion-card-title,
+ion-card.ion-color ion-card-subtitle {
+  --ion-color-base: currentColor;
 }
 
 ion-card img {

@@ -1,5 +1,6 @@
 import { Component, Prop} from '@stencil/core';
 import { Color, Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
@@ -7,9 +8,6 @@ import { Color, Mode } from '../../interface';
   styleUrls: {
     ios: 'card-subtitle.ios.scss',
     md: 'card-subtitle.md.scss'
-  },
-  host: {
-    theme: 'card-subtitle'
   }
 })
 export class CardSubtitle {
@@ -27,6 +25,7 @@ export class CardSubtitle {
 
   hostData() {
     return {
+      class: createThemedClasses(this.mode, this.color, 'card-subtitle'),
       'role': 'heading',
       'aria-level': '3'
     };

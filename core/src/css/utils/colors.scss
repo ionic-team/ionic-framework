@@ -17,7 +17,7 @@
 }
 
 @each $color-name, $value in $colors {
-  .color-#{$color-name} {
+  .ion-color-#{$color-name} {
     @include generate-color($color-name);
   }
 }
