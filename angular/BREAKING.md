@@ -37,7 +37,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 
 ## Action Sheet
 
-The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectivelly.
+The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectively.
 
 **Old Usage Example:**
 
