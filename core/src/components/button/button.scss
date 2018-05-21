@@ -63,16 +63,16 @@
   contain: content;
 }
 
-.button > .button-container:hover {
-  opacity: var(--opacity-hover);
-}
-
 .button > .button-container[disabled] {
   cursor: default;
-  opacity: var(--opacity-disabled);
+  opacity: .5;
 
   pointer-events: none;
 }
+
+// .button > .button-container:hover {
+//   opacity: var(--opacity-hover);
+// }
 
 .button > .button-container:active,
 .button > .button-container:focus {
@@ -101,9 +101,6 @@
   --ripple-color: #{$color-contrast};
 }
 
-.button-solid.activated {
-  --background: #{$color-shade};
-}
 
 // Outline Button
 // --------------------------------------------------

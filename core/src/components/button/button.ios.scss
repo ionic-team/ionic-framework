@@ -28,6 +28,7 @@
   --transition: background-color, opacity 100ms linear;
 }
 
+
 // iOS Button Sizes
 // --------------------------------------------------
 
@@ -53,6 +54,21 @@
   --height: #{$button-ios-small-height};
 }
 
+// iOS Solid Button
+
+.button-solid-ios.activated {
+  --background: $button-ios-background-color-activated;
+  --opacity: $button-ios-opacity-activated;
+}
+
+.button-solid-ios.focused {
+  --background: $button-ios-background-color-focused;
+}
+
+.button-solid-ios:hover {
+  --opacity: $button-ios-opacity-hover;
+}
+
 // iOS Outline Button
 // --------------------------------------------------
 
@@ -68,22 +84,29 @@
   --background: #{$color-base};
 }
 
+.button-outline-ios.focused {
+  --background: rgba(#{$color-base-rgb}, .1);
+}
+
+.button-outline-ios.activated.focused {
+  --border-color: #{$color-shade};
+  --background-color: #{$color-shade};
+}
 
 // iOS Clear Button
 // --------------------------------------------------
+
+.button-clear-ios:hover {
+  --opacity: #{$button-ios-clear-opacity-hover};
+}
 
 .button-clear-ios.activated {
   --opacity: #{$button-ios-clear-opacity-activated};
 }
 
 .button-clear-ios.focused {
-  --background: #{$button-ios-clear-background-color-focused};
+  --background: rgba(#{$color-base-rgb}, .1);
 }
-
-// :host(.button-clear-ios):hover {
-//   // color: $button-ios-clear-text-color-hover;
-//   // opacity: $button-ios-clear-opacity-hover;
-// }
 
 
 // iOS Round Button

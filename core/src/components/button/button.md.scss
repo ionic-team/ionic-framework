@@ -73,13 +73,21 @@
 // --------------------------------------------------
 
 .button-outline-md {
-  --border-width: #{$button-md-outline-border-width};
-  --border-style: #{$button-md-outline-border-style};
-  --box-shadow: #{$button-md-outline-box-shadow};
+  --border-width: 1px;
+  --border-style: solid;
+  --box-shadow: none;
 }
 
 .button-outline-ios.activated {
   --background: transparent;
+}
+
+.button-outline-md.focused {
+  --background: rgba(#{$color-base-rgb}, .1);
+}
+
+.button-outline-md .ripple-effect {
+  background-color: #{$color-base};
 }
 
 
