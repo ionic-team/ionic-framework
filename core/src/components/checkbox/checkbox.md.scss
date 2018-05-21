@@ -4,55 +4,38 @@
 // Material Design Checkbox
 // --------------------------------------------------
 
-// Material Design Checkbox Outer Square: Unchecked
-// -----------------------------------------
+.checkbox-md {
+  --size: #{$checkbox-md-icon-size};
 
-.checkbox-md .checkbox-icon {
-  @include border-radius($checkbox-md-icon-border-radius);
+  --border-radius: calc(var(--size) * .125);
+  --border-width: #{$checkbox-md-icon-border-width};
+  --border-style: #{$checkbox-md-icon-border-style};
 
-  position: relative;
+  --unchecked-border-color: #{$checkbox-md-icon-border-color-off};
+  --unchecked-background: #{$checkbox-md-icon-background-color-off};
 
-  width: $checkbox-md-icon-size;
-  height: $checkbox-md-icon-size;
-
-  border-width: $checkbox-md-icon-border-width;
-  border-style: $checkbox-md-icon-border-style;
-  border-color: $checkbox-md-icon-border-color-off;
-  background-color: $checkbox-md-icon-background-color-off;
-
-  transition-duration: $checkbox-md-transition-duration;
-  transition-property: background;
-  transition-timing-function: $checkbox-md-transition-easing;
-
-  contain: strict;
+  --transition: #{background $checkbox-md-transition-duration $checkbox-md-transition-easing};
 }
-
-
-// Material Design Checkbox Outer Square: Checked
-// -----------------------------------------
-
-.checkbox-md .checkbox-checked {
-  border-color: $checkbox-md-icon-border-color-on;
-  background-color: $checkbox-md-icon-background-color-on;
-}
-
 
 // Material Design Checkbox Inner Checkmark: Checked
 // -----------------------------------------
 
-.checkbox-md .checkbox-checked .checkbox-inner {
-  @include position(0, null, null, 4px);
+.checkbox-md.checkbox-checked .checkbox-inner {
+  @include position(
+    calc(var(--size) * .1 - 2px),
+    null, null,
+    calc(var(--size) * .35 - 2px)
+  );
 
   position: absolute;
 
-  width: 5px;
-  height: 10px;
+  width: calc(var(--size) * .3125);
+  height: calc(var(--size) * .625);
 
-  border-width: $checkbox-md-icon-checkmark-width;
+  border-width: calc(var(--size) * .125);
   border-top-width: 0;
   border-left-width: 0;
   border-style: $checkbox-md-icon-checkmark-style;
-  border-color: $checkbox-md-icon-checkmark-color;
   transform: rotate(45deg);
 }
 
@@ -106,30 +89,4 @@
 
 .checkbox-md + .item-inner ion-label {
   @include margin-horizontal(0, null);
-}
-
-
-// Material Design Checkbox Color Mixin
-// --------------------------------------------------
-
-@mixin checkbox-theme-md($color-name) {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
-
-  .checkbox-md-#{$color-name} .checkbox-checked {
-    border-color: $color-base;
-    background-color: $color-base;
-  }
-
-  .checkbox-md-#{$color-name} .checkbox-checked .checkbox-inner {
-    border-color: $color-contrast;
-  }
-}
-
-
-// Generate Material Design Checkbox Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  @include checkbox-theme-md($color-name);
 }

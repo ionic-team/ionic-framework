@@ -14,33 +14,4 @@
   font-size: $card-ios-title-font-size;
   font-weight: $card-ios-title-font-weight;
   line-height: 1.2;
-  color: $card-ios-title-text-color;
-}
-
-
-// Generate iOS Card Title Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-
-  .card-ios-#{$color-name} {
-
-    .card-title-ios {
-      color: $color-contrast;
-    }
-
-    @each $color-name, $color-value in $colors-ios {
-      $color-base: ion-color($colors-ios, $color-name, base, ios);
-
-      .card-title-ios-#{$color-name} {
-        color: $color-base;
-      }
-    }
-  }
-
-  .card-title-ios-#{$color-name} {
-    color: $color-base;
-  }
 }

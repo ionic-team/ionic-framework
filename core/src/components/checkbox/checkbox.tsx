@@ -1,6 +1,7 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { CheckboxInput, CheckedInputChangeEvent, Color, CssClassMap, Mode, StyleEvent } from '../../interface';
+import { CheckboxInput, CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
 import { deferEvent } from '../../utils/helpers';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
@@ -8,9 +9,6 @@ import { deferEvent } from '../../utils/helpers';
   styleUrls: {
     ios: 'checkbox.ios.scss',
     md: 'checkbox.md.scss'
-  },
-  host: {
-    theme: 'checkbox'
   }
 })
 export class Checkbox implements CheckboxInput {
@@ -120,6 +118,8 @@ export class Checkbox implements CheckboxInput {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, this.color, 'checkbox'),
+
         'checkbox-checked': this.checked,
         'checkbox-disabled': this.disabled,
         'checkbox-key': this.keyFocus
@@ -128,13 +128,8 @@ export class Checkbox implements CheckboxInput {
   }
 
   render() {
-    const checkboxClasses: CssClassMap = {
-      'checkbox-icon': true,
-      'checkbox-checked': this.checked
-    };
-
     return [
-      <div class={checkboxClasses}>
+      <div class="checkbox-icon">
         <div class="checkbox-inner"></div>
       </div>,
       <input

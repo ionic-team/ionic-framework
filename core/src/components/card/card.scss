@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals";
+@import "../../themes/ionic.theme.default";
 
 // Card
 // --------------------------------------------------
@@ -9,6 +10,9 @@ ion-card {
   position: relative;
   display: block;
   overflow: hidden;
+
+  color: #{$color-contrast};
+  background: #{$color-base};
 }
 
 ion-card img {

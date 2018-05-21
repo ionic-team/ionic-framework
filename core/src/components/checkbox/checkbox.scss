@@ -1,4 +1,5 @@
 @import "../../themes/ionic.globals";
+@import "../../themes/ionic.theme.default";
 
 // Checkbox
 // --------------------------------------------------
@@ -6,6 +7,15 @@
 ion-checkbox {
   position: relative;
   display: inline-block;
+
+  --ion-color-base: #{get-color(primary, base)};
+  --ion-color-contrast: #{get-color(primary, contrast)};
+
+  --background: var(--unchecked-backgroud);
+  --border-color: var(--unchecked-border-color);
+
+  --checked-border-color: #{$color-base};
+  --checked-background: #{$color-base};
 }
 
 ion-checkbox input {
@@ -22,5 +32,35 @@ ion-checkbox input {
   cursor: pointer;
 
   appearance: none;
+}
+
+.checkbox.checkbox-checked {
+  --background: var(--checked-background);
+  --border-color: var(--checked-border-color);
+}
+
+.checkbox.checkbox-checked .checkbox-inner {
+  opacity: 1;
+}
+
+.checkbox .checkbox-icon {
+  @include border-radius(var(--border-radius));
+
+  position: relative;
+
+  width: var(--size);
+  height: var(--size);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+  background-color: var(--background);
+
+  contain: strict;
+}
+
+.checkbox .checkbox-inner {
+  border-color: #{$color-contrast};
+  opacity: 0;
 }
 

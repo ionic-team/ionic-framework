@@ -5,9 +5,6 @@
 // --------------------------------------------------
 
 .fab-button-md {
-  color: $fab-md-text-color;
-
-  --background: #{$fab-md-background-color};
   --box-shadow: #{$fab-md-box-shadow};
 
   --transition: #{box-shadow $fab-button-md-transition-duration $fab-button-md-transition-timing-function,

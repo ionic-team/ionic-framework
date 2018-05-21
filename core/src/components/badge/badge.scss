@@ -1,4 +1,5 @@
 @import "./badge.vars";
+@import "../../themes/ionic.theme.default";
 
 // Badge
 // --------------------------------------------------
@@ -18,9 +19,14 @@ ion-badge {
   line-height: 1;
 
   white-space: nowrap;
+  color: #{$color-contrast};
+  background-color: #{$color-base};
   vertical-align: baseline;
 
   contain: content;
+
+  --ion-color-base: #{get-colot(primary, base)};
+  --ion-color-contrast: #{get-colot(primary, contrast)};
 }
 
 ion-badge:empty {

@@ -12,9 +12,10 @@
 
   font-family: $card-md-font-family;
   font-size: $card-md-font-size;
-  color: $card-md-text-color;
-  background-color: $card-md-background-color;
   box-shadow: $card-md-box-shadow;
+
+  --ion-color-base-color: $card-ios-background-color;
+  --ion-color-contrast: $card-ios-text-color;
 }
 
 .card-md ion-list {
@@ -40,7 +41,6 @@
 
   font-size: 24px;
   font-weight: normal;
-  color: $card-md-text-color;
 }
 
 .card-md h2 {
@@ -48,7 +48,6 @@
 
   font-size: 16px;
   font-weight: normal;
-  color: $card-md-text-color;
 }
 
 .card-md h3,
@@ -59,7 +58,6 @@
 
   font-size: 14px;
   font-weight: normal;
-  color: $card-md-text-color;
 }
 
 .card-md p {
@@ -68,46 +66,8 @@
   font-size: 14px;
   font-weight: normal;
   line-height: 1.5;
-  color: $card-md-text-color;
 }
 
 .card-md + ion-card {
   @include margin(0, null, null, null);
-}
-
-
-// Generate Material Design Card Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
-
-  .card-md .text-md-#{$color-name} {
-    color: $color-base;
-  }
-
-  .card-md-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p {
-      color: $color-contrast;
-    }
-
-    @each $color-name, $color-value in $colors-md {
-      $color-base: ion-color($colors-md, $color-name, base, md);
-
-      .text-md-#{$color-name} {
-        color: $color-base;
-      }
-    }
-  }
-
 }

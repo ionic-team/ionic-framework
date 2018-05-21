@@ -12,11 +12,12 @@
 
   font-family: $card-ios-font-family;
   font-size: $card-ios-font-size;
-  color: $card-ios-text-color;
-  background-color: $card-ios-background-color;
   box-shadow: $card-ios-box-shadow;
 
   transform: translateZ(0);
+
+  --ion-color-base-color: $card-ios-background-color;
+  --ion-color-contrast: $card-ios-text-color;
 }
 
 .card-ios ion-list {
@@ -65,38 +66,8 @@
   @include margin(0, 0, 2px);
 
   font-size: 14px;
-  color: $card-ios-text-color;
 }
 
 // .card-ios + ion-card {
 //   @include margin(0, null, null, null);
 // }
-
-// Generate iOS Card Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-
-  .card-ios .text-ios-#{$color-name} {
-    color: $color-base;
-  }
-
-  .card-ios-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-
-    p {
-      color: $color-contrast;
-    }
-
-    @each $color-name, $color-value in $colors-ios {
-      $color-base: ion-color($colors-ios, $color-name, base, ios);
-
-      .text-ios-#{$color-name} {
-        color: $color-base;
-      }
-    }
-  }
-}

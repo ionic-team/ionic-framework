@@ -10,30 +10,3 @@
   font-size: $card-ios-font-size;
   line-height: 1.4;
 }
-
-
-// Generate iOS Card Content Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-
-  .card-ios-#{$color-name} {
-    .card-content-ios {
-      color: $color-contrast;
-    }
-
-    @each $color-name, $color-value in $colors-ios {
-      $color-base: ion-color($colors-ios, $color-name, base, ios);
-
-      .card-content-ios-#{$color-name} {
-        color: $color-base;
-      }
-    }
-  }
-
-  .card-content-ios-#{$color-name} {
-    color: $color-base;
-  }
-}
