@@ -6,12 +6,6 @@ months, days, hours and minute values. Datetimes are similar to the native `inpu
 `datetime-local`, however, Ionic's Datetime component makes it easy to display the date and time in a
 preferred format, and manage the datetime values.
 
-```html
-<ion-item>
-  <ion-label>Date</ion-label>
-  <ion-datetime display-format="MM/DD/YYYY"></ion-datetime>
-</ion-item>
-```
 
 ## Display and Picker Formats
 
@@ -109,16 +103,16 @@ more detailed down to the millisecond and timezone. Any of the ISO formats below
 can be used, and after a user selects a new value, Ionic will continue to use
 the same ISO format which datetime value was originally given as.
 
-| Description          | Format                 | Datetime Value Example       |
-| -------------------- | ---------------------- | ---------------------------- |
-| Year                 | YYYY                   | 1994                         |
-| Year and Month       | YYYY-MM                | 1994-12                      |
-| Complete Date        | YYYY-MM-DD             | 1994-12-15                   |
-| Date and Time        | YYYY-MM-DDTHH:mm       | 1994-12-15T13:47             |
-| UTC Timezone         | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20.789Z     |
-| Timezone Offset      | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20.789+5:00 |
-| Hour and Minute      | HH:mm                  | 13:47                        |
-| Hour, Minute, Second | HH:mm:ss               | 13:47:20                     |
+| Description          | Format                 | Datetime Value Example        |
+| -------------------- | ---------------------- | ----------------------------  |
+| Year                 | YYYY                   | 1994                          |
+| Year and Month       | YYYY-MM                | 1994-12                       |
+| Complete Date        | YYYY-MM-DD             | 1994-12-15                    |
+| Date and Time        | YYYY-MM-DDTHH:mm       | 1994-12-15T13:47              |
+| UTC Timezone         | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20.789Z      |
+| Timezone Offset      | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20.789+05:00 |
+| Hour and Minute      | HH:mm                  | 13:47                         |
+| Hour, Minute, Second | HH:mm:ss               | 13:47:20                      |
 
 Note that the year is always four-digits, milliseconds (if it's added) is always
 three-digits, and all others are always two-digits. So the number representing
