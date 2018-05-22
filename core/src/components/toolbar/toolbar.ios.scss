@@ -12,8 +12,8 @@
   font-family: $toolbar-ios-font-family;
 
   // default color / background
-  --ion-color-base: var(--ion-toolbar-background, #{$toolbar-ios-background-color});
-  --ion-color-contrast: var(--ion-toolbar-text-color, #{$toolbar-ios-text-color});
+  --ion-color-base: #{$toolbar-ios-background-color};
+  --ion-color-contrast: #{$toolbar-ios-text-color};
 
   --border-color: #{$toolbar-ios-border-color};
   --translucent-filter: #{$toolbar-ios-translucent-filter};

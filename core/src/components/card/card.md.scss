@@ -14,8 +14,8 @@
   font-size: $card-md-font-size;
   box-shadow: $card-md-box-shadow;
 
-  --ion-color-base-color: $card-ios-background-color;
-  --ion-color-contrast: $card-ios-text-color;
+  --ion-color-base: #{$card-md-background-color};
+  --ion-color-contrast: #{$card-md-text-color};
 }
 
 .card-md ion-list {

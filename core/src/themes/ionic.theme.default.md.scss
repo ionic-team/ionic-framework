@@ -2,98 +2,45 @@
 
 // Material Design Default Theme
 // ----------------------------------
+// TODO remove
 $colors-md:                                 $colors !default;
 
 // Material Design General
 // --------------------------------------------------
+// TODO remove use
 $content-md-margin:                         $content-margin !default;
 $content-md-padding:                        $content-padding !default;
 $font-family-md-base:                       "Roboto", "Helvetica Neue", sans-serif !default;
 $font-size-md-base:                         $font-size-base !default;
 
-// Default Foreground and Background Colors values
-// Allows users to override an foreground / background colors
-// TODO: @color-mod: remove all this
-$background-md-color-value:                 $background-color-value !default;
-$text-md-color-value:                       $text-color-value !default;
-
-// Default Material Design Foreground and Background Colors
-// --------------------------------------------------
-$background-md-color:                       css-var($background-md-color-value, background-md-color) !default;
-$text-md-color:                             css-var($text-md-color-value, text-md-color) !default;
-$placeholder-text-md-color:                 css-var($placeholder-text-color, placeholder-text-md-color) !default;
-
-// Default Material Design Background & Text Color Steps
-// --------------------------------------------------
-$background-md-color-step-50:               css-var(mix($text-md-color-value, $background-md-color-value, 5%), background-md-color-step-50) !default;
-$background-md-color-step-100:              css-var(mix($text-md-color-value, $background-md-color-value, 10%), background-md-color-step-100) !default;
-$background-md-color-step-150:              css-var(mix($text-md-color-value, $background-md-color-value, 15%), background-md-color-step-150) !default;
-$background-md-color-step-200:              css-var(mix($text-md-color-value, $background-md-color-value, 20%), background-md-color-step-200) !default;
-$background-md-color-step-250:              css-var(mix($text-md-color-value, $background-md-color-value, 25%), background-md-color-step-250) !default;
-$background-md-color-step-300:              css-var(mix($text-md-color-value, $background-md-color-value, 30%), background-md-color-step-300) !default;
-$background-md-color-step-350:              css-var(mix($text-md-color-value, $background-md-color-value, 35%), background-md-color-step-350) !default;
-$background-md-color-step-400:              css-var(mix($text-md-color-value, $background-md-color-value, 40%), background-md-color-step-400) !default;
-$background-md-color-step-450:              css-var(mix($text-md-color-value, $background-md-color-value, 45%), background-md-color-step-450) !default;
-$background-md-color-step-500:              css-var(mix($text-md-color-value, $background-md-color-value, 50%), background-md-color-step-500) !default;
-$background-md-color-step-550:              css-var(mix($text-md-color-value, $background-md-color-value, 55%), background-md-color-step-550) !default;
-$background-md-color-step-600:              css-var(mix($text-md-color-value, $background-md-color-value, 60%), background-md-color-step-600) !default;
-$background-md-color-step-650:              css-var(mix($text-md-color-value, $background-md-color-value, 65%), background-md-color-step-650) !default;
-$background-md-color-step-700:              css-var(mix($text-md-color-value, $background-md-color-value, 70%), background-md-color-step-700) !default;
-$background-md-color-step-750:              css-var(mix($text-md-color-value, $background-md-color-value, 75%), background-md-color-step-750) !default;
-$background-md-color-step-800:              css-var(mix($text-md-color-value, $background-md-color-value, 80%), background-md-color-step-800) !default;
-$background-md-color-step-850:              css-var(mix($text-md-color-value, $background-md-color-value, 85%), background-md-color-step-850) !default;
-$background-md-color-step-900:              css-var(mix($text-md-color-value, $background-md-color-value, 90%), background-md-color-step-900) !default;
-$background-md-color-step-950:              css-var(mix($text-md-color-value, $background-md-color-value, 95%), background-md-color-step-950) !default;
-$background-md-color-step-1000:             css-var(mix($text-md-color-value, $background-md-color-value, 100%), background-md-color-step-1000) !default;
-$text-md-color-step-50:                     css-var(mix($background-md-color-value, $text-md-color-value, 5%), text-md-color-step-50) !default;
-$text-md-color-step-100:                    css-var(mix($background-md-color-value, $text-md-color-value, 10%), text-md-color-step-100) !default;
-$text-md-color-step-150:                    css-var(mix($background-md-color-value, $text-md-color-value, 15%), text-md-color-step-150) !default;
-$text-md-color-step-200:                    css-var(mix($background-md-color-value, $text-md-color-value, 20%), text-md-color-step-200) !default;
-$text-md-color-step-250:                    css-var(mix($background-md-color-value, $text-md-color-value, 25%), text-md-color-step-250) !default;
-$text-md-color-step-300:                    css-var(mix($background-md-color-value, $text-md-color-value, 30%), text-md-color-step-300) !default;
-$text-md-color-step-350:                    css-var(mix($background-md-color-value, $text-md-color-value, 35%), text-md-color-step-350) !default;
-$text-md-color-step-400:                    css-var(mix($background-md-color-value, $text-md-color-value, 40%), text-md-color-step-400) !default;
-$text-md-color-step-450:                    css-var(mix($background-md-color-value, $text-md-color-value, 45%), text-md-color-step-450) !default;
-$text-md-color-step-500:                    css-var(mix($background-md-color-value, $text-md-color-value, 50%), text-md-color-step-500) !default;
-$text-md-color-step-550:                    css-var(mix($background-md-color-value, $text-md-color-value, 55%), text-md-color-step-550) !default;
-$text-md-color-step-600:                    css-var(mix($background-md-color-value, $text-md-color-value, 60%), text-md-color-step-600) !default;
-$text-md-color-step-650:                    css-var(mix($background-md-color-value, $text-md-color-value, 65%), text-md-color-step-650) !default;
-$text-md-color-step-700:                    css-var(mix($background-md-color-value, $text-md-color-value, 70%), text-md-color-step-700) !default;
-$text-md-color-step-750:                    css-var(mix($background-md-color-value, $text-md-color-value, 75%), text-md-color-step-750) !default;
-$text-md-color-step-800:                    css-var(mix($background-md-color-value, $text-md-color-value, 80%), text-md-color-step-800) !default;
-$text-md-color-step-850:                    css-var(mix($background-md-color-value, $text-md-color-value, 85%), text-md-color-step-850) !default;
-$text-md-color-step-900:                    css-var(mix($background-md-color-value, $text-md-color-value, 90%), text-md-color-step-900) !default;
-$text-md-color-step-950:                    css-var(mix($background-md-color-value, $text-md-color-value, 95%), text-md-color-step-950) !default;
-$text-md-color-step-1000:                   css-var(mix($background-md-color-value, $text-md-color-value, 100%), text-md-color-step-1000) !default;
 
 // Material Design General Colors
 // --------------------------------------------------
-$backdrop-md-color:                         css-var($backdrop-color, backdrop-md-color) !default;
-$border-md-color:                           css-var(#c1c4cd, border-md-color) !default;
-$box-shadow-md-color:                       css-var($box-shadow-color, box-shadow-md-color) !default;
-$overlay-md-background-color:               css-var(#fafafa, overlay-md-background-color) !default;
+$backdrop-md-color:                         $backdrop-color !default;
+$border-md-color:                           var(--ion-border-color, #c1c4cd) !default;
+$overlay-md-background-color:               var(--ion-overlay-background-color, #fafafa) !default;
 
 // Material Design Tabs & Tab bar
 // --------------------------------------------------
-$tabbar-md-background-color:                css-var($tabbar-background-color, tabbar-md-background-color) !default;
-$tabbar-md-background-color-focused:        css-var($tabbar-background-color-focused, tabbar-md-background-color-focused) !default;
-$tabbar-md-border-color:                    css-var(rgb(0, 0, 0), tabbar-md-border-color, .07) !default; // TODO: @color-mod($border-md-color, a($alpha-lowest))
-$tabbar-md-text-color:                      css-var($text-md-color-step-400, tabbar-md-text-color) !default;
-$tabbar-md-text-color-active:               css-var($tabbar-text-color-active, tabbar-md-text-color-active) !default;
+$tabbar-md-background-color:                $tabbar-background-color !default;
+$tabbar-md-background-color-focused:        $tabbar-background-color-focused !default;
+$tabbar-md-border-color:                    rgba(var(--ion-tabbar-border-color-rgb, 0, 0, 0), .07) !default; // TODO: @color-mod($border-md-color, a($alpha-lowest))
+$tabbar-md-text-color:                      var(--ion-tabbar-text-color, $text-color-step-400) !default;
+$tabbar-md-text-color-active:               $tabbar-text-color-active !default;
 
 // Material Design Toolbar
 // --------------------------------------------------
 $toolbar-md-height:                         56px !default;
 $toolbar-md-padding:                        4px !default;
-$toolbar-md-background-color:               css-var($toolbar-background-color, toolbar-md-background-color) !default;
-$toolbar-md-border-color:                   css-var($border-md-color, toolbar-md-border-color) !default;
-$toolbar-md-color-active:                   css-var(#4a4a4a, toolbar-md-color-active) !default;
-$toolbar-md-color-inactive:                 css-var($toolbar-color-inactive, toolbar-md-color-inactive) !default;
-$toolbar-md-text-color:                     css-var(#424242, toolbar-md-text-color) !default;
+$toolbar-md-background-color:               $toolbar-background-color !default;
+$toolbar-md-border-color:                   var(--ion-toolbar-border-color, $border-md-color) !default;
+$toolbar-md-color-active:                   var(--ion-toolbar-color-active, #4a4a4a) !default;
+$toolbar-md-color-inactive:                 $toolbar-color-inactive !default;
+$toolbar-md-text-color:                     var(--ion-toolbar-text-color, #424242) !default;
 
 // Material Design List & List Items
 // --------------------------------------------------
-$item-md-background-color:                  css-var($item-background-color, item-md-background-color) !default;
-$item-md-background-color-active:           css-var(#f1f1f1, item-md-background-color-active) !default;
-$item-md-border-color:                      css-var(#000, item-md-border-color, .13) !default;
-$item-md-text-color:                        css-var($item-text-color, item-md-text-color) !default;
+$item-md-background-color:                  $item-background-color !default;
+$item-md-background-color-active:           var(--ion-item-background-color-active, #f1f1f1) !default;
+$item-md-border-color:                      rgba(var(--ion-item-border-color-rgb, 0, 0, 0), .13) !default;
+$item-md-text-color:                        $item-text-color !default;

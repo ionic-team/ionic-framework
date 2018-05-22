@@ -10,7 +10,7 @@ $badge-md-border-radius:            4px !default;
 $badge-md-font-family:              $font-family-md-base !default;
 
 /// @prop - Background color of the badge
-$badge-md-background-color:         ion-color($colors-md, primary, base, md) !default;
+$badge-md-background-color:         get-color(primary, base) !default;
 
 /// @prop - Text color of the badge
-$badge-md-text-color:               ion-color($colors-md, $badge-md-background-color, contrast, md) !default;
+$badge-md-text-color:               get-color(primary, contrast) !default;

@@ -43,7 +43,7 @@
 // --------------------------------------------------
 
 @each $color-name, $color-value in $colors-ios {
-  $base-color: ion-color($colors-ios, $color-name, base, ios);
+  $base-color: get-color($color-name, base);
 
   .back-button-ios-#{$color-name} {
     color: $base-color;

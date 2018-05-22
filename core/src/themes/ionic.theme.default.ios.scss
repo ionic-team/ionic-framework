@@ -11,91 +11,37 @@ $content-ios-padding:                               $content-padding !default;
 $font-family-ios-base:                              $font-family-base !default;
 $font-size-ios-base:                                $font-size-base !default;
 
-// Default Foreground and Background Colors values
-// Allows users to override an foreground / background colors
-$background-ios-color-value:                        $background-color-value !default;
-$text-ios-color-value:                              $text-color-value !default;
-
-// Default iOS Foreground and Background Colors
-// --------------------------------------------------
-$background-ios-color:                              css-var($background-ios-color-value, background-ios-color) !default;
-$text-ios-color:                                    css-var($text-ios-color-value, text-ios-color) !default;
-$placeholder-text-ios-color:                        css-var($placeholder-text-color, placeholder-text-ios-color) !default;
-
-// Default iOS Background & Text Color Steps
-// --------------------------------------------------
-$background-ios-color-step-50:                      css-var(mix($text-ios-color-value, $background-ios-color-value, 5%), background-ios-color-step-50) !default;
-$background-ios-color-step-100:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 10%), background-ios-color-step-100) !default;
-$background-ios-color-step-150:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 15%), background-ios-color-step-150) !default;
-$background-ios-color-step-200:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 20%), background-ios-color-step-200) !default;
-$background-ios-color-step-250:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 25%), background-ios-color-step-250) !default;
-$background-ios-color-step-300:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 30%), background-ios-color-step-300) !default;
-$background-ios-color-step-350:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 35%), background-ios-color-step-350) !default;
-$background-ios-color-step-400:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 40%), background-ios-color-step-400) !default;
-$background-ios-color-step-450:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 45%), background-ios-color-step-450) !default;
-$background-ios-color-step-500:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 50%), background-ios-color-step-500) !default;
-$background-ios-color-step-550:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 55%), background-ios-color-step-550) !default;
-$background-ios-color-step-600:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 60%), background-ios-color-step-600) !default;
-$background-ios-color-step-650:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 65%), background-ios-color-step-650) !default;
-$background-ios-color-step-700:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 70%), background-ios-color-step-700) !default;
-$background-ios-color-step-750:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 75%), background-ios-color-step-750) !default;
-$background-ios-color-step-800:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 80%), background-ios-color-step-800) !default;
-$background-ios-color-step-850:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 85%), background-ios-color-step-850) !default;
-$background-ios-color-step-900:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 90%), background-ios-color-step-900) !default;
-$background-ios-color-step-950:                     css-var(mix($text-ios-color-value, $background-ios-color-value, 95%), background-ios-color-step-950) !default;
-$background-ios-color-step-1000:                    css-var(mix($text-ios-color-value, $background-ios-color-value, 100%), background-ios-color-step-1000) !default;
-$text-ios-color-step-50:                            css-var(mix($background-ios-color-value, $text-ios-color-value, 5%), text-ios-color-step-50) !default;
-$text-ios-color-step-100:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 10%), text-ios-color-step-100) !default;
-$text-ios-color-step-150:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 15%), text-ios-color-step-150) !default;
-$text-ios-color-step-200:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 20%), text-ios-color-step-200) !default;
-$text-ios-color-step-250:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 25%), text-ios-color-step-250) !default;
-$text-ios-color-step-300:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 30%), text-ios-color-step-300) !default;
-$text-ios-color-step-350:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 35%), text-ios-color-step-350) !default;
-$text-ios-color-step-400:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 40%), text-ios-color-step-400) !default;
-$text-ios-color-step-450:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 45%), text-ios-color-step-450) !default;
-$text-ios-color-step-500:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 50%), text-ios-color-step-500) !default;
-$text-ios-color-step-550:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 55%), text-ios-color-step-550) !default;
-$text-ios-color-step-600:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 60%), text-ios-color-step-600) !default;
-$text-ios-color-step-650:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 65%), text-ios-color-step-650) !default;
-$text-ios-color-step-700:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 70%), text-ios-color-step-700) !default;
-$text-ios-color-step-750:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 75%), text-ios-color-step-750) !default;
-$text-ios-color-step-800:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 80%), text-ios-color-step-800) !default;
-$text-ios-color-step-850:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 85%), text-ios-color-step-850) !default;
-$text-ios-color-step-900:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 90%), text-ios-color-step-900) !default;
-$text-ios-color-step-950:                           css-var(mix($background-ios-color-value, $text-ios-color-value, 95%), text-ios-color-step-950) !default;
-$text-ios-color-step-1000:                          css-var(mix($background-ios-color-value, $text-ios-color-value, 100%), text-ios-color-step-1000) !default;
-
 // iOS General Colors
 // --------------------------------------------------
-$backdrop-ios-color:                                css-var($backdrop-color, backdrop-ios-color) !default;
-$border-ios-color:                                  css-var(#dedede, border-ios-color) !default;
-$box-shadow-ios-color:                              css-var($box-shadow-color, box-shadow-ios-color) !default;
-$overlay-ios-background-color:                      css-var(#f9f9f9, overlay-ios-background-color) !default;
+$backdrop-ios-color:                                $backdrop-color !default;
+$border-ios-color:                                  var(--ion-border-color, #dedede) !default;
+$box-shadow-ios-color:                              $box-shadow-color !default;
+$overlay-ios-background-color:                      var(--ion-overlay-background-color, #f9f9f9) !default;
 
 // iOS Tabs & Tab bar
 // --------------------------------------------------
 $tabbar-ios-translucent-background-color-alpha:     .8 !default;
-$tabbar-ios-background-color:                       css-var($tabbar-background-color, tabbar-ios-background-color) !default;
-$tabbar-ios-background-color-focused:               css-var($tabbar-background-color-focused, tabbar-ios-background-color-focused) !default;
-$tabbar-ios-translucent-background-color:           css-var(rgb(248, 248, 248), tabbar-ios-translucent-background-color, $tabbar-ios-translucent-background-color-alpha) !default;
-$tabbar-ios-border-color:                           css-var(rgb(0, 0, 0), tabbar-ios-border-color, .2) !default;
-$tabbar-ios-text-color:                             css-var($tabbar-text-color, tabbar-ios-text-color) !default;
-$tabbar-ios-text-color-active:                      css-var(ion-color($colors-ios, primary, base, ios), tabbar-ios-text-color-active) !default;
+$tabbar-ios-background-color:                       $tabbar-background-color !default;
+$tabbar-ios-background-color-focused:               $tabbar-background-color-focused !default;
+$tabbar-ios-translucent-background-color:           rgba(var(--ion-tabbar-translucent-background-color-rgb, 248, 248, 248), $tabbar-ios-translucent-background-color-alpha) !default;
+$tabbar-ios-border-color:                           rgba(var(--ion-tabbar-border-color-rgb, 0, 0, 0), .2) !default;
+$tabbar-ios-text-color:                             $tabbar-text-color !default;
+$tabbar-ios-text-color-active:                      get-color(primary, base) !default; // TODO fallback $tabbar-text-color-active
 
 // iOS Toolbar
 // --------------------------------------------------
 $toolbar-ios-height:                                44px !default;
 $toolbar-ios-padding:                               4px !default;
-$toolbar-ios-background-color:                      css-var($toolbar-background-color, toolbar-ios-background-color) !default;
-$toolbar-ios-translucent-background-color:          css-var(rgb(248,248,248), toolbar-ios-translucent-background-color, .8) !default;
-$toolbar-ios-border-color:                          css-var(rgb(0, 0, 0), toolbar-ios-border-color, .2) !default;
-$toolbar-ios-color-active:                          css-var(ion-color($colors-ios, primary, base, ios), toolbar-ios-color-active) !default;
-$toolbar-ios-color-inactive:                        css-var($toolbar-color-inactive, toolbar-ios-color-inactive) !default;
-$toolbar-ios-text-color:                            css-var($toolbar-text-color, toolbar-ios-text-color) !default;
+$toolbar-ios-background-color:                      $toolbar-background-color !default;
+$toolbar-ios-translucent-background-color:          rgba(var(--ion-toolbar-translucent-background-color-rgb, 248, 248, 248), .8) !default;
+$toolbar-ios-border-color:                          rgba(var(--ion-toolbar-border-color-rgb, 0, 0, 0), .2) !default;
+$toolbar-ios-color-active:                          get-color(primary, base) !default; // TODO fallback $toolbar-color-active
+$toolbar-ios-color-inactive:                        $toolbar-color-inactive !default;
+$toolbar-ios-text-color:                            $toolbar-text-color !default;
 
 // iOS List & List Items
 // --------------------------------------------------
-$item-ios-background-color:                         css-var($background-ios-color, item-ios-background-color) !default;
-$item-ios-background-color-active:                  css-var(#d9d9d9, item-ios-background-color-active) !default;
-$item-ios-border-color:                             css-var($item-border-color, item-ios-border-color) !default;
-$item-ios-text-color:                               css-var($item-text-color, item-ios-text-color) !default;
+$item-ios-background-color:                         $item-background-color !default;
+$item-ios-background-color-active:                  var(--ion-item-background-color-active, #d9d9d9) !default;
+$item-ios-border-color:                             $item-border-color !default;
+$item-ios-text-color:                               $item-text-color !default;

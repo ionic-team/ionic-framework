@@ -30,6 +30,23 @@ $css-variables: ();
   @return $result;
 }
 
+@function get-color($name, $variation, $alpha: null) {
+  $values: map-get($colors, $name);
+  $value: map-get($values, $variation);
+  $variable: --ion-color-#{$name}-#{$variation};
+
+  @if ($variation == $default-color-variation) {
+    $variable: --ion-color-#{$name};
+  }
+
+  @if ($alpha) {
+    $value: color-to-rgb-list($value);
+    @return rgba(var(#{$variable}-rgb, $value), $alpha);
+  }
+
+  @return var(#{$variable}, $value);
+}
+
 @function get-color-shade($color) {
   @return mix(#000, $color, 12%);
 }

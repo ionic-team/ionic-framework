@@ -22,7 +22,7 @@ $toolbar-ios-font-family:                           $font-family-ios-base !defau
 $toolbar-ios-button-font-size:                      17px !default;
 
 /// @prop - Text color of the toolbar button
-$toolbar-ios-button-color:                          ion-color($colors-ios, primary, base, ios) !default;
+$toolbar-ios-button-color:                          get-color(primary, base) !default;
 
 /// @prop - Background color of the toolbar button
 $toolbar-ios-button-background-color:               $toolbar-ios-background-color !default;

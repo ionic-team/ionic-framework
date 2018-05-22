@@ -194,10 +194,10 @@
 // --------------------------------------------------
 
 @each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-shade: ion-color($colors-ios, $color-name, shade, ios);
-  $color-tint: ion-color($colors-ios, $color-name, tint, ios);
+  $color-base: get-color($color-name, base);
+  $color-contrast: get-color($color-name, contrast);
+  $color-shade: get-color($color-name, shade);
+  $color-tint: get-color($color-name, tint);
 
   .item-ios-#{$color-name} {
     border-bottom-color: $color-shade;

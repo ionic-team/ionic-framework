@@ -38,8 +38,8 @@
 // --------------------------------------------------
 
 @each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
+  $color-base: get-color($color-name, base);
+  $color-contrast: get-color($color-name, contrast);
 
   .chip-ios-#{$color-name} {
     color: $color-contrast;

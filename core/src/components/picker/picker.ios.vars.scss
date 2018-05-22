@@ -13,7 +13,7 @@ $picker-ios-height:                               260px !default;
 $picker-ios-border-color:                         $item-ios-border-color !default;
 
 /// @prop - Background Color of the picker wrapper
-$picker-ios-background-color:                     $background-ios-color !default;
+$picker-ios-background-color:                     $background-color !default;
 
 /// @prop - Top Background Color of the picker wrapper gradient
 $picker-ios-top-background-color:                 $picker-ios-background-color !default;
@@ -22,7 +22,7 @@ $picker-ios-top-background-color:                 $picker-ios-background-color !
 $picker-ios-bottom-background-color-alpha:        .8 !default;
 
 /// @prop - Bottom Background Color of the picker wrapper gradient
-$picker-ios-bottom-background-color:              css-var($background-ios-color-value, background-ios-color, $picker-ios-bottom-background-color-alpha) !default;
+$picker-ios-bottom-background-color:              rgba(var(--ion-background-color-rgb, $background-color-rgb), $picker-ios-bottom-background-color-alpha) !default;
 
 /// @prop - Height of the picker toolbar
 $picker-ios-toolbar-height:                       44px !default;
@@ -34,7 +34,7 @@ $picker-ios-toolbar-background-color:             $picker-ios-top-background-col
 $picker-ios-button-height:                        $picker-ios-toolbar-height !default;
 
 /// @prop - Text color of the picker button
-$picker-ios-button-text-color:                    ion-color($colors-ios, primary, base, ios) !default;
+$picker-ios-button-text-color:                    get-color(primary, base) !default;
 
 /// @prop - Background of the picker button
 $picker-ios-button-background-color:              transparent !default;

@@ -22,9 +22,8 @@ $font-path: "/dist/fonts" !default;
 // Hairlines width
 $hairlines-width: .55px !default;
 
-
-/// @prop - The minimum dimensions at which your layout will change,
-/// adapting to different screen sizes, for use in media queries
+// The minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries
 $screen-breakpoints: (
   xs: 0,
   sm: 576px,
@@ -33,7 +32,7 @@ $screen-breakpoints: (
   xl: 1200px
 ) !default;
 
-
+// Global color variables
 $color-base: var(--ion-color-base);
 $color-base-rgb: var(--ion-color-base-rgb);
 $color-contrast: var(--ion-color-contrast);

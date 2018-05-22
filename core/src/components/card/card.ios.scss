@@ -16,8 +16,8 @@
 
   transform: translateZ(0);
 
-  --ion-color-base-color: $card-ios-background-color;
-  --ion-color-contrast: $card-ios-text-color;
+  --ion-color-base: #{$card-ios-background-color};
+  --ion-color-contrast: #{$card-ios-text-color};
 }
 
 .card-ios ion-list {

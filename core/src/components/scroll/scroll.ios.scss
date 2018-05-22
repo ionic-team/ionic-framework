@@ -11,12 +11,12 @@
 .scroll-ios {
   font-family: $content-ios-font-family;
 
-  color: $text-ios-color;
-  background-color: $background-ios-color;
+  color: $text-color;
+  background-color: $background-color;
 }
 
 .scroll-ios hr {
   height: $hairlines-width;
 
-  background-color: css-var($background-ios-color-value, background-ios-color, $content-ios-horizontal-rule-background-color-alpha);
+  background-color: rgba(var(--ion-background-color-rgb, $background-color-rgb), $content-ios-horizontal-rule-background-color-alpha);
 }

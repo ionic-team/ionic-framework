@@ -7,5 +7,5 @@
 .note-ios {
   font-family: $note-ios-font-family;
 
-  --ion-color-base: $note-ios-color;
+  --ion-color-base: #{$note-ios-color};
 }

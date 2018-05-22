@@ -12,8 +12,8 @@
   font-family: #{$toolbar-md-font-family};
 
   // default color / background
-  --ion-color-base: var(--ion-toolbar-background, #{$toolbar-md-background-color});
-  --ion-color-contrast: var(--ion-toolbar-text-color, #{$toolbar-md-text-color});
+  --ion-color-base: #{$toolbar-md-background-color};
+  --ion-color-contrast: #{$toolbar-md-text-color};
 
   --border-color: #{$toolbar-md-border-color};
 }

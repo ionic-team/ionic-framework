@@ -37,14 +37,14 @@
 // --------------------------------------------------
 
 @mixin tabbar-ios($color-name) {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-shade: ion-color($colors-ios, $color-name, shade, ios);
+  $color-base: get-color($color-name, base);
+  $color-contrast: get-color($color-name, contrast);
+  $color-shade: get-color($color-name, shade);
 
-  $translucent-background-color: ion-color($colors-ios, $color-name, base, ios, $tabbar-ios-translucent-background-color-alpha);
+  $translucent-background-color: get-color($color-name, base, $tabbar-ios-translucent-background-color-alpha);
 
   .tabbar-ios-#{$color-name} {
-    border-color: $background-ios-color-step-400;
+    border-color: $background-color-step-400;
     color: $color-contrast;
     background-color: $color-base;
 
