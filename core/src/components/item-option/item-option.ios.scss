@@ -6,8 +6,9 @@
 
 .item-option-ios {
   font-size: $item-option-button-ios-font-size;
-  color: $item-option-button-ios-text-color;
-  background-color: $item-option-button-ios-background-color;
+
+  --ion-color-base: #{$item-option-button-ios-background-color};
+  --ion-color-contrast: #{$item-option-button-ios-text-color};
 }
 
 .list-ios .item-options-end ion-item-option:last-child {
@@ -16,19 +17,4 @@
 
 .list-ios .item-options-start ion-item-option:first-child {
   @include safe-area-padding-horizontal(.7em, null);
-}
-
-
-// Generate iOS Option Button Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-shade: ion-color($colors-ios, $color-name, tint, ios);
-
-  .item-option-ios-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-  }
 }

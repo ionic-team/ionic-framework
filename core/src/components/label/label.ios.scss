@@ -50,16 +50,3 @@
 .item-input-has-focus .label-ios-floating {
   color: $label-ios-text-color-focused;
 }
-
-
-// Generate iOS Label colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-
-  .label-ios-#{$color-name},
-  .item-interactive .label-ios-#{$color-name} {
-    color: $color-base;
-  }
-}

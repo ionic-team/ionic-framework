@@ -1,5 +1,6 @@
 import { Component, Element, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
@@ -7,12 +8,10 @@ import { Color, Mode } from '../../interface';
   styleUrls: {
     ios: 'item-divider.ios.scss',
     md: 'item-divider.md.scss'
-  },
-  host: {
-    theme: 'item-divider'
   }
 })
 export class ItemDivider {
+
   @Element() el!: HTMLElement;
 
   /**
@@ -38,6 +37,12 @@ export class ItemDivider {
         buttons[i].size = 'small';
       }
     }
+  }
+
+  hostData() {
+    return {
+      class: createThemedClasses(this.mode, this.color, 'item-divider')
+    };
   }
 
   render() {

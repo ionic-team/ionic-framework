@@ -1,5 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
@@ -7,9 +8,6 @@ import { Color, Mode } from '../../interface';
   styleUrls: {
     ios: 'list-header.ios.scss',
     md: 'list-header.md.scss'
-  },
-  host: {
-    theme: 'list-header'
   }
 })
 export class ListHeader {
@@ -28,4 +26,9 @@ export class ListHeader {
    */
   @Prop() mode!: Mode;
 
+  hostData() {
+    return {
+      class: createThemedClasses(this.mode, this.color, 'list-header')
+    };
+  }
 }

@@ -21,6 +21,9 @@ ion-item-divider {
   width: 100%;
 
   min-height: $item-divider-min-height;
+
+  color: #{$color-contrast};
+  background-color: #{$color-base};
 }
 
 ion-item-divider[sticky] {

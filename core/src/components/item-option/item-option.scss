@@ -15,6 +15,9 @@
   color: inherit;
   background: none;
 
+  color: #{$color-contrast};
+  background-color: #{$color-base};
+
   &:active,
   &:focus {
     outline: none;

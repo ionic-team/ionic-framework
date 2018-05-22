@@ -12,8 +12,8 @@
   font-family: $item-md-divider-font-family;
   font-size: $item-md-divider-font-size;
 
-  color: $item-md-divider-color;
-  background-color: $item-md-divider-background;
+  --ion-color-base: #{$item-md-divider-background};
+  --ion-color-contrast: #{$item-md-divider-color};
 }
 
 .item-divider-md .item-divider-inner {
@@ -87,27 +87,4 @@
   line-height: normal;
   text-overflow: inherit;
   color: $item-md-paragraph-text-color;
-}
-
-
-// Generate Material Design Item Divider Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
-  $color-shade: ion-color($colors-md, $color-name, tint, md);
-
-  .item-divider-md-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-
-    p {
-      color: $color-contrast;
-    }
-
-    &.activated {
-      background-color: $color-shade;
-    }
-  }
 }

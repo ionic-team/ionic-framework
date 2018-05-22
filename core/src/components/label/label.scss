@@ -15,6 +15,10 @@ ion-label {
   font-size: inherit;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  color: #{$color-base};
+
+  --ion-color-base: currentColor;
 }
 
 .item-input ion-label {

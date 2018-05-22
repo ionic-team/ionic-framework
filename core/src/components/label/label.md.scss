@@ -52,16 +52,3 @@
 .item-input-has-value .label-md-floating {
   @include transform(translate3d(0, 0, 0), scale(.8));
 }
-
-
-// Generate Material Design Label colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-
-  .label-md-#{$color-name},
-  .item-interactive .label-md-#{$color-name} {
-    color: $color-base;
-  }
-}

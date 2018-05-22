@@ -17,4 +17,7 @@ ion-list-header {
 
   width: 100%;
   min-height: 40px;
+
+  color: #{$color-contrast};
+  background: #{$color-base};
 }

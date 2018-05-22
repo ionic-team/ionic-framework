@@ -14,8 +14,8 @@
   font-family: $item-ios-divider-font-family;
   font-size: $item-ios-divider-font-size;
 
-  color: $item-ios-divider-color;
-  background-color: $item-ios-divider-background;
+  --ion-color-base: #{$item-ios-divider-background};
+  --ion-color-contrast: #{$item-ios-divider-color};
 }
 
 .item-divider-ios .item-divider-inner {
@@ -90,27 +90,4 @@
 .item-divider-ios h6:last-child,
 .item-divider-ios p:last-child {
   @include margin(null, null, 0, null);
-}
-
-
-// Generate iOS Item Divider Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-shade: ion-color($colors-ios, $color-name, tint, ios);
-
-  .item-divider-ios-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-
-    p {
-      color: $color-contrast;
-    }
-
-    &.activated {
-      background-color: $color-shade;
-    }
-  }
 }
