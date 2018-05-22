@@ -101,6 +101,10 @@
   }
 }
 
+ion-toolbar.ion-color .bar-buttons-ios .button-clear {
+  --ion-color-base: currentColor;
+}
+
 // iOS Toolbar Button Placement
 // --------------------------------------------------
 

@@ -7,8 +7,8 @@
 .item-option-md {
   font-size: $item-option-button-md-font-size;
 
-  --ion-color-base: #{$item-option-button-ios-background-color};
-  --ion-color-contrast: #{$item-option-button-ios-text-color};
+  --ion-color-base: #{$item-option-button-md-background-color};
+  --ion-color-contrast: #{$item-option-button-md-text-color};
 }
 
 .item-option-md .item-option-button {
