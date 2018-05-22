@@ -136,6 +136,15 @@
   }
 }
 
+
+// Text Direction - ltr / rtl
+// $app-direction: multi | rtl | ltr | null (default)
+// multi: Both [dir=ltr] and [dir=rtl] are applied to css selectors.
+// rtl: Always assumes rtl and only includes rtl css. No [dir] selectors.
+// ltr: Always assumes ltr and only includes ltr css. No [dir] selectors.
+// null: CSS defaults to use the ltr css, and adds [dir=rtl] selectors to override ltr defaults.
+// ----------------------------------------------------------
+
 @mixin multi-dir() {
   @if $app-direction == multi {
     $root: #{&};
@@ -150,7 +159,7 @@
 }
 
 @mixin rtl() {
-  @if $app-direction == multi {
+  @if $app-direction == multi or $app-direction == null {
     $root: #{&};
     @at-root [dir="rtl"] {
       #{$root} {
@@ -170,7 +179,7 @@
         @content;
       }
     }
-  } @else if $app-direction == ltr {
+  } @else if $app-direction == ltr or $app-direction == null {
     @content;
   }
 }
