@@ -1,5 +1,13 @@
+@import "../../themes/ionic.globals";
+
 ion-buttons {
   z-index: $z-index-toolbar-buttons;
+
+  display: block;
+
+  transform: translateZ(0);
+
+  pointer-events: none;
 }
 
 // Toolbar Buttons
@@ -21,4 +29,12 @@ ion-buttons .button {
 
 ion-buttons .button-clear {
   --ion-color-base: currentColor;
+}
+
+ion-buttons button,
+ion-buttons a,
+ion-buttons input,
+ion-buttons textarea,
+ion-buttons div {
+  pointer-events: auto;
 }

@@ -86,19 +86,13 @@
   --background: rgba(#{$color-base-rgb}, .1);
 }
 
-.button-outline-md .ripple-effect {
-  background-color: #{$color-base};
-}
-
 
 // Material Design Clear Button
 // --------------------------------------------------
 
 .button-clear-md {
   --opacity: #{$button-md-clear-opacity};
-  --ripple-color: #{$button-md-clear-ripple-background-color};
 }
-
 
 
 // Material Design Round Button

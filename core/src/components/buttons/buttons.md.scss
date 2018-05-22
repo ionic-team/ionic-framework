@@ -5,19 +5,17 @@
 // --------------------------------------------------
 
 .bar-buttons-md {
-  @include margin(0, 2px);
-
   .button-md {
     font-size: #{$toolbar-md-button-font-size};
     font-weight: 500;
 
     --padding-top: 0;
     --padding-bottom: 0;
-    --padding-start: 5px;
-    --padding-end: 5px;
+    --padding-start: 8px;
+    --padding-end: 8px;
 
     --border-radius: #{$toolbar-md-button-border-radius};
-    --height: 32px;
+    --height: 45px;
   }
 
 

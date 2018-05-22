@@ -8,6 +8,8 @@
   --ion-color-base: #{get-color(primary, base)};
   --ion-color-contrast: #{get-color(primary, contrast)};
   --ion-color-shade: #{get-color(primary, shade)};
+
+  --ripple-color: currentColor;
 }
 
 .button > .button-container {
@@ -63,6 +65,10 @@
   contain: content;
 }
 
+.button[disabled] {
+  pointer-events: none;
+}
+
 .button > .button-container[disabled] {
   cursor: default;
   opacity: .5;
@@ -98,7 +104,6 @@
   color: #{$color-contrast};
 
   --background: #{$color-base};
-  --ripple-color: #{$color-contrast};
 }
 
 
@@ -109,7 +114,6 @@
   color: #{$color-base};
 
   --border-color: #{$color-base};
-  --ripple-color: #{$color-base};
   --background: transparent;
 }
 

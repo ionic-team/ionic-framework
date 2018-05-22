@@ -40,7 +40,7 @@ export class Button {
   /**
    * If true, the user cannot interact with the button. Defaults to `false`.
    */
-  @Prop() disabled = false;
+  @Prop({ reflectToAttr: true }) disabled = false;
 
   /**
    * Set to `"block"` for a full-width button or to `"full"` for a full-width button
