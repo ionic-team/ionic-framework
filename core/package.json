@@ -18,6 +18,7 @@
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
+  "unpkg": "dist/ionic.js",
   "files": [
     "dist/"
   ],
