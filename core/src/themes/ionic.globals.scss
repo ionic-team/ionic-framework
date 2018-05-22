@@ -26,11 +26,11 @@ $hairlines-width: .55px !default;
 /// @prop - The minimum dimensions at which your layout will change,
 /// adapting to different screen sizes, for use in media queries
 $screen-breakpoints: (
-  xs: var(--ion-screen-breakpoint-xs, 0),
-  sm: var(--ion-screen-breakpoint-sm, 576px),
-  md: var(--ion-screen-breakpoint-md, 768px),
-  lg: var(--ion-screen-breakpoint-lg, 992px),
-  xl: var(--ion-screen-breakpoint-xl, 1200px)
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
 ) !default;
 
 
