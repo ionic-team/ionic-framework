@@ -5,6 +5,8 @@
 // --------------------------------------------------
 
 .bar-buttons-md {
+  @include margin(0, 2px);
+
   .button-md {
     font-size: #{$toolbar-md-button-font-size};
     font-weight: 500;
@@ -15,11 +17,23 @@
     --padding-end: 8px;
 
     --border-radius: #{$toolbar-md-button-border-radius};
-    --height: 45px;
+    --height: 32px;
+    --box-shadow: none;
   }
 
- .button-clear {
+  .button-solid,
+  .button-outline {
+    --ion-color-base: #{$toolbar-md-text-color};
+    --ion-color-contrast: #{$toolbar-md-background-color};
+  }
+
+  .button-solid.activated {
+    --box-shadow: none;
+  }
+
+  .button-clear {
     --ion-color-base: currentColor;
+    --height: 45px;
   }
 
   // Material Design Toolbar Button Icon

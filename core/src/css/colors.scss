@@ -1,4 +1,4 @@
-@import "../../themes/ionic.theme.default";
+@import "../themes/ionic.theme.default";
 
 @mixin generate-color($color-name) {
   $value: map-get($colors, $color-name);

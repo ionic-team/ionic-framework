@@ -190,11 +190,8 @@ export class FabList {
 }
 
 export declare interface Footer extends StencilComponents.IonFooter {}
-@Directive({selector: 'ion-footer', inputs: ['translucent']})
+@Directive({selector: 'ion-footer'})
 export class Footer {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['translucent']);
-  }
 }
 
 export declare interface Grid extends StencilComponents.IonGrid {}
@@ -203,11 +200,8 @@ export class Grid {
 }
 
 export declare interface Header extends StencilComponents.IonHeader {}
-@Directive({selector: 'ion-header', inputs: ['translucent']})
+@Directive({selector: 'ion-header'})
 export class Header {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['translucent']);
-  }
 }
 
 export declare interface HideWhen extends StencilComponents.IonHideWhen {}
@@ -485,11 +479,11 @@ export class ReorderGroup {
 }
 
 export declare interface RippleEffect extends StencilComponents.IonRippleEffect {}
-@Directive({selector: 'ion-ripple-effect', inputs: ['tapClick']})
+@Directive({selector: 'ion-ripple-effect', inputs: ['parent', 'tapClick']})
 export class RippleEffect {
   constructor(r: ElementRef) {
     proxyMethods(this, r, ['addRipple']);
-    proxyInputs(this, r, ['tapClick']);
+    proxyInputs(this, r, ['parent', 'tapClick']);
   }
 }
 
@@ -717,9 +711,6 @@ export class Toolbar {
 }
 
 export declare interface ToolbarTitle extends StencilComponents.IonTitle {}
-@Directive({selector: 'ion-title', inputs: ['mode', 'color']})
+@Directive({selector: 'ion-title'})
 export class ToolbarTitle {
-  constructor(r: ElementRef) {
-    proxyInputs(this, r, ['mode', 'color']);
-  }
 }

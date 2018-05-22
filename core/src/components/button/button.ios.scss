@@ -56,17 +56,17 @@
 
 // iOS Solid Button
 
-.button-solid-ios.activated {
-  --background: $button-ios-background-color-activated;
-  --opacity: $button-ios-opacity-activated;
+.button-solid-ios:hover {
+  --opacity: #{$button-ios-opacity-hover};
 }
 
 .button-solid-ios.focused {
-  --background: $button-ios-background-color-focused;
+  --background: #{$color-shade};
 }
 
-.button-solid-ios:hover {
-  --opacity: $button-ios-opacity-hover;
+.button-solid-ios.activated {
+  --background: #{$color-shade};
+  --opacity: #{$button-ios-opacity-activated};
 }
 
 // iOS Outline Button

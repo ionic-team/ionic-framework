@@ -7,9 +7,6 @@ import { createThemedClasses, getElementClassMap, openURL } from '../../utils/th
   styleUrls: {
     ios: 'back-button.ios.scss',
     md: 'back-button.md.scss'
-  },
-  host: {
-    theme: 'back-button'
   }
 })
 export class BackButton {

@@ -37,7 +37,6 @@ exports.config = {
   ],
   outputTargets: [{
     type: 'dist',
-    empty: false
   }],
   copy: [{ src: '**/*.scss' }],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',

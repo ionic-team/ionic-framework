@@ -32,7 +32,7 @@
 
 .toolbar-ios ion-title {
   @include position(0, null, null, 0);
-  @include padding(0, 90px, 1px);
+  @include padding(0, 90px, 0px);
   @include text-align($toolbar-ios-title-text-align);
 
   box-sizing: border-box;
@@ -41,11 +41,10 @@
   width: 100%;
   height: 100%;
 
-  transform: translateZ(0);
-
-  pointer-events: none;
-
   font-size: $toolbar-ios-title-font-size;
   font-weight: $toolbar-ios-title-font-weight;
   letter-spacing: -.03em;
+  transform: translateZ(0);
+
+  pointer-events: none;
 }

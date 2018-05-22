@@ -8,6 +8,7 @@ import { isDevice, isHybrid, needInputShims } from '../../utils/platform';
     ios: 'app.ios.scss',
     md: 'app.md.scss'
   },
+  assetsDir: 'css',
   host: {
     theme: 'app'
   }
