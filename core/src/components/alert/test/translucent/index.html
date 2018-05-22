@@ -5,45 +5,64 @@
   <meta charset="UTF-8">
   <title>Alert - Translucent</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>   <link rel="stylesheet" type="text/css" href="/dist/ionic/css/ionic.min.css">
+  <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/dist/ionic/css/ionic.min.css">
 </head>
 
 <body>
   <ion-app>
 
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Alert - Translucent</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Alert - Translucent</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-      <ion-content padding>
-        <ion-alert-controller></ion-alert-controller>
+    <ion-content padding>
+      <ion-alert-controller></ion-alert-controller>
 
-        <ion-button expand="block" onclick="presentAlert()">Alert</ion-button>
-        <ion-button expand="block" color="secondary" onclick="presentAlertLongMessage()">Alert Long Message</ion-button>
-        <ion-button expand="block" color="danger" onclick="presentAlertMultipleButtons()">Multiple Buttons (>2)</ion-button>
-        <ion-button expand="block" color="light" onclick="presentAlertNoMessage()">Alert No Message</ion-button>
+      <ion-button expand="block" onclick="presentAlert()">Alert</ion-button>
+      <ion-button expand="block" color="secondary" onclick="presentAlertLongMessage()">Alert Long Message</ion-button>
+      <ion-button expand="block" color="danger" onclick="presentAlertMultipleButtons()">Multiple Buttons (>2)</ion-button>
+      <ion-button expand="block" color="light" onclick="presentAlertNoMessage()">Alert No Message</ion-button>
 
-        <ion-grid>
-          <ion-row>
-            <ion-col col-4><f class="red"></f></ion-col>
-            <ion-col col-4><f class="green"></f></ion-col>
-            <ion-col col-4><f class="blue"></f></ion-col>
-            <ion-col col-4><f class="yellow"></f></ion-col>
-            <ion-col col-4><f class="pink"></f></ion-col>
-            <ion-col col-4><f class="purple"></f></ion-col>
-            <ion-col col-4><f class="black"></f></ion-col>
-            <ion-col col-4><f class="fuchsia"></f></ion-col>
-            <ion-col col-4><f class="orange"></f></ion-col>
-          </ion-row>
-        </ion-grid>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-4>
+            <f class="red"></f>
+          </ion-col>
+          <ion-col col-4>
+            <f class="green"></f>
+          </ion-col>
+          <ion-col col-4>
+            <f class="blue"></f>
+          </ion-col>
+          <ion-col col-4>
+            <f class="yellow"></f>
+          </ion-col>
+          <ion-col col-4>
+            <f class="pink"></f>
+          </ion-col>
+          <ion-col col-4>
+            <f class="purple"></f>
+          </ion-col>
+          <ion-col col-4>
+            <f class="black"></f>
+          </ion-col>
+          <ion-col col-4>
+            <f class="fuchsia"></f>
+          </ion-col>
+          <ion-col col-4>
+            <f class="orange"></f>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
-        <ion-button expand="block" color="dark" onclick="presentAlertConfirm()">Confirm</ion-button>
-        <ion-button expand="block" color="primary" onclick="presentAlertPrompt()">Prompt</ion-button>
-        <ion-button expand="block" color="secondary" onclick="presentAlertRadio()">Radio</ion-button>
-        <ion-button expand="block" color="danger" onclick="presentAlertCheckbox()">Checkbox</ion-button>
-      </ion-content>
+      <ion-button expand="block" color="dark" onclick="presentAlertConfirm()">Confirm</ion-button>
+      <ion-button expand="block" color="primary" onclick="presentAlertPrompt()">Prompt</ion-button>
+      <ion-button expand="block" color="secondary" onclick="presentAlertRadio()">Radio</ion-button>
+      <ion-button expand="block" color="danger" onclick="presentAlertCheckbox()">Checkbox</ion-button>
+    </ion-content>
 
   </ion-app>
 
@@ -356,6 +375,8 @@
     .orange {
       background-color: #f69234;
     }
+
   </style>
 </body>
+
 </html>

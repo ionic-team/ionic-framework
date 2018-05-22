@@ -1,15 +1,17 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Simple Nested Navs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>   <link rel="stylesheet" type="text/css" href="/dist/ionic/css/ionic.min.css">
+  <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/dist/ionic/css/ionic.min.css">
   <script>
 
-      class PageOne extends HTMLElement {
-        connectedCallback() {
-          this.innerHTML = `
+    class PageOne extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
 
             <ion-header>
               <ion-toolbar>
@@ -26,20 +28,20 @@
               </ion-nav-push>
             </ion-content>
           `;
-        }
       }
+    }
 
-      class PageTwo extends HTMLElement {
-        connectedCallback() {
-          this.innerHTML = `
+    class PageTwo extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
           <ion-nav root="page-two-section-one"></ion-nav>
           `;
-        }
       }
+    }
 
-      class PageTwoSectionOne extends HTMLElement {
-        connectedCallback() {
-          this.innerHTML = `
+    class PageTwoSectionOne extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
 
             <ion-header>
               <ion-toolbar>
@@ -60,19 +62,19 @@
             </ion-content>
           `;
 
-          const button = this.querySelector('ion-button.previous');
-          button.addEventListener('click', () => {
-            const nav = this.closest('ion-nav');
-            if (nav.parent) {
-              nav.parent.pop();
-            }
-          });
-        }
+        const button = this.querySelector('ion-button.previous');
+        button.addEventListener('click', () => {
+          const nav = this.closest('ion-nav');
+          if (nav.parent) {
+            nav.parent.pop();
+          }
+        });
       }
+    }
 
-      class PageTwoSectionTwo extends HTMLElement {
-        connectedCallback() {
-          this.innerHTML = `
+    class PageTwoSectionTwo extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
 
             <ion-header>
               <ion-toolbar>
@@ -89,12 +91,12 @@
               </ion-nav-push>
             </ion-content>
           `;
-        }
       }
+    }
 
-      class PageThree extends HTMLElement {
-        connectedCallback() {
-          this.innerHTML = `
+    class PageThree extends HTMLElement {
+      connectedCallback() {
+        this.innerHTML = `
 
             <ion-header>
               <ion-toolbar>
@@ -111,20 +113,22 @@
               </ion-nav-pop>
             </ion-content>
           `;
-        }
       }
+    }
 
-      customElements.define('page-one', PageOne);
-      customElements.define('page-two', PageTwo);
-      customElements.define('page-two-section-one', PageTwoSectionOne);
-      customElements.define('page-two-section-two', PageTwoSectionTwo);
-      customElements.define('page-three', PageThree);
+    customElements.define('page-one', PageOne);
+    customElements.define('page-two', PageTwo);
+    customElements.define('page-two-section-one', PageTwoSectionOne);
+    customElements.define('page-two-section-two', PageTwoSectionTwo);
+    customElements.define('page-three', PageThree);
 
-    </script>
+  </script>
 </head>
+
 <body>
   <ion-app>
     <ion-nav root="page-one"></ion-nav>
   </ion-app>
 </body>
+
 </html>

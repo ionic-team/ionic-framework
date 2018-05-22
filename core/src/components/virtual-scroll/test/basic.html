@@ -5,34 +5,33 @@
   <meta charset="UTF-8">
   <title>Ionic Item Sliding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <script src="/dist/ionic.js"></script>   <link rel="stylesheet" type="text/css" href="/dist/ionic/css/ionic.min.css">
+  <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/dist/ionic/css/ionic.min.css">
 </head>
 
 <body>
   <ion-app>
 
 
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Ionic CDN demo</ion-title>
-          <ion-buttons slot="primary">
-            <ion-button onclick="addItems()">Add Items</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-
-      <ion-content>
-        <p>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Ionic CDN demo</ion-title>
+        <ion-buttons slot="primary">
           <ion-button onclick="addItems()">Add Items</ion-button>
-        </p>
-        <ion-virtual-scroll id="virtual"></ion-virtual-scroll>
-        <ion-infinite-scroll threshold="100px" id="infinite-scroll">
-          <ion-infinite-scroll-content
-            loadingSpinner="bubbles"
-            loadingText="Loading more data...">
-          </ion-infinite-scroll-content>
-        </ion-infinite-scroll>
-      </ion-content>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <p>
+        <ion-button onclick="addItems()">Add Items</ion-button>
+      </p>
+      <ion-virtual-scroll id="virtual"></ion-virtual-scroll>
+      <ion-infinite-scroll threshold="100px" id="infinite-scroll">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </ion-content>
 
 
 
@@ -40,11 +39,11 @@
 
   <script>
     const virtual = document.getElementById('virtual');
-    const items = Array.from({length: 100}, (x, i) => i);
+    const items = Array.from({ length: 100 }, (x, i) => i);
 
     function addItems(append) {
-      if(!append) {
-        append = Array.from({length: 10}, (x, i) => "append" + i);
+      if (!append) {
+        append = Array.from({ length: 10 }, (x, i) => "append" + i);
       }
       items.push(...append);
       virtual.markDirtyTail(append.length)
@@ -91,7 +90,7 @@
 
 
     const infiniteScroll = document.getElementById('infinite-scroll');
-    infiniteScroll.addEventListener('ionInfinite', async function() {
+    infiniteScroll.addEventListener('ionInfinite', async function () {
       console.log('Loading data...');
       const data = await getAsyncData();
       infiniteScroll.complete();
@@ -103,11 +102,12 @@
     function getAsyncData() {
       return new Promise(resolve => {
         setTimeout(() => {
-          const data = Array.from({length: 10}, (x, i) => "append" + i);
+          const data = Array.from({ length: 10 }, (x, i) => "append" + i);
           resolve(data);
         }, 500);
       });
     }
   </script>
 </body>
+
 </html>
