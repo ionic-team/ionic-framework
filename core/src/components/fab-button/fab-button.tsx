@@ -78,6 +78,7 @@ export class FabButton {
     const translucentClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'fab-button-translucent') : {};
 
     return {
+      'tappable': '',
       class: {
         ...this.getFabClassMap(),
         ...themedClasses,
@@ -91,14 +92,14 @@ export class FabButton {
 
     return (
       <TagType
-        class="fab-button-container"
+        class="button-container"
         disabled={this.disabled}
         href={this.href}>
         <ion-icon name="close" class="fab-button-close-icon"></ion-icon>
         <span class="fab-button-inner">
           <slot></slot>
         </span>
-        { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+        { this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el}/> }
       </TagType>
     );
   }

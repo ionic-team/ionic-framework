@@ -12,21 +12,23 @@
 }
 
 .fab-button-ios.activated {
-  --background: #{$fab-ios-background-color-activated};
+  --background: #{$color-tint};
   --box-shadow: #{$fab-ios-box-shadow-activated};
 
   --transform: #{$fab-ios-transform};
   --transition: #{$fab-ios-transition-activated};
 }
 
+.fab-button-ios ion-icon {
+  font-size: $fab-ios-icon-font-size;
+}
 
 // FAB buttons in a list
 // --------------------------------------------------
 
 .fab-button-ios-in-list {
-  color: #{$fab-ios-list-button-text-color};
-
-  --background: #{$fab-ios-list-button-background-color};
+  --ion-color-contrast: #{$fab-ios-list-button-text-color};
+  --ion-color-base: #{$fab-ios-list-button-background-color};
   --transition: #{transform $fab-ios-list-button-transition-duration $fab-ios-list-button-transition-timing-function $fab-ios-list-button-transition-delay,
               opacity $fab-ios-list-button-transition-duration $fab-ios-list-button-transition-timing-function $fab-ios-list-button-transition-delay};
 }

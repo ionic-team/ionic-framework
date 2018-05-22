@@ -49,7 +49,7 @@ $fab-ios-list-button-translucent-background-color-alpha:      .8 !default;
 $fab-ios-list-button-translucent-background-color:            rgba(var(--ion-background-color-rgb, $background-color-rgb), $fab-ios-list-button-translucent-background-color-alpha) !default;
 
 /// @prop - Text color of the button in a list
-$fab-ios-list-button-text-color:                              get-color(primary, contrast) !default;
+$fab-ios-list-button-text-color:                              get-color(light, contrast) !default;
 
 /// @prop - Color of the button icon in a list
 $fab-ios-list-button-icon-fill-color:                         $fab-ios-list-button-text-color !default;

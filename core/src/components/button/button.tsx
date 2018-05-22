@@ -122,18 +122,18 @@ export class Button {
 
   hostData() {
     const { buttonType, color, expand, fill, mode, shape, size, strong } = this;
-    const buttonClasses = {
-      ...getButtonClassMap(buttonType, mode),
-      ...getButtonTypeClassMap(buttonType, expand, mode),
-      ...getButtonTypeClassMap(buttonType, size, mode),
-      ...getButtonTypeClassMap(buttonType, shape, mode),
-      ...getButtonTypeClassMap(buttonType, strong ? 'strong' : undefined, mode),
-      ...getColorClassMap(buttonType, color, fill, mode),
-      ...getElementClassMap(this.el.classList),
-      'focused': this.keyFocus,
-    };
+
     return {
-      class: buttonClasses
+      class: {
+        ...getButtonClassMap(buttonType, mode),
+        ...getButtonTypeClassMap(buttonType, expand, mode),
+        ...getButtonTypeClassMap(buttonType, size, mode),
+        ...getButtonTypeClassMap(buttonType, shape, mode),
+        ...getButtonTypeClassMap(buttonType, strong ? 'strong' : undefined, mode),
+        ...getColorClassMap(buttonType, color, fill, mode),
+        ...getElementClassMap(this.el.classList),
+        'focused': this.keyFocus,
+      }
     };
   }
 

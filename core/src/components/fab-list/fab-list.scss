@@ -22,14 +22,23 @@ ion-fab-list {
 }
 
 .fab-button-in-list {
-  @include margin(8px, 0);
-
-  width: $fab-mini-size;
-  height: $fab-mini-size;
-
   opacity: 0;
   visibility: hidden;
   transform: scale(0);
+
+  --size: #{$fab-mini-size};
+}
+
+.fab-list-side-top .fab-button-in-list,
+.fab-list-side-bottom .fab-button-in-list {
+  --padding-top: 5px;
+  --padding-bottom: 5px;
+}
+
+.fab-list-side-start .fab-button-in-list,
+.fab-list-side-end .fab-button-in-list {
+  --padding-start: 5px;
+  --padding-end: 5px;
 }
 
 .fab-button-in-list.fab-button-show {
@@ -38,10 +47,6 @@ ion-fab-list {
   transform: scale(1);
 }
 
-.fab-list-side-start .fab-button-in-list,
-.fab-list-side-end .fab-button-in-list {
-  @include margin(0, 8px);
-}
 
 .fab-list-side-top {
   top: auto;

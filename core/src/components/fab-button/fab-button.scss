@@ -16,13 +16,24 @@ ion-fab-button {
   --size: #{$fab-size};
   --background: #{$color-base};
   --transition: background-color, opacity 100ms linear;
+
+  --padding-start: calc((#{$fab-size} - var(--size)) / 2);
+  --padding-end: calc((#{$fab-size} - var(--size)) / 2);
+  --padding-top: calc((#{$fab-size} - var(--size)) / 2);
+  --padding-bottom: calc((#{$fab-size} - var(--size)) / 2);
 }
 
 ion-fab-button.activated {
   --background: #{$color-tint};
 }
 
-.fab-button-container {
+.button-container {
+  @include margin(
+    var(--padding-top),
+    var(--padding-end),
+    var(--padding-bottom),
+    var(--padding-start)
+  );
   @include text-align(center);
   @include appearance(none);
   @include border-radius(50%);
@@ -83,9 +94,7 @@ ion-fab-button.activated {
 // FAB Mini
 // --------------------------------------------------
 
-ion-fab-button[mini] .fab-button {
-  @include margin(($fab-size - $fab-mini-size) / 2);
-
+ion-fab-button[mini] {
   --size: #{$fab-mini-size};
 }
 

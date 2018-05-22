@@ -67,6 +67,7 @@
 
 .button-solid-md.activated {
   --box-shadow: #{$button-md-box-shadow-activated};
+  --background: #{$color-shade};
 }
 
 // Material Design Outline Button

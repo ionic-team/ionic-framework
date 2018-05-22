@@ -21,9 +21,8 @@
 // --------------------------------------------------
 
 .fab-button-md-in-list {
-  color: $fab-md-list-button-text-color;
-
-  --background: #{$fab-md-list-button-background-color};
+  --ion-color-contrast: #{$fab-md-list-button-text-color};
+  --ion-color-base: #{$fab-md-list-button-background-color};
   --transition: #{transform $fab-md-list-button-transition-duration $fab-md-list-button-transition-timing-function $fab-md-list-button-transition-delay,
               opacity $fab-md-list-button-transition-duration $fab-md-list-button-transition-timing-function $fab-md-list-button-transition-delay,
               box-shadow $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
