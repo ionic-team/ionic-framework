@@ -44,7 +44,7 @@
     "yargs": "^10.0.3"
   },
   "scripts": {
-    "build": "npm run clean && npm run build-css && stencil build --docs",
+    "build": "npm run clean && npm run build.css && stencil build --docs",
     "build.css": "npm run css.sass && npm run css.clean",
     "build.debug": "npm run clean && stencil build --debug",
     "build.docs.json": "stencil build --docs-json dist/docs.json",
@@ -53,8 +53,8 @@
     "css.clean": "cleancss -O2 -o ./src/components/app/css/ionic.min.css ./src/components/app/css/ionic.css",
     "css.sass": "node-sass --output src/components/app/css src/css",
     "watch": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server\"",
-    "dev": "npm run build-css && npm run watch",
-    "dev-prod": "npm run build-css && npm run watch --prod",
+    "dev": "npm run build.css && npm run watch",
+    "dev-prod": "npm run build.css && npm run watch --prod",
     "e2e": "node ./scripts/e2e",
     "e2e-debug": "node --inspect --debug-brk ./scripts/e2e",
     "lint": "npm run lint.ts && npm run lint.sass",
