@@ -1,41 +1,14 @@
 $css-variable-prefix: "--ion-" !default;
 $default-color-variation: base !default;
 $default-color-prefix: color- !default;
-$enable-css-variables: true !default;
-$modes: (ios, md) !default;
-
-// Private
-$css-variables: ();
-
-@function remove-nth($list, $index) {
-  $result: null;
-
-  @if type-of($index) != number {
-    @warn "$index: #{quote($index)} is not a number for `remove-nth`.";
-  } @else if $index == 0 {
-    @warn "List index 0 must be a non-zero integer for `remove-nth`.";
-  } @else if abs($index) > length($list) {
-    @warn "List index is #{$index} but list is only #{length($list)} item long for `remove-nth`.";
-  } @else {
-    $result: ();
-    $index: if($index < 0, length($list) + $index + 1, $index);
-
-    @for $i from 1 through length($list) {
-      @if $i != $index {
-        $result: append($result, nth($list, $i));
-      }
-    }
-  }
-
-  @return $result;
-}
 
 
 // Gets the active color's css variable from a variation. Alpha is optional.
-// ------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------
 // Example usage:
 // current-color(base) => var(--ion-color-base)
 // current-color(contrast, 0.1) => rgba(var(--ion-color-contrast-rgb), 0.1)
+// --------------------------------------------------------------------------------------------
 @function current-color($variation, $alpha: null) {
   @if $alpha == null {
     @return var(--ion-color-#{$variation});
@@ -45,13 +18,13 @@ $css-variables: ();
 }
 
 // Gets the specific color's css variable from the name and variation. Alpha/rgb are optional.
-// ------------------------------------------------------------------------------------------------
+// --------------------------------------------------------------------------------------------
 // Example usage:
 // ion-color(primary, base) => var(--ion-color-primary, #3880ff)
 // ion-color(secondary, contrast) => var(--ion-color-secondary-contrast)
 // ion-color(primary, base, 0.5) => rgba(var(--ion-color-primary-rgb, 56, 128, 255), 0.5)
+// --------------------------------------------------------------------------------------------
 @function ion-color($name, $variation, $alpha: null, $rgb: null) {
-
   $values: map-get($colors, $name);
   $value: map-get($values, $variation);
   $variable: --ion-color-#{$name}-#{$variation};
@@ -72,144 +45,20 @@ $css-variables: ();
   @return var(#{$variable}, $value);
 }
 
+// Mixes a color with black to create its shade.
+// --------------------------------------------------------------------------------------------
 @function get-color-shade($color) {
   @return mix(#000, $color, 12%);
 }
 
+// Mixes a color with white to create its tint.
+// --------------------------------------------------------------------------------------------
 @function get-color-tint($color) {
   @return mix(#fff, $color, 10%);
 }
 
-@function get-mode($name) {
-  @each $mode in $modes {
-    @if (str-contains($name, "-#{$mode}-") or (str-index($name, "#{$mode}-") == 1)) {
-      @return $mode;
-    }
-  }
-
-  @return null;
-}
-
-// Parses a color into its name/variation pairs from the color map
-@function color-to-name-variation($colors, $color, $variation: null) {
-  $results: ();
-  $found: false;
-  @each $color-name, $color-value in $colors {
-    @if (not $found and type-of($color-value) == map) {
-      @each $color-variation-name, $color-variation-value in $color-value {
-        @if ($color == $color-variation-value) {
-          $variation: if($variation == $color-variation-name, $default-color-variation, $variation);
-          @if ($variation) {
-            $results: map-merge($results, (variation: $variation));
-          }
-          $results: map-merge($results, (name: $color-name));
-          $found: true;
-        }
-      }
-    } @else if (not $found and $color == $color-value) {
-      $results: map-merge($results, (name: $color-name));
-      $found: true;
-    }
-  }
-
-  @return $results;
-}
-
+// Converts a color to a comma separated rgb.
+// --------------------------------------------------------------------------------------------
 @function color-to-rgb-list($color) {
   @return #{red($color)},#{green($color)},#{blue($color)};
 }
-
-// Parses a css variable string into its original name/variation pair
-@function css-variable-to-name-variation($variable) {
-  // Determine the name of this color from the CSS Variable
-  $prefix: #{$css-variable-prefix}#{$default-color-prefix};
-  // Extract the last css variable
-  $index: str-index($variable, $prefix);
-  $end-index: str-index($variable, ")");
-  $value: str-slice($variable, $index, $end-index);
-
-  // Find the name of the variable
-  $end-index: str-index($value, ",");
-  $name: str-slice($value, str-length($prefix) + 1, $end-index - 1);
-
-  // Default variation (base)
-  $variation: $default-color-variation;
-
-  // Check for a mode (-md-or -ios-)
-  $mode: get-mode($name);
-
-  // Determine if this CSS variable is itself a variation (e.g. primary-contrast)
-  $extracted: str-split($name, "-");
-
-  // If this color already has a mode prefix, remove it
-  @if ($mode != null) {
-    $extracted: remove-nth($extracted, 1);
-  }
-
-  @if (length($extracted) > 0) {
-    $name: nth($extracted, 1);
-  }
-
-  @if (length($extracted) > 1) {
-    $variation: nth($extracted, 2);
-  }
-
-  @return (name: $name, variation: $variation, mode: $mode);
-}
-
-// TODO remove
-// Creates a css variable from a value/alpha combination. alpha is optional. css-var aids in 3 main ways
-// first is alpha generation
-// -- when given alpha it will convert the value to a RGBList and create a css variable name with the suffix '-rgb'
-// second is mode fallbacks
-// -- when given a name that contains a mode (-ios- or -md-) it will create the proper fallback scheme for non mode variables
-// -- for example when given text-ios-color the variable will result in var(text-ios-color, var(text-color, $value));
-// third is when css variables are disabled
-// -- provides a bottleneck method to return all colors as normal colors (with alpha transforms)
-// @function css-var($value, $name, $alpha: null) {
-//   @if ($enable-css-variables) {
-//     $is-reference: str-contains($value, $css-variable-prefix);
-//     $global-css-variable: #{$css-variable-prefix}#{$name};
-//     $mode: get-mode($name);
-//     $result: null;
-
-//     @if ($alpha and $is-reference) {
-//       @error "css-var error alpha (#{$alpha}) cannot be used with references. When trying to set '#{$name}', '#{$value}' was a reference.";
-//     }
-
-//     @if ($alpha) {
-//       $global-css-variable: "#{$global-css-variable}-rgb";
-//       $value: color-to-rgb-list($value);
-//     }
-
-//     @if ($mode != null) {
-//       $mode-css-variable: $global-css-variable;
-//       $mode: "-#{$mode}-";
-//       $global-css-variable: str-replace($mode-css-variable, $mode, "-");
-
-//       $css-variables: map-merge($css-variables, ($mode-css-variable: $value)) !global;
-
-//       $fallback: "var(#{$global-css-variable}, #{$value})";
-//       @if $is-reference {
-//         $fallback: "#{$value}";
-//       }
-
-//       $result: "var(#{$mode-css-variable}, #{$fallback})";
-//     } @else {
-//       $css-variables: map-merge($css-variables, ($global-css-variable: $value)) !global;
-//       $result: "var(#{$global-css-variable}, #{$value})";
-//     }
-
-//     @if $alpha {
-//       $result: "rgba(#{$result}, #{$alpha})";
-//     }
-//     @return unquote($result);
-//   } @else {
-//     @if ($alpha) {
-//       $value: color-to-rgb-list($value);
-//       @return unquote("rgba(#{$value}, #{$alpha})");
-//     } @else {
-//       @return $value;
-//     }
-//   }
-// }
