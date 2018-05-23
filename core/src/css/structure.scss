@@ -43,3 +43,7 @@ body {
   text-size-adjust: none;
   user-select: none;
 }
+
+[hidden] {
+  display: none !important;
+}

@@ -5,6 +5,10 @@
 // --------------------------------------------------
 
 .back-button-ios {
+  --ion-color-base: #{$back-button-ios-color};
+}
+
+.back-button-ios > .button-container {
   @include padding(0);
   @include margin(0, 0, 0, 0);
 
@@ -17,7 +21,6 @@
   font-size: 17px;
   line-height: 1;
 
-  color: $back-button-ios-color;
   background-color: transparent;
 
   transform: translateZ(0);
@@ -36,16 +39,4 @@
   font-size: 1.85em;
 
   pointer-events: none;
-}
-
-
-// Generate iOS Back Button Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $base-color: get-color($color-name, base);
-
-  .back-button-ios-#{$color-name} {
-    color: $base-color;
-  }
 }

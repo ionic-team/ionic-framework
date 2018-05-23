@@ -47,6 +47,8 @@ ion-fab-button.activated {
   height: var(--size);
 
   border: 0;
+  font-size: inherit;
+  font-weight: inherit;
   color: inherit;
   line-height: var(--size);
   text-overflow: ellipsis;

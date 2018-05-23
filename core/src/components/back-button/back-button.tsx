@@ -1,6 +1,6 @@
 import { Component, Element, Prop } from '@stencil/core';
 import { Color, Config, Mode } from '../../interface';
-import { createThemedClasses, getElementClassMap, openURL } from '../../utils/theme';
+import { createThemedClasses, openURL } from '../../utils/theme';
 
 @Component({
   tag: 'ion-back-button',
@@ -59,6 +59,7 @@ export class BackButton {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, this.color, 'back-button'),
         'show-back-button': !!this.defaultHref
       }
     };
@@ -67,16 +68,10 @@ export class BackButton {
   render() {
     const backButtonIcon = this.icon || this.config.get('backButtonIcon', 'arrow-back');
     const backButtonText = this.text != null ? this.text : this.config.get('backButtonText', 'Back');
-    const themedClasses = createThemedClasses(this.mode, this.color, 'back-button');
-
-    const backButtonClasses = {
-      ...themedClasses,
-      ...getElementClassMap(this.el.classList),
-    };
 
     return (
       <button
-        class={backButtonClasses}
+        class="button-container"
         onClick={(ev) => this.onClick(ev)}>
         <span class="back-button-inner">
           { backButtonIcon && <ion-icon icon={backButtonIcon}/> }

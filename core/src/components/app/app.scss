@@ -30,6 +30,10 @@ ion-app,
   opacity: 0;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 // TODO: move to somewhere else
 
 $navigation-ios-transition-background: #000 !default;

@@ -8,6 +8,7 @@
 
   .button {
     font-size: #{$toolbar-ios-button-font-size};
+    font-weight: 400;
 
     --padding-top: 0;
     --pading-bottom: 0;
@@ -20,8 +21,6 @@
   }
 
   .button-clear {
-    font-weight: 400;
-
     --height: 35px;
   }
 
@@ -107,7 +106,8 @@
   }
 }
 
-ion-toolbar.ion-color .bar-buttons-ios .button-clear {
+ion-toolbar.ion-color .bar-buttons-ios .button-clear,
+ion-toolbar.ion-color .bar-buttons-ios .back-button {
   --ion-color-base: currentColor;
 }
 

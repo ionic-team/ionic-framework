@@ -5,6 +5,10 @@
 // --------------------------------------------------
 
 .back-button-md {
+  --ion-color-base: currentColor;
+}
+
+.back-button-md > .button-container {
   @include margin(1px, 6px, 0, 0);
   @include padding(0, 5px);
 
@@ -19,8 +23,6 @@
   background-color: transparent;
 
   box-shadow: none;
-
-  --ion-color-base: currentColor;
 
   &.activated {
     opacity: .4;

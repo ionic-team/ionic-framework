@@ -5,6 +5,8 @@
 
 .back-button {
   display: none;
+
+  color: #{ion-color(base)};
 }
 
 .can-go-back > ion-header .back-button,
@@ -12,7 +14,7 @@
   display: inline-block;
 }
 
-.back-button button {
+.back-button .button-container {
   @include font-smoothing();
   @include text-align(center);
   @include appearance(none);
@@ -35,8 +37,8 @@
   text-decoration: none;
   text-overflow: ellipsis;
   text-transform: none;
-
   white-space: nowrap;
+  color: inherit;
   cursor: pointer;
 
   vertical-align: top; // the better option for most scenarios

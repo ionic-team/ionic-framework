@@ -12,7 +12,7 @@ ion-ripple-effect {
 
   contain: strict;
 
-  --color: $ripple-background-color;
+  --color: #{$ripple-background-color};
 }
 
 .ripple-effect {

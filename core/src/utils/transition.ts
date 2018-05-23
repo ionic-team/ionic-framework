@@ -143,25 +143,16 @@ function shallowReady(el: Element|undefined): Promise<any> {
   return Promise.resolve();
 }
 
-function deepReady(el: Element|undefined): Promise<any> {
-  if (!el) {
-    return Promise.resolve();
-  }
-  if (customElements.get) {
-    if (customElements.get(el.tagName.toLowerCase())) {
-      return componentOnReady(el);
-    } else {
-      return Promise.all(Array.from(el.children).map(deepReady));
+async function deepReady(el: Element|undefined): Promise<void> {
+  const element = el as HTMLStencilElement;
+  if (element) {
+    if (element.componentOnReady) {
+      const stencilEl = await element.componentOnReady();
+      if (stencilEl) {
+        return;
+      }
     }
-  }
-  return componentOnReady(el);
-}
-
-function componentOnReady(el: Element) {
-  if ((el as any).componentOnReady) {
-    return (el as any).componentOnReady();
-  } else {
-    return Promise.all(Array.from(el.children).map(deepReady));
+    await Promise.all(Array.from(element.children).map(deepReady));
   }
 }
 
