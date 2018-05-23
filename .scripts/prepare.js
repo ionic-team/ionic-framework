@@ -249,7 +249,7 @@ function updatePackageVersion(tasks, package, version) {
         const pkgLockData = JSON.parse(fs.readFileSync(pkgLock, 'utf-8'));
         pkgLockData.version = version;
 
-        fs.writeFileSync(pkgLock, JSON.stringify(pkgLockData));
+        fs.writeFileSync(pkgLock, JSON.stringify(pkgLockData, null, 2));
       }
     }
   );
