@@ -94,7 +94,7 @@ $action-sheet-ios-button-height:                        56px !default;
 $action-sheet-ios-button-padding:                       18px !default;
 
 /// @prop - Text color of the action sheet button
-$action-sheet-ios-button-text-color:                    get-color(primary, base) !default;
+$action-sheet-ios-button-text-color:                    ion-color(primary, base) !default;
 
 /// @prop - Font size of the action sheet button icon
 $action-sheet-ios-button-icon-font-size:                1.4em !default;
@@ -136,7 +136,7 @@ $action-sheet-ios-button-background-activated:          rgba(var(--ion-text-colo
 $action-sheet-ios-button-background-selected:           $background-color !default;
 
 /// @prop - Destructive text color of the action sheet button
-$action-sheet-ios-button-destructive-text-color:        get-color(danger, base) !default;
+$action-sheet-ios-button-destructive-text-color:        ion-color(danger, base) !default;
 
 /// @prop - Background color of the action sheet cancel button
 $action-sheet-ios-button-cancel-background:             $background-color !default;

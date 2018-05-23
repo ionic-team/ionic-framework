@@ -23,3 +23,9 @@ $badge-font-size:                 13px !default;
 
 /// @prop - Font weight of the badge
 $badge-font-weight:               bold !default;
+
+/// @prop - Background color of the badge
+$badge-background-color:          ion-color(primary, base) !default;
+
+/// @prop - Text color of the badge
+$badge-text-color:                ion-color(primary, contrast) !default;

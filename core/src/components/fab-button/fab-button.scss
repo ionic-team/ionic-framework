@@ -6,15 +6,15 @@
 
 ion-fab-button {
   font-size: 14px;
-  color: #{ion-color(contrast)};
+  color: #{current-color(contrast)};
 
   // default values
-  --ion-color-base: #{get-color(primary, base)};
-  --ion-color-contrast: #{get-color(primary, contrast)};
-  --ion-color-tint: #{get-color(primary, tint)};
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
+  --ion-color-tint: #{ion-color(primary, tint)};
 
   --size: #{$fab-size};
-  --background: #{ion-color(base)};
+  --background: #{current-color(base)};
   --transition: background-color, opacity 100ms linear;
 
   --padding-start: calc((#{$fab-size} - var(--size)) / 2);
@@ -24,7 +24,7 @@ ion-fab-button {
 }
 
 ion-fab-button.activated {
-  --background: #{ion-color(tint)};
+  --background: #{current-color(tint)};
 }
 
 .fab-button-container {

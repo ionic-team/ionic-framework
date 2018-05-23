@@ -8,14 +8,14 @@ ion-checkbox {
   position: relative;
   display: inline-block;
 
-  --ion-color-base: #{get-color(primary, base)};
-  --ion-color-contrast: #{get-color(primary, contrast)};
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
 
   --background: var(--unchecked-backgroud);
   --border-color: var(--unchecked-border-color);
 
-  --checked-border-color: #{ion-color(base)};
-  --checked-background: #{ion-color(base)};
+  --checked-border-color: #{current-color(base)};
+  --checked-background: #{current-color(base)};
 }
 
 ion-checkbox input {
@@ -60,7 +60,7 @@ ion-checkbox input {
 }
 
 .checkbox .checkbox-inner {
-  border-color: #{ion-color(contrast)};
+  border-color: #{current-color(contrast)};
   opacity: 0;
 }
 

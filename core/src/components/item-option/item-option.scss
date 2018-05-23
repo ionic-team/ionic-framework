@@ -15,8 +15,8 @@
   color: inherit;
   background: none;
 
-  color: #{ion-color(contrast)};
-  background-color: #{ion-color(base)};
+  color: #{current-color(contrast)};
+  background-color: #{current-color(base)};
 
   &:active,
   &:focus {

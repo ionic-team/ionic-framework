@@ -4,16 +4,16 @@
 // --------------------------------------------------
 
 /// @prop - Background color of the chip button
-$chip-button-md-background-color:          get-color(primary, base) !default;
+$chip-button-md-background-color:          ion-color(primary, base) !default;
 
 /// @prop - Text color of the chip button
-$chip-button-md-text-color:                get-color(primary, contrast) !default;
+$chip-button-md-text-color:                ion-color(primary, contrast) !default;
 
 /// @prop - Background color of the clear chip button
 $chip-button-md-clear-background-color:    transparent !default;
 
 /// @prop - Text color of the clear chip button
-$chip-button-md-clear-text-color:          get-color(primary, base) !default;
+$chip-button-md-clear-text-color:          ion-color(primary, base) !default;
 
 /// @prop - Fill color of the icon in the clear chip button
-$chip-button-md-clear-icon-fill-color:     get-color(primary, base) !default;
+$chip-button-md-clear-icon-fill-color:     ion-color(primary, base) !default;

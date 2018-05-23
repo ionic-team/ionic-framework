@@ -22,7 +22,7 @@ $searchbar-ios-font-family:                       $font-family-ios-base !default
 $searchbar-ios-cancel-button-font-size:           16px !default;
 
 /// @prop - Color of the searchbar cancel button
-$searchbar-ios-cancel-button-color:               get-color(primary, base) !default;
+$searchbar-ios-cancel-button-color:               ion-color(primary, base) !default;
 
 /// @prop - Background color of the searchbar cancel button
 $searchbar-ios-cancel-button-background-color:    transparent !default;

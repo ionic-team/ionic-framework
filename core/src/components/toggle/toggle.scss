@@ -12,8 +12,8 @@ ion-toggle {
   touch-action: none;
   user-select: none;
 
-  --ion-color-base: #{get-color(primary, base)};
-  --ion-color-base-rgb: #{get-color(primary, base, null, true)};
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-base-rgb: #{ion-color(primary, base, null, true)};
 }
 
 ion-toggle ion-gesture {

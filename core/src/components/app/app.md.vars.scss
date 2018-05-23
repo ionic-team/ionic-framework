@@ -7,7 +7,7 @@
 // --------------------------------------------------
 
 /// @prop - Color for links for the app
-$app-md-link-color:             get-color(primary, base) !default;
+$app-md-link-color:             ion-color(primary, base) !default;
 
 /// @prop - Statusbar padding for the app
 $app-md-statusbar-padding:       20px !default;

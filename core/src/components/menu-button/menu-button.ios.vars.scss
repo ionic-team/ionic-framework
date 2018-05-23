@@ -7,4 +7,4 @@
 $menu-button-ios-button-z-index:      $z-index-toolbar-buttons !default;
 
 /// @prop - Text color of the Menu button
-$menu-button-ios-color:               get-color(primary, base) !default;
+$menu-button-ios-color:               ion-color(primary, base) !default;

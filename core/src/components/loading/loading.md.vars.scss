@@ -43,7 +43,7 @@ $loading-md-box-shadow-color:          rgba(0, 0, 0, .4) !default;
 $loading-md-box-shadow:                0 16px 20px $loading-md-box-shadow-color !default;
 
 /// @prop - Color of the loading spinner
-$loading-md-spinner-color:             get-color(primary, base) !default;
+$loading-md-spinner-color:             ion-color(primary, base) !default;
 
 /// @prop - Color of the lines loading spinner
 $loading-md-spinner-lines-color:       $loading-md-spinner-color !default;

@@ -157,10 +157,10 @@
 // Generate Default Search Bar Colors
 // --------------------------------------------------
 @each $color-name, $color-value in $colors-ios {
-  $color-base: get-color($color-name, base);
-  $color-contrast: get-color($color-name, contrast);
-  $color-contrast-alpha: get-color($color-name, contrast, $searchbar-ios-input-background-color-alpha);
-  $color-tint: get-color($color-name, tint);
+  $color-base: ion-color($color-name, base);
+  $color-contrast: ion-color($color-name, contrast);
+  $color-contrast-alpha: ion-color($color-name, contrast, $searchbar-ios-input-background-color-alpha);
+  $color-tint: ion-color($color-name, tint);
 
   .searchbar-ios-#{$color-name} .searchbar-cancel-button-ios {
     color: $color-base;

@@ -105,7 +105,7 @@ $alert-md-input-border-width-focused:         2px !default;
 $alert-md-input-border-style-focused:         $alert-md-input-border-style !default;
 
 /// @prop - Border color of the alert input when focused
-$alert-md-input-border-color-focused:         get-color(primary, base) !default;
+$alert-md-input-border-color-focused:         ion-color(primary, base) !default;
 
 /// @prop - Margin top of the alert input
 $alert-md-input-margin-top:                   5px !default;
@@ -168,7 +168,7 @@ $alert-md-button-margin-start:                0 !default;
 $alert-md-button-font-weight:                 500 !default;
 
 /// @prop - Text color of the alert button
-$alert-md-button-text-color:                  get-color(primary, base) !default;
+$alert-md-button-text-color:                  ion-color(primary, base) !default;
 
 /// @prop - Background color of the alert button
 $alert-md-button-background-color:            transparent !default;
@@ -309,7 +309,7 @@ $alert-md-checkbox-icon-border-width:         2px !default;
 $alert-md-checkbox-icon-border-style:         solid !default;
 
 /// @prop - Border color of the icon in the checkbox alert
-$alert-md-checkbox-icon-border-color:         get-color(primary, contrast) !default;
+$alert-md-checkbox-icon-border-color:         ion-color(primary, contrast) !default;
 
 /// @prop - Transform of the icon in the checkbox alert
 $alert-md-checkbox-icon-transform:            rotate(45deg) !default;

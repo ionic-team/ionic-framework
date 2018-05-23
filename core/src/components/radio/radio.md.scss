@@ -124,7 +124,7 @@
 // --------------------------------------------------
 
 @mixin radio-theme-md($color-name) {
-  $color-base: get-color($color-name, base);
+  $color-base: ion-color($color-name, base);
 
   .item-radio-md-#{$color-name}.item-radio-checked ion-label {
     color: $color-base;

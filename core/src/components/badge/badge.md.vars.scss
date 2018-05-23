@@ -8,9 +8,3 @@ $badge-md-border-radius:            4px !default;
 
 /// @prop - Font family of the badge
 $badge-md-font-family:              $font-family-md-base !default;
-
-/// @prop - Background color of the badge
-$badge-md-background-color:         get-color(primary, base) !default;
-
-/// @prop - Text color of the badge
-$badge-md-text-color:               get-color(primary, contrast) !default;

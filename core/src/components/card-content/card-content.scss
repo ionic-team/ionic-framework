@@ -7,7 +7,7 @@ ion-card-content {
   position: relative;
   display: block;
 
-  color: #{ion-color(base)};
+  color: #{current-color(base)};
 
   --ion-color-base: currentColor;
   --ion-card-text: currentColor;

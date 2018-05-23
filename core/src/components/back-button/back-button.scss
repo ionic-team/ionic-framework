@@ -6,7 +6,7 @@
 .back-button {
   display: none;
 
-  color: #{ion-color(base)};
+  color: #{current-color(base)};
 }
 
 .can-go-back > ion-header .back-button,

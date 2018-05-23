@@ -137,7 +137,7 @@
 // --------------------------------------------------
 
 @each $color-name, $color-value in $colors-ios {
-  $color-base: get-color($color-name, base);
+  $color-base: ion-color($color-name, base);
 
   .range-ios-#{$color-name} {
     .range-bar-active,

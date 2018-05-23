@@ -38,8 +38,8 @@
 // --------------------------------------------------
 
 @each $color-name, $color-value in $colors-md {
-  $color-base: get-color($color-name, base);
-  $color-contrast: get-color($color-name, contrast);
+  $color-base: ion-color($color-name, base);
+  $color-contrast: ion-color($color-name, contrast);
 
   .chip-md-#{$color-name} {
     color: $color-contrast;
