@@ -20,14 +20,14 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
-    "build": "npm run clean && npm run compile && npm run clean-generated && npm run ionic-core",
-    "build.dev": "npm run clean && npm run compile && npm run clean-generated && npm run ionic-core-dev",
+    "build": "npm run clean && npm run compile && npm run clean-generated && npm run build.core",
+    "build.dev": "npm run clean && npm run compile && npm run clean-generated && npm run build.core.dev",
+    "build.core": "node scripts/build-core.js",
+    "build.core.dev": "node scripts/build-core.js --dev",
     "build.link": "npm run build && node scripts/link-copy.js",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
     "compile": "./node_modules/.bin/ngc",
-    "ionic-core": "sh ./scripts/build-ionic.sh",
-    "ionic-core-dev": "stencil build --dev",
     "lint": "tslint --project .",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
     "test": "echo 'angular no tests yet'",
