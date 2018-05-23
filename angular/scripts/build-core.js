@@ -16,7 +16,7 @@ function buildIonicAngular() {
 
   console.log(cmd, args.join(' '));
 
-  const p = spawn('stencil', args, { cwd: stencilPath, stdio: 'inherit' });
+  const p = spawn('./stencil', args, { cwd: stencilPath, stdio: 'inherit' });
   p.on('close', (code) => {
     if (code > 0) {
       console.log(`@ionic/angular build exited with ${code}`);
@@ -35,7 +35,7 @@ function buildIonicCore() {
 
   console.log(cmd, args.join(' '));
 
-  const p = spawn('stencil', args, { cwd: stencilPath, stdio: 'inherit' });
+  const p = spawn('./stencil', args, { cwd: stencilPath, stdio: 'inherit' });
   p.on('close', (code) => {
     if (code > 0) {
       console.log(`@ionic/core build exited with ${code}`);
