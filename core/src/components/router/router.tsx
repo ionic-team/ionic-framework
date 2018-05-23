@@ -160,9 +160,9 @@ export class Router {
     const redirect = routeRedirect(path, redirects);
     let redirectFrom: string[]|null = null;
     if (redirect) {
-      this.setPath(redirect.to, intent);
+      this.setPath(redirect.to!, intent);
       redirectFrom = redirect.from;
-      path = redirect.to;
+      path = redirect.to!;
     }
 
     // lookup route chain
