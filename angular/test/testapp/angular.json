@@ -20,7 +20,12 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*.svg",
+                "input": "../../dist/ionic/svg",
+                "output": "./svg"
+               }
             ],
             "styles": [
               "src/styles.css"
