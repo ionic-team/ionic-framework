@@ -8,7 +8,7 @@
   --ion-color-base: currentColor;
 }
 
-.back-button-md > .button-container {
+.back-button-md > .back-button-native {
   @include margin(1px, 6px, 0, 0);
   @include padding(0, 5px);
 

@@ -27,7 +27,7 @@ ion-fab-button.activated {
   --background: #{ion-color(tint)};
 }
 
-.button-container {
+.fab-button-container {
   @include margin(
     var(--padding-top),
     var(--padding-end),
@@ -49,19 +49,20 @@ ion-fab-button.activated {
   border: 0;
   font-size: inherit;
   font-weight: inherit;
-  color: inherit;
   line-height: var(--size);
   text-overflow: ellipsis;
   text-transform: none;
   white-space: nowrap;
+  color: inherit;
+  background: var(--background);
+  box-shadow: var(--box-shadow);
   cursor: pointer;
+  transform: var(--transform);
   transition: var(--transition);
 
-  background: var(--background);
   background-clip: padding-box;
-  box-shadow: var(--box-shadow);
+
   font-kerning: none;
-  transform: var(--transform);
   user-select: none;
 
   contain: strict;

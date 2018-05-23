@@ -253,6 +253,11 @@ export class Nav implements NavOutlet {
   }
 
   @Method()
+  isAnimating() {
+    return this.isTransitioning;
+  }
+
+  @Method()
   length() {
     return this.views.length;
   }

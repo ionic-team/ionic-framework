@@ -93,6 +93,9 @@ boolean
 #### insertPages()
 
 
+#### isAnimating()
+
+
 #### length()
 
 

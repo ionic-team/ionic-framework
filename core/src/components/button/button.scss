@@ -12,7 +12,7 @@
   --ripple-color: currentColor;
 }
 
-.button > .button-container {
+.button-native {
   @include font-smoothing();
   @include text-align(center);
   @include appearance(none);
@@ -70,7 +70,7 @@
   pointer-events: none;
 }
 
-.button > .button-container[disabled] {
+.button-native[disabled] {
   cursor: default;
   opacity: .5;
 
@@ -81,8 +81,8 @@
 //   opacity: var(--opacity-hover);
 // }
 
-.button > .button-container:active,
-.button > .button-container:focus {
+.button-native:active,
+.button-native:focus {
   outline: none;
 }
 
@@ -133,7 +133,7 @@
 // Block Button
 // --------------------------------------------------
 
-.button-block > .button-container {
+.button-block > .button-native {
   @include margin-horizontal(0);
 
   display: block;
@@ -144,7 +144,7 @@
   contain: strict;
 }
 
-.button-block > .button-container::after {
+.button-block > .button-native::after {
   clear: both;
 }
 
@@ -152,7 +152,7 @@
 // Full Button
 // --------------------------------------------------
 
-.button-full > .button-container {
+.button-full > .button-native {
   @include margin-horizontal(0);
 
   display: block;
@@ -162,7 +162,7 @@
   contain: strict;
 }
 
-.button-full:not(.button-round) > .button-container {
+.button-full:not(.button-round) > .button-native {
   @include border-radius(0);
 
   border-right-width: 0;

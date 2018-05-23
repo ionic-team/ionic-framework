@@ -133,7 +133,8 @@ export class Button {
         ...getColorClassMap(buttonType, color, fill, mode),
         ...getElementClassMap(this.el.classList),
         'focused': this.keyFocus,
-      }
+      },
+      'tappable': '',
     };
   }
 
@@ -147,7 +148,7 @@ export class Button {
     return (
       <TagType
         {...attrs}
-        class="button-container"
+        class="button-native"
         disabled={this.disabled}
         onFocus={this.onFocus.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}

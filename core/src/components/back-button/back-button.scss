@@ -14,7 +14,7 @@
   display: inline-block;
 }
 
-.back-button .button-container {
+.back-button-native {
   @include font-smoothing();
   @include text-align(center);
   @include appearance(none);

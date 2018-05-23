@@ -92,7 +92,7 @@ export class FabButton {
 
     return (
       <TagType
-        class="button-container"
+        class="fab-button-native"
         disabled={this.disabled}
         href={this.href}>
         <ion-icon name="close" class="fab-button-close-icon"></ion-icon>

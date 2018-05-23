@@ -8,7 +8,7 @@
   --ion-color-base: #{$back-button-ios-color};
 }
 
-.back-button-ios > .button-container {
+.back-button-ios > .back-button-native {
   @include padding(0);
   @include margin(0, 0, 0, 0);
 

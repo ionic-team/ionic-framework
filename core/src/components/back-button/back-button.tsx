@@ -46,11 +46,13 @@ export class BackButton {
   @Prop() text?: string;
 
 
-  private onClick(ev: Event) {
+  private async onClick(ev: Event) {
     const nav = this.el.closest('ion-nav');
     if (nav && nav.canGoBack()) {
       ev.preventDefault();
-      nav.pop();
+      if (!nav.isAnimating()) {
+        nav.pop();
+      }
     } else if (this.defaultHref) {
       openURL(this.win, this.defaultHref, ev, 'back');
     }
@@ -61,7 +63,8 @@ export class BackButton {
       class: {
         ...createThemedClasses(this.mode, this.color, 'back-button'),
         'show-back-button': !!this.defaultHref
-      }
+      },
+      'tappable': '',
     };
   }
 
@@ -71,12 +74,12 @@ export class BackButton {
 
     return (
       <button
-        class="button-container"
+        class="back-button-native"
         onClick={(ev) => this.onClick(ev)}>
         <span class="back-button-inner">
           { backButtonIcon && <ion-icon icon={backButtonIcon}/> }
           { this.mode === 'ios' && backButtonText && <span class="button-text">{backButtonText}</span> }
-          { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+          { this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el}/> }
         </span>
       </button>
     );

@@ -53,6 +53,7 @@ declare global {
     export interface DOMAttributes {
       // for ion-menu and ion-split-pane
       main?: boolean;
+      tappable?: boolean;
 
       padding?: boolean;
       ['padding-top']?: boolean;
