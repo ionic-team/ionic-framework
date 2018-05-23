@@ -13,7 +13,7 @@ ion-toggle {
   user-select: none;
 
   --ion-color-base: #{get-color(primary, base)};
-  --checked-color: #{$color-base};
+  --ion-color-base-rgb: #{get-color(primary, base, null, true)};
 }
 
 ion-toggle ion-gesture {

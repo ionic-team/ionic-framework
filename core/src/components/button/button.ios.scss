@@ -61,11 +61,11 @@
 }
 
 .button-solid-ios.focused {
-  --background: #{$color-shade};
+  --background: #{ion-color(shade)};
 }
 
 .button-solid-ios.activated {
-  --background: #{$color-shade};
+  --background: #{ion-color(shade)};
   --opacity: #{$button-ios-opacity-activated};
 }
 
@@ -79,18 +79,18 @@
 }
 
 .button-outline-ios.activated {
-  color: #{$color-contrast};
+  color: #{ion-color(contrast)};
 
-  --background: #{$color-base};
+  --background: #{ion-color(base)};
 }
 
 .button-outline-ios.focused {
-  --background: rgba(#{$color-base-rgb}, .1);
+  --background: #{ion-color(base, .1)};
 }
 
 .button-outline-ios.activated.focused {
-  --border-color: #{$color-shade};
-  --background-color: #{$color-shade};
+  --border-color: #{ion-color(shade)};
+  --background-color: #{ion-color(shade)};
 }
 
 // iOS Clear Button
@@ -105,7 +105,7 @@
 }
 
 .button-clear-ios.focused {
-  --background: rgba(#{$color-base-rgb}, .1);
+  --background: #{ion-color(base, .1)};
 }
 
 

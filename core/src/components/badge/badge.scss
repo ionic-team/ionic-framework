@@ -19,8 +19,8 @@ ion-badge {
   line-height: 1;
 
   white-space: nowrap;
-  color: #{$color-contrast};
-  background-color: #{$color-base};
+  color: #{ion-color(contrast)};
+  background-color: #{ion-color(base)};
   vertical-align: baseline;
 
   contain: content;

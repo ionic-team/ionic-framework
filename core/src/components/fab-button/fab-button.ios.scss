@@ -12,7 +12,7 @@
 }
 
 .fab-button-ios.activated {
-  --background: #{$color-tint};
+  --background: #{ion-color(tint)};
   --box-shadow: #{$fab-ios-box-shadow-activated};
 
   --transform: #{$fab-ios-transform};

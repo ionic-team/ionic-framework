@@ -67,7 +67,7 @@
 
 .button-solid-md.activated {
   --box-shadow: #{$button-md-box-shadow-activated};
-  --background: #{$color-shade};
+  --background: #{ion-color(shade)};
 }
 
 // Material Design Outline Button
@@ -84,7 +84,7 @@
 }
 
 .button-outline-md.focused {
-  --background: rgba(#{$color-base-rgb}, .1);
+  --background: #{ion-color(base, .1)};
 }
 
 

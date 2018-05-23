@@ -32,14 +32,6 @@ $screen-breakpoints: (
   xl: 1200px
 ) !default;
 
-// Global color variables
-$color-base: var(--ion-color-base);
-$color-base-rgb: var(--ion-color-base-rgb);
-$color-contrast: var(--ion-color-contrast);
-$color-base-contrast: var(--ion-color-base-rgb);
-$color-shade: var(--ion-color-shade);
-$color-tint: var(--ion-color-tint);
-
 // Z-Index
 // --------------------------------------------------
 // Grouped by elements which would be siblings

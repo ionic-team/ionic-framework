@@ -22,8 +22,8 @@ ion-item-divider {
 
   min-height: $item-divider-min-height;
 
-  color: #{$color-contrast};
-  background-color: #{$color-base};
+  color: #{ion-color(contrast)};
+  background-color: #{ion-color(base)};
 }
 
 ion-item-divider[sticky] {

@@ -43,6 +43,7 @@
   border-style: var(--border-style);
   border-color: var(--border-color);
   font-family: inherit;
+  font-size: inherit;
   font-weight: inherit;
   letter-spacing: var(--letter-spacing);
   line-height: 1;
@@ -101,9 +102,9 @@
 // --------------------------------------------------
 
 .button-solid {
-  color: #{$color-contrast};
+  color: #{ion-color(contrast)};
 
-  --background: #{$color-base};
+  --background: #{ion-color(base)};
 }
 
 
@@ -111,9 +112,9 @@
 // --------------------------------------------------
 
 .button-outline {
-  color: #{$color-base};
+  color: #{ion-color(base)};
 
-  --border-color: #{$color-base};
+  --border-color: #{ion-color(base)};
   --background: transparent;
 }
 
@@ -122,7 +123,7 @@
 // --------------------------------------------------
 
 .button-clear {
-  color: #{$color-base};
+  color: #{ion-color(base)};
 
   --border-width: 0;
   --background: transparent;

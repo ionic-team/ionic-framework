@@ -14,8 +14,8 @@ ion-checkbox {
   --background: var(--unchecked-backgroud);
   --border-color: var(--unchecked-border-color);
 
-  --checked-border-color: #{$color-base};
-  --checked-background: #{$color-base};
+  --checked-border-color: #{ion-color(base)};
+  --checked-background: #{ion-color(base)};
 }
 
 ion-checkbox input {
@@ -60,7 +60,7 @@ ion-checkbox input {
 }
 
 .checkbox .checkbox-inner {
-  border-color: #{$color-contrast};
+  border-color: #{ion-color(contrast)};
   opacity: 0;
 }
 

@@ -16,8 +16,8 @@
 
   contain: strict;
 
-  --checked-background: var(--checked-color);
-  --checked-knob: var(--checked-color);
+  --checked-background: #{ion-color(base, $toggle-md-track-background-color-alpha-on)};
+  --checked-knob: #{ion-color(base)};
 }
 
 
@@ -70,7 +70,7 @@
 // -----------------------------------------
 
 .toggle-md.toggle-checked .toggle-icon {
-  background-color: var(--checked-knob);
+  background-color: var(--checked-background);
 }
 
 
@@ -80,7 +80,7 @@
 .toggle-md.toggle-checked .toggle-inner {
   @include transform(translate3d($toggle-md-track-width - $toggle-md-handle-width, 0, 0));
 
-  background-color: var(--checked-background);
+  background-color: var(--checked-knob);
 }
 
 

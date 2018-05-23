@@ -8,5 +8,5 @@ ion-card-subtitle {
   position: relative;
   display: block;
 
-  color: $color-base;
+  color: #{ion-color(base)};
 }

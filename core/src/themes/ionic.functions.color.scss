@@ -30,7 +30,7 @@ $css-variables: ();
   @return $result;
 }
 
-@function get-color($name, $variation, $alpha: null) {
+@function get-color($name, $variation, $alpha: null, $rgb: null) {
   $values: map-get($colors, $name);
   $value: map-get($values, $variation);
   $variable: --ion-color-#{$name}-#{$variation};
@@ -42,6 +42,10 @@ $css-variables: ();
   @if ($alpha) {
     $value: color-to-rgb-list($value);
     @return rgba(var(#{$variable}-rgb, $value), $alpha);
+  }
+  @if ($rgb) {
+    $value: color-to-rgb-list($value);
+    $variable: #{$variable}-rgb;
   }
 
   @return var(#{$variable}, $value);
@@ -188,69 +192,10 @@ $css-variables: ();
   }
 }
 
-@function ion-color($colors, $name, $variation: null, $mode: null, $alpha: null) {
-
-  // If CSS variables are off or someone passed a raw color, we will be passed color values
-  // we need to look up the map in order to provide variations
-  @if (type-of($name) == color) {
-    $results: color-to-name-variation($colors, $name, $variation);
-    @if (map-has-key($results, name)) {
-      $name: map-get($results, name);
-      @if (map-has-key($results, variation)) {
-        $variation: map-get($results, variation);
-      } @else {
-        @if ($variation) {
-          @warn "Color '#{$name}' does not exist in map. Unable to set to variation '#{$variation}'";
-        }
-      }
-    }
+@function ion-color($variation, $alpha: null) {
+  @if $alpha == null {
+    @return var(--ion-color-#{$variation});
+  } @else {
+    @return rgba(var(--ion-color-#{$variation}-rgb), #{$alpha});
   }
-
-  // Does the name contain the CSS Variable color prefix
-  // If so this is this is a reference to a CSS variable
-  @if ($enable-css-variables and str-contains($name, $css-variable-prefix)) {
-    // If there is no variation change, just return the css variable
-    @if ($variation == null) {
-      @return unquote($name);
-    } @else {
-      // Convert the CSS Variable into a name/variation pair
-      $results: css-variable-to-name-variation($name);
-      $name: map-get($results, name);
-      $current-variation: map-get($results, variation);
-      $current-mode: map-get($results, mode);
-      $variation: if($variation == $current-variation, $default-color-variation, $variation);
-      $mode: if($current-mode != null, $current-mode, $mode);
-    }
-  }
-
-  $color: map-get($colors, $name);
-  @if ($color) {
-    // If there is no variation use the default
-    $variation: if($variation == null, $default-color-variation, $variation);
-
-    // If the color contains variations pick the appropriate one
-    @if (type-of($color) == map) {
-      @if (not map-has-key($color, $variation)) {
-        @if (not map-has-key($color, $variation)) {
-          @error "Unknown Color: '#{$name}' with variation '#{$variation}'.";
-        }
-      }
-      $color: map-get($color, $variation);
-    } @else if $variation != $default-color-variation {
-      @error "Color '#{$name}' is not a map. Cannot contain variation '#{$variation}'.";
-    }
-
-    $name: "#{$default-color-prefix}#{if($mode, '#{$mode}-', '')}#{$name}";
-    @if $variation != $default-color-variation {
-      $name: "#{$name}-#{$variation}";
-    }
-
-    @if $alpha {
-      @return css-var($color, $name, $alpha);
-    }
-
-    @return css-var($color, $name);
-  }
-
-  @error "Unknown Color: '#{$name}' with variation '#{$variation}'";
 }

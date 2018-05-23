@@ -13,8 +13,8 @@
 
   contain: strict;
 
-  --checked-background: var(--checked-color);
-  --checked-knob: var(--checked-color);
+  --checked-background: #{ion-color(base)};
+  --checked-knob: #{ion-color(base)};
 }
 
 
