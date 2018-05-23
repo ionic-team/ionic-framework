@@ -11,8 +11,8 @@ ion-card {
   display: block;
   overflow: hidden;
 
-  color: #{ion-color(contrast)};
-  background: #{ion-color(base)};
+  color: #{current-color(contrast)};
+  background: #{current-color(base)};
 
   --ion-card-text: currentColor;
 }

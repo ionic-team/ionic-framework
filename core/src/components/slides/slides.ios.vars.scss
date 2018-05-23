@@ -4,7 +4,7 @@
 $slides-ios-bullet-background-color:                    $text-color-step-400 !default;
 
 /// @prop - Slides Bullet Background color when Active
-$slides-ios-bullet-background-color-active:             get-color(primary, base) !default;
+$slides-ios-bullet-background-color-active:             ion-color(primary, base) !default;
 
 /// @prop - Slides Progress indicator Background color alpha
 $slides-ios-progress-background-color-alpha:            .25 !default;
@@ -13,7 +13,7 @@ $slides-ios-progress-background-color-alpha:            .25 !default;
 $slides-ios-progress-background-color:                  rgba(var(--ion-text-color-rgb, $text-color-rgb), $slides-ios-progress-background-color-alpha) !default;
 
 /// @prop - Slides Progress indicator bar Background color
-$slides-ios-progress-bar-background-color:              get-color(primary, shade) !default;
+$slides-ios-progress-bar-background-color:              ion-color(primary, shade) !default;
 
 /// @prop - Slides Scroll bar Background color alpha
 $slides-ios-scroll-bar-background-color-alpha:          .25 !default;

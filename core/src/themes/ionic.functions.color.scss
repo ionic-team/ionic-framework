@@ -30,7 +30,28 @@ $css-variables: ();
   @return $result;
 }
 
-@function get-color($name, $variation, $alpha: null, $rgb: null) {
+
+// Gets the active color's css variable from a variation. Alpha is optional.
+// ------------------------------------------------------------------------------------------------
+// Example usage:
+// current-color(base) => var(--ion-color-base)
+// current-color(contrast, 0.1) => rgba(var(--ion-color-contrast-rgb), 0.1)
+@function current-color($variation, $alpha: null) {
+  @if $alpha == null {
+    @return var(--ion-color-#{$variation});
+  } @else {
+    @return rgba(var(--ion-color-#{$variation}-rgb), #{$alpha});
+  }
+}
+
+// Gets the specific color's css variable from the name and variation. Alpha/rgb are optional.
+// ------------------------------------------------------------------------------------------------
+// Example usage:
+// ion-color(primary, base) => var(--ion-color-primary, #3880ff)
+// ion-color(secondary, contrast) => var(--ion-color-secondary-contrast)
+// ion-color(primary, base, 0.5) => rgba(var(--ion-color-primary-rgb, 56, 128, 255), 0.5)
+@function ion-color($name, $variation, $alpha: null, $rgb: null) {
+
   $values: map-get($colors, $name);
   $value: map-get($values, $variation);
   $variable: --ion-color-#{$name}-#{$variation};
@@ -136,6 +157,7 @@ $css-variables: ();
   @return (name: $name, variation: $variation, mode: $mode);
 }
 
+// TODO remove
 // Creates a css variable from a value/alpha combination. alpha is optional. css-var aids in 3 main ways
 // first is alpha generation
 // -- when given alpha it will convert the value to a RGBList and create a css variable name with the suffix '-rgb'
@@ -144,58 +166,50 @@ $css-variables: ();
 // -- for example when given text-ios-color the variable will result in var(text-ios-color, var(text-color, $value));
 // third is when css variables are disabled
 // -- provides a bottleneck method to return all colors as normal colors (with alpha transforms)
-@function css-var($value, $name, $alpha: null) {
-  @if ($enable-css-variables) {
-    $is-reference: str-contains($value, $css-variable-prefix);
-    $global-css-variable: #{$css-variable-prefix}#{$name};
-    $mode: get-mode($name);
-    $result: null;
+// @function css-var($value, $name, $alpha: null) {
+//   @if ($enable-css-variables) {
+//     $is-reference: str-contains($value, $css-variable-prefix);
+//     $global-css-variable: #{$css-variable-prefix}#{$name};
+//     $mode: get-mode($name);
+//     $result: null;
 
-    @if ($alpha and $is-reference) {
-      @error "css-var error alpha (#{$alpha}) cannot be used with references. When trying to set '#{$name}', '#{$value}' was a reference.";
-    }
+//     @if ($alpha and $is-reference) {
+//       @error "css-var error alpha (#{$alpha}) cannot be used with references. When trying to set '#{$name}', '#{$value}' was a reference.";
+//     }
 
-    @if ($alpha) {
-      $global-css-variable: "#{$global-css-variable}-rgb";
-      $value: color-to-rgb-list($value);
-    }
+//     @if ($alpha) {
+//       $global-css-variable: "#{$global-css-variable}-rgb";
+//       $value: color-to-rgb-list($value);
+//     }
 
-    @if ($mode != null) {
-      $mode-css-variable: $global-css-variable;
-      $mode: "-#{$mode}-";
-      $global-css-variable: str-replace($mode-css-variable, $mode, "-");
+//     @if ($mode != null) {
+//       $mode-css-variable: $global-css-variable;
+//       $mode: "-#{$mode}-";
+//       $global-css-variable: str-replace($mode-css-variable, $mode, "-");
 
-      $css-variables: map-merge($css-variables, ($mode-css-variable: $value)) !global;
+//       $css-variables: map-merge($css-variables, ($mode-css-variable: $value)) !global;
 
-      $fallback: "var(#{$global-css-variable}, #{$value})";
-      @if $is-reference {
-        $fallback: "#{$value}";
-      }
+//       $fallback: "var(#{$global-css-variable}, #{$value})";
+//       @if $is-reference {
+//         $fallback: "#{$value}";
+//       }
 
-      $result: "var(#{$mode-css-variable}, #{$fallback})";
-    } @else {
-      $css-variables: map-merge($css-variables, ($global-css-variable: $value)) !global;
-      $result: "var(#{$global-css-variable}, #{$value})";
-    }
+//       $result: "var(#{$mode-css-variable}, #{$fallback})";
+//     } @else {
+//       $css-variables: map-merge($css-variables, ($global-css-variable: $value)) !global;
+//       $result: "var(#{$global-css-variable}, #{$value})";
+//     }
 
-    @if $alpha {
-      $result: "rgba(#{$result}, #{$alpha})";
-    }
-    @return unquote($result);
-  } @else {
-    @if ($alpha) {
-      $value: color-to-rgb-list($value);
-      @return unquote("rgba(#{$value}, #{$alpha})");
-    } @else {
-      @return $value;
-    }
-  }
-}
-
-@function ion-color($variation, $alpha: null) {
-  @if $alpha == null {
-    @return var(--ion-color-#{$variation});
-  } @else {
-    @return rgba(var(--ion-color-#{$variation}-rgb), #{$alpha});
-  }
-}
+//     @if $alpha {
+//       $result: "rgba(#{$result}, #{$alpha})";
+//     }
+//     @return unquote($result);
+//   } @else {
+//     @if ($alpha) {
+//       $value: color-to-rgb-list($value);
+//       @return unquote("rgba(#{$value}, #{$alpha})");
+//     } @else {
+//       @return $value;
+//     }
+//   }
+// }

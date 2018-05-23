@@ -16,7 +16,7 @@ ion-label {
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  color: #{ion-color(base)};
+  color: #{current-color(base)};
 
   --ion-color-base: currentColor;
 }

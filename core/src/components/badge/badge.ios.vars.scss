@@ -8,9 +8,3 @@ $badge-ios-border-radius:      10px !default;
 
 /// @prop - Font family of the badge
 $badge-ios-font-family:        $font-family-ios-base !default;
-
-/// @prop - Background color of the badge
-$badge-ios-background-color:   get-color(primary, base) !default;
-
-/// @prop - Text color of the badge
-$badge-ios-text-color:         get-color(primary, contrast) !default;

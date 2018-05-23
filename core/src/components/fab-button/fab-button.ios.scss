@@ -10,7 +10,7 @@
 }
 
 .fab-button-ios.activated {
-  --background: #{ion-color(tint)};
+  --background: #{current-color(tint)};
   --box-shadow: #{$fab-ios-box-shadow-activated};
 
   --transform: #{$fab-ios-transform};
@@ -51,7 +51,7 @@
 
 
 // .fab-translucent-ios-#{$color-name} {
-//   background-color: get-color($color-name, base, $fab-ios-translucent-background-color-alpha);
+//   background-color: ion-color($color-name, base, $fab-ios-translucent-background-color-alpha);
 //   opacity: .8;
 // }
 

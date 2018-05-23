@@ -102,7 +102,7 @@
 // --------------------------------------------------
 
 @mixin radio-theme-ios($color-name) {
-  $color-base: get-color($color-name, base);
+  $color-base: ion-color($color-name, base);
 
   .item-radio-ios-#{$color-name}.item-radio-checked ion-label {
     color: $color-base;

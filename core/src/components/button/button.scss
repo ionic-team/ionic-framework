@@ -5,9 +5,9 @@
 // --------------------------------------------------
 
 .button {
-  --ion-color-base: #{get-color(primary, base)};
-  --ion-color-contrast: #{get-color(primary, contrast)};
-  --ion-color-shade: #{get-color(primary, shade)};
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
+  --ion-color-shade: #{ion-color(primary, shade)};
 
   --ripple-color: currentColor;
 }
@@ -102,9 +102,9 @@
 // --------------------------------------------------
 
 .button-solid {
-  color: #{ion-color(contrast)};
+  color: #{current-color(contrast)};
 
-  --background: #{ion-color(base)};
+  --background: #{current-color(base)};
 }
 
 
@@ -112,9 +112,9 @@
 // --------------------------------------------------
 
 .button-outline {
-  color: #{ion-color(base)};
+  color: #{current-color(base)};
 
-  --border-color: #{ion-color(base)};
+  --border-color: #{current-color(base)};
   --background: transparent;
 }
 
@@ -123,7 +123,7 @@
 // --------------------------------------------------
 
 .button-clear {
-  color: #{ion-color(base)};
+  color: #{current-color(base)};
 
   --border-width: 0;
   --background: transparent;

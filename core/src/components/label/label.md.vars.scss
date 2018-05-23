@@ -12,7 +12,7 @@ $label-md-font-family:                $font-family-md-base !default;
 $label-md-text-color:                 $text-color-step-600 !default;
 
 /// @prop - Text color of the stacked/floating label when it is focused
-$label-md-text-color-focused:         get-color(primary, base) !default;
+$label-md-text-color-focused:         ion-color(primary, base) !default;
 
 /// @prop - Margin top of the label
 $label-md-margin-top:                 $item-md-padding-top !default;

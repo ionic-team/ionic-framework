@@ -11,7 +11,7 @@ ion-spinner {
   width: 28px;
   height: 28px;
 
-  --color: #{ion-color(base)};
+  --color: #{current-color(base)};
 }
 
 ion-spinner svg {

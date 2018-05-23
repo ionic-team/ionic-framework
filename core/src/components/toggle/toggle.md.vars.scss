@@ -6,7 +6,7 @@
 // --------------------------------------------------
 
 /// @prop - Color of the active toggle
-$toggle-md-active-color:                          get-color(primary, base) !default;
+$toggle-md-active-color:                          ion-color(primary, base) !default;
 
 /// @prop - Width of the toggle track
 $toggle-md-track-width:                           36px !default;
@@ -21,7 +21,7 @@ $toggle-md-track-background-color-off:            $item-md-border-color !default
 $toggle-md-track-background-color-alpha-on:       .5 !default;
 
 /// @prop - Background color of the checked toggle track
-$toggle-md-track-background-color-on:             get-color(primary, base, $toggle-md-track-background-color-alpha-on) !default;
+$toggle-md-track-background-color-on:             ion-color(primary, base, $toggle-md-track-background-color-alpha-on) !default;
 
 /// @prop - Width of the toggle handle
 $toggle-md-handle-width:                          20px !default;

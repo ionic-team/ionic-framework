@@ -146,7 +146,7 @@ $button-md-outline-opacity-activated:                   1 !default;
 $button-md-outline-background-color-alpha-focused:      .1 !default;
 
 /// @prop - Background color of the focused outline button
-$button-md-outline-background-color-focused:            get-color(primary, base, $button-md-outline-background-color-alpha-focused) !default;
+$button-md-outline-background-color-focused:            ion-color(primary, base, $button-md-outline-background-color-alpha-focused) !default;
 
 // Material Design Clear Button
 // --------------------------------------------------
@@ -185,7 +185,7 @@ $button-md-clear-ripple-background-color:               $text-color-step-600 !de
 $button-md-clear-background-color-alpha-focused:        .1 !default;
 
 /// @props - Background color of the focused clear button
-$button-md-clear-background-color-focused:              get-color(primary, base, $button-md-clear-background-color-alpha-focused) !default;
+$button-md-clear-background-color-focused:              ion-color(primary, base, $button-md-clear-background-color-alpha-focused) !default;
 
 // Material Design Round Button
 // --------------------------------------------------

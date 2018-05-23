@@ -7,5 +7,5 @@ ion-text {
 ion-text,
 ion-text a,
 ion-text p {
-  color: #{ion-color(base)};
+  color: #{current-color(base)};
 }

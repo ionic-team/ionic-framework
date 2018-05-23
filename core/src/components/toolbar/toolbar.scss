@@ -19,13 +19,13 @@
 
   width: 100%;
 
-  color: #{ion-color(contrast)};
+  color: #{current-color(contrast)};
 
   contain: content;
 
   --border-width: 0;
   --border-style: solid;
-  --background: #{ion-color(base)};
+  --background: #{current-color(base)};
 }
 
 .toolbar-background {

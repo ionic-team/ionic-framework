@@ -24,7 +24,7 @@ $toggle-ios-background-color-off:      $item-ios-background-color !default;
 $toggle-ios-border-color-off:          $background-color-step-50 !default;
 
 /// @prop - Background color of the checked toggle
-$toggle-ios-background-color-on:       get-color(primary, base) !default;
+$toggle-ios-background-color-on:       ion-color(primary, base) !default;
 
 /// @prop - Width of the toggle handle
 $toggle-ios-handle-width:              $toggle-ios-height - ($toggle-ios-border-width * 2) !default;

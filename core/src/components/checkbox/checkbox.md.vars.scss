@@ -12,10 +12,10 @@ $checkbox-md-disabled-opacity:           .3 !default;
 $checkbox-md-icon-background-color-off:  $item-md-background-color !default;
 
 /// @prop - Background color of focus indicator for checkbox when focused
-$checkbox-md-background-color-focused:   get-color(primary, tint) !default;
+$checkbox-md-background-color-focused:   ion-color(primary, tint) !default;
 
 /// @prop - Background color of the checkbox icon when on
-$checkbox-md-icon-background-color-on:   get-color(primary, base) !default;
+$checkbox-md-icon-background-color-on:   ion-color(primary, base) !default;
 
 /// @prop - Size of the checkbox icon
 $checkbox-md-icon-size:                  16px !default;
@@ -27,7 +27,7 @@ $checkbox-md-icon-checkmark-width:       2px !default;
 $checkbox-md-icon-checkmark-style:       solid !default;
 
 /// @prop - Color of the checkbox icon checkmark
-$checkbox-md-icon-checkmark-color:       get-color(primary, contrast) !default;
+$checkbox-md-icon-checkmark-color:       ion-color(primary, contrast) !default;
 
 /// @prop - Border width of the checkbox icon
 $checkbox-md-icon-border-width:          2px !default;
@@ -42,7 +42,7 @@ $checkbox-md-icon-border-radius:         2px !default;
 $checkbox-md-icon-border-color-off:      $border-md-color !default;
 
 /// @prop - Border color of the checkbox icon when on
-$checkbox-md-icon-border-color-on:       get-color(primary, base) !default;
+$checkbox-md-icon-border-color-on:       ion-color(primary, base) !default;
 
 /// @prop - Transition duration of the checkbox
 $checkbox-md-transition-duration:        280ms !default;

@@ -187,10 +187,10 @@
 // --------------------------------------------------
 
 @each $color-name, $color-value in $colors-md {
-  $color-base: get-color($color-name, base);
-  $color-contrast: get-color($color-name, contrast);
-  $color-shade: get-color($color-name, shade);
-  $color-tint: get-color($color-name, tint);
+  $color-base: ion-color($color-name, base);
+  $color-contrast: ion-color($color-name, contrast);
+  $color-shade: ion-color($color-name, shade);
+  $color-tint: ion-color($color-name, tint);
 
   .item-md-#{$color-name} {
     border-bottom-color: $color-shade;

@@ -34,7 +34,7 @@ $picker-ios-toolbar-background-color:             $picker-ios-top-background-col
 $picker-ios-button-height:                        $picker-ios-toolbar-height !default;
 
 /// @prop - Text color of the picker button
-$picker-ios-button-text-color:                    get-color(primary, base) !default;
+$picker-ios-button-text-color:                    ion-color(primary, base) !default;
 
 /// @prop - Background of the picker button
 $picker-ios-button-background-color:              transparent !default;

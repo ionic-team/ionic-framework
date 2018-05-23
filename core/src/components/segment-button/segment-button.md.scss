@@ -52,7 +52,7 @@
 // --------------------------------------------------
 
 @each $color-name, $color-value in $colors-md {
-  $color-base: get-color($color-name, base);
+  $color-base: ion-color($color-name, base);
 
   .segment-md-#{$color-name} .segment-button {
     color: $color-base;

@@ -24,9 +24,9 @@
 // --------------------------------------------------
 
 @mixin tabbar-md($color-name) {
-  $color-base: get-color($color-name, base);
-  $color-contrast: get-color($color-name, contrast);
-  $color-shade: get-color($color-name, shade);
+  $color-base: ion-color($color-name, base);
+  $color-contrast: ion-color($color-name, contrast);
+  $color-shade: ion-color($color-name, shade);
 
   .tabbar-md-#{$color-name} {
     color: $color-contrast;

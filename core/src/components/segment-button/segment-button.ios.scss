@@ -107,8 +107,8 @@ ion-segment-button {
 // --------------------------------------------------
 
 @mixin ios-segment-button($color-name) {
-  $color-base: get-color($color-name, base);
-  $color-contrast: get-color($color-name, contrast);
+  $color-base: ion-color($color-name, base);
+  $color-contrast: ion-color($color-name, contrast);
 
   .segment-ios-#{$color-name} {
 
@@ -117,11 +117,11 @@ ion-segment-button {
       color: $color-base;
 
       &:hover:not(.segment-checked) {
-        background-color: get-color($color-name, base, $segment-button-ios-background-color-alpha-hover);
+        background-color: ion-color($color-name, base, $segment-button-ios-background-color-alpha-hover);
       }
 
       &:active:not(.segment-checked) {
-        background-color: get-color($color-name, base, $segment-button-ios-background-color-alpha-active);
+        background-color: ion-color($color-name, base, $segment-button-ios-background-color-alpha-active);
       }
 
       &.segment-checked {
@@ -131,7 +131,7 @@ ion-segment-button {
     }
 
     .segment-button-disabled {
-      color: get-color($color-name, base, $segment-button-ios-background-color-alpha-disabled);
+      color: ion-color($color-name, base, $segment-button-ios-background-color-alpha-disabled);
     }
   }
 }
@@ -141,7 +141,7 @@ ion-segment-button {
 // --------------------------------------------------
 
 @each $color-name, $color-value in $colors-ios {
-  $color-base: get-color($color-name, base);
+  $color-base: ion-color($color-name, base);
 
   @include ios-segment-button($color-name);
 

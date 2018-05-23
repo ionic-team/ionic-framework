@@ -5,6 +5,9 @@
 // --------------------------------------------------
 
 ion-badge {
+  --ion-color-base: #{$badge-background-color};
+  --ion-color-contrast: #{$badge-text-color};
+
   @include font-smoothing();
   @include padding($badge-padding-top, $badge-padding-end, $badge-padding-bottom, $badge-padding-start);
   @include text-align(center);
@@ -19,14 +22,11 @@ ion-badge {
   line-height: 1;
 
   white-space: nowrap;
-  color: #{ion-color(contrast)};
-  background-color: #{ion-color(base)};
+  color: #{current-color(contrast)};
+  background-color: #{current-color(base)};
   vertical-align: baseline;
 
   contain: content;
-
-  --ion-color-base: #{get-color(primary, base)};
-  --ion-color-contrast: #{get-color(primary, contrast)};
 }
 
 ion-badge:empty {
