@@ -7,9 +7,6 @@ import { Color, Mode, StyleEvent } from '../../interface';
   styleUrls: {
     ios: 'label.ios.scss',
     md: 'label.md.scss'
-  },
-  host: {
-    theme: 'label'
   }
 })
 export class Label {
@@ -36,6 +33,10 @@ export class Label {
    */
   @Prop() position?: 'fixed' | 'stacked' | 'floating';
 
+
+  @Prop() text?: string;
+  @Prop() labelfor?: string;
+
   /**
    * Emitted when the styles change.
    */
@@ -58,13 +59,23 @@ export class Label {
     });
   }
 
-  hostData() {
+  protected render() {
+
+    const TagType = 'label';
     const position = this.position;
-    return {
-      class: {
-        [`label-${position}`]: !!position,
-        [`label-${this.mode}-${position}`]: !!position
-      }
+    const labelClasses = {
+      [`label-${position}`]: !!position,
+      [`label-${this.mode}-${position}`]: !!position
     };
+
+    return (
+      <TagType
+        class={labelClasses}
+        htmlFor={this.labelfor}
+      >
+        {this.text}
+      </TagType>
+    );
   }
+
 }
