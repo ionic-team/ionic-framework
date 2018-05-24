@@ -118,31 +118,3 @@
 .item-radio-checked.item-md ion-label {
   color: $radio-md-color-on;
 }
-
-
-// Material Design Radio Color Mixin
-// --------------------------------------------------
-
-@mixin radio-theme-md($color-name) {
-  $color-base: ion-color($color-name, base);
-
-  .item-radio-md-#{$color-name}.item-radio-checked ion-label {
-    color: $color-base;
-  }
-
-  .radio-md-#{$color-name}.radio-checked .radio-icon {
-    border-color: $color-base;
-  }
-
-  .radio-md-#{$color-name} .radio-inner {
-    background-color: $color-base;
-  }
-}
-
-
-// Generate Material Design Radio Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  @include radio-theme-md($color-name);
-}

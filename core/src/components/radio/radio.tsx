@@ -173,7 +173,8 @@ export class Radio implements RadioButtonInput {
 
   hostData() {
     return {
-      'class': {
+      class: {
+        ...createThemedClasses(this.mode, this.color, 'radio'),
         'radio-checked': this.checked,
         'radio-disabled': this.disabled,
         'radio-key': this.keyFocus

@@ -96,31 +96,3 @@
 .item-radio-checked.item-ios ion-label {
   color: $radio-ios-color-on;
 }
-
-
-// iOS Radio Color Mixin
-// --------------------------------------------------
-
-@mixin radio-theme-ios($color-name) {
-  $color-base: ion-color($color-name, base);
-
-  .item-radio-ios-#{$color-name}.item-radio-checked ion-label {
-    color: $color-base;
-  }
-
-  .radio-ios-#{$color-name}.radio-checked {
-    color: $color-base;
-  }
-
-  .radio-ios-#{$color-name}.radio-checked .radio-inner {
-    border-color: $color-base;
-  }
-}
-
-
-// Generate iOS Radio Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  @include radio-theme-ios($color-name);
-}

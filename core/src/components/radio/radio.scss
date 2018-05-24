@@ -4,6 +4,8 @@
 // --------------------------------------------------
 
 ion-radio {
+  --ion-color-base: #{ion-color(primary, base)};
+
   box-sizing: border-box;
 
   position: relative;

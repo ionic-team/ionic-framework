@@ -6,7 +6,7 @@
 // --------------------------------------------------
 
 /// @prop - Color of the checked radio
-$radio-md-color-on:                  ion-color(primary, base) !default;
+$radio-md-color-on:                  current-color(base) !default;
 
 /// @prop - Background color of focus indicator for radio when focused
 $radio-md-background-color-focused:  ion-color(primary, tint) !default;
