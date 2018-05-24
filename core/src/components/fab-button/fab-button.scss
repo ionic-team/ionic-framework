@@ -25,7 +25,7 @@ ion-fab-button.activated {
   --background: #{current-color(tint)};
 }
 
-.fab-button-container {
+.fab-button-native {
   @include margin(
     var(--padding-top),
     var(--padding-end),

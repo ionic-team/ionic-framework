@@ -69,15 +69,11 @@ export class Spinner {
   }
 
   hostData() {
-    const themedClasses = createThemedClasses(this.mode, this.color, `spinner spinner-${this.getName()}`);
-
-    const spinnerClasses = {
-      ...themedClasses,
-      'spinner-paused': this.paused
-    };
-
     return {
-      class: spinnerClasses
+      class: {
+        ...createThemedClasses(this.mode, this.color, `spinner spinner-${this.getName()}`),
+        'spinner-paused': this.paused
+      }
     };
   }
 
@@ -85,9 +81,7 @@ export class Spinner {
     const name = this.getName();
 
     const spinner = SPINNERS[name] || SPINNERS['lines'];
-
     const duration = (typeof this.duration === 'number' && this.duration > 10 ? this.duration : spinner.dur);
-
     const svgs: any[] = [];
 
     if (spinner.circles) {

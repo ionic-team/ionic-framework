@@ -1,8 +1,8 @@
 @import "../themes/ionic.globals";
 @import "../themes/ionic.mixins";
 
-$padding: calc(var(--ion-padding, 16px));
-$margin: calc(var(--ion-padding, 16px));
+$padding: var(--ion-padding, 16px);
+$margin: var(--ion-padding, 16px);
 
 ion-app [no-padding],
 ion-app [no-padding] .scroll-inner {

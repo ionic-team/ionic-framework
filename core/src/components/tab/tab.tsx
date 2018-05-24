@@ -38,7 +38,7 @@ export class Tab {
   /**
    * The badge color for the tab button.
    */
-  @Prop() badgeColor: Color = 'default';
+  @Prop() badgeColor?: Color;
 
   /**
    * The component to display inside of the tab.

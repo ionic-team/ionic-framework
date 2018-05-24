@@ -21,7 +21,7 @@ export * from './components/toast/toast-interface';
 export * from './utils/input-interface';
 export * from './global/config';
 
-export type Color = 'default'| 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
+export type Color = 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
 export type Mode = 'ios' | 'md';
 export type ComponentRef = Function | HTMLElement | string;
 export type ComponentProps = {[key: string]: any};

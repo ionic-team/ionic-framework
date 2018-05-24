@@ -80,7 +80,7 @@ export class Loading implements OverlayInterface {
    * The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`,
    * `"bubbles"`, `"circles"`, `"crescent"`.
    */
-  @Prop() spinner?: string;
+  @Prop({mutable: true}) spinner?: string;
 
   /**
    * If true, the loading indicator will be translucent. Defaults to `false`.
