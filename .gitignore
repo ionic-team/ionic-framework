@@ -48,3 +48,4 @@ demos/src/**/*.d.ts
 demos/src/**/*.metadata.json
 demos/src/**/*.css.shim.ts
 core/css/
+angular/css/
