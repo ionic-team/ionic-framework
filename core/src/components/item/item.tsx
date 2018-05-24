@@ -107,12 +107,6 @@ export class Item {
     }
   }
 
-  hostData() {
-    return {
-      // class: createThemedClasses(this.mode, this.color, 'item')
-    };
-  }
-
   render() {
     const childStyles = {};
     for (const key in this.itemStyles) {
@@ -135,7 +129,6 @@ export class Item {
       ...childStyles,
       ...createThemedClasses(this.mode, this.color, 'item'),
       ...getElementClassMap(this.el.classList),
-      'item-native': true,
       'item-disabled': this.disabled,
       [`item-lines-${this.lines}`]: !!this.lines,
       [`item-${this.mode}-lines-${this.lines}`]: !!this.lines
