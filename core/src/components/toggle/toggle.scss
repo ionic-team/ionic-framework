@@ -1,19 +1,18 @@
 @import "../../themes/ionic.globals";
-@import "../../themes/ionic.theme.default";
 
 // Toggle
 // --------------------------------------------------
 
 ion-toggle {
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-base-rgb: #{ion-color(primary, base, null, true)};
+
   display: inline-block;
 
   contain: content;
 
   touch-action: none;
   user-select: none;
-
-  --ion-color-base: #{ion-color(primary, base)};
-  --ion-color-base-rgb: #{ion-color(primary, base, null, true)};
 }
 
 ion-toggle ion-gesture {

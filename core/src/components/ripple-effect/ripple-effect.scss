@@ -1,18 +1,17 @@
 @import "../../themes/ionic.globals";
-@import "../../themes/ionic.theme.default";
 
 
 // Material Design Ripple Effect
 // --------------------------------------------------
 
 ion-ripple-effect {
+  --color: #{$ripple-background-color};
+
   @include position(0, 0, 0, 0);
 
   position: absolute;
 
   contain: strict;
-
-  --color: #{$ripple-background-color};
 }
 
 .ripple-effect {

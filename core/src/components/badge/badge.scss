@@ -1,12 +1,11 @@
 @import "./badge.vars";
-@import "../../themes/ionic.theme.default";
 
 // Badge
 // --------------------------------------------------
 
 ion-badge {
-  --ion-color-base: #{$badge-background-color};
-  --ion-color-contrast: #{$badge-text-color};
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
 
   @include font-smoothing();
   @include padding($badge-padding-top, $badge-padding-end, $badge-padding-bottom, $badge-padding-start);

@@ -1,13 +1,9 @@
 @import "../../themes/ionic.globals";
-@import "../../themes/ionic.theme.default";
 
 // Checkbox
 // --------------------------------------------------
 
 ion-checkbox {
-  position: relative;
-  display: inline-block;
-
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
 
@@ -16,6 +12,9 @@ ion-checkbox {
 
   --checked-border-color: #{current-color(base)};
   --checked-background: #{current-color(base)};
+
+  position: relative;
+  display: inline-block;
 }
 
 ion-checkbox input {

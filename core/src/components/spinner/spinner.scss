@@ -1,17 +1,16 @@
 @import "../../themes/ionic.globals";
-@import "../../themes/ionic.theme.default";
 
 // Spinners
 // --------------------------------------------------
 
 ion-spinner {
+  --color: #{current-color(base)};
+
   position: relative;
   display: inline-block;
 
   width: 28px;
   height: 28px;
-
-  --color: #{current-color(base)};
 }
 
 ion-spinner svg {

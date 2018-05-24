@@ -1,14 +1,9 @@
 @import "./fab-button.vars";
-@import "../../themes/ionic.theme.default";
 
 // Floating Action Buttons
 // --------------------------------------------------
 
 ion-fab-button {
-  font-size: 14px;
-  color: #{current-color(contrast)};
-
-  // default values
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
   --ion-color-tint: #{ion-color(primary, tint)};
@@ -21,6 +16,9 @@ ion-fab-button {
   --padding-end: calc((#{$fab-size} - var(--size)) / 2);
   --padding-top: calc((#{$fab-size} - var(--size)) / 2);
   --padding-bottom: calc((#{$fab-size} - var(--size)) / 2);
+
+  font-size: 14px;
+  color: #{current-color(contrast)};
 }
 
 ion-fab-button.activated {

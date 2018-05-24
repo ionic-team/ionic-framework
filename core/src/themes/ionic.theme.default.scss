@@ -1,81 +1,5 @@
 @import "./ionic.globals";
 
-// Default Theme
-// ----------------------------------
-
-// Private color variables
-$primary:         #3880ff;
-$secondary:       #0cd1e8;
-$tertiary:        #7044ff;
-$success:         #10dc60;
-$warning:         #ffce00;
-$danger:          #f04141;
-$light:           #f4f5f8;
-$medium:          #989aa2;
-$dark:            #222428;
-
-// Color map should provide
-// - base: main color to be used.
-// - contrast: Color that will provide readable text against the base color
-// - shade: 12% darker version of the base color (mix with black)
-// - tint: 10% lighter version of the base color (mix with white)
-$colors:  (
-  primary: (
-    base:             $primary,
-    contrast:         #fff,
-    shade:            get-color-shade($primary),
-    tint:             get-color-tint($primary)
-  ),
-  secondary: (
-    base:             $secondary,
-    contrast:         #fff,
-    shade:            get-color-shade($secondary),
-    tint:             get-color-tint($secondary)
-  ),
-  tertiary: (
-    base:             $tertiary,
-    contrast:         #fff,
-    shade:            get-color-shade($tertiary),
-    tint:             get-color-tint($tertiary)
-  ),
-  success: (
-    base:             $success,
-    contrast:         #fff,
-    shade:            get-color-shade($success),
-    tint:             get-color-tint($success)
-  ),
-  warning: (
-    base:             $warning,
-    contrast:         #fff,
-    shade:            get-color-shade($warning),
-    tint:             get-color-tint($warning)
-  ),
-  danger: (
-    base:             $danger,
-    contrast:         #fff,
-    shade:            get-color-shade($danger),
-    tint:             get-color-tint($danger)
-  ),
-  light: (
-    base:             $light,
-    contrast:         #000,
-    shade:            get-color-shade($light),
-    tint:             get-color-tint($light)
-  ),
-  medium: (
-    base:             $medium,
-    contrast:         #fff,
-    shade:            get-color-shade($medium),
-    tint:             get-color-tint($medium)
-  ),
-  dark: (
-    base:             $dark,
-    contrast:         #fff,
-    shade:            get-color-shade($dark),
-    tint:             get-color-tint($dark)
-  )
-);
-
 // Default General
 // --------------------------------------------------
 $content-margin:                    var(--ion-content-margin, 16px) !default;
@@ -150,8 +74,6 @@ $text-color-step-1000:              var(--ion-text-color-step-1000, mix($backgro
 $backdrop-color:                    var(--ion-backdrop-color, #000) !default;
 $border-color:                      var(--ion-border-color, #b2b2b2) !default;
 $box-shadow-color:                  var(--ion-box-shadow-color, #000) !default;
-$overlay-background-color:          var(--ion-overlay-background-color, #fafafa) !default;
-$ripple-background-color:           var(--ion-ripple-background-color, #000) !default;
 
 // Default Tabs & Tab bar
 // --------------------------------------------------
