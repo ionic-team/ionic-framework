@@ -9,6 +9,15 @@ ion-item {
   display: block;
 }
 
+.item.ion-color {
+  --background: #{current-color(base)};
+  --background-active: #{current-color(tint)};
+  --color: #{current-color(contrast)};
+  --paragraph-color: #{current-color(contrast)};
+  --border-color: #{current-color(shade)};
+  --detail-push-color: #{current-color(shade)};
+}
+
 .item {
   @include border-radius(0);
   @include margin(0);

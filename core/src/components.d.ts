@@ -2847,6 +2847,10 @@ declare global {
        */
       'detail': boolean;
       /**
+       * The icon to use when `detail` is set to `true`. Defaults to `"ios-arrow-forward"`.
+       */
+      'detailIcon': string;
+      /**
        * If true, the user cannot interact with the item. Defaults to `false`.
        */
       'disabled': boolean;
@@ -2900,6 +2904,10 @@ declare global {
        * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
        */
       'detail'?: boolean;
+      /**
+       * The icon to use when `detail` is set to `true`. Defaults to `"ios-arrow-forward"`.
+       */
+      'detailIcon'?: string;
       /**
        * If true, the user cannot interact with the item. Defaults to `false`.
        */
