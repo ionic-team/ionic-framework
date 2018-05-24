@@ -258,10 +258,10 @@ export class Input {
 }
 
 export declare interface Item extends StencilComponents.IonItem {}
-@Directive({selector: 'ion-item', inputs: ['color', 'mode', 'button', 'detail', 'disabled', 'href', 'lines', 'routerDirection']})
+@Directive({selector: 'ion-item', inputs: ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection']})
 export class Item {
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'button', 'detail', 'disabled', 'href', 'lines', 'routerDirection']);
+    proxyInputs(this, r, ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection']);
   }
 }
 
@@ -371,7 +371,7 @@ export class Nav {
   ionNavWillChange: EventEmitter<any>;
   ionNavDidChange: EventEmitter<any>;
   constructor(r: ElementRef) {
-    proxyMethods(this, r, ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'setRouteId', 'getRouteId', 'canGoBack', 'getActive', 'getByIndex', 'getPrevious', 'length']);
+    proxyMethods(this, r, ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'setRouteId', 'getRouteId', 'canGoBack', 'getActive', 'getByIndex', 'getPrevious', 'isAnimating', 'length']);
     proxyInputs(this, r, ['swipeBackEnabled', 'animated', 'delegate', 'rootParams', 'root']);
     proxyOutputs(this, ['ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
   }
