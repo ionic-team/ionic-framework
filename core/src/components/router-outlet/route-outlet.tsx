@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
-import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, NavOutlet, RouteID, RouteWrite, RouterOutletOptions } from '../../interface';
+import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, NavOutlet, QueueController, RouteID, RouteWrite, RouterOutletOptions } from '../../interface';
 import { transition } from '../../utils';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 
@@ -20,6 +20,7 @@ export class RouterOutlet implements NavOutlet {
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'window' }) win!: Window;
+  @Prop({ context: 'queue' }) queue!: QueueController;
 
   @Prop({ mutable: true }) animated?: boolean;
   @Prop() animationBuilder?: AnimationBuilder;
@@ -75,14 +76,16 @@ export class RouterOutlet implements NavOutlet {
 
     opts = opts || {};
 
+    const { mode, queue, animated, animationCtrl, win, el} = this;
     await transition({
-      mode: this.mode,
-      animated: this.animated,
-      animationCtrl: this.animationCtrl,
-      window: this.win,
+      mode,
+      queue,
+      animated,
+      animationCtrl,
+      window: win,
       enteringEl: enteringEl,
       leavingEl: leavingEl,
-      baseEl: this.el,
+      baseEl: el,
 
       ...opts
     });

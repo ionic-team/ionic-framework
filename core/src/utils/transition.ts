@@ -1,16 +1,22 @@
-import { ViewLifecycle } from '..';
+import { QueueController, ViewLifecycle } from '..';
 import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../interface';
 
 const iosTransitionAnimation = () => import('./animations/ios.transition');
 const mdTransitionAnimation = () => import('./animations/md.transition');
 
-export async function transition(opts: TransitionOptions): Promise<Animation|null> {
-  beforeTransition(opts);
+export function transition(opts: TransitionOptions): Promise<Animation|null> {
+  return new Promise((resolve) => {
+    opts.queue.write(async () => {
+      beforeTransition(opts);
 
-  const animationBuilder = await getAnimationBuilder(opts);
-  return (animationBuilder)
-    ? animation(animationBuilder, opts)
-    : noAnimation(opts); // fast path for no animation
+      const animationBuilder = await getAnimationBuilder(opts);
+      const ani = (animationBuilder)
+        ? animation(animationBuilder, opts)
+        : noAnimation(opts); // fast path for no animation
+
+      resolve(ani);
+    });
+  });
 }
 
 async function getAnimationBuilder(opts: TransitionOptions): Promise<AnimationBuilder | undefined> {
@@ -173,6 +179,7 @@ function setZIndex(
 
 export interface TransitionOptions extends NavOptions {
   animationCtrl: HTMLIonAnimationControllerElement;
+  queue: QueueController;
   progressCallback?: ((ani: Animation) => void);
   window: Window;
   baseEl: HTMLElement;

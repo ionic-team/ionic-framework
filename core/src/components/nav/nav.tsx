@@ -579,6 +579,7 @@ export class Nav implements NavOutlet {
       showGoBack: this.canGoBack(enteringView),
       animationCtrl: this.animationCtrl,
       progressCallback,
+      queue: this.queue,
       window: this.win,
       baseEl: this.el,
       enteringEl,
