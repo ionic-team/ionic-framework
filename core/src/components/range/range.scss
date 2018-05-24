@@ -3,29 +3,10 @@
 // Range
 // --------------------------------------------------
 
-.item ion-range .item-inner {
-  overflow: visible;
-
-  width: 100%;
-}
-
-.item ion-range .input-wrapper {
-  overflow: visible;
-
-  flex-direction: column;
-
-  width: 100%;
-}
-
-.item ion-range {
-  width: 100%;
-}
-
-.item ion-range ion-label {
-  align-self: center;
-}
-
 ion-range {
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
+
   position: relative;
   display: flex;
 
@@ -58,4 +39,29 @@ ion-range .range-slider {
   &:focus {
     outline: none;
   }
+}
+
+// Range in Item
+// ----------------------------
+
+.item ion-range .item-inner {
+  overflow: visible;
+
+  width: 100%;
+}
+
+.item ion-range .input-wrapper {
+  overflow: visible;
+
+  flex-direction: column;
+
+  width: 100%;
+}
+
+.item ion-range {
+  width: 100%;
+}
+
+.item ion-range ion-label {
+  align-self: center;
 }

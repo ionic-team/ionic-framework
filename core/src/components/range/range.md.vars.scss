@@ -28,7 +28,7 @@ $range-md-bar-height:                        2px !default;
 $range-md-bar-background-color:              $background-color-step-250 !default;
 
 /// @prop - Background of the active range bar
-$range-md-bar-active-background-color:       ion-color(primary, base) !default;
+$range-md-bar-active-background-color:       current-color(base) !default;
 
 /// @prop - Width of the range knob
 $range-md-knob-width:                        18px !default;

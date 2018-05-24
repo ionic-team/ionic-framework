@@ -28,7 +28,7 @@ $range-ios-bar-height:                        1px !default;
 $range-ios-bar-background-color:              $background-color-step-250 !default;
 
 /// @prop - Background of the active range bar
-$range-ios-bar-active-background-color:       ion-color(primary, base) !default;
+$range-ios-bar-active-background-color:       current-color(base) !default;
 
 /// @prop - Width of the range knob
 $range-ios-knob-width:                        28px !default;

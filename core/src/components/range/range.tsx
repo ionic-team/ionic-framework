@@ -1,6 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
 import { BaseInput, Color, GestureDetail, Mode, RangeInputChangeEvent, StyleEvent } from '../../interface';
 import { clamp, debounceEvent, deferEvent } from '../../utils/helpers';
+import { createThemedClasses } from '../../utils/theme';
 import { Knob, RangeEventDetail, RangeValue } from './range-interface';
 
 @Component({
@@ -293,6 +294,7 @@ export class Range implements BaseInput {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, this.color, 'range'),
         'range-disabled': this.disabled,
         'range-pressed': this.pressedKnob !== Knob.None,
         'range-has-pin': this.pin

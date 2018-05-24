@@ -131,18 +131,3 @@
 .range-ios.range-disabled {
   opacity: .5;
 }
-
-
-// Generate iOS Range Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($color-name, base);
-
-  .range-ios-#{$color-name} {
-    .range-bar-active,
-    .range-tick-active {
-      background: $color-base;
-    }
-  }
-}

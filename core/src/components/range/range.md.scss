@@ -187,22 +187,3 @@
     transform: scale(.55);
   }
 }
-
-
-// Generate Material Design Range Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  $color-base: ion-color($color-name, base);
-
-  .range-md-#{$color-name} {
-    @include md-range-min();
-
-    .range-bar-active,
-    .range-knob,
-    .range-pin,
-    .range-pin::before {
-      background: $color-base;
-    }
-  }
-}
