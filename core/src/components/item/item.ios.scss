@@ -5,6 +5,13 @@
 // --------------------------------------------------
 
 .item-ios {
+  --background: #{$item-ios-background-color};
+  --background-active: #{$item-ios-background-color-active};
+  --color: #{$item-ios-text-color};
+  --paragraph-color: #{$item-ios-paragraph-text-color};
+  --border-color: #{$item-ios-border-bottom-color};
+  --detail-push-color: #{$item-ios-detail-push-color};
+
   @include padding-horizontal($item-ios-padding-start, null);
   @include safe-area-padding-horizontal($item-ios-padding-start, null);
   @include border-radius(0);
@@ -14,13 +21,13 @@
   font-family: $item-ios-font-family;
 
   font-size: $item-ios-font-size;
-  color: $item-ios-text-color;
-  background-color: $item-ios-background-color;
+  color: var(--color);
+  background-color: var(--background);
   transition: background-color 200ms linear;
 }
 
 .item-ios.activated {
-  background-color: $item-ios-background-color-active;
+  background-color: var(--background-active);
   transition-duration: 0ms;
 }
 
@@ -57,7 +64,7 @@
   font-size: $item-ios-paragraph-font-size;
   line-height: normal;
   text-overflow: inherit;
-  color: $item-ios-paragraph-text-color;
+  color: var(--paragraph-color);
 }
 
 .item-ios h2:last-child,
@@ -85,7 +92,7 @@
 .item-ios .item-inner {
   border-bottom-width: 0;
   border-bottom-style: $item-ios-border-bottom-style;
-  border-bottom-color: $item-ios-border-bottom-color;
+  border-bottom-color: var(--border-color);
 }
 
 // Default item has inset border bottom
@@ -174,51 +181,8 @@
 // iOS Item Detail Push
 // --------------------------------------------------
 
-// Only show the forward arrow icon if true
-.item-ios.item-detail-push .item-inner {
-  $safe-area-position: calc(#{$item-ios-padding-end - 2} + constant(safe-area-inset-right));
-  $safe-area-position-env: calc(#{$item-ios-padding-end - 2} + env(safe-area-inset-right));
+.item-ios .item-detail-icon {
+  font-size: 20px;
 
-  @include item-push-svg-url($item-ios-detail-push-color);
-  @include padding-horizontal(null, 32px);
-  @include background-position(end, $item-ios-padding-end - 2, center);
-  @include background-position(end, $safe-area-position, center);
-  @include background-position(end, $safe-area-position-env, center);
-
-  background-repeat: no-repeat;
-  background-size: 14px 14px;
-}
-
-
-// Generate iOS Item and Item Divider Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($color-name, base);
-  $color-contrast: ion-color($color-name, contrast);
-  $color-shade: ion-color($color-name, shade);
-  $color-tint: ion-color($color-name, tint);
-
-  .item-ios-#{$color-name} {
-    border-bottom-color: $color-shade;
-
-    color: $color-contrast;
-    background-color: $color-base;
-
-    .item-inner {
-      border-bottom-color: $color-shade;
-    }
-
-    p {
-      color: $color-contrast;
-    }
-
-    &.activated {
-      background-color: $color-tint;
-    }
-  }
-
-  .item-ios-#{$color-name}.item-detail-push .item-inner {
-    @include item-push-svg-url($color-shade);
-  }
+  color: var(--detail-push-color);
 }

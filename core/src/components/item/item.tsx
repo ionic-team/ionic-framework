@@ -44,6 +44,11 @@ export class Item {
   @Prop() detail?: boolean;
 
   /**
+   * The icon to use when `detail` is set to `true`. Defaults to `"ios-arrow-forward"`.
+   */
+  @Prop() detailIcon = 'ios-arrow-forward';
+
+  /**
    * If true, the user cannot interact with the item. Defaults to `false`.
    */
   @Prop() disabled = false;
@@ -102,6 +107,12 @@ export class Item {
     }
   }
 
+  hostData() {
+    return {
+      // class: createThemedClasses(this.mode, this.color, 'item')
+    };
+  }
+
   render() {
     const childStyles = {};
     for (const key in this.itemStyles) {
@@ -124,8 +135,8 @@ export class Item {
       ...childStyles,
       ...createThemedClasses(this.mode, this.color, 'item'),
       ...getElementClassMap(this.el.classList),
+      'item-native': true,
       'item-disabled': this.disabled,
-      'item-detail-push': showDetail,
       [`item-lines-${this.lines}`]: !!this.lines,
       [`item-${this.mode}-lines-${this.lines}`]: !!this.lines
     };
@@ -141,6 +152,7 @@ export class Item {
             <slot></slot>
           </div>
           <slot name="end"></slot>
+          { showDetail && <ion-icon icon={this.detailIcon} class="item-detail-icon"></ion-icon> }
         </div>
         { clickable && this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </TagType>

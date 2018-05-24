@@ -5,6 +5,13 @@
 // --------------------------------------------------
 
 .item-md {
+  --background: #{$item-md-background-color};
+  --background-active: #{$item-md-background-color-active};
+  --color: #{$item-md-text-color};
+  --paragraph-color: #{$item-md-paragraph-text-color};
+  --border-color: #{$item-md-border-bottom-color};
+  --detail-push-color: #{$item-md-detail-push-color};
+
   @include padding-horizontal($item-md-padding-start, null);
 
   position: relative;
@@ -14,8 +21,8 @@
   font-weight: normal;
   text-transform: none;
 
-  color: $item-md-text-color;
-  background-color: $item-md-background-color;
+  color: var(--color);
+  background-color: var(--background);
   box-shadow: none;
   transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
 }
@@ -25,7 +32,7 @@
 }
 
 .item-md.activated {
-  background-color: $item-md-background-color-active;
+  background-color: var(--background-active);
 }
 
 .item-md h1 {
@@ -61,7 +68,7 @@
   font-size: 14px;
   line-height: normal;
   text-overflow: inherit;
-  color: $item-md-paragraph-text-color;
+  color: var(--paragraph-color);
 }
 
 
@@ -73,7 +80,7 @@
 .item-md .item-inner {
   border-bottom-width: 0;
   border-bottom-style: $item-md-border-bottom-style;
-  border-bottom-color: $item-md-border-bottom-color;
+  border-bottom-color: var(--border-color);
 }
 
 // Default input items have a border
@@ -102,14 +109,10 @@
 // Material Design Item Detail Push
 // --------------------------------------------------
 
-// Only show the forward arrow icon if true
-.item-md.item-detail-push .item-inner {
-  @include item-push-svg-url($item-md-detail-push-color);
-  @include padding-horizontal(null, 32px);
-  @include background-position(end, $item-md-padding-end - 2, center);
+.item-md .item-detail-icon {
+  font-size: 20px;
 
-  background-repeat: no-repeat;
-  background-size: 14px 14px;
+  color: var(--detail-push-color);
 }
 
 
@@ -180,38 +183,4 @@
 .item-md ion-thumbnail {
   width: $item-md-thumbnail-width;
   height: $item-md-thumbnail-height;
-}
-
-
-// Generate Material Design Item and Item Divider Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  $color-base: ion-color($color-name, base);
-  $color-contrast: ion-color($color-name, contrast);
-  $color-shade: ion-color($color-name, shade);
-  $color-tint: ion-color($color-name, tint);
-
-  .item-md-#{$color-name} {
-    border-bottom-color: $color-shade;
-
-    color: $color-contrast;
-    background-color: $color-base;
-
-    .item-inner {
-      border-bottom-color: $color-shade;
-    }
-
-    p {
-      color: $color-contrast;
-    }
-
-    &.activated {
-      background-color: $color-tint;
-    }
-  }
-
-  .item-md-#{$color-name}.item-detail-push .item-inner {
-    @include item-push-svg-url($color-shade);
-  }
 }
