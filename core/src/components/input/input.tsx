@@ -61,6 +61,11 @@ export class Input implements InputComponent {
   @Event() ionInputDidUnload!: EventEmitter<void>;
 
   /**
+   * If the value of the type attribute is `"inputid"`, then this attribute will add child component `input` id attribute.
+   */
+  @Prop() labelId?: string;
+
+  /**
    * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
    */
   @Prop() accept?: string;
@@ -315,6 +320,7 @@ export class Input implements InputComponent {
 
     return [
       <input
+        id={this.labelId}
         ref={input => this.nativeInput = input as any}
         aria-disabled={this.disabled ? 'true' : false}
         accept={this.accept}

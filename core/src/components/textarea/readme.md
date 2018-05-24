@@ -171,6 +171,7 @@ Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `
 
 ## Attributes
 
+
 #### autocapitalize
 
 string
@@ -219,6 +220,11 @@ boolean
 
 If true, the user cannot interact with the textarea. Defaults to `false`.
 
+#### labelId
+
+string
+
+If you set value, this value set component id attribute.
 
 #### maxlength
 

@@ -51,6 +51,11 @@ export class Textarea implements TextareaComponent {
   @Event() ionFocus!: EventEmitter<void>;
 
   /**
+   * If the value of the type attribute is `"inputid"`, then this attribute will add child component `input` id attribute.
+   */
+  @Prop() labelId?: string;
+
+  /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
    */
   @Prop() autocapitalize = 'none';
@@ -244,6 +249,7 @@ export class Textarea implements TextareaComponent {
 
     return (
       <textarea
+        id={this.labelId}
         autoCapitalize={this.autocapitalize}
         // autoComplete={this.autocomplete}
         autoFocus={this.autofocus}

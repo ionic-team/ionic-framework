@@ -12,6 +12,7 @@ export interface InputBaseComponent {
   didBlurAfterEdit: boolean;
 
   // Shared Attributes
+  labelId?: string;
   autocapitalize?: string;
   autocomplete?: string;
   autofocus?: boolean;
