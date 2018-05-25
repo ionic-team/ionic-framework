@@ -39,6 +39,10 @@ exports.config = {
   outputTargets: [
     {
       type: 'dist'
+    },
+    {
+      type: 'stats',
+      file: 'stats.json'
     }
   ],
   copy: [{ src: '**/*.scss' }],
