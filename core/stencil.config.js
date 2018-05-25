@@ -47,7 +47,6 @@ exports.config = {
   copy: [{ src: '**/*.scss' }],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',
-  buildStats: true,
   enableCache: false,
 };
 
