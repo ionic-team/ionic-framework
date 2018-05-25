@@ -17,7 +17,7 @@ The `virtualScroll` and `*virtualItem` properties can be added to any element.
 ```html
 <ion-list [virtualScroll]="items">
   <ion-item *virtualItem="let item">
-    {% raw %}{{ item }}{% endraw %}
+    {{ item }}
   </ion-item>
 </ion-list>
 ```

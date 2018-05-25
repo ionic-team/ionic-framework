@@ -6,6 +6,7 @@ const stencilPath = path.join(__dirname, '..', '..', 'core', 'node_modules', '.b
 
 
 function buildIonicAngular() {
+<<<<<<< HEAD
   return new Promise((resolve, reject) => {
 
     const cmd = 'stencil';
@@ -25,6 +26,45 @@ function buildIonicAngular() {
         resolve();
       }
     });
+=======
+  const cmd = 'stencil';
+  const args = [
+    'build',
+    '--config',
+    path.join(__dirname, '..', 'stencil.config.js'),
+    ...process.argv.slice(2)
+  ];
+
+  console.log(cmd, args.join(' '));
+
+  const p = spawn('./stencil', args, { cwd: stencilPath, stdio: 'inherit' });
+  p.on('close', (code) => {
+    if (code > 0) {
+      console.log(`@ionic/angular build exited with ${code}`);
+    }
+  });
+}
+
+function buildIonicCore() {
+  const cmd = 'stencil';
+  const args = [
+    'build',
+    '--config',
+    path.join(__dirname, '..', '..', 'core', 'stencil.config.js'),
+    ...process.argv.slice(2)
+  ];
+
+  console.log(cmd, args.join(' '));
+
+  const p = spawn('./stencil', args, { cwd: stencilPath, stdio: 'inherit' });
+  p.on('close', (code) => {
+    if (code > 0) {
+      console.log(`@ionic/core build exited with ${code}`);
+    } else {
+      copyIonicCore();
+      copyIonicons();
+    }
+>>>>>>> master
   });
 }
 
@@ -44,6 +84,10 @@ function copyCSS() {
   fs.copySync(src, dst);
 }
 
+<<<<<<< HEAD
 copyIonicons();
 copyCSS();
+=======
+buildIonicCore();
+>>>>>>> master
 buildIonicAngular();

@@ -38,7 +38,7 @@ export class Datetime {
   private inputId = `ion-dt-${datetimeIds++}`;
   private labelId = `${this.inputId}-lbl`;
 
-  private picker?: HTMLIonPickerElement;
+  private picker?: HTMLIonPickerElement | null;
 
   locale: LocaleData = {};
   datetimeMin: DatetimeData = {};
@@ -286,8 +286,10 @@ export class Datetime {
     }
     const pickerOptions = {...this.pickerOptions};
     this.picker = await this.buildPicker(pickerOptions);
-    this.validate();
-    await this.picker.present();
+    if (this.picker) {
+      this.validate();
+      await this.picker.present();
+    }
   }
 
   private generateColumns(): PickerColumn[] {

@@ -35,9 +35,15 @@ exports.config = {
   plugins: [
     sass(),
   ],
-  outputTargets: [{
-    type: 'dist',
-  }],
+  outputTargets: [
+    {
+      type: 'dist'
+    },
+    {
+      type: 'stats',
+      file: 'stats.json'
+    }
+  ],
   copy: [{ src: '**/*.scss' }],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',

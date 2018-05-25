@@ -32,7 +32,7 @@ export class LoadingController implements OverlayController {
    * Create a loading overlay with loading options.
    */
   @Method()
-  create(opts?: LoadingOptions): Promise<HTMLIonLoadingElement> {
+  create(opts?: LoadingOptions): Promise<HTMLIonLoadingElement | null> {
     return createOverlay(this.doc.createElement('ion-loading'), opts);
   }
 

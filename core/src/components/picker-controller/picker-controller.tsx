@@ -32,7 +32,7 @@ export class PickerController implements OverlayController {
    * Create a picker overlay with picker options.
    */
   @Method()
-  create(opts?: PickerOptions): Promise<HTMLIonPickerElement> {
+  create(opts?: PickerOptions): Promise<HTMLIonPickerElement | null> {
     return createOverlay(this.doc.createElement('ion-picker'), opts);
   }
 

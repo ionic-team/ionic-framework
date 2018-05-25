@@ -31,7 +31,7 @@ export class ActionSheetController implements OverlayController {
    * Create an action sheet overlay with action sheet options.
    */
   @Method()
-  create(opts?: ActionSheetOptions): Promise<HTMLIonActionSheetElement> {
+  create(opts?: ActionSheetOptions): Promise<HTMLIonActionSheetElement | null> {
     return createOverlay(this.doc.createElement('ion-action-sheet'), opts);
   }
 
