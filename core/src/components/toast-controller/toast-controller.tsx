@@ -32,7 +32,7 @@ export class ToastController implements OverlayController {
    * Create a toast overlay with toast options.
    */
   @Method()
-  create(opts?: ToastOptions): Promise<HTMLIonToastElement> {
+  create(opts?: ToastOptions): Promise<HTMLIonToastElement | null> {
     return createOverlay(this.doc.createElement('ion-toast'), opts);
   }
 

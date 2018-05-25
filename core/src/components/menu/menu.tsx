@@ -27,7 +27,7 @@ export class Menu {
   backdropEl?: HTMLElement;
   menuInnerEl?: HTMLElement;
   contentEl?: HTMLElement;
-  menuCtrl?: HTMLIonMenuControllerElement;
+  menuCtrl?: HTMLIonMenuControllerElement | null;
 
   @Element() el!: HTMLIonMenuElement;
 
