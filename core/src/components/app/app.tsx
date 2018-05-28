@@ -1,15 +1,13 @@
 import { Component, Element, Prop } from '@stencil/core';
 import { Config, Mode, QueueController } from '../../interface';
 import { isDevice, isHybrid, needInputShims } from '../../utils/platform';
+import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-app',
   styleUrls: {
     ios: 'app.ios.scss',
     md: 'app.md.scss'
-  },
-  host: {
-    theme: 'app'
   }
 })
 export class App {
@@ -34,6 +32,7 @@ export class App {
     return {
       class: {
         [this.mode]: true,
+        ...createThemedClasses(this.mode, undefined, 'app'),
         'statusbar-padding': statusBar
       }
     };

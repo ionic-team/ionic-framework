@@ -162,8 +162,8 @@ export function isCancel(role: string|undefined): boolean {
   return role === 'cancel' || role === BACKDROP;
 }
 
-export interface OverlayEventDetail {
-  data?: any;
+export interface OverlayEventDetail<T = any> {
+  data?: T;
   role?: string;
 }
 

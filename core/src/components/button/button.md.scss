@@ -9,7 +9,7 @@
   font-size: #{$button-md-font-size};
   font-weight: #{$button-md-font-weight};
 
-  --text-transform: #{$button-md-text-transform};
+  text-transform: #{$button-md-text-transform};
 
   --transition: box-shadow #{$button-md-transition-duration} #{$button-md-transition-timing-function},
               background-color #{$button-md-transition-duration} #{$button-md-transition-timing-function},

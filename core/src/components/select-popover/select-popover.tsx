@@ -12,11 +12,8 @@ export class SelectPopover {
   mode!: Mode;
 
   @Prop() header?: string;
-
   @Prop() subHeader?: string;
-
   @Prop() message?: string;
-
   @Prop() options: SelectPopoverOption[] = [];
 
   @Listen('ionSelect')

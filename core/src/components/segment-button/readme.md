@@ -28,14 +28,6 @@ Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"wa
 boolean
 
 
-#### href
-
-string
-
-Contains a URL or a URL fragment that the hyperlink points to.
-If this property is set, an anchor tag will be rendered.
-
-
 #### mode
 
 string
@@ -71,14 +63,6 @@ Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"wa
 #### disabled
 
 boolean
-
-
-#### href
-
-string
-
-Contains a URL or a URL fragment that the hyperlink points to.
-If this property is set, an anchor tag will be rendered.
 
 
 #### mode

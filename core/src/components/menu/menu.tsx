@@ -1,15 +1,13 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { Animation, Color, Config, GestureDetail, MenuChangeEventDetail, Mode } from '../../interface';
 import { Side, assert, isEndSide } from '../../utils/helpers';
+import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-menu',
   styleUrls: {
     ios: 'menu.ios.scss',
     md: 'menu.md.scss'
-  },
-  host: {
-    theme: 'menu'
   }
 })
 export class Menu {
@@ -422,6 +420,7 @@ export class Menu {
     return {
       role: 'complementary',
       class: {
+        ...createThemedClasses(this.mode, this.color, 'menu'),
         [`menu-type-${this.type}`]: true,
         'menu-enabled': !this.disabled,
         'menu-side-right': isEndSide,

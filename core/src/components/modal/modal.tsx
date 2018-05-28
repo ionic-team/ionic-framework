@@ -16,9 +16,6 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'modal.ios.scss',
     md: 'modal.md.scss'
-  },
-  host: {
-    theme: 'modal'
   }
 })
 export class Modal implements OverlayInterface {
@@ -218,7 +215,10 @@ export class Modal implements OverlayInterface {
   hostData() {
     return {
       'no-router': true,
-      class: getClassMap(this.cssClass),
+      class: {
+        ...createThemedClasses(this.mode, this.color, 'modal'),
+        ...getClassMap(this.cssClass)
+      },
       style: {
         zIndex: 20000 + this.overlayId,
       }

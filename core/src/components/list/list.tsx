@@ -1,14 +1,12 @@
 import { Component, Method, Prop } from '@stencil/core';
 import { Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-list',
   styleUrls: {
     ios: 'list.ios.scss',
     md: 'list.md.scss'
-  },
-  host: {
-    theme: 'list'
   }
 })
 export class List {
@@ -53,6 +51,7 @@ export class List {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, undefined, 'list'),
         [`list-lines-${this.lines}`]: !!this.lines,
         [`list-${this.mode}-lines-${this.lines}`]: !!this.lines
       }

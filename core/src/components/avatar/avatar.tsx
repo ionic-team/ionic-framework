@@ -6,9 +6,6 @@ import { Component } from '@stencil/core';
   styleUrls: {
     ios: 'avatar.ios.scss',
     md: 'avatar.md.scss'
-  },
-  host: {
-    theme: 'avatar'
   }
 })
 export class Avatar {}

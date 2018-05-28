@@ -14,9 +14,6 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'loading.ios.scss',
     md: 'loading.md.scss'
-  },
-  host: {
-    theme: 'loading'
   }
 })
 export class Loading implements OverlayInterface {
@@ -197,6 +194,7 @@ export class Loading implements OverlayInterface {
         zIndex: 20000 + this.overlayId,
       },
       class: {
+        ...createThemedClasses(this.mode, this.color, 'loading'),
         ...themedClasses,
         ...getClassMap(this.cssClass)
       }

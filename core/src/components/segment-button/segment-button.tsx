@@ -1,15 +1,11 @@
 import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 import { Color, Mode } from '../../interface';
-import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 
 let ids = 0;
 
 @Component({
   tag: 'ion-segment-button',
-  styleUrls: {
-    ios: 'segment-button.ios.scss',
-    md: 'segment-button.md.scss'
-  }
+  styleUrl: 'segment-button.scss'
 })
 export class SegmentButton {
 
@@ -38,12 +34,6 @@ export class SegmentButton {
   @Prop() disabled = false;
 
   /**
-   * Contains a URL or a URL fragment that the hyperlink points to.
-   * If this property is set, an anchor tag will be rendered.
-   */
-  @Prop() href?: string;
-
-  /**
    * The value of the segment button.
    */
   @Prop() value: string = 'ion-sb-' + (ids++);
@@ -60,33 +50,29 @@ export class SegmentButton {
     }
   }
 
-  render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'segment-button');
-    const hostClasses = getElementClassMap(this.el.classList);
-
-    const buttonClasses = {
-      'segment-button-disabled': this.disabled,
-      'segment-checked': this.checked,
-      ...themedClasses,
-      ...hostClasses,
+  hostData() {
+    const { disabled, checked, color } = this;
+    return {
+      class: {
+        'segment-button-disabled': disabled,
+        'segment-checked': checked,
+        'ion-color': !!color,
+        [`ion-color-${color}`]: !!color
+      },
+      'tappable': ''
     };
+  }
 
-    const TagType = this.href ? 'a' : 'button';
-    const attrs = (TagType === 'button')
-      ? {type: 'button'}
-      : {};
-
+  render() {
     return [
-      <TagType
-       {...attrs}
+      <button
         aria-pressed={this.checked}
-        class={buttonClasses}
+        class="segment-button-native"
         disabled={this.disabled}
-        href={this.href}
         onClick={() => this.checked = true }>
           <slot></slot>
-          { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
-      </TagType>
+          { this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el}/> }
+      </button>
     ];
   }
 }

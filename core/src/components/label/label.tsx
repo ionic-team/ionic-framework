@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import { Color, Mode, StyleEvent } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
@@ -7,9 +8,6 @@ import { Color, Mode, StyleEvent } from '../../interface';
   styleUrls: {
     ios: 'label.ios.scss',
     md: 'label.md.scss'
-  },
-  host: {
-    theme: 'label'
   }
 })
 export class Label {
@@ -62,6 +60,7 @@ export class Label {
     const position = this.position;
     return {
       class: {
+        ...createThemedClasses(this.mode, this.color, 'label'),
         [`label-${position}`]: !!position,
         [`label-${this.mode}-${position}`]: !!position
       }

@@ -13,9 +13,6 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'action-sheet.ios.scss',
     md: 'action-sheet.md.scss'
-  },
-  host: {
-    theme: 'action-sheet'
   }
 })
 export class ActionSheet implements OverlayInterface {
@@ -208,13 +205,13 @@ export class ActionSheet implements OverlayInterface {
 
   hostData() {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'action-sheet-translucent') : {};
-
     return {
       style: {
         zIndex: 20000 + this.overlayId,
       },
       class: {
         ...themedClasses,
+        ...createThemedClasses(this.mode, this.color, 'action-sheet'),
         ...getClassMap(this.cssClass)
       }
     };

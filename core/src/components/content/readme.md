@@ -38,10 +38,16 @@ to transparent.
 
 boolean
 
+By default `ion-content` uses an `ion-scroll` under the hood to implement scrolling,
+if you want to disable the content scrolling for a given page, set this property to `false`.
+
 
 #### scrollEvents
 
 boolean
+
+Because of performance reasons, ionScroll events are disabled by default, in order to enable them
+and start listening from (ionScroll), set this property to `true`.
 
 
 ## Attributes
@@ -68,10 +74,16 @@ to transparent.
 
 boolean
 
+By default `ion-content` uses an `ion-scroll` under the hood to implement scrolling,
+if you want to disable the content scrolling for a given page, set this property to `false`.
+
 
 #### scroll-events
 
 boolean
+
+Because of performance reasons, ionScroll events are disabled by default, in order to enable them
+and start listening from (ionScroll), set this property to `true`.
 
 
 ## Methods

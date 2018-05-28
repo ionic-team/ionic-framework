@@ -25,6 +25,9 @@ string
 
 boolean
 
+Because of performance reasons, ionScroll events are disabled by default, in order to enable them
+and start listening from (ionScroll), set this property to `true`.
+
 
 ## Attributes
 
@@ -45,6 +48,9 @@ string
 #### scroll-events
 
 boolean
+
+Because of performance reasons, ionScroll events are disabled by default, in order to enable them
+and start listening from (ionScroll), set this property to `true`.
 
 
 ## Events

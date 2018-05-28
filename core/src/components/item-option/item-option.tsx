@@ -1,12 +1,10 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
   tag: 'ion-item-option',
-  host: {
-    theme: 'item-option'
-  },
   styleUrls: {
     ios: 'item-option.ios.scss',
     md: 'item-option.md.scss'
@@ -51,6 +49,7 @@ export class ItemOption {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, this.color, 'item-option'),
         'item-option-expandable': this.expandable
       }
     };

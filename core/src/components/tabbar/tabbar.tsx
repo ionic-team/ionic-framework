@@ -10,9 +10,6 @@ export type TabbarPlacement = 'top' | 'bottom';
   styleUrls: {
     ios: 'tabbar.ios.scss',
     md: 'tabbar.md.scss'
-  },
-  host: {
-    theme: 'tabbar'
   }
 })
 export class Tabbar {
@@ -173,6 +170,7 @@ export class Tabbar {
     return {
       role: 'tablist',
       class: {
+        ...createThemedClasses(this.mode, this.color, 'tabbar'),
         ...themedClasses,
         [`layout-${this.layout}`]: true,
         [`placement-${this.placement}`]: true,

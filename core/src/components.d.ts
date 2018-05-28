@@ -29,6 +29,7 @@ import {
   ActionSheetButton,
   ActionSheetOptions,
   AlertButton,
+  AlertEventDetailData,
   AlertInput,
   AlertOptions,
   Animation,
@@ -175,11 +176,11 @@ declare global {
       /**
        * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await actionSheet.onDidDismiss(); ```
        */
-      'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await actionSheet.onWillDismiss(); ```
        */
-      'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Unique ID to be used with the overlay. Internal only
        */
@@ -337,7 +338,7 @@ declare global {
       /**
        * Array of buttons to be added to the alert.
        */
-      'buttons': AlertButton[];
+      'buttons': (AlertButton | string)[];
       /**
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
@@ -375,11 +376,11 @@ declare global {
       /**
        * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await alert.onDidDismiss(); ```
        */
-      'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
       /**
        * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await alert.onWillDismiss(); ```
        */
-      'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
       'overlayId': number;
       /**
        * Present the alert overlay after it has been created.
@@ -422,7 +423,7 @@ declare global {
       /**
        * Array of buttons to be added to the alert.
        */
-      'buttons'?: AlertButton[];
+      'buttons'?: (AlertButton | string)[];
       /**
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
@@ -456,7 +457,7 @@ declare global {
       /**
        * Emitted after the alert has dismissed.
        */
-      'onIonAlertDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      'onIonAlertDidDismiss'?: (event: CustomEvent<AlertEventDetailData>) => void;
       /**
        * Emitted after the alert has presented.
        */
@@ -472,7 +473,7 @@ declare global {
       /**
        * Emitted before the alert has dismissed.
        */
-      'onIonAlertWillDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
+      'onIonAlertWillDismiss'?: (event: CustomEvent<AlertEventDetailData>) => void;
       /**
        * Emitted before the alert has presented.
        */
@@ -1488,7 +1489,13 @@ declare global {
        */
       'fullscreen': boolean;
       'scrollByPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
+      /**
+       * By default `ion-content` uses an `ion-scroll` under the hood to implement scrolling, if you want to disable the content scrolling for a given page, set this property to `false`.
+       */
       'scrollEnabled': boolean;
+      /**
+       * Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.
+       */
       'scrollEvents': boolean;
       /**
        * Scroll to the bottom of the content component.  Duration of the scroll animation in milliseconds. Defaults to `300`. Returns a promise which is resolved when the scroll has completed.
@@ -1529,7 +1536,13 @@ declare global {
        * If true, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.
        */
       'fullscreen'?: boolean;
+      /**
+       * By default `ion-content` uses an `ion-scroll` under the hood to implement scrolling, if you want to disable the content scrolling for a given page, set this property to `false`.
+       */
       'scrollEnabled'?: boolean;
+      /**
+       * Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.
+       */
       'scrollEvents'?: boolean;
     }
   }
@@ -3166,11 +3179,11 @@ declare global {
       /**
        * Returns a promise that resolves when the loading did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await loading.onDidDismiss(); ```
        */
-      'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Returns a promise that resolves when the loading will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await loading.onWillDismiss(); ```
        */
-      'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       'overlayId': number;
       /**
        * Present the loading overlay after it has been created.
@@ -3634,11 +3647,11 @@ declare global {
       /**
        * Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await modal.onDidDismiss(); ```
        */
-      'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Returns a promise that resolves when the modal will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await modal.onWillDismiss(); ```
        */
-      'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       'overlayId': number;
       /**
        * Present the modal overlay after it has been created.
@@ -4069,11 +4082,11 @@ declare global {
       /**
        * Returns a promise that resolves when the picker did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await picker.onDidDismiss(); ```
        */
-      'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Returns a promise that resolves when the picker will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await picker.onWillDismiss(); ```
        */
-      'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       'overlayId': number;
       /**
        * Present the picker overlay after it has been created.
@@ -4260,11 +4273,11 @@ declare global {
       /**
        * Returns a promise that resolves when the popover did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await popover.onDidDismiss(); ```
        */
-      'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Returns a promise that resolves when the popover will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await popover.onWillDismiss(); ```
        */
-      'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       'overlayId': number;
       /**
        * Present the popover overlay after it has been created.
@@ -5257,6 +5270,9 @@ declare global {
       'forceOverscroll': boolean;
       'mode': Mode;
       'scrollByPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
+      /**
+       * Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.
+       */
       'scrollEvents': boolean;
       'scrollToBottom': (duration: number) => Promise<void>;
       'scrollToPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
@@ -5300,6 +5316,9 @@ declare global {
        * Emitted when the scroll has started.
        */
       'onIonScrollStart'?: (event: CustomEvent<ScrollBaseDetail>) => void;
+      /**
+       * Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.
+       */
       'scrollEvents'?: boolean;
     }
   }
@@ -5471,10 +5490,6 @@ declare global {
       'color': Color;
       'disabled': boolean;
       /**
-       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-       */
-      'href': string;
-      /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
@@ -5513,10 +5528,6 @@ declare global {
        */
       'color'?: Color;
       'disabled'?: boolean;
-      /**
-       * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
-       */
-      'href'?: string;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
@@ -6945,11 +6956,11 @@ declare global {
       /**
        * Returns a promise that resolves when the toast did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await toast.onDidDismiss(); ```
        */
-      'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Returns a promise that resolves when the toast will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await toast.onWillDismiss(); ```
        */
-      'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       'overlayId': number;
       /**
        * The position of the toast on the screen. Possible values: "top", "middle", "bottom".

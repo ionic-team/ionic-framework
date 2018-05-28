@@ -9,9 +9,6 @@ import { createThemedClasses } from '../../utils/theme';
   styleUrls: {
     ios: 'radio.ios.scss',
     md: 'radio.md.scss'
-  },
-  host: {
-    theme: 'radio'
   }
 })
 export class Radio implements RadioButtonInput {

@@ -10,9 +10,6 @@ import { createThemedClasses } from '../../utils/theme';
   styleUrls: {
     ios: 'searchbar.ios.scss',
     md: 'searchbar.md.scss'
-  },
-  host: {
-    theme: 'searchbar'
   }
 })
 export class Searchbar {
@@ -326,6 +323,8 @@ export class Searchbar {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, this.color, 'searchbar'),
+
         'searchbar-active': this.activated,
         'searchbar-animated': this.animated,
         'searchbar-has-value': (this.value !== ''),

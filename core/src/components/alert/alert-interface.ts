@@ -1,3 +1,9 @@
+import { OverlayEventDetail } from '../../utils/overlays';
+
+export type AlertEventDetailData = OverlayEventDetail<{
+  values?: any;
+  [key: string]: any;
+}>;
 
 export interface AlertOptions {
   header?: string;
@@ -29,5 +35,5 @@ export interface AlertButton {
   text: string;
   role?: string;
   cssClass?: string | string[];
-  handler?: (value: any) => boolean|void;
+  handler?: (value: any) => boolean | void | {[key: string]: any};
 }

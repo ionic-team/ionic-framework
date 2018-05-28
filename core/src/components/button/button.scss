@@ -48,7 +48,7 @@
   line-height: 1;
   text-decoration: none;
   text-overflow: ellipsis;
-  text-transform: var(--text-transform);
+  text-transform: inherit;
   white-space: nowrap;
   color: inherit;
   background: var(--background);

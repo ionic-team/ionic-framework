@@ -1,14 +1,12 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { Config, GestureDetail, Mode, QueueController } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-scroll',
   styleUrls: {
     ios: 'scroll.ios.scss',
     md: 'scroll.md.scss'
-  },
-  host: {
-    theme: 'scroll'
   }
 })
 export class Scroll {
@@ -249,6 +247,7 @@ export class Scroll {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, undefined, 'scroll'),
         overscroll: this.forceOverscroll
       }
     };

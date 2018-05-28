@@ -15,9 +15,6 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'toast.ios.scss',
     md: 'toast.md.scss'
-  },
-  host: {
-    theme: 'toast'
   }
 })
 export class Toast implements OverlayInterface {
@@ -190,6 +187,7 @@ export class Toast implements OverlayInterface {
     return {
       class: {
         ...themedClasses,
+        ...createThemedClasses(this.mode, this.color, 'toast'),
         ...getClassMap(this.cssClass)
       }
     };

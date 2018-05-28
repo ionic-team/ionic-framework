@@ -1,5 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
@@ -7,9 +8,6 @@ import { Color, Mode } from '../../interface';
   styleUrls: {
     ios: 'chip.ios.scss',
     md: 'chip.md.scss'
-  },
-  host: {
-    theme: 'chip'
   }
 })
 export class Chip {
@@ -25,4 +23,9 @@ export class Chip {
    */
   @Prop() mode!: Mode;
 
+  hostData() {
+    return {
+      class: createThemedClasses(this.mode, this.color, 'chip'),
+    };
+  }
 }
