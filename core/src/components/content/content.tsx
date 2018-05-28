@@ -35,8 +35,16 @@ export class Content {
    */
   @Prop() forceOverscroll?: boolean;
 
+  /**
+   * By default `ion-content` uses an `ion-scroll` under the hood to implement scrolling,
+   * if you want to disable the content scrolling for a given page, set this property to `false`.
+   */
   @Prop() scrollEnabled = true;
 
+  /**
+   * Because of performance reasons, ionScroll events are disabled by default, in order to enable them
+   * and start listening from (ionScroll), set this property to `true`.
+   */
   @Prop() scrollEvents = false;
 
   @Listen('body:ionNavDidChange')

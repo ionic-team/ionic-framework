@@ -58,7 +58,7 @@ export class Tab {
   /**
    * If true, the tab will be selected. Defaults to `false`.
    */
-  @Prop({ mutable: true }) selected = false;
+  @Prop() selected = false;
 
   @Watch('selected')
   selectedChanged(selected: boolean) {

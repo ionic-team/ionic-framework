@@ -21,7 +21,7 @@ export class Scroll {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'config'}) config!: Config;
+  @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'queue' }) queue!: QueueController;
   @Prop({ context: 'window' }) win!: Window;
 
@@ -35,6 +35,10 @@ export class Scroll {
    */
   @Prop({ mutable: true }) forceOverscroll?: boolean;
 
+  /**
+   * Because of performance reasons, ionScroll events are disabled by default, in order to enable them
+   * and start listening from (ionScroll), set this property to `true`.
+   */
   @Prop() scrollEvents = false;
 
   /**
@@ -46,7 +50,7 @@ export class Scroll {
    * Emitted while scrolling. This event is disabled by default.
    * Look at the property: `scrollEvents`
    */
-  @Event({bubbles: false}) ionScroll!: EventEmitter<ScrollDetail>;
+  @Event() ionScroll!: EventEmitter<ScrollDetail>;
 
   /**
    * Emitted when the scroll has ended.

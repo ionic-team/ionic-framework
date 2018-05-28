@@ -306,7 +306,7 @@ export class Input implements InputComponent {
   }
 
   private hasValue(): boolean {
-    return (this.value !== '');
+    return !!this.value;
   }
 
   render() {
