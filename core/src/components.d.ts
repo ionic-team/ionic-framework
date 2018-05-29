@@ -106,7 +106,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonActionSheetController {
-      'create': (opts?: ActionSheetOptions | undefined) => Promise<HTMLIonActionSheetElement | null>;
+      'create': (opts?: ActionSheetOptions | undefined) => Promise<HTMLIonActionSheetElement>;
       'dismiss': (data?: any, role?: string | undefined, actionSheetId?: number) => Promise<void>;
       'getTop': () => HTMLIonActionSheetElement;
     }
@@ -300,7 +300,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonAlertController {
-      'create': (opts?: AlertOptions | undefined) => Promise<HTMLIonAlertElement | null>;
+      'create': (opts?: AlertOptions | undefined) => Promise<HTMLIonAlertElement>;
       'dismiss': (data?: any, role?: string | undefined, alertId?: number) => Promise<void>;
       'getTop': () => HTMLIonAlertElement;
     }
@@ -3108,7 +3108,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonLoadingController {
-      'create': (opts?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement | null>;
+      'create': (opts?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>;
       'dismiss': (data?: any, role?: string | undefined, loadingId?: number) => Promise<void>;
       'getTop': () => HTMLIonLoadingElement;
     }
@@ -3571,7 +3571,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonModalController {
-      'create': (opts?: ModalOptions | undefined) => Promise<HTMLIonModalElement | null>;
+      'create': (opts?: ModalOptions | undefined) => Promise<HTMLIonModalElement>;
       'dismiss': (data?: any, role?: string | undefined, modalId?: number) => Promise<void>;
       'getTop': () => HTMLIonModalElement;
     }
@@ -4007,7 +4007,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonPickerController {
-      'create': (opts?: PickerOptions | undefined) => Promise<HTMLIonPickerElement | null>;
+      'create': (opts?: PickerOptions | undefined) => Promise<HTMLIonPickerElement>;
       'dismiss': (data?: any, role?: string | undefined, pickerId?: number) => Promise<void>;
       'getTop': () => HTMLIonPickerElement;
     }
@@ -4193,7 +4193,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonPopoverController {
-      'create': (opts?: PopoverOptions | undefined) => Promise<HTMLIonPopoverElement | null>;
+      'create': (opts?: PopoverOptions | undefined) => Promise<HTMLIonPopoverElement>;
       'dismiss': (data?: any, role?: string | undefined, popoverId?: number) => Promise<void>;
       'getTop': () => HTMLIonPopoverElement;
     }
@@ -6889,7 +6889,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonToastController {
-      'create': (opts?: ToastOptions | undefined) => Promise<HTMLIonToastElement | null>;
+      'create': (opts?: ToastOptions | undefined) => Promise<HTMLIonToastElement>;
       'dismiss': (data?: any, role?: string | undefined, toastId?: number) => Promise<void>;
       'getTop': () => HTMLIonToastElement;
     }

@@ -11,7 +11,7 @@ export type Requires<K extends string> = {
 };
 
 export function createOverlay<T extends HTMLIonOverlayElement & Requires<keyof B>, B>
-(element: T, opts: B): Promise<T | null> {
+(element: T, opts: B): Promise<T> {
   // convert the passed in overlay options into props
   // that get passed down into the new overlay
   Object.assign(element, opts);
@@ -191,7 +191,7 @@ export interface OverlayInterface {
 }
 
 export interface OverlayController {
-  create(opts?: any): Promise<HTMLElement | null>;
+  create(opts?: any): Promise<HTMLElement>;
   dismiss(data?: any, role?: string, alertId?: number): Promise<void>;
   getTop(): HTMLElement;
 }

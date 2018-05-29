@@ -18,7 +18,7 @@ export class Select {
   private childOpts: HTMLIonSelectOptionElement[] = [];
   private selectId = `ion-sel-${selectIds++}`;
   private labelId?: string;
-  private overlay?: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | null;
+  private overlay?: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
 
   mode!: Mode;
   color?: Color;
@@ -323,10 +323,8 @@ export class Select {
     };
 
     const popover = this.overlay = await this.popoverCtrl.create(popoverOpts);
-    if (popover) {
-      await popover.present();
-      this.isExpanded = true;
-    }
+    await popover.present();
+    this.isExpanded = true;
     return popover;
   }
 
@@ -358,10 +356,9 @@ export class Select {
     };
 
     const actionSheet = this.overlay = await this.actionSheetCtrl.create(actionSheetOpts);
-    if (actionSheet) {
-      await actionSheet.present();
-      this.isExpanded = true;
-    }
+    await actionSheet.present();
+
+    this.isExpanded = true;
     return actionSheet;
   }
 
@@ -401,10 +398,9 @@ export class Select {
     };
 
     const alert = this.overlay = await this.alertCtrl.create(alertOpts);
-    if (alert) {
-      await alert.present();
-      this.isExpanded = true;
-    }
+    await alert.present();
+
+    this.isExpanded = true;
     return alert;
   }
 

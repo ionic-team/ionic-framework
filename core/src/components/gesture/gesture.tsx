@@ -88,11 +88,8 @@ export class Gesture {
 
     if (this.autoBlockAll) {
       this.gestureCtrl.componentOnReady()
-        .then(ctrl => {
-          if (ctrl) {
-            this.blocker = ctrl.createBlocker(BLOCK_ALL);
-          }
-        });
+        .then(ctrl => ctrl.createBlocker(BLOCK_ALL))
+        .then(blocker => this.blocker = blocker);
     }
   }
 

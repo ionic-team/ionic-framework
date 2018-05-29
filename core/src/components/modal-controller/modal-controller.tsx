@@ -32,7 +32,7 @@ export class ModalController implements OverlayController {
    * Create a modal overlay with modal options.
    */
   @Method()
-  create(opts?: ModalOptions): Promise<HTMLIonModalElement | null> {
+  create(opts?: ModalOptions): Promise<HTMLIonModalElement> {
     return createOverlay(this.doc.createElement('ion-modal'), opts);
   }
 

@@ -9,7 +9,7 @@ export class InfiniteScroll {
 
   private thrPx = 0;
   private thrPc = 0;
-  private scrollEl?: HTMLIonScrollElement | null;
+  private scrollEl?: HTMLIonScrollElement;
   private didFire = false;
   private isBusy = false;
 
