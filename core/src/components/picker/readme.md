@@ -11,14 +11,14 @@ A Picker is a dialog that displays a row of buttons and columns underneath. It a
 
 #### buttons
 
-
+PickerButton[]
 
 Array of buttons to be displayed at the top of the picker.
 
 
 #### columns
 
-
+PickerColumn[]
 
 Array of columns to be displayed in the picker.
 
@@ -47,7 +47,7 @@ If true, the picker will be dismissed when the backdrop is clicked. Defaults to 
 
 #### enterAnimation
 
-
+AnimationBuilder
 
 Animation to use when the picker is presented.
 
@@ -59,7 +59,7 @@ boolean
 
 #### leaveAnimation
 
-
+AnimationBuilder
 
 Animation to use when the picker is dismissed.
 

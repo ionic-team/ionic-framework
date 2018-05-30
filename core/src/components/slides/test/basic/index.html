@@ -65,7 +65,12 @@
     }
 
     function slideAutoPlay() {
-      slides.options = Object.assign({}, slides.options, { autoplay: 300 });
+      slides.options = Object.assign({}, slides.options, {
+        autoplay: {
+          delay: 2500,
+          disableOnInteraction: false
+        }
+      });
       slides.startAutoplay();
     }
 

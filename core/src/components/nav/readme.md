@@ -14,7 +14,7 @@ boolean
 
 #### delegate
 
-
+FrameworkDelegate
 
 
 #### root
@@ -24,7 +24,7 @@ string
 
 #### rootParams
 
-
+ComponentProps
 
 
 #### swipeBackEnabled

@@ -1,7 +1,6 @@
-import { Component, Prop} from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-card-subtitle',
@@ -13,7 +12,6 @@ import { createThemedClasses } from '../../utils/theme';
 export class CardSubtitle {
   /**
    * The color to use for the text color.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @Prop() color?: Color;
 
@@ -30,5 +28,4 @@ export class CardSubtitle {
       'aria-level': '3'
     };
   }
-
 }

@@ -34,7 +34,7 @@ The component to display inside of the popover.
 
 #### componentProps
 
-
+ComponentProps
 
 The data to pass to the popover component.
 
@@ -49,7 +49,7 @@ provided they should be separated by spaces.
 
 #### delegate
 
-
+FrameworkDelegate
 
 
 #### enableBackdropDismiss
@@ -61,7 +61,7 @@ If true, the popover will be dismissed when the backdrop is clicked. Defaults to
 
 #### enterAnimation
 
-
+AnimationBuilder
 
 Animation to use when the popover is presented.
 
@@ -80,7 +80,7 @@ boolean
 
 #### leaveAnimation
 
-
+AnimationBuilder
 
 Animation to use when the popover is dismissed.
 

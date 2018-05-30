@@ -26,11 +26,17 @@ async function presentAlert() {
 
 #### create()
 
+Create an alert overlay with alert options
+
 
 #### dismiss()
 
+Dismiss the open alert overlay.
+
 
 #### getTop()
+
+Get the most recently opened alert overlay.
 
 
 

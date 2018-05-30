@@ -13,7 +13,6 @@ import { createThemedClasses } from '../../utils/theme';
 export class Chip {
   /**
    * The color to use.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @Prop() color?: Color;
 

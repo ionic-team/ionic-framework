@@ -18,7 +18,7 @@ A button's `role` property can either be `destructive` or `cancel`. Buttons with
 
 #### buttons
 
-
+ActionSheetButton[]
 
 An array of buttons for the action sheet.
 
@@ -40,7 +40,7 @@ If true, the action sheet will be dismissed when the backdrop is clicked. Defaul
 
 #### enterAnimation
 
-
+AnimationBuilder
 
 Animation to use when the action sheet is presented.
 
@@ -61,7 +61,7 @@ If the actionSheet should close the keyboard
 
 #### leaveAnimation
 
-
+AnimationBuilder
 
 Animation to use when the action sheet is dismissed.
 

@@ -56,7 +56,7 @@ If true, the loading indicator will be dismissed when the backdrop is clicked. D
 
 #### enterAnimation
 
-
+AnimationBuilder
 
 Animation to use when the loading indicator is presented.
 
@@ -68,7 +68,7 @@ boolean
 
 #### leaveAnimation
 
-
+AnimationBuilder
 
 Animation to use when the loading indicator is dismissed.
 

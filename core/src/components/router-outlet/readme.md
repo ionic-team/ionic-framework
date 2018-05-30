@@ -14,12 +14,12 @@ boolean
 
 #### animationBuilder
 
-
+AnimationBuilder
 
 
 #### delegate
 
-
+FrameworkDelegate
 
 
 ## Attributes

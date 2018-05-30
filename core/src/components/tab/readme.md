@@ -83,7 +83,7 @@ The component to display inside of the tab.
 
 #### delegate
 
-
+FrameworkDelegate
 
 
 #### disabled

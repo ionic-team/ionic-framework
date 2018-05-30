@@ -20,7 +20,7 @@ in ion-tabs it actually refers to the name of the `ion-tab` to select.
 
 #### componentProps
 
-
+{[key: string]: any}
 
 A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed
 to the defined component when rendered.

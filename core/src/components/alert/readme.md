@@ -27,7 +27,7 @@ Alerts can also include several different inputs whose data can be passed back t
 
 #### buttons
 
-
+AlertButton[]
 
 Array of buttons to be added to the alert.
 
@@ -49,7 +49,7 @@ If true, the alert will be dismissed when the backdrop is clicked. Defaults to `
 
 #### enterAnimation
 
-
+AnimationBuilder
 
 Animation to use when the alert is presented.
 
@@ -63,7 +63,7 @@ The main title in the heading of the alert.
 
 #### inputs
 
-
+AlertInput[]
 
 Array of input to show in the alert.
 
@@ -75,7 +75,7 @@ boolean
 
 #### leaveAnimation
 
-
+AnimationBuilder
 
 Animation to use when the alert is dismissed.
 
@@ -255,7 +255,7 @@ Dismiss the alert overlay after it has been presented.
 #### onDidDismiss()
 
 Returns a promise that resolves when the alert did dismiss. It also accepts a callback
-that is called in the same circustances.
+that is called in the same circumstances.
 
 ```
 const {data, role} = await alert.onDidDismiss();
@@ -265,7 +265,7 @@ const {data, role} = await alert.onDidDismiss();
 #### onWillDismiss()
 
 Returns a promise that resolves when the alert will dismiss. It also accepts a callback
-that is called in the same circustances.
+that is called in the same circumstances.
 
 ```
 const {data, role} = await alert.onWillDismiss();

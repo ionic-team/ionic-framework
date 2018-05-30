@@ -21,7 +21,10 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button text="Volver" icon="close"></ion-back-button>
+      <ion-back-button
+          [text]="buttonText"
+          [icon]="buttonIcon">
+      </ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

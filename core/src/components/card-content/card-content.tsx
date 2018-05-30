@@ -13,7 +13,6 @@ export class CardContent {
 
   /**
    * The color to use for the text.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @Prop() color?: Color;
 

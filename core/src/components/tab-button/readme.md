@@ -14,7 +14,7 @@ boolean
 
 #### tab
 
-
+HTMLIonTabElement
 
 
 ## Attributes

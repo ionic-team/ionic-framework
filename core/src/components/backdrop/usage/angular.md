@@ -12,7 +12,11 @@
 <ion-backdrop stopPropagation="false"></ion-backdrop>
 
 <!-- Backdrop that sets dynamic properties -->
-<ion-backdrop [tappable]="enableBackdropDismiss" [visible]="showBackdrop" [stopPropagation]="shouldPropagate"></ion-backdrop>
+<ion-backdrop
+  [tappable]="enableBackdropDismiss"
+  [visible]="showBackdrop"
+  [stopPropagation]="shouldPropagate">
+</ion-backdrop>
 ```
 
 ```typescript

@@ -202,7 +202,7 @@ export class Alert implements OverlayInterface {
 
   /**
    * Returns a promise that resolves when the alert did dismiss. It also accepts a callback
-   * that is called in the same circustances.
+   * that is called in the same circumstances.
    *
    * ```
    * const {data, role} = await alert.onDidDismiss();
@@ -215,7 +215,7 @@ export class Alert implements OverlayInterface {
 
   /**
    * Returns a promise that resolves when the alert will dismiss. It also accepts a callback
-   * that is called in the same circustances.
+   * that is called in the same circumstances.
    *
    * ```
    * const {data, role} = await alert.onWillDismiss();

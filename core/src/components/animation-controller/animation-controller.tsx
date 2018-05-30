@@ -8,6 +8,9 @@ import { Animator } from './animator';
 })
 export class AnimationControllerImpl implements AnimationController {
 
+  /**
+   * Creates an animation instance
+   */
   @Method()
   create(animationBuilder?: AnimationBuilder, baseEl?: any, opts?: any): Promise<Animation> {
     if (animationBuilder) {

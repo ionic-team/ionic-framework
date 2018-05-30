@@ -12,7 +12,6 @@
 string
 
 The color to use for the text color.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### mode
@@ -30,7 +29,6 @@ Possible values are: `"ios"` or `"md"`.
 string
 
 The color to use for the text color.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
 
 
 #### mode

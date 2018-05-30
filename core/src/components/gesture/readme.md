@@ -19,7 +19,7 @@ boolean
 
 #### canStart
 
-
+GestureCallback
 
 
 #### direction
@@ -54,27 +54,27 @@ number
 
 #### notCaptured
 
-
+GestureCallback
 
 
 #### onEnd
 
-
+GestureCallback
 
 
 #### onMove
 
-
+GestureCallback
 
 
 #### onStart
 
-
+GestureCallback
 
 
 #### onWillStart
 
-
+(_: GestureDetail) => Promise<void>
 
 
 #### passive

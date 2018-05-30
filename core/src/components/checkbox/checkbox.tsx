@@ -21,8 +21,7 @@ export class Checkbox implements CheckboxInput {
   @State() keyFocus = false;
 
   /**
-   * The color to use.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * The color to use for the checkbox.
    */
   @Prop() color?: Color;
 
@@ -48,7 +47,7 @@ export class Checkbox implements CheckboxInput {
   @Prop() disabled = false;
 
   /**
-   * the value of the checkbox.
+   * The value of the checkbox.
    */
   @Prop() value = 'on';
 
