@@ -1,6 +1,7 @@
 @import "../../themes/ionic.globals";
 
 @import "./grid.mixins";
+@import "./grid.mixins.legacy";
 
 // Grid
 // --------------------------------------------------
@@ -26,7 +27,7 @@ $grid-max-widths: (
 // --------------------------------------------------
 
 /// @prop - Number of columns to auto generate for the grid
-$grid-columns:               32 !default;
+$grid-columns:               12 !default;
 
 /// @prop - Total width of the padding for the grid
 $grid-padding-width:         var(--ion-grid-padding-width, 10px) !default;

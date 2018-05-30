@@ -19,6 +19,31 @@
     </ion-header>
 
     <ion-content id="content" class="grid-demo">
+      <ion-grid class="old-grid">
+        <ion-row>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
       <ion-grid>
         <ion-row>
           <ion-col>
@@ -290,6 +315,9 @@
         padding: 10px 5px;
       }
 
+      .old-grid {
+        --grid-new: false;
+      }
     </style>
   </ion-app>
 </body>

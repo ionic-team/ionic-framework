@@ -21,6 +21,24 @@ There are several attributes that can be added to a column to customize this beh
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+#### width
+
+string
+
+The width of the column, in terms of how many columns it should take up.
+
+
+## Attributes
+
+#### width
+
+string
+
+The width of the column, in terms of how many columns it should take up.
+
+
 
 ----------------------------------------------
 

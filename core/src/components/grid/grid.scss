@@ -3,26 +3,44 @@
 // Grid
 // --------------------------------------------------
 
-ion-grid {
-  @include make-grid();
+// TODO use supports
+// @supports (display: grid) {
+  ion-grid:not(.old-grid) {
+    @include make-grid();
 
-  &[fixed] {
-    @include make-grid-max-widths();
+    // TODO move out of grid
+    ion-row {
+      @include make-row();
+    }
+
+    ion-col {
+      @include make-column();
+    }
   }
-}
+// }
 
-// Row
+
+// Legacy Grid
 // --------------------------------------------------
 
-ion-row {
-  @include make-row();
-}
+// TODO use supports
+// @supports not (display: grid) {
+  ion-grid.old-grid {
+    @include make-legacy-grid();
 
-// Columns
-// --------------------------------------------------
+    &[fixed] {
+      @include make-legacy-grid-max-widths();
+    }
 
-ion-col {
-  @include make-column-base();
-}
+    //TODO move out of grid
+    ion-row {
+      @include make-legacy-row();
+    }
 
-@include make-grid-columns();
+    ion-col {
+      @include make-legacy-column-base();
+    }
+
+    @include make-legacy-grid-columns();
+  }
+// }

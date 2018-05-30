@@ -1447,7 +1447,10 @@ declare global {
 
   namespace StencilComponents {
     interface IonCol {
-
+      /**
+       * The width of the column, in terms of how many columns it should take up.
+       */
+      'width': string;
     }
   }
 
@@ -1470,7 +1473,10 @@ declare global {
   }
   namespace JSXElements {
     export interface IonColAttributes extends HTMLAttributes {
-
+      /**
+       * The width of the column, in terms of how many columns it should take up.
+       */
+      'width'?: string;
     }
   }
 }

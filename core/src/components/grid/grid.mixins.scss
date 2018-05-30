@@ -4,256 +4,35 @@
 // Responsive Mixins
 // --------------------------------------------------
 
-// Creates a grid with padding
+// Creates a grid
 // ---------------------------------------------------------------------------------
 
 @mixin make-grid($padding-width: $grid-padding-width) {
   @include padding(calc(#{$padding-width} / 2));
   @include margin-horizontal(auto);
 
-  display: flex;
-  flex-direction: column;
+  background: #b9ce4f;
 
-  width: 100%;
-
-
-  // Remove the padding from the grid and all immediate children columns
-  &[no-padding] {
-    @include padding(0);
-
-    > ion-row > ion-col {
-      @include padding(0);
-    }
-  }
+  display: block;
 }
 
-// Creates maximum widths for the grid based on screen size
+// Creates a row
 // ---------------------------------------------------------------------------------
 
-@mixin make-grid-max-widths($max-widths: $grid-max-widths, $breakpoints: $screen-breakpoints) {
-  @each $breakpoint, $container-max-width in $max-widths {
-    @include media-breakpoint-up($breakpoint, $breakpoints) {
-      width: $container-max-width;
-      max-width: 100%;
-    }
-  }
+@mixin make-row($padding-width: $grid-padding-width) {
+  @include padding(null, null, calc(#{$padding-width} / 2), null);
+
+  background: #6eb4c7;
+
+  display: grid;
+
+  grid-gap: calc(#{$padding-width} / 2);
+  grid-template-columns: repeat(var(--grid-columns, $grid-columns), minmax(0, auto));
 }
 
-// Creates a row used to align columns
+// Creates a column
 // ---------------------------------------------------------------------------------
 
-@mixin make-row() {
-  display: flex;
-  flex-wrap: wrap;
-
-  &[nowrap] {
-    flex-wrap: nowrap;
-  }
-
-  &[wrap-reverse] {
-    flex-wrap: wrap-reverse;
-  }
-
-  &[align-items-start] {
-    align-items: flex-start;
-  }
-
-  &[align-items-center] {
-    align-items: center;
-  }
-
-  &[align-items-end] {
-    align-items: flex-end;
-  }
-
-  &[align-items-stretch] {
-    align-items: stretch;
-  }
-
-  &[align-items-baseline] {
-    align-items: baseline;
-  }
-
-  &[justify-content-start] {
-    justify-content: flex-start;
-  }
-
-  &[justify-content-center] {
-    justify-content: center;
-  }
-
-  &[justify-content-end] {
-    justify-content: flex-end;
-  }
-
-  &[justify-content-around] {
-    justify-content: space-around;
-  }
-
-  &[justify-content-between] {
-    justify-content: space-between;
-  }
-}
-
-
-// Creates the base column which has shared styles among all columns
-// ---------------------------------------------------------------------------------
-
-@mixin make-column-base($padding-width: $grid-padding-width) {
-  @include margin(0);
-  @include padding(calc(#{$padding-width} / 2));
-
-  position: relative;
-
-  flex-basis: 0;
-  flex-grow: 1;
-  width: 100%;
-  max-width: 100%;
-  min-height: 1px; // Prevent columns from collapsing when empty
-
-  &[align-self-start] {
-    align-self: flex-start;
-  }
-
-  &[align-self-end] {
-    align-self: flex-end;
-  }
-
-  &[align-self-center] {
-    align-self: center;
-  }
-
-  &[align-self-stretch] {
-    align-self: stretch;
-  }
-
-  &[align-self-baseline] {
-    align-self: baseline;
-  }
-}
-
-
-// Create an individual column
-// ---------------------------------------------------------------------------------
-
-@mixin make-column($i, $columns: $grid-columns) {
-  flex: 0 0 calc(calc(#{$i} / var(--grid-columns, 12)) * 100%);
-  width: calc(calc(#{$i} / var(--grid-columns, 12)) * 100%);
-
-  // Add a `max-width` to ensure content within each column does not blow out
-  // the width of the column. Applies to IE10+ and Firefox. Chrome and Safari
-  // do not appear to require this.
-  max-width: calc(calc(#{$i} / var(--grid-columns, 12)) * 100%);
-}
-
-
-// Adds padding to the column
-// ---------------------------------------------------------------------------------
-
-@mixin make-column-padding($padding-widths: $grid-padding-widths) {
-  @each $breakpoint in map-keys($padding-widths) {
-    @include media-breakpoint-up($breakpoint) {
-      $padding-width: map-get($padding-widths, $breakpoint);
-      @include padding(calc(#{$padding-width} / 2));
-    }
-  }
-}
-
-
-// Offset the column using margin-start
-// ---------------------------------------------------------------------------------
-
-@mixin make-column-offset($i, $columns: $grid-columns) {
-  @include margin-horizontal(percentage($i / $columns), null);
-}
-
-
-// Push the column using left
-// ---------------------------------------------------------------------------------
-
-@mixin make-column-push($i, $columns: $grid-columns) {
-  @include position(null, null, null, if($i > 0, percentage($i / $columns), auto));
-}
-
-
-// Pull the column using right
-// ---------------------------------------------------------------------------------
-
-@mixin make-column-pull($i, $columns: $grid-columns) {
-  @include position(null, if($i > 0, percentage($i / $columns), auto), null, null);
-}
-
-
-// Determine which modifier to add
-// ---------------------------------------------------------------------------------
-
-@mixin make-column-modifier($type, $i, $columns) {
-  // Work around the lack of dynamic mixin @include support (https://github.com/sass/sass/issues/626)
-  @if $type == push {
-    @include make-column-push($i, $columns);
-  } @else if $type == pull {
-    @include make-column-pull($i, $columns);
-  } @else if $type == offset {
-    @include make-column-offset($i, $columns);
-  }
-}
-
-
-// Create the responsive grid columns
-// --------------------------------------------------
-
-@mixin make-grid-columns($columns: $grid-columns, $padding-widths: $grid-padding-widths, $breakpoints: $screen-breakpoints) {
-  @each $breakpoint in map-keys($breakpoints) {
-    $infix: breakpoint-infix($breakpoint, $breakpoints);
-
-    // Allow columns to stretch full width below their breakpoints
-    @for $i from 1 through $columns {
-      [col#{$infix}-#{$i}] {
-        @include make-column-padding($padding-widths);
-      }
-    }
-
-    [col#{$infix}] {
-      @include make-column-padding($padding-widths);
-    }
-
-    @include media-breakpoint-up($breakpoint, $breakpoints) {
-      // Provide basic `[col-{bp}]` attributes for equal-width flexbox columns
-      [col#{$infix}] {
-        flex-basis: 0;
-        flex-grow: 1;
-
-        max-width: 100%;
-      }
-
-      [col#{$infix}-auto] {
-        flex: 0 0 auto;
-
-        width: auto;
-      }
-
-      @for $i from 1 through $columns {
-        [col#{$infix}-#{$i}] {
-          @include make-column($i, $columns);
-        }
-      }
-
-      @each $modifier in (pull, push) {
-        @for $i from 0 through $columns {
-          [#{$modifier}#{$infix}-#{$i}] {
-            @include make-column-modifier($modifier, $i, $columns)
-          }
-        }
-      }
-
-      // `$columns - 1` because offsetting by the width of an entire row isn't possible
-      @for $i from 0 through ($columns - 1) {
-        @if not ($infix == "" and $i == 0) { // Avoid emitting useless [offset-xs-0]
-          [offset#{$infix}-#{$i}] {
-            @include make-column-modifier(offset, $i, $columns)
-          }
-        }
-      }
-    }
-  }
+@mixin make-column {
+  background: #e2b863;
 }
