@@ -26,7 +26,9 @@ export class Footer {
   @Prop() translucent = false;
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'header-translucent') : {};
+    const themedClasses = this.translucent
+      ? createThemedClasses(this.mode, this.color, 'header-translucent')
+      : {};
 
     const hostClasses = {
       ...themedClasses
@@ -36,5 +38,4 @@ export class Footer {
       class: hostClasses
     };
   }
-
 }

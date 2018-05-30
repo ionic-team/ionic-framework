@@ -4,11 +4,13 @@ Fabs are container elements that contain one or more fab buttons. They should be
 
 <!-- Auto Generated Below -->
 
+
 ## Properties
 
 #### activated
 
 boolean
+
 
 #### edge
 
@@ -18,6 +20,7 @@ If true, the fab will display on the edge of the header if
 `vertical` is `"top"`, and on the edge of the footer if
 it is `"bottom"`. Should be used with a `fixed` slot.
 
+
 #### horizontal
 
 string
@@ -25,12 +28,14 @@ string
 Where to align the fab horizontally in the viewport.
 Possible values are: `"center"`, `"start"`, `"end"`.
 
+
 #### vertical
 
 string
 
 Where to align the fab vertically in the viewport.
 Possible values are: `"top"`, `"center"`, `"bottom"`.
+
 
 ## Attributes
 
@@ -38,6 +43,7 @@ Possible values are: `"top"`, `"center"`, `"bottom"`.
 
 boolean
 
+
 #### edge
 
 boolean
@@ -46,12 +52,14 @@ If true, the fab will display on the edge of the header if
 `vertical` is `"top"`, and on the edge of the footer if
 it is `"bottom"`. Should be used with a `fixed` slot.
 
+
 #### horizontal
 
 string
 
 Where to align the fab horizontally in the viewport.
 Possible values are: `"center"`, `"start"`, `"end"`.
+
 
 #### vertical
 
@@ -60,12 +68,15 @@ string
 Where to align the fab vertically in the viewport.
 Possible values are: `"top"`, `"center"`, `"bottom"`.
 
+
 ## Methods
 
 #### close()
 
 Close an active FAB list container
 
----
 
-_Built with [StencilJS](https://stenciljs.com/)_
+
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

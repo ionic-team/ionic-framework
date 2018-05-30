@@ -1983,7 +1983,13 @@ declare global {
 
   namespace StencilComponents {
     interface IonGestureController {
+      /**
+       * Creates a gesture delegate based on the GestureConfig passed
+       */
       'create': (config: GestureConfig) => Promise<GestureDelegate>;
+      /**
+       * Creates a blocker that will block any other gesture events from firing. Set in the ion-gesture component.
+       */
       'createBlocker': (opts?: BlockerConfig) => BlockerDelegate;
     }
   }
@@ -2007,6 +2013,9 @@ declare global {
   }
   namespace JSXElements {
     export interface IonGestureControllerAttributes extends HTMLAttributes {
+      /**
+       * Event emitted when a gesture has been captured.
+       */
       'onIonGestureCaptured'?: (event: CustomEvent<string>) => void;
     }
   }
@@ -2017,21 +2026,69 @@ declare global {
 
   namespace StencilComponents {
     interface IonGesture {
+      /**
+       * What component to attach listeners to.
+       */
       'attachTo': string | HTMLElement;
+      /**
+       * If true, gesture will prevent any other gestures from firing
+       */
       'autoBlockAll': boolean;
+      /**
+       * Function to execute to see if gesture can start. Return boolean
+       */
       'canStart': GestureCallback;
+      /**
+       * What direction to listen for gesture changes
+       */
       'direction': string;
+      /**
+       * If true, the current gesture will disabling scrolling interactions
+       */
       'disableScroll': boolean;
+      /**
+       * If true, the current gesture interaction is disabled
+       */
       'disabled': boolean;
+      /**
+       * Name for the gesture action
+       */
       'gestureName': string;
+      /**
+       * What priority the gesture should take. The higher the number, the higher the priority.
+       */
       'gesturePriority': number;
+      /**
+       * The max angle for the gesture
+       */
       'maxAngle': number;
+      /**
+       * Function to execute when the gesture has not been captured
+       */
       'notCaptured': GestureCallback;
+      /**
+       * Function to execute when the gesture has end
+       */
       'onEnd': GestureCallback;
+      /**
+       * Function to execute when the gesture has moved
+       */
       'onMove': GestureCallback;
+      /**
+       * Function to execute when the gesture has start
+       */
       'onStart': GestureCallback;
+      /**
+       * Function to execute when the gesture will start
+       */
       'onWillStart': (_: GestureDetail) => Promise<void>;
+      /**
+       * If the event should use passive event listeners
+       */
       'passive': boolean;
+      /**
+       * How many pixels of change the gesture should wait for before triggering the action.
+       */
       'threshold': number;
     }
   }
@@ -2055,21 +2112,69 @@ declare global {
   }
   namespace JSXElements {
     export interface IonGestureAttributes extends HTMLAttributes {
+      /**
+       * What component to attach listeners to.
+       */
       'attachTo'?: string | HTMLElement;
+      /**
+       * If true, gesture will prevent any other gestures from firing
+       */
       'autoBlockAll'?: boolean;
+      /**
+       * Function to execute to see if gesture can start. Return boolean
+       */
       'canStart'?: GestureCallback;
+      /**
+       * What direction to listen for gesture changes
+       */
       'direction'?: string;
+      /**
+       * If true, the current gesture will disabling scrolling interactions
+       */
       'disableScroll'?: boolean;
+      /**
+       * If true, the current gesture interaction is disabled
+       */
       'disabled'?: boolean;
+      /**
+       * Name for the gesture action
+       */
       'gestureName'?: string;
+      /**
+       * What priority the gesture should take. The higher the number, the higher the priority.
+       */
       'gesturePriority'?: number;
+      /**
+       * The max angle for the gesture
+       */
       'maxAngle'?: number;
+      /**
+       * Function to execute when the gesture has not been captured
+       */
       'notCaptured'?: GestureCallback;
+      /**
+       * Function to execute when the gesture has end
+       */
       'onEnd'?: GestureCallback;
+      /**
+       * Function to execute when the gesture has moved
+       */
       'onMove'?: GestureCallback;
+      /**
+       * Function to execute when the gesture has start
+       */
       'onStart'?: GestureCallback;
+      /**
+       * Function to execute when the gesture will start
+       */
       'onWillStart'?: (_: GestureDetail) => Promise<void>;
+      /**
+       * If the event should use passive event listeners
+       */
       'passive'?: boolean;
+      /**
+       * How many pixels of change the gesture should wait for before triggering the action.
+       */
       'threshold'?: number;
     }
   }
@@ -2623,11 +2728,11 @@ declare global {
   namespace StencilComponents {
     interface IonItemDivider {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the item-divider
        */
       'color': Color;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
     }
@@ -2653,11 +2758,11 @@ declare global {
   namespace JSXElements {
     export interface IonItemDividerAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the item-divider
        */
       'color'?: Color;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
     }
@@ -2703,7 +2808,7 @@ declare global {
   namespace StencilComponents {
     interface IonItemOption {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the option
        */
       'color': Color;
       /**
@@ -2719,7 +2824,7 @@ declare global {
        */
       'href': string;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
     }
@@ -2745,7 +2850,7 @@ declare global {
   namespace JSXElements {
     export interface IonItemOptionAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the option
        */
       'color'?: Color;
       /**
@@ -2761,7 +2866,7 @@ declare global {
        */
       'href'?: string;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
     }
