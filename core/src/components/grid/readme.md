@@ -10,6 +10,24 @@ See [Responsive Grid](../../layout/grid) for more information.
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+#### fixed
+
+boolean
+
+If true, the grid will have a maximum width based on the screen size. Defaults to `false`.
+
+
+## Attributes
+
+#### fixed
+
+boolean
+
+If true, the grid will have a maximum width based on the screen size. Defaults to `false`.
+
+
 
 ----------------------------------------------
 

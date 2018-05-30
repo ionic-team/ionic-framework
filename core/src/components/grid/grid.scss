@@ -3,44 +3,42 @@
 // Grid
 // --------------------------------------------------
 
-// TODO use supports
-// @supports (display: grid) {
-  ion-grid:not(.old-grid) {
-    @include make-grid();
+ion-grid {
+  @include make-grid-base();
 
-    // TODO move out of grid
-    ion-row {
-      @include make-row();
-    }
+  // TODO remove
+  background: #b9ce4f;
 
-    ion-col {
-      @include make-column();
-    }
-  }
-// }
+}
 
+.grid-fixed {
+  @include make-grid-max-widths();
+}
 
 // Legacy Grid
 // --------------------------------------------------
 
-// TODO use supports
-// @supports not (display: grid) {
-  ion-grid.old-grid {
-    @include make-legacy-grid();
+ion-grid {
+  @include make-legacy-grid();
+}
 
-    &[fixed] {
-      @include make-legacy-grid-max-widths();
-    }
+ion-col {
+  @include make-legacy-column-base();
 
-    //TODO move out of grid
-    ion-row {
-      @include make-legacy-row();
-    }
+  background: #e2b863;
+}
 
-    ion-col {
-      @include make-legacy-column-base();
-    }
+@include make-legacy-grid-columns();
 
-    @include make-legacy-grid-columns();
-  }
+// CSS Grid
+// --------------------------------------------------
+
+// @supports (display: grid) {
+//   ion-grid {
+//     @include make-grid();
+//   }
+
+//   ion-col {
+//     @include make-column();
+//   }
 // }

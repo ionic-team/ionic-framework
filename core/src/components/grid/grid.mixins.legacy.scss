@@ -4,45 +4,10 @@
 // Responsive Mixins
 // --------------------------------------------------
 
-// Creates a grid with padding
+// Creates a flex grid used to align columns
 // ---------------------------------------------------------------------------------
 
-@mixin make-legacy-grid($padding-width: $grid-padding-width) {
-  @include padding(calc(#{$padding-width} / 2));
-  @include margin-horizontal(auto);
-
-  display: flex;
-  flex-direction: column;
-
-  width: 100%;
-
-
-  // Remove the padding from the grid and all immediate children columns
-  &[no-padding] {
-    @include padding(0);
-
-    > ion-row > ion-col {
-      @include padding(0);
-    }
-  }
-}
-
-// Creates maximum widths for the grid based on screen size
-// ---------------------------------------------------------------------------------
-
-@mixin make-legacy-grid-max-widths($max-widths: $grid-max-widths, $breakpoints: $screen-breakpoints) {
-  @each $breakpoint, $container-max-width in $max-widths {
-    @include media-breakpoint-up($breakpoint, $breakpoints) {
-      width: $container-max-width;
-      max-width: 100%;
-    }
-  }
-}
-
-// Creates a row used to align columns
-// ---------------------------------------------------------------------------------
-
-@mixin make-legacy-row() {
+@mixin make-legacy-grid() {
   display: flex;
   flex-wrap: wrap;
 
