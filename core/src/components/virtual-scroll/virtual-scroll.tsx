@@ -280,8 +280,8 @@ export class VirtualScroll {
         this.setCellHeight(cell, height);
       }
     };
-    if ('componentOnReady' in node) {
-      node.componentOnReady(update);
+    if (node && node.componentOnReady) {
+      node.componentOnReady().then(update);
     } else {
       update();
     }
