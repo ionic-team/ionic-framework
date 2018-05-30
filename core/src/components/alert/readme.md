@@ -27,7 +27,7 @@ Alerts can also include several different inputs whose data can be passed back t
 
 #### buttons
 
-
+AlertButton[]
 
 Array of buttons to be added to the alert.
 
@@ -49,7 +49,7 @@ If true, the alert will be dismissed when the backdrop is clicked. Defaults to `
 
 #### enterAnimation
 
-
+AnimationBuilder
 
 Animation to use when the alert is presented.
 
@@ -63,7 +63,7 @@ The main title in the heading of the alert.
 
 #### inputs
 
-
+AlertInput[]
 
 Array of input to show in the alert.
 
@@ -75,7 +75,7 @@ boolean
 
 #### leaveAnimation
 
-
+AnimationBuilder
 
 Animation to use when the alert is dismissed.
 

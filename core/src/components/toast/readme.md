@@ -45,7 +45,7 @@ until `dismiss()` is called.
 
 #### enterAnimation
 
-
+AnimationBuilder
 
 Animation to use when the toast is presented.
 
@@ -57,7 +57,7 @@ boolean
 
 #### leaveAnimation
 
-
+AnimationBuilder
 
 Animation to use when the toast is dismissed.
 

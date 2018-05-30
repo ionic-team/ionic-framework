@@ -32,7 +32,7 @@ The component to display inside of the modal.
 
 #### componentProps
 
-
+ComponentProps
 
 The data to pass to the modal component.
 
@@ -47,7 +47,7 @@ provided they should be separated by spaces.
 
 #### delegate
 
-
+FrameworkDelegate
 
 
 #### enableBackdropDismiss
@@ -59,7 +59,7 @@ If true, the modal will be dismissed when the backdrop is clicked. Defaults to `
 
 #### enterAnimation
 
-
+AnimationBuilder
 
 Animation to use when the modal is presented.
 
@@ -71,7 +71,7 @@ boolean
 
 #### leaveAnimation
 
-
+AnimationBuilder
 
 Animation to use when the modal is dismissed.
 

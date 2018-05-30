@@ -227,12 +227,12 @@ initial dimensions before the item has been rendered. Default is
 
 #### domRender
 
-
+DomRenderFn
 
 
 #### footerFn
 
-
+HeaderFn
 
 Section footers and the data used within its given
 template can be dynamically created by passing a function to `footerFn`.
@@ -243,7 +243,7 @@ must return `null` if a footer cell shouldn't be created.
 
 #### headerFn
 
-
+HeaderFn
 
 Section headers and the data used within its given
 template can be dynamically created by passing a function to `headerFn`.
@@ -257,12 +257,12 @@ and what data to give to the header template. The function must return
 
 #### itemHeight
 
-
+ItemHeightFn
 
 
 #### items
 
-
+any[]
 
 The data that builds the templates within the virtual scroll.
 It's important to note that when this data has changed, then the
@@ -272,22 +272,22 @@ should be avoided if possible.
 
 #### nodeRender
 
-
+ItemRenderFn
 
 
 #### renderFooter
 
-
+(item: any, index: number) => JSX.Element
 
 
 #### renderHeader
 
-
+(item: any, index: number) => JSX.Element
 
 
 #### renderItem
 
-
+(item: any, index: number) => JSX.Element
 
 
 ## Attributes

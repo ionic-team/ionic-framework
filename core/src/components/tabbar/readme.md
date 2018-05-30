@@ -29,12 +29,12 @@ boolean
 
 #### selectedTab
 
-
+HTMLIonTabElement
 
 
 #### tabs
 
-
+HTMLIonTabElement[]
 
 
 #### translucent

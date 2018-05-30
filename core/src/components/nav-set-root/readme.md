@@ -14,7 +14,7 @@ string
 
 #### componentProps
 
-
+ComponentProps
 
 
 ## Attributes

@@ -351,7 +351,7 @@ parse format. Defaults to use `displayFormat`.
 
 #### pickerOptions
 
-
+PickerOptions
 
 Any additional options that the picker interface can accept.
 See the [Picker API docs](../../picker/Picker) for the picker options.
