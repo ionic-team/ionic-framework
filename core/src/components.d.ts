@@ -14,7 +14,8 @@ declare global {
   namespace JSXElements {}
 
   interface HTMLStencilElement extends HTMLElement {
-    componentOnReady(): Promise<this|null>;
+    componentOnReady(): Promise<this>;
+    componentOnReady(done: (ele?: this) => void): void;
 
     forceUpdate(): void;
   }
@@ -104,8 +105,17 @@ declare global {
 
   namespace StencilComponents {
     interface IonActionSheetController {
+      /**
+       * Create an action sheet overlay with action sheet options.
+       */
       'create': (opts?: ActionSheetOptions | undefined) => Promise<HTMLIonActionSheetElement | null>;
+      /**
+       * Dismiss the open action sheet overlay.
+       */
       'dismiss': (data?: any, role?: string | undefined, actionSheetId?: number) => Promise<void>;
+      /**
+       * Get the most recently opened action sheet overlay.
+       */
       'getTop': () => HTMLIonActionSheetElement;
     }
   }
@@ -298,8 +308,17 @@ declare global {
 
   namespace StencilComponents {
     interface IonAlertController {
+      /**
+       * Create an alert overlay with alert options
+       */
       'create': (opts?: AlertOptions | undefined) => Promise<HTMLIonAlertElement | null>;
+      /**
+       * Dismiss the open alert overlay.
+       */
       'dismiss': (data?: any, role?: string | undefined, alertId?: number) => Promise<void>;
+      /**
+       * Get the most recently opened alert overlay.
+       */
       'getTop': () => HTMLIonAlertElement;
     }
   }
@@ -372,11 +391,11 @@ declare global {
       'message': string;
       'mode': Mode;
       /**
-       * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await alert.onDidDismiss(); ```
+       * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circumstances.  ``` const {data, role} = await alert.onDidDismiss(); ```
        */
       'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       /**
-       * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await alert.onWillDismiss(); ```
+       * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circumstances.  ``` const {data, role} = await alert.onWillDismiss(); ```
        */
       'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       'overlayId': number;
@@ -545,6 +564,9 @@ declare global {
 
   namespace StencilComponents {
     interface IonAnimationController {
+      /**
+       * Creates an animation instance
+       */
       'create': (animationBuilder?: AnimationBuilder | undefined, baseEl?: any, opts?: any) => Promise<Animation>;
     }
   }
@@ -645,7 +667,7 @@ declare global {
   namespace StencilComponents {
     interface IonBackButton {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color the button should be.
        */
       'color': Color;
       /**
@@ -657,7 +679,7 @@ declare global {
        */
       'icon': string;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
       /**
@@ -687,7 +709,7 @@ declare global {
   namespace JSXElements {
     export interface IonBackButtonAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color the button should be.
        */
       'color'?: Color;
       /**
@@ -699,7 +721,7 @@ declare global {
        */
       'icon'?: string;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
       /**
@@ -775,11 +797,11 @@ declare global {
   namespace StencilComponents {
     interface IonBadge {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color the badge should be
        */
       'color': Color;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
     }
@@ -805,11 +827,11 @@ declare global {
   namespace JSXElements {
     export interface IonBadgeAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color the badge should be
        */
       'color'?: Color;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
     }
@@ -826,7 +848,7 @@ declare global {
        */
       'buttonType': string;
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the button.
        */
       'color': Color;
       /**
@@ -846,7 +868,7 @@ declare global {
        */
       'href': string;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
       /**
@@ -896,7 +918,7 @@ declare global {
        */
       'buttonType'?: string;
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the button.
        */
       'color'?: Color;
       /**
@@ -916,7 +938,7 @@ declare global {
        */
       'href'?: string;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
       /**
@@ -990,7 +1012,7 @@ declare global {
   namespace StencilComponents {
     interface IonCardContent {
       /**
-       * The color to use for the text. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use for the text.
        */
       'color': Color;
       /**
@@ -1020,7 +1042,7 @@ declare global {
   namespace JSXElements {
     export interface IonCardContentAttributes extends HTMLAttributes {
       /**
-       * The color to use for the text. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use for the text.
        */
       'color'?: Color;
       /**
@@ -1037,7 +1059,7 @@ declare global {
   namespace StencilComponents {
     interface IonCardHeader {
       /**
-       * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use for the background.
        */
       'color': Color;
       /**
@@ -1071,7 +1093,7 @@ declare global {
   namespace JSXElements {
     export interface IonCardHeaderAttributes extends HTMLAttributes {
       /**
-       * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use for the background.
        */
       'color'?: Color;
       /**
@@ -1092,7 +1114,7 @@ declare global {
   namespace StencilComponents {
     interface IonCardSubtitle {
       /**
-       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use for the text color.
        */
       'color': Color;
       /**
@@ -1122,7 +1144,7 @@ declare global {
   namespace JSXElements {
     export interface IonCardSubtitleAttributes extends HTMLAttributes {
       /**
-       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use for the text color.
        */
       'color'?: Color;
       /**
@@ -1139,7 +1161,7 @@ declare global {
   namespace StencilComponents {
     interface IonCardTitle {
       /**
-       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use for the text color.
        */
       'color': Color;
       /**
@@ -1169,7 +1191,7 @@ declare global {
   namespace JSXElements {
     export interface IonCardTitleAttributes extends HTMLAttributes {
       /**
-       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use for the text color.
        */
       'color'?: Color;
       /**
@@ -1237,7 +1259,7 @@ declare global {
        */
       'checked': boolean;
       /**
-       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use for the checkbox.
        */
       'color': Color;
       /**
@@ -1253,7 +1275,7 @@ declare global {
        */
       'name': string;
       /**
-       * the value of the checkbox.
+       * The value of the checkbox.
        */
       'value': string;
     }
@@ -1283,7 +1305,7 @@ declare global {
        */
       'checked'?: boolean;
       /**
-       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use for the checkbox.
        */
       'color'?: Color;
       /**
@@ -1315,7 +1337,7 @@ declare global {
        */
       'onIonStyle'?: (event: CustomEvent<StyleEvent>) => void;
       /**
-       * the value of the checkbox.
+       * The value of the checkbox.
        */
       'value'?: string;
     }
@@ -1399,7 +1421,7 @@ declare global {
   namespace StencilComponents {
     interface IonChip {
       /**
-       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use.
        */
       'color': Color;
       /**
@@ -1429,7 +1451,7 @@ declare global {
   namespace JSXElements {
     export interface IonChipAttributes extends HTMLAttributes {
       /**
-       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use.
        */
       'color'?: Color;
       /**
@@ -1735,7 +1757,7 @@ declare global {
        */
       'activated': boolean;
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the button.
        */
       'color': Color;
       /**
@@ -1747,7 +1769,7 @@ declare global {
        */
       'href': string;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
       'show': boolean;
@@ -1782,7 +1804,7 @@ declare global {
        */
       'activated'?: boolean;
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the button.
        */
       'color'?: Color;
       /**
@@ -1794,7 +1816,7 @@ declare global {
        */
       'href'?: string;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
       'show'?: boolean;

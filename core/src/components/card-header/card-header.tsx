@@ -16,7 +16,6 @@ import { createThemedClasses } from '../../utils/theme';
 export class CardHeader {
   /**
    * The color to use for the background.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @Prop() color?: Color;
 
@@ -32,7 +31,9 @@ export class CardHeader {
   @Prop() translucent = false;
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'card-header-translucent') : {};
+    const themedClasses = this.translucent
+      ? createThemedClasses(this.mode, this.color, 'card-header-translucent')
+      : {};
 
     const hostClasses = {
       ...themedClasses
@@ -42,5 +43,4 @@ export class CardHeader {
       class: hostClasses
     };
   }
-
 }

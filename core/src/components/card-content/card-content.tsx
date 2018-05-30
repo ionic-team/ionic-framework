@@ -14,7 +14,6 @@ import { Color, Mode } from '../../interface';
 export class CardContent {
   /**
    * The color to use for the text.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
    */
   @Prop() color?: Color;
 
@@ -23,5 +22,4 @@ export class CardContent {
    * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
-
 }
