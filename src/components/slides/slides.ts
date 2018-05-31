@@ -342,7 +342,7 @@ export class Slides extends Ion {
   private _speedMs = 300;
 
   /**
-   * @input {boolean} If true, enables zooming functionality.
+   * @input {boolean} If true, enables zooming functionality. You might need to wrap the ion-slide with a container div with the class `.swiper-zoom-container` to get zoom working.
    */
   @Input()
   get zoom() {
