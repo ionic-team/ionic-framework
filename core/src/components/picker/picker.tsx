@@ -167,9 +167,6 @@ export class Picker implements OverlayInterface {
    * Returns a promise that resolves when the picker did dismiss. It also accepts a callback
    * that is called in the same circustances.
    *
-   * ```
-   * const {data, role} = await picker.onDidDismiss();
-   * ```
    */
   @Method()
   onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
@@ -180,9 +177,6 @@ export class Picker implements OverlayInterface {
    * Returns a promise that resolves when the picker will dismiss. It also accepts a callback
    * that is called in the same circustances.
    *
-   * ```
-   * const {data, role} = await picker.onWillDismiss();
-   * ```
    */
   @Method()
   onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {

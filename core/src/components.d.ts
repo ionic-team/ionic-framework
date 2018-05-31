@@ -185,11 +185,11 @@ declare global {
        */
       'leaveAnimation': AnimationBuilder;
       /**
-       * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await actionSheet.onDidDismiss(); ```
+       * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback that is called in the same circustances.
        */
       'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       /**
-       * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await actionSheet.onWillDismiss(); ```
+       * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback that is called in the same circustances.
        */
       'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       /**
@@ -394,11 +394,11 @@ declare global {
       'message': string;
       'mode': Mode;
       /**
-       * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circumstances.  ``` const {data, role} = await alert.onDidDismiss(); ```
+       * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circumstances.
        */
       'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       /**
-       * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circumstances.  ``` const {data, role} = await alert.onWillDismiss(); ```
+       * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circumstances.
        */
       'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       'overlayId': number;
@@ -3071,12 +3071,12 @@ declare global {
   namespace StencilComponents {
     interface IonLabel {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the label's text
        */
       'color': Color;
       'getText': () => string;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
       /**
@@ -3106,11 +3106,11 @@ declare global {
   namespace JSXElements {
     export interface IonLabelAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the label's text
        */
       'color'?: Color;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
       /**
@@ -3131,11 +3131,11 @@ declare global {
   namespace StencilComponents {
     interface IonListHeader {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the background.
        */
       'color': Color;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
     }
@@ -3161,11 +3161,11 @@ declare global {
   namespace JSXElements {
     export interface IonListHeaderAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the background.
        */
       'color'?: Color;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
     }
@@ -3228,8 +3228,17 @@ declare global {
 
   namespace StencilComponents {
     interface IonLoadingController {
+      /**
+       * Create a loading overlay with loading options.
+       */
       'create': (opts?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement | null>;
+      /**
+       * Dismiss the open loading overlay.
+       */
       'dismiss': (data?: any, role?: string | undefined, loadingId?: number) => Promise<void>;
+      /**
+       * Get the most recently opened loading overlay.
+       */
       'getTop': () => HTMLIonLoadingElement;
     }
   }
@@ -3297,7 +3306,7 @@ declare global {
        */
       'leaveAnimation': AnimationBuilder;
       /**
-       * Returns a promise that resolves when the loading did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await loading.onDidDismiss(); ```
+       * Returns a promise that resolves when the loading did dismiss. It also accepts a callback that is called in the same circustances.
        */
       'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       /**
@@ -3478,7 +3487,7 @@ declare global {
       '_setOpen': (menu: Menu, shouldOpen: boolean, animated: boolean) => Promise<boolean>;
       '_unregister': (menu: Menu) => void;
       /**
-       * Programatically close the Menu. If no `menuId` is given as the first argument then it'll close any menu which is open. If a `menuId` is given then it'll close that exact menu.
+       * Close the Menu. If no `menuId` is given as the first argument then it'll close any menu which is open. If a `menuId` is given then it'll close that exact menu.
        */
       'close': (menuId?: string | undefined) => Promise<boolean>;
       'createAnimation': (type: string, menuCmp: Menu) => Promise<Animation>;
@@ -3490,13 +3499,28 @@ declare global {
        * Used to get a menu instance. If a `menuId` is not provided then it'll return the first menu found. If a `menuId` is `left` or `right`, then it'll return the enabled menu on that side. Otherwise, if a `menuId` is provided, then it'll try to find the menu using the menu's `id` property. If a menu is not found then it'll return `null`.
        */
       'get': (menuId?: string | undefined) => HTMLIonMenuElement | null;
+      /**
+       * Returns an array of all menu instances.
+       */
       'getMenus': () => HTMLIonMenuElement[];
+      /**
+       * Returns the instance of the menu already opened, otherwise `null`.
+       */
       'getOpen': () => HTMLIonMenuElement | null;
+      /**
+       * If any menu is currently animating
+       */
       'isAnimating': () => boolean;
+      /**
+       * Returns true or false if the menuId is enabled or not
+       */
       'isEnabled': (menuId?: string | undefined) => boolean;
+      /**
+       * If the menuId is not specified, it returns true if ANY menu is currenly open.
+       */
       'isOpen': (menuId?: string | undefined) => boolean;
       /**
-       * Programatically open the Menu.
+       * Open the Menu.
        */
       'open': (menuId?: string | undefined) => Promise<boolean>;
       'registerAnimation': (name: string, animation: AnimationBuilder) => void;
@@ -3598,6 +3622,9 @@ declare global {
       'disabled': boolean;
       'isActive': () => boolean;
       'isOpen': () => boolean;
+      /**
+       * The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered.
+       */
       'maxEdgeStart': number;
       /**
        * An id for the menu.
@@ -3619,7 +3646,7 @@ declare global {
       'swipeEnabled': boolean;
       'toggle': (animated?: boolean) => Promise<boolean>;
       /**
-       * The display type of the menu. Default varies based on the mode, see the `menuType` in the [config](../../config/Config). Available options: `"overlay"`, `"reveal"`, `"push"`.
+       * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
        */
       'type': string;
     }
@@ -3652,6 +3679,9 @@ declare global {
        * If true, the menu is disabled. Default `false`.
        */
       'disabled'?: boolean;
+      /**
+       * The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered.
+       */
       'maxEdgeStart'?: number;
       /**
        * An id for the menu.
@@ -3679,7 +3709,7 @@ declare global {
        */
       'swipeEnabled'?: boolean;
       /**
-       * The display type of the menu. Default varies based on the mode, see the `menuType` in the [config](../../config/Config). Available options: `"overlay"`, `"reveal"`, `"push"`.
+       * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
        */
       'type'?: string;
     }
@@ -3765,11 +3795,11 @@ declare global {
        */
       'mode': Mode;
       /**
-       * Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await modal.onDidDismiss(); ```
+       * Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circustances.
        */
       'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       /**
-       * Returns a promise that resolves when the modal will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await modal.onWillDismiss(); ```
+       * Returns a promise that resolves when the modal will dismiss. It also accepts a callback that is called in the same circustances.
        */
       'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       'overlayId': number;
@@ -4199,11 +4229,11 @@ declare global {
        */
       'leaveAnimation': AnimationBuilder;
       /**
-       * Returns a promise that resolves when the picker did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await picker.onDidDismiss(); ```
+       * Returns a promise that resolves when the picker did dismiss. It also accepts a callback that is called in the same circustances.
        */
       'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       /**
-       * Returns a promise that resolves when the picker will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await picker.onWillDismiss(); ```
+       * Returns a promise that resolves when the picker will dismiss. It also accepts a callback that is called in the same circustances.
        */
       'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       'overlayId': number;
@@ -4390,11 +4420,11 @@ declare global {
        */
       'mode': Mode;
       /**
-       * Returns a promise that resolves when the popover did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await popover.onDidDismiss(); ```
+       * Returns a promise that resolves when the popover did dismiss. It also accepts a callback that is called in the same circustances.
        */
       'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       /**
-       * Returns a promise that resolves when the popover will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await popover.onWillDismiss(); ```
+       * Returns a promise that resolves when the popover will dismiss. It also accepts a callback that is called in the same circustances.
        */
       'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       'overlayId': number;
@@ -7108,11 +7138,11 @@ declare global {
        */
       'message': string;
       /**
-       * Returns a promise that resolves when the toast did dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await toast.onDidDismiss(); ```
+       * Returns a promise that resolves when the toast did dismiss. It also accepts a callback that is called in the same circustances.
        */
       'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       /**
-       * Returns a promise that resolves when the toast will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await toast.onWillDismiss(); ```
+       * Returns a promise that resolves when the toast will dismiss. It also accepts a callback that is called in the same circustances.
        */
       'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       'overlayId': number;

@@ -11,9 +11,7 @@ Label is a wrapper element that can be used in combination with `ion-item`.
 
 string
 
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
+The color to use for the label's text
 
 
 #### mode
@@ -22,7 +20,6 @@ string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### position
@@ -39,9 +36,7 @@ Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
 
 string
 
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
+The color to use for the label's text
 
 
 #### mode
@@ -50,7 +45,6 @@ string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### position

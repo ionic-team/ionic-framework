@@ -240,19 +240,11 @@ Dismiss the modal overlay after it has been presented.
 Returns a promise that resolves when the modal did dismiss. It also accepts a callback
 that is called in the same circustances.
 
-```
-const {data, role} = await modal.onDidDismiss();
-```
-
 
 #### onWillDismiss()
 
 Returns a promise that resolves when the modal will dismiss. It also accepts a callback
 that is called in the same circustances.
-
-```
-const {data, role} = await modal.onWillDismiss();
-```
 
 
 #### present()

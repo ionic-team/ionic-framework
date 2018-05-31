@@ -31,6 +31,9 @@ If true, the menu is disabled. Default `false`.
 
 number
 
+The edge threshold for dragging the menu open.
+If a drag/swipe happens over this value, the menu is not triggered.
+
 
 #### menuId
 
@@ -64,9 +67,8 @@ If true, swiping the menu is enabled. Default `true`.
 
 string
 
-The display type of the menu. Default varies based on the mode,
-see the `menuType` in the [config](../../config/Config). Available options:
-`"overlay"`, `"reveal"`, `"push"`.
+The display type of the menu.
+Available options: `"overlay"`, `"reveal"`, `"push"`.
 
 
 ## Attributes
@@ -88,6 +90,9 @@ If true, the menu is disabled. Default `false`.
 #### max-edge-start
 
 number
+
+The edge threshold for dragging the menu open.
+If a drag/swipe happens over this value, the menu is not triggered.
 
 
 #### menu-id
@@ -122,9 +127,8 @@ If true, swiping the menu is enabled. Default `true`.
 
 string
 
-The display type of the menu. Default varies based on the mode,
-see the `menuType` in the [config](../../config/Config). Available options:
-`"overlay"`, `"reveal"`, `"push"`.
+The display type of the menu.
+Available options: `"overlay"`, `"reveal"`, `"push"`.
 
 
 ## Events

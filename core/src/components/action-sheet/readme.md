@@ -218,19 +218,11 @@ Dismiss the action sheet overlay after it has been presented.
 Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback
 that is called in the same circustances.
 
-```
-const {data, role} = await actionSheet.onDidDismiss();
-```
-
 
 #### onWillDismiss()
 
 Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback
 that is called in the same circustances.
-
-```
-const {data, role} = await actionSheet.onWillDismiss();
-```
 
 
 #### present()

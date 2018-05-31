@@ -242,10 +242,6 @@ Dismiss the loading overlay after it has been presented.
 Returns a promise that resolves when the loading did dismiss. It also accepts a callback
 that is called in the same circustances.
 
-```
-const {data, role} = await loading.onDidDismiss();
-```
-
 
 #### onWillDismiss()
 
