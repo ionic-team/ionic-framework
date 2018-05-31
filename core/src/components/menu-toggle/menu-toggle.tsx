@@ -5,19 +5,20 @@ import { Component, Listen, Prop, State } from '@stencil/core';
   styleUrl: 'menu-toggle.scss'
 })
 export class MenuToggle {
-
-  @Prop({ context: 'document' }) doc!: Document;
+  @Prop({ context: 'document' })
+  doc!: Document;
 
   @State() visible = false;
 
   /**
-   * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
+   * Optional property that maps to a Menu's `menuId` prop.
+   * Can also be `left` or `right` for the menu side.
+   * This is used to find the correct menu to toggle
    */
   @Prop() menu?: string;
 
   /**
-   * Automatically hides the content when the corresponding menu is not
-   * active
+   * Automatically hides the content when the corresponding menu is not active
    */
   @Prop() autoHide = true;
 
@@ -54,15 +55,16 @@ export class MenuToggle {
   hostData() {
     const hidden = this.autoHide && !this.visible;
     return {
-      class:  {
+      class: {
         'menu-toggle-hidden': hidden
       }
     };
   }
-
 }
 
-function getMenuController(doc: Document): Promise<HTMLIonMenuControllerElement|null> {
+function getMenuController(
+  doc: Document
+): Promise<HTMLIonMenuControllerElement | null> {
   const menuControllerElement = doc.querySelector('ion-menu-controller');
   if (!menuControllerElement) {
     return Promise.resolve(null);

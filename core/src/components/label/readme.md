@@ -1,5 +1,5 @@
 # ion-label
-
+Label is a wrapper element that can be used in combination with `ion-item`.
 
 
 <!-- Auto Generated Below -->

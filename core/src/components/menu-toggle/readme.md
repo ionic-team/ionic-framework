@@ -1,5 +1,5 @@
 # ion-menu-toggle
-
+The MenuToggle component can be used to toggle a menu open or closed.
 
 
 <!-- Auto Generated Below -->

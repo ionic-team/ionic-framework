@@ -1,5 +1,5 @@
 # ion-list-header
-
+List header a header component for a list.
 
 
 <!-- Auto Generated Below -->
