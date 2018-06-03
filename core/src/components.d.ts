@@ -6415,6 +6415,9 @@ declare global {
 
   namespace StencilComponents {
     interface IonTabButton {
+      'badge': string;
+      'icon': string;
+      'label': string;
       'selected': boolean;
       'tab': HTMLIonTabElement;
     }
@@ -6439,6 +6442,9 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTabButtonAttributes extends HTMLAttributes {
+      'badge'?: string;
+      'icon'?: string;
+      'label'?: string;
       'onIonTabButtonDidLoad'?: (event: CustomEvent<void>) => void;
       'onIonTabButtonDidUnload'?: (event: CustomEvent<void>) => void;
       'onIonTabbarClick'?: (event: CustomEvent<HTMLIonTabElement>) => void;

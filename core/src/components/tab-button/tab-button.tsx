@@ -18,6 +18,11 @@ export class TabButton {
   @State() keyFocus = false;
 
   @Prop() selected = false;
+
+  @Prop() icon: string = '';
+  @Prop() label: string = '';
+  @Prop() badge: string = '';
+
   @Prop() tab!: HTMLIonTabElement;
 
   @Event() ionTabbarClick!: EventEmitter<HTMLIonTabElement>;
@@ -52,11 +57,11 @@ export class TabButton {
   hostData() {
     const selected = this.selected;
     const tab = this.tab;
-    const hasTitle = !!tab.label;
-    const hasIcon = !!tab.icon;
+    const hasTitle = !!this.label;
+    const hasIcon = !!this.icon;
     const hasTitleOnly = (hasTitle && !hasIcon);
     const hasIconOnly = (hasIcon && !hasTitle);
-    const hasBadge = !!tab.badge;
+    const hasBadge = !!this.badge;
     return {
       'role': 'tab',
       'id': tab.btnId,
@@ -85,9 +90,9 @@ export class TabButton {
         class="tab-cover"
         onKeyUp={this.onKeyUp.bind(this)}
         onBlur={this.onBlur.bind(this)}>
-        { tab.icon && <ion-icon class="tab-button-icon" icon={tab.icon}></ion-icon> }
-        { tab.label && <span class="tab-button-text">{tab.label}</span> }
-        { tab.badge && <ion-badge class="tab-badge" color={tab.badgeColor}>{tab.badge}</ion-badge> }
+        { this.icon && <ion-icon class="tab-button-icon" icon={this.icon}></ion-icon> }
+        { this.label && <span class="tab-button-text">{this.label}</span> }
+        { this.badge && <ion-badge class="tab-badge" color={tab.badgeColor}>{this.badge}</ion-badge> }
         { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </a>
     ];
