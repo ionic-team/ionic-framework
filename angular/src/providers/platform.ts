@@ -45,7 +45,7 @@ export class Platform {
     let readyResolve: (value: string) => void;
     this._readyPromise = new Promise(res => { readyResolve = res; } );
     if ((window as any)['cordova']) {
-      window.addEventListener('deviceready', () => {
+      document.addEventListener('deviceready', () => {
         readyResolve('cordova');
       }, {once: true});
     } else {
