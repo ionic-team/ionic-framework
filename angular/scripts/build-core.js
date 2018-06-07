@@ -22,6 +22,10 @@ function buildIonicAngular() {
       console.log(`@ionic/angular build exited with ${code}`);
     }
   });
+  
+  p.on('error', (err) => {
+    console.log(`Error (@ionic/angular) : ${err}`);
+  })
 }
 
 function buildIonicCore() {
@@ -44,6 +48,10 @@ function buildIonicCore() {
       copyIonicons();
     }
   });
+  
+  p.on('error', (err) => {
+    console.log(`Error (@ionic/core) : ${err}`);
+  })
 }
 
 function copyIonicons() {
