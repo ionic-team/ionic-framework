@@ -142,12 +142,8 @@ export class Item {
           <div class="input-wrapper">
             <slot />
           </div>
-<<<<<<< HEAD
           <slot name="end"></slot>
           { showDetail && <ion-icon icon={this.detailIcon} class="item-detail-icon"></ion-icon> }
-=======
-          <slot name="end" />
->>>>>>> master
         </div>
         {clickable &&
           this.mode === 'md' && <ion-ripple-effect tapClick={true} />}
