@@ -3,8 +3,7 @@ import {Directive,  Input, TemplateRef, ViewContainerRef, Renderer2} from '@angu
 @Directive({
   selector: '[ifPl]',
 })
-
-export class IfPlatform {
+export class ifPlatform {
   public _context: IfPlatformContext = new IfPlatformContext();
   public _thenTemplateRef: TemplateRef<IfPlatformContext>|null = null;
   public platform: string;
@@ -13,18 +12,27 @@ export class IfPlatform {
   }
 
   onResize() {
-    this._context.$implicit = this._context.ifPlatform = IsThisPlateForm(window, this.platform);
+    if (this._context.inversed) {
+      this._context.$implicit = this._context.ifPlatform = !IsThisPlateForm(window, this.platform);
+    }else{
+      this._context.$implicit = this._context.ifPlatform = IsThisPlateForm(window, this.platform);
+    }
     this._updateView();
   }
 
   @Input('ifPl')
   set myIfPl(platform: string) {
-    this.platform = platform;
-    this._context.$implicit = this._context.ifPlatform = IsThisPlateForm(window, platform);
+    this.platform = this.ParsePlatform(platform);
+    if (this._context.inversed) {
+      this._context.$implicit = this._context.ifPlatform = !IsThisPlateForm(window, this.platform);
+    }else{
+      this._context.$implicit = this._context.ifPlatform = IsThisPlateForm(window, this.platform);
+    }
     this._updateView();
     this.render.listen("window", "resize", this.onResize.bind(this));
 
   }
+
 
   private _updateView() {
     if (!this._context.$implicit) {
@@ -35,6 +43,15 @@ export class IfPlatform {
         this._viewContainer.createEmbeddedView(this._thenTemplateRef, this._context);
       }
       this._context.see = true;
+
+    }
+  }
+
+  private ParsePlatform(pl: string) {
+    var splitted = pl.split("!");
+    if (splitted.length > 1) {
+      this._context.inversed = true;
+      return splitted[1]
     }
   }
 }
@@ -43,6 +60,7 @@ export class IfPlatformContext {
   public $implicit: any = null;
   public ifPlatform: any = null;
   public see: boolean = false;
+  public inversed: boolean = false;
 }
 
 // TODO: Use the util provided by core/src/util
@@ -60,5 +78,6 @@ export function IsThisPlateForm(win, pl){
     case "wd":
       return (agent.match(/Windows Phone/i) || []).length > 0;
   }
-  throw new Error(`there is no platform named : ${pl}. Use : ios, iPad, iPhone, android, wd instead.`)
+  throw new Error(`there is no platform named : ${pl}. Use : ios, iPad, iPhone, android, wd instead.`);
 }
+
