@@ -21,7 +21,6 @@ export class IfPlatform {
   set myIfPl(platform: string) {
     this.platform = platform;
     this._context.$implicit = this._context.ifPlatform = IsThisPlateForm(window, platform);
-    console.log(IsThisPlateForm(window, platform))
     this._updateView();
     this.render.listen("window", "resize", this.onResize.bind(this));
 
