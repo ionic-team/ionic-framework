@@ -157,9 +157,6 @@ export class ActionSheet implements OverlayInterface {
    * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback
    * that is called in the same circustances.
    *
-   * ```
-   * const {data, role} = await actionSheet.onDidDismiss();
-   * ```
    */
   @Method()
   onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
@@ -170,9 +167,6 @@ export class ActionSheet implements OverlayInterface {
    * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback
    * that is called in the same circustances.
    *
-   * ```
-   * const {data, role} = await actionSheet.onWillDismiss();
-   * ```
    */
   @Method()
   onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {

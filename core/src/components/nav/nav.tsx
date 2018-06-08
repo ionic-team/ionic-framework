@@ -3,9 +3,10 @@ import { ViewLifecycle } from '../..';
 import {
   Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, Mode,
   NavComponent, NavOptions, NavOutlet, NavResult, QueueController, RouteID,
-  RouteWrite, RouterIntent, TransitionDoneFn, TransitionInstruction } from '../../interface';
+  RouteWrite, TransitionDoneFn, TransitionInstruction } from '../../interface';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, transition } from '../../utils/transition';
+import { RouterIntent } from '../router/utils/constants';
 import { ViewController, ViewState, convertToViews, matches } from './view-controller';
 
 @Component({

@@ -2,32 +2,45 @@ import { Component, Event, EventEmitter, Method } from '@stencil/core';
 import { BlockerConfig, GestureConfig } from '../../interface';
 import { BlockerDelegate, GestureDelegate } from './gesture-controller-utils';
 
-
 @Component({
   tag: 'ion-gesture-controller'
 })
 export class GestureController {
-
   private gestureId = 0;
   private requestedStart = new Map<number, number>();
   private disabledGestures = new Map<string, Set<number>>();
   private disabledScroll = new Set<number>();
-  private capturedId: number|null = null;
+  private capturedId: number | null = null;
 
+  /**
+   * Event emitted when a gesture has been captured.
+   */
   @Event() ionGestureCaptured!: EventEmitter<string>;
 
+  /**
+   * Creates a gesture delegate based on the GestureConfig passed
+   */
   @Method()
   create(config: GestureConfig): Promise<GestureDelegate> {
-    return Promise.resolve(new GestureDelegate(
-      this, this.newID(),
-      config.name,
-      config.priority ? config.priority : 0,
-      !!config.disableScroll));
+    return Promise.resolve(
+      new GestureDelegate(
+        this,
+        this.newID(),
+        config.name,
+        config.priority ? config.priority : 0,
+        !!config.disableScroll
+      )
+    );
   }
 
+  /**
+   * Creates a blocker that will block any other gesture events from firing. Set in the ion-gesture component.
+   */
   @Method()
   createBlocker(opts: BlockerConfig = {}): BlockerDelegate {
-    return new BlockerDelegate(this.newID(), this,
+    return new BlockerDelegate(
+      this.newID(),
+      this,
       opts.disable,
       !!opts.disableScroll
     );

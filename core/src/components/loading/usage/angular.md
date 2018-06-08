@@ -18,7 +18,7 @@ export class LoadingExample {
     return await loading.present();
   }
 
-  presentLoadingWithOptions() {
+  async presentLoadingWithOptions() {
     const loading = await this.loadingController.create({
       spinner: 'hide',
       duration: 5000,

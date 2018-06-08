@@ -2,7 +2,6 @@ import { Component, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
-
 @Component({
   tag: 'ion-list-header',
   styleUrls: {
@@ -11,18 +10,14 @@ import { createThemedClasses } from '../../utils/theme';
   }
 })
 export class ListHeader {
-
   /**
-   * The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * The color to use for the background.
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode!: Mode;
 

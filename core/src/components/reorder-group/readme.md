@@ -103,7 +103,7 @@ class MyComponent {
 }
 ```
 
-Alternatevely you can execute helper function inside template:
+Alternatively the helper function can be executed inside a template:
 
 ```html
 <ion-list>

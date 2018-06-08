@@ -1,5 +1,6 @@
 # ion-menu-controller
 
+The MenuController makes it easy to control a Menu. Its methods can be used to display the menu, enable the menu, toggle the menu, and more. The controller will grab a reference to the menu by the side, id, or, if neither of these are passed to it, it will grab the first menu it finds.
 
 
 <!-- Auto Generated Below -->
@@ -21,7 +22,7 @@
 
 #### close()
 
-Programatically close the Menu. If no `menuId` is given as the first
+Close the Menu. If no `menuId` is given as the first
 argument then it'll close any menu which is open. If a `menuId`
 is given then it'll close that exact menu.
 
@@ -48,22 +49,32 @@ property. If a menu is not found then it'll return `null`.
 
 #### getMenus()
 
+Returns an array of all menu instances.
+
 
 #### getOpen()
+
+Returns the instance of the menu already opened, otherwise `null`.
 
 
 #### isAnimating()
 
+If any menu is currently animating
+
 
 #### isEnabled()
+
+Returns true or false if the menuId is enabled or not
 
 
 #### isOpen()
 
+If the menuId is not specified, it returns true if ANY menu is currenly open.
+
 
 #### open()
 
-Programatically open the Menu.
+Open the Menu.
 
 
 #### registerAnimation()

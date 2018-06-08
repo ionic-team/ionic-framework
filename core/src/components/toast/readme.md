@@ -230,19 +230,11 @@ Dismiss the toast overlay after it has been presented.
 Returns a promise that resolves when the toast did dismiss. It also accepts a callback
 that is called in the same circustances.
 
-```
-const {data, role} = await toast.onDidDismiss();
-```
-
 
 #### onWillDismiss()
 
 Returns a promise that resolves when the toast will dismiss. It also accepts a callback
 that is called in the same circustances.
-
-```
-const {data, role} = await toast.onWillDismiss();
-```
 
 
 #### present()

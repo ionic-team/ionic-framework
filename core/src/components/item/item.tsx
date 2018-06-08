@@ -1,7 +1,10 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
 import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
-import { createThemedClasses, getElementClassMap, openURL } from '../../utils/theme';
-
+import {
+  createThemedClasses,
+  getElementClassMap,
+  openURL
+} from '../../utils/theme';
 
 @Component({
   tag: 'ion-item',
@@ -11,24 +14,21 @@ import { createThemedClasses, getElementClassMap, openURL } from '../../utils/th
   }
 })
 export class Item {
-
   private itemStyles: { [key: string]: CssClassMap } = {};
 
   @Element() el!: HTMLStencilElement;
 
-  @Prop({ context: 'window' }) win!: Window;
+  @Prop({ context: 'window' })
+  win!: Window;
 
   /**
-   * The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * The color to use for the background of the item.
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode!: Mode;
 
@@ -69,7 +69,6 @@ export class Item {
    * another page using `href`.
    */
   @Prop() routerDirection?: RouterDirection;
-
 
   @Listen('ionStyle')
   itemStyle(ev: UIEvent) {
@@ -115,15 +114,13 @@ export class Item {
 
     const clickable = !!(this.href || this.el.onclick || this.button);
 
-    const TagType = clickable
-      ? this.href ? 'a' : 'button'
-      : 'div';
+    const TagType = clickable ? (this.href ? 'a' : 'button') : 'div';
 
-    const attrs = (TagType === 'button')
-      ? { type: 'button' }
-      : { href: this.href };
+    const attrs =
+      TagType === 'button' ? { type: 'button' } : { href: this.href };
 
-    const showDetail = this.detail != null ? this.detail : (this.mode === 'ios' && clickable);
+    const showDetail =
+      this.detail != null ? this.detail : this.mode === 'ios' && clickable;
 
     const themedClasses = {
       ...childStyles,
@@ -138,18 +135,23 @@ export class Item {
       <TagType
         {...attrs}
         class={themedClasses}
-        onClick={(ev) => openURL(this.win, this.href, ev, this.routerDirection)}>
-        <slot name="start"></slot>
+        onClick={ev => openURL(this.win, this.href, ev, this.routerDirection)}
+      >
+        <slot name="start" />
         <div class="item-inner">
           <div class="input-wrapper">
-            <slot></slot>
+            <slot />
           </div>
+<<<<<<< HEAD
           <slot name="end"></slot>
           { showDetail && <ion-icon icon={this.detailIcon} class="item-detail-icon"></ion-icon> }
+=======
+          <slot name="end" />
+>>>>>>> master
         </div>
-        { clickable && this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+        {clickable &&
+          this.mode === 'md' && <ion-ripple-effect tapClick={true} />}
       </TagType>
     );
   }
-
 }

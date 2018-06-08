@@ -1,5 +1,5 @@
 # ion-gesture-controller
-
+Gesture controller is a component for creating a gesture interactions.
 
 
 <!-- Auto Generated Below -->
@@ -9,13 +9,19 @@
 
 #### ionGestureCaptured
 
+Event emitted when a gesture has been captured.
+
 
 ## Methods
 
 #### create()
 
+Creates a gesture delegate based on the GestureConfig passed
+
 
 #### createBlocker()
+
+Creates a blocker that will block any other gesture events from firing. Set in the ion-gesture component.
 
 
 

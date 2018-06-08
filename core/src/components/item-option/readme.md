@@ -1,9 +1,8 @@
 # ion-item-option
 
 The option button for an `ion-item-sliding`. Must be placed inside of an `<ion-item-options>`.
-You can combine the `(ionSwipe)` event and the `expandable` directive to create a full swipe
+You can combine the `ionSwipe` event and the `expandable` directive to create a full swipe
 action for the item.
-
 
 <!-- Auto Generated Below -->
 
@@ -14,9 +13,7 @@ action for the item.
 
 string
 
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
+The color to use for the option
 
 
 #### disabled
@@ -47,7 +44,6 @@ string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 ## Attributes
@@ -56,9 +52,7 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 
 string
 
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
+The color to use for the option
 
 
 #### disabled
@@ -89,7 +83,6 @@ string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 

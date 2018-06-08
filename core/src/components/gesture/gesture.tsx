@@ -1,5 +1,18 @@
-import { Component, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
-import { BlockerConfig, BlockerDelegate , GestureCallback, GestureDelegate, GestureDetail, QueueController } from '../../interface';
+import {
+  Component,
+  EventListenerEnable,
+  Listen,
+  Prop,
+  Watch
+} from '@stencil/core';
+import {
+  BlockerConfig,
+  BlockerDelegate,
+  GestureCallback,
+  GestureDelegate,
+  GestureDetail,
+  QueueController
+} from '../../interface';
 import { assert, now } from '../../utils/helpers';
 import { PanRecognizer } from './recognizers';
 
@@ -12,7 +25,6 @@ export const BLOCK_ALL: BlockerConfig = {
   tag: 'ion-gesture'
 })
 export class Gesture {
-
   private detail: GestureDetail;
   private positions: number[] = [];
   private gesture?: GestureDelegate;
@@ -24,27 +36,96 @@ export class Gesture {
   private isMoveQueued = false;
   private blocker?: BlockerDelegate;
 
-  @Prop({ connect: 'ion-gesture-controller' }) gestureCtrl!: HTMLIonGestureControllerElement;
-  @Prop({ context: 'queue' }) queue!: QueueController;
-  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
-  @Prop({ context: 'isServer' }) isServer!: boolean;
+  @Prop({ connect: 'ion-gesture-controller' })
+  gestureCtrl!: HTMLIonGestureControllerElement;
 
+  @Prop({ context: 'queue' })
+  queue!: QueueController;
+
+  @Prop({ context: 'enableListener' })
+  enableListener!: EventListenerEnable;
+
+  @Prop({ context: 'isServer' })
+  isServer!: boolean;
+
+  /**
+   * If true, the current gesture interaction is disabled
+   */
   @Prop() disabled = false;
+
+  /**
+   * What component to attach listeners to.
+   */
   @Prop() attachTo: string | HTMLElement = 'child';
+
+  /**
+   * If true, gesture will prevent any other gestures from firing
+   */
   @Prop() autoBlockAll = false;
+
+  /**
+   * If true, the current gesture will disabling scrolling interactions
+   */
   @Prop() disableScroll = false;
+
+  /**
+   * What direction to listen for gesture changes
+   */
   @Prop() direction = 'x';
+
+  /**
+   * Name for the gesture action
+   */
   @Prop() gestureName = '';
+
+  /**
+   * What priority the gesture should take. The higher the number, the higher the priority.
+   */
   @Prop() gesturePriority = 0;
+
+  /**
+   * If the event should use passive event listeners
+   */
   @Prop() passive = true;
+
+  /**
+   * The max angle for the gesture
+   */
   @Prop() maxAngle = 40;
+
+  /**
+   * How many pixels of change the gesture should wait for before triggering the action.
+   */
   @Prop() threshold = 10;
 
+  /**
+   * Function to execute to see if gesture can start. Return boolean
+   */
   @Prop() canStart?: GestureCallback;
+
+  /**
+   * Function to execute when the gesture will start
+   */
   @Prop() onWillStart?: (_: GestureDetail) => Promise<void>;
+
+  /**
+   * Function to execute when the gesture has start
+   */
   @Prop() onStart?: GestureCallback;
+
+  /**
+   * Function to execute when the gesture has moved
+   */
   @Prop() onMove?: GestureCallback;
+
+  /**
+   * Function to execute when the gesture has end
+   */
   @Prop() onEnd?: GestureCallback;
+
+  /**
+   * Function to execute when the gesture has not been captured
+   */
   @Prop() notCaptured?: GestureCallback;
 
   constructor() {
@@ -61,7 +142,7 @@ export class Gesture {
       deltaY: 0,
       timeStamp: 0,
       event: undefined as any,
-      data: undefined,
+      data: undefined
     };
   }
 
@@ -105,8 +186,20 @@ export class Gesture {
 
   @Watch('disabled')
   protected disabledChanged(isDisabled: boolean) {
-    this.enableListener(this, 'touchstart', !isDisabled, this.attachTo, this.passive);
-    this.enableListener(this, 'mousedown', !isDisabled, this.attachTo, this.passive);
+    this.enableListener(
+      this,
+      'touchstart',
+      !isDisabled,
+      this.attachTo,
+      this.passive
+    );
+    this.enableListener(
+      this,
+      'mousedown',
+      !isDisabled,
+      this.attachTo,
+      this.passive
+    );
     if (isDisabled) {
       this.abortGesture();
     }
@@ -126,12 +219,11 @@ export class Gesture {
     }
   }
 
-
   @Listen('mousedown', { passive: true, enabled: false })
   onMouseDown(ev: MouseEvent) {
     const timeStamp = now(ev);
 
-    if (this.lastTouch === 0 || (this.lastTouch + MOUSE_WAIT < timeStamp)) {
+    if (this.lastTouch === 0 || this.lastTouch + MOUSE_WAIT < timeStamp) {
       if (this.pointerDown(ev, timeStamp)) {
         this.enableMouse(true);
         this.enableTouch(false);
@@ -182,7 +274,6 @@ export class Gesture {
     return true;
   }
 
-
   // MOVE *************************
 
   @Listen('touchmove', { passive: true, enabled: false })
@@ -191,11 +282,10 @@ export class Gesture {
     this.pointerMove(ev);
   }
 
-
   @Listen('document:mousemove', { passive: true, enabled: false })
   onMoveMove(ev: TouchEvent) {
     const timeStamp = now(ev);
-    if (this.lastTouch === 0 || (this.lastTouch + MOUSE_WAIT < timeStamp)) {
+    if (this.lastTouch === 0 || this.lastTouch + MOUSE_WAIT < timeStamp) {
       this.detail.timeStamp = timeStamp;
       this.pointerMove(ev);
     }
@@ -342,13 +432,12 @@ export class Gesture {
   onMouseUp(ev: TouchEvent) {
     const timeStamp = now(ev);
 
-    if (this.lastTouch === 0 || (this.lastTouch + MOUSE_WAIT < timeStamp)) {
+    if (this.lastTouch === 0 || this.lastTouch + MOUSE_WAIT < timeStamp) {
       this.detail.timeStamp = timeStamp;
       this.pointerUp(ev);
       this.enableMouse(false);
     }
   }
-
 
   private pointerUp(ev: UIEvent) {
     const hasCaptured = this.hasCapturedPan;
@@ -378,14 +467,44 @@ export class Gesture {
   // ENABLE LISTENERS *************************
 
   private enableMouse(shouldEnable: boolean) {
-    this.enableListener(this, 'document:mousemove', shouldEnable, undefined, this.passive);
-    this.enableListener(this, 'document:mouseup', shouldEnable, undefined, this.passive);
+    this.enableListener(
+      this,
+      'document:mousemove',
+      shouldEnable,
+      undefined,
+      this.passive
+    );
+    this.enableListener(
+      this,
+      'document:mouseup',
+      shouldEnable,
+      undefined,
+      this.passive
+    );
   }
 
   private enableTouch(shouldEnable: boolean) {
-    this.enableListener(this, 'touchmove', shouldEnable, this.attachTo, this.passive);
-    this.enableListener(this, 'touchcancel', shouldEnable, this.attachTo, this.passive);
-    this.enableListener(this, 'touchend', shouldEnable, this.attachTo, this.passive);
+    this.enableListener(
+      this,
+      'touchmove',
+      shouldEnable,
+      this.attachTo,
+      this.passive
+    );
+    this.enableListener(
+      this,
+      'touchcancel',
+      shouldEnable,
+      this.attachTo,
+      this.passive
+    );
+    this.enableListener(
+      this,
+      'touchend',
+      shouldEnable,
+      this.attachTo,
+      this.passive
+    );
   }
 
   private enable(shouldEnable: boolean) {

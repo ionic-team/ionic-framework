@@ -28,7 +28,7 @@ export class LoadingController implements OverlayController {
     removeLastOverlay(this.loadings);
   }
 
-  /*
+  /**
    * Create a loading overlay with loading options.
    */
   @Method()
@@ -36,7 +36,7 @@ export class LoadingController implements OverlayController {
     return createOverlay(this.doc.createElement('ion-loading'), opts);
   }
 
-  /*
+  /**
    * Dismiss the open loading overlay.
    */
   @Method()
@@ -44,7 +44,7 @@ export class LoadingController implements OverlayController {
     return dismissOverlay(data, role, this.loadings, loadingId);
   }
 
-  /*
+  /**
    * Get the most recently opened loading overlay.
    */
   @Method()
