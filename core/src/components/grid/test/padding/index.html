@@ -19,6 +19,63 @@
     </ion-header>
 
     <ion-content id="content" class="grid-demo">
+      <h2>No Grid Padding</h2>
+      <ion-grid no-padding>
+        <ion-col>
+          <div>
+            ion-col
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            ion-col
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            ion-col
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            ion-col
+          </div>
+        </ion-col>
+      </ion-grid>
+
+      <h2>No Grid Padding / Nested</h2>
+      <ion-grid no-padding>
+        <ion-col>
+          <ion-grid>
+            <ion-col>
+              <div>
+                ion-col
+              </div>
+            </ion-col>
+            <ion-col>
+              <div>
+                ion-col
+              </div>
+            </ion-col>
+          </ion-grid>
+        </ion-col>
+        <ion-col>
+          <div>
+            ion-col
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            ion-col
+          </div>
+        </ion-col>
+        <ion-col>
+          <div>
+            ion-col
+          </div>
+        </ion-col>
+      </ion-grid>
+
       <h2>Default Grid Padding</h2>
       <ion-grid>
         <ion-col>
@@ -122,6 +179,7 @@
       ion-col {
         background: #e2b863;
       }
+
     </style>
   </ion-app>
 </body>

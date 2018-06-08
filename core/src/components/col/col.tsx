@@ -22,118 +22,142 @@ export class Col {
   @Element() el!: HTMLStencilElement;
 
   /**
-   * The amount to offset the column, in terms of how many columns it should shift to the right of the total available.
+   * The amount to offset the column, in terms of how many columns it should shift to the right
+   * of the total available.
    */
   @Prop() offset?: string;
 
   /**
-   * The amount to offset the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+   * The amount to offset the column for xs screens, in terms of how many columns it should shift
+   * to the right of the total available.
    */
   @Prop() offsetXs?: string;
 
   /**
-   * The amount to offset the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+   * The amount to offset the column for sm screens, in terms of how many columns it should shift
+   * to the right of the total available.
    */
   @Prop() offsetSm?: string;
 
   /**
-   * The amount to offset the column for md screens, in terms of how many columns it should shift to the right of the total available.
+   * The amount to offset the column for md screens, in terms of how many columns it should shift
+   * to the right of the total available.
    */
   @Prop() offsetMd?: string;
 
   /**
-   * The amount to offset the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+   * The amount to offset the column for lg screens, in terms of how many columns it should shift
+   * to the right of the total available.
    */
   @Prop() offsetLg?: string;
 
   /**
-   * The amount to offset the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+   * The amount to offset the column for xl screens, in terms of how many columns it should shift
+   * to the right of the total available.
    */
   @Prop() offsetXl?: string;
 
   /**
-   * The amount to pull the column, in terms of how many columns it should shift to the left of the total available.
+   * The amount to pull the column, in terms of how many columns it should shift to the left of
+   * the total available.
    */
   @Prop() pull?: string;
 
   /**
-   * The amount to pull the column for xs screens, in terms of how many columns it should shift to the left of the total available.
+   * The amount to pull the column for xs screens, in terms of how many columns it should shift
+   * to the left of the total available.
    */
   @Prop() pullXs?: string;
   /**
-   * The amount to pull the column for sm screens, in terms of how many columns it should shift to the left of the total available.
+   * The amount to pull the column for sm screens, in terms of how many columns it should shift
+   * to the left of the total available.
    */
   @Prop() pullSm?: string;
   /**
-   * The amount to pull the column for md screens, in terms of how many columns it should shift to the left of the total available.
+   * The amount to pull the column for md screens, in terms of how many columns it should shift
+   * to the left of the total available.
    */
   @Prop() pullMd?: string;
   /**
-   * The amount to pull the column for lg screens, in terms of how many columns it should shift to the left of the total available.
+   * The amount to pull the column for lg screens, in terms of how many columns it should shift
+   * to the left of the total available.
    */
   @Prop() pullLg?: string;
   /**
-   * The amount to pull the column for xl screens, in terms of how many columns it should shift to the left of the total available.
+   * The amount to pull the column for xl screens, in terms of how many columns it should shift
+   * to the left of the total available.
    */
   @Prop() pullXl?: string;
 
   /**
-   * The amount to push the column, in terms of how many columns it should shift to the right of the total available.
+   * The amount to push the column, in terms of how many columns it should shift to the right
+   * of the total available.
    */
   @Prop() push?: string;
 
   /**
-   * The amount to push the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+   * The amount to push the column for xs screens, in terms of how many columns it should shift
+   * to the right of the total available.
    */
   @Prop() pushXs?: string;
 
   /**
-   * The amount to push the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+   * The amount to push the column for sm screens, in terms of how many columns it should shift
+   * to the right of the total available.
    */
   @Prop() pushSm?: string;
 
   /**
-   * The amount to push the column for md screens, in terms of how many columns it should shift to the right of the total available.
+   * The amount to push the column for md screens, in terms of how many columns it should shift
+   * to the right of the total available.
    */
   @Prop() pushMd?: string;
 
   /**
-   * The amount to push the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+   * The amount to push the column for lg screens, in terms of how many columns it should shift
+   * to the right of the total available.
    */
   @Prop() pushLg?: string;
 
   /**
-   * The amount to push the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+   * The amount to push the column for xl screens, in terms of how many columns it should shift
+   * to the right of the total available.
    */
   @Prop() pushXl?: string;
 
   /**
-   * The size of the column, in terms of how many columns it should take up out of the total available.
+   * The size of the column, in terms of how many columns it should take up out of the total
+   * available.
    */
   @Prop() size?: string;
 
   /**
-   * The size of the column for xs screens, in terms of how many columns it should take up out of the total available.
+   * The size of the column for xs screens, in terms of how many columns it should take up out
+   * of the total available. If `"auto" is passed, the column will be the size of its content.
    */
   @Prop() sizeXs?: string;
 
   /**
-   * The size of the column for sm screens, in terms of how many columns it should take up out of the total available.
+   * The size of the column for sm screens, in terms of how many columns it should take up out
+   * of the total available. If `"auto" is passed, the column will be the size of its content.
    */
   @Prop() sizeSm?: string;
 
   /**
-   * The size of the column for md screens, in terms of how many columns it should take up out of the total available.
+   * The size of the column for md screens, in terms of how many columns it should take up out
+   * of the total available. If `"auto" is passed, the column will be the size of its content.
    */
   @Prop() sizeMd?: string;
 
   /**
-   * The size of the column for lg screens, in terms of how many columns it should take up out of the total available.
+   * The size of the column for lg screens, in terms of how many columns it should take up out
+   * of the total available. If `"auto" is passed, the column will be the size of its content.
    */
   @Prop() sizeLg?: string;
 
   /**
-   * The size of the column for xl screens, in terms of how many columns it should take up out of the total available.
+   * The size of the column for xl screens, in terms of how many columns it should take up out
+   * of the total available. If `"auto" is passed, the column will be the size of its content.
    */
   @Prop() sizeXl?: string;
 
@@ -165,7 +189,7 @@ export class Col {
       // media query matches we return the value
       const columns = this[property + breakpoint.charAt(0).toUpperCase() + breakpoint.slice(1)];
 
-      if (matches && columns) {
+      if (matches && columns !== undefined) {
         matched = columns;
       }
     }
@@ -178,7 +202,11 @@ export class Col {
   calculateSize() {
     let columns = this.getColumns('size');
 
-    if (!columns) return;
+    // If size wasn't set for any breakpoint
+    // or if the user set the size without a value
+    // it means we need to stick with the default and return
+    // e.g. <ion-col size-md>
+    if (!columns || columns === '') return;
 
     // If CSS supports grid we should use grid column properties
     if (SUPPORTS_GRID) {
