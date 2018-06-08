@@ -20,3 +20,4 @@ export { VirtualHeader } from './virtual-scroll/virtual-header';
 export { VirtualFooter } from './virtual-scroll/virtual-footer';
 
 export { IfPlatform } from './control-template/ifplatform';
+export { IfWidth } from './control-template/ifwidth';
