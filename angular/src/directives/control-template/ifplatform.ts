@@ -60,4 +60,5 @@ export function IsThisPlateForm(win, pl){
     case "wd":
       return (agent.match(/Windows Phone/i) || []).length > 0;
   }
+  throw new Error(`there is no platform named : ${pl}. Use : ios, iPad, iPhone, android, wd instead.`)
 }
