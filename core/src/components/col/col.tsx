@@ -150,10 +150,6 @@ export class Col {
 
   @Listen('window:resize')
   onResize() {
-    this.calculateOffset();
-    this.calculatePull();
-    this.calculatePush();
-    this.calculateSize();
     this.el.forceUpdate();
   }
 

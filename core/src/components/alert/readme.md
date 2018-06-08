@@ -27,7 +27,7 @@ Alerts can also include several different inputs whose data can be passed back t
 
 #### buttons
 
-AlertButton[]
+(AlertButton | string)[]
 
 Array of buttons to be added to the alert.
 
