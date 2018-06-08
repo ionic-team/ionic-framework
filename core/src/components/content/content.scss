@@ -3,7 +3,7 @@
 // Content
 // --------------------------------------------------
 
-ion-content {
+:host {
   position: relative;
   display: block;
 
@@ -16,8 +16,8 @@ ion-content {
 
   margin: 0 !important; // scss-lint:disable all
   padding: 0 !important; // scss-lint:disable all
+}
 
-  > .scroll-inner {
-    min-height: 100%;
-  }
+.scroll-inner {
+  min-height: 100%;
 }

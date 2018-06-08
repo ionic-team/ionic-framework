@@ -1,21 +1,21 @@
-@import "./scroll";
-@import "./scroll.ios.vars";
+@import "./content";
+@import "./content.ios.vars";
 
 // iOS Content
 // --------------------------------------------------
 
-.outer-content .scroll-ios {
-  background: $content-ios-outer-background;
-}
-
-.scroll-ios {
+:host {
   font-family: $content-ios-font-family;
 
   color: $text-color;
   background-color: $background-color;
 }
 
-.scroll-ios hr {
+:host(.outer-content) {
+  background: $content-ios-outer-background;
+}
+
+::slotted(hr) {
   height: $hairlines-width;
 
   background-color: rgba(var(--ion-background-color-rgb, $background-color-rgb), $content-ios-horizontal-rule-background-color-alpha);

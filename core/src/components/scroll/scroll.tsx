@@ -4,10 +4,8 @@ import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-scroll',
-  styleUrls: {
-    ios: 'scroll.ios.scss',
-    md: 'scroll.md.scss'
-  }
+  styleUrl: 'scroll.scss',
+  shadow: true
 })
 export class Scroll {
 

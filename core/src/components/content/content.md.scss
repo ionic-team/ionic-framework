@@ -1,16 +1,16 @@
-@import "./scroll";
-@import "./scroll.md.vars";
+@import "./content";
+@import "./content.md.vars";
 
 // Material Design Content
 // --------------------------------------------------
 
-.scroll-md {
+:host {
   font-family: $content-md-font-family;
 
   color: $text-color;
   background-color: $background-color;
+}
 
-  hr {
-    background-color: $background-color-step-50;
-  }
+::slotted(hr) {
+  background-color: $background-color-step-50;
 }

@@ -4,7 +4,11 @@ import { Color, Config, Mode, QueueController } from '../../interface';
 
 @Component({
   tag: 'ion-content',
-  styleUrl: 'content.scss'
+  styleUrls: {
+    ios: 'content.ios.scss',
+    md: 'content.md.scss'
+  },
+  shadow: true
 })
 export class Content {
 
