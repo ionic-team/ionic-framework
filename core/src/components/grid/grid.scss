@@ -5,30 +5,28 @@
 
 ion-grid {
   @include make-grid-base();
-
-  // TODO remove
-  background: #b9ce4f;
-
 }
 
 .grid-fixed {
   @include make-grid-max-widths();
 }
 
-// Legacy Grid
+.grid-sized {
+  @include make-grid-sized();
+}
+
+// Flex Grid
 // --------------------------------------------------
 
 ion-grid {
-  @include make-legacy-grid();
+  @include make-flex-grid();
 }
 
 ion-col {
-  @include make-legacy-column-base();
-
-  background: #e2b863;
+  @include make-flex-column();
 }
 
-@include make-legacy-grid-columns();
+@include make-flex-grid-columns();
 
 // CSS Grid
 // --------------------------------------------------

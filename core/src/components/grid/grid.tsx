@@ -17,10 +17,16 @@ export class Grid {
    */
   @Prop() fixed?: boolean;
 
+  /**
+   * If true, the grid will have a set number of columns. Defaults to `false`.
+   */
+  @Prop() sized?: boolean;
+
   hostData() {
     return {
       class: {
-        'grid-fixed': this.fixed
+        'grid-fixed': this.fixed,
+        'grid-sized': this.sized
       }
     };
   }

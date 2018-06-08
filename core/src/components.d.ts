@@ -13,9 +13,12 @@ declare global {
   }
   namespace JSXElements {}
 
+  interface HTMLElement {
+    componentOnReady?: () => Promise<this | null>;
+  }
+
   interface HTMLStencilElement extends HTMLElement {
     componentOnReady(): Promise<this>;
-    componentOnReady(done: (ele?: this) => void): void;
 
     forceUpdate(): void;
   }
@@ -1469,9 +1472,101 @@ declare global {
   namespace StencilComponents {
     interface IonCol {
       /**
-       * The width of the column, in terms of how many columns it should take up.
+       * The amount to offset the column, in terms of how many columns it should shift to the right of the total available.
        */
-      'width': string;
+      'offset': string;
+      /**
+       * The amount to offset the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'offsetLg': string;
+      /**
+       * The amount to offset the column for md screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'offsetMd': string;
+      /**
+       * The amount to offset the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'offsetSm': string;
+      /**
+       * The amount to offset the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'offsetXl': string;
+      /**
+       * The amount to offset the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'offsetXs': string;
+      /**
+       * The amount to pull the column, in terms of how many columns it should shift to the left of the total available.
+       */
+      'pull': string;
+      /**
+       * The amount to pull the column for lg screens, in terms of how many columns it should shift to the left of the total available.
+       */
+      'pullLg': string;
+      /**
+       * The amount to pull the column for md screens, in terms of how many columns it should shift to the left of the total available.
+       */
+      'pullMd': string;
+      /**
+       * The amount to pull the column for sm screens, in terms of how many columns it should shift to the left of the total available.
+       */
+      'pullSm': string;
+      /**
+       * The amount to pull the column for xl screens, in terms of how many columns it should shift to the left of the total available.
+       */
+      'pullXl': string;
+      /**
+       * The amount to pull the column for xs screens, in terms of how many columns it should shift to the left of the total available.
+       */
+      'pullXs': string;
+      /**
+       * The amount to push the column, in terms of how many columns it should shift to the right of the total available.
+       */
+      'push': string;
+      /**
+       * The amount to push the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'pushLg': string;
+      /**
+       * The amount to push the column for md screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'pushMd': string;
+      /**
+       * The amount to push the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'pushSm': string;
+      /**
+       * The amount to push the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'pushXl': string;
+      /**
+       * The amount to push the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'pushXs': string;
+      /**
+       * The size of the column, in terms of how many columns it should take up out of the total available.
+       */
+      'size': string;
+      /**
+       * The size of the column for lg screens, in terms of how many columns it should take up out of the total available.
+       */
+      'sizeLg': string;
+      /**
+       * The size of the column for md screens, in terms of how many columns it should take up out of the total available.
+       */
+      'sizeMd': string;
+      /**
+       * The size of the column for sm screens, in terms of how many columns it should take up out of the total available.
+       */
+      'sizeSm': string;
+      /**
+       * The size of the column for xl screens, in terms of how many columns it should take up out of the total available.
+       */
+      'sizeXl': string;
+      /**
+       * The size of the column for xs screens, in terms of how many columns it should take up out of the total available.
+       */
+      'sizeXs': string;
     }
   }
 
@@ -1495,9 +1590,101 @@ declare global {
   namespace JSXElements {
     export interface IonColAttributes extends HTMLAttributes {
       /**
-       * The width of the column, in terms of how many columns it should take up.
+       * The amount to offset the column, in terms of how many columns it should shift to the right of the total available.
        */
-      'width'?: string;
+      'offset'?: string;
+      /**
+       * The amount to offset the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'offsetLg'?: string;
+      /**
+       * The amount to offset the column for md screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'offsetMd'?: string;
+      /**
+       * The amount to offset the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'offsetSm'?: string;
+      /**
+       * The amount to offset the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'offsetXl'?: string;
+      /**
+       * The amount to offset the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'offsetXs'?: string;
+      /**
+       * The amount to pull the column, in terms of how many columns it should shift to the left of the total available.
+       */
+      'pull'?: string;
+      /**
+       * The amount to pull the column for lg screens, in terms of how many columns it should shift to the left of the total available.
+       */
+      'pullLg'?: string;
+      /**
+       * The amount to pull the column for md screens, in terms of how many columns it should shift to the left of the total available.
+       */
+      'pullMd'?: string;
+      /**
+       * The amount to pull the column for sm screens, in terms of how many columns it should shift to the left of the total available.
+       */
+      'pullSm'?: string;
+      /**
+       * The amount to pull the column for xl screens, in terms of how many columns it should shift to the left of the total available.
+       */
+      'pullXl'?: string;
+      /**
+       * The amount to pull the column for xs screens, in terms of how many columns it should shift to the left of the total available.
+       */
+      'pullXs'?: string;
+      /**
+       * The amount to push the column, in terms of how many columns it should shift to the right of the total available.
+       */
+      'push'?: string;
+      /**
+       * The amount to push the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'pushLg'?: string;
+      /**
+       * The amount to push the column for md screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'pushMd'?: string;
+      /**
+       * The amount to push the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'pushSm'?: string;
+      /**
+       * The amount to push the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'pushXl'?: string;
+      /**
+       * The amount to push the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+       */
+      'pushXs'?: string;
+      /**
+       * The size of the column, in terms of how many columns it should take up out of the total available.
+       */
+      'size'?: string;
+      /**
+       * The size of the column for lg screens, in terms of how many columns it should take up out of the total available.
+       */
+      'sizeLg'?: string;
+      /**
+       * The size of the column for md screens, in terms of how many columns it should take up out of the total available.
+       */
+      'sizeMd'?: string;
+      /**
+       * The size of the column for sm screens, in terms of how many columns it should take up out of the total available.
+       */
+      'sizeSm'?: string;
+      /**
+       * The size of the column for xl screens, in terms of how many columns it should take up out of the total available.
+       */
+      'sizeXl'?: string;
+      /**
+       * The size of the column for xs screens, in terms of how many columns it should take up out of the total available.
+       */
+      'sizeXs'?: string;
     }
   }
 }
@@ -2094,6 +2281,10 @@ declare global {
        * If true, the grid will have a maximum width based on the screen size. Defaults to `false`.
        */
       'fixed': boolean;
+      /**
+       * If true, the grid will have a set number of columns. Defaults to `false`.
+       */
+      'sized': boolean;
     }
   }
 
@@ -2120,6 +2311,10 @@ declare global {
        * If true, the grid will have a maximum width based on the screen size. Defaults to `false`.
        */
       'fixed'?: boolean;
+      /**
+       * If true, the grid will have a set number of columns. Defaults to `false`.
+       */
+      'sized'?: boolean;
     }
   }
 }

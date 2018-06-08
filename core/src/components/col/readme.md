@@ -23,20 +23,342 @@ There are several attributes that can be added to a column to customize this beh
 
 ## Properties
 
-#### width
+#### offset
 
 string
 
-The width of the column, in terms of how many columns it should take up.
+The amount to offset the column, in terms of how many columns it should shift to the right of the total available.
+
+
+#### offsetLg
+
+string
+
+The amount to offset the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### offsetMd
+
+string
+
+The amount to offset the column for md screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### offsetSm
+
+string
+
+The amount to offset the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### offsetXl
+
+string
+
+The amount to offset the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### offsetXs
+
+string
+
+The amount to offset the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### pull
+
+string
+
+The amount to pull the column, in terms of how many columns it should shift to the left of the total available.
+
+
+#### pullLg
+
+string
+
+The amount to pull the column for lg screens, in terms of how many columns it should shift to the left of the total available.
+
+
+#### pullMd
+
+string
+
+The amount to pull the column for md screens, in terms of how many columns it should shift to the left of the total available.
+
+
+#### pullSm
+
+string
+
+The amount to pull the column for sm screens, in terms of how many columns it should shift to the left of the total available.
+
+
+#### pullXl
+
+string
+
+The amount to pull the column for xl screens, in terms of how many columns it should shift to the left of the total available.
+
+
+#### pullXs
+
+string
+
+The amount to pull the column for xs screens, in terms of how many columns it should shift to the left of the total available.
+
+
+#### push
+
+string
+
+The amount to push the column, in terms of how many columns it should shift to the right of the total available.
+
+
+#### pushLg
+
+string
+
+The amount to push the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### pushMd
+
+string
+
+The amount to push the column for md screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### pushSm
+
+string
+
+The amount to push the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### pushXl
+
+string
+
+The amount to push the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### pushXs
+
+string
+
+The amount to push the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### size
+
+string
+
+The size of the column, in terms of how many columns it should take up out of the total available.
+
+
+#### sizeLg
+
+string
+
+The size of the column for lg screens, in terms of how many columns it should take up out of the total available.
+
+
+#### sizeMd
+
+string
+
+The size of the column for md screens, in terms of how many columns it should take up out of the total available.
+
+
+#### sizeSm
+
+string
+
+The size of the column for sm screens, in terms of how many columns it should take up out of the total available.
+
+
+#### sizeXl
+
+string
+
+The size of the column for xl screens, in terms of how many columns it should take up out of the total available.
+
+
+#### sizeXs
+
+string
+
+The size of the column for xs screens, in terms of how many columns it should take up out of the total available.
 
 
 ## Attributes
 
-#### width
+#### offset
 
 string
 
-The width of the column, in terms of how many columns it should take up.
+The amount to offset the column, in terms of how many columns it should shift to the right of the total available.
+
+
+#### offset-lg
+
+string
+
+The amount to offset the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### offset-md
+
+string
+
+The amount to offset the column for md screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### offset-sm
+
+string
+
+The amount to offset the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### offset-xl
+
+string
+
+The amount to offset the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### offset-xs
+
+string
+
+The amount to offset the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### pull
+
+string
+
+The amount to pull the column, in terms of how many columns it should shift to the left of the total available.
+
+
+#### pull-lg
+
+string
+
+The amount to pull the column for lg screens, in terms of how many columns it should shift to the left of the total available.
+
+
+#### pull-md
+
+string
+
+The amount to pull the column for md screens, in terms of how many columns it should shift to the left of the total available.
+
+
+#### pull-sm
+
+string
+
+The amount to pull the column for sm screens, in terms of how many columns it should shift to the left of the total available.
+
+
+#### pull-xl
+
+string
+
+The amount to pull the column for xl screens, in terms of how many columns it should shift to the left of the total available.
+
+
+#### pull-xs
+
+string
+
+The amount to pull the column for xs screens, in terms of how many columns it should shift to the left of the total available.
+
+
+#### push
+
+string
+
+The amount to push the column, in terms of how many columns it should shift to the right of the total available.
+
+
+#### push-lg
+
+string
+
+The amount to push the column for lg screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### push-md
+
+string
+
+The amount to push the column for md screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### push-sm
+
+string
+
+The amount to push the column for sm screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### push-xl
+
+string
+
+The amount to push the column for xl screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### push-xs
+
+string
+
+The amount to push the column for xs screens, in terms of how many columns it should shift to the right of the total available.
+
+
+#### size
+
+string
+
+The size of the column, in terms of how many columns it should take up out of the total available.
+
+
+#### size-lg
+
+string
+
+The size of the column for lg screens, in terms of how many columns it should take up out of the total available.
+
+
+#### size-md
+
+string
+
+The size of the column for md screens, in terms of how many columns it should take up out of the total available.
+
+
+#### size-sm
+
+string
+
+The size of the column for sm screens, in terms of how many columns it should take up out of the total available.
+
+
+#### size-xl
+
+string
+
+The size of the column for xl screens, in terms of how many columns it should take up out of the total available.
+
+
+#### size-xs
+
+string
+
+The size of the column for xs screens, in terms of how many columns it should take up out of the total available.
 
 
 

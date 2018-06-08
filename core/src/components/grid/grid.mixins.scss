@@ -4,11 +4,146 @@
 // Responsive Mixins
 // --------------------------------------------------
 
+// Creates a flex grid used to align columns
+// ---------------------------------------------------------------------------------
+
+@mixin make-flex-grid() {
+  display: flex;
+  flex-wrap: wrap;
+
+  &[nowrap] {
+    flex-wrap: nowrap;
+  }
+
+  &[wrap-reverse] {
+    flex-wrap: wrap-reverse;
+  }
+
+  &[align-items-start] {
+    align-items: flex-start;
+  }
+
+  &[align-items-center] {
+    align-items: center;
+  }
+
+  &[align-items-end] {
+    align-items: flex-end;
+  }
+
+  &[align-items-stretch] {
+    align-items: stretch;
+  }
+
+  &[align-items-baseline] {
+    align-items: baseline;
+  }
+
+  &[justify-content-start] {
+    justify-content: flex-start;
+  }
+
+  &[justify-content-center] {
+    justify-content: center;
+  }
+
+  &[justify-content-end] {
+    justify-content: flex-end;
+  }
+
+  &[justify-content-around] {
+    justify-content: space-around;
+  }
+
+  &[justify-content-between] {
+    justify-content: space-between;
+  }
+}
+
+
+// Creates a column
+// ---------------------------------------------------------------------------------
+
+@mixin make-flex-column($column-paddings: $grid-column-paddings) {
+  @include make-breakpoint-padding($column-paddings);
+  @include margin(0);
+
+  position: relative;
+
+  flex-basis: 0;
+  flex-grow: 1;
+  width: 100%;
+  max-width: 100%;
+  min-height: 1px; // Prevent columns from collapsing when empty
+
+  &[align-self-start] {
+    align-self: flex-start;
+  }
+
+  &[align-self-end] {
+    align-self: flex-end;
+  }
+
+  &[align-self-center] {
+    align-self: center;
+  }
+
+  &[align-self-stretch] {
+    align-self: stretch;
+  }
+
+  &[align-self-baseline] {
+    align-self: baseline;
+  }
+}
+
+
+// Adds padding to the element based on breakpoints
+// ---------------------------------------------------------------------------------
+
+@mixin make-breakpoint-padding($paddings) {
+  @each $breakpoint in map-keys($paddings) {
+    @include media-breakpoint-up($breakpoint) {
+      $padding: map-get($paddings, $breakpoint);
+      @include padding($padding);
+    }
+  }
+}
+
+
+// Create the responsive grid columns
+// --------------------------------------------------
+
+@mixin make-flex-grid-columns($columns: $grid-columns, $breakpoints: $screen-breakpoints) {
+  @each $breakpoint in map-keys($breakpoints) {
+    $infix: breakpoint-infix($breakpoint, $breakpoints);
+
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      // Provide basic `[size-{bp}]` attributes for equal-width flexbox columns
+
+      // TODO
+      [size#{$infix}] {
+        flex-basis: 0;
+        flex-grow: 1;
+
+        max-width: 100%;
+      }
+
+      [size#{$infix}-auto] {
+        flex: 0 0 auto;
+
+        width: auto;
+      }
+    }
+  }
+}
+
+
 // Creates the shared grid properties
 // ---------------------------------------------------------------------------------
 
-@mixin make-grid-base($padding-width: $grid-padding-width) {
-  @include padding(calc(#{$padding-width} / 2));
+@mixin make-grid-base($paddings: $grid-paddings) {
+  @include make-breakpoint-padding($paddings);
   @include margin-horizontal(auto);
 
   // Remove the padding from the grid and all immediate children columns
@@ -36,11 +171,18 @@
 // Creates a grid
 // ---------------------------------------------------------------------------------
 
-@mixin make-grid($padding-width: $grid-padding-width) {
-  display: grid;
+@mixin make-grid() {
+  @include make-grid-gap();
 
-  grid-gap: calc(#{$padding-width} / 2);
-  grid-template-columns: repeat(var(--grid-columns, $grid-columns), minmax(0, auto));
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, auto));
+}
+
+// Creates a sized grid
+// ---------------------------------------------------------------------------------
+
+@mixin make-grid-sized() {
+  grid-template-columns: repeat(var(--ion-grid-columns, $grid-columns), [col-start] minmax(0, auto));
 }
 
 
@@ -48,5 +190,18 @@
 // ---------------------------------------------------------------------------------
 
 @mixin make-column {
+  @include padding(0);
+}
 
+
+// Modifies grid gap based on the breakpoint
+// ---------------------------------------------------------------------------------
+
+@mixin make-grid-gap($column-paddings: $grid-column-paddings) {
+  @each $breakpoint in map-keys($column-paddings) {
+    @include media-breakpoint-up($breakpoint) {
+      $padding: map-get($column-paddings, $breakpoint);
+      grid-gap: $padding;
+    }
+  }
 }
