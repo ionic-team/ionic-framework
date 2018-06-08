@@ -1,4 +1,3 @@
-
 export { BooleanValueAccessor } from './control-value-accessors/boolean-value-accessor';
 export { NumericValueAccessor } from './control-value-accessors/numeric-value-accesssor';
 export { RadioValueAccessor } from './control-value-accessors/radio-value-accessor';
@@ -19,3 +18,5 @@ export { VirtualScroll } from './virtual-scroll/virtual-scroll';
 export { VirtualItem } from './virtual-scroll/virtual-item';
 export { VirtualHeader } from './virtual-scroll/virtual-header';
 export { VirtualFooter } from './virtual-scroll/virtual-footer';
+
+export { IfPlatform } from './control-template/ifplatform';
