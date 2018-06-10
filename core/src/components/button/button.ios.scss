@@ -9,6 +9,7 @@
   font-family: #{$button-ios-font-family};
   font-size: #{$button-ios-font-size};
   font-weight: #{$button-ios-font-weight};
+  letter-spacing: #{$button-ios-letter-spacing};
 
   --border-radius: #{$button-ios-border-radius};
 
@@ -23,7 +24,6 @@
   --padding-end: #{$button-ios-padding-end};
 
   --height: #{$button-ios-height};
-  --letter-spacing: #{$button-ios-letter-spacing};
 
   --transition: background-color, opacity 100ms linear;
 }

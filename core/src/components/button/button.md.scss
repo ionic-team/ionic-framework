@@ -10,10 +10,11 @@
   font-weight: #{$button-md-font-weight};
 
   text-transform: #{$button-md-text-transform};
+  letter-spacing: #{$button-md-letter-spacing};
 
-  --transition: box-shadow #{$button-md-transition-duration} #{$button-md-transition-timing-function},
-              background-color #{$button-md-transition-duration} #{$button-md-transition-timing-function},
-              color #{$button-md-transition-duration} #{$button-md-transition-timing-function};
+  --transition: #{box-shadow $button-md-transition-duration $button-md-transition-timing-function,
+              background-color $button-md-transition-duration $button-md-transition-timing-function,
+              color $button-md-transition-duration $button-md-transition-timing-function};
 
   --border-radius: #{$button-md-border-radius};
 
@@ -28,7 +29,6 @@
   --padding-end: #{$button-md-padding-end};
 
   --height: #{$button-md-height};
-  --letter-spacing: #{$button-md-letter-spacing};
 }
 
 
