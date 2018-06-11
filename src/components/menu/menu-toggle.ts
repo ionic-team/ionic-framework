@@ -10,7 +10,7 @@ import { ViewController } from '../../navigation/view-controller';
  * @description
  * The `menuToggle` directive can be placed on any button to toggle a menu open or closed.
  * If it is added to the [NavBar](../../toolbar/Navbar) of a page, the button will only appear
- * when the page it's in is currently a root page. See the [Menu Navigation Bar Behavior](../Menu#navigation-bar-behavior)
+ * when the page it's in, is currently a root page. See the [Menu Navigation Bar Behavior](../Menu#navigation-bar-behavior)
  * docs for more information.
  *
  *
