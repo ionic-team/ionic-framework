@@ -3,7 +3,7 @@ import {Directive,  Input, TemplateRef, ViewContainerRef, Renderer2} from '@angu
 @Directive({
   selector: '[ifPl]',
 })
-export class ifPlatform {
+export class IfPlatform {
   public _context: IfPlatformContext = new IfPlatformContext();
   public _thenTemplateRef: TemplateRef<IfPlatformContext>|null = null;
   public platform: string;
