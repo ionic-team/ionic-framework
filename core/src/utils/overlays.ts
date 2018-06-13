@@ -10,7 +10,7 @@ export type Requires<K extends string> = {
   [P in K]: any;
 };
 
-export function createOverlay<T extends HTMLIonOverlayElement & Requires<keyof B>, B>
+export function createOverlay<T extends HTMLIonOverlayElement & Requires<string>, B>
 (element: T, opts: B): Promise<T | null> {
   // convert the passed in overlay options into props
   // that get passed down into the new overlay

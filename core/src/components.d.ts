@@ -3310,7 +3310,7 @@ declare global {
        */
       'onDidDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       /**
-       * Returns a promise that resolves when the loading will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await loading.onWillDismiss(); ```
+       * Returns a promise that resolves when the loading will dismiss. It also accepts a callback that is called in the same circustances.  ```    * const {data, role} = await loading.onWillDismiss();    * ```
        */
       'onWillDismiss': (callback?: ((detail: OverlayEventDetail) => void) | undefined) => Promise<OverlayEventDetail>;
       'overlayId': number;
