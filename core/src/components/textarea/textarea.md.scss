@@ -4,7 +4,7 @@
 // Material Design Textarea
 // --------------------------------------------------
 
-.native-textarea-md {
+.native-textarea {
   @include placeholder($textarea-md-placeholder-color);
   @include margin($textarea-md-margin-top, $textarea-md-margin-end, $textarea-md-margin-bottom, $textarea-md-margin-start);
   @include padding(0);
@@ -13,15 +13,4 @@
 
   font-family: $textarea-md-font-family;
   font-size: $textarea-md-font-size;
-}
-
-
-// Material Design Stacked & Floating Textarea
-// --------------------------------------------------
-
-.item-label-stacked .native-textarea-md,
-.item-label-floating .native-textarea-md {
-  @include margin(8px, null, 8px, 0);
-
-  width: calc(100% - #{$textarea-md-margin-end});
 }

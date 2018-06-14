@@ -3,12 +3,12 @@
 // Text
 // --------------------------------------------------
 
-ion-text {
+:host {
   --ion-color-base: currentColor;
 }
 
 ion-text,
-ion-text a,
-ion-text p {
+::slotted(a),
+::slotted(p) {
   color: #{current-color(base)};
 }

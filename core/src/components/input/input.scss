@@ -3,7 +3,7 @@
 // Input
 // --------------------------------------------------
 
-.input {
+:host {
   position: relative;
   display: block;
 
@@ -15,7 +15,7 @@
 // Input Within An Item
 // --------------------------------------------------
 
-.item-input .input {
+:host(.in-item) {
   position: static;
 }
 
@@ -48,7 +48,7 @@
   opacity: .4;
 }
 
-input.native-input:-webkit-autofill {
+.native-input:-webkit-autofill {
   background-color: transparent;
 }
 
@@ -71,7 +71,7 @@ input.native-input:-webkit-autofill {
   height: 100%;
 }
 
-.input[disabled] .input-cover {
+:host([disabled]) .input-cover {
   pointer-events: none;
 }
 
@@ -100,7 +100,7 @@ input.native-input:-webkit-autofill {
 // This input is used to help the app handle
 // Next and Previous input tabbing
 
-[next-input] {
+:host([next-input]) {
   @include padding(0);
 
   position: absolute;

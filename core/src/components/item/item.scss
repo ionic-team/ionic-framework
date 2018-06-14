@@ -158,3 +158,18 @@
 
   max-width: 100%;
 }
+
+
+
+
+// TODO: FROM textarea
+
+.item.item-textarea {
+  align-items: stretch;
+}
+
+.item-input-has-focus a,
+.item-input-has-focus button,
+.item-input-has-focus textarea {
+  pointer-events: auto;
+}

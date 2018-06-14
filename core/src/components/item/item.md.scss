@@ -148,3 +148,97 @@
 :host(.item-toggle) ::slotted(ion-label) {
   @include margin-horizontal(0, null);
 }
+
+
+
+// // FROM RADIO
+
+// .item-radio.item-md ion-label {
+//   @include margin-horizontal(0, null);
+// }
+
+
+// // Material Design Radio Item Label: Checked
+// // -----------------------------------------
+
+// .item-radio-checked.item-md ion-label {
+//   color: $radio-md-color-on;
+// }
+
+
+
+
+// // FROM INPUT
+// // Material Design Highlighted Input
+// // --------------------------------------------------
+
+// // Input highlight mixin for focus, valid, and invalid states
+// @mixin md-input-highlight($highlight-color) {
+//   border-bottom-color: $highlight-color;
+//   box-shadow: inset 0 -1px 0 0 $highlight-color;
+// }
+
+// // Show the focus highlight when the input has focus
+// @if ($input-md-show-focus-highlight) {
+//   // In order to get a 2px border we need to add an inset
+//   // box-shadow 1px (this is to avoid the div resizing)
+
+//   .item-md.item-input.item-input-has-focus .item-inner {
+//     @include md-input-highlight($input-md-highlight-color);
+//   }
+
+//   // The last item in a list has a border on the item, not the
+//   // inner item, so add it to the item itself
+//   .list-md .item-input.item-input-has-focus:last-child {
+//     @include md-input-highlight($input-md-highlight-color);
+
+//     .item-inner {
+//       box-shadow: none;
+//     }
+//   }
+// }
+
+// // TODO this is angular specific scss
+
+// // Show the valid highlight when it has the .ng-valid class and a value
+// @if ($input-md-show-valid-highlight) {
+//   .item-md.item-input.ng-valid.item-input-has-value:not(.item-input-has-focus) .item-inner {
+//     @include md-input-highlight($input-md-highlight-color-valid);
+//   }
+
+//   .list-md .item-input.ng-valid.item-input-has-value:not(.item-input-has-focus):last-child {
+//     @include md-input-highlight($input-md-highlight-color-valid);
+
+//     .item-inner {
+//       box-shadow: none;
+//     }
+//   }
+// }
+
+// // Show the invalid highlight when it has the invalid class and has been touched
+// @if ($input-md-show-invalid-highlight) {
+//   .item-md.item-input.ng-invalid.ng-touched:not(.item-input-has-focus) .item-inner {
+//     @include md-input-highlight($input-md-highlight-color-invalid);
+//   }
+
+//   .list-md .item-input.ng-invalid.ng-touched:not(.item-input-has-focus):last-child {
+//     @include md-input-highlight($input-md-highlight-color-invalid);
+
+//     .item-inner {
+//       box-shadow: none;
+//     }
+//   }
+// }
+
+
+
+// // FROM TEXTAREA
+// // Material Design Stacked & Floating Textarea
+// // --------------------------------------------------
+
+// .item-label-stacked .native-textarea-md,
+// .item-label-floating .native-textarea-md {
+//   @include margin(8px, null, 8px, 0);
+
+//   width: calc(100% - #{$textarea-md-margin-end});
+// }

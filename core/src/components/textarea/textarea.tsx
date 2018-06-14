@@ -12,9 +12,7 @@ import { TextareaComponent } from '../input/input-base';
     ios: 'textarea.ios.scss',
     md: 'textarea.md.scss'
   },
-  host: {
-    theme: 'textarea'
-  }
+  shadow: true
 })
 export class Textarea implements TextareaComponent {
 
@@ -199,7 +197,6 @@ export class Textarea implements TextareaComponent {
     this.ionBlur.emit();
   }
 
-
   private onKeyDown() {
     this.checkClearOnEdit();
   }
@@ -239,9 +236,6 @@ export class Textarea implements TextareaComponent {
   }
 
   render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'native-textarea');
-    // TODO aria-labelledby={this.item.labelId}
-
     return (
       <textarea
         autoCapitalize={this.autocapitalize}
@@ -258,7 +252,7 @@ export class Textarea implements TextareaComponent {
         cols={this.cols}
         rows={this.rows}
         wrap={this.wrap}
-        class={themedClasses}
+        class="native-textarea"
         onInput={this.onInput.bind(this)}
         onBlur={this.onBlur.bind(this)}
         onFocus={this.onFocus.bind(this)}

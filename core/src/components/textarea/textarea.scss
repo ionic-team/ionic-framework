@@ -3,7 +3,7 @@
 // Textarea
 // --------------------------------------------------
 
-ion-textarea {
+:host {
   position: relative;
   display: block;
 
@@ -12,16 +12,14 @@ ion-textarea {
   width: 100%;
 }
 
-.item-input ion-textarea {
-  position: static;
-}
 
 // Textarea Within An Item
 // --------------------------------------------------
 
-.item.item-textarea {
-  align-items: stretch;
+:host(.in-item) {
+  position: static;
 }
+
 
 // Native Textarea
 // --------------------------------------------------
@@ -43,6 +41,8 @@ ion-textarea {
 
   background: transparent;
 
+  resize: none;
+
   &:active,
   &:focus {
     outline: none;
@@ -53,15 +53,9 @@ ion-textarea {
   opacity: .4;
 }
 
-.platform-mobile .native-textarea {
-  resize: none;
-}
-
-.item-input-has-focus a,
-.item-input-has-focus button,
-.item-input-has-focus textarea {
-  pointer-events: auto;
-}
+// .platform-mobile .native-textarea {
+//   resize: none;
+// }
 
 // Input Cover: Unfocused
 // --------------------------------------------------
@@ -81,6 +75,6 @@ ion-textarea {
   height: 100%;
 }
 
-.textarea[disabled] .textarea-cover {
+:host([disabled]) .textarea-cover {
   pointer-events: none;
 }

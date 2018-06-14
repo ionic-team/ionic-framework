@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 import { Color, InputChangeEvent, Mode, StyleEvent  } from '../../interface';
 import { debounceEvent, deferEvent } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
+import { createThemedClasses, hostContext } from '../../utils/theme';
 import { InputComponent } from './input-base';
 
 
@@ -11,9 +11,7 @@ import { InputComponent } from './input-base';
     ios: 'input.ios.scss',
     md: 'input.md.scss'
   },
-  host: {
-    theme: 'input'
-  }
+  shadow: true
 })
 export class Input implements InputComponent {
 
@@ -309,8 +307,17 @@ export class Input implements InputComponent {
     return !!this.value;
   }
 
+  hostData() {
+    return {
+      class: {
+        'in-item': hostContext('.item', this.el),
+        'input-has-value': this.hasValue(),
+        'input-has-focus': this.hasFocus()
+      }
+    };
+  }
+
   render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'native-input');
     // TODO aria-labelledby={this.item.labelId}
 
     return [
@@ -322,7 +329,7 @@ export class Input implements InputComponent {
         autoComplete={this.autocomplete}
         autoCorrect={this.autocorrect}
         autoFocus={this.autofocus}
-        class={themedClasses}
+        class="native-input"
         disabled={this.disabled}
         inputMode={this.inputmode}
         min={this.min}

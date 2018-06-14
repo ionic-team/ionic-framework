@@ -4,7 +4,7 @@
 // iOS Input
 // --------------------------------------------------
 
-.native-input-ios {
+.native-input {
   @include placeholder($input-ios-placeholder-color);
   @include margin($input-ios-margin-top, $input-ios-margin-end, $input-ios-margin-bottom, $input-ios-margin-start);
   @include padding(0);
@@ -19,108 +19,24 @@
 // iOS Inset Input
 // --------------------------------------------------
 
-.input-ios .inset-input {
+.inset-input {
   @include padding($input-ios-inset-padding-top, $input-ios-inset-padding-end, $input-ios-inset-padding-bottom, $input-ios-inset-padding-start);
   @include margin($input-ios-inset-margin-top, $input-ios-inset-margin-end, $input-ios-inset-margin-bottom, $input-ios-inset-margin-start);
-}
-
-
-// iOS Highlighted Input
-// --------------------------------------------------
-
-// TODO this is angular specific scss
-
-// Input highlight mixin for focus, valid, and invalid states
-@mixin ios-input-highlight($highlight-color) {
-  border-bottom-color: $highlight-color;
-}
-
-// Show the focus highlight when the input has focus
-@if ($input-ios-show-focus-highlight) {
-  // In order to get a 2px border we need to add an inset
-  // box-shadow 1px (this is to avoid the div resizing)
-
-  .item-ios.item-input.item-input-has-focus .item-inner {
-    @include ios-input-highlight($input-ios-highlight-color);
-  }
-
-  // The last item in a list has a border on the item, not the
-  // inner item, so add it to the item itself
-  .list-ios .item-input.item-input-has-focus:last-child {
-    @include ios-input-highlight($input-ios-highlight-color);
-
-    .item-inner {
-      box-shadow: none;
-    }
-  }
-}
-
-// Show the valid highlight when it has the .ng-valid class and a value
-@if ($input-ios-show-valid-highlight) {
-  .item-ios.item-input.ng-valid.item-input-has-value:not(.item-input-has-focus) .item-inner {
-    @include ios-input-highlight($input-ios-highlight-color-valid);
-  }
-
-  .list-ios .item-input.ng-valid.item-input-has-value:not(.item-input-has-focus):last-child {
-    @include ios-input-highlight($input-ios-highlight-color-valid);
-
-    .item-inner {
-      box-shadow: none;
-    }
-  }
-}
-
-// Show the invalid highlight when it has the invalid class and has been touched
-@if ($input-ios-show-invalid-highlight) {
-  .item-ios.item-input.ng-invalid.ng-touched:not(.item-input-has-focus) .item-inner {
-    @include ios-input-highlight($input-ios-highlight-color-invalid);
-  }
-
-  .list-ios .item-input.ng-invalid.ng-touched:not(.item-input-has-focus):last-child {
-    @include ios-input-highlight($input-ios-highlight-color-invalid);
-
-    .item-inner {
-      box-shadow: none;
-    }
-  }
-}
-
-// iOS Input After Label
-// --------------------------------------------------
-
-.label-ios + .input .native-input,
-.label-ios + .input + .cloned-input {
-  @include margin-horizontal($input-ios-by-label-margin-start, null);
-}
-
-// iOS Stacked & Floating Inputs
-// --------------------------------------------------
-
-.item-ios.item-label-stacked .native-input,
-.item-ios.item-label-floating .native-input {
-  @include margin(8px, null, 8px, 0);
-
-  width: calc(100% - #{$input-ios-margin-end});
-}
-
-.item-ios.item-label-stacked .label-ios + .input + .cloned-input,
-.item-ios.item-label-floating .label-ios + .input + .cloned-input {
-  @include margin-horizontal(0, null);
 }
 
 
 // iOS Clear Input Icon
 // --------------------------------------------------
 
-.input-ios[clear-input] {
+:host([clear-input]) {
   position: relative;
 }
 
-.input-ios[clear-input] .native-input {
+:host([clear-input]) .native-input {
   @include padding-horizontal(null, $input-ios-input-clear-padding-end);
 }
 
-.input-ios .input-clear-icon {
+.input-clear-icon {
   @include position-horizontal(null, 0);
   @include svg-background-image($input-ios-input-clear-icon-svg);
 
