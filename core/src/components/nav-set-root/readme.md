@@ -13,10 +13,14 @@ It is the element form a calling `NavController.setRoot()`
 
 string
 
+Component you want to make root for the navigation stack
+
 
 #### componentProps
 
 ComponentProps
+
+Data you want to pass to the component as props
 
 
 ## Attributes
@@ -25,10 +29,14 @@ ComponentProps
 
 string
 
+Component you want to make root for the navigation stack
+
 
 #### component-props
 
 
+
+Data you want to pass to the component as props
 
 
 

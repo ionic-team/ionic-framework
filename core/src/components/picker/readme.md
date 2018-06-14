@@ -56,6 +56,8 @@ Animation to use when the picker is presented.
 
 boolean
 
+If the keyboard should be able to close the picker. Defaults to true.
+
 
 #### leaveAnimation
 
@@ -132,6 +134,8 @@ Animation to use when the picker is presented.
 
 boolean
 
+If the keyboard should be able to close the picker. Defaults to true.
+
 
 #### leave-animation
 
@@ -195,8 +199,12 @@ Emitted before the picker has presented.
 
 #### addButton()
 
+Add a new PickerButton to the picker
+
 
 #### addColumn()
+
+Add a new PickerColumn to the picker
 
 
 #### dismiss()
@@ -206,8 +214,12 @@ Dismiss the picker overlay after it has been presented.
 
 #### getColumn()
 
+Returns the column the matches the specified name
+
 
 #### getColumns()
+
+Returns all the PickerColumns
 
 
 #### onDidDismiss()

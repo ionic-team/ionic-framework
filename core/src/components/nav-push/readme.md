@@ -13,10 +13,14 @@ It is the element from of `NavController.push()`
 
 string
 
+Component to navigate to
+
 
 #### componentProps
 
 ComponentProps
+
+Data you want to pass to the component as props
 
 
 ## Attributes
@@ -25,10 +29,14 @@ ComponentProps
 
 string
 
+Component to navigate to
+
 
 #### component-props
 
 
+
+Data you want to pass to the component as props
 
 
 

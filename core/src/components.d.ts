@@ -3723,8 +3723,17 @@ declare global {
 
   namespace StencilComponents {
     interface IonModalController {
+      /**
+       * Create a modal overlay with modal options.
+       */
       'create': (opts?: ModalOptions | undefined) => Promise<HTMLIonModalElement | null>;
+      /**
+       * Dismiss the open modal overlay.
+       */
       'dismiss': (data?: any, role?: string | undefined, modalId?: number) => Promise<void>;
+      /**
+       * Get the most recently opened modal overlay.
+       */
       'getTop': () => HTMLIonModalElement;
     }
   }
@@ -3948,7 +3957,13 @@ declare global {
 
   namespace StencilComponents {
     interface IonNavPush {
+      /**
+       * Component to navigate to
+       */
       'component': NavComponent;
+      /**
+       * Data you want to pass to the component as props
+       */
       'componentProps': ComponentProps;
     }
   }
@@ -3972,7 +3987,13 @@ declare global {
   }
   namespace JSXElements {
     export interface IonNavPushAttributes extends HTMLAttributes {
+      /**
+       * Component to navigate to
+       */
       'component'?: NavComponent;
+      /**
+       * Data you want to pass to the component as props
+       */
       'componentProps'?: ComponentProps;
     }
   }
@@ -3983,7 +4004,13 @@ declare global {
 
   namespace StencilComponents {
     interface IonNavSetRoot {
+      /**
+       * Component you want to make root for the navigation stack
+       */
       'component': NavComponent;
+      /**
+       * Data you want to pass to the component as props
+       */
       'componentProps': ComponentProps;
     }
   }
@@ -4007,7 +4034,13 @@ declare global {
   }
   namespace JSXElements {
     export interface IonNavSetRootAttributes extends HTMLAttributes {
+      /**
+       * Component you want to make root for the navigation stack
+       */
       'component'?: NavComponent;
+      /**
+       * Data you want to pass to the component as props
+       */
       'componentProps'?: ComponentProps;
     }
   }
@@ -4018,26 +4051,80 @@ declare global {
 
   namespace StencilComponents {
     interface IonNav {
+      /**
+       * If the nav should animate the components or not
+       */
       'animated': boolean;
+      /**
+       * Returns true or false if the current view can go back
+       */
       'canGoBack': (view?: ViewController | undefined) => boolean;
       'delegate': FrameworkDelegate;
+      /**
+       * Gets the active view
+       */
       'getActive': () => ViewController | undefined;
+      /**
+       * Returns the view at the index
+       */
       'getByIndex': (index: number) => ViewController | undefined;
+      /**
+       * Gets the previous view
+       */
       'getPrevious': (view?: ViewController | undefined) => ViewController | undefined;
       'getRouteId': () => RouteID | undefined;
+      /**
+       * Inserts a component into the nav stack at the specified index. This is useful if you need to add a component at any point in your navigation stack.
+       */
       'insert': (insertIndex: number, component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      /**
+       * Inserts an array of components into the nav stack at the specified index. The last component in the array will become instantiated as a view, and animate in to become the active view.
+       */
       'insertPages': (insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      /**
+       * Returns the length of navigation stack
+       */
       'length': () => number;
+      /**
+       * Call to navigate back from a current component. Similar to push(), you can also pass navigation options.
+       */
       'pop': (opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      /**
+       * Pop to a specific index in the navigation stack
+       */
       'popTo': (indexOrViewCtrl: number | ViewController, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      /**
+       * Navigate back to the root of the stack, no matter how far back that is.
+       */
       'popToRoot': (opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      /**
+       * Push a new component onto the current navigation stack. Pass any aditional information along as an object. This additional information is accessible through NavParams
+       */
       'push': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      /**
+       * Removes a page from the nav stack at the specified index.
+       */
       'removeIndex': (startIndex: number, removeCount?: number, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      /**
+       * Root NavComponent to load
+       */
       'root': NavComponent;
+      /**
+       * Any parameters for the root component
+       */
       'rootParams': ComponentProps;
+      /**
+       * Set the views of the current navigation stack and navigate to the last view. By default animations are disabled, but they can be enabled by passing options to the navigation controller.You can also pass any navigation params to the individual pages in the array.
+       */
       'setPages': (views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      /**
+       * Set the root for the current navigation stack.
+       */
       'setRoot': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
       'setRouteId': (id: string, params: any, direction: RouterIntent) => Promise<RouteWrite>;
+      /**
+       * If the nav component should allow for swipe-to-go-back
+       */
       'swipeBackEnabled': boolean;
     }
   }
@@ -4061,13 +4148,34 @@ declare global {
   }
   namespace JSXElements {
     export interface IonNavAttributes extends HTMLAttributes {
+      /**
+       * If the nav should animate the components or not
+       */
       'animated'?: boolean;
       'delegate'?: FrameworkDelegate;
+      /**
+       * Event fired when the nav has changed components
+       */
       'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
+      /**
+       * Event fired when the nav will components
+       */
       'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
+      /**
+       * Event fired when Nav will load a component
+       */
       'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
+      /**
+       * Root NavComponent to load
+       */
       'root'?: NavComponent;
+      /**
+       * Any parameters for the root component
+       */
       'rootParams'?: ComponentProps;
+      /**
+       * If the nav component should allow for swipe-to-go-back
+       */
       'swipeBackEnabled'?: boolean;
     }
   }
@@ -4079,11 +4187,11 @@ declare global {
   namespace StencilComponents {
     interface IonNote {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color': Color;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
     }
@@ -4109,11 +4217,11 @@ declare global {
   namespace JSXElements {
     export interface IonNoteAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color'?: Color;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
     }
@@ -4193,7 +4301,13 @@ declare global {
 
   namespace StencilComponents {
     interface IonPicker {
+      /**
+       * Add a new PickerButton to the picker
+       */
       'addButton': (button: PickerButton) => void;
+      /**
+       * Add a new PickerColumn to the picker
+       */
       'addColumn': (column: PickerColumn) => void;
       /**
        * Array of buttons to be displayed at the top of the picker.
@@ -4223,8 +4337,17 @@ declare global {
        * Animation to use when the picker is presented.
        */
       'enterAnimation': AnimationBuilder;
+      /**
+       * Returns the column the matches the specified name
+       */
       'getColumn': (name: string) => PickerColumn | undefined;
+      /**
+       * Returns all the PickerColumns
+       */
       'getColumns': () => PickerColumn[];
+      /**
+       * If the keyboard should be able to close the picker. Defaults to true.
+       */
       'keyboardClose': boolean;
       /**
        * Animation to use when the picker is dismissed.
@@ -4297,6 +4420,9 @@ declare global {
        * Animation to use when the picker is presented.
        */
       'enterAnimation'?: AnimationBuilder;
+      /**
+       * If the keyboard should be able to close the picker. Defaults to true.
+       */
       'keyboardClose'?: boolean;
       /**
        * Animation to use when the picker is dismissed.
@@ -4618,7 +4744,7 @@ declare global {
        */
       'checked': boolean;
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color': Color;
       /**
@@ -4626,7 +4752,7 @@ declare global {
        */
       'disabled': boolean;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
       /**
@@ -4664,7 +4790,7 @@ declare global {
        */
       'checked'?: boolean;
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color'?: Color;
       /**
@@ -4672,7 +4798,7 @@ declare global {
        */
       'disabled'?: boolean;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
       /**
@@ -4768,7 +4894,7 @@ declare global {
   namespace StencilComponents {
     interface IonRange {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color': Color;
       /**
@@ -4792,7 +4918,7 @@ declare global {
        */
       'min': number;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
       /**
@@ -4838,7 +4964,7 @@ declare global {
   namespace JSXElements {
     export interface IonRangeAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color'?: Color;
       /**
@@ -4862,7 +4988,7 @@ declare global {
        */
       'min'?: number;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
       /**
