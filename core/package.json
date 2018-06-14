@@ -42,6 +42,7 @@
     "selenium-webdriver": "^3.6.0",
     "tslint": "^5.10.0",
     "tslint-ionic-rules": "0.0.14",
+    "typescript": "^2.9.2",
     "yargs": "^10.0.3"
   },
   "scripts": {
@@ -72,7 +73,7 @@
     "theme-builder:dev": "sd concurrent \"npm run theme-app-build -- --watch\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
     "theme-server": "node scripts/theme-builder/server.js",
     "tsc": "./node_modules/.bin/tsc -p .",
-    "validate": "npm i && npm run lint && npm run test && npm run build"
+    "validate": "npm run lint && npm run test && npm run build"
   },
   "author": "Ionic Team",
   "license": "MIT",
