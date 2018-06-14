@@ -1,15 +1,7 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
 
-const SIZE_TO_MEDIA: any = {
-  'xs': '(min-width: 0px)',
-  'sm': '(min-width: 576px)',
-  'md': '(min-width: 768px)',
-  'lg': '(min-width: 992px)',
-  'xl': '(min-width: 1200px)'
-};
+import { isMatch } from '../../utils/media';
 
-// const SUPPORTS_GRID: boolean = CSS.supports('display', 'grid');
-const SUPPORTS_GRID = false;
 const SUPPORTS_VARS: boolean = CSS.supports('--a', '0');
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
@@ -208,13 +200,6 @@ export class Col {
     // e.g. <ion-col size-md>
     if (!columns || columns === '') return;
 
-    // If CSS supports grid we should use grid column properties
-    if (SUPPORTS_GRID) {
-      return {
-        'grid-column-end': 'span ' + columns
-      };
-    }
-
     columns = SUPPORTS_VARS
       // If CSS supports variables we should use the grid columns var
       ? `calc(calc(${columns} / var(--ion-grid-columns, 12)) * 100%)`
@@ -234,11 +219,6 @@ export class Col {
     const columns = this.getColumns(property);
 
     if (!columns) return;
-
-    if (SUPPORTS_GRID) {
-      // TODO how do we determine where to push/pull/offset grid
-      return;
-    }
 
     // If the number of columns passed are greater than 0 and less than
     // 12 we can position the column, else default to auto
@@ -267,15 +247,6 @@ export class Col {
   }
 
   isMatch(bp: string) {
-    if (!bp) {
-      return true;
-    }
-
-    const mediaQuery = SIZE_TO_MEDIA[bp];
-    if (mediaQuery && matchMedia(mediaQuery)) {
-      const media = matchMedia(mediaQuery);
-      return media.matches;
-    }
-    return false;
+    return bp ? isMatch(bp) : true;
   }
 }

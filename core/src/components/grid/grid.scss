@@ -11,10 +11,6 @@ ion-grid {
   @include make-grid-max-widths();
 }
 
-.grid-sized {
-  @include make-grid-sized();
-}
-
 
 // Flex Grid
 // --------------------------------------------------
@@ -26,17 +22,3 @@ ion-grid {
 ion-col {
   @include make-flex-column();
 }
-
-
-// CSS Grid
-// --------------------------------------------------
-
-// @supports (display: grid) {
-//   ion-grid {
-//     @include make-grid();
-//   }
-
-//   ion-col {
-//     @include make-column();
-//   }
-// }

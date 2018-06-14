@@ -19,13 +19,6 @@ boolean
 If true, the grid will have a maximum width based on the screen size. Defaults to `false`.
 
 
-#### sized
-
-boolean
-
-If true, the grid will have a set number of columns. Defaults to `false`.
-
-
 ## Attributes
 
 #### fixed
@@ -33,13 +26,6 @@ If true, the grid will have a set number of columns. Defaults to `false`.
 boolean
 
 If true, the grid will have a maximum width based on the screen size. Defaults to `false`.
-
-
-#### sized
-
-boolean
-
-If true, the grid will have a set number of columns. Defaults to `false`.
 
 
 

@@ -4,6 +4,35 @@
 // Responsive Mixins
 // --------------------------------------------------
 
+// Creates the shared grid properties
+// ---------------------------------------------------------------------------------
+
+@mixin make-grid-base($paddings: $grid-paddings) {
+  @include make-breakpoint-padding($paddings);
+  @include margin-horizontal(auto);
+
+  // Remove the padding from grid and all immediate children columns
+  &[no-padding],
+  &[no-padding] > ion-col {
+    @include padding(0);
+  }
+}
+
+
+// Creates maximum widths for the grid based on screen size
+// ---------------------------------------------------------------------------------
+
+@mixin make-grid-max-widths($max-widths: $grid-widths, $breakpoints: $screen-breakpoints) {
+  max-width: 100%;
+
+  @each $breakpoint, $container-max-width in $max-widths {
+    @include media-breakpoint-up($breakpoint, $breakpoints) {
+      width: $container-max-width;
+    }
+  }
+}
+
+
 // Creates a flex grid used to align columns
 // ---------------------------------------------------------------------------------
 
@@ -106,72 +135,6 @@
     @include media-breakpoint-up($breakpoint) {
       $padding: map-get($paddings, $breakpoint);
       @include padding($padding);
-    }
-  }
-}
-
-
-// Creates the shared grid properties
-// ---------------------------------------------------------------------------------
-
-@mixin make-grid-base($paddings: $grid-paddings) {
-  @include make-breakpoint-padding($paddings);
-  @include margin-horizontal(auto);
-
-  // Remove the padding from grid and all immediate children columns
-  &[no-padding],
-  &[no-padding] > ion-col {
-    @include padding(0);
-  }
-}
-
-// Creates maximum widths for the grid based on screen size
-// ---------------------------------------------------------------------------------
-
-@mixin make-grid-max-widths($max-widths: $grid-widths, $breakpoints: $screen-breakpoints) {
-  max-width: 100%;
-
-  @each $breakpoint, $container-max-width in $max-widths {
-    @include media-breakpoint-up($breakpoint, $breakpoints) {
-      width: $container-max-width;
-    }
-  }
-}
-
-// Creates a grid
-// ---------------------------------------------------------------------------------
-
-@mixin make-grid() {
-  @include make-grid-gap();
-
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, auto));
-}
-
-// Creates a sized grid
-// ---------------------------------------------------------------------------------
-
-@mixin make-grid-sized() {
-  grid-template-columns: repeat($grid-columns, minmax(0, auto));
-}
-
-
-// Creates a column
-// ---------------------------------------------------------------------------------
-
-@mixin make-column {
-  @include padding(0);
-}
-
-
-// Modifies grid gap based on the breakpoint
-// ---------------------------------------------------------------------------------
-
-@mixin make-grid-gap($column-paddings: $grid-column-paddings) {
-  @each $breakpoint in map-keys($column-paddings) {
-    @include media-breakpoint-up($breakpoint) {
-      $padding: map-get($column-paddings, $breakpoint);
-      grid-gap: $padding;
     }
   }
 }
