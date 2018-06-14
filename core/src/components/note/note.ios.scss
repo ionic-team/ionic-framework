@@ -4,7 +4,7 @@
 // iOS Note
 // --------------------------------------------------
 
-.note-ios {
+:host {
   font-family: $note-ios-font-family;
 
   --ion-color-base: #{$note-ios-color};

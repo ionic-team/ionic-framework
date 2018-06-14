@@ -249,7 +249,7 @@ export class ItemSliding {
         this.state = SlidingState.Disabled;
         this.tmr = undefined;
       }, 600);
-      this.list && this.list.setOpenItem(undefined);
+      this.list && this.list.setOpenItem(null!);
       style.transform = '';
       return;
     }

@@ -4,7 +4,7 @@
 // Material Design Note
 // --------------------------------------------------
 
-.note-md {
+:host {
   font-family: $note-md-font-family;
 
   --ion-color-base: #{$note-md-color};
