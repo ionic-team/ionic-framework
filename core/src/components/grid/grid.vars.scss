@@ -30,9 +30,6 @@ $grid-paddings: (
 // Grid Columns
 // --------------------------------------------------
 
-/// @prop - Number of columns the grid should span
-$grid-columns:               var(--ion-grid-columns, 12) !default;
-
 /// @prop - The padding for the grid column
 $grid-column-padding:        var(--ion-grid-column-padding, $grid-padding) !default;
 

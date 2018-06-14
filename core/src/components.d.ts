@@ -2388,10 +2388,6 @@ declare global {
        * If true, the grid will have a maximum width based on the screen size. Defaults to `false`.
        */
       'fixed': boolean;
-      /**
-       * If true, the grid will have a set number of columns. Defaults to `false`.
-       */
-      'sized': boolean;
     }
   }
 
@@ -2418,10 +2414,6 @@ declare global {
        * If true, the grid will have a maximum width based on the screen size. Defaults to `false`.
        */
       'fixed'?: boolean;
-      /**
-       * If true, the grid will have a set number of columns. Defaults to `false`.
-       */
-      'sized'?: boolean;
     }
   }
 }
