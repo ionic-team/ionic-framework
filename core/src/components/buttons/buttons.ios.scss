@@ -17,38 +17,9 @@
   --border-radius: #{$toolbar-ios-button-border-radius};
 
   --height: 32px;
-}
-
-::slotted(.button-clear) {
-  --height: 35px;
-}
-
-  // iOS Toolbar Button Solid
-  // --------------------------------------------------
-
-  // .button-solid-ios {
-
-  //   // &:hover {
-  //   //   color: $toolbar-ios-button-background-color;
-  //   //   opacity: .4;
-  //   // }
-
-  //   // &.activated {
-  //   //   color: $toolbar-ios-button-background-color;
-  //   //   background-color: $toolbar-ios-button-background-color-activated;
-  //   //   opacity: .4;
-  //   // }
-  // }
-
-  .button-solid-ios:hover {
-    opacity: .4;
-  }
-
 
   // iOS Toolbar Button Icon
   // --------------------------------------------------
-
-::slotted(ion-button) {
   ion-icon[slot="start"] {
     @include padding-horizontal(null, .3em);
     @include margin(0);
@@ -79,6 +50,31 @@
     pointer-events: none;
   }
 }
+
+::slotted(.button-clear) {
+  --height: 35px;
+}
+
+  // iOS Toolbar Button Solid
+  // --------------------------------------------------
+
+  // .button-solid-ios {
+
+  //   // &:hover {
+  //   //   color: $toolbar-ios-button-background-color;
+  //   //   opacity: .4;
+  //   // }
+
+  //   // &.activated {
+  //   //   color: $toolbar-ios-button-background-color;
+  //   //   background-color: $toolbar-ios-button-background-color-activated;
+  //   //   opacity: .4;
+  //   // }
+  // }
+
+  .button-solid-ios:hover {
+    opacity: .4;
+  }
 
   // iOS Toolbar Menu Toggle
   // --------------------------------------------------

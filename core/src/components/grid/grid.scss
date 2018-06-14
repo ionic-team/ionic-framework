@@ -5,18 +5,11 @@
 
 ion-grid {
   @include make-grid-base();
+  @include make-flex-grid();
 }
 
 .grid-fixed {
   @include make-grid-max-widths();
-}
-
-
-// Flex Grid
-// --------------------------------------------------
-
-ion-grid {
-  @include make-flex-grid();
 }
 
 ion-col {
