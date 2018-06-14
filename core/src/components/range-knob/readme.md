@@ -1,5 +1,6 @@
 # ion-range-knob
 
+RangeKnob is an internal component of Range.
 
 
 <!-- Auto Generated Below -->

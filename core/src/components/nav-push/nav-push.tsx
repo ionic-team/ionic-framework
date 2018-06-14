@@ -2,13 +2,19 @@ import { Component, Element, Listen, Prop } from '@stencil/core';
 import { ComponentProps, NavComponent } from '../../interface';
 
 @Component({
-  tag: 'ion-nav-push',
+  tag: 'ion-nav-push'
 })
 export class NavPush {
-
   @Element() el!: HTMLElement;
 
+  /**
+   * Component to navigate to
+   */
   @Prop() component?: NavComponent;
+
+  /**
+   * Data you want to pass to the component as props
+   */
   @Prop() componentProps?: ComponentProps;
 
   @Listen('child:click')
@@ -20,5 +26,4 @@ export class NavPush {
     }
     return Promise.resolve(null);
   }
-
 }

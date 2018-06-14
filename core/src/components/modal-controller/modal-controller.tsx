@@ -28,7 +28,7 @@ export class ModalController implements OverlayController {
     removeLastOverlay(this.modals);
   }
 
-  /*
+  /**
    * Create a modal overlay with modal options.
    */
   @Method()
@@ -36,7 +36,7 @@ export class ModalController implements OverlayController {
     return createOverlay(this.doc.createElement('ion-modal'), opts);
   }
 
-  /*
+  /**
    * Dismiss the open modal overlay.
    */
   @Method()
@@ -44,7 +44,7 @@ export class ModalController implements OverlayController {
     return dismissOverlay(data, role, this.modals, modalId);
   }
 
-  /*
+  /**
    * Get the most recently opened modal overlay.
    */
   @Method()
