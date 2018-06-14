@@ -25,7 +25,7 @@ import {
   eventMethod,
   present
 } from '../../utils/overlays';
-import { getClassMap } from '../../utils/theme';
+import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';

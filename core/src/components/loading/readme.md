@@ -249,8 +249,8 @@ Returns a promise that resolves when the loading will dismiss. It also accepts a
 that is called in the same circustances.
 
 ```
-   * const {data, role} = await loading.onWillDismiss();
-   * ```
+const {data, role} = await loading.onWillDismiss();
+```
 
 
 #### present()

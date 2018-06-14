@@ -181,7 +181,6 @@ string
 
 The size of the column for lg screens, in terms of how many columns it should take up out
 of the total available. If `"auto" is passed, the column will be the size of its content.
-   *
 
 
 #### sizeMd
@@ -190,7 +189,6 @@ string
 
 The size of the column for md screens, in terms of how many columns it should take up out
 of the total available. If `"auto" is passed, the column will be the size of its content.
-   *
 
 
 #### sizeSm
@@ -199,7 +197,6 @@ string
 
 The size of the column for sm screens, in terms of how many columns it should take up out
 of the total available. If `"auto" is passed, the column will be the size of its content.
-   *
 
 
 #### sizeXl
@@ -208,7 +205,6 @@ string
 
 The size of the column for xl screens, in terms of how many columns it should take up out
 of the total available. If `"auto" is passed, the column will be the size of its content.
-   *
 
 
 #### sizeXs
@@ -217,7 +213,6 @@ string
 
 The size of the column for xs screens, in terms of how many columns it should take up out
 of the total available. If `"auto" is passed, the column will be the size of its content.
-   *
 
 
 ## Attributes
@@ -380,7 +375,6 @@ string
 
 The size of the column for lg screens, in terms of how many columns it should take up out
 of the total available. If `"auto" is passed, the column will be the size of its content.
-   *
 
 
 #### size-md
@@ -389,7 +383,6 @@ string
 
 The size of the column for md screens, in terms of how many columns it should take up out
 of the total available. If `"auto" is passed, the column will be the size of its content.
-   *
 
 
 #### size-sm
@@ -398,7 +391,6 @@ string
 
 The size of the column for sm screens, in terms of how many columns it should take up out
 of the total available. If `"auto" is passed, the column will be the size of its content.
-   *
 
 
 #### size-xl
@@ -407,7 +399,6 @@ string
 
 The size of the column for xl screens, in terms of how many columns it should take up out
 of the total available. If `"auto" is passed, the column will be the size of its content.
-   *
 
 
 #### size-xs
@@ -416,7 +407,6 @@ string
 
 The size of the column for xs screens, in terms of how many columns it should take up out
 of the total available. If `"auto" is passed, the column will be the size of its content.
-   *
 
 
 
