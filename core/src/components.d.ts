@@ -1550,23 +1550,23 @@ declare global {
        */
       'size': string;
       /**
-       * The size of the column for lg screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.
+       * The size of the column for lg screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.    *
        */
       'sizeLg': string;
       /**
-       * The size of the column for md screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.
+       * The size of the column for md screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.    *
        */
       'sizeMd': string;
       /**
-       * The size of the column for sm screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.
+       * The size of the column for sm screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.    *
        */
       'sizeSm': string;
       /**
-       * The size of the column for xl screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.
+       * The size of the column for xl screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.    *
        */
       'sizeXl': string;
       /**
-       * The size of the column for xs screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.
+       * The size of the column for xs screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.    *
        */
       'sizeXs': string;
     }
@@ -1668,23 +1668,23 @@ declare global {
        */
       'size'?: string;
       /**
-       * The size of the column for lg screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.
+       * The size of the column for lg screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.    *
        */
       'sizeLg'?: string;
       /**
-       * The size of the column for md screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.
+       * The size of the column for md screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.    *
        */
       'sizeMd'?: string;
       /**
-       * The size of the column for sm screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.
+       * The size of the column for sm screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.    *
        */
       'sizeSm'?: string;
       /**
-       * The size of the column for xl screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.
+       * The size of the column for xl screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.    *
        */
       'sizeXl'?: string;
       /**
-       * The size of the column for xs screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.
+       * The size of the column for xs screens, in terms of how many columns it should take up out of the total available. If `"auto" is passed, the column will be the size of its content.    *
        */
       'sizeXs'?: string;
     }
@@ -3525,7 +3525,7 @@ declare global {
        */
       'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
-       * Returns a promise that resolves when the loading will dismiss. It also accepts a callback that is called in the same circustances.  ``` const {data, role} = await loading.onWillDismiss(); ```
+       * Returns a promise that resolves when the loading will dismiss. It also accepts a callback that is called in the same circustances.  ```    * const {data, role} = await loading.onWillDismiss();    * ```
        */
       'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       'overlayId': number;
