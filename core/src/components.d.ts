@@ -62,7 +62,6 @@ import {
   RouteID,
   RouterDirection,
   RouterEventDetail,
-  RouterIntent,
   RouterOutletOptions,
   RouteWrite,
   SelectInputChangeEvent,
@@ -89,6 +88,9 @@ import {
 import {
   ViewController,
 } from './components/nav/view-controller';
+import {
+  RouterIntent,
+} from './components/router/utils/constants';
 import {
   ScrollBaseDetail,
   ScrollDetail,
