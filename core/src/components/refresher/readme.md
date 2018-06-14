@@ -10,12 +10,6 @@ refresher.
 
 
 ```html
-<ion-content>
-  <ion-refresher slot="fixed">
-    <ion-refresher-content>
-    </ion-refresher-content>
-  </ion-refresher>
-</ion-content>
 ```
 
 

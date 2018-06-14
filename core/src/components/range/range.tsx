@@ -1,5 +1,21 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
-import { BaseInput, Color, GestureDetail, Mode, RangeInputChangeEvent, StyleEvent } from '../../interface';
+import {
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  Listen,
+  Prop,
+  State,
+  Watch
+} from '@stencil/core';
+import {
+  BaseInput,
+  Color,
+  GestureDetail,
+  Mode,
+  RangeInputChangeEvent,
+  StyleEvent
+} from '../../interface';
 import { clamp, debounceEvent, deferEvent } from '../../utils/helpers';
 import { Knob, RangeEventDetail, RangeValue } from './range-interface';
 
@@ -14,7 +30,6 @@ import { Knob, RangeEventDetail, RangeValue } from './range-interface';
   }
 })
 export class Range implements BaseInput {
-
   private noUpdate = false;
   private rect!: ClientRect;
   private hasFocus = false;
@@ -28,14 +43,12 @@ export class Range implements BaseInput {
   /**
    * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode!: Mode;
 
@@ -99,15 +112,15 @@ export class Range implements BaseInput {
   /**
    * the value of the range.
    */
-  @Prop({ mutable: true }) value: any = 0;
+  @Prop({ mutable: true })
+  value: any = 0;
   @Watch('value')
   protected valueChanged(value: RangeValue) {
     if (!this.noUpdate) {
       this.updateRatio();
     }
-    this.ionChange.emit({value});
+    this.ionChange.emit({ value });
   }
-
 
   /**
    * Emitted when the value property has changed.
@@ -128,7 +141,6 @@ export class Range implements BaseInput {
    * Emitted when the range loses focus.
    */
   @Event() ionBlur!: EventEmitter<void>;
-
 
   componentWillLoad() {
     this.ionStyle = deferEvent(this.ionStyle);
@@ -162,7 +174,7 @@ export class Range implements BaseInput {
       }
       return {
         lower: 0,
-        upper: value,
+        upper: value
       };
     } else {
       if (typeof value === 'object') {
@@ -198,14 +210,16 @@ export class Range implements BaseInput {
     this.fireFocus();
 
     const el = this.el.querySelector('.range-slider')!;
-    const rect = this.rect = el.getBoundingClientRect() as any;
+    const rect = (this.rect = el.getBoundingClientRect() as any);
     const currentX = detail.currentX;
 
     // figure out which knob they started closer to
     const ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
-    this.pressedKnob = (!this.dualKnobs || (Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio)))
-      ? Knob.A
-      : Knob.B;
+    this.pressedKnob =
+      !this.dualKnobs ||
+      Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio)
+        ? Knob.A
+        : Knob.B;
 
     // update the active knob's position
     this.update(currentX);
@@ -267,7 +281,7 @@ export class Range implements BaseInput {
 
   private updateRatio() {
     const value = this.getValue() as any;
-    const {min, max} = this;
+    const { min, max } = this;
     if (this.dualKnobs) {
       this.ratioA = valueToRatio(value.lower, min, max);
       this.ratioB = valueToRatio(value.upper, min, max);
@@ -279,13 +293,13 @@ export class Range implements BaseInput {
   private updateValue() {
     this.noUpdate = true;
 
-    const {valA, valB} = this;
-    this.value = (!this.dualKnobs)
+    const { valA, valB } = this;
+    this.value = !this.dualKnobs
       ? valA
       : {
-        lower: Math.min(valA, valB),
-        upper: Math.max(valA, valB)
-      };
+          lower: Math.min(valA, valB),
+          upper: Math.max(valA, valB)
+        };
 
     this.noUpdate = false;
   }
@@ -301,7 +315,7 @@ export class Range implements BaseInput {
   }
 
   render() {
-    const {min, max, step, ratioLower, ratioUpper} = this;
+    const { min, max, step, ratioLower, ratioUpper } = this;
 
     const barL = `${ratioLower * 100}%`;
     const barR = `${100 - ratioUpper * 100}%`;
@@ -319,7 +333,7 @@ export class Range implements BaseInput {
     }
 
     return [
-      <slot name="start"></slot>,
+      <slot name="start" />,
       <ion-gesture
         disableScroll={true}
         onStart={this.onDragStart.bind(this)}
@@ -329,18 +343,19 @@ export class Range implements BaseInput {
         gestureName="range"
         gesturePriority={30}
         direction="x"
-        threshold={0}>
-
+        threshold={0}
+      >
         <div class="range-slider">
-          {ticks.map(t =>
+          {ticks.map(t => (
             <div
               style={{ left: t.left }}
               role="presentation"
               class={{
                 'range-tick': true,
                 'range-tick-active': t.active
-              }}/>
-          )}
+              }}
+            />
+          ))}
 
           <div class="range-bar" role="presentation" />
           <div
@@ -358,9 +373,10 @@ export class Range implements BaseInput {
             ratio={this.ratioA}
             pin={this.pin}
             min={min}
-            max={max}/>
+            max={max}
+          />
 
-          { this.dualKnobs &&
+          {this.dualKnobs && (
             <ion-range-knob
               knob={Knob.B}
               pressed={this.pressedKnob === Knob.B}
@@ -368,17 +384,23 @@ export class Range implements BaseInput {
               ratio={this.ratioB}
               pin={this.pin}
               min={min}
-              max={max} /> }
+              max={max}
+            />
+          )}
         </div>
       </ion-gesture>,
-      <slot name="end"></slot>
+      <slot name="end" />
     ];
   }
 }
 
-
-export function ratioToValue(ratio: number, min: number, max: number, step: number): number {
-  let value = ((max - min) * ratio);
+export function ratioToValue(
+  ratio: number,
+  min: number,
+  max: number,
+  step: number
+): number {
+  let value = (max - min) * ratio;
   if (step > 0) {
     value = Math.round(value / step) * step + min;
   }

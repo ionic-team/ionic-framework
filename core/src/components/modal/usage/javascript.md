@@ -7,16 +7,16 @@ async function presentModal() {
   // create component to open
   const element = document.createElement('div');
   element.innerHTML = `
-  <ion-header>
-    <ion-toolbar>
-      <ion-title>Super Modal</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <h1>Content of doom</h1>
-    <div>Here's some more content</div>
-    <ion-button class="dismiss">Dismiss Modal</ion-button>
-  </ion-content>
+  &lt;ion-header&gt;
+    &lt;ion-toolbar&gt;
+      &lt;ion-title&gt;Super Modal&lt;/ion-title&gt;
+    &lt;/ion-toolbar&gt;
+  &lt;/ion-header&gt;
+  &lt;ion-content&gt;
+    &lt;h1&gt;Content of doom&lt;/h1&gt;
+    &lt;div&gt;Here's some more content&lt;/div&gt;
+    &lt;ion-button class="dismiss"&gt;Dismiss Modal&lt;/ion-button&gt;
+  &lt;/ion-content&gt;
   `;
 
   // listen for close event

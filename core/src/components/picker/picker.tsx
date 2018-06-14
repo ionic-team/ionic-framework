@@ -1,7 +1,30 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, CssClassMap, Mode, PickerButton, PickerColumn } from '../../interface';
+import {
+  Component,
+  Element,
+  Event,
+  EventEmitter,
+  Listen,
+  Method,
+  Prop,
+  State
+} from '@stencil/core';
+import {
+  Animation,
+  AnimationBuilder,
+  Config,
+  CssClassMap,
+  Mode,
+  PickerButton,
+  PickerColumn
+} from '../../interface';
 
-import { OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
+import {
+  OverlayEventDetail,
+  OverlayInterface,
+  dismiss,
+  eventMethod,
+  present
+} from '../../utils/overlays';
 import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -18,7 +41,6 @@ import { iosLeaveAnimation } from './animations/ios.leave';
   }
 })
 export class Picker implements OverlayInterface {
-
   private durationTimeout: any;
 
   mode!: Mode;
@@ -30,9 +52,18 @@ export class Picker implements OverlayInterface {
   @State() private showSpinner!: boolean;
   @State() private spinner!: string;
 
-  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
-  @Prop({ context: 'config' }) config!: Config;
+  @Prop({ connect: 'ion-animation-controller' })
+  animationCtrl!: HTMLIonAnimationControllerElement;
+
+  @Prop({ context: 'config' })
+  config!: Config;
+
+  /** @hidden */
   @Prop() overlayId!: number;
+
+  /**
+   * If the keyboard should be able to close the picker. Defaults to true.
+   */
   @Prop() keyboardClose = true;
 
   /**
@@ -89,32 +120,35 @@ export class Picker implements OverlayInterface {
   /**
    * Emitted after the picker has presented.
    */
-  @Event({eventName: 'ionPickerDidPresent'}) didPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionPickerDidPresent' })
+  didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the picker has presented.
    */
-  @Event({eventName: 'ionPickerWillPresent'}) willPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionPickerWillPresent' })
+  willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the picker has dismissed.
    */
-  @Event({eventName: 'ionPickerWillDismiss'}) willDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionPickerWillDismiss' })
+  willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the picker has dismissed.
    */
-  @Event({eventName: 'ionPickerDidDismiss'}) didDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionPickerDidDismiss' })
+  didDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the picker has unloaded.
    */
   @Event() ionPickerDidUnload!: EventEmitter<void>;
 
-
   componentWillLoad() {
     if (!this.spinner) {
-      const defaultSpinner = (this.mode === 'ios') ? 'lines' : 'crescent';
+      const defaultSpinner = this.mode === 'ios' ? 'lines' : 'crescent';
       this.spinner = this.config.get('pickerSpinner', defaultSpinner);
     }
     if (this.showSpinner === undefined) {
@@ -145,7 +179,13 @@ export class Picker implements OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    await present(this, 'pickerEnter', iosEnterAnimation, iosEnterAnimation, undefined);
+    await present(
+      this,
+      'pickerEnter',
+      iosEnterAnimation,
+      iosEnterAnimation,
+      undefined
+    );
 
     if (this.duration) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
@@ -160,7 +200,14 @@ export class Picker implements OverlayInterface {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    return dismiss(this, data, role, 'pickerLeave', iosLeaveAnimation, iosLeaveAnimation);
+    return dismiss(
+      this,
+      data,
+      role,
+      'pickerLeave',
+      iosLeaveAnimation,
+      iosLeaveAnimation
+    );
   }
 
   /**
@@ -169,7 +216,9 @@ export class Picker implements OverlayInterface {
    *
    */
   @Method()
-  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
+  onDidDismiss(
+    callback?: (detail: OverlayEventDetail) => void
+  ): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionPickerDidDismiss', callback);
   }
 
@@ -179,25 +228,39 @@ export class Picker implements OverlayInterface {
    *
    */
   @Method()
-  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
+  onWillDismiss(
+    callback?: (detail: OverlayEventDetail) => void
+  ): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionPickerWillDismiss', callback);
   }
 
+  /**
+   * Add a new PickerButton to the picker
+   */
   @Method()
   addButton(button: PickerButton) {
     this.buttons.push(button);
   }
 
+  /**
+   * Add a new PickerColumn to the picker
+   */
   @Method()
   addColumn(column: PickerColumn) {
     this.columns.push(column);
   }
 
+  /**
+   * Returns the column the matches the specified name
+   */
   @Method()
-  getColumn(name: string): PickerColumn|undefined {
+  getColumn(name: string): PickerColumn | undefined {
     return this.columns.find(column => column.name === name);
   }
 
+  /**
+   * Returns all the PickerColumns
+   */
   @Method()
   getColumns(): PickerColumn[] {
     return this.columns;
@@ -226,13 +289,15 @@ export class Picker implements OverlayInterface {
   }
 
   private getSelected() {
-    const selected: {[k: string]: any} = {};
+    const selected: { [k: string]: any } = {};
     this.columns.forEach((col, index) => {
-      const selectedColumn = col.selectedIndex ? col.options[col.selectedIndex] : null;
+      const selectedColumn = col.selectedIndex
+        ? col.options[col.selectedIndex]
+        : null;
       selected[col.name] = {
         text: selectedColumn ? selectedColumn.text : null,
         value: selectedColumn ? selectedColumn.value : null,
-        columnIndex: index,
+        columnIndex: index
       };
     });
     return selected;
@@ -241,7 +306,7 @@ export class Picker implements OverlayInterface {
   hostData() {
     return {
       style: {
-        zIndex: 20000 + this.overlayId,
+        zIndex: 20000 + this.overlayId
       }
     };
   }
@@ -249,16 +314,17 @@ export class Picker implements OverlayInterface {
   render() {
     // TODO: cssClass
 
-    const buttons = this.buttons.map(b => {
-      if (typeof b === 'string') {
-        b = { text: b };
-      }
-      if (!b.cssClass) {
-        b.cssClass = '';
-      }
-      return b;
-    })
-    .filter(b => b !== null);
+    const buttons = this.buttons
+      .map(b => {
+        if (typeof b === 'string') {
+          b = { text: b };
+        }
+        if (!b.cssClass) {
+          b.cssClass = '';
+        }
+        return b;
+      })
+      .filter(b => b !== null);
 
     const columns = this.columns;
 
@@ -292,23 +358,27 @@ export class Picker implements OverlayInterface {
     // });
 
     return [
-      <ion-backdrop visible={this.showBackdrop} tappable={this.enableBackdropDismiss}/>,
+      <ion-backdrop
+        visible={this.showBackdrop}
+        tappable={this.enableBackdropDismiss}
+      />,
       <div class="picker-wrapper" role="dialog">
         <div class="picker-toolbar">
-          {buttons.map(b =>
+          {buttons.map(b => (
             <div class={buttonWrapperClass(b)}>
-              <button onClick={() => this.buttonClick(b)} class={buttonClass(b)}>
+              <button
+                onClick={() => this.buttonClick(b)}
+                class={buttonClass(b)}
+              >
                 {b.text}
               </button>
             </div>
-          )}
+          ))}
         </div>
         <div class="picker-columns">
-          <div class="picker-above-highlight"></div>
-          {columns.map(c =>
-            <ion-picker-column col={c}></ion-picker-column>
-          )}
-          <div class="picker-below-highlight"></div>
+          <div class="picker-above-highlight" />
+          {columns.map(c => <ion-picker-column col={c} />)}
+          <div class="picker-below-highlight" />
         </div>
       </div>
     ];
@@ -317,7 +387,7 @@ export class Picker implements OverlayInterface {
 
 function buttonWrapperClass(button: PickerButton): CssClassMap {
   const buttonClass: CssClassMap = {
-    'picker-toolbar-button': true,
+    'picker-toolbar-button': true
   };
   if (button.role) {
     buttonClass[`picker-toolbar-${button.role}`] = true;
