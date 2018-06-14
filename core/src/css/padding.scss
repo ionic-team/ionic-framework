@@ -4,43 +4,35 @@
 $padding: var(--ion-padding, 16px);
 $margin: var(--ion-padding, 16px);
 
-ion-app [no-padding],
-ion-app [no-padding] .scroll-inner {
+[no-padding] {
   @include padding(0);
 }
 
-[padding],
-[padding] .scroll-inner {
+[padding] {
   @include padding($padding);
 }
 
-[padding-top],
-[padding-top] .scroll-inner {
+[padding-top] {
   @include padding($padding, null, null, null);
 }
 
-[padding-left],
-[padding-left] .scroll-inner {
+[padding-left] {
   @include padding-horizontal($padding, null);
 }
 
-[padding-right],
-[padding-right] .scroll-inner {
+[padding-right] {
   @include padding-horizontal(null, $padding);
 }
 
-[padding-bottom],
-[padding-bottom] .scroll-inner {
+[padding-bottom] {
   @include padding(null, null, $padding, null);
 }
 
-[padding-vertical],
-[padding-vertical] .scroll-inner {
+[padding-vertical] {
   @include padding($padding, null, $padding, null);
 }
 
-[padding-horizontal],
-[padding-horizontal] .scroll-inner {
+[padding-horizontal] {
   @include padding-horizontal($padding);
 }
 
@@ -48,55 +40,45 @@ ion-app [no-padding] .scroll-inner {
 // Content Margin
 // --------------------------------------------------
 
-ion-app [no-margin],
-ion-app [no-margin] ion-scroll {
+ion-app [no-margin] {
   @include margin(0);
 }
 
-[margin],
-[margin] .scroll-inner {
+[margin] {
   @include margin($margin);
 }
 
-[margin-top],
-[margin-top] .scroll-inner {
+[margin-top] {
   @include margin($margin, null, null, null);
 }
 
-[margin-left],
-[margin-left] .scroll-inner {
+[margin-left] {
   // scss-lint:disable PropertySpelling
   margin-left: $margin;
 }
 
-[margin-start],
-[margin-start] .scroll-inner {
+[margin-start] {
   @include margin-horizontal($margin, null);
 }
 
-[margin-right],
-[margin-right] .scroll-inner {
+[margin-right] {
   // scss-lint:disable PropertySpelling
   margin-right: $margin;
 }
 
-[margin-end],
-[margin-end] .scroll-inner {
+[margin-end] {
   @include margin-horizontal(null, $margin);
 }
 
-[margin-bottom],
-[margin-bottom] .scroll-inner {
+[margin-bottom] {
   @include margin(null, null, $margin, null);
 }
 
-[margin-vertical],
-[margin-vertical] .scroll-inner {
+[margin-vertical] {
   @include margin($margin, null, $margin, null);
 }
 
-[margin-horizontal],
-[margin-horizontal] .scroll-inner {
+[margin-horizontal] {
   @include margin-horizontal($margin);
 }
 

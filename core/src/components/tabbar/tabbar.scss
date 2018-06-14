@@ -1,6 +1,6 @@
 @import "../../themes/ionic.globals";
 
-ion-tabbar {
+:host {
   position: relative;
 
   z-index: $z-index-toolbar;
@@ -12,13 +12,16 @@ ion-tabbar {
   order: 1;
 
   width: 100%;
+
+  background: #{current-color(base)};
+  color: #{current-color(contrast)};
 }
 
-ion-tabbar.tabbar-hidden {
+:host(.tabbar-hidden) {
   display: none;
 }
 
-ion-tabbar.placement-top {
+:host(.placement-top) {
   order: -1;
 }
 
@@ -39,6 +42,8 @@ ion-tabbar.placement-top {
 
   transform: translateZ(0);
 
+  background: currentColor;
+
   &.animated {
     transition-duration: 300ms;
     transition-property: transform;
@@ -48,11 +53,11 @@ ion-tabbar.placement-top {
   }
 }
 
-.placement-top .tabbar-highlight {
+:host(.placement-top) .tabbar-highlight {
   bottom: 0;
 }
 
-.placement-bottom .tabbar-highlight {
+:host(.placement-bottom) .tabbar-highlight {
   top: 0;
 }
 
@@ -60,19 +65,17 @@ ion-tabbar.placement-top {
 // Overflow Scrolling
 // --------------------------------------------------
 
-ion-tabbar.scrollable {
-  ion-scroll {
-    overflow: hidden;
-  }
+ion-scroll {
+  overflow: hidden;
+}
 
-  .scroll-inner {
-    position: relative;
-    display: flex;
+.scroll-inner {
+  position: relative;
+  display: flex;
 
-    flex-direction: row;
-  }
+  flex-direction: row;
+}
 
-  ion-button.inactive {
-    visibility: hidden;
-  }
+ion-button.inactive {
+  visibility: hidden;
 }

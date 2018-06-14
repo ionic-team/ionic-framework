@@ -27,7 +27,7 @@
 }
 
 .list-ios[inset] .item {
-  border-bottom: 1px solid $item-ios-border-color;
+  --border-width: 0 0 1px 0;
 }
 
 .list-ios[inset] .item-inner {
@@ -52,38 +52,40 @@
 // iOS No Lines List
 // --------------------------------------------------
 
-.list-ios-lines-none .item-ios,
-.list-ios-lines-none .item-ios .item-inner {
-  border-bottom-width: 0;
+.list-ios-lines-none .item {
+  --border-width: 0;
+  --border-inner-width: 0;
 }
-
 
 // iOS Full Lines List
 // --------------------------------------------------
 
-.list-ios-lines-full .item-ios,
-.list-ios .item-ios-lines-full {
-  border-bottom-width: $list-ios-item-border-bottom-width;
+.list-ios-lines-full .item,
+.list-ios .item-lines-full {
+  --border-width: #{0 0 $list-ios-item-border-bottom-width 0};
 }
 
-.list-ios-lines-full .item-ios .item-inner {
-  border-bottom-width: 0;
+.list-ios-lines-full .item {
+  --border-inner-width: 0;
 }
 
 
 // iOS Inset Lines List
 // --------------------------------------------------
 
-.list-ios-lines-inset .item-ios .item-inner,
-.list-ios .item-ios-lines-inset .item-inner {
-  border-bottom-width: $list-ios-item-border-bottom-width;
+.list-ios-lines-inset .item .item-inner,
+.list-ios .item-lines-inset .item-inner {
+  --border-inner-width: #{0 0 $list-ios-item-border-bottom-width 0};
 }
 
 
 // Remove the border from items in lists
 // if they are explicitly styled by the item
 // to be different than the list
-.list-ios .item-ios-lines-full .item-inner,
-.list-ios .item-ios-lines-inset {
-  border-bottom-width: 0;
+.list-ios .item-lines-inset {
+  --border-width: 0;
+}
+
+.list-ios .item-lines-full {
+  --border-inner-width: 0;
 }

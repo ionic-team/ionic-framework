@@ -1,15 +1,19 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Element, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-item-option',
   styleUrls: {
     ios: 'item-option.ios.scss',
     md: 'item-option.md.scss'
-  }
+  },
+  shadow: true
 })
 export class ItemOption {
+
+  @Element() el!: HTMLElement;
+
   /**
    * The color to use for the option
    */
@@ -45,7 +49,11 @@ export class ItemOption {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, this.color, 'item-option'),
+        ...createColorClasses(this.color),
+        'in-list': hostContext('ion-list', this.el),
+        'in-swipe-start': hostContext('.item-sliding-active-swipe-start', this.el),
+        'in-swipe-end': hostContext('.item-sliding-active-swipe-end', this.el),
+
         'item-option-expandable': this.expandable
       }
     };

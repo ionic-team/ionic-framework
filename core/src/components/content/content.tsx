@@ -8,7 +8,7 @@ import { Color, Config, Mode, QueueController } from '../../interface';
     ios: 'content.ios.scss',
     md: 'content.md.scss'
   },
-  shadow: true
+  scoped: true
 })
 export class Content {
 

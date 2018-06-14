@@ -1,13 +1,14 @@
 import { Component, Element, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-item-divider',
   styleUrls: {
     ios: 'item-divider.ios.scss',
     md: 'item-divider.md.scss'
-  }
+  },
+  shadow: true
 })
 export class ItemDivider {
 
@@ -37,7 +38,7 @@ export class ItemDivider {
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, this.color, 'item-divider')
+      class: createColorClasses(this.color)
     };
   }
 

@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
 import { BaseInput, Color, GestureDetail, Mode, RangeInputChangeEvent, StyleEvent } from '../../interface';
 import { clamp, debounceEvent, deferEvent } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 import { Knob, RangeEventDetail, RangeValue } from './range-interface';
 
 @Component({
@@ -10,15 +10,14 @@ import { Knob, RangeEventDetail, RangeValue } from './range-interface';
     ios: 'range.ios.scss',
     md: 'range.md.scss'
   },
-  host: {
-    theme: 'range'
-  }
+  shadow: true
 })
 export class Range implements BaseInput {
 
   private noUpdate = false;
   private rect!: ClientRect;
   private hasFocus = false;
+  private rangeSlider?: HTMLElement;
 
   @Element() el!: HTMLStencilElement;
 
@@ -198,8 +197,7 @@ export class Range implements BaseInput {
   private onDragStart(detail: GestureDetail) {
     this.fireFocus();
 
-    const el = this.el.querySelector('.range-slider')!;
-    const rect = this.rect = el.getBoundingClientRect() as any;
+    const rect = this.rect = this.rangeSlider!.getBoundingClientRect() as any;
     const currentX = detail.currentX;
 
     // figure out which knob they started closer to
@@ -294,7 +292,8 @@ export class Range implements BaseInput {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, this.color, 'range'),
+        ...createColorClasses(this.color),
+        'in-item': hostContext('in-item', this.el),
         'range-disabled': this.disabled,
         'range-pressed': this.pressedKnob !== Knob.None,
         'range-has-pin': this.pin
@@ -333,7 +332,7 @@ export class Range implements BaseInput {
         direction="x"
         threshold={0}>
 
-        <div class="range-slider">
+        <div class="range-slider" ref={(el) => this.rangeSlider = el}>
           {ticks.map(t =>
             <div
               style={{ left: t.left }}

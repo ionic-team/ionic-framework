@@ -1,6 +1,6 @@
 @import "../../themes/ionic.globals";
 
-ion-buttons {
+:host {
   z-index: $z-index-toolbar-buttons;
 
   display: block;
@@ -13,7 +13,7 @@ ion-buttons {
 // Toolbar Buttons
 // --------------------------------------------------
 
-ion-buttons .button {
+::slotted(ion-button) {
   --margin-top: 0;
   --margin-bottom: 0;
   --margin-start: 0;
@@ -25,12 +25,7 @@ ion-buttons .button {
   --padding-end: 0;
 
   --box-shadow: none;
-}
 
-ion-buttons button,
-ion-buttons a,
-ion-buttons input,
-ion-buttons textarea,
-ion-buttons div {
   pointer-events: auto;
 }
+

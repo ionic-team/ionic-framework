@@ -3,7 +3,7 @@
 // Card
 // --------------------------------------------------
 
-ion-card {
+:host {
   @include font-smoothing();
 
   position: relative;
@@ -16,12 +16,7 @@ ion-card {
   --ion-card-text: currentColor;
 }
 
-ion-card.ion-color ion-card-title,
-ion-card.ion-color ion-card-subtitle {
-  --ion-color-base: currentColor;
-}
-
-ion-card img {
+:host img {
   display: block;
 
   width: 100%;

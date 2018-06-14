@@ -1,13 +1,14 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-list-header',
   styleUrls: {
     ios: 'list-header.ios.scss',
     md: 'list-header.md.scss'
-  }
+  },
+  shadow: true
 })
 export class ListHeader {
   /**
@@ -23,7 +24,7 @@ export class ListHeader {
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, this.color, 'list-header')
+      class: createColorClasses(this.color)
     };
   }
 }

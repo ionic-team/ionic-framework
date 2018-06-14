@@ -7,6 +7,16 @@
 
 ## Properties
 
+#### color
+
+string
+
+
+#### mode
+
+string
+
+
 #### selected
 
 boolean
@@ -18,6 +28,16 @@ HTMLIonTabElement
 
 
 ## Attributes
+
+#### color
+
+string
+
+
+#### mode
+
+string
+
 
 #### selected
 

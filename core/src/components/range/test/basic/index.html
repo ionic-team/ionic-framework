@@ -134,7 +134,7 @@
 
     function increaseRangeValues() {
       for (var i = 0; i < ranges.length; i++) {
-        var el = document.getElementById(ranges[i]);
+        var el = ranges[i];
         var newValue = el.value + 10;
 
         if (newValue > 100) {

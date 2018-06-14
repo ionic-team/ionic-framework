@@ -4,7 +4,7 @@
 // Material Design Chip
 // --------------------------------------------------
 
-.chip-md {
+:host {
   @include border-radius($chip-md-border-radius);
 
   @include margin($chip-md-margin-top, $chip-md-margin-end, $chip-md-margin-bottom, $chip-md-margin-start);
@@ -18,41 +18,17 @@
   background: $chip-md-background-color;
 }
 
-.chip-md > ion-label {
+::slotted(ion-label) {
   @include margin($chip-md-label-margin-top, $chip-md-label-margin-end, $chip-md-label-margin-bottom, $chip-md-label-margin-start);
 }
 
-.chip-md > ion-icon {
+::slotted(ion-icon) {
   color: $chip-md-icon-fill-color;
 
   background-color: $chip-md-icon-background-color;
 }
 
-.chip-md ion-avatar {
+::slotted(ion-avatar) {
   width: $chip-md-avatar-width;
   height: $chip-md-avatar-height;
-}
-
-
-// Generate Material Design Chip Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  $color-base: ion-color($color-name, base);
-  $color-contrast: ion-color($color-name, contrast);
-
-  .chip-md-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-  }
-
-  .chip-md .icon-md-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-
-    svg {
-      fill: $color-contrast;
-      stroke: $color-contrast;
-    }
-  }
 }

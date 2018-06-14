@@ -4,7 +4,7 @@
 // iOS Card
 // --------------------------------------------------
 
-.card-ios {
+:host {
   @include margin($card-ios-margin-top, $card-ios-margin-end, $card-ios-margin-bottom, $card-ios-margin-start);
   @include border-radius($card-ios-border-radius);
 
@@ -20,49 +20,49 @@
   --ion-color-contrast: #{$card-ios-text-color};
 }
 
-.card-ios ion-list {
+::slotted(ion-list) {
   @include margin(null, null, 0, null);
 }
 
-.card-ios > .item:last-child,
-.card-ios > .item:last-child .item-inner,
-.card-ios > .item-sliding:last-child .item {
+::slotted(.item:last-child)
+::slotted(.item:last-child),
+::slotted(.item-sliding:last-child) {
   border-bottom: 0;
 }
 
-.card-ios .item-ios .item-inner {
+::slotted(.item) {
   border: 0;
 }
 
-.card .note-ios {
-  font-size: 13px;
-}
+// .card .note-ios {
+//   font-size: 13px;
+// }
 
-.card-ios h1 {
+::slotted(h1) {
   @include margin(0, 0, 2px);
 
   font-size: 24px;
   font-weight: normal;
 }
 
-.card-ios h2 {
+::slotted(h2) {
   @include margin(2px, 0);
 
   font-size: 16px;
   font-weight: normal;
 }
 
-.card-ios h3,
-.card-ios h4,
-.card-ios h5,
-.card-ios h6 {
+::slotted(h3),
+::slotted(h4),
+::slotted(h5),
+::slotted(h6) {
   @include margin(2px, 0);
 
   font-size: 14px;
   font-weight: normal;
 }
 
-.card-ios p {
+:slotted(p) {
   @include margin(0, 0, 2px);
 
   font-size: 14px;

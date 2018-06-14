@@ -4,7 +4,7 @@
 // List Header
 // --------------------------------------------------
 
-ion-list-header {
+:host {
   @include font-smoothing();
   @include margin(0);
   @include padding(0);

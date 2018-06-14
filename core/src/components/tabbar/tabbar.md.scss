@@ -1,59 +1,32 @@
 @import "./tabbar";
 @import "./tabbar.md.vars";
 
-.tabbar-md {
+:host {
   height: $tabbar-md-height;
 
   border-top: $tabbar-md-border;
-  background: $tabbar-md-background-color;
+
+  --ion-color-base: #{$tabbar-md-background-color};
+  --ion-color-contrast: #{$tabbar-md-text-color-active};
 
   contain: strict;
 }
 
-.tabbar-md .tabbar-highlight {
-  background: $tabbar-md-text-color-active;
-}
-
-.tabbar-md.scrollable ion-scroll {
+ion-scroll {
   @include margin(0, 8px);
 
   max-width: 650px;
 }
 
-// Material Design Tabs Color Mixin
-// --------------------------------------------------
 
-@mixin tabbar-md($color-name) {
-  $color-base: ion-color($color-name, base);
-  $color-contrast: ion-color($color-name, contrast);
-  $color-shade: ion-color($color-name, shade);
-
-  .tabbar-md-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-
-    fill: $color-contrast;
-  }
-
-  .tabbar-md-#{$color-name} .tab-button.focused {
-    background: $color-shade;
-  }
-
-  .tabbar-md-#{$color-name} .tab-button:hover,
-  .tabbar-md-#{$color-name} .tab-button.tab-selected {
-    color: $color-contrast;
-
-    fill: $color-contrast;
-  }
-
-  .tabbar-md-#{$color-name} .tabbar-highlight {
-    background: $color-contrast;
-  }
+// TODO: REVIEW
+:host(.placement-top) .tab-button.tab-selected .tab-button-icon,
+:host(.placement-top) .tab-button.tab-selected .tab-button-text {
+  transform: inherit;
 }
 
-// Material Design Tabbar Color Generation
-// --------------------------------------------------
+.scrollable .tab-button {
+  overflow: hidden;
 
-@each $color-name, $color-value in $colors-md {
-  @include tabbar-md($color-name);
+  flex: 1 0 auto;
 }

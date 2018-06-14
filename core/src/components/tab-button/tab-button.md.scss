@@ -4,20 +4,18 @@
 // Material Design Tab Button
 // --------------------------------------------------
 
-.tab-button-md {
+:host {
   max-width: 168px;
 
   font-weight: $tab-button-md-font-weight;
+
   color: $tab-button-md-text-color;
 
-  fill: $tab-button-md-icon-color;
+  --color-selected: #{$tabbar-md-text-color-active};
+  --background-focused: #{$tabbar-md-background-color-focused};
 }
 
-.tab-button-md.focused {
-  background: $tabbar-md-background-color-focused;
-}
-
-.tab-button-md .tab-cover {
+.tab-cover {
   @include padding(
     $tab-button-md-padding-top,
     $tab-button-md-padding-end,
@@ -27,27 +25,10 @@
   display: flex;
 }
 
-.scrollable .tab-button-md {
-  overflow: hidden;
-
-  flex: 1 0 auto;
-}
-
-.tab-button-md.tab-selected {
-  color: $tab-button-md-text-color-active;
-
-  fill: $tab-button-md-icon-color-active;
-}
-
 // Material Design Tab Button Text
 // --------------------------------------------------
 
-.placement-top .tab-button-md.tab-selected .tab-button-icon,
-.placement-top .tab-button-md.tab-selected .tab-button-text {
-  transform: inherit;
-}
-
-.tab-button-md .tab-button-text {
+.tab-button-text {
   @include margin($tab-button-md-text-margin-top, $tab-button-md-text-margin-end, $tab-button-md-text-margin-bottom, $tab-button-md-text-margin-start);
 
   @include transform-origin(center, bottom);
@@ -58,25 +39,15 @@
   transition: $tab-button-md-text-transition;
 }
 
-.tab-button-md.tab-selected .tab-button-text {
+:host(.tab-selected) .tab-button-text {
   transform: $tab-button-md-text-transform-active;
   transition: $tab-button-md-text-transition;
-}
-
-.layout-icon-top .tab-button-md .has-icon .tab-button-text {
-  @include margin(null, null, -2px, null);
-}
-
-.layout-icon-bottom .tab-button-md .tab-button-text {
-  @include transform-origin(center, top);
-
-  @include margin(-2px, null, null, null);
 }
 
 // Material Design Tab Button Icon
 // --------------------------------------------------
 
-.tab-button-md .tab-button-icon {
+.tab-button-icon {
   @include transform-origin(center, center);
 
   width: $tab-button-md-icon-size;
@@ -88,12 +59,22 @@
 }
 
 // Tab layout: icon-top, icon-only, title-only
-.tab-button-md.tab-selected .tab-button-icon {
+:host(.tab-selected) .tab-button-icon {
   @include transform(translate3d(
     $tab-button-md-icon-transform-x-active,
     $tab-button-md-icon-transform-y-active,
     $tab-button-md-icon-transform-z-active));
 }
+
+
+// Material Design Tab with Icon or Title only
+// --------------------------------------------------
+
+:host(.icon-only),
+:host(.has-title-only) {
+  justify-content: center;
+}
+
 
 // Tab layout: icon-end
 .layout-icon-end .tab-button-md.tab-selected .tab-button-icon {
@@ -119,12 +100,17 @@
     $tab-button-md-icon-left-transform-z-active));
 }
 
-// Material Design Tab with Icon or Title only
-// --------------------------------------------------
+.layout-icon-top .tab-button-md .has-icon .tab-button-text {
+  @include margin(null, null, -2px, null);
+}
+
+.layout-icon-bottom .tab-button-md .tab-button-text {
+  @include transform-origin(center, top);
+
+  @include margin(-2px, null, null, null);
+}
 
 .layout-icon-hide .tab-button-md,
-.layout-title-hide .tab-button-md,
-.tab-button-md.icon-only,
-.tab-button-md.has-title-only {
+.layout-title-hide .tab-button-md {
   justify-content: center;
 }

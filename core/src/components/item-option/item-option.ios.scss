@@ -4,17 +4,17 @@
 // iOS Item Option
 // --------------------------------------------------
 
-.item-option-ios {
+:host {
   font-size: $item-option-button-ios-font-size;
 
   --ion-color-base: #{$item-option-button-ios-background-color};
   --ion-color-contrast: #{$item-option-button-ios-text-color};
 }
 
-.list-ios .item-options-end ion-item-option:last-child {
+:host(.in-list.item-options-end:last-child) {
   @include safe-area-padding-horizontal(null, .7em);
 }
 
-.list-ios .item-options-start ion-item-option:first-child {
+:host(.in-list.item-options-start:first-child) {
   @include safe-area-padding-horizontal(.7em, null);
 }

@@ -3,7 +3,7 @@
 // Toolbar
 // --------------------------------------------------
 
-.toolbar {
+:host {
   @include font-smoothing();
 
   box-sizing: border-box;
@@ -28,6 +28,21 @@
   --background: #{current-color(base)};
 }
 
+// Transparent Toolbar
+// --------------------------------------------------
+
+:host(.toolbar-translucent) {
+  --border-color: transparent;
+  --background: transparent;
+
+  .toolbar-background {
+    background: var(--translucent-background);
+
+    backdrop-filter: var(--translucent-filter);
+  }
+}
+
+
 .toolbar-background {
   @include position(0, 0, 0, 0);
 
@@ -43,18 +58,4 @@
   pointer-events: none;
 
   contain: strict;
-}
-
-// Transparent Toolbar
-// --------------------------------------------------
-
-.toolbar-translucent {
-  --border-color: transparent;
-  --background: transparent;
-
-  .toolbar-background {
-    background: var(--translucent-background);
-
-    backdrop-filter: var(--translucent-filter);
-  }
 }

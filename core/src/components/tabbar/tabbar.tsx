@@ -1,6 +1,6 @@
 import { Component, Element, Listen, Prop, State, Watch } from '@stencil/core';
 import { Color, Mode, QueueController } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 
 export type TabbarLayout = 'icon-top' | 'icon-start' | 'icon-end' | 'icon-bottom' | 'icon-hide' | 'title-hide';
 export type TabbarPlacement = 'top' | 'bottom';
@@ -10,14 +10,15 @@ export type TabbarPlacement = 'top' | 'bottom';
   styleUrls: {
     ios: 'tabbar.ios.scss',
     md: 'tabbar.md.scss'
-  }
+  },
+  shadow: true
 })
 export class Tabbar {
 
   private scrollEl?: HTMLIonScrollElement;
 
-  mode!: Mode;
-  color?: Color;
+  @Prop() mode!: Mode;
+  @Prop() color?: Color;
 
   @Element() el!: HTMLElement;
 
@@ -165,13 +166,11 @@ export class Tabbar {
   }
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'tabbar-translucent') : {};
-
     return {
       role: 'tablist',
       class: {
-        ...createThemedClasses(this.mode, this.color, 'tabbar'),
-        ...themedClasses,
+        ...createColorClasses(this.color),
+        'tabbar-translucent': this.translucent,
         [`layout-${this.layout}`]: true,
         [`placement-${this.placement}`]: true,
         'tabbar-hidden': this.hidden,
@@ -183,8 +182,7 @@ export class Tabbar {
   render() {
     const selectedTab = this.selectedTab;
     const ionTabbarHighlight = this.highlight ? <div class="animated tabbar-highlight"/> as HTMLElement : null;
-    const buttonClasses = createThemedClasses(this.mode, this.color, 'tab-button');
-    const tabButtons = this.tabs.map(tab => <ion-tab-button class={buttonClasses} tab={tab} selected={selectedTab === tab}/>);
+    const tabButtons = this.tabs.map(tab => <ion-tab-button tab={tab} selected={selectedTab === tab} mode={this.mode} color={this.color}/>);
 
     if (this.scrollable) {
       return [

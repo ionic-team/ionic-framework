@@ -4,7 +4,7 @@
 // Label
 // --------------------------------------------------
 
-ion-label {
+:host {
   @include margin(0);
 
   display: block;
@@ -21,7 +21,7 @@ ion-label {
   --ion-color-base: currentColor;
 }
 
-.item-input ion-label {
+:host-context(.item-input) {
   flex: initial;
 
   max-width: 200px;
@@ -29,7 +29,7 @@ ion-label {
   pointer-events: none;
 }
 
-[text-wrap] ion-label {
+:host-context([text-wrap]) {
   white-space: normal;
 }
 
@@ -37,7 +37,7 @@ ion-label {
 // Stacked & Floating Inputs
 // --------------------------------------------------
 
-.label-fixed {
+:host(.label-fixed) {
   flex: 0 0 100px;
 
   width: 100px;
@@ -45,28 +45,15 @@ ion-label {
   max-width: 200px;
 }
 
-.item-label-stacked ion-label,
-.item-label-floating ion-label {
+:host-context(.item-label-stacked),
+:host-context(.item-label-floating) {
   align-self: stretch;
 
   width: auto;
   max-width: 100%;
 }
 
-.label-stacked ,
-.label-floating {
+:host(.label-stacked),
+:host(.label-floating) {
   @include margin(null, null, 0, null);
-}
-
-.item-label-stacked .input-wrapper,
-.item-label-floating .input-wrapper {
-  flex: 1;
-  flex-direction: column;
-}
-
-.item-label-stacked ion-select,
-.item-label-floating ion-select {
-  align-self: stretch;
-
-  max-width: 100%;
 }

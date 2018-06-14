@@ -28,7 +28,7 @@
     "ionicons": "4.1.2"
   },
   "devDependencies": {
-    "@stencil/core": "^0.9.6",
+    "@stencil/core": "0.9.7",
     "@stencil/dev-server": "latest",
     "@stencil/sass": "latest",
     "@stencil/utils": "latest",
@@ -55,7 +55,7 @@
     "css.sass": "node-sass --output ./css src/css",
     "watch": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server\"",
     "dev": "npm run build.css && npm run watch",
-    "dev-prod": "npm run build.css && npm run watch --prod",
+    "dev-prod": "npm run build.css && npm run watch --es5",
     "e2e": "node ./scripts/e2e",
     "e2e-debug": "node --inspect --debug-brk ./scripts/e2e",
     "lint": "npm run lint.ts && npm run lint.sass",

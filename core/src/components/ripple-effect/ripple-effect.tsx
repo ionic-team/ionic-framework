@@ -5,6 +5,7 @@ import { now } from '../../utils/helpers';
 @Component({
   tag: 'ion-ripple-effect',
   styleUrl: 'ripple-effect.scss',
+  shadow: true
 })
 export class RippleEffect {
 
@@ -72,9 +73,13 @@ export class RippleEffect {
       style.height = size + 'px';
       style.animationDuration = duration + 'ms';
 
-      this.el.appendChild(div);
+      this.el.shadowRoot!.appendChild(div);
       setTimeout(() => div.remove(), duration + 50);
     });
+  }
+
+  render() {
+    return null;
   }
 }
 

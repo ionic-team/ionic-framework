@@ -1,6 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Config, Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 import { SPINNERS, SpinnerConfig } from './spinner-configs';
 
 
@@ -9,7 +9,8 @@ import { SPINNERS, SpinnerConfig } from './spinner-configs';
   styleUrls: {
     ios: 'spinner.ios.scss',
     md: 'spinner.md.scss'
-  }
+  },
+  shadow: true
 })
 export class Spinner {
   @Prop({ context: 'config' }) config!: Config;
@@ -71,7 +72,9 @@ export class Spinner {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, this.color, `spinner spinner-${this.getName()}`),
+        ...createColorClasses(this.color),
+
+        [`spinner-${this.getName()}`]: true,
         'spinner-paused': this.paused
       }
     };

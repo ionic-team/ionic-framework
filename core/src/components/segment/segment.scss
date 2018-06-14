@@ -3,7 +3,7 @@
 // Segment
 // --------------------------------------------------
 
-ion-segment {
+:host {
   @include font-smoothing();
 
   display: flex;

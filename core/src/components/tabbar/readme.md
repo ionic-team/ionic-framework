@@ -7,12 +7,22 @@
 
 ## Properties
 
+#### color
+
+string
+
+
 #### highlight
 
 boolean
 
 
 #### layout
+
+string
+
+
+#### mode
 
 string
 
@@ -46,12 +56,22 @@ If true, the tabbar will be translucent. Defaults to `false`.
 
 ## Attributes
 
+#### color
+
+string
+
+
 #### highlight
 
 boolean
 
 
 #### layout
+
+string
+
+
+#### mode
 
 string
 

@@ -1,6 +1,6 @@
 @import "../../themes/ionic.globals";
 
-ion-tab-button {
+:host {
   @include margin(0);
   @include text-align(center);
   @include border-radius(0);
@@ -22,9 +22,27 @@ ion-tab-button {
   background: none;
 
   user-select: none;
+
+  box-sizing: border-box;
 }
 
-ion-tab-button a {
+:host(.ion-color) {
+  color: #{current-color(contrast)};
+
+  --color-selected: #{current-color(contrast)};
+  --background-selected: #{current-color(shade)};
+}
+
+:host(.focused) {
+  background: var(--background-focused);
+}
+
+:host(:hover),
+:host(.tab-selected) {
+  color: var(--color-selected);
+}
+
+a {
   text-decoration: none;
 }
 
@@ -45,6 +63,7 @@ ion-tab-button a {
   color: inherit;
   background: transparent;
   cursor: pointer;
+  box-sizing: border-box;
 
   &:active,
   &:focus {
@@ -52,12 +71,12 @@ ion-tab-button a {
   }
 }
 
-.tab-btn-disabled {
+:host(.tab-btn-disabled) {
   pointer-events: none;
+}
 
-  > .tab-cover {
-    opacity: .4;
-  }
+:host(.tab-btn-disabled) .tab-cover {
+  opacity: .4;
 }
 
 .tab-button-text,
@@ -72,16 +91,42 @@ ion-tab-button a {
 
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  box-sizing: border-box;
 }
 
-.has-icon .tab-button-icon,
-.has-title .tab-button-text {
+:host(.has-icon) .tab-button-icon,
+:host(.has-title) .tab-button-text {
   display: block;
 }
 
-.has-title-only .tab-button-text {
+:host(.has-title-only) .tab-button-text {
   white-space: normal;
 }
+
+
+// Tab Badges
+// --------------------------------------------------
+
+.tab-badge {
+  @include position(6%, 4%, null, null); // 4% fallback
+  @include position(null, calc(50% - 50px), null, null);
+  @include padding(1px, 6px);
+
+  position: absolute;
+
+  height: auto;
+
+  font-size: 12px;
+  line-height: 16px;
+  box-sizing: border-box;
+}
+
+:host(.has-icon) .tab-badge {
+  @include position(null, calc(50% - 30px), null, null);
+}
+
+
 
 // Tab Badges
 // --------------------------------------------------
@@ -110,25 +155,6 @@ ion-tab-button a {
   display: none;
 }
 
-// Tab Badges
-// --------------------------------------------------
-
-.tab-badge {
-  @include position(6%, 4%, null, null); // 4% fallback
-  @include position(null, calc(50% - 50px), null, null);
-  @include padding(1px, 6px);
-
-  position: absolute;
-
-  height: auto;
-
-  font-size: 12px;
-  line-height: 16px;
-}
-
-.has-icon .tab-badge {
-  @include position(null, calc(50% - 30px), null, null);
-}
 
 .layout-icon-bottom .tab-badge,
 .layout-icon-start .tab-badge,

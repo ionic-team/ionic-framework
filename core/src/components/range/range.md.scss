@@ -4,29 +4,30 @@
 // Material Design Range
 // --------------------------------------------------
 
-.range-md {
+:host {
   @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
 
   font-family: $range-md-font-family;
 }
 
-.range-md [slot="range-start"] {
-  @include margin(0, 12px, 0, 0);
-}
+// TODO: REVIEW
+// .range-md [slot="range-start"] {
+//   @include margin(0, 12px, 0, 0);
+// }
 
-.range-md [slot="range-end"] {
-  @include margin(0, 0, 0, 12px);
-}
+// .range-md [slot="range-end"] {
+//   @include margin(0, 0, 0, 12px);
+// }
 
-.range-md.range-has-pin {
+:host(.range-has-pin) {
   @include padding($range-md-padding-vertical + $range-md-pin-font-size + $range-md-pin-padding-vertical, null, null, null);
 }
 
-.range-md .range-slider {
+.range-slider {
   height: $range-md-slider-height;
 }
 
-.range-md .range-bar {
+.range-bar {
   @include position(($range-md-slider-height / 2), null, null, 0);
 
   position: absolute;
@@ -39,15 +40,15 @@
   pointer-events: none;
 }
 
-.range-md.range-pressed .range-bar-active {
+:host(.range-pressed) .range-bar-active {
   will-change: left, right;
 }
 
-.range-md.range-pressed .range-knob-handle {
+:host(.range-pressed) .range-knob-handle {
   will-change: left;
 }
 
-.range-md .range-bar-active {
+.range-bar-active {
   bottom: 0;
 
   width: auto;
@@ -55,7 +56,7 @@
   background: $range-md-bar-active-background-color;
 }
 
-.range-md .range-knob-handle {
+.range-knob-handle {
   @include position(($range-md-slider-height / 2), null, null, 0);
   @include margin(-($range-md-hit-height / 2), null, null, -($range-md-hit-width / 2));
   @include text-align(center);
@@ -66,7 +67,7 @@
   height: $range-md-hit-height;
 }
 
-.range-md .range-knob {
+.range-knob {
   @include position(($range-md-hit-height / 2) - ($range-md-knob-height / 2) + ($range-md-bar-height / 2),
           null, null, ($range-md-hit-width / 2) - ($range-md-knob-width / 2));
   @include border-radius(50%);
@@ -88,7 +89,7 @@
   pointer-events: none;
 }
 
-.range-md .range-tick {
+.range-tick {
   @include margin-horizontal(-($range-md-tick-width / 2), null);
   @include border-radius($range-md-tick-border-radius);
 
@@ -106,11 +107,11 @@
   pointer-events: none;
 }
 
-.range-md .range-tick-active {
+.range-tick-active {
   background: $range-md-tick-active-background-color;
 }
 
-.range-md .range-pin {
+.range-pin {
   @include padding($range-md-pin-padding-vertical, $range-md-pin-padding-horizontal);
   @include text-align(center);
   @include border-radius(50%);
@@ -151,16 +152,16 @@
   }
 }
 
-.range-md .range-knob-pressed .range-pin {
+.range-knob-pressed .range-pin {
   @include transform(translate3d(0, 0, 0), scale(1));
 }
 
-.range-md:not(.range-has-pin) .range-knob-pressed .range-knob {
+:host(:not(.range-has-pin)) .range-knob-pressed .range-knob {
   transform: scale(1);
 }
 
 @mixin md-range-min() {
-  .range-md .range-knob-min.range-knob-min {
+  .range-knob-min.range-knob-min {
     .range-knob {
       border: $range-md-knob-min-border;
       background: $range-md-knob-min-background-color;
@@ -176,14 +177,12 @@
 
 @include md-range-min();
 
-.range-md.range-disabled {
-  .range-bar-active {
-    background-color: $range-md-bar-background-color;
-  }
+:host(.range-disabled) .range-bar-active {
+  background-color: $range-md-bar-background-color;
+}
 
-  .range-knob {
-    outline: 5px solid #fff;
-    background-color: $range-md-bar-background-color;
-    transform: scale(.55);
-  }
+:host(.range-disabled) .range-knob {
+  outline: 5px solid #fff;
+  background-color: $range-md-bar-background-color;
+  transform: scale(.55);
 }

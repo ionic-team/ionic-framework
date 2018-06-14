@@ -4,22 +4,22 @@
 // iOS Spinner
 // --------------------------------------------------
 
-.spinner-lines-ios {
+:host(.spinner-lines) {
   --ion-color-base: #{$spinner-ios-lines-color};
 }
 
-.spinner-bubbles-ios {
+:host(.spinner-bubbles) {
   --ion-color-base: #{$spinner-ios-bubbles-color};
 }
 
-.spinner-circles-ios {
+:host(.spinner-circles) {
   --ion-color-base: #{$spinner-ios-circles-color};
 }
 
-.spinner-crescent-ios {
+:host(.spinner-crescent) {
   --ion-color-base: #{$spinner-ios-crescent-color};
 }
 
-.spinner-dots-ios {
+:host(.spinner-dots) {
   --ion-color-base: #{$spinner-ios-dots-color};
 }

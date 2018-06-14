@@ -3,7 +3,7 @@
 // Checkbox
 // --------------------------------------------------
 
-ion-checkbox {
+:host {
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
 
@@ -17,7 +17,16 @@ ion-checkbox {
   display: inline-block;
 }
 
-ion-checkbox input {
+:host(.checkbox-checked) {
+  --background: var(--checked-background);
+  --border-color: var(--checked-border-color);
+}
+
+:host(.checkbox-checked) .checkbox-inner {
+  opacity: 1;
+}
+
+input {
   @include position(0, null, null, 0);
   @include margin(0);
 
@@ -33,16 +42,7 @@ ion-checkbox input {
   appearance: none;
 }
 
-.checkbox.checkbox-checked {
-  --background: var(--checked-background);
-  --border-color: var(--checked-border-color);
-}
-
-.checkbox.checkbox-checked .checkbox-inner {
-  opacity: 1;
-}
-
-.checkbox .checkbox-icon {
+.checkbox-icon {
   @include border-radius(var(--border-radius));
 
   position: relative;
@@ -58,7 +58,7 @@ ion-checkbox input {
   contain: strict;
 }
 
-.checkbox .checkbox-inner {
+.checkbox-inner {
   border-color: #{current-color(contrast)};
   opacity: 0;
 }

@@ -3,7 +3,7 @@
 // Item Option
 // --------------------------------------------------
 
-.item-option-button {
+:host {
   @include padding(0, .7em);
 
   width: 100%;
@@ -37,7 +37,7 @@
   height: 100%;
 }
 
-.item-option-button [slot="icon-only"] {
+:host([slot="icon-only"]) {
   @include padding(0);
 
   min-width: .9em;
@@ -49,7 +49,7 @@
 // Item Expandable Animation
 // --------------------------------------------------
 
-.item-option-expandable {
+:host(.item-option-expandable) {
   flex-shrink: 0;
 
   transition-duration: 0;
@@ -57,7 +57,7 @@
   transition-timing-function: cubic-bezier(.65, .05, .36, 1);
 }
 
-.item-sliding-active-swipe-right .item-options-end .item-option-expandable {
+:host(.in-swipe-end.item-options-end.item-option-expandable) {
   transition-duration: .6s;
   transition-property: padding-left;
 
@@ -75,7 +75,7 @@
   }
 }
 
-.item-sliding-active-swipe-left .item-options-start .item-option-expandable {
+:host(.in-swipe-start.item-options-start.item-option-expandable) {
   transition-duration: .6s;
   transition-property: padding-right;
 

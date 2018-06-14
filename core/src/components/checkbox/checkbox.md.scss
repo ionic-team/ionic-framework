@@ -4,7 +4,7 @@
 // Material Design Checkbox
 // --------------------------------------------------
 
-.checkbox-md {
+:host {
   --size: #{$checkbox-md-icon-size};
 
   --border-radius: calc(var(--size) * .125);
@@ -20,11 +20,11 @@
 // Material Design Checkbox Inner Checkmark: Checked
 // -----------------------------------------
 
-.checkbox-md.checkbox-checked .checkbox-inner {
+:host(.checkbox-checked) .checkbox-inner {
   @include position(
-    calc(var(--size) * .1 - 2px),
+    calc(var(--size) * .05),
     null, null,
-    calc(var(--size) * .35 - 2px)
+    calc(var(--size) * .3)
   );
 
   position: absolute;
@@ -43,8 +43,10 @@
 // Material Design Checkbox: Disabled
 // -----------------------------------------
 
-.checkbox-md.checkbox-disabled,
-.item-md.item-checkbox-disabled ion-label {
+// TODO
+// .item-md.item-checkbox-disabled ion-label {
+
+:host(.checkbox-disabled) {
   opacity: $checkbox-md-disabled-opacity;
 
   pointer-events: none;
@@ -54,7 +56,7 @@
 // Material Design Checkbox Keyboard Focus
 // -----------------------------------------
 
-.checkbox-key .checkbox-icon::after {
+:host(.checkbox-key) .checkbox-icon::after {
   @include border-radius(50%);
   @include position(-12px, null, null, -12px);
 
@@ -76,17 +78,18 @@
 // Material Design Checkbox Within An Item
 // -----------------------------------------
 
-.item.item-md .checkbox-md {
+:host(.in-item) {
   @include margin($checkbox-md-item-start-margin-top, $checkbox-md-item-start-margin-end, $checkbox-md-item-start-margin-bottom, $checkbox-md-item-start-margin-start);
 
   position: static;
   display: block;
 }
 
-.item.item-md .checkbox-md[slot="end"] {
+:host(.in-item[slot="end"]) {
   @include margin($checkbox-md-item-end-margin-top, $checkbox-md-item-end-margin-end, $checkbox-md-item-end-margin-bottom, $checkbox-md-item-end-margin-start);
 }
 
-.checkbox-md + .item-inner ion-label {
-  @include margin-horizontal(0, null);
-}
+// REVIEW
+// .checkbox-md + .item-inner ion-label {
+//   @include margin-horizontal(0, null);
+// }

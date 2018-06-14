@@ -4,11 +4,12 @@
 // Avatar
 // --------------------------------------------------
 
-ion-avatar {
+:host {
   display: block;
 }
 
-ion-avatar img {
+::slotted(ion-img),
+::slotted(img) {
   width: 100%;
   height: 100%;
 

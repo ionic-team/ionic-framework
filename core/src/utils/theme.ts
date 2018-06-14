@@ -1,8 +1,19 @@
 import { CssClassMap, Mode, RouterDirection } from '../interface';
 
+export function hostContext(selector: string, el: HTMLElement): boolean {
+  return !!el.closest(selector);
+}
+
 /**
  * Create the mode and color classes for the component based on the classes passed in
  */
+export function createColorClasses(color: string | undefined): CssClassMap | null {
+  return (color) ? {
+    'ion-color': true,
+    [`ion-color-${color}`]: true
+  } : null;
+}
+
 export function createThemedClasses(mode: Mode | undefined, color: string | undefined, classes: string): CssClassMap {
   const classObj: CssClassMap = {};
   getClassList(classes).forEach(classString => {

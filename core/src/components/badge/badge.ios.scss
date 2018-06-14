@@ -4,7 +4,7 @@
 // iOS Badge
 // --------------------------------------------------
 
-.badge-ios {
+:host {
   @include border-radius($badge-ios-border-radius);
 
   font-family: $badge-ios-font-family;

@@ -4,7 +4,8 @@ import { openURL } from '../../utils/theme';
 
 
 @Component({
-  tag: 'ion-anchor'
+  tag: 'ion-anchor',
+  shadow: true,
 })
 export class Anchor {
 

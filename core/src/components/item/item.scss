@@ -3,26 +3,57 @@
 // Item
 // --------------------------------------------------
 
-ion-item {
+:host {
   @include font-smoothing();
 
   display: block;
-}
 
-.item.ion-color {
+  text-decoration: none;
+
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
+  --ion-color-tint: #{ion-color(primary, tint)};
+  --ion-color-shade: #{ion-color(primary, shade)};
+
   --background: #{current-color(base)};
   --background-active: #{current-color(tint)};
   --color: #{current-color(contrast)};
   --paragraph-color: #{current-color(contrast)};
   --border-color: #{current-color(shade)};
   --detail-push-color: #{current-color(shade)};
+
+  --border-radius: 0;
+  --border-width: 0;
+  --border-inner-width: 0;
+
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-end: 0;
+  --padding-start: 0;
+
+  --padding-inner-top: 0;
+  --padding-inner-bottom: 0;
+  --padding-inner-start: 0;
+  --padding-inner-end: 0;
 }
 
-.item {
-  @include border-radius(0);
+:host(.item-disabled) {
+  cursor: default;
+  opacity: .4;
+
+  pointer-events: none;
+}
+
+.item-native {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include border-radius(var(--border-radius));
+
   @include margin(0);
-  @include padding(0);
   @include text-align(initial);
+
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+  border-width: var(--border-width);
 
   display: flex;
   overflow: hidden;
@@ -33,18 +64,35 @@ ion-item {
   width: 100%;
   min-height: $item-min-height;
 
-  border: 0;
+  position: relative;
+
+  font-family: inherit;
+  color: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
+  text-decoration: inherit;
+
   outline: none;
 
-  font-weight: normal;
-  line-height: normal;
-  text-decoration: none;
-  color: inherit;
+  font-size: inherit;
+  background-color: var(--background);
+  transition: var(--transition);
+  box-sizing: border-box;
 }
 
 .item-inner {
   @include margin(0);
   @include padding(0);
+  @include padding(
+    var(--padding-inner-top),
+    var(--padding-inner-end),
+    var(--padding-inner-bottom),
+    var(--padding-inner-start)
+    );
+
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+  border-width: var(--border-inner-width);
 
   display: flex;
   overflow: hidden;
@@ -55,8 +103,7 @@ ion-item {
   align-self: stretch;
 
   min-height: inherit;
-
-  border: 0;
+  box-sizing: border-box;
 }
 
 .input-wrapper {
@@ -69,14 +116,11 @@ ion-item {
   align-self: stretch;
 
   text-overflow: ellipsis;
+  box-sizing: border-box;
 }
 
-ion-item-group {
-  display: block;
-}
-
-[vertical-align-top],
-.input.item {
+:host([vertical-align-top]),
+:host(.input) {
   align-items: flex-start;
 }
 
@@ -92,21 +136,28 @@ ion-item-group {
   cursor: pointer;
 }
 
-.item > ion-icon,
-.item-inner > ion-icon {
+::slotted(ion-icon) {
   font-size: 1.6em;
 }
 
-.item .button {
+::slotted(ion-button) {
   --margin-top: 0;
   --margin-bottom: 0;
   --margin-start: 0;
   --margin-end: 0;
 }
 
-.item-disabled {
-  cursor: default;
-  opacity: .4;
 
-  pointer-events: none;
+// FROM LABEL
+:host(.item-label-stacked) .input-wrapper,
+:host(.item-label-floating) .input-wrapper {
+  flex: 1;
+  flex-direction: column;
+}
+
+:host(.item-label-stacked)::slotted(ion-select),
+:host(.item-label-floating)::slotted(ion-select) {
+  align-self: stretch;
+
+  max-width: 100%;
 }

@@ -4,7 +4,7 @@
 // Material Design FAB Button
 // --------------------------------------------------
 
-.fab-button-md {
+:host(.fab-button) {
   --box-shadow: #{$fab-md-box-shadow};
 
   --transition: #{box-shadow $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
@@ -12,7 +12,7 @@
               color $fab-button-md-transition-duration $fab-button-md-transition-timing-function};
 }
 
-.fab-button-md.activated {
+:host(.fab-button.activated) {
   --box-shadow: #{$fab-md-box-shadow-activated};
 }
 
@@ -20,7 +20,7 @@
 // FAB buttons in a list
 // --------------------------------------------------
 
-.fab-button-md-in-list {
+:host(.fab-button-in-list) {
   --ion-color-contrast: #{$fab-md-list-button-text-color};
   --ion-color-base: #{$fab-md-list-button-background-color};
   --transition: #{transform $fab-md-list-button-transition-duration $fab-md-list-button-transition-timing-function $fab-md-list-button-transition-delay,
@@ -30,6 +30,6 @@
               color $fab-button-md-transition-duration $fab-button-md-transition-timing-function};
 }
 
-.fab-button-md-in-list.activated {
+:host(.fab-button-in-list.activated) {
   --background: #{$fab-md-list-button-background-color-activated};
 }

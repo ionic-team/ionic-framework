@@ -34,23 +34,6 @@ ion-app,
   display: none !important;
 }
 
-// TODO: move to somewhere else
-
-$navigation-ios-transition-background: #000 !default;
-
-.show-decor > .nav-decor {
-  @include position(0, 0, 0, 0);
-
-  // when ios pages transition, the leaving page grays out
-  // this is the black square behind all pages so they gray out
-  position: absolute;
-  z-index: 0;
-  display: block;
-
-  background: $navigation-ios-transition-background;
-
-  pointer-events: none;
-}
 
 // Misc
 // --------------------------------------------------
@@ -66,7 +49,6 @@ ion-alert-controller,
 ion-loading-controller,
 ion-modal-controller,
 ion-picker-controller,
-ion-toast-controller,
-.nav-decor {
+ion-toast-controller {
   display: none;
 }

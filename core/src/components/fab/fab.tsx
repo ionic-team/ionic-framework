@@ -3,7 +3,8 @@ import { Component, Element, Listen, Method, Prop, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-fab',
-  styleUrl: 'fab.scss'
+  styleUrl: 'fab.scss',
+  shadow: true
 })
 export class Fab {
 
@@ -69,6 +70,10 @@ export class Fab {
         ['fab-edge']: this.edge
       }
     };
+  }
+
+  render() {
+    return <slot/>;
   }
 
 }

@@ -3,7 +3,7 @@
 // Floating Action Buttons
 // --------------------------------------------------
 
-ion-fab-button {
+:host {
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
   --ion-color-tint: #{ion-color(primary, tint)};
@@ -21,7 +21,7 @@ ion-fab-button {
   color: #{current-color(contrast)};
 }
 
-ion-fab-button.activated {
+:host(.activated) {
   --background: #{current-color(tint)};
 }
 
@@ -71,7 +71,7 @@ ion-fab-button.activated {
   }
 }
 
-.fab-button ion-icon {
+:slotted(ion-icon) {
   font-size: 24px;
   line-height: 1;
 }
@@ -95,7 +95,7 @@ ion-fab-button.activated {
 // FAB Mini
 // --------------------------------------------------
 
-ion-fab-button[mini] {
+:host([mini]) {
   --size: #{$fab-mini-size};
 }
 
@@ -134,6 +134,6 @@ ion-fab-button[mini] {
   transform: scale(.4) rotateZ(45deg);
 }
 
-.fab-button ion-ripple-effect {
+ion-ripple-effect {
   --color: var(--ripple-color);
 }

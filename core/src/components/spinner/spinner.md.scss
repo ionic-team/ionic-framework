@@ -4,22 +4,22 @@
 // Material Design Spinner
 // --------------------------------------------------
 
-.spinner-lines-md {
+:host(.spinner-lines-md) {
   --ion-color-base: #{$spinner-md-lines-color};
 }
 
-.spinner-bubbles-md {
+:host(.spinner-bubbles) {
   --ion-color-base: #{$spinner-md-bubbles-color};
 }
 
-.spinner-circles-md {
+:host(.spinner-circles) {
   --ion-color-base: #{$spinner-md-circles-color};
 }
 
-.spinner-crescent-md {
+:host(.spinner-crescent) {
   --ion-color-base: #{$spinner-md-crescent-color};
 }
 
-.spinner-dots-md {
+:host(.spinner-dots) {
   --ion-color-base: #{$spinner-md-dots-color};
 }

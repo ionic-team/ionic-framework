@@ -5,7 +5,8 @@ import { TabbarLayout, TabbarPlacement } from '../tabbar/tabbar';
 
 @Component({
   tag: 'ion-tabs',
-  styleUrl: 'tabs.scss'
+  styleUrl: 'tabs.scss',
+  shadow: true
 })
 export class Tabs implements NavOutlet {
 

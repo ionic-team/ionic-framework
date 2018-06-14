@@ -1,13 +1,14 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-card-title',
   styleUrls: {
     ios: 'card-title.ios.scss',
     md: 'card-title.md.scss'
-  }
+  },
+  shadow: true
 })
 export class CardTitle {
   /**
@@ -23,9 +24,13 @@ export class CardTitle {
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, this.color, 'card-title'),
+      class: createColorClasses(this.color),
       'role': 'heading',
       'aria-level': '2'
     };
+  }
+
+  render() {
+    return <slot/>;
   }
 }

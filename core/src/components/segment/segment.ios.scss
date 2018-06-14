@@ -4,7 +4,7 @@
 // iOS Segment
 // --------------------------------------------------
 
-.segment-ios {
+:host {
   height: #{$segment-button-ios-height};
 
   font-family: $segment-ios-font-family;
@@ -13,13 +13,13 @@
   --border-width: #{$segment-button-ios-border-width};
 }
 
-.segment-ios.segment-disabled {
+:host(.segment-disabled) {
   opacity: $segment-ios-opacity-disabled;
 
   pointer-events: none;
 }
 
-.segment-ios ion-segment-button {
+::slotted(ion-segment-button) {
 
   font-size: #{$segment-button-ios-font-size};
   line-height: #{$segment-button-ios-line-height};
@@ -30,50 +30,50 @@
   --border-color: #{current-color(base)};
   --background: transparent;
   --transition: 100ms all linear;
-
-  &.segment-checked {
-    color: #{current-color(contrast)};
-
-    --background: #{current-color(base)};
-  }
-
-  &.segment-button-disabled {
-    color: #{current-color(base, $segment-button-ios-background-color-alpha-disabled)};
-
-    pointer-events: none;
-  }
-
-  &:hover:not(.segment-checked) {
-    --background: #{current-color(base, $segment-button-ios-background-color-alpha-hover)};
-  }
-
-  &:active:not(.segment-checked) {
-    --background: #{current-color(base, $segment-button-ios-background-color-alpha-active)};
-  }
-
-  ion-icon {
-    font-size: $segment-button-ios-icon-size;
-    line-height: $segment-button-ios-icon-line-height;
-  }
 }
+
+::slotted(.segment-checked) {
+  color: #{current-color(contrast)};
+
+  --background: #{current-color(base)};
+}
+
+::slotted(.segment-button-disabled) {
+  color: #{current-color(base, $segment-button-ios-background-color-alpha-disabled)};
+
+  pointer-events: none;
+}
+
+::slotted(:hover:not(.segment-checked)) {
+  --background: #{current-color(base, $segment-button-ios-background-color-alpha-hover)};
+}
+
+::slotted(:active:not(.segment-checked)) {
+  --background: #{current-color(base, $segment-button-ios-background-color-alpha-active)};
+}
+
+
+// MOVE TO segment-button?
+// ion-icon {
+//   font-size: $segment-button-ios-icon-size;
+//   line-height: $segment-button-ios-icon-line-height;
+// }
 
 
 // iOS Segment in Toolbar
 // --------------------------------------------------
+:host(.in-toolbar) {
+  @include position(0, 0, 0, 0);
 
-.toolbar-ios {
-  .segment-ios {
-    @include position(0, 0, 0, 0);
+  position: absolute;
 
-    position: absolute;
+  height: $segment-button-ios-toolbar-button-height;
 
-    height: $segment-button-ios-toolbar-button-height;
+  font-size: $segment-button-ios-toolbar-font-size;
+  line-height: $segment-button-ios-toolbar-line-height;
+}
 
-    font-size: $segment-button-ios-toolbar-font-size;
-    line-height: $segment-button-ios-toolbar-line-height;
-  }
-
-  ion-segment-button {
-    max-width: $segment-button-ios-toolbar-button-max-width;
-  }
+// REVIEW
+:host(.in-toolbar) ::slotted(ion-segment-button) {
+  max-width: $segment-button-ios-toolbar-button-max-width;
 }

@@ -5,7 +5,7 @@
 // iOS Button
 // --------------------------------------------------
 
-.button-ios {
+:host {
   font-family: #{$button-ios-font-family};
   font-size: #{$button-ios-font-size};
   font-weight: #{$button-ios-font-weight};
@@ -32,7 +32,7 @@
 // iOS Button Sizes
 // --------------------------------------------------
 
-.button-large-ios {
+:host(.button-large) {
   font-size: #{$button-ios-large-font-size};
 
   --border-radius: #{$button-ios-large-border-radius};
@@ -45,7 +45,7 @@
   --height: #{$button-ios-large-height};
 }
 
-.button-small-ios {
+:host(.button-small) {
   font-size: #{$button-ios-small-font-size};
 
   --border-radius: #{$button-ios-small-border-radius};
@@ -60,15 +60,15 @@
 
 // iOS Solid Button
 
-.button-solid-ios:hover {
+:host(.button-solid:hover) {
   --opacity: #{$button-ios-opacity-hover};
 }
 
-.button-solid-ios.focused {
+:host(.button-solid.focused) {
   --background: #{current-color(shade)};
 }
 
-.button-solid-ios.activated {
+:host(.button-solid.activated) {
   --background: #{current-color(shade)};
   --opacity: #{$button-ios-opacity-activated};
 }
@@ -76,23 +76,23 @@
 // iOS Outline Button
 // --------------------------------------------------
 
-.button-outline-ios {
+:host(.button-outline) {
   --border-radius: #{$button-ios-outline-border-radius};
   --border-width: #{$button-ios-outline-border-width};
   --border-style: #{$button-ios-outline-border-style};
 }
 
-.button-outline-ios.activated {
+:host(.button-outline.activated) {
   color: #{current-color(contrast)};
 
   --background: #{current-color(base)};
 }
 
-.button-outline-ios.focused {
+:host(.button-outline.focused) {
   --background: #{current-color(base, .1)};
 }
 
-.button-outline-ios.activated.focused {
+:host(.button-outline.activated.focused) {
   --border-color: #{current-color(shade)};
   --background-color: #{current-color(shade)};
 }
@@ -100,15 +100,15 @@
 // iOS Clear Button
 // --------------------------------------------------
 
-.button-clear-ios:hover {
+:host(.button-clear:hover) {
   --opacity: #{$button-ios-clear-opacity-hover};
 }
 
-.button-clear-ios.activated {
+:host(.button-clear.activated) {
   --opacity: #{$button-ios-clear-opacity-activated};
 }
 
-.button-clear-ios.focused {
+:host(.button-clear.focused) {
   --background: #{current-color(base, .1)};
 }
 
@@ -116,7 +116,7 @@
 // iOS Round Button
 // --------------------------------------------------
 
-.button-round-ios {
+:host(.button-round) {
   --border-radius: #{$button-ios-round-border-radius};
 
   --padding-top: #{$button-ios-round-padding-top};
@@ -129,6 +129,6 @@
 // iOS strong Button
 // --------------------------------------------------
 
-.button-strong-ios {
+:host(.button-strong) {
   font-weight: #{$button-ios-strong-font-weight};
 }

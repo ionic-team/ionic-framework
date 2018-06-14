@@ -6,8 +6,10 @@ import { Component } from '@stencil/core';
     ios: 'buttons.ios.scss',
     md: 'buttons.md.scss'
   },
-  host: {
-    theme: 'bar-buttons'
-  }
+  scoped: true,
 })
-export class Buttons {}
+export class Buttons {
+  render() {
+    return <slot/>;
+  }
+}

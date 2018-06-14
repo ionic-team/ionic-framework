@@ -8,14 +8,15 @@ import {
   Watch
 } from '@stencil/core';
 import { Color, Mode, StyleEvent } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-label',
   styleUrls: {
     ios: 'label.ios.scss',
     md: 'label.md.scss'
-  }
+  },
+  scoped: true
 })
 export class Label {
   @Element() el!: HTMLElement;
@@ -63,10 +64,13 @@ export class Label {
     const position = this.position;
     return {
       class: {
-        ...createThemedClasses(this.mode, this.color, 'label'),
+        ...createColorClasses(this.color),
         [`label-${position}`]: !!position,
-        [`label-${this.mode}-${position}`]: !!position
       }
     };
+  }
+
+  render() {
+    return <slot/>;
   }
 }

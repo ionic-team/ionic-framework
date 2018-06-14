@@ -4,7 +4,7 @@
 // iOS Chip
 // --------------------------------------------------
 
-.chip-ios {
+:host {
   @include border-radius($chip-ios-border-radius);
 
   @include margin($chip-ios-margin-top, $chip-ios-margin-end, $chip-ios-margin-bottom, $chip-ios-margin-start);
@@ -18,41 +18,17 @@
   background: $chip-ios-background-color;
 }
 
-.chip-ios > ion-label {
+::slotted(ion-label) {
   @include margin($chip-ios-label-margin-top, $chip-ios-label-margin-end, $chip-ios-label-margin-bottom, $chip-ios-label-margin-start);
 }
 
-.chip-ios > ion-icon {
+::slotted(ion-icon) {
   color: $chip-ios-icon-fill-color;
 
   background-color: $chip-ios-icon-background-color;
 }
 
-.chip-ios ion-avatar {
+::slotted(ion-avatar) {
   width: $chip-ios-avatar-width;
   height: $chip-ios-avatar-height;
-}
-
-
-// Generate iOS Chip Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($color-name, base);
-  $color-contrast: ion-color($color-name, contrast);
-
-  .chip-ios-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-  }
-
-  .chip-ios .icon-ios-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-
-    svg {
-      fill: $color-contrast;
-      stroke: $color-contrast;
-    }
-  }
 }

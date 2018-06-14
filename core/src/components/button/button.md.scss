@@ -4,7 +4,7 @@
 // Material Design Button
 // --------------------------------------------------
 
-.button-md {
+:host {
   font-family: #{$button-md-font-family};
   font-size: #{$button-md-font-size};
   font-weight: #{$button-md-font-weight};
@@ -35,7 +35,7 @@
 // Material Design Button Sizes
 // --------------------------------------------------
 
-.button-large-md {
+:host(.button-large) {
   font-size: #{$button-md-large-font-size};
 
   --padding-top: #{$button-md-large-padding-top};
@@ -46,7 +46,7 @@
   --height: #{$button-md-large-height};
 }
 
-.button-small-md {
+:host(.button-small) {
   font-size: #{$button-md-small-font-size};
 
   --padding-top: #{$button-md-small-padding-top};
@@ -61,11 +61,11 @@
 // Material Design Solid Button
 // --------------------------------------------------
 
-.button-solid-md {
+:host(.button-solid) {
   --box-shadow: #{$button-md-box-shadow};
 }
 
-.button-solid-md.activated {
+:host(.button-solid.activated) {
   --box-shadow: #{$button-md-box-shadow-activated};
   --background: #{current-color(shade)};
 }
@@ -73,17 +73,17 @@
 // Material Design Outline Button
 // --------------------------------------------------
 
-.button-outline-md {
+:host(.button-outline) {
   --border-width: 1px;
   --border-style: solid;
   --box-shadow: none;
 }
 
-.button-outline-ios.activated {
+:host(.button-outline.activated) {
   --background: transparent;
 }
 
-.button-outline-md.focused {
+:host(.button-outline.focused) {
   --background: #{current-color(base, .1)};
 }
 
@@ -91,7 +91,7 @@
 // Material Design Clear Button
 // --------------------------------------------------
 
-.button-clear-md {
+:host(.button-clear) {
   --opacity: #{$button-md-clear-opacity};
 }
 
@@ -99,7 +99,7 @@
 // Material Design Round Button
 // --------------------------------------------------
 
-.button-round-md {
+:host(.button-round) {
   --border-radius: #{$button-md-round-border-radius};
 
   --padding-top: #{$button-md-round-padding-top};
@@ -108,13 +108,14 @@
   --padding-bottom: #{$button-md-round-padding-bottom};
 }
 
-.button-md ion-icon[slot="icon-only"] {
-  @include padding(0);
-}
 
 // MD strong Button
 // --------------------------------------------------
 
-.button-strong-md {
+:host(.button-strong) {
   font-weight: #{$button-md-strong-font-weight};
+}
+
+::slotted(ion-icon[slot="icon-only"]) {
+  @include padding(0);
 }

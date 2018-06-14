@@ -4,12 +4,12 @@
 // Material Design Ripple Effect
 // --------------------------------------------------
 
-ion-ripple-effect {
-  --color: #{$ripple-background-color};
-
+:host {
   @include position(0, 0, 0, 0);
 
   position: absolute;
+
+  --color: #{$ripple-background-color};
 
   contain: strict;
 }

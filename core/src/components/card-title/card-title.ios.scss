@@ -4,7 +4,7 @@
 // iOS Card Title
 // --------------------------------------------------
 
-.card-title-ios {
+:host {
   @include margin($card-ios-title-margin-top, $card-ios-title-margin-end, $card-ios-title-margin-bottom, $card-ios-title-margin-start);
 
   @include padding($card-ios-title-padding-top, $card-ios-title-padding-end, $card-ios-title-padding-bottom, $card-ios-title-padding-start);

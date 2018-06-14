@@ -4,7 +4,7 @@
 // iOS List Header
 // --------------------------------------------------
 
-.list-header-ios {
+:host {
   @include padding-horizontal($list-ios-header-padding-start, null);
 
   position: relative;

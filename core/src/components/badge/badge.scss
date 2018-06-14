@@ -3,7 +3,7 @@
 // Badge
 // --------------------------------------------------
 
-ion-badge {
+:host {
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
 
@@ -28,6 +28,6 @@ ion-badge {
   contain: content;
 }
 
-ion-badge:empty {
+:host(:empty) {
   display: none;
 }

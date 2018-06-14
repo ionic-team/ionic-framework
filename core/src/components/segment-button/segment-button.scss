@@ -3,31 +3,31 @@
 // Segment Button
 // --------------------------------------------------
 
-ion-segment-button {
+:host {
   flex: 1;
 
   height: 100%;
+}
 
-  &:first-of-type .segment-button-native {
-    @include border-radius(
-      var(--border-radius), 0,
-      0, var(--border-radius)
-    );
-    --padding-end: 0;
-  }
+:host(:first-of-type) .segment-button-native {
+  @include border-radius(
+    var(--border-radius), 0,
+    0, var(--border-radius)
+  );
+  --padding-end: 0;
+}
 
-  &:not(:first-of-type) .segment-button-native {
-    border-left-width: 0;
-  }
+:host(:not(:first-of-type)) .segment-button-native {
+  border-left-width: 0;
+}
 
-  &:last-of-type .segment-button-native {
-    @include border-radius(
-      0, var(--border-radius),
-      var(--border-radius), 0
-    );
+:host(:last-of-type) .segment-button-native {
+  @include border-radius(
+    0, var(--border-radius),
+    var(--border-radius), 0
+  );
 
-    --padding-start: 0;
-  }
+  --padding-start: 0;
 }
 
 .segment-button-native {

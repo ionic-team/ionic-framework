@@ -4,7 +4,7 @@
 // Material Design Card Title
 // --------------------------------------------------
 
-.card-title-md {
+:host {
   @include margin($card-md-title-margin-top, $card-md-title-margin-end, $card-md-title-margin-bottom, $card-md-title-margin-start);
 
   @include padding($card-md-title-padding-top, $card-md-title-padding-end, $card-md-title-padding-bottom, $card-md-title-padding-start);

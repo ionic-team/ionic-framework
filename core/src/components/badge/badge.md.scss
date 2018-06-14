@@ -4,7 +4,7 @@
 // Material Design Badge
 // --------------------------------------------------
 
-.badge-md {
+:host {
   @include border-radius($badge-md-border-radius);
 
   font-family: $badge-md-font-family;

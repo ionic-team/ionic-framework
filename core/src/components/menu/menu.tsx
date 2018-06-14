@@ -189,10 +189,11 @@ export class Menu {
     let isEnabled = !this.disabled;
     if (isEnabled === true || typeof isEnabled === 'undefined') {
       const menus = this.menuCtrl!.getMenus();
-      isEnabled = !menus.some(m => {
+      isEnabled = !menus.some((m: any) => {
         return m.side === this.side && !m.disabled;
       });
     }
+
     // register this menu with the app's menu controller
     this.menuCtrl!._register(this);
     this.ionMenuChange.emit({ disabled: !isEnabled, open: this._isOpen });

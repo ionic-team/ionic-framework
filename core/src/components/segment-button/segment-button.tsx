@@ -1,11 +1,13 @@
 import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 import { Color, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 let ids = 0;
 
 @Component({
   tag: 'ion-segment-button',
-  styleUrl: 'segment-button.scss'
+  styleUrl: 'segment-button.scss',
+  shadow: true
 })
 export class SegmentButton {
 
@@ -54,10 +56,9 @@ export class SegmentButton {
     const { disabled, checked, color } = this;
     return {
       class: {
+        ...createColorClasses(color),
         'segment-button-disabled': disabled,
         'segment-checked': checked,
-        'ion-color': !!color,
-        [`ion-color-${color}`]: !!color
       },
       'tappable': ''
     };

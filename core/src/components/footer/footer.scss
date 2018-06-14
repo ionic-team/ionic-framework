@@ -3,7 +3,7 @@
 // Footer
 // --------------------------------------------------
 
-ion-footer {
+:host {
   position: relative;
   z-index: $z-index-toolbar;
   display: block;

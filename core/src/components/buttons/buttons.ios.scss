@@ -4,25 +4,24 @@
 
 // iOS Toolbar Button Default
 // --------------------------------------------------
-.bar-buttons-ios {
 
-  .button {
-    font-size: #{$toolbar-ios-button-font-size};
-    font-weight: 400;
+::slotted(ion-button) {
+  font-size: #{$toolbar-ios-button-font-size};
+  font-weight: 400;
 
-    --padding-top: 0;
-    --pading-bottom: 0;
-    --padding-start: 5px;
-    --padding-end: 5px;
+  --padding-top: 0;
+  --pading-bottom: 0;
+  --padding-start: 5px;
+  --padding-end: 5px;
 
-    --border-radius: #{$toolbar-ios-button-border-radius};
+  --border-radius: #{$toolbar-ios-button-border-radius};
 
-    --height: 32px;
-  }
+  --height: 32px;
+}
 
-  .button-clear {
-    --height: 35px;
-  }
+::slotted(.button-clear) {
+  --height: 35px;
+}
 
   // iOS Toolbar Button Solid
   // --------------------------------------------------
@@ -49,7 +48,8 @@
   // iOS Toolbar Button Icon
   // --------------------------------------------------
 
-  .button ion-icon[slot="start"] {
+::slotted(ion-button) {
+  ion-icon[slot="start"] {
     @include padding-horizontal(null, .3em);
     @include margin(0);
 
@@ -59,7 +59,7 @@
     pointer-events: none;
   }
 
-  .button ion-icon[slot="end"] {
+  ion-icon[slot="end"] {
     @include padding-horizontal(.4em, null);
     @include margin(0);
 
@@ -69,7 +69,7 @@
     pointer-events: none;
   }
 
-  .button ion-icon[slot="icon-only"] {
+  ion-icon[slot="icon-only"] {
     @include padding(0);
     @include margin(0);
 
@@ -78,57 +78,51 @@
 
     pointer-events: none;
   }
-
+}
 
   // iOS Toolbar Menu Toggle
   // --------------------------------------------------
 
-  .button-menutoggle-ios {
-    order: map-get($toolbar-order-ios, menu-toggle-start);
+  // .button-menutoggle-ios {
+  //   order: map-get($toolbar-order-ios, menu-toggle-start);
 
-    min-width: 36px;
+  //   min-width: 36px;
 
-    --margin-top: 0;
-    --margin-bottom: 0;
-    --margin-start: 6px;
-    --margin-end: 6px;
+  //   --margin-top: 0;
+  //   --margin-bottom: 0;
+  //   --margin-start: 6px;
+  //   --margin-end: 6px;
 
-    --padding-top: 0;
-    --padding-bottom: 0;
-    --padding-start: 0;
-    --padding-end: 0;
+  //   --padding-top: 0;
+  //   --padding-bottom: 0;
+  //   --padding-start: 0;
+  //   --padding-end: 0;
 
-    ion-icon {
-      @include padding(0, 6px);
+  //   ion-icon {
+  //     @include padding(0, 6px);
 
-      font-size: 28px;
-    }
-  }
-}
-
-ion-toolbar.ion-color .bar-buttons-ios .button-clear,
-ion-toolbar.ion-color .bar-buttons-ios .back-button {
-  --ion-color-base: currentColor;
-}
+  //     font-size: 28px;
+  //   }
+  // }
 
 // iOS Toolbar Button Placement
 // --------------------------------------------------
 
-.bar-buttons-ios[slot="start"] {
+:host([slot="start"]) {
   order: map-get($toolbar-order-ios, buttons-start);
 }
 
-.bar-buttons-ios[slot="secondary"] {
+:host([slot="secondary"]) {
   order: map-get($toolbar-order-ios, buttons-secondary);
 }
 
-.bar-buttons-ios[slot="primary"] {
+:host([slot="primary"]) {
   @include text-align(end);
 
   order: map-get($toolbar-order-ios, buttons-primary);
 }
 
-.bar-buttons-ios[slot="end"] {
+:host([slot="end"]) {
   @include text-align(end);
 
   order: map-get($toolbar-order-ios, buttons-end);

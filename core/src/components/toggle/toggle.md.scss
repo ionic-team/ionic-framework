@@ -4,7 +4,7 @@
 // Material Design Toggle
 // -----------------------------------------
 
-.toggle-md {
+:host {
   @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
 
   box-sizing: content-box;
@@ -24,7 +24,7 @@
 // Material Design Toggle Background Track: Unchecked
 // -----------------------------------------
 
-.toggle-md .toggle-icon {
+.toggle-icon {
   @include border-radius($toggle-md-track-height);
 
   position: relative;
@@ -44,7 +44,7 @@
 // Material Design Toggle Inner Knob: Unchecked
 // -----------------------------------------
 
-.toggle-md .toggle-inner {
+.toggle-inner {
   @include position(($toggle-md-handle-height - $toggle-md-track-height) / -2, null, null, 0);
   @include border-radius($toggle-md-handle-border-radius);
 
@@ -69,15 +69,14 @@
 // Material Design Toggle Background Track: Checked
 // -----------------------------------------
 
-.toggle-md.toggle-checked .toggle-icon {
+:host(.toggle-checked) .toggle-icon {
   background-color: var(--checked-background);
 }
-
 
 // Material Design Toggle Inner Knob: Checked
 // -----------------------------------------
 
-.toggle-md.toggle-checked .toggle-inner {
+:host(.toggle-checked) .toggle-inner {
   @include transform(translate3d($toggle-md-track-width - $toggle-md-handle-width, 0, 0));
 
   background-color: var(--checked-knob);
@@ -87,32 +86,35 @@
 // Material Design Toggle: Disabled
 // -----------------------------------------
 
-.toggle-md.toggle-disabled,
-.item-md.item-toggle-disabled ion-label {
+:host(.toggle-disabled) {
   opacity: $toggle-md-disabled-opacity;
 
   pointer-events: none;
 }
 
-.toggle-md.toggle-disabled ion-radio {
-  opacity: $toggle-md-disabled-opacity;
-}
+
+// TODO: move to item
+// .item-md.item-toggle-disabled ion-label {
+//   opacity: $toggle-md-disabled-opacity;
+
+//   pointer-events: none;
+// }
+
+// .toggle-md.toggle-disabled ion-radio {
+//   opacity: $toggle-md-disabled-opacity;
+// }
 
 
 // Material Design Toggle Within An Item
 // -----------------------------------------
 
-.item-md .toggle-md[slot] {
+:host(.in-item[slot]) {
   @include margin($toggle-md-media-margin-top, $toggle-md-media-margin-end, $toggle-md-media-margin-bottom, $toggle-md-media-margin-start);
   @include padding($toggle-md-item-end-padding-top, $toggle-md-item-end-padding-end, $toggle-md-item-end-padding-bottom, $toggle-md-item-end-padding-start);
 
   cursor: pointer;
 }
 
-.item-md .toggle-md[slot="start"] {
+:host(.in-item[slot="start"]) {
   @include padding($toggle-md-item-start-padding-top, $toggle-md-item-start-padding-end, $toggle-md-item-start-padding-bottom, $toggle-md-item-start-padding-start);
-}
-
-.item-md.item-toggle ion-label {
-  @include margin-horizontal(0, null);
 }

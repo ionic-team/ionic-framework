@@ -1,6 +1,6 @@
 @import "../../themes/ionic.globals";
 
-ion-tabs {
+:host {
   @include position(0, 0, 0, 0);
 
   position: absolute;

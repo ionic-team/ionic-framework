@@ -7,9 +7,7 @@ import { now } from '../../utils/helpers';
     ios: 'backdrop.ios.scss',
     md: 'backdrop.md.scss'
   },
-  host: {
-    theme: 'backdrop'
-  }
+  shadow: true
 })
 export class Backdrop {
 

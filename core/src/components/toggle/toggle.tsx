@@ -1,8 +1,8 @@
-import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { CheckboxInput, CheckedInputChangeEvent, Color, GestureDetail, Mode, StyleEvent } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
 import { deferEvent } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 
 @Component({
@@ -10,7 +10,8 @@ import { createThemedClasses } from '../../utils/theme';
   styleUrls: {
     ios: 'toggle.ios.scss',
     md: 'toggle.md.scss'
-  }
+  },
+  shadow: true
 })
 export class Toggle implements CheckboxInput {
 
@@ -18,8 +19,9 @@ export class Toggle implements CheckboxInput {
   private nativeInput!: HTMLInputElement;
   private pivotX = 0;
 
-  @State() activated = false;
+  @Element() el!: HTMLElement;
 
+  @State() activated = false;
   @State() keyFocus = false;
 
   /**
@@ -160,12 +162,13 @@ export class Toggle implements CheckboxInput {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, this.color, 'toggle'),
-
+        ...createColorClasses(this.color),
+        'in-item': hostContext('.item', this.el),
         'toggle-activated': this.activated,
         'toggle-checked': this.checked,
         'toggle-disabled': this.disabled,
-        'toggle-key': this.keyFocus
+        'toggle-key': this.keyFocus,
+        'interactive': true
       }
     };
   }

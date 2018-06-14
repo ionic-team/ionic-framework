@@ -4,7 +4,7 @@
 // Material Design Toolbar
 // --------------------------------------------------
 
-.toolbar-md {
+:host {
   @include padding($toolbar-md-padding);
 
   min-height: #{$toolbar-md-height};
@@ -22,7 +22,7 @@
 // Material Design Toolbar Content
 // --------------------------------------------------
 
-.toolbar-md > .toolbar-content {
+.toolbar-content {
   flex: 1;
   order: map-get($toolbar-order-md, content);
 
@@ -30,7 +30,7 @@
   max-width: 100%;
 }
 
-.toolbar-md ion-title {
+::slotted(ion-title) {
   @include padding(0, 12px);
 
   font-size: $toolbar-md-title-font-size;

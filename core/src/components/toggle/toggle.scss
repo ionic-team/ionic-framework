@@ -3,7 +3,7 @@
 // Toggle
 // --------------------------------------------------
 
-ion-toggle {
+:host {
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-base-rgb: #{ion-color(primary, base, null, true)};
 
@@ -13,9 +13,18 @@ ion-toggle {
 
   touch-action: none;
   user-select: none;
+  box-sizing: content-box !important;
 }
 
-ion-toggle ion-gesture {
+:host(.toggle-key) input {
+  border: 2px solid #5e9ed6;
+}
+
+:host(:focus) {
+  outline: none;
+}
+
+ion-gesture {
   display: block;
 
   width: 100%;
@@ -47,7 +56,7 @@ ion-toggle ion-gesture {
   cursor: pointer;
 }
 
-ion-toggle input {
+input {
   @include position(0, null, null, 0);
   @include margin(0);
 
@@ -63,12 +72,5 @@ ion-toggle input {
   pointer-events: none;
 
   appearance: none;
-}
-
-ion-toggle :focus {
   outline: none;
-}
-
-.toggle-key input {
-  border: 2px solid #5e9ed6;
 }

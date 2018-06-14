@@ -4,83 +4,37 @@
 // iOS Item
 // --------------------------------------------------
 
-.item-ios {
+:host {
+  font-family: $item-ios-font-family;
+
+  font-size: $item-ios-font-size;
+  color: $item-ios-text-color;
+  color: $item-ios-text-color;
+
   --background: #{$item-ios-background-color};
   --background-active: #{$item-ios-background-color-active};
-  --color: #{$item-ios-text-color};
+
   --paragraph-color: #{$item-ios-paragraph-text-color};
   --border-color: #{$item-ios-border-bottom-color};
   --detail-push-color: #{$item-ios-detail-push-color};
 
-  @include padding-horizontal($item-ios-padding-start, null);
-  @include safe-area-padding-horizontal($item-ios-padding-start, null);
-  @include border-radius(0);
+  --transition: background-color 200ms linear;
 
-  position: relative;
+  --padding-start: #{$item-ios-padding-start};
+  --padding-inner-end: #{$item-ios-padding-end / 2};
 
-  font-family: $item-ios-font-family;
-
-  font-size: $item-ios-font-size;
-  color: var(--color);
-  background-color: var(--background);
-  transition: background-color 200ms linear;
+  --border-style: solid;
+  --border-inner-width: #{0 0 $item-ios-border-bottom-width 0};
 }
 
-.item-ios.activated {
-  background-color: var(--background-active);
-  transition-duration: 0ms;
+:host(.activated) {
+  --background: var(--background-active);
+  --transition: none;
 }
 
-.item-ios h1 {
-  @include margin(0, 0, 2px);
-
-  font-size: 24px;
-  font-weight: normal;
-}
-
-.item-ios h2 {
-  @include margin(0, 0, 2px);
-
-  font-size: 17px;
-  font-weight: normal;
-}
-
-.item-ios h3,
-.item-ios h4,
-.item-ios h5,
-.item-ios h6 {
-  @include margin(0, 0, 3px);
-
-  font-size: 14px;
-  font-weight: normal;
-  line-height: normal;
-}
-
-.item-ios p {
-  @include margin($item-ios-paragraph-margin-top, $item-ios-paragraph-margin-end, $item-ios-paragraph-margin-bottom, $item-ios-paragraph-margin-start);
-
-  overflow: inherit;
-
-  font-size: $item-ios-paragraph-font-size;
-  line-height: normal;
-  text-overflow: inherit;
-  color: var(--paragraph-color);
-}
-
-.item-ios h2:last-child,
-.item-ios h3:last-child,
-.item-ios h4:last-child,
-.item-ios h5:last-child,
-.item-ios h6:last-child,
-.item-ios p:last-child {
-  @include margin(null, null, 0, null);
-}
-
-.item-ios .item-inner {
-  @include padding-horizontal(null, $item-ios-padding-end / 2);
-
-  @media screen and (orientation: landscape) {
-    @include safe-area-padding-horizontal(null, $item-ios-padding-end / 2);
+@media screen and (orientation: landscape) {
+  .item-inner {
+    @include safe-area-padding-horizontal(var(--padding-inner-start), var(--padding-inner-end));
   }
 }
 
@@ -88,54 +42,48 @@
 // iOS Item Lines
 // --------------------------------------------------
 
-.item-ios,
-.item-ios .item-inner {
-  border-bottom-width: 0;
-  border-bottom-style: $item-ios-border-bottom-style;
-  border-bottom-color: var(--border-color);
-}
-
-// Default item has inset border bottom
-.item-ios .item-inner {
-  border-bottom-width: $item-ios-border-bottom-width;
-}
-
 // Full lines - apply the border to the item
 // Inset lines - apply the border to the item inner
-.item-ios-lines-full,
-.item-ios-lines-inset .item-inner {
-  border-bottom-width: $item-ios-border-bottom-width;
+:host(.item-lines-full) {
+  --border-width: #{0 0 $item-ios-border-bottom-width 0};
+}
+
+:host(.item-lines-inset) {
+  --border-inner-width: #{0 0 $item-ios-border-bottom-width 0};
 }
 
 // Full lines - remove the border from the item inner (inset list items)
 // Inset lines - remove the border on the item (full list items)
 // No lines - remove the border on both (full / inset list items)
-.item-ios-lines-inset,
-.item-ios-lines-full .item-inner,
-.item-ios-lines-none,
-.item-ios-lines-none .item-inner {
-  border-bottom-width: 0;
+:host(.item-lines-inset),
+:host(.item-lines-none) {
+  --border-width: 0;
+}
+
+:host(.item-lines-full),
+:host(.item-lines-none) {
+  --border-inner-width: 0;
 }
 
 
 // iOS Item Slots
 // --------------------------------------------------
 
-.item-ios [slot="start"] {
+::slotted(:not(.interactive)[slot="start"]) {
   @include margin($item-ios-slot-start-margin-top, $item-ios-slot-start-margin-end, $item-ios-slot-start-margin-bottom, $item-ios-slot-start-margin-start);
 }
 
-.item-ios [slot="end"] {
+::slotted(:not(.interactive)[slot="end"]) {
   @include margin($item-ios-slot-end-margin-top, $item-ios-slot-end-margin-end, $item-ios-slot-end-margin-bottom, $item-ios-slot-end-margin-start);
 }
 
-.item-ios > ion-icon[slot="start"],
-.item-ios > ion-icon[slot="end"] {
+::slotted(ion-icon[slot="start"]),
+::slotted(ion-icon[slot="end"]) {
   @include margin($item-ios-icon-slot-margin-top, $item-ios-icon-slot-margin-end, $item-ios-icon-slot-margin-bottom, $item-ios-icon-slot-margin-start);
 }
 
-.item-ios.item-label-stacked [slot="end"],
-.item-ios.item-label-floating [slot="end"] {
+:host(.item-label-stacked) ::slotted([slot="end"]),
+:host(.item-label-floating) ::slotted([slot="end"]) {
   @include margin($item-ios-label-slot-end-margin-top, $item-ios-label-slot-end-margin-end, $item-ios-label-slot-end-margin-bottom, $item-ios-label-slot-end-margin-start);
 }
 
@@ -143,7 +91,7 @@
 // iOS Item Button
 // --------------------------------------------------
 
-.item-ios .button-small-ios {
+::slotted(.button-small) {
   font-size: 13px;
 
   --padding-top: 0;
@@ -154,34 +102,34 @@
   --height: 24px;
 }
 
-.item-ios .button-small-ios ion-icon[slot="icon-only"] {
-  @include padding(0, 1px);
-}
+// TODO
+// .item-ios .button-small-ios ion-icon[slot="icon-only"] {
+//   @include padding(0, 1px);
+// }
 
 
 // iOS Item Avatar & Thumbnail
 // --------------------------------------------------
 
-.item-ios ion-avatar {
+::slotted(ion-avatar) {
   width: $item-ios-avatar-width;
   height: $item-ios-avatar-height;
 }
 
-.item-ios ion-thumbnail {
+::slotted(ion-thumbnail) {
   width: $item-ios-thumbnail-width;
   height: $item-ios-thumbnail-height;
 }
 
-.item-ios ion-avatar[slot="end"],
-.item-ios ion-thumbnail[slot="end"] {
+::slotted(ion-avatar[slot="end"]),
+::slotted(ion-thumbnail[slot="end"]) {
   @include margin(($item-ios-padding-end / 2));
 }
-
 
 // iOS Item Detail Push
 // --------------------------------------------------
 
-.item-ios .item-detail-icon {
+.item-detail-icon {
   font-size: 20px;
 
   color: var(--detail-push-color);

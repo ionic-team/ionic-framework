@@ -4,14 +4,14 @@
 // Material Design Item Option
 // --------------------------------------------------
 
-.item-option-md {
+:host {
   font-size: $item-option-button-md-font-size;
 
   --ion-color-base: #{$item-option-button-md-background-color};
   --ion-color-contrast: #{$item-option-button-md-text-color};
 }
 
-.item-option-md .item-option-button {
+.item-option-button {
   font-weight: 500;
   text-transform: uppercase;
 }

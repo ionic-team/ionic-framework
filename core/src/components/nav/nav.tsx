@@ -11,6 +11,8 @@ import { ViewController, ViewState, convertToViews, matches } from './view-contr
 
 @Component({
   tag: 'ion-nav',
+  styleUrl: 'nav.scss',
+  shadow: true
 })
 export class Nav implements NavOutlet {
 

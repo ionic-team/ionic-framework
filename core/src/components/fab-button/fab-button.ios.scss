@@ -4,12 +4,12 @@
 // iOS FAB Button
 // --------------------------------------------------
 
-.fab-button-ios {
+:host {
   --box-shadow: #{$fab-ios-box-shadow};
   --transition: #{$fab-ios-transition};
 }
 
-.fab-button-ios.activated {
+:host(.activated) {
   --background: #{current-color(tint)};
   --box-shadow: #{$fab-ios-box-shadow-activated};
 
@@ -17,21 +17,21 @@
   --transition: #{$fab-ios-transition-activated};
 }
 
-.fab-button-ios ion-icon {
+::slotted(ion-icon) {
   font-size: $fab-ios-icon-font-size;
 }
 
 // FAB buttons in a list
 // --------------------------------------------------
 
-.fab-button-ios-in-list {
+:host(.fab-button-in-list) {
   --ion-color-contrast: #{$fab-ios-list-button-text-color};
   --ion-color-base: #{$fab-ios-list-button-background-color};
   --transition: #{transform $fab-ios-list-button-transition-duration $fab-ios-list-button-transition-timing-function $fab-ios-list-button-transition-delay,
               opacity $fab-ios-list-button-transition-duration $fab-ios-list-button-transition-timing-function $fab-ios-list-button-transition-delay};
 }
 
-.fab-button-ios-in-list.activated {
+:host(.fab-button-in-list.activated) {
   --background: #{$fab-ios-list-button-background-color-activated};
 }
 
@@ -39,13 +39,13 @@
 // Translucent FAB buttons
 // --------------------------------------------------
 
-.fab-translucent-ios {
+:host(.fab-translucent) {
   --background: #{$fab-ios-translucent-background-color};
 
   --backdrop-filter: #{$fab-ios-translucent-filter};
 }
 
-.fab-translucent-ios-in-list {
+:host(.fab-translucent-in-list) {
   --background: #{$fab-ios-list-button-translucent-background-color};
 }
 

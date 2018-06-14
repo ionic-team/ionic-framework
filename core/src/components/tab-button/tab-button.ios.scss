@@ -1,20 +1,18 @@
 @import "./tab-button";
 @import "./tab-button.ios.vars";
 
-.tab-button-ios {
+:host {
   max-width: $tab-button-ios-max-width;
 
   font-size: $tab-button-ios-font-size;
   color: $tab-button-ios-text-color;
 
-  fill: $tab-button-ios-icon-color;
+  --color-selected: #{$tabbar-ios-text-color-active};
+  --background-focused: #{$tabbar-ios-background-color-focused};
 }
 
-.tab-button-ios.focused {
-  background: $tabbar-ios-background-color-focused;
-}
 
-.tab-button-ios .tab-cover {
+.tab-cover {
   @include padding(
     $tab-button-ios-padding-top,
     $tab-button-ios-padding-end,
@@ -22,37 +20,36 @@
     $tab-button-ios-padding-start);
 }
 
-.tab-button-ios:hover,
-.tab-button-ios.tab-selected {
-  color: $tab-button-ios-text-color-active;
-
-  fill: $tab-button-ios-icon-color-active;
-}
-
-.tab-button-ios .tab-button-text {
+.tab-button-text {
   @include margin(0, null, 1px, null);
 
   min-height: $tab-button-ios-font-size + 1;
 }
 
-.tab-button-ios.has-title-only .tab-button-text {
+:host(.has-title-only) .tab-button-text {
+  @include margin(2px, 0);
+
   font-size: $tab-button-ios-font-size + 2;
+
+  font-size: 14px;
+  line-height: 1.1;
 }
 
-.tab-button-ios .tab-button-icon {
+.tab-button-icon {
   @include margin(4px, null, null, null);
 
   font-size: $tab-button-ios-icon-size;
 }
 
-.tabbar-ios .tab-button-icon::before {
+.tab-button-icon::before {
   vertical-align: top;
 }
 
+
+
 .layout-icon-end .tab-button-ios .tab-button-text,
 .layout-icon-start .tab-button-ios .tab-button-text,
-.layout-icon-hide .tab-button-ios .tab-button-text,
-.tab-button-ios.has-title-only .tab-button-text {
+.layout-icon-hide .tab-button-ios .tab-button-text {
   @include margin(2px, 0);
 
   font-size: 14px;

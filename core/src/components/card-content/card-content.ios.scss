@@ -4,7 +4,7 @@
 // iOS Card Header
 // --------------------------------------------------
 
-.card-content-ios {
+:host {
   @include padding($card-ios-padding-top, $card-ios-padding-end, $card-ios-padding-bottom, $card-ios-padding-start);
 
   font-size: $card-ios-font-size;

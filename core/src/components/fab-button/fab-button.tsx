@@ -1,13 +1,14 @@
 import { Component, Element, Prop } from '@stencil/core';
 import { Color, CssClassMap, Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-fab-button',
   styleUrls: {
     ios: 'fab-button.ios.scss',
     md: 'fab-button.md.scss'
-  }
+  },
+  shadow: true
 })
 export class FabButton {
   private inList = false;
@@ -61,24 +62,20 @@ export class FabButton {
   private getFabClassMap(): CssClassMap {
     return {
       'fab-button-in-list': this.inList,
-      [`fab-button-${this.mode}-in-list`]: this.inList,
-      [`fab-button-translucent-${this.mode}-in-list`]:
-        this.inList && this.translucent,
+      'fab-button-translucent-in-list': this.inList && this.translucent,
       'fab-button-close-active': this.activated,
       'fab-button-show': this.show
     };
   }
 
   hostData() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'fab-button');
-    const translucentClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'fab-button-translucent') : {};
 
     return {
       'tappable': '',
       class: {
+        ...createColorClasses(this.color),
         ...this.getFabClassMap(),
-        ...themedClasses,
-        ...translucentClasses,
+        'fab-button-translucent': this.translucent
       }
     };
   }

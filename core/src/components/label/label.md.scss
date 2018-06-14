@@ -4,13 +4,13 @@
 // Material Design Label
 // --------------------------------------------------
 
-.label-md {
+:host {
   @include margin($label-md-margin-top, $label-md-margin-end, $label-md-margin-bottom, $label-md-margin-start);
 
   font-family: $label-md-font-family;
 }
 
-[text-wrap] .label-md {
+:host-context([text-wrap]) {
   font-size: $label-md-text-wrap-font-size;
   line-height: $label-md-text-wrap-line-height;
 }
@@ -19,7 +19,7 @@
 // Material Design Default Label Inside An Input/Select Item
 // --------------------------------------------------
 
-.item-interactive .label-md {
+:host-context(.item-interactive) {
   color: $label-md-text-color;
 }
 
@@ -27,28 +27,67 @@
 // Material Design Stacked & Floating Labels
 // --------------------------------------------------
 
-.label-md-stacked {
+:host(.label-stacked) {
   font-size: 12px;
 }
 
-.label-md-floating {
+:host(.label-floating) {
   @include transform(translate3d(0, 27px, 0));
   @include transform-origin(start, top);
 
   transition: transform 150ms ease-in-out;
 }
 
-.label-md-stacked,
-.label-md-floating {
+:host(.label-stacked),
+:host(.label-floating) {
   @include margin(null, null, 0, 0);
 }
 
-.item-input-has-focus .label-md-stacked,
-.item-input-has-focus .label-md-floating {
+:host-context(.item-input-has-focus):host(.label-stacked),
+:host-context(.item-input-has-focus):host(.label-floating) {
   color: $label-md-text-color-focused;
 }
 
-.item-input-has-focus .label-md-floating,
-.item-input-has-value .label-md-floating {
+:host-context(.item-input-has-focus):host(.label-floating),
+:host-context(.item-input-has-value):host(.label-floating) {
   @include transform(translate3d(0, 0, 0), scale(.8));
+}
+
+// MD Typography
+// --------------------------------------------------
+
+::slotted(h1) {
+  @include margin(0, 0, 2px);
+
+  font-size: 24px;
+  font-weight: normal;
+}
+
+::slotted(h2) {
+  @include margin(2px, 0);
+
+  font-size: 16px;
+  font-weight: normal;
+}
+
+::slotted(h3),
+::slotted(h4),
+::slotted(h5),
+::slotted(h6) {
+  @include margin(2px, 0);
+
+  font-size: 14px;
+  font-weight: normal;
+  line-height: normal;
+}
+
+::slotted(p) {
+  @include margin(0, 0, 2px);
+
+  overflow: inherit;
+
+  font-size: 14px;
+  line-height: normal;
+  text-overflow: inherit;
+  color: var(--paragraph-color);
 }

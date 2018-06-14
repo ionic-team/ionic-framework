@@ -4,7 +4,7 @@
 // Material Design List Header
 // --------------------------------------------------
 
-.list-header-md {
+:host {
   @include padding-horizontal($list-md-header-padding-start, null);
   @include margin(null, null, $list-md-header-margin-bottom, null);
 

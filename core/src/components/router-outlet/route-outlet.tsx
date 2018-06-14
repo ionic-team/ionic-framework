@@ -5,7 +5,9 @@ import { attachComponent, detachComponent } from '../../utils/framework-delegate
 
 
 @Component({
-  tag: 'ion-router-outlet'
+  tag: 'ion-router-outlet',
+  styleUrl: 'route-outlet.scss',
+  shadow: true
 })
 export class RouterOutlet implements NavOutlet {
 

@@ -8,7 +8,8 @@ import { getButtonClassMap, getElementClassMap, openURL } from '../../utils/them
   styleUrls: {
     ios: 'button.ios.scss',
     md: 'button.md.scss'
-  }
+  },
+  shadow: true,
 })
 export class Button {
   @Element() el!: HTMLElement;

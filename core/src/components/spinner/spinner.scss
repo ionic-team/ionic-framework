@@ -3,7 +3,7 @@
 // Spinners
 // --------------------------------------------------
 
-ion-spinner {
+:host {
   --color: #{current-color(base)};
 
   position: relative;
@@ -13,7 +13,7 @@ ion-spinner {
   height: 28px;
 }
 
-ion-spinner svg {
+svg {
   @include position(0, null, null, 0);
 
   position: absolute;
@@ -24,7 +24,7 @@ ion-spinner svg {
   transform: translateZ(0);
 }
 
-ion-spinner.spinner-paused svg {
+:host(.spinner-paused) svg {
   animation-play-state: paused;
 }
 
@@ -32,15 +32,15 @@ ion-spinner.spinner-paused svg {
 // Spinner: lines / lines-small
 // --------------------------------------------------
 
-.spinner-lines line,
-.spinner-lines-small line {
+:host(.spinner-lines) line,
+:host(.spinner-lines-small) line {
   stroke-width: 4px;
   stroke-linecap: round;
   stroke: var(--color);
 }
 
-.spinner-lines svg,
-.spinner-lines-small svg {
+:host(.spinner-lines) svg,
+:host(.spinner-lines-small) svg {
   animation: spinner-fade-out 1s linear infinite;
 }
 
@@ -48,7 +48,7 @@ ion-spinner.spinner-paused svg {
 // Spinner: bubbles
 // --------------------------------------------------
 
-.spinner-bubbles svg {
+:host(.spinner-bubbles) svg {
   animation: spinner-scale-out 1s linear infinite;
   fill: var(--color);
 }
@@ -57,7 +57,7 @@ ion-spinner.spinner-paused svg {
 // Spinner: circles
 // --------------------------------------------------
 
-.spinner-circles svg {
+:host(.spinner-circles) svg {
   animation: spinner-fade-out 1s linear infinite;
   fill: var(--color);
 }
@@ -66,7 +66,7 @@ ion-spinner.spinner-paused svg {
 // Spinner: crescent
 // --------------------------------------------------
 
-.spinner-crescent circle {
+:host(.spinner-crescent) circle {
   fill: transparent;
   stroke-width: 4px;
   stroke-dasharray: 128px;
@@ -75,7 +75,7 @@ ion-spinner.spinner-paused svg {
   stroke: var(--color);
 }
 
-.spinner-crescent svg {
+:host(.spinner-crescent) svg {
   animation: spinner-rotate 1s linear infinite;
 }
 
@@ -83,12 +83,12 @@ ion-spinner.spinner-paused svg {
 // Spinner: dots
 // --------------------------------------------------
 
-.spinner-dots circle {
+:host(.spinner-dots) circle {
   stroke-width: 0;
   fill: var(--color);
 }
 
-.spinner-dots svg {
+:host(.spinner-dots) svg {
   @include transform-origin(center);
 
   animation: spinner-dots 1s linear infinite;

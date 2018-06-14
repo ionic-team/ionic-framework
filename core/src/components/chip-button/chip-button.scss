@@ -3,16 +3,36 @@
 // Chip Button
 // --------------------------------------------------
 
-.chip-button {
+:host {
+  --size: #{$chip-button-size};
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
+}
+
+:host(.chip-button-default) {
+  color: #{current-color(contrast)};
+
+  --background: #{current-color(base)};
+}
+
+:host(.chip-button-clear) {
+  color: #{current-color(base)};
+
+  --background: transparent;
+}
+
+.chip-button-native {
   @include border-radius($chip-button-border-radius);
   @include margin($chip-button-margin-top, $chip-button-margin-end, $chip-button-margin-bottom, $chip-button-margin-start);
 
   position: relative;
 
-  width: $chip-button-size;
-  height: $chip-button-size;
+  width: var(--size);
+  height: var(--size);
 
   border: 0;
+  color: inherit;
+  background: var(--background);
 
   &:active,
   &:focus {

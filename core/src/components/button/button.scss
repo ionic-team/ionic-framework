@@ -3,13 +3,94 @@
 // Button
 // --------------------------------------------------
 
-.button {
+:host {
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
   --ion-color-shade: #{ion-color(primary, shade)};
 
   --ripple-color: currentColor;
 }
+
+:host([disabled]) {
+  pointer-events: none;
+}
+
+:host-context(ion-toolbar.ion-color):host(.button-clear) {
+  --ion-color-base: currentColor;
+}
+
+
+// Solid Button
+// --------------------------------------------------
+
+:host(.button-solid) {
+  color: #{current-color(contrast)};
+
+  --background: #{current-color(base)};
+}
+
+
+// Outline Button
+// --------------------------------------------------
+
+:host(.button-outline) {
+  color: #{current-color(base)};
+
+  --border-color: #{current-color(base)};
+  --background: transparent;
+}
+
+
+// Clear Button
+// --------------------------------------------------
+
+:host(.button-clear) {
+  color: #{current-color(base)};
+
+  --border-width: 0;
+  --background: transparent;
+}
+
+
+// Block Button
+// --------------------------------------------------
+
+:host(.button-block) .button-native {
+  @include margin-horizontal(0);
+
+  display: block;
+  clear: both;
+
+  width: 100%;
+
+  contain: strict;
+}
+
+:host(.button-block) .button-native::after {
+  clear: both;
+}
+
+
+// Full Button
+// --------------------------------------------------
+
+:host(.button-full) .button-native {
+  @include margin-horizontal(0);
+
+  display: block;
+
+  width: 100%;
+
+  contain: strict;
+}
+
+:host(.button-full:not(.button-round)) .button-native {
+  @include border-radius(0);
+
+  border-right-width: 0;
+  border-left-width: 0;
+}
+
 
 .button-native {
   @include font-smoothing();
@@ -65,10 +146,6 @@
   contain: content;
 }
 
-.button[disabled] {
-  pointer-events: none;
-}
-
 .button-native[disabled] {
   cursor: default;
   opacity: .5;
@@ -97,96 +174,25 @@
   height: 100%;
 }
 
-// Solid Button
-// --------------------------------------------------
-
-.button-solid {
-  color: #{current-color(contrast)};
-
-  --background: #{current-color(base)};
-}
-
-
-// Outline Button
-// --------------------------------------------------
-
-.button-outline {
-  color: #{current-color(base)};
-
-  --border-color: #{current-color(base)};
-  --background: transparent;
-}
-
-
-// Clear Button
-// --------------------------------------------------
-
-.button-clear {
-  color: #{current-color(base)};
-
-  --border-width: 0;
-  --background: transparent;
-}
-
-
-// Block Button
-// --------------------------------------------------
-
-.button-block > .button-native {
-  @include margin-horizontal(0);
-
-  display: block;
-  clear: both;
-
-  width: 100%;
-
-  contain: strict;
-}
-
-.button-block > .button-native::after {
-  clear: both;
-}
-
-
-// Full Button
-// --------------------------------------------------
-
-.button-full > .button-native {
-  @include margin-horizontal(0);
-
-  display: block;
-
-  width: 100%;
-
-  contain: strict;
-}
-
-.button-full:not(.button-round) > .button-native {
-  @include border-radius(0);
-
-  border-right-width: 0;
-  border-left-width: 0;
-}
-
 
 // Button Icons
 // --------------------------------------------------
 
-.button ion-icon {
+::slotted(ion-icon) {
   font-size: 1.4em;
 
   pointer-events: none;
 }
 
-.button ion-icon[slot="start"] {
+::slotted(ion-icon[slot="start"]) {
   @include margin(0, .3em, 0, -.3em);
 }
 
-.button ion-icon[slot="end"] {
+::slotted(ion-icon[slot="end"]) {
   @include margin(0, -.2em, 0, .3em);
 }
 
-.button ion-icon[slot="icon-only"] {
+::slotted(ion-icon[slot="icon-only"]) {
   font-size: 1.8em;
 }
 

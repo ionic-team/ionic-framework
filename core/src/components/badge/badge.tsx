@@ -1,13 +1,14 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-badge',
   styleUrls: {
     ios: 'badge.ios.scss',
     md: 'badge.md.scss'
-  }
+  },
+  shadow: true
 })
 export class Badge {
   /**
@@ -23,8 +24,11 @@ export class Badge {
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, this.color, 'badge')
+      class: createColorClasses(this.color)
     };
   }
 
+  render() {
+    return <slot/>;
+  }
 }

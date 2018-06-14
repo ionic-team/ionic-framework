@@ -7,7 +7,8 @@ import { createThemedClasses } from '../../utils/theme';
   styleUrls: {
     ios: 'toolbar.ios.scss',
     md: 'toolbar.md.scss'
-  }
+  },
+  shadow: true
 })
 export class Toolbar {
 
