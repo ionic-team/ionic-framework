@@ -1,7 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
-import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions,
-  CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent, Color
-} from '../../interface';
+import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, Color, CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent} from '../../interface';
 import { deferEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
