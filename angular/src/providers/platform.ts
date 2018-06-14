@@ -1,12 +1,13 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { EventEmitter, Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { PlatformConfig, detectPlatforms } from '@ionic/core';
 import { proxyEvent } from '../util/util';
+import { isPlatformBrowser } from '@angular/common';
 
 
 @Injectable()
 export class Platform {
 
-  private _platforms = detectPlatforms(window);
+  private _platforms: PlatformConfig[];
   private _readyPromise: Promise<string>;
 
   /**
@@ -36,20 +37,27 @@ export class Platform {
    */
   resize = new EventEmitter<Event>();
 
-  constructor() {
-    proxyEvent(this.pause, document, 'pause');
-    proxyEvent(this.resume, document, 'resume');
-    proxyEvent(this.backButton, document, 'backbutton');
-    proxyEvent(this.resize, document, 'resize');
+  constructor(@Inject(PLATFORM_ID) platformId: string) {
+    if (isPlatformBrowser(platformId)) {
+      proxyEvent(this.pause, document, 'pause');
+      proxyEvent(this.resume, document, 'resume');
+      proxyEvent(this.backButton, document, 'backbutton');
+      proxyEvent(this.resize, document, 'resize');
 
-    let readyResolve: (value: string) => void;
-    this._readyPromise = new Promise(res => { readyResolve = res; } );
-    if ((window as any)['cordova']) {
-      document.addEventListener('deviceready', () => {
-        readyResolve('cordova');
-      }, {once: true});
+      this._platforms = detectPlatforms(window);
+
+      if ((window as any)['cordova']) {
+        let readyResolve: (value: string) => void;
+        this._readyPromise = new Promise(res => { readyResolve = res; } );
+        document.addEventListener('deviceready', () => {
+          readyResolve('cordova');
+        }, {once: true});
+      } else {
+        this._readyPromise = new Promise(res => { res('dom'); });
+      }
     } else {
-      readyResolve('dom');
+      this._platforms = [];
+      this._readyPromise = new Promise(res => { res('node'); });
     }
   }
 
