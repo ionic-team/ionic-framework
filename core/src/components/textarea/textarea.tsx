@@ -2,7 +2,6 @@ import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/c
 
 import { Color, InputChangeEvent, Mode, StyleEvent } from '../../interface';
 import { debounceEvent, deferEvent } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
 import { TextareaComponent } from '../input/input-base';
 
 
