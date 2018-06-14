@@ -10,15 +10,11 @@
 
   text-decoration: none;
 
-  --ion-color-base: #{ion-color(primary, base)};
-  --ion-color-contrast: #{ion-color(primary, contrast)};
-  --ion-color-tint: #{ion-color(primary, tint)};
-  --ion-color-shade: #{ion-color(primary, shade)};
+  color: #{current-color(contrast)};
 
   --background: #{current-color(base)};
   --background-active: #{current-color(tint)};
   --color: #{current-color(contrast)};
-  --paragraph-color: #{current-color(contrast)};
   --border-color: #{current-color(shade)};
   --detail-push-color: #{current-color(shade)};
 
@@ -77,6 +73,7 @@
   font-size: inherit;
   background-color: var(--background);
   transition: var(--transition);
+
   box-sizing: border-box;
 }
 

@@ -27,4 +27,8 @@ export class ListHeader {
       class: createColorClasses(this.color)
     };
   }
+
+  render() {
+    return <slot/>;
+  }
 }

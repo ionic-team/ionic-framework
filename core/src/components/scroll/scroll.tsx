@@ -5,7 +5,7 @@ import { createThemedClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-scroll',
   styleUrl: 'scroll.scss',
-  shadow: true
+  scoped: true
 })
 export class Scroll {
 
@@ -249,15 +249,6 @@ export class Scroll {
         overscroll: this.forceOverscroll
       }
     };
-  }
-
-  render() {
-    return [
-      // scroll-inner is used to keep custom user padding
-      <div class="scroll-inner">
-        <slot></slot>
-      </div>
-    ];
   }
 }
 

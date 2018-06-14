@@ -88,7 +88,7 @@
   font-size: $item-ios-paragraph-font-size;
   line-height: normal;
   text-overflow: inherit;
-  color: var(--paragraph-color);
+  color:  #{$item-ios-paragraph-text-color};
 }
 
 ::slotted(h2:last-child),

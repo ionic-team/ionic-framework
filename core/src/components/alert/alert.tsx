@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
 import { AlertButton, AlertEventDetailData, AlertInput, Animation, AnimationBuilder, Color, Config, CssClassMap, Mode } from '../../interface';
 import { BACKDROP, OverlayInterface, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
-import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { createColorClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -13,7 +13,8 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'alert.ios.scss',
     md: 'alert.md.scss'
-  }
+  },
+  scoped: true
 })
 export class Alert implements OverlayInterface {
 
@@ -375,17 +376,15 @@ export class Alert implements OverlayInterface {
   }
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'alert-translucent') : {};
-
     return {
       role: 'alertdialog',
       style: {
         zIndex: 20000 + this.overlayId,
       },
       class: {
-        ...themedClasses,
-        ...createThemedClasses(this.mode, this.color, 'alert'),
-        ...getClassMap(this.cssClass)
+        ...createColorClasses(this.color),
+        ...getClassMap(this.cssClass),
+        'alert-translucent': this.translucent
       }
     };
   }

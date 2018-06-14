@@ -287,7 +287,7 @@ export class Datetime {
     const pickerOptions = {...this.pickerOptions};
     this.picker = await this.buildPicker(pickerOptions);
     this.validate();
-    await this.picker.present();
+    await this.picker!.present();
   }
 
   private generateColumns(): PickerColumn[] {

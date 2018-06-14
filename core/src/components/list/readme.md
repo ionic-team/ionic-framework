@@ -13,6 +13,13 @@ reorder items within the list, and deleting items.
 
 ## Properties
 
+#### inset
+
+boolean
+
+How the bottom border should be displayed on all items.
+
+
 #### lines
 
 string
@@ -21,6 +28,13 @@ How the bottom border should be displayed on all items.
 
 
 ## Attributes
+
+#### inset
+
+boolean
+
+How the bottom border should be displayed on all items.
+
 
 #### lines
 

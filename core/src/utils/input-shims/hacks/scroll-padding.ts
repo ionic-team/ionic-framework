@@ -26,7 +26,7 @@ function setScrollPadding(input: HTMLElement, keyboardHeight: number) {
   if (input.parentElement && input.parentElement.tagName === 'ION-INPUT') {
     return;
   }
-  const el = input.closest('.scroll-inner') as HTMLElement;
+  const el = input.closest('ion-content') as HTMLElement;
   if (!el) {
     return;
   }
@@ -36,10 +36,10 @@ function setScrollPadding(input: HTMLElement, keyboardHeight: number) {
   }
 
   if (keyboardHeight > 0) {
-    el.style.paddingBottom = keyboardHeight + 'px';
+    el.style.setProperty('--keyboard-offset', `${keyboardHeight}px`);
   } else {
     (el as any)[PADDING_TIMER_KEY] = setTimeout(() => {
-      el.style.paddingBottom = '';
+      el.style.setProperty('--keyboard-offset', '0px');
     }, 120);
   }
 }

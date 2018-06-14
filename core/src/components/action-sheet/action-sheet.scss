@@ -3,7 +3,7 @@
 // Action Sheet
 // --------------------------------------------------
 
-ion-action-sheet {
+:host {
   @include font-smoothing();
   @include position(0, 0, 0, 0);
 

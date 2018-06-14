@@ -8,15 +8,11 @@
   font-family: $item-ios-font-family;
 
   font-size: $item-ios-font-size;
-  color: $item-ios-text-color;
-  color: $item-ios-text-color;
 
-  --background: #{$item-ios-background-color};
-  --background-active: #{$item-ios-background-color-active};
-
-  --paragraph-color: #{$item-ios-paragraph-text-color};
-  --border-color: #{$item-ios-border-bottom-color};
-  --detail-push-color: #{$item-ios-detail-push-color};
+  --ion-color-base: #{$item-ios-background-color};
+  --ion-color-contrast: #{$item-ios-text-color};
+  --ion-color-tint: #{$item-ios-background-color-active};
+  --ion-color-shade: #{$item-ios-border-bottom-color};
 
   --transition: background-color 200ms linear;
 

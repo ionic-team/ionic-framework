@@ -118,7 +118,9 @@ async function overlayAnimation(
     overlay.animation.destroy();
     overlay.animation = undefined;
   }
-  const animation = overlay.animation = await overlay.animationCtrl.create(animationBuilder, baseEl, opts);
+
+  const aniRoot = baseEl.shadowRoot || overlay.el;
+  const animation = overlay.animation = await overlay.animationCtrl.create(animationBuilder, aniRoot, opts);
   overlay.animation = animation;
   if (!overlay.willAnimate) {
     animation.duration(0);

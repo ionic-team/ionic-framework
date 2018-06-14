@@ -31,3 +31,6 @@ $label-md-text-wrap-font-size:        14px !default;
 
 /// @prop - Line height of the label when the text wraps
 $label-md-text-wrap-line-height:      1.5 !default;
+
+/// @prop - Color of the item paragraph
+$item-md-paragraph-text-color:              $text-color-step-400 !default;

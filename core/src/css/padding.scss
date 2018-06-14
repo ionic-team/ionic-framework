@@ -2,38 +2,62 @@
 @import "../themes/ionic.mixins";
 
 $padding: var(--ion-padding, 16px);
-$margin: var(--ion-padding, 16px);
+$margin: var(--ion-margin, 16px);
 
 [no-padding] {
   @include padding(0);
+
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
 }
 
 [padding] {
   @include padding($padding);
+
+  --padding-start: #{$padding};
+  --padding-end: #{$padding};
+  --padding-top: #{$padding};
+  --padding-bottom: #{$padding};
 }
 
 [padding-top] {
   @include padding($padding, null, null, null);
+
+  --padding-top: #{$padding};
 }
 
-[padding-left] {
+[padding-start] {
   @include padding-horizontal($padding, null);
+
+  --padding-start: #{$padding};
 }
 
-[padding-right] {
+[padding-end] {
   @include padding-horizontal(null, $padding);
+
+  --padding-end: #{$padding};
 }
 
 [padding-bottom] {
   @include padding(null, null, $padding, null);
+
+  --padding-bottom: #{$padding};
 }
 
 [padding-vertical] {
   @include padding($padding, null, $padding, null);
+
+  --padding-top: #{$padding};
+  --padding-bottom: #{$padding};
 }
 
 [padding-horizontal] {
   @include padding-horizontal($padding);
+
+  --padding-start: #{$padding};
+  --padding-end: #{$padding};
 }
 
 

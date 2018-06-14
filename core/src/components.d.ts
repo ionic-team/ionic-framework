@@ -113,11 +113,11 @@ declare global {
       /**
        * Create an action sheet overlay with action sheet options.
        */
-      'create': (opts?: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>;
+      'create': (opts?: ActionSheetOptions | undefined) => Promise<HTMLIonActionSheetElement>;
       /**
        * Dismiss the open action sheet overlay.
        */
-      'dismiss': (data?: any, role?: string, actionSheetId?: number) => Promise<void>;
+      'dismiss': (data?: any, role?: string | undefined, actionSheetId?: number) => Promise<void>;
       /**
        * Get the most recently opened action sheet overlay.
        */
@@ -165,7 +165,7 @@ declare global {
       /**
        * Dismiss the action sheet overlay after it has been presented.
        */
-      'dismiss': (data?: any, role?: string) => Promise<void>;
+      'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
       /**
        * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
        */
@@ -189,11 +189,11 @@ declare global {
       /**
        * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback that is called in the same circustances.
        */
-      'onDidDismiss': (callback?: (detail: OverlayEventDetail<any>) => void) => Promise<OverlayEventDetail<any>>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback that is called in the same circustances.
        */
-      'onWillDismiss': (callback?: (detail: OverlayEventDetail<any>) => void) => Promise<OverlayEventDetail<any>>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Unique ID to be used with the overlay. Internal only
        */
@@ -316,11 +316,11 @@ declare global {
       /**
        * Create an alert overlay with alert options
        */
-      'create': (opts?: AlertOptions) => Promise<HTMLIonAlertElement>;
+      'create': (opts?: AlertOptions | undefined) => Promise<HTMLIonAlertElement>;
       /**
        * Dismiss the open alert overlay.
        */
-      'dismiss': (data?: any, role?: string, alertId?: number) => Promise<void>;
+      'dismiss': (data?: any, role?: string | undefined, alertId?: number) => Promise<void>;
       /**
        * Get the most recently opened alert overlay.
        */
@@ -368,7 +368,7 @@ declare global {
       /**
        * Dismiss the alert overlay after it has been presented.
        */
-      'dismiss': (data?: any, role?: string) => Promise<void>;
+      'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
       /**
        * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
        */
@@ -398,11 +398,11 @@ declare global {
       /**
        * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circumstances.
        */
-      'onDidDismiss': (callback?: (detail: OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) => Promise<OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
       /**
        * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circumstances.
        */
-      'onWillDismiss': (callback?: (detail: OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) => Promise<OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
       'overlayId': number;
       /**
        * Present the alert overlay after it has been created.
@@ -572,7 +572,7 @@ declare global {
       /**
        * Creates an animation instance
        */
-      'create': (animationBuilder?: AnimationBuilder, baseEl?: any, opts?: any) => Promise<Animation>;
+      'create': (animationBuilder?: AnimationBuilder | undefined, baseEl?: any, opts?: any) => Promise<Animation>;
     }
   }
 
@@ -1703,7 +1703,7 @@ declare global {
        * If true, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.
        */
       'fullscreen': boolean;
-      'scrollByPoint': (x: number, y: number, duration: number, done?: Function) => Promise<any>;
+      'scrollByPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
       /**
        * By default `ion-content` uses an `ion-scroll` under the hood to implement scrolling, if you want to disable the content scrolling for a given page, set this property to `false`.
        */
@@ -1716,7 +1716,7 @@ declare global {
        * Scroll to the bottom of the content component.  Duration of the scroll animation in milliseconds. Defaults to `300`. Returns a promise which is resolved when the scroll has completed.
        */
       'scrollToBottom': (duration?: number) => Promise<void>;
-      'scrollToPoint': (x: number, y: number, duration: number, done?: Function) => Promise<any>;
+      'scrollToPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
       /**
        * Scroll to the top of the content component.  Duration of the scroll animation in milliseconds. Defaults to `300`. Returns a promise which is resolved when the scroll has completed.
        */
@@ -3398,7 +3398,11 @@ declare global {
       /**
        * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
        */
-      'getOpenItem': () => HTMLIonItemSlidingElement;
+      'getOpenItem': () => HTMLIonItemSlidingElement | undefined;
+      /**
+       * How the bottom border should be displayed on all items.
+       */
+      'inset': boolean;
       /**
        * How the bottom border should be displayed on all items.
        */
@@ -3406,7 +3410,7 @@ declare global {
       /**
        * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
        */
-      'setOpenItem': (itemSliding: HTMLIonItemSlidingElement) => void;
+      'setOpenItem': (itemSliding: HTMLIonItemSlidingElement | undefined) => void;
     }
   }
 
@@ -3432,6 +3436,10 @@ declare global {
       /**
        * How the bottom border should be displayed on all items.
        */
+      'inset'?: boolean;
+      /**
+       * How the bottom border should be displayed on all items.
+       */
       'lines'?: 'full' | 'inset' | 'none';
     }
   }
@@ -3445,11 +3453,11 @@ declare global {
       /**
        * Create a loading overlay with loading options.
        */
-      'create': (opts?: LoadingOptions) => Promise<HTMLIonLoadingElement>;
+      'create': (opts?: LoadingOptions | undefined) => Promise<HTMLIonLoadingElement>;
       /**
        * Dismiss the open loading overlay.
        */
-      'dismiss': (data?: any, role?: string, loadingId?: number) => Promise<void>;
+      'dismiss': (data?: any, role?: string | undefined, loadingId?: number) => Promise<void>;
       /**
        * Get the most recently opened loading overlay.
        */
@@ -3497,7 +3505,7 @@ declare global {
       /**
        * Dismiss the loading overlay after it has been presented.
        */
-      'dismiss': (data?: any, role?: string) => Promise<void>;
+      'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
       /**
        * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
        */
@@ -3522,11 +3530,11 @@ declare global {
       /**
        * Returns a promise that resolves when the loading did dismiss. It also accepts a callback that is called in the same circustances.
        */
-      'onDidDismiss': (callback?: (detail: OverlayEventDetail<any>) => void) => Promise<OverlayEventDetail<any>>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Returns a promise that resolves when the loading will dismiss. It also accepts a callback that is called in the same circustances.  ```    * const {data, role} = await loading.onWillDismiss();    * ```
        */
-      'onWillDismiss': (callback?: (detail: OverlayEventDetail<any>) => void) => Promise<OverlayEventDetail<any>>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       'overlayId': number;
       /**
        * Present the loading overlay after it has been created.
@@ -3703,16 +3711,16 @@ declare global {
       /**
        * Close the Menu. If no `menuId` is given as the first argument then it'll close any menu which is open. If a `menuId` is given then it'll close that exact menu.
        */
-      'close': (menuId?: string) => Promise<boolean>;
+      'close': (menuId?: string | undefined) => Promise<boolean>;
       'createAnimation': (type: string, menuCmp: Menu) => Promise<Animation>;
       /**
        * Used to enable or disable a menu. For example, there could be multiple left menus, but only one of them should be able to be opened at the same time. If there are multiple menus on the same side, then enabling one menu will also automatically disable all the others that are on the same side.
        */
-      'enable': (shouldEnable: boolean, menuId?: string) => HTMLIonMenuElement;
+      'enable': (shouldEnable: boolean, menuId?: string | undefined) => HTMLIonMenuElement | null;
       /**
        * Used to get a menu instance. If a `menuId` is not provided then it'll return the first menu found. If a `menuId` is `left` or `right`, then it'll return the enabled menu on that side. Otherwise, if a `menuId` is provided, then it'll try to find the menu using the menu's `id` property. If a menu is not found then it'll return `null`.
        */
-      'get': (menuId?: string) => HTMLIonMenuElement;
+      'get': (menuId?: string | undefined) => HTMLIonMenuElement | null;
       /**
        * Returns an array of all menu instances.
        */
@@ -3720,7 +3728,7 @@ declare global {
       /**
        * Returns the instance of the menu already opened, otherwise `null`.
        */
-      'getOpen': () => HTMLIonMenuElement;
+      'getOpen': () => HTMLIonMenuElement | null;
       /**
        * If any menu is currently animating
        */
@@ -3728,24 +3736,24 @@ declare global {
       /**
        * Returns true or false if the menuId is enabled or not
        */
-      'isEnabled': (menuId?: string) => boolean;
+      'isEnabled': (menuId?: string | undefined) => boolean;
       /**
        * If the menuId is not specified, it returns true if ANY menu is currenly open.
        */
-      'isOpen': (menuId?: string) => boolean;
+      'isOpen': (menuId?: string | undefined) => boolean;
       /**
        * Open the Menu.
        */
-      'open': (menuId?: string) => Promise<boolean>;
+      'open': (menuId?: string | undefined) => Promise<boolean>;
       'registerAnimation': (name: string, animation: AnimationBuilder) => void;
       /**
        * Used to enable or disable the ability to swipe open the menu.
        */
-      'swipeEnable': (shouldEnable: boolean, menuId?: string) => HTMLIonMenuElement;
+      'swipeEnable': (shouldEnable: boolean, menuId?: string | undefined) => HTMLIonMenuElement | null;
       /**
        * Toggle the menu. If it's closed, it will open, and if opened, it will close.
        */
-      'toggle': (menuId?: string) => Promise<boolean>;
+      'toggle': (menuId?: string | undefined) => Promise<boolean>;
     }
   }
 
@@ -3935,8 +3943,8 @@ declare global {
 
   namespace StencilComponents {
     interface IonModalController {
-      'create': (opts?: ModalOptions) => Promise<HTMLIonModalElement>;
-      'dismiss': (data?: any, role?: string, modalId?: number) => Promise<void>;
+      'create': (opts?: ModalOptions | undefined) => Promise<HTMLIonModalElement>;
+      'dismiss': (data?: any, role?: string | undefined, modalId?: number) => Promise<void>;
       'getTop': () => HTMLIonModalElement;
     }
   }
@@ -3990,7 +3998,7 @@ declare global {
       /**
        * Dismiss the modal overlay after it has been presented.
        */
-      'dismiss': (data?: any, role?: string) => Promise<void>;
+      'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
       /**
        * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
        */
@@ -4011,11 +4019,11 @@ declare global {
       /**
        * Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circustances.
        */
-      'onDidDismiss': (callback?: (detail: OverlayEventDetail<any>) => void) => Promise<OverlayEventDetail<any>>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Returns a promise that resolves when the modal will dismiss. It also accepts a callback that is called in the same circustances.
        */
-      'onWillDismiss': (callback?: (detail: OverlayEventDetail<any>) => void) => Promise<OverlayEventDetail<any>>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       'overlayId': number;
       /**
        * Present the modal overlay after it has been created.
@@ -4231,25 +4239,25 @@ declare global {
   namespace StencilComponents {
     interface IonNav {
       'animated': boolean;
-      'canGoBack': (view?: ViewController) => boolean;
+      'canGoBack': (view?: ViewController | undefined) => boolean;
       'delegate': FrameworkDelegate;
-      'getActive': () => ViewController;
-      'getByIndex': (index: number) => ViewController;
-      'getPrevious': (view?: ViewController) => ViewController;
-      'getRouteId': () => RouteID;
-      'insert': (insertIndex: number, component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-      'insertPages': (insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+      'getActive': () => ViewController | undefined;
+      'getByIndex': (index: number) => ViewController | undefined;
+      'getPrevious': (view?: ViewController | undefined) => ViewController | undefined;
+      'getRouteId': () => RouteID | undefined;
+      'insert': (insertIndex: number, component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      'insertPages': (insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
       'isAnimating': () => boolean;
       'length': () => number;
-      'pop': (opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-      'popTo': (indexOrViewCtrl: number | ViewController, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-      'popToRoot': (opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-      'push': (component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-      'removeIndex': (startIndex: number, removeCount?: number, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+      'pop': (opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      'popTo': (indexOrViewCtrl: number | ViewController, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      'popToRoot': (opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      'push': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      'removeIndex': (startIndex: number, removeCount?: number, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
       'root': NavComponent;
       'rootParams': ComponentProps;
-      'setPages': (views: any[], opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
-      'setRoot': (component: NavComponent, componentProps?: ComponentProps, opts?: NavOptions, done?: TransitionDoneFn) => Promise<boolean>;
+      'setPages': (views: any[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+      'setRoot': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
       'setRouteId': (id: string, params: any, direction: RouterIntent) => Promise<RouteWrite>;
       'swipeBackEnabled': boolean;
     }
@@ -4371,8 +4379,8 @@ declare global {
 
   namespace StencilComponents {
     interface IonPickerController {
-      'create': (opts?: PickerOptions) => Promise<HTMLIonPickerElement>;
-      'dismiss': (data?: any, role?: string, pickerId?: number) => Promise<void>;
+      'create': (opts?: PickerOptions | undefined) => Promise<HTMLIonPickerElement>;
+      'dismiss': (data?: any, role?: string | undefined, pickerId?: number) => Promise<void>;
       'getTop': () => HTMLIonPickerElement;
     }
   }
@@ -4423,7 +4431,7 @@ declare global {
       /**
        * Dismiss the picker overlay after it has been presented.
        */
-      'dismiss': (data?: any, role?: string) => Promise<void>;
+      'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
       /**
        * Number of milliseconds to wait before dismissing the picker.
        */
@@ -4436,7 +4444,7 @@ declare global {
        * Animation to use when the picker is presented.
        */
       'enterAnimation': AnimationBuilder;
-      'getColumn': (name: string) => PickerColumn;
+      'getColumn': (name: string) => PickerColumn | undefined;
       'getColumns': () => PickerColumn[];
       'keyboardClose': boolean;
       /**
@@ -4446,11 +4454,11 @@ declare global {
       /**
        * Returns a promise that resolves when the picker did dismiss. It also accepts a callback that is called in the same circustances.
        */
-      'onDidDismiss': (callback?: (detail: OverlayEventDetail<any>) => void) => Promise<OverlayEventDetail<any>>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Returns a promise that resolves when the picker will dismiss. It also accepts a callback that is called in the same circustances.
        */
-      'onWillDismiss': (callback?: (detail: OverlayEventDetail<any>) => void) => Promise<OverlayEventDetail<any>>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       'overlayId': number;
       /**
        * Present the picker overlay after it has been created.
@@ -4557,8 +4565,8 @@ declare global {
 
   namespace StencilComponents {
     interface IonPopoverController {
-      'create': (opts?: PopoverOptions) => Promise<HTMLIonPopoverElement>;
-      'dismiss': (data?: any, role?: string, popoverId?: number) => Promise<void>;
+      'create': (opts?: PopoverOptions | undefined) => Promise<HTMLIonPopoverElement>;
+      'dismiss': (data?: any, role?: string | undefined, popoverId?: number) => Promise<void>;
       'getTop': () => HTMLIonPopoverElement;
     }
   }
@@ -4612,7 +4620,7 @@ declare global {
       /**
        * Dismiss the popover overlay after it has been presented.
        */
-      'dismiss': (data?: any, role?: string) => Promise<void>;
+      'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
       /**
        * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
        */
@@ -4637,11 +4645,11 @@ declare global {
       /**
        * Returns a promise that resolves when the popover did dismiss. It also accepts a callback that is called in the same circustances.
        */
-      'onDidDismiss': (callback?: (detail: OverlayEventDetail<any>) => void) => Promise<OverlayEventDetail<any>>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Returns a promise that resolves when the popover will dismiss. It also accepts a callback that is called in the same circustances.
        */
-      'onWillDismiss': (callback?: (detail: OverlayEventDetail<any>) => void) => Promise<OverlayEventDetail<any>>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       'overlayId': number;
       /**
        * Present the popover overlay after it has been created.
@@ -5501,10 +5509,10 @@ declare global {
     interface IonRouterOutlet {
       'animated': boolean;
       'animationBuilder': AnimationBuilder;
-      'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement, opts?: RouterOutletOptions) => Promise<boolean>;
+      'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
       'delegate': FrameworkDelegate;
-      'getRouteId': () => RouteID;
-      'setRoot': (component: ComponentRef, params?: ComponentProps, opts?: RouterOutletOptions) => Promise<boolean>;
+      'getRouteId': () => RouteID | undefined;
+      'setRoot': (component: ComponentRef, params?: ComponentProps | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
       'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
     }
   }
@@ -5633,13 +5641,13 @@ declare global {
        */
       'forceOverscroll': boolean;
       'mode': Mode;
-      'scrollByPoint': (x: number, y: number, duration: number, done?: Function) => Promise<any>;
+      'scrollByPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
       /**
        * Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.
        */
       'scrollEvents': boolean;
       'scrollToBottom': (duration: number) => Promise<void>;
-      'scrollToPoint': (x: number, y: number, duration: number, done?: Function) => Promise<any>;
+      'scrollToPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
       'scrollToTop': (duration: number) => Promise<void>;
     }
   }
@@ -6357,15 +6365,15 @@ declare global {
       /**
        * Transition to the next slide.
        */
-      'slideNext': (speed?: number, runCallbacks?: boolean) => void;
+      'slideNext': (speed?: number | undefined, runCallbacks?: boolean | undefined) => void;
       /**
        * Transition to the previous slide.
        */
-      'slidePrev': (speed?: number, runCallbacks?: boolean) => void;
+      'slidePrev': (speed?: number | undefined, runCallbacks?: boolean | undefined) => void;
       /**
        * Transition to the specified slide.
        */
-      'slideTo': (index: number, speed?: number, runCallbacks?: boolean) => void;
+      'slideTo': (index: number, speed?: number | undefined, runCallbacks?: boolean | undefined) => void;
       /**
        * Start auto play.
        */
@@ -6658,7 +6666,7 @@ declare global {
        * If true, the user cannot interact with the tab. Defaults to `false`.
        */
       'disabled': boolean;
-      'getTabId': () => string;
+      'getTabId': () => string | null;
       /**
        * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
        */
@@ -6829,9 +6837,9 @@ declare global {
        * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
        */
       'color': Color;
-      'getRouteId': () => RouteID;
-      'getSelected': () => HTMLIonTabElement;
-      'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => HTMLIonTabElement;
+      'getRouteId': () => RouteID | undefined;
+      'getSelected': () => HTMLIonTabElement | undefined;
+      'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => HTMLIonTabElement | undefined;
       /**
        * A unique name for the tabs
        */
@@ -7261,8 +7269,8 @@ declare global {
 
   namespace StencilComponents {
     interface IonToastController {
-      'create': (opts?: ToastOptions) => Promise<HTMLIonToastElement>;
-      'dismiss': (data?: any, role?: string, toastId?: number) => Promise<void>;
+      'create': (opts?: ToastOptions | undefined) => Promise<HTMLIonToastElement>;
+      'dismiss': (data?: any, role?: string | undefined, toastId?: number) => Promise<void>;
       'getTop': () => HTMLIonToastElement;
     }
   }
@@ -7307,7 +7315,7 @@ declare global {
       /**
        * Dismiss the toast overlay after it has been presented.
        */
-      'dismiss': (data?: any, role?: string) => Promise<void>;
+      'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
       /**
        * How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.
        */
@@ -7328,11 +7336,11 @@ declare global {
       /**
        * Returns a promise that resolves when the toast did dismiss. It also accepts a callback that is called in the same circustances.
        */
-      'onDidDismiss': (callback?: (detail: OverlayEventDetail<any>) => void) => Promise<OverlayEventDetail<any>>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Returns a promise that resolves when the toast will dismiss. It also accepts a callback that is called in the same circustances.
        */
-      'onWillDismiss': (callback?: (detail: OverlayEventDetail<any>) => void) => Promise<OverlayEventDetail<any>>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       'overlayId': number;
       /**
        * The position of the toast on the screen. Possible values: "top", "middle", "bottom".

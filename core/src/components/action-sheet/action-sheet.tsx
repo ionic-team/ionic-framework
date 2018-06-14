@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 import { ActionSheetButton, Animation, AnimationBuilder, Color, Config, CssClassMap, Mode } from '../../interface';
 import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
-import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { createColorClasses, getClassMap } from '../../utils/theme';
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
 import { mdEnterAnimation } from './animations/md.enter';
@@ -13,7 +13,8 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'action-sheet.ios.scss',
     md: 'action-sheet.md.scss'
-  }
+  },
+  scoped: true
 })
 export class ActionSheet implements OverlayInterface {
 
@@ -198,15 +199,14 @@ export class ActionSheet implements OverlayInterface {
   }
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'action-sheet-translucent') : {};
     return {
       style: {
         zIndex: 20000 + this.overlayId,
       },
       class: {
-        ...themedClasses,
-        ...createThemedClasses(this.mode, this.color, 'action-sheet'),
-        ...getClassMap(this.cssClass)
+        ...createColorClasses(this.color),
+        ...getClassMap(this.cssClass),
+        'action-sheet-translucent': this.translucent
       }
     };
   }

@@ -16,8 +16,21 @@
 
   margin: 0 !important; // scss-lint:disable all
   padding: 0 !important; // scss-lint:disable all
+
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --padding-end: 0;
+
+  --keyboard-offset: 0px;
 }
 
 .scroll-inner {
+  @include padding(
+    var(--padding-top),
+    var(--padding-end),
+    calc(var(--padding-bottom) + var(--keyboard-offset)),
+    var(--padding-start)
+  );
   min-height: 100%;
 }

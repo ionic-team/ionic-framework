@@ -19,6 +19,11 @@ export class List {
   @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
+   * How the bottom border should be displayed on all items.
+   */
+  @Prop() inset = false;
+
+  /**
    * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
    */
   @Method()
@@ -53,6 +58,7 @@ export class List {
       class: {
         ...createThemedClasses(this.mode, undefined, 'list'),
         [`list-lines-${this.lines}`]: !!this.lines,
+        'list-inset': this.inset,
         [`list-${this.mode}-lines-${this.lines}`]: !!this.lines
       }
     };

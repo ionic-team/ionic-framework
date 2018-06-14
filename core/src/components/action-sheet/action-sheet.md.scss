@@ -4,14 +4,14 @@
 // Material Design Action Sheet
 // --------------------------------------------------
 
-.action-sheet-md {
+:host {
   font-family: $action-sheet-md-font-family;
 }
 
 // Material Design Action Sheet Title
 // -----------------------------------------
 
-.action-sheet-md .action-sheet-title {
+.action-sheet-title {
   @include padding($action-sheet-md-title-padding-top, $action-sheet-md-title-padding-end, $action-sheet-md-title-padding-bottom, $action-sheet-md-title-padding-start);
 
   @include text-align($action-sheet-md-text-align);
@@ -20,7 +20,7 @@
   color: $action-sheet-md-title-color;
 }
 
-.action-sheet-md .action-sheet-sub-title {
+.action-sheet-sub-title {
   @include padding($action-sheet-md-sub-title-padding-top, $action-sheet-md-sub-title-padding-end, $action-sheet-md-sub-title-padding-bottom, $action-sheet-md-sub-title-padding-start);
 
   font-size: $action-sheet-md-sub-title-font-size;
@@ -30,15 +30,15 @@
 // Material Design Action Sheet Group
 // -----------------------------------------
 
-.action-sheet-md .action-sheet-group {
+.action-sheet-group {
   background-color: $action-sheet-md-background-color;
 }
 
-.action-sheet-md .action-sheet-group:first-child {
+.action-sheet-group:first-child {
   @include padding($action-sheet-md-padding-top, null, null, null);
 }
 
-.action-sheet-md .action-sheet-group:last-child {
+.action-sheet-group:last-child {
   @include padding(null, null, $action-sheet-md-padding-bottom, null);
 }
 
@@ -46,7 +46,7 @@
 // Material Design Action Sheet Buttons
 // -----------------------------------------
 
-.action-sheet-md .action-sheet-button {
+.action-sheet-button {
   @include padding($action-sheet-md-button-padding-top, $action-sheet-md-button-padding-end, $action-sheet-md-button-padding-bottom, $action-sheet-md-button-padding-start);
 
   @include text-align($action-sheet-md-text-align);
@@ -63,21 +63,21 @@
   contain: strict;
 }
 
-.action-sheet-md .action-sheet-button.activated {
+.action-sheet-button.activated {
   background: $action-sheet-md-button-background-activated;
 }
 
-.action-sheet-md .action-sheet-icon {
+.action-sheet-icon {
   @include margin($action-sheet-md-icon-margin-top, $action-sheet-md-icon-margin-end, $action-sheet-md-icon-margin-bottom, $action-sheet-md-icon-margin-start);
 
   font-size: $action-sheet-md-icon-font-size;
 }
 
-.action-sheet-md .action-sheet-button-inner {
+.action-sheet-button-inner {
   justify-content: flex-start;
 }
 
-.action-sheet-md .action-sheet-selected {
+.action-sheet-selected {
   font-weight: bold;
   background-color: $action-sheet-md-button-background-selected;
 }

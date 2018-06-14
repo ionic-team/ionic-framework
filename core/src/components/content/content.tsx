@@ -8,7 +8,7 @@ import { Color, Config, Mode, QueueController } from '../../interface';
     ios: 'content.ios.scss',
     md: 'content.md.scss'
   },
-  scoped: true
+  shadow: true
 })
 export class Content {
 
@@ -146,6 +146,8 @@ export class Content {
   render() {
     this.resize();
 
+    const innerScroll = <div class="scroll-inner"><slot></slot></div>;
+
     return [
       (this.scrollEnabled)
       ? <ion-scroll
@@ -153,9 +155,9 @@ export class Content {
           mode={this.mode}
           scrollEvents={this.scrollEvents}
           forceOverscroll={this.forceOverscroll}>
-          <slot></slot>
+            { innerScroll }
         </ion-scroll>
-      : <div class="scroll-inner"><slot></slot></div>,
+      : innerScroll,
       <slot name="fixed"></slot>
     ];
   }
