@@ -20,6 +20,8 @@ tmp/
 temp/
 core/theme-builder/
 core/test-components/
+core/css/
+angular/css/
 $RECYCLE.BIN/
 
 .DS_Store

@@ -23,7 +23,7 @@
     "dist/"
   ],
   "dependencies": {
-    "ionicons": "^4.1.2"
+    "ionicons": "^4.2.0"
   },
   "devDependencies": {
     "@stencil/core": "^0.9.6",
