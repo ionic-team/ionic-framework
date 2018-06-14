@@ -1,5 +1,4 @@
-import { Component, Event, Prop } from '@stencil/core';
-import { EventEmitter } from 'ionicons/dist/types/stencil.core';
+import { Component, Event, EventEmitter, Prop } from '@stencil/core';
 
 @Component({
   tag: 'ion-route-redirect'
