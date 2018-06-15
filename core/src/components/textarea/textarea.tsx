@@ -166,7 +166,7 @@ export class Textarea implements TextareaComponent {
       'interactive': true,
       'textarea': true,
       'input': true,
-      'input-disabled': this.disabled,
+      'disabled': this.disabled,
       'input-has-value': this.hasValue(),
       'input-has-focus': this.hasFocus()
     });

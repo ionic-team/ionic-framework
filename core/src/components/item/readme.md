@@ -112,6 +112,11 @@ When using a router, it specifies the transition direction when navigating to
 another page using `href`.
 
 
+#### state
+
+string
+
+
 ## Attributes
 
 #### button
@@ -179,6 +184,11 @@ string
 
 When using a router, it specifies the transition direction when navigating to
 another page using `href`.
+
+
+#### state
+
+string
 
 
 

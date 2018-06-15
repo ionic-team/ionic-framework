@@ -4,13 +4,13 @@
 // Material Design Textarea
 // --------------------------------------------------
 
-.native-textarea {
-  @include placeholder($textarea-md-placeholder-color);
-  @include margin($textarea-md-margin-top, $textarea-md-margin-end, $textarea-md-margin-bottom, $textarea-md-margin-start);
-  @include padding(0);
-
-  width: calc(100% - #{$textarea-md-margin-end} - #{$textarea-md-margin-start});
-
+:host {
   font-family: $textarea-md-font-family;
   font-size: $textarea-md-font-size;
+
+  --margin-end: #{$textarea-md-margin-end};
+  --margin-bottom: #{$textarea-md-margin-bottom};
+  --margin-start: #{$textarea-md-margin-start};
+
+  --placeholder-color: #{$textarea-md-placeholder-color};
 }

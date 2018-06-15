@@ -144,7 +144,7 @@ export class Radio implements RadioButtonInput {
       ...createThemedClasses(this.mode, this.color, 'radio'),
       'in-item': hostContext('.item', this.el),
       'radio-checked': this.checked,
-      'radio-disabled': this.disabled
+      'disabled': this.disabled,
     });
   }
 
@@ -174,6 +174,7 @@ export class Radio implements RadioButtonInput {
     return {
       class: {
         ...createColorClasses(this.color),
+        'in-item': hostContext('.item', this.el),
         'radio-checked': this.checked,
         'radio-disabled': this.disabled,
         'radio-key': this.keyFocus

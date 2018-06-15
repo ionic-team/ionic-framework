@@ -1,51 +1,31 @@
 @import "./input";
 @import "./input.md.vars";
 
+
 // Material Design Input
 // --------------------------------------------------
 
-.native-input {
-  @include placeholder($input-md-placeholder-color);
-  @include margin($input-md-margin-top, $input-md-margin-end, $input-md-margin-bottom, $input-md-margin-start);
-  @include padding(0);
-
-  width: calc(100% - #{$input-md-margin-end} - #{$input-md-margin-start});
-
+:host {
   font-family: $input-md-font-family;
   font-size: $input-md-font-size;
+
+  --margin-top: #{$input-md-margin-top};
+  --margin-end: #{$input-md-margin-end};
+  --margin-bottom: #{$input-md-margin-bottom};
+  --margin-start: #{$input-md-margin-start};
+
+  --placeholder-color: #{$input-md-placeholder-color};
 }
-
-
-// Material Design Inset Input
-// --------------------------------------------------
-
-.inset-input {
-  @include padding($input-md-inset-padding-top, $input-md-inset-padding-end, $input-md-inset-padding-bottom, $input-md-inset-padding-start);
-  @include margin($input-md-inset-margin-top, $input-md-inset-margin-end, $input-md-inset-margin-bottom, $input-md-inset-margin-start);
-}
-
-// Material Design Stacked & Floating Inputs
-// --------------------------------------------------
-
-// TODO: refactor
-.item-label-stacked .native-input-md,
-.item-label-floating .native-input-md {
-  @include margin(8px, null, 8px, 0);
-
-  width: calc(100% - #{$input-md-margin-end});
-}
-
 
 // Material Design Clear Input Icon
 // --------------------------------------------------
 
 :host([clear-input]) {
   position: relative;
+
+  --padding-end: #{$input-md-input-clear-icon-width};
 }
 
-:host([clear-input]) .native-input {
-  @include padding-horizontal(null, $input-md-input-clear-icon-width);
-}
 
 .native-input-clear-icon {
   @include position-horizontal(null, 0);
@@ -56,3 +36,11 @@
   background-color: transparent;
   background-size: $input-md-input-clear-icon-size;
 }
+
+// Material Design Inset Input
+// --------------------------------------------------
+
+// .inset-input {
+//   @include padding($input-md-inset-padding-top, $input-md-inset-padding-end, $input-md-inset-padding-bottom, $input-md-inset-padding-start);
+//   @include margin($input-md-inset-margin-top, $input-md-inset-margin-end, $input-md-inset-margin-bottom, $input-md-inset-margin-start);
+// }

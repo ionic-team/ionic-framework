@@ -91,7 +91,7 @@ export class Toggle implements CheckboxInput {
   @Watch('disabled')
   emitStyle() {
     this.ionStyle.emit({
-      'toggle-disabled': this.disabled,
+      'disabled': this.disabled,
       'toggle-checked': this.checked,
       'toggle-activated': this.activated
     });

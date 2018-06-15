@@ -15,7 +15,7 @@ import { InputComponent } from './input-base';
 })
 export class Input implements InputComponent {
 
-  private nativeInput: HTMLInputElement|undefined;
+  private nativeInput?: HTMLInputElement;
   didBlurAfterEdit = false;
 
   mode!: Mode;
@@ -237,9 +237,9 @@ export class Input implements InputComponent {
     this.ionStyle.emit({
       'interactive': true,
       'input': true,
-      'input-disabled': this.disabled,
       'input-has-value': this.hasValue(),
-      'input-has-focus': this.hasFocus()
+      'input-has-focus': this.hasFocus(),
+      'disabled': this.disabled,
     });
   }
 
@@ -311,8 +311,8 @@ export class Input implements InputComponent {
     return {
       class: {
         'in-item': hostContext('.item', this.el),
-        'input-has-value': this.hasValue(),
-        'input-has-focus': this.hasFocus()
+        'has-value': this.hasValue(),
+        'has-focus': this.hasFocus()
       }
     };
   }

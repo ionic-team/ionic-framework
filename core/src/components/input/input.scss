@@ -10,6 +10,13 @@
   flex: 1;
 
   width: 100%;
+
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+
+  --border-radius: 0;
 }
 
 // Input Within An Item
@@ -25,16 +32,34 @@
 
 .native-input {
   @include appearance(none);
-  @include border-radius(0);
+  @include border-radius(var(--border-radius));
+  @include placeholder(var(--placeholder-color));
+  @include margin(
+    var(--margin-top),
+    var(--margin-end),
+    var(--margin-bottom),
+    var(--margin-start)
+  );
 
+  @include padding(
+    var(--padding-top),
+    var(--padding-end),
+    var(--padding-bottom),
+    var(--padding-start)
+  );
+
+  box-sizing: border-box;
   display: inline-block;
 
   flex: 1;
 
-  width: 92%;
-  width: calc(100% - 10px);
+  width: 100%;
 
   border: 0;
+
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
 
   background: transparent;
 
@@ -76,24 +101,25 @@
 }
 
 
-// Input Cover: Focused
+// Clear Input Icon
 // --------------------------------------------------
-// When the input has focus, then the input cover should be hidden
 
-.item-input-has-focus .input-cover {
+.input-clear-icon {
+  @include margin(0);
+  @include padding(0);
+  @include appearance(none);
+  @include background-position(center);
+
+  position: absolute;
+  top: 0;
   display: none;
-}
 
-.item-input-has-focus {
-  pointer-events: none;
-}
+  height: 100%;
 
-.item-input-has-focus input,
-.item-input-has-focus a,
-.item-input-has-focus button {
-  pointer-events: auto;
-}
+  border: 0;
 
+  background-repeat: no-repeat;
+}
 
 // Scroll Assist Input
 // --------------------------------------------------
@@ -116,23 +142,25 @@
 }
 
 
-// Clear Input Icon
+// Input Has focus
 // --------------------------------------------------
+// When the input has focus, then the input cover should be hidden
 
-.input-clear-icon {
-  @include margin(0);
-  @include padding(0);
-  @include background-position(center);
-
-  position: absolute;
-  top: 0;
+:host(.has-focus) .input-cover {
   display: none;
-
-  height: 100%;
-
-  background-repeat: no-repeat;
 }
 
-.item-input-has-focus.item-input-has-value .input-clear-icon {
+
+:host(.has-value) .input-clear-icon {
   display: block;
+}
+
+:host(.has-focus) {
+  pointer-events: none;
+}
+
+:host(.has-focus) input,
+:host(.has-focus) a,
+:host(.has-focus) button {
+  pointer-events: auto;
 }

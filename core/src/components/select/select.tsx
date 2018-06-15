@@ -442,8 +442,8 @@ export class Select {
     this.ionStyle.emit({
       'interactive': true,
       'select': true,
-      'select-disabled': this.disabled,
-      'input-has-value': this.hasValue()
+      'input-has-value': this.hasValue(),
+      'disabled': this.disabled,
     });
   }
 

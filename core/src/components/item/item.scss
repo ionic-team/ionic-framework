@@ -20,17 +20,24 @@
 
   --border-radius: 0;
   --border-width: 0;
-  --border-inner-width: 0;
+  --inner-border-width: 0;
 
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-end: 0;
   --padding-start: 0;
 
-  --padding-inner-top: 0;
-  --padding-inner-bottom: 0;
-  --padding-inner-start: 0;
-  --padding-inner-end: 0;
+  --inner-padding-top: 0;
+  --inner-padding-bottom: 0;
+  --inner-padding-start: 0;
+  --inner-padding-end: 0;
+
+  --box-shadow: none;
+  --inner-box-shadow: none;
+
+  --highlight-color-focus: #{ion-color(primary, base)};
+  --highlight-color-valid: #{ion-color(success, base)};
+  --highlight-color-invalid: #{ion-color(danger, base)};
 }
 
 :host(.item-disabled) {
@@ -39,6 +46,7 @@
 
   pointer-events: none;
 }
+
 
 .item-native {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
@@ -50,6 +58,8 @@
   border-style: var(--border-style);
   border-color: var(--border-color);
   border-width: var(--border-width);
+
+  box-shadow: var(--box-shadow);
 
   display: flex;
   overflow: hidden;
@@ -77,19 +87,29 @@
   box-sizing: border-box;
 }
 
+.item-state {
+  position: absolute;
+
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  height: var(--highlight-height);
+}
+
 .item-inner {
   @include margin(0);
   @include padding(0);
   @include padding(
-    var(--padding-inner-top),
-    var(--padding-inner-end),
-    var(--padding-inner-bottom),
-    var(--padding-inner-start)
+    var(--inner-padding-top),
+    var(--inner-padding-end),
+    var(--inner-padding-bottom),
+    var(--inner-padding-start)
     );
 
   border-style: var(--border-style);
   border-color: var(--border-color);
-  border-width: var(--border-inner-width);
+  border-width: var(--inner-border-width);
 
   display: flex;
   overflow: hidden;
@@ -101,6 +121,7 @@
 
   min-height: inherit;
   box-sizing: border-box;
+  box-shadow: var(--inner-box-shadow);
 }
 
 .input-wrapper {
@@ -164,12 +185,12 @@
 
 // TODO: FROM textarea
 
-.item.item-textarea {
+:host(.item-textarea) {
   align-items: stretch;
 }
 
-.item-input-has-focus a,
-.item-input-has-focus button,
-.item-input-has-focus textarea {
-  pointer-events: auto;
-}
+// :host(.item-input-has-focus) a,
+// :host(.item-input-has-focus) button,
+// :host(.item-input-has-focus) textarea {
+//   pointer-events: auto;
+// }

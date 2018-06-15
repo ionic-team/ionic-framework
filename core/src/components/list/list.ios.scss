@@ -28,20 +28,17 @@
 
 .list-ios.list-inset .item {
   --border-width: 0 0 1px 0;
-}
-
-.list-ios.list-inset .item-inner {
-  border-bottom: 0;
+  --inner-border-width: 0;
 }
 
 .list-ios.list-inset > ion-item:first-child .item,
 .list-ios.list-inset > ion-item-sliding:first-child .item {
-  border-top: 0;
+  --border-width: 0;
 }
 
 .list-ios.list-inset > ion-item:last-child .item,
 .list-ios.list-inset > ion-item-sliding:last-child .item {
-  border-bottom: 0;
+  --border-width: 0;
 }
 
 .list-ios.list-inset + ion-list.list-inset {
@@ -54,7 +51,7 @@
 
 .list-ios-lines-none .item {
   --border-width: 0;
-  --border-inner-width: 0;
+  --inner-border-width: 0;
 }
 
 // iOS Full Lines List
@@ -66,7 +63,7 @@
 }
 
 .list-ios-lines-full .item {
-  --border-inner-width: 0;
+  --inner-border-width: 0;
 }
 
 
@@ -75,7 +72,7 @@
 
 .list-ios-lines-inset .item,
 .list-ios .item-lines-inset {
-  --border-inner-width: #{0 0 $list-ios-item-border-bottom-width 0};
+  --inner-border-width: #{0 0 $list-ios-item-border-bottom-width 0};
 }
 
 
@@ -87,5 +84,5 @@
 }
 
 .list-ios .item-lines-full {
-  --border-inner-width: 0;
+  --inner-border-width: 0;
 }

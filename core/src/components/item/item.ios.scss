@@ -17,10 +17,10 @@
   --transition: background-color 200ms linear;
 
   --padding-start: #{$item-ios-padding-start};
-  --padding-inner-end: #{$item-ios-padding-end / 2};
+  --inner-padding-end: #{$item-ios-padding-end / 2};
 
   --border-style: solid;
-  --border-inner-width: #{0 0 $item-ios-border-bottom-width 0};
+  --inner-border-width: #{0 0 $item-ios-border-bottom-width 0};
 }
 
 :host(.activated) {
@@ -30,7 +30,7 @@
 
 @media screen and (orientation: landscape) {
   .item-inner {
-    @include safe-area-padding-horizontal(var(--padding-inner-start), var(--padding-inner-end));
+    @include safe-area-padding-horizontal(var(--inner-padding-start), var(--inner-padding-end));
   }
 }
 
@@ -45,7 +45,7 @@
 }
 
 :host(.item-lines-inset) {
-  --border-inner-width: #{0 0 $item-ios-border-bottom-width 0};
+  --inner-border-width: #{0 0 $item-ios-border-bottom-width 0};
 }
 
 // Full lines - remove the border from the item inner (inset list items)
@@ -58,7 +58,7 @@
 
 :host(.item-lines-full),
 :host(.item-lines-none) {
-  --border-inner-width: 0;
+  --inner-border-width: 0;
 }
 
 
@@ -132,126 +132,58 @@
 }
 
 
-// // TODO: MOVE FROM RADIO
-// // iOS Radio Item Label: Checked
-// // -----------------------------------------
+// TODO: MOVE FROM RADIO
+// iOS Radio Item Label: Checked
+// -----------------------------------------
 
-// .item-radio-checked.item-ios ion-label {
+// :host(.item-radio-checked) ::slotted(ion-label) {
 //   color: $radio-ios-color-on;
 // }
 
-// .item-radio.item-ios ion-label {
-//   @include margin-horizontal(0, null);
-// }
+
+:host(.item-radio) ::slotted(ion-label),
+:host(.item-toggle) ::slotted(ion-label) {
+  @include margin-horizontal(0, null);
+}
 
 
+// iOS Stacked & Floating Inputs
+// --------------------------------------------------
+
+:host(.item-label-stacked) ::slotted(ion-item),
+:host(.item-label-floating) ::slotted(ion-item),
+:host(.item-label-stacked) ::slotted(ion-textarea),
+:host(.item-label-floating) ::slotted(ion-textarea) {
+  --margin-top: 8px;
+  --margin-bottom: 8px;
+  --margin-start: 0px;
+}
+
+.item-ios.item-label-stacked .label-ios + .input + .cloned-input,
+.item-ios.item-label-floating .label-ios + .input + .cloned-input {
+  @include margin-horizontal(0, null);
+}
+
+// FROM TEXTAREA
+// iOS Stacked & Floating Textarea
+// --------------------------------------------------
+
+.item-ios.item-label-stacked .label-ios + .input + .cloned-input,
+.item-ios.item-label-floating .label-ios + .input + .cloned-input {
+  @include margin-horizontal(0, null);
+}
 
 
-// // FROM INPUT
-// // iOS Highlighted Input
-// // --------------------------------------------------
-
-// // TODO this is angular specific scss
-
-// // Input highlight mixin for focus, valid, and invalid states
-// @mixin ios-input-highlight($highlight-color) {
-//   border-bottom-color: $highlight-color;
-// }
-
-// // Show the focus highlight when the input has focus
-// @if ($input-ios-show-focus-highlight) {
-//   // In order to get a 2px border we need to add an inset
-//   // box-shadow 1px (this is to avoid the div resizing)
-
-//   .item-ios.item-input.item-input-has-focus .item-inner {
-//     @include ios-input-highlight($input-ios-highlight-color);
-//   }
-
-//   // The last item in a list has a border on the item, not the
-//   // inner item, so add it to the item itself
-//   .list-ios .item-input.item-input-has-focus:last-child {
-//     @include ios-input-highlight($input-ios-highlight-color);
-
-//     .item-inner {
-//       box-shadow: none;
-//     }
-//   }
-// }
-
-// // Show the valid highlight when it has the .ng-valid class and a value
-// @if ($input-ios-show-valid-highlight) {
-//   .item-ios.item-input.ng-valid.item-input-has-value:not(.item-input-has-focus) .item-inner {
-//     @include ios-input-highlight($input-ios-highlight-color-valid);
-//   }
-
-//   .list-ios .item-input.ng-valid.item-input-has-value:not(.item-input-has-focus):last-child {
-//     @include ios-input-highlight($input-ios-highlight-color-valid);
-
-//     .item-inner {
-//       box-shadow: none;
-//     }
-//   }
-// }
-
-// // Show the invalid highlight when it has the invalid class and has been touched
-// @if ($input-ios-show-invalid-highlight) {
-//   .item-ios.item-input.ng-invalid.ng-touched:not(.item-input-has-focus) .item-inner {
-//     @include ios-input-highlight($input-ios-highlight-color-invalid);
-//   }
-
-//   .list-ios .item-input.ng-invalid.ng-touched:not(.item-input-has-focus):last-child {
-//     @include ios-input-highlight($input-ios-highlight-color-invalid);
-
-//     .item-inner {
-//       box-shadow: none;
-//     }
-//   }
-// }
-
-// // iOS Input After Label
-// // --------------------------------------------------
+// iOS Input After Label
+// --------------------------------------------------
 
 // .label-ios + .input .native-input,
 // .label-ios + .input + .cloned-input {
 //   @include margin-horizontal($input-ios-by-label-margin-start, null);
 // }
 
-// // iOS Stacked & Floating Inputs
-// // --------------------------------------------------
-
-// .item-ios.item-label-stacked .native-input,
-// .item-ios.item-label-floating .native-input {
-//   @include margin(8px, null, 8px, 0);
-
-//   width: calc(100% - #{$input-ios-margin-end});
-// }
-
-// .item-ios.item-label-stacked .label-ios + .input + .cloned-input,
-// .item-ios.item-label-floating .label-ios + .input + .cloned-input {
-//   @include margin-horizontal(0, null);
-// }
-
-
-
-// // FROM TEXTAREA
-// // iOS Stacked & Floating Textarea
-// // --------------------------------------------------
-
-// .item-ios.item-label-stacked .native-textarea,
-// .item-ios.item-label-floating .native-textarea {
-//   @include margin(8px, null, 8px, 0);
-
-//   width: calc(100% - #{$textarea-ios-margin-end});
-// }
-
-// .item-ios.item-label-stacked .label-ios + .input + .cloned-input,
-// .item-ios.item-label-floating .label-ios + .input + .cloned-input {
-//   @include margin-horizontal(0, null);
-// }
-
-
-// // iOS Textarea After Label
-// // --------------------------------------------------
+// iOS Textarea After Label
+// --------------------------------------------------
 
 // .label-ios + ion-textarea .native-textarea,
 // .label-ios + .input + .cloned-input {

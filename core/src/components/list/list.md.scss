@@ -24,13 +24,12 @@
   @include border-radius($list-inset-md-border-radius);
 }
 
-.list-md[inset] ion-item:first-child .item-md {
-  @include border-radius($list-inset-md-border-radius, $list-inset-md-border-radius, null, null);
-
-  border-top-width: 0;
+.list-md[inset] ion-item:first-child {
+  --border-radius: #{$list-inset-md-border-radius $list-inset-md-border-radius 0 0};
+  --border-width: 0;
 }
 
-.list-md[inset] ion-item:last-child .item {
+.list-md[inset] ion-item:last-child {
   --border-radius: #{0 0 $list-inset-md-border-radius, $list-inset-md-border-radius};
   --border-width: 0;
 }
@@ -53,12 +52,8 @@
 
 .list-md-lines-none .item {
   --border-width: 0;
+  --inner-border-width: 0;
 }
-
-.list-md-lines-none .item {
-  --border-inner-width: 0;
-}
-
 
 // Material Design Full Lines List
 // --------------------------------------------------
@@ -74,7 +69,7 @@
 
 .list-md-lines-inset .item,
 .list-md .item-lines-inset {
-  --border-inner-width: #{0 0 $list-md-item-border-bottom-width 0};
+  --inner-border-width: #{0 0 $list-md-item-border-bottom-width 0};
 }
 
 
@@ -82,7 +77,7 @@
 // if they are explicitly styled by the item
 // to be different than the list
 .list-md .item-lines-full {
-  --border-inner-width: 0;
+  --inner-border-width: 0;
 }
 
 .list-md .item-lines-inset {

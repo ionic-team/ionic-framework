@@ -93,8 +93,8 @@ export class Checkbox implements CheckboxInput {
   @Watch('disabled')
   emitStyle() {
     this.ionStyle.emit({
-      'checkbox-disabled': this.disabled,
       'checkbox-checked': this.checked,
+      'disabled': this.disabled,
     });
   }
 

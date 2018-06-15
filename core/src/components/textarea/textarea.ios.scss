@@ -4,13 +4,14 @@
 // iOS Textarea
 // --------------------------------------------------
 
-.native-textarea {
-  @include placeholder($textarea-ios-placeholder-color);
-  @include margin($textarea-ios-margin-top, $textarea-ios-margin-end, $textarea-ios-margin-bottom, $textarea-ios-margin-start);
-  @include padding(0);
-
-  width: calc(100% - #{($textarea-ios-margin-end + $textarea-ios-margin-start)});
-
+:host {
   font-family: $textarea-ios-font-family;
   font-size: $textarea-ios-font-size;
+
+  --margin-top: #{$textarea-ios-margin-top};
+  --margin-end: #{$textarea-ios-margin-end};
+  --margin-bottom: #{$textarea-ios-margin-bottom};
+  --margin-start: #{$textarea-ios-margin-start};
+
+  --placeholder-color: #{$textarea-ios-placeholder-color};
 }

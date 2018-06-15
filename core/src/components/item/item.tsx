@@ -1,6 +1,6 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
 import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
-import { createColorClasses, openURL } from '../../utils/theme';
+import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 @Component({
   tag: 'ion-item',
@@ -61,11 +61,14 @@ export class Item {
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
 
+  @Prop() state?: 'valid' | 'unvalid' | 'focus';
+
   /**
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
   @Prop() routerDirection?: RouterDirection;
+
 
   @Listen('ionStyle')
   itemStyle(ev: UIEvent) {
@@ -116,8 +119,9 @@ export class Item {
     const themedClasses = {
       ...childStyles,
       ...createColorClasses(this.color),
-      'item-disabled': this.disabled,
       [`item-lines-${this.lines}`]: !!this.lines,
+      'item-disabled': this.disabled,
+      'in-list': hostContext('ion-list', this.el),
       'item': true
     };
 
@@ -128,16 +132,18 @@ export class Item {
   }
 
   render() {
+    const { href, detail, mode, win, state, detailIcon, el, routerDirection } = this;
+
     const clickable = this.isClickable();
-    const TagType = clickable ? (this.href ? 'a' : 'button') : 'div';
-    const attrs = TagType === 'button' ? { type: 'button' } : { href: this.href };
-    const showDetail = this.detail != null ? this.detail : this.mode === 'ios' && clickable;
+    const TagType = clickable ? (href ? 'a' : 'button') : 'div';
+    const attrs = TagType === 'button' ? { type: 'button' } : { href: href };
+    const showDetail = detail != null ? detail : mode === 'ios' && clickable;
 
     return (
       <TagType
         {...attrs}
         class="item-native"
-        onClick={ev => openURL(this.win, this.href, ev, this.routerDirection)}
+        onClick={ev => openURL(win, href, ev, routerDirection)}
       >
         <slot name="start" />
         <div class="item-inner">
@@ -145,9 +151,10 @@ export class Item {
             <slot />
           </div>
           <slot name="end"></slot>
-          { showDetail && <ion-icon icon={this.detailIcon} class="item-detail-icon"></ion-icon> }
+          { showDetail && <ion-icon icon={detailIcon} class="item-detail-icon"></ion-icon> }
         </div>
-        { clickable && this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el} /> }
+        { state && <div class="item-state"></div> }
+        { clickable && mode === 'md' && <ion-ripple-effect tapClick={true} parent={el} /> }
       </TagType>
     );
   }

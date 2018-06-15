@@ -186,7 +186,7 @@ export class Range implements BaseInput {
 
   private emitStyle() {
     this.ionStyle.emit({
-      'range-disabled': this.disabled
+      'disabled': this.disabled
     });
   }
 

@@ -1,39 +1,25 @@
 @import "./input";
 @import "./input.ios.vars";
 
-// iOS Input
-// --------------------------------------------------
-
-.native-input {
-  @include placeholder($input-ios-placeholder-color);
-  @include margin($input-ios-margin-top, $input-ios-margin-end, $input-ios-margin-bottom, $input-ios-margin-start);
-  @include padding(0);
-
-  width: calc(100% - #{($input-ios-margin-end + $input-ios-margin-start)});
-
+:host {
   font-family: $input-ios-font-family;
   font-size: $input-ios-font-size;
+
+  --margin-top: #{$input-ios-margin-top};
+  --margin-end: #{$input-ios-margin-end};
+  --margin-bottom: #{$input-ios-margin-bottom};
+  --margin-start: #{$input-ios-margin-start};
+
+  --placeholder-color: #{$input-ios-placeholder-color};
 }
-
-
-// iOS Inset Input
-// --------------------------------------------------
-
-.inset-input {
-  @include padding($input-ios-inset-padding-top, $input-ios-inset-padding-end, $input-ios-inset-padding-bottom, $input-ios-inset-padding-start);
-  @include margin($input-ios-inset-margin-top, $input-ios-inset-margin-end, $input-ios-inset-margin-bottom, $input-ios-inset-margin-start);
-}
-
 
 // iOS Clear Input Icon
 // --------------------------------------------------
 
 :host([clear-input]) {
   position: relative;
-}
 
-:host([clear-input]) .native-input {
-  @include padding-horizontal(null, $input-ios-input-clear-padding-end);
+  --padding-end: $input-ios-input-clear-padding-end;
 }
 
 .input-clear-icon {
@@ -45,3 +31,12 @@
   background-color: transparent;
   background-size: $input-ios-input-clear-icon-size;
 }
+
+// iOS Inset Input
+// --------------------------------------------------
+
+// TODO: where is it apply
+// :host(.inset-input) {
+//   @include padding($input-ios-inset-padding-top, $input-ios-inset-padding-end, $input-ios-inset-padding-bottom, $input-ios-inset-padding-start);
+//   @include margin($input-ios-inset-margin-top, $input-ios-inset-margin-end, $input-ios-inset-margin-bottom, $input-ios-inset-margin-start);
+// }
