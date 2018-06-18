@@ -12,16 +12,16 @@ $input-md-font-family:                    $font-family-md-base !default;
 $input-md-font-size:                      inherit !default;
 
 /// @prop - Margin top of the input
-$input-md-margin-top:                     $item-md-padding-top !default;
+$input-md-padding-top:                     $item-md-padding-top !default;
 
 /// @prop - Margin end of the input
-$input-md-margin-end:                     ($item-md-padding-end / 2) !default;
+$input-md-padding-end:                     ($item-md-padding-end / 2) !default;
 
 /// @prop - Margin bottom of the input
-$input-md-margin-bottom:                  $item-md-padding-bottom !default;
+$input-md-padding-bottom:                  $item-md-padding-bottom !default;
 
 /// @prop - Margin start of the input
-$input-md-margin-start:                   ($item-md-padding-start / 2) !default;
+$input-md-padding-start:                   ($item-md-padding-start / 2) !default;
 
 /// @prop - Width of the icon used to clear the input
 $input-md-input-clear-icon-width:         30px !default;

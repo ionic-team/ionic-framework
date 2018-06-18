@@ -24,7 +24,6 @@
 }
 
 :host(.activated) {
-  --background: var(--background-active);
   --transition: none;
 }
 

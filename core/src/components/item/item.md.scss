@@ -15,27 +15,12 @@
   --ion-color-tint: #{$item-md-background-color-active};
   --ion-color-shade: #{$item-md-border-bottom-color};
 
+  --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
+
   --padding-start: #{$item-md-padding-start};
   --inner-padding-end: #{$item-md-padding-end / 2};
 
-  --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
-
-  --border-width: 0;
-  --inner-border-width: 0;
-  --border-color: #{$item-md-border-bottom-style};
-  --border-style: #{$item-md-border-bottom-style};
-
   --padding-start: #{$item-md-padding-start};
-
-  --highlight-color-focus: #{ion-color(primary, base)};
-  --highlight-color-valid: #{ion-color(success, base)};
-  --highlight-color-invalid: #{ion-color(danger, base)};
-
-  --highlight-height: 2px;
-}
-
-:host(.activated) {
-  background-color: var(--background-active);
 }
 
 // Material Design Item Lines

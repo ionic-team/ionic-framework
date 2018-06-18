@@ -116,18 +116,16 @@ export class Item {
       Object.assign(childStyles, this.itemStyles[key]);
     }
 
-    const themedClasses = {
-      ...childStyles,
-      ...createColorClasses(this.color),
-      [`item-lines-${this.lines}`]: !!this.lines,
-      'item-disabled': this.disabled,
-      'in-list': hostContext('ion-list', this.el),
-      'item': true
-    };
-
     return {
-      class: themedClasses,
       'tappable': this.isClickable() ? '' : null,
+      class: {
+        ...childStyles,
+        ...createColorClasses(this.color),
+        [`item-lines-${this.lines}`]: !!this.lines,
+        'item-disabled': this.disabled,
+        'in-list': hostContext('ion-list', this.el),
+        'item': true
+      }
     };
   }
 
@@ -136,7 +134,7 @@ export class Item {
 
     const clickable = this.isClickable();
     const TagType = clickable ? (href ? 'a' : 'button') : 'div';
-    const attrs = TagType === 'button' ? { type: 'button' } : { href: href };
+    const attrs = TagType === 'button' ? { type: 'button' } : { href };
     const showDetail = detail != null ? detail : mode === 'ios' && clickable;
 
     return (

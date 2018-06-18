@@ -5,25 +5,18 @@
 
 :host {
   position: relative;
-  display: block;
-
+  display: flex;
+  align-items: center;
   flex: 1;
 
   width: 100%;
 
-  --padding-top: 0;
-  --padding-end: 0;
-  --padding-bottom: 0;
-  --padding-start: 0;
+  --padding-top: 0px;
+  --padding-end: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
 
-  --border-radius: 0;
-}
-
-// Input Within An Item
-// --------------------------------------------------
-
-:host(.in-item) {
-  position: static;
+  --border-radius: 0px;
 }
 
 
@@ -34,12 +27,6 @@
   @include appearance(none);
   @include border-radius(var(--border-radius));
   @include placeholder(var(--placeholder-color));
-  @include margin(
-    var(--margin-top),
-    var(--margin-end),
-    var(--margin-bottom),
-    var(--margin-start)
-  );
 
   @include padding(
     var(--padding-top),
@@ -110,35 +97,21 @@
   @include appearance(none);
   @include background-position(center);
 
-  position: absolute;
-  top: 0;
-  display: none;
-
-  height: 100%;
-
   border: 0;
 
+  background-color: transparent;
   background-repeat: no-repeat;
+
+  visibility: hidden;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
 
-// Scroll Assist Input
-// --------------------------------------------------
-// This input is used to help the app handle
-// Next and Previous input tabbing
-
-:host([next-input]) {
-  @include padding(0);
-
-  position: absolute;
-  bottom: 20px;
-
-  width: 1px;
-  height: 1px;
-
-  border: 0;
-  background: transparent;
-
-  pointer-events: none;
+:host(.has-focus.has-value) .input-clear-icon {
+  visibility: visible;
 }
 
 
@@ -148,11 +121,6 @@
 
 :host(.has-focus) .input-cover {
   display: none;
-}
-
-
-:host(.has-value) .input-clear-icon {
-  display: block;
 }
 
 :host(.has-focus) {

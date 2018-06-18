@@ -9,31 +9,21 @@
   font-family: $input-md-font-family;
   font-size: $input-md-font-size;
 
-  --margin-top: #{$input-md-margin-top};
-  --margin-end: #{$input-md-margin-end};
-  --margin-bottom: #{$input-md-margin-bottom};
-  --margin-start: #{$input-md-margin-start};
+  --padding-top: #{$input-md-padding-top};
+  --padding-end: #{$input-md-padding-end};
+  --padding-bottom: #{$input-md-padding-bottom};
+  --padding-start: #{$input-md-padding-start};
 
   --placeholder-color: #{$input-md-placeholder-color};
 }
 
-// Material Design Clear Input Icon
-// --------------------------------------------------
 
-:host([clear-input]) {
-  position: relative;
-
-  --padding-end: #{$input-md-input-clear-icon-width};
-}
-
-
-.native-input-clear-icon {
-  @include position-horizontal(null, 0);
+.input-clear-icon {
   @include svg-background-image($input-md-input-clear-icon-svg);
 
   width: $input-md-input-clear-icon-width;
+  height: $input-md-input-clear-icon-width;
 
-  background-color: transparent;
   background-size: $input-md-input-clear-icon-size;
 }
 

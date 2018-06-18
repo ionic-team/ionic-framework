@@ -38,6 +38,12 @@
   --highlight-color-focus: #{ion-color(primary, base)};
   --highlight-color-valid: #{ion-color(success, base)};
   --highlight-color-invalid: #{ion-color(danger, base)};
+
+  --highlight-height: 2px;
+}
+
+:host(.activated) {
+  --background: var(--background-active);
 }
 
 :host(.item-disabled) {

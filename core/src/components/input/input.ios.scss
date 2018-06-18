@@ -5,30 +5,20 @@
   font-family: $input-ios-font-family;
   font-size: $input-ios-font-size;
 
-  --margin-top: #{$input-ios-margin-top};
-  --margin-end: #{$input-ios-margin-end};
-  --margin-bottom: #{$input-ios-margin-bottom};
-  --margin-start: #{$input-ios-margin-start};
+  --padding-top: #{$input-ios-padding-top};
+  --padding-end: #{$input-ios-padding-end};
+  --padding-bottom: #{$input-ios-padding-bottom};
+  --padding-start: #{$input-ios-padding-start};
 
   --placeholder-color: #{$input-ios-placeholder-color};
 }
 
-// iOS Clear Input Icon
-// --------------------------------------------------
-
-:host([clear-input]) {
-  position: relative;
-
-  --padding-end: $input-ios-input-clear-padding-end;
-}
-
 .input-clear-icon {
-  @include position-horizontal(null, 0);
   @include svg-background-image($input-ios-input-clear-icon-svg);
 
   width: $input-ios-input-clear-icon-width;
+  height: $input-ios-input-clear-icon-width;
 
-  background-color: transparent;
   background-size: $input-ios-input-clear-icon-size;
 }
 

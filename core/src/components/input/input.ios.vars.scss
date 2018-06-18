@@ -12,16 +12,16 @@ $input-ios-font-family:                   $font-family-ios-base !default;
 $input-ios-font-size:                     inherit !default;
 
 /// @prop - Margin top of the input
-$input-ios-margin-top:                    $item-ios-padding-top !default;
+$input-ios-padding-top:                    $item-ios-padding-top !default;
 
 /// @prop - Margin end of the input
-$input-ios-margin-end:                    ($item-ios-padding-end / 2) !default;
+$input-ios-padding-end:                    ($item-ios-padding-end / 2) !default;
 
 /// @prop - Margin bottom of the input
-$input-ios-margin-bottom:                 $item-ios-padding-bottom !default;
+$input-ios-padding-bottom:                 $item-ios-padding-bottom !default;
 
 /// @prop - Margin start of the input
-$input-ios-margin-start:                  0 !default;
+$input-ios-padding-start:                  0px !default;
 
 /// @prop - Margin start of the input when it is after a label
 $input-ios-by-label-margin-start:         $item-ios-padding-start !default;

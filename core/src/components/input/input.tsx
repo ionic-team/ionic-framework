@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, Watch, State } from '@stencil/core';
 import { Color, InputChangeEvent, Mode, StyleEvent  } from '../../interface';
 import { debounceEvent, deferEvent } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
@@ -20,6 +20,8 @@ export class Input implements InputComponent {
 
   mode!: Mode;
   color?: Color;
+
+  @State() hasFocus = false;
 
   @Element() el!: HTMLElement;
 
@@ -238,7 +240,7 @@ export class Input implements InputComponent {
       'interactive': true,
       'input': true,
       'input-has-value': this.hasValue(),
-      'input-has-focus': this.hasFocus(),
+      'input-has-focus': this.hasFocus,
       'disabled': this.disabled,
     });
   }
@@ -252,6 +254,7 @@ export class Input implements InputComponent {
   }
 
   private onBlur() {
+    this.hasFocus = false;
     this.focusChanged();
     this.emitStyle();
 
@@ -259,6 +262,7 @@ export class Input implements InputComponent {
   }
 
   private onFocus() {
+    this.hasFocus = true;
     this.focusChanged();
     this.emitStyle();
 
@@ -267,7 +271,7 @@ export class Input implements InputComponent {
 
   private focusChanged() {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this.clearOnEdit && !this.hasFocus() && this.hasValue()) {
+    if (this.clearOnEdit && !this.hasFocus && this.hasValue()) {
       this.didBlurAfterEdit = true;
     }
   }
@@ -298,11 +302,6 @@ export class Input implements InputComponent {
     this.value = '';
   }
 
-  private hasFocus(): boolean {
-    // check if an input has focus or not
-    return this.nativeInput === document.activeElement;
-  }
-
   private hasValue(): boolean {
     return !!this.value;
   }
@@ -312,7 +311,7 @@ export class Input implements InputComponent {
       class: {
         'in-item': hostContext('.item', this.el),
         'has-value': this.hasValue(),
-        'has-focus': this.hasFocus()
+        'has-focus': this.hasFocus
       }
     };
   }
@@ -353,10 +352,9 @@ export class Input implements InputComponent {
         onFocus={this.onFocus.bind(this)}
         onKeyDown={this.inputKeydown.bind(this)}
       />,
-      <button
+      this.clearInput && <button
         type="button"
         class="input-clear-icon"
-        hidden={!this.clearInput}
         onClick={this.clearTextInput.bind(this)}
         onMouseDown={this.clearTextInput.bind(this)}/>
     ];

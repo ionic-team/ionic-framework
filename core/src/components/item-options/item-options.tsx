@@ -13,9 +13,6 @@ import { Side, isEndSide } from '../../utils/helpers';
   styleUrls: {
     ios: 'item-options.ios.scss',
     md: 'item-options.md.scss'
-  },
-  host: {
-    theme: 'item-options'
   }
 })
 export class ItemOptions {
