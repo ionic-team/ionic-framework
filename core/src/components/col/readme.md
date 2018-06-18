@@ -3,6 +3,9 @@
 Columns are cellular components of the [grid](../Grid) system and go inside of a [row](../Row).
 They will expand to fill their row. All content within a grid should go inside of a column.
 
+See [Grid Layout](/docs/layout/grid) for more information.
+
+
 ## Column attributes
 
 By default, columns will stretch to fill the entire height of the row.

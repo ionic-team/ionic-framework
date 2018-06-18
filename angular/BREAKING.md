@@ -13,6 +13,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Dynamic Mode](#dynamic-mode)
 - [FAB](#fab)
 - [Fixed Content](#fixed-content)
+- [Grid](#grid)
 - [Icon](#icon)
 - [Input](#Input)
 - [Item](#item)
@@ -426,6 +427,19 @@ The `<ion-fab>` container was previously placed inside of the fixed content by d
   Scrollable Content
 </ion-content>
 ```
+
+## Grid
+
+The Grid has been refactored in order to support css variables and a dynamic number of columns. The following column attributes have been changed.
+
+_In the following examples, `{breakpoint}` refers to the optional screen breakpoint (xs, sm, md, lg, xl) and `{value}` refers to the number of columns._
+
+- `col-{breakpoint}-{value}` attributes have been renamed to `size-{breakpoint}=“{value}”`
+- `offset-{breakpoint}-{value}` attributes have been renamed to `offset-{breakpoint}=“{value}”`
+- `push-{breakpoint}-{value}` attributes have been renamed to `push-{breakpoint}=“{value}”`
+- `pull-{breakpoint}-{value}` attributes have been renamed to `pull-{breakpoint}=“{value}”`
+
+Customizing the padding styles should now be done with css variables. For more information, see [Grid Layout](https://github.com/ionic-team/ionic-docs/blob/master/src/content/layout/grid.md).
 
 ## Icon
 
