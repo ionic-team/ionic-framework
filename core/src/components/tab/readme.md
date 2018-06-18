@@ -1,48 +1,10 @@
 # ion-tab
 
-The Tab component, written `<ion-tab>`, is styled based on the mode and should
-be used in conjunction with the [Tabs](../Tabs/) component.
-
-Each `ion-tab` is a declarative component for a [NavController](../../../navigation/NavController/).
-Basically, each tab is a `NavController`. For more information on using
-navigation controllers take a look at the [NavController API Docs](../../../navigation/NavController/).
+The Tab component is a child component of the [Tabs](../Tabs/) component.
+Each Tab is meant to be a top level navigation stack for an app.
+Meaning that an app can have many tabs, all wit their own independent navigation.
 
 See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.
-
-To add a basic tab, you can use the following markup where the `root` property
-is the page you want to load for that tab, `label` is the optional text to
-display on the tab, and `icon` is the optional [icon](../../icon/Icon/).
-
-```html
-<ion-tabs>
- <ion-tab [root]="chatRoot" label="Chat" icon="chat"></ion-tab>
-</ion-tabs>
-```
-
-
-Sometimes you may want to call a method instead of navigating to a new
-page. You can use the `(ionSelect)` event to call a method on your class when
-the tab is selected. Below is an example of presenting a modal from one of
-the tabs.
-
-```html
-<ion-tabs>
-  <ion-tab (ionSelect)="chat()" label="Show Modal"></ion-tab>
-</ion-tabs>pop
-```
-
-```ts
-export class Tabs {
-  constructor(public modalCtrl: ModalController) {
-
-  }
-
-  chat() {
-    let modal = this.modalCtrl.create(ChatPage);
-    modal.present();
-  }
-}
-```
 
 
 <!-- Auto Generated Below -->
@@ -53,6 +15,8 @@ export class Tabs {
 #### active
 
 boolean
+
+If the tab is active or not
 
 
 #### badge
@@ -72,6 +36,8 @@ The badge color for the tab button.
 #### btnId
 
 string
+
+hidden
 
 
 #### component
@@ -148,6 +114,8 @@ If true, hide the tabs on child pages.
 
 boolean
 
+If the tab is active or not
+
 
 #### badge
 
@@ -166,6 +134,8 @@ The badge color for the tab button.
 #### btn-id
 
 string
+
+hidden
 
 
 #### component
@@ -247,8 +217,12 @@ Emitted when the current tab is selected.
 
 #### getTabId()
 
+Get the Id for the tab
+
 
 #### setActive()
+
+Set the active component for the tab
 
 
 

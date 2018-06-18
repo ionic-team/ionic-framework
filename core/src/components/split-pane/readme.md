@@ -9,30 +9,6 @@ collapse and the menu will become hidden again. This is especially useful when
 creating an app that will be served over a browser or deployed through the app
 store to phones and tablets.
 
-To use SplitPane, simply add the component around your root component.
-In this example, we'll be using a sidemenu layout, similar to what is
-provided from the sidemenu starter template.
-
-```html
-<ion-split-pane>
-  <!--  our side menu  -->
-  <ion-menu>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>Menu</ion-title>
-      </ion-toolbar>
-    </ion-header>
-  </ion-menu>
-
-  <!-- the main content -->
-  <ion-nav [root]="root" main></ion-nav>
-</ion-split-pane>
-```
-
-Here, SplitPane will look for the element with the `main` attribute and make
-that the central component on larger screens. The `main` component can be any
-Ionic component (`ion-nav` or `ion-tabs`) except `ion-menu`.
-
 
 ### Setting breakpoints
 
@@ -40,26 +16,12 @@ By default, SplitPane will expand when the screen is larger than 768px.
 If you want to customize this, use the `when` input. The `when` input can
 accept any valid media query, as it uses `matchMedia()` underneath.
 
-```
-<ion-split-pane when="(min-width: 475px)">
-
-  <!--  our side menu  -->
-  <ion-menu>
-  ....
-  </ion-menu>
-
-  <!-- the main content -->
-  <ion-nav [root]="root" main></ion-nav>
-</ion-split-pane>
-```
 
 SplitPane also provides some predefined media queries that can be used.
 
 ```html
 <!-- could be "xs", "sm", "md", "lg", or "xl" -->
-<ion-split-pane when="lg">
-...
-</ion-split-pane>
+<ion-split-pane when="lg"></ion-split-pane>
 ```
 
 
@@ -73,41 +35,6 @@ SplitPane also provides some predefined media queries that can be used.
 
  You can also pass in boolean values that will trigger SplitPane when the value
  or expression evaluates to true.
-
-
- ```html
- <ion-split-pane [when]="isLarge">
- ...
- </ion-split-pane>
- ```
-
- ```ts
- class MyClass {
-   public isLarge = false;
-   constructor(){}
- }
- ```
-
- Or
-
- ```html
- <ion-split-pane [when]="shouldShow()">
- ...
- </ion-split-pane>
- ```
-
- ```ts
- class MyClass {
-   constructor(){}
-   shouldShow(){
-     if(conditionA){
-       return true
-     } else {
-       return false
-     }
-   }
- }
- ```
 
 
 <!-- Auto Generated Below -->
@@ -167,6 +94,8 @@ Expression to be called when the split-pane visibility has changed
 
 
 #### isVisible()
+
+Returns if the split pane is toggled or not
 
 
 

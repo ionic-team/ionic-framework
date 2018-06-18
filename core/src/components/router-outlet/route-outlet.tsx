@@ -41,6 +41,9 @@ export class RouterOutlet implements NavOutlet {
     this.activeEl = this.activeComponent = undefined;
   }
 
+  /**
+   * Set the root component for the given navigation stack
+   */
   @Method()
   async setRoot(component: ComponentRef, params?: ComponentProps, opts?: RouterOutletOptions): Promise<boolean> {
     if (this.isTransitioning || this.activeComponent === component) {
@@ -62,6 +65,7 @@ export class RouterOutlet implements NavOutlet {
     return true;
   }
 
+  /** @hidden */
   @Method()
   async commit(enteringEl: HTMLElement, leavingEl: HTMLElement|undefined, opts?: RouterOutletOptions): Promise<boolean> {
     // isTransitioning acts as a lock to prevent reentering
@@ -93,6 +97,7 @@ export class RouterOutlet implements NavOutlet {
     return true;
   }
 
+  /** @hidden */
   @Method()
   async setRouteId(id: string, params: any, direction: number): Promise<RouteWrite> {
     const changed = await this.setRoot(id, params, {
@@ -105,6 +110,7 @@ export class RouterOutlet implements NavOutlet {
     };
   }
 
+  /** Returns the ID for the current route */
   @Method()
   getRouteId(): RouteID|undefined {
     const active = this.activeEl;

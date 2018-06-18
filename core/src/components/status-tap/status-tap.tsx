@@ -9,6 +9,7 @@ export class StatusTap {
   @Prop({ context: 'queue' }) queue!: QueueController;
   @Prop({ context: 'window' }) win!: Window;
 
+  /** How long the scrolling action should take. */
   @Prop() duration = 300;
 
   @Listen('window:statusTap')

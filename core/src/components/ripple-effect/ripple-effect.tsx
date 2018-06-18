@@ -15,6 +15,7 @@ export class RippleEffect {
   @Prop({context: 'enableListener'}) enableListener!: EventListenerEnable;
   @Prop({ context: 'document' }) doc!: Document;
 
+  /** @hidden */
   @Prop() tapClick = false;
   @Watch('tapClick')
   tapClickChanged(tapClick: boolean) {
@@ -47,6 +48,9 @@ export class RippleEffect {
     this.tapClickChanged(this.tapClick);
   }
 
+  /**
+   * Adds the ripple effect to the parent elment
+   */
   @Method()
   addRipple(pageX: number, pageY: number) {
     let x: number, y: number, size: number;

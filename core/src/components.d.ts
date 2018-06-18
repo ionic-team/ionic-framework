@@ -4711,7 +4711,7 @@ declare global {
   namespace StencilComponents {
     interface IonPopover {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color': Color;
       /**
@@ -4749,7 +4749,7 @@ declare global {
        */
       'leaveAnimation': AnimationBuilder;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
       /**
@@ -4800,7 +4800,7 @@ declare global {
   namespace JSXElements {
     export interface IonPopoverAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color'?: Color;
       /**
@@ -4834,7 +4834,7 @@ declare global {
        */
       'leaveAnimation'?: AnimationBuilder;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
       /**
@@ -5471,6 +5471,9 @@ declare global {
 
   namespace StencilComponents {
     interface IonRippleEffect {
+      /**
+       * Adds the ripple effect to the parent elment
+       */
       'addRipple': (pageX: number, pageY: number) => void;
       'tapClick': boolean;
     }
@@ -5619,7 +5622,13 @@ declare global {
       'animationBuilder': AnimationBuilder;
       'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
       'delegate': FrameworkDelegate;
+      /**
+       * Returns the ID for the current route 
+       */
       'getRouteId': () => RouteID | undefined;
+      /**
+       * Set the root component for the given navigation stack
+       */
       'setRoot': (component: ComponentRef, params?: ComponentProps | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
       'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
     }
@@ -5661,9 +5670,12 @@ declare global {
     interface IonRouter {
       'navChanged': (intent: RouterIntent) => Promise<boolean>;
       'printDebug': () => void;
+      /**
+       * Navigate to the specified URL 
+       */
       'push': (url: string, direction?: RouterDirection) => Promise<boolean>;
       /**
-       * By default `ion-router` will match the routes at the root path ("/"). That can be changed when  T
+       * By default `ion-router` will match the routes at the root path ("/"). That can be changed when
        */
       'root': string;
       /**
@@ -5692,10 +5704,16 @@ declare global {
   }
   namespace JSXElements {
     export interface IonRouterAttributes extends HTMLAttributes {
+      /**
+       * Emitted when the route had changed
+       */
       'onIonRouteDidChange'?: (event: CustomEvent<RouterEventDetail>) => void;
+      /**
+       * Event emitted when the route is about to change
+       */
       'onIonRouteWillChange'?: (event: CustomEvent<RouterEventDetail>) => void;
       /**
-       * By default `ion-router` will match the routes at the root path ("/"). That can be changed when  T
+       * By default `ion-router` will match the routes at the root path ("/"). That can be changed when
        */
       'root'?: string;
       /**
@@ -5748,11 +5766,29 @@ declare global {
        * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionScroll, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
        */
       'forceOverscroll': boolean;
+      /**
+       * The mode for component. 
+       */
       'mode': Mode;
+      /**
+       * Scroll by a specified X/Y distance in the component 
+       */
       'scrollByPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
+      /**
+       * If true, the component will emit scroll events 
+       */
       'scrollEvents': boolean;
+      /**
+       * Scroll to the bottom of the component 
+       */
       'scrollToBottom': (duration: number) => Promise<void>;
+      /**
+       * Scroll to a specified X/Y location in the component 
+       */
       'scrollToPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
+      /**
+       * Scroll to the top of the component 
+       */
       'scrollToTop': (duration: number) => Promise<void>;
     }
   }
@@ -5780,6 +5816,9 @@ declare global {
        * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionScroll, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
        */
       'forceOverscroll'?: boolean;
+      /**
+       * The mode for component. 
+       */
       'mode'?: Mode;
       /**
        * Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents`
@@ -5793,6 +5832,9 @@ declare global {
        * Emitted when the scroll has started.
        */
       'onIonScrollStart'?: (event: CustomEvent<ScrollBaseDetail>) => void;
+      /**
+       * If true, the component will emit scroll events 
+       */
       'scrollEvents'?: boolean;
     }
   }
@@ -6155,9 +6197,21 @@ declare global {
 
   namespace StencilComponents {
     interface IonSelectPopover {
+      /**
+       * Header text for the popover 
+       */
       'header': string;
+      /**
+       * Text for popover body 
+       */
       'message': string;
+      /**
+       * Array of options for the popover 
+       */
       'options': SelectPopoverOption[];
+      /**
+       * Subheader text for the popover 
+       */
       'subHeader': string;
     }
   }
@@ -6181,9 +6235,21 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSelectPopoverAttributes extends HTMLAttributes {
+      /**
+       * Header text for the popover 
+       */
       'header'?: string;
+      /**
+       * Text for popover body 
+       */
       'message'?: string;
+      /**
+       * Array of options for the popover 
+       */
       'options'?: SelectPopoverOption[];
+      /**
+       * Subheader text for the popover 
+       */
       'subHeader'?: string;
     }
   }
@@ -6366,6 +6432,9 @@ declare global {
 
   namespace StencilComponents {
     interface IonSkeletonText {
+      /**
+       * Width for the element to render at. Default is 100% 
+       */
       'width': string;
     }
   }
@@ -6389,6 +6458,9 @@ declare global {
   }
   namespace JSXElements {
     export interface IonSkeletonTextAttributes extends HTMLAttributes {
+      /**
+       * Width for the element to render at. Default is 100% 
+       */
       'width'?: string;
     }
   }
@@ -6588,7 +6660,7 @@ declare global {
   namespace StencilComponents {
     interface IonSpinner {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color': Color;
       /**
@@ -6596,7 +6668,7 @@ declare global {
        */
       'duration': number;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
       /**
@@ -6630,7 +6702,7 @@ declare global {
   namespace JSXElements {
     export interface IonSpinnerAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color'?: Color;
       /**
@@ -6638,7 +6710,7 @@ declare global {
        */
       'duration'?: number;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
       /**
@@ -6663,6 +6735,9 @@ declare global {
        */
       'disabled': boolean;
       'isPane': (element: HTMLElement) => boolean;
+      /**
+       * Returns if the split pane is toggled or not 
+       */
       'isVisible': () => boolean;
       /**
        * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
@@ -6715,6 +6790,9 @@ declare global {
 
   namespace StencilComponents {
     interface IonStatusTap {
+      /**
+       * How long the scrolling action should take. 
+       */
       'duration': number;
     }
   }
@@ -6738,6 +6816,9 @@ declare global {
   }
   namespace JSXElements {
     export interface IonStatusTapAttributes extends HTMLAttributes {
+      /**
+       * How long the scrolling action should take. 
+       */
       'duration'?: number;
     }
   }
@@ -6748,7 +6829,13 @@ declare global {
 
   namespace StencilComponents {
     interface IonTabButton {
+      /**
+       * If the tab is selected or not 
+       */
       'selected': boolean;
+      /**
+       * The tab component for the button 
+       */
       'tab': HTMLIonTabElement;
     }
   }
@@ -6772,10 +6859,25 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTabButtonAttributes extends HTMLAttributes {
+      /**
+       * Emitted when the tab button is loaded 
+       */
       'onIonTabButtonDidLoad'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted when the tab button is destroyed 
+       */
       'onIonTabButtonDidUnload'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted when the tab bar is clicked  
+       */
       'onIonTabbarClick'?: (event: CustomEvent<HTMLIonTabElement>) => void;
+      /**
+       * If the tab is selected or not 
+       */
       'selected'?: boolean;
+      /**
+       * The tab component for the button 
+       */
       'tab'?: HTMLIonTabElement;
     }
   }
@@ -6786,6 +6888,9 @@ declare global {
 
   namespace StencilComponents {
     interface IonTab {
+      /**
+       * If the tab is active or not 
+       */
       'active': boolean;
       /**
        * The badge for the tab.
@@ -6795,6 +6900,9 @@ declare global {
        * The badge color for the tab button.
        */
       'badgeColor': Color;
+      /**
+       * hidden 
+       */
       'btnId': string;
       /**
        * The component to display inside of the tab.
@@ -6805,6 +6913,9 @@ declare global {
        * If true, the user cannot interact with the tab. Defaults to `false`.
        */
       'disabled': boolean;
+      /**
+       * Get the Id for the tab 
+       */
       'getTabId': () => string | null;
       /**
        * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
@@ -6826,6 +6937,9 @@ declare global {
        * If true, the tab will be selected. Defaults to `false`.
        */
       'selected': boolean;
+      /**
+       * Set the active component for the tab 
+       */
       'setActive': () => Promise<void>;
       /**
        * If true, the tab button is visible within the tabbar. Defaults to `true`.
@@ -6857,6 +6971,9 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTabAttributes extends HTMLAttributes {
+      /**
+       * If the tab is active or not 
+       */
       'active'?: boolean;
       /**
        * The badge for the tab.
@@ -6866,6 +6983,9 @@ declare global {
        * The badge color for the tab button.
        */
       'badgeColor'?: Color;
+      /**
+       * hidden 
+       */
       'btnId'?: string;
       /**
        * The component to display inside of the tab.
@@ -6917,11 +7037,29 @@ declare global {
 
   namespace StencilComponents {
     interface IonTabbar {
+      /**
+       * If the tabbar should include the highlight on the active tab 
+       */
       'highlight': boolean;
+      /**
+       * The layout of the title and icons 
+       */
       'layout': TabbarLayout;
+      /**
+       * The placement of the tabbar in the app 
+       */
       'placement': TabbarPlacement;
+      /**
+       * If the tabbar is scrollable or not 
+       */
       'scrollable': boolean;
+      /**
+       * The selected tab component 
+       */
       'selectedTab': HTMLIonTabElement;
+      /**
+       * The tabs to render 
+       */
       'tabs': HTMLIonTabElement[];
       /**
        * If true, the tabbar will be translucent. Defaults to `false`.
@@ -6949,11 +7087,29 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTabbarAttributes extends HTMLAttributes {
+      /**
+       * If the tabbar should include the highlight on the active tab 
+       */
       'highlight'?: boolean;
+      /**
+       * The layout of the title and icons 
+       */
       'layout'?: TabbarLayout;
+      /**
+       * The placement of the tabbar in the app 
+       */
       'placement'?: TabbarPlacement;
+      /**
+       * If the tabbar is scrollable or not 
+       */
       'scrollable'?: boolean;
+      /**
+       * The selected tab component 
+       */
       'selectedTab'?: HTMLIonTabElement;
+      /**
+       * The tabs to render 
+       */
       'tabs'?: HTMLIonTabElement[];
       /**
        * If true, the tabbar will be translucent. Defaults to `false`.
@@ -6969,17 +7125,29 @@ declare global {
   namespace StencilComponents {
     interface IonTabs {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color': Color;
       'getRouteId': () => RouteID | undefined;
+      /**
+       * Get the currently selected tab
+       */
       'getSelected': () => HTMLIonTabElement | undefined;
+      /**
+       * Get the tab at the given index 
+       */
       'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => HTMLIonTabElement | undefined;
       /**
        * A unique name for the tabs
        */
       'name': string;
+      /**
+       * If the tabs should be scrollable 
+       */
       'scrollable': boolean;
+      /**
+       * Index or the Tab instance, of the tab to select.
+       */
       'select': (tabOrIndex: number | HTMLIonTabElement) => Promise<boolean>;
       'setRouteId': (id: string) => Promise<RouteWrite>;
       /**
@@ -7002,6 +7170,9 @@ declare global {
        * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
        */
       'translucent': boolean;
+      /**
+       * If the tabs should use the router or not. If true, `selectedTab` does nothing.
+       */
       'useRouter': boolean;
     }
   }
@@ -7026,7 +7197,7 @@ declare global {
   namespace JSXElements {
     export interface IonTabsAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color'?: Color;
       /**
@@ -7040,6 +7211,9 @@ declare global {
       'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
       'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
       'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
+      /**
+       * If the tabs should be scrollable 
+       */
       'scrollable'?: boolean;
       /**
        * If true, the tabbar
@@ -7061,6 +7235,9 @@ declare global {
        * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
        */
       'translucent'?: boolean;
+      /**
+       * If the tabs should use the router or not. If true, `selectedTab` does nothing.
+       */
       'useRouter'?: boolean;
     }
   }
@@ -7105,11 +7282,11 @@ declare global {
   namespace StencilComponents {
     interface IonText {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the text. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color': Color;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
     }
@@ -7135,11 +7312,11 @@ declare global {
   namespace JSXElements {
     export interface IonTextAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the text. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color'?: Color;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
     }
@@ -7371,7 +7548,13 @@ declare global {
 
   namespace StencilComponents {
     interface IonTitle {
+      /**
+       * The color to use for the title. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
       'color': Color;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
       'mode': Mode;
     }
   }
@@ -7395,7 +7578,13 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTitleAttributes extends HTMLAttributes {
+      /**
+       * The color to use for the title. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
       'color'?: Color;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
       'mode'?: Mode;
     }
   }
@@ -7406,8 +7595,17 @@ declare global {
 
   namespace StencilComponents {
     interface IonToastController {
+      /**
+       * Create a toast overlay with toast options.
+       */
       'create': (opts?: ToastOptions | undefined) => Promise<HTMLIonToastElement | null>;
+      /**
+       * Dismiss the open toast overlay.
+       */
       'dismiss': (data?: any, role?: string | undefined, toastId?: number) => Promise<void>;
+      /**
+       * Get the most recently opened toast overlay.
+       */
       'getTop': () => HTMLIonToastElement;
     }
   }
@@ -7692,11 +7890,11 @@ declare global {
   namespace StencilComponents {
     interface IonToolbar {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color': Color;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
       /**
@@ -7726,11 +7924,11 @@ declare global {
   namespace JSXElements {
     export interface IonToolbarAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color'?: Color;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
       /**

@@ -34,7 +34,11 @@ export class Toast implements OverlayInterface {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
+
+  /** @hidden */
   @Prop() overlayId!: number;
+
+  /** @hidden */
   @Prop() keyboardClose = false;
 
   /**

@@ -15,7 +15,16 @@ import { createThemedClasses } from '../../utils/theme';
 })
 export class ToolbarTitle {
 
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
   @Prop() mode!: Mode;
+
+  /**
+   * The color to use for the title.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   */
   @Prop() color?: Color;
 
   render() {

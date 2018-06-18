@@ -28,7 +28,7 @@ export class ToastController implements OverlayController {
     removeLastOverlay(this.toasts);
   }
 
-  /*
+  /**
    * Create a toast overlay with toast options.
    */
   @Method()
@@ -36,7 +36,7 @@ export class ToastController implements OverlayController {
     return createOverlay(this.doc.createElement('ion-toast'), opts);
   }
 
-  /*
+  /**
    * Dismiss the open toast overlay.
    */
   @Method()
@@ -44,7 +44,7 @@ export class ToastController implements OverlayController {
     return dismissOverlay(data, role, this.toasts, toastId);
   }
 
-  /*
+  /**
    * Get the most recently opened toast overlay.
    */
   @Method()

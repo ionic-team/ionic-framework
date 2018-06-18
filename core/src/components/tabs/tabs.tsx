@@ -25,7 +25,6 @@ export class Tabs implements NavOutlet {
   /**
    * The color to use from your Sass `$colors` map.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
    */
   @Prop() color?: Color;
 
@@ -62,8 +61,13 @@ export class Tabs implements NavOutlet {
    */
   @Prop() translucent = false;
 
+  /** If the tabs should be scrollable */
   @Prop() scrollable = false;
 
+  /**
+   * If the tabs should use the router or not.
+   * If true, `selectedTab` does nothing.
+   */
   @Prop({ mutable: true }) useRouter = false;
 
   /**
@@ -110,7 +114,7 @@ export class Tabs implements NavOutlet {
   }
 
   /**
-   * @param {number|Tab} tabOrIndex Index, or the Tab instance, of the tab to select.
+   * Index or the Tab instance, of the tab to select.
    */
   @Method()
   async select(tabOrIndex: number | HTMLIonTabElement): Promise<boolean> {
@@ -125,6 +129,7 @@ export class Tabs implements NavOutlet {
     return true;
   }
 
+  /** @hidden */
   @Method()
   async setRouteId(id: string): Promise<RouteWrite> {
     const selectedTab = this.getTab(id);
@@ -140,12 +145,14 @@ export class Tabs implements NavOutlet {
     };
   }
 
+  /** @hidden */
   @Method()
   getRouteId(): RouteID|undefined {
     const id = this.selectedTab && this.selectedTab.getTabId();
     return id ? {id, element: this.selectedTab} : undefined;
   }
 
+  /** Get the tab at the given index */
   @Method()
   getTab(tabOrIndex: string | number | HTMLIonTabElement): HTMLIonTabElement|undefined {
     if (typeof tabOrIndex === 'string') {
@@ -158,7 +165,7 @@ export class Tabs implements NavOutlet {
   }
 
   /**
-   * @return {HTMLIonTabElement} Returns the currently selected tab
+   * Get the currently selected tab
    */
   @Method()
   getSelected(): HTMLIonTabElement | undefined {

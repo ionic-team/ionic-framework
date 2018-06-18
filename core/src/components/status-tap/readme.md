@@ -11,12 +11,16 @@
 
 number
 
+How long the scrolling action should take.
+
 
 ## Attributes
 
 #### duration
 
 number
+
+How long the scrolling action should take.
 
 
 
