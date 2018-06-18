@@ -28,8 +28,7 @@ The mode for component.
 
 boolean
 
-Because of performance reasons, ionScroll events are disabled by default, in order to enable them
-and start listening from (ionScroll), set this property to `true`.
+If true, the component will emit scroll events.
 
 
 ## Attributes
@@ -54,8 +53,7 @@ The mode for component.
 
 boolean
 
-Because of performance reasons, ionScroll events are disabled by default, in order to enable them
-and start listening from (ionScroll), set this property to `true`.
+If true, the component will emit scroll events.
 
 
 ## Events
