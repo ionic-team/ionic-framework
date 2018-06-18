@@ -4666,8 +4666,17 @@ declare global {
 
   namespace StencilComponents {
     interface IonPopoverController {
+      /**
+       * Create a popover overlay with popover options.
+       */
       'create': (opts?: PopoverOptions | undefined) => Promise<HTMLIonPopoverElement | null>;
+      /**
+       * Dismiss the open popover overlay.
+       */
       'dismiss': (data?: any, role?: string | undefined, popoverId?: number) => Promise<void>;
+      /**
+       * Get the most recently opened popover overlay.
+       */
       'getTop': () => HTMLIonPopoverElement;
     }
   }
@@ -7592,7 +7601,7 @@ declare global {
        */
       'checked': boolean;
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color': Color;
       /**
@@ -7600,7 +7609,7 @@ declare global {
        */
       'disabled': boolean;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
       /**
@@ -7638,7 +7647,7 @@ declare global {
        */
       'checked'?: boolean;
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
        */
       'color'?: Color;
       /**
@@ -7646,7 +7655,7 @@ declare global {
        */
       'disabled'?: boolean;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
       /**

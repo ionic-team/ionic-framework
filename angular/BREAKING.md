@@ -25,6 +25,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Nav](#nav)
 - [Navbar](#navbar)
 - [Option](#option)
+- [Overlays](#overlays)
 - [Radio](#radio)
 - [Range](#range)
 - [Segment](#segment)
@@ -430,6 +431,8 @@ The `<ion-fab>` container was previously placed inside of the fixed content by d
 
 ## Grid
 
+### Markup Changed
+
 The Grid has been refactored in order to support css variables and a dynamic number of columns. The following column attributes have been changed.
 
 _In the following examples, `{breakpoint}` refers to the optional screen breakpoint (xs, sm, md, lg, xl) and `{value}` refers to the number of columns._
@@ -439,7 +442,7 @@ _In the following examples, `{breakpoint}` refers to the optional screen breakpo
 - `push-{breakpoint}-{value}` attributes have been renamed to `push-{breakpoint}=“{value}”`
 - `pull-{breakpoint}-{value}` attributes have been renamed to `pull-{breakpoint}=“{value}”`
 
-Customizing the padding styles should now be done with css variables. For more information, see [Grid Layout](https://github.com/ionic-team/ionic-docs/blob/master/src/content/layout/grid.md).
+Customizing the padding and width of a grid should now be done with css variables. For more information, see [Grid Layout](https://github.com/ionic-team/ionic-docs/blob/master/src/content/layout/grid.md).
 
 ## Icon
 
@@ -779,6 +782,40 @@ Select's option element should now be written as `<ion-select-option>`. This mak
 ### Class Changed
 
 The class has been renamed from `Option` to `SelectOption` to keep it consistent with the element tag name.
+
+## Overlays
+
+### Markup Changed
+
+Action Sheet, Alert, Loading, Modal, Popover, and Toast should now use `async`/`await`:
+
+**New Usage Example:**
+
+```javascript
+presentPopover(ev: any) {
+  const popover = this.popoverController.create({
+    component: PopoverComponent,
+    ev: event,
+    translucent: true
+  });
+  popover.present();
+}
+```
+
+**Old Usage Example:**
+
+```javascript
+async presentPopover(ev: any) {
+  const popover = await this.popoverController.create({
+    component: PopoverComponent,
+    ev: event,
+    translucent: true
+  });
+  return await popover.present();
+}
+```
+
+
 
 ## Radio
 
