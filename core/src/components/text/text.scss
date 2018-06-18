@@ -4,11 +4,7 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: currentColor;
-}
-
-ion-text,
-::slotted(a),
-::slotted(p) {
   color: #{current-color(base)};
+
+  --ion-color-base: currentColor;
 }

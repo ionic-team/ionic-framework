@@ -40,4 +40,8 @@ export class FabList {
     };
   }
 
+  render() {
+    return <slot/>;
+  }
+
 }

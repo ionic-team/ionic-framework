@@ -71,8 +71,7 @@
   }
 }
 
-:slotted(ion-icon) {
-  font-size: 24px;
+::slotted(ion-icon) {
   line-height: 1;
 }
 
@@ -107,29 +106,21 @@
 
   position: absolute;
 
-  display: flex;
-
-  height: 100%;
-
   opacity: 0;
   transform: scale(.4) rotateZ(-45deg);
   transition: all ease-in-out 300ms;
   transition-property: transform, opacity;
 }
 
-.fab-button-close-icon .icon-inner {
-  @include margin(auto);
-}
-
 // FAB Animation
 // --------------------------------------------------
 
-.fab-button-close-active .fab-button-close-icon {
+:host(.fab-button-close-active) .fab-button-close-icon {
   opacity: 1;
   transform: scale(1) rotateZ(0deg);
 }
 
-.fab-button-close-active .fab-button-inner {
+:host(.fab-button-close-active) .fab-button-inner {
   opacity: 0;
   transform: scale(.4) rotateZ(45deg);
 }

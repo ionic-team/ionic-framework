@@ -17,7 +17,8 @@
   --transition: #{$fab-ios-transition-activated};
 }
 
-::slotted(ion-icon) {
+::slotted(ion-icon),
+.fab-button-close-icon {
   font-size: $fab-ios-icon-font-size;
 }
 

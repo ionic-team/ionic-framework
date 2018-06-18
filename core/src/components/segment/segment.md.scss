@@ -41,6 +41,8 @@
   --border-style: solid;
   --opacity: #{$segment-button-md-opacity};
   --transition: #{$segment-button-md-transition};
+
+  --icon-size: #{$segment-button-md-icon-size};
 }
 
 ::slotted(.activated),
@@ -49,13 +51,6 @@
 
   --border-color: #{current-color(base)};
 }
-
-// TODO
-// ion-icon {
-//   font-size: $segment-button-md-icon-size;
-//   line-height: $segment-button-md-icon-line-height;
-// }
-
 
 // Material Design Segment Button Disabled
 // --------------------------------------------------

@@ -7,6 +7,13 @@
   flex: 1;
 
   height: 100%;
+
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+
+  --icon-size: 1em;
 }
 
 :host(:first-of-type) .segment-button-native {
@@ -78,4 +85,8 @@
   &:focus {
     outline: none;
   }
+}
+
+::slotted(ion-icon) {
+  font-size: var(--icon-size);
 }

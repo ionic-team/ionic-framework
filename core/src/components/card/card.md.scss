@@ -18,15 +18,15 @@
   --ion-color-contrast: #{$card-md-text-color};
 }
 
-:slotted(ion-list) {
+::slotted(ion-list) {
   @include margin(null, null, 0, null);
 }
 
-:slotted(.item:last-child) {
+::slotted(.item:last-child) {
   border-bottom: 0;
 }
 
-:slotted(.item) {
+::slotted(.item) {
   border: 0;
 }
 

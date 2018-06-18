@@ -31,33 +31,6 @@
   --height: #{$button-md-height};
 }
 
-
-// Material Design Button Sizes
-// --------------------------------------------------
-
-:host(.button-large) {
-  font-size: #{$button-md-large-font-size};
-
-  --padding-top: #{$button-md-large-padding-top};
-  --padding-start: #{$button-md-large-padding-start};
-  --padding-end: #{$button-md-large-padding-end};
-  --padding-bottom: #{$button-md-large-padding-bottom};
-
-  --height: #{$button-md-large-height};
-}
-
-:host(.button-small) {
-  font-size: #{$button-md-small-font-size};
-
-  --padding-top: #{$button-md-small-padding-top};
-  --padding-start: #{$button-md-small-padding-start};
-  --padding-end: #{$button-md-small-padding-end};
-  --padding-bottom: #{$button-md-small-padding-bottom};
-
-  --height: #{$button-md-small-height};
-}
-
-
 // Material Design Solid Button
 // --------------------------------------------------
 
@@ -106,6 +79,32 @@
   --padding-start: #{$button-md-round-padding-start};
   --padding-end: #{$button-md-round-padding-end};
   --padding-bottom: #{$button-md-round-padding-bottom};
+}
+
+
+// Material Design Button Sizes
+// --------------------------------------------------
+
+:host(.button-large) {
+  font-size: #{$button-md-large-font-size};
+
+  --padding-top: #{$button-md-large-padding-top};
+  --padding-start: #{$button-md-large-padding-start};
+  --padding-end: #{$button-md-large-padding-end};
+  --padding-bottom: #{$button-md-large-padding-bottom};
+
+  --height: #{$button-md-large-height};
+}
+
+:host(.button-small) {
+  font-size: #{$button-md-small-font-size};
+
+  --padding-top: #{$button-md-small-padding-top};
+  --padding-start: #{$button-md-small-padding-start};
+  --padding-end: #{$button-md-small-padding-end};
+  --padding-bottom: #{$button-md-small-padding-bottom};
+
+  --height: #{$button-md-small-height};
 }
 
 

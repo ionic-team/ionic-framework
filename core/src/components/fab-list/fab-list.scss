@@ -21,7 +21,7 @@
   display: flex;
 }
 
-:host(.fab-button-in-list) {
+::slotted(.fab-button-in-list) {
   opacity: 0;
   visibility: hidden;
   transform: scale(0);
@@ -41,7 +41,7 @@
   --padding-end: 5px;
 }
 
-:host(.fab-button-in-list.fab-button-show) {
+::slotted(.fab-button-in-list.fab-button-show) {
   opacity: 1;
   visibility: visible;
   transform: scale(1);

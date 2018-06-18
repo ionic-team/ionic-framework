@@ -64,7 +64,7 @@ export class ItemOption {
 
     return (
       <TagType
-        class="item-option-button"
+        class="item-option-native"
         disabled={this.disabled}
         href={this.href}
         onClick={this.clickedOptionButton.bind(this)}

@@ -134,8 +134,6 @@ Returns the length of navigation stack
 
 #### length()
 
-Returns the length of navigation stack
-
 
 #### pop()
 

@@ -16,6 +16,11 @@
   --box-shadow: #{$fab-md-box-shadow-activated};
 }
 
+::slotted(ion-icon),
+.fab-button-close-icon {
+  font-size: 24px;
+}
+
 
 // FAB buttons in a list
 // --------------------------------------------------

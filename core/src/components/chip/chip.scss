@@ -19,7 +19,7 @@
   --ion-color-contrast: #{ion-color(primary, contrast)};
 }
 
-:slotted(ion-icon) {
+::slotted(ion-icon) {
   @include border-radius($chip-icon-border-radius);
 
   display: inline-flex;

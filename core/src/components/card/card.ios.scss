@@ -62,7 +62,7 @@
   font-weight: normal;
 }
 
-:slotted(p) {
+::slotted(p) {
   @include margin(0, 0, 2px);
 
   font-size: 14px;
