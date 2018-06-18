@@ -35,13 +35,14 @@
     "@types/jest": "^22.2.3",
     "chai": "^4.1.2",
     "chromedriver": "^2.38.3",
-    "jest": "^22.4.3",
+    "jest": "^23.1.0",
     "mocha": "^4.0.1",
     "np": "^2.17.0",
     "sass-lint": "^1.12.1",
     "selenium-webdriver": "^3.6.0",
     "tslint": "^5.10.0",
     "tslint-ionic-rules": "0.0.14",
+    "typescript": "^2.9.2",
     "yargs": "^10.0.3"
   },
   "scripts": {
@@ -65,14 +66,14 @@
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
     "set.version": "node scripts/set-version.js",
     "snapshot": "node ./scripts/e2e --snapshot",
-    "test": "jest --no-cache",
+    "test": "jest",
     "test.watch": "jest --watch --no-cache",
     "theme-app-build": "stencil build --dev --config scripts/theme-builder/stencil.config.js",
     "theme-builder": "sd concurrent \"npm run theme-app-build\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
     "theme-builder:dev": "sd concurrent \"npm run theme-app-build -- --watch\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
     "theme-server": "node scripts/theme-builder/server.js",
     "tsc": "./node_modules/.bin/tsc -p .",
-    "validate": "npm i && npm run lint && npm run test && npm run build"
+    "validate": "npm run lint && npm run test && npm run build"
   },
   "author": "Ionic Team",
   "license": "MIT",

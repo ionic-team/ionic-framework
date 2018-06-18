@@ -1,4 +1,5 @@
-import { RouteChain, RouterIntent } from '../utils/interface';
+import { RouterIntent } from '../utils/constants';
+import { RouteChain } from '../utils/interface';
 import { chainToPath, generatePath, parsePath, readPath, writePath } from '../utils/path';
 
 describe('parseURL', () => {
