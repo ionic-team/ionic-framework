@@ -32,6 +32,17 @@ $font-path: "/dist/fonts" !default;
 $hairlines-width: .55px !default;
 
 
+// The minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries
+$screen-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+
 // Z-Index
 // --------------------------------------------------
 // Grouped by elements which would be siblings

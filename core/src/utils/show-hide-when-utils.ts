@@ -1,4 +1,5 @@
 import { Config, Mode } from '../interface';
+import { SIZE_TO_MEDIA } from './media';
 import { isAndroid, isCordova, isElectron, isIOS, isIpad, isIphone, isPhablet, isTablet, matchMedia } from './platform';
 
 export function updateTestResults(displayWhen: DisplayWhen) {
@@ -84,14 +85,6 @@ export function isPortrait(win: Window): boolean {
 }
 
 
-const SIZE_TO_MEDIA: any = {
-  'xs': '(min-width: 0px)',
-  'sm': '(min-width: 576px)',
-  'md': '(min-width: 768px)',
-  'lg': '(min-width: 992px)',
-  'xl': '(min-width: 1200px)',
-};
-
 // order from most specifc to least specific
 export const PLATFORM_CONFIGS: PlatformConfig[] = [
 
@@ -152,4 +145,3 @@ export interface DisplayWhen {
   platform?: string;
   size?: string;
 }
-

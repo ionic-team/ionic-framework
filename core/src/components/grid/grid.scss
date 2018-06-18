@@ -5,24 +5,16 @@
 
 ion-grid {
   @include make-grid();
-
-  &[fixed] {
-    @include make-grid-max-widths();
-  }
 }
 
-// Row
-// --------------------------------------------------
+.grid-fixed {
+  @include make-grid-widths();
+}
 
 ion-row {
   @include make-row();
 }
 
-// Columns
-// --------------------------------------------------
-
 ion-col {
-  @include make-column-base();
+  @include make-column();
 }
-
-@include make-grid-columns();

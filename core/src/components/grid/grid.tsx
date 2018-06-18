@@ -1,4 +1,4 @@
-import { Component } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 
 
 @Component({
@@ -11,4 +11,17 @@ import { Component } from '@stencil/core';
     theme: 'grid'
   }
 })
-export class Grid {}
+export class Grid {
+  /**
+   * If true, the grid will have a fixed width based on the screen size. Defaults to `false`.
+   */
+  @Prop() fixed?: boolean;
+
+  hostData() {
+    return {
+      class: {
+        'grid-fixed': this.fixed
+      }
+    };
+  }
+}

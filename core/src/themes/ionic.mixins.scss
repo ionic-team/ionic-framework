@@ -45,34 +45,11 @@
 }
 
 
-// Check that the given map values are in ascending order
-// ---------------------------------------------------------------------------------
+// Get the key from a map based on the index
+@function index-to-key($map, $index) {
+  $keys: map-keys($map);
 
-@mixin assert-ascending($map, $map-name) {
-  $prev-key: null;
-  $prev-num: null;
-  @each $key, $num in $map {
-    @if $prev-num == null {
-      // Do nothing
-    } @else if not comparable($prev-num, $num) {
-      @warn "Potentially invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} whose unit makes it incomparable to #{$prev-num}, the value of the previous key '#{$prev-key}' !";
-    } @else if $prev-num >= $num {
-      @warn "Invalid value for #{$map-name}: This map must be in ascending order, but key '#{$key}' has value #{$num} which isn't greater than #{$prev-num}, the value of the previous key '#{$prev-key}' !";
-    }
-    $prev-key: $key;
-    $prev-num: $num;
-  }
-}
-
-// Check that the first value in the given map starts at 0
-// ---------------------------------------------------------------------------------
-
-@mixin assert-starts-at-zero($map, $map-name) {
-  $values: map-values($map);
-  $first-value: nth($values, 1);
-  @if $first-value != 0 {
-    @warn "First value in `#{$map-name}` must start at 0, but starts at #{$first-value}.";
-  }
+  @return nth($keys, $index);
 }
 
 
@@ -85,7 +62,7 @@
 //
 //    (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px)
 //
-// The map defined in the `$grid-breakpoints` global variable is used as the `$breakpoints` argument by default.
+// The map defined in the `$screen-breakpoints` global variable is used as the `$breakpoints` argument by default.
 
 // ---------------------------------------------------------------------------------
 
@@ -93,9 +70,10 @@
 //
 //    >> breakpoint-min(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    576px
-@function breakpoint-min($name, $breakpoints: $grid-breakpoints) {
+@function breakpoint-min($name, $breakpoints: $screen-breakpoints) {
   $min: map-get($breakpoints, $name);
-  @return if($min != 0, $min, null);
+
+  @return if($name != index-to-key($breakpoints, 1), $min, null);
 }
 
 // Returns a blank string if smallest breakpoint, otherwise returns the name with a dash infront.
@@ -105,13 +83,13 @@
 //    ""  (Returns a blank string)
 //    >> breakpoint-infix(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    "-sm"
-@function breakpoint-infix($name, $breakpoints: $grid-breakpoints) {
+@function breakpoint-infix($name, $breakpoints: $screen-breakpoints) {
   @return if(breakpoint-min($name, $breakpoints) == null, "", "-#{$name}");
 }
 
 // Media of at least the minimum breakpoint width. No query for the smallest breakpoint.
 // Makes the @content apply to the given breakpoint and wider.
-@mixin media-breakpoint-up($name, $breakpoints: $grid-breakpoints) {
+@mixin media-breakpoint-up($name, $breakpoints: $screen-breakpoints) {
   $min: breakpoint-min($name, $breakpoints);
   @if $min {
     @media (min-width: $min) {
@@ -130,7 +108,7 @@
 //    md
 //    >> breakpoint-next(sm, $breakpoint-names: (xs sm md lg xl))
 //    md
-@function breakpoint-next($name, $breakpoints: $grid-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
+@function breakpoint-next($name, $breakpoints: $screen-breakpoints, $breakpoint-names: map-keys($breakpoints)) {
   $n: index($breakpoint-names, $name);
   @return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
 }
@@ -140,14 +118,14 @@
 //
 //    >> breakpoint-max(sm, (xs: 0, sm: 576px, md: 768px, lg: 992px, xl: 1200px))
 //    767px
-@function breakpoint-max($name, $breakpoints: $grid-breakpoints) {
+@function breakpoint-max($name, $breakpoints: $screen-breakpoints) {
   $next: breakpoint-next($name, $breakpoints);
   @return if($next, breakpoint-min($next, $breakpoints) - 1px, null);
 }
 
 // Media of at most the maximum breakpoint width. No query for the largest breakpoint.
 // Makes the @content apply to the given breakpoint and narrower.
-@mixin media-breakpoint-down($name, $breakpoints: $grid-breakpoints) {
+@mixin media-breakpoint-down($name, $breakpoints: $screen-breakpoints) {
   $max: breakpoint-max($name, $breakpoints);
   @if $max {
     @media (max-width: $max) {
@@ -206,19 +184,6 @@
   }
 }
 
-// If deprecated variable exists, use it, otherwise, use alternative
-// @param {string} $property - property to default
-// @param {string} $variable-name - the deprecated variable's name
-// @param {string} $variable - the deprecated variable
-// ----------------------------------------------------------
-@mixin deprecated-variable($property, $variable-name, $variable) {
-  @if $variable == null {
-    @content;
-  } @else {
-    @warn "you are using a deprecated variable: #{$variable-name}";
-    #{$property}: $variable;
-  }
-}
 
 // SVG Background Image Mixin
 // @param {string} $svg
