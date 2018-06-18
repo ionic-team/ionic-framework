@@ -29,6 +29,7 @@ export class Img {
     this.addIO();
   }
 
+  /** Emitted when the img src is loaded */
   @Event() ionImgDidLoad!: EventEmitter<void>;
 
   componentDidLoad() {

@@ -1,5 +1,6 @@
 # ion-input
 
+Input is a component similar to the HTML input element. It accepts most of the standard properties/attributes as the HTML input, but is styled to fit Ionic's UI.
 
 
 <!-- Auto Generated Below -->
