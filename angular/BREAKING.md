@@ -297,7 +297,7 @@ import { DateTime } from 'ionic-angular';
 **New Usage Example:**
 
 ```javascript
-import { Datetime } from 'ionic-angular';
+import { Datetime } from '@ionic/angular';
 ```
 
 
