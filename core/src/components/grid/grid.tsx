@@ -13,7 +13,7 @@ import { Component, Prop } from '@stencil/core';
 })
 export class Grid {
   /**
-   * If true, the grid will have a maximum width based on the screen size. Defaults to `false`.
+   * If true, the grid will have a fixed width based on the screen size. Defaults to `false`.
    */
   @Prop() fixed?: boolean;
 

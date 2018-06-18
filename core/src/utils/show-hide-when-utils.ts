@@ -145,4 +145,3 @@ export interface DisplayWhen {
   platform?: string;
   size?: string;
 }
-

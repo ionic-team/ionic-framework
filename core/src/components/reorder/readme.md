@@ -1,6 +1,6 @@
 # ion-reorder
 
-Reorder adds the ability to change an item's order in a group. It can be used within an ion-list or ion-reorder-group to provide a visual drag and drop interface.
+Reorder is a component that allows an item to be dragged to change it's order. It can be used within an ion-reorder-group to provide a visual drag and drop interface.
 
 
 <!-- Auto Generated Below -->

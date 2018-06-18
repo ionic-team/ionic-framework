@@ -3,6 +3,8 @@
 Rows are horizontal components of the [grid](../Grid) system and contain varying numbers of
 [columns](../Col). They ensure the columns are positioned properly.
 
+See [Grid Layout](/docs/layout/grid) for more information.
+
 
 ## Row attributes
 

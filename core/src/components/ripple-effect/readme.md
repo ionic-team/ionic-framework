@@ -1,5 +1,7 @@
 # ion-button-effect
 
+RippleEffect is component that adds the Material Design button ripple to any element.
+
 
 
 <!-- Auto Generated Below -->
@@ -32,6 +34,8 @@ boolean
 ## Methods
 
 #### addRipple()
+
+Adds the ripple effect to the parent elment
 
 
 

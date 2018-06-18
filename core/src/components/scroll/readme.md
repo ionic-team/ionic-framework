@@ -1,5 +1,6 @@
 # ion-scroll
 
+Scroll is a low-level component for arbitrary scrolling areas. It's used internally by Content.
 
 
 <!-- Auto Generated Below -->
@@ -19,6 +20,8 @@ Note, the does not disable the system bounce on iOS. That is an OS level setting
 #### mode
 
 string
+
+The mode for component.
 
 
 #### scrollEvents
@@ -43,6 +46,8 @@ Note, the does not disable the system bounce on iOS. That is an OS level setting
 #### mode
 
 string
+
+The mode for component.
 
 
 #### scroll-events
@@ -75,14 +80,22 @@ Emitted when the scroll has started.
 
 #### scrollByPoint()
 
+Scroll by a specified X/Y distance in the component
+
 
 #### scrollToBottom()
+
+Scroll to the bottom of the component
 
 
 #### scrollToPoint()
 
+Scroll to a specified X/Y location in the component
+
 
 #### scrollToTop()
+
+Scroll to the top of the component
 
 
 

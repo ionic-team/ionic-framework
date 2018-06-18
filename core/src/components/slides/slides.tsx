@@ -1,12 +1,4 @@
-import {
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  Method,
-  Prop,
-  Watch
-} from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import { Swiper }  from './vendor/swiper.js';
 @Component({
   tag: 'ion-slides',

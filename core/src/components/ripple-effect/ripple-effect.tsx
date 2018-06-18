@@ -50,6 +50,9 @@ export class RippleEffect {
     this.tapClickChanged(this.tapClick);
   }
 
+  /**
+   * Adds the ripple effect to the parent elment
+   */
   @Method()
   addRipple(pageX: number, pageY: number) {
     let x: number, y: number, size: number;

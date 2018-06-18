@@ -31,7 +31,7 @@ $grid-paddings: (
 // --------------------------------------------------
 
 /// @prop - The padding for the grid column
-$grid-column-padding:        var(--ion-grid-column-padding, $grid-padding) !default;
+$grid-column-padding:        var(--ion-grid-column-padding, 5px) !default;
 
 /// @prop - The padding for the column at different breakpoints
 $grid-column-paddings: (

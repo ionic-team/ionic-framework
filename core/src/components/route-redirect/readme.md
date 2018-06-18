@@ -2,6 +2,8 @@
 
 A redirect router can only be used in the scope of `ion-router` as a direct children of it.
 
+> Note: this is only meant for vanilla JavaScript project. For Angular projects, use `ion-router-outlet` and the Angular router.
+
 This route has only two configurable values:
  - `from`
  - `to`

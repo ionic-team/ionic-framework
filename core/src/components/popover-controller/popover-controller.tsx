@@ -27,7 +27,7 @@ export class PopoverController implements OverlayController {
     removeLastOverlay(this.popovers);
   }
 
-  /*
+  /**
    * Create a popover overlay with popover options.
    */
   @Method()
@@ -35,7 +35,7 @@ export class PopoverController implements OverlayController {
     return createOverlay(this.doc.createElement('ion-popover'), opts);
   }
 
-  /*
+  /**
    * Dismiss the open popover overlay.
    */
   @Method()
@@ -43,7 +43,7 @@ export class PopoverController implements OverlayController {
     return dismissOverlay(data, role, this.popovers, popoverId);
   }
 
-  /*
+  /**
    * Get the most recently opened popover overlay.
    */
   @Method()

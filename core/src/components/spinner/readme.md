@@ -4,31 +4,6 @@ The Spinner component provides a variety of animated SVG spinners. Spinners are 
 
 The default spinner to use is based on the platform. The default spinner for `ios` is `"lines"`, and the default for `android` is `"crescent"`. If the platform is not `ios` or `android`, the spinner will default to `crescent`. If the `name` property is set, then that spinner will be used instead of the platform specific spinner.
 
-```html
-<!-- Default Spinner -->
-<ion-spinner></ion-spinner>
-
-<!-- Lines -->
-<ion-spinner name="lines"></ion-spinner>
-
-<!-- Lines Small -->
-<ion-spinner name="lines-small"></ion-spinner>
-
-<!-- Dots -->
-<ion-spinner name="dots"></ion-spinner>
-
-<!-- Bubbles -->
-<ion-spinner name="bubbles"></ion-spinner>
-
-<!-- Circles -->
-<ion-spinner name="circles"></ion-spinner>
-
-<!-- Crescent -->
-<ion-spinner name="crescent"></ion-spinner>
-
-<!-- Paused Default Spinner -->
-<ion-spinner paused></ion-spinner>
-```
 
 
 <!-- Auto Generated Below -->
@@ -42,7 +17,6 @@ string
 
 The color to use from your Sass `$colors` map.
 Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
 #### duration
@@ -58,7 +32,6 @@ string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### name
@@ -85,7 +58,6 @@ string
 
 The color to use from your Sass `$colors` map.
 Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
 #### duration
@@ -101,7 +73,6 @@ string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### name

@@ -9,9 +9,6 @@ operation has completed and the refreshing should end, call `complete()` on the
 refresher.
 
 
-```html
-```
-
 
 <!-- Auto Generated Below -->
 

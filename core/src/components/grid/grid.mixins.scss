@@ -7,9 +7,11 @@
 // Creates the shared grid properties
 // ---------------------------------------------------------------------------------
 
-@mixin make-grid-base($paddings: $grid-paddings) {
+@mixin make-grid($paddings: $grid-paddings) {
   @include make-breakpoint-padding($paddings);
   @include margin-horizontal(auto);
+
+  display: block;
 
   // Remove the padding from grid and all immediate children columns
   &[no-padding],
@@ -19,21 +21,21 @@
 }
 
 
-// Creates maximum widths for the grid based on screen size
+// Creates a fixed width for the grid based on the screen size
 // ---------------------------------------------------------------------------------
 
-@mixin make-grid-max-widths($max-widths: $grid-widths, $breakpoints: $screen-breakpoints) {
+@mixin make-grid-widths($widths: $grid-widths, $breakpoints: $screen-breakpoints) {
   max-width: 100%;
 
-  @each $breakpoint, $container-max-width in $max-widths {
+  @each $breakpoint, $width in $widths {
     @include media-breakpoint-up($breakpoint, $breakpoints) {
-      width: $container-max-width;
+      width: $width;
     }
   }
 }
 
 
-// Creates a flex grid used to align columns
+// Creates a flex row used to align columns
 // ---------------------------------------------------------------------------------
 
 @mixin make-flex-grid() {
@@ -93,7 +95,7 @@
 // Creates a column
 // ---------------------------------------------------------------------------------
 
-@mixin make-flex-column($column-paddings: $grid-column-paddings) {
+@mixin make-column($column-paddings: $grid-column-paddings) {
   @include make-breakpoint-padding($column-paddings);
   @include margin(0);
 

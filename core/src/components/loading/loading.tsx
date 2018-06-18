@@ -1,27 +1,6 @@
-import {
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  Listen,
-  Method,
-  Prop
-} from '@stencil/core';
-import {
-  Animation,
-  AnimationBuilder,
-  Color,
-  Config,
-  Mode
-} from '../../interface';
-import {
-  BACKDROP,
-  OverlayEventDetail,
-  OverlayInterface,
-  dismiss,
-  eventMethod,
-  present
-} from '../../utils/overlays';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Animation, AnimationBuilder, Color, Config, Mode } from '../../interface';
+import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -47,10 +26,8 @@ export class Loading implements OverlayInterface {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ connect: 'ion-animation-controller' })
-  animationCtrl!: HTMLIonAnimationControllerElement;
-  @Prop({ context: 'config' })
-  config!: Config;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+  @Prop({ context: 'config' }) config!: Config;
   @Prop() overlayId!: number;
   @Prop() keyboardClose = true;
 
@@ -124,33 +101,26 @@ export class Loading implements OverlayInterface {
   /**
    * Emitted after the loading has presented.
    */
-  @Event({ eventName: 'ionLoadingDidPresent' })
-  didPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionLoadingDidPresent' }) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the loading has presented.
    */
-  @Event({ eventName: 'ionLoadingWillPresent' })
-  willPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionLoadingWillPresent' }) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the loading has dismissed.
    */
-  @Event({ eventName: 'ionLoadingWillDismiss' })
-  willDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionLoadingWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the loading has dismissed.
    */
-  @Event({ eventName: 'ionLoadingDidDismiss' })
-  didDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionLoadingDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   componentWillLoad() {
     if (!this.spinner) {
-      this.spinner = this.config.get(
-        'loadingSpinner',
-        this.mode === 'ios' ? 'lines' : 'crescent'
-      );
+      this.spinner = this.config.get('loadingSpinner', this.mode === 'ios' ? 'lines' : 'crescent');
     }
   }
 
@@ -172,13 +142,7 @@ export class Loading implements OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    await present(
-      this,
-      'loadingEnter',
-      iosEnterAnimation,
-      mdEnterAnimation,
-      undefined
-    );
+    await present( this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined);
 
     if (this.duration) {
       this.durationTimeout = setTimeout(
@@ -196,40 +160,24 @@ export class Loading implements OverlayInterface {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
-    return dismiss(
-      this,
-      data,
-      role,
-      'loadingLeave',
-      iosLeaveAnimation,
-      mdLeaveAnimation
-    );
+    return dismiss(this, data, role, 'loadingLeave', iosLeaveAnimation, mdLeaveAnimation);
   }
 
   /**
    * Returns a promise that resolves when the loading did dismiss. It also accepts a callback
-   * that is called in the same circustances.
-   *
+   * that is called in the same circumstances.
    */
   @Method()
-  onDidDismiss(
-    callback?: (detail: OverlayEventDetail) => void
-  ): Promise<OverlayEventDetail> {
+  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionLoadingDidDismiss', callback);
   }
 
   /**
    * Returns a promise that resolves when the loading will dismiss. It also accepts a callback
-   * that is called in the same circustances.
-   *
-   * ```
-   * const {data, role} = await loading.onWillDismiss();
-   * ```
+   * that is called in the same circumstances.
    */
   @Method()
-  onWillDismiss(
-    callback?: (detail: OverlayEventDetail) => void
-  ): Promise<OverlayEventDetail> {
+  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionLoadingWillDismiss', callback);
   }
 
