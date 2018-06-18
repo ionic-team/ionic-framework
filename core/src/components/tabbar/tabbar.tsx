@@ -186,7 +186,12 @@ export class Tabbar {
     const selectedTab = this.selectedTab;
     const ionTabbarHighlight = this.highlight ? <div class="animated tabbar-highlight"/> as HTMLElement : null;
     const buttonClasses = createThemedClasses(this.mode, this.color, 'tab-button');
-    const tabButtons = this.tabs.map(tab => <ion-tab-button class={buttonClasses} tab={tab} selected={selectedTab === tab}/>);
+    const tabButtons = this.tabs.map(tab => <ion-tab-button class={buttonClasses}
+                                                            icon={tab.icon}
+                                                            label={tab.label}
+                                                            badge={tab.badge}
+                                                            tab={tab}
+                                                            selected={selectedTab === tab}/>);
 
     if (this.scrollable) {
       return [

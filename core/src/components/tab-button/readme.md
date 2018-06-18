@@ -7,6 +7,21 @@
 
 ## Properties
 
+#### badge
+
+string
+
+
+#### icon
+
+string
+
+
+#### label
+
+string
+
+
 #### selected
 
 boolean
@@ -18,6 +33,21 @@ HTMLIonTabElement
 
 
 ## Attributes
+
+#### badge
+
+string
+
+
+#### icon
+
+string
+
+
+#### label
+
+string
+
 
 #### selected
 
