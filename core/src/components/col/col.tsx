@@ -119,37 +119,37 @@ export class Col {
 
   /**
    * The size of the column, in terms of how many columns it should take up out of the total
-   * available.
+   * available. If `"auto"` is passed, the column will be the size of its content.
    */
   @Prop() size?: string;
 
   /**
    * The size of the column for xs screens, in terms of how many columns it should take up out
-   * of the total available. If `"auto" is passed, the column will be the size of its content.
+   * of the total available. If `"auto"` is passed, the column will be the size of its content.
    */
   @Prop() sizeXs?: string;
 
   /**
    * The size of the column for sm screens, in terms of how many columns it should take up out
-   * of the total available. If `"auto" is passed, the column will be the size of its content.
+   * of the total available. If `"auto"` is passed, the column will be the size of its content.
    */
   @Prop() sizeSm?: string;
 
   /**
    * The size of the column for md screens, in terms of how many columns it should take up out
-   * of the total available. If `"auto" is passed, the column will be the size of its content.
+   * of the total available. If `"auto"` is passed, the column will be the size of its content.
    */
   @Prop() sizeMd?: string;
 
   /**
    * The size of the column for lg screens, in terms of how many columns it should take up out
-   * of the total available. If `"auto" is passed, the column will be the size of its content.
+   * of the total available. If `"auto"` is passed, the column will be the size of its content.
    */
   @Prop() sizeLg?: string;
 
   /**
    * The size of the column for xl screens, in terms of how many columns it should take up out
-   * of the total available. If `"auto" is passed, the column will be the size of its content.
+   * of the total available. If `"auto"` is passed, the column will be the size of its content.
    */
   @Prop() sizeXl?: string;
 

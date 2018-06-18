@@ -6,7 +6,6 @@
   <title>Grid - Padding</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
-  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
 </head>
 
 <body>
@@ -21,59 +20,65 @@
     <ion-content id="content" class="grid-demo">
       <h2>No Grid Padding</h2>
       <ion-grid no-padding>
-        <ion-col>
-          <div>
-            ion-col
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            ion-col
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            ion-col
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            ion-col
-          </div>
-        </ion-col>
+        <ion-row>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+        </ion-row>
       </ion-grid>
 
       <h2>No Grid Padding / Nested</h2>
       <ion-grid no-padding>
-        <ion-col>
-          <ion-grid>
-            <ion-col>
-              <div>
-                ion-col
-              </div>
-            </ion-col>
-            <ion-col>
-              <div>
-                ion-col
-              </div>
-            </ion-col>
-          </ion-grid>
-        </ion-col>
-        <ion-col>
-          <div>
-            ion-col
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            ion-col
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            ion-col
-          </div>
-        </ion-col>
+        <ion-row>
+          <ion-col>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <div>
+                    ion-col
+                  </div>
+                </ion-col>
+                <ion-col>
+                  <div>
+                    ion-col
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+        </ion-row>
       </ion-grid>
 
       <h2>Default Grid Padding</h2>
@@ -98,54 +103,59 @@
             ion-col
           </div>
         </ion-col>
+        </ion-row>
       </ion-grid>
 
       <h2>Custom Grid Padding By Breakpoint</h2>
       <ion-grid class="custom-grid-padding">
-        <ion-col>
-          <div>
-            ion-col
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            ion-col
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            ion-col
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            ion-col
-          </div>
-        </ion-col>
+        <ion-row>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+        </ion-row>
       </ion-grid>
 
       <h2>Custom Column Padding By Breakpoint</h2>
       <ion-grid class="custom-column-padding">
-        <ion-col>
-          <div>
-            ion-col
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            ion-col
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            ion-col
-          </div>
-        </ion-col>
-        <ion-col>
-          <div>
-            ion-col
-          </div>
-        </ion-col>
+        <ion-row>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+          <ion-col>
+            <div>
+              ion-col
+            </div>
+          </ion-col>
+        </ion-row>
       </ion-grid>
     </ion-content>
 

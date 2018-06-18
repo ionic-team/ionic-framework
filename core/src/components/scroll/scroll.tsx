@@ -21,6 +21,7 @@ export class Scroll {
   @Prop({ context: 'queue' }) queue!: QueueController;
   @Prop({ context: 'window' }) win!: Window;
 
+  /** The mode for component. */
   @Prop() mode!: Mode;
 
 
@@ -31,10 +32,7 @@ export class Scroll {
    */
   @Prop({ mutable: true }) forceOverscroll?: boolean;
 
-  /**
-   * Because of performance reasons, ionScroll events are disabled by default, in order to enable them
-   * and start listening from (ionScroll), set this property to `true`.
-   */
+  /** If true, the component will emit scroll events. */
   @Prop() scrollEvents = false;
 
   /**
@@ -109,11 +107,13 @@ export class Scroll {
     }
   }
 
+  /** Scroll to the top of the component */
   @Method()
   scrollToTop(duration: number): Promise<void> {
     return this.scrollToPoint(0, 0, duration);
   }
 
+  /** Scroll to the bottom of the component */
   @Method()
   scrollToBottom(duration: number): Promise<void> {
     const y = (this.el)
@@ -123,11 +123,13 @@ export class Scroll {
     return this.scrollToPoint(0, y, duration);
   }
 
+  /** Scroll by a specified X/Y distance in the component */
   @Method()
   scrollByPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
     return this.scrollToPoint(x + this.el.scrollLeft, y + this.el.scrollTop, duration, done);
   }
 
+  /** Scroll to a specified X/Y location in the component */
   @Method()
   scrollToPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
     // scroll animation loop w/ easing

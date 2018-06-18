@@ -11,9 +11,16 @@ import { Mode, SelectPopoverOption } from '../../interface';
 export class SelectPopover {
   mode!: Mode;
 
+  /** Header text for the popover */
   @Prop() header?: string;
+
+  /** Subheader text for the popover */
   @Prop() subHeader?: string;
+
+  /** Text for popover body */
   @Prop() message?: string;
+
+  /** Array of options for the popover */
   @Prop() options: SelectPopoverOption[] = [];
 
   @Listen('ionSelect')

@@ -3,9 +3,11 @@
 
 The grid is a powerful mobile-first flexbox system for building custom layouts.
 
-It is composed of three units — a grid, row(s) and column(s). Columns will expand to fill their row, and will resize to fit additional columns. It is based on a 12 column layout with different breakpoints based on the screen size. The number of columns and breakpoints can be customized using CSS.
+It is composed of three units — a grid, [row(s)](../Row) and [column(s)]((../Col)). Columns will expand to fill the row, and will resize to fit additional columns. It is based on a 12 column layout with different breakpoints based on the screen size. The number of columns can be customized using CSS.
 
-See [Responsive Grid](../../layout/grid) for more information.
+See [Grid Layout](/docs/layout/grid) for more information.
+
+<!-- Auto Generated Below -->
 
 <!-- Auto Generated Below -->
 
@@ -16,7 +18,7 @@ See [Responsive Grid](../../layout/grid) for more information.
 
 boolean
 
-If true, the grid will have a maximum width based on the screen size. Defaults to `false`.
+If true, the grid will have a fixed width based on the screen size. Defaults to `false`.
 
 
 ## Attributes
@@ -25,7 +27,7 @@ If true, the grid will have a maximum width based on the screen size. Defaults t
 
 boolean
 
-If true, the grid will have a maximum width based on the screen size. Defaults to `false`.
+If true, the grid will have a fixed width based on the screen size. Defaults to `false`.
 
 
 

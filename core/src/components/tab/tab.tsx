@@ -10,9 +10,13 @@ export class Tab {
   private loaded = false;
   @Element() el!: HTMLIonTabElement;
 
+  /** If the tab is active or not */
   @Prop({ mutable: true }) active = false;
 
+  /** hidden */
   @Prop() btnId?: string;
+
+  /** @hidden */
   @Prop() delegate?: FrameworkDelegate;
 
   /**
@@ -94,6 +98,7 @@ export class Tab {
     }
   }
 
+  /** Get the Id for the tab */
   @Method()
   getTabId(): string|null {
     if (this.name) {
@@ -105,6 +110,7 @@ export class Tab {
     return null;
   }
 
+  /** Set the active component for the tab */
   @Method()
   async setActive(): Promise<void> {
     await this.prepareLazyLoaded();

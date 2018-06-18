@@ -4,14 +4,17 @@
 // --------------------------------------------------
 
 ion-grid {
-  @include make-grid-base();
-  @include make-flex-grid();
+  @include make-grid();
 }
 
 .grid-fixed {
-  @include make-grid-max-widths();
+  @include make-grid-widths();
+}
+
+ion-row {
+  @include make-row();
 }
 
 ion-col {
-  @include make-flex-column();
+  @include make-column();
 }

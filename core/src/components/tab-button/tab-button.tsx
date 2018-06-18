@@ -20,11 +20,19 @@ export class TabButton {
 
   @State() keyFocus = false;
 
+  /** If the tab is selected or not */
   @Prop() selected = false;
+
+  /** The tab component for the button */
   @Prop() tab!: HTMLIonTabElement;
 
+  /** Emitted when the tab bar is clicked  */
   @Event() ionTabbarClick!: EventEmitter<HTMLIonTabElement>;
+
+  /** Emitted when the tab button is loaded */
   @Event() ionTabButtonDidLoad!: EventEmitter<void>;
+
+  /** Emitted when the tab button is destroyed */
   @Event() ionTabButtonDidUnload!: EventEmitter<void>;
 
   componentDidLoad() {

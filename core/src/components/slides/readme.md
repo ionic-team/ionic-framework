@@ -4,10 +4,8 @@ The Slides component is a multi-section container. Each section can be swiped
 or dragged between. It contains any number of [Slide](../Slide) components.
 
 
-```
 Adopted from Swiper.js:
-The most modern mobile touch slider and framework with
-hardware accelerated transitions.
+The most modern mobile touch slider and framework with hardware accelerated transitions.
 
 http://www.idangero.us/swiper/
 
@@ -16,7 +14,6 @@ The iDangero.us
 http://www.idangero.us/
 
 Licensed under MIT
-```
 
 
 <!-- Auto Generated Below -->

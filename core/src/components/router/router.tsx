@@ -29,7 +29,6 @@ export class Router {
    * By default `ion-router` will match the routes at the root path ("/").
    * That can be changed when
    *
-   * T
    */
   @Prop() root = '/';
 
@@ -49,7 +48,14 @@ export class Router {
    */
   @Prop() useHash = true;
 
+  /**
+   * Event emitted when the route is about to change
+   */
   @Event() ionRouteWillChange!: EventEmitter<RouterEventDetail>;
+
+  /**
+   * Emitted when the route had changed
+   */
   @Event() ionRouteDidChange!: EventEmitter<RouterEventDetail>;
 
   async componentWillLoad() {
@@ -72,6 +78,7 @@ export class Router {
     return this.writeNavStateRoot(path, direction);
   }
 
+  /** Navigate to the specified URL */
   @Method()
   push(url: string, direction: RouterDirection = 'forward') {
     const path = parsePath(url);
@@ -82,6 +89,7 @@ export class Router {
     return this.writeNavStateRoot(path, intent);
   }
 
+  /** @hidden */
   @Method()
   printDebug() {
     console.debug('CURRENT PATH', this.getPath());
@@ -90,6 +98,7 @@ export class Router {
     printRedirects(readRedirects(this.el));
   }
 
+  /** @hidden */
   @Method()
   async navChanged(intent: RouterIntent): Promise<boolean> {
     if (this.busy) {

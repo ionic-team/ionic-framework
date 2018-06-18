@@ -1,4 +1,3 @@
-
 ```html
 <!-- Segment buttons with text and click listeners -->
 <ion-segment>

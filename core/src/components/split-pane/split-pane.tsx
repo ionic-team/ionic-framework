@@ -112,11 +112,13 @@ export class SplitPane {
     this.visible = mediaList.matches;
   }
 
+  /** Returns if the split pane is toggled or not */
   @Method()
   isVisible(): boolean {
     return this.visible;
   }
 
+  /** @hidden */
   @Method()
   isPane(element: HTMLElement): boolean {
     if (!this.visible) {
