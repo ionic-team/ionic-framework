@@ -463,10 +463,13 @@ If any `CSS` is being overridden for an icon it will need to change to override 
 **New Usage Example:**
 
 ```css
-.icon {
+ion-icon {
   fill: #000;
 }
 ```
+
+_Note: we are no longer adding the `icon` class to an `ion-icon`, so the element should be targeted instead._
+
 
 ### Property Removed
 
