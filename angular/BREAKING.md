@@ -789,7 +789,7 @@ The class has been renamed from `Option` to `SelectOption` to keep it consistent
 
 Action Sheet, Alert, Loading, Modal, Popover, and Toast should now use `async`/`await`:
 
-**New Usage Example:**
+**Old Usage Example:**
 
 ```javascript
 presentPopover(ev: any) {
@@ -802,7 +802,7 @@ presentPopover(ev: any) {
 }
 ```
 
-**Old Usage Example:**
+**New Usage Example:**
 
 ```javascript
 async presentPopover(ev: any) {
