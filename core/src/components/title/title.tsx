@@ -1,5 +1,5 @@
 import { Component, Prop } from '@stencil/core';
-import { Mode, Color } from '../../interface';
+import { Color, Mode } from '../../interface';
 
 @Component({
   tag: 'ion-title',
