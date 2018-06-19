@@ -65,6 +65,8 @@ Animation to use when the loading indicator is presented.
 
 boolean
 
+If true, the loading will blur any inputs and hide the keyboard
+
 
 #### leaveAnimation
 
@@ -155,6 +157,8 @@ Animation to use when the loading indicator is presented.
 #### keyboard-close
 
 boolean
+
+If true, the loading will blur any inputs and hide the keyboard
 
 
 #### leave-animation
