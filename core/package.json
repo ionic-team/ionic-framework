@@ -25,10 +25,10 @@
   ],
   "dependencies": {
     "clean-css-cli": "^4.1.11",
-    "ionicons": "4.2.0"
+    "ionicons": "4.2.1"
   },
   "devDependencies": {
-    "@stencil/core": "0.9.8",
+    "@stencil/core": "0.9.10",
     "@stencil/dev-server": "latest",
     "@stencil/sass": "latest",
     "@stencil/utils": "latest",
