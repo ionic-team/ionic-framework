@@ -76,7 +76,8 @@ export class RippleEffect {
       style.height = size + 'px';
       style.animationDuration = duration + 'ms';
 
-      this.el.shadowRoot!.appendChild(div);
+      const container = this.el.shadowRoot || this.el;
+      container.appendChild(div);
       setTimeout(() => div.remove(), duration + 50);
     });
   }

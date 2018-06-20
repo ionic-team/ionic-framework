@@ -9,8 +9,6 @@
 
   position: absolute;
 
-  --color: #{$ripple-background-color};
-
   contain: strict;
 }
 
@@ -18,7 +16,7 @@
   @include border-radius(50%);
   position: absolute;
 
-  background-color: var(--color);
+  background-color: currentColor;
   opacity: 0;
 
   will-change: transform, opacity;
@@ -26,6 +24,8 @@
   animation-name: rippleAnimation;
   animation-duration: 200ms;
   animation-timing-function: ease-out;
+
+  color: inherit;
 
   contain: strict;
 }

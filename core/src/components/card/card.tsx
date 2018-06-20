@@ -8,7 +8,7 @@ import { createColorClasses } from '../../utils/theme';
     ios: 'card.ios.scss',
     md: 'card.md.scss'
   },
-  shadow: true
+  scoped: true
 })
 export class Card {
 
@@ -28,9 +28,5 @@ export class Card {
     return {
       class: createColorClasses(this.color)
     };
-  }
-
-  render() {
-    return <slot/>;
   }
 }

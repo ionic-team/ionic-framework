@@ -28,7 +28,7 @@
     "ionicons": "4.2.0"
   },
   "devDependencies": {
-    "@stencil/core": "0.9.7",
+    "@stencil/core": "0.9.8",
     "@stencil/dev-server": "latest",
     "@stencil/sass": "latest",
     "@stencil/utils": "latest",
@@ -54,7 +54,7 @@
     "clean": "node scripts/clean.js",
     "css.clean": "cleancss -O2 -o ./css/ionic.min.css ./css/ionic.css",
     "css.sass": "node-sass --output ./css src/css",
-    "watch": "sd concurrent \"stencil build --dev --watch --docs\" \"stencil-dev-server\"",
+    "watch": "sd concurrent \"stencil build --dev --watch --docs --es5\" \"stencil-dev-server\"",
     "dev": "npm run build.css && npm run watch",
     "dev-prod": "npm run build.css && npm run watch --es5",
     "e2e": "node ./scripts/e2e",

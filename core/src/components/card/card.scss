@@ -16,7 +16,14 @@
   --ion-card-text: currentColor;
 }
 
-:host img {
+:host(.ion-color)::slotted(*) ion-card-title,
+:host(.ion-color)::slotted(*) ion-card-subtitle,
+:host(.ion-color)::slotted(ion-card-title),
+:host(.ion-color)::slotted(ion-card-subtitle) {
+  color: #{current-color(base)};
+}
+
+::slotted(img) {
   display: block;
 
   width: 100%;

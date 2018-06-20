@@ -8,8 +8,4 @@ import { Component } from '@stencil/core';
   },
   scoped: true,
 })
-export class Buttons {
-  render() {
-    return <slot/>;
-  }
-}
+export class Buttons {}

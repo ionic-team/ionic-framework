@@ -3,12 +3,7 @@
 // Card Content
 // --------------------------------------------------
 
-:host {
+ion-card-content {
   position: relative;
   display: block;
-
-  color: #{current-color(base)};
-
-  --ion-color-base: currentColor;
-  --ion-card-text: currentColor;
 }

@@ -9,7 +9,3 @@
 
   color: #{current-color(base)};
 }
-
-:host-context(ion-card.ion-color) {
-  --ion-color-base: currentColor;
-}

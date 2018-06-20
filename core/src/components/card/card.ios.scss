@@ -20,53 +20,26 @@
   --ion-color-contrast: #{$card-ios-text-color};
 }
 
-::slotted(ion-list) {
+::slotted(ion-list),
+::slotted(*) ion-list {
   @include margin(null, null, 0, null);
 }
 
-::slotted(.item:last-child)
-::slotted(.item:last-child),
-::slotted(.item-sliding:last-child) {
-  border-bottom: 0;
+
+::slotted(.item),
+::slotted(*) .item {
+  --border-width: 0;
 }
 
-::slotted(.item) {
-  border: 0;
+::slotted(.item:last-child),
+::slotted(*) .item:last-child {
+  --border-width: 0;
+  --inner-border-width: 0;
 }
 
 // .card .note-ios {
 //   font-size: 13px;
 // }
-
-::slotted(h1) {
-  @include margin(0, 0, 2px);
-
-  font-size: 24px;
-  font-weight: normal;
-}
-
-::slotted(h2) {
-  @include margin(2px, 0);
-
-  font-size: 16px;
-  font-weight: normal;
-}
-
-::slotted(h3),
-::slotted(h4),
-::slotted(h5),
-::slotted(h6) {
-  @include margin(2px, 0);
-
-  font-size: 14px;
-  font-weight: normal;
-}
-
-::slotted(p) {
-  @include margin(0, 0, 2px);
-
-  font-size: 14px;
-}
 
 // .card-ios + ion-card {
 //   @include margin(0, null, null, null);

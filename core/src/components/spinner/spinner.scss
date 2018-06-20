@@ -4,13 +4,15 @@
 // --------------------------------------------------
 
 :host {
-  --color: #{current-color(base)};
-
   position: relative;
   display: inline-block;
 
   width: 28px;
   height: 28px;
+
+  color: #{current-color(base)};
+
+  --ion-color-base: currentColor;
 }
 
 svg {
@@ -36,7 +38,7 @@ svg {
 :host(.spinner-lines-small) line {
   stroke-width: 4px;
   stroke-linecap: round;
-  stroke: var(--color);
+  stroke: currentColor;
 }
 
 :host(.spinner-lines) svg,
@@ -50,7 +52,7 @@ svg {
 
 :host(.spinner-bubbles) svg {
   animation: spinner-scale-out 1s linear infinite;
-  fill: var(--color);
+  fill: currentColor;
 }
 
 
@@ -59,7 +61,7 @@ svg {
 
 :host(.spinner-circles) svg {
   animation: spinner-fade-out 1s linear infinite;
-  fill: var(--color);
+  fill: currentColor;
 }
 
 
@@ -72,7 +74,7 @@ svg {
   stroke-dasharray: 128px;
   stroke-dashoffset: 82px;
 
-  stroke: var(--color);
+  stroke: currentColor;
 }
 
 :host(.spinner-crescent) svg {
@@ -85,7 +87,7 @@ svg {
 
 :host(.spinner-dots) circle {
   stroke-width: 0;
-  fill: var(--color);
+  fill: currentColor;
 }
 
 :host(.spinner-dots) svg {

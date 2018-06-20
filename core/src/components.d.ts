@@ -1017,10 +1017,6 @@ declare global {
   namespace StencilComponents {
     interface IonCardContent {
       /**
-       * The color to use for the text.
-       */
-      'color': Color;
-      /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
@@ -1046,10 +1042,6 @@ declare global {
   }
   namespace JSXElements {
     export interface IonCardContentAttributes extends HTMLAttributes {
-      /**
-       * The color to use for the text.
-       */
-      'color'?: Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
