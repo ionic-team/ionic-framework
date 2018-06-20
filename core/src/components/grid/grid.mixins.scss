@@ -38,7 +38,7 @@
 // Creates a flex row used to align columns
 // ---------------------------------------------------------------------------------
 
-@mixin make-flex-grid() {
+@mixin make-row() {
   display: flex;
   flex-wrap: wrap;
 
