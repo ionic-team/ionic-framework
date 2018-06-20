@@ -20,7 +20,7 @@
 :host(.ion-color)::slotted(*) ion-card-subtitle,
 :host(.ion-color)::slotted(ion-card-title),
 :host(.ion-color)::slotted(ion-card-subtitle) {
-  color: #{current-color(base)};
+  color: currentColor;
 }
 
 ::slotted(img) {

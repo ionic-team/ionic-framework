@@ -88,7 +88,9 @@ export class FabButton {
         class="fab-button-native"
         disabled={this.disabled}
         href={this.href}>
-        <ion-icon name="close" class="fab-button-close-icon"></ion-icon>
+        <span class="fab-button-close-icon">
+          <ion-icon name="close"></ion-icon>
+        </span>
         <span class="fab-button-inner">
           <slot />
         </span>

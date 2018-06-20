@@ -7,6 +7,8 @@
 :host {
   position: relative;
   display: block;
+}
 
-  color: #{current-color(base)};
+:host(.ion-color) {
+  color: #{current-color(base)} !important;
 }

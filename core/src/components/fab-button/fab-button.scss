@@ -76,6 +76,9 @@
 }
 
 .fab-button-inner {
+  @include position(0, 0, null, 0);
+
+  position: absolute;
   display: flex;
 
   flex-flow: row nowrap;
@@ -83,7 +86,9 @@
   align-items: center;
   justify-content: center;
 
-  width: 100%;
+  align-items: center;
+  justify-content: center;
+
   height: 100%;
 
   transition: all ease-in-out 300ms;
@@ -105,6 +110,12 @@
   @include position(0, 0, null, 0);
 
   position: absolute;
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
 
   opacity: 0;
   transform: scale(.4) rotateZ(-45deg);
