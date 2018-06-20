@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, Watch, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { Color, InputChangeEvent, Mode, StyleEvent  } from '../../interface';
 import { debounceEvent, deferEvent } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
