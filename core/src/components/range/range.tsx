@@ -307,7 +307,7 @@ export class Range implements BaseInput {
     return {
       class: {
         ...createColorClasses(this.color),
-        'in-item': hostContext('in-item', this.el),
+        'in-item': hostContext('.item', this.el),
         'range-disabled': this.disabled,
         'range-pressed': this.pressedKnob !== Knob.None,
         'range-has-pin': this.pin
