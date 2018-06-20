@@ -31,6 +31,6 @@ export class CardSubtitle {
   }
 
   render() {
-    return <slot/>;
+    return <slot></slot>;
   }
 }

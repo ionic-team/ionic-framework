@@ -128,7 +128,7 @@ export class RouterOutlet implements NavOutlet {
   render() {
     return [
       this.mode === 'ios' && <div class="nav-decor"/>,
-      <slot/>
+      <slot></slot>
     ];
   }
 }

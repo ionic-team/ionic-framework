@@ -37,6 +37,6 @@ export class CardHeader {
   }
 
   render() {
-    return <slot/>;
+    return <slot></slot>;
   }
 }

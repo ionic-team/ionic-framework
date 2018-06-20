@@ -12,7 +12,7 @@ import { Component } from '@stencil/core';
 export class Avatar {
 
   render() {
-    return <slot/>;
+    return <slot></slot>;
   }
 
 }

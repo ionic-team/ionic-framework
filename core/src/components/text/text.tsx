@@ -29,6 +29,6 @@ export class Text {
   }
 
   render() {
-    return <slot/>;
+    return <slot></slot>;
   }
 }

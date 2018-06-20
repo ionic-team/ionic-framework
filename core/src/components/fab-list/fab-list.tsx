@@ -41,7 +41,7 @@ export class FabList {
   }
 
   render() {
-    return <slot/>;
+    return <slot></slot>;
   }
 
 }

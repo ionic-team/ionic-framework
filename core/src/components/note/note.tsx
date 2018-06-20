@@ -32,7 +32,7 @@ export class Note {
   }
 
   render() {
-    return <slot/>;
+    return <slot></slot>;
   }
 
 }

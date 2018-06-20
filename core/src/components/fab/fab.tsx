@@ -73,7 +73,7 @@ export class Fab {
   }
 
   render() {
-    return <slot/>;
+    return <slot></slot>;
   }
 
 }

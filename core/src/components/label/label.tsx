@@ -71,6 +71,6 @@ export class Label {
   }
 
   render() {
-    return <slot/>;
+    return <slot></slot>;
   }
 }

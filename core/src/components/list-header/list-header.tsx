@@ -29,6 +29,6 @@ export class ListHeader {
   }
 
   render() {
-    return <slot/>;
+    return <slot></slot>;
   }
 }

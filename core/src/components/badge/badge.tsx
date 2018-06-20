@@ -12,7 +12,7 @@ import { createColorClasses } from '../../utils/theme';
 })
 export class Badge {
   /**
-   * The color the badge should be
+   * The color the badge should be.
    */
   @Prop() color?: Color;
 
@@ -29,6 +29,6 @@ export class Badge {
   }
 
   render() {
-    return <slot/>;
+    return <slot></slot>;
   }
 }
