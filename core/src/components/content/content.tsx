@@ -92,6 +92,9 @@ export class Content {
     return this.scrollEl.scrollToBottom(duration);
   }
 
+  /**
+   * Scroll by a specific X/Y distance
+   */
   @Method()
   scrollByPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
     if (!this.scrollEl) {
@@ -100,6 +103,9 @@ export class Content {
     return this.scrollEl.scrollByPoint(x, y, duration, done);
   }
 
+  /**
+   * Scroll to a specific X/Y coordinate in the content
+   */
   @Method()
   scrollToPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
     if (!this.scrollEl) {

@@ -83,6 +83,8 @@ and start listening from (ionScroll), set this property to `true`.
 
 #### scrollByPoint()
 
+Scroll by a specific X/Y distance
+
 
 #### scrollToBottom()
 
@@ -93,6 +95,8 @@ Returns a promise which is resolved when the scroll has completed.
 
 
 #### scrollToPoint()
+
+Scroll to a specific X/Y coordinate in the content
 
 
 #### scrollToTop()

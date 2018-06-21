@@ -48,20 +48,15 @@ export class Menu {
 
   @State() isEndSide = false;
 
-  @Prop({ context: 'config' })
-  config!: Config;
+  @Prop({ context: 'config' }) config!: Config;
 
-  @Prop({ context: 'isServer' })
-  isServer!: boolean;
+  @Prop({ context: 'isServer' }) isServer!: boolean;
 
-  @Prop({ connect: 'ion-menu-controller' })
-  lazyMenuCtrl!: HTMLIonMenuControllerElement;
+  @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl!: HTMLIonMenuControllerElement;
 
-  @Prop({ context: 'enableListener' })
-  enableListener!: EventListenerEnable;
+  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
 
-  @Prop({ context: 'window' })
-  win!: Window;
+  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The content's id the menu should use.
@@ -77,8 +72,7 @@ export class Menu {
    * The display type of the menu.
    * Available options: `"overlay"`, `"reveal"`, `"push"`.
    */
-  @Prop({ mutable: true })
-  type!: string;
+  @Prop({ mutable: true }) type!: string;
 
   @Watch('type')
   typeChanged(type: string, oldType: string | null) {
@@ -98,8 +92,7 @@ export class Menu {
   /**
    * If true, the menu is disabled. Default `false`.
    */
-  @Prop({ mutable: true })
-  disabled = false;
+  @Prop({ mutable: true }) disabled = false;
 
   @Watch('disabled')
   protected disabledChanged(disabled: boolean) {
@@ -148,6 +141,9 @@ export class Menu {
    */
   @Event() ionClose!: EventEmitter<void>;
 
+  /**
+   * Emitted when the menu state is changed.
+   */
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
   async componentWillLoad() {

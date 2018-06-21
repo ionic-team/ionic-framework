@@ -50,6 +50,8 @@ Possible values are: `"ios"` or `"md"`.
 
 boolean
 
+If true, the fab button will show when in a fab-list.
+
 
 #### translucent
 
@@ -100,6 +102,8 @@ Possible values are: `"ios"` or `"md"`.
 #### show
 
 boolean
+
+If true, the fab button will show when in a fab-list.
 
 
 #### translucent

@@ -1,5 +1,6 @@
-# ion-route-link
+# ion-anchor
 
+Anchor is a component used for navigating to a specified link. Similar to the browsers anchor tag, Anchor can accept a href for the location, and a direction for the transition animation.
 
 
 <!-- Auto Generated Below -->

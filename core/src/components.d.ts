@@ -1695,6 +1695,9 @@ declare global {
        * If true, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.
        */
       'fullscreen': boolean;
+      /**
+       * Scroll by a specific X/Y distance
+       */
       'scrollByPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
       /**
        * By default `ion-content` uses an `ion-scroll` under the hood to implement scrolling, if you want to disable the content scrolling for a given page, set this property to `false`.
@@ -1708,6 +1711,9 @@ declare global {
        * Scroll to the bottom of the content component.  Duration of the scroll animation in milliseconds. Defaults to `300`. Returns a promise which is resolved when the scroll has completed.
        */
       'scrollToBottom': (duration?: number) => Promise<void>;
+      /**
+       * Scroll to a specific X/Y coordinate in the content
+       */
       'scrollToPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
       /**
        * Scroll to the top of the content component.  Duration of the scroll animation in milliseconds. Defaults to `300`. Returns a promise which is resolved when the scroll has completed.
@@ -1971,6 +1977,9 @@ declare global {
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
+      /**
+       * If true, the fab button will show when in a fab-list.
+       */
       'show': boolean;
       /**
        * If true, the fab button will be translucent. Defaults to `false`.
@@ -2018,6 +2027,9 @@ declare global {
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
+      /**
+       * If true, the fab button will show when in a fab-list.
+       */
       'show'?: boolean;
       /**
        * If true, the fab button will be translucent. Defaults to `false`.
@@ -2522,6 +2534,9 @@ declare global {
        * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
        */
       'alt'?: string;
+      /**
+       * Emitted when the img src is loaded 
+       */
       'onIonImgDidLoad'?: (event: CustomEvent<void>) => void;
       /**
        * The image URL. This attribute is mandatory for the <img> element.
@@ -3508,6 +3523,9 @@ declare global {
        * Animation to use when the loading indicator is presented.
        */
       'enterAnimation': AnimationBuilder;
+      /**
+       * If true, the loading will blur any inputs and hide the keyboard 
+       */
       'keyboardClose': boolean;
       /**
        * Animation to use when the loading indicator is dismissed.
@@ -3588,6 +3606,9 @@ declare global {
        * Animation to use when the loading indicator is presented.
        */
       'enterAnimation'?: AnimationBuilder;
+      /**
+       * If true, the loading will blur any inputs and hide the keyboard 
+       */
       'keyboardClose'?: boolean;
       /**
        * Animation to use when the loading indicator is dismissed.
@@ -3899,6 +3920,9 @@ declare global {
        * Emitted when the menu is closed.
        */
       'onIonClose'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted when the menu state is changed.
+       */
       'onIonMenuChange'?: (event: CustomEvent<MenuChangeEventDetail>) => void;
       /**
        * Emitted when the menu is open.

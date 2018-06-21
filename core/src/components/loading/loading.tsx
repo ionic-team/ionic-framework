@@ -29,6 +29,8 @@ export class Loading implements OverlayInterface {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
   @Prop() overlayId!: number;
+
+  /** If true, the loading will blur any inputs and hide the keyboard */
   @Prop() keyboardClose = true;
 
   /**
