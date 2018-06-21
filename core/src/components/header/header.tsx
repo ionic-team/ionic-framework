@@ -14,8 +14,16 @@ import { createThemedClasses } from '../../utils/theme';
   }
 })
 export class Header {
-  mode!: Mode;
-  color?: Color;
+  /**
+   * The color to use for the button.
+   */
+  @Prop() color?: Color;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * If true, the header will be translucent.
