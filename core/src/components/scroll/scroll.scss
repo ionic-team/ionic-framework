@@ -15,22 +15,6 @@
   contain: size style layout;
 }
 
-.focus-input {
-  @include margin(0);
-  @include padding(0);
-
-  position: absolute;
-
-  width: 0;
-  height: 0;
-
-  border: 0;
-  background: none;
-  opacity: 0;
-
-  appearance: none;
-}
-
 :host(.overscroll)::before,
 :host(.overscroll)::after {
   position: absolute;

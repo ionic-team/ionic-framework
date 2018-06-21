@@ -5,7 +5,7 @@
 
 .menu-button button {
   @include font-smoothing();
-  @include text-align(center);
+  text-align: center;
   @include appearance(none);
 
   position: relative;

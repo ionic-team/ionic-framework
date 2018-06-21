@@ -5,7 +5,7 @@ import { createThemedClasses } from '../../utils/theme';
 @Component({
   tag: 'ion-scroll',
   styleUrl: 'scroll.scss',
-  scoped: true
+  shadow: true
 })
 export class Scroll {
 
@@ -251,6 +251,10 @@ export class Scroll {
         overscroll: this.forceOverscroll
       }
     };
+  }
+
+  render() {
+    return <slot/>;
   }
 }
 

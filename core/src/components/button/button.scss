@@ -94,7 +94,7 @@
 
 .button-native {
   @include font-smoothing();
-  @include text-align(center);
+  text-align: center;
   @include appearance(none);
   @include border-radius(var(--border-radius));
   @include margin(

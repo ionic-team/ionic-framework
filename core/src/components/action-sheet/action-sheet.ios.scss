@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  @include text-align($action-sheet-ios-text-align);
+  text-align: $action-sheet-ios-text-align;
 
   font-family: $action-sheet-ios-font-family;
 }
@@ -59,7 +59,7 @@
 .action-sheet-title {
   @include padding($action-sheet-ios-title-padding-top, $action-sheet-ios-title-padding-end, $action-sheet-ios-title-padding-bottom, $action-sheet-ios-title-padding-start);
 
-  @include text-align($action-sheet-ios-text-align);
+  text-align: $action-sheet-ios-text-align;
 
   border-bottom: $action-sheet-ios-title-border-width $action-sheet-ios-title-border-style $action-sheet-ios-title-border-color;
 

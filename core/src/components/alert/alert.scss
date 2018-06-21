@@ -114,7 +114,7 @@
 }
 
 .alert-tappable {
-  @include text-align(start);
+  text-align: start;
   @include appearance(none);
   @include margin(0);
   @include padding(0);

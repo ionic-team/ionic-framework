@@ -2,7 +2,7 @@
 
 :host {
   @include margin(0);
-  @include text-align(center);
+  text-align: center;
   @include border-radius(0);
 
   box-sizing: border-box;

@@ -27,7 +27,7 @@
 }
 
 .picker-ios .picker-toolbar-button {
-  @include text-align(end);
+  text-align: end;
 
   flex: 1;
 }
@@ -37,7 +37,7 @@
 }
 
 .picker-ios .picker-toolbar-button:first-child {
-  @include text-align(start);
+  text-align: start;
 
   font-weight: normal;
 }

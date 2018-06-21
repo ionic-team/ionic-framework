@@ -39,7 +39,7 @@ ion-refresher-content {
 
 .refresher-pulling-icon,
 .refresher-refreshing-icon {
-  @include text-align(center);
+  text-align: center;
   @include transform-origin(center);
 
   font-size: $refresher-icon-font-size;
@@ -48,7 +48,7 @@ ion-refresher-content {
 
 .refresher-pulling-text,
 .refresher-refreshing-text {
-  @include text-align(center);
+  text-align: center;
 
   font-size: $refresher-text-font-size;
 }

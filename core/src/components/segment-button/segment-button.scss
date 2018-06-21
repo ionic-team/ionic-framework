@@ -50,7 +50,7 @@
     var(--padding-bottom),
     var(--padding-start)
   );
-  @include text-align(center);
+  text-align: center;
 
   position: relative;
   display: block;

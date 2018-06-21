@@ -9,7 +9,7 @@
 
   @include font-smoothing();
   @include padding($badge-padding-top, $badge-padding-end, $badge-padding-bottom, $badge-padding-start);
-  @include text-align(center);
+  text-align: center;
 
   display: inline-block;
 

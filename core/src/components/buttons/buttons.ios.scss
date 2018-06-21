@@ -113,13 +113,13 @@
 }
 
 :host([slot="primary"]) {
-  @include text-align(end);
+  text-align: end;
 
   order: map-get($toolbar-order-ios, buttons-primary);
 }
 
 :host([slot="end"]) {
-  @include text-align(end);
+  text-align: end;
 
   order: map-get($toolbar-order-ios, buttons-end);
 }

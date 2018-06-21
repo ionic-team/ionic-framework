@@ -85,7 +85,7 @@ ion-picker {
 }
 
 .picker-prefix {
-  @include text-align(end);
+  text-align: end;
 
   position: relative;
 
@@ -98,7 +98,7 @@ ion-picker {
 }
 
 .picker-suffix {
-  @include text-align(start);
+  text-align: start;
 
   position: relative;
 
@@ -113,7 +113,7 @@ ion-picker {
 // contain property is supported by Chrome
 .picker-opt {
   @include position(0, null, null, 0);
-  @include text-align(center);
+  text-align: center;
 
   position: absolute;
 

@@ -33,7 +33,7 @@
 ::slotted(ion-title) {
   @include position(0, null, null, 0);
   @include padding(0, 90px, 0px);
-  @include text-align($toolbar-ios-title-text-align);
+  text-align: $toolbar-ios-title-text-align;
 
   box-sizing: border-box;
   position: absolute;

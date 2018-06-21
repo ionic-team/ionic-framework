@@ -59,7 +59,7 @@
 .range-knob-handle {
   @include position(($range-ios-slider-height / 2), null, null, 0);
   @include margin(-($range-ios-hit-height / 2), null, null, -($range-ios-hit-width / 2));
-  @include text-align(center);
+  text-align: center;
 
   position: absolute;
 
@@ -104,7 +104,7 @@
 }
 
 .range-pin {
-  @include text-align(center);
+  text-align: center;
   @include border-radius(50px);
   @include transform(translate3d(0, 28px, 0), scale(.01));
   @include padding($range-ios-pin-padding-top, $range-ios-pin-padding-end, $range-ios-pin-padding-bottom, $range-ios-pin-padding-start);
