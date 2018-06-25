@@ -183,3 +183,19 @@
 // :host(.item-input-has-focus) textarea {
 //   pointer-events: auto;
 // }
+
+
+// FROM SELECT
+:host(.item-select-disabled) ::slotted(ion-label) {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+:host(.item-multiple-inputs) ::slotted(ion-select) {
+  position: relative;
+}
+
+:host(.item-label-stacked) ::slotted(ion-select),
+:host(.item-label-floating) ::slotted(ion-select) {
+  max-width: 100%;
+}

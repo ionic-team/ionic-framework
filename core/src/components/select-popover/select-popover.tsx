@@ -4,6 +4,7 @@ import { Mode, SelectPopoverOption } from '../../interface';
 
 @Component({
   tag: 'ion-select-popover',
+  styleUrl: 'select-popover.scss',
   host: {
     theme: 'select-popover'
   }}
