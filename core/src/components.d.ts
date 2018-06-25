@@ -86,9 +86,6 @@ import {
   Side,
 } from './utils/helpers';
 import {
-  OverlayEventDetail as OverlayEventDetail2,
-} from './utils/overlays';
-import {
   ViewController,
 } from './components/nav/view-controller';
 import {

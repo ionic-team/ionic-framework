@@ -1,4 +1,4 @@
-import { OverlayEventDetail } from '../../utils/overlays';
+import { OverlayEventDetail } from '../../interface';
 
 export type AlertEventDetailData = OverlayEventDetail<{
   values?: any;
