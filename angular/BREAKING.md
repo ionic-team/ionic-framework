@@ -463,10 +463,13 @@ If any `CSS` is being overridden for an icon it will need to change to override 
 **New Usage Example:**
 
 ```css
-.icon {
+ion-icon {
   fill: #000;
 }
 ```
+
+_Note: we are no longer adding the `icon` class to an `ion-icon`, so the element should be targeted instead._
+
 
 ### Property Removed
 
@@ -789,7 +792,7 @@ The class has been renamed from `Option` to `SelectOption` to keep it consistent
 
 Action Sheet, Alert, Loading, Modal, Popover, and Toast should now use `async`/`await`:
 
-**New Usage Example:**
+**Old Usage Example:**
 
 ```javascript
 presentPopover(ev: any) {
@@ -802,7 +805,7 @@ presentPopover(ev: any) {
 }
 ```
 
-**Old Usage Example:**
+**New Usage Example:**
 
 ```javascript
 async presentPopover(ev: any) {

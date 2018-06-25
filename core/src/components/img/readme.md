@@ -46,6 +46,8 @@ The image URL. This attribute is mandatory for the <img> element.
 
 #### ionImgDidLoad
 
+Emitted when the img src is loaded
+
 
 
 ----------------------------------------------

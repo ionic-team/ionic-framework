@@ -140,6 +140,8 @@ Emitted when the menu is closed.
 
 #### ionMenuChange
 
+Emitted when the menu state is changed.
+
 
 #### ionOpen
 

@@ -47,6 +47,9 @@ export class FabButton {
    */
   @Prop() translucent = false;
 
+  /**
+   * If true, the fab button will show when in a fab-list.
+   */
   @Prop() show = false;
 
   componentWillLoad() {

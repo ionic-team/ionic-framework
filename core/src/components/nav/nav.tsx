@@ -57,27 +57,23 @@ export class Nav implements NavOutlet {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' })
-  queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueController;
 
-  @Prop({ context: 'config' })
-  config!: Config;
+  @Prop({ context: 'config' }) config!: Config;
 
-  @Prop({ context: 'window' })
-  win!: Window;
+  @Prop({ context: 'window' }) win!: Window;
 
-  @Prop({ connect: 'ion-animation-controller' })
-  animationCtrl!: HTMLIonAnimationControllerElement;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+
   /**
    * If the nav component should allow for swipe-to-go-back
    */
-  @Prop({ mutable: true })
-  swipeBackEnabled?: boolean;
+  @Prop({ mutable: true }) swipeBackEnabled?: boolean;
+
   /**
    * If the nav should animate the components or not
    */
-  @Prop({ mutable: true })
-  animated?: boolean;
+  @Prop({ mutable: true }) animated?: boolean;
 
   /** @hidden */
   @Prop() delegate?: FrameworkDelegate;
