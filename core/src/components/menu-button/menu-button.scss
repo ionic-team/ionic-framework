@@ -6,7 +6,6 @@
 .menu-button button {
   @include font-smoothing();
   text-align: center;
-  @include appearance(none);
 
   position: relative;
   z-index: 0;
@@ -33,4 +32,6 @@
 
   font-kerning: none;
   user-select: none;
+
+  appearance: none;
 }

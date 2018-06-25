@@ -21,6 +21,17 @@
   --ion-color-base: currentColor;
 }
 
+:host([text-wrap]) {
+  white-space: normal;
+}
+
+:host-context(.item-interactive-disabled) {
+  cursor: default;
+  opacity: .4;
+
+  pointer-events: none;
+}
+
 :host-context(.item-input) {
   flex: initial;
 
@@ -29,12 +40,8 @@
   pointer-events: none;
 }
 
-:host-context([text-wrap]) {
-  white-space: normal;
-}
 
-
-// Stacked & Floating Inputs
+// Fixed Inputs
 // --------------------------------------------------
 
 :host(.label-fixed) {
@@ -45,15 +52,20 @@
   max-width: 200px;
 }
 
-:host-context(.item-label-stacked),
-:host-context(.item-label-floating) {
+// Stacked & Floating Inputs
+// --------------------------------------------------
+
+:host(.label-stacked),
+:host(.label-floating) {
+  @include margin(null, null, 0, null);
+
   align-self: stretch;
 
   width: auto;
   max-width: 100%;
 }
 
-:host(.label-stacked),
-:host(.label-floating) {
-  @include margin(null, null, 0, null);
+:host-context(.item-has-focus).label-floating,
+:host-context(.item-has-value).label-floating {
+  @include transform(translate3d(0, 0, 0), scale(.8));
 }

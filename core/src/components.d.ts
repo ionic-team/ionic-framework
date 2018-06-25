@@ -54,6 +54,7 @@ import {
   Mode,
   NavComponent,
   NavOptions,
+  OverlayEventDetail,
   PickerButton,
   PickerColumn,
   PickerOptions,
@@ -68,13 +69,12 @@ import {
   SelectInterface,
   SelectPopoverOption,
   StyleEvent,
+  TabbarLayout,
+  TabbarPlacement,
   ToastOptions,
   TransitionDoneFn,
   TransitionInstruction,
 } from './interface';
-import {
-  OverlayEventDetail,
-} from './utils/overlays';
 import {
   EventEmitter,
 } from '@stencil/core';
@@ -86,6 +86,9 @@ import {
   Side,
 } from './utils/helpers';
 import {
+  OverlayEventDetail as OverlayEventDetail2,
+} from './utils/overlays';
+import {
   ViewController,
 } from './components/nav/view-controller';
 import {
@@ -95,10 +98,6 @@ import {
   ScrollBaseDetail,
   ScrollDetail,
 } from './components/scroll/scroll';
-import {
-  TabbarLayout,
-  TabbarPlacement,
-} from './components/tabbar/tabbar';
 import {
   DomRenderFn,
   HeaderFn,
@@ -189,11 +188,11 @@ declare global {
       /**
        * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback that is called in the same circustances.
        */
-      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+      'onDidDismiss': (callback?: ((detail: any) => void) | undefined) => Promise<any>;
       /**
        * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback that is called in the same circustances.
        */
-      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+      'onWillDismiss': (callback?: ((detail: any) => void) | undefined) => Promise<any>;
       /**
        * Unique ID to be used with the overlay. Internal only
        */
@@ -398,11 +397,11 @@ declare global {
       /**
        * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circumstances.
        */
-      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
+      'onDidDismiss': (callback?: ((detail: import("/Users/manuelmartinez-almeida/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<import("/Users/manuelmartinez-almeida/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
       /**
        * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circumstances.
        */
-      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
+      'onWillDismiss': (callback?: ((detail: import("/Users/manuelmartinez-almeida/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<import("/Users/manuelmartinez-almeida/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
       'overlayId': number;
       /**
        * Present the alert overlay after it has been created.

@@ -10,7 +10,7 @@
   font-family: $label-ios-font-family;
 }
 
-:host-context([text-wrap]) {
+:host([text-wrap]) {
   font-size: $label-ios-text-wrap-font-size;
   line-height: $label-ios-text-wrap-line-height;
 }
@@ -41,13 +41,8 @@
   transition: transform 150ms ease-in-out;
 }
 
-:host-context(.item-input-has-focus):host(.label-floating),
-:host-context(.item-input-has-value):host(.label-floating) {
-  @include transform(translate3d(0, 0, 0), scale(.8));
-}
-
-:host-context(.item-input-has-focus):host(.label-stacked),
-:host-context(.item-input-has-focus):host(.label-floating) {
+:host-context(.item-has-focus).label-stacked,
+:host-context(.item-has-focus).label-floating {
   color: $label-ios-text-color-focused;
 }
 
@@ -88,7 +83,11 @@
   font-size: $item-ios-paragraph-font-size;
   line-height: normal;
   text-overflow: inherit;
-  color:  #{$item-ios-paragraph-text-color};
+  color: #{$item-ios-paragraph-text-color};
+}
+
+:host-context(.ion-color)::slotted(p) {
+  color: inherit;
 }
 
 ::slotted(h2:last-child),

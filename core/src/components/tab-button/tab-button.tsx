@@ -81,7 +81,7 @@ export class TabButton {
         'has-title-only': hasTitleOnly,
         'has-icon-only': hasIconOnly,
         'has-badge': hasBadge,
-        'tab-btn-disabled': tab.disabled,
+        'tab-button-disabled': tab.disabled,
         'focused': this.keyFocus
       }
     };
@@ -94,7 +94,7 @@ export class TabButton {
     return [
       <a
         href={href}
-        class="tab-cover"
+        class="tab-button-native"
         onKeyUp={this.onKeyUp.bind(this)}
         onBlur={this.onBlur.bind(this)}>
         { tab.icon && <ion-icon class="tab-button-icon" icon={tab.icon}></ion-icon> }

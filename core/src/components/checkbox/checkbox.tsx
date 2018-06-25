@@ -94,7 +94,7 @@ export class Checkbox implements CheckboxInput {
   emitStyle() {
     this.ionStyle.emit({
       'checkbox-checked': this.checked,
-      'disabled': this.disabled,
+      'interactive-disabled': this.disabled,
     });
   }
 

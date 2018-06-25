@@ -33,44 +33,8 @@ ion-gesture {
   visibility: inherit;
 }
 
-.toggle-cover {
-  @include position-horizontal(0, null);
-
-  position: absolute;
-  top: 0;
-
-  width: 100%;
-  height: 100%;
-
-  border: 0;
-  outline: none;
-
-  font-family: inherit;
-  font-style: inherit;
-  font-variant: inherit;
-
-  line-height: 1;
-  text-transform: none;
-
-  background: transparent;
-  cursor: pointer;
-}
-
 input {
-  @include position(0, null, null, 0);
-  @include margin(0);
-
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  border: 0;
-  background: transparent;
-  cursor: pointer;
+  @include input-cover();
 
   pointer-events: none;
-
-  appearance: none;
-  outline: none;
 }

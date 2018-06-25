@@ -239,9 +239,9 @@ export class Input implements InputComponent {
     this.ionStyle.emit({
       'interactive': true,
       'input': true,
-      'input-has-value': this.hasValue(),
-      'input-has-focus': this.hasFocus,
-      'disabled': this.disabled,
+      'has-value': this.hasValue(),
+      'has-focus': this.hasFocus,
+      'interactive-disabled': this.disabled,
     });
   }
 

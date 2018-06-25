@@ -24,7 +24,6 @@
 // --------------------------------------------------
 
 .native-input {
-  @include appearance(none);
   @include border-radius(var(--border-radius));
   @include placeholder(var(--placeholder-color));
 
@@ -43,17 +42,14 @@
   width: 100%;
 
   border: 0;
-
+  outline: none;
   font-size: inherit;
   font-weight: inherit;
   letter-spacing: inherit;
 
   background: transparent;
 
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  appearance: none;
 }
 
 .native-input[disabled] {
@@ -94,7 +90,6 @@
 .input-clear-icon {
   @include margin(0);
   @include padding(0);
-  @include appearance(none);
   @include background-position(center);
 
   border: 0;
@@ -103,6 +98,8 @@
   background-repeat: no-repeat;
 
   visibility: hidden;
+
+  appearance: none;
 
   &:active,
   &:focus {

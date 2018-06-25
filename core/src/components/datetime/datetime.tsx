@@ -242,8 +242,8 @@ export class Datetime {
     this.ionStyle.emit({
       'interactive': true,
       'datetime': true,
-      'input-has-value': this.hasValue(),
-      'disabled': this.disabled,
+      'has-value': this.hasValue(),
+      'interactive-disabled': this.disabled,
     });
   }
 

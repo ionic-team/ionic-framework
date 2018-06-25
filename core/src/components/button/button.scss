@@ -15,6 +15,7 @@
   pointer-events: none;
 }
 
+// TODO: review
 :host-context(ion-toolbar.ion-color):host(.button-clear) {
   --ion-color-base: currentColor;
 }
@@ -94,8 +95,6 @@
 
 .button-native {
   @include font-smoothing();
-  text-align: center;
-  @include appearance(none);
   @include border-radius(var(--border-radius));
   @include margin(
     var(--margin-top),
@@ -142,8 +141,11 @@
 
   font-kerning: none;
   user-select: none;
+  text-align: center;
 
   contain: content;
+
+  appearance: none;
 }
 
 .button-native[disabled] {

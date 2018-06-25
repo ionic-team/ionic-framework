@@ -15,11 +15,14 @@ export * from './components/router/utils/interface';
 export * from './components/range/range-interface';
 export * from './components/select/select-interface';
 export * from './components/select-popover/select-popover-interface';
+export * from './components/tabbar/tabbar-interface';
 export * from './components/toast/toast-interface';
 
 // export all of the component declarations that are dynamically created
 export * from './utils/input-interface';
 export * from './global/config';
+export { OverlayEventDetail, OverlayInterface } from './utils/overlays';
+
 
 export type Color = 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
 export type Mode = 'ios' | 'md';

@@ -83,15 +83,12 @@ export class Toggle implements CheckboxInput {
       checked: isChecked,
       value: this.value
     });
-    this.emitStyle();
   }
 
   @Watch('disabled')
   emitStyle() {
     this.ionStyle.emit({
-      'disabled': this.disabled,
-      'toggle-checked': this.checked,
-      'toggle-activated': this.activated
+      'interactive-disabled': this.disabled,
     });
   }
 
@@ -188,7 +185,6 @@ export class Toggle implements CheckboxInput {
         <div class="toggle-icon">
           <div class="toggle-inner"/>
         </div>
-        <div class="toggle-cover"/>
       </ion-gesture>,
       <input
         type="checkbox"

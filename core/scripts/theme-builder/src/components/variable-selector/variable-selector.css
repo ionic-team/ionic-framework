@@ -23,12 +23,13 @@ input[type="text"] {
 }
 
 input[type="color"] {
-  -webkit-appearance: none;
   border: none;
   width: 64px;
   height: 20px;
   outline: none;
   background: transparent;
+
+  appearance: none;
 }
 
 input[type="color"]::-webkit-color-swatch-wrapper {

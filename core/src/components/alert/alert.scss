@@ -115,7 +115,6 @@
 
 .alert-tappable {
   text-align: start;
-  @include appearance(none);
   @include margin(0);
   @include padding(0);
 
@@ -126,6 +125,8 @@
   font-size: inherit;
   line-height: initial;
   background: transparent;
+
+  appearance: none;
 }
 
 .alert-button,

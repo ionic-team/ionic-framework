@@ -13,25 +13,9 @@
 }
 
 input {
-  @include position(0, null, null, 0);
-  @include margin(0);
+  @include input-cover();
 
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  border: 0;
-  background: transparent;
-  cursor: pointer;
-
-
-  appearance: none;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  pointer-events: none;
 }
 
 .radio-icon {

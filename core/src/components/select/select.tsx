@@ -443,7 +443,7 @@ export class Select {
       'interactive': true,
       'select': true,
       'input-has-value': this.hasValue(),
-      'disabled': this.disabled,
+      'interactive-disabled': this.disabled,
     });
   }
 

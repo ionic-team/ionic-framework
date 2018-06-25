@@ -55,7 +55,7 @@ export class Label {
   @Watch('position')
   positionChanged() {
     const position = this.position;
-    return this.ionStyle.emit({
+    this.ionStyle.emit({
       [`label-${position}`]: !!position
     });
   }
@@ -68,9 +68,5 @@ export class Label {
         [`label-${position}`]: !!position,
       }
     };
-  }
-
-  render() {
-    return <slot></slot>;
   }
 }

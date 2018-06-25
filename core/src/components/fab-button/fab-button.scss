@@ -33,7 +33,6 @@
     var(--padding-start)
   );
   text-align: center;
-  @include appearance(none);
   @include border-radius(50%);
 
   position: relative;
@@ -64,6 +63,8 @@
   user-select: none;
 
   contain: strict;
+
+  appearance: none;
 
   &:active,
   &:focus {

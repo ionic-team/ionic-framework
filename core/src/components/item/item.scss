@@ -59,14 +59,10 @@
   @include border-radius(var(--border-radius));
 
   @include margin(0);
-  text-align: initial;
+  @include text-align(initial);
 
-  border-style: var(--border-style);
-  border-color: var(--border-color);
-  border-width: var(--border-width);
-
-  box-shadow: var(--box-shadow);
-
+  box-sizing: border-box;
+  position: relative;
   display: flex;
   overflow: hidden;
 
@@ -76,36 +72,33 @@
   width: 100%;
   min-height: $item-min-height;
 
-  position: relative;
-
-  font-family: inherit;
-  color: inherit;
-  font-weight: inherit;
-  text-transform: inherit;
-  text-decoration: inherit;
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
 
   outline: none;
-
+  font-family: inherit;
   font-size: inherit;
-  background-color: var(--background);
-  transition: var(--transition);
+  font-weight: inherit;
+  text-decoration: inherit;
+  text-transform: inherit;
+  color: inherit;
 
-  box-sizing: border-box;
+  background-color: var(--background);
+  box-shadow: var(--box-shadow);
+  transition: var(--transition);
 }
 
 .item-state {
-  position: absolute;
+  @include position(null, 0, 0, 0);
 
-  bottom: 0;
-  left: 0;
-  right: 0;
+  position: absolute;
 
   height: var(--highlight-height);
 }
 
 .item-inner {
   @include margin(0);
-  @include padding(0);
   @include padding(
     var(--inner-padding-top),
     var(--inner-padding-end),
@@ -113,9 +106,7 @@
     var(--inner-padding-start)
     );
 
-  border-style: var(--border-style);
-  border-color: var(--border-color);
-  border-width: var(--inner-border-width);
+  box-sizing: border-box;
 
   display: flex;
   overflow: hidden;
@@ -126,11 +117,16 @@
   align-self: stretch;
 
   min-height: inherit;
-  box-sizing: border-box;
+
+  border-width: var(--inner-border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
   box-shadow: var(--inner-box-shadow);
 }
 
 .input-wrapper {
+  box-sizing: border-box;
   display: flex;
   overflow: hidden;
 
@@ -140,24 +136,11 @@
   align-self: stretch;
 
   text-overflow: ellipsis;
-  box-sizing: border-box;
 }
 
 :host([vertical-align-top]),
-:host(.input) {
+:host(.item-input) {
   align-items: flex-start;
-}
-
-.item-cover {
-  @include position(0, null, null, 0);
-
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  background: transparent;
-  cursor: pointer;
 }
 
 ::slotted(ion-icon) {

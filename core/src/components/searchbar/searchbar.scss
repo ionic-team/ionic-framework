@@ -31,8 +31,6 @@ ion-searchbar {
 }
 
 .searchbar-input {
-  @include appearance(none);
-
   box-sizing: border-box;
 
   display: block;
@@ -41,6 +39,8 @@ ion-searchbar {
 
   border: 0;
   font-family: inherit;
+
+  appearance: none;
 
   &:active,
   &:focus {

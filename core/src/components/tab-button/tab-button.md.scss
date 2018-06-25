@@ -15,7 +15,7 @@
   --background-focused: #{$tabbar-md-background-color-focused};
 }
 
-.tab-cover {
+.tab-button-native {
   @include padding(
     $tab-button-md-padding-top,
     $tab-button-md-padding-end,

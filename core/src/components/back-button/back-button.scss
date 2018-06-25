@@ -17,7 +17,6 @@
 .back-button-native {
   @include font-smoothing();
   text-align: center;
-  @include appearance(none);
 
   position: relative;
   z-index: 0;
@@ -48,6 +47,8 @@
 
   user-select: none;
   font-kerning: none;
+
+  appearance: none;
 }
 
 .back-button-inner {

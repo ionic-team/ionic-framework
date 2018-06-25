@@ -8,7 +8,6 @@
 }
 
 .item-option-native {
-  @include appearance(none);
   @include padding(0, .7em);
 
   width: 100%;
@@ -23,6 +22,8 @@
   color: inherit;
 
   background: #{current-color(base)};
+
+  appearance: none;
 
   &:active,
   &:focus {

@@ -46,7 +46,7 @@ a {
   text-decoration: none;
 }
 
-.tab-cover {
+.tab-button-native {
   @include margin(0);
   @include padding(0);
 
@@ -71,16 +71,18 @@ a {
   }
 }
 
-:host(.tab-btn-disabled) {
+:host(.tab-button-disabled) {
   pointer-events: none;
 }
 
-:host(.tab-btn-disabled) .tab-cover {
+:host(.tab-button-disabled) .tab-button-native {
   opacity: .4;
 }
 
 .tab-button-text,
 .tab-button-icon {
+  box-sizing: border-box;
+
   display: none;
   overflow: hidden;
 
@@ -91,8 +93,6 @@ a {
 
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  box-sizing: border-box;
 }
 
 :host(.has-icon) .tab-button-icon,
