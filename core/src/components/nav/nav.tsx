@@ -1,44 +1,10 @@
-import {
-  Build,
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  Method,
-  Prop,
-  Watch
-} from '@stencil/core';
+import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import { ViewLifecycle } from '../..';
-import {
-  Animation,
-  ComponentProps,
-  Config,
-  FrameworkDelegate,
-  GestureDetail,
-  Mode,
-  NavComponent,
-  NavOptions,
-  NavOutlet,
-  NavResult,
-  QueueController,
-  RouteID,
-  RouteWrite,
-  TransitionDoneFn,
-  TransitionInstruction
-} from '../../interface';
+import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, Mode, NavComponent, NavOptions, NavOutlet, NavResult,QueueController, RouteID, RouteWrite, TransitionDoneFn, TransitionInstruction } from '../../interface';
 import { assert } from '../../utils/helpers';
-import {
-  TransitionOptions,
-  lifecycle,
-  transition
-} from '../../utils/transition';
+import { TransitionOptions, lifecycle, transition } from '../../utils/transition';
 import { RouterIntent } from '../router/utils/constants';
-import {
-  ViewController,
-  ViewState,
-  convertToViews,
-  matches
-} from './view-controller';
+import { ViewController, ViewState, convertToViews, matches } from './view-controller';
 
 @Component({
   tag: 'ion-nav'
