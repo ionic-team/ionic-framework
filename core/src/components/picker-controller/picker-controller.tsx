@@ -3,6 +3,7 @@ import { PickerOptions } from '../../interface';
 import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 
+/** @hidden */
 @Component({
   tag: 'ion-picker-controller'
 })

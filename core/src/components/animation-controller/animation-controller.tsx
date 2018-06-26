@@ -3,6 +3,7 @@ import { Animation, AnimationBuilder, AnimationController } from '../../interfac
 import { Animator } from './animator';
 
 
+/** @hidden */
 @Component({
   tag: 'ion-animation-controller'
 })

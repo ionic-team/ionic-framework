@@ -1,6 +1,6 @@
 # ion-chip-button
 
-A chip-button is an inset button that is placed inside of a chip.
+A ChipButton is an inset button that is placed inside of a Chip. For more information, see the [Chip Docs](../chip)
 
 <!-- Auto Generated Below -->
 

@@ -15,7 +15,7 @@ export class RippleEffect {
   @Prop({context: 'enableListener'}) enableListener!: EventListenerEnable;
   @Prop({ context: 'document' }) doc!: Document;
 
-  /** @hidden */
+  /** If true, the ripple effect will listen to any click events and animate */
   @Prop() tapClick = false;
   @Watch('tapClick')
   tapClickChanged(tapClick: boolean) {

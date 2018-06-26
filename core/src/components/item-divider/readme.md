@@ -1,6 +1,7 @@
 # ion-item-divider
 
 Item Divider is divider component for list items.
+Similar to ListHeaders, item dividers are styled to be inset with the rest of the list items.
 
 <!-- Auto Generated Below -->
 
