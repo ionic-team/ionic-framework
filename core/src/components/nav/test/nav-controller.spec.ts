@@ -953,6 +953,7 @@ describe('NavController', () => {
     nav.animated = false;
     nav.el = win.document.createElement('ion-nav');
     nav.win = win;
+    nav.queue = { write: (fn: any) => fn(), read: (fn: any) => fn()};
     nav.ionNavDidChange = {emit: function() { return; } };
     nav.ionNavWillChange = {emit: function() { return; } };
 

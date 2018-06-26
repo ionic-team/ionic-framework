@@ -2,10 +2,7 @@ import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
 
 
 @Component({
-  tag: 'ion-select-option',
-  host: {
-    theme: 'select-option'
-  }
+  tag: 'ion-select-option'
 })
 export class SelectOption {
 

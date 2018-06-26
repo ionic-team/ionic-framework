@@ -9,6 +9,11 @@ view component.
 
 ## Properties
 
+#### color
+
+string
+
+
 #### forceOverscroll
 
 boolean
@@ -44,6 +49,11 @@ and start listening from (ionScroll), set this property to `true`.
 
 
 ## Attributes
+
+#### color
+
+string
+
 
 #### force-overscroll
 
@@ -81,30 +91,7 @@ and start listening from (ionScroll), set this property to `true`.
 
 ## Methods
 
-#### scrollByPoint()
-
-Scroll by a specific X/Y distance
-
-
-#### scrollToBottom()
-
-Scroll to the bottom of the content component.
-
-Duration of the scroll animation in milliseconds. Defaults to `300`.
-Returns a promise which is resolved when the scroll has completed.
-
-
-#### scrollToPoint()
-
-Scroll to a specific X/Y coordinate in the content
-
-
-#### scrollToTop()
-
-Scroll to the top of the content component.
-
-Duration of the scroll animation in milliseconds. Defaults to `300`.
-Returns a promise which is resolved when the scroll has completed.
+#### getScrollElement()
 
 
 
