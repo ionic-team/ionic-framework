@@ -8,11 +8,11 @@ export function startStatusTap(win: Window, queue: QueueController) {
     if (!el) {
       return;
     }
-    const scrollEl = el.closest('ion-scroll');
-    if (scrollEl) {
-      scrollEl.componentOnReady().then(() => {
+    const contentEl = el.closest('ion-content');
+    if (contentEl) {
+      contentEl.componentOnReady().then(() => {
         queue.write(() => {
-          scrollEl.scrollToTop(300);
+          contentEl.getScrollElement().scrollToTop(300);
         });
       });
     }

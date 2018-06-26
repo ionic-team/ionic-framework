@@ -22,24 +22,20 @@
   @include border-radius($list-inset-ios-border-radius);
 }
 
-.list-ios.list-inset ion-list-header {
-  background-color: $item-ios-background-color;
+.list-ios.list-inset {
+  background-color: $item-background-color;
 }
 
-.list-ios.list-inset .item {
+.list-ios.list-inset ion-item {
   --border-width: 0 0 1px 0;
   --inner-border-width: 0;
 }
 
-.list-ios.list-inset > ion-item:first-child .item,
-.list-ios.list-inset > ion-item-sliding:first-child .item {
+.list-ios.list-inset ion-item:last-child {
   --border-width: 0;
+  --inner-border-width: 0;
 }
 
-.list-ios.list-inset > ion-item:last-child .item,
-.list-ios.list-inset > ion-item-sliding:last-child .item {
-  --border-width: 0;
-}
 
 .list-ios.list-inset + ion-list.list-inset {
   @include margin(0, null, null, null);

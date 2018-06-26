@@ -27,7 +27,7 @@ export class Refresher {
   private appliedStyles = false;
   private didStart = false;
   private progress = 0;
-  private scrollEl: HTMLElement | null = null;
+  private scrollEl?: HTMLIonScrollElement;
 
   @Prop({ context: 'queue' }) queue!: QueueController;
 
@@ -93,7 +93,7 @@ export class Refresher {
    */
   @Event() ionStart!: EventEmitter<void>;
 
-  componentDidLoad() {
+  async componentDidLoad() {
     if (this.el.getAttribute('slot') !== 'fixed') {
       console.error('Make sure you use: <ion-refresher slot="fixed">');
       return;
@@ -103,14 +103,17 @@ export class Refresher {
       console.error('ion-refresher is not attached');
       return;
     }
-    this.scrollEl = parentElement.querySelector('ion-scroll') as HTMLElement;
-    if (!this.scrollEl) {
+    const contentEl = parentElement.querySelector('ion-content');
+    if (contentEl) {
+      await contentEl.componentOnReady();
+      this.scrollEl = contentEl.getScrollElement();
+    } else {
       console.error('ion-refresher didn\'t attached, make sure if parent is a ion-content');
     }
   }
 
   componentDidUnload() {
-    this.scrollEl = null;
+    this.scrollEl = undefined;
   }
 
   /**

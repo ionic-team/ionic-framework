@@ -25,8 +25,8 @@ export function startInputShims(
 
   function registerInput(componentEl: HTMLElement) {
     const inputEl = componentEl.querySelector('input');
-    const scrollEl = componentEl.closest('ion-scroll');
     const contentEl = componentEl.closest('ion-content');
+    const scrollEl = contentEl && contentEl.getScrollElement();
 
     if (!inputEl) {
       return;

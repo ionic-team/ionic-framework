@@ -17,7 +17,7 @@ export class ReorderGroup {
   private lastToIndex!: number;
   private cachedHeights: number[] = [];
   private containerEl!: HTMLElement;
-  private scrollEl: HTMLElement|null = null;
+  private scrollEl?: HTMLIonScrollElement;
 
   private scrollElTop = 0;
   private scrollElBottom = 0;
@@ -52,9 +52,13 @@ export class ReorderGroup {
     }
   }
 
-  componentDidLoad() {
+  async componentDidLoad() {
     this.containerEl = this.el.querySelector('ion-gesture')!;
-    this.scrollEl = this.el.closest('ion-scroll');
+    const contentEl = this.el.closest('ion-content');
+    if (contentEl) {
+      await contentEl.componentOnReady();
+      this.scrollEl = contentEl.getScrollElement();
+    }
     if (!this.disabled) {
       this.disabledChanged(false);
     }

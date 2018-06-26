@@ -75,14 +75,13 @@ export class InfiniteScroll {
    */
   @Event() ionInfinite!: EventEmitter<void>;
 
-  async componentWillLoad() {
-    const scrollEl = this.el.closest('ion-scroll');
-    if (scrollEl) {
-      this.scrollEl = await scrollEl.componentOnReady();
-    }
-  }
 
-  componentDidLoad() {
+  async componentDidLoad() {
+    const contentEl = this.el.closest('ion-content');
+    if (contentEl) {
+      await contentEl.componentOnReady()
+      this.scrollEl = contentEl.getScrollElement();
+    }
     this.thresholdChanged(this.threshold);
     this.enableScrollEvents(!this.disabled);
     if (this.position === 'top') {

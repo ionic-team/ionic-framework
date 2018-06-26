@@ -65,55 +65,11 @@ export class Content {
     this.scrollEl = undefined as any;
   }
 
-  /**
-   * Scroll to the top of the content component.
-   *
-   * Duration of the scroll animation in milliseconds. Defaults to `300`.
-   * Returns a promise which is resolved when the scroll has completed.
-   */
   @Method()
-  scrollToTop(duration = 300) {
-    if (!this.scrollEl) {
-      throw new Error('content is not scrollable');
-    }
-    return this.scrollEl.scrollToTop(duration);
+  getScrollElement(): HTMLIonScrollElement {
+    return this.scrollEl!;
   }
 
-  /**
-   * Scroll to the bottom of the content component.
-   *
-   * Duration of the scroll animation in milliseconds. Defaults to `300`.
-   * Returns a promise which is resolved when the scroll has completed.
-   */
-  @Method()
-  scrollToBottom(duration = 300) {
-    if (!this.scrollEl) {
-      throw new Error('content is not scrollable');
-    }
-    return this.scrollEl.scrollToBottom(duration);
-  }
-
-  /**
-   * Scroll by a specific X/Y distance
-   */
-  @Method()
-  scrollByPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
-    if (!this.scrollEl) {
-      throw new Error('content is not scrollable');
-    }
-    return this.scrollEl.scrollByPoint(x, y, duration, done);
-  }
-
-  /**
-   * Scroll to a specific X/Y coordinate in the content
-   */
-  @Method()
-  scrollToPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
-    if (!this.scrollEl) {
-      throw new Error('content is not scrollable');
-    }
-    return this.scrollEl.scrollToPoint(x, y, duration, done);
-  }
 
   private resize() {
     if (!this.scrollEl) {

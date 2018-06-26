@@ -64,7 +64,7 @@ function jsSetFocus(
   inputEl.focus();
 
   // scroll the input into place
-  contentEl.scrollByPoint(0, scrollData.scrollAmount, scrollData.scrollDuration, () => {
+  contentEl.getScrollElement().scrollByPoint(0, scrollData.scrollAmount, scrollData.scrollDuration, () => {
     // the scroll view is in the correct position now
     // give the native text input focus
     relocateInput(componentEl, inputEl, false, scrollData.inputSafeY);

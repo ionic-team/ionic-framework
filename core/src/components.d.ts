@@ -1692,10 +1692,7 @@ declare global {
        * If true, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.
        */
       'fullscreen': boolean;
-      /**
-       * Scroll by a specific X/Y distance
-       */
-      'scrollByPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
+      'getScrollElement': () => HTMLIonScrollElement;
       /**
        * By default `ion-content` uses an `ion-scroll` under the hood to implement scrolling, if you want to disable the content scrolling for a given page, set this property to `false`.
        */
@@ -1704,18 +1701,6 @@ declare global {
        * Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.
        */
       'scrollEvents': boolean;
-      /**
-       * Scroll to the bottom of the content component.  Duration of the scroll animation in milliseconds. Defaults to `300`. Returns a promise which is resolved when the scroll has completed.
-       */
-      'scrollToBottom': (duration?: number) => Promise<void>;
-      /**
-       * Scroll to a specific X/Y coordinate in the content
-       */
-      'scrollToPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
-      /**
-       * Scroll to the top of the content component.  Duration of the scroll animation in milliseconds. Defaults to `300`. Returns a promise which is resolved when the scroll has completed.
-       */
-      'scrollToTop': (duration?: number) => Promise<void>;
     }
   }
 

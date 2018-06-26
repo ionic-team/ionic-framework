@@ -43,8 +43,8 @@
   @include margin(0, null, null, null);
 }
 
-.list-md.list-inset ion-list-header {
-  background-color: $item-md-background-color;
+.list-md.list-inset {
+  background: $item-background-color;
 }
 
 // Material Design No Lines List

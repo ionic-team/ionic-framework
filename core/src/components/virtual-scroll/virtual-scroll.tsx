@@ -116,13 +116,13 @@ export class VirtualScroll {
   }
 
   componentDidLoad() {
-    const scrollEl = this.el.closest('ion-scroll');
-    if (!scrollEl) {
+    const contentEl = this.el.closest('ion-content');
+    if (!contentEl) {
       console.error('virtual-scroll must be used inside ion-scroll/ion-content');
       return;
     }
-    this.scrollEl = scrollEl;
-    scrollEl.componentOnReady().then(() => {
+    contentEl.componentOnReady().then(() => {
+      this.scrollEl = contentEl.getScrollElement();
       this.calcDimensions();
       this.calcCells();
       this.updateState();
