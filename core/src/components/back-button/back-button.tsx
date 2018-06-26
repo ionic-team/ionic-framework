@@ -1,13 +1,14 @@
 import { Component, Element, Prop } from '@stencil/core';
 import { Color, Config, Mode } from '../../interface';
-import { createThemedClasses, openURL } from '../../utils/theme';
+import { createColorClasses, openURL } from '../../utils/theme';
 
 @Component({
   tag: 'ion-back-button',
   styleUrls: {
     ios: 'back-button.ios.scss',
     md: 'back-button.md.scss'
-  }
+  },
+  scoped: true
 })
 export class BackButton {
 
@@ -44,6 +45,7 @@ export class BackButton {
 
 
   private async onClick(ev: Event) {
+    console.log('holaaa');
     const nav = this.el.closest('ion-nav');
     if (nav && nav.canGoBack()) {
       ev.preventDefault();
@@ -56,10 +58,12 @@ export class BackButton {
   }
 
   hostData() {
+    const showBackButton = !!this.defaultHref;
+
     return {
       class: {
-        ...createThemedClasses(this.mode, this.color, 'back-button'),
-        'show-back-button': !!this.defaultHref
+        ...createColorClasses(this.color),
+        'show-back-button': showBackButton
       },
       'tappable': '',
     };

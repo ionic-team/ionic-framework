@@ -186,11 +186,6 @@
 
 
 // FROM SELECT
-:host(.item-select-disabled) ::slotted(ion-label) {
-  opacity: 0.4;
-  pointer-events: none;
-}
-
 :host(.item-multiple-inputs) ::slotted(ion-select) {
   position: relative;
 }

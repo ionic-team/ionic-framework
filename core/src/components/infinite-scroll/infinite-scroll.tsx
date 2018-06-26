@@ -79,7 +79,7 @@ export class InfiniteScroll {
   async componentDidLoad() {
     const contentEl = this.el.closest('ion-content');
     if (contentEl) {
-      await contentEl.componentOnReady()
+      await contentEl.componentOnReady();
       this.scrollEl = contentEl.getScrollElement();
     }
     this.thresholdChanged(this.threshold);

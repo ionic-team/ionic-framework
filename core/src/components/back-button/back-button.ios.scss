@@ -4,13 +4,13 @@
 // iOS Back Button
 // --------------------------------------------------
 
-.back-button-ios {
+:host {
   --ion-color-base: #{$back-button-ios-color};
 }
 
-.back-button-ios > .back-button-native {
+.back-button-native {
   @include padding(0);
-  @include margin(0, 0, 0, 0);
+  @include margin(0);
 
   z-index: $back-button-ios-button-z-index;
   overflow: visible;
@@ -30,7 +30,7 @@
   }
 }
 
-.back-button-ios ion-icon {
+ion-icon {
   @include padding(0);
   @include margin(0, -5px, 0, -4px);
 

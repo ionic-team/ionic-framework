@@ -4,11 +4,11 @@
 // MD Back Button
 // --------------------------------------------------
 
-.back-button-md {
+:host {
   --ion-color-base: currentColor;
 }
 
-.back-button-md > .back-button-native {
+.back-button-native {
   @include margin(1px, 6px, 0, 0);
   @include padding(0, 5px);
 
@@ -29,15 +29,16 @@
   }
 }
 
-.back-button-md ion-icon {
+ion-icon {
   @include padding-horizontal(null, .3em);
   @include margin(0);
-  @include padding(0, 6px);
-  text-align: start;
+  @include margin(0, 6px);
 
   font-size: 24px;
   font-weight: normal;
   line-height: .67;
+
+  text-align: start;
 
   pointer-events: none;
 }

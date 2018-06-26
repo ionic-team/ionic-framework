@@ -3,14 +3,14 @@
 // Back Button
 // --------------------------------------------------
 
-.back-button {
+:host {
   display: none;
 
   color: #{current-color(base)};
 }
 
-.can-go-back > ion-header .back-button,
-.back-button.show-back-button {
+:host-context(.can-go-back > ion-header),
+:host(.show-back-button) {
   display: inline-block;
 }
 
