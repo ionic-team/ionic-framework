@@ -12,12 +12,22 @@
   display: inline-block;
 }
 
-input {
-  @include input-cover();
+.radio-icon {
+  position: relative;
+  display: block;
 
-  pointer-events: none;
+  width: var(--width);
+  height: var(--height);
+
+
+  contain: layout size style;
 }
 
-.radio-icon {
+input {
+  @include input-cover();
+}
+
+.radio-icon,
+.radio-inner {
   box-sizing: border-box;
 }

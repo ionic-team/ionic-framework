@@ -4,17 +4,14 @@
 // iOS Radio
 // --------------------------------------------------
 
-// iOS Radio Circle: Unchecked
-// -----------------------------------------
+:host {
+  --width: #{$radio-ios-icon-width};
+  --height: #{$radio-ios-icon-height};
+}
 
-.radio-icon {
-  position: relative;
-  display: block;
 
-  width: $radio-ios-icon-width;
-  height: $radio-ios-icon-height;
-
-  contain: strict;
+.item-radio.item-ios ion-label {
+  @include margin-horizontal(0, null);
 }
 
 
@@ -40,9 +37,6 @@
 
 // iOS Radio: Disabled
 // -----------------------------------------
-
-// TODO
-// .item-ios.item-radio-disabled ion-label {
 :host(.radio-disabled) {
   opacity: $radio-ios-disabled-opacity;
 

@@ -4,7 +4,7 @@
 // Material Design FAB Button
 // --------------------------------------------------
 
-:host(.fab-button) {
+:host {
   --box-shadow: #{$fab-md-box-shadow};
 
   --transition: #{box-shadow $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
@@ -12,7 +12,7 @@
               color $fab-button-md-transition-duration $fab-button-md-transition-timing-function};
 }
 
-:host(.fab-button.activated) {
+:host(.activated) {
   --box-shadow: #{$fab-md-box-shadow-activated};
 }
 

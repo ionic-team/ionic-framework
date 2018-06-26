@@ -4,6 +4,11 @@
 // Material Design Radio
 // --------------------------------------------------
 
+:host {
+  --width: #{$radio-md-icon-width};
+  --height: #{$radio-md-icon-height};
+}
+
 // Material Design Radio Outer Circle: Unchecked
 // -----------------------------------------
 
@@ -12,17 +17,9 @@
   @include margin(0);
   @include border-radius($radio-md-icon-border-radius);
 
-  position: relative;
-  display: block;
-
-  width: $radio-md-icon-width;
-  height: $radio-md-icon-height;
-
   border-width: $radio-md-icon-border-width;
   border-style: $radio-md-icon-border-style;
   border-color: $radio-md-color-off;
-
-  contain: layout size style;
 }
 
 
@@ -101,8 +98,8 @@
 
   position: static;
   display: block;
+}
 
-  &[slot="start"] {
-    @include margin($radio-md-item-start-margin-top, $radio-md-item-start-margin-end, $radio-md-item-start-margin-bottom, $radio-md-item-start-margin-start);
-  }
+:host(.in-item[slot="start"]) {
+  @include margin($radio-md-item-start-margin-top, $radio-md-item-start-margin-end, $radio-md-item-start-margin-bottom, $radio-md-item-start-margin-start);
 }

@@ -27,10 +27,8 @@
     "ionicons": "4.2.1"
   },
   "devDependencies": {
-    "@stencil/core": "0.9.10",
-    "@stencil/dev-server": "latest",
+    "@stencil/core": "0.10.0-0",
     "@stencil/sass": "latest",
-    "@stencil/utils": "latest",
     "@types/jest": "^22.2.3",
     "chai": "^4.1.2",
     "chromedriver": "^2.38.3",
