@@ -1,4 +1,4 @@
-@import "../../themes/ionic.globals";
+@import "../../themes/ionic.theme.default";
 
 // Content
 // --------------------------------------------------
@@ -12,10 +12,16 @@
   width: 100%;
   height: 100%;
 
+  color: #{current-color(contrast)};
+  background-color: #{current-color(base)};
+
   contain: layout size style;
 
   margin: 0 !important; // scss-lint:disable all
   padding: 0 !important; // scss-lint:disable all
+
+  --ion-color-base: #{$background-color};
+  --ion-color-contrast: #{$text-color};
 
   --padding-top: 0;
   --padding-bottom: 0;
@@ -23,6 +29,10 @@
   --padding-end: 0;
 
   --keyboard-offset: 0px;
+}
+
+:host(.outer-content) {
+  background: $background-color-step-50;
 }
 
 .scroll-inner {

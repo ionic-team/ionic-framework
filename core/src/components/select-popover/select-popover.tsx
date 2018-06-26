@@ -34,8 +34,8 @@ export class SelectPopover {
       <ion-list>
         { this.header ? <ion-list-header>{this.header}</ion-list-header> : null }
         { this.subHeader || this.message
-          ? <ion-item text-wrap>
-              <ion-label>
+          ? <ion-item>
+              <ion-label text-wrap>
                 { this.subHeader ? <h3>{this.subHeader}</h3> : null }
                 { this.message ? <p>{this.message}</p> : null }
               </ion-label>

@@ -15,7 +15,7 @@ ion-list {
   list-style-type: none;
 }
 
-ion-list[inset] {
+ion-list.list-inset {
   overflow: hidden;
 
   transform: translateZ(0);

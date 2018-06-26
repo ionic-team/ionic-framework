@@ -6,9 +6,6 @@
 
 :host {
   font-family: $content-md-font-family;
-
-  color: $text-color;
-  background-color: $background-color;
 }
 
 ::slotted(hr) {

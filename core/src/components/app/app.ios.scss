@@ -19,8 +19,8 @@
     .ion-page > ion-header,
     ion-menu > .menu-inner,
     ion-menu > .menu-inner > ion-header {
-      @include toolbar-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-ios-padding, $app-ios-statusbar-padding);
-      @include toolbar-title-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-ios-padding, $app-ios-statusbar-padding);
+      @include toolbar-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-padding, $app-ios-statusbar-padding);
+      @include toolbar-title-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-padding, $app-ios-statusbar-padding);
     }
   }
 }

@@ -1,5 +1,6 @@
 import { Component, Element, Listen, Method, Prop } from '@stencil/core';
 import { Color, Config, Mode, QueueController } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class Content {
   private scrollEl?: HTMLIonScrollElement;
 
   mode!: Mode;
-  color?: Color;
+  @Prop() color?: Color;
 
   @Element() el!: HTMLElement;
 
@@ -147,6 +148,12 @@ export class Content {
       style.bottom = -this.cBottom + 'px';
       this.dirty = false;
     }
+  }
+
+  hostData() {
+    return {
+      class: createColorClasses(this.color)
+    };
   }
 
   render() {

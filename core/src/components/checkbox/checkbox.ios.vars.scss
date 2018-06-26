@@ -5,9 +5,6 @@
 // iOS Checkbox
 // --------------------------------------------------
 
-/// @prop - Background color of the checkbox when off
-$checkbox-ios-background-color-off:       $item-ios-background-color !default;
-
 /// @prop - Background color of the checkbox when on
 $checkbox-ios-background-color-on:        ion-color(primary, base) !default;
 

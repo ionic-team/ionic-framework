@@ -14,21 +14,18 @@
   font-size: $card-md-font-size;
   box-shadow: $card-md-box-shadow;
 
-  --ion-color-base: #{$card-md-background-color};
+  --ion-color-base: var(--ion-item-background, transparent);
   --ion-color-contrast: #{$card-md-text-color};
 }
 
-::slotted(ion-list),
 ::slotted(*) ion-list {
   @include margin(null, null, 0, null);
 }
 
-::slotted(.item),
 ::slotted(*) .item {
   --border-width: 0;
 }
 
-::slotted(.item:last-child),
 ::slotted(*) .item:last-child {
   --border-width: 0;
   --inner-border-width: 0;

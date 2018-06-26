@@ -50,24 +50,24 @@
 // iOS Typography
 // --------------------------------------------------
 
-::slotted(h1) {
+::slotted(*) h1 {
   @include margin(0, 0, 2px);
 
   font-size: 24px;
   font-weight: normal;
 }
 
-::slotted(h2) {
+::slotted(*) h2 {
   @include margin(0, 0, 2px);
 
   font-size: 17px;
   font-weight: normal;
 }
 
-::slotted(h3),
-::slotted(h4),
-::slotted(h5),
-::slotted(h6) {
+::slotted(*) h3,
+::slotted(*) h4,
+::slotted(*) h5,
+::slotted(*) h6 {
   @include margin(0, 0, 3px);
 
   font-size: 14px;
@@ -75,7 +75,7 @@
   line-height: normal;
 }
 
-::slotted(p) {
+::slotted(*) p {
   @include margin($item-ios-paragraph-margin-top, $item-ios-paragraph-margin-end, $item-ios-paragraph-margin-bottom, $item-ios-paragraph-margin-start);
 
   overflow: inherit;
@@ -90,11 +90,11 @@
   color: inherit;
 }
 
-::slotted(h2:last-child),
-::slotted(h3:last-child),
-::slotted(h4:last-child),
-::slotted(h5:last-child),
-::slotted(h6:last-child),
-::slotted(p:last-child) {
+::slotted(*) h2:last-child,
+::slotted(*) h3:last-child,
+::slotted(*) h4:last-child,
+::slotted(*) h5:last-child,
+::slotted(*) h6:last-child,
+::slotted(*) p:last-child {
   @include margin(null, null, 0, null);
 }

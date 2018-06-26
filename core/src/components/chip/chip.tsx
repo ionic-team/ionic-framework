@@ -9,7 +9,7 @@ import { createColorClasses } from '../../utils/theme';
     ios: 'chip.ios.scss',
     md: 'chip.md.scss'
   },
-  shadow: true
+  scoped: true
 })
 export class Chip {
   /**

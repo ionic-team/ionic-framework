@@ -16,26 +16,20 @@
 
   transform: translateZ(0);
 
-  --ion-color-base: #{$card-ios-background-color};
+  --ion-color-base: var(--ion-item-background, transparent);
   --ion-color-contrast: #{$card-ios-text-color};
 }
 
-::slotted(ion-list),
 ::slotted(*) ion-list {
   @include margin(null, null, 0, null);
 }
 
 
-::slotted(.item),
 ::slotted(*) .item {
-  --border-width: 0;
-}
-
-::slotted(.item:last-child),
-::slotted(*) .item:last-child {
   --border-width: 0;
   --inner-border-width: 0;
 }
+
 
 // .card .note-ios {
 //   font-size: 13px;

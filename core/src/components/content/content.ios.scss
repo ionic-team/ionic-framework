@@ -6,13 +6,6 @@
 
 :host {
   font-family: $content-ios-font-family;
-
-  color: $text-color;
-  background-color: $background-color;
-}
-
-:host(.outer-content) {
-  background: $content-ios-outer-background;
 }
 
 ::slotted(hr) {

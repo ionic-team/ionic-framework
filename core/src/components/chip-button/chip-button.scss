@@ -31,13 +31,11 @@
   height: var(--size);
 
   border: 0;
+  outline: none;
   color: inherit;
   background: var(--background);
 
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  appearance: none;
 }
 
 .chip-button-inner {

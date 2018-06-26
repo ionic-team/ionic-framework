@@ -17,13 +17,11 @@
 }
 
 :host(.ion-color)::slotted(*) ion-card-title,
-:host(.ion-color)::slotted(*) ion-card-subtitle,
-:host(.ion-color)::slotted(ion-card-title),
-:host(.ion-color)::slotted(ion-card-subtitle) {
+:host(.ion-color)::slotted(*) ion-card-subtitle {
   color: currentColor;
 }
 
-::slotted(img) {
+::slotted(*) img {
   display: block;
 
   width: 100%;

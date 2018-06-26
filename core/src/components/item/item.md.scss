@@ -10,7 +10,7 @@
   font-weight: normal;
   text-transform: none;
 
-  --ion-color-base: #{$item-md-background-color};
+  --ion-color-base: var(--ion-item-background, transparent);
   --ion-color-contrast: #{$item-md-text-color};
   --ion-color-tint: #{$item-md-background-color-active};
   --ion-color-shade: #{$item-md-border-bottom-color};

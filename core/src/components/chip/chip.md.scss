@@ -18,17 +18,17 @@
   background: $chip-md-background-color;
 }
 
-::slotted(ion-label) {
+::slotted(*) ion-label {
   @include margin($chip-md-label-margin-top, $chip-md-label-margin-end, $chip-md-label-margin-bottom, $chip-md-label-margin-start);
 }
 
-::slotted(ion-icon) {
+::slotted(*) ion-icon {
   color: $chip-md-icon-fill-color;
 
   background-color: $chip-md-icon-background-color;
 }
 
-::slotted(ion-avatar) {
+::slotted(*) ion-avatar {
   width: $chip-md-avatar-width;
   height: $chip-md-avatar-height;
 }

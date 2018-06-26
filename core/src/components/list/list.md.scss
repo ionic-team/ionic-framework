@@ -19,31 +19,31 @@
 // Material Design Inset List
 // --------------------------------------------------
 
-.list-md[inset] {
+.list-md.list-inset {
   @include margin($list-inset-md-margin-top, $list-inset-md-margin-end, $list-inset-md-margin-bottom, $list-inset-md-margin-start);
   @include border-radius($list-inset-md-border-radius);
 }
 
-.list-md[inset] ion-item:first-child {
+.list-md.list-inset ion-item:first-child {
   --border-radius: #{$list-inset-md-border-radius $list-inset-md-border-radius 0 0};
   --border-width: 0;
 }
 
-.list-md[inset] ion-item:last-child {
+.list-md.list-inset ion-item:last-child {
   --border-radius: #{0 0 $list-inset-md-border-radius, $list-inset-md-border-radius};
   --border-width: 0;
 }
 
-.list-md[inset] .item-interactive {
+.list-md.list-inset .item-interactive {
   --padding-start: 0;
   --padding-end: 0;
 }
 
-.list-md[inset] + ion-list[inset] {
+.list-md.list-inset + ion-list.list-inset {
   @include margin(0, null, null, null);
 }
 
-.list-md[inset] ion-list-header {
+.list-md.list-inset ion-list-header {
   background-color: $item-md-background-color;
 }
 

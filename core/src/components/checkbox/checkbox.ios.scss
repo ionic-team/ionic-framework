@@ -12,7 +12,7 @@
   --border-style: #{$checkbox-ios-icon-border-style};
 
   --unchecked-border-color: #{$checkbox-ios-icon-border-color-off};
-  --unchecked-background: #{$checkbox-ios-background-color-off};
+  --unchecked-background: transparent;
 }
 
 // iOS Checkbox Inner Checkmark: Checked

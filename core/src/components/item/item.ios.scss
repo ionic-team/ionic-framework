@@ -9,7 +9,7 @@
 
   font-size: $item-ios-font-size;
 
-  --ion-color-base: #{$item-ios-background-color};
+  --ion-color-base: var(--ion-item-background, transparent);
   --ion-color-contrast: #{$item-ios-text-color};
   --ion-color-tint: #{$item-ios-background-color-active};
   --ion-color-shade: #{$item-ios-border-bottom-color};
