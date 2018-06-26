@@ -3,13 +3,12 @@
 // Select
 // --------------------------------------------------
 
-ion-select {
+:host {
   display: flex;
   overflow: hidden;
-
 }
 
-.item .select {
+:host(.in-item) {
   max-width: 45%;
 }
 
@@ -29,39 +28,19 @@ ion-select {
   white-space: nowrap;
 }
 
-// TODO item needs this class
-.item-multiple-inputs ion-select {
-  position: relative;
-}
-
-.select-disabled,
-.item-select-disabled ion-label {
+:host(.select-disabled) {
   opacity: .4;
-
   pointer-events: none;
 }
 
-.select-popover ion-list {
-  @include margin($select-popover-list-margin-top, $select-popover-list-margin-end, $select-popover-list-margin-bottom, $select-popover-list-margin-start);
-}
-
-.select-option {
+::slotted(ion-select-option) {
   display: none;
 }
 
-.select button:focus {
+button:focus {
   outline: none;
 }
 
-.select-key button {
+:host(.select-key) button {
   border: 2px solid #5e9ed6;
-}
-
-
-// Stacked & Floating Select
-// --------------------------------------------------
-
-.item-label-stacked .select,
-.item-label-floating .select {
-  max-width: 100%;
 }

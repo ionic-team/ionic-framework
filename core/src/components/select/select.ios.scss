@@ -4,25 +4,25 @@
 // iOS Select
 // --------------------------------------------------
 
-.select-ios {
+:host {
   @include padding($select-ios-padding-top, $select-ios-padding-end, $select-ios-padding-bottom, $select-ios-padding-start);
 
   font-family: $select-ios-font-family;
   color: $select-ios-text-color;
 }
 
-.select-ios .select-placeholder {
+.select-placeholder {
   color: $select-ios-placeholder-color;
 }
 
-.select-ios .select-icon {
+.select-icon {
   position: relative;
 
   width: 12px;
   height: 18px;
 }
 
-.select-ios .select-icon .select-icon-inner {
+.select-icon .select-icon-inner {
   @include position(50%, null, null, 5px);
   @include margin(-2px, null, null, null);
 
