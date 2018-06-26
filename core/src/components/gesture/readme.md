@@ -1,5 +1,7 @@
 # ion-gesture
 
+Gesture is a component that can be used to add gesture based interaction to it's child content.
+The component properties can accept methods that will fire when the property is triggered.
 
 
 <!-- Auto Generated Below -->

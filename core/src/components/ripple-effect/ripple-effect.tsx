@@ -18,6 +18,7 @@ export class RippleEffect {
 
   @Prop() parent?: HTMLElement | string = 'parent';
 
+  /** If true, the ripple effect will listen to any click events and animate */
   @Prop() tapClick = false;
   @Watch('tapClick')
   tapClickChanged(tapClick: boolean) {

@@ -21,20 +21,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content fullscreen>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="6"><f class="red"></f></ion-col>
-            <ion-col size="6"><f class="green"></f></ion-col>
-            <ion-col size="6"><f class="blue"></f></ion-col>
-            <ion-col size="6"><f class="yellow"></f></ion-col>
-            <ion-col size="6"><f class="pink"></f></ion-col>
-            <ion-col size="6"><f class="purple"></f></ion-col>
-            <ion-col size="6"><f class="black"></f></ion-col>
-            <ion-col size="6"><f class="orange"></f></ion-col>
-          </ion-row>
-        </ion-grid>
-
+      <ion-content id="content" fullscreen>
         <h5 padding-left padding-top> Search - Transparent Toolbar </h5>
         <ion-toolbar transparent>
           <ion-searchbar></ion-searchbar>
@@ -90,12 +77,25 @@
           <ion-searchbar placeholder="Filter Schedules"></ion-searchbar>
         </ion-toolbar>
 
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6"><f class="red"></f></ion-col>
+            <ion-col size="6"><f class="green"></f></ion-col>
+            <ion-col size="6"><f class="blue"></f></ion-col>
+            <ion-col size="6"><f class="yellow"></f></ion-col>
+            <ion-col size="6"><f class="pink"></f></ion-col>
+            <ion-col size="6"><f class="purple"></f></ion-col>
+            <ion-col size="6"><f class="black"></f></ion-col>
+            <ion-col size="6"><f class="orange"></f></ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-content>
 
   </ion-app>
 
   <style>
     f {
+      display: block;
       width: 100%;
       height: 200px;
       margin: 20px auto;

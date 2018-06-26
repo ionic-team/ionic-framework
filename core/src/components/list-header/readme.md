@@ -1,5 +1,7 @@
 # ion-list-header
-List header a header component for a list.
+
+ListHeader a header component for a list.
+Unlike ItemDivider, ListHeaders are styled to be stand-out from the rest of the list items.
 
 
 <!-- Auto Generated Below -->

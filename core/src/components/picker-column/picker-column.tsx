@@ -4,6 +4,7 @@ import { hapticSelectionChanged } from '../../utils';
 import { clamp } from '../../utils/helpers';
 
 
+/** @hidden */
 @Component({
   tag: 'ion-picker-column',
   host: {

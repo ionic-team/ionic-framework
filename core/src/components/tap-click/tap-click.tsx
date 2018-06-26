@@ -2,6 +2,7 @@ import { Component, Element, EventListenerEnable, Listen, Prop } from '@stencil/
 import { now, pointerCoord } from '../../utils/helpers';
 
 
+/** @hidden */
 @Component({
   tag: 'ion-tap-click',
 })

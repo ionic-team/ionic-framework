@@ -1,18 +1,5 @@
-import {
-  Component,
-  EventListenerEnable,
-  Listen,
-  Prop,
-  Watch
-} from '@stencil/core';
-import {
-  BlockerConfig,
-  BlockerDelegate,
-  GestureCallback,
-  GestureDelegate,
-  GestureDetail,
-  QueueController
-} from '../../interface';
+import { Component, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
+import { BlockerConfig, BlockerDelegate, GestureCallback, GestureDelegate, GestureDetail, QueueController } from '../../interface';
 import { assert, now } from '../../utils/helpers';
 import { PanRecognizer } from './recognizers';
 
@@ -36,17 +23,13 @@ export class Gesture {
   private isMoveQueued = false;
   private blocker?: BlockerDelegate;
 
-  @Prop({ connect: 'ion-gesture-controller' })
-  gestureCtrl!: HTMLIonGestureControllerElement;
+  @Prop({ connect: 'ion-gesture-controller' }) gestureCtrl!: HTMLIonGestureControllerElement;
 
-  @Prop({ context: 'queue' })
-  queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueController;
 
-  @Prop({ context: 'enableListener' })
-  enableListener!: EventListenerEnable;
+  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
 
-  @Prop({ context: 'isServer' })
-  isServer!: boolean;
+  @Prop({ context: 'isServer' }) isServer!: boolean;
 
   /**
    * If true, the current gesture interaction is disabled

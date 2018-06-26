@@ -1,6 +1,7 @@
 # ion-gesture-controller
-Gesture controller is a component for creating a gesture interactions.
 
+Gesture controller is a component for creating a gesture interactions.
+It is not meant to be used directly, but with the [Gesture Component](../gesture)
 
 <!-- Auto Generated Below -->
 

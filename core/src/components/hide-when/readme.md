@@ -1,5 +1,6 @@
 # ion-hide-when
 
+`HideWhen` is a component that will automatically hide itself and any child content when a property evaluates to true.
 
 
 <!-- Auto Generated Below -->
