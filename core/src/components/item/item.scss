@@ -12,6 +12,7 @@
 
   color: #{current-color(contrast)};
 
+  --min-height: #{$item-min-height};
   --background: #{current-color(base)};
   --background-active: #{current-color(tint)};
   --color: #{current-color(contrast)};
@@ -70,7 +71,7 @@
   justify-content: space-between;
 
   width: 100%;
-  min-height: $item-min-height;
+  min-height: var(--min-height);
 
   border-width: var(--border-width);
   border-style: var(--border-style);

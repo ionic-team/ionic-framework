@@ -64,11 +64,11 @@
 // iOS Item Slots
 // --------------------------------------------------
 
-::slotted(:not(.item-interactive)[slot="start"]) {
+::slotted(:not(.interactive)[slot="start"]) {
   @include margin($item-ios-slot-start-margin-top, $item-ios-slot-start-margin-end, $item-ios-slot-start-margin-bottom, $item-ios-slot-start-margin-start);
 }
 
-::slotted(:not(.item-interactive)[slot="end"]) {
+::slotted(:not(.interactive)[slot="end"]) {
   @include margin($item-ios-slot-end-margin-top, $item-ios-slot-end-margin-end, $item-ios-slot-end-margin-bottom, $item-ios-slot-end-margin-start);
 }
 

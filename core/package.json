@@ -24,11 +24,13 @@
     "css/"
   ],
   "dependencies": {
-    "ionicons": "4.2.1"
+    "ionicons": "4.2.2"
   },
   "devDependencies": {
     "@stencil/core": "0.10.0-2",
     "@stencil/sass": "latest",
+    "@stencil/dev-server": "latest",
+    "@stencil/utils": "latest",
     "@types/jest": "^22.2.3",
     "chai": "^4.1.2",
     "chromedriver": "^2.38.3",

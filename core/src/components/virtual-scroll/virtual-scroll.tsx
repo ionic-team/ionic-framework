@@ -392,11 +392,10 @@ export class VirtualScroll {
         if (!item.vattrs) {
           item.vattrs = {};
         }
-        item.vattrs.class += ' virtual-item';
         if (!node.visible) {
           classes.push('virtual-loading');
         }
-        item.vattrs.class += ' ' + classes.join(' ');
+        item.vattrs.class += classes.join(' ');
         if (!item.vattrs.style) {
           item.vattrs.style = {};
         }

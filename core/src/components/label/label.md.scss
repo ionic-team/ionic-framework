@@ -84,6 +84,9 @@
   font-size: 14px;
   line-height: normal;
   text-overflow: inherit;
+}
+
+::slotted(p) {
   color: #{$item-md-paragraph-text-color};
 }
 
