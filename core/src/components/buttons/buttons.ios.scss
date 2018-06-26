@@ -19,6 +19,10 @@
   --height: 32px;
 }
 
+:host-context(.ion-color)::slotted(*) .button {
+  --ion-color-base: currentColor;
+}
+
 // iOS Toolbar Button Icon
 // --------------------------------------------------
 ::slotted(*) ion-icon[slot="start"] {

@@ -63,6 +63,7 @@ export class BackButton {
     return {
       class: {
         ...createColorClasses(this.color),
+        'button': true,
         'show-back-button': showBackButton
       },
       'tappable': '',
