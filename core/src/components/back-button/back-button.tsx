@@ -45,7 +45,6 @@ export class BackButton {
 
 
   private async onClick(ev: Event) {
-    console.log('holaaa');
     const nav = this.el.closest('ion-nav');
     if (nav && nav.canGoBack()) {
       ev.preventDefault();
