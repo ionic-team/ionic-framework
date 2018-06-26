@@ -185,11 +185,11 @@ declare global {
       /**
        * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback that is called in the same circustances.
        */
-      'onDidDismiss': (callback?: ((detail: any) => void) | undefined) => Promise<any>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback that is called in the same circustances.
        */
-      'onWillDismiss': (callback?: ((detail: any) => void) | undefined) => Promise<any>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Unique ID to be used with the overlay. Internal only
        */

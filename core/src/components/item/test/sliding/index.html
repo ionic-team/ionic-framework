@@ -382,8 +382,8 @@
         function reload() {
           window.location.reload();
         }
-        document.addEventListener('ionSwipe', (ev) => console.log('SWIPE!!', ev.detail));
-        document.addEventListener('ionDrag', (ev) => console.log('DRAG!!', ev.detail.getOpenAmount()));
+        document.addEventListener('ionSwipe', (ev) => console.log('SWIPE!!', ev.target));
+        document.addEventListener('ionDrag', (ev) => console.log('DRAG!!', ev.target.getOpenAmount()));
 
       </script>
       <style>

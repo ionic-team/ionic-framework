@@ -95,11 +95,7 @@
 }
 
 .action-sheet-button .action-sheet-icon {
-  @include margin($action-sheet-ios-button-icon-margin-top, null, null, null);
-
-  @include padding-horizontal(null, $action-sheet-ios-button-icon-padding-right);
-
-  height: $action-sheet-ios-button-icon-height;
+  @include margin-horizontal(null, $action-sheet-ios-button-icon-padding-right);
 
   font-size: $action-sheet-ios-button-icon-font-size;
 }

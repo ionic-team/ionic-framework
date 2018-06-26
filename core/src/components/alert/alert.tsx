@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
-import { AlertButton, AlertEventDetailData, AlertInput, Animation, AnimationBuilder, Color, Config, CssClassMap, Mode } from '../../interface';
-import { BACKDROP, OverlayInterface, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
+import { AlertButton, AlertEventDetailData, AlertInput, Animation, AnimationBuilder, Color, Config, CssClassMap, Mode, OverlayInterface } from '../../interface';
+import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 import { createColorClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
