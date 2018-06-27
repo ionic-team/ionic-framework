@@ -22,7 +22,7 @@
   @include margin($chip-md-label-margin-top, $chip-md-label-margin-end, $chip-md-label-margin-bottom, $chip-md-label-margin-start);
 }
 
-::slotted(*) ion-icon {
+::slotted(ion-icon) {
   color: $chip-md-icon-fill-color;
 
   background-color: $chip-md-icon-background-color;
