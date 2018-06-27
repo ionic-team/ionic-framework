@@ -27,8 +27,8 @@
   align-items: center;
   justify-content: center;
 
-  font-size: $chip-icon-font-size;
-
   width: $chip-icon-size;
   height: $chip-icon-size;
+
+  padding: $chip-icon-padding;
 }

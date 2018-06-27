@@ -5,6 +5,7 @@
 
 :host {
   --size: #{$chip-button-size};
+  --icon-size: 18px;
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
 }
@@ -19,6 +20,10 @@
   color: #{current-color(base)};
 
   --background: transparent;
+}
+
+::slotted(ion-icon) {
+  font-size: var(--icon-size);
 }
 
 .chip-button-native {
