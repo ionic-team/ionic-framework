@@ -20,6 +20,8 @@ string
 
 boolean
 
+If true, the ripple effect will listen to any click events and animate
+
 
 ## Attributes
 
@@ -31,6 +33,8 @@ string
 #### tap-click
 
 boolean
+
+If true, the ripple effect will listen to any click events and animate
 
 
 ## Methods
