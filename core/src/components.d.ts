@@ -394,11 +394,11 @@ declare global {
       /**
        * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circumstances.
        */
-      'onDidDismiss': (callback?: ((detail: import("/Users/manuelmartinez-almeida/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<import("/Users/manuelmartinez-almeida/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
+      'onDidDismiss': (callback?: ((detail: import("/Users/brandyscarney/Documents/git/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<import("/Users/brandyscarney/Documents/git/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
       /**
        * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circumstances.
        */
-      'onWillDismiss': (callback?: ((detail: import("/Users/manuelmartinez-almeida/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<import("/Users/manuelmartinez-almeida/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
+      'onWillDismiss': (callback?: ((detail: import("/Users/brandyscarney/Documents/git/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<import("/Users/brandyscarney/Documents/git/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
       'overlayId': number;
       /**
        * Present the alert overlay after it has been created.
@@ -2442,10 +2442,29 @@ declare global {
 
   namespace StencilComponents {
     interface IonHideWhen {
+      /**
+       * If the current media query matches this value, the element will hide.
+       */
       'mediaQuery': string;
+      /**
+       * If the current platform matches the given value, the element will hide. Accepts a comma separated list of modes to match against.
+       */
+      'mode': Mode;
+      /**
+       * If false, and two or more conditions are set, the element will hide when all are true. If true, and two or more conditions are set, the element will hide when at least one is true.
+       */
       'or': boolean;
+      /**
+       * If the current orientation matches this value, the element will hide.
+       */
       'orientation': string;
+      /**
+       * If the current platform matches the given value, the element will hide. Accepts a comma separated list of platform to match against.
+       */
       'platform': string;
+      /**
+       * If the current screen width matches the given size, the element will hide. Uses the build in sizes of xs, sm, md, lg, xl.
+       */
       'size': string;
     }
   }
@@ -2469,10 +2488,29 @@ declare global {
   }
   namespace JSXElements {
     export interface IonHideWhenAttributes extends HTMLAttributes {
+      /**
+       * If the current media query matches this value, the element will hide.
+       */
       'mediaQuery'?: string;
+      /**
+       * If the current platform matches the given value, the element will hide. Accepts a comma separated list of modes to match against.
+       */
+      'mode'?: Mode;
+      /**
+       * If false, and two or more conditions are set, the element will hide when all are true. If true, and two or more conditions are set, the element will hide when at least one is true.
+       */
       'or'?: boolean;
+      /**
+       * If the current orientation matches this value, the element will hide.
+       */
       'orientation'?: string;
+      /**
+       * If the current platform matches the given value, the element will hide. Accepts a comma separated list of platform to match against.
+       */
       'platform'?: string;
+      /**
+       * If the current screen width matches the given size, the element will hide. Uses the build in sizes of xs, sm, md, lg, xl.
+       */
       'size'?: string;
     }
   }
@@ -5494,6 +5532,9 @@ declare global {
        */
       'addRipple': (pageX: number, pageY: number) => void;
       'parent': HTMLElement | string;
+      /**
+       * If true, the ripple effect will listen to any click events and animate 
+       */
       'tapClick': boolean;
     }
   }
@@ -5518,6 +5559,9 @@ declare global {
   namespace JSXElements {
     export interface IonRippleEffectAttributes extends HTMLAttributes {
       'parent'?: HTMLElement | string;
+      /**
+       * If true, the ripple effect will listen to any click events and animate 
+       */
       'tapClick'?: boolean;
     }
   }
@@ -5878,11 +5922,19 @@ declare global {
        */
       'autocorrect': string;
       /**
-       * Set the the cancel button text. Default: `"Cancel"`.
+       * Set the cancel button icon. Only applies to `md` mode. Defaults to `"md-arrow-back"`.
+       */
+      'cancelButtonIcon': string;
+      /**
+       * Set the the cancel button text. Only applies to `ios` mode. Default: `"Cancel"`.
        */
       'cancelButtonText': string;
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
+       */
+      'clearIcon': string;
+      /**
+       * The color the searchbar should be.
        */
       'color': Color;
       /**
@@ -5890,13 +5942,17 @@ declare global {
        */
       'debounce': number;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
       /**
        * Set the input's placeholder. Default `"Search"`.
        */
       'placeholder': string;
+      /**
+       * The icon to use as the search icon. Defaults to `"search"`.
+       */
+      'searchIcon': string;
       /**
        * If true, show the cancel button. Default `false`.
        */
@@ -5948,11 +6004,19 @@ declare global {
        */
       'autocorrect'?: string;
       /**
-       * Set the the cancel button text. Default: `"Cancel"`.
+       * Set the cancel button icon. Only applies to `md` mode. Defaults to `"md-arrow-back"`.
+       */
+      'cancelButtonIcon'?: string;
+      /**
+       * Set the the cancel button text. Only applies to `ios` mode. Default: `"Cancel"`.
        */
       'cancelButtonText'?: string;
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
+       * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
+       */
+      'clearIcon'?: string;
+      /**
+       * The color the searchbar should be.
        */
       'color'?: Color;
       /**
@@ -5960,7 +6024,7 @@ declare global {
        */
       'debounce'?: number;
       /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
       /**
@@ -5991,6 +6055,10 @@ declare global {
        * Set the input's placeholder. Default `"Search"`.
        */
       'placeholder'?: string;
+      /**
+       * The icon to use as the search icon. Defaults to `"search"`.
+       */
+      'searchIcon'?: string;
       /**
        * If true, show the cancel button. Default `false`.
        */
@@ -6403,10 +6471,29 @@ declare global {
 
   namespace StencilComponents {
     interface IonShowWhen {
+      /**
+       * If the current media query matches this value, the element will show.
+       */
       'mediaQuery': string;
+      /**
+       * If the current platform matches the given value, the element will show. Accepts a comma separated list of modes to match against.
+       */
+      'mode': Mode;
+      /**
+       * If false, and two or more conditions are set, the element will show when all are true. If true, and two or more conditions are set, the element will show when at least one is true.
+       */
       'or': boolean;
+      /**
+       * If the current orientation matches this value, the element will show.
+       */
       'orientation': string;
+      /**
+       * If the current platform matches the given value, the element will show. Accepts a comma separated list of platform to match against.
+       */
       'platform': string;
+      /**
+       * If the current screen width matches the given size, the element will show. Uses the build in sizes of xs, sm, md, lg, xl.
+       */
       'size': string;
     }
   }
@@ -6430,10 +6517,29 @@ declare global {
   }
   namespace JSXElements {
     export interface IonShowWhenAttributes extends HTMLAttributes {
+      /**
+       * If the current media query matches this value, the element will show.
+       */
       'mediaQuery'?: string;
+      /**
+       * If the current platform matches the given value, the element will show. Accepts a comma separated list of modes to match against.
+       */
+      'mode'?: Mode;
+      /**
+       * If false, and two or more conditions are set, the element will show when all are true. If true, and two or more conditions are set, the element will show when at least one is true.
+       */
       'or'?: boolean;
+      /**
+       * If the current orientation matches this value, the element will show.
+       */
       'orientation'?: string;
+      /**
+       * If the current platform matches the given value, the element will show. Accepts a comma separated list of platform to match against.
+       */
       'platform'?: string;
+      /**
+       * If the current screen width matches the given size, the element will show. Uses the build in sizes of xs, sm, md, lg, xl.
+       */
       'size'?: string;
     }
   }

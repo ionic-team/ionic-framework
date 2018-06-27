@@ -3,7 +3,7 @@
 // Searchbar
 // --------------------------------------------------
 
-ion-searchbar {
+:host {
   @include font-smoothing();
 
   box-sizing: border-box;
@@ -52,7 +52,7 @@ ion-searchbar {
   }
 }
 
-.searchbar-clear-icon {
+.searchbar-clear-button {
   @include margin(0);
   @include padding(0);
 
@@ -61,6 +61,6 @@ ion-searchbar {
   min-height: 0;
 }
 
-.searchbar-has-value.searchbar-has-focus .searchbar-clear-icon {
+:host(.searchbar-has-value.searchbar-has-focus) .searchbar-clear-button {
   display: block;
 }

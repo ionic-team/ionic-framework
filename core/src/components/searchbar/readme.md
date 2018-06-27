@@ -43,9 +43,7 @@ Set the the cancel button text. Default: `"Cancel"`.
 
 string
 
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
+The color the searchbar should be.
 
 
 #### debounce
@@ -61,7 +59,6 @@ string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### placeholder
@@ -133,9 +130,7 @@ Set the the cancel button text. Default: `"Cancel"`.
 
 string
 
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
+The color the searchbar should be.
 
 
 #### debounce
@@ -151,7 +146,6 @@ string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### placeholder

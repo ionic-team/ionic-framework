@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@st
 
 import { Color, InputChangeEvent, Mode } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 
 
 @Component({
@@ -10,10 +10,10 @@ import { createThemedClasses } from '../../utils/theme';
   styleUrls: {
     ios: 'searchbar.ios.scss',
     md: 'searchbar.md.scss'
-  }
+  },
+  scoped: true
 })
 export class Searchbar {
-
   private nativeInput!: HTMLInputElement;
   private isCancelVisible = false;
   private shouldBlur = true;
@@ -28,16 +28,13 @@ export class Searchbar {
   @State() focused = false;
 
   /**
-   * The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * The color the searchbar should be.
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode!: Mode;
 
@@ -57,9 +54,19 @@ export class Searchbar {
   @Prop() autocorrect = 'off';
 
   /**
-   * Set the the cancel button text. Default: `"Cancel"`.
+   * Set the cancel button icon. Only applies to `md` mode. Defaults to `"md-arrow-back"`.
+   */
+  @Prop() cancelButtonIcon = 'md-arrow-back';
+
+  /**
+   * Set the the cancel button text. Only applies to `ios` mode. Default: `"Cancel"`.
    */
   @Prop() cancelButtonText = 'Cancel';
+
+  /**
+   * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
+   */
+  @Prop() clearIcon?: string;
 
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `250`.
@@ -75,6 +82,11 @@ export class Searchbar {
    * Set the input's placeholder. Default `"Search"`.
    */
   @Prop() placeholder = 'Search';
+
+  /**
+   * The icon to use as the search icon. Defaults to `"search"`.
+   */
+  @Prop() searchIcon?: string;
 
   /**
    * If true, show the cancel button. Default `false`.
@@ -183,7 +195,7 @@ export class Searchbar {
   }
 
   private inputUpdated() {
-    // const inputEl = this.el.querySelector('.searchbar-input') as HTMLInputElment;
+    // const inputEl = (this.el.shadowRoot || this.el).querySelector('.searchbar-input') as HTMLInputElment;
     // It is important not to re-assign the value if it is the same, because,
     // otherwise, the caret is moved to the end of the input
     // if (inputEl && inputEl.value !== this.value) {
@@ -199,7 +211,7 @@ export class Searchbar {
    * based on whether there is a value in the searchbar or not.
    */
   private onBlur() {
-    const inputEl = this.el.querySelector('.searchbar-input') as HTMLInputElement;
+    const inputEl = (this.el.shadowRoot || this.el).querySelector('.searchbar-input') as HTMLInputElement;
 
     // shouldBlur determines if it should blur
     // if we are clearing the input we still want to stay focused in the input
@@ -255,8 +267,8 @@ export class Searchbar {
    */
   private positionPlaceholder() {
     const isRTL = this.doc.dir === 'rtl';
-    const inputEl = this.el.querySelector('.searchbar-input') as HTMLInputElement;
-    const iconEl = this.el.querySelector('.searchbar-search-icon') as HTMLElement;
+    const inputEl = (this.el.shadowRoot || this.el).querySelector('.searchbar-input') as HTMLInputElement;
+    const iconEl = (this.el.shadowRoot || this.el).querySelector('.searchbar-search-icon') as HTMLElement;
 
     if (this.shouldAlignLeft) {
       inputEl.removeAttribute('style');
@@ -295,10 +307,10 @@ export class Searchbar {
    */
   private positionCancelButton() {
     const isRTL = this.doc.dir === 'rtl';
-    const cancelButton = this.el.querySelector('.searchbar-cancel-button-ios') as HTMLElement;
+    const cancelButton = (this.el.shadowRoot || this.el).querySelector('.searchbar-cancel-button') as HTMLElement;
     const shouldShowCancel = this.focused;
 
-    if (shouldShowCancel !== this.isCancelVisible) {
+    if (cancelButton && shouldShowCancel !== this.isCancelVisible) {
       const cancelStyle = cancelButton.style;
       this.isCancelVisible = shouldShowCancel;
       if (shouldShowCancel) {
@@ -323,8 +335,7 @@ export class Searchbar {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, this.color, 'searchbar'),
-
+        ...createColorClasses(this.color),
         'searchbar-active': this.activated,
         'searchbar-animated': this.animated,
         'searchbar-has-value': (this.value !== ''),
@@ -336,8 +347,8 @@ export class Searchbar {
   }
 
   render() {
-    const cancelButtonClasses = createThemedClasses(this.mode, this.color, 'searchbar-cancel-button');
-    const searchIconClasses = createThemedClasses(this.mode, this.color, 'searchbar-search-icon');
+    const clearIcon = this.clearIcon ? this.clearIcon : (this.mode === 'md' ? 'md-close' : 'ios-close-circle');
+    const searchIcon = this.searchIcon ? this.searchIcon : (this.mode === 'md' ? 'md-search' : 'ios-search');
 
     const cancelButton = (this.showCancelButton)
       ? <button
@@ -345,9 +356,9 @@ export class Searchbar {
         tabindex={this.mode === 'ios' && !this.activated ? -1 : undefined}
         onClick={this.cancelSearchbar.bind(this)}
         onMouseDown={this.cancelSearchbar.bind(this)}
-        class={cancelButtonClasses}>
+        class="searchbar-cancel-button">
           { this.mode === 'md'
-            ? <ion-icon name="md-arrow-back"></ion-icon>
+            ? <ion-icon icon={this.cancelButtonIcon}></ion-icon>
             : this.cancelButtonText }
       </button>
       : null;
@@ -355,7 +366,7 @@ export class Searchbar {
     return [
       <div class="searchbar-input-container">
         { this.mode === 'md' && cancelButton }
-        <div class={searchIconClasses}></div>
+        <ion-icon icon={searchIcon} class="searchbar-search-icon"></ion-icon>
         <input
           ref={(el) => this.nativeInput = el as HTMLInputElement}
           class="searchbar-input"
@@ -371,9 +382,11 @@ export class Searchbar {
 
         <button
           type="button"
-          class="searchbar-clear-icon"
+          class="searchbar-clear-button"
           onClick={this.clearInput.bind(this)}
-          onMouseDown={this.clearInput.bind(this)}/>
+          onMouseDown={this.clearInput.bind(this)}>
+            <ion-icon icon={clearIcon} class="searchbar-clear-icon"></ion-icon>
+        </button>
       </div>,
       this.mode === 'ios' && cancelButton
     ];
