@@ -12,10 +12,10 @@
   height: $chip-ios-height;
 
   font-family: $chip-ios-font-family;
-
   font-size: $chip-ios-font-size;
-  color: $chip-ios-text-color;
-  background: $chip-ios-background-color;
+
+  --ion-color-base: #{$chip-ios-background-color};
+  --ion-color-contrast: #{$chip-ios-text-color};
 }
 
 ::slotted(*) ion-label {

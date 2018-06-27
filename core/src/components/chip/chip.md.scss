@@ -14,8 +14,8 @@
   font-family: $chip-md-font-family;
   font-size: $chip-md-font-size;
 
-  color: $chip-md-text-color;
-  background: $chip-md-background-color;
+  --ion-color-base: #{$chip-md-background-color};
+  --ion-color-contrast: #{$chip-md-text-color};
 }
 
 ::slotted(*) ion-label {

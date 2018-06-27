@@ -6,6 +6,9 @@
 :host {
   @include font-smoothing();
 
+  background-color: var(--ion-color-base);
+  color: var(--ion-color-contrast);
+
   box-sizing: border-box;
   display: inline-flex;
 
