@@ -18,11 +18,13 @@
   --background: #{current-color(base)};
   --background-active: #{current-color(tint)};
   --color: #{current-color(contrast)};
-  --border-color: #{current-color(shade)};
   --detail-push-color: #{current-color(shade)};
 
   --border-radius: 0;
   --border-width: 0;
+  --border-style: solid;
+  --border-color: #{current-color(shade)};
+
   --inner-border-width: 0;
 
   --padding-top: 0;
@@ -160,6 +162,8 @@
   --margin-bottom: 0;
   --margin-start: 0;
   --margin-end: 0;
+
+  z-index: 1;
 }
 
 

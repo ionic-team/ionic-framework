@@ -5,7 +5,7 @@ import { DisplayWhen, PLATFORM_CONFIGS, PlatformConfig, detectPlatforms, updateT
 
 @Component({
   tag: 'ion-show-when',
-  styleUrl: './show-when.scss'
+  styleUrl: 'show-when.scss'
 })
 export class ShowWhen implements DisplayWhen {
 
