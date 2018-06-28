@@ -12,6 +12,8 @@
 
   color: #{current-color(contrast)};
 
+  box-sizing: border-box;
+
   --min-height: #{$item-min-height};
   --background: #{current-color(base)};
   --background-active: #{current-color(tint)};
@@ -56,7 +58,12 @@
 
 
 .item-native {
-  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include padding(
+    var(--padding-top),
+    var(--padding-end),
+    var(--padding-bottom),
+    var(--padding-start)
+  );
   @include border-radius(var(--border-radius));
 
   @include margin(0);
@@ -105,7 +112,7 @@
     var(--inner-padding-end),
     var(--inner-padding-bottom),
     var(--inner-padding-start)
-    );
+  );
 
   box-sizing: border-box;
 

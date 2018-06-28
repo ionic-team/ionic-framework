@@ -16,6 +16,8 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 
+  box-sizing: border-box;
+
   color: #{current-color(base)};
 
   --ion-color-base: currentColor;

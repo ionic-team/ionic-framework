@@ -61,7 +61,10 @@
   font-weight: normal;
 }
 
-::slotted(h3, h4, h5, h6) {
+::slotted(h3),
+::slotted(h4),
+::slotted(h5),
+::slotted(h6) {
   @include margin(0, 0, 3px);
 
   font-size: 14px;
@@ -80,6 +83,11 @@
   color: $item-ios-paragraph-text-color;
 }
 
-::slotted(h2:last-child, h3:last-child, h4:last-child, h5:last-child, h6:last-child, p:last-child) {
+::slotted(h2:last-child)
+::slotted(h3:last-child),
+::slotted(h4:last-child),
+::slotted(h5:last-child),
+::slotted(h6:last-child),
+::slotted(p:last-child) {
   @include margin(null, null, 0, null);
 }

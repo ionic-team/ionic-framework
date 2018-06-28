@@ -43,13 +43,13 @@ $item-ios-thumbnail-height:                  $item-ios-thumbnail-width !default;
 $item-ios-detail-push-color:                 $item-ios-border-color !default;
 
 /// @prop - Padding top for the item content
-$item-ios-padding-top:                       11px !default;
+$item-ios-padding-top:                       10px !default;
 
 /// @prop - Padding end for the item content
 $item-ios-padding-end:                       16px !default;
 
 /// @prop - Padding bottom for the item content
-$item-ios-padding-bottom:                    11px !default;
+$item-ios-padding-bottom:                    10px !default;
 
 /// @prop - Padding start for the item content
 $item-ios-padding-start:                     16px !default;
@@ -71,7 +71,7 @@ $item-ios-border-bottom:                     $item-ios-border-bottom-width $item
 // --------------------------------------------------
 
 /// @prop - Margin top for the start slot
-$item-ios-slot-start-margin-top:             8px !default;
+$item-ios-slot-start-margin-top:             0 !default;
 
 /// @prop - Margin end for the start slot
 $item-ios-slot-start-margin-end:             $item-ios-padding-end !default;
