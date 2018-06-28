@@ -1,19 +1,21 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+import { Mode } from '../../interface.js';
+import { createThemedClasses } from '../../utils/theme.js';
 import { Swiper }  from './vendor/swiper.js';
+
 @Component({
   tag: 'ion-slides',
   styleUrls: {
     ios: 'slides.ios.scss',
     md: 'slides.md.scss'
   },
-  host: {
-    theme: 'slides'
-  },
   assetsDir: 'vendor'
 })
 export class Slides {
   private container!: HTMLElement;
   private swiper: any;
+
+  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -350,6 +352,12 @@ export class Slides {
 
     // Merge the base, user options, and events together then pas to swiper
     return Object.assign({}, swiperOptions, this.options, eventOptions);
+  }
+
+  hostData() {
+    return {
+      class: createThemedClasses(this.mode, undefined, 'slides')
+    };
   }
 
   render() {

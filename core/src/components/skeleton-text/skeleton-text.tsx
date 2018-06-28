@@ -6,9 +6,7 @@ import { Component, Prop } from '@stencil/core';
     ios: 'skeleton-text.ios.scss',
     md: 'skeleton-text.md.scss'
   },
-  host: {
-    theme: 'skeleton-text'
-  }
+  shadow: true
 })
 export class SkeletonText {
 

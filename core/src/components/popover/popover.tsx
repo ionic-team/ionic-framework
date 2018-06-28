@@ -16,9 +16,6 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'popover.ios.scss',
     md: 'popover.md.scss'
-  },
-  host: {
-    theme: 'popover'
   }
 })
 export class Popover implements OverlayInterface {
@@ -226,6 +223,7 @@ export class Popover implements OverlayInterface {
       },
       'no-router': true,
       class: {
+        ...createThemedClasses(this.mode, this.color, 'popover'),
         ...themedClasses,
         ...getClassMap(this.cssClass),
       }

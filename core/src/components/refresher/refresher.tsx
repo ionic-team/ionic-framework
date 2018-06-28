@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State } from '@stencil/core';
-import { GestureDetail, QueueController } from '../../interface';
+import { GestureDetail, Mode, QueueController } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 const enum RefresherState {
   Inactive = 1 << 0,
@@ -17,9 +18,6 @@ const enum RefresherState {
   styleUrls: {
     ios: 'refresher.ios.scss',
     md: 'refresher.md.scss'
-  },
-  host: {
-    theme: 'refresher'
   }
 })
 export class Refresher {
@@ -28,6 +26,8 @@ export class Refresher {
   private didStart = false;
   private progress = 0;
   private scrollEl?: HTMLIonScrollElement;
+
+  mode!: Mode;
 
   @Prop({ context: 'queue' }) queue!: QueueController;
 
@@ -336,6 +336,8 @@ export class Refresher {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, undefined, 'refresher'),
+
         'refresher-active': this.state !== RefresherState.Inactive,
         'refresher-pulling': this.state === RefresherState.Pulling,
         'refresher-ready': this.state === RefresherState.Ready,

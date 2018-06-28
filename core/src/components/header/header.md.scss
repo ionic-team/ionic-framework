@@ -3,10 +3,7 @@
 // Material Design Header / Footer / Tabs Box Shadow
 // --------------------------------------------------
 
-.header-md::after,
-.tabs-md[tabsPlacement="top"] > .tabbar::after,
-.footer-md::before,
-.tabs-md[tabsPlacement="bottom"] > .tabbar::before {
+.header-md::after {
   // using datauri png background image for improved scroll performance
   // rather than using `box-shadow: 0 2px 5px rgba(0,0,0,0.26);`
   // noticable performance difference on older Android devices
@@ -24,17 +21,6 @@
   content: "";
 }
 
-.footer-md::before,
-.tabs-md[tabsPlacement="bottom"] > .tabbar::before {
-  @include position(-2px, null, auto, null);
-  @include background-position(start, 0, top, 0);
-
-  height: 2px;
-}
-
-.header-md[no-border]::after,
-.footer-md[no-border]::before,
-.tabs-md[tabsPlacement="top"][no-border] > .tabbar::after,
-.tabs-md[tabsPlacement="bottom"][no-border] > .tabbar::before {
+.header-md[no-border]::after {
   display: none;
 }

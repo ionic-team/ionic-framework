@@ -1,4 +1,6 @@
 import { Component } from '@stencil/core';
+import { Color, Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
@@ -6,9 +8,16 @@ import { Component } from '@stencil/core';
   styleUrls: {
     ios: 'item-group.ios.scss',
     md: 'item-group.md.scss'
-  },
-  host: {
-    theme: 'item-group'
   }
 })
-export class ItemGroup {}
+export class ItemGroup {
+
+  mode!: Mode;
+  color?: Color;
+
+  hostData() {
+    return {
+      class: createThemedClasses(this.mode, this.color, 'item-group')
+    };
+  }
+}

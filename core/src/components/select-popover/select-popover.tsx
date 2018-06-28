@@ -1,15 +1,14 @@
 import { Component, Listen, Prop } from '@stencil/core';
 import { Mode, SelectPopoverOption } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
   tag: 'ion-select-popover',
-  styleUrl: 'select-popover.scss',
-  host: {
-    theme: 'select-popover'
-  }}
-)
+  styleUrl: 'select-popover.scss'
+})
 export class SelectPopover {
+
   mode!: Mode;
 
   /** Header text for the popover */
@@ -28,6 +27,12 @@ export class SelectPopover {
   onSelect(ev: any) {
     const option = this.options.find(o => o.value === ev.target.value);
     option && option.handler && option.handler();
+  }
+
+  hostData() {
+    return {
+      class: createThemedClasses(this.mode, undefined, 'select-popover')
+    };
   }
 
   render() {

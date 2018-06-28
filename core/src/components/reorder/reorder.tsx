@@ -1,17 +1,23 @@
 import { Component } from '@stencil/core';
+import { createThemedClasses } from '../../utils/theme';
+import { Mode } from '../../interface';
 
 @Component({
   tag: 'ion-reorder',
   styleUrls: {
     ios: 'reorder.ios.scss',
     md: 'reorder.md.scss',
-  },
-  host: {
-    theme: 'reorder'
   }
 })
 export class Reorder {
 
+  mode!: Mode;
+
+  hostData() {
+    return {
+      class: createThemedClasses(this.mode, undefined, 'reorder')
+    };
+  }
   render() {
     return (
       <slot>

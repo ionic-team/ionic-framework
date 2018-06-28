@@ -20,6 +20,7 @@ import {
 
 import { CssClassMap, PickerColumn, PickerOptions, StyleEvent } from '../../interface';
 import { clamp, deferEvent } from '../../utils/helpers';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
@@ -27,9 +28,6 @@ import { clamp, deferEvent } from '../../utils/helpers';
   styleUrls: {
     ios: 'datetime.ios.scss',
     md: 'datetime.md.scss'
-  },
-  host: {
-    theme: 'datetime'
   }
 })
 export class Datetime {
@@ -563,6 +561,7 @@ export class Datetime {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, this.color, 'datetime'),
         'datetime-disabled': this.disabled
       }
     };

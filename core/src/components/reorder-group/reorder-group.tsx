@@ -1,14 +1,12 @@
 import { Component, Element, Prop, State, Watch } from '@stencil/core';
-import { GestureDetail, QueueController } from '../../interface';
+import { GestureDetail, Mode, QueueController } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart} from '../../utils/haptic';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
   tag: 'ion-reorder-group',
-  styleUrl: 'reorder-group.scss',
-  host: {
-    theme: 'reorder-group'
-  }
+  styleUrl: 'reorder-group.scss'
 })
 export class ReorderGroup {
 
@@ -25,6 +23,8 @@ export class ReorderGroup {
 
   private containerTop = 0;
   private containerBottom = 0;
+
+  mode!: Mode;
 
   @State() enabled = false;
   @State() iconVisible = false;
@@ -245,6 +245,8 @@ export class ReorderGroup {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, undefined, 'reorder-group'),
+
         'reorder-enabled': this.enabled,
         'reorder-list-active': this.activated,
         'reorder-visible': this.iconVisible
