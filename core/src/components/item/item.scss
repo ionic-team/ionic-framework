@@ -195,3 +195,10 @@
 :host(.item-label-floating) ::slotted(ion-select) {
   max-width: 100%;
 }
+
+// Item Reorder
+// --------------------------------------------------
+
+::slotted(ion-reorder[slot]) {
+  @include margin(0, null);
+}

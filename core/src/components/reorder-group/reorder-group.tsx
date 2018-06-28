@@ -1,4 +1,4 @@
-import { Component, Element, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Prop, State } from '@stencil/core';
 import { GestureDetail, Mode, QueueController } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart} from '../../utils/haptic';
 import { createThemedClasses } from '../../utils/theme';
@@ -26,8 +26,6 @@ export class ReorderGroup {
 
   mode!: Mode;
 
-  @State() enabled = false;
-  @State() iconVisible = false;
   @State() activated = false;
 
   @Element() el!: HTMLElement;
@@ -39,28 +37,12 @@ export class ReorderGroup {
    */
   @Prop() disabled = true;
 
-  @Watch('disabled')
-  protected disabledChanged(disabled: boolean) {
-    if (!disabled) {
-      this.enabled = true;
-      this.queue.read(() => {
-        this.iconVisible = true;
-      });
-    } else {
-      this.iconVisible = false;
-      setTimeout(() => this.enabled = false, 400);
-    }
-  }
-
   async componentDidLoad() {
     this.containerEl = this.el.querySelector('ion-gesture')!;
     const contentEl = this.el.closest('ion-content');
     if (contentEl) {
       await contentEl.componentOnReady();
       this.scrollEl = contentEl.getScrollElement();
-    }
-    if (!this.disabled) {
-      this.disabledChanged(false);
     }
   }
 
@@ -247,9 +229,8 @@ export class ReorderGroup {
       class: {
         ...createThemedClasses(this.mode, undefined, 'reorder-group'),
 
-        'reorder-enabled': this.enabled,
+        'reorder-enabled': !this.disabled,
         'reorder-list-active': this.activated,
-        'reorder-visible': this.iconVisible
       }
     };
   }
