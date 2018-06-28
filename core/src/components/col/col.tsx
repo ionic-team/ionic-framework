@@ -1,4 +1,6 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
+import { Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 import { isMatch } from '../../utils/media';
 
@@ -6,10 +8,14 @@ const SUPPORTS_VARS: boolean = CSS.supports('--a', '0');
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
 @Component({
-  tag: 'ion-col'
+  tag: 'ion-col',
+  styleUrl: 'col.scss',
+  shadow: true
 })
 export class Col {
   [key: string]: any;
+
+  mode!: Mode;
 
   @Element() el!: HTMLStencilElement;
 
@@ -155,6 +161,9 @@ export class Col {
 
   hostData() {
     return {
+      class: {
+        ...createThemedClasses(this.mode, undefined, 'col')
+      },
       style: {
         ...this.calculateOffset(),
         ...this.calculatePull(),
@@ -248,5 +257,9 @@ export class Col {
 
   isMatch(bp: string) {
     return bp ? isMatch(bp) : true;
+  }
+
+  render() {
+    return <slot></slot>;
   }
 }

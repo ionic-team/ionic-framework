@@ -4,22 +4,6 @@
 // Responsive Mixins
 // --------------------------------------------------
 
-// Creates the shared grid properties
-// ---------------------------------------------------------------------------------
-
-@mixin make-grid($paddings: $grid-paddings) {
-  @include make-breakpoint-padding($paddings);
-  @include margin-horizontal(auto);
-
-  display: block;
-
-  // Remove the padding from grid and all immediate children columns
-  &[no-padding],
-  &[no-padding] > ion-col {
-    @include padding(0);
-  }
-}
-
 
 // Creates a fixed width for the grid based on the screen size
 // ---------------------------------------------------------------------------------
@@ -31,100 +15,6 @@
     @include media-breakpoint-up($breakpoint, $breakpoints) {
       width: $width;
     }
-  }
-}
-
-
-// Creates a flex row used to align columns
-// ---------------------------------------------------------------------------------
-
-@mixin make-row() {
-  display: flex;
-  flex-wrap: wrap;
-
-  &[nowrap] {
-    flex-wrap: nowrap;
-  }
-
-  &[wrap-reverse] {
-    flex-wrap: wrap-reverse;
-  }
-
-  &[align-items-start] {
-    align-items: flex-start;
-  }
-
-  &[align-items-center] {
-    align-items: center;
-  }
-
-  &[align-items-end] {
-    align-items: flex-end;
-  }
-
-  &[align-items-stretch] {
-    align-items: stretch;
-  }
-
-  &[align-items-baseline] {
-    align-items: baseline;
-  }
-
-  &[justify-content-start] {
-    justify-content: flex-start;
-  }
-
-  &[justify-content-center] {
-    justify-content: center;
-  }
-
-  &[justify-content-end] {
-    justify-content: flex-end;
-  }
-
-  &[justify-content-around] {
-    justify-content: space-around;
-  }
-
-  &[justify-content-between] {
-    justify-content: space-between;
-  }
-}
-
-
-// Creates a column
-// ---------------------------------------------------------------------------------
-
-@mixin make-column($column-paddings: $grid-column-paddings) {
-  @include make-breakpoint-padding($column-paddings);
-  @include margin(0);
-
-  position: relative;
-
-  flex-basis: 0;
-  flex-grow: 1;
-  width: 100%;
-  max-width: 100%;
-  min-height: 1px; // Prevent columns from collapsing when empty
-
-  &[align-self-start] {
-    align-self: flex-start;
-  }
-
-  &[align-self-end] {
-    align-self: flex-end;
-  }
-
-  &[align-self-center] {
-    align-self: center;
-  }
-
-  &[align-self-stretch] {
-    align-self: stretch;
-  }
-
-  &[align-self-baseline] {
-    align-self: baseline;
   }
 }
 

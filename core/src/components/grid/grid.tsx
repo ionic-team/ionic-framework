@@ -8,7 +8,8 @@ import { createThemedClasses } from '../../utils/theme';
   styleUrls: {
     ios: 'grid.ios.scss',
     md: 'grid.md.scss'
-  }
+  },
+  shadow: true
 })
 export class Grid {
 
@@ -23,9 +24,13 @@ export class Grid {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, this.color, 'grid'),
+        ...createThemedClasses(this.mode, undefined, 'grid'),
         'grid-fixed': this.fixed
       }
     };
+  }
+
+  render() {
+    return <slot></slot>;
   }
 }

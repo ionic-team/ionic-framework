@@ -1,0 +1,61 @@
+@import "./row.vars";
+
+// Row
+// --------------------------------------------------
+
+:host {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+// Row Alignment
+// --------------------------------------------------
+
+:host([nowrap]) {
+  flex-wrap: nowrap;
+}
+
+:host([wrap-reverse]) {
+  flex-wrap: wrap-reverse;
+}
+
+:host([align-items-start]) {
+  align-items: flex-start;
+}
+
+:host([align-items-center]) {
+  align-items: center;
+}
+
+:host([align-items-end]) {
+  align-items: flex-end;
+}
+
+:host([align-items-stretch]) {
+  align-items: stretch;
+}
+
+:host([align-items-baseline]) {
+  align-items: baseline;
+}
+
+:host([justify-content-start]) {
+  justify-content: flex-start;
+}
+
+:host([justify-content-center]) {
+  justify-content: center;
+}
+
+:host([justify-content-end]) {
+  justify-content: flex-end;
+}
+
+:host([justify-content-around]) {
+  justify-content: space-around;
+}
+
+:host([justify-content-between]) {
+  justify-content: space-between;
+}

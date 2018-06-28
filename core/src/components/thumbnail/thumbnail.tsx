@@ -20,9 +20,7 @@ export class Thumbnail {
     };
   }
 
-
   render() {
     return <slot></slot>;
   }
-
 }

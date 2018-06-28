@@ -3,18 +3,25 @@
 // Grid
 // --------------------------------------------------
 
-ion-grid {
-  @include make-grid();
+:host {
+  @include make-breakpoint-padding($grid-paddings);
+  @include margin-horizontal(auto);
+
+  display: block;
 }
 
-.grid-fixed {
+// Fixed Grid
+// --------------------------------------------------
+
+:host(.grid-fixed) {
   @include make-grid-widths();
 }
 
-ion-row {
-  @include make-row();
-}
+// Grid Padding
+// --------------------------------------------------
 
-ion-col {
-  @include make-column();
+// Remove the padding from grid and all immediate children columns
+:host([no-padding]),
+:host([no-padding]) > ion-col {
+  @include padding(0);
 }
