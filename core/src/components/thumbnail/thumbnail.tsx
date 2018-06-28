@@ -8,7 +8,8 @@ import { createThemedClasses } from '../../utils/theme';
   styleUrls: {
     ios: 'thumbnail.ios.scss',
     md: 'thumbnail.md.scss'
-  }
+  },
+  shadow: true
 })
 export class Thumbnail {
   mode!: Mode;
@@ -18,4 +19,10 @@ export class Thumbnail {
       class: createThemedClasses(this.mode, undefined, 'thumbnail')
     };
   }
+
+
+  render() {
+    return <slot></slot>;
+  }
+
 }

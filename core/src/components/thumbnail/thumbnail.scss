@@ -4,11 +4,12 @@
 // Thumbnail
 // --------------------------------------------------
 
-ion-thumbnail {
+:host {
   display: block;
 }
 
-ion-thumbnail img {
+::slotted(ion-img),
+::slotted(img) {
   width: 100%;
   height: 100%;
 
