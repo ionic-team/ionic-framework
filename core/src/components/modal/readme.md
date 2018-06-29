@@ -14,15 +14,6 @@ Modals can be created using a [Modal Controller](../../modal-controller/ModalCon
 
 ## Properties
 
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
-
-
 #### component
 
 string
@@ -76,15 +67,6 @@ AnimationBuilder
 Animation to use when the modal is dismissed.
 
 
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
-
 #### overlayId
 
 number
@@ -105,15 +87,6 @@ If true, the modal will animate. Defaults to `true`.
 
 
 ## Attributes
-
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
-
 
 #### component
 
@@ -166,15 +139,6 @@ boolean
 
 
 Animation to use when the modal is dismissed.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### overlay-id

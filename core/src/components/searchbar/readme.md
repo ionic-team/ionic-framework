@@ -32,11 +32,25 @@ string
 Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
 
 
+#### cancelButtonIcon
+
+string
+
+Set the cancel button icon. Only applies to `md` mode. Defaults to `"md-arrow-back"`.
+
+
 #### cancelButtonText
 
 string
 
-Set the the cancel button text. Default: `"Cancel"`.
+Set the the cancel button text. Only applies to `ios` mode. Default: `"Cancel"`.
+
+
+#### clearIcon
+
+string
+
+Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
 
 
 #### color
@@ -66,6 +80,13 @@ Possible values are: `"ios"` or `"md"`.
 string
 
 Set the input's placeholder. Default `"Search"`.
+
+
+#### searchIcon
+
+string
+
+The icon to use as the search icon. Defaults to `"search"`.
 
 
 #### showCancelButton
@@ -119,11 +140,25 @@ string
 Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
 
 
+#### cancel-button-icon
+
+string
+
+Set the cancel button icon. Only applies to `md` mode. Defaults to `"md-arrow-back"`.
+
+
 #### cancel-button-text
 
 string
 
-Set the the cancel button text. Default: `"Cancel"`.
+Set the the cancel button text. Only applies to `ios` mode. Default: `"Cancel"`.
+
+
+#### clear-icon
+
+string
+
+Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
 
 
 #### color
@@ -153,6 +188,13 @@ Possible values are: `"ios"` or `"md"`.
 string
 
 Set the input's placeholder. Default `"Search"`.
+
+
+#### search-icon
+
+string
+
+The icon to use as the search icon. Defaults to `"search"`.
 
 
 #### show-cancel-button
