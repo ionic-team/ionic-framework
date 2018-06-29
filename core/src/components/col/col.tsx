@@ -1,10 +1,7 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
-import { Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
-
 import { isMatch } from '../../utils/media';
 
-const SUPPORTS_VARS: boolean = CSS.supports('--a', '0');
+const SUPPORTS_VARS: boolean = CSS && CSS.supports && CSS.supports('--a', '0');
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
 @Component({
@@ -14,8 +11,6 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 })
 export class Col {
   [key: string]: any;
-
-  mode!: Mode;
 
   @Element() el!: HTMLStencilElement;
 
@@ -159,20 +154,6 @@ export class Col {
    */
   @Prop() sizeXl?: string;
 
-  hostData() {
-    return {
-      class: {
-        ...createThemedClasses(this.mode, undefined, 'col')
-      },
-      style: {
-        ...this.calculateOffset(),
-        ...this.calculatePull(),
-        ...this.calculatePush(),
-        ...this.calculateSize()
-      }
-    };
-  }
-
   @Listen('window:resize')
   onResize() {
     this.el.forceUpdate();
@@ -180,7 +161,7 @@ export class Col {
 
   // Loop through all of the breakpoints to see if the media query
   // matches and grab the column value from the relevant prop if so
-  getColumns(property: string) {
+  private getColumns(property: string) {
     let matched;
 
     for (const breakpoint of BREAKPOINTS) {
@@ -200,14 +181,16 @@ export class Col {
     return matched;
   }
 
-  calculateSize() {
+  private calculateSize() {
     let columns = this.getColumns('size');
 
     // If size wasn't set for any breakpoint
     // or if the user set the size without a value
     // it means we need to stick with the default and return
     // e.g. <ion-col size-md>
-    if (!columns || columns === '') return;
+    if (!columns || columns === '') {
+      return;
+    }
 
     columns = SUPPORTS_VARS
       // If CSS supports variables we should use the grid columns var
@@ -224,10 +207,12 @@ export class Col {
   }
 
   // Called by push, pull, and offset since they use the same calculations
-  calculatePosition(property: string, modifier: string) {
+  private calculatePosition(property: string, modifier: string) {
     const columns = this.getColumns(property);
 
-    if (!columns) return;
+    if (!columns) {
+      return;
+    }
 
     // If the number of columns passed are greater than 0 and less than
     // 12 we can position the column, else default to auto
@@ -243,20 +228,31 @@ export class Col {
     };
   }
 
-  calculateOffset() {
+  private calculateOffset() {
     return this.calculatePosition('offset', 'margin-left');
   }
 
-  calculatePull() {
+  private calculatePull() {
     return this.calculatePosition('pull', 'right');
   }
 
-  calculatePush() {
+  private calculatePush() {
     return this.calculatePosition('push', 'left');
   }
 
-  isMatch(bp: string) {
+  private isMatch(bp: string) {
     return bp ? isMatch(bp) : true;
+  }
+
+  hostData() {
+    return {
+      style: {
+        ...this.calculateOffset(),
+        ...this.calculatePull(),
+        ...this.calculatePush(),
+        ...this.calculateSize()
+      }
+    };
   }
 
   render() {

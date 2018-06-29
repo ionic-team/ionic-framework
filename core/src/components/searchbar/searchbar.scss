@@ -38,14 +38,10 @@
   width: 100%;
 
   border: 0;
+  outline: none;
   font-family: inherit;
 
   appearance: none;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
 
   &::-webkit-search-cancel-button {
     display: none;
@@ -59,6 +55,10 @@
   display: none;
 
   min-height: 0;
+
+  outline: none;
+
+  appearance: none;
 }
 
 :host(.searchbar-has-value.searchbar-has-focus) .searchbar-clear-button {

@@ -94,12 +94,15 @@
   flex-shrink: 0;
 
   border: 0;
+  outline: none;
   font-size: $searchbar-ios-cancel-button-font-size;
 
   color: $searchbar-ios-cancel-button-color;
   background-color: $searchbar-ios-cancel-button-background-color;
 
   cursor: pointer;
+
+  appearance: none;
 }
 
 
