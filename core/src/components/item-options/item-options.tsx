@@ -48,10 +48,11 @@ export class ItemOptions {
   }
 
   hostData() {
+    const isEnd = this.isEndSide();
     return {
       class: {
-        'item-options-start': !this.isEndSide(),
-        'item-options-end': this.isEndSide()
+        'item-options-start': !isEnd,
+        'item-options-end': isEnd
       }
     };
   }

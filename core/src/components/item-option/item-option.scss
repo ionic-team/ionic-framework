@@ -14,21 +14,17 @@
   height: 100%;
 
   border: 0;
-
+  outline: none;
   font-family: inherit;
   font-size: inherit;
-  letter-spacing: inherit;
   font-weight: inherit;
+  letter-spacing: inherit;
   color: inherit;
 
   background: #{current-color(base)};
 
   appearance: none;
 
-  &:active,
-  &:focus {
-    outline: none;
-  }
 }
 
 .item-option-button-inner {
@@ -40,17 +36,19 @@
   align-items: center;
   justify-content: center;
 
-  font-family: inherit;
-  font-size: inherit;
-  letter-spacing: inherit;
-  font-weight: inherit;
-
   width: 100%;
   height: 100%;
+
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+
 }
 
 ::slotted([slot="icon-only"]) {
   @include padding(0);
+  @include margin(0, 10px);
 
   min-width: .9em;
 
@@ -67,40 +65,4 @@
   transition-duration: 0;
   transition-property: none;
   transition-timing-function: cubic-bezier(.65, .05, .36, 1);
-}
-
-:host(.in-swipe-end.item-options-end.item-option-expandable) {
-  transition-duration: .6s;
-  transition-property: padding-left;
-
-  @include multi-dir() {
-    // scss-lint:disable PropertySpelling
-    padding-left: 90%;
-  }
-
-  @include ltr() {
-    order: 1;
-  }
-
-  @include rtl() {
-    order: -1;
-  }
-}
-
-:host(.in-swipe-start.item-options-start.item-option-expandable) {
-  transition-duration: .6s;
-  transition-property: padding-right;
-
-  @include multi-dir() {
-    // scss-lint:disable PropertySpelling
-    padding-right: 90%;
-  }
-
-  @include ltr() {
-    order: -1;
-  }
-
-  @include rtl() {
-    order: 1;
-  }
 }

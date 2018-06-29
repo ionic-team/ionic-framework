@@ -7,30 +7,28 @@ const ELASTIC_FACTOR = 0.55;
 
 const enum ItemSide {
   None = 0,
-  Left = 1 << 0,
-  Right = 1 << 1,
-  Both = Left | Right
+  Start = 1 << 0,
+  End = 1 << 1,
+  Both = Start | End
 }
 
 const enum SlidingState {
   Disabled = 1 << 1,
   Enabled = 1 << 2,
-  Right = 1 << 3,
-  Left = 1 << 4,
+  End = 1 << 3,
+  Start = 1 << 4,
 
-  SwipeRight = 1 << 5,
-  SwipeLeft = 1 << 6,
+  SwipeEnd = 1 << 5,
+  SwipeStart = 1 << 6,
 }
 
 
 @Component({
   tag: 'ion-item-sliding',
-  styleUrls: {
-    ios: 'item-sliding.ios.scss',
-    md: 'item-sliding.md.scss'
-  }
+  styleUrl: 'item-sliding.scss'
 })
 export class ItemSliding {
+
   private item: HTMLIonItemElement|null = null;
   private list: HTMLIonListElement|null = null;
   private openAmount = 0;
@@ -120,10 +118,10 @@ export class ItemSliding {
 
       if (option.isEndSide()) {
         this.rightOptions = option;
-        sides |= ItemSide.Right;
+        sides |= ItemSide.End;
       } else {
         this.leftOptions = option;
-        sides |= ItemSide.Left;
+        sides |= ItemSide.Start;
       }
     }
     this.optsDirty = true;
@@ -163,8 +161,8 @@ export class ItemSliding {
     let openAmount = this.initialOpenAmount - gesture.deltaX;
 
     switch (this.sides) {
-      case ItemSide.Right: openAmount = Math.max(0, openAmount); break;
-      case ItemSide.Left: openAmount = Math.min(0, openAmount); break;
+      case ItemSide.End: openAmount = Math.max(0, openAmount); break;
+      case ItemSide.Start: openAmount = Math.min(0, openAmount); break;
       case ItemSide.Both: break;
       case ItemSide.None: return;
       default: console.warn('invalid ItemSideFlags value', this.sides); break;
@@ -201,9 +199,9 @@ export class ItemSliding {
 
     this.setOpenAmount(restingPoint, true);
 
-    if (this.state & SlidingState.SwipeRight && this.rightOptions) {
+    if (this.state & SlidingState.SwipeEnd && this.rightOptions) {
       this.rightOptions.fireSwipeEvent();
-    } else if (this.state & SlidingState.SwipeLeft && this.leftOptions) {
+    } else if (this.state & SlidingState.SwipeStart && this.leftOptions) {
       this.leftOptions.fireSwipeEvent();
     }
   }
@@ -238,12 +236,12 @@ export class ItemSliding {
 
     if (openAmount > 0) {
       this.state = (openAmount >= (this.optsWidthRightSide + SWIPE_MARGIN))
-        ? SlidingState.Right | SlidingState.SwipeRight
-        : SlidingState.Right;
+        ? SlidingState.End | SlidingState.SwipeEnd
+        : SlidingState.End;
     } else if (openAmount < 0) {
       this.state = (openAmount <= (-this.optsWidthLeftSide - SWIPE_MARGIN))
-        ? SlidingState.Left | SlidingState.SwipeLeft
-        : SlidingState.Left;
+        ? SlidingState.Start | SlidingState.SwipeStart
+        : SlidingState.Start;
     } else {
       this.tmr = window.setTimeout(() => {
         this.state = SlidingState.Disabled;
@@ -265,29 +263,27 @@ export class ItemSliding {
       class: {
         'item-sliding': true,
         'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
-        'item-sliding-active-options-right': !!(this.state & SlidingState.Right),
-        'item-sliding-active-options-left': !!(this.state & SlidingState.Left),
-        'item-sliding-active-swipe-right': !!(this.state & SlidingState.SwipeRight),
-        'item-sliding-active-swipe-left': !!(this.state & SlidingState.SwipeLeft)
+        'item-sliding-active-options-end': !!(this.state & SlidingState.End),
+        'item-sliding-active-options-start': !!(this.state & SlidingState.Start),
+        'item-sliding-active-swipe-end': !!(this.state & SlidingState.SwipeEnd),
+        'item-sliding-active-swipe-start': !!(this.state & SlidingState.SwipeStart)
       }
     };
   }
 
   render() {
     return (
-      <ion-gesture {...{
-        'canStart': this.canStart.bind(this),
-        'onStart': this.onDragStart.bind(this),
-        'onMove': this.onDragMove.bind(this),
-        'onEnd': this.onDragEnd.bind(this),
-        'gestureName': 'item-swipe',
-        'gesturePriority': -10,
-        'type': 'pan',
-        'direction': 'x',
-        'maxAngle': 20,
-        'threshold': 5,
-        'attachTo': 'parent'
-      }}>
+      <ion-gesture
+        canStart={this.canStart.bind(this)}
+        onStart={this.onDragStart.bind(this)}
+        onMove={this.onDragMove.bind(this)}
+        onEnd={this.onDragEnd.bind(this)}
+        gestureName={'item-swipe'}
+        gesturePriority={-10}
+        direction={'x'}
+        maxAngle={20}
+        threshold={5}
+        attachTo={'parent'}>
         <slot></slot>
       </ion-gesture>
     );
