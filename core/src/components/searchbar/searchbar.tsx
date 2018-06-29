@@ -347,8 +347,8 @@ export class Searchbar {
   }
 
   render() {
-    const clearIcon = this.clearIcon ? this.clearIcon : (this.mode === 'md' ? 'md-close' : 'ios-close-circle');
-    const searchIcon = this.searchIcon ? this.searchIcon : (this.mode === 'md' ? 'md-search' : 'ios-search');
+    const clearIcon = this.clearIcon || (this.mode === 'ios' ? 'ios-close-circle' : 'md-close');
+    const searchIcon = this.searchIcon || 'search';
 
     const cancelButton = (this.showCancelButton)
       ? <button
@@ -358,7 +358,7 @@ export class Searchbar {
         onMouseDown={this.cancelSearchbar.bind(this)}
         class="searchbar-cancel-button">
           { this.mode === 'md'
-            ? <ion-icon icon={this.cancelButtonIcon}></ion-icon>
+            ? <ion-icon mode={this.mode} icon={this.cancelButtonIcon}></ion-icon>
             : this.cancelButtonText }
       </button>
       : null;
@@ -366,7 +366,7 @@ export class Searchbar {
     return [
       <div class="searchbar-input-container">
         { this.mode === 'md' && cancelButton }
-        <ion-icon icon={searchIcon} class="searchbar-search-icon"></ion-icon>
+        <ion-icon mode={this.mode} icon={searchIcon} class="searchbar-search-icon"></ion-icon>
         <input
           ref={(el) => this.nativeInput = el as HTMLInputElement}
           class="searchbar-input"
@@ -385,7 +385,7 @@ export class Searchbar {
           class="searchbar-clear-button"
           onClick={this.clearInput.bind(this)}
           onMouseDown={this.clearInput.bind(this)}>
-            <ion-icon icon={clearIcon} class="searchbar-clear-icon"></ion-icon>
+            <ion-icon mode={this.mode} icon={clearIcon} class="searchbar-clear-icon"></ion-icon>
         </button>
       </div>,
       this.mode === 'ios' && cancelButton

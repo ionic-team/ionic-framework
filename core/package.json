@@ -24,7 +24,7 @@
     "css/"
   ],
   "dependencies": {
-    "ionicons": "4.2.2"
+    "ionicons": "4.2.4"
   },
   "devDependencies": {
     "@stencil/core": "0.10.0-7",
