@@ -215,7 +215,7 @@ export class Popover implements OverlayInterface {
   }
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'popover-translucent') : {};
+    const themedClasses = this.translucent ? createThemedClasses(this.mode, 'popover-translucent') : {};
 
     return {
       style: {
@@ -223,7 +223,7 @@ export class Popover implements OverlayInterface {
       },
       'no-router': true,
       class: {
-        ...createThemedClasses(this.mode, this.color, 'popover'),
+        ...createThemedClasses(this.mode, 'popover'),
         ...themedClasses,
         ...getClassMap(this.cssClass),
       }
@@ -231,7 +231,7 @@ export class Popover implements OverlayInterface {
   }
 
   render() {
-    const wrapperClasses = createThemedClasses(this.mode, this.color, 'popover-wrapper');
+    const wrapperClasses = createThemedClasses(this.mode, 'popover-wrapper');
 
     return [
       <ion-backdrop tappable={this.enableBackdropDismiss}/>,

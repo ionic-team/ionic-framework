@@ -156,7 +156,7 @@ export class SplitPane {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, undefined, 'split-pane'),
+        ...createThemedClasses(this.mode, 'split-pane'),
         'split-pane-visible': this.visible
       }
     };

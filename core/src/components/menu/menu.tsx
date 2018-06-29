@@ -12,7 +12,6 @@ import {
 } from '@stencil/core';
 import {
   Animation,
-  Color,
   Config,
   GestureDetail,
   MenuChangeEventDetail,
@@ -35,7 +34,7 @@ export class Menu {
   private lastOnEnd = 0;
 
   mode!: Mode;
-  color?: Color;
+
   isAnimating = false;
   width!: number; // TOOD
 
@@ -454,7 +453,7 @@ export class Menu {
     return {
       role: 'complementary',
       class: {
-        ...createThemedClasses(this.mode, this.color, 'menu'),
+        ...createThemedClasses(this.mode, 'menu'),
         [`menu-type-${this.type}`]: true,
         'menu-enabled': !this.disabled,
         'menu-side-right': isEndSide,

@@ -336,7 +336,7 @@ export class Refresher {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, undefined, 'refresher'),
+        ...createThemedClasses(this.mode, 'refresher'),
 
         'refresher-active': this.state !== RefresherState.Inactive,
         'refresher-pulling': this.state === RefresherState.Pulling,

@@ -356,7 +356,7 @@ export class Slides {
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, undefined, 'slides')
+      class: createThemedClasses(this.mode, 'slides')
     };
   }
 

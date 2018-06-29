@@ -227,7 +227,7 @@ export class ReorderGroup {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, undefined, 'reorder-group'),
+        ...createThemedClasses(this.mode, 'reorder-group'),
 
         'reorder-enabled': !this.disabled,
         'reorder-list-active': this.activated,

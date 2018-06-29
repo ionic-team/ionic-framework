@@ -32,7 +32,7 @@ export class App {
     return {
       class: {
         [this.mode]: true,
-        ...createThemedClasses(this.mode, undefined, 'app'),
+        ...createThemedClasses(this.mode, 'app'),
         'statusbar-padding': statusBar
       }
     };

@@ -381,7 +381,7 @@ export class PickerColumnCmp {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, undefined, 'picker-col'),
+        ...createThemedClasses(this.mode, 'picker-col'),
 
         'picker-opts-left': this.col.align === 'left',
         'picker-opts-right': this.col.align === 'right'

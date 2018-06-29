@@ -561,7 +561,7 @@ export class Datetime {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, this.color, 'datetime'),
+        ...createThemedClasses(this.mode, 'datetime'),
         'datetime-disabled': this.disabled
       }
     };

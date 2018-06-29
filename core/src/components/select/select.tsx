@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
-import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, Color, CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent} from '../../interface';
+import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent} from '../../interface';
 import { deferEvent } from '../../utils/helpers';
 import { createThemedClasses, hostContext } from '../../utils/theme';
 
@@ -20,7 +20,6 @@ export class Select {
   private overlay?: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
 
   mode!: Mode;
-  color?: Color;
 
   @Element() el!: HTMLIonSelectElement;
 
@@ -452,7 +451,7 @@ export class Select {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, this.color, 'select'),
+        ...createThemedClasses(this.mode, 'select'),
         'in-item': hostContext('.item', this.el),
         'select-disabled': this.disabled,
         'select-key': this.keyFocus

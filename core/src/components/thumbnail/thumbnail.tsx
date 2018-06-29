@@ -16,7 +16,7 @@ export class Thumbnail {
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, undefined, 'thumbnail')
+      class: createThemedClasses(this.mode, 'thumbnail')
     };
   }
 

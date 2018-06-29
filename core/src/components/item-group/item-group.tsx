@@ -1,5 +1,5 @@
 import { Component } from '@stencil/core';
-import { Color, Mode } from '../../interface';
+import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 
@@ -13,11 +13,10 @@ import { createThemedClasses } from '../../utils/theme';
 export class ItemGroup {
 
   mode!: Mode;
-  color?: Color;
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, this.color, 'item-group')
+      class: createThemedClasses(this.mode, 'item-group')
     };
   }
 }

@@ -31,7 +31,7 @@ export class SelectPopover {
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, undefined, 'select-popover')
+      class: createThemedClasses(this.mode, 'select-popover')
     };
   }
 

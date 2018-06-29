@@ -1,5 +1,5 @@
 import { Component, Prop } from '@stencil/core';
-import { Color, Config, Mode } from '../../interface';
+import { Config, Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({
@@ -12,7 +12,6 @@ import { createThemedClasses } from '../../utils/theme';
 export class InfiniteScrollContent {
 
   mode!: Mode;
-  color?: Color;
 
   @Prop({ context: 'config' }) config!: Config;
 
@@ -37,7 +36,7 @@ export class InfiniteScrollContent {
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, this.color, 'infinite-scroll-content')
+      class: createThemedClasses(this.mode, 'infinite-scroll-content')
     };
   }
 

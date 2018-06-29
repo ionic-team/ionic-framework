@@ -180,12 +180,12 @@ export class Toast implements OverlayInterface {
   }
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'toast-translucent') : {};
+    const themedClasses = this.translucent ? createThemedClasses(this.mode, 'toast-translucent') : {};
 
     return {
       class: {
         ...themedClasses,
-        ...createThemedClasses(this.mode, this.color, 'toast'),
+        ...createThemedClasses(this.mode, 'toast'),
         ...getClassMap(this.cssClass)
       }
     };

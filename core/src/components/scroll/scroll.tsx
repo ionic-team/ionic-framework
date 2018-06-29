@@ -247,7 +247,7 @@ export class Scroll {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, undefined, 'scroll'),
+        ...createThemedClasses(this.mode, 'scroll'),
         overscroll: this.forceOverscroll
       }
     };

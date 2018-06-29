@@ -10,8 +10,9 @@ import { createThemedClasses } from '../../utils/theme';
   }
 })
 export class List {
-  private mode!: Mode;
   private openItem?: HTMLIonItemSlidingElement;
+
+  mode!: Mode;
 
   /**
    * How the bottom border should be displayed on all items.
@@ -56,7 +57,7 @@ export class List {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, undefined, 'list'),
+        ...createThemedClasses(this.mode, 'list'),
         [`list-lines-${this.lines}`]: !!this.lines,
         'list-inset': this.inset,
         [`list-${this.mode}-lines-${this.lines}`]: !!this.lines

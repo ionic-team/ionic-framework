@@ -14,7 +14,7 @@ export class Footer {
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, undefined, 'footer')
+      class: createThemedClasses(this.mode, 'footer')
     };
   }
 }

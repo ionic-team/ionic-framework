@@ -280,7 +280,7 @@ export class Picker implements OverlayInterface {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, undefined, 'picker'),
+        ...createThemedClasses(this.mode, 'picker'),
       },
       style: {
         zIndex: 20000 + this.overlayId

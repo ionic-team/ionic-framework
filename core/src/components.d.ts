@@ -4019,10 +4019,6 @@ declare global {
   namespace StencilComponents {
     interface IonModal {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-       */
-      'color': Color;
-      /**
        * The component to display inside of the modal.
        */
       'component': ComponentRef;
@@ -4052,10 +4048,6 @@ declare global {
        * Animation to use when the modal is dismissed.
        */
       'leaveAnimation': AnimationBuilder;
-      /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-       */
-      'mode': Mode;
       /**
        * Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circustances.
        */
@@ -4100,10 +4092,6 @@ declare global {
   namespace JSXElements {
     export interface IonModalAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information, see [Theming your App](/docs/theming/theming-your-app).
-       */
-      'color'?: Color;
-      /**
        * The component to display inside of the modal.
        */
       'component'?: ComponentRef;
@@ -4129,10 +4117,6 @@ declare global {
        * Animation to use when the modal is dismissed.
        */
       'leaveAnimation'?: AnimationBuilder;
-      /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-       */
-      'mode'?: Mode;
       /**
        * Emitted after the modal has dismissed.
        */

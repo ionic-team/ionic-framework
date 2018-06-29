@@ -14,7 +14,7 @@ export class Header {
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, undefined, 'header')
+      class: createThemedClasses(this.mode, 'header')
     };
   }
 }

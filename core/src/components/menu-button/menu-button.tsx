@@ -1,5 +1,5 @@
 import { Component, Prop } from '@stencil/core';
-import { Color, Config, Mode } from '../../interface';
+import { Config, Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({
@@ -12,7 +12,6 @@ import { createThemedClasses } from '../../utils/theme';
 export class MenuButton {
 
   mode!: Mode;
-  color?: Color;
 
   @Prop({ context: 'config' }) config!: Config;
 
@@ -28,7 +27,7 @@ export class MenuButton {
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, this.color, 'menu-button')
+      class: createThemedClasses(this.mode, 'menu-button')
     };
   }
 

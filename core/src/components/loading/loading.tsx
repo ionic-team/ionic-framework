@@ -185,7 +185,7 @@ export class Loading implements OverlayInterface {
 
   hostData() {
     const themedClasses = this.translucent
-      ? createThemedClasses(this.mode, this.color, 'loading-translucent')
+      ? createThemedClasses(this.mode, 'loading-translucent')
       : {};
 
     return {
@@ -193,7 +193,7 @@ export class Loading implements OverlayInterface {
         zIndex: 20000 + this.overlayId
       },
       class: {
-        ...createThemedClasses(this.mode, this.color, 'loading'),
+        ...createThemedClasses(this.mode, 'loading'),
         ...themedClasses,
         ...getClassMap(this.cssClass)
       }

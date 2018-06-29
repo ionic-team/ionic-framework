@@ -14,25 +14,11 @@ export function createColorClasses(color: string | undefined): CssClassMap | nul
   } : null;
 }
 
-export function createThemedClasses(mode: Mode | undefined, color: string | undefined, classes: string): CssClassMap {
-  const classObj: CssClassMap = {};
-  getClassList(classes).forEach(classString => {
-    classObj[classString] = true;
-
-    if (mode) {
-      classObj[`${classString}-${mode}`] = true;
-
-      if (color) {
-        classObj[`${classString}-${color}`] = true;
-        classObj[`${classString}-${mode}-${color}`] = true;
-      }
-    }
-  });
-  if (color) {
-    classObj[`ion-color`] = true;
-    classObj[`ion-color-${color}`] = true;
-  }
-  return classObj;
+export function createThemedClasses(mode: Mode | undefined, name: string): CssClassMap {
+  return {
+    [name]: true,
+    [`${name}-${mode}`]: !!mode
+  };
 }
 
 /**

@@ -19,7 +19,7 @@ export class CardContent {
 
   hostData() {
     return {
-      class: createThemedClasses(this.mode, undefined, 'card-content')
+      class: createThemedClasses(this.mode, 'card-content')
     };
   }
 }
