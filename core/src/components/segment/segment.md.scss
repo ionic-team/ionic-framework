@@ -5,13 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  font-size: $segment-button-md-font-size;
-  font-weight: $segment-button-md-font-weight;
-  line-height: $segment-button-md-line-height;
   font-family: $segment-md-font-family;
-  height: $segment-button-md-height;
-
-  color: $segment-button-md-text-color;
 }
 
 :host(.segment-disabled) {
@@ -20,16 +14,10 @@
   pointer-events: none;
 }
 
-
-
-// Material Design Segment
+// Material Design Segment Button
 // --------------------------------------------------
 
 ::slotted(ion-segment-button) {
-  text-transform: uppercase;
-
-  color: #{current-color(base)};
-
   --padding-top: #{$segment-button-md-padding-top};
   --padding-end: #{$segment-button-md-padding-end};
   --padding-bottom: #{$segment-button-md-padding-bottom};
@@ -43,16 +31,40 @@
   --transition: #{$segment-button-md-transition};
 
   --icon-size: #{$segment-button-md-icon-size};
+
+  font-size: $segment-button-md-font-size;
+  font-weight: $segment-button-md-font-weight;
+  line-height: $segment-button-md-line-height;
+  height: $segment-button-md-height;
+
+  opacity: $segment-button-md-opacity;
+
+  text-transform: uppercase;
+
+  color: $segment-button-md-text-color;
 }
+
+:host(.ion-color) ::slotted(ion-segment-button) {
+  color: #{current-color(base)} !important;
+}
+
+// Checked Segment Button
+// --------------------------------------------------
 
 ::slotted(.activated),
 ::slotted(.segment-checked) {
   opacity: $segment-button-md-opacity-activated;
 
+  --border-color: #{$segment-button-md-border-color-activated};
+}
+
+:host(.ion-color) ::slotted(.activated),
+:host(.ion-color) ::slotted(.segment-checked) {
   --border-color: #{current-color(base)};
 }
 
-// Material Design Segment Button Disabled
+
+// Disabled Segment Button
 // --------------------------------------------------
 
 ::slotted(.segment-button-disabled) {
