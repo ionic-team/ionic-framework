@@ -11,5 +11,5 @@
 ::slotted(hr) {
   height: $hairlines-width;
 
-  background-color: rgba(var(--ion-background-color-rgb, $background-color-rgb), $content-ios-horizontal-rule-background-color-alpha);
+  background-color: rgba(var(--ion-text-color-rgb, $text-color-rgb), $content-ios-horizontal-rule-background-color-alpha);
 }

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Segment - Modes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header no-border>
+      <ion-toolbar>
+        <ion-title>Segment - Modes</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <h2>Mode: ios</h2>
+      <ion-segment id="modeSegment" mode="ios" name="iosMode" value="kittens">
+        <ion-segment-button value="puppies">
+          Puppies
+        </ion-segment-button>
+        <ion-segment-button value="kittens">
+          Kittens
+        </ion-segment-button>
+        <ion-segment-button value="turtles">
+          Turtles
+        </ion-segment-button>
+      </ion-segment>
+
+      <hr>
+
+      <h2>Mode: md</h2>
+      <ion-segment mode="md" name="mdMode" value="kittens">
+        <ion-segment-button value="puppies">
+          Puppies
+        </ion-segment-button>
+        <ion-segment-button value="kittens">
+          Kittens
+        </ion-segment-button>
+        <ion-segment-button value="turtles">
+          Turtles
+        </ion-segment-button>
+      </ion-segment>
+    </ion-content>
+  </ion-app>
+</body>
+
+</html>
