@@ -10,7 +10,7 @@ $colors-md:                                 $colors !default;
 // TODO remove use
 $content-md-margin:                         $content-margin !default;
 $content-md-padding:                        $content-padding !default;
-$font-family-md-base:                       "Roboto", "Helvetica Neue", sans-serif !default;
+$font-family-md-base:                       $font-family-base !default;
 $font-size-md-base:                         $font-size-base !default;
 
 

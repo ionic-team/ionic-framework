@@ -4,7 +4,7 @@
 // --------------------------------------------------
 $content-margin:                    var(--ion-content-margin, 16px) !default;
 $content-padding:                   var(--ion-content-padding, 16px) !default;
-$font-family-base:                  var(--ion-font-family, -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif) !default;
+$font-family-base:                  var(--ion-font-family, inherit) !default;
 $font-size-base:                    var(--ion-font-size-base, 14px) !default; // TODO: remove
 
 // Default Foreground and Background Colors values
