@@ -27,4 +27,5 @@ const documentElement = document.documentElement;
 const mode = config.get('mode', documentElement.getAttribute('mode') || (isIOS(window) ? 'ios' : 'md'));
 Ionic.mode = Context.mode = mode;
 config.set('mode', mode);
-documentElement.setAttribute('mode', Ionic.mode);
+documentElement.setAttribute('mode', mode);
+documentElement.classList.add(mode);
