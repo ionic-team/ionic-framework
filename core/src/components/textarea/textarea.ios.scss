@@ -8,10 +8,10 @@
   font-family: $textarea-ios-font-family;
   font-size: $textarea-ios-font-size;
 
-  --margin-top: #{$textarea-ios-margin-top};
-  --margin-end: #{$textarea-ios-margin-end};
-  --margin-bottom: #{$textarea-ios-margin-bottom};
-  --margin-start: #{$textarea-ios-margin-start};
+  --padding-top: #{$textarea-ios-padding-top};
+  --padding-end: #{$textarea-ios-padding-end};
+  --padding-bottom: #{$textarea-ios-padding-bottom};
+  --padding-start: #{$textarea-ios-padding-start};
 
   --placeholder-color: #{$textarea-ios-placeholder-color};
 }

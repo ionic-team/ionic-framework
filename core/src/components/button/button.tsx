@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
-import { getButtonClassMap, getElementClassMap, openURL } from '../../utils/theme';
+import { openURL } from '../../utils/theme';
 
 
 @Component({
@@ -129,7 +129,6 @@ export class Button {
         ...getButtonTypeClassMap(buttonType, shape, mode),
         ...getButtonTypeClassMap(buttonType, strong ? 'strong' : undefined, mode),
         ...getColorClassMap(buttonType, color, fill, mode),
-        ...getElementClassMap(this.el.classList),
         'focused': this.keyFocus,
       },
       'tappable': '',
@@ -164,6 +163,20 @@ export class Button {
   }
 }
 
+
+/**
+ * Get the classes based on the button type
+ * e.g. alert-button, action-sheet-button
+ */
+function getButtonClassMap(buttonType: string | undefined, mode: Mode): CssClassMap {
+  if (!buttonType) {
+    return {};
+  }
+  return {
+    [buttonType]: true,
+    [`${buttonType}-${mode}`]: true
+  };
+}
 
 /**
  * Get the classes based on the type

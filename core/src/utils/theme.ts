@@ -21,32 +21,6 @@ export function createThemedClasses(mode: Mode | undefined, name: string): CssCl
   };
 }
 
-/**
- * Get the classes from a class list and return them as an object
- */
-export function getElementClassMap(classList: DOMTokenList | string[]): CssClassMap {
-  const classObj: CssClassMap = {};
-
-  for (let i = 0; i < classList.length; i++) {
-    classObj[classList[i]] = true;
-  }
-
-  return classObj;
-}
-
-/**
- * Get the classes based on the button type
- * e.g. alert-button, action-sheet-button
- */
-export function getButtonClassMap(buttonType: string | undefined, mode: Mode): CssClassMap {
-  if (!buttonType) {
-    return {};
-  }
-  return {
-    [buttonType]: true,
-    [`${buttonType}-${mode}`]: true
-  };
-}
 
 export function getClassList(classes: string | string[] | undefined): string[] {
   if (classes) {

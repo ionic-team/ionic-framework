@@ -1,5 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Config, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-toolbar',
@@ -36,6 +37,7 @@ export class Toolbar {
   hostData() {
     return {
       class: {
+        ...createColorClasses(this.color),
         'toolbar-translucent': this.translucent
       }
     };

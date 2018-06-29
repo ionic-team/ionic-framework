@@ -8,9 +8,10 @@
   font-family: $textarea-md-font-family;
   font-size: $textarea-md-font-size;
 
-  --margin-end: #{$textarea-md-margin-end};
-  --margin-bottom: #{$textarea-md-margin-bottom};
-  --margin-start: #{$textarea-md-margin-start};
+  --padding-top: #{$textarea-md-padding-top};
+  --padding-end: #{$textarea-md-padding-end};
+  --padding-bottom: #{$textarea-md-padding-bottom};
+  --padding-start: #{$textarea-md-padding-start};
 
   --placeholder-color: #{$textarea-md-placeholder-color};
 }

@@ -231,6 +231,7 @@ export class Textarea implements TextareaComponent {
   render() {
     return (
       <textarea
+        class="native-textarea"
         ref={(el) => this.inputEl = el as HTMLTextAreaElement}
         autoCapitalize={this.autocapitalize}
         // autoComplete={this.autocomplete}
@@ -246,7 +247,6 @@ export class Textarea implements TextareaComponent {
         cols={this.cols}
         rows={this.rows}
         wrap={this.wrap}
-        class="native-textarea"
         onInput={this.onInput.bind(this)}
         onBlur={this.onBlur.bind(this)}
         onFocus={this.onFocus.bind(this)}
