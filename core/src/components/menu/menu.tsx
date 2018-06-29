@@ -15,9 +15,10 @@ import {
   Config,
   GestureDetail,
   MenuChangeEventDetail,
-  Mode
+  Mode,
+  Side
 } from '../../interface';
-import { Side, assert, isEndSide } from '../../utils/helpers';
+import { assert, isEndSide } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({

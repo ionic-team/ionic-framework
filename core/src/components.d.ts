@@ -41,11 +41,15 @@ import {
   Color,
   ComponentProps,
   ComponentRef,
+  DomRenderFn,
   FrameworkDelegate,
   GestureCallback,
   GestureConfig,
   GestureDetail,
+  HeaderFn,
   InputChangeEvent,
+  ItemHeightFn,
+  ItemRenderFn,
   Knob,
   LoadingOptions,
   Menu,
@@ -65,9 +69,12 @@ import {
   RouterEventDetail,
   RouterOutletOptions,
   RouteWrite,
+  ScrollBaseDetail,
+  ScrollDetail,
   SelectInputChangeEvent,
   SelectInterface,
   SelectPopoverOption,
+  Side,
   StyleEvent,
   TabbarLayout,
   TabbarPlacement,
@@ -83,24 +90,11 @@ import {
   GestureDelegate,
 } from './components/gesture-controller/gesture-controller-utils';
 import {
-  Side,
-} from './utils/helpers';
-import {
   ViewController,
 } from './components/nav/view-controller';
 import {
   RouterIntent,
 } from './components/router/utils/constants';
-import {
-  ScrollBaseDetail,
-  ScrollDetail,
-} from './components/scroll/scroll';
-import {
-  DomRenderFn,
-  HeaderFn,
-  ItemHeightFn,
-  ItemRenderFn,
-} from './components/virtual-scroll/virtual-scroll-utils';
 
 declare global {
 

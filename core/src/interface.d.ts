@@ -13,10 +13,12 @@ export * from './components/popover/popover-interface';
 export * from './components/nav/nav-interface';
 export * from './components/router/utils/interface';
 export * from './components/range/range-interface';
+export * from './components/scroll/scroll-interface';
 export * from './components/select/select-interface';
 export * from './components/select-popover/select-popover-interface';
 export * from './components/tabbar/tabbar-interface';
 export * from './components/toast/toast-interface';
+export * from './components/virtual-scroll/virtual-scroll-interface';
 
 // export all of the component declarations that are dynamically created
 export * from './utils/input-interface';
@@ -24,6 +26,7 @@ export * from './global/config';
 export { OverlayEventDetail, OverlayInterface } from './utils/overlays';
 
 
+export type Side = 'start' | 'end';
 export type Color = 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
 export type Mode = 'ios' | 'md';
 export type ComponentRef = Function | HTMLElement | string;

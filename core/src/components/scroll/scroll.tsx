@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Config, GestureDetail, Mode, QueueController } from '../../interface';
+import { Config, Mode, QueueController, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({
@@ -307,18 +307,4 @@ function updateScrollDetail(
     detail.velocityX = 0;
     detail.velocityY = 0;
   }
-}
-
-export interface ScrollDetail extends GestureDetail, ScrollBaseDetail {
-  positions: number[];
-  scrollTop: number;
-  scrollLeft: number;
-}
-
-export interface ScrollBaseDetail {
-  isScrolling: boolean;
-}
-
-export interface ScrollCallback {
-  (detail?: ScrollDetail): boolean|void;
 }
