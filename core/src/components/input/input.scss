@@ -11,6 +11,8 @@
 
   width: 100%;
 
+  --placeholder-weight: inherit;
+
   --padding-top: 0px;
   --padding-end: 0px;
   --padding-bottom: 0px;
@@ -25,7 +27,6 @@
 
 .native-input {
   @include border-radius(var(--border-radius));
-  @include placeholder(var(--placeholder-color));
 
   @include padding(
     var(--padding-top),
@@ -43,13 +44,21 @@
 
   border: 0;
   outline: none;
+  font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
   letter-spacing: inherit;
-
+  font-kerning: inherit;
   background: transparent;
 
   appearance: none;
+
+  &::placeholder {
+    font-family: inherit;
+
+    font-weight: var(--placeholder-weight);
+    color: var(--placeholder-color);
+  }
 }
 
 .native-input[disabled] {

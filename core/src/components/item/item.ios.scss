@@ -147,28 +147,31 @@
 // iOS Stacked & Floating Inputs
 // --------------------------------------------------
 
-:host(.item-label-stacked) ::slotted(ion-item),
-:host(.item-label-floating) ::slotted(ion-item),
+:host(.item-label-stacked) ::slotted(ion-input),
+:host(.item-label-floating) ::slotted(ion-input),
 :host(.item-label-stacked) ::slotted(ion-textarea),
 :host(.item-label-floating) ::slotted(ion-textarea) {
-  --margin-top: 8px;
-  --margin-bottom: 8px;
-  --margin-start: 0px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 0;
 }
 
-.item-ios.item-label-stacked .label-ios + .input + .cloned-input,
-.item-ios.item-label-floating .label-ios + .input + .cloned-input {
-  @include margin-horizontal(0, null);
-}
+
+// TODO
+// .item-ios.item-label-stacked .label-ios + .input + .cloned-input,
+// .item-ios.item-label-floating .label-ios + .input + .cloned-input {
+//   @include margin-horizontal(0, null);
+// }
 
 // FROM TEXTAREA
 // iOS Stacked & Floating Textarea
 // --------------------------------------------------
 
-.item-ios.item-label-stacked .label-ios + .input + .cloned-input,
-.item-ios.item-label-floating .label-ios + .input + .cloned-input {
-  @include margin-horizontal(0, null);
-}
+// TODO
+// .item-ios.item-label-stacked .label-ios + .input + .cloned-input,
+// .item-ios.item-label-floating .label-ios + .input + .cloned-input {
+//   @include margin-horizontal(0, null);
+// }
 
 
 // iOS Input After Label

@@ -31,8 +31,9 @@
   --keyboard-offset: 0px;
 }
 
+:host(.ion-color-outer),
 :host(.outer-content) {
-  background: $background-color-step-50;
+  --ion-color-base: #{$background-color-step-50};
 }
 
 .scroll-inner {

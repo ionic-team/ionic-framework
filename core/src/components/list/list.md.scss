@@ -8,10 +8,6 @@
   @include margin(-1px, $list-md-margin-end, $list-md-margin-bottom, $list-md-margin-start);
 }
 
-.list-md + .list ion-list-header {
-  @include margin(-$list-md-margin-top, null, null, null);
-}
-
 .list-md > .input:last-child::after {
   @include position-horizontal(0, null);
 }

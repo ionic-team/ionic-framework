@@ -56,6 +56,7 @@ export class Label {
   positionChanged() {
     const position = this.position;
     this.ionStyle.emit({
+      'label': true,
       [`label-${position}`]: !!position
     });
   }
