@@ -36,10 +36,7 @@
 
   font-family: inherit;
 
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  outline: none;
 }
 
 .action-sheet-button-inner {
@@ -66,13 +63,19 @@
 }
 
 .action-sheet-group {
-  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
 
-  overscroll-behavior: contain;
+  overflow-y: scroll;
+
+  overscroll-behavior-y: contain;
 
   flex-shrink: 2;
 
   pointer-events: all;
+}
+
+.action-sheet-group::-webkit-scrollbar {
+  display: none;
 }
 
 .action-sheet-group-cancel {

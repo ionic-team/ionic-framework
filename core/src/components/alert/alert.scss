@@ -63,6 +63,10 @@
   overscroll-behavior-y: contain;
 }
 
+.alert-message::-webkit-scrollbar {
+  display: none;
+}
+
 .alert-input {
   @include padding(10px, 0);
 

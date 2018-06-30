@@ -388,11 +388,11 @@ declare global {
       /**
        * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circumstances.
        */
-      'onDidDismiss': (callback?: ((detail: import("/Users/manuelmartinez-almeida/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<import("/Users/manuelmartinez-almeida/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
+      'onDidDismiss': (callback?: ((detail: import("/home/manu/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<import("/home/manu/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
       /**
        * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circumstances.
        */
-      'onWillDismiss': (callback?: ((detail: import("/Users/manuelmartinez-almeida/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<import("/Users/manuelmartinez-almeida/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
+      'onWillDismiss': (callback?: ((detail: import("/home/manu/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<import("/home/manu/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
       'overlayId': number;
       /**
        * Present the alert overlay after it has been created.
