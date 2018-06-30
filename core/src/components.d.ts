@@ -31,7 +31,6 @@ import {
   ActionSheetButton,
   ActionSheetOptions,
   AlertButton,
-  AlertEventDetailData,
   AlertInput,
   AlertOptions,
   Animation,
@@ -388,11 +387,11 @@ declare global {
       /**
        * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circumstances.
        */
-      'onDidDismiss': (callback?: ((detail: import("/home/manu/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<import("/home/manu/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
+      'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       /**
        * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circumstances.
        */
-      'onWillDismiss': (callback?: ((detail: import("/home/manu/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>) => void) | undefined) => Promise<import("/home/manu/repos/ionic/ionic/core/src/utils/overlays").OverlayEventDetail<{ [key: string]: any; values?: any; }>>;
+      'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
       'overlayId': number;
       /**
        * Present the alert overlay after it has been created.
@@ -469,7 +468,7 @@ declare global {
       /**
        * Emitted after the alert has dismissed.
        */
-      'onIonAlertDidDismiss'?: (event: CustomEvent<AlertEventDetailData>) => void;
+      'onIonAlertDidDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
       /**
        * Emitted after the alert has presented.
        */
@@ -485,7 +484,7 @@ declare global {
       /**
        * Emitted before the alert has dismissed.
        */
-      'onIonAlertWillDismiss'?: (event: CustomEvent<AlertEventDetailData>) => void;
+      'onIonAlertWillDismiss'?: (event: CustomEvent<OverlayEventDetail>) => void;
       /**
        * Emitted before the alert has presented.
        */

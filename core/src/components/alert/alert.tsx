@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
-import { AlertButton, AlertEventDetailData, AlertInput, Animation, AnimationBuilder, Color, Config, CssClassMap, Mode, OverlayInterface } from '../../interface';
+import { AlertButton, AlertInput, Animation, AnimationBuilder, Color, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 import { createColorClasses, getClassMap } from '../../utils/theme';
 
@@ -115,12 +115,12 @@ export class Alert implements OverlayInterface {
   /**
    * Emitted before the alert has dismissed.
    */
-  @Event({eventName: 'ionAlertWillDismiss'}) willDismiss!: EventEmitter<AlertEventDetailData>;
+  @Event({eventName: 'ionAlertWillDismiss'}) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the alert has dismissed.
    */
-  @Event({eventName: 'ionAlertDidDismiss'}) didDismiss!: EventEmitter<AlertEventDetailData>;
+  @Event({eventName: 'ionAlertDidDismiss'}) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   @Watch('buttons')
   buttonsChanged() {
@@ -207,7 +207,7 @@ export class Alert implements OverlayInterface {
    *
    */
   @Method()
-  onDidDismiss(callback?: (detail: AlertEventDetailData) => void): Promise<AlertEventDetailData> {
+  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionAlertDidDismiss', callback);
   }
 
@@ -217,7 +217,7 @@ export class Alert implements OverlayInterface {
    *
    */
   @Method()
-  onWillDismiss(callback?: (detail: AlertEventDetailData) => void): Promise<AlertEventDetailData> {
+  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
     return eventMethod(this.el, 'ionAlertWillDismiss', callback);
   }
 

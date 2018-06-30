@@ -1,9 +1,3 @@
-import { OverlayEventDetail } from '../../interface';
-
-export type AlertEventDetailData = OverlayEventDetail<{
-  values?: any;
-  [key: string]: any;
-}>;
 
 export interface AlertOptions {
   header?: string;
