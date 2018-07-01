@@ -1,4 +1,5 @@
-import { QueueController, ViewLifecycle } from '..';
+import { QueueApi } from '@stencil/core';
+import { ViewLifecycle } from '..';
 import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../interface';
 
 const iosTransitionAnimation = () => import('./animations/ios.transition');
@@ -179,7 +180,7 @@ function setZIndex(
 
 export interface TransitionOptions extends NavOptions {
   animationCtrl: HTMLIonAnimationControllerElement;
-  queue: QueueController;
+  queue: QueueApi;
   progressCallback?: ((ani: Animation) => void);
   window: Window;
   baseEl: HTMLElement;

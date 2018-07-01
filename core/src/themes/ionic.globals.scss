@@ -11,6 +11,7 @@
 // Global Mixins
 @import "./ionic.mixins";
 
+
 // Global app direction
 $app-direction: ltr !default;
 
@@ -124,6 +125,16 @@ $screen-breakpoints: (
   lg: 992px,
   xl: 1200px
 ) !default;
+
+
+// Default General
+// --------------------------------------------------
+
+$content-margin:                    var(--ion-content-margin, 16px) !default;
+$content-padding:                   var(--ion-content-padding, 16px) !default;
+$font-family-base:                  var(--ion-font-family, inherit) !default;
+$font-size-base:                    var(--ion-font-size-base, 14px) !default; // TODO: remove
+
 
 
 // Z-Index

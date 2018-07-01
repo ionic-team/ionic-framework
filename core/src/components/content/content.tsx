@@ -1,5 +1,5 @@
-import { Component, Element, Listen, Method, Prop } from '@stencil/core';
-import { Color, Config, Mode, QueueController } from '../../interface';
+import { Component, Element, Listen, Method, Prop, QueueApi } from '@stencil/core';
+import { Color, Config, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 
@@ -24,7 +24,7 @@ export class Content {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * If true, the content will scroll behind the headers

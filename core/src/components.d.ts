@@ -36,6 +36,7 @@ import {
   Animation,
   AnimationBuilder,
   BlockerConfig,
+  BlockerDelegate,
   CheckedInputChangeEvent,
   Color,
   ComponentProps,
@@ -44,6 +45,7 @@ import {
   FrameworkDelegate,
   GestureCallback,
   GestureConfig,
+  GestureDelegate,
   GestureDetail,
   HeaderFn,
   InputChangeEvent,
@@ -80,20 +82,11 @@ import {
   ToastOptions,
   TransitionDoneFn,
   TransitionInstruction,
+  ViewController,
 } from './interface';
 import {
   EventEmitter,
 } from '@stencil/core';
-import {
-  BlockerDelegate,
-  GestureDelegate,
-} from './components/gesture-controller/gesture-controller-utils';
-import {
-  ViewController,
-} from './components/nav/view-controller';
-import {
-  RouterIntent,
-} from './components/router/utils/constants';
 
 declare global {
 
@@ -2209,10 +2202,6 @@ declare global {
        */
       'attachTo': string | HTMLElement;
       /**
-       * If true, gesture will prevent any other gestures from firing
-       */
-      'autoBlockAll': boolean;
-      /**
        * Function to execute to see if gesture can start. Return boolean
        */
       'canStart': GestureCallback;
@@ -2294,10 +2283,6 @@ declare global {
        * What component to attach listeners to.
        */
       'attachTo'?: string | HTMLElement;
-      /**
-       * If true, gesture will prevent any other gestures from firing
-       */
-      'autoBlockAll'?: boolean;
       /**
        * Function to execute to see if gesture can start. Return boolean
        */
@@ -4350,7 +4335,7 @@ declare global {
        * Set the root for the current navigation stack.
        */
       'setRoot': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-      'setRouteId': (id: string, params: any, direction: RouterIntent) => Promise<RouteWrite>;
+      'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
       /**
        * If the nav component should allow for swipe-to-go-back
        */
@@ -5709,7 +5694,7 @@ declare global {
 
   namespace StencilComponents {
     interface IonRouter {
-      'navChanged': (intent: RouterIntent) => Promise<boolean>;
+      'navChanged': (intent: number) => Promise<boolean>;
       'printDebug': () => void;
       /**
        * Navigate to the specified URL 

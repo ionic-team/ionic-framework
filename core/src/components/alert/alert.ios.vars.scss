@@ -6,10 +6,10 @@
 // --------------------------------------------------
 
 /// @prop - Font family of the alert
-$alert-ios-font-family:                                 $font-family-ios-base !default;
+$alert-ios-font-family:                                 $font-family-base !default;
 
 /// @prop - Font size of the alert
-$alert-ios-font-size:                                   $font-size-ios-base !default;
+$alert-ios-font-size:                                   14px !default;
 
 /// @prop - Max width of the alert
 $alert-ios-max-width:                                   var(--ion-alert-max-width, 270px) !default;

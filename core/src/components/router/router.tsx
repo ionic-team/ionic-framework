@@ -1,5 +1,5 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Config, QueueController, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
+import { Config, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
 import { debounce } from '../../utils/helpers';
 import { RouterIntent } from './utils/constants';
 import { printRedirects, printRoutes } from './utils/debug';
@@ -22,7 +22,7 @@ export class Router {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'window' }) win!: Window;
 
   /**
@@ -100,7 +100,7 @@ export class Router {
 
   /** @hidden */
   @Method()
-  async navChanged(intent: RouterIntent): Promise<boolean> {
+  async navChanged(intent: number): Promise<boolean> {
     if (this.busy) {
       return false;
     }
@@ -154,7 +154,6 @@ export class Router {
       return RouterIntent.None;
     }
   }
-
 
   private async writeNavStateRoot(path: string[]|null, intent: RouterIntent): Promise<boolean> {
     if (this.busy) {

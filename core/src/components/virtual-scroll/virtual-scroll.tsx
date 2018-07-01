@@ -1,5 +1,4 @@
-import { Component, Element, EventListenerEnable, Listen, Method, Prop, Watch } from '@stencil/core';
-import { QueueController } from '../../interface';
+import { Component, Element, EventListenerEnable, Listen, Method, Prop, QueueApi, Watch } from '@stencil/core';
 import { Cell, CellType, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
 import {
@@ -32,7 +31,7 @@ export class VirtualScroll {
 
   @Element() el!: HTMLStencilElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
   @Prop({ context: 'window' }) win!: Window;
 

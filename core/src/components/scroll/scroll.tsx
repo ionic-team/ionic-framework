@@ -1,5 +1,5 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Config, Mode, QueueController, ScrollBaseDetail, ScrollDetail } from '../../interface';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
+import { Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({
@@ -18,7 +18,7 @@ export class Scroll {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'window' }) win!: Window;
 
   /** The mode for component. */
@@ -101,7 +101,7 @@ export class Scroll {
       this.queue.read(timeStamp => {
         this.queued = false;
         this.detail.event = ev;
-        updateScrollDetail(this.detail, this.el, timeStamp, didStart);
+        updateScrollDetail(this.detail, this.el, timeStamp!, didStart);
         this.ionScroll.emit(this.detail);
       });
     }
@@ -192,7 +192,8 @@ export class Scroll {
       if (easedT < 1) {
         // do not use DomController here
         // must use nativeRaf in order to fire in the next frame
-        self.queue.read(step);
+        // TODO: remove as any
+        self.queue.read(step as any);
 
       } else {
         stopScroll = true;
@@ -208,8 +209,9 @@ export class Scroll {
     // chill out for a frame first
     this.queue.write(() => {
       this.queue.write(timeStamp => {
-        startTime = timeStamp;
-        step(timeStamp);
+        // TODO: review stencilt type of timeStamp
+        startTime = timeStamp!;
+        step(timeStamp!);
       });
     });
 

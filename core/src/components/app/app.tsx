@@ -1,24 +1,18 @@
-import { Component, Element, Prop } from '@stencil/core';
-import { Config, Mode, QueueController } from '../../interface';
+import { Component, Element, Prop, QueueApi } from '@stencil/core';
+import { Config } from '../../interface';
 import { isDevice, isHybrid, needInputShims } from '../../utils/platform';
-import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-app',
-  styleUrls: {
-    ios: 'app.ios.scss',
-    md: 'app.md.scss'
-  }
+  styleUrl: 'app.scss'
 })
 export class App {
-
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;
   @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   componentDidLoad() {
     importInputShims(this.win, this.config);
@@ -31,8 +25,6 @@ export class App {
 
     return {
       class: {
-        [this.mode]: true,
-        ...createThemedClasses(this.mode, 'app'),
         'statusbar-padding': statusBar
       }
     };
@@ -46,7 +38,7 @@ export class App {
   }
 }
 
-async function importStatusTap(win: Window, config: Config, queue: QueueController) {
+async function importStatusTap(win: Window, config: Config, queue: QueueApi) {
   const device = config.getBoolean('isDevice', isDevice(win));
   if (device) {
     (await import('../../utils/status-tap')).startStatusTap(win, queue);

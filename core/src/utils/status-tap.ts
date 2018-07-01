@@ -1,6 +1,6 @@
-import { QueueController } from '../interface';
+import { QueueApi } from '@stencil/core';
 
-export function startStatusTap(win: Window, queue: QueueController) {
+export function startStatusTap(win: Window, queue: QueueApi) {
   queue.read(() => {
     const width = win.innerWidth;
     const height = win.innerWidth;

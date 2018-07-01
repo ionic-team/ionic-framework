@@ -1,5 +1,5 @@
-import { Component, Element, Prop, State } from '@stencil/core';
-import { GestureDetail, Mode, QueueController } from '../../interface';
+import { Component, Element, Prop, QueueApi, State } from '@stencil/core';
+import { GestureDetail, Mode } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart} from '../../utils/haptic';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -30,7 +30,7 @@ export class ReorderGroup {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * If true, the reorder will be hidden. Defaults to `true`.

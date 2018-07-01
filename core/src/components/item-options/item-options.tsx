@@ -6,8 +6,8 @@ import {
   Method,
   Prop
 } from '@stencil/core';
-import { isEndSide } from '../../utils/helpers';
 import { Side } from '../../interface';
+import { isEndSide } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-item-options',

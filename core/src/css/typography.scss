@@ -45,6 +45,7 @@ $h6-font-size:                 calc(#{$h1-font-size} - #{$h-step} * 5) !default;
 
 a {
   background-color: transparent;
+  color: ion-color(primary, base);
 }
 
 h1,

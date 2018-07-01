@@ -1,5 +1,5 @@
-import { Component, Element, Prop } from '@stencil/core';
-import { GestureDetail, Mode, PickerColumn, PickerColumnOption, QueueController } from '../../interface';
+import { Component, Element, Prop, QueueApi } from '@stencil/core';
+import { GestureDetail, Mode, PickerColumn, PickerColumnOption } from '../../interface';
 import { hapticSelectionChanged } from '../../utils';
 import { clamp } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
@@ -27,7 +27,7 @@ export class PickerColumnCmp {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   @Prop() col!: PickerColumn;
 

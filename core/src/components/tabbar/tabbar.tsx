@@ -1,5 +1,5 @@
-import { Component, Element, Listen, Prop, State, Watch } from '@stencil/core';
-import { Color, Mode, QueueController, TabbarLayout, TabbarPlacement } from '../../interface';
+import { Component, Element, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Color, Mode, TabbarLayout, TabbarPlacement } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -19,7 +19,7 @@ export class Tabbar {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'document' }) doc!: Document;
 
   @State() canScrollLeft = false;

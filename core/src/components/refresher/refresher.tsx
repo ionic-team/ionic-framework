@@ -1,5 +1,5 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, State } from '@stencil/core';
-import { GestureDetail, Mode, QueueController } from '../../interface';
+import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi, State } from '@stencil/core';
+import { GestureDetail, Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 const enum RefresherState {
@@ -29,7 +29,7 @@ export class Refresher {
 
   mode!: Mode;
 
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * The current state which the refresher is in. The refresher's states include:

@@ -1,5 +1,4 @@
-import { Component, Element, EventListenerEnable, Listen, Method, Prop, Watch } from '@stencil/core';
-import { QueueController } from '../../interface';
+import { Component, Element, EventListenerEnable, Listen, Method, Prop, QueueApi, Watch } from '@stencil/core';
 import { now } from '../../utils/helpers';
 
 @Component({
@@ -12,7 +11,7 @@ export class RippleEffect {
   private lastClick = -10000;
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
   @Prop({ context: 'document' }) doc!: Document;
 

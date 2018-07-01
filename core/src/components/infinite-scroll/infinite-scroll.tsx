@@ -1,5 +1,4 @@
-import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { QueueController } from '../../interface';
+import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-infinite-scroll',
@@ -16,7 +15,7 @@ export class InfiniteScroll {
   @Element() el!: HTMLElement;
   @State() isLoading = false;
 
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
 
   /**

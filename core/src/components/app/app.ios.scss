@@ -8,10 +8,6 @@
 
   @include footer-safe-area($toolbar-ios-height, $toolbar-ios-padding, $tabbar-ios-height);
 
-  font-family: $font-family-ios-base;
-  font-size: $font-size-ios-base;
-  background-color: $background-color;
-
   // TODO this can be simplified
   &.statusbar-padding {
     .ion-page,
@@ -23,8 +19,4 @@
       @include toolbar-title-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-padding, $app-ios-statusbar-padding);
     }
   }
-}
-
-a {
-  color: $app-ios-link-color;
 }

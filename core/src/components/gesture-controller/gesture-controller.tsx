@@ -1,11 +1,12 @@
 import { Component, Event, EventEmitter, Method } from '@stencil/core';
-import { BlockerConfig, GestureConfig } from '../../interface';
-import { BlockerDelegate, GestureDelegate } from './gesture-controller-utils';
+import { BlockerConfig, BlockerDelegate, GestureConfig, GestureDelegate } from '../../interface';
+import { BlockerDelegate as BD, GestureDelegate as GD } from './gesture-controller-utils';
 
 @Component({
   tag: 'ion-gesture-controller'
 })
 export class GestureController {
+
   private gestureId = 0;
   private requestedStart = new Map<number, number>();
   private disabledGestures = new Map<string, Set<number>>();
@@ -23,7 +24,7 @@ export class GestureController {
   @Method()
   create(config: GestureConfig): Promise<GestureDelegate> {
     return Promise.resolve(
-      new GestureDelegate(
+      new GD(
         this,
         this.newID(),
         config.name,
@@ -38,7 +39,7 @@ export class GestureController {
    */
   @Method()
   createBlocker(opts: BlockerConfig = {}): BlockerDelegate {
-    return new BlockerDelegate(
+    return new BD(
       this.newID(),
       this,
       opts.disable,

@@ -1,12 +1,5 @@
 @import "./ionic.globals";
 
-// Default General
-// --------------------------------------------------
-$content-margin:                    var(--ion-content-margin, 16px) !default;
-$content-padding:                   var(--ion-content-padding, 16px) !default;
-$font-family-base:                  var(--ion-font-family, inherit) !default;
-$font-size-base:                    var(--ion-font-size-base, 14px) !default; // TODO: remove
-
 // Default Foreground and Background Colors values
 // Allows users to override an foreground / background colors
 // TODO: @color-mod: remove all this
