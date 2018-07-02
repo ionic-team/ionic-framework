@@ -10,27 +10,27 @@
     // Provide `[text-{bp}]` attributes for aligning the text based
     // on the breakpoint
     [text#{$infix}-center] {
-      text-align: center, !important;
+      text-align: center !important;
     }
 
     [text#{$infix}-justify] {
-      text-align: justify, !important;
+      text-align: justify !important;
     }
 
     [text#{$infix}-start] {
-      text-align: start, !important;
+      text-align: start !important;
     }
 
     [text#{$infix}-end] {
-      text-align: end, !important;
+      text-align: end !important;
     }
 
     [text#{$infix}-left] {
-      text-align: left, !important;
+      text-align: left !important;
     }
 
     [text#{$infix}-right] {
-      text-align: right, !important;
+      text-align: right !important;
     }
 
     [text#{$infix}-nowrap] {
