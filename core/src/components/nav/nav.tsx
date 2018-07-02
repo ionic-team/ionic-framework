@@ -940,7 +940,7 @@ export class Nav implements NavOutlet {
         />
       ),
       this.mode === 'ios' && <div class="nav-decor" />,
-      <slot />
+      <slot></slot>
     ];
   }
 }

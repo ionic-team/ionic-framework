@@ -47,7 +47,7 @@ export class ItemDivider {
       <slot name="start" />,
       <div class="item-divider-inner">
         <div class="item-divider-wrapper">
-          <slot />
+          <slot></slot>
         </div>
         <slot name="end" />
       </div>
