@@ -13,6 +13,9 @@
       height: 200px !important;
     }
 
+    ion-slides .swiper-container {
+      border-bottom: 1px solid #e5e5e5;
+    }
   </style>
 </head>
 
@@ -20,9 +23,21 @@
   <ion-app>
 
     <ion-content id="content">
-      <ion-slides id="slides" pager>
+      <ion-slides>
         <ion-slide>
-          <h1>Slide 1</h1>
+          <h1>Default Slides</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 2</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 3</h1>
+        </ion-slide>
+      </ion-slides>
+
+      <ion-slides pager>
+        <ion-slide>
+          <h1>Pager</h1>
         </ion-slide>
         <ion-slide>
           <h1>Slide 2</h1>

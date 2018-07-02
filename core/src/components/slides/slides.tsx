@@ -98,9 +98,9 @@ export class Slides {
   }
 
   /**
-   * Show or hide the pager
+   * If true, show the pagination bullets. Defaults to `false`.
    */
-  @Prop() pager = true;
+  @Prop() pager = false;
 
   componentDidLoad() {
     setTimeout(this.initSlides.bind(this), 10);
@@ -249,8 +249,10 @@ export class Slides {
       initialSlide: 0,
       loop: false,
       pager: false,
-      pagination: '.swiper-pagination',
-      paginationType: 'bullets',
+      pagination: {
+        el: '.swiper-pagination',
+        type: 'bullets',
+      },
       parallax: false,
       slidesPerView: 1,
       spaceBetween: 0,
@@ -364,14 +366,9 @@ export class Slides {
     return (
       <div class="swiper-container">
         <div class="swiper-wrapper">
-          <slot />
+          <slot></slot>
         </div>
-        <div
-          class={{
-            'swiper-pagination': true,
-            hide: !this.pager
-          }}
-        />
+        { this.pager ? <div class="swiper-pagination"></div> : null}
       </div>
     );
   }
