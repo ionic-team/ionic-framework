@@ -4,14 +4,15 @@
 // Material Design Menu
 // --------------------------------------------------
 
-.menu-md .menu-inner {
+.menu-inner {
   background: $menu-md-background;
 }
 
-.menu-md.menu-type-overlay .menu-inner {
+:host(.menu-type-overlay) .menu-inner {
   box-shadow: $menu-md-box-shadow;
 }
 
+// TODO: review
 // MD Menu Content
 // --------------------------------------------------
 

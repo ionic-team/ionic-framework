@@ -43,23 +43,6 @@
   display: none;
 }
 
-.split-pane-visible > ion-menu {
-  > .menu-inner {
-    @include position-horizontal(0, 0);
-
-    // scss-lint:disable ImportantRule
-    width: auto;
-
-    box-shadow: none !important;
-    transform: none !important;
-  }
-
-  > .ion-backdrop {
-    // scss-lint:disable ImportantRule
-    display: hidden !important;
-  }
-}
-
 .split-pane-visible > .split-pane-side[side=start] {
   @include multi-dir() {
     order: -1;

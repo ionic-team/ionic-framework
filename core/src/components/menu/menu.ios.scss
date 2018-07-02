@@ -4,14 +4,27 @@
 // iOS Menu
 // --------------------------------------------------
 
-.menu-ios .menu-inner {
+.menu-inner {
   background: $menu-ios-background;
 }
 
-.app-ios .menu-type-overlay .menu-inner {
+:host(.menu-type-overlay) .menu-inner {
   box-shadow: $menu-ios-box-shadow-overlay;
 }
 
+
+// iOS Menu Push
+// --------------------------------------------------
+
+:host(.menu-type-push) {
+  z-index: $z-index-menu-overlay;
+}
+
+:host(.menu-type-push) .show-backdrop {
+  display: block;
+}
+
+// TODO: review
 // iOS Menu Content
 // --------------------------------------------------
 
@@ -19,17 +32,6 @@
   box-shadow: $menu-ios-box-shadow-reveal;
 }
 
-.app-ios .menu-content-push {
+.menu-content-push {
   box-shadow: $menu-ios-box-shadow-push;
-}
-
-// iOS Menu Push
-// --------------------------------------------------
-
-.app-ios .menu-type-push {
-  z-index: $z-index-menu-overlay;
-}
-
-.app-ios .menu-type-push .show-backdrop {
-  display: block;
 }

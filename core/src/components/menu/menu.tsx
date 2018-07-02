@@ -19,18 +19,18 @@ import {
   Side
 } from '../../interface';
 import { assert, isEndSide } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-menu',
   styleUrls: {
     ios: 'menu.ios.scss',
     md: 'menu.md.scss'
-  }
+  },
+  shadow: true
 })
 export class Menu {
+
   private animation?: Animation;
-  private isPane = false;
   private _isOpen = false;
   private lastOnEnd = 0;
 
@@ -46,16 +46,13 @@ export class Menu {
 
   @Element() el!: HTMLIonMenuElement;
 
+  @State() isPaneVisible = false;
   @State() isEndSide = false;
 
   @Prop({ context: 'config' }) config!: Config;
-
   @Prop({ context: 'isServer' }) isServer!: boolean;
-
   @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl!: HTMLIonMenuControllerElement;
-
   @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
-
   @Prop({ context: 'window' }) win!: Window;
 
   /**
@@ -119,12 +116,6 @@ export class Menu {
   protected swipeEnabledChanged() {
     this.updateState();
   }
-
-  /**
-   * If true, the menu will persist on child pages.
-   */
-  @Prop() persistent = false;
-
   /**
    * The edge threshold for dragging the menu open.
    * If a drag/swipe happens over this value, the menu is not triggered.
@@ -207,15 +198,15 @@ export class Menu {
   }
 
   @Listen('body:ionSplitPaneVisible')
-  splitPaneChanged(ev: CustomEvent) {
-    this.isPane = (ev.target as any).isPane(this.el);
+  onSplitPaneChanged(ev: CustomEvent) {
+    this.isPaneVisible = (ev.target as HTMLIonSplitPaneElement).isPane(this.el);
     this.updateState();
   }
 
   @Listen('body:click', { enabled: false, capture: true })
-  onBackdropClick(ev: UIEvent) {
-    const el = ev.target as HTMLElement;
-    if (!el.closest('.menu-inner') && this.lastOnEnd < ev.timeStamp - 100) {
+  onBackdropClick(ev: any) {
+    const path = ev.path;
+    if (path && !path.includes(this.menuInnerEl) && this.lastOnEnd < ev.timeStamp - 100) {
       ev.preventDefault();
       ev.stopPropagation();
       this.close();
@@ -263,7 +254,7 @@ export class Menu {
 
   @Method()
   isActive(): boolean {
-    return !this.disabled && !this.isPane;
+    return !this.disabled && !this.isPaneVisible;
   }
 
   private async loadAnimation(): Promise<void> {
@@ -450,27 +441,31 @@ export class Menu {
   }
 
   hostData() {
-    const isEndSide = this.isEndSide;
+    const { isEndSide, type, disabled, isPaneVisible } = this;
     return {
       role: 'complementary',
       class: {
-        ...createThemedClasses(this.mode, 'menu'),
-        [`menu-type-${this.type}`]: true,
-        'menu-enabled': !this.disabled,
-        'menu-side-right': isEndSide,
-        'menu-side-left': !isEndSide
+        [`menu-type-${type}`]: true,
+        'menu-enabled': !disabled,
+        'menu-side-end': isEndSide,
+        'menu-side-start': !isEndSide,
+        'menu-pane-visible': isPaneVisible
       }
     };
   }
 
   render() {
     return [
-      <div class="menu-inner" ref={el => (this.menuInnerEl = el)}>
-        <slot />
+      <div
+        class="menu-inner"
+        ref={el => this.menuInnerEl = el}
+        onClick={this.onBackdropClick.bind(this)}
+      >
+        <slot/>
       </div>,
 
       <ion-backdrop
-        ref={el => (this.backdropEl = el)}
+        ref={el => this.backdropEl = el}
         class="menu-backdrop"
         tappable={false}
         stopPropagation={false}
