@@ -4,21 +4,16 @@
 // --------------------------------------------------
 
 :host {
+  --background: var(--ion-color-base);
+  --color: var(--ion-color-contrast);
   --size: #{$chip-button-size};
   --icon-size: 18px;
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
 }
 
-:host(.chip-button-default) {
-  color: #{current-color(contrast)};
-
-  --background: #{current-color(base)};
-}
-
 :host(.chip-button-clear) {
-  color: #{current-color(base)};
-
+  --color: var(--ion-color-base);
   --background: transparent;
 }
 
@@ -37,7 +32,7 @@
 
   border: 0;
   outline: none;
-  color: inherit;
+  color: var(--color);
   background: var(--background);
 
   appearance: none;

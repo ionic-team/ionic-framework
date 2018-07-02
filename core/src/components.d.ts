@@ -1398,6 +1398,61 @@ declare global {
 declare global {
 
   namespace StencilComponents {
+    interface IonChipIcon {
+      /**
+       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color': Color;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': Mode;
+      /**
+       * The icon to use. Possible values are the same as `"ion-icon"`.
+       */
+      'name': string;
+    }
+  }
+
+  interface HTMLIonChipIconElement extends StencilComponents.IonChipIcon, HTMLStencilElement {}
+
+  var HTMLIonChipIconElement: {
+    prototype: HTMLIonChipIconElement;
+    new (): HTMLIonChipIconElement;
+  };
+  interface HTMLElementTagNameMap {
+    'ion-chip-icon': HTMLIonChipIconElement;
+  }
+  interface ElementTagNameMap {
+    'ion-chip-icon': HTMLIonChipIconElement;
+  }
+  namespace JSX {
+    interface IntrinsicElements {
+      'ion-chip-icon': JSXElements.IonChipIconAttributes;
+    }
+  }
+  namespace JSXElements {
+    export interface IonChipIconAttributes extends HTMLAttributes {
+      /**
+       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       */
+      'color'?: Color;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: Mode;
+      /**
+       * The icon to use. Possible values are the same as `"ion-icon"`.
+       */
+      'name'?: string;
+    }
+  }
+}
+
+
+declare global {
+
+  namespace StencilComponents {
     interface IonChip {
       /**
        * The color to use.

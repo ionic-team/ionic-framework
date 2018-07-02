@@ -36,7 +36,7 @@
       <h2>Color Chips</h2>
 
       <ion-chip color="primary">
-        <ion-icon name="heart" color="dark"></ion-icon>
+        <ion-chip-icon name="heart" color="dark"></ion-chip-icon>
         <ion-label>Primary</ion-label>
       </ion-chip>
 
@@ -51,13 +51,13 @@
       <h2>Icon Chips</h2>
 
       <ion-chip>
-        <ion-icon name="pin"></ion-icon>
+        <ion-chip-icon name="pin"></ion-chip-icon>
         <ion-label>Default</ion-label>
       </ion-chip>
 
       <ion-chip>
         <ion-label>Secondary</ion-label>
-        <ion-icon name="pin" color="secondary"></ion-icon>
+        <ion-chip-icon name="pin" color="secondary"></ion-chip-icon>
       </ion-chip>
 
       <h2>Avatar Chips</h2>
@@ -86,7 +86,7 @@
       </ion-chip>
 
       <ion-chip id="chip2">
-        <ion-icon name="pin"></ion-icon>
+        <ion-chip-icon name="pin"></ion-chip-icon>
         <ion-label>With Icon</ion-label>
         <ion-chip-button onclick="del('chip2')">
           <ion-icon name="close"></ion-icon>
@@ -104,9 +104,9 @@
       </ion-chip>
 
       <ion-chip color="primary" id="chip4">
-        <ion-icon name="pin"></ion-icon>
+        <ion-chip-icon name="pin"></ion-chip-icon>
         <ion-label>Primary</ion-label>
-        <ion-chip-button fill="clear" onclick="del('chip4')">
+        <ion-chip-button onclick="del('chip4')">
           <ion-icon name="close-circle"></ion-icon>
         </ion-chip-button>
       </ion-chip>
@@ -114,7 +114,7 @@
       <ion-item>
         <ion-label>Chip Item</ion-label>
         <ion-chip slot="end" id="chip5">
-          <ion-icon name="pin" color="primary"></ion-icon>
+          <ion-chip-icon name="pin" color="primary"></ion-chip-icon>
           <ion-label>Default</ion-label>
           <ion-chip-button fill="clear" color="light" onclick="del('chip5')">
             <ion-icon name="close-circle"></ion-icon>

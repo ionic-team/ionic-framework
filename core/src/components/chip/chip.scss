@@ -21,17 +21,3 @@
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
 }
-
-::slotted(ion-icon) {
-  @include border-radius($chip-icon-border-radius);
-
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: $chip-icon-size;
-  height: $chip-icon-size;
-
-  padding: $chip-icon-padding;
-}
