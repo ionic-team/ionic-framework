@@ -14,7 +14,7 @@
     "progressive web app",
     "pwa"
   ],
-  "module": "dist/esm/index.js",
+  "module": "dist/collection/index.js",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
