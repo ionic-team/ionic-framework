@@ -3,13 +3,22 @@
 // Menu Button
 // --------------------------------------------------
 
+:host {
+  pointer-events: all;
+}
+
 button {
   @include font-smoothing();
   text-align: center;
 
+  margin: 0;
+  padding: 0;
+
   position: relative;
   z-index: 0;
-  display: inline-flex;
+  display: flex;
+  color: inherit;
+
   flex-flow: row nowrap;
   flex-shrink: 0;
   align-items: center;
@@ -23,12 +32,10 @@ button {
   text-overflow: ellipsis;
   text-transform: none;
 
+  background: transparent;
+
   white-space: nowrap;
   cursor: pointer;
-  vertical-align: top; // the better option for most scenarios
-  vertical-align: -webkit-baseline-middle; // the best for those that support it
-
-  transition: background-color, opacity 100ms linear;
 
   font-kerning: none;
   user-select: none;

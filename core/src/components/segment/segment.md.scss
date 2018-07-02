@@ -6,6 +6,12 @@
 
 :host {
   font-family: $segment-md-font-family;
+
+  color: $segment-button-md-text-color;
+}
+
+:host(.ion-color) {
+  color: #{current-color(base)} !important;
 }
 
 :host(.segment-disabled) {
@@ -35,17 +41,12 @@
   font-size: $segment-button-md-font-size;
   font-weight: $segment-button-md-font-weight;
   line-height: $segment-button-md-line-height;
+  color: inherit;
   height: $segment-button-md-height;
 
   opacity: $segment-button-md-opacity;
 
   text-transform: uppercase;
-
-  color: $segment-button-md-text-color;
-}
-
-:host(.ion-color) ::slotted(ion-segment-button) {
-  color: #{current-color(base)} !important;
 }
 
 // Checked Segment Button
@@ -55,14 +56,8 @@
 ::slotted(.segment-checked) {
   opacity: $segment-button-md-opacity-activated;
 
-  --border-color: #{$segment-button-md-border-color-activated};
+  --border-color: currentColor;
 }
-
-:host(.ion-color) ::slotted(.activated),
-:host(.ion-color) ::slotted(.segment-checked) {
-  --border-color: #{current-color(base)};
-}
-
 
 // Disabled Segment Button
 // --------------------------------------------------

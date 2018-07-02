@@ -31,7 +31,8 @@ export { OverlayEventDetail, OverlayInterface } from './utils/overlays';
 
 // Global types
 export type Side = 'start' | 'end';
-export type Color = 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
+export type PredefinedColors = 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
+export type Color = PredefinedColors | string;
 export type Mode = 'ios' | 'md';
 export type ComponentRef = Function | HTMLElement | string;
 export type ComponentProps = {[key: string]: any};

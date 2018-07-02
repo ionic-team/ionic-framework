@@ -42,13 +42,6 @@ string
 An id for the menu.
 
 
-#### persistent
-
-boolean
-
-If true, the menu will persist on child pages.
-
-
 #### side
 
 string
@@ -100,13 +93,6 @@ If a drag/swipe happens over this value, the menu is not triggered.
 string
 
 An id for the menu.
-
-
-#### persistent
-
-boolean
-
-If true, the menu will persist on child pages.
 
 
 #### side

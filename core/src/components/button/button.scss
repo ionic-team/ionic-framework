@@ -4,6 +4,13 @@
 // --------------------------------------------------
 
 :host {
+  vertical-align: top; // the better option for most scenarios
+  vertical-align: -webkit-baseline-middle; // the best for those that support it
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
   --ion-color-shade: #{ion-color(primary, shade)};
@@ -112,7 +119,6 @@
 
   height: var(--height);
 
-  border: 0;
   border-width: var(--border-width);
   border-style: var(--border-style);
   border-color: var(--border-color);
@@ -121,10 +127,10 @@
   font-weight: inherit;
   letter-spacing: inherit;
   line-height: 1;
-  text-decoration: none;
-  text-overflow: ellipsis;
+  text-decoration: inherit;
+  text-overflow: inherit;
   text-transform: inherit;
-  white-space: nowrap;
+  white-space: inherit;
   color: inherit;
   background: var(--background);
   box-shadow: var(--box-shadow);
@@ -136,7 +142,7 @@
 
   font-kerning: none;
   user-select: none;
-  text-align: center;
+  text-align: inherit;
 
   contain: content;
 

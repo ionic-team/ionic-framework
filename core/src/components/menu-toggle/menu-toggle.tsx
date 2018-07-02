@@ -25,7 +25,7 @@ export class MenuToggle {
     this.updateVisibility();
   }
 
-  @Listen('child:click')
+  @Listen('click')
   async onClick() {
     const menuCtrl = await getMenuController(this.doc);
     if (menuCtrl) {

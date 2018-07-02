@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 import { Color, InputChangeEvent, Mode } from '../../interface';
-import { hostContext } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 
 @Component({
@@ -78,6 +78,8 @@ export class Segment {
   hostData() {
     return {
       class: {
+        ...createColorClasses(this.color),
+
         'segment-disabled': this.disabled,
         'in-toolbar': hostContext('ion-toolbar', this.el)
       }
