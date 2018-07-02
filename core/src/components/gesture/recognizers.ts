@@ -37,7 +37,7 @@ export class PanRecognizer {
       return false;
     }
     const hypotenuse = Math.sqrt(distance);
-    const cosine = ((this.isDirX) ? deltaX : deltaY) / hypotenuse;
+    const cosine = (this.isDirX ? deltaX : deltaY) / hypotenuse;
 
     if (cosine > this.maxCosine) {
       this.isPan = 1;

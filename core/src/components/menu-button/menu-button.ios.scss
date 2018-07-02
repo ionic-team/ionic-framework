@@ -4,7 +4,7 @@
 // iOS Menu Button
 // --------------------------------------------------
 
-.menu-button-ios .menu-button-inner {
+.menu-button-inner {
   @include padding(0);
   @include margin(2px, 0, 0, 0);
 
@@ -27,7 +27,7 @@
   }
 }
 
-.menu-button-ios ion-icon {
+ion-icon {
   @include padding(0);
   @include margin(0, -3px, 0, 0);
 

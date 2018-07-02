@@ -60,7 +60,7 @@ export class SegmentButton {
         'segment-button-disabled': disabled,
         'segment-checked': checked,
       },
-      'tappable': ''
+      'tappable': true,
     };
   }
 

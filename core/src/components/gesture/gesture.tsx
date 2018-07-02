@@ -1,12 +1,7 @@
 import { Component, EventListenerEnable, Listen, Prop, QueueApi, Watch } from '@stencil/core';
-import { BlockerConfig, GestureCallback, GestureDelegate, GestureDetail } from '../../interface';
+import { GestureCallback, GestureDelegate, GestureDetail } from '../../interface';
 import { assert, now } from '../../utils/helpers';
 import { PanRecognizer } from './recognizers';
-
-export const BLOCK_ALL: BlockerConfig = {
-  disable: ['menu-swipe', 'goback-swipe'],
-  disableScroll: true
-};
 
 @Component({
   tag: 'ion-gesture'

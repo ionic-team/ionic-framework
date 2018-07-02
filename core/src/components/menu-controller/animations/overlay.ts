@@ -30,8 +30,6 @@ export function menuOverlayAnimation(Animation: Animation, _: HTMLElement, menu:
     .addElement(menu.backdropEl)
     .fromTo('opacity', 0.01, 0.3);
 
-
-
   return baseAnimation(Animation).then(animation => {
     return animation.add(menuAni)
       .add(backdropAni);

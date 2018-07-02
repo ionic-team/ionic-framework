@@ -1,13 +1,13 @@
 import { Component, Prop } from '@stencil/core';
 import { Config, Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-menu-button',
   styleUrls: {
     ios: 'menu-button.ios.scss',
     md: 'menu-button.md.scss'
-  }
+  },
+  shadow: true
 })
 export class MenuButton {
 
@@ -25,21 +25,15 @@ export class MenuButton {
    */
   @Prop() autoHide = true;
 
-  hostData() {
-    return {
-      class: createThemedClasses(this.mode, 'menu-button')
-    };
-  }
-
   render() {
     const menuIcon = this.config.get('menuIcon', 'menu');
     return (
       <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
-        <ion-button>
+        <button>
           <slot>
             <ion-icon icon={menuIcon} slot="icon-only" />
           </slot>
-        </ion-button>
+        </button>
       </ion-menu-toggle>
     );
   }

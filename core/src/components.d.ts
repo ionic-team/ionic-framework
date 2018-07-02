@@ -3859,10 +3859,6 @@ declare global {
        */
       'menuId': string;
       'open': (animated?: boolean) => Promise<boolean>;
-      /**
-       * If true, the menu will persist on child pages.
-       */
-      'persistent': boolean;
       'setOpen': (shouldOpen: boolean, animated?: boolean) => Promise<boolean>;
       /**
        * Which side of the view the menu should be placed. Default `"start"`.
@@ -3927,10 +3923,6 @@ declare global {
        * Emitted when the menu is open.
        */
       'onIonOpen'?: (event: CustomEvent<void>) => void;
-      /**
-       * If true, the menu will persist on child pages.
-       */
-      'persistent'?: boolean;
       /**
        * Which side of the view the menu should be placed. Default `"start"`.
        */

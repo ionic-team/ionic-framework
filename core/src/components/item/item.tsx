@@ -117,7 +117,7 @@ export class Item {
     }
 
     return {
-      'tappable': this.isClickable() ? '' : null,
+      'tappable': this.isClickable(),
       class: {
         ...childStyles,
         ...createColorClasses(this.color),

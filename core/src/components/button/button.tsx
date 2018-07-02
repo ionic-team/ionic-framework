@@ -131,7 +131,7 @@ export class Button {
         ...getColorClassMap(buttonType, color, fill, mode),
         'focused': this.keyFocus,
       },
-      'tappable': '',
+      'tappable': true,
     };
   }
 
