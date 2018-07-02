@@ -21,7 +21,10 @@
 // --------------------------------------------------
 
 // Remove the padding from grid and all immediate children columns
-:host([no-padding]),
-:host([no-padding]) > ion-col {
+:host([no-padding]) {
+  @include padding(0);
+}
+
+:host([no-padding]) ::slotted(ion-col) {
   @include padding(0);
 }

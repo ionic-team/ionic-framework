@@ -1,5 +1,4 @@
 import { Component, Prop } from '@stencil/core';
-import { Color, Mode } from '../../interface';
 
 
 @Component({
@@ -8,9 +7,6 @@ import { Color, Mode } from '../../interface';
   shadow: true
 })
 export class Grid {
-
-  mode!: Mode;
-  color?: Color;
 
   /**
    * If true, the grid will have a fixed width based on the screen size. Defaults to `false`.

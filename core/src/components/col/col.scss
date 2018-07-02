@@ -17,26 +17,3 @@
   max-width: 100%;
   min-height: 1px; // Prevent columns from collapsing when empty
 }
-
-// Column Alignment
-// --------------------------------------------------
-
-:host([align-self-start]) {
-  align-self: flex-start;
-}
-
-:host([align-self-end]) {
-  align-self: flex-end;
-}
-
-:host([align-self-center]) {
-  align-self: center;
-}
-
-:host([align-self-stretch]) {
-  align-self: stretch;
-}
-
-:host([align-self-baseline]) {
-  align-self: baseline;
-}
