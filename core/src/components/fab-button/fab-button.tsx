@@ -95,7 +95,7 @@ export class FabButton {
           <ion-icon name="close"></ion-icon>
         </span>
         <span class="fab-button-inner">
-          <slot />
+          <slot></slot>
         </span>
         { this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el}/> }
       </TagType>

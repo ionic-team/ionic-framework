@@ -69,7 +69,7 @@ export class ItemOption {
           <slot name="start" />
           <slot name="top" />
           <slot name="icon-only" />
-          <slot />
+          <slot></slot>
           <slot name="bottom" />
           <slot name="end" />
         </span>

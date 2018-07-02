@@ -461,7 +461,7 @@ export class Menu {
         ref={el => this.menuInnerEl = el}
         onClick={this.onBackdropClick.bind(this)}
       >
-        <slot/>
+        <slot></slot>
       </div>,
 
       <ion-backdrop

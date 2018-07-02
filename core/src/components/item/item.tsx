@@ -146,7 +146,7 @@ export class Item {
         <slot name="start" />
         <div class="item-inner">
           <div class="input-wrapper">
-            <slot />
+            <slot></slot>
           </div>
           <slot name="end"></slot>
           { showDetail && <ion-icon icon={detailIcon} class="item-detail-icon"></ion-icon> }

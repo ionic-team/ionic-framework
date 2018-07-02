@@ -256,7 +256,7 @@ export class Scroll {
   }
 
   render() {
-    return <slot/>;
+    return <slot></slot>;
   }
 }
 
