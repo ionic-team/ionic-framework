@@ -46,13 +46,26 @@
           <h1>Slide 3</h1>
         </ion-slide>
       </ion-slides>
+
+      <ion-slides pager class="custom-slides">
+        <ion-slide>
+          <h1>Custom Color Pager</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 2</h1>
+        </ion-slide>
+        <ion-slide>
+          <h1>Slide 3</h1>
+        </ion-slide>
+      </ion-slides>
     </ion-content>
 
   </ion-app>
-  <script>
-    // const slides = document.getElementById('slides')
-    // slides.options = {}
-  </script>
+  <style>
+    .custom-slides {
+      --bullet-background-color: blue;
+    }
+  </style>
 </body>
 
 </html>

@@ -4,6 +4,22 @@
 // Slides
 // --------------------------------------------------
 
-ion-slides {
+:host {
   display: block;
+}
+
+.swiper-pagination-bullet {
+  background-color: var(--bullet-background-color);
+}
+
+.swiper-pagination-progress {
+  background-color: var(--progress-background-color);
+}
+
+.swiper-pagination-progress .swiper-pagination-progressbar {
+  background-color: var(--progress-bar-background-color);
+}
+
+.swiper-scrollbar {
+  background-color: var(--swiper-scrollbar-background-color);
 }

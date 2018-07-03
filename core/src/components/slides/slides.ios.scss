@@ -1,26 +1,29 @@
-@import "./slides-vendor";
+@import "./slides";
 @import "./slides.ios.vars";
 
-.slides-ios .swiper-pagination-bullet {
-  background-color: $slides-ios-bullet-background-color;
+// iOS Slides
+// --------------------------------------------------
+
+.swiper-pagination-bullet {
+  --bullet-background-color: #{$slides-ios-bullet-background-color};
 }
 
-.slides-ios .swiper-pagination-bullet-active {
-  background-color: $slides-ios-bullet-background-color-active;
+.swiper-pagination-bullet-active {
+  --bullet-background-color: #{$slides-ios-bullet-background-color-active};
 }
 
-.slides-ios .swiper-pagination-progress {
-  background-color: $slides-ios-progress-background-color;
+.swiper-pagination-progress {
+  --progress-background-color: #{$slides-ios-progress-background-color};
 }
 
-.slides-ios .swiper-pagination-progress .swiper-pagination-progressbar {
-  background-color: $slides-ios-progress-bar-background-color;
+.swiper-pagination-progress .swiper-pagination-progressbar {
+  --progress-bar-background-color: #{$slides-ios-progress-bar-background-color};
 }
 
-.slides-ios .swiper-scrollbar {
-  background-color: $slides-ios-scroll-bar-background-color;
+.swiper-scrollbar {
+  --swiper-scrollbar-background-color: #{$slides-ios-scroll-bar-background-color};
 }
 
-.slides-ios .swiper-scrollbar-drag {
-  background-color: $slides-ios-scroll-bar-drag-background-color;
+.swiper-scrollbar-drag {
+  --swiper-scrollbar-background-color: #{$slides-ios-scroll-bar-drag-background-color};
 }
