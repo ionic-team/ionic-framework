@@ -20,7 +20,7 @@
 // --------------------------------------------------
 
 :host-context(.item-interactive) {
-  color: $label-ios-text-color;
+  --ion-color-base: #{$label-ios-text-color};
 }
 
 

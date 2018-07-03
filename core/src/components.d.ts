@@ -6668,7 +6668,7 @@ declare global {
        */
       'options': any;
       /**
-       * Show or hide the pager
+       * If true, show the pagination bullets. Defaults to `false`.
        */
       'pager': boolean;
       /**
@@ -6774,7 +6774,7 @@ declare global {
        */
       'options'?: any;
       /**
-       * Show or hide the pager
+       * If true, show the pagination bullets. Defaults to `false`.
        */
       'pager'?: boolean;
     }

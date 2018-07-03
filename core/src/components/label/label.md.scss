@@ -21,7 +21,7 @@
 
 // TODO, takes high priority
 :host-context(.item-interactive) {
-  color: $label-md-text-color;
+  --ion-color-base: #{$label-md-text-color};
 }
 
 
