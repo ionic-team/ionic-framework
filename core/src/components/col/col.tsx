@@ -2,7 +2,7 @@ import { Component, Element, Listen, Prop } from '@stencil/core';
 import { isMatch } from '../../utils/media';
 
 const SUPPORTS_VARS: boolean = CSS && CSS.supports && CSS.supports('--a', '0');
-const BREAKPOINTS = ['xl', 'lg', 'md', 'sm', 'xs', ''];
+const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
 @Component({
   tag: 'ion-col',
@@ -162,16 +162,23 @@ export class Col {
   // Loop through all of the breakpoints to see if the media query
   // matches and grab the column value from the relevant prop if so
   private getColumns(property: string) {
+    let matched;
 
-    return BREAKPOINTS.find(breakpoint => {
+    for (const breakpoint of BREAKPOINTS) {
       const matches = isMatch(breakpoint);
 
       // Grab the value of the property, if it exists and our
       // media query matches we return the value
       const columns = this[property + breakpoint.charAt(0).toUpperCase() + breakpoint.slice(1)];
 
-      return (matches && columns !== undefined);
-    });
+      if (matches && columns !== undefined) {
+        matched = columns;
+      }
+    }
+
+    // Return the last matched columns since the breakpoints
+    // increase in size and we want to return the largest match
+    return matched;
   }
 
   private calculateSize() {
@@ -190,7 +197,7 @@ export class Col {
       ? `calc(calc(${columns} / var(--ion-grid-columns, 12)) * 100%)`
       // Convert the columns to a percentage by dividing by the total number
       // of columns (12) and then multiplying by 100
-      : ((parseFloat(columns) / 12) * 100) + '%';
+      : ((columns / 12) * 100) + '%';
 
     return {
       'flex': `0 0 ${colSize}`,
@@ -209,13 +216,12 @@ export class Col {
 
     // If the number of columns passed are greater than 0 and less than
     // 12 we can position the column, else default to auto
-    const columnsNu = parseInt(columns, 10);
     const amount = SUPPORTS_VARS
       // If CSS supports variables we should use the grid columns var
       ? `calc(calc(${columns} / var(--ion-grid-columns, 12)) * 100%)`
       // Convert the columns to a percentage by dividing by the total number
       // of columns (12) and then multiplying by 100
-      : (columnsNu > 0 && columnsNu < 12) ? (columnsNu / 12 * 100) + '%' : 'auto';
+      : (columns > 0 && columns < 12) ? (columns / 12 * 100) + '%' : 'auto';
 
     return {
       [modifier]: amount
