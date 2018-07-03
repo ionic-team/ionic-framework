@@ -9,7 +9,8 @@ import { Swiper }  from './vendor/swiper.js';
     ios: 'slides.ios.scss',
     md: 'slides.md.scss'
   },
-  assetsDir: 'vendor'
+  assetsDir: 'vendor',
+  shadow: true
 })
 export class Slides {
   private container!: HTMLElement;
@@ -17,7 +18,7 @@ export class Slides {
 
   mode!: Mode;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLStencilElement;
 
   /**
    * Emitted before the active slide has changed.
@@ -98,7 +99,7 @@ export class Slides {
   }
 
   /**
-   * If true, show the pagination bullets. Defaults to `false`.
+   * If true, show the pagination. Defaults to `false`.
    */
   @Prop() pager = false;
 
@@ -112,7 +113,7 @@ export class Slides {
 
   private initSlides() {
     console.debug(`ion-slides, init`);
-    this.container = this.el.children[0] as HTMLElement;
+    this.container = (this.el.shadowRoot || this.el).querySelector('.swiper-container') as HTMLElement;
     const finalOptions = this.normalizeOptions();
     // init swiper core
     this.swiper = new Swiper(this.container, finalOptions);
@@ -364,7 +365,7 @@ export class Slides {
 
   render() {
     return (
-      <div class="swiper-container">
+      <div class="swiper-container" ref={ (el) => this.container = el as HTMLElement }>
         <div class="swiper-wrapper">
           <slot></slot>
         </div>
