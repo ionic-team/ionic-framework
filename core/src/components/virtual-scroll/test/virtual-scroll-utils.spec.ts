@@ -1,4 +1,6 @@
-import { CellType, HeaderFn, ItemHeightFn, Range, VirtualNode, calcCells, calcHeightIndex, getRange, getShouldUpdate, getViewport, positionForIndex, resizeBuffer, updateVDom } from '../virtual-scroll-utils';
+import { HeaderFn, ItemHeightFn, VirtualNode  } from '../../../interface';
+import { CellType } from '../virtual-scroll-interface';
+import { Range, calcCells, calcHeightIndex, getRange, getShouldUpdate, getViewport, positionForIndex, resizeBuffer, updateVDom } from '../virtual-scroll-utils';
 
 
 describe('getViewport', () => {
@@ -111,7 +113,7 @@ describe('getRange', () => {
 
 describe('resizeBuffer', () => {
   it('should allocate a buffer', () => {
-    const buf = resizeBuffer(null, 10);
+    const buf = resizeBuffer(undefined, 10);
     expect(buf.length).toEqual(10);
   });
 
@@ -148,7 +150,7 @@ describe('resizeBuffer', () => {
 describe('calcCells', () => {
   it('should calculate cells without headers and itemHeight', () => {
     const items = ['0', 2, 'hola', {data: 'hello'}];
-    const cells = calcCells(items, null, null, null, 10, 20, 30, 0, 0, items.length);
+    const cells = calcCells(items, undefined, undefined, undefined, 10, 20, 30, 0, 0, items.length);
     expect(cells).toEqual([
       {
         type: CellType.Item,
@@ -192,12 +194,12 @@ describe('calcCells', () => {
   it('should calculate cells with itemHeight', () => {
     const items = [10, 9, 8];
     let called = 0;
-    const itemHeight: ItemHeightFn = (item: any, index?: number) => {
+    const itemHeight: ItemHeightFn = (item: any, index: number) => {
       expect(item).toEqual(items[index]);
       called++;
       return index * 20 + 20;
     };
-    const cells = calcCells(items, itemHeight, null, null, 10, 20, 30, 0, 0, items.length);
+    const cells = calcCells(items, itemHeight, undefined, undefined, 10, 20, 30, 0, 0, items.length);
 
     expect(called).toEqual(3);
     expect(cells).toEqual([
@@ -248,7 +250,7 @@ describe('calcCells', () => {
       footerCalled++;
       return (index === 2) ? 'my footer' : null;
     };
-    const itemHeight: ItemHeightFn = (item: any, index?: number) => {
+    const itemHeight: ItemHeightFn = (item: any, index: number) => {
       expect(item).toEqual(items[index]);
       called++;
       return index * 20 + 20;
@@ -317,8 +319,8 @@ describe('calcHeightIndex', () => {
     const footerFn: HeaderFn = (_, index) => {
       return (index === 2) ? 'my footer' : null;
     };
-    const cells = calcCells(items, null, headerFn, footerFn, 10, 20, 50, 0, 0, items.length);
-    const buf = resizeBuffer(null, cells.length);
+    const cells = calcCells(items, undefined, headerFn, footerFn, 10, 20, 50, 0, 0, items.length);
+    const buf = resizeBuffer(undefined, cells.length);
     const totalHeight = calcHeightIndex(buf, cells, 0);
     expect(buf.length).toEqual(7);
     expect(buf[0]).toEqual(0);
@@ -502,12 +504,12 @@ describe('updateVDom', () => {
 
 function mockVirtualScroll(
   items: any[],
-  itemHeight: ItemHeightFn = null,
-  headerFn: HeaderFn = null,
-  footerFn: HeaderFn = null
+  itemHeight?: ItemHeightFn,
+  headerFn?: HeaderFn,
+  footerFn?: HeaderFn
 ) {
   const cells = calcCells(items, itemHeight, headerFn, footerFn, 10, 10, 30, 0, 0, items.length);
-  const heightIndex = resizeBuffer(null, cells.length);
+  const heightIndex = resizeBuffer(undefined, cells.length);
   calcHeightIndex(heightIndex, cells, 0);
   return { items, heightIndex, cells };
 }

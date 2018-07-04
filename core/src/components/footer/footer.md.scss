@@ -4,25 +4,18 @@
   // using datauri png background image for improved scroll performance
   // rather than using `box-shadow: 0 2px 5px rgba(0,0,0,0.26);`
   // noticable performance difference on older Android devices
-  @include position(null, null, -5px, 0);
-  @include background-position(start, 0, top, -2px);
+  @include position(-2px, null, auto, 0);
+  @include background-position(start, 0, top, 0);
 
   position: absolute;
 
   width: 100%;
-  height: 5px;
+  height: 2px;
 
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAHBAMAAADzDtBxAAAAD1BMVEUAAAAAAAAAAAAAAAAAAABPDueNAAAABXRSTlMUCS0gBIh/TXEAAAAaSURBVAjXYxCEAgY4UIICBmMogMsgFLtAAQCNSwXZKOdPxgAAAABJRU5ErkJggg==");
   background-repeat: repeat-x;
 
   content: "";
-}
-
-.footer-md::before {
-  @include position(-2px, null, auto, null);
-  @include background-position(start, 0, top, 0);
-
-  height: 2px;
 }
 
 .footer-md[no-border]::before{

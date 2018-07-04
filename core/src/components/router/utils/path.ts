@@ -9,7 +9,7 @@ export function generatePath(segments: string[]): string {
   return '/' + path;
 }
 
-export function chainToPath(chain: RouteChain): string[]|null {
+export function chainToPath(chain: RouteChain): string[] | null {
   const path = [];
   for (const route of chain) {
     for (const segment of route.path) {

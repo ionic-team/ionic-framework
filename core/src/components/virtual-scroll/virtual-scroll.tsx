@@ -1,5 +1,6 @@
-import { Component, Element, EventListenerEnable, Listen, Method, Prop, QueueApi, Watch } from '@stencil/core';
-import { Cell, CellType, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+import { Component, Element, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+import { CellType } from './virtual-scroll-interface';
 
 import {
   Range,
@@ -25,11 +26,11 @@ export class VirtualScroll {
   private viewportOffset = 0;
   private currentScrollTop = 0;
   private indexDirty = 0;
-  private totalHeight = 0;
-  private heightChanged = false;
   private lastItemLen = 0;
 
   @Element() el!: HTMLStencilElement;
+
+  @State() totalHeight = 0;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
@@ -205,29 +206,33 @@ export class VirtualScroll {
   }
 
   private updateVirtualScroll() {
-    // do nothing if there is a scheduled update
+    // do nothing if virtual-scroll is disabled
     if (!this.isEnabled || !this.scrollEl) {
       return;
     }
+
+    // unschedule future updates
     if (this.timerUpdate) {
       clearTimeout(this.timerUpdate);
       this.timerUpdate = null;
     }
 
+    // schedule DOM operations into the stencil queue
     this.queue.read(this.readVS.bind(this));
     this.queue.write(this.writeVS.bind(this));
   }
 
   private readVS() {
+    const { scrollEl, el } = this;
     let topOffset = 0;
-    let node: HTMLElement | null = this.el;
-    while (node && node !== this.scrollEl) {
+    let node: HTMLElement | null = el;
+    while (node && node !== scrollEl) {
       topOffset += node.offsetTop;
       node = node.parentElement;
     }
     this.viewportOffset = topOffset;
-    if (this.scrollEl) {
-      this.currentScrollTop = this.scrollEl.scrollTop;
+    if (scrollEl) {
+      this.currentScrollTop = scrollEl.scrollTop;
     }
   }
 
@@ -259,17 +264,14 @@ export class VirtualScroll {
       range
     );
 
-    // write DOM
+    // Write DOM
+    // Different code paths taken depending of the render API used
     if (this.nodeRender) {
       doRender(this.el, this.nodeRender, this.virtualDom, this.updateCellHeight.bind(this));
     } else if (this.domRender) {
       this.domRender(this.virtualDom);
     } else if (this.renderItem) {
       this.el.forceUpdate();
-    }
-    if (this.heightChanged) {
-      this.el.style.height = this.totalHeight + 'px';
-      this.heightChanged = false;
     }
   }
 
@@ -352,12 +354,8 @@ export class VirtualScroll {
   private calcHeightIndex(index = 0) {
     // TODO: optimize, we don't need to calculate all the cells
     this.heightIndex = resizeBuffer(this.heightIndex, this.cells.length);
-    const totalHeight = calcHeightIndex(this.heightIndex, this.cells, index);
-    if (totalHeight !== this.totalHeight) {
-      console.debug(`[virtual] total height changed: ${this.totalHeight}px -> ${totalHeight}px`);
-      this.totalHeight = totalHeight;
-      this.heightChanged = true;
-    }
+    this.totalHeight = calcHeightIndex(this.heightIndex, this.cells, index);
+
     console.debug('[virtual] height index recalculated', this.heightIndex.length - index);
     this.indexDirty = Infinity;
   }
@@ -375,13 +373,21 @@ export class VirtualScroll {
     }
   }
 
-  renderVirtualNode(node: VirtualNode) {
-    const cell = node.cell;
-    switch (cell.type) {
-      case CellType.Item: return this.renderItem!(cell.value, cell.index);
-      case CellType.Header: return this.renderHeader!(cell.value, cell.index);
-      case CellType.Footer: return this.renderFooter!(cell.value, cell.index);
+  private renderVirtualNode(node: VirtualNode) {
+    const { type, value, index } = node.cell;
+    switch (type) {
+      case CellType.Item: return this.renderItem!(value, index);
+      case CellType.Header: return this.renderHeader!(value, index);
+      case CellType.Footer: return this.renderFooter!(value, index);
     }
+  }
+
+  hostData() {
+    return {
+      style: {
+        height: `${this.totalHeight}px`
+      }
+    };
   }
 
   render() {

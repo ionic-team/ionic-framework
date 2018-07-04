@@ -29,6 +29,7 @@ import { Knob, RangeEventDetail, RangeValue } from './range-interface';
   shadow: true
 })
 export class Range implements BaseInput {
+
   private noUpdate = false;
   private rect!: ClientRect;
   private hasFocus = false;
@@ -38,7 +39,7 @@ export class Range implements BaseInput {
 
   @State() private ratioA = 0;
   @State() private ratioB = 0;
-  @State() private pressedKnob = Knob.None;
+  @State() private pressedKnob: Knob;
 
   /**
    * The color to use from your Sass `$colors` map.
@@ -159,7 +160,7 @@ export class Range implements BaseInput {
     if (!ev.detail.isIncrease) {
       step *= -1;
     }
-    if (ev.detail.knob === Knob.A) {
+    if (ev.detail.knob === 'A') {
       this.ratioA += step;
     } else {
       this.ratioB += step;
@@ -217,8 +218,8 @@ export class Range implements BaseInput {
     this.pressedKnob =
       !this.dualKnobs ||
       Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio)
-        ? Knob.A
-        : Knob.B;
+        ? 'A'
+        : 'B';
 
     // update the active knob's position
     this.update(currentX);
@@ -230,7 +231,7 @@ export class Range implements BaseInput {
 
   private onDragEnd(detail: GestureDetail) {
     this.update(detail.currentX);
-    this.pressedKnob = Knob.None;
+    this.pressedKnob = undefined;
     this.fireBlur();
   }
 
@@ -246,7 +247,7 @@ export class Range implements BaseInput {
     }
 
     // update which knob is pressed
-    if (this.pressedKnob === Knob.A) {
+    if (this.pressedKnob === 'A') {
       this.ratioA = ratio;
     } else {
       this.ratioB = ratio;
@@ -309,7 +310,7 @@ export class Range implements BaseInput {
         ...createColorClasses(this.color),
         'in-item': hostContext('.item', this.el),
         'range-disabled': this.disabled,
-        'range-pressed': this.pressedKnob !== Knob.None,
+        'range-pressed': this.pressedKnob !== undefined,
         'range-has-pin': this.pin
       }
     };
@@ -368,8 +369,8 @@ export class Range implements BaseInput {
             }}
           />
           <ion-range-knob
-            knob={Knob.A}
-            pressed={this.pressedKnob === Knob.A}
+            knob="A"
+            pressed={this.pressedKnob === 'A'}
             value={this.valA}
             ratio={this.ratioA}
             pin={this.pin}
@@ -379,8 +380,8 @@ export class Range implements BaseInput {
 
           {this.dualKnobs && (
             <ion-range-knob
-              knob={Knob.B}
-              pressed={this.pressedKnob === Knob.B}
+              knob="B"
+              pressed={this.pressedKnob === 'B'}
               value={this.valB}
               ratio={this.ratioB}
               pin={this.pin}

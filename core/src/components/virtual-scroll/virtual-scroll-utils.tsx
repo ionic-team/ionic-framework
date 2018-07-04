@@ -1,5 +1,5 @@
-import { VirtualNode } from '../../interface';
-import { Cell, CellType, HeaderFn, ItemHeightFn, ItemRenderFn, NodeChange } from '../../interface';
+import { Cell, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+import { CellType, NodeChange } from './virtual-scroll-interface';
 
 export interface Viewport {
   top: number;
@@ -195,7 +195,7 @@ export function calcCells(
   offset: number,
   len: number
 ): Cell[] {
-  const cells = [];
+  const cells: Cell[] = [];
   const end = len + offset;
   for (let i = offset; i < end; i++) {
     const item = items[i];
