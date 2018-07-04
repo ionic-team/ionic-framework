@@ -16,14 +16,6 @@
 }
 
 
-// iOS Default Label Inside An Input/Select Item
-// --------------------------------------------------
-
-:host-context(.item-interactive) {
-  --ion-color-base: #{$label-ios-text-color};
-}
-
-
 // iOS Stacked & Floating Labels
 // --------------------------------------------------
 

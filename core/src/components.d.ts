@@ -2589,7 +2589,7 @@ declare global {
        */
       'alt'?: string;
       /**
-       * Emitted when the img src is loaded
+       * Emitted when the img src is loaded 
        */
       'onIonImgDidLoad'?: (event: CustomEvent<void>) => void;
       /**
@@ -3578,7 +3578,7 @@ declare global {
        */
       'enterAnimation': AnimationBuilder;
       /**
-       * If true, the loading will blur any inputs and hide the keyboard
+       * If true, the loading will blur any inputs and hide the keyboard 
        */
       'keyboardClose': boolean;
       /**
@@ -3661,7 +3661,7 @@ declare global {
        */
       'enterAnimation'?: AnimationBuilder;
       /**
-       * If true, the loading will blur any inputs and hide the keyboard
+       * If true, the loading will blur any inputs and hide the keyboard 
        */
       'keyboardClose'?: boolean;
       /**
@@ -5542,7 +5542,7 @@ declare global {
       'addRipple': (pageX: number, pageY: number) => void;
       'parent': HTMLElement | string;
       /**
-       * If true, the ripple effect will listen to any click events and animate
+       * If true, the ripple effect will listen to any click events and animate 
        */
       'tapClick': boolean;
     }
@@ -5569,7 +5569,7 @@ declare global {
     export interface IonRippleEffectAttributes extends HTMLAttributes {
       'parent'?: HTMLElement | string;
       /**
-       * If true, the ripple effect will listen to any click events and animate
+       * If true, the ripple effect will listen to any click events and animate 
        */
       'tapClick'?: boolean;
     }
@@ -5696,7 +5696,7 @@ declare global {
       'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
       'delegate': FrameworkDelegate;
       /**
-       * Returns the ID for the current route
+       * Returns the ID for the current route 
        */
       'getRouteId': () => RouteID | undefined;
       /**
@@ -5744,7 +5744,7 @@ declare global {
       'navChanged': (intent: number) => Promise<boolean>;
       'printDebug': () => void;
       /**
-       * Navigate to the specified URL
+       * Navigate to the specified URL 
        */
       'push': (url: string, direction?: RouterDirection) => Promise<boolean>;
       /**
@@ -5840,27 +5840,27 @@ declare global {
        */
       'forceOverscroll': boolean;
       /**
-       * The mode for component.
+       * The mode for component. 
        */
       'mode': Mode;
       /**
-       * Scroll by a specified X/Y distance in the component
+       * Scroll by a specified X/Y distance in the component 
        */
       'scrollByPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
       /**
-       * If true, the component will emit scroll events.
+       * If true, the component will emit scroll events. 
        */
       'scrollEvents': boolean;
       /**
-       * Scroll to the bottom of the component
+       * Scroll to the bottom of the component 
        */
       'scrollToBottom': (duration: number) => Promise<void>;
       /**
-       * Scroll to a specified X/Y location in the component
+       * Scroll to a specified X/Y location in the component 
        */
       'scrollToPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
       /**
-       * Scroll to the top of the component
+       * Scroll to the top of the component 
        */
       'scrollToTop': (duration: number) => Promise<void>;
     }
@@ -5890,7 +5890,7 @@ declare global {
        */
       'forceOverscroll'?: boolean;
       /**
-       * The mode for component.
+       * The mode for component. 
        */
       'mode'?: Mode;
       /**
@@ -5906,7 +5906,7 @@ declare global {
        */
       'onIonScrollStart'?: (event: CustomEvent<ScrollBaseDetail>) => void;
       /**
-       * If true, the component will emit scroll events.
+       * If true, the component will emit scroll events. 
        */
       'scrollEvents'?: boolean;
     }
@@ -6287,19 +6287,19 @@ declare global {
   namespace StencilComponents {
     interface IonSelectPopover {
       /**
-       * Header text for the popover
+       * Header text for the popover 
        */
       'header': string;
       /**
-       * Text for popover body
+       * Text for popover body 
        */
       'message': string;
       /**
-       * Array of options for the popover
+       * Array of options for the popover 
        */
       'options': SelectPopoverOption[];
       /**
-       * Subheader text for the popover
+       * Subheader text for the popover 
        */
       'subHeader': string;
     }
@@ -6325,19 +6325,19 @@ declare global {
   namespace JSXElements {
     export interface IonSelectPopoverAttributes extends HTMLAttributes {
       /**
-       * Header text for the popover
+       * Header text for the popover 
        */
       'header'?: string;
       /**
-       * Text for popover body
+       * Text for popover body 
        */
       'message'?: string;
       /**
-       * Array of options for the popover
+       * Array of options for the popover 
        */
       'options'?: SelectPopoverOption[];
       /**
-       * Subheader text for the popover
+       * Subheader text for the popover 
        */
       'subHeader'?: string;
     }
@@ -6560,7 +6560,7 @@ declare global {
   namespace StencilComponents {
     interface IonSkeletonText {
       /**
-       * Width for the element to render at. Default is 100%
+       * Width for the element to render at. Default is 100% 
        */
       'width': string;
     }
@@ -6586,7 +6586,7 @@ declare global {
   namespace JSXElements {
     export interface IonSkeletonTextAttributes extends HTMLAttributes {
       /**
-       * Width for the element to render at. Default is 100%
+       * Width for the element to render at. Default is 100% 
        */
       'width'?: string;
     }
@@ -6863,7 +6863,7 @@ declare global {
       'disabled': boolean;
       'isPane': (element: HTMLElement) => boolean;
       /**
-       * Returns if the split pane is toggled or not
+       * Returns if the split pane is toggled or not 
        */
       'isVisible': () => boolean;
       /**
@@ -6920,11 +6920,11 @@ declare global {
       'color': Color;
       'mode': Mode;
       /**
-       * If the tab is selected or not
+       * If the tab is selected or not 
        */
       'selected': boolean;
       /**
-       * The tab component for the button
+       * The tab component for the button 
        */
       'tab': HTMLIonTabElement;
     }
@@ -6952,23 +6952,23 @@ declare global {
       'color'?: Color;
       'mode'?: Mode;
       /**
-       * Emitted when the tab button is loaded
+       * Emitted when the tab button is loaded 
        */
       'onIonTabButtonDidLoad'?: (event: CustomEvent<void>) => void;
       /**
-       * Emitted when the tab button is destroyed
+       * Emitted when the tab button is destroyed 
        */
       'onIonTabButtonDidUnload'?: (event: CustomEvent<void>) => void;
       /**
-       * Emitted when the tab bar is clicked
+       * Emitted when the tab bar is clicked  
        */
       'onIonTabbarClick'?: (event: CustomEvent<HTMLIonTabElement>) => void;
       /**
-       * If the tab is selected or not
+       * If the tab is selected or not 
        */
       'selected'?: boolean;
       /**
-       * The tab component for the button
+       * The tab component for the button 
        */
       'tab'?: HTMLIonTabElement;
     }
@@ -6981,7 +6981,7 @@ declare global {
   namespace StencilComponents {
     interface IonTab {
       /**
-       * If the tab is active or not
+       * If the tab is active or not 
        */
       'active': boolean;
       /**
@@ -6993,7 +6993,7 @@ declare global {
        */
       'badgeColor': Color;
       /**
-       * hidden
+       * hidden 
        */
       'btnId': string;
       /**
@@ -7006,7 +7006,7 @@ declare global {
        */
       'disabled': boolean;
       /**
-       * Get the Id for the tab
+       * Get the Id for the tab 
        */
       'getTabId': () => string | null;
       /**
@@ -7030,7 +7030,7 @@ declare global {
        */
       'selected': boolean;
       /**
-       * Set the active component for the tab
+       * Set the active component for the tab 
        */
       'setActive': () => Promise<void>;
       /**
@@ -7064,7 +7064,7 @@ declare global {
   namespace JSXElements {
     export interface IonTabAttributes extends HTMLAttributes {
       /**
-       * If the tab is active or not
+       * If the tab is active or not 
        */
       'active'?: boolean;
       /**
@@ -7076,7 +7076,7 @@ declare global {
        */
       'badgeColor'?: Color;
       /**
-       * hidden
+       * hidden 
        */
       'btnId'?: string;
       /**
@@ -7131,28 +7131,28 @@ declare global {
     interface IonTabbar {
       'color': Color;
       /**
-       * If the tabbar should include the highlight on the active tab
+       * If the tabbar should include the highlight on the active tab 
        */
       'highlight': boolean;
       /**
-       * The layout of the title and icons
+       * The layout of the title and icons 
        */
       'layout': TabbarLayout;
       'mode': Mode;
       /**
-       * The placement of the tabbar in the app
+       * The placement of the tabbar in the app 
        */
       'placement': TabbarPlacement;
       /**
-       * If the tabbar is scrollable or not
+       * If the tabbar is scrollable or not 
        */
       'scrollable': boolean;
       /**
-       * The selected tab component
+       * The selected tab component 
        */
       'selectedTab': HTMLIonTabElement;
       /**
-       * The tabs to render
+       * The tabs to render 
        */
       'tabs': HTMLIonTabElement[];
       /**
@@ -7183,28 +7183,28 @@ declare global {
     export interface IonTabbarAttributes extends HTMLAttributes {
       'color'?: Color;
       /**
-       * If the tabbar should include the highlight on the active tab
+       * If the tabbar should include the highlight on the active tab 
        */
       'highlight'?: boolean;
       /**
-       * The layout of the title and icons
+       * The layout of the title and icons 
        */
       'layout'?: TabbarLayout;
       'mode'?: Mode;
       /**
-       * The placement of the tabbar in the app
+       * The placement of the tabbar in the app 
        */
       'placement'?: TabbarPlacement;
       /**
-       * If the tabbar is scrollable or not
+       * If the tabbar is scrollable or not 
        */
       'scrollable'?: boolean;
       /**
-       * The selected tab component
+       * The selected tab component 
        */
       'selectedTab'?: HTMLIonTabElement;
       /**
-       * The tabs to render
+       * The tabs to render 
        */
       'tabs'?: HTMLIonTabElement[];
       /**
@@ -7230,7 +7230,7 @@ declare global {
        */
       'getSelected': () => HTMLIonTabElement | undefined;
       /**
-       * Get the tab at the given index
+       * Get the tab at the given index 
        */
       'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => HTMLIonTabElement | undefined;
       /**
@@ -7238,7 +7238,7 @@ declare global {
        */
       'name': string;
       /**
-       * If the tabs should be scrollable
+       * If the tabs should be scrollable 
        */
       'scrollable': boolean;
       /**
@@ -7308,7 +7308,7 @@ declare global {
       'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
       'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
       /**
-       * If the tabs should be scrollable
+       * If the tabs should be scrollable 
        */
       'scrollable'?: boolean;
       /**

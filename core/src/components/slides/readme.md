@@ -33,7 +33,7 @@ See http://idangero.us/swiper/api/ for valid options
 
 boolean
 
-Show or hide the pager
+If true, show the pagination. Defaults to `false`.
 
 
 ## Attributes
@@ -50,7 +50,7 @@ See http://idangero.us/swiper/api/ for valid options
 
 boolean
 
-Show or hide the pager
+If true, show the pagination. Defaults to `false`.
 
 
 ## Events
