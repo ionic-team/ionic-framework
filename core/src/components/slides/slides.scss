@@ -8,18 +8,37 @@
   display: block;
 }
 
+
+// Pagination Bullets
+// --------------------------------------------------
+
 .swiper-pagination-bullet {
-  background-color: var(--bullet-background-color);
+  background: var(--bullet-background);
 }
 
-.swiper-pagination-progress {
-  background-color: var(--progress-background-color);
+.swiper-pagination-bullet-active {
+  background: var(--bullet-background-active);
 }
 
-.swiper-pagination-progress .swiper-pagination-progressbar {
-  background-color: var(--progress-bar-background-color);
+
+// Pagination Progress Bar
+// --------------------------------------------------
+
+.swiper-pagination-progressbar {
+  background: var(--progress-bar-background);
 }
+
+.swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
+  background: var(--progress-bar-background-active);
+}
+
+// Scrollbar
+// --------------------------------------------------
 
 .swiper-scrollbar {
-  background-color: var(--swiper-scrollbar-background-color);
+  background: var(--scroll-bar-background);
+}
+
+.swiper-scrollbar-drag {
+  background: var(--scroll-bar-background-active);
 }

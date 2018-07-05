@@ -6712,7 +6712,8 @@ var Swiper;
       var $swiperEl = swiper.$el;
       var params = swiper.params.scrollbar;
 
-      var $el = $(params.el);
+      // Ionic hack to work with shadow
+      var $el = $(this.el.querySelector(params.el)) || $(params.el);
       if (
         swiper.params.uniqueNavElements &&
         typeof params.el === 'string' &&
