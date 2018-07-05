@@ -14,20 +14,4 @@
     </ion-item-options>
   </ion-item-sliding>
 </ion-list>
-
-
-<ion-item-options side="end">
-  <ion-item-option onClick="archive(item)">
-    <ion-icon name="archive"></ion-icon>
-    Archive
-  </ion-item-option>
-</ion-item-options>
-
-<ion-item-options side="start">
-  <ion-item-option onClick="archive(item)">
-    <ion-icon name="archive"></ion-icon>
-    Archive
-  </ion-item-option>
-</ion-item-options>
-
 ```
