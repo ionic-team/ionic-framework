@@ -36,6 +36,13 @@ boolean
 If true, show the pagination. Defaults to `false`.
 
 
+#### scrollbar
+
+boolean
+
+If true, show the scrollbar. Defaults to `false`.
+
+
 ## Attributes
 
 #### options
@@ -51,6 +58,13 @@ See http://idangero.us/swiper/api/ for valid options
 boolean
 
 If true, show the pagination. Defaults to `false`.
+
+
+#### scrollbar
+
+boolean
+
+If true, show the scrollbar. Defaults to `false`.
 
 
 ## Events
