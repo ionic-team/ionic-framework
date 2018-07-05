@@ -1,9 +1,6 @@
 # ion-ripple-effect
 
-RippleEffect is component that adds the Material Design button ripple effect.
-This is the stand alone version of the ripple effect and can be added to any component.
-
-
+The ripple effect component adds the [Material Design ink ripple interaction effect](https://material.io/develop/web/components/ripples/). This component can be used without a button and can be added to any component.
 
 
 <!-- Auto Generated Below -->

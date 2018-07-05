@@ -20,6 +20,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Item Divider](#item-divider)
 - [Item Options](#item-options)
 - [Item Sliding](#item-sliding)
+- [Label](#label)
 - [List Header](#list-header)
 - [Menu Toggle](#menu-toggle)
 - [Nav](#nav)
@@ -683,6 +684,47 @@ The option component should not be written as a `button` with an `ion-button` di
 ### Method Renamed
 
 The `getSlidingPercent` method has been renamed to `getSlidingRatio` since the function is returning a ratio of the open amount of the item compared to the width of the options.
+
+
+## Label
+
+### Attributes Renamed
+
+The attributes to set label position for input are now combined under the `position` attribute:
+
+| Old Property | New Property         | Property Behavior                                                            |
+|--------------|----------------------|------------------------------------------------------------------------------|
+| fixed        | `position="fixed"`   | A persistent label that sits next the input.                                 |
+| floating     | `position="floating"`| A label that will float above the input if the input is empty or loses focus.|
+| stacked      | `position="stacked"` | A stacked label will always appear on top of the input.                      |
+
+**Old Usage Example:**
+
+```html
+<ion-item>
+  <ion-label floating>Floating Label</ion-label>    
+  <!-- input -->
+</ion-item>
+
+<ion-item>
+  <ion-label fixed>Fixed Label</ion-label>    
+  <!-- input -->
+</ion-item>
+```
+
+**New Usage Example:**
+
+```html
+<ion-item>
+  <ion-label position="floating">Floating Label</ion-label>    
+  <!-- input -->
+</ion-item>
+
+<ion-item>
+  <ion-label position="fixed">Fixed Label</ion-label>    
+  <!-- input -->
+</ion-item>
+```
 
 
 ## List Header
