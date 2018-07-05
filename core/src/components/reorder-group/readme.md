@@ -1,6 +1,6 @@
 # ion-reorder-group
 
-ReorderGroup is a wrapper component for items with the Reorder element. For more information, see the [Reorder docs](../reorder/)
+The reorder group is a wrapper component for items with the `ion-reorder` component. For more information, see the [Reorder documentation](../reorder/).
 
 <!-- Auto Generated Below -->
 
