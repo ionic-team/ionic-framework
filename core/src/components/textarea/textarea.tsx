@@ -246,7 +246,7 @@ export class Textarea implements TextareaComponent {
       <textarea
         autoCapitalize={this.autocapitalize}
         // autoComplete={this.autocomplete}
-        autoFocus={this.autofocus}
+        {this.autofocus ? 'autofocus' : false}
         disabled={this.disabled}
         maxLength={this.maxlength}
         minLength={this.minlength}

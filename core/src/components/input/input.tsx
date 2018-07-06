@@ -321,7 +321,7 @@ export class Input implements InputComponent {
         autoCapitalize={this.autocapitalize}
         autoComplete={this.autocomplete}
         autoCorrect={this.autocorrect}
-        autoFocus={this.autofocus}
+        {this.autofocus ? 'autofocus' : false}
         class={themedClasses}
         disabled={this.disabled}
         inputMode={this.inputmode}
