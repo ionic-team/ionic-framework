@@ -1,4 +1,4 @@
-import { Component } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -10,7 +10,12 @@ import { createThemedClasses } from '../../utils/theme';
   }
 })
 export class Header {
-  mode!: Mode;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
 
   hostData() {
     return {
