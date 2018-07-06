@@ -89,7 +89,7 @@ task('release.publishGithubRelease', (done: Function) => {
     github.releases.createRelease({
       owner: 'ionic-team',
       repo: 'ionic',
-      target_commitish: 'master',
+      target_commitish: 'v3',
       tag_name: 'v' + packageJSON.version,
       name: packageJSON.version,
       body: file.toString(),
@@ -270,7 +270,7 @@ task('release.pullLatest', (done: Function) => {
     } else if ( stdOut && stdOut.length > 0) {
       done(new Error('There are uncommited changes. Please commit or stash changes.'));
     } else {
-      const gitPullResult = spawnSync('git', ['pull', 'origin', 'master']);
+      const gitPullResult = spawnSync('git', ['pull', 'origin', 'v3']);
       if (gitPullResult.status !== 0) {
         done(new Error('Error running git pull'));
       }
