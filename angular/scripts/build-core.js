@@ -16,7 +16,7 @@ function buildIonicAngular() {
       ...process.argv.slice(2)
     ];
 
-    const p = spawn('stencil', args, { cwd: stencilPath, stdio: 'inherit' });
+    const p = spawn('./stencil', args, { cwd: stencilPath, stdio: 'inherit' });
     p.on('close', (code) => {
       if (code > 0) {
         console.log(`@ionic/angular build exited with ${code}`);

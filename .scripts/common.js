@@ -3,6 +3,7 @@ const path = require('path');
 const execa = require('execa');
 const Listr = require('listr');
 const semver = require('semver');
+const chalk = require('chalk');
 
 const rootDir = path.join(__dirname, '../');
 
@@ -62,12 +63,107 @@ function checkGit(tasks) {
 const isValidVersion = input => Boolean(semver.valid(input));
 
 
+function preparePackage(tasks, package, version) {
+  const projectRoot = projectPath(package);
+  const pkg = readPkg(package);
+
+  const projectTasks = [];
+  if (version) {
+    projectTasks.push({
+      title: `${pkg.name}: validate new version`,
+      task: () => {
+        if (!isVersionGreater(pkg.version, version)) {
+          throw new Error(`New version \`${version}\` should be higher than current version \`${pkg.version}\``);
+        }
+      }
+    });
+  }
+
+
+  projectTasks.push({
+    title: `${pkg.name}: install npm dependencies`,
+    task: async () => {
+      await fs.remove(path.join(projectRoot, 'node_modules'))
+      await execa('npm', ['ci'], { cwd: projectRoot });
+    }
+  });
+
+  if (package !== 'core') {
+    projectTasks.push({
+      title: `${pkg.name}: npm link @ionic/core`,
+      task: () => execa('npm', ['link', '@ionic/core'], { cwd: projectRoot })
+    });
+    if (version) {
+      projectTasks.push({
+        title: `${pkg.name}: update ionic/core dep to ${version}`,
+        task: () => {
+          updateDependency(pkg, "@ionic/core", version);
+          writePkg(package, pkg);
+        }
+      });
+    }
+  }
+
+  if (version) {
+    projectTasks.push({
+      title: `${pkg.name}: lint`,
+      task: () => execa('npm', ['run', 'lint'], { cwd: projectRoot })
+    });
+  }
+
+  projectTasks.push({
+    title: `${pkg.name}: build`,
+    task: () => execa('npm', ['run', 'build'], { cwd: projectRoot })
+  });
+
+  if (version) {
+    projectTasks.push({
+      title: `${pkg.name}: test`,
+      task: () => execa('npm', ['test'], { cwd: projectRoot })
+    });
+  }
+
+  if (package === 'core') {
+    projectTasks.push({
+      title: `${pkg.name}: npm link`,
+      task: () => execa('npm', ['link'], { cwd: projectRoot })
+    });
+  }
+
+  // Add project tasks
+  tasks.push({
+    title: `Prepare ${chalk.bold(pkg.name)}`,
+    task: () => new Listr(projectTasks)
+  });
+}
+
+
+function updateDependency(pkg, dependency, version) {
+  if (pkg.dependencies && pkg.dependencies[dependency]) {
+    pkg.dependencies[dependency] = version;
+  }
+  if (pkg.devDependencies && pkg.devDependencies[dependency]) {
+    pkg.devDependencies[dependency] = version;
+  }
+}
+
+function isVersionGreater(oldVersion, newVersion) {
+  if (!isValidVersion(newVersion)) {
+    throw new Error('Version should be a valid semver version.');
+  }
+
+  return semver.gt(newVersion, oldVersion);
+}
+
+
 module.exports = {
   isValidVersion,
+  isVersionGreater,
   readPkg,
   writePkg,
   rootDir,
   projectPath,
   checkGit,
-  packages
+  packages,
+  preparePackage
 };
