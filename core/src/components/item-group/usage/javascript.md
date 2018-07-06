@@ -1,6 +1,8 @@
 ```html
 <ion-item-group>
-  <ion-item-divider>A</ion-item-divider>
+  <ion-item-divider>
+    <ion-label>A</ion-label>
+  </ion-item-divider>
 
   <ion-item>
     <ion-label>Angola</ion-label>
@@ -14,7 +16,9 @@
 </ion-item-group>
 
 <ion-item-group>
-  <ion-item-divider>B</ion-item-divider>
+  <ion-item-divider>
+    <ion-label>B</ion-label>
+  </ion-item-divider>
 
   <ion-item>
     <ion-label>Bangladesh</ion-label>
@@ -31,7 +35,9 @@
 <!-- They can also be used to group sliding items -->
 <ion-item-group>
   <ion-item-divider>
-    Fruits
+    <ion-label>
+      Fruits
+    </ion-label>
   </ion-item-divider>
 
   <ion-item-sliding>
@@ -63,7 +69,9 @@
 
 <ion-item-group>
   <ion-item-divider>
-    Vegetables
+    <ion-label>
+      Vegetables
+    </ion-label>
   </ion-item-divider>
 
   <ion-item-sliding>

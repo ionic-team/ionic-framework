@@ -4,26 +4,11 @@
 // Material Design Slides
 // --------------------------------------------------
 
-.swiper-pagination-bullet {
-  --bullet-background-color: #{$slides-md-bullet-background-color};
-}
-
-.swiper-pagination-bullet-active {
-  --bullet-background-color: #{$slides-md-bullet-background-color-active};
-}
-
-.swiper-pagination-progress {
-  --progress-background-color: #{$slides-md-progress-background-color};
-}
-
-.swiper-pagination-progress .swiper-pagination-progressbar {
-  --progress-bar-background-color: #{$slides-md-progress-bar-background-color};
-}
-
-.swiper-scrollbar {
-  --swiper-scrollbar-background-color: #{$slides-md-scroll-bar-background-color};
-}
-
-.swiper-scrollbar-drag {
-  --swiper-scrollbar-background-color: #{$slides-md-scroll-bar-drag-background-color};
+:host {
+  --bullet-background: #{$slides-md-bullet-background};
+  --bullet-background-active: #{$slides-md-bullet-background-active};
+  --progress-bar-background: #{$slides-md-progress-bar-background};
+  --progress-bar-background-active: #{$slides-md-progress-bar-background-active};
+  --scroll-bar-background: #{$slides-md-scroll-bar-background};
+  --scroll-bar-background-active: #{$slides-md-scroll-bar-drag-background};
 }

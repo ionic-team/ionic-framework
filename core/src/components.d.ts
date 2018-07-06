@@ -6672,6 +6672,10 @@ declare global {
        */
       'pager': boolean;
       /**
+       * If true, show the scrollbar. Defaults to `false`.
+       */
+      'scrollbar': boolean;
+      /**
        * Transition to the next slide.
        */
       'slideNext': (speed?: number | undefined, runCallbacks?: boolean | undefined) => void;
@@ -6777,6 +6781,10 @@ declare global {
        * If true, show the pagination. Defaults to `false`.
        */
       'pager'?: boolean;
+      /**
+       * If true, show the scrollbar. Defaults to `false`.
+       */
+      'scrollbar'?: boolean;
     }
   }
 }

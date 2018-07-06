@@ -103,6 +103,11 @@ export class Slides {
    */
   @Prop() pager = false;
 
+  /**
+   * If true, show the scrollbar. Defaults to `false`.
+   */
+  @Prop() scrollbar = false;
+
   componentDidLoad() {
     setTimeout(this.initSlides.bind(this), 10);
   }
@@ -255,6 +260,10 @@ export class Slides {
         type: 'bullets',
       },
       parallax: false,
+      scrollbar: {
+        el: '.swiper-scrollbar',
+        hide: true,
+      },
       slidesPerView: 1,
       spaceBetween: 0,
       speed: 300,
@@ -369,7 +378,8 @@ export class Slides {
         <div class="swiper-wrapper">
           <slot></slot>
         </div>
-        { this.pager ? <div class="swiper-pagination"></div> : null}
+        { this.pager ? <div class="swiper-pagination"></div> : null }
+        { this.scrollbar ? <div class="swiper-scrollbar"></div> : null }
       </div>
     );
   }
