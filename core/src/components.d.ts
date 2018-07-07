@@ -2176,7 +2176,10 @@ declare global {
 
   namespace StencilComponents {
     interface IonFooter {
-
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': Mode;
     }
   }
 
@@ -2199,7 +2202,10 @@ declare global {
   }
   namespace JSXElements {
     export interface IonFooterAttributes extends HTMLAttributes {
-
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: Mode;
     }
   }
 }
@@ -2442,7 +2448,10 @@ declare global {
 
   namespace StencilComponents {
     interface IonHeader {
-
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': Mode;
     }
   }
 
@@ -2465,7 +2474,10 @@ declare global {
   }
   namespace JSXElements {
     export interface IonHeaderAttributes extends HTMLAttributes {
-
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: Mode;
     }
   }
 }
