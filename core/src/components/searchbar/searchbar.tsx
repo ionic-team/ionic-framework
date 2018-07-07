@@ -165,6 +165,7 @@ export class Searchbar {
       const value = this.value;
       if (value !== undefined && value !== '') {
         this.value = '';
+        this.ionInput.emit();
       }
     }, 16 * 4);
     this.shouldBlur = false;
@@ -353,7 +354,7 @@ export class Searchbar {
     const cancelButton = (this.showCancelButton)
       ? <button
         type="button"
-        tabindex={this.mode === 'ios' && !this.activated ? -1 : undefined}
+        tabIndex={this.mode === 'ios' && !this.activated ? -1 : undefined}
         onClick={this.cancelSearchbar.bind(this)}
         onMouseDown={this.cancelSearchbar.bind(this)}
         class="searchbar-cancel-button">
