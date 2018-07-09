@@ -1,3 +1,28 @@
+<a name="4.0.0-alpha.8"></a>
+# [4.0.0-alpha.8](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.7...v4.0.0-alpha.8) (2018-07-09)
+
+
+### Bug Fixes
+
+* **angular:** avoid TS 2.8 features ([c736bac](https://github.com/ionic-team/ionic/commit/c736bac))
+* **angular:** correct subscription to cordova ready event ([#14577](https://github.com/ionic-team/ionic/issues/14577)) ([5967352](https://github.com/ionic-team/ionic/commit/5967352))
+* **bundling:** fix EventEmitter import ([8e47101](https://github.com/ionic-team/ionic/commit/8e47101))
+* linting ([e629e29](https://github.com/ionic-team/ionic/commit/e629e29))
+* **icon:** target element for style and add to breaking ([949d93e](https://github.com/ionic-team/ionic/commit/949d93e))
+* **overlay:** make type an any ([15dc651](https://github.com/ionic-team/ionic/commit/15dc651))
+* **router:** fix reuse strategy ([bd53bba](https://github.com/ionic-team/ionic/commit/bd53bba))
+* **scripts:** update github release notes ([fc078af](https://github.com/ionic-team/ionic/commit/fc078af))
+* **tabs:** align tab title and icons to flex-start ([c11d74b](https://github.com/ionic-team/ionic/commit/c11d74b)), closes [#14606](https://github.com/ionic-team/ionic/issues/14606)
+
+
+### Features
+
+* **all:** custom icons ([e6638e7](https://github.com/ionic-team/ionic/commit/e6638e7))
+* **dir:** default to ltr css, rtl overrides w/ [dir=rtl] selectors ([fb4353c](https://github.com/ionic-team/ionic/commit/fb4353c))
+* **slides:** update swiper to latest ([8e164d6](https://github.com/ionic-team/ionic/commit/8e164d6))
+
+
+
 <a name="4.0.0-alpha.7"></a>
 # [4.0.0-alpha.7](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.6...v4.0.0-alpha.7) (2018-05-17)
 

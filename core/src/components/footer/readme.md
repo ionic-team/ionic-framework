@@ -6,6 +6,26 @@ Footer can be a wrapper for ion-toolbar to make sure the content area is sized c
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+#### mode
+
+string
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+
+
+## Attributes
+
+#### mode
+
+string
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
+
+
 
 ----------------------------------------------
 
