@@ -1,12 +1,4 @@
-import {
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  Method,
-  Prop,
-  Watch
-} from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import { Color, Mode, StyleEvent } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
