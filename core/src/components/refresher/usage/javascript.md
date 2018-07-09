@@ -1,13 +1,12 @@
 ```html
+<!-- Default Refresher -->
 <ion-content>
   <ion-refresher slot="fixed">
-    <ion-refresher-content>
-    </ion-refresher-content>
+    <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 </ion-content>
 
-<!-- or for custom content -->
-
+<!-- Custom Refresher Content -->
 <ion-content>
   <ion-refresher slot="fixed">
     <ion-refresher-content
