@@ -7,20 +7,20 @@ Items are elements that can contain text, icons, avatars, images, inputs, and an
 
 By default, clickable items will display a right arrow icon on `ios` mode. To hide the right arrow icon on clickable elements, set the `detail` property to `false`. To show the right arrow icon on an item that doesn't display it naturally, add the `detail` attribute to the item.
 
-<!-- This feature is not enabled by default on clickable items for the `md` mode, but it can be enabled by setting the following Sass variable: -->
-<!--  -->
-<!-- ```scss -->
-<!-- $item-md-detail-push-show: true; -->
-<!-- ``` -->
+<!--
 
-<!-- It can also be turned off by default on clickable items for ios by setting the following Sass variable: -->
-<!--  -->
-<!-- ```scss -->
-<!-- $item-ios-detail-push-show: false; -->
-<!-- ``` -->
+TODO add this functionality back as a css variable
 
-<!-- See the [theming documentation](http://ionicframework.com/docs/theming/overriding-ionic-variables/) for more information on overriding Sass variables. -->
-<!--  -->
+This feature is not enabled by default on clickable items for the `md` mode, but it can be enabled by setting the following CSS variable:
+
+```css
+--item-detail-push-show: true;
+```
+
+See the [theming documentation](/docs/theming/css-variables) for more information.
+
+-->
+
 
 ## Item Placement
 
@@ -37,7 +37,7 @@ The below chart details the item slots and where it will place the element insid
 
 ### Text Alignment
 
-Items left align text and add an ellipsis when the text is wider than the item. See the [Utility Attributes Documentation](../../../../theming/css-utilities/) for attributes that can be added to `<ion-item>` to transform the text.
+Items left align text and add an ellipsis when the text is wider than the item. See the [Utility Attributes Documentation](/docs/layout/css-utilities) for attributes that can be added to `<ion-item>` to transform the text.
 
 
 <!-- Auto Generated Below -->

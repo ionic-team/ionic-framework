@@ -61,7 +61,8 @@ export class Item {
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
 
-  @Prop() state?: 'valid' | 'unvalid' | 'focus';
+  // TODO document this
+  @Prop() state?: 'valid' | 'invalid' | 'focus';
 
   /**
    * When using a router, it specifies the transition direction when navigating to

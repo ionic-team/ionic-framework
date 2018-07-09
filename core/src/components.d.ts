@@ -3282,7 +3282,7 @@ declare global {
        * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection': RouterDirection;
-      'state': 'valid' | 'unvalid' | 'focus';
+      'state': 'valid' | 'invalid' | 'focus';
     }
   }
 
@@ -3341,7 +3341,7 @@ declare global {
        * When using a router, it specifies the transition direction when navigating to another page using `href`.
        */
       'routerDirection'?: RouterDirection;
-      'state'?: 'valid' | 'unvalid' | 'focus';
+      'state'?: 'valid' | 'invalid' | 'focus';
     }
   }
 }
