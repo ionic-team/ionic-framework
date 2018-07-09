@@ -3463,11 +3463,11 @@ declare global {
        */
       'closeSlidingItems': () => boolean;
       /**
-       * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
+       * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently open.
        */
       'getOpenItem': () => HTMLIonItemSlidingElement | undefined;
       /**
-       * How the bottom border should be displayed on all items.
+       * If true, the list will have margin around it and rounded corners. Defaults to `"false"`.
        */
       'inset': boolean;
       /**
@@ -3501,7 +3501,7 @@ declare global {
   namespace JSXElements {
     export interface IonListAttributes extends HTMLAttributes {
       /**
-       * How the bottom border should be displayed on all items.
+       * If true, the list will have margin around it and rounded corners. Defaults to `"false"`.
        */
       'inset'?: boolean;
       /**

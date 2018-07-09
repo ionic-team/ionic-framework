@@ -20,12 +20,12 @@ export class List {
   @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
-   * How the bottom border should be displayed on all items.
+   * If true, the list will have margin around it and rounded corners. Defaults to `"false"`.
    */
   @Prop() inset = false;
 
   /**
-   * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
+   * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently open.
    */
   @Method()
   getOpenItem() {
