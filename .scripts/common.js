@@ -76,17 +76,16 @@ function preparePackage(tasks, package, version) {
           throw new Error(`New version \`${version}\` should be higher than current version \`${pkg.version}\``);
         }
       }
+    }, {
+      title: `${pkg.name}: install npm dependencies`,
+      task: async () => {
+        await fs.remove(path.join(projectRoot, 'node_modules'))
+        await execa('npm', ['ci'], { cwd: projectRoot });
+      }
     });
   }
 
 
-  projectTasks.push({
-    title: `${pkg.name}: install npm dependencies`,
-    task: async () => {
-      await fs.remove(path.join(projectRoot, 'node_modules'))
-      await execa('npm', ['ci'], { cwd: projectRoot });
-    }
-  });
 
   if (package !== 'core') {
     projectTasks.push({
@@ -123,12 +122,10 @@ function preparePackage(tasks, package, version) {
     });
   }
 
-  if (package === 'core') {
-    projectTasks.push({
-      title: `${pkg.name}: npm link`,
-      task: () => execa('npm', ['link'], { cwd: projectRoot })
-    });
-  }
+  projectTasks.push({
+    title: `${pkg.name}: npm link`,
+    task: () => execa('npm', ['link'], { cwd: projectRoot })
+  });
 
   // Add project tasks
   tasks.push({
