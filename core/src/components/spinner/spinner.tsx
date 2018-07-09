@@ -1,6 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Config, Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 import { SPINNERS, SpinnerConfig } from './spinner-configs';
 
 
@@ -10,9 +10,7 @@ import { SPINNERS, SpinnerConfig } from './spinner-configs';
     ios: 'spinner.ios.scss',
     md: 'spinner.md.scss'
   },
-  host: {
-    theme: 'spinner'
-  }
+  shadow: true
 })
 export class Spinner {
   @Prop({ context: 'config' }) config!: Config;
@@ -70,15 +68,13 @@ export class Spinner {
   }
 
   hostData() {
-    const themedClasses = createThemedClasses(this.mode, this.color, `spinner spinner-${this.getName()}`);
-
-    const spinnerClasses = {
-      ...themedClasses,
-      'spinner-paused': this.paused
-    };
-
     return {
-      class: spinnerClasses
+      class: {
+        ...createColorClasses(this.color),
+
+        [`spinner-${this.getName()}`]: true,
+        'spinner-paused': this.paused
+      }
     };
   }
 
@@ -86,9 +82,7 @@ export class Spinner {
     const name = this.getName();
 
     const spinner = SPINNERS[name] || SPINNERS['lines'];
-
     const duration = (typeof this.duration === 'number' && this.duration > 10 ? this.duration : spinner.dur);
-
     const svgs: any[] = [];
 
     if (spinner.circles) {

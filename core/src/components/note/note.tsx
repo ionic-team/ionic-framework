@@ -1,5 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-note',
@@ -7,9 +8,7 @@ import { Color, Mode } from '../../interface';
     ios: 'note.ios.scss',
     md: 'note.md.scss'
   },
-  host: {
-    theme: 'note'
-  }
+  shadow: true
 })
 export class Note {
   /**
@@ -23,4 +22,17 @@ export class Note {
    * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
+
+  hostData() {
+    return {
+      class: {
+        ...createColorClasses(this.color)
+      }
+    };
+  }
+
+  render() {
+    return <slot></slot>;
+  }
+
 }

@@ -59,8 +59,9 @@ rules:
       allow-element-with-id: false
 
 
+  # TODO temporarily disabled until https://github.com/sasstools/sass-lint/pull/1207 is merged
   property-sort-order:
-    - 2
+    - 0
     - ignore-custom-properties: false
       order:
 

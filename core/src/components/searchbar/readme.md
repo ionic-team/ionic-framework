@@ -32,20 +32,32 @@ string
 Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
 
 
+#### cancelButtonIcon
+
+string
+
+Set the cancel button icon. Only applies to `md` mode. Defaults to `"md-arrow-back"`.
+
+
 #### cancelButtonText
 
 string
 
-Set the the cancel button text. Default: `"Cancel"`.
+Set the the cancel button text. Only applies to `ios` mode. Default: `"Cancel"`.
+
+
+#### clearIcon
+
+string
+
+Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
 
 
 #### color
 
 string
 
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
+The color the searchbar should be.
 
 
 #### debounce
@@ -61,7 +73,6 @@ string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### placeholder
@@ -69,6 +80,13 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 string
 
 Set the input's placeholder. Default `"Search"`.
+
+
+#### searchIcon
+
+string
+
+The icon to use as the search icon. Defaults to `"search"`.
 
 
 #### showCancelButton
@@ -122,20 +140,32 @@ string
 Set the input's autocorrect property. Values: `"on"`, `"off"`. Default `"off"`.
 
 
+#### cancel-button-icon
+
+string
+
+Set the cancel button icon. Only applies to `md` mode. Defaults to `"md-arrow-back"`.
+
+
 #### cancel-button-text
 
 string
 
-Set the the cancel button text. Default: `"Cancel"`.
+Set the the cancel button text. Only applies to `ios` mode. Default: `"Cancel"`.
+
+
+#### clear-icon
+
+string
+
+Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
 
 
 #### color
 
 string
 
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
+The color the searchbar should be.
 
 
 #### debounce
@@ -151,7 +181,6 @@ string
 
 The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
 
 
 #### placeholder
@@ -159,6 +188,13 @@ For more information, see [Platform Styles](/docs/theming/platform-specific-styl
 string
 
 Set the input's placeholder. Default `"Search"`.
+
+
+#### search-icon
+
+string
+
+The icon to use as the search icon. Defaults to `"search"`.
 
 
 #### show-cancel-button

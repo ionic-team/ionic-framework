@@ -22,19 +22,19 @@ $chip-ios-height:                           32px !default;
 $chip-ios-border-radius:                    16px !default;
 
 /// @prop - Font family of the chip
-$chip-ios-font-family:                      $font-family-ios-base !default;
+$chip-ios-font-family:                      $font-family-base !default;
 
 /// @prop - Font size of the chip
 $chip-ios-font-size:                        13px !default;
 
 /// @prop - Text color of the chip
-$chip-ios-text-color:                       $text-ios-color-step-150 !default;
+$chip-ios-text-color:                       $text-color-step-150 !default;
 
 /// @prop - Background color alpha of the chip
 $chip-ios-background-color-alpha:           .1 !default;
 
 /// @prop - Background color of the chip
-$chip-ios-background-color:                 css-var($text-ios-color-value, text-ios-color, $chip-ios-background-color-alpha) !default;
+$chip-ios-background-color:                 rgba(var(--ion-text-color-rgb, $text-color-rgb), $chip-ios-background-color-alpha) !default;
 
 /// @prop - Margin top of the label in the chip
 $chip-ios-label-margin-top:                 0 !default;
@@ -49,10 +49,10 @@ $chip-ios-label-margin-bottom:              $chip-ios-label-margin-top !default;
 $chip-ios-label-margin-start:               $chip-ios-label-margin-end !default;
 
 /// @prop - Background color of the icon in the chip
-$chip-ios-icon-background-color:            ion-color($colors-ios, primary, base, ios) !default;
+$chip-ios-icon-background-color:            ion-color(primary, base) !default;
 
 /// @prop - Fill color of the icon in the chip
-$chip-ios-icon-fill-color:                  ion-color($colors-ios, $chip-ios-icon-background-color, contrast, ios) !default;
+$chip-ios-icon-fill-color:                  ion-color(primary, contrast) !default;
 
 /// @prop - Width of the avatar in the chip
 $chip-ios-avatar-width:                     32px !default;

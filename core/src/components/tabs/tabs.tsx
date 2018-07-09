@@ -1,11 +1,11 @@
 import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Color, Config, NavOutlet, RouteID, RouteWrite } from '../../interface';
-import { TabbarLayout, TabbarPlacement } from '../tabbar/tabbar';
+import { Color, Config, NavOutlet, RouteID, RouteWrite, TabbarLayout, TabbarPlacement } from '../../interface';
 
 
 @Component({
   tag: 'ion-tabs',
-  styleUrl: 'tabs.scss'
+  styleUrl: 'tabs.scss',
+  shadow: true
 })
 export class Tabs implements NavOutlet {
 

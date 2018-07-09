@@ -10,28 +10,28 @@ $fab-md-box-shadow:                               0 4px 6px 0 rgba(0, 0, 0, .14)
 $fab-md-box-shadow-activated:                     0 5px 15px 0 rgba(0, 0, 0, .4), 0 4px 7px 0 rgba(0, 0, 0, .1) !default;
 
 /// @prop - Background color of the button
-$fab-md-background-color:                         ion-color($colors-md, primary, base, md) !default;
+$fab-md-background-color:                         ion-color(primary, base) !default;
 
 /// @prop - Text color of the button
-$fab-md-text-color:                               ion-color($colors-md, $fab-md-background-color, contrast, md) !default;
+$fab-md-text-color:                               ion-color(primary, contrast) !default;
 
 /// @prop - Color of the button icon
 $fab-md-icon-fill-color:                          $fab-md-text-color !default;
 
 /// @prop - Background color of the activated button
-$fab-md-background-color-activated:               ion-color($colors-md, $fab-md-background-color, tint, md) !default;
+$fab-md-background-color-activated:               ion-color(primary, tint) !default;
 
 /// @prop - Background color of the button in a list
-$fab-md-list-button-background-color:             ion-color($colors-md, light, base, md) !default;
+$fab-md-list-button-background-color:             ion-color(light, base) !default;
 
 /// @prop - Text color of the button in a list
-$fab-md-list-button-text-color:                   ion-color($colors-md, $fab-md-list-button-background-color, contrast, md) !default;
+$fab-md-list-button-text-color:                   ion-color(light, contrast) !default;
 
 /// @prop - Color of the button icon in a list
 $fab-md-list-button-icon-fill-color:              $fab-md-list-button-text-color !default;
 
 /// @prop - Background color of the activated button in a list
-$fab-md-list-button-background-color-activated:   ion-color($colors-md, $fab-md-list-button-background-color, tint, md) !default;
+$fab-md-list-button-background-color-activated:   ion-color(primary, tint) !default;
 
 /// @prop - Transition duration of the transform and opacity of the button in a list
 $fab-md-list-button-transition-duration:          200ms !default;

@@ -21,7 +21,7 @@ export class NavPush {
   push(): Promise<any> {
     const nav = this.el.closest('ion-nav');
     const toPush = this.component;
-    if (nav && toPush) {
+    if (nav && toPush && !nav.isAnimating()) {
       return nav.push(toPush, this.componentProps);
     }
     return Promise.resolve(null);

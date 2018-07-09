@@ -4,7 +4,7 @@
 // Label
 // --------------------------------------------------
 
-ion-label {
+:host {
   @include margin(0);
 
   display: block;
@@ -15,9 +15,26 @@ ion-label {
   font-size: inherit;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  box-sizing: border-box;
+
+  color: #{current-color(base)};
+
+  --ion-color-base: currentColor;
 }
 
-.item-input ion-label {
+:host([text-wrap]) {
+  white-space: normal;
+}
+
+:host-context(.item-interactive-disabled) {
+  cursor: default;
+  opacity: .3;
+
+  pointer-events: none;
+}
+
+:host-context(.item-input) {
   flex: initial;
 
   max-width: 200px;
@@ -25,15 +42,11 @@ ion-label {
   pointer-events: none;
 }
 
-[text-wrap] ion-label {
-  white-space: normal;
-}
 
-
-// Stacked & Floating Inputs
+// Fixed Inputs
 // --------------------------------------------------
 
-.label-fixed {
+:host(.label-fixed) {
   flex: 0 0 100px;
 
   width: 100px;
@@ -41,28 +54,20 @@ ion-label {
   max-width: 200px;
 }
 
-.item-label-stacked ion-label,
-.item-label-floating ion-label {
+// Stacked & Floating Inputs
+// --------------------------------------------------
+
+:host(.label-stacked),
+:host(.label-floating) {
+  @include margin(null, null, 0, null);
+
   align-self: stretch;
 
   width: auto;
   max-width: 100%;
 }
 
-.label-stacked ,
-.label-floating {
-  @include margin(null, null, 0, null);
-}
-
-.item-label-stacked .input-wrapper,
-.item-label-floating .input-wrapper {
-  flex: 1;
-  flex-direction: column;
-}
-
-.item-label-stacked ion-select,
-.item-label-floating ion-select {
-  align-self: stretch;
-
-  max-width: 100%;
+:host-context(.item-has-focus).label-floating,
+:host-context(.item-has-value).label-floating {
+  @include transform(translate3d(0, 0, 0), scale(.8));
 }

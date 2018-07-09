@@ -1,21 +1,24 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+import { Mode } from '../../interface.js';
+import { createThemedClasses } from '../../utils/theme.js';
 import { Swiper }  from './vendor/swiper.js';
+
 @Component({
   tag: 'ion-slides',
   styleUrls: {
     ios: 'slides.ios.scss',
     md: 'slides.md.scss'
   },
-  host: {
-    theme: 'slides'
-  },
-  assetsDir: 'vendor'
+  assetsDir: 'vendor',
+  shadow: true
 })
 export class Slides {
   private container!: HTMLElement;
   private swiper: any;
 
-  @Element() el!: HTMLElement;
+  mode!: Mode;
+
+  @Element() el!: HTMLStencilElement;
 
   /**
    * Emitted before the active slide has changed.
@@ -96,9 +99,14 @@ export class Slides {
   }
 
   /**
-   * Show or hide the pager
+   * If true, show the pagination. Defaults to `false`.
    */
-  @Prop() pager = true;
+  @Prop() pager = false;
+
+  /**
+   * If true, show the scrollbar. Defaults to `false`.
+   */
+  @Prop() scrollbar = false;
 
   componentDidLoad() {
     setTimeout(this.initSlides.bind(this), 10);
@@ -110,7 +118,7 @@ export class Slides {
 
   private initSlides() {
     console.debug(`ion-slides, init`);
-    this.container = this.el.children[0] as HTMLElement;
+    this.container = (this.el.shadowRoot || this.el).querySelector('.swiper-container') as HTMLElement;
     const finalOptions = this.normalizeOptions();
     // init swiper core
     this.swiper = new Swiper(this.container, finalOptions);
@@ -247,9 +255,15 @@ export class Slides {
       initialSlide: 0,
       loop: false,
       pager: false,
-      pagination: '.swiper-pagination',
-      paginationType: 'bullets',
+      pagination: {
+        el: '.swiper-pagination',
+        type: 'bullets',
+      },
       parallax: false,
+      scrollbar: {
+        el: '.swiper-scrollbar',
+        hide: true,
+      },
       slidesPerView: 1,
       spaceBetween: 0,
       speed: 300,
@@ -352,18 +366,20 @@ export class Slides {
     return Object.assign({}, swiperOptions, this.options, eventOptions);
   }
 
+  hostData() {
+    return {
+      class: createThemedClasses(this.mode, 'slides')
+    };
+  }
+
   render() {
     return (
-      <div class="swiper-container">
+      <div class="swiper-container" ref={ (el) => this.container = el as HTMLElement }>
         <div class="swiper-wrapper">
-          <slot />
+          <slot></slot>
         </div>
-        <div
-          class={{
-            'swiper-pagination': true,
-            hide: !this.pager
-          }}
-        />
+        { this.pager ? <div class="swiper-pagination"></div> : null }
+        { this.scrollbar ? <div class="swiper-scrollbar"></div> : null }
       </div>
     );
   }

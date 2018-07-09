@@ -40,8 +40,6 @@ exports.config.outputTargets = [
       'ion-animation-controller',
       'ion-animation-controller',
       'ion-gesture-controller',
-      'ion-platform',
-      'ion-cordova-platform',
 
       // navigation
       'ion-router',
@@ -54,11 +52,9 @@ exports.config.outputTargets = [
 
       // auxiliar
       'ion-gesture',
-      'ion-status-tap',
       'ion-tap-click',
       'ion-picker-column',
       'ion-range-knob',
-      'ion-input-shims',
       'ion-backdrop',
       'ion-anchor',
       'ion-virtual-scroll'

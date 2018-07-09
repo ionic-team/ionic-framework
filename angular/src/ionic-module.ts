@@ -24,6 +24,7 @@ const DECLARATIONS = [
   d.Checkbox,
   d.Chip,
   d.ChipButton,
+  d.ChipIcon,
   d.Col,
   d.Content,
   d.Datetime,
@@ -34,6 +35,7 @@ const DECLARATIONS = [
   d.Grid,
   d.Header,
   d.HideWhen,
+  d.Icon,
   d.Img,
   d.InfiniteScroll,
   d.InfiniteScrollContent,
@@ -85,9 +87,6 @@ const DECLARATIONS = [
   d.Toggle,
   d.Toolbar,
   d.ToolbarTitle,
-
-  // custom proxy
-  c.Icon,
 
   // ngModel accessors
   c.BooleanValueAccessor,

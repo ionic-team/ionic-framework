@@ -4,46 +4,22 @@
 // Material Design Spinner
 // --------------------------------------------------
 
-.spinner-lines-md line,
-.spinner-lines-small-md line {
-  stroke: $spinner-md-lines-color;
+:host(.spinner-lines-md) {
+  --ion-color-base: #{$spinner-md-lines-color};
 }
 
-.spinner-bubbles-md circle {
-  fill: $spinner-md-bubbles-color;
+:host(.spinner-bubbles) {
+  --ion-color-base: #{$spinner-md-bubbles-color};
 }
 
-.spinner-circles-md circle {
-  fill: $spinner-md-circles-color;
+:host(.spinner-circles) {
+  --ion-color-base: #{$spinner-md-circles-color};
 }
 
-.spinner-crescent-md circle {
-  stroke: $spinner-md-crescent-color;
+:host(.spinner-crescent) {
+  --ion-color-base: #{$spinner-md-crescent-color};
 }
 
-.spinner-dots-md circle {
-  fill: $spinner-md-dots-color;
-}
-
-
-// Generate Material Design Spinner Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-
-  .spinner-md-#{$color-name} {
-
-    &.spinner-lines line,
-    &.spinner-lines-small line,
-    &.spinner-crescent circle {
-      stroke: $color-base;
-    }
-
-    &.spinner-bubbles circle,
-    &.spinner-circles circle,
-    &.spinner-dots circle {
-      fill: $color-base;
-    }
-  }
+:host(.spinner-dots) {
+  --ion-color-base: #{$spinner-md-dots-color};
 }

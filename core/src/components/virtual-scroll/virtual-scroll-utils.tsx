@@ -1,3 +1,6 @@
+import { Cell, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+import { CellType, NodeChange } from './virtual-scroll-interface';
+
 export interface Viewport {
   top: number;
   bottom: number;
@@ -8,42 +11,7 @@ export interface Range {
   length: number;
 }
 
-export const enum CellType {
-  Item,
-  Header,
-  Footer
-}
-
-export const enum NodeChange {
-  NoChange,
-  Position,
-  Cell,
-}
-
-export interface Cell {
-  i: number;
-  index: number;
-  value: any;
-  type: CellType;
-  height: number;
-  reads: number;
-  visible: boolean;
-}
-
-export interface VirtualNode {
-  cell: Cell;
-  top: number;
-  change: NodeChange;
-  d: boolean;
-  visible: boolean;
-}
 const MIN_READS = 2;
-
-
-export type HeaderFn = (item: any, index: number, items: any[]) => string | null;
-export type ItemHeightFn = (item: any, index?: number) => number;
-export type ItemRenderFn = (el: HTMLElement|null, cell: Cell, domIndex?: number) => HTMLElement;
-export type DomRenderFn = (dom: VirtualNode[]) => void;
 
 export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: Cell[], range: Range) {
   // reset dom
@@ -227,7 +195,7 @@ export function calcCells(
   offset: number,
   len: number
 ): Cell[] {
-  const cells = [];
+  const cells: Cell[] = [];
   const end = len + offset;
   for (let i = offset; i < end; i++) {
     const item = items[i];

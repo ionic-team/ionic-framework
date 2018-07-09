@@ -3,8 +3,11 @@
 // Chip
 // --------------------------------------------------
 
-ion-chip {
+:host {
   @include font-smoothing();
+
+  background-color: var(--ion-color-base);
+  color: var(--ion-color-contrast);
 
   box-sizing: border-box;
   display: inline-flex;
@@ -14,20 +17,7 @@ ion-chip {
 
   font-weight: normal;
   vertical-align: middle;
-}
 
-ion-chip > ion-icon {
-  @include border-radius($chip-icon-border-radius);
-
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  width: $chip-icon-size;
-  height: $chip-icon-size;
-}
-
-ion-chip ion-icon {
-  font-size: $chip-icon-font-size;
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
 }

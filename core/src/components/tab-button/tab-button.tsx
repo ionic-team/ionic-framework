@@ -1,5 +1,6 @@
-import {Component, Element, Event, EventEmitter, Listen, Prop, State} from '@stencil/core';
-import { Mode } from '../../interface';
+import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
+import { Color, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 
 @Component({
@@ -7,13 +8,15 @@ import { Mode } from '../../interface';
   styleUrls: {
     ios: 'tab-button.ios.scss',
     md: 'tab-button.md.scss'
-  }
+  },
+  shadow: true
 })
 export class TabButton {
 
   @Element() el!: HTMLElement;
 
-  mode!: Mode;
+  @Prop() mode!: Mode;
+  @Prop() color?: Color;
 
   @State() keyFocus = false;
 
@@ -71,13 +74,14 @@ export class TabButton {
       'aria-selected': selected,
       'hidden': !tab.show,
       class: {
+        ...createColorClasses(this.color),
         'tab-selected': selected,
         'has-title': hasTitle,
         'has-icon': hasIcon,
         'has-title-only': hasTitleOnly,
         'has-icon-only': hasIconOnly,
         'has-badge': hasBadge,
-        'tab-btn-disabled': tab.disabled,
+        'tab-button-disabled': tab.disabled,
         'focused': this.keyFocus
       }
     };
@@ -90,7 +94,7 @@ export class TabButton {
     return [
       <a
         href={href}
-        class="tab-cover"
+        class="tab-button-native"
         onKeyUp={this.onKeyUp.bind(this)}
         onBlur={this.onBlur.bind(this)}>
         { tab.icon && <ion-icon class="tab-button-icon" icon={tab.icon}></ion-icon> }

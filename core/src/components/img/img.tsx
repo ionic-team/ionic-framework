@@ -3,7 +3,8 @@ import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@st
 
 @Component({
   tag: 'ion-img',
-  styleUrl: 'img.scss'
+  styleUrl: 'img.scss',
+  shadow: true
 })
 export class Img {
 

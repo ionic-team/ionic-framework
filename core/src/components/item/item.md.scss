@@ -4,145 +4,97 @@
 // Material Design Item
 // --------------------------------------------------
 
-.item-md {
-  @include padding-horizontal($item-md-padding-start, null);
-
-  position: relative;
-
+:host {
   font-family: $item-md-font-family;
   font-size: $item-md-font-size;
   font-weight: normal;
   text-transform: none;
 
-  color: $item-md-text-color;
-  background-color: $item-md-background-color;
-  box-shadow: none;
-  transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
+  --ion-color-base: var(--ion-item-background, transparent);
+  --ion-color-contrast: #{$item-md-text-color};
+  --ion-color-tint: #{$item-md-background-color-active};
+  --ion-color-shade: #{$item-md-border-bottom-color};
+
+  --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
+
+  --padding-start: #{$item-md-padding-start};
+  --inner-padding-end: #{$item-md-padding-end / 2};
+
+  --padding-start: #{$item-md-padding-start};
 }
-
-.item-md .item-inner {
-  @include padding-horizontal(null, ($item-md-padding-end / 2));
-}
-
-.item-md.activated {
-  background-color: $item-md-background-color-active;
-}
-
-.item-md h1 {
-  @include margin(0, 0, 2px);
-
-  font-size: 24px;
-  font-weight: normal;
-}
-
-.item-md h2 {
-  @include margin(2px, 0);
-
-  font-size: 16px;
-  font-weight: normal;
-}
-
-.item-md h3,
-.item-md h4,
-.item-md h5,
-.item-md h6 {
-  @include margin(2px, 0);
-
-  font-size: 14px;
-  font-weight: normal;
-  line-height: normal;
-}
-
-.item-md p {
-  @include margin(0, 0, 2px);
-
-  overflow: inherit;
-
-  font-size: 14px;
-  line-height: normal;
-  text-overflow: inherit;
-  color: $item-md-paragraph-text-color;
-}
-
 
 // Material Design Item Lines
 // --------------------------------------------------
 
-// Default item has no border bottom
-.item-md,
-.item-md .item-inner {
-  border-bottom-width: 0;
-  border-bottom-style: $item-md-border-bottom-style;
-  border-bottom-color: $item-md-border-bottom-color;
-}
-
 // Default input items have a border
-.item-md.item-interactive {
-  border-bottom-width: $item-md-border-bottom-width;
+:host(.item-interactive) {
+  --border-width: #{0 0 $item-md-border-bottom-width 0};
 }
 
 // Full lines - apply the border to the item
 // Inset lines - apply the border to the item inner
-.item-md-lines-full,
-.item-md-lines-inset .item-inner {
-  border-bottom-width: $item-md-border-bottom-width;
+:host(.item-lines-full) {
+  --border-width: #{0 0 $item-md-border-bottom-width 0};
+}
+
+:host(.item-lines-inset) {
+  --inner-border-width: #{0 0 $item-md-border-bottom-width 0};
 }
 
 // Full lines - remove the border from the item inner (inset list items)
 // Inset lines - remove the border on the item (full list items)
 // No lines - remove the border on both (full / inset list items)
-.item-md-lines-inset,
-.item-md-lines-full .item-inner,
-.item-md-lines-none,
-.item-md-lines-none .item-inner {
-  border-bottom-width: 0;
+:host(.item-lines-inset),
+:host(.item-lines-none) {
+  --border-width: 0;
 }
 
+:host(.item-lines-full),
+:host(.item-lines-none){
+  --inner-border-width: 0;
+}
 
 // Material Design Item Detail Push
 // --------------------------------------------------
 
-// Only show the forward arrow icon if true
-.item-md.item-detail-push .item-inner {
-  @include item-push-svg-url($item-md-detail-push-color);
-  @include padding-horizontal(null, 32px);
-  @include background-position(end, $item-md-padding-end - 2, center);
+.item-detail-icon {
+  font-size: 20px;
 
-  background-repeat: no-repeat;
-  background-size: 14px 14px;
+  color: var(--detail-push-color);
 }
 
 
 // Material Design Item Slots
 // --------------------------------------------------
 
-.item-md [slot="start"],
-.item-md [slot="end"] {
+::slotted(:not(.interactive)[slot="start"]),
+::slotted(:not(.interactive)[slot="end"]) {
   @include margin($item-md-slot-margin-top, $item-md-slot-margin-end, $item-md-slot-margin-bottom, $item-md-slot-margin-start);
 }
 
-.item-md > ion-icon[slot="start"],
-.item-md > ion-icon[slot="end"] {
+::slotted(ion-icon[slot="start"]),
+::slotted(ion-icon[slot="end"]) {
   @include margin($item-md-icon-slot-margin-top, $item-md-icon-slot-margin-end, $item-md-icon-slot-margin-bottom, $item-md-icon-slot-margin-start);
 }
 
-.item-md > ion-icon[slot="start"] + .item-inner,
-.item-md > ion-icon[slot="start"] + .item-interactive {
+// TODO
+::slotted(ion-icon[slot="start"]) + .item-inner,
+::slotted(ion-icon[slot="start"]) + .item-interactive {
   @include margin-horizontal($item-md-padding-start + ($item-md-padding-start / 2), null);
 }
 
-.item-md ion-avatar[slot="start"],
-.item-md ion-thumbnail[slot="start"] {
+::slotted(ion-avatar[slot="start"]),
+::slotted(ion-thumbnail[slot="start"]) {
   @include margin(($item-md-padding-end / 2), $item-md-padding-end, ($item-md-padding-end / 2), 0);
 }
 
-.item-md ion-avatar[slot="end"],
-.item-md ion-thumbnail[slot="end"] {
+::slotted(ion-avatar[slot="end"]),
+::slotted(ion-thumbnail[slot="end"]) {
   @include margin(($item-md-padding-end / 2));
 }
 
-.item-md.item-label-stacked [slot="end"],
-.item-md.item-label-floating [slot="end"] {
+:host(.item-label-stacked) ::slotted([slot="end"]),
+:host(.item-label-floating) ::slotted([slot="end"]) {
   @include margin($item-md-label-slot-end-margin-top, $item-md-label-slot-end-margin-end, $item-md-label-slot-end-margin-bottom, $item-md-label-slot-end-margin-start);
 }
 
@@ -150,23 +102,27 @@
 // Material Design Item Button
 // --------------------------------------------------
 
-.item-md .button-small-md {
-  @include padding(0, .6em);
-
-  height: 25px;
-
+::slotted(.button-small-md) {
   font-size: 12px;
+
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: .6em;
+  --padding-end: .6em;
+
+  --height: 25px;
 }
 
-.item-md .button-small-md ion-icon[slot="icon-only"] {
-  @include padding(0);
 
+// TODO, review
+::slotted(.button-small-md) ion-icon[slot="icon-only"] {
+  @include padding(0);
 }
 
 // Material Design Item Avatar
 // --------------------------------------------------
 
-.item-md ion-avatar {
+::slotted(ion-avatar) {
   width: $item-md-avatar-width;
   height: $item-md-avatar-height;
 }
@@ -175,41 +131,40 @@
 // Material Design Item Thumbnail
 // --------------------------------------------------
 
-.item-md ion-thumbnail {
+::slotted(ion-thumbnail) {
   width: $item-md-thumbnail-width;
   height: $item-md-thumbnail-height;
 }
 
+:host(.item-toggle) ::slotted(ion-label),
+:host(.item-radio) ::slotted(ion-label) {
+  @include margin-horizontal(0, null);
+}
 
-// Generate Material Design Item and Item Divider Colors
+
+// Material Design Radio Item Label: Checked
+// -----------------------------------------
+
+// .item-radio-checked.item-md ion-label {
+//   color: $radio-md-color-on;
+// }
+
+
+// Material Design Stacked & Floating Inputs
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-md {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
-  $color-shade: ion-color($colors-md, $color-name, shade, md);
-  $color-tint: ion-color($colors-md, $color-name, tint, md);
+// TODO: refactor
+:host(.item-label-stacked) ::slotted(ion-input),
+:host(.item-label-floating) ::slotted(ion-input),
+:host(.item-label-stacked) ::slotted(ion-textarea),
+:host(.item-label-floating) ::slotted(ion-textarea) {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 0;
+}
 
-  .item-md-#{$color-name} {
-    border-bottom-color: $color-shade;
 
-    color: $color-contrast;
-    background-color: $color-base;
-
-    .item-inner {
-      border-bottom-color: $color-shade;
-    }
-
-    p {
-      color: $color-contrast;
-    }
-
-    &.activated {
-      background-color: $color-tint;
-    }
-  }
-
-  .item-md-#{$color-name}.item-detail-push .item-inner {
-    @include item-push-svg-url($color-shade);
-  }
+:host(:not(.item-label)) ::slotted(ion-input),
+:host(:not(.item-label)) ::slotted(ion-textarea) {
+  --padding-start: 0;
 }

@@ -28,7 +28,7 @@ The mode for component.
 
 boolean
 
-If true, the component will emit scroll events
+If true, the component will emit scroll events.
 
 
 ## Attributes
@@ -53,7 +53,7 @@ The mode for component.
 
 boolean
 
-If true, the component will emit scroll events
+If true, the component will emit scroll events.
 
 
 ## Events

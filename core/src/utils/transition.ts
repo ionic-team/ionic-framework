@@ -1,16 +1,23 @@
+import { QueueApi } from '@stencil/core';
 import { ViewLifecycle } from '..';
 import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../interface';
 
 const iosTransitionAnimation = () => import('./animations/ios.transition');
 const mdTransitionAnimation = () => import('./animations/md.transition');
 
-export async function transition(opts: TransitionOptions): Promise<Animation|null> {
-  beforeTransition(opts);
+export function transition(opts: TransitionOptions): Promise<Animation|null> {
+  return new Promise((resolve) => {
+    opts.queue.write(async () => {
+      beforeTransition(opts);
 
-  const animationBuilder = await getAnimationBuilder(opts);
-  return (animationBuilder)
-    ? animation(animationBuilder, opts)
-    : noAnimation(opts); // fast path for no animation
+      const animationBuilder = await getAnimationBuilder(opts);
+      const ani = (animationBuilder)
+        ? animation(animationBuilder, opts)
+        : noAnimation(opts); // fast path for no animation
+
+      resolve(ani);
+    });
+  });
 }
 
 async function getAnimationBuilder(opts: TransitionOptions): Promise<AnimationBuilder | undefined> {
@@ -143,25 +150,16 @@ function shallowReady(el: Element|undefined): Promise<any> {
   return Promise.resolve();
 }
 
-function deepReady(el: Element|undefined): Promise<any> {
-  if (!el) {
-    return Promise.resolve();
-  }
-  if (customElements.get) {
-    if (customElements.get(el.tagName.toLowerCase())) {
-      return componentOnReady(el);
-    } else {
-      return Promise.all(Array.from(el.children).map(deepReady));
+async function deepReady(el: Element|undefined): Promise<void> {
+  const element = el as HTMLStencilElement;
+  if (element) {
+    if (element.componentOnReady) {
+      const stencilEl = await element.componentOnReady();
+      if (stencilEl) {
+        return;
+      }
     }
-  }
-  return componentOnReady(el);
-}
-
-function componentOnReady(el: Element) {
-  if ((el as any).componentOnReady) {
-    return (el as any).componentOnReady();
-  } else {
-    return Promise.all(Array.from(el.children).map(deepReady));
+    await Promise.all(Array.from(element.children).map(deepReady));
   }
 }
 
@@ -182,6 +180,7 @@ function setZIndex(
 
 export interface TransitionOptions extends NavOptions {
   animationCtrl: HTMLIonAnimationControllerElement;
+  queue: QueueApi;
   progressCallback?: ((ani: Animation) => void);
   window: Window;
   baseEl: HTMLElement;

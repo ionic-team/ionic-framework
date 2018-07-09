@@ -22,19 +22,19 @@ $chip-md-height:                           32px !default;
 $chip-md-border-radius:                    16px !default;
 
 /// @prop - Font family of the chip
-$chip-md-font-family:                      $font-family-md-base !default;
+$chip-md-font-family:                      $font-family-base !default;
 
 /// @prop - Font size of the chip
 $chip-md-font-size:                        13px !default;
 
 /// @prop - Text color of the chip
-$chip-md-text-color:                       $text-md-color-step-150 !default;
+$chip-md-text-color:                       $text-color-step-150 !default;
 
 /// @prop - Background color alpha of the chip
 $chip-md-background-color-alpha:           .1 !default
 
 /// @prop - Background color of the chip
-$chip-md-background-color:                 css-var($text-md-color-value, text-md-color, $chip-md-background-color-alpha) !default;
+$chip-md-background-color:                 rgba(var(--ion-text-color-rgb, $text-color-rgb), $chip-md-background-color-alpha) !default;
 
 /// @prop - Margin top of the label in the chip
 $chip-md-label-margin-top:                 0 !default;
@@ -49,10 +49,10 @@ $chip-md-label-margin-bottom:              $chip-md-label-margin-top !default;
 $chip-md-label-margin-start:               $chip-md-label-margin-end !default;
 
 /// @prop - Background color of the icon in the chip
-$chip-md-icon-background-color:            ion-color($colors-md, primary, base, md) !default;
+$chip-md-icon-background-color:            ion-color(primary, base) !default;
 
 /// @prop - Fill color of the icon in the chip
-$chip-md-icon-fill-color:                  ion-color($colors-md, $chip-md-icon-background-color, contrast, md) !default;
+$chip-md-icon-fill-color:                  ion-color(primary, contrast) !default;
 
 /// @prop - Width of the avatar in the chip
 $chip-md-avatar-width:                     32px !default;

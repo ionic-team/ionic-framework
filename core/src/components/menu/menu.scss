@@ -3,7 +3,7 @@
 // Menu
 // --------------------------------------------------
 
-ion-menu {
+:host {
   @include position(0, 0, 0, 0);
 
   position: absolute;
@@ -13,7 +13,7 @@ ion-menu {
   contain: strict;
 }
 
-ion-menu.show-menu {
+:host(.show-menu) {
   display: block;
 }
 
@@ -35,7 +35,7 @@ ion-menu.show-menu {
   contain: strict;
 }
 
-.menu-side-left > .menu-inner {
+:host(.menu-side-start) .menu-inner {
   @include multi-dir() {
     // scss-lint:disable PropertySpelling
     right: auto;
@@ -43,7 +43,7 @@ ion-menu.show-menu {
   }
 }
 
-.menu-side-right > .menu-inner {
+:host(.menu-side-end) .menu-inner {
   @include multi-dir() {
     // scss-lint:disable PropertySpelling
     right: 0;
@@ -51,7 +51,7 @@ ion-menu.show-menu {
   }
 }
 
-ion-menu ion-backdrop {
+ion-backdrop {
   z-index: -1;
   display: none;
 
@@ -92,11 +92,11 @@ ion-menu ion-backdrop {
 // The content slides over to reveal the menu underneath.
 // The menu itself, which is under the content, does not move.
 
-ion-menu.menu-type-reveal {
+:host(.menu-type-reveal) {
   z-index: 0;
 }
 
-ion-menu.menu-type-reveal.show-menu .menu-inner {
+:host(.menu-type-reveal.show-menu) .menu-inner {
   @include transform(translate3d(0, 0, 0));
 }
 
@@ -106,12 +106,31 @@ ion-menu.menu-type-reveal.show-menu .menu-inner {
 // The menu slides over the content. The content
 // itself, which is under the menu, does not move.
 
-ion-menu.menu-type-overlay {
+:host(.menu-type-overlay) {
   z-index: $z-index-menu-overlay;
 }
 
-ion-menu.menu-type-overlay .show-backdrop {
+:host(.menu-type-overlay) .show-backdrop {
   display: block;
 
   cursor: pointer;
+}
+
+
+// Menu Split Pane
+// --------------------------------------------------
+
+:host(.menu-pane-visible) .menu-inner {
+  @include position-horizontal(0, 0);
+
+  // scss-lint:disable ImportantRule
+  width: auto;
+
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+:host(.menu-pane-visible) ion-backdrop {
+  // scss-lint:disable ImportantRule
+  display: hidden !important;
 }

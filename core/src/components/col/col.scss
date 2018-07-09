@@ -1,0 +1,19 @@
+@import "./col.vars";
+
+// Column
+// --------------------------------------------------
+
+:host {
+  @include make-breakpoint-padding($grid-column-paddings);
+  @include margin(0);
+
+  position: relative;
+
+  box-sizing: border-box;
+
+  flex-basis: 0;
+  flex-grow: 1;
+  width: 100%;
+  max-width: 100%;
+  min-height: 1px; // Prevent columns from collapsing when empty
+}

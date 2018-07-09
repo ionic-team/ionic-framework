@@ -6,6 +6,7 @@
   <title>Grid - Sizes</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
 </head>
 
 <body>
@@ -18,10 +19,12 @@
     </ion-header>
 
     <ion-content id="content" class="grid-demo">
-      <h2>10 Column Layout</h2>
-      <ion-grid id="grid10"></ion-grid>
+      <h2 padding-start>10 Column Layout</h2>
+      <ion-grid class="grid-10">
+        <ion-row id="row10"></ion-row>
+      </ion-grid>
 
-      <h2>Responsive sm</h2>
+      <h2 padding-start>Responsive sm</h2>
       <ion-grid>
         <ion-row>
           <ion-col size="12" size-sm>
@@ -47,7 +50,7 @@
         </ion-row>
       </ion-grid>
 
-      <h2>Breakpoint Sizes</h2>
+      <h2 padding-start>Breakpoint Sizes</h2>
       <ion-grid>
         <ion-row>
           <ion-col size="12" size-sm="6" size-md="4" size-lg="3" size-xl="1">
@@ -174,7 +177,7 @@
 
         cols.push(col);
       }
-      const grid = document.getElementById('grid10');
+      const grid = document.getElementById('row10');
 
       grid.innerHTML = cols.join('');
     </script>
@@ -186,10 +189,9 @@
         padding: 10px 5px;
       }
 
-      #grid10 {
+      .grid-10 {
         --ion-grid-columns: 10;
       }
-
     </style>
   </ion-app>
 </body>

@@ -1,4 +1,5 @@
 import { Component } from '@stencil/core';
+import { Mode } from '../../interface';
 
 @Component({
   tag: 'ion-reorder',
@@ -6,11 +7,11 @@ import { Component } from '@stencil/core';
     ios: 'reorder.ios.scss',
     md: 'reorder.md.scss',
   },
-  host: {
-    theme: 'reorder'
-  }
+  shadow: true
 })
 export class Reorder {
+
+  mode!: Mode;
 
   render() {
     return (

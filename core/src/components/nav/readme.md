@@ -129,9 +129,12 @@ Inserts a component into the nav stack at the specified index. This is useful if
 Inserts an array of components into the nav stack at the specified index. The last component in the array will become instantiated as a view, and animate in to become the active view.
 
 
-#### length()
+#### isAnimating()
 
 Returns the length of navigation stack
+
+
+#### length()
 
 
 #### pop()

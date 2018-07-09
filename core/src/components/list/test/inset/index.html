@@ -1,70 +1,73 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>List - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
 </head>
+
 <body>
   <ion-app>
 
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>List - Inset</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>List - Inset</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-      <ion-content id="content">
-        <ion-list inset>
-          <ion-item>
-            <ion-label>Normal Input</ion-label>
-            <ion-input></ion-input>
-          </ion-item>
+    <ion-content id="content">
+      <ion-list inset>
+        <ion-item>
+          <ion-label>Normal Input</ion-label>
+          <ion-input></ion-input>
+        </ion-item>
 
-          <ion-item>
-            <ion-label position="stacked">Stacked Input</ion-label>
-            <ion-input></ion-input>
-          </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Stacked Input</ion-label>
+          <ion-input></ion-input>
+        </ion-item>
 
-          <ion-item>
-            <ion-label>Normal Select</ion-label>
-            <ion-select>
-              <ion-select-option>1</ion-select-option>
-              <ion-select-option>2</ion-select-option>
-              <ion-select-option>3</ion-select-option>
-            </ion-select>
-          </ion-item>
+        <ion-item>
+          <ion-label>Normal Select</ion-label>
+          <ion-select>
+            <ion-select-option>1</ion-select-option>
+            <ion-select-option>2</ion-select-option>
+            <ion-select-option>3</ion-select-option>
+          </ion-select>
+        </ion-item>
 
-          <ion-item>
-            <ion-label position="stacked">Stacked Select</ion-label>
-            <ion-select>
-              <ion-select-option>1</ion-select-option>
-              <ion-select-option>2</ion-select-option>
-              <ion-select-option>3</ion-select-option>
-            </ion-select>
-          </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Stacked Select</ion-label>
+          <ion-select>
+            <ion-select-option>1</ion-select-option>
+            <ion-select-option>2</ion-select-option>
+            <ion-select-option>3</ion-select-option>
+          </ion-select>
+        </ion-item>
 
-          <ion-item>
-            <ion-label>Normal Datetime</ion-label>
-            <ion-datetime></ion-datetime>
-          </ion-item>
+        <ion-item>
+          <ion-label>Normal Datetime</ion-label>
+          <ion-datetime></ion-datetime>
+        </ion-item>
 
-          <ion-item>
-            <ion-label position="stacked">Stacked Datetime</ion-label>
-            <ion-datetime></ion-datetime>
-          </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Stacked Datetime</ion-label>
+          <ion-datetime></ion-datetime>
+        </ion-item>
 
-        </ion-list>
-      </ion-content>
+      </ion-list>
+    </ion-content>
 
   </ion-app>
 
   <style>
-    ion-content .scroll {
+    ion-content {
       background: #e5e5e5;
     }
   </style>
 </body>
-</html>
 
+</html>

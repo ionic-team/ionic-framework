@@ -2,17 +2,8 @@
 // Ionic Version
 @import "./version";
 
-// Global String Functions
+// Global Utility Functions
 @import "./ionic.functions.string";
-
-// Global List Functions
-@import "./ionic.functions.list";
-
-// Global Map Functions
-@import "./ionic.functions.map";
-
-// Global URL Functions
-@import "./ionic.functions.url";
 
 // Global Color Functions
 @import "./ionic.functions.color";
@@ -20,16 +11,109 @@
 // Global Mixins
 @import "./ionic.mixins";
 
+
 // Global app direction
-$app-direction: null !default;
+$app-direction: ltr !default;
 
 
 // Global font path
 $font-path: "/dist/fonts" !default;
 
 
-// Hairline width
+// Hairlines width
 $hairlines-width: .55px !default;
+
+// The minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries
+$screen-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+
+// Default Colors
+// ----------------------------------
+
+// Private color variables
+$primary:         #3880ff;
+$secondary:       #0cd1e8;
+$tertiary:        #7044ff;
+$success:         #10dc60;
+$warning:         #ffce00;
+$danger:          #f04141;
+$light:           #f4f5f8;
+$medium:          #989aa2;
+$dark:            #222428;
+
+// Color map should provide
+// - base: main color to be used.
+// - contrast: Color that will provide readable text against the base color
+// - shade: 12% darker version of the base color (mix with black)
+// - tint: 10% lighter version of the base color (mix with white)
+$colors:  (
+  primary: (
+    base:             $primary,
+    contrast:         #fff,
+    shade:            get-color-shade($primary),
+    tint:             get-color-tint($primary)
+  ),
+  secondary: (
+    base:             $secondary,
+    contrast:         #fff,
+    shade:            get-color-shade($secondary),
+    tint:             get-color-tint($secondary)
+  ),
+  tertiary: (
+    base:             $tertiary,
+    contrast:         #fff,
+    shade:            get-color-shade($tertiary),
+    tint:             get-color-tint($tertiary)
+  ),
+  success: (
+    base:             $success,
+    contrast:         #fff,
+    shade:            get-color-shade($success),
+    tint:             get-color-tint($success)
+  ),
+  warning: (
+    base:             $warning,
+    contrast:         #fff,
+    shade:            get-color-shade($warning),
+    tint:             get-color-tint($warning)
+  ),
+  danger: (
+    base:             $danger,
+    contrast:         #fff,
+    shade:            get-color-shade($danger),
+    tint:             get-color-tint($danger)
+  ),
+  light: (
+    base:             $light,
+    contrast:         #000,
+    shade:            get-color-shade($light),
+    tint:             get-color-tint($light)
+  ),
+  medium: (
+    base:             $medium,
+    contrast:         #fff,
+    shade:            get-color-shade($medium),
+    tint:             get-color-tint($medium)
+  ),
+  dark: (
+    base:             $dark,
+    contrast:         #fff,
+    shade:            get-color-shade($dark),
+    tint:             get-color-tint($dark)
+  )
+);
+
+// Default General Colors
+// --------------------------------------------------
+$overlay-background-color:          var(--ion-overlay-background-color, #fafafa) !default;
+$ripple-background-color:           var(--ion-ripple-background-color, #000) !default;
 
 
 // The minimum dimensions at which your layout will change,
@@ -41,6 +125,16 @@ $screen-breakpoints: (
   lg: 992px,
   xl: 1200px
 ) !default;
+
+
+// Default General
+// --------------------------------------------------
+
+$content-margin:                    var(--ion-content-margin, 16px) !default;
+$content-padding:                   var(--ion-content-padding, 16px) !default;
+$font-family-base:                  var(--ion-font-family, inherit) !default;
+$font-size-base:                    var(--ion-font-size-base, 14px) !default; // TODO: remove
+
 
 
 // Z-Index

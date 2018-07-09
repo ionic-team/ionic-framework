@@ -6,7 +6,7 @@
 // --------------------------------------------------
 
 /// @prop - Color for links for the app
-$app-ios-link-color:             ion-color($colors-ios, primary, base, ios) !default;
+$app-ios-link-color:             ion-color(primary, base) !default;
 
 /// @prop - Statusbar padding for the app
 $app-ios-statusbar-padding:       20px !default;

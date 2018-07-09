@@ -155,7 +155,7 @@ export class TapClick {
 }
 
 function getActivatableTarget(el: HTMLElement): any {
-  return el.closest('a,button,[tappable]');
+  return el.closest(':not([tappable]) > a, :not([tappable]) > button, [tappable]');
 }
 
 const ACTIVATED = 'activated';

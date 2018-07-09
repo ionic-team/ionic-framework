@@ -4,7 +4,7 @@
 // Item Divider
 // --------------------------------------------------
 
-ion-item-divider {
+:host {
   @include font-smoothing();
   @include margin(0);
   @include padding(0);
@@ -21,9 +21,12 @@ ion-item-divider {
   width: 100%;
 
   min-height: $item-divider-min-height;
+
+  color: #{current-color(contrast)};
+  background-color: #{current-color(base)};
 }
 
-ion-item-divider[sticky] {
+:host([sticky]) {
   position: sticky;
   top: 0;
 }

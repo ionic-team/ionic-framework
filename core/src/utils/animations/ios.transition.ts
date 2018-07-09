@@ -9,6 +9,10 @@ const TRANSLATEX = 'translateX';
 const CENTER = '0%';
 const OFF_OPACITY = 0.8;
 
+export function shadow<T extends Element>(el: T): ShadowRoot | T {
+  return el.shadowRoot || el;
+}
+
 export function iosTransitionAnimation(Animation: Animation, navEl: HTMLElement, opts: TransitionOptions): Promise<Animation> {
 
   const isRTL = document.dir === 'rtl';
@@ -75,10 +79,11 @@ export function iosTransitionAnimation(Animation: Animation, navEl: HTMLElement,
       enteringToolBarItems.addElement(enteringToolBarEle.querySelectorAll('ion-buttons,[menuToggle]'));
 
       const enteringToolBarBg = new Animation();
-      enteringToolBarBg.addElement(enteringToolBarEle.querySelector('.toolbar-background'));
+      enteringToolBarBg.addElement(shadow(enteringToolBarEle).querySelector('.toolbar-background'));
 
       const enteringBackButton = new Animation();
-      enteringBackButton.addElement(enteringToolBarEle.querySelector('ion-back-button'));
+      const backButtonEl = enteringToolBarEle.querySelector('ion-back-button');
+      enteringBackButton.addElement(backButtonEl);
 
       enteringToolBar
         .add(enteringTitle)
@@ -105,12 +110,14 @@ export function iosTransitionAnimation(Animation: Animation, navEl: HTMLElement,
         // forward direction, entering page has a back button
         enteringBackButton.fromTo(OPACITY, 0.01, 1, true);
 
-        const enteringBackBtnText = new Animation();
-        enteringBackBtnText
-          .addElement(enteringToolBarEle.querySelector('ion-back-button .button-text'))
-          .fromTo(TRANSLATEX, (isRTL ? '-100px' : '100px'), '0px');
+        if (backButtonEl) {
+          const enteringBackBtnText = new Animation();
+          enteringBackBtnText
+            .addElement(shadow(backButtonEl).querySelector('.button-text'))
+            .fromTo(TRANSLATEX, (isRTL ? '-100px' : '100px'), '0px');
 
-        enteringToolBar.add(enteringBackBtnText);
+          enteringToolBar.add(enteringBackBtnText);
+        }
       }
     }
   }
@@ -149,10 +156,11 @@ export function iosTransitionAnimation(Animation: Animation, navEl: HTMLElement,
       leavingToolBarItems.addElement(leavingToolBarEle.querySelectorAll('ion-buttons,[menuToggle]'));
 
       const leavingToolBarBg = new Animation();
-      leavingToolBarBg.addElement(leavingToolBarEle.querySelector('.toolbar-background'));
+      leavingToolBarBg.addElement(shadow(leavingToolBarEle).querySelector('.toolbar-background'));
 
       const leavingBackButton = new Animation();
-      leavingBackButton.addElement(leavingToolBarEle.querySelector('ion-back-button'));
+      const backButtonEl = leavingToolBarEle.querySelector('ion-back-button');
+      leavingBackButton.addElement(backButtonEl);
 
       leavingToolBar
         .add(leavingTitle)
@@ -177,10 +185,12 @@ export function iosTransitionAnimation(Animation: Animation, navEl: HTMLElement,
           .beforeClearStyles([OPACITY])
           .fromTo(OPACITY, 1, 0.01, true);
 
-        const leavingBackBtnText = new Animation();
-        leavingBackBtnText.addElement(leavingToolBarEle.querySelector('ion-back-button .button-text'));
-        leavingBackBtnText.fromTo(TRANSLATEX, CENTER, (isRTL ? -124 : 124) + 'px');
-        leavingToolBar.add(leavingBackBtnText);
+        if (backButtonEl) {
+          const leavingBackBtnText = new Animation();
+          leavingBackBtnText.addElement(shadow(backButtonEl).querySelector('.button-text'));
+          leavingBackBtnText.fromTo(TRANSLATEX, CENTER, (isRTL ? -124 : 124) + 'px');
+          leavingToolBar.add(leavingBackBtnText);
+        }
 
       } else {
         // leaving toolbar, forward direction

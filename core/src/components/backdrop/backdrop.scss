@@ -3,7 +3,7 @@
 // Backdrop
 // --------------------------------------------------
 
-ion-backdrop {
+:host {
   @include position(0, 0, 0, 0);
 
   position: absolute;

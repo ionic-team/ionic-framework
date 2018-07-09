@@ -1,17 +1,13 @@
-import { Component, EventListenerEnable, Listen, Prop, Watch } from '@stencil/core';
-import { BlockerConfig, BlockerDelegate, GestureCallback, GestureDelegate, GestureDetail, QueueController } from '../../interface';
+import { Component, EventListenerEnable, Listen, Prop, QueueApi, Watch } from '@stencil/core';
+import { GestureCallback, GestureDelegate, GestureDetail } from '../../interface';
 import { assert, now } from '../../utils/helpers';
 import { PanRecognizer } from './recognizers';
-
-export const BLOCK_ALL: BlockerConfig = {
-  disable: ['menu-swipe', 'goback-swipe'],
-  disableScroll: true
-};
 
 @Component({
   tag: 'ion-gesture'
 })
 export class Gesture {
+
   private detail: GestureDetail;
   private positions: number[] = [];
   private gesture?: GestureDelegate;
@@ -21,14 +17,10 @@ export class Gesture {
   private hasStartedPan = false;
   private hasFiredStart = true;
   private isMoveQueued = false;
-  private blocker?: BlockerDelegate;
 
   @Prop({ connect: 'ion-gesture-controller' }) gestureCtrl!: HTMLIonGestureControllerElement;
-
-  @Prop({ context: 'queue' }) queue!: QueueController;
-
+  @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
-
   @Prop({ context: 'isServer' }) isServer!: boolean;
 
   /**
@@ -40,11 +32,6 @@ export class Gesture {
    * What component to attach listeners to.
    */
   @Prop() attachTo: string | HTMLElement = 'child';
-
-  /**
-   * If true, gesture will prevent any other gestures from firing
-   */
-  @Prop() autoBlockAll = false;
 
   /**
    * If true, the current gesture will disabling scrolling interactions
@@ -149,21 +136,9 @@ export class Gesture {
     // only create one instance of GestureController, and reuse the same one later
     this.pan = new PanRecognizer(this.direction, this.threshold, this.maxAngle);
     this.disabledChanged(this.disabled);
-
-    if (this.autoBlockAll) {
-      this.gestureCtrl.componentOnReady().then(ctrl => {
-        if (ctrl) {
-          this.blocker = ctrl.createBlocker(BLOCK_ALL);
-        }
-      });
-    }
   }
 
   componentDidUnload() {
-    if (this.blocker) {
-      this.blocker.destroy();
-      this.blocker = undefined;
-    }
     if (this.gesture) {
       this.gesture.destroy();
     }

@@ -3,15 +3,7 @@ import { Animation, AnimationBuilder, Config, Mode } from '../interface';
 
 let lastId = 1;
 
-/**
- * Convert an interface where all the properties are optional to mandatory.
- */
-export type Requires<K extends string> = {
-  [P in K]: any;
-};
-
-export function createOverlay<T extends HTMLIonOverlayElement & Requires<any>, B>
-(element: T, opts: B): Promise<T | null> {
+export function createOverlay<T extends HTMLIonOverlayElement, B>(element: T, opts: B): Promise<T> {
   // convert the passed in overlay options into props
   // that get passed down into the new overlay
   Object.assign(element, opts);
@@ -118,7 +110,9 @@ async function overlayAnimation(
     overlay.animation.destroy();
     overlay.animation = undefined;
   }
-  const animation = overlay.animation = await overlay.animationCtrl.create(animationBuilder, baseEl, opts);
+
+  const aniRoot = baseEl.shadowRoot || overlay.el;
+  const animation = overlay.animation = await overlay.animationCtrl.create(animationBuilder, aniRoot, opts);
   overlay.animation = animation;
   if (!overlay.willAnimate) {
     animation.duration(0);
@@ -162,8 +156,8 @@ export function isCancel(role: string|undefined): boolean {
   return role === 'cancel' || role === BACKDROP;
 }
 
-export interface OverlayEventDetail {
-  data?: any;
+export interface OverlayEventDetail<T = any> {
+  data?: T;
   role?: string;
 }
 
@@ -191,7 +185,7 @@ export interface OverlayInterface {
 }
 
 export interface OverlayController {
-  create(opts?: any): Promise<HTMLElement | null>;
+  create(opts?: any): Promise<HTMLElement>;
   dismiss(data?: any, role?: string, alertId?: number): Promise<void>;
   getTop(): HTMLElement;
 }

@@ -1,14 +1,12 @@
-import { Component, Element, Prop, State, Watch } from '@stencil/core';
-import { GestureDetail, QueueController } from '../../interface';
+import { Component, Element, Prop, QueueApi, State } from '@stencil/core';
+import { GestureDetail, Mode } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart} from '../../utils/haptic';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
   tag: 'ion-reorder-group',
-  styleUrl: 'reorder-group.scss',
-  host: {
-    theme: 'reorder-group'
-  }
+  styleUrl: 'reorder-group.scss'
 })
 export class ReorderGroup {
 
@@ -17,7 +15,7 @@ export class ReorderGroup {
   private lastToIndex!: number;
   private cachedHeights: number[] = [];
   private containerEl!: HTMLElement;
-  private scrollEl: HTMLElement|null = null;
+  private scrollEl?: HTMLIonScrollElement;
 
   private scrollElTop = 0;
   private scrollElBottom = 0;
@@ -26,37 +24,25 @@ export class ReorderGroup {
   private containerTop = 0;
   private containerBottom = 0;
 
-  @State() enabled = false;
-  @State() iconVisible = false;
+  mode!: Mode;
+
   @State() activated = false;
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * If true, the reorder will be hidden. Defaults to `true`.
    */
   @Prop() disabled = true;
 
-  @Watch('disabled')
-  protected disabledChanged(disabled: boolean) {
-    if (!disabled) {
-      this.enabled = true;
-      this.queue.read(() => {
-        this.iconVisible = true;
-      });
-    } else {
-      this.iconVisible = false;
-      setTimeout(() => this.enabled = false, 400);
-    }
-  }
-
-  componentDidLoad() {
+  async componentDidLoad() {
     this.containerEl = this.el.querySelector('ion-gesture')!;
-    this.scrollEl = this.el.closest('ion-scroll');
-    if (!this.disabled) {
-      this.disabledChanged(false);
+    const contentEl = this.el.closest('ion-content');
+    if (contentEl) {
+      await contentEl.componentOnReady();
+      this.scrollEl = contentEl.getScrollElement();
     }
   }
 
@@ -241,29 +227,29 @@ export class ReorderGroup {
   hostData() {
     return {
       class: {
-        'reorder-enabled': this.enabled,
+        ...createThemedClasses(this.mode, 'reorder-group'),
+
+        'reorder-enabled': !this.disabled,
         'reorder-list-active': this.activated,
-        'reorder-visible': this.iconVisible
       }
     };
   }
 
   render() {
     return (
-      <ion-gesture {...{
-        canStart: this.canStart.bind(this),
-        onStart: this.onDragStart.bind(this),
-        onMove: this.onDragMove.bind(this),
-        onEnd: this.onDragEnd.bind(this),
-        disabled: this.disabled,
-        disableScroll: true,
-        gestureName: 'reorder',
-        gesturePriority: 30,
-        type: 'pan',
-        direction: 'y',
-        threshold: 0,
-        attachTo: 'window'
-      }}>
+      <ion-gesture
+        canStart={this.canStart.bind(this)}
+        onStart={this.onDragStart.bind(this)}
+        onMove={this.onDragMove.bind(this)}
+        onEnd={this.onDragEnd.bind(this)}
+        disabled={this.disabled}
+        disableScroll={true}
+        gestureName="reorder"
+        gesturePriority={30}
+        direction="y"
+        threshold={0}
+        attachTo="window"
+      >
         <slot></slot>
       </ion-gesture>
     );

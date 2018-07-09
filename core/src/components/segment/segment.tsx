@@ -1,5 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 import { Color, InputChangeEvent, Mode } from '../../interface';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 
 @Component({
@@ -8,9 +9,7 @@ import { Color, InputChangeEvent, Mode } from '../../interface';
     ios: 'segment.ios.scss',
     md: 'segment.md.scss'
   },
-  host: {
-    theme: 'segment'
-  }
+  shadow: true
 })
 export class Segment {
 
@@ -40,7 +39,7 @@ export class Segment {
 
   @Watch('value')
   protected valueChanged(value: string | undefined) {
-    this.update();
+    this.updateButtons();
     this.ionChange.emit({value});
   }
 
@@ -57,29 +56,38 @@ export class Segment {
 
   componentDidLoad() {
     if (this.value === undefined) {
-      const buttons = Array.from(this.el.querySelectorAll('ion-segment-button'));
-      const checked = buttons.find(b => b.checked);
+      const checked = this.getButtons().find(b => b.checked);
       if (checked) {
         this.value = checked.value;
       }
     }
-    this.update();
+    this.updateButtons();
   }
 
-  private update() {
+  private updateButtons() {
     const value = this.value;
-    const buttons = Array.from(this.el.querySelectorAll('ion-segment-button'));
-    for (const button of buttons) {
+    for (const button of this.getButtons()) {
       button.checked = (button.value === value);
     }
+  }
+
+  private getButtons() {
+    return Array.from(this.el.querySelectorAll('ion-segment-button'));
   }
 
   hostData() {
     return {
       class: {
-        'segment-disabled': this.disabled
+        ...createColorClasses(this.color),
+
+        'segment-disabled': this.disabled,
+        'in-toolbar': hostContext('ion-toolbar', this.el)
       }
     };
+  }
+
+  render() {
+    return <slot></slot>;
   }
 
 }

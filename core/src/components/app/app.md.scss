@@ -11,10 +11,6 @@
     $toolbar-md-padding,
     $tabbar-md-height);
 
-  font-family: $font-family-md-base;
-  font-size: $font-size-md-base;
-  background-color: $background-md-color;
-
   // TODO this can be simplified
   &.statusbar-padding {
     .ion-page,
@@ -27,17 +23,3 @@
   }
 }
 
-a {
-  color: $app-md-link-color;
-}
-
-// Material Design Content Padding
-// --------------------------------------------------
-
-@include app-padding("md", $content-md-padding);
-
-
-// Material Design Content Margin
-// --------------------------------------------------
-
-@include app-margin("md", $content-md-margin);

@@ -3,24 +3,45 @@
 // Segment Button
 // --------------------------------------------------
 
-ion-segment-button {
-  display: flex;
-
+:host {
   flex: 1;
+
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+
+  --icon-size: 1em;
 }
 
-.segment-button {
-  @include border-radius(0);
-  @include margin-horizontal(0);
-  @include text-align(center);
+:host(:first-of-type) .segment-button-native {
+  @include border-radius(var(--border-radius), 0, 0, var(--border-radius));
+
+  --padding-end: 0;
+}
+
+:host(:not(:first-of-type)) .segment-button-native {
+  border-left-width: 0;
+}
+
+:host(:last-of-type) .segment-button-native {
+  @include border-radius(0, var(--border-radius),var(--border-radius), 0);
+
+  --padding-start: 0;
+}
+
+.segment-button-native {
+  @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  text-align: center;
 
   position: relative;
   display: block;
 
   overflow: hidden;
 
-  border: 0;
-
+  text-transform: inherit;
   text-decoration: none;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -30,8 +51,26 @@ ion-segment-button {
   user-select: none;
   contain: content;
 
+  width: 100%;
+  height: 100%;
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+  transition: var(--transition);
+
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+
+  background: var(--background);
+
   &:active,
   &:focus {
     outline: none;
   }
+}
+
+::slotted(ion-icon) {
+  font-size: var(--icon-size);
 }

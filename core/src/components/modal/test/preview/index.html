@@ -6,29 +6,30 @@
   <title>Modal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
 </head>
 
 <body>
   <ion-app>
 
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Modal</ion-title>
-        </ion-toolbar>
-      </ion-header>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Modal</ion-title>
+      </ion-toolbar>
+    </ion-header>
 
-      <ion-content padding>
-        <ion-modal-controller></ion-modal-controller>
-        <p>
-          <ion-button id="presentModal" class="e2ePresentModal" onclick="presentModal()">Present modal</ion-button>
-        </p>
-      </ion-content>
+    <ion-content padding>
+      <ion-modal-controller></ion-modal-controller>
+      <p>
+        <ion-button id="presentModal" class="e2ePresentModal" onclick="presentModal()">Present modal</ion-button>
+      </p>
+    </ion-content>
 
   </ion-app>
 
   <script>
-    window.addEventListener("ionModalDidDismiss", function(e){console.log('DidDismiss', e)})
-    window.addEventListener("ionModalWillDismiss", function(e){console.log('WillDismiss', e)})
+    window.addEventListener("ionModalDidDismiss", function (e) { console.log('DidDismiss', e) })
+    window.addEventListener("ionModalWillDismiss", function (e) { console.log('WillDismiss', e) })
     async function presentModal() {
 
       // initialize controller
@@ -64,4 +65,5 @@
     }
   </script>
 </body>
+
 </html>

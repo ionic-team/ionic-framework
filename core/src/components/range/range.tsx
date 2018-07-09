@@ -17,6 +17,7 @@ import {
   StyleEvent
 } from '../../interface';
 import { clamp, debounceEvent, deferEvent } from '../../utils/helpers';
+import { createColorClasses, hostContext } from '../../utils/theme';
 import { Knob, RangeEventDetail, RangeValue } from './range-interface';
 
 @Component({
@@ -25,20 +26,20 @@ import { Knob, RangeEventDetail, RangeValue } from './range-interface';
     ios: 'range.ios.scss',
     md: 'range.md.scss'
   },
-  host: {
-    theme: 'range'
-  }
+  shadow: true
 })
 export class Range implements BaseInput {
+
   private noUpdate = false;
   private rect!: ClientRect;
   private hasFocus = false;
+  private rangeSlider?: HTMLElement;
 
   @Element() el!: HTMLStencilElement;
 
   @State() private ratioA = 0;
   @State() private ratioB = 0;
-  @State() private pressedKnob = Knob.None;
+  @State() private pressedKnob: Knob;
 
   /**
    * The color to use from your Sass `$colors` map.
@@ -159,7 +160,7 @@ export class Range implements BaseInput {
     if (!ev.detail.isIncrease) {
       step *= -1;
     }
-    if (ev.detail.knob === Knob.A) {
+    if (ev.detail.knob === 'A') {
       this.ratioA += step;
     } else {
       this.ratioB += step;
@@ -186,7 +187,7 @@ export class Range implements BaseInput {
 
   private emitStyle() {
     this.ionStyle.emit({
-      'range-disabled': this.disabled
+      'interactive-disabled': this.disabled
     });
   }
 
@@ -209,8 +210,7 @@ export class Range implements BaseInput {
   private onDragStart(detail: GestureDetail) {
     this.fireFocus();
 
-    const el = this.el.querySelector('.range-slider')!;
-    const rect = (this.rect = el.getBoundingClientRect() as any);
+    const rect = this.rect = this.rangeSlider!.getBoundingClientRect() as any;
     const currentX = detail.currentX;
 
     // figure out which knob they started closer to
@@ -218,8 +218,8 @@ export class Range implements BaseInput {
     this.pressedKnob =
       !this.dualKnobs ||
       Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio)
-        ? Knob.A
-        : Knob.B;
+        ? 'A'
+        : 'B';
 
     // update the active knob's position
     this.update(currentX);
@@ -231,7 +231,7 @@ export class Range implements BaseInput {
 
   private onDragEnd(detail: GestureDetail) {
     this.update(detail.currentX);
-    this.pressedKnob = Knob.None;
+    this.pressedKnob = undefined;
     this.fireBlur();
   }
 
@@ -247,7 +247,7 @@ export class Range implements BaseInput {
     }
 
     // update which knob is pressed
-    if (this.pressedKnob === Knob.A) {
+    if (this.pressedKnob === 'A') {
       this.ratioA = ratio;
     } else {
       this.ratioB = ratio;
@@ -307,8 +307,10 @@ export class Range implements BaseInput {
   hostData() {
     return {
       class: {
+        ...createColorClasses(this.color),
+        'in-item': hostContext('.item', this.el),
         'range-disabled': this.disabled,
-        'range-pressed': this.pressedKnob !== Knob.None,
+        'range-pressed': this.pressedKnob !== undefined,
         'range-has-pin': this.pin
       }
     };
@@ -345,7 +347,7 @@ export class Range implements BaseInput {
         direction="x"
         threshold={0}
       >
-        <div class="range-slider">
+        <div class="range-slider" ref={(el) => this.rangeSlider = el}>
           {ticks.map(t => (
             <div
               style={{ left: t.left }}
@@ -367,8 +369,8 @@ export class Range implements BaseInput {
             }}
           />
           <ion-range-knob
-            knob={Knob.A}
-            pressed={this.pressedKnob === Knob.A}
+            knob="A"
+            pressed={this.pressedKnob === 'A'}
             value={this.valA}
             ratio={this.ratioA}
             pin={this.pin}
@@ -378,8 +380,8 @@ export class Range implements BaseInput {
 
           {this.dualKnobs && (
             <ion-range-knob
-              knob={Knob.B}
-              pressed={this.pressedKnob === Knob.B}
+              knob="B"
+              pressed={this.pressedKnob === 'B'}
               value={this.valB}
               ratio={this.ratioB}
               pin={this.pin}

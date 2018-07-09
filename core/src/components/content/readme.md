@@ -9,6 +9,11 @@ view component.
 
 ## Properties
 
+#### color
+
+string
+
+
 #### forceOverscroll
 
 boolean
@@ -31,13 +36,24 @@ to transparent.
 
 boolean
 
+By default `ion-content` uses an `ion-scroll` under the hood to implement scrolling,
+if you want to disable the content scrolling for a given page, set this property to `false`.
+
 
 #### scrollEvents
 
 boolean
 
+Because of performance reasons, ionScroll events are disabled by default, in order to enable them
+and start listening from (ionScroll), set this property to `true`.
+
 
 ## Attributes
+
+#### color
+
+string
+
 
 #### force-overscroll
 
@@ -61,38 +77,21 @@ to transparent.
 
 boolean
 
+By default `ion-content` uses an `ion-scroll` under the hood to implement scrolling,
+if you want to disable the content scrolling for a given page, set this property to `false`.
+
 
 #### scroll-events
 
 boolean
 
+Because of performance reasons, ionScroll events are disabled by default, in order to enable them
+and start listening from (ionScroll), set this property to `true`.
+
 
 ## Methods
 
-#### scrollByPoint()
-
-Scroll by a specific X/Y distance
-
-
-#### scrollToBottom()
-
-Scroll to the bottom of the content component.
-
-Duration of the scroll animation in milliseconds. Defaults to `300`.
-Returns a promise which is resolved when the scroll has completed.
-
-
-#### scrollToPoint()
-
-Scroll to a specific X/Y coordinate in the content
-
-
-#### scrollToTop()
-
-Scroll to the top of the content component.
-
-Duration of the scroll animation in milliseconds. Defaults to `300`.
-Returns a promise which is resolved when the scroll has completed.
+#### getScrollElement()
 
 
 

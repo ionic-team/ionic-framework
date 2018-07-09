@@ -3,10 +3,13 @@
 // Badge
 // --------------------------------------------------
 
-ion-badge {
+:host {
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
+
   @include font-smoothing();
   @include padding($badge-padding-top, $badge-padding-end, $badge-padding-bottom, $badge-padding-start);
-  @include text-align(center);
+  text-align: center;
 
   display: inline-block;
 
@@ -18,11 +21,13 @@ ion-badge {
   line-height: 1;
 
   white-space: nowrap;
+  color: #{current-color(contrast)};
+  background-color: #{current-color(base)};
   vertical-align: baseline;
 
   contain: content;
 }
 
-ion-badge:empty {
+:host(:empty) {
   display: none;
 }

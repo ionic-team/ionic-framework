@@ -1,7 +1,8 @@
-import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { CheckboxInput, CheckedInputChangeEvent, Color, GestureDetail, Mode, StyleEvent } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
 import { deferEvent } from '../../utils/helpers';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 
 @Component({
@@ -10,9 +11,7 @@ import { deferEvent } from '../../utils/helpers';
     ios: 'toggle.ios.scss',
     md: 'toggle.md.scss'
   },
-  host: {
-    theme: 'toggle'
-  }
+  shadow: true
 })
 export class Toggle implements CheckboxInput {
 
@@ -20,8 +19,9 @@ export class Toggle implements CheckboxInput {
   private nativeInput!: HTMLInputElement;
   private pivotX = 0;
 
-  @State() activated = false;
+  @Element() el!: HTMLElement;
 
+  @State() activated = false;
   @State() keyFocus = false;
 
   /**
@@ -83,15 +83,12 @@ export class Toggle implements CheckboxInput {
       checked: isChecked,
       value: this.value
     });
-    this.emitStyle();
   }
 
   @Watch('disabled')
   emitStyle() {
     this.ionStyle.emit({
-      'toggle-disabled': this.disabled,
-      'toggle-checked': this.checked,
-      'toggle-activated': this.activated
+      'interactive-disabled': this.disabled,
     });
   }
 
@@ -160,10 +157,13 @@ export class Toggle implements CheckboxInput {
   hostData() {
     return {
       class: {
+        ...createColorClasses(this.color),
+        'in-item': hostContext('.item', this.el),
         'toggle-activated': this.activated,
         'toggle-checked': this.checked,
         'toggle-disabled': this.disabled,
-        'toggle-key': this.keyFocus
+        'toggle-key': this.keyFocus,
+        'interactive': true
       }
     };
   }
@@ -185,7 +185,6 @@ export class Toggle implements CheckboxInput {
         <div class="toggle-icon">
           <div class="toggle-inner"/>
         </div>
-        <div class="toggle-cover"/>
       </ion-gesture>,
       <input
         type="checkbox"

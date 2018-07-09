@@ -1,9 +1,4 @@
-
-export const enum Knob {
-  None,
-  A,
-  B
-}
+export type Knob = 'A' | 'B' | undefined;
 
 export type RangeValue = number | {lower: number, upper: number};
 

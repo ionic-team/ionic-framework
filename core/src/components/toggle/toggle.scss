@@ -3,16 +3,28 @@
 // Toggle
 // --------------------------------------------------
 
-ion-toggle {
+:host {
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-base-rgb: #{ion-color(primary, base, null, true)};
+
   display: inline-block;
 
   contain: content;
 
   touch-action: none;
   user-select: none;
+  box-sizing: content-box !important;
 }
 
-ion-toggle ion-gesture {
+:host(.toggle-key) input {
+  border: 2px solid #5e9ed6;
+}
+
+:host(:focus) {
+  outline: none;
+}
+
+ion-gesture {
   display: block;
 
   width: 100%;
@@ -21,51 +33,8 @@ ion-toggle ion-gesture {
   visibility: inherit;
 }
 
-.toggle-cover {
-  @include position-horizontal(0, null);
-
-  position: absolute;
-  top: 0;
-
-  width: 100%;
-  height: 100%;
-
-  border: 0;
-  outline: none;
-
-  font-family: inherit;
-  font-style: inherit;
-  font-variant: inherit;
-
-  line-height: 1;
-  text-transform: none;
-
-  background: transparent;
-  cursor: pointer;
-}
-
-ion-toggle input {
-  @include position(0, null, null, 0);
-  @include margin(0);
-
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  border: 0;
-  background: transparent;
-  cursor: pointer;
+input {
+  @include input-cover();
 
   pointer-events: none;
-
-  appearance: none;
-}
-
-ion-toggle :focus {
-  outline: none;
-}
-
-.toggle-key input {
-  border: 2px solid #5e9ed6;
 }

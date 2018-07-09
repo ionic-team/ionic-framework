@@ -1,10 +1,15 @@
-import { Component, Element, Listen, Method, Prop } from '@stencil/core';
-import { Color, Config, Mode, QueueController } from '../../interface';
+import { Component, Element, Listen, Method, Prop, QueueApi } from '@stencil/core';
+import { Color, Config, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 
 @Component({
   tag: 'ion-content',
-  styleUrl: 'content.scss'
+  styleUrls: {
+    ios: 'content.ios.scss',
+    md: 'content.md.scss'
+  },
+  shadow: true
 })
 export class Content {
 
@@ -14,12 +19,12 @@ export class Content {
   private scrollEl?: HTMLIonScrollElement;
 
   mode!: Mode;
-  color?: Color;
+  @Prop() color?: Color;
 
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'config' }) config!: Config;
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * If true, the content will scroll behind the headers
@@ -35,8 +40,16 @@ export class Content {
    */
   @Prop() forceOverscroll?: boolean;
 
+  /**
+   * By default `ion-content` uses an `ion-scroll` under the hood to implement scrolling,
+   * if you want to disable the content scrolling for a given page, set this property to `false`.
+   */
   @Prop() scrollEnabled = true;
 
+  /**
+   * Because of performance reasons, ionScroll events are disabled by default, in order to enable them
+   * and start listening from (ionScroll), set this property to `true`.
+   */
   @Prop() scrollEvents = false;
 
   @Listen('body:ionNavDidChange')
@@ -52,55 +65,11 @@ export class Content {
     this.scrollEl = undefined as any;
   }
 
-  /**
-   * Scroll to the top of the content component.
-   *
-   * Duration of the scroll animation in milliseconds. Defaults to `300`.
-   * Returns a promise which is resolved when the scroll has completed.
-   */
   @Method()
-  scrollToTop(duration = 300) {
-    if (!this.scrollEl) {
-      throw new Error('content is not scrollable');
-    }
-    return this.scrollEl.scrollToTop(duration);
+  getScrollElement(): HTMLIonScrollElement {
+    return this.scrollEl!;
   }
 
-  /**
-   * Scroll to the bottom of the content component.
-   *
-   * Duration of the scroll animation in milliseconds. Defaults to `300`.
-   * Returns a promise which is resolved when the scroll has completed.
-   */
-  @Method()
-  scrollToBottom(duration = 300) {
-    if (!this.scrollEl) {
-      throw new Error('content is not scrollable');
-    }
-    return this.scrollEl.scrollToBottom(duration);
-  }
-
-  /**
-   * Scroll by a specific X/Y distance
-   */
-  @Method()
-  scrollByPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
-    if (!this.scrollEl) {
-      throw new Error('content is not scrollable');
-    }
-    return this.scrollEl.scrollByPoint(x, y, duration, done);
-  }
-
-  /**
-   * Scroll to a specific X/Y coordinate in the content
-   */
-  @Method()
-  scrollToPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
-    if (!this.scrollEl) {
-      throw new Error('content is not scrollable');
-    }
-    return this.scrollEl.scrollToPoint(x, y, duration, done);
-  }
 
   private resize() {
     if (!this.scrollEl) {
@@ -137,8 +106,16 @@ export class Content {
     }
   }
 
+  hostData() {
+    return {
+      class: createColorClasses(this.color)
+    };
+  }
+
   render() {
     this.resize();
+
+    const innerScroll = <div class="scroll-inner"><slot></slot></div>;
 
     return [
       (this.scrollEnabled)
@@ -147,9 +124,9 @@ export class Content {
           mode={this.mode}
           scrollEvents={this.scrollEvents}
           forceOverscroll={this.forceOverscroll}>
-          <slot></slot>
+            { innerScroll }
         </ion-scroll>
-      : <div class="scroll-inner"><slot></slot></div>,
+      : innerScroll,
       <slot name="fixed"></slot>
     ];
   }

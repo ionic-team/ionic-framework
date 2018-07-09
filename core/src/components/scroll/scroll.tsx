@@ -1,15 +1,11 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Config, GestureDetail, Mode, QueueController } from '../../interface';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
+import { Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-scroll',
-  styleUrls: {
-    ios: 'scroll.ios.scss',
-    md: 'scroll.md.scss'
-  },
-  host: {
-    theme: 'scroll'
-  }
+  styleUrl: 'scroll.scss',
+  shadow: true
 })
 export class Scroll {
 
@@ -21,8 +17,8 @@ export class Scroll {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'config'}) config!: Config;
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'config' }) config!: Config;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'window' }) win!: Window;
 
   /** The mode for component. */
@@ -36,7 +32,7 @@ export class Scroll {
    */
   @Prop({ mutable: true }) forceOverscroll?: boolean;
 
-  /** If true, the component will emit scroll events */
+  /** If true, the component will emit scroll events. */
   @Prop() scrollEvents = false;
 
   /**
@@ -48,7 +44,7 @@ export class Scroll {
    * Emitted while scrolling. This event is disabled by default.
    * Look at the property: `scrollEvents`
    */
-  @Event({bubbles: false}) ionScroll!: EventEmitter<ScrollDetail>;
+  @Event() ionScroll!: EventEmitter<ScrollDetail>;
 
   /**
    * Emitted when the scroll has ended.
@@ -105,7 +101,7 @@ export class Scroll {
       this.queue.read(timeStamp => {
         this.queued = false;
         this.detail.event = ev;
-        updateScrollDetail(this.detail, this.el, timeStamp, didStart);
+        updateScrollDetail(this.detail, this.el, timeStamp!, didStart);
         this.ionScroll.emit(this.detail);
       });
     }
@@ -196,7 +192,8 @@ export class Scroll {
       if (easedT < 1) {
         // do not use DomController here
         // must use nativeRaf in order to fire in the next frame
-        self.queue.read(step);
+        // TODO: remove as any
+        self.queue.read(step as any);
 
       } else {
         stopScroll = true;
@@ -212,8 +209,9 @@ export class Scroll {
     // chill out for a frame first
     this.queue.write(() => {
       this.queue.write(timeStamp => {
-        startTime = timeStamp;
-        step(timeStamp);
+        // TODO: review stencilt type of timeStamp
+        startTime = timeStamp!;
+        step(timeStamp!);
       });
     });
 
@@ -251,18 +249,14 @@ export class Scroll {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, 'scroll'),
         overscroll: this.forceOverscroll
       }
     };
   }
 
   render() {
-    return [
-      // scroll-inner is used to keep custom user padding
-      <div class="scroll-inner">
-        <slot></slot>
-      </div>
-    ];
+    return <slot></slot>;
   }
 }
 
@@ -315,18 +309,4 @@ function updateScrollDetail(
     detail.velocityX = 0;
     detail.velocityY = 0;
   }
-}
-
-export interface ScrollDetail extends GestureDetail, ScrollBaseDetail {
-  positions: number[];
-  scrollTop: number;
-  scrollLeft: number;
-}
-
-export interface ScrollBaseDetail {
-  isScrolling: boolean;
-}
-
-export interface ScrollCallback {
-  (detail?: ScrollDetail): boolean|void;
 }

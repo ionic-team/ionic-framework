@@ -4,12 +4,12 @@
 // Material Design Alert
 // --------------------------------------------------
 
-.alert-md {
+:host {
   font-family: $alert-md-font-family;
   font-size: $alert-md-font-size;
 }
 
-.alert-md .alert-wrapper {
+.alert-wrapper {
   @include border-radius($alert-md-border-radius);
 
   max-width: $alert-md-max-width;
@@ -22,19 +22,19 @@
 // Material Design Alert Header
 // --------------------------------------------------
 
-.alert-md .alert-head {
-  @include text-align($alert-md-head-text-align);
+.alert-head {
+  text-align: $alert-md-head-text-align;
 
   @include padding($alert-md-head-padding-top, $alert-md-head-padding-end, $alert-md-head-padding-bottom, $alert-md-head-padding-start);
 }
 
-.alert-md .alert-title {
+.alert-title {
   font-size: $alert-md-title-font-size;
   font-weight: $alert-md-title-font-weight;
   color: $alert-md-title-color;
 }
 
-.alert-md .alert-sub-title {
+.alert-sub-title {
   font-size: $alert-md-sub-title-font-size;
   color: $alert-md-sub-title-text-color;
 }
@@ -43,20 +43,20 @@
 // Material Design Alert Message
 // --------------------------------------------------
 
-.alert-md .alert-message,
-.alert-md .alert-input-group {
+.alert-message,
+.alert-input-group {
   @include padding($alert-md-message-padding-top, $alert-md-message-padding-end, $alert-md-message-padding-bottom, $alert-md-message-padding-start);
 
   color: $alert-md-message-text-color;
 }
 
-.alert-md .alert-message {
+.alert-message {
   max-height: $alert-md-content-max-height;
 
   font-size: $alert-md-message-font-size;
 }
 
-.alert-md .alert-message:empty {
+.alert-message:empty {
   @include padding($alert-md-message-empty-padding-top, $alert-md-message-empty-padding-end, $alert-md-message-empty-padding-bottom, $alert-md-message-empty-padding-start);
 }
 
@@ -64,7 +64,7 @@
 // Material Design Alert Input
 // --------------------------------------------------
 
-.alert-md .alert-input {
+.alert-input {
   @include placeholder($alert-md-input-placeholder-color);
   @include margin($alert-md-input-margin-top, $alert-md-input-margin-end, $alert-md-input-margin-bottom, $alert-md-input-margin-start);
 
@@ -72,7 +72,7 @@
   color: $alert-md-input-text-color;
 }
 
-.alert-md .alert-input:focus {
+.alert-input:focus {
   @include margin(null, null, $alert-md-input-margin-bottom - 1, null);
 
   border-bottom: $alert-md-input-border-width-focused $alert-md-input-border-style-focused $alert-md-input-border-color-focused;
@@ -82,8 +82,8 @@
 // Material Design Alert Radio/Checkbox Group
 // --------------------------------------------------
 
-.alert-md .alert-radio-group,
-.alert-md .alert-checkbox-group {
+.alert-radio-group,
+.alert-checkbox-group {
   position: relative;
   overflow: auto;
 
@@ -93,7 +93,7 @@
   border-bottom: $alert-md-list-border-bottom;
 }
 
-.alert-md .alert-tappable {
+.alert-tappable {
   position: relative;
   display: flex;
 
@@ -108,7 +108,7 @@
 // Material Design Alert Radio
 // --------------------------------------------------
 
-.alert-md .alert-radio-label {
+.alert-radio-label {
   @include padding($alert-md-radio-label-padding-top, $alert-md-radio-label-padding-end, $alert-md-radio-label-padding-bottom, $alert-md-radio-label-padding-start);
 
   overflow: hidden;
@@ -125,7 +125,7 @@
 // Material Design Alert Radio Unchecked Circle
 // ---------------------------------------------------
 
-.alert-md .alert-radio-icon {
+.alert-radio-icon {
   @include position($alert-md-radio-top, null, null, $alert-md-radio-left);
   @include border-radius($alert-md-radio-border-radius);
 
@@ -143,7 +143,7 @@
 // Material Design Alert Radio Checked Dot
 // ---------------------------------------------------
 
-.alert-md .alert-radio-inner {
+.alert-radio-inner {
   @include position($alert-md-radio-icon-top, null, null, $alert-md-radio-icon-start);
   @include border-radius($alert-md-radio-icon-border-radius);
 
@@ -161,15 +161,15 @@
 // Material Design Alert Radio Checked
 // ---------------------------------------------------
 
-.alert-md [aria-checked=true] .alert-radio-label {
+[aria-checked=true] .alert-radio-label {
   color: $alert-md-radio-label-text-color-checked;
 }
 
-.alert-md [aria-checked=true] .alert-radio-icon {
+[aria-checked=true] .alert-radio-icon {
   border-color: $alert-md-radio-border-color-on;
 }
 
-.alert-md [aria-checked=true] .alert-radio-inner {
+[aria-checked=true] .alert-radio-inner {
   transform: $alert-md-radio-icon-transform-on;
 }
 
@@ -177,7 +177,7 @@
 // Material Design Alert Checkbox Label
 // --------------------------------------------------
 
-.alert-md .alert-checkbox-label {
+.alert-checkbox-label {
   @include padding($alert-md-checkbox-label-padding-top, $alert-md-checkbox-label-padding-end, $alert-md-checkbox-label-padding-bottom, $alert-md-checkbox-label-padding-start);
 
   overflow: hidden;
@@ -195,7 +195,7 @@
 // Material Design Alert Checkbox Outline: Unchecked
 // --------------------------------------------------
 
-.alert-md .alert-checkbox-icon {
+.alert-checkbox-icon {
   @include position($alert-md-checkbox-top, null, null, $alert-md-checkbox-left);
   @include border-radius($alert-md-checkbox-border-radius);
 
@@ -214,12 +214,12 @@
 // Material Design Alert Checkbox Checkmark: Checked
 // --------------------------------------------------
 
-.alert-md [aria-checked=true] .alert-checkbox-icon {
+[aria-checked=true] .alert-checkbox-icon {
   border-color: $alert-md-checkbox-border-color-on;
   background-color: $alert-md-checkbox-border-color-on;
 }
 
-.alert-md [aria-checked=true] .alert-checkbox-inner {
+[aria-checked=true] .alert-checkbox-inner {
   @include position($alert-md-checkbox-icon-top, null, null, $alert-md-checkbox-icon-start);
 
   position: absolute;
@@ -239,7 +239,7 @@
 // Material Design Alert Button
 // --------------------------------------------------
 
-.alert-md .alert-button-group {
+.alert-button-group {
   @include padding($alert-md-button-group-padding-top, $alert-md-button-group-padding-end, $alert-md-button-group-padding-bottom, $alert-md-button-group-padding-start);
 
   box-sizing: border-box;
@@ -248,14 +248,14 @@
   justify-content: $alert-md-button-group-justify-content;
 }
 
-.alert-md .alert-button {
+.alert-button {
   @include border-radius($alert-md-button-border-radius);
 
   @include margin($alert-md-button-margin-top, $alert-md-button-margin-end, $alert-md-button-margin-bottom, $alert-md-button-margin-start);
 
   @include padding($alert-md-button-padding-top, $alert-md-button-padding-end, $alert-md-button-padding-bottom, $alert-md-button-padding-start);
 
-  @include text-align($alert-md-button-text-align);
+  text-align: $alert-md-button-text-align;
 
   // necessary for ripple to work properly
   position: relative;
@@ -267,10 +267,10 @@
   background-color: $alert-md-button-background-color;
 }
 
-.alert-md .alert-button.activated {
+.alert-button.activated {
   background-color: $alert-md-button-background-color-activated;
 }
 
-.alert-md .alert-button-inner {
+.alert-button-inner {
   justify-content: $alert-md-button-group-justify-content;
 }

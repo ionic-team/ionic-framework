@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Tab - Translucent</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
   <script type="text/javascript">
-    window.Ionic.config = {useRouter: true};
+    window.Ionic.config = { useRouter: true };
   </script>
 </head>
+
 <body>
 
   <ion-app>
@@ -23,12 +26,12 @@
       </ion-tab>
 
       <ion-tab label="Apps" icon="logo-buffer" root="page-three">
-          <ion-route path="/" component="page-three"></ion-route>
+        <ion-route path="/" component="page-three"></ion-route>
       </ion-tab>
 
       <ion-tab label="Updates" icon="download" badge="7" badge-style="danger" root="translucent-page-tab">
-          <ion-route component="page-one"></ion-route>
-          <ion-route path="paginaaaa-two" component="page-two"></ion-route>
+        <ion-route component="page-one"></ion-route>
+        <ion-route path="paginaaaa-two" component="page-two"></ion-route>
       </ion-tab>
 
       <ion-tab label="Search" icon="search">
@@ -80,6 +83,8 @@
     .orange {
       background-color: #f69234;
     }
-    </style>
+
+  </style>
 </body>
+
 </html>

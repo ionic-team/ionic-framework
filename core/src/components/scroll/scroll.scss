@@ -1,6 +1,6 @@
 @import "../../themes/ionic.globals";
 
-ion-scroll {
+:host {
   @include position(0, 0, 0, 0);
 
   position: absolute;
@@ -8,48 +8,27 @@ ion-scroll {
   display: block;
 
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   will-change: scroll-position;
 
   contain: size style layout;
+}
 
-  .focus-input {
-    @include margin(0);
-    @include padding(0);
+:host(.overscroll)::before,
+:host(.overscroll)::after {
+  position: absolute;
 
-    position: absolute;
+  width: 1px;
+  height: 1px;
 
-    width: 0;
-    height: 0;
+  content: "";
+}
 
-    border: 0;
-    background: none;
-    opacity: 0;
+:host(.overscroll)::before {
+  bottom: -1px;
+}
 
-    appearance: none;
-  }
-
-
-  &.overscroll::before,
-  &.overscroll::after {
-    position: absolute;
-
-    width: 1px;
-    height: 1px;
-
-    content: "";
-  }
-
-  &.overscroll::before {
-    bottom: -1px;
-  }
-
-  &.overscroll::after {
-    top: -1px;
-  }
-
-  > .scroll-inner {
-    min-height: 100%;
-  }
+:host(.overscroll)::after {
+  top: -1px;
 }

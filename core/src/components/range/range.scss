@@ -3,45 +3,28 @@
 // Range
 // --------------------------------------------------
 
-.item ion-range .item-inner {
-  overflow: visible;
+:host {
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
 
-  width: 100%;
-}
-
-.item ion-range .input-wrapper {
-  overflow: visible;
-
-  flex-direction: column;
-
-  width: 100%;
-}
-
-.item ion-range {
-  width: 100%;
-}
-
-.item ion-range ion-label {
-  align-self: center;
-}
-
-ion-range {
   position: relative;
   display: flex;
+
+  flex: 1;
 
   align-items: center;
 }
 
-ion-range ion-label {
+::slotted(ion-label) {
   flex: initial;
 }
 
-ion-range ion-icon {
+::slotted(ion-icon[slot]) {
   font-size: 24px;
 }
 
-ion-range ion-gesture,
-ion-range .range-slider {
+ion-gesture,
+.range-slider {
   position: relative;
 
   flex: 1;
@@ -58,4 +41,30 @@ ion-range .range-slider {
   &:focus {
     outline: none;
   }
+}
+
+// Range in Item
+// ----------------------------
+
+// .item ion-range .item-inner {
+//   overflow: visible;
+
+//   width: 100%;
+// }
+
+// .item ion-range .input-wrapper {
+//   overflow: visible;
+
+//   flex-direction: column;
+
+//   width: 100%;
+// }
+
+:host(.in-item) {
+  width: 100%;
+}
+
+
+:host(.in-item) ::slotted(ion-label) {
+  align-self: center;
 }

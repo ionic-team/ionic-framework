@@ -1,5 +1,6 @@
 import { Component, Element, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-item-divider',
@@ -7,11 +8,10 @@ import { Color, Mode } from '../../interface';
     ios: 'item-divider.ios.scss',
     md: 'item-divider.md.scss'
   },
-  host: {
-    theme: 'item-divider'
-  }
+  shadow: true
 })
 export class ItemDivider {
+
   @Element() el!: HTMLElement;
 
   /**
@@ -36,12 +36,18 @@ export class ItemDivider {
     }
   }
 
+  hostData() {
+    return {
+      class: createColorClasses(this.color)
+    };
+  }
+
   render() {
     return [
       <slot name="start" />,
       <div class="item-divider-inner">
         <div class="item-divider-wrapper">
-          <slot />
+          <slot></slot>
         </div>
         <slot name="end" />
       </div>

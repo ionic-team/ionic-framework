@@ -4,6 +4,7 @@ import { DatetimeData, LocaleData, convertFormatToKey, convertToArrayOfNumbers, 
 
 import { CssClassMap, PickerColumn, PickerOptions, StyleEvent } from '../../interface';
 import { clamp, deferEvent } from '../../utils/helpers';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
@@ -11,9 +12,6 @@ import { clamp, deferEvent } from '../../utils/helpers';
   styleUrls: {
     ios: 'datetime.ios.scss',
     md: 'datetime.md.scss'
-  },
-  host: {
-    theme: 'datetime'
   }
 })
 export class Datetime {
@@ -22,7 +20,7 @@ export class Datetime {
   private inputId = `ion-dt-${datetimeIds++}`;
   private labelId = `${this.inputId}-lbl`;
 
-  private picker?: HTMLIonPickerElement | null;
+  private picker?: HTMLIonPickerElement;
 
   locale: LocaleData = {};
   datetimeMin: DatetimeData = {};
@@ -226,8 +224,8 @@ export class Datetime {
     this.ionStyle.emit({
       'interactive': true,
       'datetime': true,
-      'datetime-disabled': this.disabled,
-      'input-has-value': this.hasValue()
+      'has-value': this.hasValue(),
+      'interactive-disabled': this.disabled,
     });
   }
 
@@ -270,10 +268,8 @@ export class Datetime {
     }
     const pickerOptions = {...this.pickerOptions};
     this.picker = await this.buildPicker(pickerOptions);
-    if (this.picker) {
-      this.validate();
-      await this.picker.present();
-    }
+    this.validate();
+    await this.picker!.present();
   }
 
   private generateColumns(): PickerColumn[] {
@@ -549,6 +545,7 @@ export class Datetime {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, 'datetime'),
         'datetime-disabled': this.disabled
       }
     };

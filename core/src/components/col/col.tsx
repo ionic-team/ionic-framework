@@ -1,12 +1,13 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
-
 import { isMatch } from '../../utils/media';
 
-const SUPPORTS_VARS: boolean = CSS.supports('--a', '0');
+const SUPPORTS_VARS = !!(CSS && CSS.supports && CSS.supports('--a', '0'));
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
 @Component({
-  tag: 'ion-col'
+  tag: 'ion-col',
+  styleUrl: 'col.scss',
+  shadow: true
 })
 export class Col {
   [key: string]: any;
@@ -153,17 +154,6 @@ export class Col {
    */
   @Prop() sizeXl?: string;
 
-  hostData() {
-    return {
-      style: {
-        ...this.calculateOffset(),
-        ...this.calculatePull(),
-        ...this.calculatePush(),
-        ...this.calculateSize()
-      }
-    };
-  }
-
   @Listen('window:resize')
   onResize() {
     this.el.forceUpdate();
@@ -171,11 +161,11 @@ export class Col {
 
   // Loop through all of the breakpoints to see if the media query
   // matches and grab the column value from the relevant prop if so
-  getColumns(property: string) {
+  private getColumns(property: string) {
     let matched;
 
     for (const breakpoint of BREAKPOINTS) {
-      const matches = this.isMatch(breakpoint);
+      const matches = isMatch(breakpoint);
 
       // Grab the value of the property, if it exists and our
       // media query matches we return the value
@@ -191,16 +181,18 @@ export class Col {
     return matched;
   }
 
-  calculateSize() {
-    let columns = this.getColumns('size');
+  private calculateSize() {
+    const columns = this.getColumns('size');
 
     // If size wasn't set for any breakpoint
     // or if the user set the size without a value
     // it means we need to stick with the default and return
     // e.g. <ion-col size-md>
-    if (!columns || columns === '') return;
+    if (!columns || columns === '') {
+      return;
+    }
 
-    columns = SUPPORTS_VARS
+    const colSize = SUPPORTS_VARS
       // If CSS supports variables we should use the grid columns var
       ? `calc(calc(${columns} / var(--ion-grid-columns, 12)) * 100%)`
       // Convert the columns to a percentage by dividing by the total number
@@ -208,17 +200,19 @@ export class Col {
       : ((columns / 12) * 100) + '%';
 
     return {
-      'flex': `0 0 ${columns}`,
-      'width': `${columns}`,
-      'max-width': `${columns}`
+      'flex': `0 0 ${colSize}`,
+      'width': `${colSize}`,
+      'max-width': `${colSize}`
     };
   }
 
   // Called by push, pull, and offset since they use the same calculations
-  calculatePosition(property: string, modifier: string) {
+  private calculatePosition(property: string, modifier: string) {
     const columns = this.getColumns(property);
 
-    if (!columns) return;
+    if (!columns) {
+      return;
+    }
 
     // If the number of columns passed are greater than 0 and less than
     // 12 we can position the column, else default to auto
@@ -230,23 +224,34 @@ export class Col {
       : (columns > 0 && columns < 12) ? (columns / 12 * 100) + '%' : 'auto';
 
     return {
-      [`${modifier}`]: amount
+      [modifier]: amount
     };
   }
 
-  calculateOffset() {
+  private calculateOffset() {
     return this.calculatePosition('offset', 'margin-left');
   }
 
-  calculatePull() {
+  private calculatePull() {
     return this.calculatePosition('pull', 'right');
   }
 
-  calculatePush() {
+  private calculatePush() {
     return this.calculatePosition('push', 'left');
   }
 
-  isMatch(bp: string) {
-    return bp ? isMatch(bp) : true;
+  hostData() {
+    return {
+      style: {
+        ...this.calculateOffset(),
+        ...this.calculatePull(),
+        ...this.calculatePush(),
+        ...this.calculateSize(),
+      }
+    };
+  }
+
+  render() {
+    return <slot></slot>;
   }
 }

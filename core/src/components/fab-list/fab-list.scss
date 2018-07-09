@@ -3,7 +3,7 @@
 // Floating Action Button List
 // --------------------------------------------------
 
-ion-fab-list {
+:host {
   @include margin($fab-size + $fab-list-margin, 0);
 
   position: absolute;
@@ -17,47 +17,52 @@ ion-fab-list {
   min-height: $fab-size;
 }
 
-.fab-list-active {
+:host(.fab-list-active) {
   display: flex;
 }
 
-.fab-button-in-list {
-  @include margin(8px, 0);
-
-  width: $fab-mini-size;
-  height: $fab-mini-size;
-
+::slotted(.fab-button-in-list) {
   opacity: 0;
   visibility: hidden;
   transform: scale(0);
+
+  --size: #{$fab-mini-size};
 }
 
-.fab-button-in-list.fab-button-show {
+:host(.fab-list-side-top) ::slotted(.fab-button-in-list),
+:host(.fab-list-side-bottom) ::slotted(.fab-button-in-list) {
+  --padding-top: 5px;
+  --padding-bottom: 5px;
+}
+
+:host(.fab-list-side-start) ::slotted(.fab-button-in-list),
+:host(.fab-list-side-end) ::slotted(.fab-button-in-list) {
+  --padding-start: 5px;
+  --padding-end: 5px;
+}
+
+::slotted(.fab-button-in-list.fab-button-show) {
   opacity: 1;
   visibility: visible;
   transform: scale(1);
 }
 
-.fab-list-side-start .fab-button-in-list,
-.fab-list-side-end .fab-button-in-list {
-  @include margin(0, 8px);
-}
 
-.fab-list-side-top {
+:host(.fab-list-side-top) {
   top: auto;
   bottom: 0;
 
   flex-direction: column-reverse;
 }
 
-.fab-list-side-start {
+:host(.fab-list-side-start) {
   @include margin(0, $fab-size + $fab-list-margin);
   @include position-horizontal(null, 0);
 
   flex-direction: row-reverse;
 }
 
-.fab-list-side-end {
+:host(.fab-list-side-end) {
   @include margin(0, $fab-size + $fab-list-margin);
   @include position(null, null, null, 0);
 

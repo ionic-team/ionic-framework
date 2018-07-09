@@ -12,7 +12,7 @@ Badges are inline block elements that usually appear near another element. Typic
 
 string
 
-The color the badge should be
+The color the badge should be.
 
 
 #### mode
@@ -29,7 +29,7 @@ Possible values are: `"ios"` or `"md"`.
 
 string
 
-The color the badge should be
+The color the badge should be.
 
 
 #### mode

@@ -3,7 +3,7 @@
 // Searchbar
 // --------------------------------------------------
 
-ion-searchbar {
+:host {
   @include font-smoothing();
 
   box-sizing: border-box;
@@ -31,8 +31,6 @@ ion-searchbar {
 }
 
 .searchbar-input {
-  @include appearance(none);
-
   box-sizing: border-box;
 
   display: block;
@@ -40,27 +38,29 @@ ion-searchbar {
   width: 100%;
 
   border: 0;
+  outline: none;
   font-family: inherit;
 
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  appearance: none;
 
   &::-webkit-search-cancel-button {
     display: none;
   }
 }
 
-.searchbar-clear-icon {
+.searchbar-clear-button {
   @include margin(0);
   @include padding(0);
 
   display: none;
 
   min-height: 0;
+
+  outline: none;
+
+  appearance: none;
 }
 
-.searchbar-has-value.searchbar-has-focus .searchbar-clear-icon {
+:host(.searchbar-has-value.searchbar-has-focus) .searchbar-clear-button {
   display: block;
 }

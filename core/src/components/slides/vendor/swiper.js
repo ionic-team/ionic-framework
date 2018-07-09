@@ -1501,7 +1501,13 @@ var Swiper;
     var swiperSize = swiper.size;
     var rtl = swiper.rtlTranslate;
     var wrongRTL = swiper.wrongRTL;
-    var slides = $wrapperEl.children('.' + swiper.params.slideClass);
+
+    // Ionic hack to work with shadow
+    var children = $wrapperEl[0].querySelector('slot') && $wrapperEl[0].querySelector('slot').assignedNodes();
+    children = children && $(children.filter(child => child.classList && child.classList.contains(swiper.params.slideClass)));
+
+    var slides = children || $wrapperEl.children('.' + swiper.params.slideClass);
+
     var isVirtual = swiper.virtual && params.virtual.enabled;
     var slidesLength = isVirtual ? swiper.virtual.slides.length : slides.length;
     var snapGrid = [];
@@ -6154,7 +6160,8 @@ var Swiper;
         return;
       }
 
-      var $el = $(params.el);
+      // Ionic hack to get the pagination element
+      var $el = $(this.el.querySelector(params.el)) || $(params.el);
       if ($el.length === 0) {
         return;
       }
@@ -6705,7 +6712,8 @@ var Swiper;
       var $swiperEl = swiper.$el;
       var params = swiper.params.scrollbar;
 
-      var $el = $(params.el);
+      // Ionic hack to work with shadow
+      var $el = $(this.el.querySelector(params.el)) || $(params.el);
       if (
         swiper.params.uniqueNavElements &&
         typeof params.el === 'string' &&

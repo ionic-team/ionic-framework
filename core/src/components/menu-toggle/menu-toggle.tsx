@@ -2,7 +2,6 @@ import { Component, Listen, Prop, State } from '@stencil/core';
 
 @Component({
   tag: 'ion-menu-toggle',
-  styleUrl: 'menu-toggle.scss'
 })
 export class MenuToggle {
   @Prop({ context: 'document' })
@@ -26,7 +25,7 @@ export class MenuToggle {
     this.updateVisibility();
   }
 
-  @Listen('child:click')
+  @Listen('click')
   async onClick() {
     const menuCtrl = await getMenuController(this.doc);
     if (menuCtrl) {
@@ -55,19 +54,15 @@ export class MenuToggle {
   hostData() {
     const hidden = this.autoHide && !this.visible;
     return {
-      class: {
-        'menu-toggle-hidden': hidden
-      }
+      'hidden': hidden
     };
   }
 }
 
-function getMenuController(
-  doc: Document
-): Promise<HTMLIonMenuControllerElement | null> {
+function getMenuController(doc: Document): Promise<HTMLIonMenuControllerElement|undefined> {
   const menuControllerElement = doc.querySelector('ion-menu-controller');
   if (!menuControllerElement) {
-    return Promise.resolve(null);
+    return Promise.resolve(undefined);
   }
   return menuControllerElement.componentOnReady();
 }

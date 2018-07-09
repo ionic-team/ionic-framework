@@ -1,0 +1,89 @@
+@import "./buttons.md.vars";
+@import "./buttons";
+
+// Material Design Toolbar Button Default
+// --------------------------------------------------
+
+:host {
+  @include margin(0, 2px);
+}
+
+::slotted(*) ion-button {
+  font-size: #{$toolbar-md-button-font-size};
+  font-weight: 500;
+
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: 8px;
+  --padding-end: 8px;
+
+  --border-radius: #{$toolbar-md-button-border-radius};
+  --height: 32px;
+  --box-shadow: none;
+}
+
+
+// Material Design Toolbar Button Icon
+// --------------------------------------------------
+::slotted(*) ion-icon[slot="start"] {
+  @include margin(0);
+  @include margin-horizontal(null, .3em);
+
+  font-size: 1.4em;
+
+  pointer-events: none;
+}
+
+::slotted(*) ion-icon[slot="end"] {
+  @include margin(0);
+  @include margin-horizontal(.4em, null);
+
+  font-size: 1.4em;
+
+  pointer-events: none;
+}
+
+::slotted(*) ion-icon[slot="icon-only"] {
+  @include padding(0);
+  @include margin(0);
+
+  font-size: 1.8em;
+
+  pointer-events: none;
+}
+
+::slotted(*) ion-button.button-solid,
+::slotted(*) ion-button.button-outline {
+  --ion-color-base: #{$toolbar-md-text-color};
+  --ion-color-contrast: #{$toolbar-md-background-color};
+  --ion-color-shade: #{$toolbar-md-text-color};
+}
+
+::slotted(*) ion-button.button-clear {
+  --ion-color-base: currentColor;
+  --height: 45px;
+}
+
+
+// Material Design Toolbar Button Placement
+// --------------------------------------------------
+
+:host([slot="start"]) {
+  order: map-get($toolbar-order-md, buttons-start);
+}
+
+:host([slot="secondary"]) {
+  order: map-get($toolbar-order-md, buttons-secondary);
+}
+
+:host([slot="primary"]) {
+  order: map-get($toolbar-order-md, buttons-primary);
+
+  text-align: end;
+}
+
+:host([slot="end"]) {
+  order: map-get($toolbar-order-md, buttons-end);
+
+  text-align: end;
+}

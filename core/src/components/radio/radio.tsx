@@ -1,7 +1,7 @@
-import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { CheckedInputChangeEvent, Color, Mode, RadioButtonInput, StyleEvent } from '../../interface';
 import { deferEvent } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 
 @Component({
@@ -10,9 +10,7 @@ import { createThemedClasses } from '../../utils/theme';
     ios: 'radio.ios.scss',
     md: 'radio.md.scss'
   },
-  host: {
-    theme: 'radio'
-  }
+  shadow: true
 })
 export class Radio implements RadioButtonInput {
 
@@ -20,6 +18,8 @@ export class Radio implements RadioButtonInput {
   private nativeInput!: HTMLInputElement;
 
   @State() keyFocus = false;
+
+  @Element() el!: HTMLElement;
 
   /**
    * The color to use from your Sass `$colors` map.
@@ -141,9 +141,8 @@ export class Radio implements RadioButtonInput {
 
   emitStyle() {
     this.ionStyle.emit({
-      ...createThemedClasses(this.mode, this.color, 'radio'),
       'radio-checked': this.checked,
-      'radio-disabled': this.disabled
+      'interactive-disabled': this.disabled,
     });
   }
 
@@ -171,7 +170,10 @@ export class Radio implements RadioButtonInput {
 
   hostData() {
     return {
-      'class': {
+      class: {
+        ...createColorClasses(this.color),
+        'in-item': hostContext('.item', this.el),
+        'interactive': true,
         'radio-checked': this.checked,
         'radio-disabled': this.disabled,
         'radio-key': this.keyFocus

@@ -4,7 +4,7 @@
 // MD Menu Button
 // --------------------------------------------------
 
-.menu-button-md .menu-button-inner {
+.menu-button-inner {
   @include margin(2px, 6px, 0, 0);
   @include padding(0, 5px);
 
@@ -25,11 +25,11 @@
   }
 }
 
-.menu-button-md ion-icon {
+ion-icon {
   @include padding-horizontal(null, 0.3em);
   @include margin(0);
   @include padding(0, 6px);
-  @include text-align(start);
+  text-align: start;
 
   font-size: 24px;
   font-weight: normal;

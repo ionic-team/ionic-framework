@@ -8,6 +8,16 @@ TabButton is an internal component for tabs. Please see the [Tab docs](../tab) f
 
 ## Properties
 
+#### color
+
+string
+
+
+#### mode
+
+string
+
+
 #### selected
 
 boolean
@@ -23,6 +33,16 @@ The tab component for the button
 
 
 ## Attributes
+
+#### color
+
+string
+
+
+#### mode
+
+string
+
 
 #### selected
 

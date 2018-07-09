@@ -1,30 +1,32 @@
-import { Component, Element, EventListenerEnable, Listen, Method, Prop, Watch } from '@stencil/core';
-import { QueueController } from '../../interface';
+import { Component, Element, EventListenerEnable, Listen, Method, Prop, QueueApi, Watch } from '@stencil/core';
 import { now } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-ripple-effect',
   styleUrl: 'ripple-effect.scss',
+  shadow: true
 })
 export class RippleEffect {
 
   private lastClick = -10000;
   @Element() el!: HTMLElement;
 
-  @Prop({context: 'queue'}) queue!: QueueController;
-  @Prop({context: 'enableListener'}) enableListener!: EventListenerEnable;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
+  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
   @Prop({ context: 'document' }) doc!: Document;
+
+  @Prop() parent?: HTMLElement | string = 'parent';
 
   /** If true, the ripple effect will listen to any click events and animate */
   @Prop() tapClick = false;
   @Watch('tapClick')
   tapClickChanged(tapClick: boolean) {
-    this.enableListener(this, 'parent:ionActivated', tapClick);
+    this.enableListener(this, 'ionActivated', tapClick, this.parent);
     this.enableListener(this, 'touchstart', !tapClick);
     this.enableListener(this, 'mousedown', !tapClick);
   }
 
-  @Listen('parent:ionActivated', {enabled: false})
+  @Listen('ionActivated', {enabled: false})
   ionActivated(ev: CustomEvent) {
     this.addRipple(ev.detail.x, ev.detail.y);
   }
@@ -74,9 +76,14 @@ export class RippleEffect {
       style.height = size + 'px';
       style.animationDuration = duration + 'ms';
 
-      this.el.appendChild(div);
+      const container = this.el.shadowRoot || this.el;
+      container.appendChild(div);
       setTimeout(() => div.remove(), duration + 50);
     });
+  }
+
+  render() {
+    return null;
   }
 }
 

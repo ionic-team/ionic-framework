@@ -3,38 +3,165 @@
 // Button
 // --------------------------------------------------
 
-.button {
+:host {
+  vertical-align: top; // the better option for most scenarios
+  vertical-align: -webkit-baseline-middle; // the best for those that support it
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
+  --ion-color-shade: #{ion-color(primary, shade)};
+
+  --ripple-color: currentColor;
+}
+
+:host([disabled]) {
+  pointer-events: none;
+}
+
+
+// Solid Button
+// --------------------------------------------------
+
+:host(.button-solid) {
+  color: #{current-color(contrast)};
+
+  --background: #{current-color(base)};
+}
+
+
+// Outline Button
+// --------------------------------------------------
+
+:host(.button-outline) {
+  color: #{current-color(base)};
+
+  --border-color: #{current-color(base)};
+  --background: transparent;
+}
+
+
+// Clear Button
+// --------------------------------------------------
+
+:host(.button-clear) {
+  color: #{current-color(base)};
+
+  --border-width: 0;
+  --background: transparent;
+}
+
+
+// Block Button
+// --------------------------------------------------
+
+:host(.button-block) .button-native {
+  @include margin-horizontal(0);
+
+  display: block;
+  clear: both;
+
+  width: 100%;
+
+  contain: strict;
+}
+
+:host(.button-block) .button-native::after {
+  clear: both;
+}
+
+
+// Full Button
+// --------------------------------------------------
+
+:host(.button-full) .button-native {
+  @include margin-horizontal(0);
+
+  display: block;
+
+  width: 100%;
+
+  contain: strict;
+}
+
+:host(.button-full:not(.button-round)) .button-native {
+  @include border-radius(0);
+
+  border-right-width: 0;
+  border-left-width: 0;
+}
+
+
+.button-native {
   @include font-smoothing();
-  @include text-align(center);
-  @include appearance(none);
+  @include border-radius(var(--border-radius));
+  @include margin(
+    var(--margin-top),
+    var(--margin-end),
+    var(--margin-bottom),
+    var(--margin-start)
+  );
+
+  @include padding(
+    var(--padding-top),
+    var(--padding-end),
+    var(--padding-bottom),
+    var(--padding-start)
+  );
 
   position: relative;
   z-index: 0;
   display: inline-block;
+  overflow: hidden;
 
-  border: 0;
+  height: var(--height);
 
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
   line-height: 1;
-
-  text-decoration: none;
-  text-overflow: ellipsis;
-  text-transform: none;
-
-  white-space: nowrap;
+  text-decoration: inherit;
+  text-overflow: inherit;
+  text-transform: inherit;
+  white-space: inherit;
+  color: inherit;
+  background: var(--background);
+  box-shadow: var(--box-shadow);
   cursor: pointer;
+  opacity: var(--opacity);
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
-
-  transition: background-color, opacity 100ms linear;
+  transition: var(--transition);
 
   font-kerning: none;
   user-select: none;
+  text-align: inherit;
 
   contain: content;
+
+  appearance: none;
 }
 
-.button:active,
-.button:focus {
+.button-native[disabled] {
+  cursor: default;
+  opacity: .5;
+
+  pointer-events: none;
+}
+
+// .button > .button-container:hover {
+//   opacity: var(--opacity-hover);
+// }
+
+.button-native:active,
+.button-native:focus {
   outline: none;
 }
 
@@ -51,72 +178,31 @@
 }
 
 
-a[disabled],
-button[disabled],
-.button[disabled] {
-  cursor: default;
-
-  pointer-events: none;
-}
-
-
-// Block Button
-// --------------------------------------------------
-
-.button-block {
-  display: block;
-  clear: both;
-
-  width: 100%;
-
-  contain: strict;
-}
-
-.button-block::after {
-  clear: both;
-}
-
-
-// Full Button
-// --------------------------------------------------
-
-.button-full {
-  display: block;
-
-  width: 100%;
-
-  contain: strict;
-}
-
-
-// Full Outline Button
-// --------------------------------------------------
-
-.button-full.button-outline {
-  @include border-radius(0);
-
-  border-right-width: 0;
-  border-left-width: 0;
-}
-
-
 // Button Icons
 // --------------------------------------------------
 
-.button ion-icon {
+::slotted(ion-icon) {
   font-size: 1.4em;
 
   pointer-events: none;
 }
 
-.button ion-icon[slot="start"] {
+::slotted(ion-icon[slot="start"]) {
   @include margin(0, .3em, 0, -.3em);
 }
 
-.button ion-icon[slot="end"] {
+::slotted(ion-icon[slot="end"]) {
   @include margin(0, -.2em, 0, .3em);
 }
 
-.button ion-icon[slot="icon-only"] {
+::slotted(ion-icon[slot="icon-only"]) {
   font-size: 1.8em;
+}
+
+
+// Button Ripple effect
+// --------------------------------------------------
+
+ion-ripple-effect {
+  color: var(--ripple-color);
 }

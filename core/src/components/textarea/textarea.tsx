@@ -1,8 +1,6 @@
-import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
-
+import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { Color, InputChangeEvent, Mode, StyleEvent } from '../../interface';
 import { debounceEvent, deferEvent } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
 import { TextareaComponent } from '../input/input-base';
 
 
@@ -12,11 +10,11 @@ import { TextareaComponent } from '../input/input-base';
     ios: 'textarea.ios.scss',
     md: 'textarea.md.scss'
   },
-  host: {
-    theme: 'textarea'
-  }
+  shadow: true
 })
 export class Textarea implements TextareaComponent {
+
+  private inputEl?: HTMLTextAreaElement;
 
   mode!: Mode;
   color?: Color;
@@ -24,6 +22,8 @@ export class Textarea implements TextareaComponent {
   didBlurAfterEdit = false;
 
   @Element() el!: HTMLElement;
+
+  @State() hasFocus = false;
 
   /**
    * Emitted when the input value has changed.
@@ -150,10 +150,9 @@ export class Textarea implements TextareaComponent {
    */
   @Watch('value')
   protected valueChanged() {
-    const inputEl = this.el.querySelector('textarea')!;
-    const value = this.value;
-    if (inputEl.value !== value) {
-      inputEl.value = value;
+    const { inputEl, value } = this;
+    if (inputEl!.value !== value) {
+      inputEl!.value = value;
     }
     this.ionChange.emit({value});
   }
@@ -169,36 +168,31 @@ export class Textarea implements TextareaComponent {
       'interactive': true,
       'textarea': true,
       'input': true,
-      'input-disabled': this.disabled,
-      'input-has-value': this.hasValue(),
-      'input-has-focus': this.hasFocus()
+      'interactive-disabled': this.disabled,
+      'has-value': this.hasValue(),
+      'has-focus': this.hasFocus
     });
   }
 
-  private clearTextInput() {
-    this.value = '';
-  }
-
   private onInput(ev: KeyboardEvent) {
-    this.value = ev.target && (ev.target as HTMLInputElement).value || '';
+    this.value = this.inputEl!.value;
     this.emitStyle();
     this.ionInput.emit(ev);
   }
 
   private onFocus() {
+    this.hasFocus = true;
     this.focusChange();
-    this.emitStyle();
 
     this.ionFocus.emit();
   }
 
   private onBlur() {
+    this.hasFocus = false;
     this.focusChange();
-    this.emitStyle();
 
     this.ionBlur.emit();
   }
-
 
   private onKeyDown() {
     this.checkClearOnEdit();
@@ -215,7 +209,7 @@ export class Textarea implements TextareaComponent {
     // Did the input value change after it was blurred and edited?
     if (this.didBlurAfterEdit && this.hasValue()) {
       // Clear the input
-      this.clearTextInput();
+      this.value = '';
     }
 
     // Reset the flag
@@ -224,14 +218,10 @@ export class Textarea implements TextareaComponent {
 
   private focusChange() {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this.clearOnEdit && !this.hasFocus() && this.hasValue()) {
+    if (this.clearOnEdit && !this.hasFocus && this.hasValue()) {
       this.didBlurAfterEdit = true;
     }
-  }
-
-  private hasFocus(): boolean {
-    // check if an input has focus or not
-    return this.el && (this.el.querySelector(':focus') === this.el.querySelector('textarea'));
+    this.emitStyle();
   }
 
   private hasValue(): boolean {
@@ -239,11 +229,10 @@ export class Textarea implements TextareaComponent {
   }
 
   render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'native-textarea');
-    // TODO aria-labelledby={this.item.labelId}
-
     return (
       <textarea
+        class="native-textarea"
+        ref={(el) => this.inputEl = el as HTMLTextAreaElement}
         autoCapitalize={this.autocapitalize}
         // autoComplete={this.autocomplete}
         autoFocus={this.autofocus}
@@ -258,7 +247,6 @@ export class Textarea implements TextareaComponent {
         cols={this.cols}
         rows={this.rows}
         wrap={this.wrap}
-        class={themedClasses}
         onInput={this.onInput.bind(this)}
         onBlur={this.onBlur.bind(this)}
         onFocus={this.onFocus.bind(this)}

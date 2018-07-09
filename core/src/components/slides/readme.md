@@ -33,7 +33,14 @@ See http://idangero.us/swiper/api/ for valid options
 
 boolean
 
-Show or hide the pager
+If true, show the pagination. Defaults to `false`.
+
+
+#### scrollbar
+
+boolean
+
+If true, show the scrollbar. Defaults to `false`.
 
 
 ## Attributes
@@ -50,7 +57,14 @@ See http://idangero.us/swiper/api/ for valid options
 
 boolean
 
-Show or hide the pager
+If true, show the pagination. Defaults to `false`.
+
+
+#### scrollbar
+
+boolean
+
+If true, show the scrollbar. Defaults to `false`.
 
 
 ## Events

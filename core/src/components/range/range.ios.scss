@@ -4,29 +4,29 @@
 // iOS Range
 // --------------------------------------------------
 
-.range-ios {
+:host {
   @include padding($range-ios-padding-vertical, $range-ios-padding-horizontal);
 
   font-family: $range-ios-font-family;
 }
 
-.range-ios [range-left] {
-  @include margin(0, 20px, 0, 0);
-}
+// .range-ios [range-left] {
+//   @include margin(0, 20px, 0, 0);
+// }
 
-.range-ios [range-right] {
-  @include margin(0, 0, 0, 20px);
-}
+// .range-ios [range-right] {
+//   @include margin(0, 0, 0, 20px);
+// }
 
-.range-ios.range-has-pin {
+:host(.range-has-pin) {
   @include padding($range-ios-padding-vertical + $range-ios-pin-font-size, null, null, null);
 }
 
-.range-ios .range-slider {
+.range-slider {
   height: $range-ios-slider-height;
 }
 
-.range-ios .range-bar {
+.range-bar {
   @include position(($range-ios-slider-height / 2), null, null, 0);
   @include border-radius(1px);
 
@@ -40,15 +40,15 @@
   pointer-events: none;
 }
 
-.range-ios.range-pressed .range-bar-active {
+:host(.range-pressed) .range-bar-active {
   will-change: left, right;
 }
 
-.range-ios.range-pressed .range-knob-handle {
+:host(.range-pressed) .range-knob-handle {
   will-change: left;
 }
 
-.range-ios .range-bar-active {
+.range-bar-active {
   bottom: 0;
 
   width: auto;
@@ -56,10 +56,10 @@
   background: $range-ios-bar-active-background-color;
 }
 
-.range-ios .range-knob-handle {
+.range-knob-handle {
   @include position(($range-ios-slider-height / 2), null, null, 0);
   @include margin(-($range-ios-hit-height / 2), null, null, -($range-ios-hit-width / 2));
-  @include text-align(center);
+  text-align: center;
 
   position: absolute;
 
@@ -67,7 +67,7 @@
   height: $range-ios-hit-height;
 }
 
-.range-ios .range-knob {
+.range-knob {
   @include position(($range-ios-hit-height / 2) - ($range-ios-knob-height / 2) + ($range-ios-bar-height / 2) - .5px,
           null, null, ($range-ios-hit-width / 2) - ($range-ios-knob-width / 2));
   @include border-radius($range-ios-knob-border-radius);
@@ -84,7 +84,7 @@
   pointer-events: none;
 }
 
-.range-ios .range-tick {
+.range-tick {
   @include margin-horizontal(-($range-ios-tick-width / 2), null);
   @include border-radius($range-ios-tick-border-radius);
 
@@ -99,12 +99,12 @@
   pointer-events: none;
 }
 
-.range-ios .range-tick-active {
+.range-tick-active {
   background: $range-ios-tick-active-background-color;
 }
 
-.range-ios .range-pin {
-  @include text-align(center);
+.range-pin {
+  text-align: center;
   @include border-radius(50px);
   @include transform(translate3d(0, 28px, 0), scale(.01));
   @include padding($range-ios-pin-padding-top, $range-ios-pin-padding-end, $range-ios-pin-padding-bottom, $range-ios-pin-padding-start);
@@ -124,25 +124,10 @@
   transition: transform 120ms ease;
 }
 
-.range-ios .range-knob-pressed .range-pin {
+.range-knob-pressed .range-pin {
   @include transform(translate3d(0, 0, 0), scale(1));
 }
 
-.range-ios.range-disabled {
+:host(.range-disabled) {
   opacity: .5;
-}
-
-
-// Generate iOS Range Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-
-  .range-ios-#{$color-name} {
-    .range-bar-active,
-    .range-tick-active {
-      background: $color-base;
-    }
-  }
 }

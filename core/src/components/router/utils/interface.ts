@@ -1,17 +1,15 @@
-import * as c from './constants';
+
 
 export interface NavOutlet {
-  setRouteId(id: string, data: any, direction: c.RouterIntent): Promise<RouteWrite>;
-  getRouteId(): RouteID|undefined;
+  setRouteId(id: string, data: any, direction: number): Promise<RouteWrite>;
+  getRouteId(): RouteID | undefined;
 }
 
 export interface RouterEventDetail {
-  from: string|null;
-  redirectedFrom: string|null;
+  from: string | null;
+  redirectedFrom: string | null;
   to: string;
 }
-
-export type RouterDirection = 'forward' | 'back' | 'root';
 
 export interface RouteRedirect {
   from: string[];
@@ -30,8 +28,6 @@ export interface RouteID {
   params?: any;
 }
 
-export type NavOutletElement = NavOutlet & HTMLStencilElement;
-
 export interface RouteEntry {
   id: string;
   path: string[];
@@ -42,5 +38,7 @@ export interface RouteNode extends RouteEntry {
   children: RouteTree;
 }
 
+export type RouterDirection = 'forward' | 'back' | 'root';
+export type NavOutletElement = NavOutlet & HTMLStencilElement;
 export type RouteChain = RouteEntry[];
 export type RouteTree = RouteNode[];

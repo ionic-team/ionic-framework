@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Color, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode } from '../../interface';
+import { Animation, AnimationBuilder, Color, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -16,9 +16,6 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'popover.ios.scss',
     md: 'popover.md.scss'
-  },
-  host: {
-    theme: 'popover'
   }
 })
 export class Popover implements OverlayInterface {
@@ -218,7 +215,7 @@ export class Popover implements OverlayInterface {
   }
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'popover-translucent') : {};
+    const themedClasses = this.translucent ? createThemedClasses(this.mode, 'popover-translucent') : {};
 
     return {
       style: {
@@ -226,6 +223,7 @@ export class Popover implements OverlayInterface {
       },
       'no-router': true,
       class: {
+        ...createThemedClasses(this.mode, 'popover'),
         ...themedClasses,
         ...getClassMap(this.cssClass),
       }
@@ -233,7 +231,7 @@ export class Popover implements OverlayInterface {
   }
 
   render() {
-    const wrapperClasses = createThemedClasses(this.mode, this.color, 'popover-wrapper');
+    const wrapperClasses = createThemedClasses(this.mode, 'popover-wrapper');
 
     return [
       <ion-backdrop tappable={this.enableBackdropDismiss}/>,

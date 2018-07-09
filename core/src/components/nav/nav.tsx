@@ -1,13 +1,14 @@
-import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+import { Build, Component, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch } from '@stencil/core';
 import { ViewLifecycle } from '../..';
-import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, Mode, NavComponent, NavOptions, NavOutlet, NavResult, QueueController, RouteID, RouteWrite, TransitionDoneFn, TransitionInstruction } from '../../interface';
+import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, Mode, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, transition } from '../../utils/transition';
-import { RouterIntent } from '../router/utils/constants';
-import { ViewController, ViewState, convertToViews, matches } from './view-controller';
+import { ViewState, convertToViews, matches } from './view-controller';
 
 @Component({
-  tag: 'ion-nav'
+  tag: 'ion-nav',
+  styleUrl: 'nav.scss',
+  shadow: true
 })
 export class Nav implements NavOutlet {
   private transInstr: TransitionInstruction[] = [];
@@ -21,7 +22,7 @@ export class Nav implements NavOutlet {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   @Prop({ context: 'config' }) config!: Config;
 
@@ -202,7 +203,7 @@ export class Nav implements NavOutlet {
       removeCount: -1,
       opts: opts
     };
-    if (indexOrViewCtrl instanceof ViewController) {
+    if (typeof indexOrViewCtrl === 'object' && (indexOrViewCtrl as ViewController).component) {
       config.removeView = indexOrViewCtrl;
       config.removeStart = 1;
     } else if (typeof indexOrViewCtrl === 'number') {
@@ -299,7 +300,7 @@ export class Nav implements NavOutlet {
   setRouteId(
     id: string,
     params: any,
-    direction: RouterIntent
+    direction: number
   ): Promise<RouteWrite> {
     const active = this.getActive();
     if (matches(active, id, params)) {
@@ -405,6 +406,11 @@ export class Nav implements NavOutlet {
   /**
    * Returns the length of navigation stack
    */
+  @Method()
+  isAnimating() {
+    return this.isTransitioning;
+  }
+
   @Method()
   length() {
     return this.views.length;
@@ -753,6 +759,7 @@ export class Nav implements NavOutlet {
       showGoBack: this.canGoBack(enteringView),
       animationCtrl: this.animationCtrl,
       progressCallback,
+      queue: this.queue,
       window: this.win,
       baseEl: this.el,
       enteringEl,
@@ -933,7 +940,7 @@ export class Nav implements NavOutlet {
         />
       ),
       this.mode === 'ios' && <div class="nav-decor" />,
-      <slot />
+      <slot></slot>
     ];
   }
 }

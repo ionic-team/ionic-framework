@@ -3,15 +3,25 @@
 // Card
 // --------------------------------------------------
 
-ion-card {
+:host {
   @include font-smoothing();
 
   position: relative;
   display: block;
   overflow: hidden;
+
+  color: #{current-color(contrast)};
+  background: #{current-color(base)};
+
+  --ion-card-text: currentColor;
 }
 
-ion-card img {
+:host(.ion-color)::slotted(*) ion-card-title,
+:host(.ion-color)::slotted(*) ion-card-subtitle {
+  color: currentColor;
+}
+
+::slotted(*) img {
   display: block;
 
   width: 100%;

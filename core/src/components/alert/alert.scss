@@ -3,7 +3,7 @@
 // Alert
 // --------------------------------------------------
 
-ion-alert {
+:host {
   @include font-smoothing();
   @include position(0, 0, 0, 0);
 
@@ -21,7 +21,7 @@ ion-alert {
   contain: strict;
 }
 
-ion-alert.alert-top {
+:host(.alert-top) {
   @include padding(50px, null, null, null);
 
   align-items: flex-start;
@@ -61,6 +61,10 @@ ion-alert.alert-top {
   overflow-y: scroll;
 
   overscroll-behavior-y: contain;
+}
+
+.alert-message::-webkit-scrollbar {
+  display: none;
 }
 
 .alert-input {
@@ -114,8 +118,7 @@ ion-alert.alert-top {
 }
 
 .alert-tappable {
-  @include text-align(start);
-  @include appearance(none);
+  text-align: start;
   @include margin(0);
   @include padding(0);
 
@@ -126,6 +129,8 @@ ion-alert.alert-top {
   font-size: inherit;
   line-height: initial;
   background: transparent;
+
+  appearance: none;
 }
 
 .alert-button,

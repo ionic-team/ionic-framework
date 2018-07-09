@@ -1,4 +1,6 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 const SPLIT_PANE_MAIN = 'split-pane-main';
 const SPLIT_PANE_SIDE = 'split-pane-side';
@@ -17,14 +19,13 @@ const QUERY: { [key: string]: string }  = {
   styleUrls: {
     ios: 'split-pane.ios.scss',
     md: 'split-pane.md.scss'
-  },
-  host: {
-    theme: 'split-pane'
   }
 })
 export class SplitPane {
 
   private rmL: any;
+
+  mode!: Mode;
 
   @Element() el!: HTMLElement;
   @State() visible = false;
@@ -155,6 +156,7 @@ export class SplitPane {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, 'split-pane'),
         'split-pane-visible': this.visible
       }
     };

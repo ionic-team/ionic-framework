@@ -1,11 +1,13 @@
-import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi } from '@stencil/core';
 import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, NavOutlet, RouteID, RouteWrite, RouterOutletOptions } from '../../interface';
 import { transition } from '../../utils';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 
 
 @Component({
-  tag: 'ion-router-outlet'
+  tag: 'ion-router-outlet',
+  styleUrl: 'route-outlet.scss',
+  shadow: true
 })
 export class RouterOutlet implements NavOutlet {
 
@@ -20,6 +22,7 @@ export class RouterOutlet implements NavOutlet {
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'window' }) win!: Window;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   @Prop({ mutable: true }) animated?: boolean;
   @Prop() animationBuilder?: AnimationBuilder;
@@ -79,14 +82,16 @@ export class RouterOutlet implements NavOutlet {
 
     opts = opts || {};
 
+    const { mode, queue, animated, animationCtrl, win, el} = this;
     await transition({
-      mode: this.mode,
-      animated: this.animated,
-      animationCtrl: this.animationCtrl,
-      window: this.win,
+      mode,
+      queue,
+      animated,
+      animationCtrl,
+      window: win,
       enteringEl: enteringEl,
       leavingEl: leavingEl,
-      baseEl: this.el,
+      baseEl: el,
 
       ...opts
     });
@@ -123,7 +128,7 @@ export class RouterOutlet implements NavOutlet {
   render() {
     return [
       this.mode === 'ios' && <div class="nav-decor"/>,
-      <slot/>
+      <slot></slot>
     ];
   }
 }

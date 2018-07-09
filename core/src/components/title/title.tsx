@@ -1,17 +1,10 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-title',
-  styleUrls: {
-    ios: 'title.ios.scss',
-    md: 'title.md.scss'
-  },
-  host: {
-    theme: 'title'
-  }
+  styleUrl: 'title.scss',
+  shadow: true
 })
 export class ToolbarTitle {
 
@@ -28,10 +21,8 @@ export class ToolbarTitle {
   @Prop() color?: Color;
 
   render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'toolbar-title');
-
     return [
-      <div class={themedClasses}>
+      <div class="toolbar-title">
         <slot></slot>
       </div>
     ];

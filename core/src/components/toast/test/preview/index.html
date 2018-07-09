@@ -6,6 +6,7 @@
   <title>Toast</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
 </head>
 
 <body>
@@ -60,8 +61,8 @@
 
   </ion-app>
   <script>
-    window.addEventListener('ionToastDidDismiss', function(e){console.log('didDismiss', e)})
-    window.addEventListener('ionToastWillDismiss', function(e){console.log('willDismiss', e)})
+    window.addEventListener('ionToastDidDismiss', function (e) { console.log('didDismiss', e) })
+    window.addEventListener('ionToastWillDismiss', function (e) { console.log('willDismiss', e) })
 
     async function presentToast(position) {
       const toastController = document.querySelector('ion-toast-controller');

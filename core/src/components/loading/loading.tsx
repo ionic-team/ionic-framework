@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Color, Config, Mode } from '../../interface';
-import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
+import { Animation, AnimationBuilder, Color, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -14,9 +14,6 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'loading.ios.scss',
     md: 'loading.md.scss'
-  },
-  host: {
-    theme: 'loading'
   }
 })
 export class Loading implements OverlayInterface {
@@ -81,7 +78,7 @@ export class Loading implements OverlayInterface {
    * The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`,
    * `"bubbles"`, `"circles"`, `"crescent"`.
    */
-  @Prop() spinner?: string;
+  @Prop({mutable: true}) spinner?: string;
 
   /**
    * If true, the loading indicator will be translucent. Defaults to `false`.
@@ -188,7 +185,7 @@ export class Loading implements OverlayInterface {
 
   hostData() {
     const themedClasses = this.translucent
-      ? createThemedClasses(this.mode, this.color, 'loading-translucent')
+      ? createThemedClasses(this.mode, 'loading-translucent')
       : {};
 
     return {
@@ -196,6 +193,7 @@ export class Loading implements OverlayInterface {
         zIndex: 20000 + this.overlayId
       },
       class: {
+        ...createThemedClasses(this.mode, 'loading'),
         ...themedClasses,
         ...getClassMap(this.cssClass)
       }

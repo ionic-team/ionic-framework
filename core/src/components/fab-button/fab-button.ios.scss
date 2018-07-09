@@ -4,91 +4,58 @@
 // iOS FAB Button
 // --------------------------------------------------
 
-.fab-button-ios {
-  color: $fab-ios-text-color;
-  background-color: $fab-ios-background-color;
-
-  box-shadow: $fab-ios-box-shadow;
-
-  transition: $fab-ios-transition;
+:host {
+  --box-shadow: #{$fab-ios-box-shadow};
+  --transition: #{$fab-ios-transition};
 }
 
-.fab-button-ios.activated {
-  background-color: $fab-ios-background-color-activated;
+:host(.activated) {
+  --background: #{current-color(tint)};
+  --box-shadow: #{$fab-ios-box-shadow-activated};
 
-  box-shadow: $fab-ios-box-shadow-activated;
-
-  transform: $fab-ios-transform;
-  transition: $fab-ios-transition-activated;
+  --transform: #{$fab-ios-transform};
+  --transition: #{$fab-ios-transition-activated};
 }
 
-.fab-button-ios .icon {
+::slotted(ion-icon),
+.fab-button-close-icon {
   font-size: $fab-ios-icon-font-size;
-
-  fill: $fab-ios-icon-fill-color;
 }
 
 // FAB buttons in a list
 // --------------------------------------------------
 
-.fab-button-ios-in-list {
-  color: $fab-ios-list-button-text-color;
-  background-color: $fab-ios-list-button-background-color;
-
-  transition: transform $fab-ios-list-button-transition-duration $fab-ios-list-button-transition-timing-function $fab-ios-list-button-transition-delay,
-              opacity $fab-ios-list-button-transition-duration $fab-ios-list-button-transition-timing-function $fab-ios-list-button-transition-delay;
+:host(.fab-button-in-list) {
+  --ion-color-contrast: #{$fab-ios-list-button-text-color};
+  --ion-color-base: #{$fab-ios-list-button-background-color};
+  --transition: #{transform $fab-ios-list-button-transition-duration $fab-ios-list-button-transition-timing-function $fab-ios-list-button-transition-delay,
+              opacity $fab-ios-list-button-transition-duration $fab-ios-list-button-transition-timing-function $fab-ios-list-button-transition-delay};
 }
 
-.fab-button-ios-in-list.activated {
-  background-color: $fab-ios-list-button-background-color-activated;
+:host(.fab-button-in-list.activated) {
+  --background: #{$fab-ios-list-button-background-color-activated};
 }
 
-.fab-button-ios-in-list .icon {
-  fill: $fab-ios-list-button-icon-fill-color;
-}
 
 // Translucent FAB buttons
 // --------------------------------------------------
 
-.fab-translucent-ios {
-  background-color: $fab-ios-translucent-background-color;
+:host(.fab-translucent) {
+  --background: #{$fab-ios-translucent-background-color};
 
-  backdrop-filter: $fab-ios-translucent-filter;
+  --backdrop-filter: #{$fab-ios-translucent-filter};
 }
 
-.fab-translucent-ios-in-list {
-  background-color: $fab-ios-list-button-translucent-background-color;
+:host(.fab-translucent-in-list) {
+  --background: #{$fab-ios-list-button-translucent-background-color};
 }
 
 
-// Generate iOS FAB colors
-// --------------------------------------------------
+// .fab-translucent-ios-#{$color-name} {
+//   background-color: ion-color($color-name, base, $fab-ios-translucent-background-color-alpha);
+//   opacity: .8;
+// }
 
-@each $color-name, $color-value in $colors-ios {
-  $bg-color: ion-color($colors-ios, $color-name, base, ios);
-  $bg-color-activated: ion-color($colors-ios, $color-name, tint, ios);
-  $fg-color: ion-color($colors-ios, $color-name, contrast, ios);
-
-  .fab-button-ios-#{$color-name} {
-    color: $fg-color;
-    background-color: $bg-color;
-  }
-
-  .fab-button-ios-#{$color-name} .icon {
-    fill: $fg-color;
-  }
-
-  .fab-button-ios-#{$color-name}.activated {
-    background-color: $bg-color-activated;
-  }
-
-  .fab-translucent-ios-#{$color-name} {
-    background-color: ion-color($colors-ios, $color-name, base, ios, $fab-ios-translucent-background-color-alpha);
-    opacity: .8;
-  }
-
-  .fab-translucent-ios-#{$color-name}.activated {
-    opacity: 1;
-  }
-}
-
+// .fab-translucent-ios-#{$color-name}.activated {
+//   opacity: 1;
+// }

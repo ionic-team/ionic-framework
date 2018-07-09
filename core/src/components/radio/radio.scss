@@ -3,35 +3,31 @@
 // Radio
 // --------------------------------------------------
 
-ion-radio {
+:host {
+  --ion-color-base: #{ion-color(primary, base)};
+
   box-sizing: border-box;
 
   position: relative;
   display: inline-block;
 }
 
-ion-radio input {
-  @include position(0, null, null, 0);
-  @include margin(0);
+.radio-icon {
+  position: relative;
+  display: block;
 
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  border: 0;
-  background: transparent;
-  cursor: pointer;
+  width: var(--width);
+  height: var(--height);
 
 
-  appearance: none;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  contain: layout size style;
 }
 
-ion-radio .radio-icon {
+input {
+  @include input-cover();
+}
+
+.radio-icon,
+.radio-inner {
   box-sizing: border-box;
 }

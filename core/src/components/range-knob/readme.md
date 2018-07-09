@@ -15,7 +15,7 @@ boolean
 
 #### knob
 
-number
+string
 
 
 #### labelId
@@ -62,7 +62,7 @@ boolean
 
 #### knob
 
-number
+string
 
 
 #### label-id

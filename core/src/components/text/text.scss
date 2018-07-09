@@ -1,0 +1,10 @@
+@import "../../themes/ionic.globals";
+
+// Text
+// --------------------------------------------------
+
+:host {
+  color: #{current-color(base)};
+
+  --ion-color-base: currentColor;
+}

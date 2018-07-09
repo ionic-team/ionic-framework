@@ -1,5 +1,4 @@
-import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { QueueController } from '../../interface';
+import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-infinite-scroll',
@@ -9,14 +8,14 @@ export class InfiniteScroll {
 
   private thrPx = 0;
   private thrPc = 0;
-  private scrollEl?: HTMLIonScrollElement | null;
+  private scrollEl?: HTMLIonScrollElement;
   private didFire = false;
   private isBusy = false;
 
   @Element() el!: HTMLElement;
   @State() isLoading = false;
 
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
   @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
 
   /**
@@ -75,14 +74,13 @@ export class InfiniteScroll {
    */
   @Event() ionInfinite!: EventEmitter<void>;
 
-  async componentWillLoad() {
-    const scrollEl = this.el.closest('ion-scroll');
-    if (scrollEl) {
-      this.scrollEl = await scrollEl.componentOnReady();
-    }
-  }
 
-  componentDidLoad() {
+  async componentDidLoad() {
+    const contentEl = this.el.closest('ion-content');
+    if (contentEl) {
+      await contentEl.componentOnReady();
+      this.scrollEl = contentEl.getScrollElement();
+    }
     this.thresholdChanged(this.threshold);
     this.enableScrollEvents(!this.disabled);
     if (this.position === 'top') {

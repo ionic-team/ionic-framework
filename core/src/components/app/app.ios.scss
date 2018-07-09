@@ -8,10 +8,6 @@
 
   @include footer-safe-area($toolbar-ios-height, $toolbar-ios-padding, $tabbar-ios-height);
 
-  font-family: $font-family-ios-base;
-  font-size: $font-size-ios-base;
-  background-color: $background-ios-color;
-
   // TODO this can be simplified
   &.statusbar-padding {
     .ion-page,
@@ -19,24 +15,8 @@
     .ion-page > ion-header,
     ion-menu > .menu-inner,
     ion-menu > .menu-inner > ion-header {
-      @include toolbar-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-ios-padding, $app-ios-statusbar-padding);
-      @include toolbar-title-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-ios-padding, $app-ios-statusbar-padding);
+      @include toolbar-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-padding, $app-ios-statusbar-padding);
+      @include toolbar-title-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-padding, $app-ios-statusbar-padding);
     }
   }
 }
-
-a {
-  color: $app-ios-link-color;
-}
-
-
-// iOS Content Padding
-// --------------------------------------------------
-
-@include app-padding("ios", $content-ios-padding);
-
-
-// iOS Content Margin
-// --------------------------------------------------
-
-@include app-margin("ios", $content-ios-margin);

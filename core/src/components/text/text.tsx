@@ -1,16 +1,12 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 
 @Component({
   tag: 'ion-text',
-  styleUrls: {
-    ios: 'text.ios.scss',
-    md: 'text.md.scss'
-  },
-  host: {
-    theme: 'text'
-  }
+  styleUrl: 'text.scss',
+  shadow: true
 })
 export class Text {
 
@@ -26,4 +22,13 @@ export class Text {
    */
   @Prop() mode!: Mode;
 
+  hostData() {
+    return {
+      class: createColorClasses(this.color)
+    };
+  }
+
+  render() {
+    return <slot></slot>;
+  }
 }

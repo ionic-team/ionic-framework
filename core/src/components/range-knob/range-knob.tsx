@@ -3,7 +3,7 @@ import { Knob } from '../../interface';
 
 /** @hidden */
 @Component({
-  tag: `ion-range-knob`
+  tag: 'ion-range-knob'
 })
 export class RangeKnob {
 

@@ -1,31 +1,8 @@
-import {
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  Listen,
-  Method,
-  Prop,
-  State
-} from '@stencil/core';
-import {
-  Animation,
-  AnimationBuilder,
-  Config,
-  CssClassMap,
-  Mode,
-  PickerButton,
-  PickerColumn
-} from '../../interface';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
+import { Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
 
-import {
-  OverlayEventDetail,
-  OverlayInterface,
-  dismiss,
-  eventMethod,
-  present
-} from '../../utils/overlays';
-import { getClassMap } from '../../utils/theme';
+import { dismiss, eventMethod, present } from '../../utils/overlays';
+import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -35,9 +12,6 @@ import { iosLeaveAnimation } from './animations/ios.leave';
   styleUrls: {
     ios: 'picker.ios.scss',
     md: 'picker.md.scss'
-  },
-  host: {
-    theme: 'picker'
   }
 })
 export class Picker implements OverlayInterface {
@@ -305,6 +279,9 @@ export class Picker implements OverlayInterface {
 
   hostData() {
     return {
+      class: {
+        ...createThemedClasses(this.mode, 'picker'),
+      },
       style: {
         zIndex: 20000 + this.overlayId
       }

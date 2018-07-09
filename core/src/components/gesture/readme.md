@@ -16,13 +16,6 @@ string
 What component to attach listeners to.
 
 
-#### autoBlockAll
-
-boolean
-
-If true, gesture will prevent any other gestures from firing
-
-
 #### canStart
 
 GestureCallback
@@ -128,13 +121,6 @@ How many pixels of change the gesture should wait for before triggering the acti
 string
 
 What component to attach listeners to.
-
-
-#### auto-block-all
-
-boolean
-
-If true, gesture will prevent any other gestures from firing
 
 
 #### can-start

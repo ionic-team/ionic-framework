@@ -1,0 +1,13 @@
+@import "../../themes/ionic.globals.ios";
+
+// iOS Content
+// --------------------------------------------------
+
+/// @prop - Font family of the content
+$content-ios-font-family:                               $font-family-base !default;
+
+/// @prop - Background color of the outer content
+$content-ios-outer-background:                          $background-color-step-50 !default;
+
+/// @prop - Alpha for the Horizontal Rule
+$content-ios-horizontal-rule-background-color-alpha:    .12 !default;

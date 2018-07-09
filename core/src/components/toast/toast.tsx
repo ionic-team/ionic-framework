@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Color, Config, Mode } from '../../interface';
+import { Animation, AnimationBuilder, Color, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 
-import { OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
+import { dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -15,9 +15,6 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'toast.ios.scss',
     md: 'toast.md.scss'
-  },
-  host: {
-    theme: 'toast'
   }
 })
 export class Toast implements OverlayInterface {
@@ -183,11 +180,12 @@ export class Toast implements OverlayInterface {
   }
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'toast-translucent') : {};
+    const themedClasses = this.translucent ? createThemedClasses(this.mode, 'toast-translucent') : {};
 
     return {
       class: {
         ...themedClasses,
+        ...createThemedClasses(this.mode, 'toast'),
         ...getClassMap(this.cssClass)
       }
     };

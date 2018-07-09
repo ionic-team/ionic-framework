@@ -1,5 +1,5 @@
 import { Component, Prop } from '@stencil/core';
-import { Config } from '../../interface';
+import { Config, Mode } from '../../interface';
 
 @Component({
   tag: 'ion-menu-button',
@@ -7,13 +7,13 @@ import { Config } from '../../interface';
     ios: 'menu-button.ios.scss',
     md: 'menu-button.md.scss'
   },
-  host: {
-    theme: 'menu-button'
-  }
+  shadow: true
 })
 export class MenuButton {
-  @Prop({ context: 'config' })
-  config!: Config;
+
+  mode!: Mode;
+
+  @Prop({ context: 'config' }) config!: Config;
 
   /**
    * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
@@ -29,11 +29,11 @@ export class MenuButton {
     const menuIcon = this.config.get('menuIcon', 'menu');
     return (
       <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
-        <ion-button>
+        <button>
           <slot>
             <ion-icon icon={menuIcon} slot="icon-only" />
           </slot>
-        </ion-button>
+        </button>
       </ion-menu-toggle>
     );
   }

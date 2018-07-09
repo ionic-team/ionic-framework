@@ -1,15 +1,13 @@
-import { Component, Element, Prop } from '@stencil/core';
-import { GestureDetail, Mode, PickerColumn, PickerColumnOption, QueueController } from '../../interface';
+import { Component, Element, Prop, QueueApi } from '@stencil/core';
+import { GestureDetail, Mode, PickerColumn, PickerColumnOption } from '../../interface';
 import { hapticSelectionChanged } from '../../utils';
 import { clamp } from '../../utils/helpers';
+import { createThemedClasses } from '../../utils/theme';
 
 
 /** @hidden */
 @Component({
-  tag: 'ion-picker-column',
-  host: {
-    theme: 'picker-col'
-  }
+  tag: 'ion-picker-column'
 })
 export class PickerColumnCmp {
   mode!: Mode;
@@ -29,7 +27,7 @@ export class PickerColumnCmp {
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   @Prop() col!: PickerColumn;
 
@@ -383,6 +381,8 @@ export class PickerColumnCmp {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, 'picker-col'),
+
         'picker-opts-left': this.col.align === 'left',
         'picker-opts-right': this.col.align === 'right'
       },

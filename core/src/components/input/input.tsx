@@ -1,7 +1,7 @@
-import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { Color, InputChangeEvent, Mode, StyleEvent  } from '../../interface';
 import { debounceEvent, deferEvent } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
+import { hostContext } from '../../utils/theme';
 import { InputComponent } from './input-base';
 
 
@@ -11,17 +11,17 @@ import { InputComponent } from './input-base';
     ios: 'input.ios.scss',
     md: 'input.md.scss'
   },
-  host: {
-    theme: 'input'
-  }
+  shadow: true
 })
 export class Input implements InputComponent {
 
-  private nativeInput: HTMLInputElement|undefined;
+  private nativeInput?: HTMLInputElement;
   didBlurAfterEdit = false;
 
   mode!: Mode;
   color?: Color;
+
+  @State() hasFocus = false;
 
   @Element() el!: HTMLElement;
 
@@ -239,9 +239,9 @@ export class Input implements InputComponent {
     this.ionStyle.emit({
       'interactive': true,
       'input': true,
-      'input-disabled': this.disabled,
-      'input-has-value': this.hasValue(),
-      'input-has-focus': this.hasFocus()
+      'has-value': this.hasValue(),
+      'has-focus': this.hasFocus,
+      'interactive-disabled': this.disabled,
     });
   }
 
@@ -254,6 +254,7 @@ export class Input implements InputComponent {
   }
 
   private onBlur() {
+    this.hasFocus = false;
     this.focusChanged();
     this.emitStyle();
 
@@ -261,6 +262,7 @@ export class Input implements InputComponent {
   }
 
   private onFocus() {
+    this.hasFocus = true;
     this.focusChanged();
     this.emitStyle();
 
@@ -269,7 +271,7 @@ export class Input implements InputComponent {
 
   private focusChanged() {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this.clearOnEdit && !this.hasFocus() && this.hasValue()) {
+    if (this.clearOnEdit && !this.hasFocus && this.hasValue()) {
       this.didBlurAfterEdit = true;
     }
   }
@@ -300,17 +302,21 @@ export class Input implements InputComponent {
     this.value = '';
   }
 
-  private hasFocus(): boolean {
-    // check if an input has focus or not
-    return this.nativeInput === document.activeElement;
+  private hasValue(): boolean {
+    return !!this.value;
   }
 
-  private hasValue(): boolean {
-    return (this.value !== '');
+  hostData() {
+    return {
+      class: {
+        'in-item': hostContext('.item', this.el),
+        'has-value': this.hasValue(),
+        'has-focus': this.hasFocus
+      }
+    };
   }
 
   render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'native-input');
     // TODO aria-labelledby={this.item.labelId}
 
     return [
@@ -322,7 +328,7 @@ export class Input implements InputComponent {
         autoComplete={this.autocomplete}
         autoCorrect={this.autocorrect}
         autoFocus={this.autofocus}
-        class={themedClasses}
+        class="native-input"
         disabled={this.disabled}
         inputMode={this.inputmode}
         min={this.min}
@@ -346,10 +352,9 @@ export class Input implements InputComponent {
         onFocus={this.onFocus.bind(this)}
         onKeyDown={this.inputKeydown.bind(this)}
       />,
-      <button
+      this.clearInput && <button
         type="button"
         class="input-clear-icon"
-        hidden={!this.clearInput}
         onClick={this.clearTextInput.bind(this)}
         onMouseDown={this.clearTextInput.bind(this)}/>
     ];

@@ -3,7 +3,8 @@ import { Component, Element, Prop, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-fab-list',
-  styleUrl: 'fab-list.scss'
+  styleUrl: 'fab-list.scss',
+  shadow: true
 })
 export class FabList {
   @Element() el!: HTMLIonFabElement;
@@ -37,6 +38,10 @@ export class FabList {
         [`fab-list-side-${this.side}`]: this.side
       }
     };
+  }
+
+  render() {
+    return <slot></slot>;
   }
 
 }

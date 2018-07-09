@@ -6,16 +6,14 @@ import {
   Method,
   Prop
 } from '@stencil/core';
-import { Side, isEndSide } from '../../utils/helpers';
+import { Side } from '../../interface';
+import { isEndSide } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-item-options',
   styleUrls: {
     ios: 'item-options.ios.scss',
     md: 'item-options.md.scss'
-  },
-  host: {
-    theme: 'item-options'
   }
 })
 export class ItemOptions {
@@ -51,10 +49,11 @@ export class ItemOptions {
   }
 
   hostData() {
+    const isEnd = this.isEndSide();
     return {
       class: {
-        'item-options-start': !this.isEndSide(),
-        'item-options-end': this.isEndSide()
+        'item-options-start': !isEnd,
+        'item-options-end': isEnd
       }
     };
   }

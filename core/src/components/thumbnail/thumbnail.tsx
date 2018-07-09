@@ -1,4 +1,6 @@
 import { Component } from '@stencil/core';
+import { Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 
 @Component({
@@ -7,8 +9,18 @@ import { Component } from '@stencil/core';
     ios: 'thumbnail.ios.scss',
     md: 'thumbnail.md.scss'
   },
-  host: {
-    theme: 'thumbnail'
-  }
+  shadow: true
 })
-export class Thumbnail {}
+export class Thumbnail {
+  mode!: Mode;
+
+  hostData() {
+    return {
+      class: createThemedClasses(this.mode, 'thumbnail')
+    };
+  }
+
+  render() {
+    return <slot></slot>;
+  }
+}

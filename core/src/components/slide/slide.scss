@@ -12,7 +12,7 @@ ion-slide {
 }
 
 .slide-zoom {
-  @include text-align(center);
+  text-align: center;
 
   display: block;
 
@@ -20,7 +20,7 @@ ion-slide {
 }
 
 .swiper-slide {
-  @include text-align(center);
+  text-align: center;
 
   box-sizing: border-box;
   position: relative;

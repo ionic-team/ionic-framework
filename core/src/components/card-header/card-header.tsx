@@ -1,7 +1,6 @@
 import { Component, Prop } from '@stencil/core';
-
 import { Color, Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-card-header',
@@ -9,9 +8,7 @@ import { createThemedClasses } from '../../utils/theme';
     ios: 'card-header.ios.scss',
     md: 'card-header.md.scss'
   },
-  host: {
-    theme: 'card-header'
-  }
+  shadow: true
 })
 export class CardHeader {
   /**
@@ -31,16 +28,15 @@ export class CardHeader {
   @Prop() translucent = false;
 
   hostData() {
-    const themedClasses = this.translucent
-      ? createThemedClasses(this.mode, this.color, 'card-header-translucent')
-      : {};
-
-    const hostClasses = {
-      ...themedClasses
-    };
-
     return {
-      class: hostClasses
+      class: {
+        ...createColorClasses(this.color),
+        'card-header-translucent': this.translucent,
+      }
     };
+  }
+
+  render() {
+    return <slot></slot>;
   }
 }

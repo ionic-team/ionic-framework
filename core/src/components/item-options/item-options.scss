@@ -58,7 +58,7 @@ ion-item-options {
 
 .item-sliding-active-slide {
   @include rtl() {
-    &.item-sliding-active-options-left ion-item-options:not(.item-options-end) {
+    &.item-sliding-active-options-start ion-item-options:not(.item-options-end) {
       width: 100%;
 
       visibility: visible;
@@ -69,8 +69,8 @@ ion-item-options {
     display: flex;
   }
 
-  &.item-sliding-active-options-left .item-options-start,
-  &.item-sliding-active-options-right ion-item-options:not(.item-options-start) {
+  &.item-sliding-active-options-start .item-options-start,
+  &.item-sliding-active-options-end ion-item-options:not(.item-options-start) {
     width: 100%;
 
     visibility: visible;

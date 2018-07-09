@@ -9,13 +9,6 @@ It is recommended that any text content for a card should be placed in an `ion-c
 
 ## Properties
 
-#### color
-
-string
-
-The color to use for the text.
-
-
 #### mode
 
 string
@@ -25,13 +18,6 @@ Possible values are: `"ios"` or `"md"`.
 
 
 ## Attributes
-
-#### color
-
-string
-
-The color to use for the text.
-
 
 #### mode
 

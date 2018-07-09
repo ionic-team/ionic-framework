@@ -8,6 +8,11 @@ Tabbar is an internal component for Tabs. Please see the [Tabs documentation](..
 
 ## Properties
 
+#### color
+
+string
+
+
 #### highlight
 
 boolean
@@ -20,6 +25,11 @@ If the tabbar should include the highlight on the active tab
 string
 
 The layout of the title and icons
+
+
+#### mode
+
+string
 
 
 #### placement
@@ -59,6 +69,11 @@ If true, the tabbar will be translucent. Defaults to `false`.
 
 ## Attributes
 
+#### color
+
+string
+
+
 #### highlight
 
 boolean
@@ -71,6 +86,11 @@ If the tabbar should include the highlight on the active tab
 string
 
 The layout of the title and icons
+
+
+#### mode
+
+string
 
 
 #### placement

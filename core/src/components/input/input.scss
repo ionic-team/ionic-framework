@@ -3,20 +3,22 @@
 // Input
 // --------------------------------------------------
 
-.input {
+:host {
   position: relative;
-  display: block;
-
+  display: flex;
+  align-items: center;
   flex: 1;
 
   width: 100%;
-}
 
-// Input Within An Item
-// --------------------------------------------------
+  --placeholder-weight: inherit;
 
-.item-input .input {
-  position: static;
+  --padding-top: 0px;
+  --padding-end: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
+
+  --border-radius: 0px;
 }
 
 
@@ -24,23 +26,38 @@
 // --------------------------------------------------
 
 .native-input {
-  @include appearance(none);
-  @include border-radius(0);
+  @include border-radius(var(--border-radius));
 
+  @include padding(
+    var(--padding-top),
+    var(--padding-end),
+    var(--padding-bottom),
+    var(--padding-start)
+  );
+
+  box-sizing: border-box;
   display: inline-block;
 
   flex: 1;
 
-  width: 92%;
-  width: calc(100% - 10px);
+  width: 100%;
 
   border: 0;
-
+  outline: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  font-kerning: inherit;
   background: transparent;
 
-  &:active,
-  &:focus {
-    outline: none;
+  appearance: none;
+
+  &::placeholder {
+    font-family: inherit;
+
+    font-weight: var(--placeholder-weight);
+    color: var(--placeholder-color);
   }
 }
 
@@ -48,7 +65,7 @@
   opacity: .4;
 }
 
-input.native-input:-webkit-autofill {
+.native-input:-webkit-autofill {
   background-color: transparent;
 }
 
@@ -71,47 +88,7 @@ input.native-input:-webkit-autofill {
   height: 100%;
 }
 
-.input[disabled] .input-cover {
-  pointer-events: none;
-}
-
-
-// Input Cover: Focused
-// --------------------------------------------------
-// When the input has focus, then the input cover should be hidden
-
-.item-input-has-focus .input-cover {
-  display: none;
-}
-
-.item-input-has-focus {
-  pointer-events: none;
-}
-
-.item-input-has-focus input,
-.item-input-has-focus a,
-.item-input-has-focus button {
-  pointer-events: auto;
-}
-
-
-// Scroll Assist Input
-// --------------------------------------------------
-// This input is used to help the app handle
-// Next and Previous input tabbing
-
-[next-input] {
-  @include padding(0);
-
-  position: absolute;
-  bottom: 20px;
-
-  width: 1px;
-  height: 1px;
-
-  border: 0;
-  background: transparent;
-
+:host([disabled]) .input-cover {
   pointer-events: none;
 }
 
@@ -124,15 +101,40 @@ input.native-input:-webkit-autofill {
   @include padding(0);
   @include background-position(center);
 
-  position: absolute;
-  top: 0;
-  display: none;
+  border: 0;
 
-  height: 100%;
-
+  background-color: transparent;
   background-repeat: no-repeat;
+
+  visibility: hidden;
+
+  appearance: none;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
 }
 
-.item-input-has-focus.item-input-has-value .input-clear-icon {
-  display: block;
+:host(.has-focus.has-value) .input-clear-icon {
+  visibility: visible;
+}
+
+
+// Input Has focus
+// --------------------------------------------------
+// When the input has focus, then the input cover should be hidden
+
+:host(.has-focus) .input-cover {
+  display: none;
+}
+
+:host(.has-focus) {
+  pointer-events: none;
+}
+
+:host(.has-focus) input,
+:host(.has-focus) a,
+:host(.has-focus) button {
+  pointer-events: auto;
 }

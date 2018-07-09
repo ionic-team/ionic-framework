@@ -12,3 +12,32 @@
 
   will-change: transform;
 }
+
+.reorder-enabled ion-reorder {
+  display: block;
+
+  cursor: grab;
+
+  pointer-events: all;
+  touch-action: none;
+}
+
+.reorder-selected,
+.reorder-selected ion-reorder {
+  cursor: grabbing;
+}
+
+.reorder-selected {
+  position: relative;
+  z-index: $z-index-reorder-selected;
+
+  box-shadow: 0 0 10px rgba(0, 0, 0, .4);
+  opacity: .8;
+
+  // scss-lint:disable ImportantRule
+  transition: none !important;
+}
+
+.reorder-visible ion-reorder .reorder-icon {
+  @include transform(translate3d(0, 0, 0));
+}

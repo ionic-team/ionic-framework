@@ -1,4 +1,5 @@
 import { EventEmitter } from '@stencil/core';
+import { Side } from '../interface';
 
 export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {
   const element = array[indexes.from];
@@ -39,7 +40,6 @@ export function pointerCoord(ev: any): {x: number, y: number} {
   }
   return {x: 0, y: 0};
 }
-export type Side = 'start' | 'end';
 
 /**
  * @hidden

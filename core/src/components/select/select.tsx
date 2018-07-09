@@ -1,8 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
-import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions,
-  CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent
-} from '../../interface';
+import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent} from '../../interface';
 import { deferEvent } from '../../utils/helpers';
+import { createThemedClasses, hostContext } from '../../utils/theme';
 
 
 @Component({
@@ -11,16 +10,14 @@ import { deferEvent } from '../../utils/helpers';
     ios: 'select.ios.scss',
     md: 'select.md.scss'
   },
-  host: {
-    theme: 'select'
-  }
+  shadow: true
 })
 export class Select {
 
   private childOpts: HTMLIonSelectOptionElement[] = [];
   private selectId = `ion-sel-${selectIds++}`;
   private labelId?: string;
-  private overlay?: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement | null;
+  private overlay?: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
 
   mode!: Mode;
 
@@ -324,10 +321,8 @@ export class Select {
     };
 
     const popover = this.overlay = await this.popoverCtrl.create(popoverOpts);
-    if (popover) {
-      await popover.present();
-      this.isExpanded = true;
-    }
+    await popover.present();
+    this.isExpanded = true;
     return popover;
   }
 
@@ -359,10 +354,9 @@ export class Select {
     };
 
     const actionSheet = this.overlay = await this.actionSheetCtrl.create(actionSheetOpts);
-    if (actionSheet) {
-      await actionSheet.present();
-      this.isExpanded = true;
-    }
+    await actionSheet.present();
+
+    this.isExpanded = true;
     return actionSheet;
   }
 
@@ -402,10 +396,9 @@ export class Select {
     };
 
     const alert = this.overlay = await this.alertCtrl.create(alertOpts);
-    if (alert) {
-      await alert.present();
-      this.isExpanded = true;
-    }
+    await alert.present();
+
+    this.isExpanded = true;
     return alert;
   }
 
@@ -449,14 +442,17 @@ export class Select {
     this.ionStyle.emit({
       'interactive': true,
       'select': true,
-      'select-disabled': this.disabled,
-      'input-has-value': this.hasValue()
+      'input-has-value': this.hasValue(),
+      'interactive-disabled': this.disabled,
+      'select-disabled': this.disabled
     });
   }
 
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, 'select'),
+        'in-item': hostContext('.item', this.el),
         'select-disabled': this.disabled,
         'select-key': this.keyFocus
       }

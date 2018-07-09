@@ -3,19 +3,15 @@ import { Component, Prop } from '@stencil/core';
 
 @Component({
   tag: 'ion-grid',
-  styleUrls: {
-    ios: 'grid.ios.scss',
-    md: 'grid.md.scss'
-  },
-  host: {
-    theme: 'grid'
-  }
+  styleUrl: 'grid.scss',
+  shadow: true
 })
 export class Grid {
+
   /**
    * If true, the grid will have a fixed width based on the screen size. Defaults to `false`.
    */
-  @Prop() fixed?: boolean;
+  @Prop() fixed = false;
 
   hostData() {
     return {
@@ -23,5 +19,9 @@ export class Grid {
         'grid-fixed': this.fixed
       }
     };
+  }
+
+  render() {
+    return <slot></slot>;
   }
 }

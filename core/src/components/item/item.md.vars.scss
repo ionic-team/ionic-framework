@@ -4,10 +4,10 @@
 // --------------------------------------------------
 
 /// @prop - Color of the item paragraph
-$item-md-paragraph-text-color:              $text-md-color-step-400 !default;
+$item-md-paragraph-text-color:              $text-color-step-400 !default;
 
 /// @prop - Font family of the item
-$item-md-font-family:                       $font-family-md-base !default;
+$item-md-font-family:                       $font-family-base !default;
 
 /// @prop - Font size of the item
 $item-md-font-size:                         16px !default;
@@ -28,13 +28,13 @@ $item-md-thumbnail-height:                  $item-md-thumbnail-width !default;
 $item-md-detail-push-color:                 $item-md-border-color !default;
 
 /// @prop - Padding top for the item content
-$item-md-padding-top:                       13px !default;
+$item-md-padding-top:                       11px !default;
 
 /// @prop - Padding end for the item content
 $item-md-padding-end:                       16px !default;
 
 /// @prop - Padding bottom for the item content
-$item-md-padding-bottom:                    13px !default;
+$item-md-padding-bottom:                    11px !default;
 
 /// @prop - Padding start for the item content
 $item-md-padding-start:                     16px !default;
@@ -56,7 +56,7 @@ $item-md-border-bottom:                     $item-md-border-bottom-width $item-m
 // --------------------------------------------------
 
 /// @prop - Margin top for the start/end slot
-$item-md-slot-margin-top:                   0 !default;
+$item-md-slot-margin-top:                   2px !default;
 
 /// @prop - Margin end for the start/end slot
 $item-md-slot-margin-end:                   ($item-md-padding-end / 2) !default;
@@ -68,13 +68,13 @@ $item-md-slot-margin-bottom:                $item-md-slot-margin-top !default;
 $item-md-slot-margin-start:                 0 !default;
 
 /// @prop - Margin top for an icon in the start/end slot
-$item-md-icon-slot-margin-top:              11px !default;
+$item-md-icon-slot-margin-top:              3px !default;
 
 /// @prop - Margin end for an icon in the start/end slot
 $item-md-icon-slot-margin-end:              null !default;
 
 /// @prop - Margin bottom for an icon in the start/end slot
-$item-md-icon-slot-margin-bottom:           10px !default;
+$item-md-icon-slot-margin-bottom:           2px !default;
 
 /// @prop - Margin start for an icon in the start/end slot
 $item-md-icon-slot-margin-start:            0 !default;

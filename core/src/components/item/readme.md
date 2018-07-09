@@ -67,6 +67,13 @@ If true, a detail arrow will appear on the item. Defaults to `false` unless the 
 is `ios` and an `href`, `onclick` or `button` property is present.
 
 
+#### detailIcon
+
+string
+
+The icon to use when `detail` is set to `true`. Defaults to `"ios-arrow-forward"`.
+
+
 #### disabled
 
 boolean
@@ -105,6 +112,11 @@ When using a router, it specifies the transition direction when navigating to
 another page using `href`.
 
 
+#### state
+
+string
+
+
 ## Attributes
 
 #### button
@@ -127,6 +139,13 @@ boolean
 
 If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode`
 is `ios` and an `href`, `onclick` or `button` property is present.
+
+
+#### detail-icon
+
+string
+
+The icon to use when `detail` is set to `true`. Defaults to `"ios-arrow-forward"`.
 
 
 #### disabled
@@ -165,6 +184,11 @@ string
 
 When using a router, it specifies the transition direction when navigating to
 another page using `href`.
+
+
+#### state
+
+string
 
 
 

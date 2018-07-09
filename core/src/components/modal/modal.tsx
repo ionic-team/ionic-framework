@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Color, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-import { BACKDROP, OverlayEventDetail, OverlayInterface, dismiss, eventMethod, present } from '../../utils/overlays';
+import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
@@ -16,9 +16,6 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'modal.ios.scss',
     md: 'modal.md.scss'
-  },
-  host: {
-    theme: 'modal'
   }
 })
 export class Modal implements OverlayInterface {
@@ -27,6 +24,7 @@ export class Modal implements OverlayInterface {
 
   animation: Animation|undefined;
   presented = false;
+  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -36,20 +34,6 @@ export class Modal implements OverlayInterface {
   @Prop() overlayId!: number;
   @Prop() delegate?: FrameworkDelegate;
   @Prop() keyboardClose = true;
-
-  /**
-   * The color to use from your Sass `$colors` map.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
-   */
-  @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-   */
-  @Prop() mode!: Mode;
 
   /**
    * Animation to use when the modal is presented.
@@ -212,7 +196,10 @@ export class Modal implements OverlayInterface {
   hostData() {
     return {
       'no-router': true,
-      class: getClassMap(this.cssClass),
+      class: {
+        ...createThemedClasses(this.mode, 'modal'),
+        ...getClassMap(this.cssClass)
+      },
       style: {
         zIndex: 20000 + this.overlayId,
       }
@@ -220,7 +207,7 @@ export class Modal implements OverlayInterface {
   }
 
   render() {
-    const dialogClasses = createThemedClasses(this.mode, this.color, 'modal-wrapper');
+    const dialogClasses = createThemedClasses(this.mode, 'modal-wrapper');
 
     return [
       <ion-backdrop visible={this.showBackdrop} tappable={this.enableBackdropDismiss}/>,

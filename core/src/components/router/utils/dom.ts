@@ -1,7 +1,13 @@
 import { NavOutletElement, RouteChain, RouteID } from '../../../interface';
 import { RouterIntent } from './constants';
 
-export async function writeNavState(root: HTMLElement | undefined, chain: RouteChain, intent: RouterIntent, index: number, changed = false): Promise<boolean> {
+export async function writeNavState(
+  root: HTMLElement | undefined,
+  chain: RouteChain,
+  intent: RouterIntent,
+  index: number,
+  changed = false
+): Promise<boolean> {
   try {
     // find next navigation outlet in the DOM
     const outlet = searchNavNode(root);

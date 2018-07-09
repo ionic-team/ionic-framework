@@ -14,7 +14,6 @@ export { IonRouterOutlet } from './navigation/ion-router-outlet';
 export { HrefDelegate } from './navigation/href-delegate';
 export { NavParams } from './navigation/nav-params';
 
-export { Icon } from './icon';
 export { VirtualScroll } from './virtual-scroll/virtual-scroll';
 export { VirtualItem } from './virtual-scroll/virtual-item';
 export { VirtualHeader } from './virtual-scroll/virtual-header';

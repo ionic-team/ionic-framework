@@ -4,22 +4,71 @@
 // iOS Segment
 // --------------------------------------------------
 
-.segment-ios {
+:host {
   font-family: $segment-ios-font-family;
 }
 
-.segment-ios.segment-disabled {
+:host(.segment-disabled) {
   opacity: $segment-ios-opacity-disabled;
 
   pointer-events: none;
 }
 
+// iOS Segment Button
+// --------------------------------------------------
+
+::slotted(ion-segment-button) {
+  --border-radius: #{$segment-button-ios-border-radius};
+  --border-width: #{$segment-button-ios-border-width};
+  --border-style: solid;
+  --border-color: #{current-color(base)};
+
+  --background: transparent;
+  --transition: 100ms all linear;
+  --icon-size: #{$segment-button-ios-icon-size};
+
+  height: #{$segment-button-ios-height};
+
+  font-size: #{$segment-button-ios-font-size};
+  line-height: #{$segment-button-ios-line-height};
+
+  color: #{current-color(base)};
+}
+
+::slotted(.segment-checked) {
+  color: #{current-color(contrast)};
+
+  --background: #{current-color(base)};
+}
+
+::slotted(.segment-button-disabled) {
+  color: #{current-color(base, $segment-button-ios-background-color-alpha-disabled)};
+
+  pointer-events: none;
+}
+
+::slotted(ion-segment-button):hover:not(.segment-checked) {
+  --background: #{current-color(base, $segment-button-ios-background-color-alpha-hover)};
+}
+
+::slotted(ion-segment-button):active:not(.segment-checked) {
+  --background: #{current-color(base, $segment-button-ios-background-color-alpha-active)};
+}
+
 
 // iOS Segment in Toolbar
 // --------------------------------------------------
-
-.toolbar-ios .segment-ios {
+:host(.in-toolbar) {
   @include position(0, 0, 0, 0);
 
   position: absolute;
+}
+
+:host(.in-toolbar) ::slotted(ion-segment-button) {
+  max-width: $segment-button-ios-toolbar-button-max-width;
+
+  height: $segment-button-ios-toolbar-button-height;
+
+  font-size: $segment-button-ios-toolbar-font-size;
+  line-height: $segment-button-ios-toolbar-line-height;
 }
