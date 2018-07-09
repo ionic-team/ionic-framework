@@ -1,7 +1,7 @@
 # ion-label
 
 Label is a wrapper element that can be used in combination with `ion-item` and `ion-input`.
-The position of the label can be controlled to be either stacked, inline, or floating.
+The position of the label can be controlled to be either inline (default), fixed, stacked, or floating.
 
 
 <!-- Auto Generated Below -->
