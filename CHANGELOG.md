@@ -1,3 +1,12 @@
+<a name="4.0.0-alpha.9"></a>
+# [4.0.0-alpha.9](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.8...v4.0.0-alpha.9) (2018-07-10)
+
+
+### Bug Fixes
+
+* **angular:** esm ([0e68f17](https://github.com/ionic-team/ionic/commit/0e68f17))
+
+
 <a name="4.0.0-alpha.8"></a>
 # [4.0.0-alpha.8](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.7...v4.0.0-alpha.8) (2018-07-09)
 
