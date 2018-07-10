@@ -37,7 +37,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist/"
+    "dist/",
+    "css/"
   ],
   "dependencies": {
     "@ionic/core": "4.0.0-alpha.9"
