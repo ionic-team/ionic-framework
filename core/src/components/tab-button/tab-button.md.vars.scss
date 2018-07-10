@@ -57,13 +57,13 @@ $tab-button-md-text-transform-active:           scale3d($tab-button-md-font-size
 /// @prop - Text transition for the tab button text
 $tab-button-md-text-transition:                 transform .3s ease-in-out !default;
 
-/// @prop - Transform x for the active tab button icon when the layout is icon-top, icon-only, or title-only
+/// @prop - Transform x for the active tab button icon when the layout is icon-top, icon-only, or label-only
 $tab-button-md-icon-transform-x-active:         0 !default;
 
-/// @prop - Transform y for the active tab button icon when the layout is icon-top, icon-only, or title-only
+/// @prop - Transform y for the active tab button icon when the layout is icon-top, icon-only, or label-only
 $tab-button-md-icon-transform-y-active:         -2px !default;
 
-/// @prop - Transform z for the active tab button icon when the layout is icon-top, icon-only, or title-only
+/// @prop - Transform z for the active tab button icon when the layout is icon-top, icon-only, or label-only
 $tab-button-md-icon-transform-z-active:         0 !default;
 
 /// @prop - Transform x for the active tab button icon when the layout is icon-right

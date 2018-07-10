@@ -96,12 +96,17 @@ a {
 }
 
 :host(.has-icon) .tab-button-icon,
-:host(.has-title) .tab-button-text {
+:host(.has-label) .tab-button-text {
   display: block;
 }
 
-:host(.has-title-only) .tab-button-text {
+:host(.has-label-only) .tab-button-text {
   white-space: normal;
+}
+
+:host(.has-icon-only) .tab-button-native,
+:host(.has-label-only) .tab-button-native {
+  justify-content: center;
 }
 
 
@@ -146,12 +151,12 @@ a {
 .layout-icon-start .tab-button,
 .layout-icon-end .tab-button,
 .layout-icon-hide .tab-button,
-.layout-title-hide .tab-button {
+.layout-label-hide .tab-button {
   justify-content: center;
 }
 
 .layout-icon-hide .tab-button-icon,
-.layout-title-hide .tab-button-text {
+.layout-label-hide .tab-button-text {
   display: none;
 }
 

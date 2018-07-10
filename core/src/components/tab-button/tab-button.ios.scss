@@ -11,7 +11,6 @@
   --background-focused: #{$tabbar-ios-background-color-focused};
 }
 
-
 .tab-button-native {
   @include padding(
     $tab-button-ios-padding-top,
@@ -26,7 +25,7 @@
   min-height: $tab-button-ios-font-size + 1;
 }
 
-:host(.has-title-only) .tab-button-text {
+:host(.has-label-only) .tab-button-text {
   @include margin(2px, 0);
 
   font-size: $tab-button-ios-font-size + 2;
@@ -44,8 +43,6 @@
 .tab-button-icon::before {
   vertical-align: top;
 }
-
-
 
 .layout-icon-end .tab-button-ios .tab-button-text,
 .layout-icon-start .tab-button-ios .tab-button-text,
@@ -66,6 +63,6 @@
   font-size: 24px;
 }
 
-.layout-title-hide .tab-button-ios ion-icon {
+.layout-label-hide .tab-button-ios ion-icon {
   @include margin(0);
 }

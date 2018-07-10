@@ -65,10 +65,10 @@ export class TabButton {
   hostData() {
     const selected = this.selected;
     const tab = this.tab;
-    const hasTitle = !!tab.label;
+    const hasLabel = !!tab.label;
     const hasIcon = !!tab.icon;
-    const hasTitleOnly = (hasTitle && !hasIcon);
-    const hasIconOnly = (hasIcon && !hasTitle);
+    const hasLabelOnly = (hasLabel && !hasIcon);
+    const hasIconOnly = (hasIcon && !hasLabel);
     const hasBadge = !!tab.badge;
     return {
       'role': 'tab',
@@ -78,9 +78,9 @@ export class TabButton {
       class: {
         ...createColorClasses(this.color),
         'tab-selected': selected,
-        'has-title': hasTitle,
+        'has-label': hasLabel,
         'has-icon': hasIcon,
-        'has-title-only': hasTitleOnly,
+        'has-label-only': hasLabelOnly,
         'has-icon-only': hasIconOnly,
         'has-badge': hasBadge,
         'tab-button-disabled': tab.disabled,

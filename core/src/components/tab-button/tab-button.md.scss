@@ -16,11 +16,7 @@
 }
 
 .tab-button-native {
-  @include padding(
-    $tab-button-md-padding-top,
-    $tab-button-md-padding-end,
-    $tab-button-md-padding-bottom,
-    $tab-button-md-padding-start);
+  @include padding($tab-button-md-padding-top, $tab-button-md-padding-end, $tab-button-md-padding-bottom, $tab-button-md-padding-start);
 
   display: flex;
 }
@@ -58,46 +54,28 @@
   transition: $tab-button-md-icon-transition;
 }
 
-// Tab layout: icon-top, icon-only, title-only
+// Tab layout: icon-top, icon-only, label-only
 :host(.tab-selected) .tab-button-icon {
-  @include transform(translate3d(
-    $tab-button-md-icon-transform-x-active,
-    $tab-button-md-icon-transform-y-active,
-    $tab-button-md-icon-transform-z-active));
+  @include transform(translate3d($tab-button-md-icon-transform-x-active, $tab-button-md-icon-transform-y-active, $tab-button-md-icon-transform-z-active));
 }
 
 
 // Material Design Tab with Icon or Title only
 // --------------------------------------------------
 
-:host(.icon-only),
-:host(.has-title-only) {
-  justify-content: center;
-}
-
-
 // Tab layout: icon-end
 .layout-icon-end .tab-button-md.tab-selected .tab-button-icon {
-  @include transform(translate3d(
-    $tab-button-md-icon-right-transform-x-active,
-    $tab-button-md-icon-right-transform-y-active,
-    $tab-button-md-icon-right-transform-z-active));
+  @include transform(translate3d($tab-button-md-icon-right-transform-x-active, $tab-button-md-icon-right-transform-y-active, $tab-button-md-icon-right-transform-z-active));
 }
 
 // Tab layout: icon-bottom
 .layout-icon-bottom .tab-button-md.tab-selected .tab-button-icon {
-  @include transform(translate3d(
-    $tab-button-md-icon-bottom-transform-x-active,
-    $tab-button-md-icon-bottom-transform-y-active,
-    $tab-button-md-icon-bottom-transform-z-active));
+  @include transform(translate3d($tab-button-md-icon-bottom-transform-x-active, $tab-button-md-icon-bottom-transform-y-active, $tab-button-md-icon-bottom-transform-z-active));
 }
 
 // Tab layout: icon-start
 .layout-icon-start .tab-button-md.tab-selected .tab-button-icon {
-  @include transform(translate3d(
-    $tab-button-md-icon-left-transform-x-active,
-    $tab-button-md-icon-left-transform-y-active,
-    $tab-button-md-icon-left-transform-z-active));
+  @include transform(translate3d($tab-button-md-icon-left-transform-x-active, $tab-button-md-icon-left-transform-y-active, $tab-button-md-icon-left-transform-z-active));
 }
 
 .layout-icon-top .tab-button-md .has-icon .tab-button-text {
@@ -111,6 +89,6 @@
 }
 
 .layout-icon-hide .tab-button-md,
-.layout-title-hide .tab-button-md {
+.layout-label-hide .tab-button-md {
   justify-content: center;
 }
