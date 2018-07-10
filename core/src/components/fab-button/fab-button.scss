@@ -26,14 +26,10 @@
 }
 
 .fab-button-native {
-  @include margin(
-    var(--padding-top),
-    var(--padding-end),
-    var(--padding-bottom),
-    var(--padding-start)
-  );
-  text-align: center;
   @include border-radius(50%);
+  @include margin(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  text-align: center;
 
   position: relative;
   z-index: 0;

@@ -98,19 +98,9 @@
 .button-native {
   @include font-smoothing();
   @include border-radius(var(--border-radius));
-  @include margin(
-    var(--margin-top),
-    var(--margin-end),
-    var(--margin-bottom),
-    var(--margin-start)
-  );
+  @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
 
-  @include padding(
-    var(--padding-top),
-    var(--padding-end),
-    var(--padding-bottom),
-    var(--padding-start)
-  );
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   position: relative;
   z-index: 0;

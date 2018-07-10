@@ -60,12 +60,7 @@
 
 
 .item-native {
-  @include padding(
-    var(--padding-top),
-    var(--padding-end),
-    var(--padding-bottom),
-    var(--padding-start)
-  );
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include border-radius(var(--border-radius));
 
   @include margin(0);
@@ -109,12 +104,7 @@
 
 .item-inner {
   @include margin(0);
-  @include padding(
-    var(--inner-padding-top),
-    var(--inner-padding-end),
-    var(--inner-padding-bottom),
-    var(--inner-padding-start)
-  );
+  @include padding(var(--inner-padding-top), var(--inner-padding-end), var(--inner-padding-bottom), var(--inner-padding-start));
 
   box-sizing: border-box;
 

@@ -37,12 +37,8 @@
 }
 
 .scroll-inner {
-  @include padding(
-    var(--padding-top),
-    var(--padding-end),
-    calc(var(--padding-bottom) + var(--keyboard-offset)),
-    var(--padding-start)
-  );
+  @include padding(var(--padding-top), var(--padding-end), calc(var(--padding-bottom) + var(--keyboard-offset)), var(--padding-start));
+
   min-height: 100%;
   box-sizing: border-box;
   -webkit-margin-collapse: discard;

@@ -81,11 +81,7 @@
 }
 
 .picker-ios .picker-opt {
-  @include padding(
-    $picker-ios-option-padding-top,
-    $picker-ios-option-padding-end,
-    $picker-ios-option-padding-bottom,
-    $picker-ios-option-padding-start);
+  @include padding($picker-ios-option-padding-top, $picker-ios-option-padding-end, $picker-ios-option-padding-bottom, $picker-ios-option-padding-start);
   @include margin(0);
   @include transform-origin(center, center);
 

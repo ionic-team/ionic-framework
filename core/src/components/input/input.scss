@@ -28,12 +28,7 @@
 .native-input {
   @include border-radius(var(--border-radius));
 
-  @include padding(
-    var(--padding-top),
-    var(--padding-end),
-    var(--padding-bottom),
-    var(--padding-start)
-  );
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
   box-sizing: border-box;
   display: inline-block;
