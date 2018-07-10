@@ -15,7 +15,7 @@ Lists support several interactions including swiping items to reveal options, dr
 
 boolean
 
-How the bottom border should be displayed on all items.
+If true, the list will have margin around it and rounded corners. Defaults to `"false"`.
 
 
 #### lines
@@ -31,7 +31,7 @@ How the bottom border should be displayed on all items.
 
 boolean
 
-How the bottom border should be displayed on all items.
+If true, the list will have margin around it and rounded corners. Defaults to `"false"`.
 
 
 #### lines
@@ -51,7 +51,7 @@ Returns a boolean value of whether it closed an item or not.
 
 #### getOpenItem()
 
-Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
+Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently open.
 
 
 #### setOpenItem()

@@ -1,5 +1,6 @@
 import { Config } from './providers/config';
-import { defineCustomElements } from '@ionic/core';
+// @ts-ignore
+import { defineCustomElements } from '@ionic/core/dist/esm';
 import { IonicWindow } from './types/interfaces';
 
 
