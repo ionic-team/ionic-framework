@@ -20,7 +20,9 @@ export class TabButton {
 
   @State() keyFocus = false;
 
-  /** If the tab is selected or not */
+  /**
+   * If true, the tab button will be selected. Defaults to `false`.
+   */
   @Prop() selected = false;
 
   /** The tab component for the button */

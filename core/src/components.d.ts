@@ -3467,7 +3467,7 @@ declare global {
        */
       'getOpenItem': () => HTMLIonItemSlidingElement | undefined;
       /**
-       * If true, the list will have margin around it and rounded corners. Defaults to `"false"`.
+       * If true, the list will have margin around it and rounded corners. Defaults to `false`.
        */
       'inset': boolean;
       /**
@@ -3501,7 +3501,7 @@ declare global {
   namespace JSXElements {
     export interface IonListAttributes extends HTMLAttributes {
       /**
-       * If true, the list will have margin around it and rounded corners. Defaults to `"false"`.
+       * If true, the list will have margin around it and rounded corners. Defaults to `false`.
        */
       'inset'?: boolean;
       /**
@@ -6940,7 +6940,7 @@ declare global {
       'color': Color;
       'mode': Mode;
       /**
-       * If the tab is selected or not 
+       * If true, the tab button will be selected. Defaults to `false`.
        */
       'selected': boolean;
       /**
@@ -6984,7 +6984,7 @@ declare global {
        */
       'onIonTabbarClick'?: (event: CustomEvent<HTMLIonTabElement>) => void;
       /**
-       * If the tab is selected or not 
+       * If true, the tab button will be selected. Defaults to `false`.
        */
       'selected'?: boolean;
       /**
@@ -7001,7 +7001,7 @@ declare global {
   namespace StencilComponents {
     interface IonTab {
       /**
-       * If the tab is active or not 
+       * If true, sets the tab as the active tab.
        */
       'active': boolean;
       /**
@@ -7020,6 +7020,9 @@ declare global {
        * The component to display inside of the tab.
        */
       'component': ComponentRef;
+      /**
+       * hidden 
+       */
       'delegate': FrameworkDelegate;
       /**
        * If true, the user cannot interact with the tab. Defaults to `false`.
@@ -7038,7 +7041,7 @@ declare global {
        */
       'icon': string;
       /**
-       * The title of the tab.
+       * The label of the tab.
        */
       'label': string;
       /**
@@ -7084,7 +7087,7 @@ declare global {
   namespace JSXElements {
     export interface IonTabAttributes extends HTMLAttributes {
       /**
-       * If the tab is active or not 
+       * If true, sets the tab as the active tab.
        */
       'active'?: boolean;
       /**
@@ -7103,6 +7106,9 @@ declare global {
        * The component to display inside of the tab.
        */
       'component'?: ComponentRef;
+      /**
+       * hidden 
+       */
       'delegate'?: FrameworkDelegate;
       /**
        * If true, the user cannot interact with the tab. Defaults to `false`.
@@ -7117,7 +7123,7 @@ declare global {
        */
       'icon'?: string;
       /**
-       * The title of the tab.
+       * The label of the tab.
        */
       'label'?: string;
       /**
@@ -7151,20 +7157,20 @@ declare global {
     interface IonTabbar {
       'color': Color;
       /**
-       * If the tabbar should include the highlight on the active tab 
+       * If true, show the tab highlight bar under the selected tab.
        */
       'highlight': boolean;
       /**
-       * The layout of the title and icons 
+       * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
        */
       'layout': TabbarLayout;
       'mode': Mode;
       /**
-       * The placement of the tabbar in the app 
+       * Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
        */
       'placement': TabbarPlacement;
       /**
-       * If the tabbar is scrollable or not 
+       * If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
        */
       'scrollable': boolean;
       /**
@@ -7203,20 +7209,20 @@ declare global {
     export interface IonTabbarAttributes extends HTMLAttributes {
       'color'?: Color;
       /**
-       * If the tabbar should include the highlight on the active tab 
+       * If true, show the tab highlight bar under the selected tab.
        */
       'highlight'?: boolean;
       /**
-       * The layout of the title and icons 
+       * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
        */
       'layout'?: TabbarLayout;
       'mode'?: Mode;
       /**
-       * The placement of the tabbar in the app 
+       * Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
        */
       'placement'?: TabbarPlacement;
       /**
-       * If the tabbar is scrollable or not 
+       * If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
        */
       'scrollable'?: boolean;
       /**
@@ -7254,11 +7260,11 @@ declare global {
        */
       'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => HTMLIonTabElement | undefined;
       /**
-       * A unique name for the tabs
+       * A unique name for the tabs.
        */
       'name': string;
       /**
-       * If the tabs should be scrollable 
+       * If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
        */
       'scrollable': boolean;
       /**
@@ -7267,7 +7273,7 @@ declare global {
       'select': (tabOrIndex: number | HTMLIonTabElement) => Promise<boolean>;
       'setRouteId': (id: string) => Promise<RouteWrite>;
       /**
-       * If true, the tabbar
+       * If true, the tabbar will be hidden. Defaults to `false`.
        */
       'tabbarHidden': boolean;
       /**
@@ -7275,11 +7281,11 @@ declare global {
        */
       'tabbarHighlight': boolean;
       /**
-       * Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
+       * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
        */
       'tabbarLayout': TabbarLayout;
       /**
-       * Set position of the tabbar: `top`, `bottom`.
+       * Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
        */
       'tabbarPlacement': TabbarPlacement;
       /**
@@ -7287,7 +7293,7 @@ declare global {
        */
       'translucent': boolean;
       /**
-       * If the tabs should use the router or not. If true, `selectedTab` does nothing.
+       * If true, the tabs will use the router and `selectedTab` will not do anything.
        */
       'useRouter': boolean;
     }
@@ -7317,22 +7323,31 @@ declare global {
        */
       'color'?: Color;
       /**
-       * A unique name for the tabs
+       * A unique name for the tabs.
        */
       'name'?: string;
       /**
        * Emitted when the tab changes.
        */
       'onIonChange'?: (event: CustomEvent<{tab: HTMLIonTabElement}>) => void;
+      /**
+       * Emitted when the navigation has finished transitioning to a new component.
+       */
       'onIonNavDidChange'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted when the navigation is about to transition to a new component.
+       */
       'onIonNavWillChange'?: (event: CustomEvent<void>) => void;
+      /**
+       * Emitted when the navigation will load a component.
+       */
       'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
       /**
-       * If the tabs should be scrollable 
+       * If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
        */
       'scrollable'?: boolean;
       /**
-       * If true, the tabbar
+       * If true, the tabbar will be hidden. Defaults to `false`.
        */
       'tabbarHidden'?: boolean;
       /**
@@ -7340,11 +7355,11 @@ declare global {
        */
       'tabbarHighlight'?: boolean;
       /**
-       * Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
+       * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
        */
       'tabbarLayout'?: TabbarLayout;
       /**
-       * Set position of the tabbar: `top`, `bottom`.
+       * Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
        */
       'tabbarPlacement'?: TabbarPlacement;
       /**
@@ -7352,7 +7367,7 @@ declare global {
        */
       'translucent'?: boolean;
       /**
-       * If the tabs should use the router or not. If true, `selectedTab` does nothing.
+       * If true, the tabs will use the router and `selectedTab` will not do anything.
        */
       'useRouter'?: boolean;
     }

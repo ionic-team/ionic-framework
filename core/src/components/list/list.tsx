@@ -20,7 +20,7 @@ export class List {
   @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
-   * If true, the list will have margin around it and rounded corners. Defaults to `"false"`.
+   * If true, the list will have margin around it and rounded corners. Defaults to `false`.
    */
   @Prop() inset = false;
 

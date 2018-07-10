@@ -702,12 +702,12 @@ The attributes to set label position for input are now combined under the `posit
 
 ```html
 <ion-item>
-  <ion-label floating>Floating Label</ion-label>    
+  <ion-label floating>Floating Label</ion-label>
   <!-- input -->
 </ion-item>
 
 <ion-item>
-  <ion-label fixed>Fixed Label</ion-label>    
+  <ion-label fixed>Fixed Label</ion-label>
   <!-- input -->
 </ion-item>
 ```
@@ -716,12 +716,12 @@ The attributes to set label position for input are now combined under the `posit
 
 ```html
 <ion-item>
-  <ion-label position="floating">Floating Label</ion-label>    
+  <ion-label position="floating">Floating Label</ion-label>
   <!-- input -->
 </ion-item>
 
 <ion-item>
-  <ion-label position="fixed">Fixed Label</ion-label>    
+  <ion-label position="fixed">Fixed Label</ion-label>
   <!-- input -->
 </ion-item>
 ```
@@ -1057,19 +1057,55 @@ The `ios` and `ios-small` spinner's have been renamed to `lines` and `lines-smal
 
 ## Tabs
 
-Some properties in `ion-tab` changed:
+### Attributes Renamed
 
-- [tabTitle] -> [label]
-- [tabIcon] -> [icon]
-- [tabBadge] -> [badge]
-- [tabBadgeStyle] -> [badgeStyle]
+#### `ion-tabs`
+
+The attributes to position the tabs, change the tab layout, enable the tab highlight and hide the tabs have been renamed.
+
+| Old Property        | New Property         | Notes                                           |
+|---------------------|----------------------|-------------------------------------------------|
+| `tabsHighlight`     | `tabbarHighlight`    |                                                 |
+| `tabsLayout`        | `tabbarLayout`       | Value `title-hide` was renamed to `icon-hide`   |
+| `tabsPlacement`     | `tabbarPlacement`    |                                                 |
+| `hidden`            | `tabbarHidden`       |                                                 |
+
+**Old Usage Example:**
+
+```html
+<ion-tabs tabsLayout="icon-top" tabsPlacement="bottom" tabsHighlight="true" hidden>
+  ...
+</ion-tabs>
+```
+
+**New Usage Example:**
+
+```html
+<ion-tabs tabbarLayout="icon-top" tabbarPlacement="bottom" tabbarHighlight="true" tabbarHidden>
+  ...
+</ion-tabs>
+```
+
+
+#### `ion-tab`
+
+The attributes for the tab title, icon, and badge customization have been renamed.
+
+| Old Property        | New Property         |
+|---------------------|----------------------|
+| `tabTitle`          | `label`              |
+| `tabIcon`           | `icon`               |
+| `tabBadge`          | `badge`              |
+| `tabBadgeStyle`     | `badgeColor`         |
+| `enabled`           | `disabled`           |
+| `tabUrlPath`        | `href`               |
 
 **Old Usage Example:**
 
 ```html
 <ion-tabs>
   <ion-tab tabTitle="Schedule" tabIcon="add"></ion-tab>
-  <ion-tab tabTitle="Map" tabIcon="mao" tabBadge="2"></ion-tab>
+  <ion-tab tabTitle="Map" tabIcon="map" tabBadge="2" tabBadgeStyle="danger" enabled="false"></ion-tab>
 </ion-tabs>
 ```
 
@@ -1078,7 +1114,7 @@ Some properties in `ion-tab` changed:
 ```html
 <ion-tabs>
   <ion-tab label="Schedule" icon="add"></ion-tab>
-  <ion-tab label="Map" icon="mao" badge="2"></ion-tab>
+  <ion-tab label="Map" icon="map" badge="2" badgeColor="danger" disabled="true"></ion-tab>
 </ion-tabs>
 ```
 
