@@ -26,16 +26,22 @@ export class Tabbar {
   @State() canScrollRight = false;
   @State() hidden = false;
 
-  /** The layout of the title and icons */
+  /**
+   * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
+   */
   @Prop() layout: TabbarLayout = 'icon-top';
 
-  /** The placement of the tabbar in the app */
+  /**
+   * Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
+   */
   @Prop() placement: TabbarPlacement = 'bottom';
 
   /** The selected tab component */
   @Prop() selectedTab?: HTMLIonTabElement;
 
-  /** If the tabbar is scrollable or not */
+  /**
+   * If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
+   */
   @Prop() scrollable = false;
 
   /** The tabs to render */
@@ -47,8 +53,9 @@ export class Tabbar {
     this.highlight && this.updateHighlight();
   }
 
-
-  /** If the tabbar should include the highlight on the active tab */
+  /**
+   * If true, show the tab highlight bar under the selected tab.
+   */
   @Prop() highlight = false;
 
   /**

@@ -20,6 +20,7 @@ export class Tabs implements NavOutlet {
   @State() selectedTab?: HTMLIonTabElement;
 
   @Prop({ context: 'config' }) config!: Config;
+
   @Prop({ context: 'document' }) doc!: Document;
 
   /**
@@ -29,29 +30,29 @@ export class Tabs implements NavOutlet {
   @Prop() color?: Color;
 
   /**
-   * A unique name for the tabs
+   * A unique name for the tabs.
    */
   @Prop() name?: string;
 
   /**
-   * If true, the tabbar
+   * If true, the tabbar will be hidden. Defaults to `false`.
    */
   @Prop() tabbarHidden = false;
-
-  /**
-   * Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
-   */
-  @Prop({ mutable: true }) tabbarLayout?: TabbarLayout;
-
-  /**
-   * Set position of the tabbar: `top`, `bottom`.
-   */
-  @Prop({ mutable: true }) tabbarPlacement?: TabbarPlacement;
 
   /**
    * If true, show the tab highlight bar under the selected tab.
    */
   @Prop({ mutable: true }) tabbarHighlight?: boolean;
+
+  /**
+   * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
+   */
+  @Prop({ mutable: true }) tabbarLayout?: TabbarLayout;
+
+  /**
+   * Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
+   */
+  @Prop({ mutable: true }) tabbarPlacement?: TabbarPlacement;
 
   /**
    * If true, the tabs will be translucent.
@@ -61,12 +62,13 @@ export class Tabs implements NavOutlet {
    */
   @Prop() translucent = false;
 
-  /** If the tabs should be scrollable */
+  /**
+   * If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
+   */
   @Prop() scrollable = false;
 
   /**
-   * If the tabs should use the router or not.
-   * If true, `selectedTab` does nothing.
+   * If true, the tabs will use the router and `selectedTab` will not do anything.
    */
   @Prop({ mutable: true }) useRouter = false;
 
@@ -74,8 +76,20 @@ export class Tabs implements NavOutlet {
    * Emitted when the tab changes.
    */
   @Event() ionChange!: EventEmitter<{tab: HTMLIonTabElement}>;
+
+  /**
+   * Emitted when the navigation will load a component.
+   */
   @Event() ionNavWillLoad!: EventEmitter<void>;
+
+  /**
+   * Emitted when the navigation is about to transition to a new component.
+   */
   @Event() ionNavWillChange!: EventEmitter<void>;
+
+  /**
+   * Emitted when the navigation has finished transitioning to a new component.
+   */
   @Event() ionNavDidChange!: EventEmitter<void>;
 
   componentWillLoad() {
