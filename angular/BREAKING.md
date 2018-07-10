@@ -1066,7 +1066,7 @@ The attributes to position the tabs, change the tab layout, enable the tab highl
 | Old Property        | New Property         | Notes                                           |
 |---------------------|----------------------|-------------------------------------------------|
 | `tabsHighlight`     | `tabbarHighlight`    |                                                 |
-| `tabsLayout`        | `tabbarLayout`       | Value `title-hide` was renamed to `icon-hide`   |
+| `tabsLayout`        | `tabbarLayout`       | Value `title-hide` was renamed to `label-hide`  |
 | `tabsPlacement`     | `tabbarPlacement`    |                                                 |
 | `hidden`            | `tabbarHidden`       |                                                 |
 
