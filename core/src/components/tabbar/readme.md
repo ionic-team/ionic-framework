@@ -17,14 +17,14 @@ string
 
 boolean
 
-If the tabbar should include the highlight on the active tab
+If true, show the tab highlight bar under the selected tab.
 
 
 #### layout
 
 string
 
-The layout of the title and icons
+Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
 
 
 #### mode
@@ -36,14 +36,14 @@ string
 
 string
 
-The placement of the tabbar in the app
+Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
 
 
 #### scrollable
 
 boolean
 
-If the tabbar is scrollable or not
+If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
 
 
 #### selectedTab
@@ -78,14 +78,14 @@ string
 
 boolean
 
-If the tabbar should include the highlight on the active tab
+If true, show the tab highlight bar under the selected tab.
 
 
 #### layout
 
 string
 
-The layout of the title and icons
+Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
 
 
 #### mode
@@ -97,14 +97,14 @@ string
 
 string
 
-The placement of the tabbar in the app
+Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
 
 
 #### scrollable
 
 boolean
 
-If the tabbar is scrollable or not
+If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
 
 
 #### selected-tab

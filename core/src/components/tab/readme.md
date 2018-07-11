@@ -16,7 +16,7 @@ See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.
 
 boolean
 
-If the tab is active or not
+If true, sets the tab as the active tab.
 
 
 #### badge
@@ -51,6 +51,8 @@ The component to display inside of the tab.
 
 FrameworkDelegate
 
+hidden
+
 
 #### disabled
 
@@ -77,7 +79,7 @@ The icon for the tab.
 
 string
 
-The title of the tab.
+The label of the tab.
 
 
 #### name
@@ -114,7 +116,7 @@ If true, hide the tabs on child pages.
 
 boolean
 
-If the tab is active or not
+If true, sets the tab as the active tab.
 
 
 #### badge
@@ -149,6 +151,8 @@ The component to display inside of the tab.
 
 
 
+hidden
+
 
 #### disabled
 
@@ -175,7 +179,7 @@ The icon for the tab.
 
 string
 
-The title of the tab.
+The label of the tab.
 
 
 #### name

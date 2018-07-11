@@ -117,6 +117,15 @@ another page using `href`.
 string
 
 
+#### type
+
+string
+
+The type of the button. Only used when an `onclick` or `button` property is present.
+Possible values are: `"submit"`, `"reset"` and `"button"`.
+Default value is: `"button"`
+
+
 ## Attributes
 
 #### button
@@ -189,6 +198,15 @@ another page using `href`.
 #### state
 
 string
+
+
+#### type
+
+string
+
+The type of the button. Only used when an `onclick` or `button` property is present.
+Possible values are: `"submit"`, `"reset"` and `"button"`.
+Default value is: `"button"`
 
 
 

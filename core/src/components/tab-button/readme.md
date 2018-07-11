@@ -22,7 +22,7 @@ string
 
 boolean
 
-If the tab is selected or not
+If true, the tab button will be selected. Defaults to `false`.
 
 
 #### tab
@@ -48,7 +48,7 @@ string
 
 boolean
 
-If the tab is selected or not
+If true, the tab button will be selected. Defaults to `false`.
 
 
 #### tab

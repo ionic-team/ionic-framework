@@ -21,21 +21,21 @@ Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"wa
 
 string
 
-A unique name for the tabs
+A unique name for the tabs.
 
 
 #### scrollable
 
 boolean
 
-If the tabs should be scrollable
+If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
 
 
 #### tabbarHidden
 
 boolean
 
-If true, the tabbar
+If true, the tabbar will be hidden. Defaults to `false`.
 
 
 #### tabbarHighlight
@@ -49,14 +49,14 @@ If true, show the tab highlight bar under the selected tab.
 
 string
 
-Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
+Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
 
 
 #### tabbarPlacement
 
 string
 
-Set position of the tabbar: `top`, `bottom`.
+Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
 
 
 #### translucent
@@ -73,8 +73,7 @@ Defaults to `false`.
 
 boolean
 
-If the tabs should use the router or not.
-If true, `selectedTab` does nothing.
+If true, the tabs will use the router and `selectedTab` will not do anything.
 
 
 ## Attributes
@@ -91,21 +90,21 @@ Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"wa
 
 string
 
-A unique name for the tabs
+A unique name for the tabs.
 
 
 #### scrollable
 
 boolean
 
-If the tabs should be scrollable
+If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
 
 
 #### tabbar-hidden
 
 boolean
 
-If true, the tabbar
+If true, the tabbar will be hidden. Defaults to `false`.
 
 
 #### tabbar-highlight
@@ -119,14 +118,14 @@ If true, show the tab highlight bar under the selected tab.
 
 string
 
-Set the tabbar layout: `icon-top`, `icon-start`, `icon-end`, `icon-bottom`, `icon-hide`, `title-hide`.
+Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
 
 
 #### tabbar-placement
 
 string
 
-Set position of the tabbar: `top`, `bottom`.
+Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
 
 
 #### translucent
@@ -143,8 +142,7 @@ Defaults to `false`.
 
 boolean
 
-If the tabs should use the router or not.
-If true, `selectedTab` does nothing.
+If true, the tabs will use the router and `selectedTab` will not do anything.
 
 
 ## Events
@@ -156,11 +154,17 @@ Emitted when the tab changes.
 
 #### ionNavDidChange
 
+Emitted when the navigation has finished transitioning to a new component.
+
 
 #### ionNavWillChange
 
+Emitted when the navigation is about to transition to a new component.
+
 
 #### ionNavWillLoad
+
+Emitted when the navigation will load a component.
 
 
 ## Methods
