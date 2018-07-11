@@ -1,3 +1,17 @@
+<a name="4.0.0-alpha.10"></a>
+# [4.0.0-alpha.10](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.9...v4.0.0-alpha.10) (2018-07-11)
+
+
+### Bug Fixes
+
+* **angular:** publish css to npm ([748c209](https://github.com/ionic-team/ionic/commit/748c209))
+* **item:** pass the correct type property to the button tag ([5f8b02e](https://github.com/ionic-team/ionic/commit/5f8b02e)), closes [#14740](https://github.com/ionic-team/ionic/issues/14740)
+* **tabs:** correct alignment for label/icon only tabs ([b46c3e2](https://github.com/ionic-team/ionic/commit/b46c3e2))
+* **tabs:** update the tabbar placement value to match the property it applies to ([45583bc](https://github.com/ionic-team/ionic/commit/45583bc))
+* **toolbar:** get translucency working with header, footer and toolbar ([f6ab5b6](https://github.com/ionic-team/ionic/commit/f6ab5b6))
+
+
+
 <a name="4.0.0-alpha.9"></a>
 # [4.0.0-alpha.9](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.8...v4.0.0-alpha.9) (2018-07-10)
 

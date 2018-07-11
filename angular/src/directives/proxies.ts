@@ -201,10 +201,10 @@ export class FabList {
 }
 
 export declare interface Footer extends StencilComponents.IonFooter {}
-@Directive({selector: 'ion-footer', inputs: ['mode']})
+@Directive({selector: 'ion-footer', inputs: ['mode', 'translucent']})
 export class Footer {
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['mode']);
+    proxyInputs(this, r, ['mode', 'translucent']);
   }
 }
 
@@ -217,10 +217,10 @@ export class Grid {
 }
 
 export declare interface Header extends StencilComponents.IonHeader {}
-@Directive({selector: 'ion-header', inputs: ['mode']})
+@Directive({selector: 'ion-header', inputs: ['mode', 'translucent']})
 export class Header {
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['mode']);
+    proxyInputs(this, r, ['mode', 'translucent']);
   }
 }
 
@@ -286,10 +286,10 @@ export class Input {
 }
 
 export declare interface Item extends StencilComponents.IonItem {}
-@Directive({selector: 'ion-item', inputs: ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'state', 'routerDirection']})
+@Directive({selector: 'ion-item', inputs: ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection', 'state', 'type']})
 export class Item {
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'state', 'routerDirection']);
+    proxyInputs(this, r, ['color', 'mode', 'button', 'detail', 'detailIcon', 'disabled', 'href', 'lines', 'routerDirection', 'state', 'type']);
   }
 }
 
@@ -677,7 +677,7 @@ export class Tab {
 }
 
 export declare interface Tabs extends StencilComponents.IonTabs {}
-@Directive({selector: 'ion-tabs', inputs: ['color', 'name', 'tabbarHidden', 'tabbarLayout', 'tabbarPlacement', 'tabbarHighlight', 'translucent', 'scrollable', 'useRouter'], outputs: ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']})
+@Directive({selector: 'ion-tabs', inputs: ['color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'scrollable', 'useRouter'], outputs: ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']})
 export class Tabs {
   ionChange: EventEmitter<any>;
   ionNavWillLoad: EventEmitter<any>;
@@ -685,7 +685,7 @@ export class Tabs {
   ionNavDidChange: EventEmitter<any>;
   constructor(r: ElementRef) {
     proxyMethods(this, r, ['select', 'setRouteId', 'getRouteId', 'getTab', 'getSelected']);
-    proxyInputs(this, r, ['color', 'name', 'tabbarHidden', 'tabbarLayout', 'tabbarPlacement', 'tabbarHighlight', 'translucent', 'scrollable', 'useRouter']);
+    proxyInputs(this, r, ['color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'scrollable', 'useRouter']);
     proxyOutputs(this, ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
   }
 }
