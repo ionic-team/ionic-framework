@@ -125,7 +125,6 @@ export class VirtualScroll {
     }
     contentEl.componentOnReady().then(() => {
       this.scrollEl = contentEl.getScrollElement();
-      this.calcDimensions();
       this.calcCells();
       this.updateState();
     });
@@ -147,7 +146,6 @@ export class VirtualScroll {
   @Listen('window:resize')
   onResize() {
     this.indexDirty = 0;
-    this.calcDimensions();
     this.calcCells();
     this.updateVirtualScroll();
   }
@@ -232,6 +230,7 @@ export class VirtualScroll {
     }
     this.viewportOffset = topOffset;
     if (scrollEl) {
+      this.viewportHeight = scrollEl.offsetHeight;
       this.currentScrollTop = scrollEl.scrollTop;
     }
   }
@@ -313,8 +312,7 @@ export class VirtualScroll {
   private updateState() {
     const shouldEnable = !!(
       this.scrollEl &&
-      this.cells &&
-      this.viewportHeight > 1
+      this.cells
     );
     if (shouldEnable !== this.isEnabled) {
       this.enableScrollEvents(shouldEnable);
@@ -358,12 +356,6 @@ export class VirtualScroll {
 
     console.debug('[virtual] height index recalculated', this.heightIndex.length - index);
     this.indexDirty = Infinity;
-  }
-
-  private calcDimensions() {
-    if (this.scrollEl) {
-      this.viewportHeight = this.scrollEl.offsetHeight;
-    }
   }
 
   private enableScrollEvents(shouldListen: boolean) {
