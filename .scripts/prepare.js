@@ -164,12 +164,6 @@ function updatePackageVersion(tasks, package, version) {
       title: `${pkg.name}: update package.json ${chalk.dim(`(${version})`)}`,
       task: async () => {
         await execa('npm', ['version', version], { cwd: projectRoot });
-
-        const pkgLock = path.join(projectRoot, 'package-lock.json');
-        const pkgLockData = JSON.parse(fs.readFileSync(pkgLock, 'utf-8'));
-        pkgLockData.version = version;
-
-        fs.writeFileSync(pkgLock, JSON.stringify(pkgLockData, null, 2));
       }
     }
   );
