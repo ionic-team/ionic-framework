@@ -66,12 +66,12 @@ export class ItemOption {
         onClick={this.clickedOptionButton.bind(this)}
       >
         <span class="item-option-button-inner">
-          <slot name="start" />
+          <slot name="start"></slot>
           <slot name="top" />
           <slot name="icon-only" />
           <slot></slot>
           <slot name="bottom" />
-          <slot name="end" />
+          <slot name="end"></slot>
         </span>
       </TagType>
     );

@@ -335,7 +335,7 @@ export class Range implements BaseInput {
     }
 
     return [
-      <slot name="start" />,
+      <slot name="start"></slot>,
       <ion-gesture
         disableScroll={true}
         onStart={this.onDragStart.bind(this)}
@@ -391,7 +391,7 @@ export class Range implements BaseInput {
           )}
         </div>
       </ion-gesture>,
-      <slot name="end" />
+      <slot name="end"></slot>
     ];
   }
 }

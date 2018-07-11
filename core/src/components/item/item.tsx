@@ -144,7 +144,7 @@ export class Item {
         class="item-native"
         onClick={ev => openURL(win, href, ev, routerDirection)}
       >
-        <slot name="start" />
+        <slot name="start"></slot>
         <div class="item-inner">
           <div class="input-wrapper">
             <slot></slot>
