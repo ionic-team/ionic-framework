@@ -17,9 +17,23 @@ export class Footer {
    */
   @Prop() mode!: Mode;
 
+  /**
+   * If true, the footer will be translucent.
+   * Note: In order to scroll content behind the footer, the `fullscreen`
+   * attribute needs to be set on the content.
+   * Defaults to `false`.
+   */
+  @Prop() translucent = false;
+
   hostData() {
+    const themedClasses = createThemedClasses(this.mode, 'footer');
+    const translucentClasses = this.translucent ? createThemedClasses(this.mode, 'footer-translucent') : null;
+
     return {
-      class: createThemedClasses(this.mode, 'footer')
+      class: {
+        ...themedClasses,
+        ...translucentClasses
+      }
     };
   }
 }

@@ -1,6 +1,7 @@
 @import "./footer";
+@import "./footer.ios.vars";
 
-// iOS Borders
+// iOS Footer
 // --------------------------------------------------
 
 .footer-ios ion-toolbar:first-child {
@@ -9,4 +10,14 @@
 
 .footer-ios[no-border] ion-toolbar:first-child {
   --border-width: 0;
+}
+
+.footer-translucent-ios {
+  backdrop-filter: $footer-ios-translucent-filter;
+}
+
+.footer-translucent-ios ion-toolbar {
+  --border-color: transparent;
+  --opacity: 0.8;
+  --backdrop-filter: #{$footer-ios-translucent-filter};
 }

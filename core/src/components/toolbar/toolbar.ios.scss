@@ -5,19 +5,18 @@
 // --------------------------------------------------
 
 :host {
-  @include padding($toolbar-ios-padding);
-
-  min-height: $toolbar-ios-height;
-
-  font-family: $toolbar-ios-font-family;
-
   // default color / background
   --ion-color-base: #{$toolbar-ios-background-color};
   --ion-color-contrast: #{$toolbar-ios-text-color};
 
   --border-color: #{$toolbar-ios-border-color};
   --translucent-filter: #{$toolbar-ios-translucent-filter};
-  --translucent-background: #{$toolbar-ios-translucent-background-color};
+
+  @include padding($toolbar-ios-padding);
+
+  min-height: $toolbar-ios-height;
+
+  font-family: $toolbar-ios-font-family;
 }
 
 // iOS Toolbar Content

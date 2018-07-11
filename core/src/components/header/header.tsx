@@ -17,9 +17,23 @@ export class Header {
    */
   @Prop() mode!: Mode;
 
+  /**
+   * If true, the header will be translucent.
+   * Note: In order to scroll content behind the header, the `fullscreen`
+   * attribute needs to be set on the content.
+   * Defaults to `false`.
+   */
+  @Prop() translucent = false;
+
   hostData() {
+    const themedClasses = createThemedClasses(this.mode, 'header');
+    const translucentClasses = this.translucent ? createThemedClasses(this.mode, 'header-translucent') : null;
+
     return {
-      class: createThemedClasses(this.mode, 'header')
+      class: {
+        ...themedClasses,
+        ...translucentClasses
+      }
     };
   }
 }
