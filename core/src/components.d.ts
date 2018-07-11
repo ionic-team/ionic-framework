@@ -3299,6 +3299,10 @@ declare global {
        */
       'routerDirection': RouterDirection;
       'state': 'valid' | 'invalid' | 'focus';
+      /**
+       * The type of the button. Only used when an `onclick` or `button` property is present. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
+       */
+      'type': 'submit' | 'reset' | 'button';
     }
   }
 
@@ -3358,6 +3362,10 @@ declare global {
        */
       'routerDirection'?: RouterDirection;
       'state'?: 'valid' | 'invalid' | 'focus';
+      /**
+       * The type of the button. Only used when an `onclick` or `button` property is present. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
+       */
+      'type'?: 'submit' | 'reset' | 'button';
     }
   }
 }

@@ -61,14 +61,21 @@ export class Item {
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
 
-  // TODO document this
-  @Prop() state?: 'valid' | 'invalid' | 'focus';
-
   /**
    * When using a router, it specifies the transition direction when navigating to
    * another page using `href`.
    */
   @Prop() routerDirection?: RouterDirection;
+
+  // TODO document this
+  @Prop() state?: 'valid' | 'invalid' | 'focus';
+
+  /**
+   * The type of the button. Only used when an `onclick` or `button` property is present.
+   * Possible values are: `"submit"`, `"reset"` and `"button"`.
+   * Default value is: `"button"`
+   */
+  @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
 
   @Listen('ionStyle')
@@ -131,11 +138,11 @@ export class Item {
   }
 
   render() {
-    const { href, detail, mode, win, state, detailIcon, el, routerDirection } = this;
+    const { href, detail, mode, win, state, detailIcon, el, routerDirection, type } = this;
 
     const clickable = this.isClickable();
     const TagType = clickable ? (href ? 'a' : 'button') : 'div';
-    const attrs = TagType === 'button' ? { type: 'button' } : { href };
+    const attrs = TagType === 'button' ? { type: type } : { href };
     const showDetail = detail != null ? detail : mode === 'ios' && clickable;
 
     return (
