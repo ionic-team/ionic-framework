@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Badge } from '@ionic/angular';
 
 @Component({
@@ -74,7 +74,7 @@ import { Badge } from '@ionic/angular';
   </ion-app>
   `
 })
-export class BadgePageComponent {
+export class BadgePageComponent implements OnInit {
   dynamicColor = 'primary';
 
   @ViewChild(Badge) badge: Badge;

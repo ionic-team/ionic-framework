@@ -11,6 +11,7 @@ const routes: Routes = [
   { path: 'alert', loadChildren: './alert/alert.module#AlertModule' },
   { path: 'actionSheet', loadChildren: './action-sheet/action-sheet.module#ActionSheetModule' },
   { path: 'badge', loadChildren: './badge/badge.module#BadgeModule' },
+  { path: 'button', loadChildren: './button/button.module#ButtonModule' },
   { path: 'card', loadChildren: './card/card.module#CardModule' },
   { path: 'content', loadChildren: './content/content.module#ContentModule' },
   { path: 'toast', loadChildren: './toast/toast.module#ToastModule' },
