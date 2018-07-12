@@ -797,11 +797,11 @@ export class MyPage {
 
   constructor(public modalCtrl: ModalController) { }
 
-  presentModal() {
+  async presentModal() {
     const modal = this.modalCtrl.create({
       component: ModalPage
     });
-    modal.present();
+    return modal.present();
   }
 }
 ```
