@@ -74,9 +74,9 @@ export class TabButton {
       'role': 'tab',
       'id': tab.btnId,
       'aria-selected': selected,
-      'hidden': !tab.show,
       class: {
         ...createColorClasses(this.color),
+        'tab-hidden': !tab.show,
         'tab-selected': selected,
         'has-label': hasLabel,
         'has-icon': hasIcon,

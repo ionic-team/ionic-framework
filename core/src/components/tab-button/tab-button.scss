@@ -1,9 +1,10 @@
 @import "../../themes/ionic.globals";
 
 :host {
-  @include margin(0);
-  text-align: center;
   @include border-radius(0);
+  @include margin(0);
+
+  text-align: center;
 
   box-sizing: border-box;
 
@@ -40,6 +41,10 @@
 :host(:hover),
 :host(.tab-selected) {
   color: var(--color-selected);
+}
+
+:host(.tab-hidden) {
+  display: none;
 }
 
 a {
