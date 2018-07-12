@@ -6,6 +6,7 @@ import { openURL } from '../../utils/theme';
 @Component({
   tag: 'ion-anchor',
   shadow: true,
+  styleUrl: 'anchor.scss'
 })
 export class Anchor {
 
