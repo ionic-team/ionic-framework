@@ -70,8 +70,12 @@
       </p>
 
       <p>
-        <ion-button disabled>Button Disabled</ion-button>
+        <ion-button id="disabledButton" disabled onclick="clickedButton(event)">Button Disabled</ion-button>
         <ion-button color="secondary" disabled>Secondary Disabled</ion-button>
+      </p>
+
+      <p>
+          <ion-button onclick="toggleDisabled()">Toggle Disabled</ion-button>
       </p>
 
       <p>
@@ -97,6 +101,16 @@
       newColor = testingColors[testingColorIndex[el.id]];
 
       el.color = newColor;
+    }
+
+    function toggleDisabled() {
+      var buttonEl = this.document.getElementById('disabledButton');
+      console.log(buttonEl);
+      buttonEl.disabled = !buttonEl.disabled;
+    }
+
+    function clickedButton(ev) {
+      console.log("Clicked button", ev);
     }
   </script>
 </body>
