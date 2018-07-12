@@ -106,6 +106,7 @@
   z-index: 0;
   display: inline-block;
   overflow: hidden;
+  box-sizing: border-box;
 
   height: var(--height);
 
