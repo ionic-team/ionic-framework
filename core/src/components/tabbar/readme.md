@@ -128,6 +128,13 @@ boolean
 If true, the tabbar will be translucent. Defaults to `false`.
 
 
+## Events
+
+#### ionTabbarClick
+
+Emitted when the tab bar is clicked
+
+
 
 ----------------------------------------------
 

@@ -217,6 +217,11 @@ If true, hide the tabs on child pages.
 Emitted when the current tab is selected.
 
 
+#### ionTabMutated
+
+Emitted when the tab props mutates. Used internally.
+
+
 ## Methods
 
 #### getTabId()

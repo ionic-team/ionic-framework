@@ -14,7 +14,7 @@ export class Tabs implements NavOutlet {
   private tabsId = (++tabIds);
   private leavingTab?: HTMLIonTabElement;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLStencilElement;
 
   @State() tabs: HTMLIonTabElement[] = [];
   @State() selectedTab?: HTMLIonTabElement;
@@ -101,11 +101,12 @@ export class Tabs implements NavOutlet {
     this.loadConfig('tabbarLayout', 'icon-top');
     this.loadConfig('tabbarHighlight', false);
 
+    this.initTabs();
+
     this.ionNavWillLoad.emit();
   }
 
   async componentDidLoad() {
-    await this.initTabs();
     await this.initSelect();
   }
 
@@ -114,8 +115,13 @@ export class Tabs implements NavOutlet {
     this.selectedTab = this.leavingTab = undefined;
   }
 
+  @Listen('ionTabMutated')
+  protected onTabMutated() {
+    this.el.forceUpdate();
+  }
+
   @Listen('ionTabbarClick')
-  protected tabChange(ev: CustomEvent<HTMLIonTabElement>) {
+  protected onTabClicked(ev: CustomEvent<HTMLIonTabElement>) {
     const selectedTab = ev.detail;
     if (this.useRouter && selectedTab.href != null) {
       const router = this.doc.querySelector('ion-router');
@@ -188,20 +194,18 @@ export class Tabs implements NavOutlet {
 
   private initTabs() {
     const tabs = this.tabs = Array.from(this.el.querySelectorAll('ion-tab'));
-    const tabPromises = tabs.map(tab => {
+    tabs.forEach(tab => {
       const id = `t-${this.tabsId}-${++this.ids}`;
       tab.btnId = 'tab-' + id;
       tab.id = 'tabpanel-' + id;
-      return tab.componentOnReady();
     });
-
-    return Promise.all(tabPromises);
   }
 
   private async initSelect(): Promise<void> {
+    const tabs = this.tabs;
     if (this.useRouter) {
       if (Build.isDev) {
-        const selectedTab = this.tabs.find(t => t.selected);
+        const selectedTab = tabs.find(t => t.selected);
         if (selectedTab) {
           console.warn('When using a router (ion-router) <ion-tab selected="true"> makes no difference' +
           'Define routes properly the define which tab is selected');
@@ -210,11 +214,11 @@ export class Tabs implements NavOutlet {
       return;
     }
     // find pre-selected tabs
-    const selectedTab = this.tabs.find(t => t.selected) ||
-      this.tabs.find(t => t.show && !t.disabled);
+    const selectedTab = tabs.find(t => t.selected) ||
+      tabs.find(t => t.show && !t.disabled);
 
     // reset all tabs none is selected
-    for (const tab of this.tabs) {
+    for (const tab of tabs) {
       if (tab !== selectedTab) {
         tab.selected = false;
       }
@@ -302,9 +306,11 @@ export class Tabs implements NavOutlet {
     ];
 
     if (!this.tabbarHidden) {
+      console.log('render tabs');
+
       dom.push(
         <ion-tabbar
-          tabs={this.tabs}
+          tabs={this.tabs.slice()}
           color={this.color}
           selectedTab={this.selectedTab}
           highlight={this.tabbarHighlight}

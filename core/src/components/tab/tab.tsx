@@ -88,6 +88,11 @@ export class Tab {
    */
   @Event() ionSelect!: EventEmitter<void>;
 
+  /**
+   * Emitted when the tab props mutates. Used internally.
+   */
+  @Event() ionTabMutated!: EventEmitter<void>;
+
   componentWillLoad() {
     if (Build.isDev) {
       if (this.component && this.el.childElementCount > 0) {
@@ -97,6 +102,10 @@ export class Tab {
       `- Remove the embedded content inside the ion-tab: <ion-tab></ion-tab>`);
       }
     }
+  }
+
+  componentWillUpdate() {
+    this.ionTabMutated.emit();
   }
 
   /** Get the Id for the tab */

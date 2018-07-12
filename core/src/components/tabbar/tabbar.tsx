@@ -1,4 +1,4 @@
-import { Component, Element, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 import { Color, Mode, TabbarLayout, TabbarPlacement } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -63,6 +63,9 @@ export class Tabbar {
    */
   @Prop() translucent = false;
 
+  /** Emitted when the tab bar is clicked  */
+  @Event() ionTabbarClick!: EventEmitter<HTMLIonTabElement>;
+
   @Listen('body:keyboardWillHide')
   protected onKeyboardWillHide() {
     setTimeout(() => this.hidden = false, 50);
@@ -80,9 +83,7 @@ export class Tabbar {
     this.highlight && this.updateHighlight();
   }
 
-  @Listen('ionTabButtonDidLoad')
-  @Listen('ionTabButtonDidUnload')
-  onTabButtonLoad() {
+  componentDidLoad() {
     this.scrollable && this.updateBoundaries();
     this.highlight && this.updateHighlight();
   }
@@ -195,9 +196,30 @@ export class Tabbar {
   }
 
   render() {
+    console.log('render tabbar');
+
     const selectedTab = this.selectedTab;
-    const ionTabbarHighlight = this.highlight ? <div class="animated tabbar-highlight"/> as HTMLElement : null;
-    const tabButtons = this.tabs.map(tab => <ion-tab-button tab={tab} selected={selectedTab === tab} mode={this.mode} color={this.color}/>);
+    const ionTabbarHighlight = this.highlight ? <div class="animated tabbar-highlight" /> as HTMLElement : null;
+    const tabButtons = this.tabs.map(tab => <ion-tab-button
+      id={tab.btnId}
+      label={tab.label}
+      icon={tab.icon}
+      badge={tab.badge}
+      disabled={tab.disabled}
+      badgeColor={tab.badgeColor}
+      href={tab.href}
+      selected={selectedTab === tab}
+      mode={this.mode}
+      color={this.color}
+      class={{ 'tab-hidden': !tab.show }}
+      onClick={(ev) => {
+        if (!tab.disabled) {
+          this.ionTabbarClick.emit(tab);
+        }
+        ev.stopPropagation();
+        ev.preventDefault();
+      }}
+    />);
 
     if (this.scrollable) {
       return [

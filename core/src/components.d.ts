@@ -6961,16 +6961,18 @@ declare global {
 
   namespace StencilComponents {
     interface IonTabButton {
+      'badge': string;
+      'badgeColor': string;
       'color': Color;
+      'disabled': boolean;
+      'href': string;
+      'icon': string;
+      'label': string;
       'mode': Mode;
       /**
        * If true, the tab button will be selected. Defaults to `false`.
        */
       'selected': boolean;
-      /**
-       * The tab component for the button 
-       */
-      'tab': HTMLIonTabElement;
     }
   }
 
@@ -6993,28 +6995,18 @@ declare global {
   }
   namespace JSXElements {
     export interface IonTabButtonAttributes extends HTMLAttributes {
+      'badge'?: string;
+      'badgeColor'?: string;
       'color'?: Color;
+      'disabled'?: boolean;
+      'href'?: string;
+      'icon'?: string;
+      'label'?: string;
       'mode'?: Mode;
-      /**
-       * Emitted when the tab button is loaded 
-       */
-      'onIonTabButtonDidLoad'?: (event: CustomEvent<void>) => void;
-      /**
-       * Emitted when the tab button is destroyed 
-       */
-      'onIonTabButtonDidUnload'?: (event: CustomEvent<void>) => void;
-      /**
-       * Emitted when the tab bar is clicked  
-       */
-      'onIonTabbarClick'?: (event: CustomEvent<HTMLIonTabElement>) => void;
       /**
        * If true, the tab button will be selected. Defaults to `false`.
        */
       'selected'?: boolean;
-      /**
-       * The tab component for the button 
-       */
-      'tab'?: HTMLIonTabElement;
     }
   }
 }
@@ -7159,6 +7151,10 @@ declare global {
        */
       'onIonSelect'?: (event: CustomEvent<void>) => void;
       /**
+       * Emitted when the tab props mutates. Used internally.
+       */
+      'onIonTabMutated'?: (event: CustomEvent<void>) => void;
+      /**
        * If true, the tab will be selected. Defaults to `false`.
        */
       'selected'?: boolean;
@@ -7241,6 +7237,10 @@ declare global {
        */
       'layout'?: TabbarLayout;
       'mode'?: Mode;
+      /**
+       * Emitted when the tab bar is clicked  
+       */
+      'onIonTabbarClick'?: (event: CustomEvent<HTMLIonTabElement>) => void;
       /**
        * Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
        */

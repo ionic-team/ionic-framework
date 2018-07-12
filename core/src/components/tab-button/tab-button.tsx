@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, State } from '@stencil/core';
+import { Component, Element, Prop, State } from '@stencil/core';
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -24,35 +24,12 @@ export class TabButton {
    * If true, the tab button will be selected. Defaults to `false`.
    */
   @Prop() selected = false;
-
-  /** The tab component for the button */
-  @Prop() tab!: HTMLIonTabElement;
-
-  /** Emitted when the tab bar is clicked  */
-  @Event() ionTabbarClick!: EventEmitter<HTMLIonTabElement>;
-
-  /** Emitted when the tab button is loaded */
-  @Event() ionTabButtonDidLoad!: EventEmitter<void>;
-
-  /** Emitted when the tab button is destroyed */
-  @Event() ionTabButtonDidUnload!: EventEmitter<void>;
-
-  componentDidLoad() {
-    this.ionTabButtonDidLoad.emit();
-  }
-
-  componentDidUnload() {
-    this.ionTabButtonDidUnload.emit();
-  }
-
-  @Listen('click')
-  protected onClick(ev: UIEvent) {
-    if (!this.tab.disabled) {
-      this.ionTabbarClick.emit(this.tab);
-    }
-    ev.stopPropagation();
-    ev.preventDefault();
-  }
+  @Prop() label?: string;
+  @Prop() icon?: string;
+  @Prop() badge?: string;
+  @Prop() disabled?: boolean;
+  @Prop() badgeColor?: string;
+  @Prop() href?: string;
 
   private onKeyUp() {
     this.keyFocus = true;
@@ -64,45 +41,41 @@ export class TabButton {
 
   hostData() {
     const selected = this.selected;
-    const tab = this.tab;
-    const hasLabel = !!tab.label;
-    const hasIcon = !!tab.icon;
+    const hasLabel = !!this.label;
+    const hasIcon = !!this.icon;
     const hasLabelOnly = (hasLabel && !hasIcon);
     const hasIconOnly = (hasIcon && !hasLabel);
-    const hasBadge = !!tab.badge;
+    const hasBadge = !!this.badge;
     return {
       'role': 'tab',
-      'id': tab.btnId,
       'aria-selected': selected,
       class: {
         ...createColorClasses(this.color),
-        'tab-hidden': !tab.show,
         'tab-selected': selected,
         'has-label': hasLabel,
         'has-icon': hasIcon,
         'has-label-only': hasLabelOnly,
         'has-icon-only': hasIconOnly,
         'has-badge': hasBadge,
-        'tab-button-disabled': tab.disabled,
+        'tab-button-disabled': this.disabled,
         'focused': this.keyFocus
       }
     };
   }
 
   render() {
-    const tab = this.tab;
-    const href = tab.href || '#';
+    const { icon, label, href, badge, badgeColor, mode } = this;
 
     return [
       <a
-        href={href}
+        href={href || '#'}
         class="tab-button-native"
         onKeyUp={this.onKeyUp.bind(this)}
         onBlur={this.onBlur.bind(this)}>
-        { tab.icon && <ion-icon class="tab-button-icon" icon={tab.icon}></ion-icon> }
-        { tab.label && <span class="tab-button-text">{tab.label}</span> }
-        { tab.badge && <ion-badge class="tab-badge" color={tab.badgeColor}>{tab.badge}</ion-badge> }
-        { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+        { icon && <ion-icon class="tab-button-icon" icon={icon}></ion-icon> }
+        { label && <span class="tab-button-text">{label}</span> }
+        { badge && <ion-badge class="tab-badge" color={badgeColor}>{badge}</ion-badge> }
+        { mode === 'md' && <ion-ripple-effect tapClick={true}/> }
       </a>
     ];
   }
