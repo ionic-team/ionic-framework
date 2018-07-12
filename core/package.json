@@ -27,7 +27,7 @@
     "ionicons": "4.2.4"
   },
   "devDependencies": {
-    "@stencil/core": "^0.10.2",
+    "@stencil/core": "^0.10.3",
     "@stencil/dev-server": "latest",
     "@stencil/sass": "latest",
     "@stencil/utils": "latest",
@@ -71,7 +71,8 @@
     "theme-builder:dev": "sd concurrent \"npm run theme-app-build -- --watch\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
     "theme-server": "node scripts/theme-builder/server.js",
     "tsc": "./node_modules/.bin/tsc -p .",
-    "validate": "npm run lint && npm run test && npm run build --max-workers 1 --debug"
+    "validate": "npm run lint && npm run test && npm run build",
+    "validate.ci": "npm run lint && npm run test && npm run build --max-workers 1 --debug"
   },
   "author": "Ionic Team",
   "license": "MIT",
