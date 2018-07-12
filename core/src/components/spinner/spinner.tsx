@@ -103,7 +103,7 @@ export class Spinner {
 
 function buildCircle(spinner: SpinnerConfig, duration: number, index: number, total: number) {
   const data = spinner.fn(duration, index, total);
-  data.style.animationDuration = duration + 'ms';
+  data.style['animation-duration'] = `${duration}ms`;
 
   return (
     <svg viewBox="0 0 64 64" style={data.style}>
@@ -115,7 +115,7 @@ function buildCircle(spinner: SpinnerConfig, duration: number, index: number, to
 
 function buildLine(spinner: SpinnerConfig, duration: number, index: number, total: number) {
   const data = spinner.fn(duration, index, total);
-  data.style.animationDuration = duration + 'ms';
+  data.style['animation-duration'] = `${duration}ms`;
 
   return (
     <svg viewBox="0 0 64 64" style={data.style}>
