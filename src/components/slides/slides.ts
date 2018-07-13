@@ -156,7 +156,7 @@ import { ViewController } from '../../navigation/view-controller';
  * ```
  *
  * To see all of the available options, take a look at the
- * [source for slides](https://github.com/ionic-team/ionic/blob/master/src/components/slides/slides.ts).
+ * [source for slides](https://github.com/ionic-team/ionic/blob/master/core/src/components/slides/slides.tsx).
  *
  * @demo /docs/demos/src/slides/
  * @see {@link /docs/components#slides Slides Component Docs}
