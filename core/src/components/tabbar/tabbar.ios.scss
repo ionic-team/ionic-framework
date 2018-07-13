@@ -5,15 +5,16 @@
 // --------------------------------------------------
 
 :host {
+  // default color / background
+  --background: #{$tabbar-ios-background-color};
+  --background-rgb: var(--ion-tabbar-translucent-background-color-rgb, 248, 248, 248);
+  --color: #{$tabbar-ios-text-color-active};
+
   justify-content: center;
 
   height: $tabbar-ios-height;
 
   border-top: $tabbar-ios-border;
-
-  --ion-color-base: #{$tabbar-ios-background-color};
-  --ion-color-base-rgb: var(--ion-tabbar-translucent-background-color-rgb, 248, 248, 248);
-  --ion-color-contrast: #{$tabbar-ios-text-color-active};
 
   contain: strict;
 }

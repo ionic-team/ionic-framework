@@ -20,18 +20,13 @@
   border: 0;
 
   text-decoration: none;
-  background: none;
+
+  background: var(--background);
+  color: var( --color);
 
   user-select: none;
 
   box-sizing: border-box;
-}
-
-:host(.ion-color) {
-  color: #{current-color(contrast)};
-
-  --color-selected: #{current-color(contrast)};
-  --background-selected: #{current-color(shade)};
 }
 
 :host(.focused) {

@@ -13,8 +13,14 @@
 
   width: 100%;
 
-  background: #{current-color(base)};
-  color: #{current-color(contrast)};
+  background: var(--background);
+  color: var(--color);
+}
+
+:host(.ion-color) ion-tab-button {
+  --background: #{current-color(base)};
+  --color: #{current-color(contrast, .7)};
+  --color-selected: #{current-color(contrast)};
 }
 
 :host(.tabbar-hidden) {

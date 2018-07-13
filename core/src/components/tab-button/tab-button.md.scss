@@ -5,14 +5,13 @@
 // --------------------------------------------------
 
 :host {
+  --color: #{$tab-button-md-text-color};
+  --color-selected: #{$tabbar-md-text-color-active};
+  --background-focused: #{$tabbar-md-background-color-focused};
+
   max-width: 168px;
 
   font-weight: $tab-button-md-font-weight;
-
-  color: $tab-button-md-text-color;
-
-  --color-selected: #{$tabbar-md-text-color-active};
-  --background-focused: #{$tabbar-md-background-color-focused};
 }
 
 .tab-button-native {

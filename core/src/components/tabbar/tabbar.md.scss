@@ -2,12 +2,13 @@
 @import "./tabbar.md.vars";
 
 :host {
+  // default color / background
+  --background: #{$tabbar-md-background-color};
+  --color: #{$tabbar-md-text-color-active};
+
   height: $tabbar-md-height;
 
   border-top: $tabbar-md-border;
-
-  --ion-color-base: #{$tabbar-md-background-color};
-  --ion-color-contrast: #{$tabbar-md-text-color-active};
 
   contain: strict;
 }
@@ -17,7 +18,6 @@ ion-scroll {
 
   max-width: 650px;
 }
-
 
 // TODO: REVIEW
 :host(.placement-top) .tab-button.tab-selected .tab-button-icon,

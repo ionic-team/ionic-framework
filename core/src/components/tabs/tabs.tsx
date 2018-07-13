@@ -1,5 +1,6 @@
 import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 import { Color, Config, NavOutlet, RouteID, RouteWrite, TabbarLayout, TabbarPlacement } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 
 @Component({
@@ -296,6 +297,12 @@ export class Tabs implements NavOutlet {
   private shouldSwitch(selectedTab: HTMLIonTabElement|undefined): selectedTab is HTMLIonTabElement {
     const leavingTab = this.selectedTab;
     return !!(selectedTab && selectedTab !== leavingTab && !this.transitioning);
+  }
+
+  hostData() {
+    return {
+      class: createColorClasses(this.color)
+    };
   }
 
   render() {

@@ -2,13 +2,13 @@
 @import "./tab-button.ios.vars";
 
 :host {
+  --color: #{$tab-button-ios-text-color};
+  --color-selected: #{$tabbar-ios-text-color-active};
+  --background-focused: #{$tabbar-ios-background-color-focused};
+
   max-width: $tab-button-ios-max-width;
 
   font-size: $tab-button-ios-font-size;
-  color: $tab-button-ios-text-color;
-
-  --color-selected: #{$tabbar-ios-text-color-active};
-  --background-focused: #{$tabbar-ios-background-color-focused};
 }
 
 .tab-button-native {
