@@ -122,6 +122,6 @@
 // Searchbar in Toolbar
 // -----------------------------------------
 
-:host-context(.toolbar) {
+:host-context(ion-toolbar) {
   @include padding(3px);
 }

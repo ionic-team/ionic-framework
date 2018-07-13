@@ -162,22 +162,22 @@
 // Searchbar in Toolbar Color
 // -----------------------------------------
 
-:host-context(.toolbar.ion-color) .searchbar-cancel-button {
+:host-context(ion-toolbar.ion-color) .searchbar-cancel-button {
   color: currentColor;
 }
 
-:host-context(.toolbar.ion-color) .searchbar-search-icon {
+:host-context(ion-toolbar.ion-color) .searchbar-search-icon {
   color: currentColor;
   opacity: $searchbar-ios-input-icon-opacity;
 }
 
-:host-context(.toolbar.ion-color) .searchbar-input {
+:host-context(ion-toolbar.ion-color) .searchbar-input {
   @include placeholder(currentColor, $opacity: .5);
   color: currentColor;
   background: rgba(var(--ion-color-contrast-rgb), $searchbar-ios-input-background-color-alpha);
 }
 
-:host-context(.toolbar.ion-color) .searchbar-clear-button {
+:host-context(ion-toolbar.ion-color) .searchbar-clear-button {
   color: currentColor;
   opacity: $searchbar-ios-input-icon-opacity;
 }
