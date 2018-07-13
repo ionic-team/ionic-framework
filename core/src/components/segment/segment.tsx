@@ -81,7 +81,8 @@ export class Segment {
         ...createColorClasses(this.color),
 
         'segment-disabled': this.disabled,
-        'in-toolbar': hostContext('ion-toolbar', this.el)
+        'in-toolbar': hostContext('ion-toolbar', this.el),
+        'in-color-toolbar': hostContext('ion-toolbar.ion-color', this.el)
       }
     };
   }

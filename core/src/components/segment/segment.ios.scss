@@ -72,3 +72,20 @@
   font-size: $segment-button-ios-toolbar-font-size;
   line-height: $segment-button-ios-toolbar-line-height;
 }
+
+:host(.in-color-toolbar) {
+  --ion-color-base: inherit;
+}
+
+:host(.in-color-toolbar) ::slotted(ion-segment-button) {
+  --border-color: currentColor;
+
+  color: inherit;
+}
+
+:host(.in-color-toolbar) ::slotted(ion-segment-button.segment-checked) {
+  --background: #{current-color(contrast)};
+  --border-color: #{current-color(contrast)};
+
+  color: #{current-color(base)};
+}

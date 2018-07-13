@@ -14,6 +14,10 @@
   color: #{current-color(base)} !important;
 }
 
+:host(.in-color-toolbar) {
+  color: inherit;
+}
+
 :host(.segment-disabled) {
   opacity: $segment-md-opacity-disabled;
 
