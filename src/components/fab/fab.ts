@@ -9,7 +9,7 @@ import { Ion } from '../ion';
   *
   * @description
   * FABs (Floating Action Buttons) are standard material design components. They are shaped as a circle that represents a promoted action. When pressed, it may contain more related actions.
-  * FABs as its name suggests are floating over the content in a fixed position. This is not achieved exclusively with `<button ion-fab>Button</button>` but it has to wrapped with the `<ion-fab>` component, like this:
+  * FABs as its name suggests are floating over the content in a fixed position. This is not achieved exclusively with `<button ion-fab>Button</button>` but it has to be wrapped with the `<ion-fab>` component, like this:
   *
   * ```html
   * <ion-content>
