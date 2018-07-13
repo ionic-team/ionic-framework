@@ -773,9 +773,14 @@ The component is no longer the first argument in the `create` method. Instead, a
 **Old Usage Example:**
 
 ```javascript
+import { Component } from '@angular/core';
 import { ModalController } from 'ionic-angular';
+
 import { ModalPage } from './modal-page';
 
+@Component({
+  ...
+})
 export class MyPage {
 
   constructor(public modalCtrl: ModalController) { }
@@ -790,18 +795,23 @@ export class MyPage {
 **New Usage Example:**
 
 ```javascript
-import { ModalController } from 'ionic-angular';
+import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+
 import { ModalPage } from './modal-page';
 
+@Component({
+  ...
+})
 export class MyPage {
 
   constructor(public modalCtrl: ModalController) { }
 
   async presentModal() {
-    const modal = this.modalCtrl.create({
+    const modal = await this.modalCtrl.create({
       component: ModalPage
     });
-    return modal.present();
+    return await modal.present();
   }
 }
 ```
