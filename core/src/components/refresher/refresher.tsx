@@ -227,7 +227,7 @@ export class Refresher {
     }
 
     // prevent native scroll events
-    console.log('preventDefault');
+    console.debug('preventDefault');
     ev.preventDefault();
 
     // the refresher is actively pulling at this point

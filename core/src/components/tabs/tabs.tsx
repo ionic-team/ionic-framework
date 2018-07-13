@@ -306,8 +306,6 @@ export class Tabs implements NavOutlet {
     ];
 
     if (!this.tabbarHidden) {
-      console.log('render tabs');
-
       dom.push(
         <ion-tabbar
           tabs={this.tabs.slice()}

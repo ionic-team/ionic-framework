@@ -196,8 +196,6 @@ export class Tabbar {
   }
 
   render() {
-    console.log('render tabbar');
-
     const selectedTab = this.selectedTab;
     const ionTabbarHighlight = this.highlight ? <div class="animated tabbar-highlight" /> as HTMLElement : null;
     const tabButtons = this.tabs.map(tab => <ion-tab-button
