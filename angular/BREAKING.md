@@ -23,6 +23,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Label](#label)
 - [List Header](#list-header)
 - [Menu Toggle](#menu-toggle)
+- [Modal](#modal)
 - [Nav](#nav)
 - [Navbar](#navbar)
 - [Option](#option)
@@ -763,6 +764,47 @@ The `menuToggle` attribute should not be added to an element anymore. Elements t
 </ion-menu-toggle>
 ```
 
+## Modal
+
+### Arguments Changed
+
+The component is no longer the first argument in the `create` method. Instead, a single argument of type `ModalOptions` is passed in with a `component` property and the value is the component as part of the passed object.
+
+**Old Usage Example:**
+
+```javascript
+import { ModalController } from 'ionic-angular';
+import { ModalPage } from './modal-page';
+
+export class MyPage {
+
+  constructor(public modalCtrl: ModalController) { }
+
+  presentModal() {
+    const modal = this.modalCtrl.create(ModalPage);
+    modal.present();
+  }
+}
+```
+
+**New Usage Example:**
+
+```javascript
+import { ModalController } from 'ionic-angular';
+import { ModalPage } from './modal-page';
+
+export class MyPage {
+
+  constructor(public modalCtrl: ModalController) { }
+
+  async presentModal() {
+    const modal = this.modalCtrl.create({
+      component: ModalPage
+    });
+    return modal.present();
+  }
+}
+```
 
 ## Nav
 
