@@ -8,7 +8,7 @@
   @include margin(-1px, $list-ios-margin-end, $list-ios-margin-bottom, $list-ios-margin-start);
 }
 
-.list-ios:not(.list-inset) .item:last-child {
+.list-ios:not(.list-inset):not(.list-ios-lines-none) .item:last-child {
   --inner-border-width: 0;
   --border-width: #{0 0 $list-ios-item-border-bottom-width 0};
 }
