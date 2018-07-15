@@ -12,7 +12,7 @@ export class LoadingExample {
 
   async presentLoading() {
     const loading = await this.loadingController.create({
-      message: 'Hellooo',
+      content: 'Hellooo',
       duration: 2000
     });
     return await loading.present();
