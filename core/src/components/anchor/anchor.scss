@@ -1,5 +1,25 @@
 @import "../../themes/ionic.globals";
 
+// Anchor
+// --------------------------------------------------
+
+:host {
+  // default background / color
+  --background: transparent;
+  --color: #{ion-color(primary, base)};
+
+  --text-decoration: none;
+
+  background: var(--background);
+  color: var(--color);
+
+  text-decoration: var(--text-decoration);
+}
+
+:host(.ion-color) {
+  --color: #{current-color(base)};
+}
+
 a {
   @include text-inherit();
 }

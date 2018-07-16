@@ -505,6 +505,10 @@ declare global {
   namespace StencilComponents {
     interface IonAnchor {
       /**
+       * The color to use for the anchor.
+       */
+      'color': Color;
+      /**
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
        */
       'href': string;
@@ -534,6 +538,10 @@ declare global {
   }
   namespace JSXElements {
     export interface IonAnchorAttributes extends HTMLAttributes {
+      /**
+       * The color to use for the anchor.
+       */
+      'color'?: Color;
       /**
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
        */

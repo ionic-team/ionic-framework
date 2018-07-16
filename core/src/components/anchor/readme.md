@@ -1,6 +1,6 @@
 # ion-anchor
 
-Anchor is a component used for navigating to a specified link. Similar to the browsers anchor tag, Anchor can accept a href for the location, and a direction for the transition animation.
+The Anchor component is used for navigating to a specified link. Similar to the browser's anchor tag, it can accept a href for the location, and a direction for the transition animation.
 
 
 <!-- Auto Generated Below -->

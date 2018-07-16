@@ -1,16 +1,21 @@
 import { Component, Prop } from '@stencil/core';
-import { RouterDirection } from '../../interface';
-import { openURL } from '../../utils/theme';
+import { Color, RouterDirection } from '../../interface';
+import { createColorClasses, openURL } from '../../utils/theme';
 
 
 @Component({
   tag: 'ion-anchor',
-  shadow: true,
-  styleUrl: 'anchor.scss'
+  styleUrl: 'anchor.scss',
+  shadow: true
 })
 export class Anchor {
 
   @Prop({ context: 'window' }) win!: Window;
+
+  /**
+   * The color to use for the anchor.
+   */
+  @Prop() color?: Color;
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -24,11 +29,19 @@ export class Anchor {
    */
   @Prop() routerDirection?: RouterDirection;
 
+  hostData() {
+    return {
+      class: createColorClasses(this.color)
+    };
+  }
+
   render() {
-    return <a
-      href={this.href}
-      onClick={(ev) => openURL(this.win, this.href, ev, this.routerDirection)}>
-        <slot></slot>
-      </a>;
+    return (
+      <a
+        href={this.href}
+        onClick={(ev) => openURL(this.win, this.href, ev, this.routerDirection)}>
+          <slot></slot>
+      </a>
+    );
   }
 }
