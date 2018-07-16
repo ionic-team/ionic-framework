@@ -84,7 +84,7 @@ function preparePackage(tasks, package, version) {
     title: `${pkg.name}: install npm dependencies`,
     task: async () => {
       await fs.remove(path.join(projectRoot, 'node_modules'))
-      await execa('npm', ['ci'], { cwd: projectRoot });
+      await execa('npm', ['i'], { cwd: projectRoot });
     }
   });
 
