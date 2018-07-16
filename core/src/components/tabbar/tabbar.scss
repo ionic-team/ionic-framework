@@ -17,6 +17,7 @@
   color: var(--color);
 }
 
+:host(.ion-color),
 :host(.ion-color) ion-tab-button {
   --background: #{current-color(base)};
   --color: #{current-color(contrast, .7)};
