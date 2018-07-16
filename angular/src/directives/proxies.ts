@@ -666,13 +666,14 @@ export class SplitPane {
 }
 
 export declare interface Tab extends StencilComponents.IonTab {}
-@Directive({selector: 'ion-tab', inputs: ['active', 'btnId', 'delegate', 'label', 'href', 'icon', 'badge', 'badgeColor', 'component', 'name', 'disabled', 'selected', 'show', 'tabsHideOnSubPages'], outputs: ['ionSelect']})
+@Directive({selector: 'ion-tab', inputs: ['active', 'btnId', 'delegate', 'label', 'href', 'icon', 'badge', 'badgeColor', 'component', 'name', 'disabled', 'selected', 'show', 'tabsHideOnSubPages'], outputs: ['ionSelect', 'ionTabMutated']})
 export class Tab {
   ionSelect: EventEmitter<any>;
+  ionTabMutated: EventEmitter<any>;
   constructor(r: ElementRef) {
     proxyMethods(this, r, ['getTabId', 'setActive']);
     proxyInputs(this, r, ['active', 'btnId', 'delegate', 'label', 'href', 'icon', 'badge', 'badgeColor', 'component', 'name', 'disabled', 'selected', 'show', 'tabsHideOnSubPages']);
-    proxyOutputs(this, ['ionSelect']);
+    proxyOutputs(this, ['ionSelect', 'ionTabMutated']);
   }
 }
 
