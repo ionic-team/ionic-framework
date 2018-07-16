@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
-import { openURL } from '../../utils/theme';
+import { getParentNode, openURL } from '../../utils/theme';
 
 
 @Component({
@@ -118,6 +118,32 @@ export class Button {
     this.ionBlur.emit();
   }
 
+  onClick(ev: Event) {
+    if (this.type === 'submit') {
+      // this button wants to specifically submit a form
+      // climb up the dom to see if we're in a <form>
+      // and if so, then use JS to submit it
+
+      let node = this.el;
+      while ((node = getParentNode(node))) {
+        if (node.nodeName.toLowerCase() === 'form') {
+          // cool, this submit button is within a <form>, let's submit it
+
+          // prevent the button's default and stop it's propagation
+          ev.preventDefault();
+          ev.stopPropagation();
+
+          // submit the <form> via JS
+          (node as HTMLFormElement).submit();
+          break;
+        }
+      }
+
+    } else {
+      openURL(this.win, this.href, ev, this.routerDirection);
+    }
+  }
+
   hostData() {
     const { buttonType, color, expand, fill, mode, shape, size, strong } = this;
 
@@ -150,7 +176,7 @@ export class Button {
         onFocus={this.onFocus.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
         onBlur={this.onBlur.bind(this)}
-        onClick={(ev) => openURL(this.win, this.href, ev, this.routerDirection)}>
+        onClick={this.onClick.bind(this)}>
           <span class="button-inner">
             <slot name="icon-only"></slot>
             <slot name="start"></slot>

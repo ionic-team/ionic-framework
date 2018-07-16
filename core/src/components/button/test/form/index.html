@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Button - Form</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+</head>
+
+<body>
+  <ion-app>
+
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Button - Form Submit</ion-title>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content id="content" padding no-bounce text-center>
+
+      <form action="http://httpbin.org/get" method="GET">
+
+        <div>
+          <input name="name">
+        </div>
+
+        <ion-button type="submit">
+          Submit Form
+        </ion-button>
+
+      </form>
+
+    </ion-content>
+
+  </ion-app>
+
+</body>
+
+</html>
