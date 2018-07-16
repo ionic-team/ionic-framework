@@ -4,6 +4,7 @@
 // --------------------------------------------------
 
 :host {
+  display: inline-block;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
   text-decoration: none;
@@ -58,6 +59,10 @@
 // Block Button
 // --------------------------------------------------
 
+:host(.button-block) {
+  display: block;
+}
+
 :host(.button-block) .button-native {
   @include margin-horizontal(0);
 
@@ -76,6 +81,10 @@
 
 // Full Button
 // --------------------------------------------------
+
+:host(.button-full) {
+  display: block;
+}
 
 :host(.button-full) .button-native {
   @include margin-horizontal(0);
