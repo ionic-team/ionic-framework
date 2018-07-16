@@ -8,6 +8,13 @@ The Anchor component is used for navigating to a specified link. Similar to the 
 
 ## Properties
 
+#### color
+
+string
+
+The color to use for the anchor.
+
+
 #### href
 
 string
@@ -25,6 +32,13 @@ another page using `href`.
 
 
 ## Attributes
+
+#### color
+
+string
+
+The color to use for the anchor.
+
 
 #### href
 
