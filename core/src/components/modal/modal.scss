@@ -8,7 +8,9 @@ ion-modal {
 
   position: absolute;
 
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   contain: strict;
 }
@@ -27,24 +29,17 @@ ion-modal-controller {
 .modal-wrapper {
   z-index: 10;
 
+  width: 100%;
   height: 100%;
 
   contain: strict;
 
   @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-small) {
-    @include position(calc(50% - (#{$modal-inset-height-small}/2)), null, null, calc(50% - (#{$modal-inset-width}/2)));
-
-    position: absolute;
-
     width: $modal-inset-width;
     height: $modal-inset-height-small;
   }
 
   @media only screen and (min-width: $modal-inset-min-width) and (min-height: $modal-inset-min-height-large) {
-    @include position(calc(50% - (#{$modal-inset-height-large}/2)), null, null, calc(50% - (#{$modal-inset-width}/2)));
-
-    position: absolute;
-
     width: $modal-inset-width;
     height: $modal-inset-height-large;
   }
