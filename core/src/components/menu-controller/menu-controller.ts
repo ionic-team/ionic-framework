@@ -12,8 +12,7 @@ export class MenuController {
   private menus: Menu[] = [];
   private menuAnimations = new Map<string, AnimationBuilder>();
 
-  @Prop({ connect: 'ion-animation-controller' })
-  animationCtrl!: HTMLIonAnimationControllerElement;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
 
   constructor() {
     this.registerAnimation('reveal', menuRevealAnimation);
@@ -22,7 +21,7 @@ export class MenuController {
   }
 
   /**
-   * Open the Menu.
+   * Open the menu.
    */
   @Method()
   open(menuId?: string): Promise<boolean> {
@@ -34,14 +33,12 @@ export class MenuController {
   }
 
   /**
-   * Close the Menu. If no `menuId` is given as the first
-   * argument then it'll close any menu which is open. If a `menuId`
-   * is given then it'll close that exact menu.
+   * Close the menu. If no menu is specified, then it will close any menu
+   * that is open. If a menu is specified, it will close that menu.
    */
   @Method()
   close(menuId?: string): Promise<boolean> {
     const menu = menuId ? this.get(menuId) : this.getOpen();
-
     if (menu) {
       return menu.close();
     }
@@ -80,10 +77,7 @@ export class MenuController {
    * Used to enable or disable the ability to swipe open the menu.
    */
   @Method()
-  swipeEnable(
-    shouldEnable: boolean,
-    menuId?: string
-  ): HTMLIonMenuElement | null {
+  swipeEnable(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement | null {
     const menu = this.get(menuId);
     if (menu) {
       menu.swipeEnabled = shouldEnable;
@@ -92,7 +86,8 @@ export class MenuController {
   }
 
   /**
-   * If the menuId is not specified, it returns true if ANY menu is currenly open.
+   * Returns true if the specified menu is open. If the menu is not specified, it
+   * will return true if any menu is currently open.
    */
   @Method()
   isOpen(menuId?: string): boolean {
@@ -104,7 +99,7 @@ export class MenuController {
   }
 
   /**
-   * Returns true or false if the menuId is enabled or not
+   * Returns true if the specified menu is enabled.
    */
   @Method()
   isEnabled(menuId?: string): boolean {
@@ -116,11 +111,11 @@ export class MenuController {
   }
 
   /**
-   * Used to get a menu instance. If a `menuId` is not provided then it'll
-   * return the first menu found. If a `menuId` is `left` or `right`, then
-   * it'll return the enabled menu on that side. Otherwise, if a `menuId` is
-   * provided, then it'll try to find the menu using the menu's `id`
-   * property. If a menu is not found then it'll return `null`.
+   * Used to get a menu instance. If a menu is not provided then it will
+   * return the first menu found. If the specified menu is `left` or `right`, then
+   * it will return the enabled menu on that side. Otherwise, it will try to find
+   * the menu using the menu's `id` property. If a menu is not found then it will
+   * return `null`.
    */
   @Method()
   get(menuId?: string): HTMLIonMenuElement | null {
@@ -176,7 +171,7 @@ export class MenuController {
   }
 
   /**
-   * If any menu is currently animating
+   * Returns true if any menu is currently animating.
    */
   @Method()
   isAnimating(): boolean {
@@ -210,11 +205,7 @@ export class MenuController {
   }
 
   @Method()
-  _setOpen(
-    menu: Menu,
-    shouldOpen: boolean,
-    animated: boolean
-  ): Promise<boolean> {
+  _setOpen(menu: Menu, shouldOpen: boolean, animated: boolean): Promise<boolean> {
     if (this.isAnimating()) {
       return Promise.resolve(false);
     }

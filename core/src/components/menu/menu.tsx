@@ -18,7 +18,7 @@ export class Menu {
   mode!: Mode;
 
   isAnimating = false;
-  width!: number; // TOOD
+  width!: number; // TODO
 
   backdropEl?: HTMLElement;
   menuInnerEl?: HTMLElement;
@@ -220,7 +220,7 @@ export class Menu {
   }
 
   async _setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
-    // If the menu is disabled or it is currenly being animated, let's do nothing
+    // If the menu is disabled or it is currently being animated, let's do nothing
     if (!this.isActive() || this.isAnimating || shouldOpen === this._isOpen) {
       return this._isOpen;
     }
@@ -256,10 +256,7 @@ export class Menu {
     this.animation = await this.menuCtrl!.createAnimation(this.type, this);
   }
 
-  private async startAnimation(
-    shouldOpen: boolean,
-    animated: boolean
-  ): Promise<void> {
+  private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
     const ani = this.animation!.reverse(!shouldOpen);
     if (animated) {
       await ani.playAsync();
