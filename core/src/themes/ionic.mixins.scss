@@ -665,7 +665,7 @@
 // Add generic safe area sizing
 // @param {string} $prop - css property you want to set
 // @param {string} $safe-area-position - short safe-area-inset value you want to modify
-// @param {string} $value - additional value you want to modify, if none, pass 0px
+// @param {string} $value - additional value you want to modify, if none, pass 0
 // ----------------------------------------------------------
 @mixin safe-area-sizing($prop, $safe-area-position, $value){
   #{$prop}: unquote("calc(#{$value} + constant(#{$safe-area-position}))");

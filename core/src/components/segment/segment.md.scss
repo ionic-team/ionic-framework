@@ -42,15 +42,16 @@
 
   --icon-size: #{$segment-button-md-icon-size};
 
+  height: $segment-button-md-height;
+
   font-size: $segment-button-md-font-size;
   font-weight: $segment-button-md-font-weight;
   line-height: $segment-button-md-line-height;
+  text-transform: uppercase;
+
   color: inherit;
-  height: $segment-button-md-height;
 
   opacity: $segment-button-md-opacity;
-
-  text-transform: uppercase;
 }
 
 // Checked Segment Button

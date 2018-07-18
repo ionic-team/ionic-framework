@@ -11,11 +11,11 @@ ion-list {
 
   display: block;
 
+  background: $item-background-color;
+
   contain: content;
 
   list-style-type: none;
-
-  background: $item-background-color;
 }
 
 ion-list.list-inset {

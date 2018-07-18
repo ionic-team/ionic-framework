@@ -33,10 +33,9 @@
   width: $action-sheet-width;
 
   border: 0;
+  outline: none;
 
   font-family: inherit;
-
-  outline: none;
 }
 
 .action-sheet-button-inner {
@@ -63,13 +62,11 @@
 }
 
 .action-sheet-group {
-  -webkit-overflow-scrolling: touch;
-
-  overflow-y: scroll;
+  flex-shrink: 2;
 
   overscroll-behavior-y: contain;
-
-  flex-shrink: 2;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
 
   pointer-events: all;
 }

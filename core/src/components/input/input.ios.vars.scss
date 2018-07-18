@@ -21,7 +21,7 @@ $input-ios-padding-end:                    ($item-ios-padding-end / 2) !default;
 $input-ios-padding-bottom:                 $item-ios-padding-bottom !default;
 
 /// @prop - Margin start of the input
-$input-ios-padding-start:                  0px !default;
+$input-ios-padding-start:                  0 !default;
 
 /// @prop - Margin start of the input when it is after a label
 $input-ios-by-label-margin-start:         $item-ios-padding-start !default;

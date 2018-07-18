@@ -7,13 +7,14 @@
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-base-rgb: #{ion-color(primary, base, null, true)};
 
+  box-sizing: content-box !important;
+
   display: inline-block;
 
   contain: content;
 
   touch-action: none;
   user-select: none;
-  box-sizing: content-box !important;
 }
 
 :host(.toggle-key) input {

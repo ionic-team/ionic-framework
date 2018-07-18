@@ -23,9 +23,9 @@
 // --------------------------------------------------
 
 .alert-head {
-  text-align: $alert-md-head-text-align;
-
   @include padding($alert-md-head-padding-top, $alert-md-head-padding-end, $alert-md-head-padding-bottom, $alert-md-head-padding-start);
+
+  text-align: $alert-md-head-text-align;
 }
 
 .alert-title {
@@ -255,8 +255,6 @@
 
   @include padding($alert-md-button-padding-top, $alert-md-button-padding-end, $alert-md-button-padding-bottom, $alert-md-button-padding-start);
 
-  text-align: $alert-md-button-text-align;
-
   // necessary for ripple to work properly
   position: relative;
   overflow: hidden;
@@ -264,7 +262,10 @@
   font-weight: $alert-md-button-font-weight;
   text-transform: $alert-md-button-text-transform;
   color: $alert-md-button-text-color;
+
   background-color: $alert-md-button-background-color;
+
+  text-align: $alert-md-button-text-align;
 }
 
 .alert-button.activated {

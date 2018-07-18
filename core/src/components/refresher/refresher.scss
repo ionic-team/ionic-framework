@@ -39,18 +39,19 @@ ion-refresher-content {
 
 .refresher-pulling-icon,
 .refresher-refreshing-icon {
-  text-align: center;
   @include transform-origin(center);
 
   font-size: $refresher-icon-font-size;
   transition: 200ms;
+
+  text-align: center;
 }
 
 .refresher-pulling-text,
 .refresher-refreshing-text {
-  text-align: center;
-
   font-size: $refresher-text-font-size;
+
+  text-align: center;
 }
 
 // Refresher Content States

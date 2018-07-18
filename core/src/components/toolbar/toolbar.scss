@@ -37,7 +37,7 @@
 :host(.toolbar-translucent) {
   --border-color: transparent;
   --backdrop-filter: var(--translucent-filter);
-  --opacity: 0.8;
+  --opacity: .8;
 }
 
 .toolbar-background {
@@ -50,9 +50,8 @@
   border-style: var(--border-style);
   border-color: var(--border-color);
   background: var(--background);
-  transform: translateZ(0);
-
   opacity: var(--opacity);
+  transform: translateZ(0);
 
   pointer-events: none;
 

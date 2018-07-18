@@ -1,19 +1,23 @@
 @import "../../themes/ionic.globals";
 
 :host {
-  align-items: center;
-  background-color: var(--ion-color-base);
-  border-radius: 50%;
-  display: inline-flex;
-  height: var(--size, 32px);
-  justify-content: center;
-  width: var(--size, 32px);
-
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
+
+  @include border-radius(50%);
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: var(--size, 32px);
+  height: var(--size, 32px);
+
+  background-color: var(--ion-color-base);
 }
 
 ion-icon {
-  color: var(--ion-color-contrast);
   font-size: var(--icon-size, 18px);
+  color: var(--ion-color-contrast);
 }

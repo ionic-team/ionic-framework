@@ -9,7 +9,6 @@
 
   @include font-smoothing();
   @include padding($badge-padding-top, $badge-padding-end, $badge-padding-bottom, $badge-padding-start);
-  text-align: center;
 
   display: inline-block;
 
@@ -24,6 +23,8 @@
   color: #{current-color(contrast)};
   background-color: #{current-color(base)};
   vertical-align: baseline;
+
+  text-align: center;
 
   contain: content;
 }

@@ -4,19 +4,23 @@
 // --------------------------------------------------
 
 :host {
-  display: inline-block;
-  vertical-align: top; // the better option for most scenarios
-  vertical-align: -webkit-baseline-middle; // the best for those that support it
-  text-decoration: none;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  text-align: center;
-
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
   --ion-color-shade: #{ion-color(primary, shade)};
 
   --ripple-color: currentColor;
+
+  display: inline-block;
+
+  text-decoration: none;
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  vertical-align: top; // the better option for most scenarios
+  vertical-align: -webkit-baseline-middle; // the best for those that support it
+
+  text-align: center;
 }
 
 :host([disabled]) {
@@ -105,44 +109,51 @@
 
 
 .button-native {
-  @include font-smoothing();
   @include border-radius(var(--border-radius));
+  @include font-smoothing();
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
-
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  box-sizing: border-box;
 
   position: relative;
   z-index: 0;
   display: inline-block;
   overflow: hidden;
-  box-sizing: border-box;
 
   height: var(--height);
 
   border-width: var(--border-width);
   border-style: var(--border-style);
   border-color: var(--border-color);
+
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
+
   letter-spacing: inherit;
   line-height: 1;
   text-decoration: inherit;
   text-overflow: inherit;
   text-transform: inherit;
   white-space: inherit;
+
   color: inherit;
   background: var(--background);
+
   box-shadow: var(--box-shadow);
+
   cursor: pointer;
   opacity: var(--opacity);
+
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
+
   transition: var(--transition);
 
-  font-kerning: none;
-  user-select: none;
   text-align: inherit;
+  user-select: none;
+  font-kerning: none;
 
   contain: content;
 

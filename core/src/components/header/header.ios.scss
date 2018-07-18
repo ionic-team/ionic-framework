@@ -18,6 +18,6 @@
 
 .header-translucent-ios ion-toolbar {
   --border-color: transparent;
-  --opacity: 0.8;
+  --opacity: .8;
   --backdrop-filter: #{$header-ios-translucent-filter};
 }

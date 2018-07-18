@@ -14,10 +14,10 @@
 .action-sheet-title {
   @include padding($action-sheet-md-title-padding-top, $action-sheet-md-title-padding-end, $action-sheet-md-title-padding-bottom, $action-sheet-md-title-padding-start);
 
-  text-align: $action-sheet-md-text-align;
-
   font-size: $action-sheet-md-title-font-size;
   color: $action-sheet-md-title-color;
+
+  text-align: $action-sheet-md-text-align;
 }
 
 .action-sheet-sub-title {
@@ -49,8 +49,6 @@
 .action-sheet-button {
   @include padding($action-sheet-md-button-padding-top, $action-sheet-md-button-padding-end, $action-sheet-md-button-padding-bottom, $action-sheet-md-button-padding-start);
 
-  text-align: $action-sheet-md-text-align;
-
   position: relative;
   overflow: hidden;
 
@@ -59,6 +57,8 @@
   font-size: $action-sheet-md-button-font-size;
   color: $action-sheet-md-button-text-color;
   background: $action-sheet-md-button-background;
+
+  text-align: $action-sheet-md-text-align;
 
   contain: strict;
 }

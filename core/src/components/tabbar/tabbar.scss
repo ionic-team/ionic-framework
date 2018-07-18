@@ -13,8 +13,8 @@
 
   width: 100%;
 
-  background: var(--background);
   color: var(--color);
+  background: var(--background);
 }
 
 :host(.ion-color),
@@ -47,9 +47,9 @@
   width: 1px;
   height: 2px;
 
-  transform: translateZ(0);
-
   background: currentColor;
+
+  transform: translateZ(0);
 
   &.animated {
     transition-duration: 300ms;

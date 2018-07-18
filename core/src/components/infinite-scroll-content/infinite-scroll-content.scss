@@ -4,14 +4,14 @@
 // --------------------------------------------------
 
 ion-infinite-scroll-content {
-  text-align: center;
-
   display: flex;
 
   flex-direction: column;
   justify-content: center;
 
   min-height: $infinite-scroll-content-min-height;
+
+  text-align: center;
 }
 
 .infinite-loading {

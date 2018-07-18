@@ -4,21 +4,23 @@
 // --------------------------------------------------
 
 :host {
-  position: relative;
-  display: flex;
-  align-items: center;
-  flex: 1;
-
-  width: 100%;
-
   --placeholder-weight: inherit;
 
-  --padding-top: 0px;
-  --padding-end: 0px;
-  --padding-bottom: 0px;
-  --padding-start: 0px;
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
 
-  --border-radius: 0px;
+  --border-radius: 0;
+
+  position: relative;
+  display: flex;
+
+  flex: 1;
+
+  align-items: center;
+
+  width: 100%;
 }
 
 
@@ -43,8 +45,10 @@
   font-size: inherit;
   font-weight: inherit;
   letter-spacing: inherit;
-  font-kerning: inherit;
+
   background: transparent;
+
+  font-kerning: inherit;
 
   appearance: none;
 

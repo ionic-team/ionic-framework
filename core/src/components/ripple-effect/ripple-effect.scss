@@ -14,20 +14,23 @@
 
 .ripple-effect {
   @include border-radius(50%);
+
   position: absolute;
 
+  color: inherit;
   background-color: currentColor;
+
   opacity: 0;
 
-  will-change: transform, opacity;
-  pointer-events: none;
   animation-name: rippleAnimation;
   animation-duration: 200ms;
   animation-timing-function: ease-out;
 
-  color: inherit;
+  will-change: transform, opacity;
 
   contain: strict;
+
+  pointer-events: none;
 }
 
 @keyframes rippleAnimation {

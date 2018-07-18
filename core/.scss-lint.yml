@@ -8,6 +8,7 @@ scss_files: 'src/**/*.scss'
 
 exclude:
   - '*.css'
+  - 'src/css/colors.scss'
   - 'src/css/flex-utils.scss'
   - 'src/css/normalize.scss'
   - 'src/css/text-alignment.scss'

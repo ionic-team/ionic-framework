@@ -4,10 +4,10 @@
 // --------------------------------------------------
 
 :host {
-  @include font-smoothing();
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
 
-  background-color: var(--ion-color-base);
-  color: var(--ion-color-contrast);
+  @include font-smoothing();
 
   box-sizing: border-box;
   display: inline-flex;
@@ -16,8 +16,9 @@
   align-self: center;
 
   font-weight: normal;
-  vertical-align: middle;
 
-  --ion-color-base: #{ion-color(primary, base)};
-  --ion-color-contrast: #{ion-color(primary, contrast)};
+  color: var(--ion-color-contrast);
+  background-color: var(--ion-color-base);
+
+  vertical-align: middle;
 }

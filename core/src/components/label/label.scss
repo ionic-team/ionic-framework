@@ -5,7 +5,11 @@
 // --------------------------------------------------
 
 :host {
+  --ion-color-base: currentColor;
+
   @include margin(0);
+
+  box-sizing: border-box;
 
   display: block;
   overflow: hidden;
@@ -16,11 +20,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 
-  box-sizing: border-box;
-
   color: #{current-color(base)};
-
-  --ion-color-base: currentColor;
 }
 
 :host([text-wrap]) {

@@ -4,8 +4,6 @@
   @include border-radius(0);
   @include margin(0);
 
-  text-align: center;
-
   box-sizing: border-box;
 
   position: relative;
@@ -21,8 +19,10 @@
 
   text-decoration: none;
 
+  color: var(--color);
   background: var(--background);
-  color: var( --color);
+
+  text-align: center;
 
   user-select: none;
 
@@ -50,6 +50,8 @@ a {
   @include margin(0);
   @include padding(0);
 
+  box-sizing: border-box;
+
   display: flex;
 
   flex-direction: column;
@@ -60,10 +62,11 @@ a {
   height: 100%;
 
   border: 0;
+
   color: inherit;
   background: transparent;
+
   cursor: pointer;
-  box-sizing: border-box;
 
   &:active,
   &:focus {
@@ -118,13 +121,14 @@ a {
   @include position(null, calc(50% - 50px), null, null);
   @include padding(1px, 6px);
 
+  box-sizing: border-box;
+
   position: absolute;
 
   height: auto;
 
   font-size: 12px;
   line-height: 16px;
-  box-sizing: border-box;
 }
 
 :host(.has-icon) .tab-badge {

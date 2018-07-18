@@ -11,6 +11,7 @@
 files:
   include: 'src/**/*.s+(a|c)ss'
   ignore:
+    - 'src/css/colors.scss'
     - 'src/css/flex-utils.scss'
     - 'src/css/normalize.scss'
     - 'src/css/text-alignment.scss'

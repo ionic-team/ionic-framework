@@ -36,9 +36,9 @@
 // --------------------------------------------------
 
 .alert-head {
-  text-align: $alert-ios-head-text-align;
-
   @include padding($alert-ios-head-padding-top, $alert-ios-head-padding-end, $alert-ios-head-padding-bottom, $alert-ios-head-padding-start);
+
+  text-align: $alert-ios-head-text-align;
 }
 
 .alert-title {
@@ -62,10 +62,10 @@
 .alert-input-group {
   @include padding($alert-ios-message-padding-top, $alert-ios-message-padding-end, $alert-ios-message-padding-bottom, $alert-ios-message-padding-start);
 
-  text-align: $alert-ios-message-text-align;
-
   font-size: $alert-ios-message-font-size;
   color: $alert-ios-message-text-color;
+
+  text-align: $alert-ios-message-text-align;
 }
 
 .alert-message {
@@ -98,14 +98,13 @@
 
 .alert-radio-group,
 .alert-checkbox-group {
-  overflow-y: scroll;
-
   overscroll-behavior: contain;
 
   max-height: $alert-ios-content-max-height;
 
   border-top: $alert-ios-list-border-top;
 
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
 

@@ -4,16 +4,16 @@
 // --------------------------------------------------
 
 :host {
-  // default background / color
-  --background: transparent;
-  --color: #{ion-color(primary, base)};
-
   --text-decoration: none;
 
-  background: var(--background);
-  color: var(--color);
+  // default background / color
+  --color: #{ion-color(primary, base)};
+  --background: transparent;
 
   text-decoration: var(--text-decoration);
+
+  color: var(--color);
+  background: var(--background);
 }
 
 :host(.ion-color) {

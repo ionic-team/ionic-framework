@@ -5,11 +5,6 @@
 // --------------------------------------------------
 
 :host {
-  font-family: $item-md-font-family;
-  font-size: $item-md-font-size;
-  font-weight: normal;
-  text-transform: none;
-
   --ion-color-base: var(--ion-item-background, transparent);
   --ion-color-contrast: #{$item-md-text-color};
   --ion-color-tint: #{$item-md-background-color-active};
@@ -21,6 +16,11 @@
   --inner-padding-end: #{$item-md-padding-end / 2};
 
   --padding-start: #{$item-md-padding-start};
+
+  font-family: $item-md-font-family;
+  font-size: $item-md-font-size;
+  font-weight: normal;
+  text-transform: none;
 }
 
 // Material Design Item Lines
@@ -50,7 +50,7 @@
 }
 
 :host(.item-lines-full),
-:host(.item-lines-none){
+:host(.item-lines-none) {
   --inner-border-width: 0;
 }
 

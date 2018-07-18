@@ -29,8 +29,6 @@
   @include border-radius(50%);
   @include margin(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
-  text-align: center;
-
   position: relative;
   z-index: 0;
   display: block;
@@ -49,9 +47,13 @@
   color: inherit;
   background: var(--background);
   box-shadow: var(--box-shadow);
+
   cursor: pointer;
+
   transform: var(--transform);
   transition: var(--transition);
+
+  text-align: center;
 
   background-clip: padding-box;
 

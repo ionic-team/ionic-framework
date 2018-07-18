@@ -4,16 +4,6 @@
 // --------------------------------------------------
 
 :host {
-  @include font-smoothing();
-
-  display: block;
-
-  text-decoration: none;
-
-  color: #{current-color(contrast)};
-
-  box-sizing: border-box;
-
   --min-height: #{$item-min-height};
   --background: #{current-color(base)};
   --background-active: #{current-color(tint)};
@@ -45,6 +35,16 @@
   --highlight-color-invalid: #{ion-color(danger, base)};
 
   --highlight-height: 2px;
+
+  @include font-smoothing();
+
+  box-sizing: border-box;
+
+  display: block;
+
+  text-decoration: none;
+
+  color: #{current-color(contrast)};
 }
 
 :host(.activated) {

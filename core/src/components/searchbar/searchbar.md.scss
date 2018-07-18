@@ -19,10 +19,10 @@
 .searchbar-search-icon {
   @include position(11px, null, null, 16px);
 
-  color: $searchbar-md-input-search-icon-color;
-
   width: $searchbar-md-input-search-icon-size + 1;
   height: $searchbar-md-input-search-icon-size + 1;
+
+  color: $searchbar-md-input-search-icon-color;
 }
 
 

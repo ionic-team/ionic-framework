@@ -5,9 +5,9 @@
 // --------------------------------------------------
 
 :host {
-  text-align: $action-sheet-ios-text-align;
-
   font-family: $action-sheet-ios-font-family;
+
+  text-align: $action-sheet-ios-text-align;
 }
 
 .action-sheet-wrapper {
@@ -59,13 +59,13 @@
 .action-sheet-title {
   @include padding($action-sheet-ios-title-padding-top, $action-sheet-ios-title-padding-end, $action-sheet-ios-title-padding-bottom, $action-sheet-ios-title-padding-start);
 
-  text-align: $action-sheet-ios-text-align;
-
   border-bottom: $action-sheet-ios-title-border-width $action-sheet-ios-title-border-style $action-sheet-ios-title-border-color;
 
   font-size: $action-sheet-ios-title-font-size;
   font-weight: $action-sheet-ios-title-font-weight;
   color: $action-sheet-ios-title-color;
+
+  text-align: $action-sheet-ios-text-align;
 }
 
 .action-sheet-sub-title {
