@@ -1,23 +1,5 @@
-import {
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  EventListenerEnable,
-  Listen,
-  Method,
-  Prop,
-  State,
-  Watch
-} from '@stencil/core';
-import {
-  Animation,
-  Config,
-  GestureDetail,
-  MenuChangeEventDetail,
-  Mode,
-  Side
-} from '../../interface';
+import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
+import { Animation, Config, GestureDetail, MenuChangeEventDetail, Mode, Side } from '../../interface';
 import { assert, isEndSide } from '../../utils/helpers';
 
 @Component({
@@ -29,7 +11,6 @@ import { assert, isEndSide } from '../../utils/helpers';
   shadow: true
 })
 export class Menu {
-
   private animation?: Animation;
   private _isOpen = false;
   private lastOnEnd = 0;

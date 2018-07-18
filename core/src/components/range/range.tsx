@@ -1,21 +1,5 @@
-import {
-  Component,
-  Element,
-  Event,
-  EventEmitter,
-  Listen,
-  Prop,
-  State,
-  Watch
-} from '@stencil/core';
-import {
-  BaseInput,
-  Color,
-  GestureDetail,
-  Mode,
-  RangeInputChangeEvent,
-  StyleEvent
-} from '../../interface';
+import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
+import { BaseInput, Color, GestureDetail, Mode, RangeInputChangeEvent, StyleEvent } from '../../interface';
 import { clamp, debounceEvent, deferEvent } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { Knob, RangeEventDetail, RangeValue } from './range-interface';

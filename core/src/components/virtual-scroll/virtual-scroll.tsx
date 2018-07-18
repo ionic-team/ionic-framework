@@ -1,12 +1,8 @@
 import { Component, Element, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
-import { CellType } from './virtual-scroll-interface';
 
-import {
-  Range,
-  calcCells, calcHeightIndex, doRender,
-  findCellIndex, getRange, getShouldUpdate, getViewport,
-  inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
+import { CellType } from './virtual-scroll-interface';
+import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
 
 
 @Component({
