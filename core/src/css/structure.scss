@@ -1,6 +1,11 @@
 @import "../themes/ionic.globals";
 @import "../themes/ionic.mixins";
 
+
+// Structure
+// --------------------------------------------------
+// Adds structural css to the native html elements
+
 * {
   box-sizing: border-box;
 
@@ -45,5 +50,6 @@ body {
 }
 
 [hidden] {
+  // scss-lint:disable ImportantRule
   display: none !important;
 }

@@ -1,5 +1,10 @@
 @import "../themes/ionic.globals";
 
+// Ionic Colors
+// --------------------------------------------------
+// Generates the color classes and variables based on the
+// colors map
+
 @mixin generate-color($color-name) {
   $value: map-get($colors, $color-name);
 

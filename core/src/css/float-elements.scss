@@ -1,8 +1,10 @@
 @import "../themes/ionic.globals";
 @import "../themes/ionic.mixins";
 
+// Float Elements
+// --------------------------------------------------
+// Creates float attributes based on screen size
 
-// Creates text transform attributes based on screen size
 @each $breakpoint in map-keys($screen-breakpoints) {
   $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
 

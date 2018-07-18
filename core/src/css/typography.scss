@@ -1,7 +1,7 @@
 @import "../themes/ionic.globals";
 @import "../themes/ionic.mixins";
 
-// App Typography
+// Typography
 // --------------------------------------------------
 
 /// @prop - Font weight of all headings
@@ -44,8 +44,8 @@ $h6-font-size:                 calc(#{$h1-font-size} - #{$h-step} * 5) !default;
 }
 
 a {
-  background-color: transparent;
   color: ion-color(primary, base);
+  background-color: transparent;
 }
 
 h1,
