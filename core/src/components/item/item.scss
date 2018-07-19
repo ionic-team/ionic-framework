@@ -93,6 +93,7 @@
   @include position(null, 0, 0, 0);
 
   position: absolute;
+
   height: var(--highlight-height);
 }
 
@@ -106,6 +107,7 @@
   flex-direction: inherit;
   align-items: inherit;
   align-self: stretch;
+
   min-height: inherit;
 
   border-width: var(--inner-border-width);

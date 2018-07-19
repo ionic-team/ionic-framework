@@ -88,6 +88,7 @@
 .alert-radio-group,
 .alert-checkbox-group {
   position: relative;
+
   max-height: $alert-md-content-max-height;
 
   border-top: $alert-md-list-border-top;
@@ -99,6 +100,7 @@
 .alert-tappable {
   display: flex;
   position: relative;
+
   height: $alert-md-tappable-height;
 
   contain: strict;

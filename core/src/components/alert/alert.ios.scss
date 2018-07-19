@@ -100,6 +100,7 @@
 .alert-radio-group,
 .alert-checkbox-group {
   overscroll-behavior: contain;
+
   max-height: $alert-ios-content-max-height;
 
   border-top: $alert-ios-list-border-top;
@@ -109,6 +110,7 @@
 
 .alert-tappable {
   display: flex;
+
   height: $alert-ios-tappable-height;
 
   contain: strict;
