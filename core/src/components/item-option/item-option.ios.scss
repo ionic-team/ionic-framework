@@ -5,10 +5,10 @@
 // --------------------------------------------------
 
 :host {
-  font-size: $item-option-button-ios-font-size;
-
   --ion-color-base: #{$item-option-button-ios-background-color};
   --ion-color-contrast: #{$item-option-button-ios-text-color};
+
+  font-size: $item-option-button-ios-font-size;
 }
 
 :host(.in-list.item-options-end:last-child) {

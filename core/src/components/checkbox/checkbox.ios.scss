@@ -6,11 +6,9 @@
 
 :host {
   --size: #{$checkbox-ios-icon-size};
-
   --border-radius: #{$checkbox-ios-icon-border-radius};
   --border-width: #{$checkbox-ios-icon-border-width};
   --border-style: #{$checkbox-ios-icon-border-style};
-
   --unchecked-border-color: #{$checkbox-ios-icon-border-color-off};
   --unchecked-background: #{$checkbox-ios-background-color-off};
 }
@@ -30,11 +28,12 @@
   width: calc(var(--size) / 6 + 1px);
   height: calc(var(--size) / 2);
 
+  transform: rotate(45deg);
+
   border-width: $checkbox-ios-checkmark-border-width;
   border-top-width: 0;
   border-left-width: 0;
   border-style: $checkbox-ios-checkmark-border-style;
-  transform: rotate(45deg);
 }
 
 
@@ -44,7 +43,6 @@
 // TODO: .item-ios.item-checkbox-disabled ion-labe
 :host(.checkbox-disabled) {
   opacity: $checkbox-ios-disabled-opacity;
-
   pointer-events: none;
 }
 
@@ -56,9 +54,8 @@
   @include border-radius(50%);
   @include position(-9px, null, null, -9px);
 
-  position: absolute;
-
   display: block;
+  position: absolute;
 
   width: 36px;
   height: 36px;
@@ -66,7 +63,6 @@
   background: $checkbox-ios-background-color-focused;
 
   content: "";
-
   opacity: .2;
 }
 
@@ -78,8 +74,8 @@
 :host(.in-item) {
   @include margin($checkbox-ios-item-start-margin-top, $checkbox-ios-item-start-margin-end, $checkbox-ios-item-start-margin-bottom, $checkbox-ios-item-start-margin-start);
 
-  position: static;
   display: block;
+  position: static;
 }
 
 :host(.in-item[slot="end"]) {

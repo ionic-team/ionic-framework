@@ -12,6 +12,7 @@
 
 :host([text-wrap]) {
   font-size: $label-ios-text-wrap-font-size;
+
   line-height: $label-ios-text-wrap-line-height;
 }
 
@@ -64,17 +65,20 @@
 
   font-size: 14px;
   font-weight: normal;
+
   line-height: normal;
 }
 
 ::slotted(*) p {
   @include margin($item-ios-paragraph-margin-top, $item-ios-paragraph-margin-end, $item-ios-paragraph-margin-bottom, $item-ios-paragraph-margin-start);
 
-  overflow: inherit;
-
   font-size: $item-ios-paragraph-font-size;
+
   line-height: normal;
+
   text-overflow: inherit;
+
+  overflow: inherit;
 }
 
 ::slotted(p) {

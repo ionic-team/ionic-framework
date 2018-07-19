@@ -4,20 +4,19 @@
 // --------------------------------------------------
 
 :host {
-  flex: 1;
-
   --padding-start: 0;
   --padding-end: 0;
   --padding-top: 0;
   --padding-bottom: 0;
-
   --icon-size: 1em;
+
+  flex: 1;
 }
 
 :host(:first-of-type) .segment-button-native {
-  @include border-radius(var(--border-radius), 0, 0, var(--border-radius));
-
   --padding-end: 0;
+
+  @include border-radius(var(--border-radius), 0, 0, var(--border-radius));
 }
 
 :host(:not(:first-of-type)) .segment-button-native {
@@ -25,47 +24,45 @@
 }
 
 :host(:last-of-type) .segment-button-native {
-  @include border-radius(0, var(--border-radius), var(--border-radius), 0);
-
   --padding-start: 0;
+
+  @include border-radius(0, var(--border-radius), var(--border-radius), 0);
 }
 
 .segment-button-native {
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
-  position: relative;
   display: block;
-
-  overflow: hidden;
+  position: relative;
 
   width: 100%;
   height: 100%;
+
+  transition: var(--transition);
 
   border-width: var(--border-width);
   border-style: var(--border-style);
   border-color: var(--border-color);
 
+  background: var(--background);
+  color: inherit;
+
   font-size: inherit;
   font-weight: inherit;
 
+  text-align: center;
   text-decoration: none;
   text-overflow: ellipsis;
   text-transform: inherit;
+
   white-space: nowrap;
 
-  color: inherit;
-  background: var(--background);
-
-  cursor: pointer;
-
-  transition: var(--transition);
-
   contain: content;
+  cursor: pointer;
+  overflow: hidden;
   user-select: none;
   font-kerning: none;
-
-  text-align: center;
 
   &:active,
   &:focus {

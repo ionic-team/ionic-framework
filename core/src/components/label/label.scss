@@ -9,18 +9,20 @@
 
   @include margin(0);
 
-  box-sizing: border-box;
-
   display: block;
-  overflow: hidden;
 
   flex: 1;
 
+  color: #{current-color(base)};
+
   font-size: inherit;
+
   text-overflow: ellipsis;
+
   white-space: nowrap;
 
-  color: #{current-color(base)};
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 :host([text-wrap]) {
@@ -30,7 +32,6 @@
 :host-context(.item-interactive-disabled) {
   cursor: default;
   opacity: .3;
-
   pointer-events: none;
 }
 
@@ -38,7 +39,6 @@
   flex: initial;
 
   max-width: 200px;
-
   pointer-events: none;
 }
 

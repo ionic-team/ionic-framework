@@ -4,20 +4,19 @@
 // --------------------------------------------------
 
 :host {
-  box-sizing: border-box;
-  position: relative;
-  display: block;
-
-  flex: 1;
-
-  width: 100%;
-
   --padding-top: 0;
   --padding-end: 0;
   --padding-bottom: 0;
   --padding-start: 0;
-
   --border-radius: 0;
+
+  display: block;
+  position: relative;
+
+  flex: 1;
+
+  width: 100%;
+  box-sizing: border-box;
 }
 
 // Textarea Within An Item
@@ -37,7 +36,6 @@
   @include margin(0);
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
-  box-sizing: border-box;
   display: block;
 
   width: 100%;
@@ -46,13 +44,15 @@
   border: 0;
 
   outline: none;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  letter-spacing: inherit;
 
   background: transparent;
 
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+
+  letter-spacing: inherit;
+  box-sizing: border-box;
   resize: none;
   appearance: none;
 }

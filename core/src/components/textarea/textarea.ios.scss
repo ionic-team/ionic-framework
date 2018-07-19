@@ -5,13 +5,12 @@
 // --------------------------------------------------
 
 :host {
-  font-family: $textarea-ios-font-family;
-  font-size: $textarea-ios-font-size;
-
   --padding-top: #{$textarea-ios-padding-top};
   --padding-end: #{$textarea-ios-padding-end};
   --padding-bottom: #{$textarea-ios-padding-bottom};
   --padding-start: #{$textarea-ios-padding-start};
-
   --placeholder-color: #{$textarea-ios-placeholder-color};
+
+  font-family: $textarea-ios-font-family;
+  font-size: $textarea-ios-font-size;
 }

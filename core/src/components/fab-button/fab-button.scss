@@ -7,18 +7,17 @@
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
   --ion-color-tint: #{ion-color(primary, tint)};
-
   --size: #{$fab-size};
   --background: #{current-color(base)};
   --transition: background-color, opacity 100ms linear;
-
   --padding-start: calc((#{$fab-size} - var(--size)) / 2);
   --padding-end: calc((#{$fab-size} - var(--size)) / 2);
   --padding-top: calc((#{$fab-size} - var(--size)) / 2);
   --padding-bottom: calc((#{$fab-size} - var(--size)) / 2);
 
-  font-size: 14px;
   color: #{current-color(contrast)};
+
+  font-size: 14px;
 }
 
 :host(.activated) {
@@ -29,39 +28,40 @@
   @include border-radius(50%);
   @include margin(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
-  position: relative;
-  z-index: 0;
   display: block;
-  overflow: hidden;
+  position: relative;
 
   width: var(--size);
   height: var(--size);
 
-  border: 0;
-  font-size: inherit;
-  font-weight: inherit;
-  line-height: var(--size);
-  text-overflow: ellipsis;
-  text-transform: none;
-  white-space: nowrap;
-  color: inherit;
-  background: var(--background);
-  box-shadow: var(--box-shadow);
-
-  cursor: pointer;
-
   transform: var(--transform);
+
   transition: var(--transition);
 
-  text-align: center;
+  border: 0;
 
+  background: var(--background);
   background-clip: padding-box;
+  color: inherit;
 
-  font-kerning: none;
-  user-select: none;
+  font-size: inherit;
+  font-weight: inherit;
 
+  line-height: var(--size);
+
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: none;
+
+  white-space: nowrap;
+
+  box-shadow: var(--box-shadow);
   contain: strict;
-
+  cursor: pointer;
+  overflow: hidden;
+  user-select: none;
+  z-index: 0;
+  font-kerning: none;
   appearance: none;
 
   &:active,
@@ -77,17 +77,15 @@
 .fab-button-inner {
   @include position(0, 0, null, 0);
 
-  position: absolute;
   display: flex;
+  position: absolute;
 
   flex-flow: row nowrap;
   flex-shrink: 0;
   align-items: center;
-  justify-content: center;
-
   align-items: center;
   justify-content: center;
-
+  justify-content: center;
   height: 100%;
 
   transition: all ease-in-out 300ms;
@@ -108,31 +106,34 @@
 .fab-button-close-icon {
   @include position(0, 0, null, 0);
 
-  position: absolute;
   display: flex;
+  position: absolute;
 
   align-items: center;
   justify-content: center;
-
   height: 100%;
 
-  opacity: 0;
   transform: scale(.4) rotateZ(-45deg);
+
   transition: all ease-in-out 300ms;
   transition-property: transform, opacity;
+
+  opacity: 0;
 }
 
 // FAB Animation
 // --------------------------------------------------
 
 :host(.fab-button-close-active) .fab-button-close-icon {
-  opacity: 1;
   transform: scale(1) rotateZ(0deg);
+
+  opacity: 1;
 }
 
 :host(.fab-button-close-active) .fab-button-inner {
-  opacity: 0;
   transform: scale(.4) rotateZ(45deg);
+
+  opacity: 0;
 }
 
 ion-ripple-effect {

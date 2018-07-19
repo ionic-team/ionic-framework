@@ -9,42 +9,34 @@
   --background-active: #{current-color(tint)};
   --color: #{current-color(contrast)};
   --detail-push-color: #{current-color(shade)};
-
   --border-radius: 0;
   --border-width: 0;
   --border-style: solid;
   --border-color: #{current-color(shade)};
-
   --inner-border-width: 0;
-
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-end: 0;
   --padding-start: 0;
-
   --inner-padding-top: 0;
   --inner-padding-bottom: 0;
   --inner-padding-start: 0;
   --inner-padding-end: 0;
-
   --box-shadow: none;
   --inner-box-shadow: none;
-
   --highlight-color-focus: #{ion-color(primary, base)};
   --highlight-color-valid: #{ion-color(success, base)};
   --highlight-color-invalid: #{ion-color(danger, base)};
-
   --highlight-height: 2px;
 
   @include font-smoothing();
 
-  box-sizing: border-box;
-
   display: block;
 
-  text-decoration: none;
-
   color: #{current-color(contrast)};
+
+  text-decoration: none;
+  box-sizing: border-box;
 }
 
 :host(.activated) {
@@ -54,7 +46,6 @@
 :host(.item-disabled) {
   cursor: default;
   opacity: .3;
-
   pointer-events: none;
 }
 
@@ -62,14 +53,11 @@
 .item-native {
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include border-radius(var(--border-radius));
-
   @include margin(0);
   @include text-align(initial);
 
-  box-sizing: border-box;
-  position: relative;
   display: flex;
-  overflow: hidden;
+  position: relative;
 
   align-items: center;
   justify-content: space-between;
@@ -77,31 +65,34 @@
   width: 100%;
   min-height: var(--min-height);
 
+  transition: var(--transition);
+
   border-width: var(--border-width);
   border-style: var(--border-style);
   border-color: var(--border-color);
 
   outline: none;
+
+  background-color: var(--background);
+  color: inherit;
+
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
+
   text-decoration: inherit;
   text-transform: inherit;
-  color: inherit;
 
-  background-color: var(--background);
   box-shadow: var(--box-shadow);
-
   cursor: pointer;
-
-  transition: var(--transition);
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .item-state {
   @include position(null, 0, 0, 0);
 
   position: absolute;
-
   height: var(--highlight-height);
 }
 
@@ -109,16 +100,12 @@
   @include margin(0);
   @include padding(var(--inner-padding-top), var(--inner-padding-end), var(--inner-padding-bottom), var(--inner-padding-start));
 
-  box-sizing: border-box;
-
   display: flex;
-  overflow: hidden;
 
   flex: 1;
   flex-direction: inherit;
   align-items: inherit;
   align-self: stretch;
-
   min-height: inherit;
 
   border-width: var(--inner-border-width);
@@ -126,12 +113,12 @@
   border-color: var(--border-color);
 
   box-shadow: var(--inner-box-shadow);
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .input-wrapper {
-  box-sizing: border-box;
   display: flex;
-  overflow: hidden;
 
   flex: 1;
   flex-direction: inherit;
@@ -139,6 +126,9 @@
   align-self: stretch;
 
   text-overflow: ellipsis;
+
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 :host([vertical-align-top]),

@@ -5,7 +5,6 @@
 // --------------------------------------------------
 
 .app-ios {
-
   @include footer-safe-area($toolbar-ios-height, $toolbar-ios-padding, $tabbar-ios-height);
 
   // TODO this can be simplified

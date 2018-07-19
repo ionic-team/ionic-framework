@@ -4,9 +4,9 @@
 // --------------------------------------------------
 
 ion-datetime {
+  display: flex;
   position: relative;
 
-  display: flex;
   overflow: hidden;
 }
 
@@ -15,23 +15,25 @@ ion-datetime {
 }
 
 .datetime-text {
-  overflow: hidden;
-
   flex: 1;
 
   min-width: $datetime-text-min-width;
   min-height: $datetime-text-min-height;
 
   font-size: inherit;
+
   line-height: $datetime-text-line-height;
+
   text-overflow: ellipsis;
+
   white-space: nowrap;
+
+  overflow: hidden;
 }
 
 .datetime-disabled,
 .item-datetime-disabled ion-label {
   opacity: $datetime-disabled-opacity;
-
   pointer-events: none;
 }
 

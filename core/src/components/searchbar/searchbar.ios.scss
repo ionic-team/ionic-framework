@@ -49,11 +49,11 @@
 
   height: 100%;
 
+  background-color: $searchbar-ios-input-background-color;
+  color: $searchbar-ios-input-text-color;
+
   font-size: 14px;
   font-weight: 400;
-
-  color: $searchbar-ios-input-text-color;
-  background-color: $searchbar-ios-input-background-color;
 
   contain: strict;
 }
@@ -72,8 +72,9 @@
   height: 100%;
 
   border: 0;
-  color: $searchbar-ios-input-clear-icon-color;
+
   background-color: transparent;
+  color: $searchbar-ios-input-clear-icon-color;
 }
 
 .searchbar-clear-icon {
@@ -93,14 +94,15 @@
   flex-shrink: 0;
 
   border: 0;
+
   outline: none;
+
+  background-color: $searchbar-ios-cancel-button-background-color;
+  color: $searchbar-ios-cancel-button-color;
+
   font-size: $searchbar-ios-cancel-button-font-size;
 
-  color: $searchbar-ios-cancel-button-color;
-  background-color: $searchbar-ios-cancel-button-background-color;
-
   cursor: pointer;
-
   appearance: none;
 }
 
@@ -132,7 +134,6 @@
 
 :host(.searchbar-animated.searchbar-has-focus) .searchbar-cancel-button {
   opacity: 1;
-
   pointer-events: auto;
 }
 
@@ -140,9 +141,9 @@
   @include margin-horizontal(null, -100%);
   @include transform(translate3d(0, 0, 0));
 
-  opacity: 0;
   transition: $searchbar-ios-cancel-transition;
 
+  opacity: 0;
   pointer-events: none;
 }
 
@@ -167,16 +168,19 @@
 
 :host-context(ion-toolbar.ion-color) .searchbar-search-icon {
   color: currentColor;
+
   opacity: $searchbar-ios-input-icon-opacity;
 }
 
 :host-context(ion-toolbar.ion-color) .searchbar-input {
   @include placeholder(currentColor, $opacity: .5);
-  color: currentColor;
+
   background: rgba(var(--ion-color-contrast-rgb), $searchbar-ios-input-background-color-alpha);
+  color: currentColor;
 }
 
 :host-context(ion-toolbar.ion-color) .searchbar-clear-button {
   color: currentColor;
+
   opacity: $searchbar-ios-input-icon-opacity;
 }

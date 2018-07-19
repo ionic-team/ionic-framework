@@ -6,17 +6,15 @@
 // --------------------------------------------------
 
 ::slotted(*) ion-button {
-  font-size: #{$toolbar-ios-button-font-size};
-  font-weight: 400;
-
   --padding-top: 0;
   --pading-bottom: 0;
   --padding-start: 5px;
   --padding-end: 5px;
-
   --border-radius: #{$toolbar-ios-button-border-radius};
-
   --height: 32px;
+
+  font-size: #{$toolbar-ios-button-font-size};
+  font-weight: 400;
 }
 
 :host-context(.ion-color)::slotted(*) .button {
@@ -30,8 +28,8 @@
   @include margin-horizontal(null, .3em);
 
   font-size: 24px;
-  line-height: .67;
 
+  line-height: .67;
   pointer-events: none;
 }
 
@@ -40,8 +38,8 @@
   @include margin-horizontal(.4em, null);
 
   font-size: 24px;
-  line-height: .67;
 
+  line-height: .67;
   pointer-events: none;
 }
 
@@ -50,8 +48,8 @@
   @include margin(0);
 
   font-size: 31px;
-  line-height: .67;
 
+  line-height: .67;
   pointer-events: none;
 }
 

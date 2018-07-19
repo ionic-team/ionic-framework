@@ -11,7 +11,6 @@
   --color: #{$tabbar-ios-text-color-active};
 
   justify-content: center;
-
   height: $tabbar-ios-height;
 
   border-top: $tabbar-ios-border;
@@ -29,7 +28,6 @@
 
 :host(.tabbar-translucent) {
   background-color: #{current-color(base, $tabbar-ios-translucent-background-color-alpha)};
-
   backdrop-filter: $tabbar-ios-translucent-filter;
 }
 

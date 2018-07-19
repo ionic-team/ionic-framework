@@ -12,10 +12,10 @@ ion-nav,
   @include position(0, 0, 0, 0);
 
   position: absolute;
-  z-index: $z-index-page-container;
-  overflow: hidden;
 
   contain: layout size style;
+  overflow: hidden;
+  z-index: $z-index-page-container;
 }
 
 ion-app,

@@ -6,25 +6,21 @@
 ion-toast {
   @include position(0, null, null, 0);
 
-  position: absolute;
-
-  z-index: $z-index-overlay;
-
   display: block;
+  position: absolute;
 
   width: $toast-width;
   height: $toast-width;
 
-  pointer-events: none;
-
   contain: strict;
+  z-index: $z-index-overlay;
+  pointer-events: none;
 }
 
 .toast-container {
   display: flex;
 
   align-items: center;
-
   pointer-events: auto;
 
   contain: content;

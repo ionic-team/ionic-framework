@@ -11,12 +11,8 @@
 
   @include font-smoothing();
 
-  box-sizing: border-box;
-  position: relative;
-  z-index: $z-index-toolbar;
-
   display: flex;
-  overflow: hidden;
+  position: relative;
 
   flex-direction: row;
   align-items: center;
@@ -27,7 +23,9 @@
   color: #{current-color(contrast)};
 
   contain: content;
-
+  overflow: hidden;
+  z-index: $z-index-toolbar;
+  box-sizing: border-box;
   backdrop-filter: var(--backdrop-filter);
 }
 
@@ -44,16 +42,17 @@
   @include position(0, 0, 0, 0);
 
   position: absolute;
-  z-index: $z-index-toolbar-background;
+
+  transform: translateZ(0);
 
   border-width: var(--border-width);
   border-style: var(--border-style);
   border-color: var(--border-color);
-  background: var(--background);
-  opacity: var(--opacity);
-  transform: translateZ(0);
 
-  pointer-events: none;
+  background: var(--background);
 
   contain: strict;
+  opacity: var(--opacity);
+  z-index: $z-index-toolbar-background;
+  pointer-events: none;
 }

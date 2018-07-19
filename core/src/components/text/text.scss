@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 :host {
-  color: #{current-color(base)};
-
   --ion-color-base: currentColor;
+
+  color: #{current-color(base)};
 }

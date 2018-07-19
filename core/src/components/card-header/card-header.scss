@@ -4,10 +4,12 @@
 // --------------------------------------------------
 
 :host {
-  position: relative;
   display: block;
-  overflow: hidden;
+  position: relative;
 
   text-overflow: ellipsis;
+
   white-space: nowrap;
+
+  overflow: hidden;
 }

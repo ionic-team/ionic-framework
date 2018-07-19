@@ -5,17 +5,15 @@
 // --------------------------------------------------
 
 :host {
+  --ion-color-base: #{$toolbar-md-background-color};
+  --ion-color-contrast: #{$toolbar-md-text-color};
+  --border-color: #{$toolbar-md-border-color};
+
   @include padding($toolbar-md-padding);
 
   min-height: #{$toolbar-md-height};
 
   font-family: #{$toolbar-md-font-family};
-
-  // default color / background
-  --ion-color-base: #{$toolbar-md-background-color};
-  --ion-color-contrast: #{$toolbar-md-text-color};
-
-  --border-color: #{$toolbar-md-border-color};
 }
 
 

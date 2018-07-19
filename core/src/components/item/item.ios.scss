@@ -5,20 +5,17 @@
 // --------------------------------------------------
 
 :host {
-  font-family: $item-ios-font-family;
-
-  font-size: $item-ios-font-size;
-
   --ion-color-base: var(--ion-item-background, transparent);
   --ion-color-contrast: #{$item-ios-text-color};
   --ion-color-tint: #{$item-ios-background-color-active};
   --ion-color-shade: #{$item-ios-border-bottom-color};
-
   --transition: background-color 200ms linear;
-
   --padding-start: #{$item-ios-padding-start};
   --inner-padding-end: #{$item-ios-padding-end / 2};
   --inner-border-width: #{0 0 $item-ios-border-bottom-width 0};
+
+  font-family: $item-ios-font-family;
+  font-size: $item-ios-font-size;
 }
 
 :host(.activated) {
@@ -85,14 +82,13 @@
 // --------------------------------------------------
 
 ::slotted(.button-small) {
-  font-size: 13px;
-
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: .5em;
   --padding-end: .5em;
-
   --height: 24px;
+
+  font-size: 13px;
 }
 
 // TODO
@@ -123,9 +119,9 @@
 // --------------------------------------------------
 
 .item-detail-icon {
-  font-size: 20px;
-
   color: var(--detail-push-color);
+
+  font-size: 20px;
 }
 
 

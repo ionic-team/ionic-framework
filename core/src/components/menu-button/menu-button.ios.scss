@@ -8,19 +8,21 @@
   @include padding(0);
   @include margin(2px, 0, 0, 0);
 
-  z-index: $menu-button-ios-button-z-index;
-  overflow: visible;
-
   min-height: 32px;
 
+  transform: translateZ(0);
+
   border: 0;
+
+  background-color: transparent;
+  color: $menu-button-ios-color;
+
   font-size: 17px;
+
   line-height: 1;
 
-  color: $menu-button-ios-color;
-  background-color: transparent;
-
-  transform: translateZ(0);
+  overflow: visible;
+  z-index: $menu-button-ios-button-z-index;
 
   &.activated {
     opacity: .4;
@@ -34,6 +36,5 @@ ion-icon {
   display: inherit;
 
   font-size: 1.75em;
-
   pointer-events: none;
 }

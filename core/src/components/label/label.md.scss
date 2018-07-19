@@ -12,6 +12,7 @@
 
 :host([text-wrap]) {
   font-size: $label-md-text-wrap-font-size;
+
   line-height: $label-md-text-wrap-line-height;
 }
 
@@ -74,17 +75,20 @@
 
   font-size: 14px;
   font-weight: normal;
+
   line-height: normal;
 }
 
 ::slotted(*) p {
   @include margin(0, 0, 2px);
 
-  overflow: inherit;
-
   font-size: 14px;
+
   line-height: normal;
+
   text-overflow: inherit;
+
+  overflow: inherit;
 }
 
 ::slotted(p) {

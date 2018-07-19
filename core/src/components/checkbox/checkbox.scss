@@ -6,15 +6,13 @@
 :host {
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
-
   --background: var(--unchecked-backgroud);
   --border-color: var(--unchecked-border-color);
-
   --checked-border-color: #{current-color(base)};
   --checked-background: #{current-color(base)};
 
-  position: relative;
   display: inline-block;
+  position: relative;
 }
 
 :host(.checkbox-checked) {
@@ -41,6 +39,7 @@ input {
   border-width: var(--border-width);
   border-style: var(--border-style);
   border-color: var(--border-color);
+
   background-color: var(--background);
 
   contain: strict;
@@ -48,6 +47,7 @@ input {
 
 .checkbox-inner {
   border-color: #{current-color(contrast)};
+
   opacity: 0;
 }
 

@@ -7,8 +7,9 @@
 :host {
   @include padding($select-md-padding-top, $select-md-padding-end, $select-md-padding-bottom, $select-md-padding-start);
 
-  font-family: $select-md-font-family;
   color: $select-md-text-color;
+
+  font-family: $select-md-font-family;
 }
 
 .select-placeholder {
@@ -38,8 +39,8 @@
   border-top: 5px solid;
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
-  color: $select-md-icon-color;
 
+  color: $select-md-icon-color;
   pointer-events: none;
 }
 

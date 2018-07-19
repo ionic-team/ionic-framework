@@ -5,19 +5,16 @@
 
 :host {
   --placeholder-weight: inherit;
-
   --padding-top: 0;
   --padding-end: 0;
   --padding-bottom: 0;
   --padding-start: 0;
-
   --border-radius: 0;
 
-  position: relative;
   display: flex;
+  position: relative;
 
   flex: 1;
-
   align-items: center;
 
   width: 100%;
@@ -29,10 +26,8 @@
 
 .native-input {
   @include border-radius(var(--border-radius));
-
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
-  box-sizing: border-box;
   display: inline-block;
 
   flex: 1;
@@ -40,23 +35,25 @@
   width: 100%;
 
   border: 0;
+
   outline: none;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  letter-spacing: inherit;
 
   background: transparent;
 
-  font-kerning: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
 
+  letter-spacing: inherit;
+  box-sizing: border-box;
+  font-kerning: inherit;
   appearance: none;
 
   &::placeholder {
-    font-family: inherit;
-
-    font-weight: var(--placeholder-weight);
     color: var(--placeholder-color);
+
+    font-family: inherit;
+    font-weight: var(--placeholder-weight);
   }
 }
 
@@ -106,7 +103,6 @@
   background-repeat: no-repeat;
 
   visibility: hidden;
-
   appearance: none;
 
   &:active,

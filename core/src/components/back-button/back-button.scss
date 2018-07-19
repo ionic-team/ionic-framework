@@ -7,7 +7,6 @@
   display: none;
 
   color: #{current-color(base)};
-
   pointer-events: all;
 }
 
@@ -19,29 +18,30 @@
 .back-button-native {
   @include font-smoothing();
 
-  position: relative;
-  z-index: 0;
   display: block;
-
-  border: 0;
-  outline: none;
-
-  line-height: 1;
-
-  text-decoration: none;
-  text-overflow: ellipsis;
-  text-transform: none;
-  white-space: nowrap;
-
-  color: inherit;
-  cursor: pointer;
+  position: relative;
 
   transition: background-color, opacity 100ms linear;
 
-  text-align: center;
-  user-select: none;
-  font-kerning: none;
+  border: 0;
 
+  outline: none;
+
+  color: inherit;
+
+  line-height: 1;
+
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  text-transform: none;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+  user-select: none;
+  z-index: 0;
+  font-kerning: none;
   appearance: none;
 }
 

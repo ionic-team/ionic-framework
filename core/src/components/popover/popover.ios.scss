@@ -12,8 +12,8 @@
   min-height: $popover-ios-min-height;
   max-height: $popover-ios-max-height;
 
-  color: $popover-ios-text-color;
   background-color: $popover-ios-background-color;
+  color: $popover-ios-text-color;
 }
 
 
@@ -21,13 +21,13 @@
 // -----------------------------------------
 
 .popover-ios .popover-arrow {
-  position: absolute;
   display: block;
-
-  overflow: hidden;
+  position: absolute;
 
   width: 20px;
   height: 10px;
+
+  overflow: hidden;
 }
 
 .popover-ios .popover-arrow::after {
@@ -36,14 +36,15 @@
 
   position: absolute;
 
-  z-index: $z-index-overlay-wrapper;
-
   width: 14px;
   height: 14px;
 
-  background-color: $popover-ios-arrow-background-color;
-  content: "";
   transform: rotate(45deg);
+
+  background-color: $popover-ios-arrow-background-color;
+
+  content: "";
+  z-index: $z-index-overlay-wrapper;
 }
 
 .popover-ios.popover-bottom .popover-arrow {
@@ -61,6 +62,5 @@
 .popover-translucent-ios .popover-content,
 .popover-translucent-ios .popover-arrow::after {
   background: $popover-ios-translucent-background-color;
-
   backdrop-filter: $popover-ios-translucent-filter;
 }

@@ -9,21 +9,20 @@
   @include margin(0);
   @include padding(0);
 
-  box-sizing: border-box;
-
-  z-index: $z-index-item-divider;
   display: flex;
-  overflow: hidden;
 
   align-items: center;
   justify-content: space-between;
 
   width: 100%;
-
   min-height: $item-divider-min-height;
 
-  color: #{current-color(contrast)};
   background-color: #{current-color(base)};
+  color: #{current-color(contrast)};
+
+  overflow: hidden;
+  z-index: $z-index-item-divider;
+  box-sizing: border-box;
 }
 
 :host([sticky]) {
@@ -36,21 +35,20 @@
   @include padding(0);
 
   display: flex;
-  overflow: hidden;
 
   flex: 1;
   flex-direction: inherit;
   align-items: inherit;
   align-self: stretch;
-
   min-height: inherit;
 
   border: 0;
+
+  overflow: hidden;
 }
 
 .item-divider-wrapper {
   display: flex;
-  overflow: hidden;
 
   flex: 1;
   flex-direction: inherit;
@@ -58,4 +56,6 @@
   align-self: stretch;
 
   text-overflow: ellipsis;
+
+  overflow: hidden;
 }

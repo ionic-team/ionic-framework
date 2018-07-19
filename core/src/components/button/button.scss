@@ -7,7 +7,6 @@
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
   --ion-color-shade: #{ion-color(primary, shade)};
-
   --ripple-color: currentColor;
 
   display: inline-block;
@@ -74,6 +73,7 @@
   width: 100%;
 
   clear: both;
+
   contain: strict;
 }
 
@@ -95,6 +95,7 @@
   display: block;
 
   width: 100%;
+
   contain: strict;
 }
 
@@ -119,9 +120,7 @@
   transition: var(--transition);
 
   border-width: var(--border-width);
-
   border-style: var(--border-style);
-
   border-color: var(--border-color);
 
   background: var(--background);
@@ -142,16 +141,16 @@
   white-space: inherit;
 
   box-shadow: var(--box-shadow);
+  contain: content;
   cursor: pointer;
   opacity: var(--opacity);
   overflow: hidden;
+  user-select: none;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
   z-index: 0;
   box-sizing: border-box;
-  user-select: none;
   font-kerning: none;
-  contain: content;
   appearance: none;
 }
 

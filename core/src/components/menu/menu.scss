@@ -6,9 +6,8 @@
 :host {
   @include position(0, 0, 0, 0);
 
-  position: absolute;
-
   display: none;
+  position: absolute;
 
   contain: strict;
 }
@@ -22,9 +21,8 @@
   @include position(0, auto, 0, 0);
   @include transform(translate3d(-9999px, 0, 0));
 
-  position: absolute;
-
   display: flex;
+  position: absolute;
 
   flex-direction: column;
   justify-content: space-between;
@@ -52,10 +50,10 @@
 }
 
 ion-backdrop {
-  z-index: -1;
   display: none;
 
   opacity: .01;
+  z-index: -1;
 }
 
 .menu-content {
@@ -64,7 +62,6 @@ ion-backdrop {
 
 .menu-content-open {
   cursor: pointer;
-
   touch-action: manipulation;
 }
 
@@ -126,8 +123,9 @@ ion-backdrop {
   // scss-lint:disable ImportantRule
   width: auto;
 
-  box-shadow: none !important;
   transform: none !important;
+
+  box-shadow: none !important;
 }
 
 :host(.menu-pane-visible) ion-backdrop {

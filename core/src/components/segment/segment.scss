@@ -4,6 +4,11 @@
 // --------------------------------------------------
 
 :host {
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-base-rgb: #{ion-color(primary, base, null, true)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
+  --ion-color-shade: #{ion-color(primary, shade)};
+
   @include font-smoothing();
 
   display: flex;
@@ -13,9 +18,4 @@
   justify-content: center;
 
   width: 100%;
-
-  --ion-color-base: #{ion-color(primary, base)};
-  --ion-color-base-rgb: #{ion-color(primary, base, null, true)};
-  --ion-color-contrast: #{ion-color(primary, contrast)};
-  --ion-color-shade: #{ion-color(primary, shade)};
 }

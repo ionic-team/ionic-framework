@@ -36,7 +36,6 @@
   height: $range-ios-bar-height;
 
   background: $range-ios-bar-background-color;
-
   pointer-events: none;
 }
 
@@ -81,7 +80,6 @@
   background: $range-ios-knob-background-color;
 
   box-shadow: $range-ios-knob-box-shadow;
-
   pointer-events: none;
 }
 
@@ -96,7 +94,6 @@
   height: $range-ios-tick-height;
 
   background: $range-ios-tick-background-color;
-
   pointer-events: none;
 }
 
@@ -109,18 +106,18 @@
   @include transform(translate3d(0, 28px, 0), scale(.01));
   @include padding($range-ios-pin-padding-top, $range-ios-pin-padding-end, $range-ios-pin-padding-bottom, $range-ios-pin-padding-start);
 
+  display: inline-block;
   position: relative;
   top: -20px;
-  display: inline-block;
 
   min-width: 28px;
 
-  font-size: $range-ios-pin-font-size;
-
-  color: $range-ios-pin-color;
-  background: $range-ios-pin-background-color;
-
   transition: transform 120ms ease;
+
+  background: $range-ios-pin-background-color;
+  color: $range-ios-pin-color;
+
+  font-size: $range-ios-pin-font-size;
 
   text-align: center;
 }

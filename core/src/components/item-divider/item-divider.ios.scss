@@ -5,6 +5,9 @@
 // --------------------------------------------------
 
 :host {
+  --ion-color-base: #{$item-ios-divider-background};
+  --ion-color-contrast: #{$item-ios-divider-color};
+
   @include padding-horizontal($item-ios-divider-padding-start, null);
   @include safe-area-padding-horizontal($item-ios-divider-padding-start, null);
   @include border-radius(0);
@@ -13,9 +16,6 @@
 
   font-family: $item-ios-divider-font-family;
   font-size: $item-ios-divider-font-size;
-
-  --ion-color-base: #{$item-ios-divider-background};
-  --ion-color-contrast: #{$item-ios-divider-color};
 }
 
 .item-divider-inner {
@@ -69,18 +69,22 @@
 
   font-size: 14px;
   font-weight: normal;
+
   line-height: normal;
 }
 
 ::slotted(p) {
   @include margin($item-ios-paragraph-margin-top, $item-ios-paragraph-margin-end, $item-ios-paragraph-margin-bottom, $item-ios-paragraph-margin-start);
 
-  overflow: inherit;
+  color: $item-ios-paragraph-text-color;
 
   font-size: $item-ios-paragraph-font-size;
+
   line-height: normal;
+
   text-overflow: inherit;
-  color: $item-ios-paragraph-text-color;
+
+  overflow: inherit;
 }
 
 ::slotted(h2:last-child)

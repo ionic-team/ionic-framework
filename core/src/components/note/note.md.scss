@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  font-family: $note-md-font-family;
-
   --ion-color-base: #{$note-md-color};
+
+  font-family: $note-md-font-family;
 }

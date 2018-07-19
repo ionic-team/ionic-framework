@@ -20,7 +20,6 @@
   display: flex;
 
   justify-content: flex-end;
-
   height: $picker-md-toolbar-height;
 
   background: $picker-md-toolbar-background-color;
@@ -33,17 +32,19 @@
 
   height: $picker-md-button-height;
 
+  background: $picker-md-button-background-color;
+  color: $picker-md-button-text-color;
+
   font-size: $picker-md-button-font-size;
   font-weight: 500;
+
   text-transform: uppercase;
-  color: $picker-md-button-text-color;
-  background: $picker-md-button-background-color;
+
   box-shadow: none;
 }
 
 .picker-md .picker-columns {
   height: $picker-md-height - $picker-md-toolbar-height;
-
   perspective: 1800px;
 }
 
@@ -58,12 +59,13 @@
 .picker-md .picker-opts {
   top: $picker-md-option-offset-y;
 
-  font-size: $picker-md-option-font-size;
-  line-height: $picker-md-option-height;
-  color: $picker-md-option-text-color;
-
   transform-style: preserve-3d;
 
+  color: $picker-md-option-text-color;
+
+  font-size: $picker-md-option-font-size;
+
+  line-height: $picker-md-option-height;
   pointer-events: none;
 }
 
@@ -74,23 +76,21 @@
 
   height: 43px;
 
-  font-size: $picker-md-option-font-size;
-  line-height: $picker-md-option-height;
-  color: $picker-md-option-text-color;
-
-  background: transparent;
-
   transition-timing-function: ease-out;
 
-  backface-visibility: hidden;
+  background: transparent;
+  color: $picker-md-option-text-color;
 
+  font-size: $picker-md-option-font-size;
+
+  line-height: $picker-md-option-height;
+  backface-visibility: hidden;
   pointer-events: auto;
 }
 
 .picker-md .picker-prefix,
 .picker-md .picker-suffix,
 .picker-md .picker-opt.picker-opt-selected {
-
   color: $picker-md-option-selected-color;
 }
 
@@ -99,7 +99,6 @@
   @include transform(translate3d(0, 0, 90px));
 
   position: absolute;
-  z-index: 10;
 
   width: 100%;
   height: $picker-md-option-offset-y + 4px;
@@ -109,6 +108,8 @@
   background: linear-gradient(to bottom,
                             $picker-md-top-background-color 20%,
                             $picker-md-bottom-background-color 100%);
+
+  z-index: 10;
 }
 
 .picker-md .picker-below-highlight {
@@ -116,7 +117,6 @@
   @include transform(translate3d(0, 0, 90px));
 
   position: absolute;
-  z-index: 11;
 
   width: 100%;
   height: $picker-md-option-offset-y + $picker-md-option-height;
@@ -126,4 +126,6 @@
   background: linear-gradient(to top,
                            $picker-md-top-background-color 30%,
                            $picker-md-bottom-background-color 100%);
+
+  z-index: 11;
 }

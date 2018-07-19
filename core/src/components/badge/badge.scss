@@ -14,19 +14,20 @@
 
   min-width: $badge-min-width;
 
+  background-color: #{current-color(base)};
+  color: #{current-color(contrast)};
+
   font-size: $badge-font-size;
   font-weight: $badge-font-weight;
 
   line-height: 1;
 
-  white-space: nowrap;
-  color: #{current-color(contrast)};
-  background-color: #{current-color(base)};
-  vertical-align: baseline;
-
   text-align: center;
 
+  white-space: nowrap;
+
   contain: content;
+  vertical-align: baseline;
 }
 
 :host(:empty) {

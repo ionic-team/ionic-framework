@@ -6,14 +6,13 @@
 :host {
   @include font-smoothing();
 
-  box-sizing: border-box;
-
-  position: relative;
   display: flex;
+  position: relative;
 
   align-items: center;
 
   width: 100%;
+  box-sizing: border-box;
 }
 
 .searchbar-icon {
@@ -22,8 +21,8 @@
 }
 
 .searchbar-input-container {
-  position: relative;
   display: block;
+  position: relative;
 
   flex-shrink: 1;
 
@@ -38,9 +37,10 @@
   width: 100%;
 
   border: 0;
-  outline: none;
-  font-family: inherit;
 
+  outline: none;
+
+  font-family: inherit;
   appearance: none;
 
   &::-webkit-search-cancel-button {
@@ -53,11 +53,9 @@
   @include padding(0);
 
   display: none;
-
   min-height: 0;
 
   outline: none;
-
   appearance: none;
 }
 
