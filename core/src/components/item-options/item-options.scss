@@ -4,18 +4,9 @@
 // --------------------------------------------------
 
 ion-item-options {
-  position: absolute;
-  z-index: $z-index-item-options;
-  display: none;
-
-  height: 100%;
-
-  font-size: 14px;
-
   @include multi-dir() {
     // scss-lint:disable PropertySpelling
     top: 0;
-
     right: 0;
   }
 
@@ -34,6 +25,14 @@ ion-item-options {
       justify-content: flex-end;
     }
   }
+
+  display: none;
+  position: absolute;
+  height: 100%;
+
+  font-size: 14px;
+
+  z-index: $z-index-item-options;
 
   &.hydrated {
     visibility: hidden;
