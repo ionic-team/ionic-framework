@@ -23,6 +23,13 @@ rules:
   block-opening-brace-newline-after:
     - always
 
+  declaration-empty-line-before:
+    - always
+    - except:
+      - after-comment
+      - after-declaration
+      - first-nested
+
   declaration-no-important:
     - true
 
@@ -33,4 +40,233 @@ rules:
     - declarations
     - rules
 
-  string-quotes: double
+  # https://github.com/sasstools/sass-lint/blob/develop/lib/config/property-sort-orders/smacss.yml
+  order/properties-order:
+
+    # Box
+
+    - emptyLineBefore: always
+      properties:
+      - display
+      - position
+      - top
+      - right
+      - bottom
+      - left
+
+    - emptyLineBefore: always
+      properties:
+      - flex
+      - flex-basis
+      - flex-direction
+      - flex-flow
+      - flex-grow
+      - flex-shrink
+      - flex-wrap
+      - align-content
+      - align-items
+      - align-self
+      - justify-content
+      - order
+
+    - emptyLineBefore: always
+      properties:
+      - width
+      - min-width
+      - max-width
+
+    - emptyLineBefore: never
+      properties:
+      - height
+      - min-height
+      - max-height
+
+    - emptyLineBefore: always
+      properties:
+      - margin
+      - margin-top
+      - margin-right
+      - margin-bottom
+      - margin-left
+
+    - emptyLineBefore: always
+      properties:
+      - padding
+      - padding-top
+      - padding-right
+      - padding-bottom
+      - padding-left
+
+    - emptyLineBefore: always
+      properties:
+      - float
+      - clear
+
+    - emptyLineBefore: always
+      properties:
+      - columns
+      - column-gap
+      - column-fill
+      - column-rule
+      - column-span
+      - column-count
+      - column-width
+
+    - emptyLineBefore: always
+      properties:
+      - transform
+      - transform-box
+      - transform-origin
+      - transform-style
+
+    - emptyLineBefore: always
+      properties:
+      - transition
+      - transition-delay
+      - transition-duration
+      - transition-property
+      - transition-timing-function
+
+    # Border
+
+    - emptyLineBefore: always
+      properties:
+      - border
+      - border-top
+      - border-right
+      - border-bottom
+      - border-left
+      - border-width
+      - border-top-width
+      - border-right-width
+      - border-bottom-width
+      - border-left-width
+
+    - emptyLineBefore: always
+      properties:
+      - border-style
+      - border-top-style
+      - border-right-style
+      - border-bottom-style
+      - border-left-style
+
+    - emptyLineBefore: always
+      properties:
+      - border-radius
+      - border-top-left-radius
+      - border-top-right-radius
+      - border-bottom-left-radius
+      - border-bottom-right-radius
+
+    - emptyLineBefore: always
+      properties:
+      - border-color
+      - border-top-color
+      - border-right-color
+      - border-bottom-color
+      - border-left-color
+
+    - emptyLineBefore: always
+      properties:
+      - outline
+      - outline-color
+      - outline-offset
+      - outline-style
+      - outline-width
+
+    # Background
+
+    - emptyLineBefore: always
+      properties:
+      - background
+      - background-attachment
+      - background-clip
+      - background-color
+      - background-image
+      - background-repeat
+      - background-position
+      - background-size
+
+    # Text
+
+    - emptyLineBefore: never
+      properties:
+      - color
+
+    - emptyLineBefore: always
+      properties:
+      - font
+      - font-family
+      - font-size
+      - font-smoothing
+      - font-style
+      - font-variant
+      - font-weight
+
+    - emptyLineBefore: always
+      properties:
+      - letter-spacing
+      - line-height
+      - list-style
+
+    - emptyLineBefore: always
+      properties:
+      - text-align
+      - text-decoration
+      - text-indent
+      - text-overflow
+      - text-rendering
+      - text-shadow
+      - text-transform
+      - text-wrap
+
+    - emptyLineBefore: always
+      properties:
+      - white-space
+      - word-spacing
+
+    # Other
+
+    - emptyLineBefore: always
+      properties:
+      - border-collapse
+      - border-spacing
+      - box-shadow
+      - caption-side
+      - content
+      - cursor
+      - empty-cells
+      - opacity
+      - overflow
+      - quotes
+      - speak
+      - table-layout
+      - vertical-align
+      - visibility
+      - z-index
+
+  property-blacklist:
+    - background-position
+    - direction
+    - right
+    - left
+    - float
+    - padding
+    - padding-left
+    - padding-right
+    - padding-top
+    - padding-bottom
+    - margin
+    - margin-left
+    - margin-right
+    - margin-top
+    - margin-bottom
+    - border-radius
+    - border-top-left-radius
+    - border-top-right-radius
+    - border-bottom-right-radius
+    - border-bottom-left-radius
+    - transform-origin
+
+  string-quotes:
+    - double
