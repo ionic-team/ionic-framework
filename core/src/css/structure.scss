@@ -50,6 +50,6 @@ body {
 }
 
 [hidden] {
-  // scss-lint:disable ImportantRule
+  // styelint:disable-next-line declaration-no-important
   display: none !important;
 }

@@ -20,7 +20,7 @@
 .split-pane-visible > .split-pane-main {
   @include position(0, 0, 0, 0);
 
-  // scss-lint:disable ImportantRule
+  // styelint:disable-next-line declaration-no-important
   position: relative;
 
   z-index: 0;

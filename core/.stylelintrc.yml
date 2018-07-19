@@ -1,0 +1,36 @@
+# Default styelint configuration.
+
+# See documentation at https://stylelint.io/
+
+ignoreFiles:
+  - src/css/colors.scss
+  - src/css/flex-utils.scss
+  - src/css/normalize.scss
+  - src/css/text-alignment.scss
+  - src/components/slides/slides-vendor.scss
+  - src/themes/ionic.mixins.scss
+
+plugins:
+  - stylelint-order
+
+rules:
+  block-closing-brace-newline-before:
+    - always
+
+  block-no-empty:
+    - true
+
+  block-opening-brace-newline-after:
+    - always
+
+  declaration-no-important:
+    - true
+
+  order/order:
+    - custom-properties
+    - dollar-variables
+    - at-rules
+    - declarations
+    - rules
+
+  string-quotes: double
