@@ -59,7 +59,7 @@
     "e2e": "node ./scripts/e2e",
     "e2e-debug": "node --inspect --debug-brk ./scripts/e2e",
     "lint": "npm run lint.ts && npm run lint.sass",
-    "lint.sass": "stylelint 'src/components/**/*.scss'",
+    "lint.sass": "stylelint 'src/**/*.scss'",
     "lint.fix": "npm run lint.sass -- --fix",
     "lint.ts": "tslint --project .",
     "lint.ts.fix": "tslint --project . --fix",

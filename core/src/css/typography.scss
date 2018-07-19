@@ -32,20 +32,20 @@ $h6-font-size:                 calc(#{$h1-font-size} - #{$h-step} * 5) !default;
 
 
 :root[mode=ios] {
-  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif;
-
   --ion-font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif;
 }
 
 :root[mode=md] {
-  font-family: "Roboto", "Helvetica Neue", sans-serif;
-
   --ion-font-family: "Roboto", "Helvetica Neue", sans-serif;
+
+  font-family: "Roboto", "Helvetica Neue", sans-serif;
 }
 
 a {
-  color: ion-color(primary, base);
   background-color: transparent;
+  color: ion-color(primary, base);
 }
 
 h1,
@@ -57,6 +57,7 @@ h6 {
   @include margin(16px, null, 10px, null);
 
   font-weight: $headings-font-weight;
+
   line-height: $headings-line-height;
 }
 
@@ -97,7 +98,9 @@ sup {
   position: relative;
 
   font-size: 75%;
+
   line-height: 0;
+
   vertical-align: baseline;
 }
 

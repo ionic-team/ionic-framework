@@ -14,59 +14,59 @@ $margin: var(--ion-margin, 16px);
 // --------------------------------------------------
 
 [no-padding] {
-  @include padding(0);
-
   --padding-start: 0;
   --padding-end: 0;
   --padding-top: 0;
   --padding-bottom: 0;
+
+  @include padding(0);
 }
 
 [padding] {
-  @include padding($padding);
-
   --padding-start: #{$padding};
   --padding-end: #{$padding};
   --padding-top: #{$padding};
   --padding-bottom: #{$padding};
+
+  @include padding($padding);
 }
 
 [padding-top] {
-  @include padding($padding, null, null, null);
-
   --padding-top: #{$padding};
+
+  @include padding($padding, null, null, null);
 }
 
 [padding-start] {
-  @include padding-horizontal($padding, null);
-
   --padding-start: #{$padding};
+
+  @include padding-horizontal($padding, null);
 }
 
 [padding-end] {
-  @include padding-horizontal(null, $padding);
-
   --padding-end: #{$padding};
+
+  @include padding-horizontal(null, $padding);
 }
 
 [padding-bottom] {
-  @include padding(null, null, $padding, null);
-
   --padding-bottom: #{$padding};
+
+  @include padding(null, null, $padding, null);
 }
 
 [padding-vertical] {
-  @include padding($padding, null, $padding, null);
-
   --padding-top: #{$padding};
   --padding-bottom: #{$padding};
+
+  @include padding($padding, null, $padding, null);
 }
 
 [padding-horizontal] {
-  @include padding-horizontal($padding);
-
   --padding-start: #{$padding};
   --padding-end: #{$padding};
+
+  @include padding-horizontal($padding);
 }
 
 
