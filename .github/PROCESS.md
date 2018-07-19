@@ -10,22 +10,22 @@ The project boards are located under the `Projects` tab in GitHub: https://githu
 
 The `Core` project board contains issues related to the `@ionic/core` package. A description of each column is below.
 
-#### Backlog
+#### Backlog :robot:
 
 Contains up to 20 issues that are important to work on soon but we don't think we can fit in the current sprint. If we finish everything we planned for the week we can pull from this column. Issues will automatically move to this column when they are added to the project board.
 
-#### On Deck
+#### On Deck :baseball:
 
 Contains issues that we believe we can accomplish in the current sprint. Issues should be manually moved to this column when we have our sprint planning meeting.
 
-#### In Progress
+#### In Progress :person_fencing:
 
 Issues and pull requests that are currently being worked on. Issues should be manually moved to this column and assigned to yourself when you begin working on them. Pull requests are automatically added to this column when added to the project board.
 
-#### Needs Review
+#### Needs Review :thinking:
 
 Issues and pull requests that need review. Pull requests will automatically move here when a reviewer requests changes, or it no longer meets the minimum number of required approving reviews.
 
-#### Done
+#### Done :tada:
 
 Issues and pull requests that are completed. Issues will automatically move here when they are closed. Pull requests will automatically moved here when they are merged or closed with unmerged commits.
