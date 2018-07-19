@@ -5,13 +5,6 @@
 // --------------------------------------------------
 
 :host {
-  font-family: #{$button-md-font-family};
-  font-size: #{$button-md-font-size};
-  font-weight: #{$button-md-font-weight};
-
-  letter-spacing: #{$button-md-letter-spacing};
-  text-transform: #{$button-md-text-transform};
-
   --transition: #{box-shadow $button-md-transition-duration $button-md-transition-timing-function,
               background-color $button-md-transition-duration $button-md-transition-timing-function,
               color $button-md-transition-duration $button-md-transition-timing-function};
@@ -29,6 +22,14 @@
   --padding-end: #{$button-md-padding-end};
 
   --height: #{$button-md-height};
+
+  font-family: #{$button-md-font-family};
+  font-size: #{$button-md-font-size};
+  font-weight: #{$button-md-font-weight};
+
+  letter-spacing: #{$button-md-letter-spacing};
+
+  text-transform: #{$button-md-text-transform};
 }
 
 // Material Design Solid Button
@@ -86,25 +87,25 @@
 // --------------------------------------------------
 
 :host(.button-large) {
-  font-size: #{$button-md-large-font-size};
-
   --padding-top: #{$button-md-large-padding-top};
   --padding-start: #{$button-md-large-padding-start};
   --padding-end: #{$button-md-large-padding-end};
   --padding-bottom: #{$button-md-large-padding-bottom};
 
   --height: #{$button-md-large-height};
+
+  font-size: #{$button-md-large-font-size};
 }
 
 :host(.button-small) {
-  font-size: #{$button-md-small-font-size};
-
   --padding-top: #{$button-md-small-padding-top};
   --padding-start: #{$button-md-small-padding-start};
   --padding-end: #{$button-md-small-padding-end};
   --padding-bottom: #{$button-md-small-padding-bottom};
 
   --height: #{$button-md-small-height};
+
+  font-size: #{$button-md-small-font-size};
 }
 
 

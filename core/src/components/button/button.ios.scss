@@ -6,11 +6,6 @@
 // --------------------------------------------------
 
 :host {
-  font-family: #{$button-ios-font-family};
-  font-size: #{$button-ios-font-size};
-  font-weight: #{$button-ios-font-weight};
-  letter-spacing: #{$button-ios-letter-spacing};
-
   --border-radius: #{$button-ios-border-radius};
 
   --margin-top: #{$button-ios-margin-top};
@@ -26,6 +21,12 @@
   --height: #{$button-ios-height};
 
   --transition: background-color, opacity 100ms linear;
+
+  font-family: #{$button-ios-font-family};
+  font-size: #{$button-ios-font-size};
+  font-weight: #{$button-ios-font-weight};
+
+  letter-spacing: #{$button-ios-letter-spacing};
 }
 
 // iOS Solid Button
@@ -54,9 +55,9 @@
 }
 
 :host(.button-outline.activated) {
-  color: #{current-color(contrast)};
-
   --background: #{current-color(base)};
+
+  color: #{current-color(contrast)};
 }
 
 :host(.button-outline.focused) {
@@ -101,8 +102,6 @@
 // --------------------------------------------------
 
 :host(.button-large) {
-  font-size: #{$button-ios-large-font-size};
-
   --border-radius: #{$button-ios-large-border-radius};
 
   --padding-top: #{$button-ios-large-padding-top};
@@ -111,11 +110,11 @@
   --padding-bottom: #{$button-ios-large-padding-bottom};
 
   --height: #{$button-ios-large-height};
+
+  font-size: #{$button-ios-large-font-size};
 }
 
 :host(.button-small) {
-  font-size: #{$button-ios-small-font-size};
-
   --border-radius: #{$button-ios-small-border-radius};
 
   --padding-top: #{$button-ios-small-padding-top};
@@ -124,6 +123,8 @@
   --padding-bottom: #{$button-ios-small-padding-bottom};
 
   --height: #{$button-ios-small-height};
+
+  font-size: #{$button-ios-small-font-size};
 }
 
 
