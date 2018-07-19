@@ -5,6 +5,9 @@
 // --------------------------------------------------
 
 :host {
+  --ion-color-base: var(--ion-item-background, transparent);
+  --ion-color-contrast: #{$card-md-text-color};
+
   @include margin($card-md-margin-top, $card-md-margin-end, $card-md-margin-bottom, $card-md-margin-start);
   @include border-radius($card-md-border-radius);
 
@@ -12,10 +15,8 @@
 
   font-family: $card-md-font-family;
   font-size: $card-md-font-size;
-  box-shadow: $card-md-box-shadow;
 
-  --ion-color-base: var(--ion-item-background, transparent);
-  --ion-color-contrast: #{$card-md-text-color};
+  box-shadow: $card-md-box-shadow;
 }
 
 ::slotted(*) ion-list {

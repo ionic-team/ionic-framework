@@ -4,16 +4,17 @@
 // --------------------------------------------------
 
 :host {
+  --ion-card-text: currentColor;
+
   @include font-smoothing();
 
-  position: relative;
   display: block;
-  overflow: hidden;
+  position: relative;
 
-  color: #{current-color(contrast)};
   background: #{current-color(base)};
+  color: #{current-color(contrast)};
 
-  --ion-card-text: currentColor;
+  overflow: hidden;
 }
 
 :host(.ion-color)::slotted(*) ion-card-title,
