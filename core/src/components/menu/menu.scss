@@ -35,7 +35,7 @@
 
 :host(.menu-side-start) .menu-inner {
   @include multi-dir() {
-    // scss-lint:disable PropertySpelling
+    /* stylelint-disable property-blacklist */
     right: auto;
     left: 0;
   }
@@ -43,9 +43,9 @@
 
 :host(.menu-side-end) .menu-inner {
   @include multi-dir() {
-    // scss-lint:disable PropertySpelling
     right: 0;
     left: auto;
+    /* stylelint-enable property-blacklist */
   }
 }
 
@@ -120,15 +120,15 @@ ion-backdrop {
 :host(.menu-pane-visible) .menu-inner {
   @include position-horizontal(0, 0);
 
-  // scss-lint:disable ImportantRule
   width: auto;
 
+  /* stylelint-disable declaration-no-important */
   transform: none !important;
 
   box-shadow: none !important;
 }
 
 :host(.menu-pane-visible) ion-backdrop {
-  // scss-lint:disable ImportantRule
   display: hidden !important;
+  /* stylelint-enable declaration-no-important */
 }

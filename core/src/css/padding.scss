@@ -86,7 +86,7 @@ $margin: var(--ion-margin, 16px);
 }
 
 [margin-left] {
-  // scss-lint:disable PropertySpelling
+  /* stylelint-disable-next-line property-blacklist */
   margin-left: $margin;
 }
 
@@ -95,7 +95,7 @@ $margin: var(--ion-margin, 16px);
 }
 
 [margin-right] {
-  // scss-lint:disable PropertySpelling
+  /* stylelint-disable-next-line property-blacklist */
   margin-right: $margin;
 }
 

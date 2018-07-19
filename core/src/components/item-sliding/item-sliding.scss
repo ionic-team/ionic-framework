@@ -28,7 +28,7 @@ ion-item-sliding {
 
 .item-sliding-active-swipe-end .item-options-end .item-option-expandable {
   @include multi-dir() {
-    // scss-lint:disable PropertySpelling
+    /* stylelint-disable-next-line property-blacklist */
     padding-left: 90%;
   }
 
@@ -46,7 +46,7 @@ ion-item-sliding {
 
 .item-sliding-active-swipe-start .item-options-start .item-option-expandable {
   @include multi-dir() {
-    // scss-lint:disable PropertySpelling
+    /* stylelint-disable-next-line property-blacklist */
     padding-right: 90%;
   }
 

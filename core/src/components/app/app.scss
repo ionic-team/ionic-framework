@@ -31,6 +31,9 @@ ion-app,
 }
 
 [hidden] {
+  // TODO can we remove important here or remove this entirely
+  // since it is also in structure.scss
+  /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
 }
 

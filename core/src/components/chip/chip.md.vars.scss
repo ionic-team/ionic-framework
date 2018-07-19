@@ -31,7 +31,7 @@ $chip-md-font-size:                        13px !default;
 $chip-md-text-color:                       $text-color-step-150 !default;
 
 /// @prop - Background color alpha of the chip
-$chip-md-background-color-alpha:           .1 !default
+$chip-md-background-color-alpha:           .1 !default;
 
 /// @prop - Background color of the chip
 $chip-md-background-color:                 rgba(var(--ion-text-color-rgb, $text-color-rgb), $chip-md-background-color-alpha) !default;

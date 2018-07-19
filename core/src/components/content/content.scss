@@ -20,9 +20,11 @@
   width: 100%;
   height: 100%;
 
-  margin: 0 !important; // scss-lint:disable all
+  /* stylelint-disable */
+  margin: 0 !important;
 
-  padding: 0 !important; // scss-lint:disable all
+  padding: 0 !important;
+  /* stylelint-enable */
 
   background-color: #{current-color(base)};
   color: #{current-color(contrast)};
