@@ -40,13 +40,6 @@ rules:
       - after-custom-property
       - first-nested
 
-  declaration-empty-line-before:
-    - always
-    - except:
-      - after-comment
-      - after-declaration
-      - first-nested
-
   declaration-no-important:
     - true
 
@@ -92,8 +85,6 @@ rules:
       - min-width
       - max-width
 
-    - emptyLineBefore: never
-      properties:
       - height
       - min-height
       - max-height
