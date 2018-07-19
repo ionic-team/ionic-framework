@@ -14,6 +14,12 @@ plugins:
   - stylelint-order
 
 rules:
+  at-rule-empty-line-before:
+    - always
+    - except:
+      - blockless-after-blockless
+      - first-nested
+
   block-closing-brace-newline-before:
     - always
 
@@ -22,6 +28,13 @@ rules:
 
   block-opening-brace-newline-after:
     - always
+
+  custom-property-empty-line-before:
+    - always
+    - except:
+      - after-comment
+      - after-custom-property
+      - first-nested
 
   declaration-empty-line-before:
     - always
