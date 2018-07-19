@@ -10,6 +10,8 @@ ignoreFiles:
   - src/components/slides/slides-vendor.scss
   - src/themes/ionic.mixins.scss
 
+indentation: 2
+
 plugins:
   - stylelint-order
 
@@ -19,6 +21,8 @@ rules:
     - except:
       - blockless-after-blockless
       - first-nested
+      ignore:
+      - after-comment
 
   block-closing-brace-newline-before:
     - always
@@ -155,24 +159,18 @@ rules:
       - border-bottom-width
       - border-left-width
 
-    - emptyLineBefore: always
-      properties:
       - border-style
       - border-top-style
       - border-right-style
       - border-bottom-style
       - border-left-style
 
-    - emptyLineBefore: always
-      properties:
       - border-radius
       - border-top-left-radius
       - border-top-right-radius
       - border-bottom-left-radius
       - border-bottom-right-radius
 
-    - emptyLineBefore: always
-      properties:
       - border-color
       - border-top-color
       - border-right-color
@@ -202,8 +200,6 @@ rules:
 
     # Text
 
-    - emptyLineBefore: never
-      properties:
       - color
 
     - emptyLineBefore: always
@@ -246,14 +242,18 @@ rules:
       - border-spacing
       - box-shadow
       - caption-side
+      - contain
       - content
       - cursor
       - empty-cells
+      - object-fit
       - opacity
       - overflow
       - quotes
       - speak
       - table-layout
+      - touch-action
+      - user-select
       - vertical-align
       - visibility
       - z-index
