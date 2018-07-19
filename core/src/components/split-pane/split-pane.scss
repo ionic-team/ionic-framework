@@ -19,11 +19,11 @@
 .split-pane-visible > .split-pane-main {
   @include position(0, 0, 0, 0);
 
-  // styelint:disable-next-line declaration-no-important
   position: relative;
 
   flex: 1;
 
+  /* stylelint-disable-next-line declaration-no-important */
   box-shadow: none !important;
   z-index: 0;
 }
