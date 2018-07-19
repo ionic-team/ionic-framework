@@ -6,9 +6,8 @@
 :host {
   @include position(0, 0, 0, 0);
 
-  position: absolute;
-
   display: none;
+  position: absolute;
 
   contain: strict;
 }
@@ -22,9 +21,8 @@
   @include position(0, auto, 0, 0);
   @include transform(translate3d(-9999px, 0, 0));
 
-  position: absolute;
-
   display: flex;
+  position: absolute;
 
   flex-direction: column;
   justify-content: space-between;
@@ -37,7 +35,7 @@
 
 :host(.menu-side-start) .menu-inner {
   @include multi-dir() {
-    // scss-lint:disable PropertySpelling
+    /* stylelint-disable property-blacklist */
     right: auto;
     left: 0;
   }
@@ -45,17 +43,17 @@
 
 :host(.menu-side-end) .menu-inner {
   @include multi-dir() {
-    // scss-lint:disable PropertySpelling
     right: 0;
     left: auto;
+    /* stylelint-enable property-blacklist */
   }
 }
 
 ion-backdrop {
-  z-index: -1;
   display: none;
 
   opacity: .01;
+  z-index: -1;
 }
 
 .menu-content {
@@ -64,7 +62,6 @@ ion-backdrop {
 
 .menu-content-open {
   cursor: pointer;
-
   touch-action: manipulation;
 }
 
@@ -123,14 +120,15 @@ ion-backdrop {
 :host(.menu-pane-visible) .menu-inner {
   @include position-horizontal(0, 0);
 
-  // scss-lint:disable ImportantRule
   width: auto;
 
-  box-shadow: none !important;
+  /* stylelint-disable declaration-no-important */
   transform: none !important;
+
+  box-shadow: none !important;
 }
 
 :host(.menu-pane-visible) ion-backdrop {
-  // scss-lint:disable ImportantRule
   display: hidden !important;
+  /* stylelint-enable declaration-no-important */
 }

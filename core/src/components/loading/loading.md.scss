@@ -11,14 +11,13 @@
 
 .loading-md .loading-wrapper {
   @include border-radius($loading-md-border-radius);
-
   @include padding($loading-md-padding-top, $loading-md-padding-end, $loading-md-padding-bottom, $loading-md-padding-start);
 
   max-width: $loading-md-max-width;
   max-height: $loading-md-max-height;
 
-  color: $loading-md-text-color;
   background: $loading-md-background;
+  color: $loading-md-text-color;
 
   box-shadow: $loading-md-box-shadow;
 }

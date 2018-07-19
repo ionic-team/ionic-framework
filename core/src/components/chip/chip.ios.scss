@@ -5,17 +5,16 @@
 // --------------------------------------------------
 
 :host {
-  @include border-radius($chip-ios-border-radius);
+  --ion-color-base: #{$chip-ios-background-color};
+  --ion-color-contrast: #{$chip-ios-text-color};
 
+  @include border-radius($chip-ios-border-radius);
   @include margin($chip-ios-margin-top, $chip-ios-margin-end, $chip-ios-margin-bottom, $chip-ios-margin-start);
 
   height: $chip-ios-height;
 
   font-family: $chip-ios-font-family;
   font-size: $chip-ios-font-size;
-
-  --ion-color-base: #{$chip-ios-background-color};
-  --ion-color-contrast: #{$chip-ios-text-color};
 }
 
 ::slotted(*) ion-label {
@@ -23,9 +22,8 @@
 }
 
 ::slotted(ion-icon) {
-  color: $chip-ios-icon-fill-color;
-
   background-color: $chip-ios-icon-background-color;
+  color: $chip-ios-icon-fill-color;
 }
 
 ::slotted(*) ion-avatar {

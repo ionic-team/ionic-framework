@@ -12,7 +12,6 @@
 :host(.activated) {
   --background: #{current-color(tint)};
   --box-shadow: #{$fab-ios-box-shadow-activated};
-
   --transform: #{$fab-ios-transform};
   --transition: #{$fab-ios-transition-activated};
 }
@@ -42,7 +41,6 @@
 
 :host(.fab-translucent) {
   --background: #{$fab-ios-translucent-background-color};
-
   --backdrop-filter: #{$fab-ios-translucent-filter};
 }
 

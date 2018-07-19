@@ -9,7 +9,6 @@
 
 .reorder-list-active ion-gesture > * {
   transition: transform 300ms;
-
   will-change: transform;
 }
 
@@ -17,7 +16,6 @@
   display: block;
 
   cursor: grab;
-
   pointer-events: all;
   touch-action: none;
 }
@@ -29,13 +27,13 @@
 
 .reorder-selected {
   position: relative;
-  z-index: $z-index-reorder-selected;
+
+  /* stylelint-disable-next-line declaration-no-important */
+  transition: none !important;
 
   box-shadow: 0 0 10px rgba(0, 0, 0, .4);
   opacity: .8;
-
-  // scss-lint:disable ImportantRule
-  transition: none !important;
+  z-index: $z-index-reorder-selected;
 }
 
 .reorder-visible ion-reorder .reorder-icon {

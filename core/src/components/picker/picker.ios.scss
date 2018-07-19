@@ -49,14 +49,14 @@
 
   height: $picker-ios-button-height;
 
-  font-size: $picker-ios-button-font-size;
-  color: $picker-ios-button-text-color;
   background: $picker-ios-button-background-color;
+  color: $picker-ios-button-text-color;
+
+  font-size: $picker-ios-button-font-size;
 }
 
 .picker-columns {
   height: $picker-ios-height - $picker-ios-toolbar-height - 1;
-
   perspective: $picker-ios-column-perspective;
 }
 
@@ -71,12 +71,13 @@
 .picker-ios .picker-opts {
   top: $picker-ios-option-offset-y;
 
-  font-size: $picker-ios-option-font-size;
-  line-height: $picker-ios-option-height;
-  color: $picker-ios-option-text-color;
-
   transform-style: preserve-3d;
 
+  color: $picker-ios-option-text-color;
+
+  font-size: $picker-ios-option-font-size;
+
+  line-height: $picker-ios-option-height;
   pointer-events: none;
 }
 
@@ -87,16 +88,17 @@
 
   height: 46px;
 
-  font-size: $picker-ios-option-font-size;
-  line-height: $picker-ios-option-height;
-  color: $picker-ios-option-text-color;
-
-  background: transparent;
   transform-style: preserve-3d;
+
   transition-timing-function: ease-out;
 
-  backface-visibility: hidden;
+  background: transparent;
+  color: $picker-ios-option-text-color;
 
+  font-size: $picker-ios-option-font-size;
+
+  line-height: $picker-ios-option-height;
+  backface-visibility: hidden;
   pointer-events: auto;
 }
 
@@ -104,9 +106,8 @@
   @include position(0, null, null, 0);
   @include transform(translate3d(0, 0, 90px));
 
-  position: absolute;
-  z-index: 10;
   display: block;
+  position: absolute;
 
   width: 100%;
   height: $picker-ios-option-offset-y + 4px;
@@ -116,16 +117,16 @@
   background: linear-gradient(to bottom,
                             $picker-ios-top-background-color 20%,
                             $picker-ios-bottom-background-color 100%);
+
+  z-index: 10;
 }
 
 .picker-ios .picker-below-highlight {
   @include position($picker-ios-option-offset-y + $picker-ios-option-height - 4, null, null, 0);
   @include transform(translate3d(0, 0, 90px));
 
-  position: absolute;
-
-  z-index: 11;
   display: block;
+  position: absolute;
 
   width: 100%;
   height: $picker-ios-option-offset-y + $picker-ios-option-height;
@@ -135,4 +136,6 @@
   background: linear-gradient(to top,
                            $picker-ios-top-background-color 30%,
                            $picker-ios-bottom-background-color 100%);
+
+  z-index: 11;
 }

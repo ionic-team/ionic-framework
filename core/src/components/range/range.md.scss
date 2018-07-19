@@ -36,7 +36,6 @@
   height: $range-md-bar-height;
 
   background: $range-md-bar-background-color;
-
   pointer-events: none;
 }
 
@@ -75,18 +74,18 @@
 
   position: absolute;
 
-  z-index: 2;
-
   width: $range-md-knob-width;
   height: $range-md-knob-height;
 
-  background: $range-md-knob-background-color;
-
   transform: scale(.67);
+
   transition-duration: 120ms;
   transition-property: transform, background-color, border;
   transition-timing-function: ease;
 
+  background: $range-md-knob-background-color;
+
+  z-index: 2;
   pointer-events: none;
 }
 
@@ -95,16 +94,14 @@
   @include border-radius($range-md-tick-border-radius);
 
   position: absolute;
-
   top: ($range-md-hit-height / 2) - ($range-md-tick-height / 2) + ($range-md-bar-height / 2);
-
-  z-index: 1;
 
   width: $range-md-tick-width;
   height: $range-md-tick-height;
 
   background: $range-md-tick-background-color;
 
+  z-index: 1;
   pointer-events: none;
 }
 
@@ -117,20 +114,19 @@
   @include border-radius(50%);
   @include transform(translate3d(0, 28px, 0), scale(.01));
 
+  display: inline-block;
   position: relative;
   top: -20px;
-  display: inline-block;
 
   min-width: 28px;
   height: 28px;
 
-  font-size: $range-md-pin-font-size;
-
-  color: $range-md-pin-color;
+  transition: transform 120ms ease, background-color 120ms ease;
 
   background: $range-md-pin-background-color;
+  color: $range-md-pin-color;
 
-  transition: transform 120ms ease, background-color 120ms ease;
+  font-size: $range-md-pin-font-size;
 
   text-align: center;
 
@@ -141,16 +137,17 @@
 
     position: absolute;
 
-    z-index: -1;
-
     width: 26px;
     height: 26px;
+
+    transform: rotate(-45deg);
+
+    transition: background-color 120ms ease;
 
     background: $range-md-pin-background-color;
 
     content: "";
-    transform: rotate(-45deg);
-    transition: background-color 120ms ease;
+    z-index: -1;
   }
 }
 
@@ -166,13 +163,14 @@
   .range-knob-min.range-knob-min {
     .range-knob {
       border: $range-md-knob-min-border;
+
       background: $range-md-knob-min-background-color;
     }
 
     .range-pin,
     .range-pin::before {
-      color: ion-color(primary, contrast);
       background: $range-md-pin-min-background-color;
+      color: ion-color(primary, contrast);
     }
   }
 }
@@ -184,7 +182,9 @@
 }
 
 :host(.range-disabled) .range-knob {
-  outline: 5px solid #fff;
-  background-color: $range-md-bar-background-color;
   transform: scale(.55);
+
+  outline: 5px solid #fff;
+
+  background-color: $range-md-bar-background-color;
 }

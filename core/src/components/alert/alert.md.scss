@@ -29,14 +29,16 @@
 }
 
 .alert-title {
+  color: $alert-md-title-color;
+
   font-size: $alert-md-title-font-size;
   font-weight: $alert-md-title-font-weight;
-  color: $alert-md-title-color;
 }
 
 .alert-sub-title {
-  font-size: $alert-md-sub-title-font-size;
   color: $alert-md-sub-title-text-color;
+
+  font-size: $alert-md-sub-title-font-size;
 }
 
 
@@ -69,6 +71,7 @@
   @include margin($alert-md-input-margin-top, $alert-md-input-margin-end, $alert-md-input-margin-bottom, $alert-md-input-margin-start);
 
   border-bottom: $alert-md-input-border-width $alert-md-input-border-style $alert-md-input-border-color;
+
   color: $alert-md-input-text-color;
 }
 
@@ -85,23 +88,23 @@
 .alert-radio-group,
 .alert-checkbox-group {
   position: relative;
-  overflow: auto;
 
   max-height: $alert-md-content-max-height;
 
   border-top: $alert-md-list-border-top;
   border-bottom: $alert-md-list-border-bottom;
+
+  overflow: auto;
 }
 
 .alert-tappable {
-  position: relative;
   display: flex;
-
-  overflow: hidden;
+  position: relative;
 
   height: $alert-md-tappable-height;
 
   contain: strict;
+  overflow: hidden;
 }
 
 
@@ -111,15 +114,17 @@
 .alert-radio-label {
   @include padding($alert-md-radio-label-padding-top, $alert-md-radio-label-padding-end, $alert-md-radio-label-padding-bottom, $alert-md-radio-label-padding-start);
 
-  overflow: hidden;
-
   flex: 1;
 
+  color: $alert-md-radio-label-text-color;
+
   font-size: $alert-md-radio-label-font-size;
+
   text-overflow: ellipsis;
+
   white-space: nowrap;
 
-  color: $alert-md-radio-label-text-color;
+  overflow: hidden;
 }
 
 // Material Design Alert Radio Unchecked Circle
@@ -129,8 +134,8 @@
   @include position($alert-md-radio-top, null, null, $alert-md-radio-left);
   @include border-radius($alert-md-radio-border-radius);
 
-  position: relative;
   display: block;
+  position: relative;
 
   width: $alert-md-radio-width;
   height: $alert-md-radio-height;
@@ -152,9 +157,11 @@
   width: $alert-md-radio-icon-width;
   height: $alert-md-radio-icon-height;
 
-  background-color: $alert-md-radio-border-color-on;
   transform: $alert-md-radio-icon-transform-off;
+
   transition: $alert-md-radio-icon-transition;
+
+  background-color: $alert-md-radio-border-color-on;
 }
 
 
@@ -180,15 +187,17 @@
 .alert-checkbox-label {
   @include padding($alert-md-checkbox-label-padding-top, $alert-md-checkbox-label-padding-end, $alert-md-checkbox-label-padding-bottom, $alert-md-checkbox-label-padding-start);
 
-  overflow: hidden;
-
   flex: 1;
 
+  color: $alert-md-checkbox-label-text-color;
+
   font-size: $alert-md-checkbox-label-font-size;
+
   text-overflow: ellipsis;
+
   white-space: nowrap;
 
-  color: $alert-md-checkbox-label-text-color;
+  overflow: hidden;
 }
 
 
@@ -216,6 +225,7 @@
 
 [aria-checked=true] .alert-checkbox-icon {
   border-color: $alert-md-checkbox-border-color-on;
+
   background-color: $alert-md-checkbox-border-color-on;
 }
 
@@ -227,12 +237,13 @@
   width: $alert-md-checkbox-icon-width;
   height: $alert-md-checkbox-icon-height;
 
+  transform: $alert-md-checkbox-icon-transform;
+
   border-width: $alert-md-checkbox-icon-border-width;
   border-top-width: 0;
   border-left-width: 0;
   border-style: $alert-md-checkbox-icon-border-style;
   border-color: $alert-md-checkbox-icon-border-color;
-  transform: $alert-md-checkbox-icon-transform;
 }
 
 
@@ -250,22 +261,21 @@
 
 .alert-button {
   @include border-radius($alert-md-button-border-radius);
-
   @include margin($alert-md-button-margin-top, $alert-md-button-margin-end, $alert-md-button-margin-bottom, $alert-md-button-margin-start);
-
   @include padding($alert-md-button-padding-top, $alert-md-button-padding-end, $alert-md-button-padding-bottom, $alert-md-button-padding-start);
 
   // necessary for ripple to work properly
   position: relative;
-  overflow: hidden;
-
-  font-weight: $alert-md-button-font-weight;
-  text-transform: $alert-md-button-text-transform;
-  color: $alert-md-button-text-color;
 
   background-color: $alert-md-button-background-color;
+  color: $alert-md-button-text-color;
+
+  font-weight: $alert-md-button-font-weight;
 
   text-align: $alert-md-button-text-align;
+  text-transform: $alert-md-button-text-transform;
+
+  overflow: hidden;
 }
 
 .alert-button.activated {

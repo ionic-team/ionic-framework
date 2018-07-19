@@ -12,13 +12,12 @@
 .alert-wrapper {
   @include border-radius($alert-ios-border-radius);
 
-  overflow: hidden;
-
   max-width: $alert-ios-max-width;
 
   background-color: $alert-ios-background-color;
 
   box-shadow: $alert-ios-box-shadow;
+  overflow: hidden;
 }
 
 
@@ -27,7 +26,6 @@
 
 :host(.alert-translucent) .alert-wrapper {
   background: $alert-ios-translucent-background-color;
-
   backdrop-filter: $alert-ios-translucent-filter;
 }
 
@@ -44,14 +42,16 @@
 .alert-title {
   @include margin($alert-ios-title-margin-top, null, null, null);
 
+  color: $alert-ios-title-color;
+
   font-size: $alert-ios-title-font-size;
   font-weight: $alert-ios-title-font-weight;
-  color: $alert-ios-title-color;
 }
 
 .alert-sub-title {
-  font-size: $alert-ios-sub-title-font-size;
   color: $alert-ios-sub-title-text-color;
+
+  font-size: $alert-ios-sub-title-font-size;
 }
 
 
@@ -62,8 +62,9 @@
 .alert-input-group {
   @include padding($alert-ios-message-padding-top, $alert-ios-message-padding-end, $alert-ios-message-padding-bottom, $alert-ios-message-padding-start);
 
-  font-size: $alert-ios-message-font-size;
   color: $alert-ios-message-text-color;
+
+  font-size: $alert-ios-message-font-size;
 
   text-align: $alert-ios-message-text-align;
 }
@@ -87,8 +88,8 @@
   @include padding($alert-ios-input-padding-top, $alert-ios-input-padding-end, $alert-ios-input-padding-bottom, $alert-ios-input-padding-start);
 
   border: $alert-ios-input-border;
-  background-color: $alert-ios-input-background-color;
 
+  background-color: $alert-ios-input-background-color;
   appearance: none;
 }
 
@@ -103,7 +104,6 @@
   max-height: $alert-ios-content-max-height;
 
   border-top: $alert-ios-list-border-top;
-
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
@@ -123,16 +123,16 @@
 .alert-radio-label {
   @include padding($alert-ios-radio-label-padding-top, $alert-ios-radio-label-padding-end, $alert-ios-radio-label-padding-bottom, $alert-ios-radio-label-padding-start);
 
-  overflow: hidden;
-
   flex: 1;
-
   order: 0;
 
+  color: $alert-ios-radio-label-text-color;
+
   text-overflow: ellipsis;
+
   white-space: nowrap;
 
-  color: $alert-ios-radio-label-text-color;
+  overflow: hidden;
 }
 
 
@@ -167,12 +167,13 @@
   width: $alert-ios-radio-icon-width;
   height: $alert-ios-radio-icon-height;
 
+  transform: $alert-ios-radio-icon-transform;
+
   border-width: $alert-ios-radio-icon-border-width;
   border-top-width: 0;
   border-left-width: 0;
   border-style: $alert-ios-radio-icon-border-style;
   border-color: $alert-ios-radio-icon-border-color;
-  transform: $alert-ios-radio-icon-transform;
 }
 
 
@@ -182,14 +183,15 @@
 .alert-checkbox-label {
   @include padding($alert-ios-checkbox-label-padding-top, $alert-ios-checkbox-label-padding-end, $alert-ios-checkbox-label-padding-bottom, $alert-ios-checkbox-label-padding-start);
 
-  overflow: hidden;
-
   flex: 1;
 
+  color: $alert-ios-checkbox-label-text-color;
+
   text-overflow: ellipsis;
+
   white-space: nowrap;
 
-  color: $alert-ios-checkbox-label-text-color;
+  overflow: hidden;
 }
 
 // iOS Alert Checkbox Outer Circle: Unchecked
@@ -197,7 +199,6 @@
 
 .alert-checkbox-icon {
   @include border-radius($alert-ios-checkbox-border-radius);
-
   @include margin($alert-ios-checkbox-margin-top, $alert-ios-checkbox-margin-end, $alert-ios-checkbox-margin-bottom, $alert-ios-checkbox-margin-start);
 
   position: relative;
@@ -208,6 +209,7 @@
   border-width: $alert-ios-checkbox-border-width;
   border-style: $alert-ios-checkbox-border-style;
   border-color: $alert-ios-checkbox-border-color-off;
+
   background-color: $alert-ios-checkbox-background-color-off;
 
   contain: strict;
@@ -219,6 +221,7 @@
 
 [aria-checked=true] .alert-checkbox-icon {
   border-color: $alert-ios-checkbox-border-color-on;
+
   background-color: $alert-ios-checkbox-background-color-on;
 }
 
@@ -234,12 +237,13 @@
   width: $alert-ios-checkbox-icon-width;
   height: $alert-ios-checkbox-icon-height;
 
+  transform: $alert-ios-checkbox-icon-transform;
+
   border-width: $alert-ios-checkbox-icon-border-width;
   border-top-width: 0;
   border-left-width: 0;
   border-style: $alert-ios-checkbox-icon-border-style;
   border-color: $alert-ios-checkbox-icon-border-color;
-  transform: $alert-ios-checkbox-icon-transform;
 }
 
 
@@ -256,8 +260,6 @@
   @include margin($alert-ios-button-margin);
   @include border-radius($alert-ios-button-border-radius);
 
-  overflow: hidden;
-
   flex: $alert-ios-button-flex;
 
   min-width: $alert-ios-button-min-width;
@@ -265,13 +267,18 @@
 
   border-top: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
   border-right: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
-  font-size: $alert-ios-button-font-size;
-  color: $alert-ios-button-text-color;
+
   background-color: $alert-ios-button-background-color;
+  color: $alert-ios-button-text-color;
+
+  font-size: $alert-ios-button-font-size;
+
+  overflow: hidden;
 }
 
 .alert-button:last-child {
   border-right: 0;
+
   font-weight: $alert-ios-button-main-font-weight;
 }
 

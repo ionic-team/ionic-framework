@@ -27,7 +27,6 @@ body {
   @include padding(0);
 
   position: fixed;
-  overflow: hidden;
 
   width: 100%;
   max-width: 100%;
@@ -36,20 +35,23 @@ body {
 
   text-rendering: optimizeLegibility;
 
+  overflow: hidden;
+
+  touch-action: manipulation;
+  user-select: none;
+
   -webkit-user-drag: none;
 
   -ms-content-zooming: none;
-  touch-action: manipulation;
 
   word-wrap: break-word;
 
   overscroll-behavior-y: contain;
 
   text-size-adjust: none;
-  user-select: none;
 }
 
 [hidden] {
-  // scss-lint:disable ImportantRule
+  /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
 }

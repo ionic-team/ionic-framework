@@ -6,14 +6,11 @@
 
 :host {
   --size: #{$checkbox-md-icon-size};
-
   --border-radius: calc(var(--size) * .125);
   --border-width: #{$checkbox-md-icon-border-width};
   --border-style: #{$checkbox-md-icon-border-style};
-
   --unchecked-border-color: #{$checkbox-md-icon-border-color-off};
   --unchecked-background: #{$checkbox-md-icon-background-color-off};
-
   --transition: #{background $checkbox-md-transition-duration $checkbox-md-transition-easing};
 }
 
@@ -32,11 +29,12 @@
   width: calc(var(--size) * .3125);
   height: calc(var(--size) * .625);
 
+  transform: rotate(45deg);
+
   border-width: calc(var(--size) * .125);
   border-top-width: 0;
   border-left-width: 0;
   border-style: $checkbox-md-icon-checkmark-style;
-  transform: rotate(45deg);
 }
 
 
@@ -48,7 +46,6 @@
 
 :host(.checkbox-disabled) {
   opacity: $checkbox-md-disabled-opacity;
-
   pointer-events: none;
 }
 
@@ -60,9 +57,8 @@
   @include border-radius(50%);
   @include position(-12px, null, null, -12px);
 
-  position: absolute;
-
   display: block;
+  position: absolute;
 
   width: 36px;
   height: 36px;
@@ -70,7 +66,6 @@
   background: $checkbox-md-background-color-focused;
 
   content: "";
-
   opacity: .2;
 }
 
@@ -81,8 +76,8 @@
 :host(.in-item) {
   @include margin($checkbox-md-item-start-margin-top, $checkbox-md-item-start-margin-end, $checkbox-md-item-start-margin-bottom, $checkbox-md-item-start-margin-start);
 
-  position: static;
   display: block;
+  position: static;
 }
 
 :host(.in-item[slot="end"]) {

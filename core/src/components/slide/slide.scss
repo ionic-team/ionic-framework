@@ -20,14 +20,12 @@ ion-slide {
 }
 
 .swiper-slide {
-  box-sizing: border-box;
-  position: relative;
 
   // Center slide text vertically
   display: flex;
+  position: relative;
 
   flex-shrink: 0;
-
   align-items: center;
   justify-content: center;
 
@@ -37,6 +35,7 @@ ion-slide {
   font-size: 18px;
 
   text-align: center;
+  box-sizing: border-box;
 }
 
 .swiper-slide img {

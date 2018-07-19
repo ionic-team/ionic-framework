@@ -16,11 +16,13 @@
   height: 32px;
 
   border: 0;
-  font-size: 14px;
-  font-weight: 500;
-  text-transform: uppercase;
 
   background-color: transparent;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  text-transform: uppercase;
 
   box-shadow: none;
 
@@ -36,9 +38,9 @@ ion-icon {
 
   font-size: 24px;
   font-weight: normal;
+
   line-height: .67;
 
   text-align: start;
-
   pointer-events: none;
 }

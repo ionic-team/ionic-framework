@@ -7,9 +7,9 @@
 :host {
   @include padding($searchbar-md-padding-top, $searchbar-md-padding-end, $searchbar-md-padding-bottom, $searchbar-md-padding-start);
 
-  font-family: $searchbar-md-font-family;
-
   background: $searchbar-md-background;
+
+  font-family: $searchbar-md-font-family;
 }
 
 
@@ -38,10 +38,11 @@
   height: 100%;
 
   border: 0;
-  font-size: $searchbar-md-cancel-button-font-size;
 
-  color: $searchbar-md-cancel-button-color;
   background-color: $searchbar-md-cancel-button-background-color;
+  color: $searchbar-md-cancel-button-color;
+
+  font-size: $searchbar-md-cancel-button-font-size;
 }
 
 // Searchbar Search & Cancel Icon
@@ -69,13 +70,14 @@
 
   height: $searchbar-md-input-height;
 
+  background-color: $searchbar-md-input-background-color;
+  color: $searchbar-md-input-text-color;
+
   font-size: 16px;
   font-weight: 400;
 
   line-height: $searchbar-md-input-line-height;
-  color: $searchbar-md-input-text-color;
 
-  background-color: $searchbar-md-input-background-color;
   box-shadow: $searchbar-md-input-box-shadow;
 }
 
@@ -92,6 +94,7 @@
   height: 100%;
 
   border: 0;
+
   background-color: transparent;
 }
 

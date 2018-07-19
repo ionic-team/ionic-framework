@@ -6,7 +6,6 @@
 
 :host {
   --box-shadow: #{$fab-md-box-shadow};
-
   --transition: #{box-shadow $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
               background-color $fab-button-md-transition-duration $fab-button-md-transition-timing-function,
               color $fab-button-md-transition-duration $fab-button-md-transition-timing-function};

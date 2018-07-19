@@ -35,9 +35,11 @@
   width: $radio-md-icon-width - $radio-md-icon-border-width * 4;
   height: $radio-md-icon-height - $radio-md-icon-border-width * 4;
 
-  background-color: $radio-md-color-on;
   transform: scale3d(0, 0, 0);
+
   transition: transform $radio-md-transition-duration $radio-md-transition-easing;
+
+  background-color: $radio-md-color-on;
 }
 
 
@@ -63,7 +65,6 @@
 // .item-md.item-radio-disabled ion-label {
 :host(.radio-disabled) {
   opacity: $radio-md-disabled-opacity;
-
   pointer-events: none;
 }
 
@@ -75,9 +76,8 @@
   @include border-radius(50%);
   @include position(-12px, null, null, -12px);
 
-  position: absolute;
-
   display: block;
+  position: absolute;
 
   width: 36px;
   height: 36px;
@@ -85,7 +85,6 @@
   background: $radio-md-background-color-focused;
 
   content: "";
-
   opacity: .2;
 }
 
@@ -96,8 +95,8 @@
 :host(.in-item) {
   @include margin($radio-md-item-end-margin-top, $radio-md-item-end-margin-end, $radio-md-item-end-margin-bottom, $radio-md-item-end-margin-start);
 
-  position: static;
   display: block;
+  position: static;
 }
 
 :host(.in-item[slot="start"]) {

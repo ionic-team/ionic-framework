@@ -10,7 +10,6 @@
   @include padding(0);
 
   display: flex;
-  overflow: hidden;
 
   align-items: center;
   justify-content: space-between;
@@ -18,6 +17,8 @@
   width: 100%;
   min-height: 40px;
 
-  color: #{current-color(contrast)};
   background: #{current-color(base)};
+  color: #{current-color(contrast)};
+
+  overflow: hidden;
 }

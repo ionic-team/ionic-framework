@@ -4,15 +4,15 @@
 // --------------------------------------------------
 
 :host {
-  position: relative;
+  --ion-color-base: currentColor;
+
   display: inline-block;
+  position: relative;
 
   width: 28px;
   height: 28px;
 
   color: #{current-color(base)};
-
-  --ion-color-base: currentColor;
 }
 
 svg {
@@ -73,7 +73,6 @@ svg {
   stroke-width: 4px;
   stroke-dasharray: 128px;
   stroke-dashoffset: 82px;
-
   stroke: currentColor;
 }
 
@@ -101,22 +100,54 @@ svg {
 // --------------------------------------------------
 
 @keyframes spinner-fade-out {
-  0% { opacity: 1; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+
 }
 
 @keyframes spinner-scale-out {
-  0% { transform: scale(1, 1); }
-  100% { transform: scale(0, 0); }
+  0% {
+    transform: scale(1, 1);
+  }
+
+  100% {
+    transform: scale(0, 0);
+  }
+
 }
 
 @keyframes spinner-rotate {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+
 }
 
 @keyframes spinner-dots {
-  0% { opacity: .9; transform: scale(1, 1); }
-  50% { opacity: .3; transform: scale(.4, .4); }
-  100% { opacity: .9; transform: scale(1, 1); }
+  0% {
+    transform: scale(1, 1);
+
+    opacity: .9;
+  }
+
+  50% {
+    transform: scale(.4, .4);
+
+    opacity: .3;
+  }
+
+  100% {
+    transform: scale(1, 1);
+
+    opacity: .9;
+  }
 }

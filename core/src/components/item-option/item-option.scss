@@ -14,15 +14,17 @@
   height: 100%;
 
   border: 0;
+
   outline: none;
+
+  background: #{current-color(base)};
+  color: inherit;
+
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
+
   letter-spacing: inherit;
-  color: inherit;
-
-  background: #{current-color(base)};
-
   appearance: none;
 
 }
@@ -42,6 +44,7 @@
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
+
   letter-spacing: inherit;
 
 }

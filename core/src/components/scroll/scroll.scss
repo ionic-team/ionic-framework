@@ -3,16 +3,15 @@
 :host {
   @include position(0, 0, 0, 0);
 
-  position: absolute;
-  z-index: $z-index-scroll-content;
   display: block;
+  position: absolute;
 
+  contain: size style layout;
+  z-index: $z-index-scroll-content;
   overflow-x: hidden;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   will-change: scroll-position;
-
-  contain: size style layout;
 }
 
 :host(.overscroll)::before,

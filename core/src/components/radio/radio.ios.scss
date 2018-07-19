@@ -26,12 +26,13 @@
   width: 5px;
   height: 12px;
 
+  transform: rotate(45deg);
+
   border-width: $radio-ios-icon-border-width;
   border-top-width: 0;
   border-left-width: 0;
   border-style: $radio-ios-icon-border-style;
   border-color: $radio-ios-color-on;
-  transform: rotate(45deg);
 }
 
 
@@ -39,7 +40,6 @@
 // -----------------------------------------
 :host(.radio-disabled) {
   opacity: $radio-ios-disabled-opacity;
-
   pointer-events: none;
 }
 
@@ -51,9 +51,8 @@
   @include border-radius(50%);
   @include position(-8px, null, null, -9px);
 
-  position: absolute;
-
   display: block;
+  position: absolute;
 
   width: 36px;
   height: 36px;
@@ -61,7 +60,6 @@
   background: $radio-ios-background-color-focused;
 
   content: "";
-
   opacity: .2;
 }
 
@@ -72,8 +70,8 @@
 :host(.in-item) {
   @include margin($radio-ios-item-end-margin-top, $radio-ios-item-end-margin-end, $radio-ios-item-end-margin-bottom, $radio-ios-item-end-margin-start);
 
-  position: static;
   display: block;
+  position: static;
 }
 
 :host(.in-item[slot="start"]) {

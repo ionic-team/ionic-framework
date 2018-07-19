@@ -29,7 +29,6 @@
 
 :host(.tabbar-translucent) {
   background-color: #{current-color(base, $tabbar-ios-translucent-background-color-alpha)};
-
   backdrop-filter: $tabbar-ios-translucent-filter;
 }
 

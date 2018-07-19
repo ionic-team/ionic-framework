@@ -12,9 +12,8 @@ button {
   @include padding(0);
   @include font-smoothing();
 
-  position: relative;
-  z-index: 0;
   display: flex;
+  position: relative;
 
   flex-flow: row nowrap;
   flex-shrink: 0;
@@ -22,25 +21,24 @@ button {
   justify-content: center;
 
   border: 0;
+
   outline: none;
+
+  background: transparent;
+  color: inherit;
 
   line-height: 1;
 
+  text-align: center;
   text-decoration: none;
   text-overflow: ellipsis;
   text-transform: none;
 
   white-space: nowrap;
 
-  color: inherit;
-  background: transparent;
-
   cursor: pointer;
-
-  text-align: center;
-
-  font-kerning: none;
   user-select: none;
-
+  z-index: 0;
+  font-kerning: none;
   appearance: none;
 }

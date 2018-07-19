@@ -8,6 +8,7 @@
   @include padding($card-md-padding-top, $card-md-padding-end, $card-md-padding-bottom, $card-md-padding-start);
 
   font-size: $card-md-font-size;
+
   line-height: $card-md-line-height;
 
   h1 {
@@ -39,6 +40,7 @@
 
     font-size: 14px;
     font-weight: normal;
+
     line-height: 1.5;
   }
 }

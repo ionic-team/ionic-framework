@@ -31,10 +31,11 @@
   height: var(--size);
 
   border: 0;
-  outline: none;
-  color: var(--color);
-  background: var(--background);
 
+  outline: none;
+
+  background: var(--background);
+  color: var(--color);
   appearance: none;
 }
 

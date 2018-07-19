@@ -6,31 +6,28 @@
 ion-popover {
   @include position(0, 0, 0, 0);
 
-  position: absolute;
-
-  z-index: $z-index-overlay;
-
   display: flex;
+  position: absolute;
 
   align-items: center;
   justify-content: center;
+
+  z-index: $z-index-overlay;
 }
 
 .popover-wrapper {
-  z-index: $z-index-overlay-wrapper;
-
   opacity: 0;
+  z-index: $z-index-overlay-wrapper;
 }
 
 .popover-content {
-  position: absolute;
-  z-index: $z-index-overlay-wrapper;
-
   display: flex;
-
-  overflow: auto;
+  position: absolute;
 
   flex-direction: column;
+
+  overflow: auto;
+  z-index: $z-index-overlay-wrapper;
 }
 
 .popover-content ion-content,

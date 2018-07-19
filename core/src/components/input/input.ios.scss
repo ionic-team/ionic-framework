@@ -2,15 +2,14 @@
 @import "./input.ios.vars";
 
 :host {
-  font-family: $input-ios-font-family;
-  font-size: $input-ios-font-size;
-
   --padding-top: #{$input-ios-padding-top};
   --padding-end: #{$input-ios-padding-end};
   --padding-bottom: #{$input-ios-padding-bottom};
   --padding-start: #{$input-ios-padding-start};
-
   --placeholder-color: #{$input-ios-placeholder-color};
+
+  font-family: $input-ios-font-family;
+  font-size: $input-ios-font-size;
 }
 
 .input-clear-icon {

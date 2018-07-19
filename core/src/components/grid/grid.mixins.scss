@@ -9,13 +9,13 @@
 // ---------------------------------------------------------------------------------
 
 @mixin make-grid-widths($widths: $grid-widths, $breakpoints: $screen-breakpoints) {
-  max-width: 100%;
-
   @each $breakpoint, $width in $widths {
     @include media-breakpoint-up($breakpoint, $breakpoints) {
       width: $width;
     }
   }
+
+  max-width: 100%;
 }
 
 
@@ -26,6 +26,7 @@
   @each $breakpoint in map-keys($paddings) {
     @include media-breakpoint-up($breakpoint) {
       $padding: map-get($paddings, $breakpoint);
+
       @include padding($padding);
     }
   }

@@ -4,14 +4,14 @@
 ion-refresher {
   @include position(0, null, null, 0);
 
+  display: none;
   position: absolute;
   top: 0;
-  z-index: $z-index-refresher;
-
-  display: none;
 
   width: 100%;
   height: $refresher-height;
+
+  z-index: $z-index-refresher;
 
   &.refresher-active {
     display: block;
@@ -41,8 +41,9 @@ ion-refresher-content {
 .refresher-refreshing-icon {
   @include transform-origin(center);
 
-  font-size: $refresher-icon-font-size;
   transition: 200ms;
+
+  font-size: $refresher-icon-font-size;
 
   text-align: center;
 }

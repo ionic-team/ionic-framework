@@ -4,12 +4,8 @@
   @include border-radius(0);
   @include margin(0);
 
-  box-sizing: border-box;
-
-  position: relative;
-  z-index: 0;
   display: block;
-  overflow: hidden;
+  position: relative;
 
   flex: 1;
 
@@ -17,15 +13,16 @@
 
   border: 0;
 
-  text-decoration: none;
-
-  color: var(--color);
   background: var(--background);
+  color: var(--color);
 
   text-align: center;
+  text-decoration: none;
 
+  overflow: hidden;
   user-select: none;
-
+  z-index: 0;
+  box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -50,8 +47,6 @@ a {
   @include margin(0);
   @include padding(0);
 
-  box-sizing: border-box;
-
   display: flex;
 
   flex-direction: column;
@@ -63,10 +58,11 @@ a {
 
   border: 0;
 
-  color: inherit;
   background: transparent;
+  color: inherit;
 
   cursor: pointer;
+  box-sizing: border-box;
 
   &:active,
   &:focus {
@@ -84,10 +80,7 @@ a {
 
 .tab-button-text,
 .tab-button-icon {
-  box-sizing: border-box;
-
   display: none;
-  overflow: hidden;
 
   align-self: center;
 
@@ -95,7 +88,11 @@ a {
   max-width: 100%;
 
   text-overflow: ellipsis;
+
   white-space: nowrap;
+
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 :host(.has-icon) .tab-button-icon,
@@ -128,6 +125,7 @@ a {
   height: auto;
 
   font-size: 12px;
+
   line-height: 16px;
 }
 

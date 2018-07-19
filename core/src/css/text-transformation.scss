@@ -12,17 +12,17 @@
     // Provide `[text-{bp}]` attributes for transforming the text based
     // on the breakpoint
     [text#{$infix}-uppercase] {
-      // scss-lint:disable ImportantRule
+      /* stylelint-disable-next-line declaration-no-important */
       text-transform: uppercase !important;
     }
 
     [text#{$infix}-lowercase] {
-      // scss-lint:disable ImportantRule
+      /* stylelint-disable-next-line declaration-no-important */
       text-transform: lowercase !important;
     }
 
     [text#{$infix}-capitalize] {
-      // scss-lint:disable ImportantRule
+      /* stylelint-disable-next-line declaration-no-important */
       text-transform: capitalize !important;
     }
   }

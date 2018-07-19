@@ -9,17 +9,15 @@
   --ion-color-contrast: #{$item-md-text-color};
   --ion-color-tint: #{$item-md-background-color-active};
   --ion-color-shade: #{$item-md-border-bottom-color};
-
   --transition: background-color 300ms cubic-bezier(.4, 0, .2, 1);
-
   --padding-start: #{$item-md-padding-start};
   --inner-padding-end: #{$item-md-padding-end / 2};
-
   --padding-start: #{$item-md-padding-start};
 
   font-family: $item-md-font-family;
   font-size: $item-md-font-size;
   font-weight: normal;
+
   text-transform: none;
 }
 
@@ -58,9 +56,9 @@
 // --------------------------------------------------
 
 .item-detail-icon {
-  font-size: 20px;
-
   color: var(--detail-push-color);
+
+  font-size: 20px;
 }
 
 
@@ -103,14 +101,13 @@
 // --------------------------------------------------
 
 ::slotted(.button-small-md) {
-  font-size: 12px;
-
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: .6em;
   --padding-end: .6em;
-
   --height: 25px;
+
+  font-size: 12px;
 }
 
 

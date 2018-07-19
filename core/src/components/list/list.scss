@@ -14,12 +14,11 @@ ion-list {
   background: $item-background-color;
 
   contain: content;
-
   list-style-type: none;
 }
 
 ion-list.list-inset {
-  overflow: hidden;
-
   transform: translateZ(0);
+
+  overflow: hidden;
 }

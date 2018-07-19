@@ -7,18 +7,15 @@
   @include font-smoothing();
   @include position(0, 0, 0, 0);
 
-  position: fixed;
-
-  z-index: $z-index-overlay;
-
   display: flex;
+  position: fixed;
 
   align-items: center;
   justify-content: center;
 
-  touch-action: none;
-
   contain: strict;
+  touch-action: none;
+  z-index: $z-index-overlay;
 }
 
 :host(.alert-top) {
@@ -28,7 +25,6 @@
 }
 
 .alert-wrapper {
-  z-index: $z-index-overlay-wrapper;
   display: flex;
 
   flex-direction: column;
@@ -36,9 +32,9 @@
   min-width: $alert-min-width;
   max-height: $alert-max-height;
 
-  opacity: 0;
-
   contain: content;
+  opacity: 0;
+  z-index: $z-index-overlay-wrapper;
 }
 
 .alert-title {
@@ -55,11 +51,8 @@
 
 .alert-message {
   box-sizing: border-box;
-
   -webkit-overflow-scrolling: touch;
-
   overflow-y: scroll;
-
   overscroll-behavior-y: contain;
 }
 
@@ -70,14 +63,14 @@
 .alert-input {
   @include padding(10px, 0);
 
-  box-sizing: border-box;
-
   width: 100%;
 
   border: 0;
-  font: inherit;
 
   background: inherit;
+
+  font: inherit;
+  box-sizing: border-box;
 }
 
 .alert-button-group {
@@ -96,13 +89,15 @@
 .alert-button {
   @include margin(0);
 
-  z-index: 0;
   display: block;
 
   border: 0;
 
   font-size: $alert-button-font-size;
+
   line-height: $alert-button-line-height;
+
+  z-index: 0;
 }
 
 .alert-button-inner {
@@ -125,12 +120,13 @@
 
   border: 0;
 
-  font-size: inherit;
-  line-height: initial;
   background: transparent;
 
-  text-align: start;
+  font-size: inherit;
 
+  line-height: initial;
+
+  text-align: start;
   appearance: none;
 }
 

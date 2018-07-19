@@ -14,8 +14,9 @@
 .action-sheet-title {
   @include padding($action-sheet-md-title-padding-top, $action-sheet-md-title-padding-end, $action-sheet-md-title-padding-bottom, $action-sheet-md-title-padding-start);
 
-  font-size: $action-sheet-md-title-font-size;
   color: $action-sheet-md-title-color;
+
+  font-size: $action-sheet-md-title-font-size;
 
   text-align: $action-sheet-md-text-align;
 }
@@ -50,17 +51,18 @@
   @include padding($action-sheet-md-button-padding-top, $action-sheet-md-button-padding-end, $action-sheet-md-button-padding-bottom, $action-sheet-md-button-padding-start);
 
   position: relative;
-  overflow: hidden;
 
   height: $action-sheet-md-button-height;
 
-  font-size: $action-sheet-md-button-font-size;
-  color: $action-sheet-md-button-text-color;
   background: $action-sheet-md-button-background;
+  color: $action-sheet-md-button-text-color;
+
+  font-size: $action-sheet-md-button-font-size;
 
   text-align: $action-sheet-md-text-align;
 
   contain: strict;
+  overflow: hidden;
 }
 
 .action-sheet-button.activated {
@@ -78,6 +80,7 @@
 }
 
 .action-sheet-selected {
-  font-weight: bold;
   background-color: $action-sheet-md-button-background-selected;
+
+  font-weight: bold;
 }

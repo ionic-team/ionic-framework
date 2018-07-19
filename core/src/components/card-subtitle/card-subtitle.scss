@@ -4,8 +4,8 @@
 // --------------------------------------------------
 
 :host {
-  position: relative;
   display: block;
+  position: relative;
 
   color: #{current-color(base)};
 }

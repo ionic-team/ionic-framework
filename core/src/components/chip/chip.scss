@@ -9,16 +9,16 @@
 
   @include font-smoothing();
 
-  box-sizing: border-box;
   display: inline-flex;
 
   align-items: center;
   align-self: center;
 
+  background-color: var(--ion-color-base);
+  color: var(--ion-color-contrast);
+
   font-weight: normal;
 
-  color: var(--ion-color-contrast);
-  background-color: var(--ion-color-base);
-
   vertical-align: middle;
+  box-sizing: border-box;
 }

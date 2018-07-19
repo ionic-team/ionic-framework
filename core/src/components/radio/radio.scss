@@ -6,19 +6,17 @@
 :host {
   --ion-color-base: #{ion-color(primary, base)};
 
-  box-sizing: border-box;
-
-  position: relative;
   display: inline-block;
+  position: relative;
+  box-sizing: border-box;
 }
 
 .radio-icon {
-  position: relative;
   display: block;
+  position: relative;
 
   width: var(--width);
   height: var(--height);
-
 
   contain: layout size style;
 }

@@ -3,6 +3,6 @@ ion-show-when.show-content {
 }
 
 ion-show-when.hide-content {
-  // scss-lint:disable ImportantRule
+  /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
 }

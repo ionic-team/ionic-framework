@@ -6,9 +6,9 @@
 :host {
   @include margin($fab-size + $fab-list-margin, 0);
 
+  display: none;
   position: absolute;
   top: 0;
-  display: none;
 
   flex-direction: column;
   align-items: center;
@@ -22,11 +22,12 @@
 }
 
 ::slotted(.fab-button-in-list) {
-  opacity: 0;
-  visibility: hidden;
+  --size: #{$fab-mini-size};
+
   transform: scale(0);
 
-  --size: #{$fab-mini-size};
+  opacity: 0;
+  visibility: hidden;
 }
 
 :host(.fab-list-side-top) ::slotted(.fab-button-in-list),
@@ -42,9 +43,10 @@
 }
 
 ::slotted(.fab-button-in-list.fab-button-show) {
+  transform: scale(1);
+
   opacity: 1;
   visibility: visible;
-  transform: scale(1);
 }
 
 

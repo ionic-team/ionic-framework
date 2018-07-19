@@ -1,20 +1,19 @@
 @import "../../themes/ionic.globals";
 
 :host {
-  position: relative;
-
-  z-index: $z-index-toolbar;
   display: flex;
+  position: relative;
 
   align-items: center;
   justify-content: center;
-
   order: 1;
 
   width: 100%;
 
-  color: var(--color);
   background: var(--background);
+  color: var(--color);
+
+  z-index: $z-index-toolbar;
 }
 
 :host(.ion-color),
@@ -40,22 +39,20 @@
   @include position(null, null, 0, 0);
   @include transform-origin(0, 0);
 
-  position: absolute;
-
   display: block;
+  position: absolute;
 
   width: 1px;
   height: 2px;
 
-  background: currentColor;
-
   transform: translateZ(0);
+
+  background: currentColor;
 
   &.animated {
     transition-duration: 300ms;
     transition-property: transform;
     transition-timing-function: cubic-bezier(.4, 0, .2, 1);
-
     will-change: transform;
   }
 }
@@ -77,8 +74,8 @@ ion-scroll {
 }
 
 .scroll-inner {
-  position: relative;
   display: flex;
+  position: relative;
 
   flex-direction: row;
 }

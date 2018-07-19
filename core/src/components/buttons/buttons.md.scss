@@ -9,17 +9,16 @@
 }
 
 ::slotted(*) ion-button {
-  font-size: #{$toolbar-md-button-font-size};
-  font-weight: 500;
-
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: 8px;
   --padding-end: 8px;
-
   --border-radius: #{$toolbar-md-button-border-radius};
   --height: 32px;
   --box-shadow: none;
+
+  font-size: #{$toolbar-md-button-font-size};
+  font-weight: 500;
 }
 
 
@@ -30,7 +29,6 @@
   @include margin-horizontal(null, .3em);
 
   font-size: 1.4em;
-
   pointer-events: none;
 }
 
@@ -39,7 +37,6 @@
   @include margin-horizontal(.4em, null);
 
   font-size: 1.4em;
-
   pointer-events: none;
 }
 
@@ -48,7 +45,6 @@
   @include margin(0);
 
   font-size: 1.8em;
-
   pointer-events: none;
 }
 

@@ -12,18 +12,20 @@
   @include padding(0);
   @include margin(0);
 
-  z-index: $back-button-ios-button-z-index;
-  overflow: visible;
-
   min-height: 32px;
 
+  transform: translateZ(0);
+
   border: 0;
-  font-size: 17px;
-  line-height: 1;
 
   background-color: transparent;
 
-  transform: translateZ(0);
+  font-size: 17px;
+
+  line-height: 1;
+
+  overflow: visible;
+  z-index: $back-button-ios-button-z-index;
 
   &.activated {
     opacity: .4;
@@ -37,6 +39,5 @@ ion-icon {
   display: inherit;
 
   font-size: 1.85em;
-
   pointer-events: none;
 }

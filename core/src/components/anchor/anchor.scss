@@ -10,10 +10,10 @@
   --color: #{ion-color(primary, base)};
   --background: transparent;
 
-  text-decoration: var(--text-decoration);
-
-  color: var(--color);
   background: var(--background);
+  color: var(--color);
+
+  text-decoration: var(--text-decoration);
 }
 
 :host(.ion-color) {

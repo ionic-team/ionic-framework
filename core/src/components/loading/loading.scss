@@ -7,17 +7,15 @@ ion-loading {
   @include font-smoothing();
   @include position(0, 0, 0, 0);
 
-  position: fixed;
-  z-index: $z-index-overlay;
-
   display: flex;
+  position: fixed;
 
   align-items: center;
   justify-content: center;
 
-  touch-action: none;
-
   contain: strict;
+  touch-action: none;
+  z-index: $z-index-overlay;
 }
 
 ion-loading-controller {
@@ -25,10 +23,10 @@ ion-loading-controller {
 }
 
 .loading-wrapper {
-  z-index: $z-index-overlay-wrapper;
   display: flex;
 
   align-items: center;
 
   opacity: 0;
+  z-index: $z-index-overlay-wrapper;
 }
