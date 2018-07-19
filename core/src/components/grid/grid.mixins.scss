@@ -9,12 +9,12 @@
 // ---------------------------------------------------------------------------------
 
 @mixin make-grid-widths($widths: $grid-widths, $breakpoints: $screen-breakpoints) {
-
   @each $breakpoint, $width in $widths {
     @include media-breakpoint-up($breakpoint, $breakpoints) {
       width: $width;
     }
   }
+
   max-width: 100%;
 }
 
