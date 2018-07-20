@@ -12,8 +12,8 @@ export interface AlertOptions {
 }
 
 export interface AlertInput {
-  type: string;
-  name: string | number;
+  type?: string;
+  name?: string | number;
   placeholder?: string;
   value?: string;
   label?: string;
