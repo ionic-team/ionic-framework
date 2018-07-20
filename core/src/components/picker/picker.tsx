@@ -265,7 +265,7 @@ export class Picker implements OverlayInterface {
   private getSelected() {
     const selected: { [k: string]: any } = {};
     this.columns.forEach((col, index) => {
-      const selectedColumn = col.selectedIndex
+      const selectedColumn = typeof (col.selectedIndex) !== 'undefined'
         ? col.options[col.selectedIndex]
         : null;
       selected[col.name] = {

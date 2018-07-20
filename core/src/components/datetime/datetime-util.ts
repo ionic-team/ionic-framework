@@ -33,7 +33,7 @@ export function renderDatetime(template: string, value: DatetimeData, locale: Lo
 }
 
 
-export function renderTextFormat(format: string, value: any, date: DatetimeData|null, locale: LocaleData): string {
+export function renderTextFormat(format: string, value: any, date: DatetimeData | null, locale: LocaleData): string {
 
   if ((format === FORMAT_DDDD || format === FORMAT_DDD)) {
     try {
@@ -65,8 +65,8 @@ export function renderTextFormat(format: string, value: any, date: DatetimeData|
   }
 
   if (format === FORMAT_YY || format === FORMAT_MM ||
-      format === FORMAT_DD || format === FORMAT_HH ||
-      format === FORMAT_mm || format === FORMAT_ss) {
+    format === FORMAT_DD || format === FORMAT_HH ||
+    format === FORMAT_mm || format === FORMAT_ss) {
     return twoDigit(value);
   }
 
@@ -107,13 +107,13 @@ export function dateValueRange(format: string, min: DatetimeData, max: DatetimeD
       throw new Error('min and max year is undefined');
     }
 
-    for (let i = max.year - 1; i >= min.year; i--) {
+    for (let i = max.year; i >= min.year; i--) {
       opts.push(i);
     }
 
   } else if (format === FORMAT_MMMM || format === FORMAT_MMM ||
-             format === FORMAT_MM || format === FORMAT_M ||
-             format === FORMAT_hh || format === FORMAT_h) {
+    format === FORMAT_MM || format === FORMAT_M ||
+    format === FORMAT_hh || format === FORMAT_h) {
 
     // month or 12-hour
     for (let i = 1; i < 13; i++) {
@@ -121,7 +121,7 @@ export function dateValueRange(format: string, min: DatetimeData, max: DatetimeD
     }
 
   } else if (format === FORMAT_DDDD || format === FORMAT_DDD ||
-             format === FORMAT_DD || format === FORMAT_D) {
+    format === FORMAT_DD || format === FORMAT_D) {
     // day
     for (let i = 1; i < 32; i++) {
       opts.push(i);
@@ -153,7 +153,7 @@ export function dateValueRange(format: string, min: DatetimeData, max: DatetimeD
   return opts;
 }
 
-export function dateSortValue(year: number|undefined, month: number|undefined, day: number|undefined, hour = 0, minute = 0): number {
+export function dateSortValue(year: number | undefined, month: number | undefined, day: number | undefined, hour = 0, minute = 0): number {
   return parseInt(`1${fourDigit(year)}${twoDigit(month)}${twoDigit(day)}${twoDigit(hour)}${twoDigit(minute)}`, 10);
 }
 
@@ -176,10 +176,10 @@ export function isLeapYear(year: number): boolean {
 const ISO_8601_REGEXP = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 
-export function parseDate(val: any): DatetimeData|null {
+export function parseDate(val: any): DatetimeData | null {
   // manually parse IS0 cuz Date.parse cannot be trusted
   // ISO 8601 format: 1994-12-15T13:47:20Z
-  let parse: any[]|null = null;
+  let parse: any[] | null = null;
 
   if (val && val !== '') {
     // try parsing for just time first, HH:MM
@@ -296,7 +296,7 @@ export function parseTemplate(template: string): string[] {
         if (word === FORMAT_A || word === FORMAT_a) {
           // this format is an am/pm format, so it's an "a" or "A"
           if ((formats.indexOf(FORMAT_h) < 0 && formats.indexOf(FORMAT_hh) < 0) ||
-              VALID_AMPM_PREFIX.indexOf(words[i - 1]) === -1) {
+            VALID_AMPM_PREFIX.indexOf(words[i - 1]) === -1) {
             // template does not already have a 12-hour format
             // or this am/pm format doesn't have a hour, minute, or second format immediately before it
             // so do not treat this word "a" or "A" as the am/pm format
@@ -323,7 +323,7 @@ export function getValueFromFormat(date: DatetimeData, format: string) {
 }
 
 
-export function convertFormatToKey(format: string): string|null {
+export function convertFormatToKey(format: string): string | null {
   for (const k in FORMAT_KEYS) {
     if (FORMAT_KEYS[k].f === format) {
       return FORMAT_KEYS[k].k;
@@ -395,7 +395,7 @@ export function convertDataToISO(data: DatetimeData): string {
  * Use to convert a string of comma separated strings or
  * an array of strings, and clean up any user input
  */
-export function convertToArrayOfStrings(input: string | string[] | undefined | null, type: string): string[]|undefined {
+export function convertToArrayOfStrings(input: string | string[] | undefined | null, type: string): string[] | undefined {
   if (!input) {
     return undefined;
   }
