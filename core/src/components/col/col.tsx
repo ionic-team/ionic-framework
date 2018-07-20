@@ -192,12 +192,14 @@ export class Col {
       return;
     }
 
-    const colSize = SUPPORTS_VARS
+    // If the size is set to auto then don't calculate a size
+    const colSize = (columns === 'auto')
+      ? 'auto'
       // If CSS supports variables we should use the grid columns var
-      ? `calc(calc(${columns} / var(--ion-grid-columns, 12)) * 100%)`
-      // Convert the columns to a percentage by dividing by the total number
-      // of columns (12) and then multiplying by 100
-      : ((columns / 12) * 100) + '%';
+      : SUPPORTS_VARS ? `calc(calc(${columns} / var(--ion-grid-columns, 12)) * 100%)`
+        // Convert the columns to a percentage by dividing by the total number
+        // of columns (12) and then multiplying by 100
+        : ((columns / 12) * 100) + '%';
 
     return {
       'flex': `0 0 ${colSize}`,
