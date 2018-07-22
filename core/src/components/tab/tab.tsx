@@ -3,7 +3,9 @@ import { Color, ComponentRef, FrameworkDelegate } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 
 @Component({
-  tag: 'ion-tab'
+  tag: 'ion-tab',
+  styleUrl: 'tab.scss',
+  shadow: true
 })
 export class Tab {
 
@@ -136,13 +138,19 @@ export class Tab {
   }
 
   hostData() {
+    const { btnId, active, component } = this;
     return {
-      'aria-labelledby': this.btnId,
+      'aria-labelledby': btnId,
+      'aria-hidden': !active ? 'true' : null,
       'role': 'tabpanel',
-      'hidden': !this.active,
       'class': {
-        'ion-page': !this.component
+        'ion-page': !component,
+        'tab-hidden': !active
       }
     };
+  }
+
+  render() {
+    return <slot></slot>;
   }
 }

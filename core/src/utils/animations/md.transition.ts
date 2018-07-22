@@ -14,7 +14,7 @@ export function mdTransitionAnimation(Animation: Animation, _: HTMLElement, opts
   const rootTransition = new Animation();
   rootTransition
     .addElement(ionPageElement)
-    .beforeRemoveClass('hide-page');
+    .beforeRemoveClass('ion-page-invisible');
 
   const backDirection = (opts.direction === 'back');
   if (enteringEl) {

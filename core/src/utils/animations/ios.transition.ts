@@ -27,7 +27,7 @@ export function iosTransitionAnimation(Animation: Animation, navEl: HTMLElement,
     .addElement(enteringEl)
     .duration(opts.duration || DURATION)
     .easing(opts.easing || EASING)
-    .beforeRemoveClass('hide-page');
+    .beforeRemoveClass('ion-page-invisible');
 
   if (leavingEl && navEl) {
     const navDecor = new Animation();

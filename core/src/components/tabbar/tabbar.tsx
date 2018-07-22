@@ -24,7 +24,7 @@ export class Tabbar {
 
   @State() canScrollLeft = false;
   @State() canScrollRight = false;
-  @State() hidden = false;
+  @State() keyboardVisible = false;
 
   /**
    * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
@@ -68,13 +68,13 @@ export class Tabbar {
 
   @Listen('body:keyboardWillHide')
   protected onKeyboardWillHide() {
-    setTimeout(() => this.hidden = false, 50);
+    setTimeout(() => this.keyboardVisible = false, 50);
   }
 
   @Listen('body:keyboardWillShow')
   protected onKeyboardWillShow() {
     if (this.placement === 'bottom') {
-      this.hidden = true;
+      this.keyboardVisible = true;
     }
   }
 
@@ -182,15 +182,17 @@ export class Tabbar {
   }
 
   hostData() {
+    const { color, translucent, layout, placement, keyboardVisible, scrollable } = this;
     return {
       role: 'tablist',
+      'aria-hidden': keyboardVisible ? 'true' : null,
       class: {
-        ...createColorClasses(this.color),
-        'tabbar-translucent': this.translucent,
-        [`layout-${this.layout}`]: true,
-        [`placement-${this.placement}`]: true,
-        'tabbar-hidden': this.hidden,
-        'scrollable': this.scrollable
+        ...createColorClasses(color),
+        'tabbar-translucent': translucent,
+        [`layout-${layout}`]: true,
+        [`placement-${placement}`]: true,
+        'tabbar-hidden': keyboardVisible,
+        'scrollable': scrollable
       }
     };
   }
@@ -209,6 +211,7 @@ export class Tabbar {
       selected={selectedTab === tab}
       mode={this.mode}
       color={this.color}
+      aria-hidden={ !tab.show ? 'true' : null }
       class={{ 'tab-hidden': !tab.show }}
       onClick={(ev) => {
         if (!tab.disabled) {

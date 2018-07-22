@@ -6,11 +6,11 @@
 :host {
   --ion-color-base: #{$background-color};
   --ion-color-contrast: #{$text-color};
-  --padding-top: 0;
-  --padding-bottom: 0;
-  --padding-start: 0;
-  --padding-end: 0;
-  --keyboard-offset: 0;
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+  --keyboard-offset: 0px;
 
   display: block;
   position: relative;
