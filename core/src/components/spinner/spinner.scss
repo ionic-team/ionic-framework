@@ -4,14 +4,14 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: currentColor;
-
   display: inline-block;
   position: relative;
 
   width: 28px;
   height: 28px;
+}
 
+:host(.ion-color) {
   color: #{current-color(base)};
 }
 
