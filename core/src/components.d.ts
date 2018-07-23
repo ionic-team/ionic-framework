@@ -3947,6 +3947,7 @@ declare global {
        * If true, the menu is disabled. Default `false`.
        */
       'disabled': boolean;
+      'getWidth': () => number;
       'isActive': () => boolean;
       'isOpen': () => boolean;
       /**

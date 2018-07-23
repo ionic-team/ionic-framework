@@ -98,12 +98,7 @@ export class Refresher {
       console.error('Make sure you use: <ion-refresher slot="fixed">');
       return;
     }
-    const parentElement = this.el.parentElement;
-    if (!parentElement) {
-      console.error('ion-refresher is not attached');
-      return;
-    }
-    const contentEl = parentElement.querySelector('ion-content');
+    const contentEl = this.el.closest('ion-content');
     if (contentEl) {
       await contentEl.componentOnReady();
       this.scrollEl = contentEl.getScrollElement();
