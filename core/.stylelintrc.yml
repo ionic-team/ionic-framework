@@ -45,6 +45,11 @@ rules:
   declaration-no-important:
     - true
 
+  length-zero-no-unit:
+    - true
+    - ignore:
+      - custom-properties
+
   order/order:
     - custom-properties
     - dollar-variables
