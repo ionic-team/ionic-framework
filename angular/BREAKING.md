@@ -1,6 +1,12 @@
 
 # Breaking Changes
 
+## Migration Linter
+
+Looking for a tool that automatically warns (and sometimes fixes) the breaking changes listed? Check out our [migration linter](https://github.com/ionic-team/v4-migration-tslint)!
+
+## Components
+
 A list of the breaking changes introduced in Ionic Angular v4.
 
 - [Action Sheet](#action-sheet)
@@ -15,7 +21,7 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Fixed Content](#fixed-content)
 - [Grid](#grid)
 - [Icon](#icon)
-- [Input](#Input)
+- [Input](#input)
 - [Item](#item)
 - [Item Divider](#item-divider)
 - [Item Options](#item-options)
