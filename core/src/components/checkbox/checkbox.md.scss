@@ -6,11 +6,15 @@
 
 :host {
   --size: #{$checkbox-md-icon-size};
+
+  // Border
   --border-radius: calc(var(--size) * .125);
   --border-width: #{$checkbox-md-icon-border-width};
   --border-style: #{$checkbox-md-icon-border-style};
-  --unchecked-border-color: #{$checkbox-md-icon-border-color-off};
-  --unchecked-background: #{$checkbox-md-icon-background-color-off};
+  --border-color: #{$checkbox-md-icon-border-color-off};
+
+  // Background
+  --background: #{$checkbox-md-icon-background-color-off};
   --transition: #{background $checkbox-md-transition-duration $checkbox-md-transition-easing};
 }
 
@@ -18,11 +22,7 @@
 // -----------------------------------------
 
 :host(.checkbox-checked) .checkbox-inner {
-  @include position(
-    calc(var(--size) * .05),
-    null, null,
-    calc(var(--size) * .3)
-  );
+  @include position(calc(var(--size) * .05), null, null, calc(var(--size) * .3));
 
   position: absolute;
 
