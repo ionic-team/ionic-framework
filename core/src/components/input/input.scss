@@ -18,6 +18,11 @@
   align-items: center;
 
   width: 100%;
+
+  /* stylelint-disable */
+  /* TODO: find a better solution in padding.css, that does not require !important, */
+  padding: 0 !important;
+  /* stylelint-enable */
 }
 
 
@@ -55,15 +60,16 @@
     font-family: inherit;
     font-weight: var(--placeholder-weight);
   }
+
+  &:-webkit-autofill {
+    background-color: transparent;
+  }
 }
 
 .native-input[disabled] {
   opacity: .4;
 }
 
-.native-input:-webkit-autofill {
-  background-color: transparent;
-}
 
 
 // Input Cover: Unfocused
@@ -99,16 +105,13 @@
 
   border: 0;
 
+  outline: none;
+
   background-color: transparent;
   background-repeat: no-repeat;
 
   visibility: hidden;
   appearance: none;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
 }
 
 :host(.has-focus.has-value) .input-clear-icon {

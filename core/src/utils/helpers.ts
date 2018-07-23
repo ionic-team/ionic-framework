@@ -8,6 +8,21 @@ export function reorderArray(array: any[], indexes: {from: number, to: number}):
   return array;
 }
 
+export function renderHiddenInput(container: HTMLElement, name: string, value: string, disabled: boolean) {
+  if (container.shadowRoot) {
+    let input = container.querySelector('input.aux-input') as HTMLInputElement;
+    if (!input) {
+      input = container.ownerDocument.createElement('input');
+      input.type = 'hidden';
+      input.classList.add('aux-input');
+      container.appendChild(input);
+    }
+    input.disabled = disabled;
+    input.name = name;
+    input.value = value;
+  }
+}
+
 export function clamp(min: number, n: number, max: number) {
   return Math.max(min, Math.min(n, max));
 }

@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { Color, InputChangeEvent, Mode, StyleEvent } from '../../interface';
-import { debounceEvent, deferEvent } from '../../utils/helpers';
+import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { TextareaComponent } from '../input/input-base';
 
 
@@ -15,6 +15,7 @@ import { TextareaComponent } from '../input/input-base';
 export class Textarea implements TextareaComponent {
 
   private inputEl?: HTMLTextAreaElement;
+  private inputId = `ion-input-${textareaIds++}`;
 
   mode!: Mode;
   color?: Color;
@@ -103,7 +104,7 @@ export class Textarea implements TextareaComponent {
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop() name?: string;
+  @Prop() name: string = this.inputId;
 
   /**
    * Instructional text that shows before the input has a value.
@@ -229,6 +230,8 @@ export class Textarea implements TextareaComponent {
   }
 
   render() {
+    renderHiddenInput(this.el, this.name, this.value, this.disabled);
+
     return (
       <textarea
         class="native-textarea"
@@ -257,3 +260,5 @@ export class Textarea implements TextareaComponent {
     );
   }
 }
+
+let textareaIds = 0;

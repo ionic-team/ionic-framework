@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { CheckboxInput, CheckedInputChangeEvent, Color, GestureDetail, Mode, StyleEvent } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
-import { deferEvent } from '../../utils/helpers';
+import { deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
 
@@ -169,6 +169,8 @@ export class Toggle implements CheckboxInput {
   }
 
   render() {
+    renderHiddenInput(this.el, this.name, this.value, this.disabled);
+
     return [
       <ion-gesture
         onStart={this.onDragStart.bind(this)}
@@ -197,7 +199,8 @@ export class Toggle implements CheckboxInput {
         name={this.name}
         value={this.value}
         disabled={this.disabled}
-        ref={r => this.nativeInput = (r as any)}/>
+        ref={r => this.nativeInput = (r as any)}/>,
+      <slot></slot>
     ];
   }
 }

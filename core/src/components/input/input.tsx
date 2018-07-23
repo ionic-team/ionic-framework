@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { Color, InputChangeEvent, Mode, StyleEvent  } from '../../interface';
-import { debounceEvent, deferEvent } from '../../utils/helpers';
+import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { hostContext } from '../../utils/theme';
 import { InputComponent } from './input-base';
 
@@ -16,6 +16,7 @@ import { InputComponent } from './input-base';
 export class Input implements InputComponent {
 
   private nativeInput?: HTMLInputElement;
+  private inputId = `ion-input-${inputIds++}`;
   didBlurAfterEdit = false;
 
   mode!: Mode;
@@ -148,7 +149,7 @@ export class Input implements InputComponent {
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop() name?: string;
+  @Prop() name: string = this.inputId;
 
   /**
    * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
@@ -276,14 +277,10 @@ export class Input implements InputComponent {
     }
   }
 
-  private inputKeydown() {
-    this.checkClearOnEdit();
-  }
-
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  private checkClearOnEdit() {
+  private onKeydown() {
     if (!this.clearOnEdit) {
       return;
     }
@@ -317,7 +314,7 @@ export class Input implements InputComponent {
   }
 
   render() {
-    // TODO aria-labelledby={this.item.labelId}
+    renderHiddenInput(this.el, this.name, this.value, this.disabled);
 
     return [
       <input
@@ -350,8 +347,9 @@ export class Input implements InputComponent {
         onInput={this.onInput.bind(this)}
         onBlur={this.onBlur.bind(this)}
         onFocus={this.onFocus.bind(this)}
-        onKeyDown={this.inputKeydown.bind(this)}
+        onKeyDown={this.onKeydown.bind(this)}
       />,
+      <slot></slot>,
       this.clearInput && <button
         type="button"
         class="input-clear-icon"
@@ -360,3 +358,5 @@ export class Input implements InputComponent {
     ];
   }
 }
+
+let inputIds = 0;
