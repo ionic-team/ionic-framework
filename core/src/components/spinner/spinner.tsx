@@ -73,7 +73,7 @@ export class Spinner {
         ...createColorClasses(this.color),
 
         [`spinner-${this.getName()}`]: true,
-        'spinner-paused': this.paused
+        'spinner-paused': !!this.paused
       }
     };
   }

@@ -26,10 +26,6 @@ svg {
   transform: translateZ(0);
 }
 
-:host(.spinner-paused) svg {
-  animation-play-state: paused;
-}
-
 
 // Spinner: lines / lines-small
 // --------------------------------------------------
@@ -93,6 +89,14 @@ svg {
   @include transform-origin(center);
 
   animation: spinner-dots 1s linear infinite;
+}
+
+
+// Spinner: paused
+// --------------------------------------------------
+
+:host(.spinner-paused) svg {
+  animation-play-state: paused;
 }
 
 
