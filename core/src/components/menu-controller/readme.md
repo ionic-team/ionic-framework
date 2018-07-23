@@ -22,9 +22,8 @@ The MenuController makes it easy to control a Menu. Its methods can be used to d
 
 #### close()
 
-Close the Menu. If no `menuId` is given as the first
-argument then it'll close any menu which is open. If a `menuId`
-is given then it'll close that exact menu.
+Close the menu. If no menu is specified, then it will close any menu
+that is open. If a menu is specified, it will close that menu.
 
 
 #### createAnimation()
@@ -40,11 +39,11 @@ will also automatically disable all the others that are on the same side.
 
 #### get()
 
-Used to get a menu instance. If a `menuId` is not provided then it'll
-return the first menu found. If a `menuId` is `left` or `right`, then
-it'll return the enabled menu on that side. Otherwise, if a `menuId` is
-provided, then it'll try to find the menu using the menu's `id`
-property. If a menu is not found then it'll return `null`.
+Used to get a menu instance. If a menu is not provided then it will
+return the first menu found. If the specified menu is `left` or `right`, then
+it will return the enabled menu on that side. Otherwise, it will try to find
+the menu using the menu's `id` property. If a menu is not found then it will
+return `null`.
 
 
 #### getMenus()
@@ -59,22 +58,23 @@ Returns the instance of the menu already opened, otherwise `null`.
 
 #### isAnimating()
 
-If any menu is currently animating
+Returns true if any menu is currently animating.
 
 
 #### isEnabled()
 
-Returns true or false if the menuId is enabled or not
+Returns true if the specified menu is enabled.
 
 
 #### isOpen()
 
-If the menuId is not specified, it returns true if ANY menu is currenly open.
+Returns true if the specified menu is open. If the menu is not specified, it
+will return true if any menu is currently open.
 
 
 #### open()
 
-Open the Menu.
+Open the menu.
 
 
 #### registerAnimation()
