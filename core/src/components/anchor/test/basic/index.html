@@ -28,7 +28,11 @@
       </p>
 
       <p>
-        <ion-anchor href="#" class="underline">Underline Anchor</ion-anchor>
+        <ion-anchor href="#" style="text-decoration: underline">Underline Anchor</ion-anchor>
+      </p>
+
+      <p>
+        <ion-anchor href="#" class="custom">Custom Anchor</ion-anchor>
       </p>
 
       <p>
@@ -60,8 +64,14 @@
   </script>
 
   <style>
-    .underline {
-      --text-decoration: underline;
+    .custom {
+      font-family: cursive;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 5px;
+      text-decoration: dotted underline;
+      text-transform: uppercase;
+      color: magenta;
     }
   </style>
 </body>
