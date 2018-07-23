@@ -238,6 +238,11 @@ export class Menu {
     return !this.disabled && !this.isPaneVisible;
   }
 
+  @Method()
+  getWidth(): number {
+    return this.width;
+  }
+
   private async loadAnimation(): Promise<void> {
     // Menu swipe animation takes the menu's inner width as parameter,
     // If `offsetWidth` changes, we need to create a new animation.
