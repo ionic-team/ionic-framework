@@ -1,7 +1,9 @@
 @import "../../themes/ionic.globals";
 
 :host {
-  display: block;
+  display: flex;
+
+  align-items: center;
 
   transform: translateZ(0);
 
@@ -12,7 +14,7 @@
 // Toolbar Buttons
 // --------------------------------------------------
 
-::slotted(*) ion-button {
+::slotted(*) .button {
   --margin-top: 0;
   --margin-bottom: 0;
   --margin-start: 0;
