@@ -32,6 +32,13 @@
       <ion-button expand="block" onclick="presentWithCssClass()">CssClass</ion-button>
     </ion-content>
 
+    <style>
+      .my-custom-class {
+        --background: lightblue;
+        --min-width: 0;
+        --max-width: 200px;
+      }
+    </style>
   </ion-app>
 
   <script>
@@ -300,7 +307,7 @@
       const alert = await alertController.create({
         header: 'Alert',
         subHeader: 'Subtitle',
-        cssClass: 'my-class my-customClass   ',
+        cssClass: 'my-class my-custom-class   ',
         message: 'This is an alert message.',
         buttons: [{
           text: 'Ok',

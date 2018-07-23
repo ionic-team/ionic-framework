@@ -5,16 +5,15 @@
 // --------------------------------------------------
 
 :host {
+  --background: #{$alert-md-background-color};
+  --max-width: #{$alert-md-max-width};
+
   font-family: $alert-md-font-family;
   font-size: $alert-md-font-size;
 }
 
 .alert-wrapper {
   @include border-radius($alert-md-border-radius);
-
-  max-width: $alert-md-max-width;
-
-  background-color: $alert-md-background-color;
 
   box-shadow: $alert-md-box-shadow;
 }

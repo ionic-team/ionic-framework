@@ -5,16 +5,15 @@
 // --------------------------------------------------
 
 :host {
+  --background: #{$alert-ios-background-color};
+  --max-width: #{$alert-ios-max-width};
+
   font-family: $alert-ios-font-family;
   font-size: $alert-ios-font-size;
 }
 
 .alert-wrapper {
   @include border-radius($alert-ios-border-radius);
-
-  max-width: $alert-ios-max-width;
-
-  background-color: $alert-ios-background-color;
 
   box-shadow: $alert-ios-box-shadow;
   overflow: hidden;
