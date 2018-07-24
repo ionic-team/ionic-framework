@@ -22,7 +22,9 @@ export class Checkbox implements CheckboxInput {
   @State() keyFocus = false;
 
   /**
-   * The color to use for the checkbox.
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
