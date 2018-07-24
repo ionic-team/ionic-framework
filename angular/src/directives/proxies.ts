@@ -233,10 +233,10 @@ export class HideWhen {
 }
 
 export declare interface Icon extends StencilComponents.IonIcon {}
-@Directive({selector: 'ion-icon', inputs: ['ariaLabel', 'color', 'icon', 'ios', 'md', 'mode', 'name', 'size', 'src']})
+@Directive({selector: 'ion-icon', inputs: ['ariaLabel', 'color', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'size', 'src']})
 export class Icon {
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['ariaLabel', 'color', 'icon', 'ios', 'md', 'mode', 'name', 'size', 'src']);
+    proxyInputs(this, r, ['ariaLabel', 'color', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'size', 'src']);
   }
 }
 
@@ -370,17 +370,17 @@ export class Menu {
   ionClose: EventEmitter<any>;
   ionMenuChange: EventEmitter<any>;
   constructor(r: ElementRef) {
-    proxyMethods(this, r, ['isOpen', 'open', 'close', 'toggle', 'setOpen', 'isActive']);
+    proxyMethods(this, r, ['isOpen', 'open', 'close', 'toggle', 'setOpen', 'isActive', 'getWidth']);
     proxyInputs(this, r, ['contentId', 'menuId', 'type', 'disabled', 'side', 'swipeEnabled', 'maxEdgeStart']);
     proxyOutputs(this, ['ionOpen', 'ionClose', 'ionMenuChange']);
   }
 }
 
 export declare interface MenuButton extends StencilComponents.IonMenuButton {}
-@Directive({selector: 'ion-menu-button', inputs: ['menu', 'autoHide']})
+@Directive({selector: 'ion-menu-button', inputs: ['color', 'mode', 'menu', 'autoHide']})
 export class MenuButton {
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['menu', 'autoHide']);
+    proxyInputs(this, r, ['color', 'mode', 'menu', 'autoHide']);
   }
 }
 
