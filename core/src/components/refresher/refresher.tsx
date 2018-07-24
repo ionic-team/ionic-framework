@@ -103,7 +103,7 @@ export class Refresher {
       await contentEl.componentOnReady();
       this.scrollEl = contentEl.getScrollElement();
     } else {
-      console.error('ion-refresher didn\'t attached, make sure if parent is a ion-content');
+      console.error('ion-refresher did not attach, make sure the parent is an ion-content.');
     }
   }
 
