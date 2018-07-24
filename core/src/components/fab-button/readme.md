@@ -20,7 +20,9 @@ If true, the fab button will be show a close icon. Defaults to `false`.
 
 string
 
-The color to use for the button.
+The color to use from your application's color palette.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### disabled
@@ -73,7 +75,9 @@ If true, the fab button will be show a close icon. Defaults to `false`.
 
 string
 
-The color to use for the button.
+The color to use from your application's color palette.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### disabled

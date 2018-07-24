@@ -13,8 +13,9 @@ The component is a container of individual [Tab](../Tab/) components.
 
 string
 
-The color to use from your Sass `$colors` map.
+The color to use from your application's color palette.
 Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### name
@@ -82,8 +83,9 @@ If true, the tabs will use the router and `selectedTab` will not do anything.
 
 string
 
-The color to use from your Sass `$colors` map.
+The color to use from your application's color palette.
 Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### name

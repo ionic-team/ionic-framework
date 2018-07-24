@@ -19,7 +19,9 @@ Automatically hides the menu button when the corresponding menu is not active
 
 string
 
-The color to use for the background of the item.
+The color to use from your application's color palette.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### menu
@@ -50,7 +52,9 @@ Automatically hides the menu button when the corresponding menu is not active
 
 string
 
-The color to use for the background of the item.
+The color to use from your application's color palette.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### menu

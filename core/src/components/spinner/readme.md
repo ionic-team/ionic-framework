@@ -15,8 +15,9 @@ The default spinner to use is based on the platform. The default spinner for `io
 
 string
 
-The color to use from your Sass `$colors` map.
+The color to use from your application's color palette.
 Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### duration
@@ -56,8 +57,9 @@ If true, the spinner's animation will be paused. Defaults to `false`.
 
 string
 
-The color to use from your Sass `$colors` map.
+The color to use from your application's color palette.
 Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### duration

@@ -14,7 +14,9 @@ To change what is displayed in the back button, use the `text` and `icon` proper
 
 string
 
-The color the button should be.
+The color to use from your application's color palette.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### defaultHref
@@ -52,7 +54,9 @@ The text to display in the back button.
 
 string
 
-The color the button should be.
+The color to use from your application's color palette.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### default-href

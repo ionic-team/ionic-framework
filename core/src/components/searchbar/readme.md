@@ -57,7 +57,9 @@ Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md
 
 string
 
-The color the searchbar should be.
+The color to use from your application's color palette.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### debounce
@@ -165,7 +167,9 @@ Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md
 
 string
 
-The color the searchbar should be.
+The color to use from your application's color palette.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### debounce
