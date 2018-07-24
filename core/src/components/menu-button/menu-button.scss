@@ -15,13 +15,15 @@ button {
   @include font-smoothing();
 
   display: flex;
-  height: 32px;
+
   position: relative;
 
   flex-flow: row nowrap;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
+
+  height: 32px;
 
   border: 0;
 
@@ -47,7 +49,8 @@ button {
 }
 
 ion-icon {
-  padding: 0;
-  margin: 0;
+  @include margin(0);
+  @include padding(0);
+
   pointer-events: none;
 }

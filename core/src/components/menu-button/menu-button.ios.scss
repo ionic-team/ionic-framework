@@ -9,7 +9,7 @@
 }
 
 button {
-  padding: 0 5px;
+  @include padding(0, 5px);
 }
 
 ion-icon {

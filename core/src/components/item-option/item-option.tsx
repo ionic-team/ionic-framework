@@ -60,6 +60,7 @@ export class ItemOption {
 
     return (
       <TagType
+        type="button"
         class="item-option-native"
         disabled={this.disabled}
         href={this.href}
