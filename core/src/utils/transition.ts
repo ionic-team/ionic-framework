@@ -56,6 +56,7 @@ export function setPageHidden(el: HTMLElement, hidden: boolean) {
     el.setAttribute('aria-hidden', 'true');
     el.classList.add('ion-page-hidden');
   } else {
+    el.hidden = false;
     el.removeAttribute('aria-hidden');
     el.classList.remove('ion-page-hidden');
   }
