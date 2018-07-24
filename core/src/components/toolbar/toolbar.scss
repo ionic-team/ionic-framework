@@ -33,7 +33,6 @@
 // --------------------------------------------------
 
 :host(.toolbar-translucent) {
-  --border-color: transparent;
   --backdrop-filter: var(--translucent-filter);
   --opacity: .8;
 }
