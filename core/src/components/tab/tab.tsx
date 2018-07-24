@@ -106,7 +106,14 @@ export class Tab {
     }
   }
 
-  componentWillUpdate() {
+  @Watch('label')
+  @Watch('href')
+  @Watch('show')
+  @Watch('disabled')
+  @Watch('badge')
+  @Watch('badgeColor')
+  @Watch('icon')
+  onPropChanged() {
     this.ionTabMutated.emit();
   }
 
