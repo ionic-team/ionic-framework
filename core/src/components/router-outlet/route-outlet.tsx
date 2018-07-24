@@ -55,7 +55,7 @@ export class RouterOutlet implements NavOutlet {
     this.activeComponent = component;
 
     // attach entering view to DOM
-    const enteringEl = await attachComponent(this.delegate, this.el, component, ['ion-page', 'hide-page'], params);
+    const enteringEl = await attachComponent(this.delegate, this.el, component, ['ion-page', 'ion-page-invisible'], params);
     const leavingEl = this.activeEl;
 
     // commit animation

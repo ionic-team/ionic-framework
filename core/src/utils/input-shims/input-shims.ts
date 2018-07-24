@@ -24,7 +24,7 @@ export function startInputShims(
   const scrollAssistMap = new WeakMap<HTMLElement, Function>();
 
   function registerInput(componentEl: HTMLElement) {
-    const inputEl = componentEl.querySelector('input');
+    const inputEl = (componentEl.shadowRoot || componentEl).querySelector('input');
     const contentEl = componentEl.closest('ion-content');
     const scrollEl = contentEl && contentEl.getScrollElement();
 

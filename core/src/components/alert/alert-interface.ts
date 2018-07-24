@@ -13,7 +13,7 @@ export interface AlertOptions {
 
 export interface AlertInput {
   type: string;
-  name: string | number;
+  name: string;
   placeholder?: string;
   value?: string;
   label?: string;

@@ -139,6 +139,9 @@ Emitted when the menu is open.
 #### close()
 
 
+#### getWidth()
+
+
 #### isActive()
 
 

@@ -26,13 +26,11 @@ ion-app,
   justify-content: space-between;
 }
 
-.hide-page {
+.ion-page-invisible {
   opacity: 0;
 }
 
-[hidden] {
-  // TODO can we remove important here or remove this entirely
-  // since it is also in structure.scss
+.ion-page-hidden {
   /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
 }

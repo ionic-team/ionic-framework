@@ -24,7 +24,7 @@
     "css/"
   ],
   "dependencies": {
-    "ionicons": "4.2.4"
+    "ionicons": "4.2.5"
   },
   "devDependencies": {
     "@stencil/core": "^0.10.7",
@@ -65,7 +65,6 @@
     "lint.ts": "tslint --project .",
     "lint.ts.fix": "tslint --project . --fix",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
-    "set.version": "node scripts/set-version.js",
     "snapshot": "node ./scripts/e2e --snapshot",
     "test": "jest",
     "test.watch": "jest --watch --no-cache",

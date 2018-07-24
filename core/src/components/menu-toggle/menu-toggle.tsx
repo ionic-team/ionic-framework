@@ -2,6 +2,8 @@ import { Component, Listen, Prop, State } from '@stencil/core';
 
 @Component({
   tag: 'ion-menu-toggle',
+  styleUrl: 'menu-toggle.scss',
+  shadow: true
 })
 export class MenuToggle {
   @Prop({ context: 'document' })
@@ -54,8 +56,15 @@ export class MenuToggle {
   hostData() {
     const hidden = this.autoHide && !this.visible;
     return {
-      'hidden': hidden
+      'aria-hidden': hidden ? 'true' : null,
+      class: {
+        'menu-toggle-hidden': hidden,
+      }
     };
+  }
+
+  render() {
+    return <slot></slot>;
   }
 }
 

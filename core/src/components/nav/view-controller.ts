@@ -29,7 +29,7 @@ export class ViewController {
 
     if (!this.element) {
       const component = this.component;
-      this.element = await attachComponent(this.delegate, container, component, ['ion-page', 'hide-page'], this.params);
+      this.element = await attachComponent(this.delegate, container, component, ['ion-page', 'ion-page-invisible'], this.params);
     }
   }
 

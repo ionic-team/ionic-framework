@@ -12,8 +12,7 @@ import { isEndSide } from '../../utils/helpers';
 export class ItemOptions {
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'window' })
-  win!: Window;
+  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.

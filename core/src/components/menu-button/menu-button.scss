@@ -5,6 +5,8 @@
 
 :host {
   pointer-events: all;
+
+  color: #{current-color(base)};
 }
 
 button {
@@ -13,12 +15,15 @@ button {
   @include font-smoothing();
 
   display: flex;
+
   position: relative;
 
   flex-flow: row nowrap;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
+
+  height: 32px;
 
   border: 0;
 
@@ -41,4 +46,11 @@ button {
   z-index: 0;
   font-kerning: none;
   appearance: none;
+}
+
+ion-icon {
+  @include margin(0);
+  @include padding(0);
+
+  pointer-events: none;
 }

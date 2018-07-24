@@ -45,9 +45,19 @@ function beforeTransition(opts: TransitionOptions) {
   } else {
     enteringEl.classList.remove('can-go-back');
   }
-  enteringEl.hidden = false;
+  setPageHidden(enteringEl, false);
   if (leavingEl) {
-    leavingEl.hidden = false;
+    setPageHidden(leavingEl, false);
+  }
+}
+
+export function setPageHidden(el: HTMLElement, hidden: boolean) {
+  if (hidden) {
+    el.setAttribute('aria-hidden', 'true');
+    el.classList.add('ion-page-hidden');
+  } else {
+    el.removeAttribute('aria-hidden');
+    el.classList.remove('ion-page-hidden');
   }
 }
 
@@ -68,10 +78,10 @@ async function noAnimation(opts: TransitionOptions): Promise<null> {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
   if (enteringEl) {
-    enteringEl.classList.remove('hide-page');
+    enteringEl.classList.remove('ion-page-invisible');
   }
   if (leavingEl) {
-    leavingEl.classList.remove('hide-page');
+    leavingEl.classList.remove('ion-page-invisible');
   }
   await waitForReady(opts, false);
 

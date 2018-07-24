@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
 import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent} from '../../interface';
-import { deferEvent } from '../../utils/helpers';
+import { deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createThemedClasses, hostContext } from '../../utils/theme';
 
 
@@ -15,7 +15,7 @@ import { createThemedClasses, hostContext } from '../../utils/theme';
 export class Select {
 
   private childOpts: HTMLIonSelectOptionElement[] = [];
-  private selectId = `ion-sel-${selectIds++}`;
+  private inputId = `ion-sel-${selectIds++}`;
   private labelId?: string;
   private overlay?: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
 
@@ -54,7 +54,7 @@ export class Select {
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop({ mutable: true }) name?: string;
+  @Prop() name: string = this.inputId;
 
   /**
    * The text to display instead of the selected option's value.
@@ -225,7 +225,6 @@ export class Select {
     if (!this.value) {
       this.value = this.multiple ? [] : undefined;
     }
-    this.name = this.name || this.selectId;
   }
 
   componentDidLoad() {
@@ -460,6 +459,8 @@ export class Select {
   }
 
   render() {
+    renderHiddenInput(this.el, this.name, parseValue(this.value), this.disabled);
+
     let addPlaceholderClass = false;
 
     let selectText = this.selectedText || this.text;
@@ -496,8 +497,7 @@ export class Select {
         class="select-cover">
         <slot></slot>
         { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
-      </button>,
-      <input type="hidden" name={this.name} value={parseValue(this.value)}/>
+      </button>
     ];
   }
 }

@@ -3767,9 +3767,17 @@ declare global {
        */
       'autoHide': boolean;
       /**
+       * The color to use for the background of the item.
+       */
+      'color': Color;
+      /**
        * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
        */
       'menu': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': Mode;
     }
   }
 
@@ -3797,9 +3805,17 @@ declare global {
        */
       'autoHide'?: boolean;
       /**
+       * The color to use for the background of the item.
+       */
+      'color'?: Color;
+      /**
        * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
        */
       'menu'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: Mode;
     }
   }
 }
@@ -3947,6 +3963,7 @@ declare global {
        * If true, the menu is disabled. Default `false`.
        */
       'disabled': boolean;
+      'getWidth': () => number;
       'isActive': () => boolean;
       'isOpen': () => boolean;
       /**

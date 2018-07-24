@@ -2,7 +2,7 @@ import { Build, Component, Element, Event, EventEmitter, Method, Prop, QueueApi,
 import { ViewLifecycle } from '../..';
 import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, Mode, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
 import { assert } from '../../utils/helpers';
-import { TransitionOptions, lifecycle, transition } from '../../utils/transition';
+import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
 import { ViewState, convertToViews, matches } from './view-controller';
 
 @Component({
@@ -850,15 +850,16 @@ export class Nav implements NavOutlet {
 
     for (let i = views.length - 1; i >= 0; i--) {
       const view = views[i];
+      const element = view.element;
       if (i > activeViewIndex) {
         // this view comes after the active view
         // let's unload it
-        lifecycle(this.win, view.element, ViewLifecycle.WillUnload);
+        lifecycle(this.win, element, ViewLifecycle.WillUnload);
         this.destroyView(view);
       } else if (i < activeViewIndex) {
         // this view comes before the active view
         // and it is not a portal then ensure it is hidden
-        view.element!.hidden = true;
+        setPageHidden(element!, true);
       }
     }
   }
