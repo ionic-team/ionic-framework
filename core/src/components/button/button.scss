@@ -7,6 +7,7 @@
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
   --ion-color-shade: #{ion-color(primary, shade)};
+  --overflow: hidden;
   --ripple-color: currentColor;
 
   display: inline-block;
@@ -145,7 +146,7 @@
   contain: content;
   cursor: pointer;
   opacity: var(--opacity);
-  overflow: hidden;
+  overflow: var(--overflow);
   user-select: none;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
