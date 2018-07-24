@@ -24,13 +24,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Button Effect</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding no-bounce>
+    <ion-content padding no-bounce fullscreen>
       <p>
         <ion-button size="small">Small</ion-button>
       </p>
@@ -61,6 +61,13 @@
     </ion-content>
 
   </ion-app>
+
+  <style>
+    ion-toolbar {
+      --background: white;
+    }
+  </style>
+
   <script>
     function blockClicked() {
       console.log('block clicked');

@@ -11,15 +11,13 @@
 
 <body>
   <ion-app>
-
-
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Radio Group</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content class="outer-content">
+    <ion-content class="outer-content" fullscreen>
       <ion-radio-group id="dynamicDisabled" disabled name="tannen" id="group" value="biff">
         <ion-list-header>
           <ion-label>Luckiest Man On Earth</ion-label>
@@ -55,6 +53,12 @@
 
       <ion-button onClick="toggleDisabled()">Toggle Disabled</ion-button>
     </ion-content>
+
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
 
     <script>
       var dynamicDisabled = document.getElementById('dynamicDisabled');

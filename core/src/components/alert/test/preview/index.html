@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Alert</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding>
+    <ion-content padding fullscreen>
       <ion-alert-controller></ion-alert-controller>
 
       <ion-button id="basic" expand="block" onclick="presentAlert()">Alert</ion-button>
@@ -32,6 +32,11 @@
       <ion-button expand="block" onclick="presentWithCssClass()">CssClass</ion-button>
     </ion-content>
 
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
   </ion-app>
 
   <script>

@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Icon</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content">
+    <ion-content id="content" fullscreen>
       <ion-list>
         <ion-item>
           <ion-icon name="home" id="dynamicColor" slot="start"></ion-icon>
@@ -175,8 +175,11 @@
 
 
     <style>
-      /*to ensure ng css encapsulation doesn't mess with icon attributes*/
+      ion-toolbar {
+        --background: white;
+      }
 
+      /*to ensure ng css encapsulation doesn't mess with icon attributes*/
       code {
         font-size: 0.8em;
       }

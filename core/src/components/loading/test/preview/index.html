@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-      <ion-header>
+      <ion-header translucent>
         <ion-toolbar>
           <ion-title>Loading</ion-title>
         </ion-toolbar>
       </ion-header>
 
-      <ion-content padding>
+      <ion-content padding fullscreen>
         <ion-button id="basic" expand="block" onclick="presentLoading()">Show Loading</ion-button>
         <ion-button id="default" expand="block" onclick="presentLoadingWithOptions({duration: 2000, content: 'Please wait...'})">Show Default Loading</ion-button>
         <ion-button expand="block" onclick="presentLoadingWithOptions({duration: 2000, content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea voluptatibus quibusdam eum nihil optio, ullam accusamus magni, nobis suscipit reprehenderit, sequi quam amet impedit. Accusamus dolorem voluptates laborum dolor obcaecati.'})">Show Loading with long content</ion-button>
@@ -80,6 +80,10 @@
   </script>
 
   <style>
+    ion-toolbar {
+      --background: white;
+    }
+
     .custom-loading .loading-wrapper {
       background: rgb(155, 221, 226);
     }

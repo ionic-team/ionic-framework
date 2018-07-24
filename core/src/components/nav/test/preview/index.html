@@ -11,12 +11,12 @@
     class PageOne extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
-          <ion-header>
+          <ion-header translucent>
             <ion-toolbar>
               <ion-title>Page One</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content padding>
+          <ion-content padding fullscreen>
             <h1>Page One</h1>
             <ion-nav-push component="page-two">
               <ion-button class="next">Go to Page Two</ion-button>
@@ -28,7 +28,7 @@
     class PageTwo extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
-          <ion-header>
+          <ion-header translucent>
             <ion-toolbar>
               <ion-buttons slot="start">
                 <ion-back-button text="Page One"></ion-back-button>
@@ -36,7 +36,7 @@
               <ion-title>Page Two</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content padding>
+          <ion-content padding fullscreen>
             <h1>Page Two</h1>
             <div>
               <ion-nav-push component="page-three">
@@ -50,7 +50,7 @@
     class PageThree extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
-          <ion-header>
+          <ion-header translucent>
             <ion-toolbar>
               <ion-buttons slot="start">
                 <ion-back-button text="Page Two"></ion-back-button>
@@ -58,7 +58,7 @@
               <ion-title>Page Three</ion-title>
             </ion-toolbar>
           </ion-header>
-          <ion-content padding>
+          <ion-content padding fullscreen>
             <h1>Page Three</h1>
           </ion-content>
         `;
@@ -74,6 +74,11 @@
   <ion-app>
     <ion-nav root="page-one"></ion-nav>
   </ion-app>
+  <style>
+    ion-toolbar {
+      --background: white;
+    }
+  </style>
 </body>
 
 </html>

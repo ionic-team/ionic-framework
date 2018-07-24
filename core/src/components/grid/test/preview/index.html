@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Grid</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content" class="grid-demo">
+    <ion-content id="content" class="grid-demo" fullscreen>
       <ion-grid>
         <ion-row>
           <ion-col>
@@ -283,6 +283,10 @@
     </ion-content>
 
     <style>
+      ion-toolbar {
+        --background: white;
+      }
+
       .grid-demo ion-col div {
         background-color: #f7f7f7;
         border: 1px solid #ddd;

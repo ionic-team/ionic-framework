@@ -11,15 +11,13 @@
 
 <body>
   <ion-app>
-
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Toggle</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content">
-
+    <ion-content id="content" fullscreen>
       <ion-list>
         <ion-item>
           <ion-label>Apple</ion-label>
@@ -65,9 +63,7 @@
           <ion-label>Button w/ right side default icon, really long text that should ellipsis</ion-label>
           <ion-icon name="information-circle" slot="end"></ion-icon>
         </ion-item>
-
       </ion-list>
-
 
       <p aria-hidden="true" text-center>
         <ion-button onClick="toggleBoolean('grapeChecked', 'checked')" fill="outline" size="small">Grape Checked</ion-button>
@@ -81,6 +77,12 @@
         <span id="standAloneCheckedSpan"></span>
       </p>
     </ion-content>
+
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
 
     <script>
       function printForm(ev) {

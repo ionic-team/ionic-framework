@@ -11,15 +11,13 @@
 
 <body>
   <ion-app>
-
-
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Pull To Refresh</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content>
+    <ion-content fullscreen>
       <ion-refresher id="refresher" disabled="false" slot="fixed">
         <ion-refresher-content pulling-text="Pull to refresh..." refreshing-spinner="bubbles" refreshing-text="Refreshing...">
         </ion-refresher-content>
@@ -29,8 +27,11 @@
 
     </ion-content>
 
-
-
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
   </ion-app>
   <ion-menu-controller></ion-menu-controller>
 

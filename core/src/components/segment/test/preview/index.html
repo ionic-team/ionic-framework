@@ -12,13 +12,13 @@
 <body onload="listenForEvent()">
   <ion-app>
 
-    <ion-header no-border>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Segment</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content>
+    <ion-content fullscreen>
       <ion-toolbar>
         <ion-segment class="event-tester" value="Free">
           <ion-segment-button value="Paid">
@@ -207,6 +207,10 @@
     </ion-content>
 
     <style>
+      ion-toolbar {
+        --background: white;
+      }
+
       ion-content ion-segment {
         margin-bottom: 10px;
       }

@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Text</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content" padding>
+    <ion-content id="content" padding fullscreen>
       <ion-text color="secondary">
         <h1>H1: The quick brown fox jumps over the lazy dog</h1>
       </ion-text>
@@ -71,6 +71,10 @@
   </ion-app>
 
   <style>
+    ion-toolbar {
+      --background: white;
+    }
+
     .color-purple {
       color: purple;
     }
