@@ -623,8 +623,11 @@ export class Slide {
 }
 
 export declare interface Slides extends StencilComponents.IonSlides {}
-@Directive({selector: 'ion-slides', inputs: ['options', 'pager', 'scrollbar'], outputs: ['ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']})
+@Directive({selector: 'ion-slides', inputs: ['options', 'pager', 'scrollbar'], outputs: ['ionSlidesDidLoad', 'ionSlideTap', 'ionSlideDoubleTap', 'ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']})
 export class Slides {
+  ionSlidesDidLoad: EventEmitter<any>;
+  ionSlideTap: EventEmitter<any>;
+  ionSlideDoubleTap: EventEmitter<any>;
   ionSlideWillChange: EventEmitter<any>;
   ionSlideDidChange: EventEmitter<any>;
   ionSlideNextStart: EventEmitter<any>;
@@ -641,7 +644,7 @@ export class Slides {
   constructor(r: ElementRef) {
     proxyMethods(this, r, ['update', 'slideTo', 'slideNext', 'slidePrev', 'getActiveIndex', 'getPreviousIndex', 'length', 'isEnd', 'isBeginning', 'startAutoplay', 'stopAutoplay', 'lockSwipeToNext', 'lockSwipeToPrev', 'lockSwipes']);
     proxyInputs(this, r, ['options', 'pager', 'scrollbar']);
-    proxyOutputs(this, ['ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']);
+    proxyOutputs(this, ['ionSlidesDidLoad', 'ionSlideTap', 'ionSlideDoubleTap', 'ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']);
   }
 }
 
