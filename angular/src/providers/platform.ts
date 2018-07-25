@@ -49,7 +49,7 @@ export class Platform {
         readyResolve('cordova');
       }, {once: true});
     } else {
-      readyResolve('dom');
+      readyResolve!('dom');
     }
   }
 
@@ -169,7 +169,7 @@ export class Platform {
   /**
    * Get the query string parameter
    */
-  getQueryParam(key: string): string {
+  getQueryParam(key: string): string | null {
     return readQueryParam(window.location.href, key);
   }
 

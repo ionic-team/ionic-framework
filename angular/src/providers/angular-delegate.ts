@@ -28,7 +28,7 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
   constructor(
     private resolver: ComponentFactoryResolver,
     private injector: Injector,
-    private location: ViewContainerRef,
+    private location: ViewContainerRef | undefined,
     private appRef: ApplicationRef,
     private zone: NgZone,
   ) {}
@@ -62,10 +62,10 @@ export class AngularFrameworkDelegate implements FrameworkDelegate {
 export function attachView(
   resolver: ComponentFactoryResolver,
   injector: Injector,
-  location: ViewContainerRef|undefined,
+  location: ViewContainerRef | undefined,
   appRef: ApplicationRef,
   elRefMap: WeakMap<HTMLElement, any>,
-  container: any, component: any, params: any, cssClasses: string[]
+  container: any, component: any, params: any, cssClasses: string[] | undefined
 ) {
   const factory = resolver.resolveComponentFactory(component);
   const childInjector = Injector.create(getProviders(params), injector);
@@ -78,8 +78,10 @@ export function attachView(
   if (params) {
     Object.assign(instance, params);
   }
-  for (const clazz of cssClasses) {
-    hostElement.classList.add(clazz);
+  if (cssClasses) {
+    for (const clazz of cssClasses) {
+      hostElement.classList.add(clazz);
+    }
   }
   bindLifecycleEvents(instance, hostElement);
   container.appendChild(hostElement);
@@ -103,8 +105,8 @@ const LIFECYCLES = [
 
 export function bindLifecycleEvents(instance: any, element: HTMLElement) {
   LIFECYCLES.forEach(eventName => {
-    element.addEventListener(eventName, (ev: CustomEvent) => {
-      if (typeof instance[eventName] === 'function') {
+    element.addEventListener(eventName, (ev: any) => {
+      if (typeof instance[eventName] === 'function' && ev.detail) {
         instance[eventName](ev.detail);
       }
     });

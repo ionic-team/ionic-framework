@@ -18,7 +18,7 @@ export class Config {
     if (c) {
       return c.getBoolean(key, fallback);
     }
-    return null;
+    return false;
   }
 
   getNumber(key: string, fallback?: number): number {
@@ -26,7 +26,7 @@ export class Config {
     if (c) {
       return c.getNumber(key, fallback);
     }
-    return null;
+    return 0;
   }
 
   set(key: string, value?: any) {
@@ -39,7 +39,7 @@ export class Config {
 
 export const ConfigToken = new InjectionToken<any>('USERCONFIG');
 
-function getConfig(): CoreConfig {
+function getConfig(): CoreConfig | null {
   const win: IonicWindow = window as any;
   if (typeof win !== 'undefined') {
     const Ionic = win.Ionic;

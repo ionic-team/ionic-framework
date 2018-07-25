@@ -21,17 +21,17 @@ export class NavController {
 
   goForward(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
     this.setIntent(NavIntent.Forward, animated);
-    return this.router.navigateByUrl(url, extras);
+    return this.router!.navigateByUrl(url, extras);
   }
 
   goBack(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
     this.setIntent(NavIntent.Back, animated);
-    return this.router.navigateByUrl(url, extras);
+    return this.router!.navigateByUrl(url, extras);
   }
 
   goRoot(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
     this.setIntent(NavIntent.Root, animated);
-    return this.router.navigateByUrl(url, extras);
+    return this.router!.navigateByUrl(url, extras);
   }
 
   setIntent(intent: NavIntent, animated?: boolean) {
