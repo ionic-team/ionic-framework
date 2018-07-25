@@ -1,3 +1,15 @@
+<a name="4.0.0-alpha.14"></a>
+# [4.0.0-alpha.14](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.13...v4.0.0-alpha.14) (2018-07-25)
+
+
+### Bug Fixes
+
+* **angular:** hide pages properly ([a44b844](https://github.com/ionic-team/ionic/commit/a44b844))
+* **angular:** make pages invisible before they are rendered ([a589816](https://github.com/ionic-team/ionic/commit/a589816))
+* **transition:** make sure hidden is removed ([f52dece](https://github.com/ionic-team/ionic/commit/f52dece))
+
+
+
 <a name="4.0.0-alpha.13"></a>
 # [4.0.0-alpha.13](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.12...v4.0.0-alpha.13) (2018-07-24)
 
