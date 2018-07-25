@@ -74,6 +74,11 @@ If true, show the scrollbar. Defaults to `false`.
 Emitted after the active slide has changed.
 
 
+#### ionSlideDoubleTap
+
+Emitted when the user double taps on the slide's container.
+
+
 #### ionSlideDrag
 
 Emitted when the slider is actively being moved.
@@ -109,6 +114,11 @@ Emitted when the slider is at the last slide.
 Emitted when the slider is at its initial position.
 
 
+#### ionSlideTap
+
+Emitted when the user taps/clicks on the slide's container.
+
+
 #### ionSlideTouchEnd
 
 Emitted when the user releases the touch.
@@ -132,6 +142,11 @@ Emitted when the slide transition has started.
 #### ionSlideWillChange
 
 Emitted before the active slide has changed.
+
+
+#### ionSlidesDidLoad
+
+Emitted after Swiper initialization
 
 
 ## Methods
