@@ -106,7 +106,7 @@ const LIFECYCLES = [
 export function bindLifecycleEvents(instance: any, element: HTMLElement) {
   LIFECYCLES.forEach(eventName => {
     element.addEventListener(eventName, (ev: any) => {
-      if (typeof instance[eventName] === 'function' && ev.detail) {
+      if (typeof instance[eventName] === 'function') {
         instance[eventName](ev.detail);
       }
     });
