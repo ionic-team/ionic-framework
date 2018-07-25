@@ -403,7 +403,7 @@ export class Slides {
           <slot></slot>
         </div>
         { this.pager ? <div class="swiper-pagination"></div> : null }
-        { this.scrollbar ? <div class="swiper-scrollbar"></div> : null }
+        <div class="swiper-scrollbar" hidden={!this.scrollbar}/>
       </div>
     );
   }
