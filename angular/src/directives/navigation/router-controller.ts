@@ -78,8 +78,9 @@ export class StackController {
       .filter(view => !this.views.includes(view))
       .forEach(view => destroyView(view));
 
-    for (let i = 0; i < this.views.length - 1; i++) {
-      this.views[i].element.hidden = true;
+    for (const {element} of this.views) {
+      element.setAttribute('aria-hidden', 'true');
+      element.classList.add('ion-page-hidden');
     }
     this.viewsSnapshot = this.views.slice();
   }
