@@ -1,3 +1,15 @@
+<a name="4.0.0-beta.0"></a>
+# [4.0.0-beta.0](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.14...v4.0.0-beta.0) (2018-07-25)
+
+## Enjoy! :tada:
+
+
+### Bug Fixes
+
+* **angular:** always dispatch lifecycle events ([5677daa](https://github.com/ionic-team/ionic/commit/5677daa))
+
+
+
 <a name="4.0.0-alpha.14"></a>
 # [4.0.0-alpha.14](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.13...v4.0.0-alpha.14) (2018-07-25)
 
