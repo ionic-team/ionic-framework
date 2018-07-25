@@ -100,7 +100,7 @@ export class StackController {
     const leavingEl = leavingView ? leavingView.element : undefined;
     const containerEl = this.containerEl;
     if (enteringEl && enteringEl !== leavingEl) {
-      enteringEl.classList.add('ion-page', 'hide-page');
+      enteringEl.classList.add('ion-page', 'ion-page-invisible');
       containerEl.appendChild(enteringEl);
 
       await containerEl.componentOnReady();
