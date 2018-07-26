@@ -1269,7 +1269,7 @@ The following set of CSS files are optional and can safely be commented out if t
 Adds utility attributes that allow adding `padding` and `margin` attributes to any element. See [content space](https://beta.ionicframework.com/docs/layout/css-utilities#content-space) for what this includes.
 
 - **float-elements.css**
-Adds utility attributes that allow adding `float`` attributes to any element. See [element placement](https://beta.ionicframework.com/docs/layout/css-utilities/#element-placement) for what this includes.
+Adds utility attributes that allow adding `float` attributes to any element. See [element placement](https://beta.ionicframework.com/docs/layout/css-utilities/#element-placement) for what this includes.
 
 - **text-alignment.css**
 Adds utility attributes that allow adding text alignment attributes to any element. See [text alignment](https://beta.ionicframework.com/docs/layout/css-utilities/#text-alignment) for what this includes.
