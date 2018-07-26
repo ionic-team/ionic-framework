@@ -42,6 +42,7 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Overlays](#overlays)
 - [Radio](#radio)
 - [Range](#range)
+- [Refresher](#refresher)
 - [Segment](#segment)
 - [Select](#select)
 - [Spinner](#spinner)
@@ -1038,6 +1039,27 @@ These have been renamed to the following:
   <ion-icon name="sunny" slot="start"></ion-icon>
   <ion-icon name="sunny" slot="end"></ion-icon>
 </ion-range>
+```
+
+
+## Refresher
+
+The `enabled` property (with a default value of `true`) has been renamed to `disabled` (with a default value of `false`).
+
+**Old Usage Example:**
+
+```html
+<ion-refresher enabled="false">
+  ...
+</ion-refresher>
+```
+
+**New Usage Example:**
+
+```html
+<ion-refresher disabled="true">
+  ...
+</ion-refresher>
 ```
 
 

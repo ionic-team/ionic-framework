@@ -5443,7 +5443,7 @@ declare global {
        */
       'complete': () => void;
       /**
-       * If true, the refresher will be hidden. Defaults to `true`.
+       * If true, the refresher will be hidden. Defaults to `false`.
        */
       'disabled': boolean;
       /**
@@ -5489,7 +5489,7 @@ declare global {
        */
       'closeDuration'?: string;
       /**
-       * If true, the refresher will be hidden. Defaults to `true`.
+       * If true, the refresher will be hidden. Defaults to `false`.
        */
       'disabled'?: boolean;
       /**

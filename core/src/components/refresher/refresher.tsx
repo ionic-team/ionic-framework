@@ -71,9 +71,9 @@ export class Refresher {
   @Prop() snapbackDuration = '280ms';
 
   /**
-   * If true, the refresher will be hidden. Defaults to `true`.
+   * If true, the refresher will be hidden. Defaults to `false`.
    */
-  @Prop() disabled = true;
+  @Prop() disabled = false;
 
   /**
    * Emitted when the user lets go of the content and has pulled down
