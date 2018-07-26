@@ -1238,6 +1238,81 @@ Typography should now be written as an `<ion-text>` element. Previously the `ion
 
 ## Theming
 
+### Global CSS
+
+Many of the components in Ionic 4 have self-contained styles thanks to [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+However, there are still global styles that need to be included in order for an Ionic app to look and behave properly. The global styles include normalizing elements, typography, colors, and more.
+
+#### Basic CSS Files
+
+The basic set of CSS files should be included to ensure the Ionic application behaves natively.
+
+- **normalize.css**
+Normalizes the CSS differences between browsers, it's based on https://necolas.github.io/normalize.css/
+
+- **structure.css**
+Applies styles to the `<html>` element and defaults `box-sizing` to `border-box`. It's used to ensure scrolling behaves natively on mobile devices.
+
+- **typography.css**
+Changes the `font-family` of the whole page based on the mode selected (iOS or Material Design). It also applies global styles to native HTML elements.
+
+- **colors.css**
+Allows the `color` property to work across all Ionic components.
+
+
+#### Additional CSS Files
+
+The following set of CSS files are optional and can safely be commented out if the application is not using any of the features.
+
+- **padding.css**
+Adds utility attributes that allow adding `padding` and `margin` attributes to any element. See [content space](https://beta.ionicframework.com/docs/layout/css-utilities#content-space) for what this includes.
+
+- **float-elements.css**
+Adds utility attributes that allow adding `float`` attributes to any element. See [element placement](https://beta.ionicframework.com/docs/layout/css-utilities/#element-placement) for what this includes.
+
+- **text-alignment.css**
+Adds utility attributes that allow adding text alignment attributes to any element. See [text alignment](https://beta.ionicframework.com/docs/layout/css-utilities/#text-alignment) for what this includes.
+
+- **text-transformation.css**
+Adds utility attributes that allow adding text transformation attributes to any element. See [text transformation](https://beta.ionicframework.com/docs/layout/css-utilities/#text-transformation) for what this includes.
+
+- **flex-utils.css**
+Adds utility attributes that allow adding flex container and item attributes to any element. See [flex properties](https://beta.ionicframework.com/docs/layout/css-utilities/#flex-properties) for what this includes.
+
+
+#### Including the CSS Files
+
+Official Ionic starters are already properly configured so the following steps are not needed.
+
+#### Testing
+
+To include the stylesheet for testing such as in a Plunker, Codepen, or anywhere else:
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/@ionic/angular/css/ionic.min.css"/>
+```
+
+#### Production
+
+To use the css in production, we recommend importing it into a global file, such as `app/global.scss`:
+
+```css
+/** Basic CSS for Ionic Apps */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/colors.css";
+
+/** Optional CSS utilities that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+```
+
+
 ### CSS Utilities
 
 #### Padding
