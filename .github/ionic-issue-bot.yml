@@ -55,12 +55,12 @@ stale:
   
 labelPullRequest:
   labels:
-    - label: "v3"
+    - label: v3
       branch: v3
-    - label: "angular"
+    - label: angular
       branch: master
       path: ^angular
-    - label: "core"
+    - label: core
       branch: master
       path: ^core
   dryRun: false
