@@ -47,8 +47,8 @@ export class InfiniteScroll {
    * If true, the infinite scroll will be hidden and scroll event listeners
    * will be removed.
    *
-   * Call `enable(false)` to disable the infinite scroll from actively
-   * trying to receive new data while scrolling. This method is useful
+   * Set this to true to disable the infinite scroll from actively
+   * trying to receive new data while scrolling. This is useful
    * when it is known that there is no more data that can be added, and
    * the infinite scroll is no longer needed.
    */

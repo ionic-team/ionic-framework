@@ -28,6 +28,7 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Fixed Content](#fixed-content)
 - [Grid](#grid)
 - [Icon](#icon)
+- [Infinite Scroll](#infinite-scroll)
 - [Item](#item)
 - [Item Divider](#item-divider)
 - [Item Options](#item-options)
@@ -489,6 +490,56 @@ _Note: we are no longer adding the `icon` class to an `ion-icon`, so the element
 ### Property Removed
 
 The `isActive` property has been removed. It only worked for `ios` icons previously. If you would like to switch between an outline and solid icon you should set it in the `name`, or `ios`/`md` attribute and then change it when needed.
+
+## Infinite Scroll
+
+### Method Removed
+
+The `enable()` method has been removed in favor of using the `disabled` property on the `ion-infinite-scroll` element.
+
+**Old Usage Example:**
+
+```html
+<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>
+```
+
+```javascript
+doInfinite(infiniteScroll) {
+  console.log('Begin async operation');
+
+  setTimeout(() => {
+    console.log('Async operation has ended');
+    infiniteScroll.complete();
+
+    // To disable the infinite scroll
+    infiniteScroll.enable(false);
+  }, 500);
+}
+```
+
+**New Usage Example:**
+
+```html
+<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>
+```
+
+```javascript
+doInfinite(event) {
+  console.log('Begin async operation');
+
+  setTimeout(() => {
+    console.log('Async operation has ended');
+    event.target.complete();
+
+    // To disable the infinite scroll
+    event.target.disabled = true;
+  }, 500);
+}
+```
 
 
 ## Item
