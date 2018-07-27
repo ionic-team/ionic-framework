@@ -52,6 +52,18 @@ stale:
   close: true
   lock: true
   dryRun: false
+  
+labelPullRequest:
+  labels:
+    - label: "v3"
+      branch: v3
+    - label: "angular"
+      branch: master
+      path: ^angular
+    - label: "core"
+      branch: master
+      path: ^core
+  dryRun: false
 
 wrongRepo:
   repos:
