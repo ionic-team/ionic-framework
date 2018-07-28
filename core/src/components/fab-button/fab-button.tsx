@@ -76,7 +76,7 @@ export class FabButton {
   hostData() {
 
     return {
-      'tappable': true,
+      'tappable': !this.disabled,
       class: {
         ...createColorClasses(this.color),
         ...this.getFabClassMap(),
