@@ -84,9 +84,12 @@
   text-transform: inherit;
 
   box-shadow: var(--box-shadow);
-  cursor: pointer;
   overflow: hidden;
   box-sizing: border-box;
+}
+
+button, a {
+  cursor: pointer;
 }
 
 .item-state {
