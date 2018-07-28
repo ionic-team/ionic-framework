@@ -21,7 +21,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
   @Input()
   set animated(animated: boolean) {
-    (this.elementRef.nativeElement as HTMLIonRouterOutletElement).animated = true;
+    (this.elementRef.nativeElement as HTMLIonRouterOutletElement).animated = animated;
   }
 
   constructor(
