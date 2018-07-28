@@ -19,6 +19,10 @@
   box-sizing: border-box;
 }
 
+:host(.ion-color) {
+  color: #{current-color(base)};
+}
+
 // Textarea Within An Item
 // --------------------------------------------------
 
@@ -31,6 +35,7 @@
 // --------------------------------------------------
 
 .native-textarea {
+  @include text-inherit();
   @include border-radius(var(--border-radius));
   @include placeholder(var(--placeholder-color));
   @include margin(0);
@@ -47,11 +52,6 @@
 
   background: transparent;
 
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-
-  letter-spacing: inherit;
   box-sizing: border-box;
   resize: none;
   appearance: none;

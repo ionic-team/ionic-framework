@@ -25,6 +25,9 @@
   /* stylelint-enable */
 }
 
+:host(.ion-color) {
+  color: #{current-color(base)};
+}
 
 // Native Text Input
 // --------------------------------------------------
@@ -32,6 +35,7 @@
 .native-input {
   @include border-radius(var(--border-radius));
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include text-inherit();
 
   display: inline-block;
 
@@ -45,13 +49,7 @@
 
   background: transparent;
 
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-
-  letter-spacing: inherit;
   box-sizing: border-box;
-  font-kerning: inherit;
   appearance: none;
 
   &::placeholder {

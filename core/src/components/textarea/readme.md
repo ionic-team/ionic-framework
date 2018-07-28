@@ -41,6 +41,15 @@ boolean
 If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
 
 
+#### color
+
+string
+
+The color to use from your application's color palette.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
+
+
 #### cols
 
 number
@@ -74,6 +83,14 @@ If the value of the type attribute is `text`, `email`, `search`, `password`, `te
 number
 
 If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+
+
+#### mode
+
+string
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
 
 
 #### name
@@ -162,6 +179,15 @@ boolean
 If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
 
 
+#### color
+
+string
+
+The color to use from your application's color palette.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
+
+
 #### cols
 
 number
@@ -195,6 +221,14 @@ If the value of the type attribute is `text`, `email`, `search`, `password`, `te
 number
 
 If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
+
+
+#### mode
+
+string
+
+The mode determines which platform styles to use.
+Possible values are: `"ios"` or `"md"`.
 
 
 #### name

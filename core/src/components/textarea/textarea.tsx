@@ -17,9 +17,6 @@ export class Textarea implements TextareaComponent {
   private inputEl?: HTMLTextAreaElement;
   private inputId = `ion-input-${textareaIds++}`;
 
-  mode!: Mode;
-  color?: Color;
-
   didBlurAfterEdit = false;
 
   @Element() el!: HTMLElement;
@@ -50,6 +47,19 @@ export class Textarea implements TextareaComponent {
    * Emitted when the input has focus.
    */
   @Event() ionFocus!: EventEmitter<void>;
+
+  /**
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
+  @Prop() color?: Color;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.

@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 import { Color, InputChangeEvent, Mode, StyleEvent  } from '../../interface';
 import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
-import { hostContext } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 import { InputComponent } from './input-base';
 
 
@@ -19,8 +19,6 @@ export class Input implements InputComponent {
   private inputId = `ion-input-${inputIds++}`;
   didBlurAfterEdit = false;
 
-  mode!: Mode;
-  color?: Color;
 
   @State() hasFocus = false;
 
@@ -60,6 +58,19 @@ export class Input implements InputComponent {
    * Emitted when the input has been removed.
    */
   @Event() ionInputDidUnload!: EventEmitter<void>;
+
+  /**
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
+  @Prop() color?: Color;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
@@ -306,6 +317,8 @@ export class Input implements InputComponent {
   hostData() {
     return {
       class: {
+        ...createColorClasses(this.color),
+
         'in-item': hostContext('.item', this.el),
         'has-value': this.hasValue(),
         'has-focus': this.hasFocus

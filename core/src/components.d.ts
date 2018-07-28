@@ -2784,6 +2784,10 @@ declare global {
        */
       'clearOnEdit': boolean;
       /**
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+       */
+      'color': Color;
+      /**
        * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
        */
       'debounce': number;
@@ -2811,6 +2815,10 @@ declare global {
        * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
        */
       'minlength': number;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': Mode;
       /**
        * If true, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
        */
@@ -2910,6 +2918,10 @@ declare global {
        */
       'clearOnEdit'?: boolean;
       /**
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+       */
+      'color'?: Color;
+      /**
        * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
        */
       'debounce'?: number;
@@ -2937,6 +2949,10 @@ declare global {
        * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
        */
       'minlength'?: number;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: Mode;
       /**
        * If true, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
        */
@@ -7525,6 +7541,10 @@ declare global {
        */
       'clearOnEdit': boolean;
       /**
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+       */
+      'color': Color;
+      /**
        * The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
        */
       'cols': number;
@@ -7544,6 +7564,10 @@ declare global {
        * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
        */
       'minlength': number;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': Mode;
       /**
        * The name of the control, which is submitted with the form data.
        */
@@ -7615,6 +7639,10 @@ declare global {
        */
       'clearOnEdit'?: boolean;
       /**
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+       */
+      'color'?: Color;
+      /**
        * The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
        */
       'cols'?: number;
@@ -7634,6 +7662,10 @@ declare global {
        * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
        */
       'minlength'?: number;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: Mode;
       /**
        * The name of the control, which is submitted with the form data.
        */
