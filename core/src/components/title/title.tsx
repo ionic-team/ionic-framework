@@ -1,5 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 import { Color, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-title',
@@ -20,6 +21,12 @@ export class ToolbarTitle {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
+
+  hostData() {
+    return {
+      class: createColorClasses(this.color)
+    };
+  }
 
   render() {
     return [

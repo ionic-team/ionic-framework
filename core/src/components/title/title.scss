@@ -12,6 +12,10 @@
   transform: translateZ(0);
 }
 
+:host(.ion-color) {
+  color: #{current-color(base)};
+}
+
 .toolbar-title {
   display: block;
 
