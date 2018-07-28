@@ -4,7 +4,9 @@
 // --------------------------------------------------
 
 :host {
+  --placeholder-color: currentColor;
   --placeholder-weight: inherit;
+  --placeholder-opacity: .5;
   --padding-top: 0;
   --padding-end: 0;
   --padding-bottom: 0;
@@ -57,6 +59,8 @@
 
     font-family: inherit;
     font-weight: var(--placeholder-weight);
+
+    opacity: var(--placeholder-opacity);
   }
 
   &:-webkit-autofill {

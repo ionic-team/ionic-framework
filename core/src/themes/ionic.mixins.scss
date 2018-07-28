@@ -35,35 +35,6 @@
   -webkit-font-smoothing: antialiased;
 }
 
-// Input Placeholder
-// --------------------------------------------------
-
-@mixin placeholder($color: #999, $text-indent: 0, $opacity: null) {
-  &::-moz-placeholder { // Firefox 19+
-    color: $color;
-    @if ($opacity) {
-      opacity: $opacity;
-    }
-  }
-
-  &:-ms-input-placeholder {
-    color: $color;
-    @if ($opacity) {
-      opacity: $opacity;
-    }
-  }
-
-  &::-webkit-input-placeholder {
-    // Safari placeholder margin issue
-    text-indent: $text-indent;
-    color: $color;
-    @if ($opacity) {
-      opacity: $opacity;
-    }
-  }
-}
-
-
 // Get the key from a map based on the index
 @function index-to-key($map, $index) {
   $keys: map-keys($map);

@@ -81,7 +81,6 @@
 // --------------------------------------------------
 
 .alert-input {
-  @include placeholder($alert-ios-input-placeholder-color);
   @include border-radius($alert-ios-input-border-radius);
   @include margin($alert-ios-input-margin-top, null, null, null);
   @include padding($alert-ios-input-padding-top, $alert-ios-input-padding-end, $alert-ios-input-padding-bottom, $alert-ios-input-padding-start);
@@ -90,6 +89,14 @@
 
   background-color: $alert-ios-input-background-color;
   appearance: none;
+
+  &::placeholder {
+    color: $alert-ios-input-placeholder-color;
+
+    font-family: inherit;
+    font-weight: inherit;
+  }
+
 }
 
 

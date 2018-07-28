@@ -4,6 +4,10 @@
 // --------------------------------------------------
 
 :host {
+  --placeholder-color: currentColor;
+  --placeholder-weight: inherit;
+  --placeholder-opacity: .5;
+
   @include font-smoothing();
 
   display: flex;
@@ -30,6 +34,8 @@
 }
 
 .searchbar-input {
+  @include text-inherit();
+
   box-sizing: border-box;
 
   display: block;
@@ -43,9 +49,22 @@
   font-family: inherit;
   appearance: none;
 
+  &::placeholder {
+    color: var(--placeholder-color);
+
+    font-family: inherit;
+    font-weight: var(--placeholder-weight);
+
+    opacity: var(--placeholder-opacity);
+  }
+
   &::-webkit-search-cancel-button {
     display: none;
   }
+}
+
+.searchbar-cancel-button {
+  color: var(--cancel-button-color);
 }
 
 .searchbar-clear-button {
@@ -57,6 +76,8 @@
   min-height: 0;
 
   outline: none;
+
+  color: var(--clear-button-color);
   appearance: none;
 }
 
