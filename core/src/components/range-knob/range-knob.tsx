@@ -52,7 +52,7 @@ export class RangeKnob {
       'tabindex': this.disabled ? -1 : 0,
       'aria-valuemin': min,
       'aria-valuemax': max,
-      'aria-disabled': this.disabled,
+      'aria-disabled': this.disabled ? 'true' : null,
       'aria-labelledby': this.labelId,
       'aria-valuenow': value
     };

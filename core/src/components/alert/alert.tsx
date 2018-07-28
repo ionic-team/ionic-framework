@@ -313,7 +313,15 @@ export class Alert implements OverlayInterface {
     return (
       <div class="alert-checkbox-group" aria-labelledby={labelledby}>
         { inputs.map((i) => (
-          <button onClick={() => this.cbClick(i)} aria-checked={i.checked} id={i.id} disabled={i.disabled} tabIndex={0} role="checkbox" class="alert-tappable alert-checkbox alert-checkbox-button">
+          <button
+            onClick={() => this.cbClick(i)}
+            aria-checked={i.checked ? 'true' : null}
+            id={i.id}
+            disabled={i.disabled}
+            tabIndex={0}
+            role="checkbox"
+            class="alert-tappable alert-checkbox alert-checkbox-button">
+
             <div class="alert-button-inner">
               <div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>
               <div class="alert-checkbox-label">
@@ -335,7 +343,13 @@ export class Alert implements OverlayInterface {
     return (
       <div class="alert-radio-group" role="radiogroup" aria-labelledby={labelledby} aria-activedescendant={this.activeId}>
         { inputs.map((i) => (
-          <button onClick={() => this.rbClick(i)} aria-checked={i.checked} disabled={i.disabled} id={i.id} tabIndex={0} class="alert-radio-button alert-tappable alert-radio" role="radio">
+          <button
+            onClick={() => this.rbClick(i)}
+            aria-checked={i.checked ? 'true' : null}
+            disabled={i.disabled}
+            id={i.id} tabIndex={0}
+            class="alert-radio-button alert-tappable alert-radio"
+            role="radio">
             <div class="alert-button-inner">
               <div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>
               <div class="alert-radio-label">

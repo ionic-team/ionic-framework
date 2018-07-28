@@ -319,7 +319,7 @@ export class Input implements InputComponent {
     return [
       <input
         ref={input => this.nativeInput = input as any}
-        aria-disabled={this.disabled ? 'true' : false}
+        aria-disabled={this.disabled ? 'true' : null}
         accept={this.accept}
         autoCapitalize={this.autocapitalize}
         autoComplete={this.autocomplete}

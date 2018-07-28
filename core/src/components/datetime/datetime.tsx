@@ -577,7 +577,7 @@ export class Datetime {
         aria-haspopup="true"
         id={this.datetimeId}
         aria-labelledby={this.labelId}
-        aria-disabled={this.disabled ? 'true' : false}
+        aria-disabled={this.disabled ? 'true' : null}
         onClick={this.open.bind(this)}
         class="datetime-cover">
         { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }

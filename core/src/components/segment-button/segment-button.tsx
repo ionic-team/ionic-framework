@@ -68,7 +68,7 @@ export class SegmentButton {
   render() {
     return [
       <button
-        aria-pressed={this.checked}
+        aria-pressed={this.checked ? 'true' : null}
         class="segment-button-native"
         disabled={this.disabled}
         onClick={() => this.checked = true }>

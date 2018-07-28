@@ -487,9 +487,9 @@ export class Select {
         type="button"
         role="combobox"
         aria-haspopup="dialog"
-        aria-expanded={this.isExpanded}
         aria-labelledby={this.labelId}
-        aria-disabled={this.disabled ? 'true' : false}
+        aria-expanded={this.isExpanded ? 'true' : null}
+        aria-disabled={this.disabled ? 'true' : null}
         onClick={this.open.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
         onFocus={this.onFocus.bind(this)}

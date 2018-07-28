@@ -48,7 +48,7 @@ export class TabButton {
     const hasBadge = !!this.badge;
     return {
       'role': 'tab',
-      'aria-selected': selected,
+      'aria-selected': selected ? 'true' : null,
       class: {
         ...createColorClasses(this.color),
         'tab-selected': selected,
