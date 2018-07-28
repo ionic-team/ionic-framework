@@ -14,7 +14,7 @@ export class Events {
   subscribe(topic: string, ...handlers: Function[]) {
     let topics = this.c.get(topic);
     if (!topics) {
-      topics = [];
+      this.c.set(topic, topics = []);
     }
     topics.push(...handlers);
   }
@@ -62,7 +62,14 @@ export class Events {
     if (!topics) {
       return null;
     }
-    return topics.map((handler => handler(...args)));
+    return topics.map(handler => {
+      try {
+        return handler(...args);
+      } catch (e) {
+        console.error(e);
+        return null;
+      }
+    });
   }
 }
 
