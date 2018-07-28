@@ -19,6 +19,11 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
   @Output('activate') activateEvents = new EventEmitter<any>();
   @Output('deactivate') deactivateEvents = new EventEmitter<any>();
 
+  @Input()
+  set animated(animated: boolean) {
+    (this.elementRef.nativeElement as HTMLIonRouterOutletElement).animated = true;
+  }
+
   constructor(
     private parentContexts: ChildrenOutletContexts,
     private location: ViewContainerRef,
