@@ -225,7 +225,7 @@ export class Tabbar {
     if (this.scrollable) {
       return [
         <ion-button onClick={() => this.scrollByTab('left')} fill="clear" class={{ inactive: !this.canScrollLeft }}>
-          <ion-icon name="arrow-dropleft"/>
+          <ion-icon name="arrow-dropleft" lazy={false}/>
         </ion-button>,
 
         <ion-scroll forceOverscroll={false} ref={(scrollEl) => this.scrollEl = scrollEl as HTMLIonScrollElement}>
@@ -234,7 +234,7 @@ export class Tabbar {
         </ion-scroll>,
 
         <ion-button onClick={() => this.scrollByTab('right')} fill="clear" class={{ inactive: !this.canScrollRight }}>
-          <ion-icon name="arrow-dropright"/>
+          <ion-icon name="arrow-dropright" lazy={false}/>
         </ion-button>
       ];
     } else {

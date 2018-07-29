@@ -331,7 +331,7 @@ export class Searchbar {
         onClick={this.cancelSearchbar.bind(this)}
         class="searchbar-cancel-button">
           { this.mode === 'md'
-            ? <ion-icon mode={this.mode} icon={this.cancelButtonIcon}></ion-icon>
+            ? <ion-icon mode={this.mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
             : this.cancelButtonText }
       </button>
       : null;
@@ -339,7 +339,7 @@ export class Searchbar {
     return [
       <div class="searchbar-input-container">
         { this.mode === 'md' && cancelButton }
-        <ion-icon mode={this.mode} icon={searchIcon} class="searchbar-search-icon"></ion-icon>
+        <ion-icon mode={this.mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
         <input
           ref={(el) => this.nativeInput = el as HTMLInputElement}
           class="searchbar-input"
@@ -360,7 +360,7 @@ export class Searchbar {
           onClick={this.clearInput.bind(this)}
           onMouseDown={this.clearInput.bind(this)}
           onTouchStart={this.clearInput.bind(this)}>
-            <ion-icon mode={this.mode} icon={clearIcon} class="searchbar-clear-icon"></ion-icon>
+            <ion-icon mode={this.mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
         </button>
       </div>,
       this.mode === 'ios' && cancelButton

@@ -80,7 +80,7 @@ export class BackButton {
         class="back-button-native"
         onClick={(ev) => this.onClick(ev)}>
         <span class="back-button-inner">
-          { backButtonIcon && <ion-icon icon={backButtonIcon}/> }
+          { backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}/> }
           { this.mode === 'ios' && backButtonText && <span class="button-text">{backButtonText}</span> }
           { this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el}/> }
         </span>

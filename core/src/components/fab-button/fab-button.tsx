@@ -94,7 +94,7 @@ export class FabButton {
         disabled={this.disabled}
         href={this.href}>
         <span class="fab-button-close-icon">
-          <ion-icon name="close"></ion-icon>
+          <ion-icon name="close" lazy={false}></ion-icon>
         </span>
         <span class="fab-button-inner">
           <slot></slot>

@@ -240,9 +240,7 @@ export class ActionSheet implements OverlayInterface {
             {buttons.map(b =>
               <button class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
                 <span class="action-sheet-button-inner">
-                  {b.icon
-                    ? <ion-icon icon={b.icon} class="action-sheet-icon" />
-                    : null}
+                  {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
                   {b.text}
                 </span>
               </button>
@@ -255,12 +253,12 @@ export class ActionSheet implements OverlayInterface {
                   onClick={() => this.buttonClick(cancelButton)}
                 >
                   <span class="action-sheet-button-inner">
-                    {cancelButton.icon
-                      ? <ion-icon
-                          icon={cancelButton.icon}
-                          class="action-sheet-icon"
-                        />
-                      : null}
+                    {cancelButton.icon &&
+                      <ion-icon
+                        icon={cancelButton.icon}
+                        lazy={false}
+                        class="action-sheet-icon"
+                      />}
                     {cancelButton.text}
                   </span>
                 </button>

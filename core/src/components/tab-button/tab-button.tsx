@@ -72,7 +72,7 @@ export class TabButton {
         class="tab-button-native"
         onKeyUp={this.onKeyUp.bind(this)}
         onBlur={this.onBlur.bind(this)}>
-        { icon && <ion-icon class="tab-button-icon" icon={icon}></ion-icon> }
+        { icon && <ion-icon class="tab-button-icon" icon={icon} lazy={false}></ion-icon> }
         { label && <span class="tab-button-text">{label}</span> }
         { badge && <ion-badge class="tab-badge" color={badgeColor}>{badge}</ion-badge> }
         { mode === 'md' && <ion-ripple-effect tapClick={true}/> }
