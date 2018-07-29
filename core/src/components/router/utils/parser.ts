@@ -1,7 +1,6 @@
 import { RouteChain, RouteNode, RouteRedirect, RouteTree } from './interface';
 import { parsePath } from './path';
 
-
 export function readRedirects(root: Element): RouteRedirect[] {
   return (Array.from(root.children) as HTMLIonRouteRedirectElement[])
     .filter(el => el.tagName === 'ION-ROUTE-REDIRECT')

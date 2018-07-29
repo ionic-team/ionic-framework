@@ -1,6 +1,5 @@
 import { Animation } from '../../../interface';
 
-
 /**
  * iOS Loading Enter Animation
  */

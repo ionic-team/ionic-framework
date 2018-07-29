@@ -1,4 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
+
 import { Color, Config, Mode } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
@@ -45,7 +46,6 @@ export class BackButton {
    */
   @Prop() text?: string;
 
-
   private async onClick(ev: Event) {
     const nav = this.el.closest('ion-nav');
     if (nav && nav.canGoBack()) {
@@ -78,7 +78,7 @@ export class BackButton {
     return (
       <button
         class="back-button-native"
-        onClick={(ev) => this.onClick(ev)}>
+        onClick={ev => this.onClick(ev)}>
         <span class="back-button-inner">
           { backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}/> }
           { this.mode === 'ios' && backButtonText && <span class="button-text">{backButtonText}</span> }

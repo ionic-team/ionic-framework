@@ -1,4 +1,5 @@
 import { Animation, Menu } from '../../../interface';
+
 import { baseAnimation } from './base';
 
 /**

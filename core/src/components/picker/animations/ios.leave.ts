@@ -1,6 +1,5 @@
 import { Animation } from '../../../interface';
 
-
 /**
  * iOS Picker Leave Animation
  */

@@ -1,4 +1,5 @@
 import { Component } from '@stencil/core';
+
 import { Mode } from '../../interface';
 
 @Component({

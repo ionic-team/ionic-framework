@@ -1,4 +1,5 @@
 import { Animation, Menu } from '../../../interface';
+
 import { baseAnimation } from './base';
 
 const BOX_SHADOW_WIDTH = 8;
@@ -9,7 +10,8 @@ const BOX_SHADOW_WIDTH = 8;
  * itself, which is under the menu, does not move.
  */
 export function menuOverlayAnimation(AnimationC: Animation, _: HTMLElement, menu: Menu): Promise<Animation> {
-  let closedX: string, openedX: string;
+  let closedX: string;
+  let openedX: string;
   const width = menu.width + BOX_SHADOW_WIDTH;
   if (menu.isEndSide) {
     // right side

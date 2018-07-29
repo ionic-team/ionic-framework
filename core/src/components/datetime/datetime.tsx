@@ -1,11 +1,10 @@
 import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
-import { DatetimeData, LocaleData, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
-
 import { CssClassMap, PickerColumn, PickerOptions, StyleEvent } from '../../interface';
 import { clamp, deferEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
+import { DatetimeData, LocaleData, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
 @Component({
   tag: 'ion-datetime',
@@ -199,7 +198,6 @@ export class Datetime {
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
 
-
   componentWillLoad() {
     // first see if locale names were provided in the inputs
     // then check to see if they're in the config
@@ -235,8 +233,6 @@ export class Datetime {
   }
 
   private buildPicker(pickerOptions: PickerOptions) {
-    console.debug('Build Datetime: Picker with', pickerOptions);
-
     // If the user has not passed in picker buttons,
     // add a cancel and ok button to the picker
     const buttons = pickerOptions.buttons;
@@ -257,7 +253,6 @@ export class Datetime {
 
     const picker = this.pickerCtrl.create(pickerOptions);
 
-    console.debug('Built Datetime: Picker with', pickerOptions);
     return picker;
   }
 
@@ -488,7 +483,6 @@ export class Datetime {
     }
     return 0;
   }
-
 
   private divyColumns(columns: PickerColumn[]): PickerColumn[] {
     const pickerColumns = columns;

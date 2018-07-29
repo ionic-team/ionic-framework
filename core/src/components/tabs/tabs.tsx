@@ -1,7 +1,7 @@
 import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
+
 import { Color, Config, NavOutlet, RouteID, RouteWrite, TabbarLayout, TabbarPlacement } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-tabs',
@@ -332,5 +332,3 @@ export class Tabs implements NavOutlet {
 }
 
 let tabIds = -1;
-
-

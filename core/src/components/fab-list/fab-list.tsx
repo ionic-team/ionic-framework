@@ -1,6 +1,5 @@
 import { Component, Element, Prop, Watch } from '@stencil/core';
 
-
 @Component({
   tag: 'ion-fab-list',
   styleUrl: 'fab-list.scss',
@@ -29,7 +28,6 @@ export class FabList {
    * The side the fab list will show on relative to the main fab button. Defaults to `'bottom'`.
    */
   @Prop() side: 'start' | 'end' | 'top' | 'bottom' = 'bottom';
-
 
   hostData() {
     return {

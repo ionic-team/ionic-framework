@@ -1,4 +1,5 @@
 import { NavOutletElement, RouteChain, RouteID } from '../../../interface';
+
 import { RouterIntent } from './constants';
 
 export async function writeNavState(
@@ -70,7 +71,7 @@ export function waitUntilNavNode(win: Window) {
   if (searchNavNode(win.document.body)) {
     return Promise.resolve();
   }
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     win.addEventListener('ionNavWillLoad', resolve, { once: true });
   });
 }

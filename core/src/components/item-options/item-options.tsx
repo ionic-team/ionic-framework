@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+
 import { Side } from '../../interface';
 import { isEndSide } from '../../utils/helpers';
 

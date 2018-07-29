@@ -1,4 +1,5 @@
 import { Config, Mode } from '../interface';
+
 import { SIZE_TO_MEDIA } from './media';
 import { isAndroid, isCordova, isElectron, isIOS, isIpad, isIphone, isPhablet, isTablet, matchMedia } from './platform';
 
@@ -24,7 +25,6 @@ export function isModeMatch(config: Config, multiModeString: string) {
   const currentMode = config.get('mode');
   return modes.indexOf(currentMode) >= 0;
 }
-
 
 export function isSizeMatch(win: Window, multiSizeString: string) {
   const sizes = multiSizeString.replace(/\s/g, '').split(',');
@@ -83,7 +83,6 @@ export function isOrientationMatch(win: Window, orientation: string) {
 export function isPortrait(win: Window): boolean {
   return matchMedia(win, '(orientation: portrait)');
 }
-
 
 // order from most specifc to least specific
 export const PLATFORM_CONFIGS: PlatformConfig[] = [

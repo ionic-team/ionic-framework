@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
+
 import { AlertButton, AlertInput, Animation, AnimationBuilder, Color, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
 import { createColorClasses, getClassMap } from '../../utils/theme';
@@ -312,7 +313,7 @@ export class Alert implements OverlayInterface {
     }
     return (
       <div class="alert-checkbox-group" aria-labelledby={labelledby}>
-        { inputs.map((i) => (
+        { inputs.map(i => (
           <button
             onClick={() => this.cbClick(i)}
             aria-checked={i.checked ? 'true' : null}
@@ -342,7 +343,7 @@ export class Alert implements OverlayInterface {
     }
     return (
       <div class="alert-radio-group" role="radiogroup" aria-labelledby={labelledby} aria-activedescendant={this.activeId}>
-        { inputs.map((i) => (
+        { inputs.map(i => (
           <button
             onClick={() => this.rbClick(i)}
             aria-checked={i.checked ? 'true' : null}

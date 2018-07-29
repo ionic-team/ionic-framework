@@ -1,8 +1,10 @@
 import { TestWindow } from '@stencil/core/dist/testing';
+
 import { RouteChain, RouteID } from '../utils/interface';
 import { routerIDsToChain, routerPathToChain } from '../utils/matching';
 import { readRoutes } from '../utils/parser';
 import { chainToPath, generatePath, parsePath } from '../utils/path';
+
 import { mockRouteElement } from './parser.spec';
 
 describe('ionic-conference-app', () => {
@@ -48,7 +50,6 @@ describe('ionic-conference-app', () => {
     win = new TestWindow() as any;
   });
 
-
   function conferenceAppRouting() {
   const p2 = mockRouteElement(win, '/', 'tab-schedule');
   const p3 = mockRouteElement(win, '/', 'PAGE-SCHEDULE');
@@ -74,7 +75,6 @@ describe('ionic-conference-app', () => {
   return container;
 }
 });
-
 
 export function getRouteIDs(path: string, routes: RouteChain[]): string[] {
   return routerPathToChain(parsePath(path), routes)!.map(r => r.id);

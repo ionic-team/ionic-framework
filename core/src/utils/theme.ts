@@ -21,7 +21,6 @@ export function createThemedClasses(mode: Mode | undefined, name: string): CssCl
   };
 }
 
-
 export function getClassList(classes: string | string[] | undefined): string[] {
   if (classes) {
     const array = Array.isArray(classes) ? classes : classes.split(' ');
@@ -43,7 +42,9 @@ export async function openURL(win: Window, url: string | undefined, ev: Event, d
   if (url && url[0] !== '#' && url.indexOf('://') === -1) {
     const router = win.document.querySelector('ion-router');
     if (router) {
-      ev && ev.preventDefault();
+      if (ev) {
+        ev.preventDefault();
+      }
       await router.componentOnReady();
       return router.push(url, direction);
     }

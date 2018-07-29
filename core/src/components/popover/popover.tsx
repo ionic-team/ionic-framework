@@ -1,13 +1,12 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Color, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 
+import { Animation, AnimationBuilder, Color, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
-
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
@@ -127,7 +126,6 @@ export class Popover implements OverlayInterface {
    */
   @Event({ eventName: 'ionPopoverDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
-
   componentDidLoad() {
     this.ionPopoverDidLoad.emit();
   }
@@ -225,8 +223,8 @@ export class Popover implements OverlayInterface {
       'no-router': true,
       class: {
         ...createThemedClasses(this.mode, 'popover'),
-        ...themedClasses,
         ...getClassMap(this.cssClass),
+        ...themedClasses,
       }
     };
   }
@@ -250,7 +248,6 @@ const LIFECYCLE_MAP: any = {
   'ionPopoverWillDismiss': 'ionViewWillDismiss',
   'ionPopoverDidDismiss': 'ionViewDidDismiss',
 };
-
 
 export const POPOVER_POSITION_PROPERTIES: any = {
   ios: {

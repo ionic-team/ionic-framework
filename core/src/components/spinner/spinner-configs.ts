@@ -1,5 +1,4 @@
 
-
 export const SPINNERS: SpinnerConfigs = {
 
   'lines': {
@@ -98,7 +97,6 @@ export const SPINNERS: SpinnerConfigs = {
     }
   }
 };
-
 
 export interface SpinnerConfigs {
   [spinnerName: string]: SpinnerConfig;

@@ -1,4 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
+
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 

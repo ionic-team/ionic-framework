@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
 
+import { Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
@@ -26,11 +26,8 @@ export class Picker implements OverlayInterface {
   @State() private showSpinner!: boolean;
   @State() private spinner!: string;
 
-  @Prop({ connect: 'ion-animation-controller' })
-  animationCtrl!: HTMLIonAnimationControllerElement;
-
-  @Prop({ context: 'config' })
-  config!: Config;
+  @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
+  @Prop({ context: 'config' }) config!: Config;
 
   /** @hidden */
   @Prop() overlayId!: number;
@@ -281,6 +278,7 @@ export class Picker implements OverlayInterface {
     return {
       class: {
         ...createThemedClasses(this.mode, 'picker'),
+        ...getClassMap(this.cssClass)
       },
       style: {
         zIndex: 20000 + this.overlayId
@@ -289,19 +287,11 @@ export class Picker implements OverlayInterface {
   }
 
   render() {
-    // TODO: cssClass
-
-    const buttons = this.buttons
-      .map(b => {
-        if (typeof b === 'string') {
-          b = { text: b };
-        }
-        if (!b.cssClass) {
-          b.cssClass = '';
-        }
-        return b;
-      })
-      .filter(b => b !== null);
+    const buttons = this.buttons.map(b => {
+      return (typeof b === 'string')
+        ? { text: b }
+        : b;
+    });
 
     const columns = this.columns;
 

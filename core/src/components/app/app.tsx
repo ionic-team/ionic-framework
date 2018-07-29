@@ -1,4 +1,5 @@
 import { Component, Element, Prop, QueueApi } from '@stencil/core';
+
 import { Config } from '../../interface';
 import { isDevice, isHybrid, needInputShims } from '../../utils/platform';
 

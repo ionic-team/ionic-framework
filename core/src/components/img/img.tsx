@@ -1,6 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
-
 @Component({
   tag: 'ion-img',
   styleUrl: 'img.scss',
@@ -43,7 +42,7 @@ export class Img {
     }
     if ('IntersectionObserver' in window) {
       this.removeIO();
-      this.io = new IntersectionObserver((data) => {
+      this.io = new IntersectionObserver(data => {
         // because there will only ever be one instance
         // of the element we are observing
         // we can just use data[0]

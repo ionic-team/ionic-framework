@@ -1,6 +1,5 @@
 import { Animation } from '../../../interface';
 
-
 /**
  * iOS Loading Leave Animation
  */
@@ -17,7 +16,6 @@ export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): P
 
   wrapperAnimation.fromTo('opacity', 0.99, 0)
                   .fromTo('scale', 1, 0.9);
-
 
   return Promise.resolve(baseAnimation
     .addElement(baseEl)

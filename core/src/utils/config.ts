@@ -1,5 +1,4 @@
 
-
 export function setupConfig(config: {[key: string]: any}) {
   const win = window as any;
   const Ionic = win.Ionic;

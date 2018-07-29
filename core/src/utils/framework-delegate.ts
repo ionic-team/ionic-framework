@@ -12,8 +12,12 @@ export async function attachComponent(delegate: FrameworkDelegate | undefined, c
     ? container.ownerDocument.createElement(component)
     : component;
 
-  cssClasses && cssClasses.forEach(c => el.classList.add(c));
-  componentProps && Object.assign(el, componentProps);
+  if (cssClasses) {
+    cssClasses.forEach(c => el.classList.add(c));
+  }
+  if (componentProps) {
+    Object.assign(el, componentProps);
+  }
 
   container.appendChild(el);
   if (el.componentOnReady) {

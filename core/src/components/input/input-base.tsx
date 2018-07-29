@@ -1,6 +1,7 @@
 // Shared Interfaces
 
 import { EventEmitter } from '@stencil/core';
+
 import { StyleEvent } from '../../interface';
 
 export interface InputBaseComponent {

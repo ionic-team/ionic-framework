@@ -1,11 +1,10 @@
 import { TestWindow } from '@stencil/core/dist/testing';
+
 import { Config } from '../../../global/config';
 import { AnimationControllerImpl } from '../../animation-controller/animation-controller';
 import { Nav } from '../nav';
 import { NavOptions } from '../nav-interface';
 import { ViewController, ViewState } from '../view-controller';
-
-
 
 describe('NavController', () => {
 
@@ -164,7 +163,6 @@ describe('NavController', () => {
       );
       expect(nav.length()).toEqual(2);
 
-
     }, 10000);
   });
 
@@ -229,7 +227,7 @@ describe('NavController', () => {
 
     }, 10000);
 
-    it('should not insert if null view', (done) => {
+    it('should not insert if null view', done => {
       mockViews(nav, [mockView(MockView1)]);
 
       nav.insert(-1, null as any, null, null, trnsDone).then(() => {
@@ -290,7 +288,7 @@ describe('NavController', () => {
 
   describe('pop', () => {
 
-    it('should not pop when no views in the stack', (done) => {
+    it('should not pop when no views in the stack', done => {
       nav.pop(null, trnsDone).then(() => {
         fail('it should not succeed');
         done();
@@ -338,7 +336,6 @@ describe('NavController', () => {
       expect(nav.getByIndex(0)!.component).toEqual(MockView1);
       expect(nav['isTransitioning']).toEqual(false);
 
-
     }, 10000);
 
   });
@@ -362,7 +359,6 @@ describe('NavController', () => {
       expect(nav.getByIndex(0)!.component).toEqual(MockView1);
       expect(nav.getByIndex(1)!.component).toEqual(MockView2);
 
-
     }, 10000);
 
     it('should pop to using an index number', async () => {
@@ -382,7 +378,6 @@ describe('NavController', () => {
       expect(nav.length()).toEqual(2);
       expect(nav.getByIndex(0)!.component).toEqual(MockView1);
       expect(nav.getByIndex(1)!.component).toEqual(MockView2);
-
 
     }, 10000);
 
@@ -484,7 +479,6 @@ describe('NavController', () => {
       expect(nav.length()).toEqual(1);
       expect(nav.getByIndex(0)!.component).toEqual(MockView1);
 
-
     }, 10000);
 
     it('should not pop first view if it\'s the only view', async () => {
@@ -499,7 +493,6 @@ describe('NavController', () => {
       );
       expect(nav.length()).toEqual(1);
       expect(nav.getByIndex(0)!.component).toEqual(MockView1);
-
 
     }, 10000);
 
@@ -552,7 +545,6 @@ describe('NavController', () => {
       );
       expect(nav.length()).toEqual(1);
       expect(nav.getByIndex(0)!.component).toEqual(MockView4);
-
 
     }, 10000);
 
@@ -612,7 +604,6 @@ describe('NavController', () => {
       expect(nav.getByIndex(1)!.component).toEqual(MockView2);
       expect(nav.getByIndex(2)!.component).toEqual(MockView5);
 
-
     }, 10000);
 
     it('should remove the last two views at the end', async () => {
@@ -662,7 +653,6 @@ describe('NavController', () => {
       expect(nav.getByIndex(0)!.component).toEqual(MockView1);
       expect(nav.getByIndex(1)!.component).toEqual(MockView2);
 
-
     }, 10000);
 
   });
@@ -705,7 +695,6 @@ describe('NavController', () => {
       );
       expect(nav.length()).toEqual(1);
       expect(nav.getByIndex(0)!.component).toEqual(MockView3);
-
 
     }, 10000);
 
@@ -785,8 +774,6 @@ describe('NavController', () => {
       expect(nav.length()).toEqual(1);
       expect(nav.getByIndex(0)!.component).toEqual(MockView1);
 
-
-
     }, 10000);
 
     it('should set a page component as the root, with transition', async () => {
@@ -812,7 +799,6 @@ describe('NavController', () => {
       );
       expect(nav.length()).toEqual(1);
       expect(nav.getByIndex(0)!.component).toEqual(MockView4);
-
 
     }, 10000);
   });
@@ -846,7 +832,6 @@ describe('NavController', () => {
       expect(nav.getByIndex(0)!.component).toEqual(MockView4);
       expect(nav.getByIndex(1)!.component).toEqual(MockView5);
 
-
     }, 10000);
 
   });
@@ -873,7 +858,6 @@ describe('NavController', () => {
       expect(result).toEqual(true);
     });
   });
-
 
   function spyOnLifecycles(view: ViewController) {
     const element = view.element as any;
@@ -921,14 +905,12 @@ describe('NavController', () => {
     nav = mockNavController();
   });
 
-
   const MockView = 'mock-view';
   const MockView1 = 'mock-view1';
   const MockView2 = 'mock-view2';
   const MockView3 = 'mock-view3';
   const MockView4 = 'mock-view4';
   const MockView5 = 'mock-view5';
-
 
   function mockView(component ?: any, data ?: any) {
     if (!component) {
@@ -970,4 +952,3 @@ describe('NavController', () => {
     return navI;
   }
 });
-

@@ -1,6 +1,5 @@
 import { Animation } from '../../../interface';
 
-
 /**
  * iOS Modal Enter Animation
  */
@@ -34,7 +33,6 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): P
 
 // }
 
-
 // export class ModalSlideOut {
 //   constructor(el: HTMLElement) {
 //     let backdrop = new Animation(this.plt, el.querySelector('ion-backdrop'));
@@ -56,7 +54,6 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): P
 //   }
 // }
 
-
 // export class ModalMDSlideIn {
 //   constructor(el: HTMLElement) {
 //     const backdrop = new Animation(this.plt, el.querySelector('ion-backdrop'));
@@ -73,7 +70,6 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement): P
 //       .add(wrapper);
 //   }
 // }
-
 
 // export class ModalMDSlideOut {
 //   constructor(el: HTMLElement) {

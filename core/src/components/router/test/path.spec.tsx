@@ -43,7 +43,6 @@ describe('parseURL', () => {
   });
 });
 
-
 describe('generatePath', () => {
   it('should generate an empty URL', () => {
     expect(generatePath([])).toEqual('/');
@@ -67,7 +66,6 @@ describe('generatePath', () => {
 
   });
 });
-
 
 describe('chainToPath', () => {
   it('should generate a simple URL', () => {
@@ -193,7 +191,6 @@ describe('writePath', () => {
     expect(history.pushState).toHaveBeenCalledWith(123, '', '/to/schedule');
   });
 
-
   it('should write non root path (no hash)', () => {
     const history = mockHistory();
     writePath(history, '/path', false, [''], RouterIntent.Forward, 2);
@@ -248,11 +245,9 @@ function mockHistory(): History {
   } as any;
 }
 
-
 function mockLocation(pathname: string, hash: string): Location {
   return {
     pathname,
     hash
   } as Location;
 }
-

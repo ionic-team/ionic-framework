@@ -1,4 +1,5 @@
 import { RouteChain } from '../../../interface';
+
 import { RouterIntent } from './constants';
 
 export function generatePath(segments: string[]): string {
@@ -88,4 +89,3 @@ export function parsePath(path: string | undefined | null): string[] {
     return segments;
   }
 }
-

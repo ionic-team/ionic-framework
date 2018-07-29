@@ -1,8 +1,8 @@
 import { Component, Element, Prop, QueueApi, State } from '@stencil/core';
+
 import { GestureDetail, Mode } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
 import { createThemedClasses } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-reorder-group',

@@ -1,7 +1,7 @@
 import { Component, Prop } from '@stencil/core';
+
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-text',

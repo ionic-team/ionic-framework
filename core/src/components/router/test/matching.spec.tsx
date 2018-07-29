@@ -27,8 +27,6 @@ const CHAIN_3: RouteChain = [
   { id: '4', path: [''], params: undefined },
 ];
 
-
-
 describe('matchesIDs', () => {
   it('should match simple set of ids', () => {
     const chain: RouteChain = CHAIN_1;
@@ -228,7 +226,6 @@ describe('mergeParams', () => {
   });
 });
 
-
 describe('RouterSegments', () => {
   it ('should initialize with empty array', () => {
     const s = new RouterSegments([]);
@@ -264,7 +261,6 @@ describe('matchesRedirect', () => {
     expect(matchesRedirect(['workouts'], { from: ['*'], to: [''] })).toBeTruthy();
     expect(matchesRedirect(['workouts', 'hola'], { from: ['workouts', '*'], to: [''] })).toBeTruthy();
     expect(matchesRedirect(['workouts', 'hola'], { from: ['workouts', 'hola'], to: [''] })).toBeTruthy();
-
 
     expect(matchesRedirect(['workouts'], { from: ['workouts', '*'], to: [''] })).toBeFalsy();
     expect(matchesRedirect(['workouts', 'hola'], { from: ['workouts'], to: [''] })).toBeFalsy();

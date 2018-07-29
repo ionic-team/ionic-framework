@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi, State } from '@stencil/core';
+
 import { GestureDetail, Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -42,7 +43,6 @@ export class Refresher {
    * - `completing` - The `refreshing` state has finished and the refresher is in the process of closing itself. Once closed, the refresher will go back to the `inactive` state.
    */
   @State() private state: RefresherState = RefresherState.Inactive;
-
 
   @Element() el!: HTMLElement;
 
@@ -222,7 +222,6 @@ export class Refresher {
     }
 
     // prevent native scroll events
-    console.debug('preventDefault');
     ev.preventDefault();
 
     // the refresher is actively pulling at this point

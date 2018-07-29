@@ -1,8 +1,9 @@
 import { Component, Prop } from '@stencil/core';
+
 import { Color, Config, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
-import { SPINNERS, SpinnerConfig } from './spinner-configs';
 
+import { SPINNERS, SpinnerConfig } from './spinner-configs';
 
 @Component({
   tag: 'ion-spinner',
@@ -44,7 +45,6 @@ export class Spinner {
    * If true, the spinner's animation will be paused. Defaults to `false`.
    */
   @Prop() paused = false;
-
 
   private getName(): string {
     let name = this.name || this.config.get('spinner');
@@ -101,7 +101,6 @@ export class Spinner {
   }
 }
 
-
 function buildCircle(spinner: SpinnerConfig, duration: number, index: number, total: number) {
   const data = spinner.fn(duration, index, total);
   data.style['animation-duration'] = `${duration}ms`;
@@ -112,7 +111,6 @@ function buildCircle(spinner: SpinnerConfig, duration: number, index: number, to
     </svg>
   );
 }
-
 
 function buildLine(spinner: SpinnerConfig, duration: number, index: number, total: number) {
   const data = spinner.fn(duration, index, total);

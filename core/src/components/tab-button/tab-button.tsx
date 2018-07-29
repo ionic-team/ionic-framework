@@ -1,7 +1,7 @@
 import { Component, Element, Prop, State } from '@stencil/core';
+
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-tab-button',

@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Method, State } from '@stencil/core';
-import { GestureDetail } from '../../interface';
 
+import { GestureDetail } from '../../interface';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -21,7 +21,6 @@ const enum SlidingState {
   SwipeEnd = 1 << 5,
   SwipeStart = 1 << 6,
 }
-
 
 @Component({
   tag: 'ion-item-sliding',
@@ -88,7 +87,6 @@ export class ItemSliding {
     }
   }
 
-
   /**
    * Close the sliding item. Items can also be closed from the [List](../../list/List).
    */
@@ -138,7 +136,9 @@ export class ItemSliding {
   }
 
   private onDragStart() {
-    this.list && this.list.setOpenItem(this.el);
+    if (this.list) {
+      this.list.setOpenItem(this.el);
+    }
 
     if (this.tmr) {
       clearTimeout(this.tmr);
@@ -247,7 +247,9 @@ export class ItemSliding {
         this.state = SlidingState.Disabled;
         this.tmr = undefined;
       }, 600);
-      this.list && this.list.setOpenItem(undefined);
+      if (this.list) {
+        this.list.setOpenItem(undefined);
+      }
       style.transform = '';
       return;
     }

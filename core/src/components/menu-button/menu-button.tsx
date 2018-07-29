@@ -1,4 +1,5 @@
 import { Component, Prop } from '@stencil/core';
+
 import { Color, Config, Mode } from '../../interface';
 
 @Component({

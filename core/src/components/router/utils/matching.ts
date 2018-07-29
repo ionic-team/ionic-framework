@@ -1,6 +1,5 @@
 import { RouteChain, RouteID, RouteRedirect } from './interface';
 
-
 export function matchesRedirect(input: string[], route: RouteRedirect): route is RouteRedirect {
   const { from, to } = route;
   if (to === undefined) {
@@ -26,7 +25,6 @@ export function matchesRedirect(input: string[], route: RouteRedirect): route is
 export function routeRedirect(path: string[], routes: RouteRedirect[]) {
   return routes.find(route => matchesRedirect(path, route)) as RouteRedirect | undefined;
 }
-
 
 export function matchesIDs(ids: string[], chain: RouteChain): number {
   const len = Math.min(ids.length, chain.length);
@@ -96,7 +94,6 @@ export function mergeParams(a: any, b: any): any {
   return undefined;
 }
 
-
 export function routerIDsToChain(ids: RouteID[], chains: RouteChain[]): RouteChain | null {
   let match: RouteChain | null = null;
   let maxMatches = 0;
@@ -117,7 +114,6 @@ export function routerIDsToChain(ids: RouteID[], chains: RouteChain[]): RouteCha
   }
   return null;
 }
-
 
 export function routerPathToChain(path: string[], chains: RouteChain[]): RouteChain | null {
   let match: RouteChain | null = null;
@@ -164,4 +160,3 @@ export class RouterSegments {
     return '';
   }
 }
-

@@ -1,9 +1,9 @@
 import { Component, Element, Prop, QueueApi } from '@stencil/core';
+
 import { GestureDetail, Mode, PickerColumn, PickerColumnOption } from '../../interface';
 import { hapticSelectionChanged } from '../../utils';
 import { clamp } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
-
 
 /** @hidden */
 @Component({
@@ -237,8 +237,6 @@ export class PickerColumnCmp {
   }
 
   private onDragStart(detail: GestureDetail): boolean {
-    console.debug('picker, onDragStart', detail, this.startY);
-
     // We have to prevent default in order to block scrolling under the picker
     // but we DO NOT have to stop propagation, since we still want
     // some "click" events to capture
@@ -312,8 +310,6 @@ export class PickerColumnCmp {
     if (this.startY === undefined) {
       return;
     }
-
-    console.debug('picker, onDragEnd', detail);
 
     this.velocity = 0;
 
@@ -431,7 +427,7 @@ export class PickerColumnCmp {
           <button
             class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }}
             disable-activated
-            onClick={(event) => this.optClick(event, index)}>
+            onClick={event => this.optClick(event, index)}>
             {o.text}
           </button>
         )}

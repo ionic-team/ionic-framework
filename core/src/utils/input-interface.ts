@@ -1,6 +1,5 @@
 import { EventEmitter } from '@stencil/core';
 
-
 export interface BaseInput {
 
   /**
@@ -18,7 +17,6 @@ export interface BaseInput {
 
   name: string;
 }
-
 
 export interface CheckboxInput extends BaseInput {
   /**
@@ -55,7 +53,6 @@ export interface CheckboxInput extends BaseInput {
   ionStyle: EventEmitter<StyleEvent>;
 }
 
-
 export interface RadioButtonInput extends BaseInput {
   /**
    * Reflects the value of the form control.
@@ -88,8 +85,6 @@ export interface RadioButtonInput extends BaseInput {
 export interface RadioGroupInput extends BaseInput {
   ionChange: EventEmitter<InputChangeEvent>;
 }
-
-
 
 export interface SelectInput extends BaseInput {
   /**
@@ -167,7 +162,6 @@ export interface TextInput extends BaseInput {
   ionStyle: EventEmitter<StyleEvent>;
 }
 
-
 export interface TextMultiLineInput extends TextInput {
   /**
    * The change event is fired when the value of has changed.
@@ -194,7 +188,6 @@ export interface TextMultiLineInput extends TextInput {
    */
   ionStyle: EventEmitter<StyleEvent>;
 }
-
 
 export interface InputChangeEvent {
   value: string | undefined;

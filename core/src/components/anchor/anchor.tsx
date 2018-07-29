@@ -1,7 +1,7 @@
 import { Component, Prop } from '@stencil/core';
+
 import { Color, RouterDirection } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-anchor',
@@ -41,7 +41,7 @@ export class Anchor {
     return (
       <a
         href={this.href}
-        onClick={(ev) => openURL(this.win, this.href, ev, this.routerDirection)}>
+        onClick={ev => openURL(this.win, this.href, ev, this.routerDirection)}>
           <slot></slot>
       </a>
     );

@@ -1,4 +1,5 @@
 import { Component, Element, EventListenerEnable, Listen, Method, Prop, QueueApi, Watch } from '@stencil/core';
+
 import { now } from '../../utils/helpers';
 
 @Component({
@@ -55,7 +56,9 @@ export class RippleEffect {
    */
   @Method()
   addRipple(pageX: number, pageY: number) {
-    let x: number, y: number, size: number;
+    let x: number;
+    let y: number;
+    let size: number;
 
     this.queue.read(() => {
       const rect = this.el.getBoundingClientRect();

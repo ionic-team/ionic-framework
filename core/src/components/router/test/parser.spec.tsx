@@ -1,4 +1,5 @@
 import { TestWindow } from '@stencil/core/dist/testing';
+
 import { RouteRedirect, RouteTree } from '../utils/interface';
 import { flattenRouterTree, readRedirects, readRouteNodes } from '../utils/parser';
 
@@ -107,4 +108,3 @@ export function mockRedirectElement(win: Window, from: string | undefined, to: s
   }
   return el;
 }
-

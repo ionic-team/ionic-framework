@@ -1,4 +1,5 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
+
 import { ComponentProps, NavComponent } from '../../interface';
 
 @Component({

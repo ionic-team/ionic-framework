@@ -1,6 +1,8 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+
 import { Mode } from '../../interface.js';
 import { createThemedClasses } from '../../utils/theme.js';
+
 import { Swiper } from './vendor/swiper.js';
 
 @Component({
@@ -94,7 +96,7 @@ export class Slides {
   @Watch('options')
   updateSwiperOptions() {
     const newOptions = this.normalizeOptions();
-    this.swiper.params = Object.assign({}, this.swiper.params, newOptions);
+    this.swiper.params = { ...this.swiper.params, ...newOptions };
     this.update();
   }
 
@@ -117,7 +119,6 @@ export class Slides {
   }
 
   private initSlides() {
-    console.debug(`ion-slides, init`);
     this.container = (this.el.shadowRoot || this.el).querySelector('.swiper-container') as HTMLElement;
     const finalOptions = this.normalizeOptions();
     // init swiper core
@@ -363,7 +364,7 @@ export class Slides {
     };
 
     // Merge the base, user options, and events together then pas to swiper
-    return Object.assign({}, swiperOptions, this.options, eventOptions);
+    return { ...swiperOptions, ...this.options, ...eventOptions };
   }
 
   hostData() {
@@ -374,7 +375,7 @@ export class Slides {
 
   render() {
     return (
-      <div class="swiper-container" ref={ (el) => this.container = el as HTMLElement }>
+      <div class="swiper-container" ref={el => this.container = el as HTMLElement }>
         <div class="swiper-wrapper">
           <slot></slot>
         </div>

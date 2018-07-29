@@ -1,11 +1,12 @@
 
-
 export function transitionEnd(el: HTMLElement | null, callback: (ev?: TransitionEvent) => void) {
-  let unRegTrans: () => void;
+  let unRegTrans: (() => void) | undefined;
   const opts: any = { passive: true };
 
   function unregister() {
-    unRegTrans && unRegTrans();
+    if (unRegTrans) {
+      unRegTrans();
+    }
   }
 
   function onTransitionEnd(ev: Event) {

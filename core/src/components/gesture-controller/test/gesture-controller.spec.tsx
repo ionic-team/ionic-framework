@@ -69,7 +69,6 @@ describe('gesture controller', () => {
     }
   });
 
-
   it('should test if canStart', () => {
     const c = new GestureController();
     expect(c.canStart('event')).toEqual(true);
@@ -107,7 +106,6 @@ describe('gesture controller', () => {
     expect(g['id']).toEqual(1);
     expect(g2['id']).toEqual(2);
   });
-
 
   it('should initialize a delegate with options', async () => {
     const c = new GestureController();
@@ -158,7 +156,6 @@ describe('gesture controller', () => {
     expected3.set(2, 3);
     expect(c['requestedStart']).toEqual(expected3);
   });
-
 
   it('should test if several gestures try to capture at the same time', async () => {
     const c = new GestureController();
@@ -261,7 +258,6 @@ describe('gesture controller', () => {
       expect(b2['ctrl']).toEqual(c);
       expect(b2['id']).toEqual(2);
 
-
       expect(c.isDisabled('event1')).toBeFalsy();
       expect(c.isDisabled('event2')).toBeFalsy();
       expect(c.isDisabled('event3')).toBeFalsy();
@@ -304,7 +300,6 @@ describe('gesture controller', () => {
       expect(c.isDisabled('event4')).toBeFalsy();
       expect(c.isDisabled('event5')).toBeFalsy();
     });
-
 
     it('should disable some events', async () => {
       const c = new GestureController();

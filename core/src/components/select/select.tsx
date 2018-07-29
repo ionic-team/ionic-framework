@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
+
 import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
 import { deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createThemedClasses, hostContext } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-select',
@@ -109,7 +109,6 @@ export class Select {
    * Emitted when the styles change.
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
-
 
   @Watch('disabled')
   disabledChanged() {
@@ -219,7 +218,6 @@ export class Select {
       }
     });
   }
-
 
   componentWillLoad() {
     if (!this.value) {

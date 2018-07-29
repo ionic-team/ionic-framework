@@ -1,6 +1,6 @@
 import { Component, ComponentDidLoad, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
-import { InputChangeEvent, RadioGroupInput } from '../../interface';
 
+import { InputChangeEvent, RadioGroupInput } from '../../interface';
 
 @Component({
   tag: 'ion-radio-group'

@@ -42,14 +42,12 @@ export interface Animation {
   hasCompleted: boolean;
 }
 
-
 export type AnimationBuilder = (Animation: Animation, baseEl: HTMLElement, opts?: any) => Promise<Animation>;
 
 export interface PlayOptions {
   duration?: number;
   promise?: boolean;
 }
-
 
 export interface EffectProperty {
   effectName: string;
@@ -59,7 +57,6 @@ export interface EffectProperty {
   from?: EffectState;
   [state: string]: any;
 }
-
 
 export interface EffectState {
   val: any;

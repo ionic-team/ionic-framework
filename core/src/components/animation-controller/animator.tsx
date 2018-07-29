@@ -2,7 +2,6 @@ import { EffectProperty, EffectState, PlayOptions } from './animation-interface'
 import { CSS_PROP, CSS_VALUE_REGEX, DURATION_MIN, TRANSITION_END_FALLBACK_PADDING_MS } from './constants';
 import { transitionEnd } from './transition-end';
 
-
 export const TRANSFORM_PROPS: {[key: string]: number} = {
   'translateX': 1,
   'translateY': 1,
@@ -270,8 +269,8 @@ export class Animator {
    */
   beforeClearStyles(propertyNames: string[]): Animator {
     this._beforeStyles = this._beforeStyles || {};
-    for (let i = 0; i < propertyNames.length; i++) {
-      this._beforeStyles[propertyNames[i]] = '';
+    for (const prop of propertyNames) {
+      this._beforeStyles[prop] = '';
     }
     return this;
   }
@@ -652,8 +651,12 @@ export class Animator {
    * NO RECURSION
    */
   _clearAsync() {
-    this._unregisterTrnsEnd && this._unregisterTrnsEnd();
-    this._timerId && clearTimeout(this._timerId);
+    if (this._unregisterTrnsEnd) {
+      this._unregisterTrnsEnd();
+    }
+    if (this._timerId) {
+      clearTimeout(this._timerId);
+    }
     this._timerId = this._unregisterTrnsEnd = undefined;
   }
 
@@ -839,9 +842,9 @@ export class Animator {
 
       // inline styles to add before the animation
       if (this._beforeStyles) {
-        for (const prop in this._beforeStyles) {
+        for (const [key, value] of Object.entries(this._beforeStyles)) {
           // ******** DOM WRITE ****************
-          (el as any).style[prop] = this._beforeStyles[prop];
+          el.style.setProperty(key, value);
         }
       }
     }
@@ -895,18 +898,12 @@ export class Animator {
    * DOM WRITE
    */
   _setAfterStyles() {
-    let i: number, j: number;
-    let el: HTMLElement;
-    let elementClassList: DOMTokenList;
     const elements = this._elements;
     if (!elements) {
       return;
     }
-    let prop: string;
-
-    for (i = 0; i < elements.length; i++) {
-      el = elements[i];
-      elementClassList = el.classList;
+    for (const el of elements) {
+      const elementClassList = el.classList;
 
       // remove the transition duration/easing
       // ******** DOM WRITE ****************
@@ -918,27 +915,25 @@ export class Animator {
         // css classes that were added before the animation should be removed
         const beforeAddClasses = this._beforeAddClasses;
         if (beforeAddClasses) {
-          for (j = 0; j < beforeAddClasses.length; j++) {
-            // ******** DOM WRITE ****************
-            elementClassList.remove(beforeAddClasses[j]);
+          for (const c of beforeAddClasses) {
+            elementClassList.remove(c);
           }
         }
 
         // css classes that were removed before the animation should be added
         const beforeRemoveClasses = this._beforeRemoveClasses;
         if (beforeRemoveClasses) {
-          for (j = 0; j < beforeRemoveClasses.length; j++) {
-            // ******** DOM WRITE ****************
-            elementClassList.add(beforeRemoveClasses[j]);
+          for (const c of beforeRemoveClasses) {
+            elementClassList.add(c);
           }
         }
 
         // inline styles that were added before the animation should be removed
         const beforeStyles = this._beforeStyles;
         if (beforeStyles) {
-          for (prop in beforeStyles) {
+          for (const propName of Object.keys(beforeStyles)) {
             // ******** DOM WRITE ****************
-            (el as any).style[prop] = '';
+            el.style.removeProperty(propName);
           }
         }
 
@@ -948,27 +943,26 @@ export class Animator {
         // css classes to add after the animation
         const afterAddClasses = this._afterAddClasses;
         if (afterAddClasses) {
-          for (j = 0; j < afterAddClasses.length; j++) {
+          for (const c of afterAddClasses) {
             // ******** DOM WRITE ****************
-            elementClassList.add(afterAddClasses[j]);
+            elementClassList.add(c);
           }
         }
 
         // css classes to remove after the animation
         const afterRemoveClasses = this._afterRemoveClasses;
         if (afterRemoveClasses) {
-          for (j = 0; j < afterRemoveClasses.length; j++) {
+          for (const c of afterRemoveClasses) {
             // ******** DOM WRITE ****************
-            elementClassList.remove(afterRemoveClasses[j]);
+            elementClassList.remove(c);
           }
         }
 
         // inline styles to add after the animation
         const afterStyles = this._afterStyles;
         if (afterStyles) {
-          for (prop in afterStyles) {
-            // ******** DOM WRITE ****************
-            (el as any).style[prop] = afterStyles[prop];
+          for (const [key, value] of Object.entries(afterStyles)) {
+            el.style.setProperty(key, value);
           }
         }
       }

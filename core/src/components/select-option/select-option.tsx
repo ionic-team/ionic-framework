@@ -1,6 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
 
-
 @Component({
   tag: 'ion-select-option'
 })

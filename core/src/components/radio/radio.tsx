@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+
 import { CheckedInputChangeEvent, Color, Mode, RadioButtonInput, StyleEvent } from '../../interface';
 import { deferEvent } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-radio',
@@ -83,7 +83,6 @@ export class Radio implements RadioButtonInput {
    * Emitted when the radio button loses focus.
    */
   @Event() ionBlur!: EventEmitter<void>;
-
 
   componentWillLoad() {
     this.ionSelect = deferEvent(this.ionSelect);

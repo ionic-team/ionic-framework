@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -12,7 +13,6 @@ const QUERY: { [key: string]: string } = {
   'xl': '(min-width: 1200px)',
   'never': ''
 };
-
 
 @Component({
   tag: 'ion-split-pane',
@@ -68,8 +68,10 @@ export class SplitPane {
   }
 
   componentDidUnload() {
-    this.rmL && this.rmL();
-    this.rmL = null;
+    if (this.rmL) {
+      this.rmL();
+      this.rmL = undefined;
+    }
   }
 
   @Watch('when')
@@ -77,8 +79,10 @@ export class SplitPane {
     if (this.isServer) {
       return;
     }
-    this.rmL && this.rmL();
-    this.rmL = null;
+    if (this.rmL) {
+      this.rmL();
+      this.rmL = undefined;
+    }
 
     // Check if the split-pane is disabled
     if (this.disabled) {
@@ -163,7 +167,6 @@ export class SplitPane {
   }
 
 }
-
 
 function setPaneClass(el: HTMLElement, isMain: boolean) {
   let toAdd;

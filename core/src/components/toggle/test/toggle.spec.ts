@@ -1,4 +1,5 @@
 import { TestWindow, spyOnEvent } from '@stencil/core/testing';
+
 import { Toggle } from '../toggle';
 
 describe('toggle', () => {

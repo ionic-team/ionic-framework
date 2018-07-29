@@ -1,7 +1,7 @@
 import { Component, Element, Listen, Method, Prop, QueueApi } from '@stencil/core';
+
 import { Color, Config, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-content',
@@ -69,7 +69,6 @@ export class Content {
   getScrollElement(): HTMLIonScrollElement {
     return this.scrollEl!;
   }
-
 
   private resize() {
     if (!this.scrollEl) {

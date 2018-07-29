@@ -1,4 +1,5 @@
 import { EventEmitter } from '@stencil/core';
+
 import { Side } from '../interface';
 
 export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {

@@ -1,4 +1,5 @@
 import { Component, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+
 import { Knob } from '../../interface';
 
 /** @hidden */

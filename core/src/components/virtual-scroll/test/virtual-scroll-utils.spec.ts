@@ -2,7 +2,6 @@ import { HeaderFn, ItemHeightFn, VirtualNode } from '../../../interface';
 import { CellType } from '../virtual-scroll-interface';
 import { Range, calcCells, calcHeightIndex, getRange, getShouldUpdate, getViewport, positionForIndex, resizeBuffer, updateVDom } from '../virtual-scroll-utils';
 
-
 describe('getViewport', () => {
   it('should return viewport without margin', () => {
     expect(getViewport(0, 100, 0)).toEqual({
@@ -18,7 +17,6 @@ describe('getViewport', () => {
     });
   });
 
-
   it('should return viewport with margin and scrollTop', () => {
     expect(getViewport(150, 100, 150)).toEqual({
       top: 0,
@@ -33,7 +31,6 @@ describe('getViewport', () => {
     });
   });
 });
-
 
 describe('getRange', () => {
   it('should return initial bounds without buffer', () => {
@@ -145,7 +142,6 @@ describe('resizeBuffer', () => {
     expect(buf2[0]).toEqual(100);
   });
 });
-
 
 describe('calcCells', () => {
   it('should calculate cells without headers and itemHeight', () => {
@@ -500,7 +496,6 @@ describe('updateVDom', () => {
     ]);
   });
 });
-
 
 function mockVirtualScroll(
   items: any[],

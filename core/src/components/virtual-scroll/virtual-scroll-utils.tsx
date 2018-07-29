@@ -1,4 +1,5 @@
 import { Cell, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
+
 import { CellType, NodeChange } from './virtual-scroll-interface';
 
 export interface Viewport {
@@ -26,7 +27,7 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
 
   for (let i = range.offset; i < end; i++) {
     const cell = cells[i];
-    const node = dom.find((n) => n.d && n.cell === cell);
+    const node = dom.find(n => n.d && n.cell === cell);
     if (node) {
       const top = heightIndex[i];
       if (top !== node.top) {
@@ -40,7 +41,7 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
   }
 
   // needs to append
-  const pool = dom.filter((n) => n.d);
+  const pool = dom.filter(n => n.d);
 
   for (const cell of toMutate) {
     const node = pool.find(n => n.d && n.cell.type === cell.type);
@@ -61,13 +62,12 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
     }
   }
   dom
-  .filter((n) => n.d && n.top !== -9999)
-  .forEach((n) => {
+  .filter(n => n.d && n.top !== -9999)
+  .forEach(n => {
     n.change = NodeChange.Position;
     n.top = -9999;
   });
 }
-
 
 export function doRender(
   el: HTMLElement,
@@ -162,7 +162,6 @@ export function getShouldUpdate(dirtyIndex: number, currentRange: Range, range: 
   );
 }
 
-
 export function findCellIndex(cells: Cell[], index: number): number {
   if (index === 0) {
     return 0;
@@ -242,7 +241,6 @@ export function calcCells(
   return cells;
 }
 
-
 export function calcHeightIndex(buf: Uint32Array, cells: Cell[], index: number): number {
   let acum = buf[index];
   for (; index < buf.length; index++) {
@@ -251,7 +249,6 @@ export function calcHeightIndex(buf: Uint32Array, cells: Cell[], index: number):
   }
   return acum;
 }
-
 
 export function resizeBuffer(buf: Uint32Array | undefined, len: number) {
   if (!buf) {

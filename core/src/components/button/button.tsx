@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+
 import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
 import { getParentNode, openURL } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-button',
@@ -190,7 +190,6 @@ export class Button {
     );
   }
 }
-
 
 /**
  * Get the classes based on the button type

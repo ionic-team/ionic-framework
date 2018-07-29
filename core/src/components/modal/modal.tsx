@@ -1,13 +1,12 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
-
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
@@ -222,14 +221,3 @@ const LIFECYCLE_MAP: any = {
   'ionModalWillDismiss': 'ionViewWillDismiss',
   'ionModalDidDismiss': 'ionViewDidDismiss',
 };
-
-export interface ModalOptions {
-  component: ComponentRef;
-  componentProps?: ComponentProps;
-  showBackdrop?: boolean;
-  enableBackdropDismiss?: boolean;
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
-  cssClass?: string | string[];
-  delegate?: FrameworkDelegate;
-}

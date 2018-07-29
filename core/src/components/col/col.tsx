@@ -1,4 +1,5 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
+
 import { isMatch } from '../../utils/media';
 
 const SUPPORTS_VARS = !!(CSS && CSS.supports && CSS.supports('--a', '0'));

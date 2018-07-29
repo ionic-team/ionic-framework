@@ -2,7 +2,6 @@ import { ComponentProps, FrameworkDelegate, Nav } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 import { assert } from '../../utils/helpers';
 
-
 export const enum ViewState {
   New = 1,
   Attached,

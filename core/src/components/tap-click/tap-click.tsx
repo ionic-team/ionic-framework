@@ -1,6 +1,6 @@
 import { Component, Element, EventListenerEnable, Listen, Prop } from '@stencil/core';
-import { now, pointerCoord } from '../../utils/helpers';
 
+import { now, pointerCoord } from '../../utils/helpers';
 
 /** @hidden */
 @Component({

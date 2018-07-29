@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi } from '@stencil/core';
+
 import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, NavOutlet, RouteID, RouteWrite, RouterOutletOptions } from '../../interface';
 import { transition } from '../../utils';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-
 
 @Component({
   tag: 'ion-router-outlet',

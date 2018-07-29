@@ -1,4 +1,5 @@
 import { Component, Listen, Method, Prop } from '@stencil/core';
+
 import { AlertOptions } from '../../interface';
 import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 

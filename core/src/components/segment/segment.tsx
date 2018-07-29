@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
+
 import { Color, InputChangeEvent, Mode } from '../../interface';
 import { createColorClasses, hostContext } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-segment',

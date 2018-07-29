@@ -1,6 +1,8 @@
 import { Component, EventListenerEnable, Listen, Prop, QueueApi, Watch } from '@stencil/core';
+
 import { GestureCallback, GestureDelegate, GestureDetail } from '../../interface';
 import { assert, now } from '../../utils/helpers';
+
 import { PanRecognizer } from './recognizers';
 
 @Component({

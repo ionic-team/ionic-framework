@@ -1,13 +1,14 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
+
 import { Config, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
 import { debounce } from '../../utils/helpers';
+
 import { RouterIntent } from './utils/constants';
 import { printRedirects, printRoutes } from './utils/debug';
 import { readNavState, waitUntilNavNode, writeNavState } from './utils/dom';
 import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matching';
 import { readRedirects, readRoutes } from './utils/parser';
 import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
-
 
 @Component({
   tag: 'ion-router'
@@ -198,7 +199,9 @@ export class Router {
 
     // generate route event and emit will change
     const routeEvent = this.routeChangeEvent(path, redirectFrom);
-    routeEvent && this.ionRouteWillChange.emit(routeEvent);
+    if (routeEvent) {
+      this.ionRouteWillChange.emit(routeEvent);
+    }
 
     const changed = await writeNavState(node, chain, intent, index);
     this.busy = false;
@@ -208,8 +211,9 @@ export class Router {
     }
 
     // emit did change
-    routeEvent && this.ionRouteDidChange.emit(routeEvent);
-
+    if (routeEvent) {
+      this.ionRouteDidChange.emit(routeEvent);
+    }
     return changed;
   }
 

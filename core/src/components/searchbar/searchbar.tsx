@@ -4,7 +4,6 @@ import { Color, InputChangeEvent, Mode } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
-
 @Component({
   tag: 'ion-searchbar',
   styleUrls: {
@@ -341,7 +340,7 @@ export class Searchbar {
         { this.mode === 'md' && cancelButton }
         <ion-icon mode={this.mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
         <input
-          ref={(el) => this.nativeInput = el as HTMLInputElement}
+          ref={el => this.nativeInput = el as HTMLInputElement}
           class="searchbar-input"
           onInput={this.onInput.bind(this)}
           onBlur={this.onBlur.bind(this)}

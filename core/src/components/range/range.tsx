@@ -1,7 +1,9 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
+
 import { BaseInput, Color, GestureDetail, Mode, RangeInputChangeEvent, StyleEvent } from '../../interface';
 import { clamp, debounceEvent, deferEvent } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
+
 import { Knob, RangeEventDetail, RangeValue } from './range-interface';
 
 @Component({
@@ -332,7 +334,7 @@ export class Range implements BaseInput {
         direction="x"
         threshold={0}
       >
-        <div class="range-slider" ref={(el) => this.rangeSlider = el}>
+        <div class="range-slider" ref={el => this.rangeSlider = el}>
           {ticks.map(t => (
             <div
               style={{ left: t.left }}

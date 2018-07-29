@@ -1,4 +1,5 @@
 import { Animation, Menu } from '../../../interface';
+
 import { baseAnimation } from './base';
 
 /**
@@ -9,7 +10,8 @@ import { baseAnimation } from './base';
  */
 export function menuPushAnimation(AnimationC: Animation, _: HTMLElement, menu: Menu): Promise<Animation> {
 
-  let contentOpenedX: string, menuClosedX: string;
+  let contentOpenedX: string;
+  let menuClosedX: string;
   const width = menu.width;
 
   if (menu.isEndSide) {
@@ -32,7 +34,7 @@ export function menuPushAnimation(AnimationC: Animation, _: HTMLElement, menu: M
     .addElement(menu.backdropEl)
     .fromTo('opacity', 0.01, 0.2);
 
-  return baseAnimation(AnimationC).then((animation) => {
+  return baseAnimation(AnimationC).then(animation => {
     return animation.add(menuAni)
     .add(backdropAni)
     .add(contentAni);

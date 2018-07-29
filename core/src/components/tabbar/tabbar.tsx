@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
+
 import { Color, Mode, TabbarLayout, TabbarPlacement } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -49,8 +50,8 @@ export class Tabbar {
 
   @Watch('selectedTab')
   selectedTabChanged() {
-    this.scrollable && this.scrollToSelectedButton();
-    this.highlight && this.updateHighlight();
+    this.scrollToSelectedButton();
+    this.updateHighlight();
   }
 
   /**
@@ -80,12 +81,12 @@ export class Tabbar {
 
   @Listen('window:resize')
   onResize() {
-    this.highlight && this.updateHighlight();
+    this.updateHighlight();
   }
 
   componentDidLoad() {
-    this.scrollable && this.updateBoundaries();
-    this.highlight && this.updateHighlight();
+    this.updateBoundaries();
+    this.updateHighlight();
   }
 
   protected analyzeTabs() {
@@ -118,17 +119,17 @@ export class Tabbar {
   }
 
   protected scrollToSelectedButton() {
-    if (!this.scrollEl) {
+    if (!this.scrollEl || !this.scrollable) {
       return;
     }
     this.queue.read(() => {
       const activeTabButton = this.getSelectedButton();
 
       if (activeTabButton) {
-        const scrollLeft: number = this.scrollEl!.scrollLeft,
-          tabsWidth: number = this.scrollEl!.clientWidth,
-          left: number = activeTabButton.offsetLeft,
-          right: number = left + activeTabButton.offsetWidth;
+        const scrollLeft = this.scrollEl!.scrollLeft;
+        const tabsWidth = this.scrollEl!.clientWidth;
+        const left = activeTabButton.offsetLeft;
+        const right = left + activeTabButton.offsetWidth;
 
         let amount = 0;
 
@@ -164,8 +165,10 @@ export class Tabbar {
   }
 
   private updateBoundaries() {
-    this.canScrollLeft = this.scrollEl!.scrollLeft !== 0;
-    this.canScrollRight = this.scrollEl!.scrollLeft < (this.scrollEl!.scrollWidth - this.scrollEl!.offsetWidth);
+    if (this.scrollEl && this.scrollable) {
+      this.canScrollLeft = this.scrollEl.scrollLeft !== 0;
+      this.canScrollRight = this.scrollEl.scrollLeft < (this.scrollEl.scrollWidth - this.scrollEl.offsetWidth);
+    }
   }
 
   private updateHighlight() {
@@ -213,7 +216,7 @@ export class Tabbar {
       color={this.color}
       aria-hidden={ !tab.show ? 'true' : null }
       class={{ 'tab-hidden': !tab.show }}
-      onClick={(ev) => {
+      onClick={ev => {
         if (!tab.disabled) {
           this.ionTabbarClick.emit(tab);
         }
@@ -228,7 +231,7 @@ export class Tabbar {
           <ion-icon name="arrow-dropleft" lazy={false}/>
         </ion-button>,
 
-        <ion-scroll forceOverscroll={false} ref={(scrollEl) => this.scrollEl = scrollEl as HTMLIonScrollElement}>
+        <ion-scroll forceOverscroll={false} ref={scrollEl => this.scrollEl = scrollEl as HTMLIonScrollElement}>
           {tabButtons}
           {ionTabbarHighlight}
         </ion-scroll>,

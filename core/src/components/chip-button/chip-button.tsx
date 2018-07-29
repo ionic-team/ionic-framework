@@ -1,4 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
+
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -38,7 +39,6 @@ export class ChipButton {
    * If this property is set, an anchor tag will be rendered.
    */
   @Prop() href?: string;
-
 
   hostData() {
     return {

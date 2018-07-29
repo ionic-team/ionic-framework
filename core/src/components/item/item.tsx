@@ -1,4 +1,5 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
+
 import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
 import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
@@ -11,7 +12,7 @@ import { createColorClasses, hostContext, openURL } from '../../utils/theme';
   shadow: true
 })
 export class Item {
-  private itemStyles: { [key: string]: CssClassMap } = {};
+  private itemStyles = new Map<string, CssClassMap>();
 
   @Element() el!: HTMLStencilElement;
 
@@ -78,7 +79,6 @@ export class Item {
    */
   @Prop() type: 'submit' | 'reset' | 'button' = 'button';
 
-
   @Listen('ionStyle')
   itemStyle(ev: UIEvent) {
     ev.stopPropagation();
@@ -87,7 +87,7 @@ export class Item {
     const updatedStyles = ev.detail as any;
     const updatedKeys = Object.keys(ev.detail);
     const newStyles = {} as any;
-    const childStyles = this.itemStyles[tagName] || {};
+    const childStyles = this.itemStyles.get(tagName) || {};
     let hasStyleChange = false;
     for (const key of updatedKeys) {
       const itemKey = `item-${key}`;
@@ -99,7 +99,7 @@ export class Item {
     }
 
     if (hasStyleChange) {
-      this.itemStyles[tagName] = newStyles;
+      this.itemStyles.set(tagName, newStyles);
       this.el.forceUpdate();
     }
   }
@@ -107,12 +107,11 @@ export class Item {
   componentDidLoad() {
     // Change the button size to small for each ion-button in the item
     // unless the size is explicitly set
-    const buttons = this.el.querySelectorAll('ion-button');
-    for (let i = 0; i < buttons.length; i++) {
-      if (!buttons[i].size) {
-        buttons[i].size = 'small';
+    Array.from(this.el.querySelectorAll('ion-button')).forEach(button => {
+      if (!button.size) {
+        button.size = 'small';
       }
-    }
+    });
   }
 
   private isClickable(): boolean {
@@ -121,8 +120,8 @@ export class Item {
 
   hostData() {
     const childStyles = {};
-    for (const key in this.itemStyles) {
-      Object.assign(childStyles, this.itemStyles[key]);
+    for (const value of this.itemStyles.values()) {
+      Object.assign(childStyles, value);
     }
 
     return {

@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
+
 import { Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -23,7 +24,6 @@ export class Scroll {
 
   /** The mode for component. */
   @Prop() mode!: Mode;
-
 
   /**
    * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
@@ -217,7 +217,6 @@ export class Scroll {
 
     return promise;
   }
-
 
   private onScrollStart() {
     this.isScrolling = true;

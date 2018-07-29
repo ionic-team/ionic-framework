@@ -1,9 +1,10 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+
 import { Color, InputChangeEvent, Mode, StyleEvent, TextFieldTypes } from '../../interface';
 import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
-import { InputComponent } from './input-base';
 
+import { InputComponent } from './input-base';
 
 @Component({
   tag: 'ion-input',
@@ -18,7 +19,6 @@ export class Input implements InputComponent {
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
   didBlurAfterEdit = false;
-
 
   @State() hasFocus = false;
 
@@ -211,7 +211,6 @@ export class Input implements InputComponent {
    * The value of the input.
    */
   @Prop({ mutable: true }) value = '';
-
 
   /**
    * Update the native input element when the value changes

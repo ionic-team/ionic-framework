@@ -1,7 +1,8 @@
 import { Component, Method } from '@stencil/core';
-import { Animation, AnimationBuilder, AnimationController } from '../../interface';
-import { Animator } from './animator';
 
+import { Animation, AnimationBuilder, AnimationController } from '../../interface';
+
+import { Animator } from './animator';
 
 /** @hidden */
 @Component({

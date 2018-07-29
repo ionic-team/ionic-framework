@@ -1,8 +1,10 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch } from '@stencil/core';
+
 import { ViewLifecycle } from '../..';
 import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, Mode, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
+
 import { ViewState, convertToViews, matches } from './view-controller';
 
 @Component({
@@ -107,7 +109,9 @@ export class Nav implements NavOutlet {
     }
 
     // release swipe back gesture and transition
-    this.sbTrns && this.sbTrns.destroy();
+    if (this.sbTrns) {
+      this.sbTrns.destroy();
+    }
     this.transInstr.length = this.views.length = 0;
     this.sbTrns = undefined;
     this.destroyed = true;
@@ -786,7 +790,9 @@ export class Nav implements NavOutlet {
 
     // this is the root transition
     // it's safe to destroy this transition
-    trans && trans.destroy();
+    if (trans) {
+      trans.destroy();
+    }
 
     return {
       hasCompleted,

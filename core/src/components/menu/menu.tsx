@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
+
 import { Animation, Config, GestureDetail, MenuChangeEventDetail, Mode, Side } from '../../interface';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
@@ -172,7 +173,9 @@ export class Menu {
 
   componentDidUnload() {
     this.menuCtrl!._unregister(this);
-    this.animation && this.animation.destroy();
+    if (this.animation) {
+      this.animation.destroy();
+    }
 
     this.animation = undefined;
     this.contentEl = this.backdropEl = this.menuInnerEl = undefined;
@@ -366,7 +369,9 @@ export class Menu {
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
     this.el.classList.add(SHOW_MENU);
-    this.backdropEl && this.backdropEl.classList.add(SHOW_BACKDROP);
+    if (this.backdropEl) {
+      this.backdropEl.classList.add(SHOW_BACKDROP);
+    }
     this.isAnimating = true;
   }
 
@@ -385,15 +390,21 @@ export class Menu {
 
     if (isOpen) {
       // add css class
-      this.contentEl && this.contentEl.classList.add(MENU_CONTENT_OPEN);
+      if (this.contentEl) {
+        this.contentEl.classList.add(MENU_CONTENT_OPEN);
+      }
 
       // emit open event
       this.ionOpen.emit();
     } else {
       // remove css classes
       this.el.classList.remove(SHOW_MENU);
-      this.contentEl && this.contentEl.classList.remove(MENU_CONTENT_OPEN);
-      this.backdropEl && this.backdropEl.classList.remove(SHOW_BACKDROP);
+      if (this.contentEl) {
+        this.contentEl.classList.remove(MENU_CONTENT_OPEN);
+      }
+      if (this.backdropEl) {
+        this.backdropEl.classList.remove(SHOW_BACKDROP);
+      }
 
       // emit close event
       this.ionClose.emit();

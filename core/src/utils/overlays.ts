@@ -1,4 +1,5 @@
 import { EventEmitter } from '@stencil/core';
+
 import { Animation, AnimationBuilder, Config, Mode } from '../interface';
 
 let lastId = 1;
@@ -95,7 +96,6 @@ export async function dismiss(
   overlay.el.remove();
 }
 
-
 async function overlayAnimation(
   overlay: OverlayInterface,
   animationBuilder: AnimationBuilder,
@@ -104,7 +104,9 @@ async function overlayAnimation(
 ): Promise<void> {
   if (overlay.keyboardClose) {
     const activeElement = baseEl.ownerDocument.activeElement as HTMLElement;
-    activeElement && activeElement.blur && activeElement.blur();
+    if (activeElement) {
+      activeElement.blur();
+    }
   }
   if (overlay.animation) {
     overlay.animation.destroy();
@@ -138,7 +140,9 @@ export function eventMethod<T>(element: HTMLElement, eventName: string, callback
   const promise = new Promise<T>(r => resolve = r);
   onceEvent(element, eventName, (event: any) => {
     const detail = event.detail;
-    callback && callback(detail);
+    if (callback) {
+      callback(detail);
+    }
     resolve(detail);
   });
   return promise;

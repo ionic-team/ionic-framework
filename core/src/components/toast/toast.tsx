@@ -1,12 +1,11 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Color, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 
+import { Animation, AnimationBuilder, Color, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
-
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 

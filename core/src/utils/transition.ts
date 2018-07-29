@@ -1,4 +1,5 @@
 import { QueueApi } from '@stencil/core';
+
 import { ViewLifecycle } from '..';
 import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../interface';
 
@@ -6,7 +7,7 @@ const iosTransitionAnimation = () => import('./animations/ios.transition');
 const mdTransitionAnimation = () => import('./animations/md.transition');
 
 export function transition(opts: TransitionOptions): Promise<Animation | null> {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     opts.queue.write(async () => {
       beforeTransition(opts);
 
@@ -110,7 +111,6 @@ async function notifyViewReady(viewIsReady: undefined | ((enteringEl: HTMLElemen
     await viewIsReady(enteringEl);
   }
 }
-
 
 function playTransition(trans: Animation, opts: TransitionOptions): Promise<Animation> {
   const progressCallback = opts.progressCallback;

@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+
 import { CheckboxInput, CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
 import { deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-checkbox',
@@ -73,7 +73,6 @@ export class Checkbox implements CheckboxInput {
    * Emitted when the styles change.
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
-
 
   componentWillLoad() {
     this.emitStyle();

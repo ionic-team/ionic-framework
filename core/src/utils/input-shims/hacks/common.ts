@@ -32,7 +32,6 @@ export function relocateInput(
   (componentEl as any)[RELOCATED_KEY] = shouldRelocate;
 }
 
-
 export function isFocused(input: HTMLInputElement): boolean {
   return input === input.ownerDocument.activeElement;
 }

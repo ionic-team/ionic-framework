@@ -1,5 +1,7 @@
 import { Component, Event, EventEmitter, Method } from '@stencil/core';
+
 import { BlockerConfig, BlockerDelegate, GestureConfig, GestureDelegate } from '../../interface';
+
 import { BlockerDelegate as BD, GestureDelegate as GD } from './gesture-controller-utils';
 
 @Component({
@@ -70,7 +72,9 @@ export class GestureController {
     if (maxPriority === priority) {
       this.capturedId = id;
       requestedStart.clear();
-      this.ionGestureCaptured && this.ionGestureCaptured.emit(gestureName);
+      if (this.ionGestureCaptured) {
+        this.ionGestureCaptured.emit(gestureName);
+      }
       return true;
     }
     requestedStart.delete(id);

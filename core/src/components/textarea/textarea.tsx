@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+
 import { Color, InputChangeEvent, Mode, StyleEvent } from '../../interface';
 import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { TextareaComponent } from '../input/input-base';
-
 
 @Component({
   tag: 'ion-textarea',
@@ -245,7 +245,7 @@ export class Textarea implements TextareaComponent {
     return (
       <textarea
         class="native-textarea"
-        ref={(el) => this.inputEl = el as HTMLTextAreaElement}
+        ref={el => this.inputEl = el as HTMLTextAreaElement}
         autoCapitalize={this.autocapitalize}
         // autoComplete={this.autocomplete}
         autoFocus={this.autofocus}

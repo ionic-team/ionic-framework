@@ -1,4 +1,5 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+
 import { Color, ComponentRef, FrameworkDelegate } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 

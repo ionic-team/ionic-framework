@@ -42,7 +42,6 @@ export class InfiniteScroll {
     }
   }
 
-
   /**
    * If true, the infinite scroll will be hidden and scroll event listeners
    * will be removed.
@@ -73,7 +72,6 @@ export class InfiniteScroll {
    * your async operation has completed.
    */
   @Event() ionInfinite!: EventEmitter<void>;
-
 
   async componentDidLoad() {
     const contentEl = this.el.closest('ion-content');

@@ -1,6 +1,5 @@
 import { Component, Element, Listen, Method, Prop, Watch } from '@stencil/core';
 
-
 @Component({
   tag: 'ion-fab',
   styleUrl: 'fab.scss',

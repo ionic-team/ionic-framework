@@ -27,7 +27,6 @@ export function getScrollData(componentEl: HTMLElement, contentEl: HTMLElement, 
   );
 }
 
-
 function calcScrollData(
   inputRect: ClientRect,
   contentRect: ClientRect,

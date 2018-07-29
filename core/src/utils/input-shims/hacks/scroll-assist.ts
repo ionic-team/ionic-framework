@@ -1,7 +1,7 @@
 import { pointerCoord } from '../../../utils/helpers';
+
 import { isFocused, relocateInput } from './common';
 import { getScrollData } from './scroll-data';
-
 
 export function enableScrollAssist(
   componentEl: HTMLElement,

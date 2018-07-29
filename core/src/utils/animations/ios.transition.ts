@@ -136,7 +136,6 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
         .beforeClearStyles([OPACITY])
         .fromTo(TRANSLATEX, CENTER, (isRTL ? '-100%' : '100%'));
 
-
     } else {
       // leaving content, forward direction
       leavingContent

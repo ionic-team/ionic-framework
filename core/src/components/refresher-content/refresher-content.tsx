@@ -1,4 +1,5 @@
 import { Component, Prop } from '@stencil/core';
+
 import { Config } from '../../interface';
 
 @Component({
@@ -27,7 +28,6 @@ export class RefresherContent {
    * The text you want to display when performing a refresh
    */
   @Prop() refreshingText?: string;
-
 
   protected componentDidLoad() {
     if (!this.pullingIcon) {
