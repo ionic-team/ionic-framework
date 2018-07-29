@@ -35,6 +35,10 @@ ion-app,
   display: none !important;
 }
 
+ion-app.is-device {
+  user-select: none;
+}
+
 
 // Misc
 // --------------------------------------------------

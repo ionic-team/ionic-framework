@@ -20,11 +20,14 @@ export class App {
   }
 
   hostData() {
+    const device = this.config.getBoolean('isDevice', isDevice(this.win));
     const hybrid = isHybrid(this.win);
     const statusBar = this.config.getBoolean('statusbarPadding', hybrid);
 
     return {
       class: {
+        'is-device': device,
+        'is-hydrid': hybrid,
         'statusbar-padding': statusBar
       }
     };

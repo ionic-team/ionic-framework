@@ -135,7 +135,6 @@
   cursor: pointer;
   opacity: var(--opacity);
   overflow: var(--overflow);
-  user-select: none;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
   z-index: 0;
