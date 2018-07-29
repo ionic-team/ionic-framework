@@ -1,0 +1,8 @@
+@import "./title";
+
+:host {
+  @include padding(0, 12px);
+
+  font-size: $toolbar-md-title-font-size;
+  font-weight: 500;
+}

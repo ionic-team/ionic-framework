@@ -27,10 +27,3 @@
   min-width: 0;
   max-width: 100%;
 }
-
-::slotted(ion-title) {
-  @include padding(0, 12px);
-
-  font-size: $toolbar-md-title-font-size;
-  font-weight: 500;
-}
