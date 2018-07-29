@@ -120,7 +120,7 @@ export class Menu {
 
   async componentWillLoad() {
     if (this.type == null) {
-      this.type = this.mode === 'ios' ? 'reveal' : 'overlay';
+      this.type = this.config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
     }
     if (this.isServer) {
       this.disabled = true;
