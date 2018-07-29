@@ -53,7 +53,7 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "clean": "node scripts/clean.js",
     "css.clean": "cleancss -O2 -o ./css/ionic.min.css ./css/ionic.css",
-    "css.sass": "node-sass --output ./css src/css",
+    "css.sass": "node-sass --output ./css src/css --output-style compressed",
     "dev": "npm run build.css && stencil build --dev --watch --serve",
     "e2e": "node ./scripts/e2e",
     "e2e-debug": "node --inspect --debug-brk ./scripts/e2e",
