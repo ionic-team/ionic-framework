@@ -35,7 +35,9 @@
 
   color: #{current-color(contrast)};
 
+  text-align: initial;
   text-decoration: none;
+
   box-sizing: border-box;
 }
 
@@ -54,7 +56,7 @@
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include border-radius(var(--border-radius));
   @include margin(0);
-  @include text-align(initial);
+  @include text-inherit();
 
   display: flex;
   position: relative;
@@ -74,14 +76,6 @@
   outline: none;
 
   background-color: var(--background);
-  color: inherit;
-
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-
-  text-decoration: inherit;
-  text-transform: inherit;
 
   box-shadow: var(--box-shadow);
   overflow: hidden;
