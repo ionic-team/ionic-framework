@@ -1,6 +1,9 @@
 import { EffectProperty, EffectState, PlayOptions } from './animation-interface';
-import { CSS_PROP, CSS_VALUE_REGEX, DURATION_MIN, TRANSITION_END_FALLBACK_PADDING_MS } from './constants';
 import { transitionEnd } from './transition-end';
+
+export const CSS_VALUE_REGEX = /(^-?\d*\.?\d*)(.*)/;
+export const DURATION_MIN = 32;
+export const TRANSITION_END_FALLBACK_PADDING_MS = 400;
 
 export const TRANSFORM_PROPS: {[key: string]: number} = {
   'translateX': 1,
@@ -162,7 +165,7 @@ export class Animator {
     if (clearProperyAfterTransition) {
       // if this effect is a transform then clear the transform effect
       // otherwise just clear the actual property
-      this.afterClearStyles([ fx.trans ? CSS_PROP.transformProp : prop]);
+      this.afterClearStyles([ fx.trans ? 'transform' : prop]);
     }
 
     return this;
@@ -197,7 +200,7 @@ export class Animator {
         trans: shouldTrans,
 
         // add the will-change property for transforms or opacity
-        wc: (shouldTrans ? CSS_PROP.transformProp : prop)
+        wc: (shouldTrans ? 'transform' : prop)
       } as EffectProperty;
       (this._fxProperties = this._fxProperties || []).push(fxProp);
     }
@@ -618,7 +621,7 @@ export class Animator {
    * RECURSION
    */
   _hasDomReads() {
-    if (this._readCallbacks && this._readCallbacks.length) {
+    if (this._readCallbacks && this._readCallbacks.length > 0) {
       return true;
     }
 
@@ -733,7 +736,7 @@ export class Animator {
 
       for (i = 0; i < elements.length; i++) {
         // ******** DOM WRITE ****************
-        (elements[i].style as any)[CSS_PROP.transformProp] = finalTransform;
+        elements[i].style.setProperty('transform', finalTransform);
       }
     }
   }
@@ -752,25 +755,21 @@ export class Animator {
     // set the TRANSITION properties inline on the element
     const easing = (forcedLinearEasing ? 'linear' : this.getEasing());
     const durString = dur + 'ms';
-    const cssTransform = CSS_PROP.transitionProp;
-    const cssTransitionDuration = CSS_PROP.transitionDurationProp;
-    const cssTransitionTimingFn = CSS_PROP.transitionTimingFnProp;
 
-    let eleStyle: any;
     for (let i = 0; i < elements.length; i++) {
-      eleStyle = elements[i].style;
+      const eleStyle = elements[i].style;
       if (dur > 0) {
         // ******** DOM WRITE ****************
-        eleStyle[cssTransform] = '';
-        eleStyle[cssTransitionDuration] = durString;
+        eleStyle.transform = '';
+        eleStyle.transitionDuration = durString;
 
         // each animation can have a different easing
         if (easing) {
           // ******** DOM WRITE ****************
-          eleStyle[cssTransitionTimingFn] = easing;
+          eleStyle.transitionTimingFunction = easing;
         }
       } else {
-        eleStyle[cssTransform] = 'none';
+        eleStyle.transform = 'none';
       }
     }
   }
@@ -907,7 +906,7 @@ export class Animator {
 
       // remove the transition duration/easing
       // ******** DOM WRITE ****************
-      (el as any).style[CSS_PROP.transitionDurationProp] = (el as any).style[CSS_PROP.transitionTimingFnProp] = '';
+      el.style.transitionDuration = el.style.transitionTimingFunction = '';
 
       if (this._isReverse) {
         // finished in reverse direction
