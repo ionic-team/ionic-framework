@@ -144,17 +144,17 @@ export class Alert implements OverlayInterface {
     }
     this.inputType = inputTypes.values().next().value;
     this.processedInputs = inputs.map((i, index) => ({
-        type: i.type || 'text',
-        name: i.name ? i.name : index + '',
-        placeholder: i.placeholder ? i.placeholder : '',
-        value: i.value ? i.value : '',
-        label: i.label,
-        checked: !!i.checked,
-        disabled: !!i.disabled,
-        id: i.id ? i.id : `alert-input-${this.overlayId}-${index}`,
-        handler: i.handler ? i.handler : null,
-        min: i.min ? i.min : null,
-        max: i.max ? i.max : null
+      type: i.type || 'text',
+      name: i.name ? i.name : index + '',
+      placeholder: i.placeholder ? i.placeholder : '',
+      value: i.value ? i.value : '',
+      label: i.label,
+      checked: !!i.checked,
+      disabled: !!i.disabled,
+      id: i.id ? i.id : `alert-input-${this.overlayId}-${index}`,
+      handler: i.handler,
+      min: i.min,
+      max: i.max
     }) as AlertInput);
   }
 

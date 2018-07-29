@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { Color, InputChangeEvent, Mode, StyleEvent } from '../../interface';
+import { Color, InputChangeEvent, Mode, StyleEvent, TextFieldTypes } from '../../interface';
 import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { InputComponent } from './input-base';
@@ -205,7 +205,7 @@ export class Input implements InputComponent {
   /**
    * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
    */
-  @Prop() type = 'text';
+  @Prop() type: TextFieldTypes = 'text';
 
   /**
    * The value of the input.

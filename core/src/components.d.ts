@@ -79,6 +79,7 @@ import {
   StyleEvent,
   TabbarLayout,
   TabbarPlacement,
+  TextFieldTypes,
   ToastOptions,
   TransitionDoneFn,
   TransitionInstruction,
@@ -2862,7 +2863,7 @@ declare global {
       /**
        * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
        */
-      'type': string;
+      'type': TextFieldTypes;
       /**
        * The value of the input.
        */
@@ -3024,7 +3025,7 @@ declare global {
       /**
        * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
        */
-      'type'?: string;
+      'type'?: TextFieldTypes;
       /**
        * The value of the input.
        */

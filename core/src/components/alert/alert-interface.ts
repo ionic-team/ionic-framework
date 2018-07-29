@@ -1,3 +1,4 @@
+import { TextFieldTypes } from '../../interface';
 
 export interface AlertOptions {
   header?: string;
@@ -12,7 +13,7 @@ export interface AlertOptions {
 }
 
 export interface AlertInput {
-  type: string;
+  type: TextFieldTypes | 'checkbox' | 'radio';
   name: string;
   placeholder?: string;
   value?: string;
@@ -21,8 +22,8 @@ export interface AlertInput {
   disabled?: boolean;
   id?: string;
   handler?: (input: AlertInput) => void;
-  min?: string | number;
-  max?: string | number;
+  min?: number;
+  max?: number;
 }
 
 export interface AlertButton {
