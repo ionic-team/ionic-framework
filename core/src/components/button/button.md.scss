@@ -17,7 +17,8 @@
   --padding-bottom: #{$button-md-padding-bottom};
   --padding-start: #{$button-md-padding-start};
   --padding-end: #{$button-md-padding-end};
-  --height: #{$button-md-height};
+	--height: #{$button-md-height};
+	--text-transform: #{$button-md-text-transform};
 
   font-family: #{$button-md-font-family};
   font-size: #{$button-md-font-size};
@@ -25,7 +26,7 @@
 
   letter-spacing: #{$button-md-letter-spacing};
 
-  text-transform: #{$button-md-text-transform};
+  text-transform: var(--text-transform);
 }
 
 // Material Design Solid Button
