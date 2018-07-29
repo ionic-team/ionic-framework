@@ -76,8 +76,7 @@ export function matches(view: ViewController | undefined, id: string, params: Co
   }
 
   // Test for A's keys different from B.
-  for (let i = 0; i < keysA.length; i++) {
-    const key = keysA[i];
+  for (const key of keysA) {
     if (currentParams[key] !== params[key]) {
       return false;
     }

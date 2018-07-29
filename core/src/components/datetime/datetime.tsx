@@ -493,8 +493,8 @@ export class Datetime {
       col = pickerColumns[i];
       columnsWidth.push(0);
 
-      for (let j = 0; j < col.options.length; j++) {
-        width = col.options[j].text!.length;
+      for (const option of col.options) {
+        width = option.text!.length;
         if (width > columnsWidth[i]) {
           columnsWidth[i] = width;
         }

@@ -329,8 +329,8 @@ export class Animator {
    */
   afterClearStyles(propertyNames: string[]): Animator {
     this._afterStyles = this._afterStyles || {};
-    for (let i = 0; i < propertyNames.length; i++) {
-      this._afterStyles[propertyNames[i]] = '';
+    for (const prop of propertyNames) {
+      this._afterStyles[prop] = '';
     }
     return this;
   }
@@ -407,9 +407,9 @@ export class Animator {
 
     const children = this._childAnimations;
     if (children) {
-      for (let i = 0; i < children.length; i++) {
+      for (const child of children) {
         // ******** DOM WRITE ****************
-        children[i]._playInit(opts);
+        child._playInit(opts);
       }
     }
 
@@ -465,9 +465,9 @@ export class Animator {
   _playProgress(opts: PlayOptions | undefined) {
     const children = this._childAnimations;
     if (children) {
-      for (let i = 0; i < children.length; i++) {
+      for (const child of children) {
         // ******** DOM WRITE ****************
-        children[i]._playProgress(opts);
+        child._playProgress(opts);
       }
     }
 
@@ -500,9 +500,9 @@ export class Animator {
     if (!this._destroyed) {
       const children = this._childAnimations;
       if (children) {
-        for (let i = 0; i < children.length; i++) {
+        for (const child of children) {
           // ******** DOM WRITE ****************
-          children[i]._playToStep(stepValue);
+          child._playToStep(stepValue);
         }
       }
 
@@ -569,9 +569,9 @@ export class Animator {
   _playEnd(stepValue?: number) {
     const children = this._childAnimations;
     if (children) {
-      for (let i = 0; i < children.length; i++) {
+      for (const child of children) {
         // ******** DOM WRITE ****************
-        children[i]._playEnd(stepValue);
+        child._playEnd(stepValue);
       }
     }
 
@@ -607,8 +607,8 @@ export class Animator {
 
     const children = this._childAnimations;
     if (children) {
-      for (let i = 0; i < children.length; i++) {
-        if (children[i]._hasDuration(opts)) {
+      for (const child of children) {
+        if (child._hasDuration(opts)) {
           return true;
         }
       }
@@ -627,8 +627,8 @@ export class Animator {
 
     const children = this._childAnimations;
     if (children) {
-      for (let i = 0; i < children.length; i++) {
-        if (children[i]._hasDomReads()) {
+      for (const child of children) {
+        if (child._hasDomReads()) {
           return true;
         }
       }
@@ -756,20 +756,19 @@ export class Animator {
     const easing = (forcedLinearEasing ? 'linear' : this.getEasing());
     const durString = dur + 'ms';
 
-    for (let i = 0; i < elements.length; i++) {
-      const eleStyle = elements[i].style;
+    for (const { style } of elements) {
       if (dur > 0) {
         // ******** DOM WRITE ****************
-        eleStyle.transform = '';
-        eleStyle.transitionDuration = durString;
+        style.transform = '';
+        style.transitionDuration = durString;
 
         // each animation can have a different easing
         if (easing) {
           // ******** DOM WRITE ****************
-          eleStyle.transitionTimingFunction = easing;
+          style.transitionTimingFunction = easing;
         }
       } else {
-        eleStyle.transform = 'none';
+        style.transform = 'none';
       }
     }
   }
@@ -804,8 +803,8 @@ export class Animator {
   _setBeforeStyles() {
     const children = this._childAnimations;
     if (children) {
-      for (let i = 0; i < children.length; i++) {
-        children[i]._setBeforeStyles();
+      for (const child of children) {
+        child._setBeforeStyles();
       }
     }
 
@@ -818,24 +817,22 @@ export class Animator {
     const addClasses = this._beforeAddClasses;
     const removeClasses = this._beforeRemoveClasses;
 
-    for (let i = 0; i < elements.length; i++) {
-      const el = elements[i];
+    for (const el of elements) {
       const elementClassList = el.classList;
 
       // css classes to add before the animation
       if (addClasses) {
-        for (let j = 0; j < addClasses.length; j++) {
+        for (const c of addClasses) {
           // ******** DOM WRITE ****************
-          elementClassList.add(addClasses[j]);
+          elementClassList.add(c);
         }
       }
 
       // css classes to remove before the animation
       if (removeClasses) {
-
-        for (let j = 0; j < removeClasses.length; j++) {
+        for (const c of removeClasses) {
           // ******** DOM WRITE ****************
-          elementClassList.remove(removeClasses[j]);
+          elementClassList.remove(c);
         }
       }
 
@@ -856,17 +853,17 @@ export class Animator {
   _fireBeforeReadFunc() {
     const children = this._childAnimations;
     if (children) {
-      for (let i = 0; i < children.length; i++) {
+      for (const child of children) {
         // ******** DOM READ ****************
-        children[i]._fireBeforeReadFunc();
+        child._fireBeforeReadFunc();
       }
     }
 
     const readFunctions = this._readCallbacks;
     if (readFunctions) {
-      for (let i = 0; i < readFunctions.length; i++) {
+      for (const callback of readFunctions) {
         // ******** DOM READ ****************
-        readFunctions[i]();
+        callback();
       }
     }
   }
@@ -878,17 +875,17 @@ export class Animator {
   _fireBeforeWriteFunc() {
     const children = this._childAnimations;
     if (children) {
-      for (let i = 0; i < children.length; i++) {
+      for (const child of children) {
         // ******** DOM WRITE ****************
-        children[i]._fireBeforeWriteFunc();
+        child._fireBeforeWriteFunc();
       }
     }
 
     const writeFunctions = this._writeCallbacks;
     if (writeFunctions) {
-      for (let i = 0; i < writeFunctions.length; i++) {
+      for (const callback of writeFunctions) {
         // ******** DOM WRITE ****************
-        writeFunctions[i]();
+        callback();
       }
     }
   }
@@ -979,8 +976,8 @@ export class Animator {
 
     if (addWillChange && effects) {
       wc = [];
-      for (let i = 0; i < effects.length; i++) {
-        const propWC = effects[i].wc;
+      for (const effect of effects) {
+        const propWC = effect.wc;
         if (propWC === 'webkitTransform') {
           wc.push('transform', '-webkit-transform');
 
@@ -996,9 +993,9 @@ export class Animator {
 
     const elements = this._elements;
     if (elements) {
-      for (let i = 0; i < elements.length; i++) {
+      for (const el of elements) {
         // ******** DOM WRITE ****************
-        (elements[i] as any).style.willChange = willChange;
+        el.style.setProperty('will-change', willChange);
       }
     }
   }
@@ -1024,9 +1021,9 @@ export class Animator {
   _progressStart() {
     const children = this._childAnimations;
     if (children) {
-      for (let i = 0; i < children.length; i++) {
+      for (const child of children) {
         // ******** DOM WRITE ****************
-        children[i]._progressStart();
+        child._progressStart();
       }
     }
 
@@ -1047,9 +1044,9 @@ export class Animator {
 
     const children = this._childAnimations;
     if (children) {
-      for (let i = 0; i < children.length; i++) {
+      for (const child of children) {
         // ******** DOM WRITE ****************
-        children[i].progressStep(stepValue);
+        child.progressStep(stepValue);
       }
     }
 
@@ -1105,9 +1102,9 @@ export class Animator {
   _progressEnd(shouldComplete: boolean, stepValue: number, dur: number, isAsync: boolean) {
     const children = this._childAnimations;
     if (children) {
-      for (let i = 0; i < children.length; i++) {
+      for (const child of children) {
         // ******** DOM WRITE ****************
-        children[i]._progressEnd(shouldComplete, stepValue, dur, isAsync);
+        child._progressEnd(shouldComplete, stepValue, dur, isAsync);
       }
     }
 
@@ -1157,8 +1154,8 @@ export class Animator {
   _didFinishAll(hasCompleted: boolean, finishAsyncAnimations: boolean, finishNoDurationAnimations: boolean) {
     const children = this._childAnimations;
     if (children) {
-      for (let i = 0; i < children.length; i++) {
-        children[i]._didFinishAll(hasCompleted, finishAsyncAnimations, finishNoDurationAnimations);
+      for (const child of children) {
+        child._didFinishAll(hasCompleted, finishAsyncAnimations, finishNoDurationAnimations);
       }
     }
 
@@ -1176,15 +1173,15 @@ export class Animator {
 
     if (this._onFinishCallbacks) {
       // run all finish callbacks
-      for (let i = 0; i < this._onFinishCallbacks.length; i++) {
-        this._onFinishCallbacks[i](this);
+      for (const callback of this._onFinishCallbacks) {
+        callback(this);
       }
     }
 
     if (this._onFinishOneTimeCallbacks) {
       // run all "onetime" finish callbacks
-      for (let i = 0; i < this._onFinishOneTimeCallbacks.length; i++) {
-        this._onFinishOneTimeCallbacks[i](this);
+      for (const callback of this._onFinishOneTimeCallbacks) {
+        callback(this);
       }
       this._onFinishOneTimeCallbacks.length = 0;
     }
@@ -1199,8 +1196,8 @@ export class Animator {
     }
     const children = this._childAnimations;
     if (children) {
-      for (let i = 0; i < children.length; i++) {
-        children[i].reverse(shouldReverse);
+      for (const child of children) {
+        child.reverse(shouldReverse);
       }
     }
     this._isReverse = !!shouldReverse;
@@ -1215,8 +1212,8 @@ export class Animator {
 
     const children = this._childAnimations;
     if (children) {
-      for (let i = 0; i < children.length; i++) {
-        children[i].destroy();
+      for (const child of children) {
+        child.destroy();
       }
     }
 
@@ -1254,8 +1251,8 @@ export class Animator {
     // get the lowest level element that has an Animator
     const children = this._childAnimations;
     if (children) {
-      for (let i = 0; i < children.length; i++) {
-        const targetEl = children[i]._transEl();
+      for (const child of children) {
+        const targetEl = child._transEl();
         if (targetEl) {
           return targetEl;
         }
@@ -1267,6 +1264,7 @@ export class Animator {
       this._hasDur &&
       this._elements &&
       this._elements.length > 0 ?
-      this._elements[0] : null);
+      this._elements[0] : null
+    );
   }
 }

@@ -38,10 +38,9 @@ export function isFocused(input: HTMLInputElement): boolean {
 
 function removeClone(componentEl: HTMLElement, inputEl: HTMLElement) {
   if (componentEl && componentEl.parentElement) {
-    const clonedInputEles = componentEl.parentElement.querySelectorAll('.cloned-input');
-    for (let i = 0; i < clonedInputEles.length; i++) {
-      clonedInputEles[i].remove();
-    }
+    Array.from(componentEl.parentElement.querySelectorAll('.cloned-input'))
+      .forEach(clon => clon.remove());
+
     componentEl.style.pointerEvents = '';
   }
   (inputEl.style as any)['transform'] = '';
