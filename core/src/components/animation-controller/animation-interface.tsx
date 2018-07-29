@@ -5,9 +5,9 @@ export interface AnimationController {
 
 export interface Animation {
   new (): any;
-  parent: Animation|undefined;
+  parent: Animation | undefined;
   hasChildren: boolean;
-  addElement(el: Node|Node[]|NodeList): Animation;
+  addElement(el: Node | Node[] | NodeList): Animation;
   add(childAnimation: Animation): Animation;
   duration(milliseconds: number): Animation;
   easing(name: string): Animation;
@@ -21,8 +21,8 @@ export interface Animation {
   beforeRemoveClass(className: string): Animation;
   beforeStyles(styles: { [property: string]: any; }): Animation;
   beforeClearStyles(propertyNames: string[]): Animation;
-  beforeAddRead(domReadFn: Function): Animation;
-  beforeAddWrite(domWriteFn: Function): Animation;
+  beforeAddRead(domReadFn: () => void): Animation;
+  beforeAddWrite(domWriteFn: () => void): Animation;
   duringAddClass(className: string): Animation;
   afterAddClass(className: string): Animation;
   afterRemoveClass(className: string): Animation;
@@ -43,9 +43,7 @@ export interface Animation {
 }
 
 
-export interface AnimationBuilder {
-  (Animation: Animation, baseEl: HTMLElement, opts?: any): Promise<Animation>;
-}
+export type AnimationBuilder = (Animation: Animation, baseEl: HTMLElement, opts?: any) => Promise<Animation>;
 
 export interface PlayOptions {
   duration?: number;

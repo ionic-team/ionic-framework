@@ -125,9 +125,9 @@ describe('gesture controller', () => {
 
   it('should test if several gestures can be started', async () => {
     const c = new GestureController();
-    const g1 = await c.create({name: 'swipe' });
-    const g2 = await c.create({name: 'swipe1', priority: 3});
-    const g3 = await c.create({name: 'swipe2', priority: 4});
+    const g1 = await c.create({ name: 'swipe' });
+    const g2 = await c.create({ name: 'swipe1', priority: 3 });
+    const g3 = await c.create({ name: 'swipe2', priority: 4 });
 
     for (let i = 0; i < 10; i++) {
       expect(g1.start()).toEqual(true);
@@ -162,11 +162,11 @@ describe('gesture controller', () => {
 
   it('should test if several gestures try to capture at the same time', async () => {
     const c = new GestureController();
-    const g1 = await c.create({name: 'swipe1'});
-    const g2 = await c.create({name: 'swipe2', priority: 2 });
-    const g3 = await c.create({name: 'swipe3', priority: 3 });
-    const g4 = await c.create({name: 'swipe4', priority: 4 });
-    const g5 = await c.create({name: 'swipe5', priority: 5 });
+    const g1 = await c.create({ name: 'swipe1' });
+    const g2 = await c.create({ name: 'swipe2', priority: 2 });
+    const g3 = await c.create({ name: 'swipe3', priority: 3 });
+    const g4 = await c.create({ name: 'swipe4', priority: 4 });
+    const g5 = await c.create({ name: 'swipe5', priority: 5 });
 
     // Low priority capture() returns false
     expect(g2.start()).toEqual(true);

@@ -53,7 +53,7 @@ export function updateVDom(dom: VirtualNode[], heightIndex: Uint32Array, cells: 
     } else {
       dom.push({
         d: false,
-        cell: cell,
+        cell,
         visible: true,
         change: NodeChange.Cell,
         top: heightIndex[index],
@@ -73,7 +73,7 @@ export function doRender(
   el: HTMLElement,
   nodeRender: ItemRenderFn,
   dom: VirtualNode[],
-  updateCellHeight: Function
+  updateCellHeight: (cell: Cell, node: HTMLElement) => void
 ) {
   const children = el.children;
   const childrenNu = children.length;
@@ -205,7 +205,7 @@ export function calcCells(
         cells.push({
           i: j++,
           type: CellType.Header,
-          value: value,
+          value,
           index: i,
           height: approxHeaderHeight,
           reads: MIN_READS,
@@ -230,7 +230,7 @@ export function calcCells(
         cells.push({
           i: j++,
           type: CellType.Footer,
-          value: value,
+          value,
           index: i,
           height: approxFooterHeight,
           reads: 2,
@@ -269,7 +269,7 @@ export function resizeBuffer(buf: Uint32Array | undefined, len: number) {
 }
 
 export function positionForIndex(index: number, cells: Cell[], heightIndex: Uint32Array): number {
-  const cell = cells.find(cell => cell.type === CellType.Item && cell.index === index);
+  const cell = cells.find(c => c.type === CellType.Item && c.index === index);
   if (cell) {
     return heightIndex[cell.i];
   }

@@ -39,7 +39,7 @@ export function getClassMap(classes: string | string[] | undefined): CssClassMap
   return map;
 }
 
-export async function openURL(win: Window, url: string|undefined, ev: Event, direction?: RouterDirection) {
+export async function openURL(win: Window, url: string | undefined, ev: Event, direction?: RouterDirection) {
   if (url && url[0] !== '#' && url.indexOf('://') === -1) {
     const router = win.document.querySelector('ion-router');
     if (router) {

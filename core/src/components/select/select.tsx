@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
-import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent} from '../../interface';
+import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
 import { deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createThemedClasses, hostContext } from '../../utils/theme';
 
@@ -316,7 +316,7 @@ export class Select {
         })
       },
       cssClass: ['select-popover', interfaceOptions.cssClass],
-      ev: ev
+      ev
     };
 
     const popover = this.overlay = await this.popoverCtrl.create(popoverOpts);
@@ -378,20 +378,23 @@ export class Select {
           disabled: o.disabled
         } as AlertInput;
       }),
-      buttons: [{
-        text: this.cancelText,
-        role: 'cancel',
-        handler: () => {
-          this.ionCancel.emit();
+      buttons: [
+        {
+          text: this.cancelText,
+          role: 'cancel',
+          handler: () => {
+            this.ionCancel.emit();
+          }
+        },
+        {
+          text: this.okText,
+          handler: (selectedValues: any) => {
+            this.value = selectedValues;
+          }
         }
-      }, {
-        text: this.okText,
-        handler: (selectedValues: any) => {
-          this.value = selectedValues;
-        }
-      }],
+      ],
       cssClass: ['select-alert', interfaceOptions.cssClass,
-                (this.multiple ? 'multiple-select-alert' : 'single-select-alert')]
+                 (this.multiple ? 'multiple-select-alert' : 'single-select-alert')]
     };
 
     const alert = this.overlay = await this.alertCtrl.create(alertOpts);

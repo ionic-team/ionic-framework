@@ -47,13 +47,13 @@ export function pointerCoord(ev: any): {x: number, y: number} {
     const changedTouches = ev.changedTouches;
     if (changedTouches && changedTouches.length > 0) {
       const touch = changedTouches[0];
-      return {x: touch.clientX, y: touch.clientY};
+      return { x: touch.clientX, y: touch.clientY };
     }
     if (ev.pageX !== undefined) {
-      return {x: ev.pageX, y: ev.pageY};
+      return { x: ev.pageX, y: ev.pageY };
     }
   }
-  return {x: 0, y: 0};
+  return { x: 0, y: 0 };
 }
 
 /**
@@ -85,8 +85,8 @@ export function debounceEvent(event: EventEmitter, wait: number): EventEmitter {
   } as EventEmitter;
 }
 
-export function debounce(func: Function, wait = 0) {
-  let timer: number;
+export function debounce(func: (...args: any[]) => void, wait = 0) {
+  let timer: any;
   return (...args: any[]): void => {
     clearTimeout(timer);
     timer = setTimeout(func, wait, ...args);

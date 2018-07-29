@@ -86,8 +86,8 @@ export const SPINNERS: SpinnerConfigs = {
   'dots': {
     dur: 750,
     circles: 3,
-    fn: (dur: number, index: number) => {
-      const animationDelay = -(110 * index) + 'ms'; dur;
+    fn: (_: number, index: number) => {
+      const animationDelay = -(110 * index) + 'ms';
       return {
         r: 6,
         style: {

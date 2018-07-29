@@ -22,7 +22,7 @@ describe('NavController', () => {
 
       // Push 1
       const view1 = mockView(MockView1);
-      await nav.push(view1, null, {animated: false}, push1Done);
+      await nav.push(view1, null, { animated: false }, push1Done);
 
       const hasCompleted = true;
       const requiresTransition = true;
@@ -34,7 +34,7 @@ describe('NavController', () => {
 
       // Push 2
       const view2 = mockView(MockView2);
-      await nav.push(view2, null, {animated: false}, push2Done);
+      await nav.push(view2, null, { animated: false }, push2Done);
 
       expect(push2Done).toHaveBeenCalledWith(
         hasCompleted, requiresTransition, view2, view1, 'forward'
@@ -46,7 +46,7 @@ describe('NavController', () => {
 
       // Push 3
       const view3 = mockView(MockView3);
-      await nav.push(view3, null, {animated: false}, push3Done);
+      await nav.push(view3, null, { animated: false }, push3Done);
 
       expect(push3Done).toHaveBeenCalledWith(
         hasCompleted, requiresTransition, view3, view2, 'forward'
@@ -58,7 +58,7 @@ describe('NavController', () => {
 
       // Push 4
       const view4 = mockView(MockView4);
-      await nav.push(view4, null, {animated: false}, push4Done);
+      await nav.push(view4, null, { animated: false }, push4Done);
       expect(push4Done).toHaveBeenCalledWith(
         hasCompleted, requiresTransition, view4, view3, 'forward'
       );
@@ -69,7 +69,7 @@ describe('NavController', () => {
       expect(nav.getByIndex(3)!.component).toEqual(MockView4);
 
       // Pop 1
-      await nav.pop({animated: false}, pop1Done);
+      await nav.pop({ animated: false }, pop1Done);
       expect(pop1Done).toHaveBeenCalledWith(
         hasCompleted, requiresTransition, view3, view4, 'back'
       );
@@ -79,7 +79,7 @@ describe('NavController', () => {
       expect(nav.getByIndex(2)!.component).toEqual(MockView3);
 
       // Pop 2
-      await nav.pop({animated: false}, pop2Done);
+      await nav.pop({ animated: false }, pop2Done);
       expect(pop2Done).toHaveBeenCalledWith(
         hasCompleted, requiresTransition, view2, view3, 'back'
       );
@@ -88,7 +88,7 @@ describe('NavController', () => {
       expect(nav.getByIndex(1)!.component).toEqual(MockView2);
 
       // Pop 3
-      await nav.pop({animated: false}, pop3Done);
+      await nav.pop({ animated: false }, pop3Done);
       expect(pop3Done).toHaveBeenCalledWith(
         hasCompleted, requiresTransition, view1, view2, 'back'
       );
@@ -830,11 +830,10 @@ describe('NavController', () => {
       const view4 = mockView(MockView4);
       const view5 = mockView(MockView5);
 
-      await nav.setPages([{
-        page: view4
-      }, {
-        page: view5
-      }], null, trnsDone);
+      await nav.setPages([
+        { page: view4 },
+        { page: view5 }
+      ], null, trnsDone);
       expect(instance1.ionViewWillUnload).toHaveBeenCalled();
       expect(instance2.ionViewWillUnload).toHaveBeenCalled();
 
@@ -941,25 +940,25 @@ describe('NavController', () => {
     return view;
   }
 
-  function mockViews(nav: Nav, views: ViewController[]) {
-    nav['views'] = views;
+  function mockViews(navI: Nav, views: ViewController[]) {
+    navI['views'] = views;
     views.forEach(v => {
-      v.nav = nav;
+      v.nav = navI;
     });
   }
 
   function mockNavController(): Nav {
-    const nav = new Nav() as any;
-    nav.animated = false;
-    nav.el = win.document.createElement('ion-nav');
-    nav.win = win;
-    nav.queue = { write: (fn: any) => fn(), read: (fn: any) => fn()};
-    nav.ionNavDidChange = {emit: function() { return; } };
-    nav.ionNavWillChange = {emit: function() { return; } };
+    const navI = new Nav() as any;
+    navI.animated = false;
+    navI.el = win.document.createElement('ion-nav');
+    navI.win = win;
+    navI.queue = { write: (fn: any) => fn(), read: (fn: any) => fn() };
+    navI.ionNavDidChange = { emit() { return; } };
+    navI.ionNavWillChange = { emit() { return; } };
 
-    nav.animationCtrl = new AnimationControllerImpl() as any;
-    nav.config = new Config({animated: false});
-    nav._viewInit = function (enteringView: ViewController) {
+    navI.animationCtrl = new AnimationControllerImpl() as any;
+    navI.config = new Config({ animated: false });
+    navI._viewInit = (enteringView: ViewController) => {
       if (!enteringView.element) {
         console.log(enteringView.component);
         enteringView.element = (typeof enteringView.component === 'string')
@@ -968,7 +967,7 @@ describe('NavController', () => {
       }
       enteringView.state = ViewState.Attached;
     };
-    return nav;
+    return navI;
   }
 });
 

@@ -46,14 +46,14 @@ export class Button {
    * Set to `"block"` for a full-width button or to `"full"` for a full-width button
    * without left and right borders.
    */
-  @Prop({reflectToAttr: true}) expand?: 'full' | 'block';
+  @Prop({ reflectToAttr: true }) expand?: 'full' | 'block';
 
   /**
    * Set to `"clear"` for a transparent button, to `"outline"` for a transparent
    * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
    * a toolbar, where the default is `"clear"`.
    */
-  @Prop({reflectToAttr: true, mutable: true}) fill?: 'clear' | 'outline' | 'solid' | 'default';
+  @Prop({ reflectToAttr: true, mutable: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
 
   /**
    * When using a router, it specifies the transition direction when navigating to
@@ -71,13 +71,13 @@ export class Button {
    * The button shape.
    * Possible values are: `"round"`.
    */
-  @Prop({reflectToAttr: true}) shape?: 'round';
+  @Prop({ reflectToAttr: true }) shape?: 'round';
 
   /**
    * The button size.
    * Possible values are: `"small"`, `"default"`, `"large"`.
    */
-  @Prop({reflectToAttr: true}) size?: 'small' | 'default' | 'large';
+  @Prop({ reflectToAttr: true }) size?: 'small' | 'default' | 'large';
 
   /**
    * If true, activates a button with a heavier font weight.
@@ -210,7 +210,7 @@ function getButtonClassMap(buttonType: string | undefined, mode: Mode): CssClass
  * Get the classes based on the type
  * e.g. block, full, round, large
  */
-function getButtonTypeClassMap(buttonType: string, type: string|undefined, mode: Mode): CssClassMap {
+function getButtonTypeClassMap(buttonType: string, type: string | undefined, mode: Mode): CssClassMap {
   if (!type) {
     return {};
   }

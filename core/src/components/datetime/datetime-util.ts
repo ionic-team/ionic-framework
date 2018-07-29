@@ -33,7 +33,7 @@ export function renderDatetime(template: string, value: DatetimeData, locale: Lo
 }
 
 
-export function renderTextFormat(format: string, value: any, date: DatetimeData|null, locale: LocaleData): string {
+export function renderTextFormat(format: string, value: any, date: DatetimeData | null, locale: LocaleData): string {
 
   if ((format === FORMAT_DDDD || format === FORMAT_DDD)) {
     try {
@@ -153,7 +153,7 @@ export function dateValueRange(format: string, min: DatetimeData, max: DatetimeD
   return opts;
 }
 
-export function dateSortValue(year: number|undefined, month: number|undefined, day: number|undefined, hour = 0, minute = 0): number {
+export function dateSortValue(year: number | undefined, month: number | undefined, day: number | undefined, hour = 0, minute = 0): number {
   return parseInt(`1${fourDigit(year)}${twoDigit(month)}${twoDigit(day)}${twoDigit(hour)}${twoDigit(minute)}`, 10);
 }
 
@@ -176,10 +176,10 @@ export function isLeapYear(year: number): boolean {
 const ISO_8601_REGEXP = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 
-export function parseDate(val: any): DatetimeData|null {
+export function parseDate(val: any): DatetimeData | null {
   // manually parse IS0 cuz Date.parse cannot be trusted
   // ISO 8601 format: 1994-12-15T13:47:20Z
-  let parse: any[]|null = null;
+  let parse: any[] | null = null;
 
   if (val && val !== '') {
     // try parsing for just time first, HH:MM
@@ -227,7 +227,7 @@ export function parseDate(val: any): DatetimeData|null {
     minute: parse[5],
     second: parse[6],
     millisecond: parse[7],
-    tzOffset: tzOffset,
+    tzOffset,
   };
 }
 
@@ -323,7 +323,7 @@ export function getValueFromFormat(date: DatetimeData, format: string) {
 }
 
 
-export function convertFormatToKey(format: string): string|null {
+export function convertFormatToKey(format: string): string | null {
   for (const k in FORMAT_KEYS) {
     if (FORMAT_KEYS[k].f === format) {
       return FORMAT_KEYS[k].k;
@@ -395,7 +395,7 @@ export function convertDataToISO(data: DatetimeData): string {
  * Use to convert a string of comma separated strings or
  * an array of strings, and clean up any user input
  */
-export function convertToArrayOfStrings(input: string | string[] | undefined | null, type: string): string[]|undefined {
+export function convertToArrayOfStrings(input: string | string[] | undefined | null, type: string): string[] | undefined {
   if (!input) {
     return undefined;
   }
@@ -406,7 +406,7 @@ export function convertToArrayOfStrings(input: string | string[] | undefined | n
     input = input.replace(/\[|\]/g, '').split(',');
   }
 
-  let values: string[] | undefined = undefined;
+  let values: string[] | undefined;
   if (Array.isArray(input)) {
     // trim up each string value
     values = input.map(val => val.toString().trim());

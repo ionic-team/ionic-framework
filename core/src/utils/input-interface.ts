@@ -209,7 +209,7 @@ export interface RangeInputChangeEvent {
 }
 
 export interface SelectInputChangeEvent {
-  value: string|string[]|undefined;
+  value: string | string[] | undefined;
   text: string;
 }
 

@@ -15,6 +15,4 @@ export interface GestureDetail {
   data?: any;
 }
 
-export interface GestureCallback {
-  (detail?: GestureDetail): boolean|void;
-}
+export type GestureCallback = (detail?: GestureDetail) => boolean | void;

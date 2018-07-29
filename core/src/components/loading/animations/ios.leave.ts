@@ -4,13 +4,13 @@ import { Animation } from '../../../interface';
 /**
  * iOS Loading Leave Animation
  */
-export function iosLeaveAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
-  const baseAnimation = new Animation();
+export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+  const baseAnimation = new AnimationC();
 
-  const backdropAnimation = new Animation();
+  const backdropAnimation = new AnimationC();
   backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
 
-  const wrapperAnimation = new Animation();
+  const wrapperAnimation = new AnimationC();
   wrapperAnimation.addElement(baseEl.querySelector('.loading-wrapper'));
 
   backdropAnimation.fromTo('opacity', 0.3, 0);

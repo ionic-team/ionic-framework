@@ -266,7 +266,7 @@ export class Datetime {
     if (this.disabled) {
       return;
     }
-    const pickerOptions = {...this.pickerOptions};
+    const pickerOptions = { ...this.pickerOptions };
     this.picker = await this.buildPicker(pickerOptions);
     this.validate();
     await this.picker!.present();
@@ -465,12 +465,12 @@ export class Datetime {
     let indexMax = 0;
 
     for (let i = 0; i < options.length; i++) {
-      const opt = options[i];
-      const value = opt.value;
-      lb[index] = opt.value;
-      ub[index] = opt.value;
+      const opts = options[i];
+      const value = opts.value;
+      lb[index] = opts.value;
+      ub[index] = opts.value;
 
-      const disabled = opt.disabled = (
+      const disabled = opts.disabled = (
         value < lowerBounds[index] ||
         value > upperBounds[index] ||
         dateSortValue(ub[0], ub[1], ub[2], ub[3], ub[4]) < min ||

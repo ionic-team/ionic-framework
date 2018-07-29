@@ -119,7 +119,7 @@ export class Tab {
 
   /** Get the Id for the tab */
   @Method()
-  getTabId(): string|null {
+  getTabId(): string | null {
     if (this.name) {
       return this.name;
     }
@@ -136,7 +136,7 @@ export class Tab {
     this.active = true;
   }
 
-  private prepareLazyLoaded(): Promise<HTMLElement|void> {
+  private prepareLazyLoaded(): Promise<HTMLElement | void> {
     if (!this.loaded && this.component) {
       this.loaded = true;
       return attachComponent(this.delegate, this.el, this.component, ['ion-page']);

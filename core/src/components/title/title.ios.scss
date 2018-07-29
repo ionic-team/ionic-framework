@@ -11,12 +11,12 @@
 
   transform: translateZ(0);
 
-  font-size: $toolbar-ios-title-font-size;
-  font-weight: $toolbar-ios-title-font-weight;
+  font-size: 17px;
+  font-weight: 600;
 
   letter-spacing: -.03em;
 
-  text-align: $toolbar-ios-title-text-align;
+  text-align: center;
   box-sizing: border-box;
   pointer-events: none;
 }

@@ -6,7 +6,7 @@ export interface AlertOptions {
   cssClass?: string | string[];
   mode?: string;
   inputs?: AlertInput[];
-  buttons?: (AlertButton|string)[];
+  buttons?: (AlertButton | string)[];
   enableBackdropDismiss?: boolean;
   translucent?: boolean;
 }
@@ -20,7 +20,7 @@ export interface AlertInput {
   checked?: boolean;
   disabled?: boolean;
   id?: string;
-  handler?: Function;
+  handler?: (input: AlertInput) => void;
   min?: string | number;
   max?: string | number;
 }

@@ -1,6 +1,6 @@
 import { Component, Element, Prop, QueueApi, State } from '@stencil/core';
 import { GestureDetail, Mode } from '../../interface';
-import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart} from '../../utils/haptic';
+import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
 import { createThemedClasses } from '../../utils/theme';
 
 
@@ -10,7 +10,7 @@ import { createThemedClasses } from '../../utils/theme';
 })
 export class ReorderGroup {
 
-  private selectedItemEl: HTMLElement|undefined;
+  private selectedItemEl: HTMLElement | undefined;
   private selectedItemHeight!: number;
   private lastToIndex!: number;
   private cachedHeights: number[] = [];
@@ -260,7 +260,7 @@ function indexForItem(element: any): number {
   return element['$ionIndex'];
 }
 
-function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement|null {
+function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement | null {
   let nested = 0;
   let parent;
   while (node && nested < 6) {

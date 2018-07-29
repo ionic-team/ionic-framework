@@ -3,10 +3,10 @@ import { Animation } from '../../../interface';
 /**
  * md Toast Leave Animation
  */
-export function mdLeaveAnimation(Animation: Animation, baseEl: HTMLElement, position: string): Promise<Animation> {
-  const baseAnimation = new Animation();
+export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement, position: string): Promise<Animation> {
+  const baseAnimation = new AnimationC();
 
-  const wrapperAnimation = new Animation();
+  const wrapperAnimation = new AnimationC();
   const wrapperEle = baseEl.querySelector('.toast-wrapper') as HTMLElement;
   wrapperAnimation.addElement(wrapperEle);
 

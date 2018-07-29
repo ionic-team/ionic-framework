@@ -18,7 +18,7 @@ export function createOverlay<T extends HTMLIonOverlayElement, B>(element: T, op
   return element.componentOnReady();
 }
 
-export function dismissOverlay(data: any, role: string|undefined, overlays: OverlayMap, id: number): Promise<void> {
+export function dismissOverlay(data: any, role: string | undefined, overlays: OverlayMap, id: number): Promise<void> {
   id = id >= 0 ? id : getHighestId(overlays);
   const overlay = overlays.get(id);
   if (!overlay) {
@@ -71,8 +71,8 @@ export async function present(
 
 export async function dismiss(
   overlay: OverlayInterface,
-  data: any|undefined,
-  role: string|undefined,
+  data: any | undefined,
+  role: string | undefined,
   name: string,
   iosLeaveAnimation: AnimationBuilder,
   mdLeaveAnimation: AnimationBuilder,
@@ -83,7 +83,7 @@ export async function dismiss(
   }
   overlay.presented = false;
 
-  overlay.willDismiss.emit({data, role});
+  overlay.willDismiss.emit({ data, role });
 
   const animationBuilder = (overlay.leaveAnimation)
     ? overlay.leaveAnimation
@@ -91,7 +91,7 @@ export async function dismiss(
 
   await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
 
-  overlay.didDismiss.emit({data, role});
+  overlay.didDismiss.emit({ data, role });
   overlay.el.remove();
 }
 
@@ -123,7 +123,7 @@ async function overlayAnimation(
   overlay.animation = undefined;
 }
 
-export function autoFocus(containerEl: HTMLElement): HTMLElement|null {
+export function autoFocus(containerEl: HTMLElement): HTMLElement | null {
   const focusableEls = containerEl.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
   if (focusableEls.length > 0) {
     const el = focusableEls[0] as HTMLInputElement;
@@ -134,7 +134,7 @@ export function autoFocus(containerEl: HTMLElement): HTMLElement|null {
 }
 
 export function eventMethod<T>(element: HTMLElement, eventName: string, callback?: (detail: T) => void): Promise<T> {
-  let resolve: Function;
+  let resolve: (detail: T) => void;
   const promise = new Promise<T>(r => resolve = r);
   onceEvent(element, eventName, (event: any) => {
     const detail = event.detail;
@@ -152,7 +152,7 @@ export function onceEvent(element: HTMLElement, eventName: string, callback: (ev
   element.addEventListener(eventName, handler);
 }
 
-export function isCancel(role: string|undefined): boolean {
+export function isCancel(role: string | undefined): boolean {
   return role === 'cancel' || role === BACKDROP;
 }
 

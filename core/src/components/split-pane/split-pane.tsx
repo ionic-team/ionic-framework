@@ -4,7 +4,7 @@ import { createThemedClasses } from '../../utils/theme';
 
 const SPLIT_PANE_MAIN = 'split-pane-main';
 const SPLIT_PANE_SIDE = 'split-pane-side';
-const QUERY: { [key: string]: string }  = {
+const QUERY: { [key: string]: string } = {
   'xs': '(min-width: 0px)',
   'sm': '(min-width: 576px)',
   'md': '(min-width: 768px)',
@@ -30,7 +30,7 @@ export class SplitPane {
   @Element() el!: HTMLElement;
   @State() visible = false;
 
-  @Prop({context: 'isServer'}) isServer!: boolean;
+  @Prop({ context: 'isServer' }) isServer!: boolean;
   @Prop({ context: 'window' }) win!: Window;
 
   /**

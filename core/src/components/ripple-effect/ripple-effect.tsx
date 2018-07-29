@@ -26,19 +26,19 @@ export class RippleEffect {
     this.enableListener(this, 'mousedown', !tapClick);
   }
 
-  @Listen('ionActivated', {enabled: false})
+  @Listen('ionActivated', { enabled: false })
   ionActivated(ev: CustomEvent) {
     this.addRipple(ev.detail.x, ev.detail.y);
   }
 
-  @Listen('touchstart', {passive: true, enabled: false})
+  @Listen('touchstart', { passive: true, enabled: false })
   touchStart(ev: TouchEvent) {
     this.lastClick = now(ev);
     const touches = ev.touches[0];
     this.addRipple(touches.clientX, touches.clientY);
   }
 
-  @Listen('mousedown', {passive: true, enabled: false})
+  @Listen('mousedown', { passive: true, enabled: false })
   mouseDown(ev: MouseEvent) {
     const timeStamp = now(ev);
     if (this.lastClick < (timeStamp - 1000)) {

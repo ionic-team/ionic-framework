@@ -105,22 +105,22 @@ export class Alert implements OverlayInterface {
   /**
    * Emitted after the alert has presented.
    */
-  @Event({eventName: 'ionAlertDidPresent'}) didPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionAlertDidPresent' }) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the alert has presented.
    */
-  @Event({eventName: 'ionAlertWillPresent'}) willPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionAlertWillPresent' }) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the alert has dismissed.
    */
-  @Event({eventName: 'ionAlertWillDismiss'}) willDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionAlertWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the alert has dismissed.
    */
-  @Event({eventName: 'ionAlertDidDismiss'}) didDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionAlertDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   @Watch('buttons')
   buttonsChanged() {
@@ -244,16 +244,16 @@ export class Alert implements OverlayInterface {
     const role = button.role;
     const values = this.getValues();
     if (isCancel(role)) {
-      this.dismiss({values}, role);
+      this.dismiss({ values }, role);
       return;
     }
     const returnData = this.callButtonHandler(button, values);
     if (returnData !== false) {
-      this.dismiss({values, ...returnData}, button.role);
+      this.dismiss({ values, ...returnData }, button.role);
     }
   }
 
-  private callButtonHandler(button: AlertButton|undefined, data: any = undefined) {
+  private callButtonHandler(button: AlertButton | undefined, data?: any) {
     if (button && button.handler) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
@@ -427,7 +427,7 @@ export class Alert implements OverlayInterface {
     const subHdrId = `alert-${this.overlayId}-sub-hdr`;
     const msgId = `alert-${this.overlayId}-msg`;
 
-    let labelledById: string|undefined = undefined;
+    let labelledById: string | undefined;
     if (this.header) {
       labelledById = hdrId;
     } else if (this.subHeader) {

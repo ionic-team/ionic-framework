@@ -45,7 +45,7 @@ function removeClone(componentEl: HTMLElement, inputEl: HTMLElement) {
     }
     componentEl.style.pointerEvents = '';
   }
-  (<any>inputEl.style)['transform'] = '';
+  (inputEl.style as any)['transform'] = '';
   inputEl.style.opacity = '';
 }
 

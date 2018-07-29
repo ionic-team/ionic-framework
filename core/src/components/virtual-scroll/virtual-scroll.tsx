@@ -12,7 +12,7 @@ import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, g
 export class VirtualScroll {
 
   private scrollEl?: HTMLIonScrollElement;
-  private range: Range = {offset: 0, length: 0};
+  private range: Range = { offset: 0, length: 0 };
   private timerUpdate: any;
   private heightIndex?: Uint32Array;
   private viewportHeight = 0;
@@ -134,7 +134,7 @@ export class VirtualScroll {
     this.scrollEl = undefined;
   }
 
-  @Listen('scroll', {enabled: false, passive: false})
+  @Listen('scroll', { enabled: false, passive: false })
   onScroll() {
     this.updateVirtualScroll();
   }

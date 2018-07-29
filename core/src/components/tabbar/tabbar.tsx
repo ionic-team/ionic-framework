@@ -92,24 +92,24 @@ export class Tabbar {
     const tabs: HTMLIonTabButtonElement[] = Array.from(this.doc.querySelectorAll('ion-tab-button'));
     const scrollLeft = this.scrollEl!.scrollLeft;
     const tabsWidth = this.scrollEl!.clientWidth;
-    let previous: {tab: HTMLIonTabButtonElement, amount: number}|undefined = undefined;
-    let next: {tab: HTMLIonTabButtonElement, amount: number}|undefined = undefined;
+    let previous: {tab: HTMLIonTabButtonElement, amount: number} | undefined;
+    let next: {tab: HTMLIonTabButtonElement, amount: number} | undefined;
 
     for (const tab of tabs) {
       const left = tab.offsetLeft;
       const right = left + tab.offsetWidth;
 
       if (left < scrollLeft) {
-        previous = {tab, amount: left};
+        previous = { tab, amount: left };
       }
 
       if (!next && right > (tabsWidth + scrollLeft)) {
         const amount = right - tabsWidth;
-        next = {tab, amount};
+        next = { tab, amount };
       }
     }
 
-    return {previous, next};
+    return { previous, next };
   }
 
   private getSelectedButton(): HTMLIonTabButtonElement | undefined {
@@ -151,7 +151,7 @@ export class Tabbar {
 
   private scrollByTab(direction: 'left' | 'right') {
     this.queue.read(() => {
-      const {previous, next} = this.analyzeTabs();
+      const { previous, next } = this.analyzeTabs();
       const info = direction === 'right' ? next : previous;
       const amount = info && info.amount;
 
@@ -224,7 +224,7 @@ export class Tabbar {
 
     if (this.scrollable) {
       return [
-        <ion-button onClick={() => this.scrollByTab('left')} fill="clear" class={{inactive: !this.canScrollLeft}}>
+        <ion-button onClick={() => this.scrollByTab('left')} fill="clear" class={{ inactive: !this.canScrollLeft }}>
           <ion-icon name="arrow-dropleft"/>
         </ion-button>,
 
@@ -233,7 +233,7 @@ export class Tabbar {
           {ionTabbarHighlight}
         </ion-scroll>,
 
-        <ion-button onClick={() => this.scrollByTab('right')} fill="clear" class={{inactive: !this.canScrollRight}}>
+        <ion-button onClick={() => this.scrollByTab('right')} fill="clear" class={{ inactive: !this.canScrollRight }}>
           <ion-icon name="arrow-dropright"/>
         </ion-button>
       ];

@@ -407,7 +407,7 @@ export class PickerColumnCmp {
 
     if (col.prefix) {
       results.push(
-        <div class="picker-prefix" style={{width: col.prefixWidth!}}>
+        <div class="picker-prefix" style={{ width: col.prefixWidth! }}>
           {col.prefix}
         </div>
       );
@@ -426,10 +426,10 @@ export class PickerColumnCmp {
         threshold={0}
         attachTo="parent"
       ></ion-gesture>,
-      <div class="picker-opts" style={{maxWidth: col.optionsWidth!}}>
+      <div class="picker-opts" style={{ maxWidth: col.optionsWidth! }}>
         {options.map((o, index) =>
           <button
-            class={{'picker-opt': true, 'picker-opt-disabled': !!o.disabled}}
+            class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }}
             disable-activated
             onClick={(event) => this.optClick(event, index)}>
             {o.text}
@@ -440,7 +440,7 @@ export class PickerColumnCmp {
 
     if (col.suffix) {
       results.push(
-        <div class="picker-suffix" style={{width: col.suffixWidth!}}>
+        <div class="picker-suffix" style={{ width: col.suffixWidth! }}>
           {col.suffix}
         </div>
       );

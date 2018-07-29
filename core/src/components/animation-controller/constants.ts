@@ -1,4 +1,5 @@
 
+// tslint:disable-next-line:only-arrow-functions
 export const CSS_PROP = function(docEle: HTMLElement) {
   // transform
   const transformProp = [

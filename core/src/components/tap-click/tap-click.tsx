@@ -17,12 +17,12 @@ export class TapClick {
 
   private clearDefers = new WeakMap<HTMLElement, any>();
 
-  @Prop({ context: 'isServer'}) isServer!: boolean;
-  @Prop({ context: 'enableListener'}) enableListener!: EventListenerEnable;
+  @Prop({ context: 'isServer' }) isServer!: boolean;
+  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
 
   @Element() el!: HTMLElement;
 
-  @Listen('body:click', {passive: false, capture: true})
+  @Listen('body:click', { passive: false, capture: true })
   onBodyClick(ev: Event) {
     if (this.cancelled) {
       ev.preventDefault();
@@ -95,7 +95,7 @@ export class TapClick {
     clearTimeout(this.activeDefer);
     this.activeDefer = undefined;
 
-    const {x, y} = pointerCoord(ev);
+    const { x, y } = pointerCoord(ev);
 
     // unactivate selected
     if (activatableEle) {
@@ -131,7 +131,7 @@ export class TapClick {
 
     const event = new CustomEvent('ionActivated', {
       bubbles: false,
-      detail: {x, y}
+      detail: { x, y }
     });
     el.dispatchEvent(event);
   }

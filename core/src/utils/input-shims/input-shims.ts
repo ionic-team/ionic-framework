@@ -20,8 +20,8 @@ export function startInputShims(
   const inputBlurring = config.getBoolean('inputBlurring', true);
   const scrollPadding = config.getBoolean('scrollPadding', true);
 
-  const hideCaretMap = new WeakMap<HTMLElement, Function>();
-  const scrollAssistMap = new WeakMap<HTMLElement, Function>();
+  const hideCaretMap = new WeakMap<HTMLElement, () => void>();
+  const scrollAssistMap = new WeakMap<HTMLElement, () => void>();
 
   function registerInput(componentEl: HTMLElement) {
     const inputEl = (componentEl.shadowRoot || componentEl).querySelector('input');

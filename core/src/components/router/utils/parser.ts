@@ -35,7 +35,7 @@ export function readRouteNodes(root: Element, node = root): RouteTree {
     });
 }
 
-export function readProp(el: HTMLElement, prop: string): string|null {
+export function readProp(el: HTMLElement, prop: string): string | null {
   if (prop in el) {
     return (el as any)[prop];
   }

@@ -68,7 +68,7 @@ export class MenuToggle {
   }
 }
 
-function getMenuController(doc: Document): Promise<HTMLIonMenuControllerElement|undefined> {
+function getMenuController(doc: Document): Promise<HTMLIonMenuControllerElement | undefined> {
   const menuControllerElement = doc.querySelector('ion-menu-controller');
   if (!menuControllerElement) {
     return Promise.resolve(undefined);

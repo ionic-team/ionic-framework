@@ -98,22 +98,22 @@ export class ActionSheet implements OverlayInterface {
   /**
    * Emitted after the alert has presented.
    */
-  @Event({eventName: 'ionActionSheetDidPresent'}) didPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionActionSheetDidPresent' }) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the alert has presented.
    */
-  @Event({eventName: 'ionActionSheetWillPresent'}) willPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionActionSheetWillPresent' }) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the alert has dismissed.
    */
-  @Event({eventName: 'ionActionSheetWillDismiss'}) willDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionActionSheetWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the alert has dismissed.
    */
-  @Event({eventName: 'ionActionSheetDidDismiss'}) didDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionActionSheetDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
 
   componentDidLoad() {
@@ -186,7 +186,7 @@ export class ActionSheet implements OverlayInterface {
     }
   }
 
-  private callButtonHandler(button: ActionSheetButton|undefined): boolean {
+  private callButtonHandler(button: ActionSheetButton | undefined): boolean {
     if (button && button.handler) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs

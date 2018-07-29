@@ -363,13 +363,10 @@ export class Picker implements OverlayInterface {
 }
 
 function buttonWrapperClass(button: PickerButton): CssClassMap {
-  const buttonClass: CssClassMap = {
+  return {
+    [`picker-toolbar-${button.role}`]: !!button.role,
     'picker-toolbar-button': true
   };
-  if (button.role) {
-    buttonClass[`picker-toolbar-${button.role}`] = true;
-  }
-  return buttonClass;
 }
 
 function buttonClass(button: PickerButton): CssClassMap {

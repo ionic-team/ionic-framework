@@ -22,7 +22,7 @@ export class Modal implements OverlayInterface {
 
   private usersElement?: HTMLElement;
 
-  animation: Animation|undefined;
+  animation: Animation | undefined;
   presented = false;
   mode!: Mode;
 
@@ -89,22 +89,22 @@ export class Modal implements OverlayInterface {
   /**
    * Emitted after the modal has presented.
    */
-  @Event({eventName: 'ionModalDidPresent'}) didPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionModalDidPresent' }) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the modal has presented.
    */
-  @Event({eventName: 'ionModalWillPresent'}) willPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionModalWillPresent' }) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the modal has dismissed.
    */
-  @Event({eventName: 'ionModalWillDismiss'}) willDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionModalWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the modal has dismissed.
    */
-  @Event({eventName: 'ionModalDidDismiss'}) didDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionModalDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   componentDidLoad() {
     this.ionModalDidLoad.emit();

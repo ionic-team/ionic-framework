@@ -133,7 +133,7 @@ export class Content {
 }
 
 function getParentElement(el: any) {
-  if (el.parentElement ) {
+  if (el.parentElement) {
     // normal element with a parent element
     return el.parentElement;
   }

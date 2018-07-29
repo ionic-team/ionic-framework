@@ -92,7 +92,7 @@ export class InfiniteScroll {
     this.scrollEl = undefined;
   }
 
-  @Listen('scroll', {enabled: false})
+  @Listen('scroll', { enabled: false })
   protected onScroll() {
     const scrollEl = this.scrollEl;
     if (!scrollEl || !this.canStart()) {

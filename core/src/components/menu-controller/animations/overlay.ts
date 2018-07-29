@@ -8,7 +8,7 @@ const BOX_SHADOW_WIDTH = 8;
  * The menu slides over the content. The content
  * itself, which is under the menu, does not move.
  */
-export function menuOverlayAnimation(Animation: Animation, _: HTMLElement, menu: Menu): Promise<Animation> {
+export function menuOverlayAnimation(AnimationC: Animation, _: HTMLElement, menu: Menu): Promise<Animation> {
   let closedX: string, openedX: string;
   const width = menu.width + BOX_SHADOW_WIDTH;
   if (menu.isEndSide) {
@@ -22,15 +22,15 @@ export function menuOverlayAnimation(Animation: Animation, _: HTMLElement, menu:
     openedX = '0px';
   }
 
-  const menuAni = new Animation()
+  const menuAni = new AnimationC()
     .addElement(menu.menuInnerEl)
     .fromTo('translateX', closedX, openedX);
 
-  const backdropAni = new Animation()
+  const backdropAni = new AnimationC()
     .addElement(menu.backdropEl)
     .fromTo('opacity', 0.01, 0.3);
 
-  return baseAnimation(Animation).then(animation => {
+  return baseAnimation(AnimationC).then(animation => {
     return animation.add(menuAni)
       .add(backdropAni);
   });

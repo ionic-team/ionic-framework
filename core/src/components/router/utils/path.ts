@@ -74,7 +74,7 @@ export function readPath(loc: Location, root: string, useHash: boolean): string[
   return removePrefix(prefix, path);
 }
 
-export function parsePath(path: string|undefined|null): string[] {
+export function parsePath(path: string | undefined | null): string[] {
   if (path == null) {
     return [''];
   }

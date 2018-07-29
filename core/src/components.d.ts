@@ -5923,7 +5923,7 @@ declare global {
       /**
        * Scroll by a specified X/Y distance in the component 
        */
-      'scrollByPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
+      'scrollByPoint': (x: number, y: number, duration: number) => Promise<any>;
       /**
        * If true, the component will emit scroll events. 
        */
@@ -5935,7 +5935,7 @@ declare global {
       /**
        * Scroll to a specified X/Y location in the component 
        */
-      'scrollToPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
+      'scrollToPoint': (x: number, y: number, duration: number) => Promise<void>;
       /**
        * Scroll to the top of the component 
        */

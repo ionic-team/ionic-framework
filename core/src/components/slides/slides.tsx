@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 import { Mode } from '../../interface.js';
 import { createThemedClasses } from '../../utils/theme.js';
-import { Swiper }  from './vendor/swiper.js';
+import { Swiper } from './vendor/swiper.js';
 
 @Component({
   tag: 'ion-slides',

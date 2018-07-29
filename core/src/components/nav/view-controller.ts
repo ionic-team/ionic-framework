@@ -53,7 +53,7 @@ export class ViewController {
   }
 }
 
-export function matches(view: ViewController|undefined, id: string, params: ComponentProps): view is ViewController {
+export function matches(view: ViewController | undefined, id: string, params: ComponentProps): view is ViewController {
   if (!view) {
     return false;
   }
@@ -86,7 +86,7 @@ export function matches(view: ViewController|undefined, id: string, params: Comp
   return true;
 }
 
-export function convertToView(page: any, params: any): ViewController|null {
+export function convertToView(page: any, params: any): ViewController | null {
   if (!page) {
     return null;
   }

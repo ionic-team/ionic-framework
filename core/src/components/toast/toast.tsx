@@ -98,22 +98,22 @@ export class Toast implements OverlayInterface {
   /**
    * Emitted after the toast has presented.
    */
-  @Event({eventName: 'ionToastDidPresent'}) didPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionToastDidPresent' }) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the toast has presented.
    */
-  @Event({eventName: 'ionToastWillPresent'}) willPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionToastWillPresent' }) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the toast has dismissed.
    */
-  @Event({eventName: 'ionToastWillDismiss'}) willDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionToastWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the toast has dismissed.
    */
-  @Event({eventName: 'ionToastDidDismiss'}) didDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionToastDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the toast has unloaded.

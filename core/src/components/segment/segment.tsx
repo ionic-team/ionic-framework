@@ -41,7 +41,7 @@ export class Segment {
   @Watch('value')
   protected valueChanged(value: string | undefined) {
     this.updateButtons();
-    this.ionChange.emit({value});
+    this.ionChange.emit({ value });
   }
 
   /**

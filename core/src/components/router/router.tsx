@@ -155,7 +155,7 @@ export class Router {
     }
   }
 
-  private async writeNavStateRoot(path: string[]|null, intent: RouterIntent): Promise<boolean> {
+  private async writeNavStateRoot(path: string[] | null, intent: RouterIntent): Promise<boolean> {
     if (this.busy) {
       return false;
     }
@@ -167,7 +167,7 @@ export class Router {
     // lookup redirect rule
     const redirects = readRedirects(this.el);
     const redirect = routeRedirect(path, redirects);
-    let redirectFrom: string[]|null = null;
+    let redirectFrom: string[] | null = null;
     if (redirect) {
       this.setPath(redirect.to!, intent);
       redirectFrom = redirect.from;
@@ -187,7 +187,7 @@ export class Router {
   }
 
   private async writeNavState(
-    node: HTMLElement|undefined, chain: RouteChain, intent: RouterIntent,
+    node: HTMLElement | undefined, chain: RouteChain, intent: RouterIntent,
     path: string[], redirectFrom: string[] | null,
     index = 0
   ): Promise<boolean> {
@@ -222,7 +222,7 @@ export class Router {
     return readPath(this.win.location, this.root, this.useHash);
   }
 
-  private routeChangeEvent(path: string[], redirectFromPath: string[]|null): RouterEventDetail | null {
+  private routeChangeEvent(path: string[], redirectFromPath: string[] | null): RouterEventDetail | null {
     const from = this.previousPath;
     const to = generatePath(path);
     this.previousPath = to;

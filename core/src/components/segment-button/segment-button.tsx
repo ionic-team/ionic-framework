@@ -29,7 +29,7 @@ export class SegmentButton {
   /**
    * If true, the segment button is selected. Defaults to `false`.
    */
-  @Prop({mutable: true}) checked = false;
+  @Prop({ mutable: true }) checked = false;
 
   /*
    * If true, the user cannot interact with the segment button. Default false.

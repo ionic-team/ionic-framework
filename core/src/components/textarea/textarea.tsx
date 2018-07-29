@@ -165,7 +165,7 @@ export class Textarea implements TextareaComponent {
     if (inputEl!.value !== value) {
       inputEl!.value = value;
     }
-    this.ionChange.emit({value});
+    this.ionChange.emit({ value });
   }
 
   componentDidLoad() {

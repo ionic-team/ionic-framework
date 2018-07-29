@@ -1,5 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { Color, InputChangeEvent, Mode, StyleEvent  } from '../../interface';
+import { Color, InputChangeEvent, Mode, StyleEvent } from '../../interface';
 import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 import { InputComponent } from './input-base';
@@ -224,7 +224,7 @@ export class Input implements InputComponent {
       inputEl.value = value;
     }
     this.emitStyle();
-    this.ionChange.emit({value});
+    this.ionChange.emit({ value });
   }
 
   componentWillLoad() {

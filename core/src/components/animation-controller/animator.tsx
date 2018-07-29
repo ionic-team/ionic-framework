@@ -23,7 +23,7 @@ export const TRANSFORM_PROPS: {[key: string]: number} = {
   'perspective': 1
 };
 
-const raf = window.requestAnimationFrame || ((f: Function) => f());
+const raf = window.requestAnimationFrame || ((f: FrameRequestCallback) => f(Date.now()));
 
 export class Animator {
 
@@ -42,21 +42,21 @@ export class Animator {
   private _hasTweenEffect = false;
   private _isAsync = false;
   private _isReverse = false;
-  private _onFinishCallbacks?: Function[];
-  private _onFinishOneTimeCallbacks?: Function[];
-  private _readCallbacks?: Function[];
+  private _onFinishCallbacks?: ((a: Animator) => void)[];
+  private _onFinishOneTimeCallbacks?: ((a: Animator) => void)[];
+  private _readCallbacks?: (() => void)[];
   private _reversedEasingName?: string;
   private _timerId?: any;
-  private _unregisterTrnsEnd?: Function;
-  private _writeCallbacks?: Function[];
+  private _unregisterTrnsEnd?: (() => void);
+  private _writeCallbacks?: (() => void)[];
   private _destroyed = false;
 
-  parent: Animator|undefined;
+  parent: Animator | undefined;
   hasChildren = false;
   isPlaying = false;
   hasCompleted = false;
 
-  addElement(el: Node|Node[]|NodeList): Animator {
+  addElement(el: Node | Node[] | NodeList): Animator {
     if (el) {
       if ((el as NodeList).length) {
         for (let i = 0; i < (el as NodeList).length; i++) {
@@ -123,7 +123,7 @@ export class Animator {
    * Get the easing of this animation. If this animation does
    * not have an easing, then it'll get the easing from its parent.
    */
-  getEasing(): string|null {
+  getEasing(): string | null {
     if (this._isReverse && this._reversedEasingName) {
       return this._reversedEasingName;
     }
@@ -205,7 +205,7 @@ export class Animator {
 
     // add from/to EffectState to the EffectProperty
     const fxState: EffectState = {
-      val: val,
+      val,
       num: 0,
       effectUnit: '',
     };
@@ -280,7 +280,7 @@ export class Animator {
    * Add a function which contains DOM reads, which will run
    * before the animation begins.
    */
-  beforeAddRead(domReadFn: Function): Animator {
+  beforeAddRead(domReadFn: () => void): Animator {
     (this._readCallbacks = this._readCallbacks || []).push(domReadFn);
     return this;
   }
@@ -289,7 +289,7 @@ export class Animator {
    * Add a function which contains DOM writes, which will run
    * before the animation begins.
    */
-  beforeAddWrite(domWriteFn: Function): Animator {
+  beforeAddWrite(domWriteFn: () => void): Animator {
     (this._writeCallbacks = this._writeCallbacks || []).push(domWriteFn);
     return this;
   }
@@ -372,7 +372,7 @@ export class Animator {
 
   playAsync(opts?: PlayOptions): Promise<Animator> {
     return new Promise(resolve => {
-      this.onFinish(resolve, {oneTimeCallback: true, clearExistingCallacks: true });
+      this.onFinish(resolve, { oneTimeCallback: true, clearExistingCallacks: true });
       this.play(opts);
       return this;
     });
@@ -393,7 +393,7 @@ export class Animator {
    * DOM WRITE
    * RECURSION
    */
-  private _playInit(opts: PlayOptions|undefined) {
+  private _playInit(opts: PlayOptions | undefined) {
     // always default that an animation does not tween
     // a tween requires that an Animation class has an element
     // and that it has at least one FROM/TO effect
@@ -427,7 +427,7 @@ export class Animator {
    * NO RECURSION
    * ROOT ANIMATION
    */
-  _playDomInspect(opts: PlayOptions|undefined) {
+  _playDomInspect(opts: PlayOptions | undefined) {
     const self = this;
     // fire off all the "before" function that have DOM READS in them
     // elements will be in the DOM, however visibily hidden
@@ -460,7 +460,7 @@ export class Animator {
    * DOM WRITE
    * RECURSION
    */
-  _playProgress(opts: PlayOptions|undefined) {
+  _playProgress(opts: PlayOptions | undefined) {
     const children = this._childAnimations;
     if (children) {
       for (let i = 0; i < children.length; i++) {
@@ -598,7 +598,7 @@ export class Animator {
    * NO DOM
    * RECURSION
    */
-  _hasDuration(opts: PlayOptions|undefined) {
+  _hasDuration(opts: PlayOptions | undefined) {
     if (this.getDuration(opts) > DURATION_MIN) {
       return true;
     }
@@ -1257,7 +1257,7 @@ export class Animator {
   /**
    * NO DOM
    */
-  _transEl(): HTMLElement|null {
+  _transEl(): HTMLElement | null {
     // get the lowest level element that has an Animator
     const children = this._childAnimations;
     if (children) {

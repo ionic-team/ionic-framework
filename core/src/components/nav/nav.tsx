@@ -127,7 +127,7 @@ export class Nav implements NavOutlet {
       {
         insertStart: -1,
         insertViews: [{ page: component, params: componentProps }],
-        opts: opts
+        opts
       },
       done
     );
@@ -148,7 +148,7 @@ export class Nav implements NavOutlet {
       {
         insertStart: insertIndex,
         insertViews: [{ page: component, params: componentProps }],
-        opts: opts
+        opts
       },
       done
     );
@@ -168,7 +168,7 @@ export class Nav implements NavOutlet {
       {
         insertStart: insertIndex,
         insertViews: insertComponents,
-        opts: opts
+        opts
       },
       done
     );
@@ -183,7 +183,7 @@ export class Nav implements NavOutlet {
       {
         removeStart: -1,
         removeCount: 1,
-        opts: opts
+        opts
       },
       done
     );
@@ -201,7 +201,7 @@ export class Nav implements NavOutlet {
     const config: TransitionInstruction = {
       removeStart: -1,
       removeCount: -1,
-      opts: opts
+      opts
     };
     if (typeof indexOrViewCtrl === 'object' && (indexOrViewCtrl as ViewController).component) {
       config.removeView = indexOrViewCtrl;
@@ -224,7 +224,7 @@ export class Nav implements NavOutlet {
       {
         removeStart: 1,
         removeCount: -1,
-        opts: opts
+        opts
       },
       done
     );
@@ -243,8 +243,8 @@ export class Nav implements NavOutlet {
     return this.queueTrns(
       {
         removeStart: startIndex,
-        removeCount: removeCount,
-        opts: opts
+        removeCount,
+        opts
       },
       done
     );
@@ -289,7 +289,7 @@ export class Nav implements NavOutlet {
         insertViews: views,
         removeStart: 0,
         removeCount: -1,
-        opts: opts
+        opts
       },
       done
     );
@@ -316,8 +316,8 @@ export class Nav implements NavOutlet {
     const commonOpts: NavOptions = {
       updateURL: false,
       viewIsReady: enteringEl => {
-        let mark: Function;
-        const p = new Promise(r => (mark = r));
+        let mark: () => void;
+        const p = new Promise<void>(r => (mark = r));
         resolve({
           changed: true,
           element: enteringEl,
@@ -663,7 +663,7 @@ export class Nav implements NavOutlet {
     const insertViews = ti.insertViews;
     const removeStart = ti.removeStart;
     const removeCount = ti.removeCount;
-    let destroyQueue: ViewController[] | undefined = undefined;
+    let destroyQueue: ViewController[] | undefined;
 
     // there are views to remove
     if (removeStart != null && removeCount != null) {
@@ -772,12 +772,12 @@ export class Nav implements NavOutlet {
   }
 
   private transitionFinish(
-    transition: Animation | null,
+    trans: Animation | null,
     enteringView: ViewController,
     leavingView: ViewController | undefined,
     opts: NavOptions
   ): NavResult {
-    const hasCompleted = transition ? transition.hasCompleted : true;
+    const hasCompleted = trans ? trans.hasCompleted : true;
 
     const cleanupView = hasCompleted ? enteringView : leavingView;
     if (cleanupView) {
@@ -786,10 +786,10 @@ export class Nav implements NavOutlet {
 
     // this is the root transition
     // it's safe to destroy this transition
-    transition && transition.destroy();
+    trans && trans.destroy();
 
     return {
-      hasCompleted: hasCompleted,
+      hasCompleted,
       requiresTransition: true,
       enteringView,
       leavingView,
@@ -879,7 +879,7 @@ export class Nav implements NavOutlet {
       {
         removeStart: -1,
         removeCount: 1,
-        opts: opts
+        opts
       },
       undefined
     );

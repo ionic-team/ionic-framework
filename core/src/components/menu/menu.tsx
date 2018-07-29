@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
 import { Animation, Config, GestureDetail, MenuChangeEventDetail, Mode, Side } from '../../interface';
-import { assert, isEndSide } from '../../utils/helpers';
+import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-menu',
@@ -75,7 +75,7 @@ export class Menu {
   @Watch('disabled')
   protected disabledChanged(disabled: boolean) {
     this.updateState();
-    this.ionMenuChange.emit({ disabled: disabled, open: this._isOpen });
+    this.ionMenuChange.emit({ disabled, open: this._isOpen });
   }
 
   /**
@@ -85,7 +85,7 @@ export class Menu {
 
   @Watch('side')
   protected sideChanged() {
-    this.isEndSide = isEndSide(this.win, this.side);
+    this.isEndSide = isEnd(this.win, this.side);
   }
 
   /**

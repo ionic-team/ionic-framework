@@ -147,7 +147,7 @@ export class Searchbar {
     if (inputEl && inputEl.value !== value) {
       inputEl.value = value;
     }
-    this.ionChange.emit({value});
+    this.ionChange.emit({ value });
   }
 
   componentDidLoad() {

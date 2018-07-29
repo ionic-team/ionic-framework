@@ -29,14 +29,14 @@ const enum SlidingState {
 })
 export class ItemSliding {
 
-  private item: HTMLIonItemElement|null = null;
-  private list: HTMLIonListElement|null = null;
+  private item: HTMLIonItemElement | null = null;
+  private list: HTMLIonListElement | null = null;
   private openAmount = 0;
   private initialOpenAmount = 0;
   private optsWidthRightSide = 0;
   private optsWidthLeftSide = 0;
   private sides = ItemSide.None;
-  private tmr: number|undefined;
+  private tmr: number | undefined;
   private leftOptions?: HTMLIonItemOptionsElement;
   private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
