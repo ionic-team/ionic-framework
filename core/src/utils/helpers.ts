@@ -9,8 +9,12 @@ export function reorderArray(array: any[], indexes: {from: number, to: number}):
   return array;
 }
 
+export function hasShadowDom(el: HTMLElement) {
+  return !!el.shadowRoot && !!el.attachShadow;
+}
+
 export function renderHiddenInput(container: HTMLElement, name: string, value: string, disabled: boolean) {
-  if (container.shadowRoot) {
+  if (hasShadowDom(container)) {
     let input = container.querySelector('input.aux-input') as HTMLInputElement;
     if (!input) {
       input = container.ownerDocument.createElement('input');
