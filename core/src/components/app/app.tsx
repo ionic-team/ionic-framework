@@ -1,13 +1,19 @@
 import { Component, Element, Prop, QueueApi } from '@stencil/core';
 
-import { Config } from '../../interface';
+import { Config, Mode } from '../../interface';
 import { isDevice, isHybrid, needInputShims } from '../../utils/platform';
+import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-app',
-  styleUrl: 'app.scss'
+  styleUrls: {
+    ios: 'app.ios.scss',
+    md: 'app.md.scss'
+  }
 })
 export class App {
+
+  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -23,13 +29,15 @@ export class App {
   hostData() {
     const device = this.config.getBoolean('isDevice', isDevice(this.win));
     const hybrid = isHybrid(this.win);
-    const statusBar = this.config.getBoolean('statusbarPadding', hybrid);
+    const statusbarPadding = this.config.get('statusbarPadding', hybrid);
 
     return {
       class: {
+        ...createThemedClasses(this.mode, 'app'),
+
         'is-device': device,
         'is-hydrid': hybrid,
-        'statusbar-padding': statusBar
+        'statusbar-padding': statusbarPadding
       }
     };
   }

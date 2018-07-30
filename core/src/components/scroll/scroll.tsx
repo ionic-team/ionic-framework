@@ -101,7 +101,7 @@ export class Scroll {
       this.queue.read(ts => {
         this.queued = false;
         this.detail.event = ev;
-        updateScrollDetail(this.detail, this.el, ts!, didStart);
+        updateScrollDetail(this.detail, this.el, ts, didStart);
         this.ionScroll.emit(this.detail);
       });
     }

@@ -1,24 +1,6 @@
 @import "./app";
-@import "./app.md.vars";
 
-// Material Design App
-// --------------------------------------------------
-
-.app-md {
-  @include footer-safe-area(
-    $toolbar-md-height,
-    $toolbar-md-padding,
-    $tabbar-md-height);
-
-  // TODO this can be simplified
-  &.statusbar-padding {
-    .ion-page,
-    .ion-page > ion-header,
-    ion-tab ion-nav .ion-page > ion-header,
-    ion-menu > .menu-inner,
-    ion-menu > .menu-inner > ion-header {
-      @include toolbar-statusbar-padding($toolbar-md-height, $toolbar-md-padding, $content-md-padding, $app-md-statusbar-padding);
-    }
-  }
+.app-md.statusbar-padding {
+  --ion-statusbar-padding: 20px;
 }
 

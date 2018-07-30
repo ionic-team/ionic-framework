@@ -9,10 +9,11 @@
   --ion-color-contrast: #{$toolbar-ios-text-color};
   --border-color: #{$toolbar-ios-border-color};
   --translucent-filter: #{$toolbar-ios-translucent-filter};
-
-  @include padding($toolbar-ios-padding);
-
-  min-height: $toolbar-ios-height;
+  --padding-top: #{$toolbar-ios-padding};
+  --padding-bottom: #{$toolbar-ios-padding};
+  --padding-start: #{$toolbar-ios-padding};
+  --padding-end: #{$toolbar-ios-padding};
+  --min-height: #{$toolbar-ios-height};
 
   font-family: $toolbar-ios-font-family;
 }

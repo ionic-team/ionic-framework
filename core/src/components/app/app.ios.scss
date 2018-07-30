@@ -1,21 +1,5 @@
 @import "./app";
-@import "./app.ios.vars";
 
-// iOS App
-// --------------------------------------------------
-
-.app-ios {
-  @include footer-safe-area($toolbar-ios-height, $toolbar-ios-padding, $tabbar-ios-height);
-
-  // TODO this can be simplified
-  &.statusbar-padding {
-    .ion-page,
-    > ion-header,
-    .ion-page > ion-header,
-    ion-menu > .menu-inner,
-    ion-menu > .menu-inner > ion-header {
-      @include toolbar-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-padding, $app-ios-statusbar-padding);
-      @include toolbar-title-statusbar-padding($toolbar-ios-height, $toolbar-ios-padding, $content-padding, $app-ios-statusbar-padding);
-    }
-  }
+.app-ios.statusbar-padding {
+  --ion-statusbar-padding: 20px;
 }
