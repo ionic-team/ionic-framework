@@ -142,6 +142,15 @@
     slides.addEventListener('ionSlideTouchEnd', function (e) {
       console.log('slide touch end', e)
     });
+    slides.addEventListener('ionSlidesDidLoad', function (e) {
+      console.log('slides did load', e)
+    });
+    slides.addEventListener('ionSlideTap', function (e) {
+      console.log('slide tapped', e)
+    });
+    slides.addEventListener('ionSlideDoubleTap', function (e) {
+      console.log('slide double-tapped', e)
+    });
   </script>
 </body>
 

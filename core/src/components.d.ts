@@ -6804,6 +6804,10 @@ declare global {
        */
       'onIonSlideDidChange'?: (event: CustomEvent) => void;
       /**
+       * Emitted when the user double taps on the slide's container.
+       */
+      'onIonSlideDoubleTap'?: (event: CustomEvent) => void;
+      /**
        * Emitted when the slider is actively being moved.
        */
       'onIonSlideDrag'?: (event: CustomEvent) => void;
@@ -6832,6 +6836,10 @@ declare global {
        */
       'onIonSlideReachStart'?: (event: CustomEvent) => void;
       /**
+       * Emitted when the user taps/clicks on the slide's container.
+       */
+      'onIonSlideTap'?: (event: CustomEvent) => void;
+      /**
        * Emitted when the user releases the touch.
        */
       'onIonSlideTouchEnd'?: (event: CustomEvent) => void;
@@ -6851,6 +6859,10 @@ declare global {
        * Emitted before the active slide has changed.
        */
       'onIonSlideWillChange'?: (event: CustomEvent) => void;
+      /**
+       * Emitted after Swiper initialization
+       */
+      'onIonSlidesDidLoad'?: (event: CustomEvent) => void;
       /**
        * Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options
        */

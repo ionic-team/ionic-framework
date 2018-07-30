@@ -23,6 +23,21 @@ export class Slides {
   @Element() el!: HTMLStencilElement;
 
   /**
+   * Emitted after Swiper initialization
+   */
+  @Event() ionSlidesDidLoad!: EventEmitter;
+
+  /**
+   * Emitted when the user taps/clicks on the slide's container.
+   */
+  @Event() ionSlideTap!: EventEmitter;
+
+  /**
+   * Emitted when the user double taps on the slide's container.
+   */
+  @Event() ionSlideDoubleTap!: EventEmitter;
+
+  /**
    * Emitted before the active slide has changed.
    */
   @Event() ionSlideWillChange!: EventEmitter;
@@ -348,19 +363,28 @@ export class Slides {
     // Keep the event options separate, we dont want users
     // overwriting these
     const eventOptions = {
-      onSlideChangeStart: this.ionSlideWillChange.emit,
-      onSlideChangeEnd: this.ionSlideDidChange.emit,
-      onSlideNextStart: this.ionSlideNextStart.emit,
-      onSlidePrevStart: this.ionSlidePrevStart.emit,
-      onSlideNextEnd: this.ionSlideNextEnd.emit,
-      onSlidePrevEnd: this.ionSlidePrevEnd.emit,
-      onTransitionStart: this.ionSlideTransitionStart.emit,
-      onTransitionEnd: this.ionSlideTransitionEnd.emit,
-      onSliderMove: this.ionSlideDrag.emit,
-      onReachBeginning: this.ionSlideReachStart.emit,
-      onReachEnd: this.ionSlideReachEnd.emit,
-      onTouchStart: this.ionSlideTouchStart.emit,
-      onTouchEnd: this.ionSlideTouchEnd.emit
+      on: {
+        init: () => {
+          setTimeout(() => {
+            this.ionSlidesDidLoad.emit();
+          }, 20);
+        },
+        slideChangeTransitionStart: this.ionSlideWillChange.emit,
+        slideChangeTransitionEnd: this.ionSlideDidChange.emit,
+        slideNextTransitionStart: this.ionSlideNextStart.emit,
+        slidePrevTransitionStart: this.ionSlidePrevStart.emit,
+        slideNextTransitionEnd: this.ionSlideNextEnd.emit,
+        slidePrevTransitionEnd: this.ionSlidePrevEnd.emit,
+        transitionStart: this.ionSlideTransitionStart.emit,
+        transitionEnd: this.ionSlideTransitionEnd.emit,
+        sliderMove: this.ionSlideDrag.emit,
+        reachBeginning: this.ionSlideReachStart.emit,
+        reachEnd: this.ionSlideReachEnd.emit,
+        touchStart: this.ionSlideTouchStart.emit,
+        touchEnd: this.ionSlideTouchEnd.emit,
+        tap: this.ionSlideTap.emit,
+        doubleTap: this.ionSlideDoubleTap.emit
+      }
     };
 
     // Merge the base, user options, and events together then pas to swiper
@@ -380,7 +404,7 @@ export class Slides {
           <slot></slot>
         </div>
         { this.pager ? <div class="swiper-pagination"></div> : null }
-        { this.scrollbar ? <div class="swiper-scrollbar"></div> : null }
+        <div class="swiper-scrollbar" hidden={!this.scrollbar}/>
       </div>
     );
   }
