@@ -10,11 +10,14 @@
   --pading-bottom: 0;
   --padding-start: 5px;
   --padding-end: 5px;
-  --border-radius: #{$toolbar-ios-button-border-radius};
   --height: 32px;
 
   font-size: #{$toolbar-ios-button-font-size};
   font-weight: 400;
+}
+
+::slotted(*) .button:not(.button-round) {
+  --border-radius: #{$toolbar-ios-button-border-radius};
 }
 
 :host-context(.ion-color)::slotted(*) .button {
