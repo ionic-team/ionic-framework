@@ -34,7 +34,7 @@
 
 @supports (padding-top: env(safe-area-inset-top)) {
   :host(.placement-bottom) {
-    padding-bottom: env(safe-area-inset-bottom);
+    @include padding(null, null, env(safe-area-inset-bottom));
   }
 }
 
