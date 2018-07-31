@@ -17,7 +17,6 @@ export const config: Config = {
     { components: ['ion-chip', 'ion-chip-button', 'ion-chip-icon'] },
     { components: ['ion-datetime', 'ion-picker', 'ion-picker-column', 'ion-picker-controller'] },
     { components: ['ion-fab', 'ion-fab-button', 'ion-fab-list'] },
-    { components: ['ion-gesture', 'ion-gesture-controller'] },
     { components: ['ion-grid', 'ion-row', 'ion-col'] },
     { components: ['ion-hide-when', 'ion-show-when'] },
     { components: ['ion-infinite-scroll', 'ion-infinite-scroll-content'] },

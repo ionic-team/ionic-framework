@@ -3,8 +3,6 @@ export * from './components';
 export * from './components/animation-controller/animation-interface';
 export * from './components/alert/alert-interface';
 export * from './components/action-sheet/action-sheet-interface';
-export * from './components/gesture/gesture-interface';
-export * from './components/gesture-controller/gesture-controller-interface';
 export * from './components/menu/menu-interface';
 export * from './components/modal/modal-interface';
 export * from './components/picker/picker-interface';
@@ -23,6 +21,8 @@ export * from './components/virtual-scroll/virtual-scroll-interface';
 // TODO: review how this types are exported
 // Other types
 export * from './components/nav/view-controller';
+
+export { Gesture, GestureDetail } from './utils/gesture/gesture';
 
 export * from './utils/input-interface';
 export * from './global/config';

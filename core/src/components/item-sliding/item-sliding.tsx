@@ -1,6 +1,6 @@
-import { Component, Element, Event, EventEmitter, Method, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi, State } from '@stencil/core';
 
-import { GestureDetail } from '../../interface';
+import { Gesture, GestureDetail } from '../../interface';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
@@ -39,24 +39,44 @@ export class ItemSliding {
   private leftOptions?: HTMLIonItemOptionsElement;
   private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
+  private gesture?: Gesture;
 
   @Element() el!: HTMLIonItemSlidingElement;
 
   @State() private state: SlidingState = SlidingState.Disabled;
+
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * Emitted when the sliding position changes.
    */
   @Event() ionDrag!: EventEmitter;
 
-  componentDidLoad() {
+  async componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
     this.list = this.el.closest('ion-list');
 
     this.updateOptions();
+
+    this.gesture = (await import('../../utils/gesture/gesture')).create({
+      el: this.el,
+      queue: this.queue,
+      gestureName: 'item-swipe',
+      gesturePriority: -10,
+      threshold: 5,
+      canStart: this.canStart.bind(this),
+      onStart: this.onDragStart.bind(this),
+      onMove: this.onDragMove.bind(this),
+      onEnd: this.onDragEnd.bind(this),
+    });
+    this.gesture.disabled = false;
   }
 
   componentDidUnload() {
+    if (this.gesture) {
+      this.gesture.destroy();
+    }
+
     this.item = this.list = null;
     this.leftOptions = this.rightOptions = undefined;
   }
@@ -271,24 +291,6 @@ export class ItemSliding {
         'item-sliding-active-swipe-start': !!(this.state & SlidingState.SwipeStart)
       }
     };
-  }
-
-  render() {
-    return (
-      <ion-gesture
-        canStart={this.canStart.bind(this)}
-        onStart={this.onDragStart.bind(this)}
-        onMove={this.onDragMove.bind(this)}
-        onEnd={this.onDragEnd.bind(this)}
-        gestureName={'item-swipe'}
-        gesturePriority={-10}
-        direction={'x'}
-        maxAngle={20}
-        threshold={5}
-        attachTo={'parent'}>
-        <slot></slot>
-      </ion-gesture>
-    );
   }
 }
 

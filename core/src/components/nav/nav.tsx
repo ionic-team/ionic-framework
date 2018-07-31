@@ -1,7 +1,7 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch } from '@stencil/core';
 
 import { ViewLifecycle } from '../..';
-import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, Mode, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
+import { Animation, ComponentProps, Config, FrameworkDelegate, Gesture, GestureDetail, Mode, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
 import { assert } from '../../utils/helpers';
 import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
 
@@ -13,12 +13,14 @@ import { ViewState, convertToViews, matches } from './view-controller';
   shadow: true
 })
 export class Nav implements NavOutlet {
+
   private transInstr: TransitionInstruction[] = [];
   private sbTrns?: Animation;
   private useRouter = false;
   private isTransitioning = false;
   private destroyed = false;
   private views: ViewController[] = [];
+  private gesture?: Gesture;
 
   mode!: Mode;
 
@@ -36,6 +38,12 @@ export class Nav implements NavOutlet {
    * If the nav component should allow for swipe-to-go-back
    */
   @Prop({ mutable: true }) swipeBackEnabled?: boolean;
+  @Watch('swipeBackEnabled')
+  swipeBackEnabledChanged() {
+    if (this.gesture) {
+      this.gesture.disabled = !this.swipeBackEnabled;
+    }
+  }
 
   /**
    * If the nav should animate the components or not
@@ -86,6 +94,7 @@ export class Nav implements NavOutlet {
     this.useRouter =
       !!this.win.document.querySelector('ion-router') &&
       !this.el.closest('[no-router]');
+
     if (this.swipeBackEnabled === undefined) {
       this.swipeBackEnabled = this.config.getBoolean(
         'swipeBackEnabled',
@@ -98,14 +107,31 @@ export class Nav implements NavOutlet {
     this.ionNavWillLoad.emit();
   }
 
-  componentDidLoad() {
+  async componentDidLoad() {
     this.rootChanged();
+
+    this.gesture = (await import('../../utils/gesture/gesture')).create({
+      el: this.win.document.body,
+      queue: this.queue,
+      gestureName: 'goback-swipe',
+      gesturePriority: 10,
+      threshold: 10,
+      canStart: this.canSwipeBack.bind(this),
+      onStart: this.swipeBackStart.bind(this),
+      onMove: this.swipeBackProgress.bind(this),
+      onEnd: this.swipeBackEnd.bind(this),
+    });
+    this.swipeBackEnabledChanged();
   }
 
   componentDidUnload() {
     for (const view of this.views) {
       lifecycle(this.win, view.element!, ViewLifecycle.WillUnload);
       view._destroy();
+    }
+
+    if (this.gesture) {
+      this.gesture.destroy();
     }
 
     // release swipe back gesture and transition
@@ -933,19 +959,6 @@ export class Nav implements NavOutlet {
 
   render() {
     return [
-      this.swipeBackEnabled && (
-        <ion-gesture
-          canStart={this.canSwipeBack.bind(this)}
-          onStart={this.swipeBackStart.bind(this)}
-          onMove={this.swipeBackProgress.bind(this)}
-          onEnd={this.swipeBackEnd.bind(this)}
-          gestureName="goback-swipe"
-          gesturePriority={10}
-          direction="x"
-          threshold={10}
-          attachTo="body"
-        />
-      ),
       this.mode === 'ios' && <div class="nav-decor" />,
       <slot></slot>
     ];

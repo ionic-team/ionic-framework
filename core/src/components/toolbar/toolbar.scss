@@ -45,6 +45,8 @@
   contain: content;
   overflow: hidden;
   z-index: $z-index-toolbar;
+
+  box-sizing: border-box;
 }
 
 // Transparent Toolbar

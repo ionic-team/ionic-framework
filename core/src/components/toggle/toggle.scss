@@ -26,15 +26,6 @@
   outline: none;
 }
 
-ion-gesture {
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  visibility: inherit;
-}
-
 input {
   @include input-cover();
 

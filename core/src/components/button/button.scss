@@ -18,6 +18,7 @@
 
   white-space: nowrap;
 
+  user-select: none;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
 }

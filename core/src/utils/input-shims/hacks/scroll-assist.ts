@@ -1,4 +1,4 @@
-import { pointerCoord } from '../../../utils/helpers';
+import { pointerCoord } from '../../helpers';
 
 import { isFocused, relocateInput } from './common';
 import { getScrollData } from './scroll-data';
