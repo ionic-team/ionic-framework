@@ -27,11 +27,12 @@
     "ionicons": "4.2.6"
   },
   "devDependencies": {
-    "@stencil/core": "0.11.0-0",
+    "@stencil/core": "0.11.0",
     "@stencil/dev-server": "latest",
-    "@stencil/sass": "latest",
+    "@stencil/sass": "0.1.0",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.1",
+    "autoprefixer": "^9.0.2",
     "chromedriver": "^2.38.3",
     "clean-css-cli": "^4.1.11",
     "jest": "^23.4.2",

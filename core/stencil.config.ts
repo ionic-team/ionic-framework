@@ -1,6 +1,7 @@
-const sass = require('@stencil/sass');
+import { Config } from '@stencil/core';
+import { sass } from '@stencil/sass';
 
-exports.config = {
+export const config: Config = {
   namespace: 'Ionic',
   bundles: [
     { components: ['ion-action-sheet', 'ion-action-sheet-controller'] },
@@ -29,8 +30,8 @@ exports.config = {
     { components: ['ion-note', 'ion-img', 'ion-text'] },
     { components: ['ion-popover', 'ion-popover-controller'] },
     { components: ['ion-radio', 'ion-radio-group'] },
-    { components: ['ion-range', 'ion-range-knob']},
-    { components: ['ion-refresher', 'ion-refresher-content']},
+    { components: ['ion-range', 'ion-range-knob'] },
+    { components: ['ion-refresher', 'ion-refresher-content'] },
     { components: ['ion-reorder', 'ion-reorder-group'] },
     { components: ['ion-ripple-effect'] },
     { components: ['ion-router', 'ion-route', 'ion-route-redirect', 'ion-router-outlet'] },
@@ -46,7 +47,7 @@ exports.config = {
     { components: ['ion-virtual-scroll'] },
   ],
   plugins: [
-    sass(),
+    sass()
   ],
   outputTargets: [
     {
@@ -61,9 +62,4 @@ exports.config = {
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',
   enableCache: true,
-};
-
-exports.devServer = {
-  root: '.',
-  watchGlob: ['dist/*.*', 'dist/ionic/**/**', 'src/**/*.html']
 };
