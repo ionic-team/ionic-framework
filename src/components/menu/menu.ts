@@ -375,9 +375,9 @@ export class Menu implements RootNode, MenuInterface, OnInit, OnDestroy {
     let isEnabled = this._isEnabled;
     if (isEnabled === true || typeof isEnabled === 'undefined') {
       // check if more than one menu is on the same side
-      isEnabled = !this._menuCtrl.getMenus().some(m => {
+      isEnabled = 2 > this._menuCtrl.getMenus().filter(m => {
         return m.side === this.side && m.enabled;
-      });
+      }).length;
     }
     // register this menu with the app's menu controller
     this._menuCtrl._register(this);
