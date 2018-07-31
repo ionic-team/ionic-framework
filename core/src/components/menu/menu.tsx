@@ -158,9 +158,9 @@ export class Menu {
     let isEnabled = !this.disabled;
     if (isEnabled === true || typeof isEnabled === 'undefined') {
       const menus = this.menuCtrl!.getMenus();
-      isEnabled = !menus.some((m: any) => {
+      isEnabled = 2 > menus.filter((m: any) => {
         return m.side === this.side && !m.disabled;
-      });
+      }).length;
     }
 
     // register this menu with the app's menu controller
