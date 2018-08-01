@@ -270,7 +270,7 @@ export class InfiniteScrollContent {
 }
 
 export declare interface Input extends StencilComponents.IonInput {}
-@Directive({selector: 'ion-input', inputs: ['accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'results', 'spellcheck', 'step', 'size', 'type', 'value'], outputs: ['ionInput', 'ionChange', 'ionStyle', 'ionBlur', 'ionFocus', 'ionInputDidLoad', 'ionInputDidUnload']})
+@Directive({selector: 'ion-input', inputs: ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'results', 'spellcheck', 'step', 'size', 'type', 'value'], outputs: ['ionInput', 'ionChange', 'ionStyle', 'ionBlur', 'ionFocus', 'ionInputDidLoad', 'ionInputDidUnload']})
 export class Input {
   ionInput: EventEmitter<any>;
   ionChange: EventEmitter<any>;
@@ -280,7 +280,7 @@ export class Input {
   ionInputDidLoad: EventEmitter<any>;
   ionInputDidUnload: EventEmitter<any>;
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'results', 'spellcheck', 'step', 'size', 'type', 'value']);
+    proxyInputs(this, r, ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'results', 'spellcheck', 'step', 'size', 'type', 'value']);
     proxyOutputs(this, ['ionInput', 'ionChange', 'ionStyle', 'ionBlur', 'ionFocus', 'ionInputDidLoad', 'ionInputDidUnload']);
   }
 }
@@ -703,7 +703,7 @@ export class Text {
 }
 
 export declare interface Textarea extends StencilComponents.IonTextarea {}
-@Directive({selector: 'ion-textarea', inputs: ['autocapitalize', 'autocomplete', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value'], outputs: ['ionChange', 'ionInput', 'ionStyle', 'ionBlur', 'ionFocus']})
+@Directive({selector: 'ion-textarea', inputs: ['color', 'mode', 'autocapitalize', 'autocomplete', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value'], outputs: ['ionChange', 'ionInput', 'ionStyle', 'ionBlur', 'ionFocus']})
 export class Textarea {
   ionChange: EventEmitter<any>;
   ionInput: EventEmitter<any>;
@@ -711,7 +711,7 @@ export class Textarea {
   ionBlur: EventEmitter<any>;
   ionFocus: EventEmitter<any>;
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['autocapitalize', 'autocomplete', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value']);
+    proxyInputs(this, r, ['color', 'mode', 'autocapitalize', 'autocomplete', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value']);
     proxyOutputs(this, ['ionChange', 'ionInput', 'ionStyle', 'ionBlur', 'ionFocus']);
   }
 }
@@ -735,10 +735,10 @@ export class Toggle {
 }
 
 export declare interface Toolbar extends StencilComponents.IonToolbar {}
-@Directive({selector: 'ion-toolbar', inputs: ['color', 'mode', 'translucent']})
+@Directive({selector: 'ion-toolbar', inputs: ['color', 'mode']})
 export class Toolbar {
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'translucent']);
+    proxyInputs(this, r, ['color', 'mode']);
   }
 }
 
