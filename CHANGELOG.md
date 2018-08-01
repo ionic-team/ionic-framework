@@ -1,3 +1,51 @@
+<a name="4.0.0-beta.1"></a>
+# [4.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.0...v4.0.0-beta.1) (2018-08-01)
+
+
+### Bug Fixes
+
+* **accesibility:** boolean aria-* properties ([4f9cbfe](https://github.com/ionic-team/ionic/commit/4f9cbfe))
+* **all:** strong type text fields ([1d001a3](https://github.com/ionic-team/ionic/commit/1d001a3))
+* **all:** updated tslint rules to latest ([92e21a8](https://github.com/ionic-team/ionic/commit/92e21a8))
+* **angular:** events ([7a0545d](https://github.com/ionic-team/ionic/commit/7a0545d)), closes [#14866](https://github.com/ionic-team/ionic/issues/14866)
+* **angular:** ion-router-outlet exposes animated ([266336e](https://github.com/ionic-team/ionic/commit/266336e)), closes [#14913](https://github.com/ionic-team/ionic/issues/14913)
+* **angular:** pass proper animated value ([7813acc](https://github.com/ionic-team/ionic/commit/7813acc))
+* **app:** statusbarPadding ([fd8f875](https://github.com/ionic-team/ionic/commit/fd8f875))
+* **app:** user-select on desktop ([8a1ad1d](https://github.com/ionic-team/ionic/commit/8a1ad1d))
+* **button:** do not change border radius if round button in toolbar ([#14941](https://github.com/ionic-team/ionic/issues/14941)) ([ad006dd](https://github.com/ionic-team/ionic/commit/ad006dd)), closes [#7661](https://github.com/ionic-team/ionic/issues/7661)
+* **button:** improve text style inherency ([25423a0](https://github.com/ionic-team/ionic/commit/25423a0)), closes [#14927](https://github.com/ionic-team/ionic/issues/14927)
+* **button:** submit forms using fake button ([c05d672](https://github.com/ionic-team/ionic/commit/c05d672)), closes [#14890](https://github.com/ionic-team/ionic/issues/14890) [#14786](https://github.com/ionic-team/ionic/issues/14786)
+* **color:** make desktop selection beautiful ([0cdb500](https://github.com/ionic-team/ionic/commit/0cdb500))
+* **config:** avoid using startWith for IE support ([73a9f14](https://github.com/ionic-team/ionic/commit/73a9f14)), closes [#14922](https://github.com/ionic-team/ionic/issues/14922)
+* **content:** bottom padding ([be4eda5](https://github.com/ionic-team/ionic/commit/be4eda5))
+* **fab:** add styles for disabled ([520da8d](https://github.com/ionic-team/ionic/commit/520da8d)), closes [#14867](https://github.com/ionic-team/ionic/issues/14867)
+* **flex-utils:** add missing flex attributes ([7c12e1b](https://github.com/ionic-team/ionic/commit/7c12e1b))
+* **input:** add color support for ion-input ([f676f98](https://github.com/ionic-team/ionic/commit/f676f98)), closes [#14864](https://github.com/ionic-team/ionic/issues/14864)
+* **inputs:** better customization for placeholder color ([517104f](https://github.com/ionic-team/ionic/commit/517104f))
+* **item:** only use pointer cursor for <button> and <a> ([f19553f](https://github.com/ionic-team/ionic/commit/f19553f))
+* **pointer-events:** listening to document ([afb0906](https://github.com/ionic-team/ionic/commit/afb0906))
+* **refresher:** default to disabled false, add to breaking changes ([f1826a6](https://github.com/ionic-team/ionic/commit/f1826a6)), closes [#14879](https://github.com/ionic-team/ionic/issues/14879)
+* **router-outlet:** fix stack attribute detection ([#14921](https://github.com/ionic-team/ionic/issues/14921)) ([16e992a](https://github.com/ionic-team/ionic/commit/16e992a))
+* **searchbar:** fix input bluring ([d65174b](https://github.com/ionic-team/ionic/commit/d65174b)), closes [#14916](https://github.com/ionic-team/ionic/issues/14916)
+* **slides:** update events to match swipers ([fc0d4c0](https://github.com/ionic-team/ionic/commit/fc0d4c0)), closes [#14865](https://github.com/ionic-team/ionic/issues/14865)
+* **title:** can be used nested ([d1969bd](https://github.com/ionic-team/ionic/commit/d1969bd)), closes [#14905](https://github.com/ionic-team/ionic/issues/14905)
+* **title:** support color ([7da0ac4](https://github.com/ionic-team/ionic/commit/7da0ac4))
+
+
+### Features
+
+* **menu:** configurable using menuType ([a62759c](https://github.com/ionic-team/ionic/commit/a62759c)), closes [#14901](https://github.com/ionic-team/ionic/issues/14901)
+
+
+### Performance Improvements
+
+* **app:** tap-click is a ES ([b0ac5ba](https://github.com/ionic-team/ionic/commit/b0ac5ba))
+* **css:** always emit compressed css ([143f0f0](https://github.com/ionic-team/ionic/commit/143f0f0))
+* **gesture:** lazy loaded dynamic ES module ([49cac8b](https://github.com/ionic-team/ionic/commit/49cac8b))
+* **icon:** disable icon lazy loading when it's not needed ([7292fc7](https://github.com/ionic-team/ionic/commit/7292fc7))
+
+
+
 <a name="4.0.0-beta.0"></a>
 # [4.0.0-beta.0](https://github.com/ionic-team/ionic/compare/v4.0.0-alpha.14...v4.0.0-beta.0) (2018-07-25)
 
