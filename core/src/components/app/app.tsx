@@ -13,6 +13,8 @@ import { createThemedClasses } from '../../utils/theme';
 })
 export class App {
 
+  private isDevice = false;
+
   mode!: Mode;
 
   @Element() el!: HTMLElement;
@@ -21,13 +23,17 @@ export class App {
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
+  componentWillLoad() {
+    this.isDevice = this.config.getBoolean('isDevice', isDevice(this.win));
+  }
+
   componentDidLoad() {
+    importTapClick(this.win, this.isDevice);
     importInputShims(this.win, this.config);
-    importStatusTap(this.win, this.config, this.queue);
+    importStatusTap(this.win, this.isDevice, this.queue);
   }
 
   hostData() {
-    const device = this.config.getBoolean('isDevice', isDevice(this.win));
     const hybrid = isHybrid(this.win);
     const statusbarPadding = this.config.get('statusbarPadding', hybrid);
 
@@ -35,25 +41,23 @@ export class App {
       class: {
         ...createThemedClasses(this.mode, 'app'),
 
-        'is-device': device,
+        'is-device': this.isDevice,
         'is-hydrid': hybrid,
         'statusbar-padding': statusbarPadding
       }
     };
   }
+}
 
-  render() {
-    return [
-      <ion-tap-click></ion-tap-click>,
-      <slot></slot>
-    ];
+async function importStatusTap(win: Window, device: boolean, queue: QueueApi) {
+  if (device) {
+    (await import('../../utils/status-tap')).startStatusTap(win, queue);
   }
 }
 
-async function importStatusTap(win: Window, config: Config, queue: QueueApi) {
-  const device = config.getBoolean('isDevice', isDevice(win));
+async function importTapClick(win: Window, device: boolean) {
   if (device) {
-    (await import('../../utils/status-tap')).startStatusTap(win, queue);
+    (await import('../../utils/tap-click')).startTapClick(win.document);
   }
 }
 

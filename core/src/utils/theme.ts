@@ -51,13 +51,3 @@ export async function openURL(win: Window, url: string | undefined, ev: Event, d
   }
   return Promise.resolve();
 }
-
-export function getParentNode(node: Node) {
-  // this also checks for host elements of shadow root node
-  // if the parent node is a document fragment (shadow root)
-  // then use the "host" property on it
-  // otherwise use the parent node
-  // DOCUMENT_FRAGMENT_NODE nodeType === 11
-  const parentNode: any = node.parentNode;
-  return (parentNode && parentNode.NODE_TYPE === 11 ? parentNode.host : parentNode);
-}
