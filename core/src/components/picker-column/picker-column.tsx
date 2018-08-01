@@ -1,9 +1,9 @@
 import { Component, Element, Prop, QueueApi } from '@stencil/core';
-import { GestureDetail, Mode, PickerColumn, PickerColumnOption } from '../../interface';
+
+import { Gesture, GestureDetail, Mode, PickerColumn, PickerColumnOption } from '../../interface';
 import { hapticSelectionChanged } from '../../utils';
 import { clamp } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
-
 
 /** @hidden */
 @Component({
@@ -24,6 +24,7 @@ export class PickerColumnCmp {
   private startY?: number;
   private velocity = 0;
   private y = 0;
+  private gesture?: Gesture;
 
   @Element() el!: HTMLElement;
 
@@ -44,7 +45,7 @@ export class PickerColumnCmp {
     this.scaleFactor = pickerScaleFactor;
   }
 
-  componentDidLoad() {
+  async componentDidLoad() {
     // get the scrollable element within the column
     const colEl = this.el.querySelector('.picker-opts')!;
 
@@ -52,6 +53,19 @@ export class PickerColumnCmp {
     this.optHeight = (colEl.firstElementChild ? colEl.firstElementChild.clientHeight : 0);
 
     this.refresh();
+
+    this.gesture = (await import('../../utils/gesture/gesture')).create({
+      el: this.el,
+      queue: this.queue,
+      gestureName: 'picker-swipe',
+      gesturePriority: 10,
+      threshold: 0,
+      canStart: this.canStart.bind(this),
+      onStart: this.onDragStart.bind(this),
+      onMove: this.onDragMove.bind(this),
+      onEnd: this.onDragEnd.bind(this),
+    });
+    this.gesture.disabled = false;
   }
 
   private optClick(ev: Event, index: number) {
@@ -237,8 +251,6 @@ export class PickerColumnCmp {
   }
 
   private onDragStart(detail: GestureDetail): boolean {
-    console.debug('picker, onDragStart', detail, this.startY);
-
     // We have to prevent default in order to block scrolling under the picker
     // but we DO NOT have to stop propagation, since we still want
     // some "click" events to capture
@@ -312,8 +324,6 @@ export class PickerColumnCmp {
     if (this.startY === undefined) {
       return;
     }
-
-    console.debug('picker, onDragEnd', detail);
 
     this.velocity = 0;
 
@@ -401,37 +411,25 @@ export class PickerColumnCmp {
       }
       return o;
     })
-    .filter(clientInformation => clientInformation !== null);
+    .filter(o => o !== null);
 
     const results: JSX.Element[] = [];
 
     if (col.prefix) {
       results.push(
-        <div class="picker-prefix" style={{width: col.prefixWidth!}}>
+        <div class="picker-prefix" style={{ width: col.prefixWidth! }}>
           {col.prefix}
         </div>
       );
     }
 
     results.push(
-      <ion-gesture
-        canStart={this.canStart.bind(this)}
-        onStart={this.onDragStart.bind(this)}
-        onMove={this.onDragMove.bind(this)}
-        onEnd={this.onDragEnd.bind(this)}
-        gestureName="picker-swipe"
-        gesturePriority={10}
-        direction="y"
-        passive={false}
-        threshold={0}
-        attachTo="parent"
-      ></ion-gesture>,
-      <div class="picker-opts" style={{maxWidth: col.optionsWidth!}}>
+      <div class="picker-opts" style={{ maxWidth: col.optionsWidth! }}>
         {options.map((o, index) =>
           <button
-            class={{'picker-opt': true, 'picker-opt-disabled': !!o.disabled}}
+            class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }}
             disable-activated
-            onClick={(event) => this.optClick(event, index)}>
+            onClick={event => this.optClick(event, index)}>
             {o.text}
           </button>
         )}
@@ -440,7 +438,7 @@ export class PickerColumnCmp {
 
     if (col.suffix) {
       results.push(
-        <div class="picker-suffix" style={{width: col.suffixWidth!}}>
+        <div class="picker-suffix" style={{ width: col.suffixWidth! }}>
           {col.suffix}
         </div>
       );

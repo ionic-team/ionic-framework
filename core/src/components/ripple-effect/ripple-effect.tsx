@@ -1,4 +1,5 @@
 import { Component, Element, EventListenerEnable, Listen, Method, Prop, QueueApi, Watch } from '@stencil/core';
+
 import { now } from '../../utils/helpers';
 
 @Component({
@@ -26,19 +27,19 @@ export class RippleEffect {
     this.enableListener(this, 'mousedown', !tapClick);
   }
 
-  @Listen('ionActivated', {enabled: false})
+  @Listen('ionActivated', { enabled: false })
   ionActivated(ev: CustomEvent) {
     this.addRipple(ev.detail.x, ev.detail.y);
   }
 
-  @Listen('touchstart', {passive: true, enabled: false})
+  @Listen('touchstart', { passive: true, enabled: false })
   touchStart(ev: TouchEvent) {
     this.lastClick = now(ev);
     const touches = ev.touches[0];
     this.addRipple(touches.clientX, touches.clientY);
   }
 
-  @Listen('mousedown', {passive: true, enabled: false})
+  @Listen('mousedown', { passive: true, enabled: false })
   mouseDown(ev: MouseEvent) {
     const timeStamp = now(ev);
     if (this.lastClick < (timeStamp - 1000)) {
@@ -55,7 +56,9 @@ export class RippleEffect {
    */
   @Method()
   addRipple(pageX: number, pageY: number) {
-    let x: number, y: number, size: number;
+    let x: number;
+    let y: number;
+    let size: number;
 
     this.queue.read(() => {
       const rect = this.el.getBoundingClientRect();

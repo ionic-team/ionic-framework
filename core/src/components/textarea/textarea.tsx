@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { Color, InputChangeEvent, Mode, StyleEvent } from '../../interface';
-import { debounceEvent, deferEvent } from '../../utils/helpers';
-import { TextareaComponent } from '../input/input-base';
 
+import { Color, InputChangeEvent, Mode, StyleEvent } from '../../interface';
+import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
+import { TextareaComponent } from '../input/input-base';
 
 @Component({
   tag: 'ion-textarea',
@@ -15,9 +15,7 @@ import { TextareaComponent } from '../input/input-base';
 export class Textarea implements TextareaComponent {
 
   private inputEl?: HTMLTextAreaElement;
-
-  mode!: Mode;
-  color?: Color;
+  private inputId = `ion-input-${textareaIds++}`;
 
   didBlurAfterEdit = false;
 
@@ -49,6 +47,19 @@ export class Textarea implements TextareaComponent {
    * Emitted when the input has focus.
    */
   @Event() ionFocus!: EventEmitter<void>;
+
+  /**
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
+  @Prop() color?: Color;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
@@ -103,7 +114,7 @@ export class Textarea implements TextareaComponent {
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop() name?: string;
+  @Prop() name: string = this.inputId;
 
   /**
    * Instructional text that shows before the input has a value.
@@ -154,7 +165,7 @@ export class Textarea implements TextareaComponent {
     if (inputEl!.value !== value) {
       inputEl!.value = value;
     }
-    this.ionChange.emit({value});
+    this.ionChange.emit({ value });
   }
 
   componentDidLoad() {
@@ -229,10 +240,12 @@ export class Textarea implements TextareaComponent {
   }
 
   render() {
+    renderHiddenInput(this.el, this.name, this.value, this.disabled);
+
     return (
       <textarea
         class="native-textarea"
-        ref={(el) => this.inputEl = el as HTMLTextAreaElement}
+        ref={el => this.inputEl = el as HTMLTextAreaElement}
         autoCapitalize={this.autocapitalize}
         // autoComplete={this.autocomplete}
         autoFocus={this.autofocus}
@@ -257,3 +270,5 @@ export class Textarea implements TextareaComponent {
     );
   }
 }
+
+let textareaIds = 0;

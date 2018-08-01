@@ -32,6 +32,13 @@
       <ion-button expand="block" onclick="presentWithCssClass()">CssClass</ion-button>
     </ion-content>
 
+    <style>
+      .my-custom-class {
+        --background: lightblue;
+        --min-width: 0;
+        --max-width: 200px;
+      }
+    </style>
   </ion-app>
 
   <script>
@@ -117,16 +124,19 @@
         header: 'Prompt!',
         inputs: [
           {
+            type: 'text',
             placeholder: 'Placeholder 1'
           },
           {
             name: 'name2',
+            type: 'text',
             id: 'name2-id',
             value: 'hello',
             placeholder: 'Placeholder 2'
           },
           {
             name: 'name3',
+            type: 'text',
             value: 'http://ionicframework.com',
             type: 'url',
             placeholder: 'Favorite site ever'
@@ -300,7 +310,7 @@
       const alert = await alertController.create({
         header: 'Alert',
         subHeader: 'Subtitle',
-        cssClass: 'my-class my-customClass   ',
+        cssClass: 'my-class my-custom-class   ',
         message: 'This is an alert message.',
         buttons: [{
           text: 'Ok',

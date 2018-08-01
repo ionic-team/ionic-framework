@@ -12,7 +12,7 @@
 <body>
   <ion-app>
 
-    <ion-header id="header">
+    <ion-header translucent id="header">
       <ion-toolbar style="display: none" id="toolbar2">
         <ion-title>Hidden Toolbar</ion-title>
       </ion-toolbar>
@@ -22,7 +22,7 @@
     </ion-header>
 
     <div style="display: flex; flex: 1">
-      <ion-content padding style="text-align: center; flex: 2" id="content">
+      <ion-content padding fullscreen text-center style="flex: 2" id="content">
         <f></f>
         <ion-button onclick="toggleFullscreen()">Toggle content.fullscreen</ion-button>
         <p>
@@ -97,7 +97,12 @@
         footer.classList.add('animation');
       }
     </script>
+
     <style>
+      ion-toolbar {
+        --background: white;
+      }
+
       ion-header.animation,
       ion-footer.animation,
       ion-content.animation {

@@ -1,6 +1,6 @@
 import { ComponentRef, FrameworkDelegate } from '../interface';
 
-export async function attachComponent(delegate: FrameworkDelegate|undefined, container: Element, component: ComponentRef, cssClasses?: string[], componentProps?: {[key: string]: any}): Promise<HTMLElement> {
+export async function attachComponent(delegate: FrameworkDelegate | undefined, container: Element, component: ComponentRef, cssClasses?: string[], componentProps?: {[key: string]: any}): Promise<HTMLElement> {
   if (delegate) {
     return delegate.attachViewToDom(container, component, componentProps, cssClasses);
   }
@@ -12,8 +12,12 @@ export async function attachComponent(delegate: FrameworkDelegate|undefined, con
     ? container.ownerDocument.createElement(component)
     : component;
 
-  cssClasses && cssClasses.forEach(c => el.classList.add(c));
-  componentProps && Object.assign(el, componentProps);
+  if (cssClasses) {
+    cssClasses.forEach(c => el.classList.add(c));
+  }
+  if (componentProps) {
+    Object.assign(el, componentProps);
+  }
 
   container.appendChild(el);
   if (el.componentOnReady) {
@@ -22,7 +26,7 @@ export async function attachComponent(delegate: FrameworkDelegate|undefined, con
   return el;
 }
 
-export function detachComponent(delegate: FrameworkDelegate|undefined, element: HTMLElement|undefined) {
+export function detachComponent(delegate: FrameworkDelegate | undefined, element: HTMLElement | undefined) {
   if (element) {
     if (delegate) {
       const container = element.parentElement;

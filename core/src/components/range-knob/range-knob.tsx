@@ -1,4 +1,5 @@
 import { Component, Event, EventEmitter, Listen, Prop } from '@stencil/core';
+
 import { Knob } from '../../interface';
 
 /** @hidden */
@@ -22,21 +23,21 @@ export class RangeKnob {
 
   @Listen('keydown')
   handleKeyBoard(ev: KeyboardEvent) {
-    const keyCode = ev.keyCode;
-    if (keyCode === KEY_LEFT || keyCode === KEY_DOWN) {
-      this.ionDecrease.emit({isIncrease: false, knob: this.knob});
+    const key = ev.key;
+    if (key === 'ArrowLeft' || key === 'ArrowDown') {
+      this.ionDecrease.emit({ isIncrease: false, knob: this.knob });
       ev.preventDefault();
       ev.stopPropagation();
 
-    } else if (keyCode === KEY_RIGHT || keyCode === KEY_UP) {
-      this.ionIncrease.emit({isIncrease: true, knob: this.knob});
+    } else if (key === 'ArrowRight' || key === 'ArrowUp') {
+      this.ionIncrease.emit({ isIncrease: true, knob: this.knob });
       ev.preventDefault();
       ev.stopPropagation();
     }
   }
 
   hostData() {
-    const {value, min, max} = this;
+    const { value, min, max } = this;
     const pos = this.ratio * 100;
     return {
       class: {
@@ -52,7 +53,7 @@ export class RangeKnob {
       'tabindex': this.disabled ? -1 : 0,
       'aria-valuemin': min,
       'aria-valuemax': max,
-      'aria-disabled': this.disabled,
+      'aria-disabled': this.disabled ? 'true' : null,
       'aria-labelledby': this.labelId,
       'aria-valuenow': value
     };

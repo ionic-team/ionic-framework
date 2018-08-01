@@ -1,11 +1,11 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+
 import { Animation, AnimationBuilder, Color, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
-
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
@@ -78,7 +78,7 @@ export class Loading implements OverlayInterface {
    * The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`,
    * `"bubbles"`, `"circles"`, `"crescent"`.
    */
-  @Prop({mutable: true}) spinner?: string;
+  @Prop({ mutable: true }) spinner?: string;
 
   /**
    * If true, the loading indicator will be translucent. Defaults to `false`.
@@ -144,7 +144,7 @@ export class Loading implements OverlayInterface {
    */
   @Method()
   async present(): Promise<void> {
-    await present( this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined);
+    await present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined);
 
     if (this.duration) {
       this.durationTimeout = setTimeout(

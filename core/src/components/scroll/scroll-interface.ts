@@ -10,6 +10,4 @@ export interface ScrollDetail extends GestureDetail, ScrollBaseDetail {
   scrollLeft: number;
 }
 
-export interface ScrollCallback {
-  (detail?: ScrollDetail): boolean|void;
-}
+export type ScrollCallback = (detail?: ScrollDetail) => boolean | void;

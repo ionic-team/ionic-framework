@@ -35,18 +35,12 @@ import {
   AlertOptions,
   Animation,
   AnimationBuilder,
-  BlockerConfig,
-  BlockerDelegate,
   CheckedInputChangeEvent,
   Color,
   ComponentProps,
   ComponentRef,
   DomRenderFn,
   FrameworkDelegate,
-  GestureCallback,
-  GestureConfig,
-  GestureDelegate,
-  GestureDetail,
   HeaderFn,
   InputChangeEvent,
   ItemHeightFn,
@@ -79,6 +73,7 @@ import {
   StyleEvent,
   TabbarLayout,
   TabbarPlacement,
+  TextFieldTypes,
   ToastOptions,
   TransitionDoneFn,
   TransitionInstruction,
@@ -505,7 +500,7 @@ declare global {
   namespace StencilComponents {
     interface IonAnchor {
       /**
-       * The color to use for the anchor.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -539,7 +534,7 @@ declare global {
   namespace JSXElements {
     export interface IonAnchorAttributes extends HTMLAttributes {
       /**
-       * The color to use for the anchor.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -662,7 +657,7 @@ declare global {
   namespace StencilComponents {
     interface IonBackButton {
       /**
-       * The color the button should be.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -704,7 +699,7 @@ declare global {
   namespace JSXElements {
     export interface IonBackButtonAttributes extends HTMLAttributes {
       /**
-       * The color the button should be.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -792,7 +787,7 @@ declare global {
   namespace StencilComponents {
     interface IonBadge {
       /**
-       * The color the badge should be.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -822,7 +817,7 @@ declare global {
   namespace JSXElements {
     export interface IonBadgeAttributes extends HTMLAttributes {
       /**
-       * The color the badge should be.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -843,7 +838,7 @@ declare global {
        */
       'buttonType': string;
       /**
-       * The color to use for the button.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -913,7 +908,7 @@ declare global {
        */
       'buttonType'?: string;
       /**
-       * The color to use for the button.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -1046,7 +1041,7 @@ declare global {
   namespace StencilComponents {
     interface IonCardHeader {
       /**
-       * The color to use for the background.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -1080,7 +1075,7 @@ declare global {
   namespace JSXElements {
     export interface IonCardHeaderAttributes extends HTMLAttributes {
       /**
-       * The color to use for the background.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -1101,7 +1096,7 @@ declare global {
   namespace StencilComponents {
     interface IonCardSubtitle {
       /**
-       * The color to use for the text color.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -1131,7 +1126,7 @@ declare global {
   namespace JSXElements {
     export interface IonCardSubtitleAttributes extends HTMLAttributes {
       /**
-       * The color to use for the text color.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -1148,7 +1143,7 @@ declare global {
   namespace StencilComponents {
     interface IonCardTitle {
       /**
-       * The color to use for the text color.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -1178,7 +1173,7 @@ declare global {
   namespace JSXElements {
     export interface IonCardTitleAttributes extends HTMLAttributes {
       /**
-       * The color to use for the text color.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -1195,7 +1190,7 @@ declare global {
   namespace StencilComponents {
     interface IonCard {
       /**
-       * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -1225,7 +1220,7 @@ declare global {
   namespace JSXElements {
     export interface IonCardAttributes extends HTMLAttributes {
       /**
-       * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -1246,7 +1241,7 @@ declare global {
        */
       'checked': boolean;
       /**
-       * The color to use for the checkbox.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -1292,7 +1287,7 @@ declare global {
        */
       'checked'?: boolean;
       /**
-       * The color to use for the checkbox.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -1337,7 +1332,7 @@ declare global {
   namespace StencilComponents {
     interface IonChipButton {
       /**
-       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -1379,7 +1374,7 @@ declare global {
   namespace JSXElements {
     export interface IonChipButtonAttributes extends HTMLAttributes {
       /**
-       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -1408,7 +1403,7 @@ declare global {
   namespace StencilComponents {
     interface IonChipIcon {
       /**
-       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -1442,7 +1437,7 @@ declare global {
   namespace JSXElements {
     export interface IonChipIconAttributes extends HTMLAttributes {
       /**
-       * The color to use. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -1463,7 +1458,7 @@ declare global {
   namespace StencilComponents {
     interface IonChip {
       /**
-       * The color to use.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -1493,7 +1488,7 @@ declare global {
   namespace JSXElements {
     export interface IonChipAttributes extends HTMLAttributes {
       /**
-       * The color to use.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -1994,7 +1989,7 @@ declare global {
        */
       'activated': boolean;
       /**
-       * The color to use for the button.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -2044,7 +2039,7 @@ declare global {
        */
       'activated'?: boolean;
       /**
-       * The color to use for the button.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -2222,200 +2217,6 @@ declare global {
        * If true, the footer will be translucent. Note: In order to scroll content behind the footer, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
        */
       'translucent'?: boolean;
-    }
-  }
-}
-
-
-declare global {
-
-  namespace StencilComponents {
-    interface IonGestureController {
-      /**
-       * Creates a gesture delegate based on the GestureConfig passed
-       */
-      'create': (config: GestureConfig) => Promise<GestureDelegate>;
-      /**
-       * Creates a blocker that will block any other gesture events from firing. Set in the ion-gesture component.
-       */
-      'createBlocker': (opts?: BlockerConfig) => BlockerDelegate;
-    }
-  }
-
-  interface HTMLIonGestureControllerElement extends StencilComponents.IonGestureController, HTMLStencilElement {}
-
-  var HTMLIonGestureControllerElement: {
-    prototype: HTMLIonGestureControllerElement;
-    new (): HTMLIonGestureControllerElement;
-  };
-  interface HTMLElementTagNameMap {
-    'ion-gesture-controller': HTMLIonGestureControllerElement;
-  }
-  interface ElementTagNameMap {
-    'ion-gesture-controller': HTMLIonGestureControllerElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      'ion-gesture-controller': JSXElements.IonGestureControllerAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonGestureControllerAttributes extends HTMLAttributes {
-      /**
-       * Event emitted when a gesture has been captured.
-       */
-      'onIonGestureCaptured'?: (event: CustomEvent<string>) => void;
-    }
-  }
-}
-
-
-declare global {
-
-  namespace StencilComponents {
-    interface IonGesture {
-      /**
-       * What component to attach listeners to.
-       */
-      'attachTo': string | HTMLElement;
-      /**
-       * Function to execute to see if gesture can start. Return boolean
-       */
-      'canStart': GestureCallback;
-      /**
-       * What direction to listen for gesture changes
-       */
-      'direction': string;
-      /**
-       * If true, the current gesture will disabling scrolling interactions
-       */
-      'disableScroll': boolean;
-      /**
-       * If true, the current gesture interaction is disabled
-       */
-      'disabled': boolean;
-      /**
-       * Name for the gesture action
-       */
-      'gestureName': string;
-      /**
-       * What priority the gesture should take. The higher the number, the higher the priority.
-       */
-      'gesturePriority': number;
-      /**
-       * The max angle for the gesture
-       */
-      'maxAngle': number;
-      /**
-       * Function to execute when the gesture has not been captured
-       */
-      'notCaptured': GestureCallback;
-      /**
-       * Function to execute when the gesture has end
-       */
-      'onEnd': GestureCallback;
-      /**
-       * Function to execute when the gesture has moved
-       */
-      'onMove': GestureCallback;
-      /**
-       * Function to execute when the gesture has start
-       */
-      'onStart': GestureCallback;
-      /**
-       * Function to execute when the gesture will start
-       */
-      'onWillStart': (_: GestureDetail) => Promise<void>;
-      /**
-       * If the event should use passive event listeners
-       */
-      'passive': boolean;
-      /**
-       * How many pixels of change the gesture should wait for before triggering the action.
-       */
-      'threshold': number;
-    }
-  }
-
-  interface HTMLIonGestureElement extends StencilComponents.IonGesture, HTMLStencilElement {}
-
-  var HTMLIonGestureElement: {
-    prototype: HTMLIonGestureElement;
-    new (): HTMLIonGestureElement;
-  };
-  interface HTMLElementTagNameMap {
-    'ion-gesture': HTMLIonGestureElement;
-  }
-  interface ElementTagNameMap {
-    'ion-gesture': HTMLIonGestureElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      'ion-gesture': JSXElements.IonGestureAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonGestureAttributes extends HTMLAttributes {
-      /**
-       * What component to attach listeners to.
-       */
-      'attachTo'?: string | HTMLElement;
-      /**
-       * Function to execute to see if gesture can start. Return boolean
-       */
-      'canStart'?: GestureCallback;
-      /**
-       * What direction to listen for gesture changes
-       */
-      'direction'?: string;
-      /**
-       * If true, the current gesture will disabling scrolling interactions
-       */
-      'disableScroll'?: boolean;
-      /**
-       * If true, the current gesture interaction is disabled
-       */
-      'disabled'?: boolean;
-      /**
-       * Name for the gesture action
-       */
-      'gestureName'?: string;
-      /**
-       * What priority the gesture should take. The higher the number, the higher the priority.
-       */
-      'gesturePriority'?: number;
-      /**
-       * The max angle for the gesture
-       */
-      'maxAngle'?: number;
-      /**
-       * Function to execute when the gesture has not been captured
-       */
-      'notCaptured'?: GestureCallback;
-      /**
-       * Function to execute when the gesture has end
-       */
-      'onEnd'?: GestureCallback;
-      /**
-       * Function to execute when the gesture has moved
-       */
-      'onMove'?: GestureCallback;
-      /**
-       * Function to execute when the gesture has start
-       */
-      'onStart'?: GestureCallback;
-      /**
-       * Function to execute when the gesture will start
-       */
-      'onWillStart'?: (_: GestureDetail) => Promise<void>;
-      /**
-       * If the event should use passive event listeners
-       */
-      'passive'?: boolean;
-      /**
-       * How many pixels of change the gesture should wait for before triggering the action.
-       */
-      'threshold'?: number;
     }
   }
 }
@@ -2693,7 +2494,7 @@ declare global {
        */
       'complete': () => void;
       /**
-       * If true, the infinite scroll will be hidden and scroll event listeners will be removed.  Call `enable(false)` to disable the infinite scroll from actively trying to receive new data while scrolling. This method is useful when it is known that there is no more data that can be added, and the infinite scroll is no longer needed.
+       * If true, the infinite scroll will be hidden and scroll event listeners will be removed.  Set this to true to disable the infinite scroll from actively trying to receive new data while scrolling. This is useful when it is known that there is no more data that can be added, and the infinite scroll is no longer needed.
        */
       'disabled': boolean;
       /**
@@ -2731,7 +2532,7 @@ declare global {
   namespace JSXElements {
     export interface IonInfiniteScrollAttributes extends HTMLAttributes {
       /**
-       * If true, the infinite scroll will be hidden and scroll event listeners will be removed.  Call `enable(false)` to disable the infinite scroll from actively trying to receive new data while scrolling. This method is useful when it is known that there is no more data that can be added, and the infinite scroll is no longer needed.
+       * If true, the infinite scroll will be hidden and scroll event listeners will be removed.  Set this to true to disable the infinite scroll from actively trying to receive new data while scrolling. This is useful when it is known that there is no more data that can be added, and the infinite scroll is no longer needed.
        */
       'disabled'?: boolean;
       /**
@@ -2784,6 +2585,10 @@ declare global {
        */
       'clearOnEdit': boolean;
       /**
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+       */
+      'color': Color;
+      /**
        * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
        */
       'debounce': number;
@@ -2811,6 +2616,10 @@ declare global {
        * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
        */
       'minlength': number;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': Mode;
       /**
        * If true, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
        */
@@ -2854,7 +2663,7 @@ declare global {
       /**
        * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
        */
-      'type': string;
+      'type': TextFieldTypes;
       /**
        * The value of the input.
        */
@@ -2910,6 +2719,10 @@ declare global {
        */
       'clearOnEdit'?: boolean;
       /**
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+       */
+      'color'?: Color;
+      /**
        * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
        */
       'debounce'?: number;
@@ -2937,6 +2750,10 @@ declare global {
        * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
        */
       'minlength'?: number;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: Mode;
       /**
        * If true, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
        */
@@ -3008,7 +2825,7 @@ declare global {
       /**
        * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
        */
-      'type'?: string;
+      'type'?: TextFieldTypes;
       /**
        * The value of the input.
        */
@@ -3023,7 +2840,7 @@ declare global {
   namespace StencilComponents {
     interface IonItemDivider {
       /**
-       * The color to use for the item-divider
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -3053,7 +2870,7 @@ declare global {
   namespace JSXElements {
     export interface IonItemDividerAttributes extends HTMLAttributes {
       /**
-       * The color to use for the item-divider
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -3103,7 +2920,7 @@ declare global {
   namespace StencilComponents {
     interface IonItemOption {
       /**
-       * The color to use for the option
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -3145,7 +2962,7 @@ declare global {
   namespace JSXElements {
     export interface IonItemOptionAttributes extends HTMLAttributes {
       /**
-       * The color to use for the option
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -3275,7 +3092,7 @@ declare global {
        */
       'button': boolean;
       /**
-       * The color to use for the background of the item.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -3338,7 +3155,7 @@ declare global {
        */
       'button'?: boolean;
       /**
-       * The color to use for the background of the item.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -3384,7 +3201,7 @@ declare global {
   namespace StencilComponents {
     interface IonLabel {
       /**
-       * The color to use for the label's text
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       'getText': () => string;
@@ -3419,7 +3236,7 @@ declare global {
   namespace JSXElements {
     export interface IonLabelAttributes extends HTMLAttributes {
       /**
-       * The color to use for the label's text
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -3444,7 +3261,7 @@ declare global {
   namespace StencilComponents {
     interface IonListHeader {
       /**
-       * The color to use for the background.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -3474,7 +3291,7 @@ declare global {
   namespace JSXElements {
     export interface IonListHeaderAttributes extends HTMLAttributes {
       /**
-       * The color to use for the background.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -3767,9 +3584,17 @@ declare global {
        */
       'autoHide': boolean;
       /**
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+       */
+      'color': Color;
+      /**
        * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
        */
       'menu': string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': Mode;
     }
   }
 
@@ -3797,9 +3622,17 @@ declare global {
        */
       'autoHide'?: boolean;
       /**
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+       */
+      'color'?: Color;
+      /**
        * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
        */
       'menu'?: string;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: Mode;
     }
   }
 }
@@ -3947,6 +3780,7 @@ declare global {
        * If true, the menu is disabled. Default `false`.
        */
       'disabled': boolean;
+      'getWidth': () => number;
       'isActive': () => boolean;
       'isOpen': () => boolean;
       /**
@@ -4492,7 +4326,7 @@ declare global {
   namespace StencilComponents {
     interface IonNote {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -4522,7 +4356,7 @@ declare global {
   namespace JSXElements {
     export interface IonNoteAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -4820,7 +4654,7 @@ declare global {
   namespace StencilComponents {
     interface IonPopover {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -4909,7 +4743,7 @@ declare global {
   namespace JSXElements {
     export interface IonPopoverAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -5058,7 +4892,7 @@ declare global {
        */
       'checked': boolean;
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -5104,7 +4938,7 @@ declare global {
        */
       'checked'?: boolean;
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -5208,7 +5042,7 @@ declare global {
   namespace StencilComponents {
     interface IonRange {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -5278,7 +5112,7 @@ declare global {
   namespace JSXElements {
     export interface IonRangeAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -5426,7 +5260,7 @@ declare global {
        */
       'complete': () => void;
       /**
-       * If true, the refresher will be hidden. Defaults to `true`.
+       * If true, the refresher will be hidden. Defaults to `false`.
        */
       'disabled': boolean;
       /**
@@ -5472,7 +5306,7 @@ declare global {
        */
       'closeDuration'?: string;
       /**
-       * If true, the refresher will be hidden. Defaults to `true`.
+       * If true, the refresher will be hidden. Defaults to `false`.
        */
       'disabled'?: boolean;
       /**
@@ -5890,7 +5724,7 @@ declare global {
       /**
        * Scroll by a specified X/Y distance in the component 
        */
-      'scrollByPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
+      'scrollByPoint': (x: number, y: number, duration: number) => Promise<any>;
       /**
        * If true, the component will emit scroll events. 
        */
@@ -5902,7 +5736,7 @@ declare global {
       /**
        * Scroll to a specified X/Y location in the component 
        */
-      'scrollToPoint': (x: number, y: number, duration: number, done?: Function | undefined) => Promise<any>;
+      'scrollToPoint': (x: number, y: number, duration: number) => Promise<void>;
       /**
        * Scroll to the top of the component 
        */
@@ -5987,7 +5821,7 @@ declare global {
        */
       'clearIcon': string;
       /**
-       * The color the searchbar should be.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -6069,7 +5903,7 @@ declare global {
        */
       'clearIcon'?: string;
       /**
-       * The color the searchbar should be.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -6142,7 +5976,7 @@ declare global {
        */
       'checked': boolean;
       /**
-       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       'disabled': boolean;
@@ -6181,7 +6015,7 @@ declare global {
        */
       'checked'?: boolean;
       /**
-       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       'disabled'?: boolean;
@@ -6207,7 +6041,7 @@ declare global {
   namespace StencilComponents {
     interface IonSegment {
       /**
-       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       'disabled': boolean;
@@ -6242,7 +6076,7 @@ declare global {
   namespace JSXElements {
     export interface IonSegmentAttributes extends HTMLAttributes {
       /**
-       * The color to use for the text color. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       'disabled'?: boolean;
@@ -6770,6 +6604,10 @@ declare global {
        */
       'onIonSlideDidChange'?: (event: CustomEvent) => void;
       /**
+       * Emitted when the user double taps on the slide's container.
+       */
+      'onIonSlideDoubleTap'?: (event: CustomEvent) => void;
+      /**
        * Emitted when the slider is actively being moved.
        */
       'onIonSlideDrag'?: (event: CustomEvent) => void;
@@ -6798,6 +6636,10 @@ declare global {
        */
       'onIonSlideReachStart'?: (event: CustomEvent) => void;
       /**
+       * Emitted when the user taps/clicks on the slide's container.
+       */
+      'onIonSlideTap'?: (event: CustomEvent) => void;
+      /**
        * Emitted when the user releases the touch.
        */
       'onIonSlideTouchEnd'?: (event: CustomEvent) => void;
@@ -6817,6 +6659,10 @@ declare global {
        * Emitted before the active slide has changed.
        */
       'onIonSlideWillChange'?: (event: CustomEvent) => void;
+      /**
+       * Emitted after Swiper initialization
+       */
+      'onIonSlidesDidLoad'?: (event: CustomEvent) => void;
       /**
        * Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options
        */
@@ -6839,7 +6685,7 @@ declare global {
   namespace StencilComponents {
     interface IonSpinner {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -6881,7 +6727,7 @@ declare global {
   namespace JSXElements {
     export interface IonSpinnerAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -7279,7 +7125,7 @@ declare global {
   namespace StencilComponents {
     interface IonTabs {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       'getRouteId': () => RouteID | undefined;
@@ -7351,7 +7197,7 @@ declare global {
   namespace JSXElements {
     export interface IonTabsAttributes extends HTMLAttributes {
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -7410,42 +7256,9 @@ declare global {
 declare global {
 
   namespace StencilComponents {
-    interface IonTapClick {
-
-    }
-  }
-
-  interface HTMLIonTapClickElement extends StencilComponents.IonTapClick, HTMLStencilElement {}
-
-  var HTMLIonTapClickElement: {
-    prototype: HTMLIonTapClickElement;
-    new (): HTMLIonTapClickElement;
-  };
-  interface HTMLElementTagNameMap {
-    'ion-tap-click': HTMLIonTapClickElement;
-  }
-  interface ElementTagNameMap {
-    'ion-tap-click': HTMLIonTapClickElement;
-  }
-  namespace JSX {
-    interface IntrinsicElements {
-      'ion-tap-click': JSXElements.IonTapClickAttributes;
-    }
-  }
-  namespace JSXElements {
-    export interface IonTapClickAttributes extends HTMLAttributes {
-
-    }
-  }
-}
-
-
-declare global {
-
-  namespace StencilComponents {
     interface IonText {
       /**
-       * The color to use for the text. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -7475,7 +7288,7 @@ declare global {
   namespace JSXElements {
     export interface IonTextAttributes extends HTMLAttributes {
       /**
-       * The color to use for the text. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -7508,6 +7321,10 @@ declare global {
        */
       'clearOnEdit': boolean;
       /**
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+       */
+      'color': Color;
+      /**
        * The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
        */
       'cols': number;
@@ -7527,6 +7344,10 @@ declare global {
        * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
        */
       'minlength': number;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode': Mode;
       /**
        * The name of the control, which is submitted with the form data.
        */
@@ -7598,6 +7419,10 @@ declare global {
        */
       'clearOnEdit'?: boolean;
       /**
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
+       */
+      'color'?: Color;
+      /**
        * The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
        */
       'cols'?: number;
@@ -7617,6 +7442,10 @@ declare global {
        * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
        */
       'minlength'?: number;
+      /**
+       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+       */
+      'mode'?: Mode;
       /**
        * The name of the control, which is submitted with the form data.
        */
@@ -7712,7 +7541,7 @@ declare global {
   namespace StencilComponents {
     interface IonTitle {
       /**
-       * The color to use for the title. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -7742,7 +7571,7 @@ declare global {
   namespace JSXElements {
     export interface IonTitleAttributes extends HTMLAttributes {
       /**
-       * The color to use for the title. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -7962,7 +7791,7 @@ declare global {
        */
       'checked': boolean;
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
@@ -8008,7 +7837,7 @@ declare global {
        */
       'checked'?: boolean;
       /**
-       * The color to use from your Sass `$colors` map. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
@@ -8053,17 +7882,13 @@ declare global {
   namespace StencilComponents {
     interface IonToolbar {
       /**
-       * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode': Mode;
-      /**
-       * If true, the toolbar will be translucent. Note: In order to scroll content behind the toolbar, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
-       */
-      'translucent': boolean;
     }
   }
 
@@ -8087,17 +7912,13 @@ declare global {
   namespace JSXElements {
     export interface IonToolbarAttributes extends HTMLAttributes {
       /**
-       * The color to use for the background. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+       * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
       'mode'?: Mode;
-      /**
-       * If true, the toolbar will be translucent. Note: In order to scroll content behind the toolbar, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
-       */
-      'translucent'?: boolean;
     }
   }
 }

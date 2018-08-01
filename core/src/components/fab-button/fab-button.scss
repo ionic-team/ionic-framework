@@ -20,6 +20,7 @@
   font-size: 14px;
 }
 
+
 :host(.activated) {
   --background: #{current-color(tint)};
 }
@@ -40,6 +41,8 @@
 
   border: 0;
 
+  outline: none;
+
   background: var(--background);
   background-clip: padding-box;
   color: inherit;
@@ -59,15 +62,15 @@
   contain: strict;
   cursor: pointer;
   overflow: hidden;
-  user-select: none;
   z-index: 0;
   font-kerning: none;
   appearance: none;
+}
 
-  &:active,
-  &:focus {
-    outline: none;
-  }
+.fab-button-native[disabled] {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
 }
 
 ::slotted(ion-icon) {

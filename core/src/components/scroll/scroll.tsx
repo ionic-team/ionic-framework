@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
+
 import { Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -23,7 +24,6 @@ export class Scroll {
 
   /** The mode for component. */
   @Prop() mode!: Mode;
-
 
   /**
    * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce.
@@ -98,10 +98,10 @@ export class Scroll {
     }
     if (!this.queued && this.scrollEvents) {
       this.queued = true;
-      this.queue.read(timeStamp => {
+      this.queue.read(ts => {
         this.queued = false;
         this.detail.event = ev;
-        updateScrollDetail(this.detail, this.el, timeStamp!, didStart);
+        updateScrollDetail(this.detail, this.el, ts, didStart);
         this.ionScroll.emit(this.detail);
       });
     }
@@ -125,20 +125,20 @@ export class Scroll {
 
   /** Scroll by a specified X/Y distance in the component */
   @Method()
-  scrollByPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
-    return this.scrollToPoint(x + this.el.scrollLeft, y + this.el.scrollTop, duration, done);
+  scrollByPoint(x: number, y: number, duration: number): Promise<any> {
+    return this.scrollToPoint(x + this.el.scrollLeft, y + this.el.scrollTop, duration);
   }
 
   /** Scroll to a specified X/Y location in the component */
   @Method()
-  scrollToPoint(x: number, y: number, duration: number, done?: Function): Promise<any> {
+  scrollToPoint(x: number, y: number, duration: number): Promise<void> {
     // scroll animation loop w/ easing
     // credit https://gist.github.com/dezinezync/5487119
 
-    let resolve!: Function;
-    const promise = new Promise(r => {
+    let resolve!: () => void;
+    const promise = new Promise<void>(r => {
       resolve = r;
-    }).then(() => done && done());
+    });
 
     const self = this;
     const el = self.el;
@@ -217,7 +217,6 @@ export class Scroll {
 
     return promise;
   }
-
 
   private onScrollStart() {
     this.isScrolling = true;

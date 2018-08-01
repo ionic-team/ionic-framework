@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Show when</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding>
+    <ion-content padding fullscreen>
 
       <h2>Mode Tests</h2>
       <ion-show-when mode="md, ios">
@@ -98,9 +98,11 @@
 
   </ion-app>
 
-  <script>
-
-  </script>
+  <style>
+    ion-toolbar {
+      --background: white;
+    }
+  </style>
 </body>
 
 </html>

@@ -4,8 +4,6 @@
 // --------------------------------------------------
 
 :host {
-  --ion-card-text: currentColor;
-
   @include font-smoothing();
 
   display: block;

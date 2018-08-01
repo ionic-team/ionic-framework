@@ -20,10 +20,10 @@
 
     <ion-content id="content" padding no-bounce text-center>
 
-      <form action="http://httpbin.org/get" method="GET">
+      <form onsubmit="return validate(event)" action="http://httpbin.org/get" method="GET">
 
         <div>
-          <input name="name">
+          <input name="name" required>
         </div>
 
         <ion-button type="submit">
@@ -35,6 +35,21 @@
     </ion-content>
 
   </ion-app>
+
+  <script>
+    document.querySelector('form').addEventListener('submit', (event) => {
+      console.log('SUBMIT from event', event);
+    });
+    function validate(event) {
+      console.log('SUBMIT from attribute', event);
+      if (event.target.elements[0].value === 'admin') {
+        return true;
+      } else {
+        console.log('INCORRECT USER, use "admin"')
+        return false;
+      }
+    }
+  </script>
 
 </body>
 

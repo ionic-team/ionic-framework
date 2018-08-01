@@ -24,12 +24,20 @@
 }
 
 :host(.tabbar-hidden) {
-  display: none;
+  /* stylelint-disable-next-line declaration-no-important */
+  display: none !important;
 }
 
 :host(.placement-top) {
   order: -1;
 }
+
+@supports (padding-top: env(safe-area-inset-top)) {
+  :host(.placement-bottom) {
+    @include padding(null, null, env(safe-area-inset-bottom));
+  }
+}
+
 
 
 // Tab Highlight

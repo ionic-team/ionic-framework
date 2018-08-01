@@ -4,7 +4,9 @@
 // --------------------------------------------------
 
 :host {
+  --placeholder-color: currentColor;
   --placeholder-weight: inherit;
+  --placeholder-opacity: .5;
   --padding-top: 0;
   --padding-end: 0;
   --padding-bottom: 0;
@@ -18,8 +20,16 @@
   align-items: center;
 
   width: 100%;
+
+  /* stylelint-disable */
+  /* TODO: find a better solution in padding.css, that does not require !important, */
+  padding: 0 !important;
+  /* stylelint-enable */
 }
 
+:host(.ion-color) {
+  color: #{current-color(base)};
+}
 
 // Native Text Input
 // --------------------------------------------------
@@ -27,6 +37,7 @@
 .native-input {
   @include border-radius(var(--border-radius));
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include text-inherit();
 
   display: inline-block;
 
@@ -40,13 +51,7 @@
 
   background: transparent;
 
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-
-  letter-spacing: inherit;
   box-sizing: border-box;
-  font-kerning: inherit;
   appearance: none;
 
   &::placeholder {
@@ -54,6 +59,12 @@
 
     font-family: inherit;
     font-weight: var(--placeholder-weight);
+
+    opacity: var(--placeholder-opacity);
+  }
+
+  &:-webkit-autofill {
+    background-color: transparent;
   }
 }
 
@@ -61,9 +72,6 @@
   opacity: .4;
 }
 
-.native-input:-webkit-autofill {
-  background-color: transparent;
-}
 
 
 // Input Cover: Unfocused
@@ -99,16 +107,13 @@
 
   border: 0;
 
+  outline: none;
+
   background-color: transparent;
   background-repeat: no-repeat;
 
   visibility: hidden;
   appearance: none;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
 }
 
 :host(.has-focus.has-value) .input-clear-icon {

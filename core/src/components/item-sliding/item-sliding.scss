@@ -10,6 +10,8 @@ ion-item-sliding {
   width: 100%;
 
   overflow: hidden;
+
+  user-select: none;
 }
 
 .item-sliding-active-slide .item {

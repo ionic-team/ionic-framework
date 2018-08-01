@@ -1,4 +1,5 @@
 import { Component, Prop } from '@stencil/core';
+
 import { Config } from '../../interface';
 
 @Component({
@@ -28,7 +29,6 @@ export class RefresherContent {
    */
   @Prop() refreshingText?: string;
 
-
   protected componentDidLoad() {
     if (!this.pullingIcon) {
       this.pullingIcon = this.config.get('ionPullIcon', 'arrow-down');
@@ -43,7 +43,7 @@ export class RefresherContent {
       <div class="refresher-pulling">
         {this.pullingIcon &&
           <div class="refresher-pulling-icon">
-            <ion-icon icon={this.pullingIcon}></ion-icon>
+            <ion-icon icon={this.pullingIcon} lazy={false}></ion-icon>
           </div>
         }
         {this.pullingText &&

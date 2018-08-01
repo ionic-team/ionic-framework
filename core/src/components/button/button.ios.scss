@@ -62,7 +62,7 @@
 
 :host(.button-outline.activated.focused) {
   --border-color: #{current-color(shade)};
-  --background-color: #{current-color(shade)};
+  --background: #{current-color(shade)};
 }
 
 // iOS Clear Button

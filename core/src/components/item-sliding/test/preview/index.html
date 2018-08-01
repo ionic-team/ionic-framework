@@ -12,7 +12,7 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Item Sliding</ion-title>
         <ion-buttons slot="secondary">
@@ -24,7 +24,7 @@
       </ion-toolbar>
     </ion-header>
 
-    <ion-content>
+    <ion-content fullscreen>
 
       <div padding>
         <ion-button expand="block" onclick="toggleSliding()">Toggle sliding</ion-button>
@@ -294,135 +294,136 @@
         </div>
 
       </ion-list>
-
-      <script>
-        var dynamicSlidingEnabled = document.getElementsByClassName('sliding-enabled');
-
-        // Toggle the dynamic options
-        var dynamicShowOptions = document.getElementsByClassName('show-options');
-        toggleDynamicOptions();
-
-        function toggleDynamicOptions() {
-          // TODO the element needs to be removed / added to the DOM
-        }
-
-        // Change the text for the more and archive buttons
-        var dynamicText = true;
-        var moreTextSpans = document.getElementsByClassName('more-text');
-        var archiveTextSpans = document.getElementsByClassName('archive-text');
-        changeDynamicText();
-
-        function changeDynamicText() {
-          dynamicText = !dynamicText;
-
-          for (var i = 0; i < moreTextSpans.length; i++) {
-            var moreText = dynamicText ? 'Changed More' : 'Dynamic More';
-            moreTextSpans[i].innerHTML = moreText;
-          }
-
-          for (var i = 0; i < archiveTextSpans.length; i++) {
-            var archiveText = dynamicText ? 'Changed Archive' : 'Dynamic Archive';
-            archiveTextSpans[i].innerHTML = archiveText;
-          }
-        }
-
-        function toggleSliding() {
-          // this.slidingEnabled = !this.slidingEnabled;
-        }
-
-        function closeOpened() {
-          var list = document.getElementById('list');
-          list.closeSlidingItems();
-        }
-
-        function noclose(item) {
-          var itemEle = document.getElementById(item);
-          console.log('no close', itemEle);
-        }
-
-        function unread(item) {
-          closeSlidingItem('UNREAD', item);
-        }
-
-        function archive(item) {
-          closeSlidingItem('ARCHIVE', item);
-        }
-
-        function del(item) {
-          closeSlidingItem('DELETE', item);
-        }
-
-        function download(item) {
-          var itemEle = document.getElementById(item);
-          console.log(itemEle);
-          itemEle.classList.add('downloading');
-          setTimeout(() => {
-            alert('Item was downloaded!');
-
-            itemEle.classList.remove('downloading');
-            itemEle.close();
-          }, 1500);
-        }
-
-        function closeSlidingItem(option, item) {
-          var itemEle = document.getElementById(item);
-
-          // TODO open alert instead
-          if (itemEle) {
-            itemEle.close();
-          }
-          console.log(option, itemEle);
-        }
-
-        function clickedItem(item) {
-          var itemEle = document.getElementById(item);
-          console.log('Clicked, ion-item', itemEle);
-        }
-
-        function reload() {
-          window.location.reload();
-        }
-        document.addEventListener('ionSwipe', (ev) => console.log('SWIPE!!', ev.detail));
-        document.addEventListener('ionDrag', (ev) => {
-          // console.log('DRAG!!', ev.detail);
-
-          let slidingRatio = ev.target.getSlidingRatio();
-          console.log('sliding', slidingRatio);
-
-          if (slidingRatio > 0) {
-            // positive
-            console.log('right side');
-          } else {
-            // negative
-            console.log('left side');
-          }
-          if (Math.abs(slidingRatio) > 1) {
-            console.log('overscroll');
-          }
-        });
-
-
-      </script>
-      <style>
-        .download-spinner {
-          display: none;
-        }
-
-        svg circle {
-          stroke: white;
-        }
-
-        .downloading .download-spinner {
-          display: block;
-        }
-
-        .downloading .download-hide {
-          display: none;
-        }
-
-      </style>
     </ion-content>
 
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+
+      .download-spinner {
+        display: none;
+      }
+
+      svg circle {
+        stroke: white;
+      }
+
+      .downloading .download-spinner {
+        display: block;
+      }
+
+      .downloading .download-hide {
+        display: none;
+      }
+    </style>
+
+    <script>
+      var dynamicSlidingEnabled = document.getElementsByClassName('sliding-enabled');
+
+      // Toggle the dynamic options
+      var dynamicShowOptions = document.getElementsByClassName('show-options');
+      toggleDynamicOptions();
+
+      function toggleDynamicOptions() {
+        // TODO the element needs to be removed / added to the DOM
+      }
+
+      // Change the text for the more and archive buttons
+      var dynamicText = true;
+      var moreTextSpans = document.getElementsByClassName('more-text');
+      var archiveTextSpans = document.getElementsByClassName('archive-text');
+      changeDynamicText();
+
+      function changeDynamicText() {
+        dynamicText = !dynamicText;
+
+        for (var i = 0; i < moreTextSpans.length; i++) {
+          var moreText = dynamicText ? 'Changed More' : 'Dynamic More';
+          moreTextSpans[i].innerHTML = moreText;
+        }
+
+        for (var i = 0; i < archiveTextSpans.length; i++) {
+          var archiveText = dynamicText ? 'Changed Archive' : 'Dynamic Archive';
+          archiveTextSpans[i].innerHTML = archiveText;
+        }
+      }
+
+      function toggleSliding() {
+        // this.slidingEnabled = !this.slidingEnabled;
+      }
+
+      function closeOpened() {
+        var list = document.getElementById('list');
+        list.closeSlidingItems();
+      }
+
+      function noclose(item) {
+        var itemEle = document.getElementById(item);
+        console.log('no close', itemEle);
+      }
+
+      function unread(item) {
+        closeSlidingItem('UNREAD', item);
+      }
+
+      function archive(item) {
+        closeSlidingItem('ARCHIVE', item);
+      }
+
+      function del(item) {
+        closeSlidingItem('DELETE', item);
+      }
+
+      function download(item) {
+        var itemEle = document.getElementById(item);
+        console.log(itemEle);
+        itemEle.classList.add('downloading');
+        setTimeout(() => {
+          alert('Item was downloaded!');
+
+          itemEle.classList.remove('downloading');
+          itemEle.close();
+        }, 1500);
+      }
+
+      function closeSlidingItem(option, item) {
+        var itemEle = document.getElementById(item);
+
+        // TODO open alert instead
+        if (itemEle) {
+          itemEle.close();
+        }
+        console.log(option, itemEle);
+      }
+
+      function clickedItem(item) {
+        var itemEle = document.getElementById(item);
+        console.log('Clicked, ion-item', itemEle);
+      }
+
+      function reload() {
+        window.location.reload();
+      }
+      document.addEventListener('ionSwipe', (ev) => console.log('SWIPE!!', ev.detail));
+      document.addEventListener('ionDrag', (ev) => {
+        // console.log('DRAG!!', ev.detail);
+
+        let slidingRatio = ev.target.getSlidingRatio();
+        console.log('sliding', slidingRatio);
+
+        if (slidingRatio > 0) {
+          // positive
+          console.log('right side');
+        } else {
+          // negative
+          console.log('left side');
+        }
+        if (Math.abs(slidingRatio) > 1) {
+          console.log('overscroll');
+        }
+      });
+    </script>
   </ion-app>
 </body>
 

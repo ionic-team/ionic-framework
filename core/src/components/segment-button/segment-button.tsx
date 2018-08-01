@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -14,8 +15,9 @@ export class SegmentButton {
   @Element() el!: HTMLElement;
 
   /**
-   * The color to use for the text color.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -28,7 +30,7 @@ export class SegmentButton {
   /**
    * If true, the segment button is selected. Defaults to `false`.
    */
-  @Prop({mutable: true}) checked = false;
+  @Prop({ mutable: true }) checked = false;
 
   /*
    * If true, the user cannot interact with the segment button. Default false.
@@ -67,7 +69,7 @@ export class SegmentButton {
   render() {
     return [
       <button
-        aria-pressed={this.checked}
+        aria-pressed={this.checked ? 'true' : null}
         class="segment-button-native"
         disabled={this.disabled}
         onClick={() => this.checked = true }>

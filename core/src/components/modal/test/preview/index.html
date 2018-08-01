@@ -12,19 +12,24 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Modal</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding>
+    <ion-content padding fullscreen>
       <ion-modal-controller></ion-modal-controller>
       <p>
         <ion-button id="presentModal" class="e2ePresentModal" onclick="presentModal()">Present modal</ion-button>
       </p>
     </ion-content>
 
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
   </ion-app>
 
   <script>
@@ -39,12 +44,12 @@
       // create component to open
       const element = document.createElement('div');
       element.innerHTML = `
-      <ion-header>
+      <ion-header translucent>
         <ion-toolbar>
           <ion-title>Super Modal</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-content>
+      <ion-content fullscreen>
         <h1>Content of doom</h1>
         <div>Here's some more content</div>
         <ion-button class="dismiss">Dismiss Modal</ion-button>

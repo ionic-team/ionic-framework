@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "4.0.0-alpha.11",
+  "version": "4.0.0-beta.1",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -24,27 +24,27 @@
     "css/"
   ],
   "dependencies": {
-    "ionicons": "4.2.4"
+    "ionicons": "4.2.6"
   },
   "devDependencies": {
-    "@stencil/core": "^0.10.7",
+    "@stencil/core": "0.11.0",
     "@stencil/dev-server": "latest",
-    "@stencil/sass": "latest",
+    "@stencil/sass": "0.1.0",
     "@stencil/utils": "latest",
-    "@types/jest": "^22.2.3",
-    "chai": "^4.1.2",
+    "@types/jest": "^23.3.1",
+    "autoprefixer": "^9.0.2",
     "chromedriver": "^2.38.3",
     "clean-css-cli": "^4.1.11",
-    "jest": "^23.1.0",
+    "jest": "^23.4.2",
     "mocha": "^4.0.1",
-    "np": "^2.17.0",
+    "np": "^3.0.4",
     "selenium-webdriver": "^3.6.0",
-    "stylelint": "^9.3.0",
+    "stylelint": "^9.4.0",
     "stylelint-order": "^0.8.1",
     "tslint": "^5.10.0",
-    "tslint-ionic-rules": "0.0.14",
+    "tslint-ionic-rules": "0.0.17",
     "typescript": "^2.9.2",
-    "yargs": "^10.0.3"
+    "yargs": "^12.0.1"
   },
   "scripts": {
     "build": "npm run clean && npm run build.css && stencil build --docs",
@@ -54,7 +54,7 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
     "clean": "node scripts/clean.js",
     "css.clean": "cleancss -O2 -o ./css/ionic.min.css ./css/ionic.css",
-    "css.sass": "node-sass --output ./css src/css",
+    "css.sass": "node-sass --output ./css src/css --output-style compressed",
     "dev": "npm run build.css && stencil build --dev --watch --serve",
     "e2e": "node ./scripts/e2e",
     "e2e-debug": "node --inspect --debug-brk ./scripts/e2e",
@@ -65,7 +65,6 @@
     "lint.ts": "tslint --project .",
     "lint.ts.fix": "tslint --project . --fix",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
-    "set.version": "node scripts/set-version.js",
     "snapshot": "node ./scripts/e2e --snapshot",
     "test": "jest",
     "test.watch": "jest --watch --no-cache",

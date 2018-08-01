@@ -5,9 +5,14 @@
 // --------------------------------------------------
 
 :host {
+  --clear-button-color: #{$searchbar-ios-input-clear-icon-color};
+  --cancel-button-color: #{$searchbar-ios-cancel-button-color};
+
   @include padding($searchbar-ios-padding-top, $searchbar-ios-padding-end, $searchbar-ios-padding-bottom, $searchbar-ios-padding-start);
 
   height: $searchbar-ios-input-height + $searchbar-ios-padding-top + $searchbar-ios-padding-bottom;
+
+  color: $searchbar-ios-input-text-color;
 
   font-family: $searchbar-ios-font-family;
 
@@ -43,14 +48,12 @@
 // -----------------------------------------
 
 .searchbar-input {
-  @include placeholder($searchbar-ios-input-placeholder-color);
   @include padding(0, 28px);
   @include border-radius($searchbar-ios-input-border-radius);
 
   height: 100%;
 
   background-color: $searchbar-ios-input-background-color;
-  color: $searchbar-ios-input-text-color;
 
   font-size: 14px;
   font-weight: 400;
@@ -74,7 +77,6 @@
   border: 0;
 
   background-color: transparent;
-  color: $searchbar-ios-input-clear-icon-color;
 }
 
 .searchbar-clear-icon {
@@ -98,7 +100,6 @@
   outline: none;
 
   background-color: $searchbar-ios-cancel-button-background-color;
-  color: $searchbar-ios-cancel-button-color;
 
   font-size: $searchbar-ios-cancel-button-font-size;
 
@@ -173,8 +174,6 @@
 }
 
 :host-context(ion-toolbar.ion-color) .searchbar-input {
-  @include placeholder(currentColor, $opacity: .5);
-
   background: rgba(var(--ion-color-contrast-rgb), $searchbar-ios-input-background-color-alpha);
   color: currentColor;
 }

@@ -13,3 +13,10 @@ ion-footer {
 
   z-index: $z-index-toolbar;
 }
+
+@supports (padding-top: env(safe-area-inset-top)) {
+  ion-footer ion-toolbar:last-child {
+    /* stylelint-disable-next-line property-blacklist */
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}

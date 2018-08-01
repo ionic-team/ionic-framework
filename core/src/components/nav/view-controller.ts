@@ -2,7 +2,6 @@ import { ComponentProps, FrameworkDelegate, Nav } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 import { assert } from '../../utils/helpers';
 
-
 export const enum ViewState {
   New = 1,
   Attached,
@@ -29,7 +28,7 @@ export class ViewController {
 
     if (!this.element) {
       const component = this.component;
-      this.element = await attachComponent(this.delegate, container, component, ['ion-page', 'hide-page'], this.params);
+      this.element = await attachComponent(this.delegate, container, component, ['ion-page', 'ion-page-invisible'], this.params);
     }
   }
 
@@ -53,7 +52,7 @@ export class ViewController {
   }
 }
 
-export function matches(view: ViewController|undefined, id: string, params: ComponentProps): view is ViewController {
+export function matches(view: ViewController | undefined, id: string, params: ComponentProps): view is ViewController {
   if (!view) {
     return false;
   }
@@ -77,8 +76,7 @@ export function matches(view: ViewController|undefined, id: string, params: Comp
   }
 
   // Test for A's keys different from B.
-  for (let i = 0; i < keysA.length; i++) {
-    const key = keysA[i];
+  for (const key of keysA) {
     if (currentParams[key] !== params[key]) {
       return false;
     }
@@ -86,7 +84,7 @@ export function matches(view: ViewController|undefined, id: string, params: Comp
   return true;
 }
 
-export function convertToView(page: any, params: any): ViewController|null {
+export function convertToView(page: any, params: any): ViewController | null {
   if (!page) {
     return null;
   }

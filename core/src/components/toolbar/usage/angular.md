@@ -75,11 +75,8 @@
 
 <ion-toolbar>
   <ion-buttons slot="start">
-    <ion-menu-toggle autoHide="false">
-      <ion-button>
-        <ion-icon slot="icon-only" name="menu"></ion-icon>
-      </ion-button>
-    </ion-menu-toggle>
+    <ion-menu-button autoHide="false"></ion-menu-button>
+
   </ion-buttons>
   <ion-buttons slot="secondary">
     <ion-button>
@@ -97,11 +94,8 @@
   </ion-buttons>
   <ion-title>Right side menu toggle</ion-title>
   <ion-buttons slot="end">
-    <ion-menu-toggle autoHide="false">
-      <ion-button>
-        <ion-icon slot="icon-only" name="menu"></ion-icon>
-      </ion-button>
-    </ion-menu-toggle>
+    <ion-menu-button autoHide="false"></ion-menu-button>
+
   </ion-buttons>
 </ion-toolbar>
 

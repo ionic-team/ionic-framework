@@ -1,8 +1,9 @@
 import 'ionicons';
+
 import { configFromURL } from '../utils/config';
 import { isIOS } from '../utils/platform';
-import { Config } from './config';
 
+import { Config } from './config';
 
 const Ionic = (window as any)['Ionic'] = (window as any)['Ionic'] || {};
 declare const Context: any;

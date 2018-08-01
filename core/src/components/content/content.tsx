@@ -1,7 +1,7 @@
 import { Component, Element, Listen, Method, Prop, QueueApi } from '@stencil/core';
+
 import { Color, Config, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-content',
@@ -70,7 +70,6 @@ export class Content {
     return this.scrollEl!;
   }
 
-
   private resize() {
     if (!this.scrollEl) {
       return;
@@ -133,7 +132,7 @@ export class Content {
 }
 
 function getParentElement(el: any) {
-  if (el.parentElement ) {
+  if (el.parentElement) {
     // normal element with a parent element
     return el.parentElement;
   }

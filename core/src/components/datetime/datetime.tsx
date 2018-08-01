@@ -1,11 +1,10 @@
 import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
-import { DatetimeData, LocaleData, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
-
 import { CssClassMap, PickerColumn, PickerOptions, StyleEvent } from '../../interface';
 import { clamp, deferEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
+import { DatetimeData, LocaleData, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
 @Component({
   tag: 'ion-datetime',
@@ -199,7 +198,6 @@ export class Datetime {
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
 
-
   componentWillLoad() {
     // first see if locale names were provided in the inputs
     // then check to see if they're in the config
@@ -235,8 +233,6 @@ export class Datetime {
   }
 
   private buildPicker(pickerOptions: PickerOptions) {
-    console.debug('Build Datetime: Picker with', pickerOptions);
-
     // If the user has not passed in picker buttons,
     // add a cancel and ok button to the picker
     const buttons = pickerOptions.buttons;
@@ -257,7 +253,6 @@ export class Datetime {
 
     const picker = this.pickerCtrl.create(pickerOptions);
 
-    console.debug('Built Datetime: Picker with', pickerOptions);
     return picker;
   }
 
@@ -266,7 +261,7 @@ export class Datetime {
     if (this.disabled) {
       return;
     }
-    const pickerOptions = {...this.pickerOptions};
+    const pickerOptions = { ...this.pickerOptions };
     this.picker = await this.buildPicker(pickerOptions);
     this.validate();
     await this.picker!.present();
@@ -465,12 +460,12 @@ export class Datetime {
     let indexMax = 0;
 
     for (let i = 0; i < options.length; i++) {
-      const opt = options[i];
-      const value = opt.value;
-      lb[index] = opt.value;
-      ub[index] = opt.value;
+      const opts = options[i];
+      const value = opts.value;
+      lb[index] = opts.value;
+      ub[index] = opts.value;
 
-      const disabled = opt.disabled = (
+      const disabled = opts.disabled = (
         value < lowerBounds[index] ||
         value > upperBounds[index] ||
         dateSortValue(ub[0], ub[1], ub[2], ub[3], ub[4]) < min ||
@@ -489,7 +484,6 @@ export class Datetime {
     return 0;
   }
 
-
   private divyColumns(columns: PickerColumn[]): PickerColumn[] {
     const pickerColumns = columns;
     const columnsWidth: number[] = [];
@@ -499,8 +493,8 @@ export class Datetime {
       col = pickerColumns[i];
       columnsWidth.push(0);
 
-      for (let j = 0; j < col.options.length; j++) {
-        width = col.options[j].text!.length;
+      for (const option of col.options) {
+        width = option.text!.length;
         if (width > columnsWidth[i]) {
           columnsWidth[i] = width;
         }
@@ -577,7 +571,7 @@ export class Datetime {
         aria-haspopup="true"
         id={this.datetimeId}
         aria-labelledby={this.labelId}
-        aria-disabled={this.disabled ? 'true' : false}
+        aria-disabled={this.disabled ? 'true' : null}
         onClick={this.open.bind(this)}
         class="datetime-cover">
         { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }

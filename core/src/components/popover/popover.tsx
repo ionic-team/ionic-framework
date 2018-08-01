@@ -1,13 +1,12 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Color, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 
+import { Animation, AnimationBuilder, Color, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
-
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
@@ -34,8 +33,9 @@ export class Popover implements OverlayInterface {
   @Prop() keyboardClose = true;
 
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -109,23 +109,22 @@ export class Popover implements OverlayInterface {
   /**
    * Emitted after the popover has presented.
    */
-  @Event({eventName: 'ionPopoverDidPresent'}) didPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionPopoverDidPresent' }) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the popover has presented.
    */
-  @Event({eventName: 'ionPopoverWillPresent'}) willPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionPopoverWillPresent' }) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the popover has dismissed.
    */
-  @Event({eventName: 'ionPopoverWillDismiss'}) willDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionPopoverWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the popover has dismissed.
    */
-  @Event({eventName: 'ionPopoverDidDismiss'}) didDismiss!: EventEmitter<OverlayEventDetail>;
-
+  @Event({ eventName: 'ionPopoverDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   componentDidLoad() {
     this.ionPopoverDidLoad.emit();
@@ -224,8 +223,8 @@ export class Popover implements OverlayInterface {
       'no-router': true,
       class: {
         ...createThemedClasses(this.mode, 'popover'),
-        ...themedClasses,
         ...getClassMap(this.cssClass),
+        ...themedClasses,
       }
     };
   }
@@ -249,7 +248,6 @@ const LIFECYCLE_MAP: any = {
   'ionPopoverWillDismiss': 'ionViewWillDismiss',
   'ionPopoverDidDismiss': 'ionViewDidDismiss',
 };
-
 
 export const POPOVER_POSITION_PROPERTIES: any = {
   ios: {

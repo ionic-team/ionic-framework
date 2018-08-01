@@ -1,4 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
+
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -15,7 +16,9 @@ export class ItemDivider {
   @Element() el!: HTMLElement;
 
   /**
-   * The color to use for the item-divider
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -28,12 +31,11 @@ export class ItemDivider {
   componentDidLoad() {
     // Change the button size to small for each ion-button in the item
     // unless the size is explicitly set
-    const buttons = this.el.querySelectorAll('ion-button');
-    for (let i = 0; i < buttons.length; i++) {
-      if (!buttons[i].size) {
-        buttons[i].size = 'small';
+    Array.from(this.el.querySelectorAll('ion-button')).forEach(button => {
+      if (!button.size) {
+        button.size = 'small';
       }
-    }
+    });
   }
 
   hostData() {

@@ -20,8 +20,9 @@ To present a popover, call the `present` method on a popover instance. In order 
 
 string
 
-The color to use from your Sass `$colors` map.
+The color to use from your application's color palette.
 Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### component
@@ -124,8 +125,9 @@ If true, the popover will animate. Defaults to `true`.
 
 string
 
-The color to use from your Sass `$colors` map.
+The color to use from your application's color palette.
 Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### component

@@ -1,7 +1,9 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
-import { BaseInput, Color, GestureDetail, Mode, RangeInputChangeEvent, StyleEvent } from '../../interface';
+import { Component, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
+
+import { BaseInput, Color, Gesture, GestureDetail, Mode, RangeInputChangeEvent, StyleEvent } from '../../interface';
 import { clamp, debounceEvent, deferEvent } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
+
 import { Knob, RangeEventDetail, RangeValue } from './range-interface';
 
 @Component({
@@ -18,16 +20,20 @@ export class Range implements BaseInput {
   private rect!: ClientRect;
   private hasFocus = false;
   private rangeSlider?: HTMLElement;
+  private gesture?: Gesture;
 
   @Element() el!: HTMLStencilElement;
+
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   @State() private ratioA = 0;
   @State() private ratioB = 0;
   @State() private pressedKnob: Knob;
 
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -91,6 +97,9 @@ export class Range implements BaseInput {
   @Prop() disabled = false;
   @Watch('disabled')
   protected disabledChanged() {
+    if (this.gesture) {
+      this.gesture.disabled = this.disabled;
+    }
     this.emitStyle();
   }
 
@@ -133,6 +142,20 @@ export class Range implements BaseInput {
     this.updateRatio();
     this.debounceChanged();
     this.emitStyle();
+  }
+
+  async componentDidLoad() {
+    this.gesture = (await import('../../utils/gesture/gesture')).create({
+      el: this.rangeSlider!,
+      queue: this.queue,
+      gestureName: 'range',
+      gesturePriority: 30,
+      threshold: 0,
+      onStart: this.onDragStart.bind(this),
+      onMove: this.onDragMove.bind(this),
+      onEnd: this.onDragEnd.bind(this),
+    });
+    this.gesture.disabled = this.disabled;
   }
 
   @Listen('ionIncrease')
@@ -320,61 +343,49 @@ export class Range implements BaseInput {
 
     return [
       <slot name="start"></slot>,
-      <ion-gesture
-        disableScroll={true}
-        onStart={this.onDragStart.bind(this)}
-        onMove={this.onDragMove.bind(this)}
-        onEnd={this.onDragEnd.bind(this)}
-        disabled={this.disabled}
-        gestureName="range"
-        gesturePriority={30}
-        direction="x"
-        threshold={0}
-      >
-        <div class="range-slider" ref={(el) => this.rangeSlider = el}>
-          {ticks.map(t => (
-            <div
-              style={{ left: t.left }}
-              role="presentation"
-              class={{
-                'range-tick': true,
-                'range-tick-active': t.active
-              }}
-            />
-          ))}
-
-          <div class="range-bar" role="presentation" />
+      <div class="range-slider" ref={el => this.rangeSlider = el}>
+        {ticks.map(t => (
           <div
-            class="range-bar range-bar-active"
+            style={{ left: t.left }}
             role="presentation"
-            style={{
-              left: barL,
-              right: barR
+            class={{
+              'range-tick': true,
+              'range-tick-active': t.active
             }}
           />
+        ))}
+
+        <div class="range-bar" role="presentation" />
+        <div
+          class="range-bar range-bar-active"
+          role="presentation"
+          style={{
+            left: barL,
+            right: barR
+          }}
+        />
+        <ion-range-knob
+          knob="A"
+          pressed={this.pressedKnob === 'A'}
+          value={this.valA}
+          ratio={this.ratioA}
+          pin={this.pin}
+          min={min}
+          max={max}
+        />
+
+        {this.dualKnobs && (
           <ion-range-knob
-            knob="A"
-            pressed={this.pressedKnob === 'A'}
-            value={this.valA}
-            ratio={this.ratioA}
+            knob="B"
+            pressed={this.pressedKnob === 'B'}
+            value={this.valB}
+            ratio={this.ratioB}
             pin={this.pin}
             min={min}
             max={max}
           />
-
-          {this.dualKnobs && (
-            <ion-range-knob
-              knob="B"
-              pressed={this.pressedKnob === 'B'}
-              value={this.valB}
-              ratio={this.ratioB}
-              pin={this.pin}
-              min={min}
-              max={max}
-            />
-          )}
-        </div>
-      </ion-gesture>,
+        )}
+      </div>,
       <slot name="end"></slot>
     ];
   }

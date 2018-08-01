@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { CheckboxInput, CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
-import { deferEvent } from '../../utils/helpers';
-import { createColorClasses, hostContext } from '../../utils/theme';
 
+import { CheckboxInput, CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
+import { deferEvent, renderHiddenInput } from '../../utils/helpers';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-checkbox',
@@ -22,7 +22,9 @@ export class Checkbox implements CheckboxInput {
   @State() keyFocus = false;
 
   /**
-   * The color to use for the checkbox.
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -71,7 +73,6 @@ export class Checkbox implements CheckboxInput {
    * Emitted when the styles change.
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
-
 
   componentWillLoad() {
     this.emitStyle();
@@ -129,6 +130,8 @@ export class Checkbox implements CheckboxInput {
   }
 
   render() {
+    renderHiddenInput(this.el, this.name, this.value, this.disabled);
+
     return [
       <div class="checkbox-icon">
         <div class="checkbox-inner"></div>

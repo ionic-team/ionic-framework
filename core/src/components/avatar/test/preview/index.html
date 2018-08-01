@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Avatar</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content>
+    <ion-content fullscreen>
       <ion-avatar>
         <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
       </ion-avatar>
@@ -38,6 +38,11 @@
       </ion-item>
     </ion-content>
 
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
   </ion-app>
 </body>
 

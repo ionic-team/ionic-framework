@@ -3,10 +3,10 @@ import { Animation } from '../../../interface';
 /**
  * MD Toast Enter Animation
  */
-export function mdEnterAnimation(Animation: Animation, baseEl: HTMLElement, position: string): Promise<Animation> {
-  const baseAnimation = new Animation();
+export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, position: string): Promise<Animation> {
+  const baseAnimation = new AnimationC();
 
-  const wrapperAnimation = new Animation();
+  const wrapperAnimation = new AnimationC();
   const wrapperEle = baseEl.querySelector('.toast-wrapper') as HTMLElement;
   wrapperAnimation.addElement(wrapperEle);
 

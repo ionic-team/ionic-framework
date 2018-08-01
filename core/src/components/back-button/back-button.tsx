@@ -1,4 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
+
 import { Color, Config, Mode } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
 
@@ -18,7 +19,9 @@ export class BackButton {
   @Prop({ context: 'window' }) win!: Window;
 
   /**
-   * The color the button should be.
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -42,7 +45,6 @@ export class BackButton {
    * The text to display in the back button.
    */
   @Prop() text?: string;
-
 
   private async onClick(ev: Event) {
     const nav = this.el.closest('ion-nav');
@@ -76,9 +78,9 @@ export class BackButton {
     return (
       <button
         class="back-button-native"
-        onClick={(ev) => this.onClick(ev)}>
+        onClick={ev => this.onClick(ev)}>
         <span class="back-button-inner">
-          { backButtonIcon && <ion-icon icon={backButtonIcon}/> }
+          { backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}/> }
           { this.mode === 'ios' && backButtonText && <span class="button-text">{backButtonText}</span> }
           { this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el}/> }
         </span>

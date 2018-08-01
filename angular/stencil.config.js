@@ -39,7 +39,6 @@ exports.config.outputTargets = [
       'ion-menu-controller',
       'ion-animation-controller',
       'ion-animation-controller',
-      'ion-gesture-controller',
 
       // navigation
       'ion-router',
@@ -51,8 +50,6 @@ exports.config.outputTargets = [
       'ion-tab-button',
 
       // auxiliar
-      'ion-gesture',
-      'ion-tap-click',
       'ion-picker-column',
       'ion-range-knob',
       'ion-backdrop',

@@ -1,5 +1,6 @@
 
 import { Config } from '../../interface';
+
 import { enableHideCaretOnScroll } from './hacks/hide-caret';
 import { enableInputBlurring } from './hacks/input-blurring';
 import { enableScrollAssist } from './hacks/scroll-assist';
@@ -20,11 +21,11 @@ export function startInputShims(
   const inputBlurring = config.getBoolean('inputBlurring', true);
   const scrollPadding = config.getBoolean('scrollPadding', true);
 
-  const hideCaretMap = new WeakMap<HTMLElement, Function>();
-  const scrollAssistMap = new WeakMap<HTMLElement, Function>();
+  const hideCaretMap = new WeakMap<HTMLElement, () => void>();
+  const scrollAssistMap = new WeakMap<HTMLElement, () => void>();
 
   function registerInput(componentEl: HTMLElement) {
-    const inputEl = componentEl.querySelector('input');
+    const inputEl = (componentEl.shadowRoot || componentEl).querySelector('input');
     const contentEl = componentEl.closest('ion-content');
     const scrollEl = contentEl && contentEl.getScrollElement();
 
@@ -46,13 +47,17 @@ export function startInputShims(
   function unregisterInput(componentEl: HTMLElement) {
     if (HIDE_CARET && hideCaret) {
       const fn = hideCaretMap.get(componentEl);
-      fn && fn();
+      if (fn) {
+        fn();
+      }
       hideCaretMap.delete(componentEl);
     }
 
     if (SCROLL_ASSIST && scrollAssist) {
       const fn = scrollAssistMap.get(componentEl);
-      fn && fn();
+      if (fn) {
+        fn();
+      }
       scrollAssistMap.delete(componentEl);
     }
   }
@@ -73,11 +78,11 @@ export function startInputShims(
     registerInput(input);
   }
 
-  doc.body.addEventListener('ionInputDidLoad', (event) => {
+  doc.body.addEventListener('ionInputDidLoad', event => {
     registerInput(event.target as any);
   });
 
-  doc.body.addEventListener('ionInputDidUnload', (event) => {
+  doc.body.addEventListener('ionInputDidUnload', event => {
     unregisterInput(event.target as any);
   });
 }

@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+
 import { Color, Mode, StyleEvent } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -14,7 +15,9 @@ export class Label {
   @Element() el!: HTMLElement;
 
   /**
-   * The color to use for the label's text
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 

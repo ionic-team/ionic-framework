@@ -3,13 +3,13 @@ import { Animation } from '../../../interface';
 /**
  * Md Modal Leave Animation
  */
-export function mdLeaveAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
-  const baseAnimation = new Animation();
+export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+  const baseAnimation = new AnimationC();
 
-  const backdropAnimation = new Animation();
+  const backdropAnimation = new AnimationC();
   backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
 
-  const wrapperAnimation = new Animation();
+  const wrapperAnimation = new AnimationC();
   const wrapperEl = baseEl.querySelector('.modal-wrapper');
   wrapperAnimation.addElement(wrapperEl);
 

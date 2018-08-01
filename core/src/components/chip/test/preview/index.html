@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Chip</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content" padding style="text-align: center">
+    <ion-content id="content" padding text-center fullscreen>
       <h2>Text Chips</h2>
 
       <ion-chip>
@@ -122,6 +122,12 @@
         </ion-chip>
       </ion-item>
     </ion-content>
+
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
 
     <script>
       function del(chip) {

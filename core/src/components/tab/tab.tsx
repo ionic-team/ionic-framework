@@ -1,9 +1,12 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+
 import { Color, ComponentRef, FrameworkDelegate } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 
 @Component({
-  tag: 'ion-tab'
+  tag: 'ion-tab',
+  styleUrl: 'tab.scss',
+  shadow: true
 })
 export class Tab {
 
@@ -104,13 +107,20 @@ export class Tab {
     }
   }
 
-  componentWillUpdate() {
+  @Watch('label')
+  @Watch('href')
+  @Watch('show')
+  @Watch('disabled')
+  @Watch('badge')
+  @Watch('badgeColor')
+  @Watch('icon')
+  onPropChanged() {
     this.ionTabMutated.emit();
   }
 
   /** Get the Id for the tab */
   @Method()
-  getTabId(): string|null {
+  getTabId(): string | null {
     if (this.name) {
       return this.name;
     }
@@ -127,7 +137,7 @@ export class Tab {
     this.active = true;
   }
 
-  private prepareLazyLoaded(): Promise<HTMLElement|void> {
+  private prepareLazyLoaded(): Promise<HTMLElement | void> {
     if (!this.loaded && this.component) {
       this.loaded = true;
       return attachComponent(this.delegate, this.el, this.component, ['ion-page']);
@@ -136,13 +146,19 @@ export class Tab {
   }
 
   hostData() {
+    const { btnId, active, component } = this;
     return {
-      'aria-labelledby': this.btnId,
+      'aria-labelledby': btnId,
+      'aria-hidden': !active ? 'true' : null,
       'role': 'tabpanel',
-      'hidden': !this.active,
       'class': {
-        'ion-page': !this.component
+        'ion-page': !component,
+        'tab-hidden': !active
       }
     };
+  }
+
+  render() {
+    return <slot></slot>;
   }
 }

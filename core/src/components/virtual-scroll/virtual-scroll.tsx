@@ -1,9 +1,9 @@
 import { Component, Element, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+
 import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
 import { CellType } from './virtual-scroll-interface';
 import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, getShouldUpdate, getViewport, inplaceUpdate, positionForIndex, resizeBuffer, updateVDom } from './virtual-scroll-utils';
-
 
 @Component({
   tag: 'ion-virtual-scroll',
@@ -12,7 +12,7 @@ import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, g
 export class VirtualScroll {
 
   private scrollEl?: HTMLIonScrollElement;
-  private range: Range = {offset: 0, length: 0};
+  private range: Range = { offset: 0, length: 0 };
   private timerUpdate: any;
   private heightIndex?: Uint32Array;
   private viewportHeight = 0;
@@ -134,7 +134,7 @@ export class VirtualScroll {
     this.scrollEl = undefined;
   }
 
-  @Listen('scroll', {enabled: false, passive: false})
+  @Listen('scroll', { enabled: false, passive: false })
   onScroll() {
     this.updateVirtualScroll();
   }
@@ -318,7 +318,6 @@ export class VirtualScroll {
     }
   }
 
-
   private calcCells() {
     if (!this.items) {
       return;
@@ -381,7 +380,7 @@ export class VirtualScroll {
   render() {
     const renderItem = this.renderItem;
     if (renderItem) {
-      return this.virtualDom.map((node) => {
+      return this.virtualDom.map(node => {
         const item = this.renderVirtualNode(node) as any;
         const classes = ['virtual-item'];
         if (!item.vattrs) {

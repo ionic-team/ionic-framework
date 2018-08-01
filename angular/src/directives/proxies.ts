@@ -233,10 +233,10 @@ export class HideWhen {
 }
 
 export declare interface Icon extends StencilComponents.IonIcon {}
-@Directive({selector: 'ion-icon', inputs: ['ariaLabel', 'color', 'icon', 'ios', 'md', 'mode', 'name', 'size', 'src']})
+@Directive({selector: 'ion-icon', inputs: ['ariaLabel', 'color', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'size', 'src']})
 export class Icon {
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['ariaLabel', 'color', 'icon', 'ios', 'md', 'mode', 'name', 'size', 'src']);
+    proxyInputs(this, r, ['ariaLabel', 'color', 'icon', 'ios', 'lazy', 'md', 'mode', 'name', 'size', 'src']);
   }
 }
 
@@ -270,7 +270,7 @@ export class InfiniteScrollContent {
 }
 
 export declare interface Input extends StencilComponents.IonInput {}
-@Directive({selector: 'ion-input', inputs: ['accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'results', 'spellcheck', 'step', 'size', 'type', 'value'], outputs: ['ionInput', 'ionChange', 'ionStyle', 'ionBlur', 'ionFocus', 'ionInputDidLoad', 'ionInputDidUnload']})
+@Directive({selector: 'ion-input', inputs: ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'results', 'spellcheck', 'step', 'size', 'type', 'value'], outputs: ['ionInput', 'ionChange', 'ionStyle', 'ionBlur', 'ionFocus', 'ionInputDidLoad', 'ionInputDidUnload']})
 export class Input {
   ionInput: EventEmitter<any>;
   ionChange: EventEmitter<any>;
@@ -280,7 +280,7 @@ export class Input {
   ionInputDidLoad: EventEmitter<any>;
   ionInputDidUnload: EventEmitter<any>;
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'results', 'spellcheck', 'step', 'size', 'type', 'value']);
+    proxyInputs(this, r, ['color', 'mode', 'accept', 'autocapitalize', 'autocomplete', 'autocorrect', 'autofocus', 'clearInput', 'clearOnEdit', 'debounce', 'disabled', 'inputmode', 'max', 'maxlength', 'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'results', 'spellcheck', 'step', 'size', 'type', 'value']);
     proxyOutputs(this, ['ionInput', 'ionChange', 'ionStyle', 'ionBlur', 'ionFocus', 'ionInputDidLoad', 'ionInputDidUnload']);
   }
 }
@@ -370,17 +370,17 @@ export class Menu {
   ionClose: EventEmitter<any>;
   ionMenuChange: EventEmitter<any>;
   constructor(r: ElementRef) {
-    proxyMethods(this, r, ['isOpen', 'open', 'close', 'toggle', 'setOpen', 'isActive']);
+    proxyMethods(this, r, ['isOpen', 'open', 'close', 'toggle', 'setOpen', 'isActive', 'getWidth']);
     proxyInputs(this, r, ['contentId', 'menuId', 'type', 'disabled', 'side', 'swipeEnabled', 'maxEdgeStart']);
     proxyOutputs(this, ['ionOpen', 'ionClose', 'ionMenuChange']);
   }
 }
 
 export declare interface MenuButton extends StencilComponents.IonMenuButton {}
-@Directive({selector: 'ion-menu-button', inputs: ['menu', 'autoHide']})
+@Directive({selector: 'ion-menu-button', inputs: ['color', 'mode', 'menu', 'autoHide']})
 export class MenuButton {
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['menu', 'autoHide']);
+    proxyInputs(this, r, ['color', 'mode', 'menu', 'autoHide']);
   }
 }
 
@@ -623,8 +623,11 @@ export class Slide {
 }
 
 export declare interface Slides extends StencilComponents.IonSlides {}
-@Directive({selector: 'ion-slides', inputs: ['options', 'pager', 'scrollbar'], outputs: ['ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']})
+@Directive({selector: 'ion-slides', inputs: ['options', 'pager', 'scrollbar'], outputs: ['ionSlidesDidLoad', 'ionSlideTap', 'ionSlideDoubleTap', 'ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']})
 export class Slides {
+  ionSlidesDidLoad: EventEmitter<any>;
+  ionSlideTap: EventEmitter<any>;
+  ionSlideDoubleTap: EventEmitter<any>;
   ionSlideWillChange: EventEmitter<any>;
   ionSlideDidChange: EventEmitter<any>;
   ionSlideNextStart: EventEmitter<any>;
@@ -641,7 +644,7 @@ export class Slides {
   constructor(r: ElementRef) {
     proxyMethods(this, r, ['update', 'slideTo', 'slideNext', 'slidePrev', 'getActiveIndex', 'getPreviousIndex', 'length', 'isEnd', 'isBeginning', 'startAutoplay', 'stopAutoplay', 'lockSwipeToNext', 'lockSwipeToPrev', 'lockSwipes']);
     proxyInputs(this, r, ['options', 'pager', 'scrollbar']);
-    proxyOutputs(this, ['ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']);
+    proxyOutputs(this, ['ionSlidesDidLoad', 'ionSlideTap', 'ionSlideDoubleTap', 'ionSlideWillChange', 'ionSlideDidChange', 'ionSlideNextStart', 'ionSlidePrevStart', 'ionSlideNextEnd', 'ionSlidePrevEnd', 'ionSlideTransitionStart', 'ionSlideTransitionEnd', 'ionSlideDrag', 'ionSlideReachStart', 'ionSlideReachEnd', 'ionSlideTouchStart', 'ionSlideTouchEnd']);
   }
 }
 
@@ -700,7 +703,7 @@ export class Text {
 }
 
 export declare interface Textarea extends StencilComponents.IonTextarea {}
-@Directive({selector: 'ion-textarea', inputs: ['autocapitalize', 'autocomplete', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value'], outputs: ['ionChange', 'ionInput', 'ionStyle', 'ionBlur', 'ionFocus']})
+@Directive({selector: 'ion-textarea', inputs: ['color', 'mode', 'autocapitalize', 'autocomplete', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value'], outputs: ['ionChange', 'ionInput', 'ionStyle', 'ionBlur', 'ionFocus']})
 export class Textarea {
   ionChange: EventEmitter<any>;
   ionInput: EventEmitter<any>;
@@ -708,7 +711,7 @@ export class Textarea {
   ionBlur: EventEmitter<any>;
   ionFocus: EventEmitter<any>;
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['autocapitalize', 'autocomplete', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value']);
+    proxyInputs(this, r, ['color', 'mode', 'autocapitalize', 'autocomplete', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value']);
     proxyOutputs(this, ['ionChange', 'ionInput', 'ionStyle', 'ionBlur', 'ionFocus']);
   }
 }
@@ -732,10 +735,10 @@ export class Toggle {
 }
 
 export declare interface Toolbar extends StencilComponents.IonToolbar {}
-@Directive({selector: 'ion-toolbar', inputs: ['color', 'mode', 'translucent']})
+@Directive({selector: 'ion-toolbar', inputs: ['color', 'mode']})
 export class Toolbar {
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'translucent']);
+    proxyInputs(this, r, ['color', 'mode']);
   }
 }
 

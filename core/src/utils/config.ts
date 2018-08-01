@@ -1,5 +1,4 @@
 
-
 export function setupConfig(config: {[key: string]: any}) {
   const win = window as any;
   const Ionic = win.Ionic;
@@ -24,11 +23,15 @@ export function configFromURL() {
     .split('&')
     .map(entry => entry.split('='))
     .map(([key, value]) => [decodeURIComponent(key), decodeURIComponent(value)])
-    .filter(([key]) => key.startsWith(IONIC_PREFIX))
+    .filter(([key]) => startsWith(key, IONIC_PREFIX))
     .map(([key, value]) => [key.slice(IONIC_PREFIX.length), value])
     .forEach(([key, value]) => {
       config[key] = value;
     });
 
   return config;
+}
+
+function startsWith(input: string, search: string): boolean {
+  return input.substr(0, search.length) === search;
 }

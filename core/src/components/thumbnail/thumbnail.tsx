@@ -1,7 +1,7 @@
 import { Component } from '@stencil/core';
+
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-thumbnail',

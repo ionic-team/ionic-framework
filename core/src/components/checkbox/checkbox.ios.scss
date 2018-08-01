@@ -6,22 +6,22 @@
 
 :host {
   --size: #{$checkbox-ios-icon-size};
+
+  // Border
   --border-radius: #{$checkbox-ios-icon-border-radius};
   --border-width: #{$checkbox-ios-icon-border-width};
   --border-style: #{$checkbox-ios-icon-border-style};
-  --unchecked-border-color: #{$checkbox-ios-icon-border-color-off};
-  --unchecked-background: #{$checkbox-ios-background-color-off};
+  --border-color: #{$checkbox-ios-icon-border-color-off};
+
+  // Background
+  --background: #{$checkbox-ios-background-color-off};
 }
 
 // iOS Checkbox Inner Checkmark: Checked
 // -----------------------------------------
 
 .checkbox-inner {
-  @include position(
-    calc(var(--size) / 6),
-    null, null,
-    calc(var(--size) / 2.5 - 1px)
-  );
+  @include position(calc(var(--size) / 6), null, null, calc(var(--size) / 2.5 - 1px));
 
   position: absolute;
 

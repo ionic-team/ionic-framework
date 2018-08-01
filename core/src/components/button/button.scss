@@ -7,6 +7,7 @@
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
   --ion-color-shade: #{ion-color(primary, shade)};
+  --overflow: hidden;
   --ripple-color: currentColor;
 
   display: inline-block;
@@ -17,6 +18,7 @@
 
   white-space: nowrap;
 
+  user-select: none;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
 }
@@ -108,6 +110,7 @@
 
 
 .button-native {
+  @include text-inherit();
   @include border-radius(var(--border-radius));
   @include font-smoothing();
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
@@ -125,28 +128,14 @@
   border-color: var(--border-color);
 
   background: var(--background);
-  color: inherit;
 
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-
-  letter-spacing: inherit;
   line-height: 1;
-
-  text-align: inherit;
-  text-decoration: inherit;
-  text-overflow: inherit;
-  text-transform: inherit;
-
-  white-space: inherit;
 
   box-shadow: var(--box-shadow);
   contain: content;
   cursor: pointer;
   opacity: var(--opacity);
-  overflow: hidden;
-  user-select: none;
+  overflow: var(--overflow);
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
   z-index: 0;

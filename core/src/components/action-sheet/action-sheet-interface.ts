@@ -15,4 +15,3 @@ export interface ActionSheetButton {
   cssClass?: string | string[];
   handler?: () => boolean | void;
 }
-

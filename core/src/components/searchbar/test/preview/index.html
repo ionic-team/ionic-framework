@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Searchbar</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content">
+    <ion-content id="content" fullscreen>
       <h5 padding-start padding-top> Search - Default </h5>
       <ion-searchbar value="test" type="tel" show-cancel-button debounce="500">
       </ion-searchbar>
@@ -114,6 +114,12 @@
         }
       </script>
     </ion-content>
+
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
 
   </ion-app>
 </body>

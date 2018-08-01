@@ -11,15 +11,13 @@
 
 <body>
   <ion-app>
-
-
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Infinite Scroll</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content" padding>
+    <ion-content id="content" padding fullscreen>
 
       <ion-button onclick="toggleInfiniteScroll()" block>
         Toggle InfiniteScroll
@@ -35,7 +33,11 @@
       </ion-infinite-scroll>
     </ion-content>
 
-
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
 
   </ion-app>
 

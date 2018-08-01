@@ -8,12 +8,11 @@
   @include margin(0, 2px);
 }
 
-::slotted(*) ion-button {
+::slotted(*) .button {
   --padding-top: 0;
   --padding-bottom: 0;
   --padding-start: 8px;
   --padding-end: 8px;
-  --border-radius: #{$toolbar-md-button-border-radius};
   --height: 32px;
   --box-shadow: none;
 
@@ -21,6 +20,9 @@
   font-weight: 500;
 }
 
+::slotted(*) .button:not(.button-round) {
+  --border-radius: #{$toolbar-md-button-border-radius};
+}
 
 // Material Design Toolbar Button Icon
 // --------------------------------------------------
@@ -48,14 +50,14 @@
   pointer-events: none;
 }
 
-::slotted(*) ion-button.button-solid,
-::slotted(*) ion-button.button-outline {
+::slotted(*) .button.button-solid,
+::slotted(*) .button.button-outline {
   --ion-color-base: #{$toolbar-md-text-color};
   --ion-color-contrast: #{$toolbar-md-background-color};
   --ion-color-shade: #{$toolbar-md-text-color};
 }
 
-::slotted(*) ion-button.button-clear {
+::slotted(*) .button.button-clear {
   --ion-color-base: currentColor;
   --height: 45px;
 }

@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Radio</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content" class="radio-test outer-content">
+    <ion-content id="content" class="radio-test outer-content" fullscreen>
       <ion-list>
         <ion-radio-group id="fruitRadio">
           <ion-item-divider>
@@ -180,6 +180,10 @@
     </script>
 
     <style>
+      ion-toolbar {
+        --background: white;
+      }
+
       .radio-test pre {
         background: #f6f6f6;
         border: 1px solid #ddd;

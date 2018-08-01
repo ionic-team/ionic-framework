@@ -1,10 +1,4 @@
-import { Component, Event, EventEmitter, Method } from '@stencil/core';
-import { BlockerConfig, BlockerDelegate, GestureConfig, GestureDelegate } from '../../interface';
-import { BlockerDelegate as BD, GestureDelegate as GD } from './gesture-controller-utils';
 
-@Component({
-  tag: 'ion-gesture-controller'
-})
 export class GestureController {
 
   private gestureId = 0;
@@ -13,33 +7,28 @@ export class GestureController {
   private disabledScroll = new Set<number>();
   private capturedId: number | null = null;
 
-  /**
-   * Event emitted when a gesture has been captured.
-   */
-  @Event() ionGestureCaptured!: EventEmitter<string>;
+  constructor(
+    private doc: Document
+  ) {}
 
   /**
    * Creates a gesture delegate based on the GestureConfig passed
    */
-  @Method()
-  create(config: GestureConfig): Promise<GestureDelegate> {
-    return Promise.resolve(
-      new GD(
-        this,
-        this.newID(),
-        config.name,
-        config.priority ? config.priority : 0,
-        !!config.disableScroll
-      )
+  createGesture(config: GestureConfig): GestureDelegate {
+    return new GestureDelegate(
+      this,
+      this.newID(),
+      config.name,
+      config.priority ? config.priority : 0,
+      !!config.disableScroll
     );
   }
 
   /**
    * Creates a blocker that will block any other gesture events from firing. Set in the ion-gesture component.
    */
-  @Method()
   createBlocker(opts: BlockerConfig = {}): BlockerDelegate {
-    return new BD(
+    return new BlockerDelegate(
       this.newID(),
       this,
       opts.disable,
@@ -70,7 +59,9 @@ export class GestureController {
     if (maxPriority === priority) {
       this.capturedId = id;
       requestedStart.clear();
-      this.ionGestureCaptured && this.ionGestureCaptured.emit(gestureName);
+
+      const event = new CustomEvent('ionGestureCaptured', { detail: gestureName });
+      this.doc.body.dispatchEvent(event);
       return true;
     }
     requestedStart.delete(id);
@@ -144,3 +135,122 @@ export class GestureController {
     return this.gestureId;
   }
 }
+
+export class GestureDelegate {
+  private ctrl?: GestureController;
+
+  constructor(
+    ctrl: any,
+    private id: number,
+    private name: string,
+    private priority: number,
+    private disableScroll: boolean
+  ) {
+    this.ctrl = ctrl;
+  }
+
+  canStart(): boolean {
+    if (!this.ctrl) {
+      return false;
+    }
+
+    return this.ctrl.canStart(this.name);
+  }
+
+  start(): boolean {
+    if (!this.ctrl) {
+      return false;
+    }
+
+    return this.ctrl.start(this.name, this.id, this.priority);
+  }
+
+  capture(): boolean {
+    if (!this.ctrl) {
+      return false;
+    }
+
+    const captured = this.ctrl.capture(this.name, this.id, this.priority);
+    if (captured && this.disableScroll) {
+      this.ctrl.disableScroll(this.id);
+    }
+
+    return captured;
+  }
+
+  release() {
+    if (this.ctrl) {
+      this.ctrl.release(this.id);
+
+      if (this.disableScroll) {
+        this.ctrl.enableScroll(this.id);
+      }
+    }
+  }
+
+  destroy() {
+    this.release();
+    this.ctrl = undefined;
+  }
+}
+
+export class BlockerDelegate {
+
+  private ctrl?: GestureController;
+
+  constructor(
+    private id: number,
+    ctrl: any,
+    private disable: string[] | undefined,
+    private disableScroll: boolean
+  ) {
+    this.ctrl = ctrl;
+  }
+
+  block() {
+    if (!this.ctrl) {
+      return;
+    }
+    if (this.disable) {
+      for (const gesture of this.disable) {
+        this.ctrl.disableGesture(gesture, this.id);
+      }
+    }
+
+    if (this.disableScroll) {
+      this.ctrl.disableScroll(this.id);
+    }
+  }
+
+  unblock() {
+    if (!this.ctrl) {
+      return;
+    }
+    if (this.disable) {
+      for (const gesture of this.disable) {
+        this.ctrl.enableGesture(gesture, this.id);
+      }
+    }
+    if (this.disableScroll) {
+      this.ctrl.enableScroll(this.id);
+    }
+  }
+
+  destroy() {
+    this.unblock();
+    this.ctrl = undefined;
+  }
+}
+
+export interface GestureConfig {
+  name: string;
+  priority?: number;
+  disableScroll?: boolean;
+}
+
+export interface BlockerConfig {
+  disable?: string[];
+  disableScroll?: boolean;
+}
+
+export const gestureController = new GestureController(document);

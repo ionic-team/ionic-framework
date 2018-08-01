@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Select</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content class="outer-content test-content">
+    <ion-content class="outer-content test-content" fullscreen>
       <ion-list>
         <ion-list-header>Single Selection</ion-list-header>
 
@@ -115,6 +115,12 @@
       </ion-list>
 
     </ion-content>
+
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
 
     <script>
       var customAlertSelect = document.getElementById('customAlertSelect');

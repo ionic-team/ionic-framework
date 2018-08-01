@@ -1,8 +1,9 @@
 import { Component, Prop } from '@stencil/core';
+
 import { Color, Config, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
-import { SPINNERS, SpinnerConfig } from './spinner-configs';
 
+import { SPINNERS, SpinnerConfig } from './spinner-configs';
 
 @Component({
   tag: 'ion-spinner',
@@ -16,8 +17,9 @@ export class Spinner {
   @Prop({ context: 'config' }) config!: Config;
 
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -43,7 +45,6 @@ export class Spinner {
    * If true, the spinner's animation will be paused. Defaults to `false`.
    */
   @Prop() paused = false;
-
 
   private getName(): string {
     let name = this.name || this.config.get('spinner');
@@ -73,7 +74,7 @@ export class Spinner {
         ...createColorClasses(this.color),
 
         [`spinner-${this.getName()}`]: true,
-        'spinner-paused': this.paused
+        'spinner-paused': !!this.paused
       }
     };
   }
@@ -100,7 +101,6 @@ export class Spinner {
   }
 }
 
-
 function buildCircle(spinner: SpinnerConfig, duration: number, index: number, total: number) {
   const data = spinner.fn(duration, index, total);
   data.style['animation-duration'] = `${duration}ms`;
@@ -111,7 +111,6 @@ function buildCircle(spinner: SpinnerConfig, duration: number, index: number, to
     </svg>
   );
 }
-
 
 function buildLine(spinner: SpinnerConfig, duration: number, index: number, total: number) {
   const data = spinner.fn(duration, index, total);

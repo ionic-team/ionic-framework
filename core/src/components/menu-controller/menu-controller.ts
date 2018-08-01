@@ -1,4 +1,5 @@
-import { Component, Method, Prop } from '@stencil/core';
+import { Build, Component, Method, Prop } from '@stencil/core';
+
 import { Animation, AnimationBuilder, Menu } from '../../interface';
 
 import { menuOverlayAnimation } from './animations/overlay';
@@ -119,20 +120,22 @@ export class MenuController {
    */
   @Method()
   get(menuId?: string): HTMLIonMenuElement | null {
-    if (menuId === 'left') {
-      console.error('menu.side=left is deprecated, use "start" instead');
-      return null;
-    }
-    if (menuId === 'right') {
-      console.error('menu.side=right is deprecated, use "end" instead');
-      return null;
+    if (Build.isDev) {
+      if (menuId === 'left') {
+        console.error('menu.side=left is deprecated, use "start" instead');
+        return null;
+      }
+      if (menuId === 'right') {
+        console.error('menu.side=right is deprecated, use "end" instead');
+        return null;
+      }
     }
     if (menuId === 'start' || menuId === 'end') {
       // there could be more than one menu on the same side
       // so first try to get the enabled one
-      const menu = this.find(m => m.side === menuId && !m.disabled);
-      if (menu) {
-        return menu;
+      const menuRef = this.find(m => m.side === menuId && !m.disabled);
+      if (menuRef) {
+        return menuRef;
       }
 
       // didn't find a menu side that is enabled

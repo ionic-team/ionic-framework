@@ -1,13 +1,14 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
+
 import { Config, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
 import { debounce } from '../../utils/helpers';
+
 import { RouterIntent } from './utils/constants';
 import { printRedirects, printRoutes } from './utils/debug';
 import { readNavState, waitUntilNavNode, writeNavState } from './utils/dom';
 import { routeRedirect, routerIDsToChain, routerPathToChain } from './utils/matching';
 import { readRedirects, readRoutes } from './utils/parser';
 import { chainToPath, generatePath, parsePath, readPath, writePath } from './utils/path';
-
 
 @Component({
   tag: 'ion-router'
@@ -155,7 +156,7 @@ export class Router {
     }
   }
 
-  private async writeNavStateRoot(path: string[]|null, intent: RouterIntent): Promise<boolean> {
+  private async writeNavStateRoot(path: string[] | null, intent: RouterIntent): Promise<boolean> {
     if (this.busy) {
       return false;
     }
@@ -167,7 +168,7 @@ export class Router {
     // lookup redirect rule
     const redirects = readRedirects(this.el);
     const redirect = routeRedirect(path, redirects);
-    let redirectFrom: string[]|null = null;
+    let redirectFrom: string[] | null = null;
     if (redirect) {
       this.setPath(redirect.to!, intent);
       redirectFrom = redirect.from;
@@ -187,7 +188,7 @@ export class Router {
   }
 
   private async writeNavState(
-    node: HTMLElement|undefined, chain: RouteChain, intent: RouterIntent,
+    node: HTMLElement | undefined, chain: RouteChain, intent: RouterIntent,
     path: string[], redirectFrom: string[] | null,
     index = 0
   ): Promise<boolean> {
@@ -198,7 +199,9 @@ export class Router {
 
     // generate route event and emit will change
     const routeEvent = this.routeChangeEvent(path, redirectFrom);
-    routeEvent && this.ionRouteWillChange.emit(routeEvent);
+    if (routeEvent) {
+      this.ionRouteWillChange.emit(routeEvent);
+    }
 
     const changed = await writeNavState(node, chain, intent, index);
     this.busy = false;
@@ -208,8 +211,9 @@ export class Router {
     }
 
     // emit did change
-    routeEvent && this.ionRouteDidChange.emit(routeEvent);
-
+    if (routeEvent) {
+      this.ionRouteDidChange.emit(routeEvent);
+    }
     return changed;
   }
 
@@ -222,7 +226,7 @@ export class Router {
     return readPath(this.win.location, this.root, this.useHash);
   }
 
-  private routeChangeEvent(path: string[], redirectFromPath: string[]|null): RouterEventDetail | null {
+  private routeChangeEvent(path: string[], redirectFromPath: string[] | null): RouterEventDetail | null {
     const from = this.previousPath;
     const to = generatePath(path);
     this.previousPath = to;

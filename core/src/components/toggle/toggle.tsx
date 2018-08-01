@@ -1,9 +1,9 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { CheckboxInput, CheckedInputChangeEvent, Color, GestureDetail, Mode, StyleEvent } from '../../interface';
-import { hapticSelection } from '../../utils/haptic';
-import { deferEvent } from '../../utils/helpers';
-import { createColorClasses, hostContext } from '../../utils/theme';
+import { Component, Element, Event, EventEmitter, Prop, QueueApi, State, Watch } from '@stencil/core';
 
+import { CheckboxInput, CheckedInputChangeEvent, Color, Gesture, GestureDetail, Mode, StyleEvent } from '../../interface';
+import { hapticSelection } from '../../utils/haptic';
+import { deferEvent, renderHiddenInput } from '../../utils/helpers';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-toggle',
@@ -18,15 +18,19 @@ export class Toggle implements CheckboxInput {
   private inputId = `ion-tg-${toggleIds++}`;
   private nativeInput!: HTMLInputElement;
   private pivotX = 0;
+  private gesture?: Gesture;
 
   @Element() el!: HTMLElement;
+
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   @State() activated = false;
   @State() keyFocus = false;
 
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -76,7 +80,6 @@ export class Toggle implements CheckboxInput {
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
 
-
   @Watch('checked')
   checkedChanged(isChecked: boolean) {
     this.ionChange.emit({
@@ -86,18 +89,20 @@ export class Toggle implements CheckboxInput {
   }
 
   @Watch('disabled')
-  emitStyle() {
+  disabledChanged() {
     this.ionStyle.emit({
       'interactive-disabled': this.disabled,
     });
+    if (this.gesture) {
+      this.gesture.disabled = this.disabled;
+    }
   }
 
   componentWillLoad() {
     this.ionStyle = deferEvent(this.ionStyle);
-    this.emitStyle();
   }
 
-  componentDidLoad() {
+  async componentDidLoad() {
     const parentItem = this.nativeInput.closest('ion-item');
     if (parentItem) {
       const itemLabel = parentItem.querySelector('ion-label');
@@ -106,6 +111,18 @@ export class Toggle implements CheckboxInput {
         this.nativeInput.setAttribute('aria-labelledby', itemLabel.id);
       }
     }
+
+    this.gesture = (await import('../../utils/gesture/gesture')).create({
+      el: this.el,
+      queue: this.queue,
+      gestureName: 'toggle',
+      gesturePriority: 30,
+      threshold: 0,
+      onStart: this.onDragStart.bind(this),
+      onMove: this.onDragMove.bind(this),
+      onEnd: this.onDragEnd.bind(this),
+    });
+    this.disabledChanged();
   }
 
   private onDragStart(detail: GestureDetail) {
@@ -169,23 +186,12 @@ export class Toggle implements CheckboxInput {
   }
 
   render() {
+    renderHiddenInput(this.el, this.name, this.value, this.disabled);
+
     return [
-      <ion-gesture
-        onStart={this.onDragStart.bind(this)}
-        onMove={this.onDragMove.bind(this)}
-        onEnd={this.onDragEnd.bind(this)}
-        gestureName="toggle"
-        passive={false}
-        gesturePriority={30}
-        direction="x"
-        threshold={0}
-        attachTo="parent"
-        disabled={this.disabled}
-        tabIndex={-1}>
-        <div class="toggle-icon">
-          <div class="toggle-inner"/>
-        </div>
-      </ion-gesture>,
+      <div class="toggle-icon">
+        <div class="toggle-inner"/>
+      </div>,
       <input
         type="checkbox"
         onChange={this.onChange.bind(this)}
@@ -197,7 +203,8 @@ export class Toggle implements CheckboxInput {
         name={this.name}
         value={this.value}
         disabled={this.disabled}
-        ref={r => this.nativeInput = (r as any)}/>
+        ref={r => this.nativeInput = (r as any)}/>,
+      <slot></slot>
     ];
   }
 }

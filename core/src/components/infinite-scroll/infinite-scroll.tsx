@@ -42,13 +42,12 @@ export class InfiniteScroll {
     }
   }
 
-
   /**
    * If true, the infinite scroll will be hidden and scroll event listeners
    * will be removed.
    *
-   * Call `enable(false)` to disable the infinite scroll from actively
-   * trying to receive new data while scrolling. This method is useful
+   * Set this to true to disable the infinite scroll from actively
+   * trying to receive new data while scrolling. This is useful
    * when it is known that there is no more data that can be added, and
    * the infinite scroll is no longer needed.
    */
@@ -74,7 +73,6 @@ export class InfiniteScroll {
    */
   @Event() ionInfinite!: EventEmitter<void>;
 
-
   async componentDidLoad() {
     const contentEl = this.el.closest('ion-content');
     if (contentEl) {
@@ -92,7 +90,7 @@ export class InfiniteScroll {
     this.scrollEl = undefined;
   }
 
-  @Listen('scroll', {enabled: false})
+  @Listen('scroll', { enabled: false })
   protected onScroll() {
     const scrollEl = this.scrollEl;
     if (!scrollEl || !this.canStart()) {

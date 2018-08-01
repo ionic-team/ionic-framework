@@ -21,13 +21,11 @@
 
     <ion-content id="content" padding>
 
-      <ion-button onclick="toggleInfiniteScroll()" block>
+      <ion-button onclick="toggleInfiniteScroll()" expand="block">
         Toggle InfiniteScroll
       </ion-button>
 
-      <ion-list id="list">
-
-      </ion-list>
+      <ion-list id="list"></ion-list>
 
       <ion-infinite-scroll threshold="100px" id="infinite-scroll">
         <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">

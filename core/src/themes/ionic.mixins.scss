@@ -23,6 +23,7 @@
   text-decoration: inherit;
   text-overflow: inherit;
   text-transform: inherit;
+  text-align: inherit;
   white-space: inherit;
   color: inherit;
 }
@@ -34,35 +35,6 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
-
-// Input Placeholder
-// --------------------------------------------------
-
-@mixin placeholder($color: #999, $text-indent: 0, $opacity: null) {
-  &::-moz-placeholder { // Firefox 19+
-    color: $color;
-    @if ($opacity) {
-      opacity: $opacity;
-    }
-  }
-
-  &:-ms-input-placeholder {
-    color: $color;
-    @if ($opacity) {
-      opacity: $opacity;
-    }
-  }
-
-  &::-webkit-input-placeholder {
-    // Safari placeholder margin issue
-    text-indent: $text-indent;
-    color: $color;
-    @if ($opacity) {
-      opacity: $opacity;
-    }
-  }
-}
-
 
 // Get the key from a map based on the index
 @function index-to-key($map, $index) {
@@ -658,81 +630,5 @@
       left: $safe-area-end-env;
       right: $safe-area-start-env;
     }
-  }
-}
-
-
-// Add generic safe area sizing
-// @param {string} $prop - css property you want to set
-// @param {string} $safe-area-position - short safe-area-inset value you want to modify
-// @param {string} $value - additional value you want to modify, if none, pass 0
-// ----------------------------------------------------------
-@mixin safe-area-sizing($prop, $safe-area-position, $value){
-  #{$prop}: unquote("calc(#{$value} + constant(#{$safe-area-position}))");
-  #{$prop}: unquote("calc(#{$value} + env(#{$safe-area-position}))");
-}
-
-
-// Add safe area padding and sizing to the footer area
-// @param {string} $toolbar-height - height of the toolbar
-// @param {string} $toolbar-padding - padding of the toolbar
-// @param {string} $tabs-height - height of the tabs
-// ----------------------------------------------------------
-@mixin footer-safe-area($toolbar-height, $toolbar-padding, $tabs-height) {
-  ion-tabs ion-tabbar:not(.placement-top) {
-    @include safe-area-padding(null, null, 0, null);
-    @include safe-area-sizing(height, safe-area-inset-bottom, $tabs-height)
-  }
-
-  ion-footer .toolbar:last-child {
-    @include safe-area-padding(null, null, $toolbar-padding, null);
-    @include safe-area-sizing(min-height, safe-area-inset-bottom, $toolbar-height)
-  }
-}
-
-
-// Add padding to the toolbar to account for the statusbar
-// @param {string} $toolbar-height - height of the toolbar
-// @param {string} $toolbar-padding - padding of the toolbar
-// @param {string} $content-padding - padding of the content
-// @param {string} $statusbar-padding - padding of the statusbar
-// --------------------------------------------------------------------------------
-@mixin toolbar-statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $statusbar-padding) {
-
-  > .toolbar:first-child {
-    @include padding(calc(#{$statusbar-padding} + #{$toolbar-padding}), null, null, null);
-    @include safe-area-padding($toolbar-padding, null, null, null);
-
-    min-height: calc(#{$toolbar-height} + #{$statusbar-padding});
-    @include safe-area-sizing(min-height, safe-area-inset-top, $toolbar-height);
-  }
-
-  > ion-content:first-child ion-scroll {
-    @include padding($statusbar-padding, null, null, null);
-    @include safe-area-padding(0px, null, null, null);
-  }
-}
-
-
-// Add padding to the toolbar to account for the statusbar
-// @param {string} $toolbar-height - height of the toolbar
-// @param {string} $toolbar-padding - padding of the toolbar
-// @param {string} $content-padding - padding of the content
-// @param {string} $statusbar-padding - padding of the statusbar
-//
-// iOS is the only mode that uses this mixin and it should be removed with #5036
-// --------------------------------------------------------------------------------
-@mixin toolbar-title-statusbar-padding($toolbar-height, $toolbar-padding, $content-padding, $statusbar-padding) {
-
-  > .toolbar:first-child ion-segment,
-  > .toolbar:first-child ion-title {
-    @include padding($statusbar-padding, null, null, null);
-    @include safe-area-padding(0px, null, null, null);
-
-    height: calc(#{$toolbar-height} + #{$statusbar-padding});
-    @include safe-area-sizing(height, safe-area-inset-top, $toolbar-height);
-
-    min-height: calc(#{$toolbar-height} + #{$statusbar-padding});
-    @include safe-area-sizing(min-height, safe-area-inset-top, $toolbar-height)
   }
 }

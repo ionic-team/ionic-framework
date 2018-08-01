@@ -1,7 +1,7 @@
 import { Component, Prop } from '@stencil/core';
+
 import { Color, RouterDirection } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-anchor',
@@ -13,7 +13,9 @@ export class Anchor {
   @Prop({ context: 'window' }) win!: Window;
 
   /**
-   * The color to use for the anchor.
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -39,7 +41,7 @@ export class Anchor {
     return (
       <a
         href={this.href}
-        onClick={(ev) => openURL(this.win, this.href, ev, this.routerDirection)}>
+        onClick={ev => openURL(this.win, this.href, ev, this.routerDirection)}>
           <slot></slot>
       </a>
     );

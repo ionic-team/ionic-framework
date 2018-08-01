@@ -4,6 +4,9 @@
 // --------------------------------------------------
 
 :host {
+  --placeholder-color: currentColor;
+  --placeholder-weight: inherit;
+  --placeholder-opacity: .5;
   --padding-top: 0;
   --padding-end: 0;
   --padding-bottom: 0;
@@ -19,6 +22,10 @@
   box-sizing: border-box;
 }
 
+:host(.ion-color) {
+  color: #{current-color(base)};
+}
+
 // Textarea Within An Item
 // --------------------------------------------------
 
@@ -31,8 +38,8 @@
 // --------------------------------------------------
 
 .native-textarea {
+  @include text-inherit();
   @include border-radius(var(--border-radius));
-  @include placeholder(var(--placeholder-color));
   @include margin(0);
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
@@ -47,14 +54,18 @@
 
   background: transparent;
 
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-
-  letter-spacing: inherit;
   box-sizing: border-box;
   resize: none;
   appearance: none;
+
+  &::placeholder {
+    color: var(--placeholder-color);
+
+    font-family: inherit;
+    font-weight: var(--placeholder-weight);
+
+    opacity: var(--placeholder-opacity);
+  }
 }
 
 .native-textarea[disabled] {

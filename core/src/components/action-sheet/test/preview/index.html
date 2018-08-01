@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Action Sheet</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding>
+    <ion-content padding fullscreen>
       <ion-action-sheet-controller></ion-action-sheet-controller>
 
       <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
@@ -32,6 +32,11 @@
 
     </ion-content>
 
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
   </ion-app>
 
   <script>

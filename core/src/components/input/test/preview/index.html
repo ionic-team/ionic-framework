@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Input</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content">
+    <ion-content id="content" fullscreen>
       <ion-list>
         <ion-item>
           <ion-input value="reallylonglonglonginputtoseetheedgesreallylonglonglonginputtoseetheedges"></ion-input>
@@ -101,6 +101,12 @@
       </ion-item>
 
     </ion-content>
+
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
 
     <script>
       function toggleBoolean(id, prop) {

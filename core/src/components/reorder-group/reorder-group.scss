@@ -3,11 +3,7 @@
 // Reorder Group
 // --------------------------------------------------
 
-.reorder-group > ion-gesture {
-  display: block;
-}
-
-.reorder-list-active ion-gesture > * {
+.reorder-list-active > * {
   transition: transform 300ms;
   will-change: transform;
 }

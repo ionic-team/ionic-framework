@@ -1,7 +1,8 @@
 import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
-import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
-import { getParentNode, openURL } from '../../utils/theme';
 
+import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
+import { hasShadowDom } from '../../utils/helpers';
+import { openURL } from '../../utils/theme';
 
 @Component({
   tag: 'ion-button',
@@ -19,7 +20,9 @@ export class Button {
   @State() keyFocus = false;
 
   /**
-   * The color to use for the button.
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -44,14 +47,14 @@ export class Button {
    * Set to `"block"` for a full-width button or to `"full"` for a full-width button
    * without left and right borders.
    */
-  @Prop({reflectToAttr: true}) expand?: 'full' | 'block';
+  @Prop({ reflectToAttr: true }) expand?: 'full' | 'block';
 
   /**
    * Set to `"clear"` for a transparent button, to `"outline"` for a transparent
    * button with a border, or to `"solid"`. The default style is `"solid"` except inside of
    * a toolbar, where the default is `"clear"`.
    */
-  @Prop({reflectToAttr: true, mutable: true}) fill?: 'clear' | 'outline' | 'solid' | 'default';
+  @Prop({ reflectToAttr: true, mutable: true }) fill?: 'clear' | 'outline' | 'solid' | 'default';
 
   /**
    * When using a router, it specifies the transition direction when navigating to
@@ -69,13 +72,13 @@ export class Button {
    * The button shape.
    * Possible values are: `"round"`.
    */
-  @Prop({reflectToAttr: true}) shape?: 'round';
+  @Prop({ reflectToAttr: true }) shape?: 'round';
 
   /**
    * The button size.
    * Possible values are: `"small"`, `"default"`, `"large"`.
    */
-  @Prop({reflectToAttr: true}) size?: 'small' | 'default' | 'large';
+  @Prop({ reflectToAttr: true }) size?: 'small' | 'default' | 'large';
 
   /**
    * If true, activates a button with a heavier font weight.
@@ -119,28 +122,25 @@ export class Button {
   }
 
   onClick(ev: Event) {
-    if (this.type === 'submit') {
+    if (this.type === 'button') {
+      openURL(this.win, this.href, ev, this.routerDirection);
+
+    } else if (hasShadowDom(this.el)) {
       // this button wants to specifically submit a form
       // climb up the dom to see if we're in a <form>
       // and if so, then use JS to submit it
+      const form = this.el.closest('form');
+      if (form) {
+        ev.preventDefault();
+        ev.stopPropagation();
 
-      let node = this.el;
-      while ((node = getParentNode(node))) {
-        if (node.nodeName.toLowerCase() === 'form') {
-          // cool, this submit button is within a <form>, let's submit it
-
-          // prevent the button's default and stop it's propagation
-          ev.preventDefault();
-          ev.stopPropagation();
-
-          // submit the <form> via JS
-          (node as HTMLFormElement).submit();
-          break;
-        }
+        const fakeButton = document.createElement('button');
+        fakeButton.type = this.type;
+        fakeButton.style.display = 'none';
+        form.appendChild(fakeButton);
+        fakeButton.click();
+        fakeButton.remove();
       }
-
-    } else {
-      openURL(this.win, this.href, ev, this.routerDirection);
     }
   }
 
@@ -189,7 +189,6 @@ export class Button {
   }
 }
 
-
 /**
  * Get the classes based on the button type
  * e.g. alert-button, action-sheet-button
@@ -208,7 +207,7 @@ function getButtonClassMap(buttonType: string | undefined, mode: Mode): CssClass
  * Get the classes based on the type
  * e.g. block, full, round, large
  */
-function getButtonTypeClassMap(buttonType: string, type: string|undefined, mode: Mode): CssClassMap {
+function getButtonTypeClassMap(buttonType: string, type: string | undefined, mode: Mode): CssClassMap {
   if (!type) {
     return {};
   }

@@ -12,12 +12,12 @@
     class PageOne extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
-        <ion-header>
+        <ion-header translucent>
           <ion-toolbar>
             <ion-title>Page One</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content>
+        <ion-content fullscreen>
           page one
           <a href='#/two/second-page'>Ir a la page 2</a>
         </ion-content>`;
@@ -27,12 +27,12 @@
     class PageTwo extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
-        <ion-header>
+        <ion-header translucent>
           <ion-toolbar>
             <ion-title>Page Two</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content>
+        <ion-content fullscreen>
           page two
         </ion-content>`;
       }
@@ -41,12 +41,12 @@
     class PageThree extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
-        <ion-header>
+        <ion-header translucent>
           <ion-toolbar>
             <ion-title>Page 3</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content>
+        <ion-content fullscreen>
           page tres
         </ion-content>`;
       }
@@ -55,12 +55,12 @@
     class TabOne extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
-        <ion-header>
+        <ion-header translucent>
           <ion-toolbar>
             <ion-title>Tab one</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content>
+        <ion-content fullscreen>
           this is the first pahe
         </ion-content>`;
       }
@@ -69,12 +69,12 @@
     class TabTwo extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
-        <ion-header>
+        <ion-header translucent>
           <ion-toolbar>
             <ion-title>Tab Two</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content>
+        <ion-content fullscreen>
           <ion-nav></ion-nav>
         </ion-content>`;
       }
@@ -83,12 +83,12 @@
     class TabThree extends HTMLElement {
       connectedCallback() {
         this.innerHTML = `
-        <ion-header>
+        <ion-header translucent>
           <ion-toolbar>
             <ion-title>Tab three</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content>
+        <ion-content fullscreen>
           hey! this is the 3 tab
         </ion-content>`;
       }
@@ -139,6 +139,10 @@
   </ion-app>
 
   <style>
+    ion-toolbar {
+      --background: white;
+    }
+
     f {
       display: block;
       margin: 15px auto;

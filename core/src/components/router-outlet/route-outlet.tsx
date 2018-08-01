@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi } from '@stencil/core';
+
 import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, NavOutlet, RouteID, RouteWrite, RouterOutletOptions } from '../../interface';
 import { transition } from '../../utils';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
-
 
 @Component({
   tag: 'ion-router-outlet',
@@ -12,7 +12,7 @@ import { attachComponent, detachComponent } from '../../utils/framework-delegate
 export class RouterOutlet implements NavOutlet {
 
   private isTransitioning = false;
-  private activeEl: HTMLElement|undefined;
+  private activeEl: HTMLElement | undefined;
   private activeComponent: any;
 
   mode!: Mode;
@@ -55,7 +55,7 @@ export class RouterOutlet implements NavOutlet {
     this.activeComponent = component;
 
     // attach entering view to DOM
-    const enteringEl = await attachComponent(this.delegate, this.el, component, ['ion-page', 'hide-page'], params);
+    const enteringEl = await attachComponent(this.delegate, this.el, component, ['ion-page', 'ion-page-invisible'], params);
     const leavingEl = this.activeEl;
 
     // commit animation
@@ -70,7 +70,7 @@ export class RouterOutlet implements NavOutlet {
 
   /** @hidden */
   @Method()
-  async commit(enteringEl: HTMLElement, leavingEl: HTMLElement|undefined, opts?: RouterOutletOptions): Promise<boolean> {
+  async commit(enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions): Promise<boolean> {
     // isTransitioning acts as a lock to prevent reentering
     if (this.isTransitioning || leavingEl === enteringEl) {
       return false;
@@ -82,15 +82,15 @@ export class RouterOutlet implements NavOutlet {
 
     opts = opts || {};
 
-    const { mode, queue, animated, animationCtrl, win, el} = this;
+    const { mode, queue, animated, animationCtrl, win, el } = this;
     await transition({
       mode,
       queue,
       animated,
       animationCtrl,
       window: win,
-      enteringEl: enteringEl,
-      leavingEl: leavingEl,
+      enteringEl,
+      leavingEl,
       baseEl: el,
 
       ...opts
@@ -117,7 +117,7 @@ export class RouterOutlet implements NavOutlet {
 
   /** Returns the ID for the current route */
   @Method()
-  getRouteId(): RouteID|undefined {
+  getRouteId(): RouteID | undefined {
     const active = this.activeEl;
     return active ? {
       id: active.tagName,

@@ -11,8 +11,9 @@ A ChipButton is an inset button that is placed inside of a Chip. For more inform
 
 string
 
-The color to use.
+The color to use from your application's color palette.
 Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### disabled
@@ -51,8 +52,9 @@ Possible values are: `"ios"` or `"md"`.
 
 string
 
-The color to use.
+The color to use from your application's color palette.
 Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### disabled

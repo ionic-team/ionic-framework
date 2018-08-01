@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Alert</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding>
+    <ion-content padding fullscreen>
       <ion-alert-controller></ion-alert-controller>
 
       <ion-button id="basic" expand="block" onclick="presentAlert()">Alert</ion-button>
@@ -32,6 +32,11 @@
       <ion-button expand="block" onclick="presentWithCssClass()">CssClass</ion-button>
     </ion-content>
 
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
   </ion-app>
 
   <script>
@@ -182,32 +187,38 @@
           {
             type: 'radio',
             label: 'Radio 1',
+            name: 'Radio 1',
             value: 'value1',
             checked: true
           },
           {
             type: 'radio',
             label: 'Radio 2',
+            name: 'Radio 2',
             value: 'value2'
           },
           {
             type: 'radio',
             label: 'Radio 3',
+            name: 'Radio 3',
             value: 'value3'
           },
           {
             type: 'radio',
             label: 'Radio 4',
+            name: 'Radio 4',
             value: 'value4'
           },
           {
             type: 'radio',
             label: 'Radio 5',
+            name: 'Radio 5',
             value: 'value5'
           },
           {
             type: 'radio',
             label: 'Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 Radio 6 ',
+            name: 'Radio 6',
             value: 'value6'
           }
         ],
@@ -241,6 +252,7 @@
           {
             type: 'checkbox',
             label: 'Checkbox 1',
+            name: 'Checkbox 1',
             value: 'value1',
             checked: true
           },
@@ -248,30 +260,35 @@
           {
             type: 'checkbox',
             label: 'Checkbox 2',
+            name: 'Checkbox 2',
             value: 'value2'
           },
 
           {
             type: 'checkbox',
             label: 'Checkbox 3',
+            name: 'Checkbox 3',
             value: 'value3'
           },
 
           {
             type: 'checkbox',
             label: 'Checkbox 4',
+            name: 'Checkbox 4',
             value: 'value4'
           },
 
           {
             type: 'checkbox',
             label: 'Checkbox 5',
+            name: 'Checkbox 5',
             value: 'value5'
           },
 
           {
             type: 'checkbox',
             label: 'Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6 Checkbox 6',
+            name: 'Checkbox 6',
             value: 'value6'
           }
         ],

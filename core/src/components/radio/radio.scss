@@ -9,6 +9,8 @@
   display: inline-block;
   position: relative;
   box-sizing: border-box;
+
+  user-select: none;
 }
 
 .radio-icon {

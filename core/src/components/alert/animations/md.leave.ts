@@ -3,13 +3,13 @@ import { Animation } from '../../../interface';
 /**
  * Md Alert Leave Animation
  */
-export function mdLeaveAnimation(Animation: Animation, baseEl: HTMLElement): Promise<Animation> {
-  const baseAnimation = new Animation();
+export function mdLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement): Promise<Animation> {
+  const baseAnimation = new AnimationC();
 
-  const backdropAnimation = new Animation();
+  const backdropAnimation = new AnimationC();
   backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
 
-  const wrapperAnimation = new Animation();
+  const wrapperAnimation = new AnimationC();
   wrapperAnimation.addElement(baseEl.querySelector('.alert-wrapper'));
 
   backdropAnimation.fromTo('opacity', 0.5, 0);

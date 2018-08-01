@@ -12,7 +12,9 @@ Label is a wrapper element that can be used in combination with `ion-item`, `ion
 
 string
 
-The color to use for the label's text
+The color to use from your application's color palette.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### mode
@@ -37,7 +39,9 @@ Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
 
 string
 
-The color to use for the label's text
+The color to use from your application's color palette.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+For more information on colors, see [theming](/docs/theming/basics).
 
 
 #### mode

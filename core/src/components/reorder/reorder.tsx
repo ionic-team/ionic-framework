@@ -1,4 +1,5 @@
 import { Component } from '@stencil/core';
+
 import { Mode } from '../../interface';
 
 @Component({
@@ -16,7 +17,7 @@ export class Reorder {
   render() {
     return (
       <slot>
-        <ion-icon class="reorder-icon" name="reorder"/>
+        <ion-icon name="reorder" lazy={false} class="reorder-icon" />
       </slot>
     );
   }

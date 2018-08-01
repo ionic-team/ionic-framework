@@ -43,7 +43,6 @@ describe('parseURL', () => {
   });
 });
 
-
 describe('generatePath', () => {
   it('should generate an empty URL', () => {
     expect(generatePath([])).toEqual('/');
@@ -68,7 +67,6 @@ describe('generatePath', () => {
   });
 });
 
-
 describe('chainToPath', () => {
   it('should generate a simple URL', () => {
     const chain: RouteChain = [
@@ -78,8 +76,8 @@ describe('chainToPath', () => {
       { id: '4', path: [''], params: undefined },
       { id: '5', path: ['hola', '', 'hey'], params: undefined },
       { id: '6', path: [''], params: undefined },
-      { id: '7', path: [':param'], params: {param: 'name'} },
-      { id: '8', path: ['adios', ':name', ':id'], params: {name: 'manu', id: '123'} },
+      { id: '7', path: [':param'], params: { param: 'name' } },
+      { id: '8', path: ['adios', ':name', ':id'], params: { name: 'manu', id: '123' } },
     ];
     expect(chainToPath(chain)).toEqual(
       ['segment', 'to', 'hola', 'hey', 'name', 'adios', 'manu', '123']
@@ -97,7 +95,7 @@ describe('chainToPath', () => {
   it('should raise an exception 2', () => {
     const chain: RouteChain = [
       { id: '3', path: ['segment'], params: undefined },
-      { id: '8', path: [':name', ':id'], params: {name: 'hey'} },
+      { id: '8', path: [':name', ':id'], params: { name: 'hey' } },
     ];
     expect(chainToPath(chain)).toBeNull();
   });
@@ -193,7 +191,6 @@ describe('writePath', () => {
     expect(history.pushState).toHaveBeenCalledWith(123, '', '/to/schedule');
   });
 
-
   it('should write non root path (no hash)', () => {
     const history = mockHistory();
     writePath(history, '/path', false, [''], RouterIntent.Forward, 2);
@@ -248,11 +245,9 @@ function mockHistory(): History {
   } as any;
 }
 
-
 function mockLocation(pathname: string, hash: string): Location {
   return {
     pathname,
     hash
   } as Location;
 }
-

@@ -1,7 +1,7 @@
 import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
+
 import { Color, Config, NavOutlet, RouteID, RouteWrite, TabbarLayout, TabbarPlacement } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
-
 
 @Component({
   tag: 'ion-tabs',
@@ -25,8 +25,9 @@ export class Tabs implements NavOutlet {
   @Prop({ context: 'document' }) doc!: Document;
 
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -155,7 +156,7 @@ export class Tabs implements NavOutlet {
   async setRouteId(id: string): Promise<RouteWrite> {
     const selectedTab = this.getTab(id);
     if (!this.shouldSwitch(selectedTab)) {
-      return {changed: false, element: this.selectedTab};
+      return { changed: false, element: this.selectedTab };
     }
 
     await this.setActive(selectedTab);
@@ -168,14 +169,14 @@ export class Tabs implements NavOutlet {
 
   /** @hidden */
   @Method()
-  getRouteId(): RouteID|undefined {
+  getRouteId(): RouteID | undefined {
     const id = this.selectedTab && this.selectedTab.getTabId();
-    return id ? {id, element: this.selectedTab} : undefined;
+    return id ? { id, element: this.selectedTab } : undefined;
   }
 
   /** Get the tab at the given index */
   @Method()
-  getTab(tabOrIndex: string | number | HTMLIonTabElement): HTMLIonTabElement|undefined {
+  getTab(tabOrIndex: string | number | HTMLIonTabElement): HTMLIonTabElement | undefined {
     if (typeof tabOrIndex === 'string') {
       return this.tabs.find(tab => tab.getTabId() === tabOrIndex);
     }
@@ -206,8 +207,8 @@ export class Tabs implements NavOutlet {
     const tabs = this.tabs;
     if (this.useRouter) {
       if (Build.isDev) {
-        const selectedTab = tabs.find(t => t.selected);
-        if (selectedTab) {
+        const tab = tabs.find(t => t.selected);
+        if (tab) {
           console.warn('When using a router (ion-router) <ion-tab selected="true"> makes no difference' +
           'Define routes properly the define which tab is selected');
         }
@@ -279,7 +280,7 @@ export class Tabs implements NavOutlet {
       if (leavingTab) {
         leavingTab.active = false;
       }
-      this.ionChange.emit({tab: selectedTab});
+      this.ionChange.emit({ tab: selectedTab });
       this.ionNavDidChange.emit();
     }
   }
@@ -294,7 +295,7 @@ export class Tabs implements NavOutlet {
     return Promise.resolve(false);
   }
 
-  private shouldSwitch(selectedTab: HTMLIonTabElement|undefined): selectedTab is HTMLIonTabElement {
+  private shouldSwitch(selectedTab: HTMLIonTabElement | undefined): selectedTab is HTMLIonTabElement {
     const leavingTab = this.selectedTab;
     return !!(selectedTab && selectedTab !== leavingTab && !this.transitioning);
   }
@@ -331,5 +332,3 @@ export class Tabs implements NavOutlet {
 }
 
 let tabIds = -1;
-
-
