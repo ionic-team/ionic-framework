@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 
 
+export type EventHandler = (...args: any[]) => any;
 @Injectable()
 export class Events {
-  private c = new Map<string, Function[]>();
+  private c = new Map<string, EventHandler[]>();
 
   /**
    * Subscribe to an event topic. Events that get posted to that topic will trigger the provided handler.
    *
-   * @param {string} topic the topic to subscribe to
-   * @param {function} handler the event handler
+   * @param topic the topic to subscribe to
+   * @param handler the event handler
    */
-  subscribe(topic: string, ...handlers: Function[]) {
+  subscribe(topic: string, ...handlers: EventHandler[]) {
     let topics = this.c.get(topic);
     if (!topics) {
       this.c.set(topic, topics = []);
@@ -22,12 +23,12 @@ export class Events {
   /**
    * Unsubscribe from the given topic. Your handler will no longer receive events published to this topic.
    *
-   * @param {string} topic the topic to unsubscribe from
-   * @param {function} handler the event handler
+   * @param topic the topic to unsubscribe from
+   * @param handler the event handler
    *
    * @return true if a handler was removed
    */
-  unsubscribe(topic: string, handler?: Function): boolean {
+  unsubscribe(topic: string, handler?: EventHandler): boolean {
     if (!handler) {
       return this.c.delete(topic);
     }
@@ -54,8 +55,8 @@ export class Events {
   /**
    * Publish an event to the given topic.
    *
-   * @param {string} topic the topic to publish to
-   * @param {any} eventData the data to send as the event
+   * @param topic the topic to publish to
+   * @param eventData the data to send as the event
    */
   publish(topic: string, ...args: any[]): any[] | null {
     const topics = this.c.get(topic);
@@ -88,7 +89,7 @@ export function setupEvents() {
 
 
 export function setupProvideEvents() {
-  return function() {
+  return () => {
     return setupEvents();
   };
 }

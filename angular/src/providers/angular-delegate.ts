@@ -68,7 +68,10 @@ export function attachView(
   container: any, component: any, params: any, cssClasses: string[] | undefined
 ) {
   const factory = resolver.resolveComponentFactory(component);
-  const childInjector = Injector.create(getProviders(params), injector);
+  const childInjector = Injector.create({
+    providers: getProviders(params),
+    parent: injector
+  });
   const componentRef = (location)
     ? location.createComponent(factory, location.length, childInjector)
     : factory.create(childInjector);

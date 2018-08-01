@@ -56,7 +56,7 @@ export class StackController {
     }
 
     // stack setRoot
-    if (direction === 0) {
+    if (direction === 0) {
       this.views = [enteringView];
       return;
     }

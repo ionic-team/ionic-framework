@@ -1,5 +1,4 @@
 /**
- * @name NavParams
  * @description
  * NavParams are an object that exists on a page and can contain data for that particular view.
  * Similar to how data was pass to a view in V1 with `$stateParams`, NavParams offer a much more flexible
@@ -37,7 +36,7 @@ export class NavParams {
    * }
    * ```
    *
-   * @param {string} param Which param you want to look up
+   * @param param Which param you want to look up
    */
   get(param: string): any {
     return this.data[param];

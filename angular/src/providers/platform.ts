@@ -43,18 +43,18 @@ export class Platform {
     proxyEvent(this.resize, document, 'resize');
 
     let readyResolve: (value: string) => void;
-    this._readyPromise = new Promise(res => { readyResolve = res; } );
+    this._readyPromise = new Promise(res => { readyResolve = res; });
     if ((window as any)['cordova']) {
       document.addEventListener('deviceready', () => {
         readyResolve('cordova');
-      }, {once: true});
+      }, { once: true });
     } else {
       readyResolve!('dom');
     }
   }
 
   /**
-   * @returns {boolean} returns true/false based on platform.
+   * @returns returns true/false based on platform.
    * @description
    * Depending on the platform the user is on, `is(platformName)` will
    * return `true` or `false`. Note that the same app can return `true`
@@ -93,15 +93,14 @@ export class Platform {
    * | windows         | on a device running Windows.       |
    * | electron        | in Electron on a desktop device.   |
    *
-   * @param {string} platformName
    */
   is(platformName: string): boolean {
     return this._platforms.some(p => p.name === platformName);
   }
 
   /**
-   * @param {Window} win the window object
-   * @param {PlatformConfig[]} platforms an array of platforms (platform configs)
+   * @param win the window object
+   * @param platforms an array of platforms (platform configs)
    * to get the appropriate platforms according to the configs provided.
    * @description
    * Detects the platforms using window and the platforms config provided.
@@ -112,7 +111,7 @@ export class Platform {
   }
 
   /**
-   * @returns {array} the array of platforms
+   * @returns the array of platforms
    * @description
    * Depending on what device you are on, `platforms` can return multiple values.
    * Each possible value is a hierarchy of platforms. For example, on an iPhone,
@@ -150,7 +149,7 @@ export class Platform {
    * }
    * ```
    *
-   * @returns {object} An object containing all of the platforms and their versions.
+   * @returns An object containing all of the platforms and their versions.
    */
   versions(): PlatformConfig[] {
     return this._platforms.slice();

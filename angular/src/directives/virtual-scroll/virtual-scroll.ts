@@ -41,15 +41,15 @@ export class VirtualScroll {
     ]);
   }
 
-  private nodeRender(el: HTMLElement|null, cell: any, index: number) {
+  private nodeRender(el: HTMLElement | null, cell: any, index: number) {
     if (!el) {
-      const node = this.itmTmp.viewContainer.createEmbeddedView(
+      const view = this.itmTmp.viewContainer.createEmbeddedView(
         this.getComponent(cell.type),
         { $implicit: null, index },
         index
       );
-      el = getElement(node);
-      (el as any)['$ionView'] = node;
+      el = getElement(view);
+      (el as any)['$ionView'] = view;
     }
     const node = (el as any)['$ionView'];
     const ctx = node.context as VirtualContext;

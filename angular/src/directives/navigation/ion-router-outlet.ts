@@ -10,9 +10,9 @@ import { bindLifecycleEvents } from '../../providers/angular-delegate';
 })
 export class IonRouterOutlet implements OnDestroy, OnInit {
 
-  private activated: ComponentRef<any>|null = null;
+  private activated: ComponentRef<any> | null = null;
 
-  private _activatedRoute: ActivatedRoute|null = null;
+  private _activatedRoute: ActivatedRoute | null = null;
   private name: string;
   private stackCtrl: StackController;
 
@@ -64,7 +64,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 
   get isActivated(): boolean { return !!this.activated; }
 
-  get component(): Object {
+  get component(): object {
     if (!this.activated) {
       throw new Error('Outlet is not activated');
     }
@@ -78,7 +78,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     return this._activatedRoute as ActivatedRoute;
   }
 
-  get activatedRouteData() {
+  get activatedRouteData(): any {
     if (this._activatedRoute) {
       return this._activatedRoute.snapshot.data;
     }
@@ -117,7 +117,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
     }
   }
 
-  async activateWith(activatedRoute: ActivatedRoute, resolver: ComponentFactoryResolver|null) {
+  async activateWith(activatedRoute: ActivatedRoute, resolver: ComponentFactoryResolver | null) {
     if (this.isActivated) {
       throw new Error('Cannot activate an already activated outlet');
     }
@@ -128,7 +128,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       this.activated = enteringView.ref;
     } else {
       const snapshot = (activatedRoute as any)._futureSnapshot;
-      const component = <any>snapshot.routeConfig !.component;
+      const component = snapshot.routeConfig!.component as any;
       resolver = resolver || this.resolver;
 
       const factory = resolver.resolveComponentFactory(component);
@@ -145,7 +145,7 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
       enteringView = this.stackCtrl.createView(this.activated, activatedRoute);
     }
 
-    const {direction, animated} = this.navCtrl.consumeTransition();
+    const { direction, animated } = this.navCtrl.consumeTransition();
     await this.stackCtrl.setActive(enteringView, direction, animated);
     this.activateEvents.emit(this.activated.instance);
 
@@ -185,6 +185,7 @@ class OutletInjector implements Injector {
       return this.childContexts;
     }
 
+    // tslint:disable-next-line
     return this.parent.get(token, notFoundValue);
   }
 }
