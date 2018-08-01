@@ -85,10 +85,10 @@ export class PointerEvents {
       return;
     }
     if (!this.rmMouseMove && this.pointerMove) {
-      this.rmMouseMove = addEventListener(this.el.ownerDocument, 'mousemove', this.pointerMove, this.options);
+      this.rmMouseMove = addEventListener(getDocument(this.el), 'mousemove', this.pointerMove, this.options);
     }
     if (!this.rmMouseUp) {
-      this.rmMouseUp = addEventListener(this.el.ownerDocument, 'mouseup', this.bindMouseUp, this.options);
+      this.rmMouseUp = addEventListener(getDocument(this.el), 'mouseup', this.bindMouseUp, this.options);
     }
   }
 
@@ -128,6 +128,10 @@ export class PointerEvents {
     }
     this.rmMouseMove = this.rmMouseUp = undefined;
   }
+}
+
+function getDocument(node: Node) {
+  return node instanceof Document ? node : node.ownerDocument;
 }
 
 export const POINTER_EVENT_TYPE_MOUSE = 1;
