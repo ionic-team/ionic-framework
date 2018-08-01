@@ -12,7 +12,7 @@ function buildIonicAngular() {
     const args = [
       'build',
       '--config',
-      path.join(__dirname, '..', 'stencil.config.js'),
+      path.join(__dirname, '..', 'stencil.config.ts'),
       ...process.argv.slice(2)
     ];
 
