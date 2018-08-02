@@ -58,7 +58,7 @@ export class ItemSliding {
 
     this.updateOptions();
 
-    this.gesture = (await import('../../utils/gesture/gesture')).create({
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
       el: this.el,
       queue: this.queue,
       gestureName: 'item-swipe',
@@ -69,7 +69,7 @@ export class ItemSliding {
       onMove: this.onDragMove.bind(this),
       onEnd: this.onDragEnd.bind(this),
     });
-    this.gesture.disabled = false;
+    this.gesture.setDisabled(false);
   }
 
   componentDidUnload() {

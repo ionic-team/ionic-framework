@@ -41,7 +41,7 @@ export class Nav implements NavOutlet {
   @Watch('swipeBackEnabled')
   swipeBackEnabledChanged() {
     if (this.gesture) {
-      this.gesture.disabled = !this.swipeBackEnabled;
+      this.gesture.setDisabled(!this.swipeBackEnabled);
     }
   }
 
@@ -110,7 +110,7 @@ export class Nav implements NavOutlet {
   async componentDidLoad() {
     this.rootChanged();
 
-    this.gesture = (await import('../../utils/gesture/gesture')).create({
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
       el: this.win.document.body,
       queue: this.queue,
       gestureName: 'goback-swipe',

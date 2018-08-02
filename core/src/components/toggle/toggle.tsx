@@ -94,7 +94,7 @@ export class Toggle implements CheckboxInput {
       'interactive-disabled': this.disabled,
     });
     if (this.gesture) {
-      this.gesture.disabled = this.disabled;
+      this.gesture.setDisabled(this.disabled);
     }
   }
 
@@ -112,7 +112,7 @@ export class Toggle implements CheckboxInput {
       }
     }
 
-    this.gesture = (await import('../../utils/gesture/gesture')).create({
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
       el: this.el,
       queue: this.queue,
       gestureName: 'toggle',

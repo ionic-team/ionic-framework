@@ -67,7 +67,7 @@ export class Refresher {
   @Watch('disabled')
   disabledChanged() {
     if (this.gesture) {
-      this.gesture.disabled = this.disabled;
+      this.gesture.setDisabled(this.disabled);
     }
   }
 
@@ -102,7 +102,7 @@ export class Refresher {
       console.error('ion-refresher did not attach, make sure the parent is an ion-content.');
     }
 
-    this.gesture = (await import('../../utils/gesture/gesture')).create({
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
       el: this.el.closest('ion-content') as any,
       queue: this.queue,
       gestureName: 'refresher',

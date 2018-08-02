@@ -98,7 +98,7 @@ export class Range implements BaseInput {
   @Watch('disabled')
   protected disabledChanged() {
     if (this.gesture) {
-      this.gesture.disabled = this.disabled;
+      this.gesture.setDisabled(this.disabled);
     }
     this.emitStyle();
   }
@@ -145,7 +145,7 @@ export class Range implements BaseInput {
   }
 
   async componentDidLoad() {
-    this.gesture = (await import('../../utils/gesture/gesture')).create({
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
       el: this.rangeSlider!,
       queue: this.queue,
       gestureName: 'range',
@@ -155,7 +155,7 @@ export class Range implements BaseInput {
       onMove: this.onDragMove.bind(this),
       onEnd: this.onDragEnd.bind(this),
     });
-    this.gesture.disabled = this.disabled;
+    this.gesture.setDisabled(this.disabled);
   }
 
   @Listen('ionIncrease')

@@ -2,7 +2,7 @@ import { QueueApi } from '@stencil/core';
 
 import { PanRecognizer } from './recognizers';
 
-import { GestureDelegate, gestureController } from './gesture-controller';
+import { gestureController } from './gesture-controller';
 import { PointerEvents } from './pointer-events';
 
 export interface GestureDetail {
@@ -22,6 +22,11 @@ export interface GestureDetail {
 }
 
 export type GestureCallback = (detail?: GestureDetail) => boolean | void;
+
+export interface Gesture {
+  setDisabled(disabled: boolean): void;
+  destroy(): void;
+}
 
 export interface GestureConfig {
   el: Node;
@@ -43,100 +48,70 @@ export interface GestureConfig {
   notCaptured?: GestureCallback;
 }
 
-export function create(config: GestureConfig) {
-  return new Gesture(config);
-}
+export function createGesture(config: GestureConfig): Gesture {
+  const finalConfig = {
+    disableScroll: false,
+    direction: 'x',
+    gesturePriority: 0,
+    passive: true,
+    maxAngle: 40,
+    threshold: 10,
 
-export class Gesture {
+    ...config
+  };
 
-  private detail: GestureDetail;
-  private positions: number[] = [];
-  private gesture: GestureDelegate;
-  private pan: PanRecognizer;
-  private hasCapturedPan = false;
-  private hasStartedPan = false;
-  private hasFiredStart = true;
-  private isMoveQueued = false;
-  private pointerEvents: PointerEvents;
+  let hasCapturedPan = false;
+  let hasStartedPan = false;
+  let hasFiredStart = true;
+  let isMoveQueued = false;
 
-  private canStart?: GestureCallback;
-  private onWillStart?: (_: GestureDetail) => Promise<void>;
-  private onStart?: GestureCallback;
-  private onMove?: GestureCallback;
-  private onEnd?: GestureCallback;
-  private notCaptured?: GestureCallback;
-  private threshold: number;
-  private queue: QueueApi;
+  const canStart = finalConfig.canStart;
+  const onWillStart = finalConfig.onWillStart;
+  const onStart = finalConfig.onStart;
+  const onEnd = finalConfig.onEnd;
+  const notCaptured = finalConfig.notCaptured;
+  const onMove = finalConfig.onMove;
+  const threshold = finalConfig.threshold;
+  const queue = finalConfig.queue;
 
-  constructor(config: GestureConfig) {
-    const finalConfig = {
-      disableScroll: false,
-      direction: 'x',
-      gesturePriority: 0,
-      passive: true,
-      maxAngle: 40,
-      threshold: 10,
+  const detail = {
+    type: 'pan',
+    startX: 0,
+    startY: 0,
+    startTimeStamp: 0,
+    currentX: 0,
+    currentY: 0,
+    velocityX: 0,
+    velocityY: 0,
+    deltaX: 0,
+    deltaY: 0,
+    timeStamp: 0,
+    event: undefined as any,
+    data: undefined
+  };
 
-      ...config
-    };
+  const pointerEvents = new PointerEvents(
+    finalConfig.el,
+    pointerDown,
+    pointerMove,
+    pointerUp,
+    {
+      capture: false,
+    }
+  );
 
-    this.canStart = finalConfig.canStart;
-    this.onWillStart = finalConfig.onWillStart;
-    this.onStart = finalConfig.onStart;
-    this.onEnd = finalConfig.onEnd;
-    this.onMove = finalConfig.onMove;
-    this.threshold = finalConfig.threshold;
-    this.queue = finalConfig.queue;
+  const pan = new PanRecognizer(finalConfig.direction, finalConfig.threshold, finalConfig.maxAngle);
+  const gesture = gestureController.createGesture({
+    name: config.gestureName,
+    priority: config.gesturePriority,
+    disableScroll: config.disableScroll
+  });
 
-    this.detail = {
-      type: 'pan',
-      startX: 0,
-      startY: 0,
-      startTimeStamp: 0,
-      currentX: 0,
-      currentY: 0,
-      velocityX: 0,
-      velocityY: 0,
-      deltaX: 0,
-      deltaY: 0,
-      timeStamp: 0,
-      event: undefined as any,
-      data: undefined
-    };
-
-    this.pointerEvents = new PointerEvents(
-      finalConfig.el,
-      this.pointerDown.bind(this),
-      this.pointerMove.bind(this),
-      this.pointerUp.bind(this),
-      {
-        capture: false,
-      }
-    );
-
-    this.pan = new PanRecognizer(finalConfig.direction, finalConfig.threshold, finalConfig.maxAngle);
-    this.gesture = gestureController.createGesture({
-      name: config.gestureName,
-      priority: config.gesturePriority,
-      disableScroll: config.disableScroll
-    });
-  }
-
-  set disabled(disabled: boolean) {
-    this.pointerEvents.disabled = disabled;
-  }
-
-  destroy() {
-    this.gesture.destroy();
-    this.pointerEvents.destroy();
-  }
-
-  private pointerDown(ev: UIEvent): boolean {
+  function pointerDown(ev: UIEvent): boolean {
     const timeStamp = now(ev);
-    if (this.hasStartedPan || !this.hasFiredStart) {
+    if (hasStartedPan || !hasFiredStart) {
       return false;
     }
-    const detail = this.detail;
 
     updateDetail(ev, detail);
     detail.startX = detail.currentX;
@@ -144,109 +119,90 @@ export class Gesture {
     detail.startTimeStamp = detail.timeStamp = timeStamp;
     detail.velocityX = detail.velocityY = detail.deltaX = detail.deltaY = 0;
     detail.event = ev;
-    this.positions.length = 0;
 
     // Check if gesture can start
-    if (this.canStart && this.canStart(detail) === false) {
+    if (canStart && canStart(detail) === false) {
       return false;
     }
     // Release fallback
-    this.gesture.release();
+    gesture.release();
 
     // Start gesture
-    if (!this.gesture.start()) {
+    if (!gesture.start()) {
       return false;
     }
 
-    this.positions.push(detail.currentX, detail.currentY, timeStamp);
-    this.hasStartedPan = true;
-    if (this.threshold === 0) {
-      return this.tryToCapturePan();
+    hasStartedPan = true;
+    if (threshold === 0) {
+      return tryToCapturePan();
     }
-    this.pan.start(detail.startX, detail.startY);
+    pan.start(detail.startX, detail.startY);
     return true;
   }
 
-  private pointerMove(ev: UIEvent) {
+  function pointerMove(ev: UIEvent) {
     // fast path, if gesture is currently captured
     // do minimun job to get user-land even dispatched
-    if (this.hasCapturedPan) {
-      if (!this.isMoveQueued && this.hasFiredStart) {
-        this.isMoveQueued = true;
-        this.calcGestureData(ev);
-        this.queue.write(this.fireOnMove.bind(this));
+    if (hasCapturedPan) {
+      if (!isMoveQueued && hasFiredStart) {
+        isMoveQueued = true;
+        calcGestureData(ev);
+        queue.write(fireOnMove);
       }
       return;
     }
 
     // gesture is currently being detected
-    const detail = this.detail;
-    this.calcGestureData(ev);
-    if (this.pan.detect(detail.currentX, detail.currentY)) {
-      if (this.pan.isGesture()) {
-        if (!this.tryToCapturePan()) {
-          this.abortGesture();
+    calcGestureData(ev);
+    if (pan.detect(detail.currentX, detail.currentY)) {
+      if (pan.isGesture()) {
+        if (!tryToCapturePan()) {
+          abortGesture();
         }
       }
     }
   }
 
-  private fireOnMove() {
+  function fireOnMove() {
     // Since fireOnMove is called inside a RAF, onEnd() might be called,
     // we must double check hasCapturedPan
-    if (!this.hasCapturedPan) {
+    if (!hasCapturedPan) {
       return;
     }
-    const detail = this.detail;
-    this.isMoveQueued = false;
-    if (this.onMove) {
-      this.onMove(detail);
+    isMoveQueued = false;
+    if (onMove) {
+      onMove(detail);
     }
   }
 
-  private calcGestureData(ev: UIEvent) {
-    const detail = this.detail;
+  function calcGestureData(ev: UIEvent) {
+    const prevX = detail.currentX;
+    const prevY = detail.currentY;
+    const prevT = detail.timeStamp;
+
     updateDetail(ev, detail);
 
     const currentX = detail.currentX;
     const currentY = detail.currentY;
     const timestamp = detail.timeStamp = now(ev);
+    const timeDelta = timestamp - prevT;
+    if (timeDelta > 0 && timeDelta < 100) {
+      const velocityX = (currentX - prevX) / timeDelta;
+      const velocityY = (currentY - prevY) / timeDelta;
+      detail.velocityX = velocityX * 0.7 + detail.velocityX * 0.3;
+      detail.velocityY = velocityY * 0.7 + detail.velocityY * 0.3;
+    }
     detail.deltaX = currentX - detail.startX;
     detail.deltaY = currentY - detail.startY;
     detail.event = ev;
-
-    const timeRange = timestamp - 100;
-    const positions = this.positions;
-    let startPos = positions.length - 1;
-
-    // move pointer to position measured 100ms ago
-    while (startPos > 0 && positions[startPos] > timeRange) {
-      startPos -= 3;
-    }
-
-    if (startPos > 1) {
-      // compute relative movement between these two points
-      const frequency = 1 / (positions[startPos] - timestamp);
-      const movedY = positions[startPos - 1] - currentY;
-      const movedX = positions[startPos - 2] - currentX;
-
-      // based on XXms compute the movement to apply for each render step
-      // velocity = space/time = s*(1/t) = s*frequency
-      detail.velocityX = movedX * frequency;
-      detail.velocityY = movedY * frequency;
-    } else {
-      detail.velocityX = 0;
-      detail.velocityY = 0;
-    }
-    positions.push(currentX, currentY, timestamp);
   }
 
-  private tryToCapturePan(): boolean {
-    if (this.gesture && !this.gesture.capture()) {
+  function tryToCapturePan(): boolean {
+    if (gesture && !gesture.capture()) {
       return false;
     }
-    this.hasCapturedPan = true;
-    this.hasFiredStart = false;
+    hasCapturedPan = true;
+    hasFiredStart = false;
 
     // reset start position since the real user-land event starts here
     // If the pan detector threshold is big, not reseting the start position
@@ -254,71 +210,77 @@ export class Gesture {
     // the array of positions used to calculate the gesture velocity does not
     // need to be cleaned, more points in the positions array always results in a
     // more acurate value of the velocity.
-    const detail = this.detail;
     detail.startX = detail.currentX;
     detail.startY = detail.currentY;
     detail.startTimeStamp = detail.timeStamp;
 
-    if (this.onWillStart) {
-      this.onWillStart(this.detail).then(this.fireOnStart.bind(this));
+    if (onWillStart) {
+      onWillStart(detail).then(fireOnStart);
     } else {
-      this.fireOnStart();
+      fireOnStart();
     }
     return true;
   }
 
-  private fireOnStart() {
-    if (this.onStart) {
-      this.onStart(this.detail);
+  function fireOnStart() {
+    if (onStart) {
+      onStart(detail);
     }
-    this.hasFiredStart = true;
+    hasFiredStart = true;
   }
 
-  private abortGesture() {
-    this.reset();
-    this.pointerEvents.stop();
-    if (this.notCaptured) {
-      this.notCaptured(this.detail);
+  function abortGesture() {
+    reset();
+    pointerEvents.stop();
+    if (notCaptured) {
+      notCaptured(detail);
     }
   }
 
-  private reset() {
-    this.hasCapturedPan = false;
-    this.hasStartedPan = false;
-    this.isMoveQueued = false;
-    this.hasFiredStart = true;
-    if (this.gesture) {
-      this.gesture.release();
-    }
+  function reset() {
+    hasCapturedPan = false;
+    hasStartedPan = false;
+    isMoveQueued = false;
+    hasFiredStart = true;
+
+    gesture.release();
   }
 
   // END *************************
 
-  private pointerUp(ev: UIEvent) {
-    const hasCaptured = this.hasCapturedPan;
-    const hasFiredStart = this.hasFiredStart;
-    this.reset();
+  function pointerUp(ev: UIEvent) {
+    const tmpHasCaptured = hasCapturedPan;
+    const tmpHasFiredStart = hasFiredStart;
+    reset();
 
-    if (!hasFiredStart) {
+    if (!tmpHasFiredStart) {
       return;
     }
-    this.calcGestureData(ev);
-
-    const detail = this.detail;
+    calcGestureData(ev);
 
     // Try to capture press
-    if (hasCaptured) {
-      if (this.onEnd) {
-        this.onEnd(detail);
+    if (tmpHasCaptured) {
+      if (onEnd) {
+        onEnd(detail);
       }
       return;
     }
 
     // Not captured any event
-    if (this.notCaptured) {
-      this.notCaptured(detail);
+    if (notCaptured) {
+      notCaptured(detail);
     }
   }
+
+  return {
+    setDisabled(disabled: boolean) {
+      pointerEvents.disabled = disabled;
+    },
+    destroy() {
+      gesture.destroy();
+      pointerEvents.destroy();
+    }
+  };
 }
 
 function updateDetail(ev: any, detail: GestureDetail) {

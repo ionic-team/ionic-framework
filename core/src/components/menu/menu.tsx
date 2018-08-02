@@ -175,7 +175,7 @@ export class Menu {
     this.menuCtrl!._register(this);
     this.ionMenuChange.emit({ disabled: !isEnabled, open: this._isOpen });
 
-    this.gesture = (await import('../../utils/gesture/gesture')).create({
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
       el: this.doc,
       queue: this.queue,
       gestureName: 'menu-swipe',
@@ -439,7 +439,7 @@ export class Menu {
   private updateState() {
     const isActive = this.isActive();
     if (this.gesture) {
-      this.gesture.disabled = !isActive || !this.swipeEnabled;
+      this.gesture.setDisabled(!isActive || !this.swipeEnabled);
     }
 
     // Close menu inmediately

@@ -40,7 +40,7 @@ export class ReorderGroup {
   @Watch('disabled')
   disabledChanged() {
     if (this.gesture) {
-      this.gesture.disabled = this.disabled;
+      this.gesture.setDisabled(this.disabled);
     }
   }
 
@@ -51,7 +51,7 @@ export class ReorderGroup {
       this.scrollEl = contentEl.getScrollElement();
     }
 
-    this.gesture = (await import('../../utils/gesture/gesture')).create({
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
       el: this.doc.body,
       queue: this.queue,
       gestureName: 'reorder',
