@@ -8,13 +8,12 @@
   --ion-color-base: #{$toolbar-md-background-color};
   --ion-color-contrast: #{$toolbar-md-text-color};
   --border-color: #{$toolbar-md-border-color};
+  --font-family: #{$toolbar-md-font-family};
   --padding-top: #{$toolbar-md-padding};
   --padding-bottom: #{$toolbar-md-padding};
   --padding-start: #{$toolbar-md-padding};
   --padding-end: #{$toolbar-md-padding};
   --min-height: #{$toolbar-md-height};
-
-  font-family: #{$toolbar-md-font-family};
 }
 
 
