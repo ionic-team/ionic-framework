@@ -4,6 +4,9 @@
 // --------------------------------------------------
 
 :host {
+  --width: #{$menu-width};
+  --small-width: #{$menu-small-width};
+
   @include position(0, 0, 0, 0);
 
   display: none;
@@ -27,7 +30,7 @@
   flex-direction: column;
   justify-content: space-between;
 
-  width: $menu-width;
+  width: var(--width);
   height: 100%;
 
   contain: strict;
@@ -78,7 +81,7 @@ ion-backdrop {
 @media (max-width: 340px) {
 
   .menu-inner {
-    width: $menu-small-width;
+    width: var(--small-width);
   }
 
 }
