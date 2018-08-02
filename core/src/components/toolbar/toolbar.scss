@@ -9,6 +9,7 @@
    * @prop --border-color: Color of the toolbar border
    * @prop --border-style: Style of the toolbar border
    * @prop --border-width: Width of the toolbar border
+   * @prop --color: Color of the toolbar text
    * @prop --font-family: Font family of the toolbar
    * @prop --min-height: Minimum height of the toolbar
    * @prop --opacity: Opacity of the toolbar background
@@ -38,11 +39,8 @@
 }
 
 :host(.ion-color) {
-  color: current-color(contrast);
-}
-
-:host(.ion-color) .toolbar-background {
-  background: current-color(base);
+  --background: #{current-color(base)};
+  --color: #{current-color(contrast)};
 }
 
 .toolbar-container {
