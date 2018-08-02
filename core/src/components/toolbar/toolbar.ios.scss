@@ -5,8 +5,8 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{$toolbar-ios-background-color};
-  --ion-color-contrast: #{$toolbar-ios-text-color};
+  --background: #{$toolbar-ios-background-color};
+  --color: #{$toolbar-ios-text-color};
   --border-color: #{$toolbar-ios-border-color};
   --font-family: #{$toolbar-ios-font-family};
   --padding-top: #{$toolbar-ios-padding};

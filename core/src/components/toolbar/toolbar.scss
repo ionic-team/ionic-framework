@@ -9,6 +9,7 @@
    * @prop --border-color: Color of the toolbar border
    * @prop --border-style: Style of the toolbar border
    * @prop --border-width: Width of the toolbar border
+   * @prop --color: Color of the toolbar text
    * @prop --font-family: Font family of the toolbar
    * @prop --min-height: Minimum height of the toolbar
    * @prop --opacity: Opacity of the toolbar background
@@ -19,7 +20,6 @@
    */
   --border-width: 0;
   --border-style: solid;
-  --background: #{current-color(base)};
   --opacity: 1;
 
   @include font-smoothing();
@@ -28,7 +28,7 @@
 
   width: 100%;
 
-  color: #{current-color(contrast)};
+  color: var(--color);
 
   font-family: var(--font-family);
 
@@ -36,6 +36,11 @@
 
   z-index: $z-index-toolbar;
   box-sizing: border-box;
+}
+
+:host(.ion-color) {
+  --background: #{current-color(base)};
+  --color: #{current-color(contrast)};
 }
 
 .toolbar-container {
