@@ -21,7 +21,7 @@ ion-header ion-toolbar:first-child {
 
 @supports (padding-top: env(safe-area-inset-top)) {
   ion-header ion-toolbar:first-child {
-    /* stylelint-disable-next-line property-blacklist */
-    padding-top: calc(env(safe-area-inset-top) + var(--ion-statusbar-padding));
+    /* stylelint-disable-next-line property-blacklist, length-zero-no-unit */
+    padding-top: calc(env(safe-area-inset-top) + var(--ion-statusbar-padding, 0px));
   }
 }
