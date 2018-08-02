@@ -1,52 +1,8 @@
 import { QueueApi } from '@stencil/core';
 
-import { PanRecognizer } from './recognizers';
-
 import { gestureController } from './gesture-controller';
-import { PointerEvents } from './pointer-events';
-
-export interface GestureDetail {
-  type: string;
-  startX: number;
-  startY: number;
-  startTimeStamp: number;
-  currentX: number;
-  currentY: number;
-  velocityX: number;
-  velocityY: number;
-  deltaX: number;
-  deltaY: number;
-  timeStamp: number;
-  event: UIEvent;
-  data?: any;
-}
-
-export type GestureCallback = (detail?: GestureDetail) => boolean | void;
-
-export interface Gesture {
-  setDisabled(disabled: boolean): void;
-  destroy(): void;
-}
-
-export interface GestureConfig {
-  el: Node;
-  disableScroll?: boolean;
-
-  queue: QueueApi;
-  direction?: 'x' | 'y';
-  gestureName: string;
-  gesturePriority?: number;
-  passive?: boolean;
-  maxAngle?: number;
-  threshold?: number;
-
-  canStart?: GestureCallback;
-  onWillStart?: (_: GestureDetail) => Promise<void>;
-  onStart?: GestureCallback;
-  onMove?: GestureCallback;
-  onEnd?: GestureCallback;
-  notCaptured?: GestureCallback;
-}
+import { createPointerEvents } from './pointer-events';
+import { createPanRecognizer } from './recognizers';
 
 export function createGesture(config: GestureConfig): Gesture {
   const finalConfig = {
@@ -59,11 +15,6 @@ export function createGesture(config: GestureConfig): Gesture {
 
     ...config
   };
-
-  let hasCapturedPan = false;
-  let hasStartedPan = false;
-  let hasFiredStart = true;
-  let isMoveQueued = false;
 
   const canStart = finalConfig.canStart;
   const onWillStart = finalConfig.onWillStart;
@@ -90,7 +41,7 @@ export function createGesture(config: GestureConfig): Gesture {
     data: undefined
   };
 
-  const pointerEvents = new PointerEvents(
+  const pointerEvents = createPointerEvents(
     finalConfig.el,
     pointerDown,
     pointerMove,
@@ -100,12 +51,17 @@ export function createGesture(config: GestureConfig): Gesture {
     }
   );
 
-  const pan = new PanRecognizer(finalConfig.direction, finalConfig.threshold, finalConfig.maxAngle);
+  const pan = createPanRecognizer(finalConfig.direction, finalConfig.threshold, finalConfig.maxAngle);
   const gesture = gestureController.createGesture({
     name: config.gestureName,
     priority: config.gesturePriority,
     disableScroll: config.disableScroll
   });
+
+  let hasCapturedPan = false;
+  let hasStartedPan = false;
+  let hasFiredStart = true;
+  let isMoveQueued = false;
 
   function pointerDown(ev: UIEvent): boolean {
     const timeStamp = now(ev);
@@ -146,14 +102,14 @@ export function createGesture(config: GestureConfig): Gesture {
     if (hasCapturedPan) {
       if (!isMoveQueued && hasFiredStart) {
         isMoveQueued = true;
-        calcGestureData(ev);
+        calcGestureData(detail, ev);
         queue.write(fireOnMove);
       }
       return;
     }
 
     // gesture is currently being detected
-    calcGestureData(ev);
+    calcGestureData(detail, ev);
     if (pan.detect(detail.currentX, detail.currentY)) {
       if (pan.isGesture()) {
         if (!tryToCapturePan()) {
@@ -173,28 +129,6 @@ export function createGesture(config: GestureConfig): Gesture {
     if (onMove) {
       onMove(detail);
     }
-  }
-
-  function calcGestureData(ev: UIEvent) {
-    const prevX = detail.currentX;
-    const prevY = detail.currentY;
-    const prevT = detail.timeStamp;
-
-    updateDetail(ev, detail);
-
-    const currentX = detail.currentX;
-    const currentY = detail.currentY;
-    const timestamp = detail.timeStamp = now(ev);
-    const timeDelta = timestamp - prevT;
-    if (timeDelta > 0 && timeDelta < 100) {
-      const velocityX = (currentX - prevX) / timeDelta;
-      const velocityY = (currentY - prevY) / timeDelta;
-      detail.velocityX = velocityX * 0.7 + detail.velocityX * 0.3;
-      detail.velocityY = velocityY * 0.7 + detail.velocityY * 0.3;
-    }
-    detail.deltaX = currentX - detail.startX;
-    detail.deltaY = currentY - detail.startY;
-    detail.event = ev;
   }
 
   function tryToCapturePan(): boolean {
@@ -256,7 +190,7 @@ export function createGesture(config: GestureConfig): Gesture {
     if (!tmpHasFiredStart) {
       return;
     }
-    calcGestureData(ev);
+    calcGestureData(detail, ev);
 
     // Try to capture press
     if (tmpHasCaptured) {
@@ -274,13 +208,35 @@ export function createGesture(config: GestureConfig): Gesture {
 
   return {
     setDisabled(disabled: boolean) {
-      pointerEvents.disabled = disabled;
+      pointerEvents.setDisabled(disabled);
     },
     destroy() {
       gesture.destroy();
       pointerEvents.destroy();
     }
   };
+}
+
+function calcGestureData(detail: GestureDetail, ev: UIEvent) {
+  const prevX = detail.currentX;
+  const prevY = detail.currentY;
+  const prevT = detail.timeStamp;
+
+  updateDetail(ev, detail);
+
+  const currentX = detail.currentX;
+  const currentY = detail.currentY;
+  const timestamp = detail.timeStamp = now(ev);
+  const timeDelta = timestamp - prevT;
+  if (timeDelta > 0 && timeDelta < 100) {
+    const velocityX = (currentX - prevX) / timeDelta;
+    const velocityY = (currentY - prevY) / timeDelta;
+    detail.velocityX = velocityX * 0.7 + detail.velocityX * 0.3;
+    detail.velocityY = velocityY * 0.7 + detail.velocityY * 0.3;
+  }
+  detail.deltaX = currentX - detail.startX;
+  detail.deltaY = currentY - detail.startY;
+  detail.event = ev;
 }
 
 function updateDetail(ev: any, detail: GestureDetail) {
@@ -305,4 +261,47 @@ function updateDetail(ev: any, detail: GestureDetail) {
 
 function now(ev: UIEvent) {
   return ev.timeStamp || Date.now();
+}
+
+export interface GestureDetail {
+  type: string;
+  startX: number;
+  startY: number;
+  startTimeStamp: number;
+  currentX: number;
+  currentY: number;
+  velocityX: number;
+  velocityY: number;
+  deltaX: number;
+  deltaY: number;
+  timeStamp: number;
+  event: UIEvent;
+  data?: any;
+}
+
+export type GestureCallback = (detail?: GestureDetail) => boolean | void;
+
+export interface Gesture {
+  setDisabled(disabled: boolean): void;
+  destroy(): void;
+}
+
+export interface GestureConfig {
+  el: Node;
+  disableScroll?: boolean;
+
+  queue: QueueApi;
+  direction?: 'x' | 'y';
+  gestureName: string;
+  gesturePriority?: number;
+  passive?: boolean;
+  maxAngle?: number;
+  threshold?: number;
+
+  canStart?: GestureCallback;
+  onWillStart?: (_: GestureDetail) => Promise<void>;
+  onStart?: GestureCallback;
+  onMove?: GestureCallback;
+  onEnd?: GestureCallback;
+  notCaptured?: GestureCallback;
 }

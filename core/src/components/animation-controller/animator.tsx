@@ -339,10 +339,8 @@ export class Animator {
    * Play the animation.
    */
   play(opts?: PlayOptions) {
-    const self = this;
-
     // If the animation was already invalidated (it did finish), do nothing
-    if (self._destroyed) {
+    if (this._destroyed) {
       return;
     }
 
@@ -352,14 +350,14 @@ export class Animator {
     // if there is a duration, then it'll stage all animations at the
     // FROM property and transition duration, wait a few frames, then
     // kick off the animation by setting the TO property for each animation
-    self._isAsync = self._hasDuration(opts);
+    this._isAsync = this._hasDuration(opts);
 
     // ensure all past transition end events have been cleared
-    self._clearAsync();
+    this._clearAsync();
 
     // recursively kicks off the correct progress step for each child animation
     // ******** DOM WRITE ****************
-    self._playInit(opts);
+    this._playInit(opts);
 
     // doubling up RAFs since this animation was probably triggered
     // from an input event, and just having one RAF would have this code
@@ -367,7 +365,7 @@ export class Animator {
     // input event probably already did way too much work for one frame
     raf(() => {
       raf(() => {
-        self._playDomInspect(opts);
+        this._playDomInspect(opts);
       });
     });
   }
@@ -430,30 +428,29 @@ export class Animator {
    * ROOT ANIMATION
    */
   _playDomInspect(opts: PlayOptions | undefined) {
-    const self = this;
     // fire off all the "before" function that have DOM READS in them
     // elements will be in the DOM, however visibily hidden
     // so we can read their dimensions if need be
     // ******** DOM READ ****************
     // ******** DOM WRITE ****************
-    self._beforeAnimation();
+    this._beforeAnimation();
 
     // for the root animation only
     // set the async TRANSITION END event
     // and run onFinishes when the transition ends
-    const dur = self.getDuration(opts);
-    if (self._isAsync) {
-      self._asyncEnd(dur, true);
+    const dur = this.getDuration(opts);
+    if (this._isAsync) {
+      this._asyncEnd(dur, true);
     }
 
     // ******** DOM WRITE ****************
-    self._playProgress(opts);
+    this._playProgress(opts);
 
-    if (self._isAsync && !this._destroyed) {
+    if (this._isAsync && !this._destroyed) {
       // this animation has a duration so we need another RAF
       // for the CSS TRANSITION properties to kick in
       raf(() => {
-        self._playToStep(1);
+        this._playToStep(1);
       });
     }
   }
@@ -721,7 +718,7 @@ export class Animator {
           } else {
             for (j = 0; j < elements.length; j++) {
               // ******** DOM WRITE ****************
-              (elements[j].style as any)[prop] = val;
+              elements[j].style.setProperty(prop, val);
             }
           }
         }
@@ -759,7 +756,6 @@ export class Animator {
     for (const { style } of elements) {
       if (dur > 0) {
         // ******** DOM WRITE ****************
-        style.transform = '';
         style.transitionDuration = durString;
 
         // each animation can have a different easing
@@ -768,7 +764,7 @@ export class Animator {
           style.transitionTimingFunction = easing;
         }
       } else {
-        style.transform = 'none';
+        style.transitionDuration = '0';
       }
     }
   }

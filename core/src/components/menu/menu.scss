@@ -68,10 +68,7 @@ ion-backdrop {
   touch-action: manipulation;
 }
 
-.menu-content-open ion-pane,
-.menu-content-open .ion-pane,
-.menu-content-open ion-content,
-.menu-content-open .toolbar {
+.menu-content-open {
   // the containing element itself should be clickable but
   // everything inside of it should not clickable when menu is open
   pointer-events: none;
