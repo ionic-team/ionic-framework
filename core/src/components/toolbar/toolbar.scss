@@ -9,6 +9,7 @@
    * @prop --border-color: Color of the toolbar border
    * @prop --border-style: Style of the toolbar border
    * @prop --border-width: Width of the toolbar border
+   * @prop --font-family: Font family of the toolbar
    * @prop --min-height: Minimum height of the toolbar
    * @prop --opacity: Opacity of the toolbar background
    * @prop --padding-bottom: Bottom padding of the toolbar
@@ -27,6 +28,8 @@
   width: 100%;
 
   color: var(--color);
+
+  font-family: var(--font-family);
 
   contain: content;
 
