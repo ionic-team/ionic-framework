@@ -4,6 +4,18 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --background: Background of the toolbar
+   * @prop --border-color: Color of the toolbar border
+   * @prop --border-style: Style of the toolbar border
+   * @prop --border-width: Width of the toolbar border
+   * @prop --min-height: Minimum height of the toolbar
+   * @prop --opacity: Opacity of the toolbar background
+   * @prop --padding-bottom: Bottom padding of the toolbar
+   * @prop --padding-end: End padding of the toolbar
+   * @prop --padding-start: Start padding of the toolbar
+   * @prop --padding-top: Top padding of the toolbar
+   */
   --border-width: 0;
   --border-style: solid;
   --background: #{current-color(base)};
