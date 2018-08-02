@@ -5,7 +5,7 @@
 
 :host {
   --width: #{$menu-width};
-  --small-width: #{$menu-small-width};
+  --width-small: #{$menu-small-width};
 
   @include position(0, 0, 0, 0);
 
@@ -81,7 +81,7 @@ ion-backdrop {
 @media (max-width: 340px) {
 
   .menu-inner {
-    width: var(--small-width);
+    width: var(--width-small);
   }
 
 }
