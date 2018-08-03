@@ -5,8 +5,8 @@
 // -----------------------------------------
 
 :host {
-  --checked-background: #{ion-color(primary, base, $toggle-md-track-background-color-alpha-on)};
-  --checked-knob: #{ion-color(primary, base)};
+  --background-on: #{ion-color(primary, base, $toggle-md-track-background-color-alpha-on)};
+  --handle-background-on: #{ion-color(primary, base)};
 
   @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
 
@@ -20,13 +20,11 @@
   contain: strict;
 }
 
-:host(.ion-color.toggle-checked) .toggle-icon {
-  background: current-color(base, $toggle-md-track-background-color-alpha-on);
+:host(.ion-color) {
+  --background-on: #{current-color(base, $toggle-md-track-background-color-alpha-on)};
+  --handle-background-on: #{current-color(base)};
 }
 
-:host(.ion-color.toggle-checked) .toggle-inner {
-  background: current-color(base);
-}
 
 // Material Design Toggle Background Track: Unchecked
 // -----------------------------------------
@@ -74,7 +72,7 @@
 // -----------------------------------------
 
 :host(.toggle-checked) .toggle-icon {
-  background: var(--background-checked);
+  background-color: var(--background-on);
 }
 
 // Material Design Toggle Inner Knob: Checked
@@ -83,7 +81,7 @@
 :host(.toggle-checked) .toggle-inner {
   @include transform(translate3d($toggle-md-track-width - $toggle-md-handle-width, 0, 0));
 
-  background: var(--handle-background-checked);
+  background: var(--handle-background-on);
 }
 
 
@@ -97,11 +95,7 @@
 
 
 // TODO: move to item
-// .item-md.item-toggle-disabled ion-label {
 //   opacity: $toggle-md-disabled-opacity;
-
-//   pointer-events: none;
-// }
 
 // .toggle-md.toggle-disabled ion-radio {
 //   opacity: $toggle-md-disabled-opacity;

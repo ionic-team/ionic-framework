@@ -5,8 +5,8 @@
 // -----------------------------------------
 
 :host {
-  --checked-background: #{ion-color(primary, base)};
-  --checked-knob: #{ion-color(primary, base)};
+  --background-on: #{ion-color(primary, base)};
+  --handle-background-on: #{$toggle-ios-handle-background-color};
 
   box-sizing: content-box;
 
@@ -18,12 +18,8 @@
   contain: strict;
 }
 
-:host(.ion-color.toggle-checked) .toggle-icon {
-  background: current-color(base);
-}
-
-:host(.ion-color.toggle-checked) .toggle-inner {
-  background: current-color(contrast);
+:host(.ion-color) {
+  --background-on: #{current-color(base)};
 }
 
 // iOS Toggle Background Track: Unchecked
@@ -92,7 +88,7 @@
 // -----------------------------------------
 
 :host(.toggle-checked) .toggle-icon {
-  background: var(--background-checked);
+  background: var(--background-on);
 }
 
 
@@ -111,7 +107,7 @@
 :host(.toggle-checked) .toggle-inner {
   @include transform(translate3d($toggle-ios-width - $toggle-ios-handle-width - ($toggle-ios-border-width * 2), 0, 0));
 
-  background: var(--handle-background-checked);
+  background: var(--handle-background-on);
 }
 
 
