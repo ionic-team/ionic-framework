@@ -4,6 +4,11 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --background-on: Background of the toggle while on
+   * @prop --handle-background-on: Background of the toggle handle while on
+   */
+
   // TODO can we remove important here
   /* stylelint-disable-next-line declaration-no-important */
   box-sizing: content-box !important;
