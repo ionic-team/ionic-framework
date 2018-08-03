@@ -362,7 +362,7 @@ export class Input implements InputComponent {
         onKeyDown={this.onKeydown.bind(this)}
       />,
       <slot></slot>,
-      this.clearInput && <button
+      (this.clearInput && !this.readonly && !this.disabled) && <button
         type="button"
         class="input-clear-icon"
         onClick={this.clearTextInput.bind(this)}
