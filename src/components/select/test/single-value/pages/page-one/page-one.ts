@@ -61,6 +61,7 @@ export class PageOne {
   fruitsForm = new FormGroup({
     'fruit': this.fruitCtrl
   });
+  booleanValue: boolean = true;
 
   constructor() {
     this.currency = this.currencies[0];

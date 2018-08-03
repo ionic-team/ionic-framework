@@ -396,7 +396,10 @@ export class Select extends BaseInput<any> implements OnDestroy {
 
       (overlay as Alert).addButton({
         text: this.okText,
-        handler: (selectedValues: any) => this.value = selectedValues
+        handler: (selectedValues: any) => {
+          this.value = selectedValues;
+          return true;
+        }
       });
 
     }

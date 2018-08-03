@@ -172,4 +172,12 @@
     </ion-select>
   </ion-item>
 
+  <ion-item>
+    <ion-label>Boolean Values</ion-label>
+    <ion-select [(ngModel)]="booleanValue" class="e2eSelectBoolean">
+      <ion-option [value]="true">True</ion-option>
+      <ion-option [value]="false">False</ion-option>
+    </ion-select>
+  </ion-item>
+
 </ion-content>
