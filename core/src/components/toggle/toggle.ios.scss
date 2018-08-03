@@ -5,8 +5,8 @@
 // -----------------------------------------
 
 :host {
-  --checked-background: #{current-color(base)};
-  --checked-knob: #{current-color(base)};
+  --checked-background: #{ion-color(primary, base)};
+  --checked-knob: #{ion-color(primary, base)};
 
   box-sizing: content-box;
 
