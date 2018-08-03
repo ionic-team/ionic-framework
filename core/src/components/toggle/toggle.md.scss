@@ -5,8 +5,8 @@
 // -----------------------------------------
 
 :host {
-  --checked-background: #{ion-color(primary, base, $toggle-md-track-background-color-alpha-on)};
-  --checked-knob: #{ion-color(primary, base)};
+  --background-on: #{ion-color(primary, base, $toggle-md-track-background-color-alpha-on)};
+  --handle-background-on: #{ion-color(primary, base)};
 
   @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
 
@@ -18,6 +18,11 @@
   height: $toggle-md-track-height;
 
   contain: strict;
+}
+
+:host(.ion-color) {
+  --background-on: #{current-color(base, $toggle-md-track-background-color-alpha-on)};
+  --handle-background-on: #{current-color(base)};
 }
 
 
@@ -67,7 +72,7 @@
 // -----------------------------------------
 
 :host(.toggle-checked) .toggle-icon {
-  background-color: var(--checked-background);
+  background-color: var(--background-on);
 }
 
 // Material Design Toggle Inner Knob: Checked
@@ -76,7 +81,7 @@
 :host(.toggle-checked) .toggle-inner {
   @include transform(translate3d($toggle-md-track-width - $toggle-md-handle-width, 0, 0));
 
-  background-color: var(--checked-knob);
+  background: var(--handle-background-on);
 }
 
 
