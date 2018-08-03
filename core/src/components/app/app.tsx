@@ -1,7 +1,7 @@
 import { Component, Element, Prop, QueueApi } from '@stencil/core';
 
 import { Config, Mode } from '../../interface';
-import { isDevice, isHybrid, needInputShims } from '../../utils/platform';
+import { isDevice, isHybrid, isStandaloneMode, needInputShims } from '../../utils/platform';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({
@@ -35,7 +35,8 @@ export class App {
 
   hostData() {
     const hybrid = isHybrid(this.win);
-    const statusbarPadding = this.config.get('statusbarPadding', hybrid);
+    const isStandalone = isStandaloneMode(this.win);
+    const statusbarPadding = this.config.get('statusbarPadding', hybrid) || this.config.get('statusbarPadding', isStandalone);
 
     return {
       class: {
@@ -43,6 +44,7 @@ export class App {
 
         'is-device': this.isDevice,
         'is-hydrid': hybrid,
+        'is-standalone': isStandalone,
         'statusbar-padding': statusbarPadding
       }
     };
