@@ -15,13 +15,12 @@ export class Content {
 
   private cTop = -1;
   private cBottom = -1;
-  private dirty = false;
   private scrollEl?: HTMLIonScrollElement;
 
   mode!: Mode;
   @Prop() color?: Color;
 
-  @Element() el!: HTMLElement;
+  @Element() el!: HTMLStencilElement;
 
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'queue' }) queue!: QueueApi;
@@ -61,10 +60,6 @@ export class Content {
     this.resize();
   }
 
-  componentDidUnload() {
-    this.scrollEl = undefined as any;
-  }
-
   @Method()
   getScrollElement(): HTMLIonScrollElement {
     return this.scrollEl!;
@@ -75,13 +70,10 @@ export class Content {
       return;
     }
     if (this.fullscreen) {
-      this.queue.read(() => {
-        this.queue.read(this.readDimensions.bind(this));
-        this.queue.write(this.writeDimensions.bind(this));
-      });
-    } else {
-      this.cTop = this.cBottom = -1;
-      this.queue.write(() => this.scrollEl && this.scrollEl.removeAttribute('style'));
+      this.queue.read(this.readDimensions.bind(this));
+    } else if (this.cTop !== 0 || this.cBottom !== 0) {
+      this.cTop = this.cBottom = 0;
+      this.el.forceUpdate();
     }
   }
 
@@ -89,43 +81,42 @@ export class Content {
     const page = getPageElement(this.el);
     const top = Math.max(this.el.offsetTop, 0);
     const bottom = Math.max(page.offsetHeight - top - this.el.offsetHeight, 0);
-    this.dirty = top !== this.cTop || bottom !== this.cBottom;
-    this.cTop = top;
-    this.cBottom = bottom;
-  }
-
-  private writeDimensions() {
-    if (this.dirty && this.scrollEl) {
-      const style = this.scrollEl.style;
-      style.paddingTop = this.cTop + 'px';
-      style.paddingBottom = this.cBottom + 'px';
-      style.top = -this.cTop + 'px';
-      style.bottom = -this.cBottom + 'px';
-      this.dirty = false;
+    const dirty = top !== this.cTop || bottom !== this.cBottom;
+    if (dirty) {
+      this.cTop = top;
+      this.cBottom = bottom;
+      this.el.forceUpdate();
     }
   }
 
   hostData() {
     return {
-      class: createColorClasses(this.color)
+      class: {
+        ...createColorClasses(this.color),
+        'scroll-disabled': !this.scrollEnabled,
+      }
     };
   }
 
   render() {
     this.resize();
 
-    const innerScroll = <div class="scroll-inner"><slot></slot></div>;
-
     return [
-      (this.scrollEnabled)
-      ? <ion-scroll
+      this.scrollEnabled ? (
+        <ion-scroll
           ref={el => this.scrollEl = el as any}
           mode={this.mode}
           scrollEvents={this.scrollEvents}
-          forceOverscroll={this.forceOverscroll}>
-            { innerScroll }
+          forceOverscroll={this.forceOverscroll}
+          style={{
+            'top': `${-this.cTop}px`,
+            'bottom': `${-this.cBottom}px`,
+            '--offset-top': `${this.cTop}px`,
+            '--offset-bottom': `${this.cBottom}px`,
+          }}>
+            <slot></slot>
         </ion-scroll>
-      : innerScroll,
+      ) : <slot></slot>,
       <slot name="fixed"></slot>
     ];
   }
