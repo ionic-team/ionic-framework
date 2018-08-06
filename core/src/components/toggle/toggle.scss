@@ -5,8 +5,10 @@
 
 :host {
   /**
-   * @prop --background-checked: Background of the toggle while on
-   * @prop --handle-background-checked: Background of the toggle handle while on
+   * @prop --background: Background of the toggle
+   * @prop --background-checked: Background of the toggle when checked
+   * @prop --handle-background: Background of the toggle handle
+   * @prop --handle-background-checked: Background of the toggle handle when checked
    */
 
   // TODO can we remove important here
