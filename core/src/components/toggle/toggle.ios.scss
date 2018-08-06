@@ -5,7 +5,9 @@
 // -----------------------------------------
 
 :host {
+  --background: #{$toggle-ios-background-color-off};
   --background-checked: #{ion-color(primary, base)};
+  --handle-background: #{$toggle-ios-handle-background-color};
   --handle-background-checked: #{$toggle-ios-handle-background-color};
 
   box-sizing: content-box;
@@ -56,7 +58,7 @@
 
   transition: transform $toggle-ios-transition-duration;
 
-  background-color: $toggle-ios-background-color-off;
+  background: var(--background);
 
   content: "";
 }
@@ -76,7 +78,7 @@
 
   transition: transform $toggle-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms, right 110ms ease-in-out 80ms;
 
-  background-color: $toggle-ios-handle-background-color;
+  background: var(--handle-background);
 
   box-shadow: $toggle-ios-handle-box-shadow;
   will-change: transform;

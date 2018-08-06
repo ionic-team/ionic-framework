@@ -5,7 +5,9 @@
 // -----------------------------------------
 
 :host {
+  --background: #{$toggle-md-track-background-color-off};
   --background-checked: #{ion-color(primary, base, $toggle-md-track-background-color-alpha-on)};
+  --handle-background: #{$toggle-md-handle-background-color-off};
   --handle-background-checked: #{ion-color(primary, base)};
 
   @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
@@ -40,7 +42,7 @@
 
   transition: background-color $toggle-md-transition-duration;
 
-  background-color: $toggle-md-track-background-color-off;
+  background: var(--background);
   pointer-events: none;
 }
 
@@ -60,7 +62,7 @@
   transition-duration: $toggle-md-transition-duration;
   transition-property: transform, background-color;
 
-  background-color: $toggle-md-handle-background-color-off;
+  background: var(--handle-background);
 
   box-shadow: $toggle-md-handle-box-shadow;
   will-change: transform, background-color;
