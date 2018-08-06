@@ -1,20 +1,10 @@
 @import "./thumbnail";
 @import "./thumbnail.ios.vars";
 
-
 // iOS Thumbnail
 // --------------------------------------------------
 
 :host {
-  @include border-radius($thumbnail-ios-border-radius);
-
-  width: $thumbnail-ios-width;
-  height: $thumbnail-ios-height;
-}
-
-::slotted(ion-img),
-::slotted(img) {
-  @include border-radius($thumbnail-ios-border-radius);
-
-  overflow: hidden;
+  --size: #{$thumbnail-ios-width};
+  --border-radius: #{$thumbnail-ios-border-radius};
 }
