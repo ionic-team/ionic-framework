@@ -18,25 +18,25 @@ import { RadioButton } from './radio-button';
  *
  * @usage
  * ```html
- * <ion-list radio-group [(ngModel)]="autoManufacturers">
+ * <ion-list radio-group>
  *
  *   <ion-list-header>
- *     Auto Manufacturers
+ *     Language
  *   </ion-list-header>
  *
  *   <ion-item>
- *     <ion-label>Cord</ion-label>
- *     <ion-radio value="cord"></ion-radio>
+ *     <ion-label>Python</ion-label>
+ *     <ion-radio checked="true"></ion-radio>
  *   </ion-item>
  *
  *   <ion-item>
- *     <ion-label>Duesenberg</ion-label>
- *     <ion-radio value="duesenberg"></ion-radio>
+ *     <ion-label>Ruby</ion-label>
+ *     <ion-radio></ion-radio>
  *   </ion-item>
  *
  *   <ion-item>
- *     <ion-label>Hudson</ion-label>
- *     <ion-radio value="hudson"></ion-radio>
+ *     <ion-label>Java</ion-label>
+ *     <ion-radio></ion-radio>
  *   </ion-item>
  *
  *   <ion-item>
@@ -45,10 +45,57 @@ import { RadioButton } from './radio-button';
  *   </ion-item>
  *
  *   <ion-item>
- *     <ion-label>Studebaker</ion-label>
- *     <ion-radio value="studebaker"></ion-radio>
+ *     <ion-label>PHP</ion-label>
+ *     <ion-radio></ion-radio>
  *   </ion-item>
  *
+ * </ion-list>
+ *
+ * <ion-list radio-group>
+ *   <ion-list-header>
+ *     Auto-Lock
+ *   </ion-list-header>
+ *
+ *   <ion-item>
+ *     <ion-label>Enable "Never"</ion-label>
+ *     <ion-toggle (ionChange)="isDisabled = !isDisabled"></ion-toggle>
+ *   </ion-item>
+ *
+ *   <ion-item>
+ *     <ion-label>1 Minute</ion-label>
+ *     <ion-radio></ion-radio>
+ *   </ion-item>
+ *
+ *   <ion-item>
+ *     <ion-label>2 Minutes</ion-label>
+ *     <ion-radio checked></ion-radio>
+ *   </ion-item>
+ *
+ *   <ion-item>
+ *     <ion-label>5 Minutes</ion-label>
+ *     <ion-radio></ion-radio>
+ *   </ion-item>
+ *
+ *   <ion-item>
+ *     <ion-label>Never</ion-label>
+ *     <ion-radio [disabled]="isDisabled"></ion-radio>
+ *   </ion-item>
+ * </ion-list>
+ *
+ * <ion-list radio-group>
+ *   <ion-list-header>
+ *     Silence
+ *   </ion-list-header>
+ *
+ *   <ion-item>
+ *     <ion-label>Always</ion-label>
+ *     <ion-radio></ion-radio>
+ *   </ion-item>
+ *
+ *   <ion-item>
+ *     <ion-label>Only while phone is locked</ion-label>
+ *     <ion-radio checked="true"></ion-radio>
+ *   </ion-item>
  * </ion-list>
  * ```
  *
