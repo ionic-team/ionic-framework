@@ -6,8 +6,6 @@
 ion-toast {
   /**
    * @prop --background: Background of the toast
-   * @prop --button-color: Color of the button text
-   * @prop --color: Color of the toast text
    */
 
   @include position(0, null, null, 0);
