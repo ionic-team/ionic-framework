@@ -5,6 +5,8 @@
 // --------------------------------------------------
 
 .toast-ios {
+  --background: #{$toast-ios-background-color};
+
   font-family: $toast-ios-font-family;
 }
 
@@ -17,8 +19,6 @@
   position: absolute;
 
   max-width: $toast-max-width;
-
-  background: $toast-ios-background-color;
 
   z-index: $z-index-overlay-wrapper;
 }
