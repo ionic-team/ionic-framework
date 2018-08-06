@@ -173,7 +173,7 @@ export function isLeapYear(year: number): boolean {
 const ISO_8601_REGEXP = /^(\d{4}|[+\-]\d{6})(?:-(\d{2})(?:-(\d{2}))?)?(?:T(\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 const TIME_REGEXP = /^((\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{3}))?)?(?:(Z)|([+\-])(\d{2})(?::(\d{2}))?)?)?$/;
 
-export function parseDate(val: any): DatetimeData | null {
+export function parseDate(val: string | undefined): DatetimeData | null {
   // manually parse IS0 cuz Date.parse cannot be trusted
   // ISO 8601 format: 1994-12-15T13:47:20Z
   let parse: any[] | null = null;
@@ -254,8 +254,9 @@ export function updateDate(existingData: DatetimeData, newData: any): boolean {
 
       // merge new values from the picker's selection
       // to the existing DatetimeData values
-      Object.assign(existingData, newData);
-
+      for (const key of Object.keys(newData)) {
+        existingData[key] = newData[key].value;
+      }
       return true;
     }
 

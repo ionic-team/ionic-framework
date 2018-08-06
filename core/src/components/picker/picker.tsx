@@ -206,35 +206,11 @@ export class Picker implements OverlayInterface {
   }
 
   /**
-   * Add a new PickerButton to the picker
-   */
-  @Method()
-  addButton(button: PickerButton) {
-    this.buttons.push(button);
-  }
-
-  /**
-   * Add a new PickerColumn to the picker
-   */
-  @Method()
-  addColumn(column: PickerColumn) {
-    this.columns.push(column);
-  }
-
-  /**
    * Returns the column the matches the specified name
    */
   @Method()
   getColumn(name: string): PickerColumn | undefined {
     return this.columns.find(column => column.name === name);
-  }
-
-  /**
-   * Returns all the PickerColumns
-   */
-  @Method()
-  getColumns(): PickerColumn[] {
-    return this.columns;
   }
 
   private buttonClick(button: PickerButton) {
@@ -295,41 +271,14 @@ export class Picker implements OverlayInterface {
 
     const columns = this.columns;
 
-    // // clean up dat data
-    // data.columns = data.columns.map(column => {
-    //   if (!isPresent(column.options)) {
-    //     column.options = [];
-    //   }
-    //   column.selectedIndex = column.selectedIndex || 0;
-    //   column.options = column.options.map(inputOpt => {
-    //     let opt: PickerColumnOption = {
-    //       text: '',
-    //       value: '',
-    //       disabled: inputOpt.disabled,
-    //     };
-
-    //     if (isPresent(inputOpt)) {
-    //       if (isString(inputOpt) || isNumber(inputOpt)) {
-    //         opt.text = inputOpt.toString();
-    //         opt.value = inputOpt;
-
-    //       } else {
-    //         opt.text = isPresent(inputOpt.text) ? inputOpt.text : inputOpt.value;
-    //         opt.value = isPresent(inputOpt.value) ? inputOpt.value : inputOpt.text;
-    //       }
-    //     }
-
-    //     return opt;
-    //   });
-    //   return column;
-    // });
-
     return [
       <ion-backdrop
         visible={this.showBackdrop}
         tappable={this.enableBackdropDismiss}
       />,
+
       <div class="picker-wrapper" role="dialog">
+
         <div class="picker-toolbar">
           {buttons.map(b => (
             <div class={buttonWrapperClass(b)}>
@@ -342,11 +291,13 @@ export class Picker implements OverlayInterface {
             </div>
           ))}
         </div>
+
         <div class="picker-columns">
           <div class="picker-above-highlight" />
           {columns.map(c => <ion-picker-column col={c} />)}
           <div class="picker-below-highlight" />
         </div>
+
       </div>
     ];
   }
