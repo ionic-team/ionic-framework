@@ -5,6 +5,8 @@
 // --------------------------------------------------
 
 .toast-md {
+  --background: #{$toast-md-background};
+
   font-family: $toast-md-font-family;
 }
 
@@ -17,8 +19,6 @@
 
   width: $toast-width;
   max-width: $toast-max-width;
-
-  background: $toast-md-background;
 
   z-index: $z-index-overlay-wrapper;
 }
