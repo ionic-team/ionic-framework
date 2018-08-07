@@ -441,6 +441,11 @@ export class Nav implements NavOutlet {
     return this.isTransitioning;
   }
 
+  @Method()
+  getLength() {
+    return this.views.length;
+  }
+
   // _queueTrns() adds a navigation stack change to the queue and schedules it to run:
   // 1. _nextTrns(): consumes the next transition in the queue
   // 2. _viewInit(): initializes enteringView if required

@@ -1,6 +1,6 @@
 import { Component, Listen, Method, Prop } from '@stencil/core';
 
-import { PopoverOptions, OverlayController } from '../../interface';
+import { OverlayController, PopoverOptions } from '../../interface';
 import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({

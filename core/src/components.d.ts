@@ -1469,6 +1469,7 @@ declare global {
        * Returns the view at the index
        */
       'getByIndex': (index: number) => ViewController | undefined;
+      'getLength': () => number;
       /**
        * Gets the previous view
        */
