@@ -1,21 +1,15 @@
 import { Component, Element, Prop, QueueApi } from '@stencil/core';
 
-import { Config, Mode } from '../../interface';
+import { Config } from '../../interface';
 import { isDevice, isHybrid, isStandaloneMode, needInputShims } from '../../utils/platform';
-import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-app',
-  styleUrls: {
-    ios: 'app.ios.scss',
-    md: 'app.md.scss'
-  }
+  styleUrl: 'app.scss'
 })
 export class App {
 
   private isDevice = false;
-
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -40,8 +34,6 @@ export class App {
 
     return {
       class: {
-        ...createThemedClasses(this.mode, 'app'),
-
         'is-device': this.isDevice,
         'is-hydrid': hybrid,
         'is-standalone': isStandalone,

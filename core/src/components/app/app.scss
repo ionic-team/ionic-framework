@@ -1,6 +1,26 @@
 @import "../../themes/ionic.globals";
 @import "../../themes/ionic.mixins";
 
+ion-app.is-device {
+  user-select: none;
+}
+
+ion-app.statusbar-padding {
+  --ion-statusbar-padding: 20px;
+}
+
+@supports (padding-top: constant(safe-area-inset-top)) {
+  ion-app.statusbar-padding {
+    --ion-statusbar-padding: constant(safe-area-inset-top);
+  }
+}
+
+@supports (padding-top: env(safe-area-inset-top)) {
+  ion-app.statusbar-padding {
+    --ion-statusbar-padding: env(safe-area-inset-top);
+  }
+}
+
 // Page Container Structure
 // --------------------------------------------------
 
@@ -31,16 +51,6 @@ ion-app,
   opacity: 0;
 }
 
-.ion-page-hidden {
-  /* stylelint-disable-next-line declaration-no-important */
-  display: none !important;
-}
-
-ion-app.is-device {
-  user-select: none;
-}
-
-
 // Misc
 // --------------------------------------------------
 
@@ -55,6 +65,8 @@ ion-alert-controller,
 ion-loading-controller,
 ion-modal-controller,
 ion-picker-controller,
-ion-toast-controller {
+ion-toast-controller,
+.ion-page-hidden {
+  /* stylelint-disable-next-line declaration-no-important */
   display: none;
 }
