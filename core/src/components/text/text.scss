@@ -3,8 +3,6 @@
 // Text
 // --------------------------------------------------
 
-:host {
-  --ion-color-base: currentColor;
-
+:host(.ion-color) {
   color: #{current-color(base)};
 }
