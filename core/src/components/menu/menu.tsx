@@ -90,7 +90,7 @@ export class Menu {
   /**
    * Which side of the view the menu should be placed. Default `"start"`.
    */
-  @Prop() side: Side = 'start';
+  @Prop({ reflectToAttr: true }) side: Side = 'start';
 
   @Watch('side')
   protected sideChanged() {

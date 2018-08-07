@@ -33,7 +33,6 @@
   display: flex;
 
   flex-shrink: 0;
-  order: -1;
 }
 
 .split-pane-side:not(ion-menu) {
@@ -41,33 +40,9 @@
 }
 
 .split-pane-visible > .split-pane-side[side=start] {
-  @include multi-dir() {
-    order: -1;
-  }
+  order: -1;
 }
 
 .split-pane-visible > .split-pane-side[side=end] {
-  @include multi-dir() {
-    order: 1;
-  }
-}
-
-.split-pane-visible > .split-pane-side[side=left] {
-  @include ltr() {
-    order: -1;
-  }
-
-  @include rtl() {
-    order: 1;
-  }
-}
-
-.split-pane-visible > .split-pane-side[side=right] {
-  @include ltr() {
-    order: 1;
-  }
-
-  @include rtl() {
-    order: -1;
-  }
+  order: 1;
 }
