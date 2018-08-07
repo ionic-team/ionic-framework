@@ -28,7 +28,7 @@ export class App {
   }
 
   componentDidLoad() {
-    importTapClick(this.win, this.isDevice);
+    importTapClick(this.win);
     importInputShims(this.win, this.config);
     importStatusTap(this.win, this.isDevice, this.queue);
   }
@@ -57,10 +57,8 @@ async function importStatusTap(win: Window, device: boolean, queue: QueueApi) {
   }
 }
 
-async function importTapClick(win: Window, device: boolean) {
-  if (device) {
-    (await import('../../utils/tap-click')).startTapClick(win.document);
-  }
+async function importTapClick(win: Window) {
+  (await import('../../utils/tap-click')).startTapClick(win.document);
 }
 
 async function importInputShims(win: Window, config: Config) {
