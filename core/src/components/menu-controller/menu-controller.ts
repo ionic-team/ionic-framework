@@ -7,7 +7,8 @@ import { menuPushAnimation } from './animations/push';
 import { menuRevealAnimation } from './animations/reveal';
 
 @Component({
-  tag: 'ion-menu-controller'
+  tag: 'ion-menu-controller',
+  styleUrl: 'menu-controller.scss'
 })
 export class MenuController {
   private menus: Menu[] = [];
