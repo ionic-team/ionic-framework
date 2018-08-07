@@ -35,8 +35,6 @@
   contain: layout size style;
 }
 
-
-
 :host(.scroll-disabled),
 ion-scroll {
   @include padding(
@@ -50,4 +48,10 @@ ion-scroll {
 :host(.ion-color-outer),
 :host(.outer-content) {
   --ion-color-base: #{$background-color-step-50};
+}
+
+:host(.content-size) ion-scroll {
+  position: relative;
+
+  contain: none;
 }

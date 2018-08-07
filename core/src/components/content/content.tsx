@@ -1,7 +1,7 @@
 import { Component, Element, Listen, Method, Prop, QueueApi } from '@stencil/core';
 
 import { Color, Config, Mode } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-content',
@@ -93,6 +93,7 @@ export class Content {
     return {
       class: {
         ...createColorClasses(this.color),
+        'content-size': hostContext('ion-popover', this.el),
         'scroll-disabled': !this.scrollEnabled,
       }
     };

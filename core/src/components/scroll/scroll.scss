@@ -12,6 +12,8 @@
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   will-change: scroll-position;
+
+  box-sizing: border-box;
 }
 
 :host(.overscroll)::before,
