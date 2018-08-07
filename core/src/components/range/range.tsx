@@ -148,7 +148,7 @@ export class Range implements BaseInput {
       el: this.rangeSlider!,
       queue: this.queue,
       gestureName: 'range',
-      gesturePriority: 30,
+      gesturePriority: 100,
       threshold: 0,
       onStart: this.onDragStart.bind(this),
       onMove: this.onDragMove.bind(this),
@@ -391,7 +391,7 @@ export class Range implements BaseInput {
   }
 }
 
-export function ratioToValue(
+function ratioToValue(
   ratio: number,
   min: number,
   max: number,
@@ -404,6 +404,6 @@ export function ratioToValue(
   return clamp(min, value, max);
 }
 
-export function valueToRatio(value: number, min: number, max: number): number {
+function valueToRatio(value: number, min: number, max: number): number {
   return clamp(0, (value - min) / (max - min), 1);
 }

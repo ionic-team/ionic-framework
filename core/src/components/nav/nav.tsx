@@ -114,7 +114,7 @@ export class Nav implements NavOutlet {
       el: this.win.document.body,
       queue: this.queue,
       gestureName: 'goback-swipe',
-      gesturePriority: 10,
+      gesturePriority: 30,
       threshold: 10,
       canStart: this.canSwipeBack.bind(this),
       onStart: this.swipeBackStart.bind(this),

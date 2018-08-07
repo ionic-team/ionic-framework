@@ -179,7 +179,7 @@ export class Menu {
       el: this.doc,
       queue: this.queue,
       gestureName: 'menu-swipe',
-      gesturePriority: 10,
+      gesturePriority: 40,
       threshold: 10,
       canStart: this.canStart.bind(this),
       onWillStart: this.onWillStart.bind(this),

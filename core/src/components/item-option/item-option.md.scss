@@ -5,9 +5,6 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{$item-option-button-md-background-color};
-  --ion-color-contrast: #{$item-option-button-md-text-color};
-
   font-size: $item-option-button-md-font-size;
   font-weight: 500;
 

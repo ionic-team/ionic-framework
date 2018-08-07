@@ -108,7 +108,7 @@ export class Refresher {
       gestureName: 'refresher',
       gesturePriority: 10,
       direction: 'y',
-      threshold: 5,
+      threshold: 10,
       passive: false,
       canStart: this.canStart.bind(this),
       onStart: this.onStart.bind(this),
@@ -175,6 +175,8 @@ export class Refresher {
   }
 
   private onStart() {
+    console.log('start');
+
     this.progress = 0;
     this.state = RefresherState.Inactive;
   }
@@ -341,6 +343,7 @@ export class Refresher {
 
   hostData() {
     return {
+      slot: 'fixed',
       class: {
         ...createThemedClasses(this.mode, 'refresher'),
 

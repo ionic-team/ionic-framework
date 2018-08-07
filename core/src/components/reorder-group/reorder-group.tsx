@@ -55,7 +55,7 @@ export class ReorderGroup {
       el: this.doc.body,
       queue: this.queue,
       gestureName: 'reorder',
-      gesturePriority: 30,
+      gesturePriority: 90,
       disableScroll: true,
       threshold: 0,
       direction: 'y',

@@ -58,7 +58,7 @@ export class PickerColumnCmp {
       el: this.el,
       queue: this.queue,
       gestureName: 'picker-swipe',
-      gesturePriority: 10,
+      gesturePriority: 100,
       threshold: 0,
       onStart: this.onDragStart.bind(this),
       onMove: this.onDragMove.bind(this),

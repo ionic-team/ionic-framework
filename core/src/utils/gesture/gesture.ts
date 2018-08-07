@@ -111,10 +111,8 @@ export function createGesture(config: GestureConfig): Gesture {
     // gesture is currently being detected
     calcGestureData(detail, ev);
     if (pan.detect(detail.currentX, detail.currentY)) {
-      if (pan.isGesture()) {
-        if (!tryToCapturePan()) {
-          abortGesture();
-        }
+      if (!pan.isGesture() || !tryToCapturePan()) {
+        abortGesture();
       }
     }
   }

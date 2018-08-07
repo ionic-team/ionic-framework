@@ -123,9 +123,12 @@
 
   transition: var(--transition);
 
+
   border-width: var(--border-width);
   border-style: var(--border-style);
   border-color: var(--border-color);
+
+  outline: none;
 
   background: var(--background);
 
@@ -153,11 +156,6 @@
 // .button > .button-container:hover {
 //   opacity: var(--opacity-hover);
 // }
-
-.button-native:active,
-.button-native:focus {
-  outline: none;
-}
 
 .button-inner {
   display: flex;

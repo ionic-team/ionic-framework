@@ -116,7 +116,7 @@ export class Toggle implements CheckboxInput {
       el: this.el,
       queue: this.queue,
       gestureName: 'toggle',
-      gesturePriority: 30,
+      gesturePriority: 100,
       threshold: 0,
       onStart: this.onDragStart.bind(this),
       onMove: this.onDragMove.bind(this),

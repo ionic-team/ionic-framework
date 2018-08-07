@@ -62,7 +62,7 @@ export class ItemSliding {
       el: this.el,
       queue: this.queue,
       gestureName: 'item-swipe',
-      gesturePriority: -10,
+      gesturePriority: 20,
       threshold: 5,
       canStart: this.canStart.bind(this),
       onStart: this.onDragStart.bind(this),
@@ -152,7 +152,7 @@ export class ItemSliding {
       this.closeOpened();
       return false;
     }
-    return true;
+    return !!(this.rightOptions || this.leftOptions);
   }
 
   private onDragStart() {
@@ -295,7 +295,7 @@ export class ItemSliding {
 }
 
 /** @hidden */
-export function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
+function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
   // The logic required to know when the sliding item should close (openAmount=0)
   // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)
   // and it ended up being too complicated to be written manually without errors
