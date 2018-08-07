@@ -30,6 +30,9 @@ export class PickerColumnCmp {
 
   @Prop() col!: PickerColumn;
 
+  /**
+   * Emitted when the selected option has changed.
+   */
   @Event() ionChange!: EventEmitter<void>;
 
   componentWillLoad() {

@@ -1305,11 +1305,11 @@ declare global {
 
     interface IonMenuToggle {
       /**
-       * Automatically hides the content when the corresponding menu is not active
+       * Automatically hides the content when the corresponding menu is not active.  By default, it's `true`. Change it to `false` in order to keep `ion-menu-toggle` always visible regardless the state of the menu.
        */
       'autoHide': boolean;
       /**
-       * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
+       * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle.  If this property is not used, `ion-menu-toggle` will toggle the first menu that is active.
        */
       'menu': string;
     }
@@ -4285,7 +4285,7 @@ declare global {
        */
       'onIonCancel'?: (event: CustomEvent<void>) => void;
       /**
-       * Emitted when the checked property has changed.
+       * Emitted when the value (selected date) has changed.
        */
       'onIonChange'?: (event: CustomEvent<void>) => void;
       /**
@@ -4862,11 +4862,11 @@ declare global {
 
     export interface IonMenuToggleAttributes extends HTMLAttributes {
       /**
-       * Automatically hides the content when the corresponding menu is not active
+       * Automatically hides the content when the corresponding menu is not active.  By default, it's `true`. Change it to `false` in order to keep `ion-menu-toggle` always visible regardless the state of the menu.
        */
       'autoHide'?: boolean;
       /**
-       * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
+       * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle.  If this property is not used, `ion-menu-toggle` will toggle the first menu that is active.
        */
       'menu'?: string;
     }
@@ -5051,6 +5051,9 @@ declare global {
 
     export interface IonPickerColumnAttributes extends HTMLAttributes {
       'col'?: PickerColumn;
+      /**
+       * Emitted when the selected option has changed.
+       */
       'onIonChange'?: (event: CustomEvent<void>) => void;
     }
 

@@ -102,7 +102,7 @@ Specifies the value granularity. Defaults to `1`.
 
 #### value
 
-any
+number
 
 the value of the range.
 
@@ -194,7 +194,7 @@ Specifies the value granularity. Defaults to `1`.
 
 #### value
 
-any
+number
 
 the value of the range.
 

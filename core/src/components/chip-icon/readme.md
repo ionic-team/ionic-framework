@@ -32,6 +32,14 @@ The icon to use.
 Possible values are the same as `"ion-icon"`.
 
 
+#### src
+
+string
+
+The icon src to use.
+Possible values are the same as `"ion-icon"`.
+
+
 ## Attributes
 
 #### color
@@ -56,6 +64,14 @@ Possible values are: `"ios"` or `"md"`.
 string
 
 The icon to use.
+Possible values are the same as `"ion-icon"`.
+
+
+#### src
+
+string
+
+The icon src to use.
 Possible values are the same as `"ion-icon"`.
 
 

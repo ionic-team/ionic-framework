@@ -197,16 +197,6 @@ Emitted before the picker has presented.
 
 ## Methods
 
-#### addButton()
-
-Add a new PickerButton to the picker
-
-
-#### addColumn()
-
-Add a new PickerColumn to the picker
-
-
 #### dismiss()
 
 Dismiss the picker overlay after it has been presented.
@@ -215,11 +205,6 @@ Dismiss the picker overlay after it has been presented.
 #### getColumn()
 
 Returns the column the matches the specified name
-
-
-#### getColumns()
-
-Returns all the PickerColumns
 
 
 #### onDidDismiss()

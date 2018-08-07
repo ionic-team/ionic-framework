@@ -19,6 +19,13 @@ PickerColumn
 
 
 
+## Events
+
+#### ionChange
+
+Emitted when the selected option has changed.
+
+
 
 ----------------------------------------------
 

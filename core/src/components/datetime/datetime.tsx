@@ -192,7 +192,7 @@ export class Datetime {
   @Event() ionCancel!: EventEmitter<void>;
 
   /**
-   * Emitted when the checked property has changed.
+   * Emitted when the value (selected date) has changed.
    */
   @Event() ionChange!: EventEmitter<void>;
 
