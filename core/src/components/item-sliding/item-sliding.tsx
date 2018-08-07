@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Gesture, GestureDetail } from '../../interface';
 
@@ -48,6 +48,17 @@ export class ItemSliding {
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
+   * If true, the user cannot interact with the sliding-item. Defaults to `false`.
+   */
+  @Prop() disabled = false;
+  @Watch('disabled')
+  disabledChanged() {
+    if (this.gesture) {
+      this.gesture.setDisabled(this.disabled);
+    }
+  }
+
+  /**
    * Emitted when the sliding position changes.
    */
   @Event() ionDrag!: EventEmitter;
@@ -69,7 +80,7 @@ export class ItemSliding {
       onMove: this.onDragMove.bind(this),
       onEnd: this.onDragEnd.bind(this),
     });
-    this.gesture.setDisabled(false);
+    this.disabledChanged();
   }
 
   componentDidUnload() {

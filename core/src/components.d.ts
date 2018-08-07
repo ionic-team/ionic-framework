@@ -1045,6 +1045,10 @@ declare global {
        */
       'closeOpened': () => boolean;
       /**
+       * If true, the user cannot interact with the sliding-item. Defaults to `false`.
+       */
+      'disabled': boolean;
+      /**
        * Get the amount the item is open in pixels.
        */
       'getOpenAmount': () => number;
@@ -4666,6 +4670,10 @@ declare global {
     }
 
     export interface IonItemSlidingAttributes extends HTMLAttributes {
+      /**
+       * If true, the user cannot interact with the sliding-item. Defaults to `false`.
+       */
+      'disabled'?: boolean;
       /**
        * Emitted when the sliding position changes.
        */
