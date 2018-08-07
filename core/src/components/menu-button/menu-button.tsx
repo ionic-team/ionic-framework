@@ -49,7 +49,7 @@ export class MenuButton {
     const menuIcon = this.config.get('menuIcon', 'menu');
     return (
       <ion-menu-toggle menu={this.menu} autoHide={this.autoHide}>
-        <button>
+        <button type="button">
           <slot>
             <ion-icon icon={menuIcon} mode={this.mode} color={this.color} lazy={false} />
           </slot>

@@ -283,6 +283,7 @@ export class Picker implements OverlayInterface {
           {buttons.map(b => (
             <div class={buttonWrapperClass(b)}>
               <button
+                type="button"
                 onClick={() => this.buttonClick(b)}
                 class={buttonClass(b)}
               >
