@@ -4,24 +4,25 @@
 // --------------------------------------------------
 
 :host {
-  --background: var(--ion-color-base);
-  --color: var(--ion-color-contrast);
-  --size: #{$chip-button-size};
-  --icon-size: 18px;
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
+  --size: #{$chip-button-size};
 }
 
 :host(.chip-button-clear) {
-  --color: var(--ion-color-base);
-  --background: transparent;
+  --background: #{current-color(base)};
+
+  color: #{current-color(contrast)}
 }
 
-::slotted(ion-icon) {
-  font-size: var(--icon-size);
+:host(.chip-button-clear) {
+  --background: transparent;
+
+  color: #{current-color(base)};
 }
 
 .chip-button-native {
+  @include text-inherit();
   @include border-radius($chip-button-border-radius);
   @include margin($chip-button-margin-top, $chip-button-margin-end, $chip-button-margin-bottom, $chip-button-margin-start);
 
@@ -35,7 +36,6 @@
   outline: none;
 
   background: var(--background);
-  color: var(--color);
   appearance: none;
 }
 

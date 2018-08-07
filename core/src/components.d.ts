@@ -468,7 +468,7 @@ declare global {
       /**
        * Set to `"clear"` for a transparent button style.
        */
-      'fill': string;
+      'fill': 'clear' | 'solid';
       /**
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
        */
@@ -492,6 +492,10 @@ declare global {
        * The icon to use. Possible values are the same as `"ion-icon"`.
        */
       'name': string;
+      /**
+       * The icon src to use. Possible values are the same as `"ion-icon"`.
+       */
+      'src': string;
     }
 
     interface IonChip {
@@ -4058,7 +4062,7 @@ declare global {
       /**
        * Set to `"clear"` for a transparent button style.
        */
-      'fill'?: string;
+      'fill'?: 'clear' | 'solid';
       /**
        * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
        */
@@ -4082,6 +4086,10 @@ declare global {
        * The icon to use. Possible values are the same as `"ion-icon"`.
        */
       'name'?: string;
+      /**
+       * The icon src to use. Possible values are the same as `"ion-icon"`.
+       */
+      'src'?: string;
     }
 
     export interface IonChipAttributes extends HTMLAttributes {
