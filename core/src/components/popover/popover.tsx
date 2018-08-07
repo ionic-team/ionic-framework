@@ -79,7 +79,7 @@ export class Popover implements OverlayInterface {
   /**
    * The event to pass to the popover animation.
    */
-  @Prop() ev: any;
+  @Prop() event: any;
 
   /**
    * If true, a backdrop will be displayed behind the popover. Defaults to `true`.
@@ -181,7 +181,7 @@ export class Popover implements OverlayInterface {
       popover: this.el
     };
     this.usersElement = await attachComponent(this.delegate, container, this.component, ['popover-viewport'], data);
-    return present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.ev);
+    return present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.event);
   }
 
   /**
@@ -189,7 +189,7 @@ export class Popover implements OverlayInterface {
    */
   @Method()
   async dismiss(data?: any, role?: string): Promise<void> {
-    await dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.ev);
+    await dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.event);
     await detachComponent(this.delegate, this.usersElement);
   }
 

@@ -26,7 +26,7 @@ export { Gesture, GestureDetail } from './utils/gesture/gesture';
 
 export * from './utils/input-interface';
 export * from './global/config';
-export { OverlayEventDetail, OverlayInterface } from './utils/overlays';
+export * from './utils/overlays-interface';
 
 
 // Global types

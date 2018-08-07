@@ -1662,7 +1662,7 @@ declare global {
       /**
        * The event to pass to the popover animation.
        */
-      'ev': any;
+      'event': any;
       'keyboardClose': boolean;
       /**
        * Animation to use when the popover is dismissed.
@@ -5169,7 +5169,7 @@ declare global {
       /**
        * The event to pass to the popover animation.
        */
-      'ev'?: any;
+      'event'?: any;
       'keyboardClose'?: boolean;
       /**
        * Animation to use when the popover is dismissed.
