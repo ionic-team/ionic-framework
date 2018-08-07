@@ -264,7 +264,9 @@ export class Datetime {
         },
         {
           text: this.doneText,
-          handler: (data: any) => this.value = data
+          handler: (data: any) => {
+            this.value = data;
+          }
         }
       ];
     }
