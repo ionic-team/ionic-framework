@@ -41,6 +41,7 @@ import {
   PickerOptions,
   PopoverOptions,
   RangeInputChangeEvent,
+  RangeValue,
   RouteID,
   RouterDirection,
   RouterEventDetail,
@@ -1798,7 +1799,7 @@ declare global {
       /**
        * the value of the range.
        */
-      'value': any;
+      'value': RangeValue;
     }
 
     interface IonRefresherContent {
@@ -5356,7 +5357,7 @@ declare global {
       /**
        * the value of the range.
        */
-      'value'?: any;
+      'value'?: RangeValue;
     }
 
     export interface IonRefresherContentAttributes extends HTMLAttributes {

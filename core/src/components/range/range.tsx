@@ -1,10 +1,10 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { BaseInput, Color, Gesture, GestureDetail, Mode, RangeInputChangeEvent, StyleEvent } from '../../interface';
+import { BaseInput, Color, Gesture, GestureDetail, Mode, RangeInputChangeEvent, RangeValue, StyleEvent } from '../../interface';
 import { clamp, debounceEvent, deferEvent } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
-import { Knob, RangeEventDetail, RangeValue } from './range-interface';
+import { Knob, RangeEventDetail } from './range-interface';
 
 @Component({
   tag: 'ion-range',
@@ -106,8 +106,7 @@ export class Range implements BaseInput {
   /**
    * the value of the range.
    */
-  @Prop({ mutable: true })
-  value: any = 0;
+  @Prop({ mutable: true }) value: RangeValue = 0;
   @Watch('value')
   protected valueChanged(value: RangeValue) {
     if (!this.noUpdate) {
@@ -172,6 +171,7 @@ export class Range implements BaseInput {
     } else {
       this.ratioB += step;
     }
+    this.updateValue();
   }
 
   private getValue(): RangeValue {
