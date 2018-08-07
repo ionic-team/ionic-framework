@@ -23,7 +23,6 @@ export interface Animation {
   beforeClearStyles(propertyNames: string[]): Animation;
   beforeAddRead(domReadFn: () => void): Animation;
   beforeAddWrite(domWriteFn: () => void): Animation;
-  duringAddClass(className: string): Animation;
   afterAddClass(className: string): Animation;
   afterRemoveClass(className: string): Animation;
   afterStyles(styles: { [property: string]: any; }): Animation;

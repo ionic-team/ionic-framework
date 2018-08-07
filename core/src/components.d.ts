@@ -1486,7 +1486,6 @@ declare global {
        * Returns the length of navigation stack
        */
       'isAnimating': () => boolean;
-      'length': () => number;
       /**
        * Call to navigate back from a current component. Similar to push(), you can also pass navigation options.
        */

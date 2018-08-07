@@ -33,7 +33,7 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
     const navDecor = new AnimationC();
     navDecor
       .addElement(navEl)
-      .duringAddClass('show-decor');
+      .beforeAddClass('show-decor');
 
     rootTransition.add(navDecor);
   }

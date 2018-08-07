@@ -249,15 +249,6 @@ export class Animator {
   }
 
   /**
-   * Sets a CSS class during the duration of the animation.
-   */
-  duringAddClass(className: string): Animator {
-    this.beforeAddClass(className);
-    this.afterRemoveClass(className);
-    return this;
-  }
-
-  /**
    * Set CSS inline styles to this animation's elements
    * before the animation begins.
    */
@@ -817,6 +808,7 @@ export class Animator {
       const elementClassList = el.classList;
 
       // css classes to add before the animation
+
       if (addClasses) {
         for (const c of addClasses) {
           // ******** DOM WRITE ****************

@@ -484,7 +484,6 @@ export class Datetime {
   private updateText() {
     // create the text of the formatted data
     const template = this.displayFormat || this.pickerFormat || DEFAULT_FORMAT;
-    // debugger;
     this.text = renderDatetime(template, this.datetimeValue, this.locale);
   }
 
