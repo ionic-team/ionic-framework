@@ -46,7 +46,13 @@
   "dependencies": {
     "@ionic/core": "4.0.0-beta.12"
   },
+  "peerDependencies": {
+    "@angular-devkit/core": "~0.7.2",
+    "@angular-devkit/schematics": "~0.7.2"
+  },
   "devDependencies": {
+    "@angular-devkit/core": "~0.7.2",
+    "@angular-devkit/schematics": "~0.7.2",
     "@angular/common": "^6.1.0",
     "@angular/compiler": "^6.1.0",
     "@angular/compiler-cli": "^6.1.0",
@@ -55,6 +61,7 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
+    "@types/node": "^9.6.22",
     "fs-extra": "^7.0.0",
     "glob": "^7.1.2",
     "rxjs": "^6.2.0",
@@ -62,5 +69,6 @@
     "tslint-ionic-rules": "0.0.17",
     "typescript": "2.9.2",
     "zone.js": "^0.8.26"
-  }
+  },
+  "schematics": "./dist/schematics/collection.json"
 }
