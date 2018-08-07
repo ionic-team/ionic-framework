@@ -66,7 +66,7 @@ export class Fab {
       class: {
         [`fab-horizontal-${this.horizontal}`]: !!this.horizontal,
         [`fab-vertical-${this.vertical}`]: !!this.vertical,
-        ['fab-edge']: this.edge
+        'fab-edge': this.edge
       }
     };
   }
