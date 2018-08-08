@@ -4,8 +4,42 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   *
+   * @prop --background: Background of the alert
+   * @prop --border-radius: Border radius of the alert
+   * @prop --box-shadow: Box shadow of the alert
+   * @prop --width: Width of the alert
+   * @prop --min-width: Minimum width of the alert
+   * @prop --max-width: Maximum width of the alert
+   * @prop --max-height: Maximum height of the alert
+   *
+   * @prop --head-padding-top: Padding top of the alert head
+   * @prop --head-padding-end: Padding end of the alert head
+   * @prop --head-padding-bottom: Padding bottom of the alert head
+   * @prop --head-padding-start: Padding start of the alert head
+   * @prop --head-text-align: Text alignment of the alert head
+   *
+   * @prop --title-margin-top: Margin top of the alert title
+   * @prop --title-margin-end: Margin end of the alert title
+   * @prop --title-margin-bottom: Margin bottom of the alert title
+   * @prop --title-margin-start: Margin start of the alert title
+   *
+   * @prop --title-color: Color of the alert title
+   * @prop --title-font-size: Font size of the alert title
+   * @prop --title-font-weight: Font weight of the alert title
+   *
+   * @prop --sub-title-color: Color of the alert subtitle
+   * @prop --sub-title-font-size: Font size of the alert subtitle
+   *
+   * @prop --button-font-size: Font size of the alert button
+   * @prop --button-line-height: Line height of the alert button
+   *
+   */
   --min-width: #{$alert-min-width};
   --max-height: #{$alert-max-height};
+  --button-font-size: #{$alert-button-font-size};
+  --button-line-height: #{$alert-button-line-height};
 
   @include font-smoothing();
   @include position(0, 0, 0, 0);
@@ -15,6 +49,9 @@
 
   align-items: center;
   justify-content: center;
+
+  font-family: var(--font-family);
+  font-size: var(--font-size);
 
   contain: strict;
   touch-action: none;
@@ -28,9 +65,13 @@
 }
 
 .alert-wrapper {
+  @include border-radius(var(--border-radius));
+
   display: flex;
 
   flex-direction: column;
+
+  width: var(--width);
 
   min-width: var(--min-width);
   max-width: var(--max-width);
@@ -39,24 +80,59 @@
 
   background: var(--background);
 
+  box-shadow: var(--box-shadow);
+
   contain: content;
   opacity: 0;
   z-index: $z-index-overlay-wrapper;
 }
 
+// Alert Head
+// --------------------------------------------------
+
+.alert-head {
+  @include padding(var(--head-padding-top), var(--head-padding-end), var(--head-padding-bottom), var(--head-padding-start));
+
+  text-align: var(--head-text-align);
+}
+
 .alert-title {
-  @include margin(0);
+  @include margin(var(--title-margin-top), var(--title-margin-end), var(--title-margin-bottom), var(--title-margin-start));
   @include padding(0);
+
+  color: var(--title-color);
+
+  font-size: var(--title-font-size);
+  font-weight: var(--title-font-weight);
 }
 
 .alert-sub-title {
   @include margin(5px, 0, 0);
   @include padding(0);
 
-  font-weight: normal;
+  color: var(--sub-title-color);
+
+  font-size: var(--sub-title-font-size);
+  font-weight: var(--sub-title-font-weight, normal);
+}
+
+// Alert Message
+// --------------------------------------------------
+
+.alert-message,
+.alert-input-group {
+  @include padding(var(--message-padding-top), var(--message-padding-end), var(--message-padding-bottom), var(--message-padding-start));
+
+  color: var(--message-color);
+
+  font-size: var(--message-font-size);
+
+  text-align: var(--message-text-align);
 }
 
 .alert-message {
+  max-height: var(--message-max-height);
+
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
   overflow-y: scroll;
@@ -67,18 +143,97 @@
   display: none;
 }
 
+
+// Alert Input
+// --------------------------------------------------
+
 .alert-input {
-  @include padding(10px, 0);
+  @include border-radius(var(--input-border-radius));
+  @include margin(var(--input-margin-top, var(--input-margin, 0)), var(--input-margin-end, var(--input-margin, 0)), var(--input-margin-bottom, var(--input-margin, 0)), var(--input-margin-start, var(--input-margin, 0)));
+  @include padding(var(--input-padding-top, 10px), var(--input-padding-end, 0), var(--input-padding-bottom, 10px), var(--input-padding-start, 0));
 
   width: 100%;
 
-  border: 0;
+  border-top: var(--input-border-top, var(--input-border));
+  border-right: var(--input-border-end, var(--input-border));
+  border-bottom: var(--input-border-bottom, var(--input-border));
+  border-left: var(--input-border-start, var(--input-border));
 
-  background: inherit;
+  background: var(--input-background, inherit);
+  color: var(--input-color, inherit);
 
   font: inherit;
+  appearance: none;
   box-sizing: border-box;
+
+  &::placeholder {
+    color: var(--input-placeholder-color);
+
+    font: inherit;
+  }
 }
+
+
+// Alert Radio / Checkbox Group
+// --------------------------------------------------
+
+.alert-radio-group,
+.alert-checkbox-group {
+  max-height: var(--group-max-height);
+
+  border-top: var(--group-border-top, var(--group-border));
+  border-right: var(--group-border-end, var(--group-border));
+  border-bottom: var(--group-border-bottom, var(--group-border));
+  border-left: var(--group-border-start, var(--group-border));
+}
+
+
+// Alert Radio
+// --------------------------------------------------
+
+.alert-radio-label {
+  @include padding(var(--radio-label-padding-top), var(--radio-label-padding-end), var(--radio-label-padding-bottom), var(--radio-label-padding-start));
+
+  flex: 1;
+
+  color: var(--radio-label-text-color);
+
+  font-size: var(--radio-label-font-size);
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+
+  overflow: hidden;
+}
+
+.alert-radio-icon {
+  @include position(var(--radio-top), var(--radio-end), var(--radio-bottom), var(--radio-start));
+  @include border-radius(var(--radio-border-radius));
+
+  position: relative;
+
+  width: var(--radio-width);
+
+  min-width: var(--radio-min-width);
+  height: var(--radio-height);
+
+  border-width: var(--radio-border-width);
+  border-style: var(--radio-border-style);
+  border-color: var(--radio-border-color);
+}
+
+
+// Alert Radio: Checked
+// --------------------------------------------------
+
+[aria-checked=true] .alert-radio-label {
+  color: var(--radio-label-color-checked);
+}
+
+
+// Alert Button Group
+// --------------------------------------------------
 
 .alert-button-group {
   display: flex;
@@ -93,18 +248,55 @@
   flex-wrap: nowrap;
 }
 
+
+.alert-button-group {
+  @include margin(var(--button-group-margin-top), var(--button-group-margin-end), var(--button-group-margin-bottom), var(--button-group-margin-start));
+  @include padding(var(--button-group-padding-top), var(--button-group-padding-end), var(--button-group-padding-bottom), var(--button-group-padding-start));
+
+  flex-wrap: var(--button-group-flex-wrap);
+  justify-content: var(--button-group-justify-content);
+}
+
+
+// Alert Button
+// --------------------------------------------------
+
 .alert-button {
-  @include margin(0);
+  @include border-radius(var(--button-border-radius));
+  @include margin(var(--button-margin-top, var(--button-margin)), var(--button-margin-end, var(--button-margin)), var(--button-margin-bottom, var(--button-margin)), var(--button-margin-start, var(--button-margin)));
+  @include padding(var(--button-padding-top), var(--button-padding-end), var(--button-padding-bottom), var(--button-padding-start));
 
   display: block;
 
-  border: 0;
+  flex: var(--button-flex);
 
-  font-size: $alert-button-font-size;
+  min-width: var(--button-min-width);
+  height: var(--button-height);
 
-  line-height: $alert-button-line-height;
+  border-top: var(--button-border-top);
+  border-right: var(--button-border-end);
+  border-bottom: var(--button-border-bottom);
+  border-left: var(--button-border-start);
+
+  background: var(--button-background);
+  color: var(--button-color);
+
+  font-size: var(--button-font-size);
+
+  font-weight: var(--button-font-weight);
+
+  line-height: var(--button-line-height);
+
+  text-align: var(--button-text-align);
+  text-transform: var(--button-text-transform);
+
+  overflow: hidden;
 
   z-index: 0;
+}
+
+.alert-button.activated {
+  background: var(--button-background-activated);
 }
 
 .alert-button-inner {
@@ -113,7 +305,7 @@
   flex-flow: row nowrap;
   flex-shrink: 0;
   align-items: center;
-  justify-content: center;
+  justify-content: var(--button-group-justify-content, center);
 
   width: 100%;
   height: 100%;
@@ -123,7 +315,11 @@
   @include margin(0);
   @include padding(0);
 
+  display: flex;
+
   width: 100%;
+
+  height: var(--tappable-height);
 
   border: 0;
 
@@ -134,6 +330,8 @@
   line-height: initial;
 
   text-align: start;
+
+  contain: strict;
   appearance: none;
 }
 
