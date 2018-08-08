@@ -1,4 +1,4 @@
-import { AnimationBuilder, HTMLIonOverlayElement, OverlayInterface, OverlayMap } from '../interface';
+import { AnimationBuilder, HTMLIonOverlayElement, IonicConfig, OverlayInterface, OverlayMap } from '../interface';
 
 let lastId = 1;
 
@@ -47,7 +47,7 @@ export function removeLastOverlay(overlays: OverlayMap) {
 
 export async function present(
   overlay: OverlayInterface,
-  name: string,
+  name: keyof IonicConfig,
   iosEnterAnimation: AnimationBuilder,
   mdEnterAnimation: AnimationBuilder,
   opts?: any
@@ -72,7 +72,7 @@ export async function dismiss(
   overlay: OverlayInterface,
   data: any | undefined,
   role: string | undefined,
-  name: string,
+  name: keyof IonicConfig,
   iosLeaveAnimation: AnimationBuilder,
   mdLeaveAnimation: AnimationBuilder,
   opts?: any

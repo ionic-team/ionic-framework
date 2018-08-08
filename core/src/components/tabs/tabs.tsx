@@ -1,6 +1,6 @@
 import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 
-import { Color, Config, NavOutlet, RouteID, RouteWrite, TabbarLayout, TabbarPlacement } from '../../interface';
+import { Color, Config, IonicConfig, NavOutlet, RouteID, RouteWrite, TabbarLayout, TabbarPlacement } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -99,7 +99,7 @@ export class Tabs implements NavOutlet {
       this.useRouter = !!this.doc.querySelector('ion-router') && !this.el.closest('[no-router]');
     }
 
-    this.loadConfig('tabbarLayout', 'bottom');
+    this.loadConfig('tabbarPlacement', 'bottom');
     this.loadConfig('tabbarLayout', 'icon-top');
     this.loadConfig('tabbarHighlight', false);
 
@@ -235,7 +235,7 @@ export class Tabs implements NavOutlet {
     }
   }
 
-  private loadConfig(attrKey: string, fallback: any) {
+  private loadConfig(attrKey: keyof IonicConfig, fallback: any) {
     const val = (this as any)[attrKey];
     if (typeof val === 'undefined') {
       (this as any)[attrKey] = this.config.get(attrKey, fallback);

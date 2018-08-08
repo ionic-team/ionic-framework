@@ -1,5 +1,6 @@
+import { IonicConfig } from '../interface';
 
-export function setupConfig(config: {[key: string]: any}) {
+export function setupConfig(config: IonicConfig) {
   const win = window as any;
   const Ionic = win.Ionic;
   if (Ionic && Ionic.config && Ionic.config.constructor.name !== 'Object') {
