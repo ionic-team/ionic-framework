@@ -5,6 +5,9 @@
 // --------------------------------------------------
 
 .toast-md {
+  --background: #{$toast-md-background};
+  --color: #{toast-md-title-color};
+
   font-family: $toast-md-font-family;
 }
 
@@ -17,8 +20,6 @@
 
   width: $toast-width;
   max-width: $toast-max-width;
-
-  background: $toast-md-background;
 
   z-index: $z-index-overlay-wrapper;
 }
@@ -42,7 +43,7 @@
 .toast-md .toast-message {
   @include padding($toast-md-title-padding-top, $toast-md-title-padding-end, $toast-md-title-padding-bottom, $toast-md-title-padding-start);
 
-  color: $toast-md-title-color;
+  color: var(--color);
 
   font-size: $toast-md-title-font-size;
 }

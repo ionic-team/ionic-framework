@@ -5,6 +5,10 @@
 // --------------------------------------------------
 
 .toast-ios {
+  --background: #{$toast-ios-background-color};
+  --button-color: #{$toast-ios-button-color};
+  --color: #{$toast-ios-title-color};
+
   font-family: $toast-ios-font-family;
 }
 
@@ -17,8 +21,6 @@
   position: absolute;
 
   max-width: $toast-max-width;
-
-  background: $toast-ios-background-color;
 
   z-index: $z-index-overlay-wrapper;
 }
@@ -47,11 +49,11 @@
 .toast-ios .toast-message {
   @include padding($toast-ios-title-padding-top, $toast-ios-title-padding-end, $toast-ios-title-padding-bottom, $toast-ios-title-padding-start);
 
-  color: $toast-ios-title-color;
+  color: var(--color);
 
   font-size: $toast-ios-title-font-size;
 }
 
 .toast-ios .toast-button {
-  color: $toast-ios-button-color;
+  color: var(--button-color);
 }

@@ -242,6 +242,14 @@ that is called in the same circustances.
 Present the toast overlay after it has been created.
 
 
+## CSS Custom Properties
+
+| Name             | Description              |
+| ---------------- | ------------------------ |
+| `--background`   | Background of the toast  |
+| `--button-color` | Color of the button text |
+| `--color`        | Color of the toast text  |
+
 
 ----------------------------------------------
 
