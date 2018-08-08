@@ -22,9 +22,11 @@ export class App {
   }
 
   componentDidLoad() {
-    importTapClick(this.win);
-    importInputShims(this.win, this.config);
-    importStatusTap(this.win, this.isDevice, this.queue);
+    setTimeout(() => {
+      importTapClick(this.win);
+      importInputShims(this.win, this.config);
+      importStatusTap(this.win, this.isDevice, this.queue);
+    }, 32);
   }
 
   hostData() {
@@ -34,6 +36,7 @@ export class App {
 
     return {
       class: {
+        'ion-page': true,
         'is-device': this.isDevice,
         'is-hydrid': hybrid,
         'is-standalone': isStandalone,

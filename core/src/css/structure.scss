@@ -50,7 +50,42 @@ body {
   text-size-adjust: none;
 }
 
+
+// Page Container Structure
+// --------------------------------------------------
+
+.ion-page {
+  @include position(0, 0, 0, 0);
+
+  display: flex;
+  position: absolute;
+
+  flex-direction: column;
+  justify-content: space-between;
+
+  contain: layout size style;
+  overflow: hidden;
+  z-index: $z-index-page-container;
+}
+
+ion-route,
+ion-route-redirect,
+ion-router,
+ion-animation-controller,
+ion-nav-controller,
+ion-menu-controller,
+ion-action-sheet-controller,
+ion-alert-controller,
+ion-loading-controller,
+ion-modal-controller,
+ion-picker-controller,
+ion-toast-controller,
+.ion-page-hidden,
 [hidden] {
   /* stylelint-disable-next-line declaration-no-important */
   display: none !important;
+}
+
+.ion-page-invisible {
+  opacity: 0;
 }
