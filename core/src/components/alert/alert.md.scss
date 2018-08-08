@@ -5,85 +5,119 @@
 // --------------------------------------------------
 
 :host {
+  /* Alert */
   --background: #{$alert-md-background-color};
+  --border-radius: #{$alert-md-border-radius};
+  --box-shadow: #{$alert-md-box-shadow};
+  --font-family: #{$alert-md-font-family};
+  --font-size: #{$alert-md-font-size};
   --max-width: #{$alert-md-max-width};
 
-  font-family: $alert-md-font-family;
-  font-size: $alert-md-font-size;
-}
+  /* Alert Head */
+  --head-padding-top: #{$alert-md-head-padding-top};
+  --head-padding-end: #{$alert-md-head-padding-end};
+  --head-padding-bottom: #{$alert-md-head-padding-bottom};
+  --head-padding-start: #{$alert-md-head-padding-start};
+  --head-text-align: #{$alert-md-head-text-align};
 
-.alert-wrapper {
-  @include border-radius($alert-md-border-radius);
+  /* Alert Title */
+  --title-color: #{$alert-md-title-color};
+  --title-font-size: #{$alert-md-title-font-size};
+  --title-font-weight: #{$alert-md-title-font-weight};
 
-  box-shadow: $alert-md-box-shadow;
-}
+  /* Alert Subtitle */
+  --sub-title-color: #{$alert-md-sub-title-text-color};
+  --sub-title-font-size: #{$alert-md-sub-title-font-size};
 
-// Material Design Alert Header
-// --------------------------------------------------
+  /* Alert Message */
+  --message-max-height: #{$alert-md-content-max-height};
+  --message-padding-top: #{$alert-md-message-padding-top};
+  --message-padding-end: #{$alert-md-message-padding-end};
+  --message-padding-bottom: #{$alert-md-message-padding-bottom};
+  --message-padding-start: #{$alert-md-message-padding-start};
+  --message-color: #{$alert-md-message-text-color};
+  --message-font-size: #{$alert-md-message-font-size};
 
-.alert-head {
-  @include padding($alert-md-head-padding-top, $alert-md-head-padding-end, $alert-md-head-padding-bottom, $alert-md-head-padding-start);
+  /* Alert Group */
+  --group-max-height: #{$alert-md-content-max-height};
+  --group-border-top: #{$alert-md-list-border-top};
+  --group-border-bottom: #{$alert-md-list-border-bottom};
 
-  text-align: $alert-md-head-text-align;
-}
+  /* Alert Input */
+  --input-margin-top: #{$alert-md-input-margin-top};
+  --input-margin-end: #{$alert-md-input-margin-end};
+  --input-margin-bottom: #{$alert-md-input-margin-bottom};
+  --input-margin-start: #{$alert-md-input-margin-start};
+  --input-border-bottom: #{$alert-md-input-border-width $alert-md-input-border-style $alert-md-input-border-color};
+  --input-color: #{$alert-md-input-text-color};
+  --input-placeholder-color: #{$alert-md-input-placeholder-color};
 
-.alert-title {
-  color: $alert-md-title-color;
+  /* Alert Tappable */
+  --tappable-height: #{$alert-md-tappable-height};
 
-  font-size: $alert-md-title-font-size;
-  font-weight: $alert-md-title-font-weight;
-}
+  /* Alert Radio Label */
+  --radio-label-padding-top: #{$alert-md-radio-label-padding-top};
+  --radio-label-padding-end: #{$alert-md-radio-label-padding-end};
+  --radio-label-padding-bottom: #{$alert-md-radio-label-padding-bottom};
+  --radio-label-padding-start: #{$alert-md-radio-label-padding-start};
+  --radio-label-color: #{$alert-md-radio-label-text-color};
+  --radio-label-font-size: #{$alert-md-radio-label-font-size};
+  --radio-label-color-checked: #{$alert-md-radio-label-text-color-checked};
 
-.alert-sub-title {
-  color: $alert-md-sub-title-text-color;
+  /* Alert Radio Icon */
+  --radio-top: #{$alert-md-radio-top};
+  --radio-start: #{$alert-md-radio-left};
+  --radio-border-radius: #{$alert-md-radio-border-radius};
+  --radio-width: #{$alert-md-radio-width};
+  --radio-height: #{$alert-md-radio-height};
+  --radio-border-width: #{$alert-md-radio-border-width};
+  --radio-border-style: #{$alert-md-radio-border-style};
+  --radio-border-color: #{$alert-md-radio-border-color-off};
 
-  font-size: $alert-md-sub-title-font-size;
+  /* Alert Button Group */
+  --button-group-padding-top: #{$alert-md-button-group-padding-top};
+  --button-group-padding-end: #{$alert-md-button-group-padding-end};
+  --button-group-padding-bottom: #{$alert-md-button-group-padding-bottom};
+  --button-group-padding-start: #{$alert-md-button-group-padding-start};
+  --button-group-flex-wrap: #{$alert-md-button-group-flex-wrap};
+  --button-group-justify-content: #{$alert-md-button-group-justify-content};
+
+  /* Alert Button */
+  --button-border-radius: #{$alert-md-button-border-radius};
+  --button-margin-top: #{$alert-md-button-margin-top};
+  --button-margin-end: #{$alert-md-button-margin-end};
+  --button-margin-bottom: #{$alert-md-button-margin-bottom};
+  --button-margin-start: #{$alert-md-button-margin-start};
+  --button-padding-top: #{$alert-md-button-padding-top};
+  --button-padding-end: #{$alert-md-button-padding-end};
+  --button-padding-bottom: #{$alert-md-button-padding-bottom};
+  --button-padding-start: #{$alert-md-button-padding-start};
+  --button-background: #{$alert-md-button-background-color};
+  --button-color: #{$alert-md-button-text-color};
+  --button-font-weight: #{$alert-md-button-font-weight};
+  --button-text-align: #{$alert-md-button-text-align};
+  --button-text-transform: #{$alert-md-button-text-transform};
+  --button-background-activated: #{$alert-md-button-background-color-activated};
 }
 
 
 // Material Design Alert Message
 // --------------------------------------------------
 
-.alert-message,
-.alert-input-group {
-  @include padding($alert-md-message-padding-top, $alert-md-message-padding-end, $alert-md-message-padding-bottom, $alert-md-message-padding-start);
-
-  color: $alert-md-message-text-color;
-}
-
-.alert-message {
-  max-height: $alert-md-content-max-height;
-
-  font-size: $alert-md-message-font-size;
-}
-
 .alert-message:empty {
-  @include padding($alert-md-message-empty-padding-top, $alert-md-message-empty-padding-end, $alert-md-message-empty-padding-bottom, $alert-md-message-empty-padding-start);
+  --message-padding-top: #{$alert-md-message-empty-padding-top};
+  --message-padding-end: #{$alert-md-message-empty-padding-end};
+  --message-padding-bottom: #{$alert-md-message-empty-padding-bottom};
+  --message-padding-start: #{$alert-md-message-empty-padding-start};
 }
 
 
-// Material Design Alert Input
+// Material Design Alert Input Focused
 // --------------------------------------------------
 
-.alert-input {
-  @include margin($alert-md-input-margin-top, $alert-md-input-margin-end, $alert-md-input-margin-bottom, $alert-md-input-margin-start);
-
-  border-bottom: $alert-md-input-border-width $alert-md-input-border-style $alert-md-input-border-color;
-
-  color: $alert-md-input-text-color;
-
-  &::placeholder {
-    color: $alert-md-input-placeholder-color;
-
-    font-family: inherit;
-    font-weight: inherit;
-  }
-}
-
 .alert-input:focus {
-  @include margin(null, null, $alert-md-input-margin-bottom - 1, null);
-
-  border-bottom: $alert-md-input-border-width-focused $alert-md-input-border-style-focused $alert-md-input-border-color-focused;
+  --input-margin-bottom: #{$alert-md-input-margin-bottom - 1};
+  --input-border-bottom: #{$alert-md-input-border-width-focused $alert-md-input-border-style-focused $alert-md-input-border-color-focused};
 }
 
 
@@ -94,40 +128,11 @@
 .alert-checkbox-group {
   position: relative;
 
-  max-height: $alert-md-content-max-height;
-
-  border-top: $alert-md-list-border-top;
-  border-bottom: $alert-md-list-border-bottom;
-
   overflow: auto;
 }
 
 .alert-tappable {
-  display: flex;
   position: relative;
-
-  height: $alert-md-tappable-height;
-
-  contain: strict;
-  overflow: hidden;
-}
-
-
-// Material Design Alert Radio
-// --------------------------------------------------
-
-.alert-radio-label {
-  @include padding($alert-md-radio-label-padding-top, $alert-md-radio-label-padding-end, $alert-md-radio-label-padding-bottom, $alert-md-radio-label-padding-start);
-
-  flex: 1;
-
-  color: $alert-md-radio-label-text-color;
-
-  font-size: $alert-md-radio-label-font-size;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
 
   overflow: hidden;
 }
@@ -136,18 +141,7 @@
 // ---------------------------------------------------
 
 .alert-radio-icon {
-  @include position($alert-md-radio-top, null, null, $alert-md-radio-left);
-  @include border-radius($alert-md-radio-border-radius);
-
   display: block;
-  position: relative;
-
-  width: $alert-md-radio-width;
-  height: $alert-md-radio-height;
-
-  border-width: $alert-md-radio-border-width;
-  border-style: $alert-md-radio-border-style;
-  border-color: $alert-md-radio-border-color-off;
 }
 
 // Material Design Alert Radio Checked Dot
@@ -172,10 +166,6 @@
 
 // Material Design Alert Radio Checked
 // ---------------------------------------------------
-
-[aria-checked=true] .alert-radio-label {
-  color: $alert-md-radio-label-text-color-checked;
-}
 
 [aria-checked=true] .alert-radio-icon {
   border-color: $alert-md-radio-border-color-on;
@@ -244,49 +234,6 @@
 
   transform: $alert-md-checkbox-icon-transform;
 
-  border-width: $alert-md-checkbox-icon-border-width;
-  border-top-width: 0;
-  border-left-width: 0;
-  border-style: $alert-md-checkbox-icon-border-style;
-  border-color: $alert-md-checkbox-icon-border-color;
-}
-
-
-// Material Design Alert Button
-// --------------------------------------------------
-
-.alert-button-group {
-  @include padding($alert-md-button-group-padding-top, $alert-md-button-group-padding-end, $alert-md-button-group-padding-bottom, $alert-md-button-group-padding-start);
-
-  box-sizing: border-box;
-
-  flex-wrap: $alert-md-button-group-flex-wrap;
-  justify-content: $alert-md-button-group-justify-content;
-}
-
-.alert-button {
-  @include border-radius($alert-md-button-border-radius);
-  @include margin($alert-md-button-margin-top, $alert-md-button-margin-end, $alert-md-button-margin-bottom, $alert-md-button-margin-start);
-  @include padding($alert-md-button-padding-top, $alert-md-button-padding-end, $alert-md-button-padding-bottom, $alert-md-button-padding-start);
-
-  // necessary for ripple to work properly
-  position: relative;
-
-  background-color: $alert-md-button-background-color;
-  color: $alert-md-button-text-color;
-
-  font-weight: $alert-md-button-font-weight;
-
-  text-align: $alert-md-button-text-align;
-  text-transform: $alert-md-button-text-transform;
-
-  overflow: hidden;
-}
-
-.alert-button.activated {
-  background-color: $alert-md-button-background-color-activated;
-}
-
-.alert-button-inner {
-  justify-content: $alert-md-button-group-justify-content;
+  border-right: $alert-md-checkbox-icon-border-width $alert-md-checkbox-icon-border-style $alert-md-checkbox-icon-border-color;
+  border-bottom: $alert-md-checkbox-icon-border-width $alert-md-checkbox-icon-border-style $alert-md-checkbox-icon-border-color;
 }

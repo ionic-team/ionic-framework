@@ -269,6 +269,34 @@ that is called in the same circumstances.
 Present the alert overlay after it has been created.
 
 
+## CSS Custom Properties
+
+| Name                    | Description                      |
+| ----------------------- | -------------------------------- |
+| `--background`          | Background of the alert          |
+| `--border-radius`       | Border radius of the alert       |
+| `--box-shadow`          | Box shadow of the alert          |
+| `--button-font-size`    | Font size of the alert button    |
+| `--button-line-height`  | Line height of the alert button  |
+| `--head-padding-bottom` | Padding bottom of the alert head |
+| `--head-padding-end`    | Padding end of the alert head    |
+| `--head-padding-start`  | Padding start of the alert head  |
+| `--head-padding-top`    | Padding top of the alert head    |
+| `--head-text-align`     | Text alignment of the alert head |
+| `--max-height`          | Maximum height of the alert      |
+| `--max-width`           | Maximum width of the alert       |
+| `--min-width`           | Minimum width of the alert       |
+| `--sub-title-color`     | Color of the alert subtitle      |
+| `--sub-title-font-size` | Font size of the alert subtitle  |
+| `--title-color`         | Color of the alert title         |
+| `--title-font-size`     | Font size of the alert title     |
+| `--title-font-weight`   | Font weight of the alert title   |
+| `--title-margin-bottom` | Margin bottom of the alert title |
+| `--title-margin-end`    | Margin end of the alert title    |
+| `--title-margin-start`  | Margin start of the alert title  |
+| `--title-margin-top`    | Margin top of the alert title    |
+| `--width`               | Width of the alert               |
+
 
 ----------------------------------------------
 

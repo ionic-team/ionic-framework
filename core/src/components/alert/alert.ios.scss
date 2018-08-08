@@ -5,17 +5,89 @@
 // --------------------------------------------------
 
 :host {
+  /* Alert */
   --background: #{$alert-ios-background-color};
+  --border-radius: #{$alert-ios-border-radius};
+  --box-shadow: #{$alert-ios-box-shadow};
+  --font-family: #{$alert-ios-font-family};
+  --font-size: #{$alert-ios-font-size};
   --max-width: #{$alert-ios-max-width};
 
-  font-family: $alert-ios-font-family;
-  font-size: $alert-ios-font-size;
+  /* Alert Head */
+  --head-padding-top: #{$alert-ios-head-padding-top};
+  --head-padding-end: #{$alert-ios-head-padding-end};
+  --head-padding-bottom: #{$alert-ios-head-padding-bottom};
+  --head-padding-start: #{$alert-ios-head-padding-start};
+  --head-text-align: #{$alert-ios-head-text-align};
+
+  /* Alert Title */
+  --title-margin-top: #{$alert-ios-title-margin-top};
+  --title-color: #{$alert-ios-title-color};
+  --title-font-size: #{$alert-ios-title-font-size};
+  --title-font-weight: #{$alert-ios-title-font-weight};
+
+  /* Alert Subtitle */
+  --sub-title-color: #{$alert-ios-sub-title-text-color};
+  --sub-title-font-size: #{$alert-ios-sub-title-font-size};
+
+  /* Alert Message */
+  --message-max-height: #{$alert-ios-content-max-height};
+  --message-padding-top: #{$alert-ios-message-padding-top};
+  --message-padding-end: #{$alert-ios-message-padding-end};
+  --message-padding-bottom: #{$alert-ios-message-padding-bottom};
+  --message-padding-start: #{$alert-ios-message-padding-start};
+  --message-color: #{$alert-ios-message-text-color};
+  --message-font-size: #{$alert-ios-message-font-size};
+  --message-text-align: #{$alert-ios-message-text-align};
+
+  /* Alert Group */
+  --group-max-height: #{$alert-ios-content-max-height};
+  --group-border-top: #{$alert-ios-list-border-top};
+
+  /* Alert Input */
+  --input-border-radius: #{$alert-ios-input-border-radius};
+  --input-margin-top: #{$alert-ios-input-margin-top};
+  --input-padding-top: #{$alert-ios-input-padding-top};
+  --input-padding-end: #{$alert-ios-input-padding-end};
+  --input-padding-bottom: #{$alert-ios-input-padding-bottom};
+  --input-padding-start: #{$alert-ios-input-padding-start};
+  --input-border: #{$alert-ios-input-border};
+  --input-background: #{$alert-ios-input-background-color};
+  --input-color: #{$alert-ios-input-placeholder-color};
+
+  /* Alert Tappable */
+  --tappable-height: #{$alert-ios-tappable-height};
+
+  /* Alert Radio Label */
+  --radio-label-padding-top: #{$alert-ios-radio-label-padding-top};
+  --radio-label-padding-end: #{$alert-ios-radio-label-padding-end};
+  --radio-label-padding-bottom: #{$alert-ios-radio-label-padding-bottom};
+  --radio-label-padding-start: #{$alert-ios-radio-label-padding-start};
+  --radio-label-color: #{$alert-ios-radio-label-text-color};
+  --radio-label-color-checked: #{$alert-ios-radio-label-text-color-checked};
+
+  /* Alert Radio Label */
+  --radio-min-width: #{$alert-ios-radio-min-width};
+
+  /* Alert Button Group */
+  --button-group-margin-end: #{-$alert-ios-button-border-width};
+  --button-group-flex-wrap: #{$alert-ios-button-group-flex-wrap};
+
+  /* Alert Button */
+  --button-margin: #{$alert-ios-button-margin};
+  --button-border-radius: #{$alert-ios-button-border-radius};
+  --button-flex: #{$alert-ios-button-flex};
+  --button-min-width: #{$alert-ios-button-min-width};
+  --button-height: #{$alert-ios-button-min-height};
+  --button-border-top: #{$alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color};
+  --button-border-end: #{$alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color};
+  --button-background: #{$alert-ios-button-background-color};
+  --button-color: #{$alert-ios-button-text-color};
+  --button-font-size: #{$alert-ios-button-font-size};
+  --button-background-activated: #{$alert-ios-button-background-color-activated};
 }
 
 .alert-wrapper {
-  @include border-radius($alert-ios-border-radius);
-
-  box-shadow: $alert-ios-box-shadow;
   overflow: hidden;
 }
 
@@ -28,75 +100,14 @@
   backdrop-filter: $alert-ios-translucent-filter;
 }
 
-
-// iOS Alert Header
-// --------------------------------------------------
-
-.alert-head {
-  @include padding($alert-ios-head-padding-top, $alert-ios-head-padding-end, $alert-ios-head-padding-bottom, $alert-ios-head-padding-start);
-
-  text-align: $alert-ios-head-text-align;
-}
-
-.alert-title {
-  @include margin($alert-ios-title-margin-top, null, null, null);
-
-  color: $alert-ios-title-color;
-
-  font-size: $alert-ios-title-font-size;
-  font-weight: $alert-ios-title-font-weight;
-}
-
-.alert-sub-title {
-  color: $alert-ios-sub-title-text-color;
-
-  font-size: $alert-ios-sub-title-font-size;
-}
-
-
 // iOS Alert Message
 // --------------------------------------------------
 
-.alert-message,
-.alert-input-group {
-  @include padding($alert-ios-message-padding-top, $alert-ios-message-padding-end, $alert-ios-message-padding-bottom, $alert-ios-message-padding-start);
-
-  color: $alert-ios-message-text-color;
-
-  font-size: $alert-ios-message-font-size;
-
-  text-align: $alert-ios-message-text-align;
-}
-
-.alert-message {
-  max-height: $alert-ios-content-max-height;
-}
-
 .alert-message:empty {
-  @include padding($alert-ios-message-empty-padding-top, $alert-ios-message-empty-padding-end, $alert-ios-message-empty-padding-bottom, $alert-ios-message-empty-padding-start);
-}
-
-
-// iOS Alert Input
-// --------------------------------------------------
-
-.alert-input {
-  @include border-radius($alert-ios-input-border-radius);
-  @include margin($alert-ios-input-margin-top, null, null, null);
-  @include padding($alert-ios-input-padding-top, $alert-ios-input-padding-end, $alert-ios-input-padding-bottom, $alert-ios-input-padding-start);
-
-  border: $alert-ios-input-border;
-
-  background-color: $alert-ios-input-background-color;
-  appearance: none;
-
-  &::placeholder {
-    color: $alert-ios-input-placeholder-color;
-
-    font-family: inherit;
-    font-weight: inherit;
-  }
-
+  --message-padding-top: #{$alert-ios-message-empty-padding-top};
+  --message-padding-end: #{$alert-ios-message-empty-padding-end};
+  --message-padding-bottom: #{$alert-ios-message-empty-padding-bottom};
+  --message-padding-start: #{$alert-ios-message-empty-padding-start};
 }
 
 
@@ -107,19 +118,8 @@
 .alert-checkbox-group {
   overscroll-behavior: contain;
 
-  max-height: $alert-ios-content-max-height;
-
-  border-top: $alert-ios-list-border-top;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-}
-
-.alert-tappable {
-  display: flex;
-
-  height: $alert-ios-tappable-height;
-
-  contain: strict;
 }
 
 
@@ -127,26 +127,7 @@
 // --------------------------------------------------
 
 .alert-radio-label {
-  @include padding($alert-ios-radio-label-padding-top, $alert-ios-radio-label-padding-end, $alert-ios-radio-label-padding-bottom, $alert-ios-radio-label-padding-start);
-
-  flex: 1;
   order: 0;
-
-  color: $alert-ios-radio-label-text-color;
-
-  text-overflow: ellipsis;
-
-  white-space: nowrap;
-
-  overflow: hidden;
-}
-
-
-// iOS Alert Radio Label: Checked
-// --------------------------------------------------
-
-[aria-checked=true] .alert-radio-label {
-  color: $alert-ios-radio-label-text-color-checked;
 }
 
 
@@ -154,13 +135,8 @@
 // -----------------------------------------
 
 .alert-radio-icon {
-  position: relative;
-
   order: 1;
-
-  min-width: $alert-ios-radio-min-width;
 }
-
 
 // iOS Alert Radio Checked
 // -----------------------------------------
@@ -256,38 +232,8 @@
 // iOS Alert Button
 // --------------------------------------------------
 
-.alert-button-group {
-  @include margin-horizontal(null, -$alert-ios-button-border-width);
-
-  flex-wrap: $alert-ios-button-group-flex-wrap;
-}
-
-.alert-button {
-  @include margin($alert-ios-button-margin);
-  @include border-radius($alert-ios-button-border-radius);
-
-  flex: $alert-ios-button-flex;
-
-  min-width: $alert-ios-button-min-width;
-  height: $alert-ios-button-min-height;
-
-  border-top: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
-  border-right: $alert-ios-button-border-width $alert-ios-button-border-style $alert-ios-button-border-color;
-
-  background-color: $alert-ios-button-background-color;
-  color: $alert-ios-button-text-color;
-
-  font-size: $alert-ios-button-font-size;
-
-  overflow: hidden;
-}
-
 .alert-button:last-child {
-  border-right: 0;
-
-  font-weight: $alert-ios-button-main-font-weight;
+  --button-border-end: 0;
+  --button-font-weight: #{$alert-ios-button-main-font-weight};
 }
 
-.alert-button.activated {
-  background-color: $alert-ios-button-background-color-activated;
-}
