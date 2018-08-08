@@ -44,6 +44,17 @@ The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
 
 
+## CSS Custom Properties
+
+| Name               | Description                 |
+| ------------------ | --------------------------- |
+| `--background`     | Background of the badge     |
+| `--color`          | Text color of the badge     |
+| `--padding-bottom` | Padding bottom of the badge |
+| `--padding-end`    | Padding end of the badge    |
+| `--padding-start`  | Padding start of the badge  |
+| `--padding-top`    | Padding top of the badge    |
+
 
 ----------------------------------------------
 
