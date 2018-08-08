@@ -20,8 +20,12 @@
   contain: strict;
 }
 
-:host(.ion-color) {
-  --background-checked: #{current-color(base)};
+:host(.ion-color.toggle-checked) .toggle-icon {
+  background: current-color(base);
+}
+
+:host(.ion-color.toggle-checked) .toggle-inner {
+  background: current-color(contrast);
 }
 
 // iOS Toggle Background Track: Unchecked
