@@ -22,11 +22,13 @@
   contain: strict;
 }
 
-:host(.ion-color) {
-  --background-checked: #{current-color(base, $toggle-md-track-background-color-alpha-on)};
-  --handle-background-checked: #{current-color(base)};
+:host(.ion-color.toggle-checked) .toggle-icon {
+  background: current-color(base, $toggle-md-track-background-color-alpha-on);
 }
 
+:host(.ion-color.toggle-checked) .toggle-inner {
+  background: current-color(base);
+}
 
 // Material Design Toggle Background Track: Unchecked
 // -----------------------------------------
@@ -74,7 +76,7 @@
 // -----------------------------------------
 
 :host(.toggle-checked) .toggle-icon {
-  background-color: var(--background-checked);
+  background: var(--background-checked);
 }
 
 // Material Design Toggle Inner Knob: Checked
