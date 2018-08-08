@@ -71,7 +71,6 @@ Possible values are: `"ios"` or `"md"`.
 | `--border-style`   | Style of the toolbar border       |
 | `--border-width`   | Width of the toolbar border       |
 | `--color`          | Color of the toolbar text         |
-| `--font-family`    | Font family of the toolbar        |
 | `--min-height`     | Minimum height of the toolbar     |
 | `--opacity`        | Opacity of the toolbar background |
 | `--padding-bottom` | Bottom padding of the toolbar     |
