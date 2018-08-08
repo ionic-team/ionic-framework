@@ -33,7 +33,7 @@
 }
 
 :host(.ion-color) {
-  color: #{current-color(base)};
+  color: current-color(base);
 }
 
 // Textarea Within An Item
