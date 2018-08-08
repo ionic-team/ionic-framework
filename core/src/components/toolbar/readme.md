@@ -62,6 +62,22 @@ The mode determines which platform styles to use.
 Possible values are: `"ios"` or `"md"`.
 
 
+## CSS Custom Properties
+
+| Name               | Description                       |
+| ------------------ | --------------------------------- |
+| `--background`     | Background of the toolbar         |
+| `--border-color`   | Color of the toolbar border       |
+| `--border-style`   | Style of the toolbar border       |
+| `--border-width`   | Width of the toolbar border       |
+| `--color`          | Color of the toolbar text         |
+| `--min-height`     | Minimum height of the toolbar     |
+| `--opacity`        | Opacity of the toolbar background |
+| `--padding-bottom` | Bottom padding of the toolbar     |
+| `--padding-end`    | End padding of the toolbar        |
+| `--padding-start`  | Start padding of the toolbar      |
+| `--padding-top`    | Top padding of the toolbar        |
+
 
 ----------------------------------------------
 
