@@ -214,11 +214,16 @@ export class Menu {
 
   @Listen('body:click', { enabled: false, capture: true })
   onBackdropClick(ev: any) {
-    const path = ev.path;
-    if (path && !path.includes(this.menuInnerEl) && this.lastOnEnd < ev.timeStamp - 100) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      this.close();
+    if (this.lastOnEnd < ev.timeStamp - 100) {
+      const shouldClose = (ev.composedPath)
+        ? !ev.composedPath().includes(this.menuInnerEl)
+        : false;
+
+      if (shouldClose) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.close();
+      }
     }
   }
 
@@ -481,7 +486,6 @@ export class Menu {
       <div
         class="menu-inner"
         ref={el => this.menuInnerEl = el}
-        onClick={this.onBackdropClick.bind(this)}
       >
         <slot></slot>
       </div>,

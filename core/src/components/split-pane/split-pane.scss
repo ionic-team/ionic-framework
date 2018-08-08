@@ -39,7 +39,7 @@
   display: none;
 }
 
-.split-pane-visible > .split-pane-side[side=start] {
+.split-pane-visible > .split-pane-side {
   order: -1;
 }
 

@@ -66,14 +66,11 @@ ion-backdrop {
 .menu-content-open {
   cursor: pointer;
   touch-action: manipulation;
-}
 
-.menu-content-open {
   // the containing element itself should be clickable but
   // everything inside of it should not clickable when menu is open
   pointer-events: none;
 }
-
 
 @media (max-width: 340px) {
 
