@@ -111,6 +111,9 @@ Gets the active view
 Returns the view at the index
 
 
+#### getLength()
+
+
 #### getPrevious()
 
 Gets the previous view
@@ -132,9 +135,6 @@ Inserts an array of components into the nav stack at the specified index. The la
 #### isAnimating()
 
 Returns the length of navigation stack
-
-
-#### length()
 
 
 #### pop()
