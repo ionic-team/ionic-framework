@@ -60,6 +60,13 @@ When using a router, it specifies the transition direction when navigating to
 another page using `href`.
 
 
+## CSS Custom Properties
+
+| Name           | Description             |
+| -------------- | ----------------------- |
+| `--background` | Background of the badge |
+| `--color`      | Text color of the badge |
+
 
 ----------------------------------------------
 
