@@ -51,6 +51,21 @@
   <ion-alert-controller></ion-alert-controller>
 
   <style>
+    .my-custom-class {
+      --background: #222;
+
+      --max-height: 200px;
+      --max-width: 200px;
+      --min-width: 0;
+      --width: 400px;
+
+      --title-color: white;
+      --sub-title-color: #e5e5e5;
+      --message-color: #f8f8f8;
+      --button-color: var(--background);
+      --button-background: yellow;
+    }
+
     .f {
       width: 200px;
       height: 200px;
@@ -335,7 +350,7 @@
       const alert = await alertController.create({
         header: 'Alert',
         subHeader: 'Subtitle',
-        cssClass: 'my-class my-customClass   ',
+        cssClass: 'my-class my-custom-class   ',
         message: 'This is an alert message.',
         buttons: [ {
             text: 'Ok',
