@@ -123,6 +123,15 @@ Emitted when the toggle has focus.
 Emitted when the styles change.
 
 
+## CSS Custom Properties
+
+| Name                          | Description                                  |
+| ----------------------------- | -------------------------------------------- |
+| `--background`                | Background of the toggle                     |
+| `--background-checked`        | Background of the toggle when checked        |
+| `--handle-background`         | Background of the toggle handle              |
+| `--handle-background-checked` | Background of the toggle handle when checked |
+
 
 ----------------------------------------------
 
