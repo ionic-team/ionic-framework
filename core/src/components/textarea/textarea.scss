@@ -5,6 +5,9 @@
 
 :host {
   /**
+   * @prop --background: Background of the textarea
+   * @prop --border-radius: Border radius of the textarea
+   * @prop --color: Color of the text
    * @prop --placeholder-color: Color of the placeholder text
    * @prop --placeholder-weight: Weight of the placeholder text
    * @prop --placeholder-opacity: Opacity of the placeholder text
@@ -12,8 +15,9 @@
    * @prop --padding-end: End padding of the textarea
    * @prop --padding-bottom: Bottom padding of the textarea
    * @prop --padding-start: Start padding of the textarea
-   * @prop --border-radius: Border radius of the textarea
    */
+  --background: initial;
+  --color: currentColor;
   --placeholder-color: currentColor;
   --placeholder-weight: inherit;
   --placeholder-opacity: .5;
@@ -30,9 +34,15 @@
 
   width: 100%;
   box-sizing: border-box;
+
+  background: var(--background);
 }
 
 :host(.ion-color) {
+  background: initial;
+}
+
+:host(.ion-color) .native-textarea {
   color: current-color(base);
 }
 
@@ -63,6 +73,7 @@
   outline: none;
 
   background: transparent;
+  color: var(--color);
 
   box-sizing: border-box;
   resize: none;

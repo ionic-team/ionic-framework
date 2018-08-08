@@ -314,6 +314,21 @@ Emitted when a keyboard input ocurred.
 Emitted when the styles change.
 
 
+## CSS Custom Properties
+
+| Name                    | Description                     |
+| ----------------------- | ------------------------------- |
+| `--background`          | Background of the textarea      |
+| `--border-radius`       | Border radius of the textarea   |
+| `--color`               | Color of the text               |
+| `--padding-bottom`      | Bottom padding of the textarea  |
+| `--padding-end`         | End padding of the textarea     |
+| `--padding-start`       | Start padding of the textarea   |
+| `--padding-top`         | Top padding of the textarea     |
+| `--placeholder-color`   | Color of the placeholder text   |
+| `--placeholder-opacity` | Opacity of the placeholder text |
+| `--placeholder-weight`  | Weight of the placeholder text  |
+
 
 ----------------------------------------------
 
