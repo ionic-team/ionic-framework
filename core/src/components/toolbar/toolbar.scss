@@ -39,8 +39,11 @@
 }
 
 :host(.ion-color) {
-  --background: #{current-color(base)};
-  --color: #{current-color(contrast)};
+  color: current-color(contrast);
+}
+
+:host(.ion-color) .toolbar-background {
+  background: current-color(base);
 }
 
 .toolbar-container {
