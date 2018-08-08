@@ -214,7 +214,7 @@ export class Menu {
 
   @Listen('body:click', { enabled: false, capture: true })
   onBackdropClick(ev: any) {
-    const path = ev.path;
+    const path = ev.composedPath();
     if (path && !path.includes(this.menuInnerEl) && this.lastOnEnd < ev.timeStamp - 100) {
       ev.preventDefault();
       ev.stopPropagation();
