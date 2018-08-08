@@ -5,8 +5,10 @@
 // --------------------------------------------------
 
 :host {
-  --clear-button-color: #{$searchbar-ios-input-clear-icon-color};
-  --cancel-button-color: #{$searchbar-ios-cancel-button-color};
+  --color-button-clear: #{$searchbar-ios-input-clear-icon-color};
+  --color-button-cancel: #{$searchbar-ios-cancel-button-color};
+  --color-icon: #{$searchbar-ios-input-search-icon-color};
+  --background: #{$searchbar-ios-input-background-color};
 
   @include padding($searchbar-ios-padding-top, $searchbar-ios-padding-end, $searchbar-ios-padding-bottom, $searchbar-ios-padding-start);
 
@@ -38,8 +40,6 @@
   width: $searchbar-ios-input-search-icon-size;
   height: 100%;
 
-  color: $searchbar-ios-input-search-icon-color;
-
   contain: strict;
 }
 
@@ -52,8 +52,6 @@
   @include border-radius($searchbar-ios-input-border-radius);
 
   height: 100%;
-
-  background-color: $searchbar-ios-input-background-color;
 
   font-size: 14px;
   font-weight: 400;

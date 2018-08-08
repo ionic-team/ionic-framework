@@ -1,7 +1,7 @@
 import { Component, Listen, Method, Prop } from '@stencil/core';
 
-import { ModalOptions } from '../../interface';
-import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+import { ModalOptions, OverlayController } from '../../interface';
+import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-modal-controller'

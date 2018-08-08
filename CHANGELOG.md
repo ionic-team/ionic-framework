@@ -1,3 +1,43 @@
+<a name="4.0.0-beta.2"></a>
+# [4.0.0-beta.2](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.1...v4.0.0-beta.2) (2018-08-08)
+
+
+### Bug Fixes
+
+* **all:** buttons are type="button" ([2b7007f](https://github.com/ionic-team/ionic/commit/2b7007f))
+* **app:** fix statusbarPadding ([2c925b7](https://github.com/ionic-team/ionic/commit/2c925b7)), closes [#15073](https://github.com/ionic-team/ionic/issues/15073)
+* **chip:** conforms to ion-icon ([f49fa4a](https://github.com/ionic-team/ionic/commit/f49fa4a)), closes [#15053](https://github.com/ionic-team/ionic/issues/15053)
+* **content:** remove scroll-inner ([efd77c9](https://github.com/ionic-team/ionic/commit/efd77c9)), closes [#14985](https://github.com/ionic-team/ionic/issues/14985)
+* **datetime:** fix gesture ([e9fd184](https://github.com/ionic-team/ionic/commit/e9fd184))
+* **datetime:** ionChange event ([8b35e37](https://github.com/ionic-team/ionic/commit/8b35e37))
+* **header:** safe margin when statubarPadding=0 ([b69d01d](https://github.com/ionic-team/ionic/commit/b69d01d))
+* **input:** hide clear button ([141b86c](https://github.com/ionic-team/ionic/commit/141b86c)), closes [#15002](https://github.com/ionic-team/ionic/issues/15002)
+* **menu:** add width and small-width css variables ([#14997](https://github.com/ionic-team/ionic/issues/14997)) ([69f5cc8](https://github.com/ionic-team/ionic/commit/69f5cc8))
+* **menu:** content's box-shadow ([48e2a4e](https://github.com/ionic-team/ionic/commit/48e2a4e))
+* **nav:** animation backdrop ([948d083](https://github.com/ionic-team/ionic/commit/948d083))
+* **popover:** ion-scroll sizing ([b85d4a0](https://github.com/ionic-team/ionic/commit/b85d4a0)), closes [#14911](https://github.com/ionic-team/ionic/issues/14911)
+* **range:** value changes when using keyboard ([27fdc9a](https://github.com/ionic-team/ionic/commit/27fdc9a)), closes [#15065](https://github.com/ionic-team/ionic/issues/15065)
+* **searchbar:** color ([14d6270](https://github.com/ionic-team/ionic/commit/14d6270)), closes [#14998](https://github.com/ionic-team/ionic/issues/14998)
+* **sliding:** fix core gesture logic + priority configuration ([a77ee2a](https://github.com/ionic-team/ionic/commit/a77ee2a)), closes [#14763](https://github.com/ionic-team/ionic/issues/14763)
+* **split-pane:** side=end works properly ([dc50003](https://github.com/ionic-team/ionic/commit/dc50003)), closes [#15013](https://github.com/ionic-team/ionic/issues/15013)
+* **tab:** edge prop ([2a4327f](https://github.com/ionic-team/ionic/commit/2a4327f)), closes [#15003](https://github.com/ionic-team/ionic/issues/15003)
+* **tap-click:** desktop also needs tap-click ([9f4d873](https://github.com/ionic-team/ionic/commit/9f4d873))
+
+
+### Features
+
+* **core:** add check for standalone mode ([#15001](https://github.com/ionic-team/ionic/issues/15001)) ([0b4b9fe](https://github.com/ionic-team/ionic/commit/0b4b9fe))
+* **item-sliding:** adds disabled prop ([9773e2a](https://github.com/ionic-team/ionic/commit/9773e2a)), closes [#14831](https://github.com/ionic-team/ionic/issues/14831)
+
+
+### Performance Improvements
+
+* **app:** move app css to global css ([a71f382](https://github.com/ionic-team/ionic/commit/a71f382))
+* **menu:** flickering ([8253b04](https://github.com/ionic-team/ionic/commit/8253b04))
+* **scroll:** filter velocity using exponential moving window ([419ef7b](https://github.com/ionic-team/ionic/commit/419ef7b))
+
+
+
 <a name="4.0.0-beta.1"></a>
 # [4.0.0-beta.1](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.0...v4.0.0-beta.1) (2018-08-01)
 

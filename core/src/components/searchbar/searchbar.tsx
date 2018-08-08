@@ -337,8 +337,6 @@ export class Searchbar {
 
     return [
       <div class="searchbar-input-container">
-        { this.mode === 'md' && cancelButton }
-        <ion-icon mode={this.mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
         <input
           ref={el => this.nativeInput = el as HTMLInputElement}
           class="searchbar-input"
@@ -351,6 +349,10 @@ export class Searchbar {
           autoComplete={this.autocomplete}
           autoCorrect={this.autocorrect}
           spellCheck={this.spellcheck}/>
+
+        { this.mode === 'md' && cancelButton }
+
+        <ion-icon mode={this.mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
 
         <button
           type="button"

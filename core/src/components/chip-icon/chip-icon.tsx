@@ -28,6 +28,12 @@ export class ChipIcon {
    */
   @Prop() name?: string;
 
+  /**
+   * The icon src to use.
+   * Possible values are the same as `"ion-icon"`.
+   */
+  @Prop() src?: string;
+
   hostData() {
     return {
       class: {
@@ -37,6 +43,6 @@ export class ChipIcon {
   }
 
   render() {
-    return <ion-icon name={this.name}/>;
+    return <ion-icon name={this.name} src={this.src} mode={this.mode}/>;
   }
 }

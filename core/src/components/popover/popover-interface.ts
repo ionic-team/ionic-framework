@@ -9,6 +9,6 @@ export interface PopoverOptions {
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
   cssClass?: string | string[];
-  ev: Event;
+  event?: Event;
   delegate?: FrameworkDelegate;
 }

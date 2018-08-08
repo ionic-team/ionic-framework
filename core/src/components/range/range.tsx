@@ -1,10 +1,10 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { BaseInput, Color, Gesture, GestureDetail, Mode, RangeInputChangeEvent, StyleEvent } from '../../interface';
+import { BaseInput, Color, Gesture, GestureDetail, Mode, RangeInputChangeEvent, RangeValue, StyleEvent } from '../../interface';
 import { clamp, debounceEvent, deferEvent } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
-import { Knob, RangeEventDetail, RangeValue } from './range-interface';
+import { Knob, RangeEventDetail } from './range-interface';
 
 @Component({
   tag: 'ion-range',
@@ -98,7 +98,7 @@ export class Range implements BaseInput {
   @Watch('disabled')
   protected disabledChanged() {
     if (this.gesture) {
-      this.gesture.disabled = this.disabled;
+      this.gesture.setDisabled(this.disabled);
     }
     this.emitStyle();
   }
@@ -106,8 +106,7 @@ export class Range implements BaseInput {
   /**
    * the value of the range.
    */
-  @Prop({ mutable: true })
-  value: any = 0;
+  @Prop({ mutable: true }) value: RangeValue = 0;
   @Watch('value')
   protected valueChanged(value: RangeValue) {
     if (!this.noUpdate) {
@@ -145,17 +144,17 @@ export class Range implements BaseInput {
   }
 
   async componentDidLoad() {
-    this.gesture = (await import('../../utils/gesture/gesture')).create({
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
       el: this.rangeSlider!,
       queue: this.queue,
       gestureName: 'range',
-      gesturePriority: 30,
+      gesturePriority: 100,
       threshold: 0,
       onStart: this.onDragStart.bind(this),
       onMove: this.onDragMove.bind(this),
       onEnd: this.onDragEnd.bind(this),
     });
-    this.gesture.disabled = this.disabled;
+    this.gesture.setDisabled(this.disabled);
   }
 
   @Listen('ionIncrease')
@@ -172,6 +171,7 @@ export class Range implements BaseInput {
     } else {
       this.ratioB += step;
     }
+    this.updateValue();
   }
 
   private getValue(): RangeValue {
@@ -391,7 +391,7 @@ export class Range implements BaseInput {
   }
 }
 
-export function ratioToValue(
+function ratioToValue(
   ratio: number,
   min: number,
   max: number,
@@ -404,6 +404,6 @@ export function ratioToValue(
   return clamp(min, value, max);
 }
 
-export function valueToRatio(value: number, min: number, max: number): number {
+function valueToRatio(value: number, min: number, max: number): number {
   return clamp(0, (value - min) / (max - min), 1);
 }

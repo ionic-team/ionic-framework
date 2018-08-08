@@ -571,6 +571,11 @@ recent leap years, then this input's value would be `yearValues="2024,2020,2016,
 Emitted when the datetime selection was cancelled.
 
 
+#### ionChange
+
+Emitted when the value (selected date) has changed.
+
+
 #### ionStyle
 
 Emitted when the styles change.

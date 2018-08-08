@@ -265,8 +265,6 @@ rules:
     - padding
     - padding-left
     - padding-right
-    - padding-top
-    - padding-bottom
     - margin
     - margin-left
     - margin-right

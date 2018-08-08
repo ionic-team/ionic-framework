@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Gesture, GestureDetail } from '../../interface';
 
@@ -48,6 +48,17 @@ export class ItemSliding {
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
+   * If true, the user cannot interact with the sliding-item. Defaults to `false`.
+   */
+  @Prop() disabled = false;
+  @Watch('disabled')
+  disabledChanged() {
+    if (this.gesture) {
+      this.gesture.setDisabled(this.disabled);
+    }
+  }
+
+  /**
    * Emitted when the sliding position changes.
    */
   @Event() ionDrag!: EventEmitter;
@@ -58,18 +69,18 @@ export class ItemSliding {
 
     this.updateOptions();
 
-    this.gesture = (await import('../../utils/gesture/gesture')).create({
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
       el: this.el,
       queue: this.queue,
       gestureName: 'item-swipe',
-      gesturePriority: -10,
+      gesturePriority: 20,
       threshold: 5,
       canStart: this.canStart.bind(this),
       onStart: this.onDragStart.bind(this),
       onMove: this.onDragMove.bind(this),
       onEnd: this.onDragEnd.bind(this),
     });
-    this.gesture.disabled = false;
+    this.disabledChanged();
   }
 
   componentDidUnload() {
@@ -152,7 +163,7 @@ export class ItemSliding {
       this.closeOpened();
       return false;
     }
-    return true;
+    return !!(this.rightOptions || this.leftOptions);
   }
 
   private onDragStart() {
@@ -295,7 +306,7 @@ export class ItemSliding {
 }
 
 /** @hidden */
-export function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
+function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
   // The logic required to know when the sliding item should close (openAmount=0)
   // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)
   // and it ended up being too complicated to be written manually without errors

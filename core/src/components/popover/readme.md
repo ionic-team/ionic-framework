@@ -66,7 +66,7 @@ AnimationBuilder
 Animation to use when the popover is presented.
 
 
-#### ev
+#### event
 
 any
 
@@ -171,7 +171,7 @@ If true, the popover will be dismissed when the backdrop is clicked. Defaults to
 Animation to use when the popover is presented.
 
 
-#### ev
+#### event
 
 any
 

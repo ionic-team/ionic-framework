@@ -1,9 +1,6 @@
 @import "../../themes/ionic.globals";
 
 :host {
-  --ion-color-base: #{ion-color(primary, base)};
-  --ion-color-contrast: #{ion-color(primary, contrast)};
-
   @include border-radius(50%);
 
   display: inline-flex;
@@ -14,11 +11,14 @@
   width: var(--size, 32px);
   height: var(--size, 32px);
 
-  background-color: var(--ion-color-base);
+
+  background: #{ion-color(primary, base)};
+  color: #{ion-color(primary, contrast)};
+
+  font-size: 18px;
 }
 
-ion-icon {
-  color: var(--ion-color-contrast);
-
-  font-size: var(--icon-size, 18px);
+:host(.ion-color) {
+  background: #{current-color(base)};
+  color: #{current-color(contrast)};
 }

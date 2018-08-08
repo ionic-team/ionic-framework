@@ -15,13 +15,5 @@ ion-header {
 }
 
 ion-header ion-toolbar:first-child {
-  /* stylelint-disable-next-line property-blacklist */
-  padding-top: var(--ion-statusbar-padding);
-}
-
-@supports (padding-top: env(safe-area-inset-top)) {
-  ion-header ion-toolbar:first-child {
-    /* stylelint-disable-next-line property-blacklist */
-    padding-top: calc(env(safe-area-inset-top) + var(--ion-statusbar-padding));
-  }
+  padding-top: var(--ion-statusbar-padding, 0);
 }

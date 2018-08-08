@@ -77,6 +77,7 @@ export class BackButton {
 
     return (
       <button
+        type="button"
         class="back-button-native"
         onClick={ev => this.onClick(ev)}>
         <span class="back-button-inner">

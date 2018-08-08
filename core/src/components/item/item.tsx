@@ -120,9 +120,9 @@ export class Item {
 
   hostData() {
     const childStyles = {};
-    for (const value of this.itemStyles.values()) {
+    this.itemStyles.forEach(value => {
       Object.assign(childStyles, value);
-    }
+    });
 
     return {
       'tappable': this.isClickable(),

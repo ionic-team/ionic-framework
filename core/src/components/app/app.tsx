@@ -1,21 +1,15 @@
 import { Component, Element, Prop, QueueApi } from '@stencil/core';
 
-import { Config, Mode } from '../../interface';
-import { isDevice, isHybrid, needInputShims } from '../../utils/platform';
-import { createThemedClasses } from '../../utils/theme';
+import { Config } from '../../interface';
+import { isDevice, isHybrid, isStandaloneMode, needInputShims } from '../../utils/platform';
 
 @Component({
   tag: 'ion-app',
-  styleUrls: {
-    ios: 'app.ios.scss',
-    md: 'app.md.scss'
-  }
+  styleUrl: 'app.scss'
 })
 export class App {
 
   private isDevice = false;
-
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
@@ -28,21 +22,24 @@ export class App {
   }
 
   componentDidLoad() {
-    importTapClick(this.win, this.isDevice);
-    importInputShims(this.win, this.config);
-    importStatusTap(this.win, this.isDevice, this.queue);
+    setTimeout(() => {
+      importTapClick(this.win);
+      importInputShims(this.win, this.config);
+      importStatusTap(this.win, this.isDevice, this.queue);
+    }, 32);
   }
 
   hostData() {
     const hybrid = isHybrid(this.win);
-    const statusbarPadding = this.config.get('statusbarPadding', hybrid);
+    const isStandalone = isStandaloneMode(this.win);
+    const statusbarPadding = this.config.get('statusbarPadding', hybrid || isStandalone);
 
     return {
       class: {
-        ...createThemedClasses(this.mode, 'app'),
-
+        'ion-page': true,
         'is-device': this.isDevice,
         'is-hydrid': hybrid,
+        'is-standalone': isStandalone,
         'statusbar-padding': statusbarPadding
       }
     };
@@ -55,10 +52,8 @@ async function importStatusTap(win: Window, device: boolean, queue: QueueApi) {
   }
 }
 
-async function importTapClick(win: Window, device: boolean) {
-  if (device) {
-    (await import('../../utils/tap-click')).startTapClick(win.document);
-  }
+async function importTapClick(win: Window) {
+  (await import('../../utils/tap-click')).startTapClick(win.document);
 }
 
 async function importInputShims(win: Window, config: Config) {

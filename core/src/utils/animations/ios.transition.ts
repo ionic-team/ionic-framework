@@ -33,7 +33,7 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
     const navDecor = new AnimationC();
     navDecor
       .addElement(navEl)
-      .duringAddClass('show-decor');
+      .beforeAddClass('show-decor');
 
     rootTransition.add(navDecor);
   }
@@ -47,7 +47,7 @@ export function iosTransitionAnimation(AnimationC: Animation, navEl: HTMLElement
     const enteringContent = new AnimationC();
 
     if (!contentEl && !enteringToolBarEle && headerEls.length === 0) {
-      enteringContent.addElement(enteringEl.querySelector(':scope > ion-page, :scope > ion-nav, :scope > ion-tabs'));
+      enteringContent.addElement(enteringEl.querySelector(':scope > .ion-page, :scope > ion-nav, :scope > ion-tabs'));
     } else {
       enteringContent.addElement(contentEl);
       enteringContent.addElement(headerEls);

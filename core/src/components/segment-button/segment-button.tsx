@@ -69,6 +69,7 @@ export class SegmentButton {
   render() {
     return [
       <button
+        type="button"
         aria-pressed={this.checked ? 'true' : null}
         class="segment-button-native"
         disabled={this.disabled}

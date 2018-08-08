@@ -11,6 +11,8 @@
   --padding-start: 0px;
   --padding-end: 0px;
   --keyboard-offset: 0px;
+  --offset-top: 0px;
+  --offset-bottom: 0px;
 
   display: block;
   position: relative;
@@ -33,16 +35,23 @@
   contain: layout size style;
 }
 
+:host(.scroll-disabled),
+ion-scroll {
+  @include padding(
+    calc(var(--padding-top) + var(--offset-top)),
+    var(--padding-end),
+    calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom)),
+    var(--padding-start)
+  );
+}
+
 :host(.ion-color-outer),
 :host(.outer-content) {
   --ion-color-base: #{$background-color-step-50};
 }
 
-.scroll-inner {
-  @include padding(var(--padding-top), var(--padding-end), calc(var(--padding-bottom) + var(--keyboard-offset)), var(--padding-start));
+:host(.content-size) ion-scroll {
+  position: relative;
 
-  box-sizing: border-box;
-
-  min-height: 100%;
-  -webkit-margin-collapse: discard;
+  contain: none;
 }

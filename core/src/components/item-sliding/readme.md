@@ -29,6 +29,24 @@ Options can be expanded to take up the full width of the item if you swipe past 
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+#### disabled
+
+boolean
+
+If true, the user cannot interact with the sliding-item. Defaults to `false`.
+
+
+## Attributes
+
+#### disabled
+
+boolean
+
+If true, the user cannot interact with the sliding-item. Defaults to `false`.
+
+
 ## Events
 
 #### ionDrag

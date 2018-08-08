@@ -315,6 +315,7 @@ export class Alert implements OverlayInterface {
       <div class="alert-checkbox-group" aria-labelledby={labelledby}>
         { inputs.map(i => (
           <button
+            type="button"
             onClick={() => this.cbClick(i)}
             aria-checked={i.checked ? 'true' : null}
             id={i.id}
@@ -345,6 +346,7 @@ export class Alert implements OverlayInterface {
       <div class="alert-radio-group" role="radiogroup" aria-labelledby={labelledby} aria-activedescendant={this.activeId}>
         { inputs.map(i => (
           <button
+            type="button"
             onClick={() => this.rbClick(i)}
             aria-checked={i.checked ? 'true' : null}
             disabled={i.disabled}
@@ -413,7 +415,7 @@ export class Alert implements OverlayInterface {
     return (
       <div class={alertButtonGroupClass}>
         {buttons.map(button =>
-          <button class={buttonClass(button)} tabIndex={0} onClick={() => this.buttonClick(button)}>
+          <button type="button" class={buttonClass(button)} tabIndex={0} onClick={() => this.buttonClick(button)}>
             <span class="alert-button-inner">
               {button.text}
             </span>

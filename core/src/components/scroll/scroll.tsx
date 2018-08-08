@@ -13,8 +13,29 @@ export class Scroll {
   private watchDog: any;
   private isScrolling = false;
   private lastScroll = 0;
-  private detail: ScrollDetail;
   private queued = false;
+
+  // Detail is used in a hot loop in the scroll event, by allocating it here
+  // V8 will be able to inline any read/write to it since it's a monomorphic class.
+  // https://mrale.ph/blog/2015/01/11/whats-up-with-monomorphism.html
+  private detail: ScrollDetail = {
+    scrollTop: 0,
+    scrollLeft: 0,
+    type: 'scroll',
+    event: undefined!,
+    startX: 0,
+    startY: 0,
+    startTimeStamp: 0,
+    currentX: 0,
+    currentY: 0,
+    velocityX: 0,
+    velocityY: 0,
+    deltaX: 0,
+    deltaY: 0,
+    timeStamp: 0,
+    data: undefined,
+    isScrolling: true,
+  };
 
   @Element() el!: HTMLElement;
 
@@ -50,31 +71,6 @@ export class Scroll {
    * Emitted when the scroll has ended.
    */
   @Event() ionScrollEnd!: EventEmitter<ScrollBaseDetail>;
-
-  constructor() {
-    // Detail is used in a hot loop in the scroll event, by allocating it here
-    // V8 will be able to inline any read/write to it since it's a monomorphic class.
-    // https://mrale.ph/blog/2015/01/11/whats-up-with-monomorphism.html
-    this.detail = {
-      positions: [],
-      scrollTop: 0,
-      scrollLeft: 0,
-      type: 'scroll',
-      event: undefined!,
-      startX: 0,
-      startY: 0,
-      startTimeStamp: 0,
-      currentX: 0,
-      currentY: 0,
-      velocityX: 0,
-      velocityY: 0,
-      deltaX: 0,
-      deltaY: 0,
-      timeStamp: 0,
-      data: undefined,
-      isScrolling: true,
-    };
-  }
 
   componentWillLoad() {
     if (this.forceOverscroll === undefined) {
@@ -116,10 +112,7 @@ export class Scroll {
   /** Scroll to the bottom of the component */
   @Method()
   scrollToBottom(duration: number): Promise<void> {
-    const y = (this.el)
-      ? this.el.scrollHeight - this.el.clientHeight
-      : 0;
-
+    const y = this.el.scrollHeight - this.el.clientHeight;
     return this.scrollToPoint(0, y, duration);
   }
 
@@ -209,9 +202,8 @@ export class Scroll {
     // chill out for a frame first
     this.queue.write(() => {
       this.queue.write(timeStamp => {
-        // TODO: review stencilt type of timeStamp
-        startTime = timeStamp!;
-        step(timeStamp!);
+        startTime = timeStamp;
+        step(timeStamp);
       });
     });
 
@@ -263,49 +255,32 @@ export class Scroll {
 function updateScrollDetail(
   detail: ScrollDetail,
   el: HTMLElement,
-  timeStamp: number,
+  timestamp: number,
   didStart: boolean
 ) {
-  const scrollTop = el.scrollTop;
-  const scrollLeft = el.scrollLeft;
-  const positions = detail.positions;
+  const prevX = detail.currentX;
+  const prevY = detail.currentY;
+  const prevT = detail.timeStamp;
+  const currentX = el.scrollLeft;
+  const currentY = el.scrollTop;
   if (didStart) {
     // remember the start positions
-    detail.startTimeStamp = timeStamp;
-    detail.startY = scrollTop;
-    detail.startX = scrollLeft;
-    positions.length = 0;
+    detail.startTimeStamp = timestamp;
+    detail.startX = currentX;
+    detail.startY = currentY;
+    detail.velocityX = detail.velocityY = 0;
   }
+  detail.timeStamp = timestamp;
+  detail.currentX = detail.scrollLeft = currentX;
+  detail.currentY = detail.scrollTop = currentY;
+  detail.deltaX = currentX - detail.startX;
+  detail.deltaY = currentY - detail.startY;
 
-  detail.timeStamp = timeStamp;
-  detail.currentY = detail.scrollTop = scrollTop;
-  detail.currentX = detail.scrollLeft = scrollLeft;
-  detail.deltaY = scrollTop - detail.startY;
-  detail.deltaX = scrollLeft - detail.startX;
-
-  // actively scrolling
-  positions.push(scrollTop, scrollLeft, timeStamp);
-
-  // move pointer to position measured 100ms ago
-  const timeRange = timeStamp - 100;
-  let startPos = positions.length - 1;
-
-  while (startPos > 0 && positions[startPos] > timeRange) {
-    startPos -= 3;
-  }
-
-  if (startPos > 3) {
-    // compute relative movement between these two points
-    const frequency = 1 / (positions[startPos] - timeStamp);
-    const movedX = positions[startPos - 1] - scrollLeft;
-    const movedY = positions[startPos - 2] - scrollTop;
-
-    // based on XXms compute the movement to apply for each render step
-    // velocity = space/time = s*(1/t) = s*frequency
-    detail.velocityX = movedX * frequency;
-    detail.velocityY = movedY * frequency;
-  } else {
-    detail.velocityX = 0;
-    detail.velocityY = 0;
+  const timeDelta = timestamp - prevT;
+  if (timeDelta > 0 && timeDelta < 100) {
+    const velocityX = (currentX - prevX) / timeDelta;
+    const velocityY = (currentY - prevY) / timeDelta;
+    detail.velocityX = velocityX * 0.7 + detail.velocityX * 0.3;
+    detail.velocityY = velocityY * 0.7 + detail.velocityY * 0.3;
   }
 }
