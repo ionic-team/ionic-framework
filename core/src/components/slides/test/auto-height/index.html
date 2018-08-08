@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Slides - App Intro</title>
+
+  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+
+  <style>
+
+    .swiper-slide {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .swiper-slide img {
+      max-width: 300px;
+    }
+
+    .slide-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      color: #fff;
+    }
+  </style>
+</head>
+
+<body>
+  <ion-app>
+    <ion-content>
+      <ion-slides class="slides">
+        <ion-slide>
+          <div class="slide-content" style="height: 300px; background: blue;">Slide 1</div>
+        </ion-slide>
+
+        <ion-slide>
+          <img src="https://images.unsplash.com/photo-1504703500545-4c4ee081b155?auto=format&fit=crop&w=1350&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D"
+            class="slide-image" />
+          <div padding>
+            <h2 class="slide-title">What is Ionic?</h2>
+            <p>
+              <b>Ionic Framework</b> is an open source SDK that enables developers to build high quality mobile apps with web
+              technologies like HTML, CSS, and JavaScript.</p>
+          </div>
+        </ion-slide>
+
+        <ion-slide>
+          <div class="slide-content" style="height: 500px; background: red;">Slide 3</div>
+        </ion-slide>
+
+        <ion-slide>
+          <img src="https://images.unsplash.com/photo-1485832329521-e944d75fa65e?auto=format&fit=crop&w=1350&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D"
+            class="slide-image" />
+        </ion-slide>
+      </ion-slides>
+    </ion-content>
+  </ion-app>
+  <script>
+    const slides = document.querySelector('.slides');
+    slides.pager = true;
+    slides.options = {
+      autoHeight: true
+    };
+  </script>
+</body>
+
+</html>
