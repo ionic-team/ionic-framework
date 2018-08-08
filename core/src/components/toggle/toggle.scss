@@ -4,8 +4,12 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{ion-color(primary, base)};
-  --ion-color-base-rgb: #{ion-color(primary, base, null, true)};
+  /**
+   * @prop --background: Background of the toggle
+   * @prop --background-checked: Background of the toggle when checked
+   * @prop --handle-background: Background of the toggle handle
+   * @prop --handle-background-checked: Background of the toggle handle when checked
+   */
 
   // TODO can we remove important here
   /* stylelint-disable-next-line declaration-no-important */
