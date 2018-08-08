@@ -2,6 +2,7 @@ import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@st
 
 import { Color, InputChangeEvent, Mode, StyleEvent } from '../../interface';
 import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
+import { createColorClasses } from '../../utils/theme';
 import { TextareaComponent } from '../input/input-base';
 
 @Component({
@@ -237,6 +238,14 @@ export class Textarea implements TextareaComponent {
 
   private hasValue(): boolean {
     return this.value !== '';
+  }
+
+  hostData() {
+    return {
+      class: {
+        ...createColorClasses(this.color)
+      }
+    };
   }
 
   render() {
