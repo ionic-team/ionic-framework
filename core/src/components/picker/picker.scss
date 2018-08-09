@@ -43,9 +43,6 @@ ion-picker {
 }
 
 .picker-columns {
-  @include margin(null, null, constant(safe-area-inset-bottom), null);
-  @include margin(null, null, env(safe-area-inset-bottom), null);
-
   @include rtl() {
     // Date is the same format in both directions
     flex-direction: row-reverse;
@@ -55,6 +52,8 @@ ion-picker {
   position: relative;
 
   justify-content: center;
+
+  margin-bottom: var(--ion-bottom-padding);
 
   contain: strict;
   overflow: hidden;

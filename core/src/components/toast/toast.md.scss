@@ -26,15 +26,11 @@
 }
 
 .toast-md .toast-wrapper.toast-top {
-  @include transform(translate3d(0, -100%, 0));
-
-  top: 0;
+  padding-top: var(--ion-statusbar-padding);
 }
 
 .toast-md .toast-wrapper.toast-bottom {
-  @include transform(translate3d(0, 100%, 0));
-
-  bottom: 0;
+  padding-bottom: var(--ion-bottom-padding);
 }
 
 .toast-md .toast-wrapper.toast-middle {

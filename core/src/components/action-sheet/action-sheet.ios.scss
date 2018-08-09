@@ -11,8 +11,7 @@
 }
 
 .action-sheet-wrapper {
-  @include margin(constant(safe-area-inset-top), auto, constant(safe-area-inset-bottom), auto);
-  @include margin(env(safe-area-inset-top), auto, env(safe-area-inset-bottom), auto);
+  @include margin(var(--ion-statusbar-padding), auto, var(--ion-bottom-padding), auto);
 }
 
 

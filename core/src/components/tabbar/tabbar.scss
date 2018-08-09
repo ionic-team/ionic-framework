@@ -32,10 +32,8 @@
   order: -1;
 }
 
-@supports (padding-top: env(safe-area-inset-top)) {
-  :host(.placement-bottom) {
-    @include padding(null, null, env(safe-area-inset-bottom));
-  }
+:host(.placement-bottom) {
+  padding-bottom: var(--ion-bottom-padding);
 }
 
 

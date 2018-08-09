@@ -268,8 +268,6 @@ rules:
     - margin
     - margin-left
     - margin-right
-    - margin-top
-    - margin-bottom
     - border-radius
     - border-top-left-radius
     - border-top-right-radius

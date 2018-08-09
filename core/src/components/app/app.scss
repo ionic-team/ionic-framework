@@ -10,11 +10,13 @@ ion-app.statusbar-padding {
 @supports (padding-top: constant(safe-area-inset-top)) {
   ion-app.statusbar-padding {
     --ion-statusbar-padding: constant(safe-area-inset-top);
+    --ion-bottom-padding: constant(safe-area-inset-bottom);
   }
 }
 
 @supports (padding-top: env(safe-area-inset-top)) {
   ion-app.statusbar-padding {
     --ion-statusbar-padding: env(safe-area-inset-top);
+    --ion-bottom-padding: env(safe-area-inset-bottom);
   }
 }

@@ -9,7 +9,6 @@ ion-toast {
    * @prop --button-color: Color of the button text
    * @prop --color: Color of the toast text
    */
-
   @include position(0, null, null, 0);
 
   display: block;
@@ -28,6 +27,19 @@ ion-toast {
 .toast-wrapper {
   background: var(--background);
 }
+
+.toast-wrapper.toast-top {
+  @include transform(translate3d(0, -100%, 0));
+
+  top: 0;
+}
+
+.toast-wrapper.toast-bottom {
+  @include transform(translate3d(0, 100%, 0));
+
+  bottom: 0;
+}
+
 
 .toast-container {
   display: flex;
