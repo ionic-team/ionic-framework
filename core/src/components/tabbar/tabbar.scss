@@ -104,8 +104,13 @@
   --text-display: none;
 }
 
-:host(.layout-icon-bottom) ion-tab-button,
+:host(.layout-icon-top) ion-tab-button,
+:host(.layout-icon-bottom) ion-tab-button {
+  --badge-end: #{calc(50% - 30px)};
+}
+
+:host(.layout-icon-hide) ion-tab-button,
 :host(.layout-icon-start) ion-tab-button,
 :host(.layout-icon-end) ion-tab-button {
-  --badge-end: calc(50% - 50px);
+  --badge-end: #{calc(50% - 50px)};
 }

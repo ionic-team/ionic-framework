@@ -82,7 +82,7 @@ a {
 .tab-button-text {
   @include margin(var(--text-margin-top), null, var(--text-margin-bottom), null);
 
-  display: var(--text-display, none);
+  display: var(--text-display, block);
 
   font-size: var(--text-font-size);
 
@@ -92,7 +92,7 @@ a {
 .tab-button-icon {
   @include margin(var(--icon-margin-top), null, var(--icon-margin-bottom), null);
 
-  display: var(--icon-display, none);
+  display: var(--icon-display, block);
 
   min-width: var(--icon-min-width);
   height: var(--icon-height, 1em);
@@ -115,14 +115,6 @@ a {
   box-sizing: border-box;
 }
 
-:host(.has-icon) .tab-button-icon {
-  --icon-display: block;
-}
-
-:host(.has-label) .tab-button-text {
-  --text-display: block;
-}
-
 :host(.has-label-only) .tab-button-text {
   white-space: normal;
 }
@@ -138,7 +130,7 @@ a {
 
 .tab-badge {
   @include position(6%, 4%, null, null); // 4% fallback
-  // @include position(null, var(--badge-end, #{calc(50% - 50px)}), null, null));
+  @include position(null, var(--badge-end, calc(50% - 30px)), null, null);
   @include padding(1px, 6px);
 
   box-sizing: border-box;
@@ -152,6 +144,10 @@ a {
   line-height: 16px;
 }
 
-:host(.has-icon) .tab-badge {
+:host(.has-label-only) .tab-badge {
+  --badge-end: #{calc(50% - 50px)};
+}
+
+:host(.has-icon-only) .tab-badge {
   --badge-end: #{calc(50% - 30px)};
 }
