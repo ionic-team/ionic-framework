@@ -58,36 +58,3 @@
 :host(.tab-selected) .tab-button-icon {
   @include transform(translate3d($tab-button-md-icon-transform-x-active, $tab-button-md-icon-transform-y-active, $tab-button-md-icon-transform-z-active));
 }
-
-
-// Material Design Tab with Icon or Title only
-// --------------------------------------------------
-
-// Tab layout: icon-end
-.layout-icon-end .tab-button-md.tab-selected .tab-button-icon {
-  @include transform(translate3d($tab-button-md-icon-right-transform-x-active, $tab-button-md-icon-right-transform-y-active, $tab-button-md-icon-right-transform-z-active));
-}
-
-// Tab layout: icon-bottom
-.layout-icon-bottom .tab-button-md.tab-selected .tab-button-icon {
-  @include transform(translate3d($tab-button-md-icon-bottom-transform-x-active, $tab-button-md-icon-bottom-transform-y-active, $tab-button-md-icon-bottom-transform-z-active));
-}
-
-// Tab layout: icon-start
-.layout-icon-start .tab-button-md.tab-selected .tab-button-icon {
-  @include transform(translate3d($tab-button-md-icon-left-transform-x-active, $tab-button-md-icon-left-transform-y-active, $tab-button-md-icon-left-transform-z-active));
-}
-
-.layout-icon-top .tab-button-md .has-icon .tab-button-text {
-  @include margin(null, null, -2px, null);
-}
-
-.layout-icon-bottom .tab-button-md .tab-button-text {
-  @include transform-origin(center, top);
-  @include margin(-2px, null, null, null);
-}
-
-.layout-icon-hide .tab-button-md,
-.layout-label-hide .tab-button-md {
-  justify-content: center;
-}

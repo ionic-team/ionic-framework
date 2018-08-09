@@ -72,3 +72,40 @@
 :host(.placement-bottom) .tabbar-highlight {
   top: 0;
 }
+
+
+// Tab Layout
+// --------------------------------------------------
+
+:host(.layout-icon-start) ion-tab-button {
+  --flex-direction: row;
+}
+
+:host(.layout-icon-end) ion-tab-button {
+  --flex-direction: row-reverse;
+}
+
+:host(.layout-icon-bottom) ion-tab-button {
+  --flex-direction: column-reverse;
+}
+
+:host(.layout-icon-start) ion-tab-button,
+:host(.layout-icon-end) ion-tab-button,
+:host(.layout-icon-hide) ion-tab-button,
+:host(.layout-label-hide) ion-tab-button {
+  --justify-content: center;
+}
+
+:host(.layout-icon-hide) ion-tab-button {
+  --icon-display: none;
+}
+
+:host(.layout-label-hide) ion-tab-button {
+  --text-display: none;
+}
+
+:host(.layout-icon-bottom) ion-tab-button,
+:host(.layout-icon-start) ion-tab-button,
+:host(.layout-icon-end) ion-tab-button {
+  --badge-end: calc(50% - 50px);
+}
