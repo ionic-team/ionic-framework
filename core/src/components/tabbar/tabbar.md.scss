@@ -13,9 +13,32 @@
   contain: strict;
 }
 
+// Material Design Tabbar Layout
+// --------------------------------------------------
 
-// TODO: REVIEW
-:host(.placement-top) .tab-button.tab-selected .tab-button-icon,
-:host(.placement-top) .tab-button.tab-selected .tab-button-text {
-  transform: inherit;
+:host(.layout-icon-top) ion-tab-button {
+  --text-margin-bottom: -2px;
 }
+
+:host(.layout-icon-bottom) ion-tab-button {
+  --text-margin-top: -2px;
+  --text-transform: transform-origin(center, top);
+}
+
+// // Tab layout: icon-end
+:host(.layout-icon-end) ion-tab-button {
+  --icon-transform: #{translate3d($tab-button-md-icon-right-transform-x-active, $tab-button-md-icon-right-transform-y-active, $tab-button-md-icon-right-transform-z-active)};
+}
+ // Tab layout: icon-bottom
+:host(.layout-icon-bottom) ion-tab-button {
+  --icon-transform: #{translate3d($tab-button-md-icon-bottom-transform-x-active, $tab-button-md-icon-bottom-transform-y-active, $tab-button-md-icon-bottom-transform-z-active)};
+}
+ // Tab layout: icon-start
+:host(.layout-icon-start) ion-tab-button {
+  --icon-transform: #{translate3d($tab-button-md-icon-left-transform-x-active, $tab-button-md-icon-left-transform-y-active, $tab-button-md-icon-left-transform-z-active)};
+}
+
+// .layout-icon-hide .tab-button-md,
+// .layout-label-hide .tab-button-md {
+//   justify-content: center;
+// }

@@ -31,11 +31,13 @@
 
   font-size: $tab-button-md-font-size;
 
+  transform: var(--text-transform);
+
   text-transform: $tab-button-md-text-capitalization;
 }
 
 :host(.tab-selected) .tab-button-text {
-  transform: $tab-button-md-text-transform-active;
+  --text-transform: #{$tab-button-md-text-transform-active};
 
   transition: $tab-button-md-text-transition;
 }
@@ -52,9 +54,11 @@
   transition: $tab-button-md-icon-transition;
 
   font-size: $tab-button-md-icon-size;
+
+  transform: var(--icon-transform);
 }
 
 // Tab layout: icon-top, icon-only, label-only
 :host(.tab-selected) .tab-button-icon {
-  @include transform(translate3d($tab-button-md-icon-transform-x-active, $tab-button-md-icon-transform-y-active, $tab-button-md-icon-transform-z-active));
+  --icon-transform: #{translate3d($tab-button-md-icon-transform-x-active, $tab-button-md-icon-transform-y-active, $tab-button-md-icon-transform-z-active)};
 }
