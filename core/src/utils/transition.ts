@@ -70,6 +70,8 @@ async function animation(animationBuilder: AnimationBuilder, opts: TransitionOpt
   fireWillEvents(opts.window, opts.enteringEl, opts.leavingEl);
   await playTransition(trns, opts);
 
+  markVisible(opts);
+
   if (trns.hasCompleted) {
     fireDidEvents(opts.window, opts.enteringEl, opts.leavingEl);
   }
@@ -79,17 +81,25 @@ async function animation(animationBuilder: AnimationBuilder, opts: TransitionOpt
 async function noAnimation(opts: TransitionOptions): Promise<null> {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
+
+  await waitForReady(opts, false);
+
+  markVisible(opts);
+
+  fireWillEvents(opts.window, enteringEl, leavingEl);
+  fireDidEvents(opts.window, enteringEl, leavingEl);
+  return null;
+}
+
+async function markVisible(opts: TransitionOptions) {
+  const enteringEl = opts.enteringEl;
+  const leavingEl = opts.leavingEl;
   if (enteringEl) {
     enteringEl.classList.remove('ion-page-invisible');
   }
   if (leavingEl) {
     leavingEl.classList.remove('ion-page-invisible');
   }
-  await waitForReady(opts, false);
-
-  fireWillEvents(opts.window, enteringEl, leavingEl);
-  fireDidEvents(opts.window, enteringEl, leavingEl);
-  return null;
 }
 
 async function waitForReady(opts: TransitionOptions, defaultDeep: boolean) {

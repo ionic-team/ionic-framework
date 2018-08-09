@@ -11,9 +11,9 @@ import { attachComponent, detachComponent } from '../../utils/framework-delegate
 })
 export class RouterOutlet implements NavOutlet {
 
-  private isTransitioning = false;
   private activeEl: HTMLElement | undefined;
   private activeComponent: any;
+  private waitPromise?: Promise<void>;
 
   mode!: Mode;
 
@@ -36,7 +36,6 @@ export class RouterOutlet implements NavOutlet {
     if (this.animated === undefined) {
       this.animated = this.config.getBoolean('animate', true);
     }
-
     this.ionNavWillLoad.emit();
   }
 
@@ -49,20 +48,19 @@ export class RouterOutlet implements NavOutlet {
    */
   @Method()
   async setRoot(component: ComponentRef, params?: ComponentProps, opts?: RouterOutletOptions): Promise<boolean> {
-    if (this.isTransitioning || this.activeComponent === component) {
+    if (this.activeComponent === component) {
       return false;
     }
-    this.activeComponent = component;
 
     // attach entering view to DOM
-    const enteringEl = await attachComponent(this.delegate, this.el, component, ['ion-page', 'ion-page-invisible'], params);
     const leavingEl = this.activeEl;
+    const enteringEl = await attachComponent(this.delegate, this.el, component, ['ion-page', 'ion-page-invisible'], params);
+
+    this.activeComponent = component;
+    this.activeEl = enteringEl;
 
     // commit animation
     await this.commit(enteringEl, leavingEl, opts);
-
-    // remove leaving view
-    this.activeEl = enteringEl;
     detachComponent(this.delegate, leavingEl);
 
     return true;
@@ -71,35 +69,15 @@ export class RouterOutlet implements NavOutlet {
   /** @hidden */
   @Method()
   async commit(enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions): Promise<boolean> {
-    // isTransitioning acts as a lock to prevent reentering
-    if (this.isTransitioning || leavingEl === enteringEl) {
-      return false;
+    const unlock = await this.lock();
+    let changed = false;
+    try {
+      changed = await this.transition(enteringEl, leavingEl, opts);
+    } catch (e) {
+      console.error(e);
     }
-    this.isTransitioning = true;
-
-    // emit nav will change event
-    this.ionNavWillChange.emit();
-
-    opts = opts || {};
-
-    const { mode, queue, animated, animationCtrl, win, el } = this;
-    await transition({
-      mode,
-      queue,
-      animated,
-      animationCtrl,
-      window: win,
-      enteringEl,
-      leavingEl,
-      baseEl: el,
-
-      ...opts
-    });
-    this.isTransitioning = false;
-
-    // emit nav changed event
-    this.ionNavDidChange.emit();
-    return true;
+    unlock();
+    return changed;
   }
 
   /** @hidden */
@@ -123,6 +101,48 @@ export class RouterOutlet implements NavOutlet {
       id: active.tagName,
       element: active,
     } : undefined;
+  }
+
+  private async lock() {
+    const p = this.waitPromise;
+    let resolve!: () => void;
+    this.waitPromise = new Promise(r => resolve = r);
+
+    if (p) {
+      await p;
+    }
+    return resolve;
+  }
+
+  async transition(enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions): Promise<boolean> {
+    // isTransitioning acts as a lock to prevent reentering
+    if (leavingEl === enteringEl) {
+      return false;
+    }
+
+    // emit nav will change event
+    this.ionNavWillChange.emit();
+
+    opts = opts || {};
+
+    const { mode, queue, animated, animationCtrl, win, el } = this;
+    await transition({
+      mode,
+      queue,
+      animated,
+      animationCtrl,
+      window: win,
+      enteringEl,
+      leavingEl,
+      baseEl: el,
+
+      ...opts
+    });
+
+    // emit nav changed event
+    this.ionNavDidChange.emit();
+
+    return true;
   }
 
   render() {

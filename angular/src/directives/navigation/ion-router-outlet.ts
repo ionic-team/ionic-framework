@@ -162,11 +162,11 @@ export class IonRouterOutlet implements OnDestroy, OnInit {
 }
 
 function emitEvent(el: HTMLElement) {
-  const event = new CustomEvent('ionRouterOutletActivated', {
+  const ev = new CustomEvent('ionRouterOutletActivated', {
     bubbles: true,
     cancelable: true,
   });
-  el.dispatchEvent(event);
+  el.dispatchEvent(ev);
 }
 
 class OutletInjector implements Injector {

@@ -1,4 +1,5 @@
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
+import { IonicConfig } from '@ionic/core';
 import { CommonModule } from '@angular/common';
 
 import { appInitialize } from './app-initialize';
@@ -133,7 +134,7 @@ const PROVIDERS = [
   imports: [CommonModule]
 })
 export class IonicModule {
-  static forRoot(config?: { [key: string]: any }): ModuleWithProviders {
+  static forRoot(config?: IonicConfig): ModuleWithProviders {
     return {
       ngModule: IonicModule,
       providers: [
