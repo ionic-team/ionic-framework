@@ -10,8 +10,8 @@ export function iosLeaveAnimation(AnimationC: Animation, baseEl: HTMLElement, po
   const wrapperEle = baseEl.querySelector('.toast-wrapper') as HTMLElement;
   wrapperAnimation.addElement(wrapperEle);
 
-  const bottom = `calc(-10px - var(--ion-bottom-padding, 0px))`;
-  const top = `calc(10px + var(--ion-statusbar-padding, 0px))`;
+  const bottom = `calc(-10px - var(--ion-safe-area-bottom, 0px))`;
+  const top = `calc(10px + var(--ion-safe-area-top, 0px))`;
 
   switch (position) {
     case 'top':

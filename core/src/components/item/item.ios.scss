@@ -22,12 +22,6 @@
   --transition: none;
 }
 
-@media screen and (orientation: landscape) {
-  .item-inner {
-    @include safe-area-padding-horizontal(var(--inner-padding-start), var(--inner-padding-end));
-  }
-}
-
 
 // iOS Item Lines
 // --------------------------------------------------

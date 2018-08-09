@@ -100,19 +100,11 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev
   contentEl.style.left = popoverCSS.left + 'px';
 
   if (checkSafeAreaLeft) {
-    if (CSS.supports('left', 'constant(safe-area-inset-left)')) {
-      contentEl.style.left = `calc(${popoverCSS.left}px + constant(safe-area-inset-left)`;
-    } else if (CSS.supports('left', 'env(safe-area-inset-left)')) {
-      contentEl.style.left = `calc(${popoverCSS.left}px + env(safe-area-inset-left)`;
-    }
+    contentEl.style.left = `calc(${popoverCSS.left}px + var(--ion-safe-area-left, 0px)`;
   }
 
   if (checkSafeAreaRight) {
-    if (CSS.supports('right', 'constant(safe-area-inset-right)')) {
-      contentEl.style.left = `calc(${popoverCSS.left}px - constant(safe-area-inset-right)`;
-    } else if (CSS.supports('right', 'env(safe-area-inset-right)')) {
-      contentEl.style.left = `calc(${popoverCSS.left}px - env(safe-area-inset-right)`;
-    }
+    contentEl.style.left = `calc(${popoverCSS.left}px + var(--ion-safe-area-right, 0px)`;
   }
 
   contentEl.style.transformOrigin = originY + ' ' + originX;

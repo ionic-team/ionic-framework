@@ -11,7 +11,7 @@
 }
 
 .action-sheet-wrapper {
-  @include margin(var(--ion-statusbar-padding), auto, var(--ion-bottom-padding), auto);
+  @include margin(var(--ion-safe-area-top), auto, var(--ion-safe-area-bottom), auto);
 }
 
 

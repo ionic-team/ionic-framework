@@ -18,10 +18,10 @@
   --padding-bottom: 0;
   --padding-end: 0;
   --padding-start: 0;
-  --inner-padding-top: 0;
-  --inner-padding-bottom: 0;
-  --inner-padding-start: 0;
-  --inner-padding-end: 0;
+  --inner-padding-top: 0px;
+  --inner-padding-bottom: 0px;
+  --inner-padding-start: 0px;
+  --inner-padding-end: 0px;
   --box-shadow: none;
   --inner-box-shadow: none;
   --highlight-color-focus: #{ion-color(primary, base)};
@@ -99,7 +99,12 @@ button, a {
 
 .item-inner {
   @include margin(0);
-  @include padding(var(--inner-padding-top), var(--inner-padding-end), var(--inner-padding-bottom), var(--inner-padding-start));
+  @include padding(
+    var(--inner-padding-top),
+    calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
+    var(--inner-padding-bottom),
+    calc(var(--ion-safe-area-left, 0px) + var(--inner-padding-start))
+  );
 
   display: flex;
 

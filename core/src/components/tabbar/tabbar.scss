@@ -33,7 +33,7 @@
 }
 
 :host(.placement-bottom) {
-  padding-bottom: var(--ion-bottom-padding);
+  padding-bottom: var(--ion-safe-area-bottom);
 }
 
 

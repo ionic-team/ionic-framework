@@ -4,19 +4,24 @@ ion-app.is-device {
 }
 
 ion-app.statusbar-padding {
-  --ion-statusbar-padding: 20px;
+  --ion-safe-area-top: 20px;
 }
 
+// TODO: remove once Safari 11.2 dies
 @supports (padding-top: constant(safe-area-inset-top)) {
   ion-app.statusbar-padding {
-    --ion-statusbar-padding: constant(safe-area-inset-top);
-    --ion-bottom-padding: constant(safe-area-inset-bottom);
+    --ion-safe-area-top: constant(safe-area-inset-top);
+    --ion-safe-area-bottom: constant(safe-area-inset-bottom);
+    --ion-safe-area-left: constant(safe-area-inset-left);
+    --ion-safe-area-rigtht: constant(safe-area-inset-right);
   }
 }
 
 @supports (padding-top: env(safe-area-inset-top)) {
   ion-app.statusbar-padding {
-    --ion-statusbar-padding: env(safe-area-inset-top);
-    --ion-bottom-padding: env(safe-area-inset-bottom);
+    --ion-safe-area-top: env(safe-area-inset-top);
+    --ion-safe-area-bottom: env(safe-area-inset-bottom);
+    --ion-safe-area-left: env(safe-area-inset-left);
+    --ion-safe-area-rigtht: env(safe-area-inset-right);
   }
 }

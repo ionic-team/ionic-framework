@@ -26,11 +26,11 @@
 }
 
 .toast-md .toast-wrapper.toast-top {
-  padding-top: var(--ion-statusbar-padding);
+  padding-top: var(--ion-safe-area-top);
 }
 
 .toast-md .toast-wrapper.toast-bottom {
-  padding-bottom: var(--ion-bottom-padding);
+  padding-bottom: var(--ion-safe-area-bottom);
 }
 
 .toast-md .toast-wrapper.toast-middle {
