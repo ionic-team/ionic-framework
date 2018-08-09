@@ -11,7 +11,7 @@ export * from './components/popover/popover-interface';
 export * from './components/nav/nav-interface';
 export * from './components/router/utils/interface';
 export * from './components/range/range-interface';
-export * from './components/scroll/scroll-interface';
+export * from './components/content/content-interface';
 export * from './components/select/select-interface';
 export * from './components/select-popover/select-popover-interface';
 export * from './components/tabbar/tabbar-interface';

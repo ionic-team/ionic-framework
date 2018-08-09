@@ -13,20 +13,9 @@
   contain: strict;
 }
 
-ion-scroll {
-  @include margin(0, 8px);
-
-  max-width: 650px;
-}
 
 // TODO: REVIEW
 :host(.placement-top) .tab-button.tab-selected .tab-button-icon,
 :host(.placement-top) .tab-button.tab-selected .tab-button-text {
   transform: inherit;
-}
-
-.scrollable .tab-button {
-  flex: 1 0 auto;
-
-  overflow: hidden;
 }

@@ -11,7 +11,7 @@ import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, g
 })
 export class VirtualScroll {
 
-  private scrollEl?: HTMLIonScrollElement;
+  private scrollEl?: HTMLElement;
   private range: Range = { offset: 0, length: 0 };
   private timerUpdate: any;
   private heightIndex?: Uint32Array;
@@ -113,17 +113,17 @@ export class VirtualScroll {
     this.calcCells();
   }
 
-  componentDidLoad() {
+  async componentDidLoad() {
     const contentEl = this.el.closest('ion-content');
     if (!contentEl) {
-      console.error('virtual-scroll must be used inside ion-scroll/ion-content');
+      console.error('virtual-scroll must be used inside ion-content');
       return;
     }
-    contentEl.componentOnReady().then(() => {
-      this.scrollEl = contentEl.getScrollElement();
-      this.calcCells();
-      this.updateState();
-    });
+    await contentEl.componentOnReady();
+
+    this.scrollEl = contentEl.getScrollElement();
+    this.calcCells();
+    this.updateState();
   }
 
   componentDidUpdate() {

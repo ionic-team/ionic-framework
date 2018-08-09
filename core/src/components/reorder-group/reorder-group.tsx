@@ -14,7 +14,7 @@ export class ReorderGroup {
   private selectedItemHeight!: number;
   private lastToIndex!: number;
   private cachedHeights: number[] = [];
-  private scrollEl?: HTMLIonScrollElement;
+  private scrollEl?: HTMLElement;
   private gesture?: Gesture;
 
   private scrollElTop = 0;

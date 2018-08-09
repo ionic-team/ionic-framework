@@ -72,22 +72,3 @@
 :host(.placement-bottom) .tabbar-highlight {
   top: 0;
 }
-
-
-// Overflow Scrolling
-// --------------------------------------------------
-
-ion-scroll {
-  overflow: hidden;
-}
-
-.scroll-inner {
-  display: flex;
-  position: relative;
-
-  flex-direction: row;
-}
-
-ion-button.inactive {
-  visibility: hidden;
-}

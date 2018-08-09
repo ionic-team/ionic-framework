@@ -30,13 +30,10 @@ ion-popover {
   z-index: $z-index-overlay-wrapper;
 }
 
-.popover-content ion-content,
-.popover-content ion-scroll {
-  contain: none;
-}
-
-.popover-content ion-scroll {
+.popover-content ion-content {
   position: relative;
+
+  contain: none;
 }
 
 ion-popover-controller {

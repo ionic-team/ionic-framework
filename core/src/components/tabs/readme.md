@@ -25,13 +25,6 @@ string
 A unique name for the tabs.
 
 
-#### scrollable
-
-boolean
-
-If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-
-
 #### tabbarHidden
 
 boolean
@@ -93,13 +86,6 @@ For more information on colors, see [theming](/docs/theming/basics).
 string
 
 A unique name for the tabs.
-
-
-#### scrollable
-
-boolean
-
-If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
 
 
 #### tabbar-hidden

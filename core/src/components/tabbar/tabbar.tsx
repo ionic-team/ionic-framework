@@ -13,8 +13,6 @@ import { createColorClasses } from '../../utils/theme';
 })
 export class Tabbar {
 
-  private scrollEl?: HTMLIonScrollElement;
-
   @Prop() mode!: Mode;
   @Prop() color?: Color;
 
@@ -40,17 +38,11 @@ export class Tabbar {
   /** The selected tab component */
   @Prop() selectedTab?: HTMLIonTabElement;
 
-  /**
-   * If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-   */
-  @Prop() scrollable = false;
-
   /** The tabs to render */
   @Prop() tabs: HTMLIonTabElement[] = [];
 
   @Watch('selectedTab')
   selectedTabChanged() {
-    this.scrollToSelectedButton();
     this.updateHighlight();
   }
 
@@ -85,90 +77,12 @@ export class Tabbar {
   }
 
   componentDidLoad() {
-    this.updateBoundaries();
     this.updateHighlight();
-  }
-
-  protected analyzeTabs() {
-    const tabs: HTMLIonTabButtonElement[] = Array.from(this.doc.querySelectorAll('ion-tab-button'));
-    const scrollLeft = this.scrollEl!.scrollLeft;
-    const tabsWidth = this.scrollEl!.clientWidth;
-    let previous: {tab: HTMLIonTabButtonElement, amount: number} | undefined;
-    let next: {tab: HTMLIonTabButtonElement, amount: number} | undefined;
-
-    for (const tab of tabs) {
-      const left = tab.offsetLeft;
-      const right = left + tab.offsetWidth;
-
-      if (left < scrollLeft) {
-        previous = { tab, amount: left };
-      }
-
-      if (!next && right > (tabsWidth + scrollLeft)) {
-        const amount = right - tabsWidth;
-        next = { tab, amount };
-      }
-    }
-
-    return { previous, next };
   }
 
   private getSelectedButton(): HTMLIonTabButtonElement | undefined {
     return Array.from(this.el.querySelectorAll('ion-tab-button'))
       .find(btn => btn.selected);
-  }
-
-  protected scrollToSelectedButton() {
-    if (!this.scrollEl || !this.scrollable) {
-      return;
-    }
-    this.queue.read(() => {
-      const activeTabButton = this.getSelectedButton();
-
-      if (activeTabButton) {
-        const scrollLeft = this.scrollEl!.scrollLeft;
-        const tabsWidth = this.scrollEl!.clientWidth;
-        const left = activeTabButton.offsetLeft;
-        const right = left + activeTabButton.offsetWidth;
-
-        let amount = 0;
-
-        if (right > (tabsWidth + scrollLeft)) {
-          amount = right - tabsWidth;
-        } else if (left < scrollLeft) {
-          amount = left;
-        }
-
-        if (amount !== 0) {
-          this.queue.write(() => {
-            this.scrollEl!.scrollToPoint(amount, 0, 250).then(() => {
-              this.updateBoundaries();
-            });
-          });
-        }
-      }
-    });
-  }
-
-  private scrollByTab(direction: 'left' | 'right') {
-    this.queue.read(() => {
-      const { previous, next } = this.analyzeTabs();
-      const info = direction === 'right' ? next : previous;
-      const amount = info && info.amount;
-
-      if (info && amount) {
-        this.scrollEl!.scrollToPoint(amount, 0, 250).then(() => {
-          this.updateBoundaries();
-        });
-      }
-    });
-  }
-
-  private updateBoundaries() {
-    if (this.scrollEl && this.scrollable) {
-      this.canScrollLeft = this.scrollEl.scrollLeft !== 0;
-      this.canScrollRight = this.scrollEl.scrollLeft < (this.scrollEl.scrollWidth - this.scrollEl.offsetWidth);
-    }
   }
 
   private updateHighlight() {
@@ -185,7 +99,7 @@ export class Tabbar {
   }
 
   hostData() {
-    const { color, translucent, layout, placement, keyboardVisible, scrollable } = this;
+    const { color, translucent, layout, placement, keyboardVisible } = this;
     return {
       role: 'tablist',
       'aria-hidden': keyboardVisible ? 'true' : null,
@@ -195,56 +109,38 @@ export class Tabbar {
         [`layout-${layout}`]: true,
         [`placement-${placement}`]: true,
         'tabbar-hidden': keyboardVisible,
-        'scrollable': scrollable
       }
     };
   }
 
   render() {
     const selectedTab = this.selectedTab;
-    const ionTabbarHighlight = this.highlight ? <div class="animated tabbar-highlight" /> as HTMLElement : null;
-    const tabButtons = this.tabs.map(tab => <ion-tab-button
-      id={tab.btnId}
-      label={tab.label}
-      icon={tab.icon}
-      badge={tab.badge}
-      disabled={tab.disabled}
-      badgeColor={tab.badgeColor}
-      href={tab.href}
-      selected={selectedTab === tab}
-      mode={this.mode}
-      color={this.color}
-      aria-hidden={ !tab.show ? 'true' : null }
-      class={{ 'tab-hidden': !tab.show }}
-      onClick={ev => {
-        if (!tab.disabled) {
-          this.ionTabbarClick.emit(tab);
-        }
-        ev.stopPropagation();
-        ev.preventDefault();
-      }}
-    />);
 
-    if (this.scrollable) {
-      return [
-        <ion-button onClick={() => this.scrollByTab('left')} fill="clear" class={{ inactive: !this.canScrollLeft }}>
-          <ion-icon name="arrow-dropleft" lazy={false}/>
-        </ion-button>,
-
-        <ion-scroll forceOverscroll={false} ref={scrollEl => this.scrollEl = scrollEl as HTMLIonScrollElement}>
-          {tabButtons}
-          {ionTabbarHighlight}
-        </ion-scroll>,
-
-        <ion-button onClick={() => this.scrollByTab('right')} fill="clear" class={{ inactive: !this.canScrollRight }}>
-          <ion-icon name="arrow-dropright" lazy={false}/>
-        </ion-button>
-      ];
-    } else {
-      return [
-        ...tabButtons,
-        ionTabbarHighlight
-      ];
-    }
+    return [
+      this.tabs.map(tab => (
+        <ion-tab-button
+          id={tab.btnId}
+          label={tab.label}
+          icon={tab.icon}
+          badge={tab.badge}
+          disabled={tab.disabled}
+          badgeColor={tab.badgeColor}
+          href={tab.href}
+          selected={selectedTab === tab}
+          mode={this.mode}
+          color={this.color}
+          aria-hidden={ !tab.show ? 'true' : null }
+          class={{ 'tab-hidden': !tab.show }}
+          onClick={ev => {
+            if (!tab.disabled) {
+              this.ionTabbarClick.emit(tab);
+            }
+            ev.stopPropagation();
+            ev.preventDefault();
+          }}
+        />
+      )),
+      this.highlight && <div class="animated tabbar-highlight" />
+    ];
   }
 }

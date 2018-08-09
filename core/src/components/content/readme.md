@@ -32,20 +32,26 @@ and footers. This effect can easily be seen by setting the toolbar
 to transparent.
 
 
-#### scrollEnabled
-
-boolean
-
-By default `ion-content` uses an `ion-scroll` under the hood to implement scrolling,
-if you want to disable the content scrolling for a given page, set this property to `false`.
-
-
 #### scrollEvents
 
 boolean
 
 Because of performance reasons, ionScroll events are disabled by default, in order to enable them
 and start listening from (ionScroll), set this property to `true`.
+
+
+#### scrollX
+
+boolean
+
+If you want to enable the content scrolling in the X axis, set this property to `true`.
+
+
+#### scrollY
+
+boolean
+
+If you want to disable the content scrolling in the Y axis, set this property to `false`.
 
 
 ## Attributes
@@ -73,14 +79,6 @@ and footers. This effect can easily be seen by setting the toolbar
 to transparent.
 
 
-#### scroll-enabled
-
-boolean
-
-By default `ion-content` uses an `ion-scroll` under the hood to implement scrolling,
-if you want to disable the content scrolling for a given page, set this property to `false`.
-
-
 #### scroll-events
 
 boolean
@@ -89,9 +87,61 @@ Because of performance reasons, ionScroll events are disabled by default, in ord
 and start listening from (ionScroll), set this property to `true`.
 
 
+#### scroll-x
+
+boolean
+
+If you want to enable the content scrolling in the X axis, set this property to `true`.
+
+
+#### scroll-y
+
+boolean
+
+If you want to disable the content scrolling in the Y axis, set this property to `false`.
+
+
+## Events
+
+#### ionScroll
+
+Emitted while scrolling. This event is disabled by default.
+Look at the property: `scrollEvents`
+
+
+#### ionScrollEnd
+
+Emitted when the scroll has ended.
+
+
+#### ionScrollStart
+
+Emitted when the scroll has started.
+
+
 ## Methods
 
 #### getScrollElement()
+
+
+#### scrollByPoint()
+
+Scroll by a specified X/Y distance in the component
+
+
+#### scrollToBottom()
+
+Scroll to the bottom of the component
+
+
+#### scrollToPoint()
+
+Scroll to a specified X/Y location in the component
+
+
+#### scrollToTop()
+
+Scroll to the top of the component
 
 
 

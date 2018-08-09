@@ -619,15 +619,35 @@ declare global {
        * If true, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.
        */
       'fullscreen': boolean;
-      'getScrollElement': () => HTMLIonScrollElement;
+      'getScrollElement': () => HTMLElement;
       /**
-       * By default `ion-content` uses an `ion-scroll` under the hood to implement scrolling, if you want to disable the content scrolling for a given page, set this property to `false`.
+       * Scroll by a specified X/Y distance in the component
        */
-      'scrollEnabled': boolean;
+      'scrollByPoint': (x: number, y: number, duration: number) => Promise<any>;
       /**
        * Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.
        */
       'scrollEvents': boolean;
+      /**
+       * Scroll to the bottom of the component
+       */
+      'scrollToBottom': (duration?: number) => Promise<void>;
+      /**
+       * Scroll to a specified X/Y location in the component
+       */
+      'scrollToPoint': (x: number | undefined, y: number | undefined, duration?: number) => Promise<void>;
+      /**
+       * Scroll to the top of the component
+       */
+      'scrollToTop': (duration?: number) => Promise<void>;
+      /**
+       * If you want to enable the content scrolling in the X axis, set this property to `true`.
+       */
+      'scrollX': boolean;
+      /**
+       * If you want to disable the content scrolling in the Y axis, set this property to `false`.
+       */
+      'scrollY': boolean;
     }
 
     interface IonDatetime {
@@ -1946,37 +1966,6 @@ declare global {
 
     }
 
-    interface IonScroll {
-      /**
-       * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionScroll, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
-       */
-      'forceOverscroll': boolean;
-      /**
-       * The mode for component. 
-       */
-      'mode': Mode;
-      /**
-       * Scroll by a specified X/Y distance in the component 
-       */
-      'scrollByPoint': (x: number, y: number, duration: number) => Promise<any>;
-      /**
-       * If true, the component will emit scroll events. 
-       */
-      'scrollEvents': boolean;
-      /**
-       * Scroll to the bottom of the component 
-       */
-      'scrollToBottom': (duration: number) => Promise<void>;
-      /**
-       * Scroll to a specified X/Y location in the component 
-       */
-      'scrollToPoint': (x: number, y: number, duration: number) => Promise<void>;
-      /**
-       * Scroll to the top of the component 
-       */
-      'scrollToTop': (duration: number) => Promise<void>;
-    }
-
     interface IonSearchbar {
       /**
        * If true, enable searchbar animation. Default `false`.
@@ -2399,10 +2388,6 @@ declare global {
        */
       'placement': TabbarPlacement;
       /**
-       * If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-       */
-      'scrollable': boolean;
-      /**
        * The selected tab component 
        */
       'selectedTab': HTMLIonTabElement;
@@ -2434,10 +2419,6 @@ declare global {
        * A unique name for the tabs.
        */
       'name': string;
-      /**
-       * If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-       */
-      'scrollable': boolean;
       /**
        * Index or the Tab instance, of the tab to select.
        */
@@ -3342,14 +3323,6 @@ declare global {
     };
     
 
-    interface HTMLIonScrollElement extends StencilComponents.IonScroll, HTMLStencilElement {}
-
-    var HTMLIonScrollElement: {
-      prototype: HTMLIonScrollElement;
-      new (): HTMLIonScrollElement;
-    };
-    
-
     interface HTMLIonSearchbarElement extends StencilComponents.IonSearchbar, HTMLStencilElement {}
 
     var HTMLIonSearchbarElement: {
@@ -3630,7 +3603,6 @@ declare global {
     'ion-router-outlet': JSXElements.IonRouterOutletAttributes;
     'ion-router': JSXElements.IonRouterAttributes;
     'ion-row': JSXElements.IonRowAttributes;
-    'ion-scroll': JSXElements.IonScrollAttributes;
     'ion-searchbar': JSXElements.IonSearchbarAttributes;
     'ion-segment-button': JSXElements.IonSegmentButtonAttributes;
     'ion-segment': JSXElements.IonSegmentAttributes;
@@ -4218,13 +4190,29 @@ declare global {
        */
       'fullscreen'?: boolean;
       /**
-       * By default `ion-content` uses an `ion-scroll` under the hood to implement scrolling, if you want to disable the content scrolling for a given page, set this property to `false`.
+       * Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents`
        */
-      'scrollEnabled'?: boolean;
+      'onIonScroll'?: (event: CustomEvent<ScrollDetail>) => void;
+      /**
+       * Emitted when the scroll has ended.
+       */
+      'onIonScrollEnd'?: (event: CustomEvent<ScrollBaseDetail>) => void;
+      /**
+       * Emitted when the scroll has started.
+       */
+      'onIonScrollStart'?: (event: CustomEvent<ScrollBaseDetail>) => void;
       /**
        * Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.
        */
       'scrollEvents'?: boolean;
+      /**
+       * If you want to enable the content scrolling in the X axis, set this property to `true`.
+       */
+      'scrollX'?: boolean;
+      /**
+       * If you want to disable the content scrolling in the Y axis, set this property to `false`.
+       */
+      'scrollY'?: boolean;
     }
 
     export interface IonDatetimeAttributes extends HTMLAttributes {
@@ -5510,33 +5498,6 @@ declare global {
 
     }
 
-    export interface IonScrollAttributes extends HTMLAttributes {
-      /**
-       * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionScroll, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
-       */
-      'forceOverscroll'?: boolean;
-      /**
-       * The mode for component. 
-       */
-      'mode'?: Mode;
-      /**
-       * Emitted while scrolling. This event is disabled by default. Look at the property: `scrollEvents`
-       */
-      'onIonScroll'?: (event: CustomEvent<ScrollDetail>) => void;
-      /**
-       * Emitted when the scroll has ended.
-       */
-      'onIonScrollEnd'?: (event: CustomEvent<ScrollBaseDetail>) => void;
-      /**
-       * Emitted when the scroll has started.
-       */
-      'onIonScrollStart'?: (event: CustomEvent<ScrollBaseDetail>) => void;
-      /**
-       * If true, the component will emit scroll events. 
-       */
-      'scrollEvents'?: boolean;
-    }
-
     export interface IonSearchbarAttributes extends HTMLAttributes {
       /**
        * If true, enable searchbar animation. Default `false`.
@@ -6034,10 +5995,6 @@ declare global {
        */
       'placement'?: TabbarPlacement;
       /**
-       * If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-       */
-      'scrollable'?: boolean;
-      /**
        * The selected tab component 
        */
       'selectedTab'?: HTMLIonTabElement;
@@ -6076,10 +6033,6 @@ declare global {
        * Emitted when the navigation will load a component.
        */
       'onIonNavWillLoad'?: (event: CustomEvent<void>) => void;
-      /**
-       * If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-       */
-      'scrollable'?: boolean;
       /**
        * If true, the tabbar will be hidden. Defaults to `false`.
        */
@@ -6470,7 +6423,6 @@ declare global {
     'ion-router-outlet': HTMLIonRouterOutletElement
     'ion-router': HTMLIonRouterElement
     'ion-row': HTMLIonRowElement
-    'ion-scroll': HTMLIonScrollElement
     'ion-searchbar': HTMLIonSearchbarElement
     'ion-segment-button': HTMLIonSegmentButtonElement
     'ion-segment': HTMLIonSegmentElement
@@ -6576,7 +6528,6 @@ declare global {
     'ion-router-outlet': HTMLIonRouterOutletElement;
     'ion-router': HTMLIonRouterElement;
     'ion-row': HTMLIonRowElement;
-    'ion-scroll': HTMLIonScrollElement;
     'ion-searchbar': HTMLIonSearchbarElement;
     'ion-segment-button': HTMLIonSegmentButtonElement;
     'ion-segment': HTMLIonSegmentElement;

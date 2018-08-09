@@ -39,13 +39,6 @@ string
 Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
 
 
-#### scrollable
-
-boolean
-
-If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-
-
 #### selectedTab
 
 HTMLIonTabElement
@@ -98,13 +91,6 @@ string
 string
 
 Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
-
-
-#### scrollable
-
-boolean
-
-If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
 
 
 #### selected-tab

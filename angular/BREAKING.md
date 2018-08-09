@@ -44,6 +44,7 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Radio](#radio)
 - [Range](#range)
 - [Refresher](#refresher)
+- [Scroll](#scroll)
 - [Segment](#segment)
 - [Select](#select)
 - [Spinner](#spinner)
@@ -1111,6 +1112,23 @@ The `enabled` property (with a default value of `true`) has been renamed to `dis
 <ion-refresher disabled="true">
   ...
 </ion-refresher>
+```
+
+## Scroll
+
+`ion-scroll` has been removed, fortunatelly `ion-content` can work as a drop-in replacement:
+
+```diff
+- <ion-scroll scrollX="true">
++ <ion-content scrollX="true">
+```
+
+Another very good option is to style a `div` to become scrollable using CSS:
+
+```css
+div.scrollable {
+  overflow: scroll
+}
 ```
 
 

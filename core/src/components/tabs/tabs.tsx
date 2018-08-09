@@ -21,7 +21,6 @@ export class Tabs implements NavOutlet {
   @State() selectedTab?: HTMLIonTabElement;
 
   @Prop({ context: 'config' }) config!: Config;
-
   @Prop({ context: 'document' }) doc!: Document;
 
   /**
@@ -63,11 +62,6 @@ export class Tabs implements NavOutlet {
    * Defaults to `false`.
    */
   @Prop() translucent = false;
-
-  /**
-   * If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-   */
-  @Prop() scrollable = false;
 
   /**
    * If true, the tabs will use the router and `selectedTab` will not do anything.
@@ -307,14 +301,12 @@ export class Tabs implements NavOutlet {
   }
 
   render() {
-    const dom = [
+    return [
       <div class="tabs-inner">
         <slot></slot>
-      </div>
-    ];
+      </div>,
 
-    if (!this.tabbarHidden) {
-      dom.push(
+      !this.tabbarHidden && (
         <ion-tabbar
           tabs={this.tabs.slice()}
           color={this.color}
@@ -322,12 +314,10 @@ export class Tabs implements NavOutlet {
           highlight={this.tabbarHighlight}
           placement={this.tabbarPlacement}
           layout={this.tabbarLayout}
-          translucent={this.translucent}
-          scrollable={this.scrollable}>
+          translucent={this.translucent}>
         </ion-tabbar>
-      );
-    }
-    return dom;
+      )
+    ];
   }
 }
 

@@ -15,7 +15,7 @@ export class Refresher {
   private appliedStyles = false;
   private didStart = false;
   private progress = 0;
-  private scrollEl?: HTMLIonScrollElement;
+  private scrollEl?: HTMLElement;
   private gesture?: Gesture;
 
   mode!: Mode;
@@ -333,7 +333,7 @@ export class Refresher {
     this.queue.write(() => {
       if (this.scrollEl) {
         const style = this.scrollEl.style;
-        style.transform = ((y > 0) ? 'translateY(' + y + 'px) translateZ(0px)' : 'translateZ(0px)');
+        style.transform = ((y > 0) ? `translateY(${y}px) translateZ(0px)` : 'translateZ(0px)');
         style.transitionDuration = duration;
         style.transitionDelay = delay;
         style.overflow = (overflowVisible ? 'hidden' : '');
