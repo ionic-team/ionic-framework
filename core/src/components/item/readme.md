@@ -96,6 +96,7 @@ If this property is set, an anchor tag will be rendered.
 string
 
 How the bottom border should be displayed on the item.
+Available options: `"full"`, `"inset"`, `"none"`.
 
 
 #### mode
@@ -181,6 +182,7 @@ If this property is set, an anchor tag will be rendered.
 string
 
 How the bottom border should be displayed on the item.
+Available options: `"full"`, `"inset"`, `"none"`.
 
 
 #### mode

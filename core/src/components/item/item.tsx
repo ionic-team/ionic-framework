@@ -60,6 +60,7 @@ export class Item {
 
   /**
    * How the bottom border should be displayed on the item.
+   * Available options: `"full"`, `"inset"`, `"none"`.
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
 
@@ -144,6 +145,8 @@ export class Item {
     const TagType = clickable ? (href ? 'a' : 'button') : 'div';
     const attrs = TagType === 'button' ? { type } : { href };
     const showDetail = detail != null ? detail : mode === 'ios' && clickable;
+
+    console.log('item state', state);
 
     return (
       <TagType

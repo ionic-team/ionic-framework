@@ -1084,7 +1084,7 @@ declare global {
        */
       'href': string;
       /**
-       * How the bottom border should be displayed on the item.
+       * How the bottom border should be displayed on the item. Available options: `"full"`, `"inset"`, `"none"`.
        */
       'lines': 'full' | 'inset' | 'none';
       /**
@@ -2182,7 +2182,7 @@ declare global {
 
     interface IonSkeletonText {
       /**
-       * Width for the element to render at. Default is 100% 
+       * The width of the element. Defaults to: `"100%"`.
        */
       'width': string;
     }
@@ -4706,7 +4706,7 @@ declare global {
        */
       'href'?: string;
       /**
-       * How the bottom border should be displayed on the item.
+       * How the bottom border should be displayed on the item. Available options: `"full"`, `"inset"`, `"none"`.
        */
       'lines'?: 'full' | 'inset' | 'none';
       /**
@@ -5802,7 +5802,7 @@ declare global {
 
     export interface IonSkeletonTextAttributes extends HTMLAttributes {
       /**
-       * Width for the element to render at. Default is 100% 
+       * The width of the element. Defaults to: `"100%"`.
        */
       'width'?: string;
     }
