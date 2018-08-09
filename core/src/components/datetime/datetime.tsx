@@ -240,13 +240,14 @@ export class Datetime {
       return;
     }
 
-    const pickerOptions = this.generatePicketOptions();
+    const pickerOptions = this.generatePickerOptions();
     this.picker = await this.pickerCtrl.create(pickerOptions);
+
     this.validate();
     await this.picker!.present();
   }
 
-  private generatePicketOptions(): PickerOptions {
+  private generatePickerOptions(): PickerOptions {
     const pickerOptions: PickerOptions = {
       ...this.pickerOptions,
       columns: this.generateColumns()
@@ -284,7 +285,7 @@ export class Datetime {
     this.calcMinMax();
 
     // does not support selecting by day name
-    // automaticallly remove any day name formats
+    // automatically remove any day name formats
     template = template.replace('DDDD', '{~}').replace('DDD', '{~}');
     if (template.indexOf('D') === -1) {
       // there is not a day in the template
