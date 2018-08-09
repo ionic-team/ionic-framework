@@ -2171,7 +2171,7 @@ declare global {
 
     interface IonSkeletonText {
       /**
-       * The width of the element. Defaults to: `"100%"`.
+       * Width for the element to render at. Default is 100% 
        */
       'width': string;
     }
@@ -5763,7 +5763,7 @@ declare global {
 
     export interface IonSkeletonTextAttributes extends HTMLAttributes {
       /**
-       * The width of the element. Defaults to: `"100%"`.
+       * Width for the element to render at. Default is 100% 
        */
       'width'?: string;
     }

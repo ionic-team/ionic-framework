@@ -146,8 +146,6 @@ export class Item {
     const attrs = TagType === 'button' ? { type } : { href };
     const showDetail = detail != null ? detail : mode === 'ios' && clickable;
 
-    console.log('item state', state);
-
     return (
       <TagType
         {...attrs}
