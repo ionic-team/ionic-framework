@@ -36,13 +36,14 @@
   box-sizing: border-box;
 
   background: var(--background);
+  color: var(--color);
 }
 
 :host(.ion-color) {
   background: initial;
 }
 
-:host(.ion-color) .native-textarea {
+:host(.ion-color) {
   color: current-color(base);
 }
 
@@ -73,7 +74,6 @@
   outline: none;
 
   background: transparent;
-  color: var(--color);
 
   box-sizing: border-box;
   resize: none;

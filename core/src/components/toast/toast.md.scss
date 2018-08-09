@@ -6,9 +6,10 @@
 
 .toast-md {
   --background: #{$toast-md-background};
-  --color: #{toast-md-title-color};
+  --color: #{$toast-md-title-color};
 
   font-family: $toast-md-font-family;
+  font-size: $toast-md-title-font-size;
 }
 
 .toast-md .toast-wrapper {
@@ -42,8 +43,4 @@
 
 .toast-md .toast-message {
   @include padding($toast-md-title-padding-top, $toast-md-title-padding-end, $toast-md-title-padding-bottom, $toast-md-title-padding-start);
-
-  color: var(--color);
-
-  font-size: $toast-md-title-font-size;
 }

@@ -7,9 +7,18 @@
   pointer-events: all;
 
   color: #{current-color(base)};
+
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  text-transform: none;
+
+  white-space: nowrap;
+  font-kerning: none;
 }
 
 button {
+  @include text-inherit();
   @include margin(0);
   @include padding(0);
   @include font-smoothing();
@@ -30,21 +39,12 @@ button {
   outline: none;
 
   background: transparent;
-  color: inherit;
 
   line-height: 1;
-
-  text-align: center;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  text-transform: none;
-
-  white-space: nowrap;
 
   cursor: pointer;
   user-select: none;
   z-index: 0;
-  font-kerning: none;
   appearance: none;
 }
 

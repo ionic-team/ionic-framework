@@ -18,6 +18,8 @@ ion-toast {
   width: $toast-width;
   height: $toast-width;
 
+  color: var(--color);
+
   contain: strict;
   z-index: $z-index-overlay;
   pointer-events: none;
