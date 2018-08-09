@@ -1143,7 +1143,7 @@ declare global {
        */
       'inset': boolean;
       /**
-       * How the bottom border should be displayed on all items.
+       * How the bottom border should be displayed on all items. Available options: `"full"`, `"inset"`, `"none"`.
        */
       'lines': 'full' | 'inset' | 'none';
       /**
@@ -4760,7 +4760,7 @@ declare global {
        */
       'inset'?: boolean;
       /**
-       * How the bottom border should be displayed on all items.
+       * How the bottom border should be displayed on all items. Available options: `"full"`, `"inset"`, `"none"`.
        */
       'lines'?: 'full' | 'inset' | 'none';
     }

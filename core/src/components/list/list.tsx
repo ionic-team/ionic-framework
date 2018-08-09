@@ -17,6 +17,7 @@ export class List {
 
   /**
    * How the bottom border should be displayed on all items.
+   * Available options: `"full"`, `"inset"`, `"none"`.
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
 

@@ -23,6 +23,7 @@ If true, the list will have margin around it and rounded corners. Defaults to `f
 string
 
 How the bottom border should be displayed on all items.
+Available options: `"full"`, `"inset"`, `"none"`.
 
 
 ## Attributes
@@ -39,6 +40,7 @@ If true, the list will have margin around it and rounded corners. Defaults to `f
 string
 
 How the bottom border should be displayed on all items.
+Available options: `"full"`, `"inset"`, `"none"`.
 
 
 ## Methods
