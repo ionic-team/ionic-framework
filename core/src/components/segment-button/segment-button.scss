@@ -9,7 +9,7 @@
   --padding-top: 0;
   --padding-bottom: 0;
   --icon-size: 1em;
-
+  --font-family: 'Arial';
   flex: 1;
 }
 
@@ -39,6 +39,8 @@
   width: 100%;
   height: 100%;
 
+  font-family: --font-family;
+  
   transition: var(--transition);
 
   border-width: var(--border-width);
