@@ -19,9 +19,10 @@
 
   flex: 1;
 
+  margin: 0 !important;
+
   /* stylelint-disable */
   padding: 0 !important;
-  margin: 0 !important;
   /* stylelint-enable */
 
   background-color: #{current-color(base)};
