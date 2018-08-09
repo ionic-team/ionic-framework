@@ -93,6 +93,12 @@ boolean
 If true, the spinner's animation will be paused. Defaults to `false`.
 
 
+## CSS Custom Properties
+
+| Name      | Description          |
+| --------- | -------------------- |
+| `--color` | Color of the spinner |
+
 
 ----------------------------------------------
 

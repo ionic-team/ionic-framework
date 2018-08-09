@@ -1,25 +1,2 @@
 @import "./spinner";
 @import "./spinner.ios.vars";
-
-// iOS Spinner
-// --------------------------------------------------
-
-:host(.spinner-lines) {
-  --ion-color-base: #{$spinner-ios-lines-color};
-}
-
-:host(.spinner-bubbles) {
-  --ion-color-base: #{$spinner-ios-bubbles-color};
-}
-
-:host(.spinner-circles) {
-  --ion-color-base: #{$spinner-ios-circles-color};
-}
-
-:host(.spinner-crescent) {
-  --ion-color-base: #{$spinner-ios-crescent-color};
-}
-
-:host(.spinner-dots) {
-  --ion-color-base: #{$spinner-ios-dots-color};
-}
