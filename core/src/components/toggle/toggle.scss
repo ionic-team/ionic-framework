@@ -30,6 +30,10 @@
   outline: none;
 }
 
+:host(.toggle-disabled) {
+  pointer-events: none;
+}
+
 input {
   @include input-cover();
 
