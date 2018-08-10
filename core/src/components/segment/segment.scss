@@ -19,3 +19,11 @@
 
   width: 100%;
 }
+
+:host(.segment-disabled) {
+  pointer-events: none;
+}
+
+::slotted(.segment-button-disabled) {
+  pointer-events: none;
+}
