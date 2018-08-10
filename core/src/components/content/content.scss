@@ -54,7 +54,8 @@
   overflow: hidden;
 }
 
-.scroll-x.scroll.y {
+.scroll-y,
+.scroll-x {
   -webkit-overflow-scrolling: touch;
   will-change: scroll-position;
 }
@@ -65,13 +66,6 @@
 
 .scroll-x {
   overflow-x: auto;
-}
-
-.scroll-enabled {
-  overflow-x: hidden;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  will-change: scroll-position;
 }
 
 .overscroll::before,

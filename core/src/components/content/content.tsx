@@ -290,7 +290,6 @@ export class Content {
 
   render() {
     const { scrollX, scrollY, forceOverscroll } = this;
-    const scrollEnabled = scrollX || scrollY;
 
     this.resize();
 
@@ -300,8 +299,7 @@ export class Content {
           'inner-scroll': true,
           'scroll-x': scrollX,
           'scroll-y': scrollY,
-          'scroll-enabled': scrollEnabled,
-          'overscroll': scrollEnabled && !!forceOverscroll
+          'overscroll': (scrollX || scrollY) && !!forceOverscroll
         }}
         ref={el => this.scrollEl = el!}
         onScroll={ev => this.onScroll(ev)}>
