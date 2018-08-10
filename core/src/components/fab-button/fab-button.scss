@@ -15,6 +15,8 @@
   --padding-top: calc((#{$fab-size} - var(--size)) / 2);
   --padding-bottom: calc((#{$fab-size} - var(--size)) / 2);
 
+  display: block;
+
   color: #{current-color(contrast)};
 
   font-size: 14px;
@@ -27,6 +29,9 @@
   font-kerning: none;
 }
 
+:host(.fab-button-disabled) {
+  pointer-events: none;
+}
 
 :host(.activated) {
   --background: #{current-color(tint)};

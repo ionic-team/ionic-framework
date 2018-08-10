@@ -81,6 +81,7 @@ export class FabButton {
       class: {
         ...createColorClasses(this.color),
         ...this.getFabClassMap(),
+        'fab-button-disabled': this.disabled,
         'fab-button-translucent': this.translucent
       }
     };
