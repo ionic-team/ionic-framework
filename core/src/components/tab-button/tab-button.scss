@@ -151,3 +151,7 @@ a {
 :host(.has-icon-only) .tab-badge {
   --badge-end: #{calc(50% - 30px)};
 }
+
+:host(.tab-selected) .tab-button-icon {
+  transform: var(--icon-transform-selected);
+}

@@ -8,6 +8,7 @@
   --color: #{$tab-button-md-text-color};
   --color-selected: #{$tabbar-md-text-color-active};
   --background-focused: #{$tabbar-md-background-color-focused};
+  --icon-transform-selected: #{$tab-button-md-icon-transform-active};
 
   max-width: 168px;
 
@@ -58,7 +59,3 @@
   font-size: $tab-button-md-icon-size;
 }
 
-// Tab layout: icon-top, icon-only, label-only
-:host(.tab-selected) .tab-button-icon {
-  --icon-transform: #{translate3d($tab-button-md-icon-transform-x-active, $tab-button-md-icon-transform-y-active, $tab-button-md-icon-transform-z-active)};
-}

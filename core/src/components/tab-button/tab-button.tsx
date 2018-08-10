@@ -75,7 +75,7 @@ export class TabButton {
         { icon && <ion-icon class="tab-button-icon" icon={icon} lazy={false}></ion-icon> }
         { label && <span class="tab-button-text">{label}</span> }
         { badge && <ion-badge class="tab-badge" color={badgeColor}>{badge}</ion-badge> }
-        { mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+        { mode === 'md' && <ion-ripple-effect tapClick={true}></ion-ripple-effect> }
       </a>
     ];
   }
