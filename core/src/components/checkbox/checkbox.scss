@@ -18,6 +18,10 @@
   user-select: none;
 }
 
+:host(.checkbox-disabled) {
+  pointer-events: none;
+}
+
 :host(.checkbox-checked) .checkbox-icon {
   border-color: var(--border-color-checked);
 
