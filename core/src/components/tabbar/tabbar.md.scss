@@ -17,12 +17,12 @@
 // --------------------------------------------------
 
 :host(.layout-icon-top) ion-tab-button {
-  --text-margin-bottom: -2px;
+  --label-margin-bottom: -2px;
 }
 
 :host(.layout-icon-bottom) ion-tab-button {
-  --text-margin-top: -2px;
-  --text-transform: transform-origin(center, top);
+  --label-margin-top: -2px;
+  --label-transform: transform-origin(center, top);
 }
 
 // // Tab layout: icon-end

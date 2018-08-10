@@ -27,7 +27,7 @@
   @include margin($tab-button-md-text-margin-top, $tab-button-md-text-margin-end, $tab-button-md-text-margin-bottom, $tab-button-md-text-margin-start);
   @include transform-origin(center, bottom);
 
-  transform: var(--text-transform);
+  transform: var(--label-transform);
 
   transition: $tab-button-md-text-transition;
 
@@ -37,7 +37,7 @@
 }
 
 :host(.tab-selected) .tab-button-text {
-  --text-transform: #{$tab-button-md-text-transform-active};
+  --label-transform: #{$tab-button-md-text-transform-active};
 
   transition: $tab-button-md-text-transition;
 }

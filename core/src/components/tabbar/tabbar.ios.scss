@@ -39,10 +39,10 @@
 :host(.layout-icon-end) ion-tab-button,
 :host(.layout-icon-start) ion-tab-button,
 :host(.layout-icon-hide) ion-tab-button {
-  --text-margin-top: 2px;
-  --text-margin-bottom: 2px;
-  --text-font-size: 14px;
-  --text-line-height: 1.1;
+  --label-margin-top: 2px;
+  --label-margin-bottom: 2px;
+  --label-font-size: 14px;
+  --label-line-height: 1.1;
 }
 
 :host(.layout-icon-end) ion-tab-button,

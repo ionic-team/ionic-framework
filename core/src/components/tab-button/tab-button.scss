@@ -80,13 +80,13 @@ a {
 }
 
 .tab-button-text {
-  @include margin(var(--text-margin-top), null, var(--text-margin-bottom), null);
+  @include margin(var(--label-margin-top), null, var(--label-margin-bottom), null);
 
-  display: var(--text-display, block);
+  display: var(--label-display, block);
 
-  font-size: var(--text-font-size);
+  font-size: var(--label-font-size);
 
-  line-height: var(--text-line-height);
+  line-height: var(--label-line-height);
 }
 
 .tab-button-icon {
