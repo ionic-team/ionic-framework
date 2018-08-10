@@ -13,9 +13,23 @@
   contain: strict;
 }
 
+// Material Design Tabbar Layout
+// --------------------------------------------------
 
-// TODO: REVIEW
-:host(.placement-top) .tab-button.tab-selected .tab-button-icon,
-:host(.placement-top) .tab-button.tab-selected .tab-button-text {
-  transform: inherit;
+:host(.layout-icon-top) ion-tab-button {
+  --label-margin-bottom: -2px;
+}
+
+:host(.layout-icon-end) ion-tab-button {
+  --icon-transform-selected: #{$tab-button-md-icon-right-transform-active};
+}
+
+:host(.layout-icon-bottom) ion-tab-button {
+  --label-margin-top: -2px;
+  --label-transform: transform-origin(center, top);
+  --icon-transform-selected: #{$tab-button-md-icon-bottom-transform-active};
+}
+
+:host(.layout-icon-start) ion-tab-button {
+  --icon-transform-selected: #{$tab-button-md-icon-left-transform-active};
 }

@@ -39,27 +39,3 @@
 .tab-button-icon::before {
   vertical-align: top;
 }
-
-.layout-icon-end .tab-button-ios .tab-button-text,
-.layout-icon-start .tab-button-ios .tab-button-text,
-.layout-icon-hide .tab-button-ios .tab-button-text {
-  @include margin(2px, 0);
-
-  font-size: 14px;
-
-  line-height: 1.1;
-}
-
-.layout-icon-end .tab-button-ios ion-icon,
-.layout-icon-start .tab-button-ios ion-icon {
-  @include margin(2px, null, 1px, null);
-
-  min-width: 24px;
-  height: 26px;
-
-  font-size: 24px;
-}
-
-.layout-label-hide .tab-button-ios ion-icon {
-  @include margin(0);
-}

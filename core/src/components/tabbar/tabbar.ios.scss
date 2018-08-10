@@ -32,3 +32,28 @@
   backdrop-filter: $tabbar-ios-translucent-filter;
 }
 
+
+// iOS Tabbar Layout
+// --------------------------------------------------
+
+:host(.layout-icon-end) ion-tab-button,
+:host(.layout-icon-start) ion-tab-button,
+:host(.layout-icon-hide) ion-tab-button {
+  --label-margin-top: 2px;
+  --label-margin-bottom: 2px;
+  --label-font-size: 14px;
+  --label-line-height: 1.1;
+}
+
+:host(.layout-icon-end) ion-tab-button,
+:host(.layout-icon-start) ion-tab-button {
+  --icon-margin-top: 2px;
+  --icon-margin-bottom: 1px;
+  --icon-min-width: 24px;
+  --icon-height: 26px;
+  --icon-font-size: 24px;
+}
+
+:host(.layout-label-hide) ion-tab-button {
+  --icon-margin: 0;
+}

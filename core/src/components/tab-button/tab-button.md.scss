@@ -8,6 +8,7 @@
   --color: #{$tab-button-md-text-color};
   --color-selected: #{$tabbar-md-text-color-active};
   --background-focused: #{$tabbar-md-background-color-focused};
+  --icon-transform-selected: #{$tab-button-md-icon-transform-active};
 
   max-width: 168px;
 
@@ -27,6 +28,8 @@
   @include margin($tab-button-md-text-margin-top, $tab-button-md-text-margin-end, $tab-button-md-text-margin-bottom, $tab-button-md-text-margin-start);
   @include transform-origin(center, bottom);
 
+  transform: var(--label-transform);
+
   transition: $tab-button-md-text-transition;
 
   font-size: $tab-button-md-font-size;
@@ -35,7 +38,7 @@
 }
 
 :host(.tab-selected) .tab-button-text {
-  transform: $tab-button-md-text-transform-active;
+  --label-transform: #{$tab-button-md-text-transform-active};
 
   transition: $tab-button-md-text-transition;
 }
@@ -49,45 +52,10 @@
   width: $tab-button-md-icon-size;
   height: $tab-button-md-icon-size;
 
+  transform: var(--icon-transform);
+
   transition: $tab-button-md-icon-transition;
 
   font-size: $tab-button-md-icon-size;
 }
 
-// Tab layout: icon-top, icon-only, label-only
-:host(.tab-selected) .tab-button-icon {
-  @include transform(translate3d($tab-button-md-icon-transform-x-active, $tab-button-md-icon-transform-y-active, $tab-button-md-icon-transform-z-active));
-}
-
-
-// Material Design Tab with Icon or Title only
-// --------------------------------------------------
-
-// Tab layout: icon-end
-.layout-icon-end .tab-button-md.tab-selected .tab-button-icon {
-  @include transform(translate3d($tab-button-md-icon-right-transform-x-active, $tab-button-md-icon-right-transform-y-active, $tab-button-md-icon-right-transform-z-active));
-}
-
-// Tab layout: icon-bottom
-.layout-icon-bottom .tab-button-md.tab-selected .tab-button-icon {
-  @include transform(translate3d($tab-button-md-icon-bottom-transform-x-active, $tab-button-md-icon-bottom-transform-y-active, $tab-button-md-icon-bottom-transform-z-active));
-}
-
-// Tab layout: icon-start
-.layout-icon-start .tab-button-md.tab-selected .tab-button-icon {
-  @include transform(translate3d($tab-button-md-icon-left-transform-x-active, $tab-button-md-icon-left-transform-y-active, $tab-button-md-icon-left-transform-z-active));
-}
-
-.layout-icon-top .tab-button-md .has-icon .tab-button-text {
-  @include margin(null, null, -2px, null);
-}
-
-.layout-icon-bottom .tab-button-md .tab-button-text {
-  @include transform-origin(center, top);
-  @include margin(-2px, null, null, null);
-}
-
-.layout-icon-hide .tab-button-md,
-.layout-label-hide .tab-button-md {
-  justify-content: center;
-}
