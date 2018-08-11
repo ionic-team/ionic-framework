@@ -11,6 +11,7 @@ import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, g
 })
 export class VirtualScroll {
 
+  private contentEl?: HTMLElement;
   private scrollEl?: HTMLElement;
   private range: Range = { offset: 0, length: 0 };
   private timerUpdate: any;
@@ -121,6 +122,7 @@ export class VirtualScroll {
     }
     await contentEl.componentOnReady();
 
+    this.contentEl = contentEl;
     this.scrollEl = contentEl.getScrollElement();
     this.calcCells();
     this.updateState();
@@ -215,14 +217,15 @@ export class VirtualScroll {
   }
 
   private readVS() {
-    const { scrollEl, el } = this;
+    const { contentEl, scrollEl, el } = this;
     let topOffset = 0;
     let node: HTMLElement | null = el;
-    while (node && node !== scrollEl) {
+    while (node && node !== contentEl) {
       topOffset += node.offsetTop;
       node = node.parentElement;
     }
     this.viewportOffset = topOffset;
+    console.log(this.viewportOffset);
     if (scrollEl) {
       this.viewportHeight = scrollEl.offsetHeight;
       this.currentScrollTop = scrollEl.scrollTop;
