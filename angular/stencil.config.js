@@ -38,7 +38,6 @@ exports.config.outputTargets = [
       // controllers
       'ion-menu-controller',
       'ion-animation-controller',
-      'ion-animation-controller',
 
       // navigation
       'ion-router',
@@ -51,8 +50,6 @@ exports.config.outputTargets = [
 
       // auxiliar
       'ion-picker-column',
-      'ion-range-knob',
-      'ion-backdrop',
       'ion-anchor',
       'ion-virtual-scroll'
     ]
