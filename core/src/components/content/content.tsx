@@ -167,15 +167,15 @@ export class Content {
    * Scroll to the top of the component
    */
   @Method()
-  scrollToTop(duration = 100): Promise<void> {
-    return this.scrollToPoint(0, undefined, duration);
+  scrollToTop(duration = 0): Promise<void> {
+    return this.scrollToPoint(undefined, 0, duration);
   }
 
   /**
    * Scroll to the bottom of the component
    */
   @Method()
-  scrollToBottom(duration = 100): Promise<void> {
+  scrollToBottom(duration = 0): Promise<void> {
     const y = this.scrollEl.scrollHeight - this.scrollEl.clientHeight;
     return this.scrollToPoint(undefined, y, duration);
   }
