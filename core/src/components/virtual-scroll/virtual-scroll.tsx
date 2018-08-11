@@ -1,4 +1,4 @@
-import { Component, Element, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, Element, EventListenerEnable, FunctionalComponent, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
@@ -141,8 +141,6 @@ export class VirtualScroll {
 
   @Listen('window:resize')
   onResize() {
-    this.indexDirty = 0;
-    this.calcCells();
     this.updateVirtualScroll();
   }
 
@@ -378,25 +376,36 @@ export class VirtualScroll {
   }
 
   render() {
-    const renderItem = this.renderItem;
-    if (renderItem) {
-      return this.virtualDom.map(node => {
-        const item = this.renderVirtualNode(node) as any;
-        const classes = ['virtual-item'];
-        if (!item.vattrs) {
-          item.vattrs = {};
-        }
-        if (!node.visible) {
-          classes.push('virtual-loading');
-        }
-        item.vattrs.class += classes.join(' ');
-        if (!item.vattrs.style) {
-          item.vattrs.style = {};
-        }
-        item.vattrs.style['transform'] = `translate3d(0,${node.top}px,0)`;
-        return item;
-      });
+    if (this.renderItem) {
+      return (
+        <VirtualProxy dom={this.virtualDom}>
+          { this.virtualDom.map(node => this.renderVirtualNode(node)) }
+        </VirtualProxy>
+      );
     }
     return undefined;
   }
 }
+
+const VirtualProxy: FunctionalComponent<{dom: VirtualNode[]}> = ({ dom }, children, utils) => {
+  return utils.map(children, (child, i) => {
+    const node = dom[i];
+    const vattrs = child.vattrs || {};
+    let classes = vattrs.class || '';
+    classes += 'virtual-item ';
+    if (!node.visible) {
+      classes += 'virtual-loading';
+    }
+    return {
+      ...child,
+      vattrs: {
+        ...vattrs,
+        class: classes,
+        style: {
+          ...vattrs.style,
+          transform: `translate3d(0,${node.top}px,0)`
+        }
+      }
+    };
+  });
+};
