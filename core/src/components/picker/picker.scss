@@ -14,6 +14,7 @@ ion-picker {
   height: $picker-width;
 
   contain: strict;
+  user-select: none;
   z-index: $z-index-overlay;
 }
 

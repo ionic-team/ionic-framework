@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, QueueApi } from '@stencil/core';
+import { Component, Element, Prop, QueueApi } from '@stencil/core';
 
 import { Gesture, GestureDetail, Mode, PickerColumn } from '../../interface';
 import { hapticSelectionChanged } from '../../utils';

@@ -39,7 +39,6 @@ import {
   PickerColumn,
   PickerOptions,
   PopoverOptions,
-  RangeInputChangeEvent,
   RangeValue,
   RouteID,
   RouterDirection,
@@ -56,6 +55,7 @@ import {
   TabbarLayout,
   TabbarPlacement,
   TextFieldTypes,
+  TextInputChangeEvent,
   ToastOptions,
   TransitionDoneFn,
   TransitionInstruction,
@@ -685,11 +685,11 @@ declare global {
       /**
        * The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.
        */
-      'max': string | undefined;
+      'max': string;
       /**
        * The minimum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), such as `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the minimum could just be the year, such as `1994`. Defaults to the beginning of the year, 100 years ago from today.
        */
-      'min': string | undefined;
+      'min': string;
       /**
        * Values used to create the list of selectable minutes. By default the mintues range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.
        */
@@ -706,6 +706,7 @@ declare global {
        * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
        */
       'monthValues': number[] | number | string;
+      'open': () => Promise<void>;
       /**
        * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
        */
@@ -721,7 +722,7 @@ declare global {
       /**
        * the value of the datetime.
        */
-      'value': string;
+      'value': any;
       /**
        * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
        */
@@ -1721,9 +1722,6 @@ declare global {
 
     interface IonRadioGroup {
       'allowEmptySelection': boolean;
-      /**
-       * Indicates that the user cannot interact with the control.
-       */
       'disabled': boolean;
       /**
        * The name of the control, which is submitted with the form data.
@@ -1744,9 +1742,6 @@ declare global {
        * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
-      /**
-       * Indicates that the user cannot interact with the control.
-       */
       'disabled': boolean;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
@@ -1771,9 +1766,6 @@ declare global {
        * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. Default `0`.
        */
       'debounce': number;
-      /**
-       * Indicates that the user cannot interact with the control.
-       */
       'disabled': boolean;
       /**
        * Show two knobs. Defaults to `false`.
@@ -2115,6 +2107,7 @@ declare global {
        * The text to display on the ok button. Default: `OK`.
        */
       'okText': string;
+      'open': (ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement> | Promise<HTMLIonAlertElement> | Promise<HTMLIonPopoverElement>;
       /**
        * The text to display when the select is empty.
        */
@@ -2627,9 +2620,6 @@ declare global {
        * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
-      /**
-       * Indicates that the user cannot interact with the control.
-       */
       'disabled': boolean;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
@@ -4229,11 +4219,11 @@ declare global {
       /**
        * The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.
        */
-      'max'?: string | undefined;
+      'max'?: string;
       /**
        * The minimum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), such as `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the minimum could just be the year, such as `1994`. Defaults to the beginning of the year, 100 years ago from today.
        */
-      'min'?: string | undefined;
+      'min'?: string;
       /**
        * Values used to create the list of selectable minutes. By default the mintues range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.
        */
@@ -4257,7 +4247,7 @@ declare global {
       /**
        * Emitted when the value (selected date) has changed.
        */
-      'onIonChange'?: (event: CustomEvent<void>) => void;
+      'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
       /**
        * Emitted when the styles change.
        */
@@ -4277,7 +4267,7 @@ declare global {
       /**
        * the value of the datetime.
        */
-      'value'?: string;
+      'value'?: any;
       /**
        * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
        */
@@ -4523,7 +4513,7 @@ declare global {
       /**
        * Emitted when the value has changed.
        */
-      'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
+      'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
       /**
        * Emitted when the input has focus.
        */
@@ -5025,10 +5015,6 @@ declare global {
 
     export interface IonPickerColumnAttributes extends HTMLAttributes {
       'col'?: PickerColumn;
-      /**
-       * Emitted when the selected option has changed.
-       */
-      'onIonChange'?: (event: CustomEvent<void>) => void;
     }
 
     export interface IonPickerControllerAttributes extends HTMLAttributes {
@@ -5187,9 +5173,6 @@ declare global {
 
     export interface IonRadioGroupAttributes extends HTMLAttributes {
       'allowEmptySelection'?: boolean;
-      /**
-       * Indicates that the user cannot interact with the control.
-       */
       'disabled'?: boolean;
       /**
        * The name of the control, which is submitted with the form data.
@@ -5198,7 +5181,7 @@ declare global {
       /**
        * Emitted when the value has changed.
        */
-      'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
+      'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
       /**
        * the value of the radio group.
        */
@@ -5214,9 +5197,6 @@ declare global {
        * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
-      /**
-       * Indicates that the user cannot interact with the control.
-       */
       'disabled'?: boolean;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
@@ -5265,9 +5245,6 @@ declare global {
        * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. Default `0`.
        */
       'debounce'?: number;
-      /**
-       * Indicates that the user cannot interact with the control.
-       */
       'disabled'?: boolean;
       /**
        * Show two knobs. Defaults to `false`.
@@ -5296,7 +5273,7 @@ declare global {
       /**
        * Emitted when the value property has changed.
        */
-      'onIonChange'?: (event: CustomEvent<RangeInputChangeEvent>) => void;
+      'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
       /**
        * Emitted when the range has focus.
        */
@@ -5510,7 +5487,7 @@ declare global {
       /**
        * Emitted when the value has changed.
        */
-      'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
+      'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
       /**
        * Emitted when the clear input button is clicked.
        */
@@ -5586,7 +5563,7 @@ declare global {
       /**
        * Emitted when the value property has changed.
        */
-      'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
+      'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
       /**
        * the value of the segment.
        */
@@ -6090,7 +6067,7 @@ declare global {
       /**
        * Emitted when the input value has changed.
        */
-      'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
+      'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
       /**
        * Emitted when the input has focus.
        */
@@ -6230,9 +6207,6 @@ declare global {
        * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
-      /**
-       * Indicates that the user cannot interact with the control.
-       */
       'disabled'?: boolean;
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
