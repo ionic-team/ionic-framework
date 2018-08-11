@@ -16,6 +16,16 @@ export function setupConfig(config: IonicConfig) {
 }
 
 const IONIC_PREFIX = 'ionic:';
+const IONIC_SESSION_KEY = 'ionic-persist-config';
+
+export function configFromSession(): any {
+  const configStr = window.sessionStorage.getItem(IONIC_SESSION_KEY);
+  return configStr ? JSON.parse(configStr) : {};
+}
+
+export function saveConfig(config: any) {
+  window.sessionStorage.setItem(IONIC_SESSION_KEY, JSON.stringify(config));
+}
 
 export function configFromURL() {
   const config: any = {};
