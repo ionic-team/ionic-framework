@@ -306,12 +306,18 @@ The `secondary` color saw the largest change. If you were previously using our `
 
 Content is now a drop-in replacement for `ion-scroll`, that means `ion-content` is much more flexible today, they can be used anywhere, even in a nested fashion.
 
+### resize() was removed
+
+In Ionic 4, `ion-content` layout is based in flex, that means their size will automatically adjust without requiring to call resize() programatically.
+
+
 ### Attributes Renamed
 
 
 | Old Property | New Property          | Property Behavior |
 |--------------|-----------------------|-------------------------------------------------------------------------|
 | no-bounce    | forceOverflow="false" | If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. |
+
 
 ## Datetime
 
