@@ -17,12 +17,13 @@ Object.defineProperty(Ionic, 'queue', {
 // create the Ionic.config from raw config object (if it exists)
 // and convert Ionic.config into a ConfigApi that has a get() fn
 const configObj = {
-  ...Ionic['config'],
   ...configFromSession(),
+  persistConfig: false,
+  ...Ionic['config'],
   ...configFromURL()
 };
 const config = Ionic['config'] = Context['config'] = new Config(configObj);
-if (config.getBoolean('_persist', false)) {
+if (config.getBoolean('persistConfig')) {
   saveConfig(configObj);
 }
 

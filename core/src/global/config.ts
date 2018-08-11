@@ -6,7 +6,7 @@ export interface IonicConfig {
    * Possible values are: `"ios"` or `"md"`.
    */
   mode?: Mode;
-  _persist?: boolean;
+  persistConfig?: boolean;
 
   isDevice?: boolean;
   statusbarPadding?: boolean;
