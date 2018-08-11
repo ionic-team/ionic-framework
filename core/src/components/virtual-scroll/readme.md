@@ -9,17 +9,17 @@ instead a small subset of records (enough to fill the viewport) are rendered
 and reused as the user scrolls.
 
 ### The Basics
-The array of records should be passed to the `virtualScroll` property.
-The data given to the `virtualScroll` property must be an array. An item
-template with the `*virtualItem` property is required in the `virtualScroll`.
-The `virtualScroll` and `*virtualItem` properties can be added to any element.
+The array of records should be passed to the `item` property on the `ion-virtual-scroll` element.
+The data given to the `item` property must be an array. An item
+template with the `*virtualItem` property is required in the `ion-virtual-scroll`.
+The `*virtualItem` property can be added to any element.
 
 ```html
-<ion-list [virtualScroll]="items">
+<ion-virtual-scroll [items]="items">
   <ion-item *virtualItem="let item">
     {{ item }}
   </ion-item>
-</ion-list>
+</ion-virtual-scroll>
 ```
 
 ### Section Headers and Footers
@@ -33,14 +33,14 @@ and what data to provide to the template. The custom function should
 return `null` if a template shouldn't be created.
 
 ```html
-<ion-list [virtualScroll]="items" [headerFn]="myHeaderFn">
+<ion-virtual-scroll [items]="items" [headerFn]="myHeaderFn">
   <ion-item-divider *virtualHeader="let header">
-    Header: {% raw %}{{ header }}{% endraw %}
+    {{ header }}
   </ion-item-divider>
   <ion-item *virtualItem="let item">
-    Item: {% raw %}{{ item }}{% endraw %}
+    Item: {{ item }}
   </ion-item>
-</ion-list>
+</ion-virtual-scroll>
 ```
 
 Below is an example of a custom function called on every record. It
@@ -99,12 +99,12 @@ renders whenever it wants which could be while the user is scrolling. However,
 images while scrolling quickly.
 
 ```html
-<ion-list [virtualScroll]="items">
+<ion-virtual-scroll [items]="items">
   <ion-item *virtualItem="let item">
     <ion-avatar item-start>
       <ion-img [src]="item.avatarUrl"></ion-img>
     </ion-avatar>
-   {% raw %} {{ item.firstName }} {{ item.lastName }}{% endraw %}
+    {{ item.firstName }} {{ item.lastName }}
   </ion-item>
 </ion-list>
 ```
@@ -118,10 +118,10 @@ quite different, wrapping within a `<div>` is a safe way to make sure
 dimensions are measured correctly.
 
 ```html
-<ion-list [virtualScroll]="items">
+<ion-virtual-scroll [items]="items">
   <div *virtualItem="let item">
     <my-custom-item [item]="item">
-      {% raw %} {{ item }}{% endraw %}
+      {{ item }}
     </my-custom-item>
   </div>
 </ion-list>
