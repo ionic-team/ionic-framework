@@ -27,7 +27,6 @@ import {
   InputChangeEvent,
   ItemHeightFn,
   ItemRenderFn,
-  Knob,
   LoadingOptions,
   Menu,
   MenuChangeEventDetail,
@@ -1763,18 +1762,6 @@ declare global {
       'value': string;
     }
 
-    interface IonRangeKnob {
-      'disabled': boolean;
-      'knob': Knob;
-      'labelId': string;
-      'max': number;
-      'min': number;
-      'pin': boolean;
-      'pressed': boolean;
-      'ratio': number;
-      'value': number;
-    }
-
     interface IonRange {
       /**
        * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -3227,14 +3214,6 @@ declare global {
     };
     
 
-    interface HTMLIonRangeKnobElement extends StencilComponents.IonRangeKnob, HTMLStencilElement {}
-
-    var HTMLIonRangeKnobElement: {
-      prototype: HTMLIonRangeKnobElement;
-      new (): HTMLIonRangeKnobElement;
-    };
-    
-
     interface HTMLIonRangeElement extends StencilComponents.IonRange, HTMLStencilElement {}
 
     var HTMLIonRangeElement: {
@@ -3591,7 +3570,6 @@ declare global {
     'ion-popover': JSXElements.IonPopoverAttributes;
     'ion-radio-group': JSXElements.IonRadioGroupAttributes;
     'ion-radio': JSXElements.IonRadioAttributes;
-    'ion-range-knob': JSXElements.IonRangeKnobAttributes;
     'ion-range': JSXElements.IonRangeAttributes;
     'ion-refresher-content': JSXElements.IonRefresherContentAttributes;
     'ion-refresher': JSXElements.IonRefresherAttributes;
@@ -5278,20 +5256,6 @@ declare global {
       'value'?: string;
     }
 
-    export interface IonRangeKnobAttributes extends HTMLAttributes {
-      'disabled'?: boolean;
-      'knob'?: Knob;
-      'labelId'?: string;
-      'max'?: number;
-      'min'?: number;
-      'onIonDecrease'?: (event: CustomEvent) => void;
-      'onIonIncrease'?: (event: CustomEvent) => void;
-      'pin'?: boolean;
-      'pressed'?: boolean;
-      'ratio'?: number;
-      'value'?: number;
-    }
-
     export interface IonRangeAttributes extends HTMLAttributes {
       /**
        * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -6411,7 +6375,6 @@ declare global {
     'ion-popover': HTMLIonPopoverElement
     'ion-radio-group': HTMLIonRadioGroupElement
     'ion-radio': HTMLIonRadioElement
-    'ion-range-knob': HTMLIonRangeKnobElement
     'ion-range': HTMLIonRangeElement
     'ion-refresher-content': HTMLIonRefresherContentElement
     'ion-refresher': HTMLIonRefresherElement
@@ -6516,7 +6479,6 @@ declare global {
     'ion-popover': HTMLIonPopoverElement;
     'ion-radio-group': HTMLIonRadioGroupElement;
     'ion-radio': HTMLIonRadioElement;
-    'ion-range-knob': HTMLIonRangeKnobElement;
     'ion-range': HTMLIonRangeElement;
     'ion-refresher-content': HTMLIonRefresherContentElement;
     'ion-refresher': HTMLIonRefresherElement;

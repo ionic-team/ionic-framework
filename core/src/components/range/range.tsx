@@ -174,6 +174,21 @@ export class Range implements BaseInput {
     this.updateValue();
   }
 
+  private handleKeyboard(knob: string, isIncrease: boolean) {
+    let step = this.step;
+    step = step > 0 ? step : 1;
+    step = step / (this.max - this.min);
+    if (!isIncrease) {
+      step *= -1;
+    }
+    if (knob === 'A') {
+      this.ratioA += step;
+    } else {
+      this.ratioB += step;
+    }
+    this.updateValue();
+  }
+
   private getValue(): RangeValue {
     const value = this.value || 0;
     if (this.dualKnobs) {
@@ -364,31 +379,83 @@ export class Range implements BaseInput {
             right: barR
           }}
         />
-        <ion-range-knob
-          knob="A"
-          pressed={this.pressedKnob === 'A'}
-          value={this.valA}
-          ratio={this.ratioA}
-          pin={this.pin}
-          min={min}
-          max={max}
-        />
 
-        {this.dualKnobs && (
-          <ion-range-knob
-            knob="B"
-            pressed={this.pressedKnob === 'B'}
-            value={this.valB}
-            ratio={this.ratioB}
-            pin={this.pin}
-            min={min}
-            max={max}
-          />
-        )}
+        { renderKnob({
+          knob: 'A',
+          pressed: this.pressedKnob === 'A',
+          value: this.valA,
+          ratio: this.ratioA,
+          pin: this.pin,
+          disabled: this.disabled,
+          handleKeyboard: this.handleKeyboard.bind(this),
+          min,
+          max
+        })}
+
+        { this.dualKnobs && renderKnob({
+          knob: 'B',
+          pressed: this.pressedKnob === 'B',
+          value: this.valB,
+          ratio: this.ratioB,
+          pin: this.pin,
+          disabled: this.disabled,
+          handleKeyboard: this.handleKeyboard.bind(this),
+          min,
+          max
+        })}
       </div>,
       <slot name="end"></slot>
     ];
   }
+}
+interface RangeKnob {
+  knob: string;
+  value: number;
+  ratio: number;
+  min: number;
+  max: number;
+  disabled: boolean;
+  pressed: boolean;
+  pin: boolean;
+
+  handleKeyboard: (name: string, isIncrease: boolean) => void;
+}
+
+function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) {
+  return (
+    <div
+      onKeyDown={(ev: KeyboardEvent) => {
+        const key = ev.key;
+        if (key === 'ArrowLeft' || key === 'ArrowDown') {
+          handleKeyboard(knob, false);
+          ev.preventDefault();
+          ev.stopPropagation();
+
+        } else if (key === 'ArrowRight' || key === 'ArrowUp') {
+          handleKeyboard(knob, true);
+          ev.preventDefault();
+          ev.stopPropagation();
+        }
+      }}
+      class={{
+        'range-knob-handle': true,
+        'range-knob-pressed': pressed,
+        'range-knob-min': value === min,
+        'range-knob-max': value === max
+      }}
+      style={{
+        'left': `${ratio * 100}%`
+      }}
+      role="slider"
+      tabindex={disabled ? -1 : 0}
+      aria-valuemin={min}
+      aria-valuemax={max}
+      aria-disabled={disabled ? 'true' : null}
+      aria-valuenow={value}>
+        { pin && <div class="range-pin" role="presentation">{Math.round(value)}</div>}
+        <div class="range-knob" role="presentation" />
+    </div>
+  );
 }
 
 function ratioToValue(

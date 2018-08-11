@@ -30,7 +30,7 @@ exports.config = {
     { components: ['ion-img'] },
     { components: ['ion-popover', 'ion-popover-controller'] },
     { components: ['ion-radio', 'ion-radio-group'] },
-    { components: ['ion-range', 'ion-range-knob'] },
+    { components: ['ion-range'] },
     { components: ['ion-refresher', 'ion-refresher-content'] },
     { components: ['ion-reorder', 'ion-reorder-group'] },
     { components: ['ion-ripple-effect'] },
