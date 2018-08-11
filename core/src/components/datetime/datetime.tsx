@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, Event, EventEmitter, Prop, State, Watch, Method } from '@stencil/core';
 
 import { CssClassMap, PickerColumn, PickerOptions, StyleEvent } from '../../interface';
 import { clamp, deferEvent } from '../../utils/helpers';
@@ -221,6 +221,18 @@ export class Datetime {
     this.emitStyle();
   }
 
+  @Method()
+  async open() {
+    if (this.disabled) {
+      return;
+    }
+
+    const pickerOptions = this.generatePickerOptions();
+    this.picker = await this.pickerCtrl.create(pickerOptions);
+    this.validate();
+    await this.picker.present();
+  }
+
   private emitStyle() {
     this.ionStyle.emit({
       'interactive': true,
@@ -233,18 +245,6 @@ export class Datetime {
   private updateValue() {
     updateDate(this.datetimeValue, this.value);
     this.updateText();
-  }
-
-  private async open() {
-    if (this.disabled) {
-      return;
-    }
-
-    const pickerOptions = this.generatePickerOptions();
-    this.picker = await this.pickerCtrl.create(pickerOptions);
-
-    this.validate();
-    await this.picker!.present();
   }
 
   private generatePickerOptions(): PickerOptions {
