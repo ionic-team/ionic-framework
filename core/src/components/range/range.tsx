@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { BaseInput, Color, Gesture, GestureDetail, Mode, RangeInputChangeEvent, RangeValue, StyleEvent } from '../../interface';
+import { Color, Gesture, GestureDetail, InputChangeEvent, Mode, RangeValue, StyleEvent } from '../../interface';
 import { clamp, debounceEvent, deferEvent } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -14,7 +14,7 @@ import { Knob, RangeEventDetail } from './range-interface';
   },
   shadow: true
 })
-export class Range implements BaseInput {
+export class Range {
 
   private noUpdate = false;
   private rect!: ClientRect;
@@ -118,7 +118,7 @@ export class Range implements BaseInput {
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange!: EventEmitter<RangeInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<InputChangeEvent>;
 
   /**
    * Emitted when the styles change.

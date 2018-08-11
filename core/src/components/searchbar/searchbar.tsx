@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
-import { Color, InputChangeEvent, Mode } from '../../interface';
+import { Color, Mode, TextInputChangeEvent } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
 
@@ -115,7 +115,7 @@ export class Searchbar {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<InputChangeEvent>;
+  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
 
   /**
    * Emitted when the cancel button is clicked.

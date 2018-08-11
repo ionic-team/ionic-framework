@@ -1,6 +1,6 @@
-import { Component, Event, EventEmitter, Prop, State, Watch, Method } from '@stencil/core';
+import { Component, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
-import { CssClassMap, PickerColumn, PickerOptions, StyleEvent } from '../../interface';
+import { CssClassMap, InputChangeEvent, PickerColumn, PickerOptions, StyleEvent } from '../../interface';
 import { clamp, deferEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -48,7 +48,7 @@ export class Datetime {
    * datetime. For example, the minimum could just be the year, such as `1994`.
    * Defaults to the beginning of the year, 100 years ago from today.
    */
-  @Prop({ mutable: true }) min: string | undefined;
+  @Prop({ mutable: true }) min?: string;
 
   /**
    * The maximum datetime allowed. Value must be a date string
@@ -58,7 +58,7 @@ export class Datetime {
    * datetime. For example, the maximum could just be the year, such as `1994`.
    * Defaults to the end of this year.
    */
-  @Prop({ mutable: true }) max: string | undefined;
+  @Prop({ mutable: true }) max?: string;
 
   /**
    * The display format of the date and time as text that shows
@@ -174,7 +174,7 @@ export class Datetime {
   /**
    * the value of the datetime.
    */
-  @Prop({ mutable: true }) value?: string;
+  @Prop({ mutable: true }) value?: any;
 
   /**
    * Update the datetime value when the value changes
@@ -183,7 +183,9 @@ export class Datetime {
   protected valueChanged() {
     this.updateValue();
     this.emitStyle();
-    this.ionChange.emit();
+    this.ionChange.emit({
+      value: this.value
+    });
   }
 
   /**
@@ -194,7 +196,7 @@ export class Datetime {
   /**
    * Emitted when the value (selected date) has changed.
    */
-  @Event() ionChange!: EventEmitter<void>;
+  @Event() ionChange!: EventEmitter<InputChangeEvent>;
 
   /**
    * Emitted when the styles change.

@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { CheckboxInput, CheckedInputChangeEvent, Color, Gesture, GestureDetail, Mode, StyleEvent } from '../../interface';
+import { CheckedInputChangeEvent, Color, Gesture, GestureDetail, Mode, StyleEvent } from '../../interface';
 import { hapticSelection } from '../../utils/haptic';
 import { deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
@@ -13,7 +13,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   },
   shadow: true
 })
-export class Toggle implements CheckboxInput {
+export class Toggle {
 
   private inputId = `ion-tg-${toggleIds++}`;
   private nativeInput!: HTMLInputElement;

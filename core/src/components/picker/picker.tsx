@@ -91,26 +91,22 @@ export class Picker implements OverlayInterface {
   /**
    * Emitted after the picker has presented.
    */
-  @Event({ eventName: 'ionPickerDidPresent' })
-  didPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionPickerDidPresent' }) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the picker has presented.
    */
-  @Event({ eventName: 'ionPickerWillPresent' })
-  willPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionPickerWillPresent' }) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the picker has dismissed.
    */
-  @Event({ eventName: 'ionPickerWillDismiss' })
-  willDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionPickerWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the picker has dismissed.
    */
-  @Event({ eventName: 'ionPickerDidDismiss' })
-  didDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionPickerDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the picker has unloaded.
@@ -285,8 +281,7 @@ export class Picker implements OverlayInterface {
               <button
                 type="button"
                 onClick={() => this.buttonClick(b)}
-                class={buttonClass(b)}
-              >
+                class={buttonClass(b)}>
                 {b.text}
               </button>
             </div>
@@ -295,7 +290,7 @@ export class Picker implements OverlayInterface {
 
         <div class="picker-columns">
           <div class="picker-above-highlight" />
-          {columns.map(c => <ion-picker-column col={c} />)}
+            { columns.map(c => <ion-picker-column col={c} />) }
           <div class="picker-below-highlight" />
         </div>
 
