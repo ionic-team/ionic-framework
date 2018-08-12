@@ -67,7 +67,7 @@ export class BackButton {
         'button': true,
         'show-back-button': showBackButton
       },
-      'tappable': true,
+      'ion-activable': true,
     };
   }
 

@@ -57,7 +57,7 @@ export function startTapClick(doc: Document) {
       return;
     }
     cancelled = false;
-    setActivatedElement(getActivatableTarget(ev.target), ev);
+    setActivatedElement(getActivatableTarget(ev), ev);
   }
 
   function pointerUp(ev: UIEvent) {
@@ -145,8 +145,18 @@ export function startTapClick(doc: Document) {
   doc.addEventListener('mouseup', onMouseUp, true);
 }
 
-function getActivatableTarget(el: HTMLElement): any {
-  return el.closest(':not([tappable]) > a, :not([tappable]) > button, [tappable]');
+function getActivatableTarget(ev: any): any {
+  if (ev.composedPath) {
+    const path = ev.composedPath() as HTMLElement[];
+    for (let i = path.length - 3; i >= 0; i--) {
+      const el = path[i];
+      if (el.hasAttribute && el.hasAttribute('ion-activable')) {
+        return el;
+      }
+    }
+  } else {
+    return ev.target.closest('[ion-activable]');
+  }
 }
 
 const ACTIVATED = 'activated';

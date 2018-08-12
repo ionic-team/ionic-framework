@@ -53,6 +53,7 @@ declare global {
       // for ion-menu and ion-split-pane
       main?: boolean;
       tappable?: boolean;
+      'ion-activable'?: boolean;
 
       padding?: boolean;
       ['padding-top']?: boolean;

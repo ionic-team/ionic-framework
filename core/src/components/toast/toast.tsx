@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Color, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
@@ -25,7 +25,6 @@ export class Toast implements OverlayInterface {
   @Element() el!: HTMLElement;
 
   mode!: Mode;
-  color?: Color;
   animation: Animation | undefined;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
@@ -203,7 +202,7 @@ export class Toast implements OverlayInterface {
             ? <div class="toast-message">{this.message}</div>
             : null}
           {this.showCloseButton
-            ? <ion-button fill="clear" color="light" class="toast-button" onClick={() => this.dismiss()}>
+            ? <ion-button fill="clear" color="light" ion-activable class="toast-button" onClick={() => this.dismiss()}>
                 {this.closeButtonText || 'Close'}
               </ion-button>
             : null}

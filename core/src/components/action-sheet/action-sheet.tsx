@@ -1,8 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
-import { ActionSheetButton, Animation, AnimationBuilder, Color, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { ActionSheetButton, Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
-import { createColorClasses, getClassMap } from '../../utils/theme';
+import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -20,7 +20,6 @@ import { mdLeaveAnimation } from './animations/md.leave';
 export class ActionSheet implements OverlayInterface {
 
   mode!: Mode;
-  color?: Color;
 
   presented = false;
   animation?: Animation;
@@ -208,7 +207,6 @@ export class ActionSheet implements OverlayInterface {
         zIndex: 20000 + this.overlayId,
       },
       class: {
-        ...createColorClasses(this.color),
         ...getClassMap(this.cssClass),
         'action-sheet-translucent': this.translucent
       }
@@ -237,7 +235,7 @@ export class ActionSheet implements OverlayInterface {
               </div>
             }
             {buttons.map(b =>
-              <button type="button" class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
+              <button type="button" ion-activable class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
                 <span class="action-sheet-button-inner">
                   {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
                   {b.text}
@@ -249,6 +247,7 @@ export class ActionSheet implements OverlayInterface {
           {cancelButton &&
             <div class="action-sheet-group action-sheet-group-cancel">
               <button
+                ion-activable
                 type="button"
                 class={buttonClass(cancelButton)}
                 onClick={() => this.buttonClick(cancelButton)}
