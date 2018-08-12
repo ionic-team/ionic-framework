@@ -58,6 +58,7 @@
 .scroll-x {
   -webkit-overflow-scrolling: touch;
   will-change: scroll-position;
+  overscroll-behavior: contain;
 }
 
 .scroll-y {
