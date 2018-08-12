@@ -7,24 +7,9 @@
 
 ## Properties
 
-#### col
-
-PickerColumn
-
-
-## Attributes
-
-#### col
-
-
-
-
-## Events
-
-#### ionChange
-
-Emitted when the selected option has changed.
-
+| Property | Attribute | Description | Type           |
+| -------- | --------- | ----------- | -------------- |
+| `col`    | --        |             | `PickerColumn` |
 
 
 ----------------------------------------------

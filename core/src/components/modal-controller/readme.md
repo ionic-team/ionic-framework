@@ -8,20 +8,11 @@ Modal controllers programmatically control the modal component. Modals can be cr
 
 ## Methods
 
-#### create()
-
-Create a modal overlay with modal options.
-
-
-#### dismiss()
-
-Dismiss the open modal overlay.
-
-
-#### getTop()
-
-Get the most recently opened modal overlay.
-
+| Method    | Description                                 |
+| --------- | ------------------------------------------- |
+| `create`  | Create a modal overlay with modal options.  |
+| `dismiss` | Dismiss the open modal overlay.             |
+| `getTop`  | Get the most recently opened modal overlay. |
 
 
 ----------------------------------------------

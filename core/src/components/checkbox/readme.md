@@ -10,119 +10,24 @@ Checkboxes allow the selection of multiple options from a set of options. They a
 
 ## Properties
 
-#### checked
-
-boolean
-
-If true, the checkbox is selected. Defaults to `false`.
-
-
-#### color
-
-string
-
-The color to use from your application's color palette.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information on colors, see [theming](/docs/theming/basics).
-
-
-#### disabled
-
-boolean
-
-If true, the user cannot interact with the checkbox. Defaults to `false`.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### name
-
-string
-
-The name of the control, which is submitted with the form data.
-
-
-#### value
-
-string
-
-The value of the checkbox.
-
-
-## Attributes
-
-#### checked
-
-boolean
-
-If true, the checkbox is selected. Defaults to `false`.
-
-
-#### color
-
-string
-
-The color to use from your application's color palette.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information on colors, see [theming](/docs/theming/basics).
-
-
-#### disabled
-
-boolean
-
-If true, the user cannot interact with the checkbox. Defaults to `false`.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### name
-
-string
-
-The name of the control, which is submitted with the form data.
-
-
-#### value
-
-string
-
-The value of the checkbox.
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type      |
+| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| `checked`  | `checked`  | If true, the checkbox is selected. Defaults to `false`.                                                                                                                                                                                                                | `boolean` |
+| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `Color`   |
+| `disabled` | `disabled` | If true, the user cannot interact with the checkbox. Defaults to `false`.                                                                                                                                                                                              | `boolean` |
+| `mode`     | `mode`     | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `Mode`    |
+| `name`     | `name`     | The name of the control, which is submitted with the form data.                                                                                                                                                                                                        | `string`  |
+| `value`    | `value`    | The value of the checkbox.                                                                                                                                                                                                                                             | `string`  |
 
 
 ## Events
 
-#### ionBlur
-
-Emitted when the toggle loses focus.
-
-
-#### ionChange
-
-Emitted when the checked property has changed.
-
-
-#### ionFocus
-
-Emitted when the toggle has focus.
-
-
-#### ionStyle
-
-Emitted when the styles change.
-
+| Event       | Description                                    |
+| ----------- | ---------------------------------------------- |
+| `ionBlur`   | Emitted when the toggle loses focus.           |
+| `ionChange` | Emitted when the checked property has changed. |
+| `ionFocus`  | Emitted when the toggle has focus.             |
+| `ionStyle`  | Emitted when the styles change.                |
 
 
 ----------------------------------------------

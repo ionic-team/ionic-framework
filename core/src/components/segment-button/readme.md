@@ -8,85 +8,20 @@ Segment buttons are groups of related buttons inside of a [Segment](../../segmen
 
 ## Properties
 
-#### checked
-
-boolean
-
-If true, the segment button is selected. Defaults to `false`.
-
-
-#### color
-
-string
-
-The color to use from your application's color palette.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information on colors, see [theming](/docs/theming/basics).
-
-
-#### disabled
-
-boolean
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### value
-
-string
-
-The value of the segment button.
-
-
-## Attributes
-
-#### checked
-
-boolean
-
-If true, the segment button is selected. Defaults to `false`.
-
-
-#### color
-
-string
-
-The color to use from your application's color palette.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information on colors, see [theming](/docs/theming/basics).
-
-
-#### disabled
-
-boolean
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### value
-
-string
-
-The value of the segment button.
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type      |
+| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| `checked`  | `checked`  | If true, the segment button is selected. Defaults to `false`.                                                                                                                                                                                                          | `boolean` |
+| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `Color`   |
+| `disabled` | `disabled` |                                                                                                                                                                                                                                                                        | `boolean` |
+| `mode`     | `mode`     | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `Mode`    |
+| `value`    | `value`    | The value of the segment button.                                                                                                                                                                                                                                       | `string`  |
 
 
 ## Events
 
-#### ionSelect
-
-Emitted when the segment button is clicked.
+| Event       | Description                                 |
+| ----------- | ------------------------------------------- |
+| `ionSelect` | Emitted when the segment button is clicked. |
 
 
 ## CSS Custom Properties

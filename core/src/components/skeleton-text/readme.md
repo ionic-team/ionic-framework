@@ -8,21 +8,9 @@ Skeleton Text is a component for rendering placeholder content. The element will
 
 ## Properties
 
-#### width
-
-string
-
-Width for the element to render at. Default is 100%
-
-
-## Attributes
-
-#### width
-
-string
-
-Width for the element to render at. Default is 100%
-
+| Property | Attribute | Description                                         | Type     |
+| -------- | --------- | --------------------------------------------------- | -------- |
+| `width`  | `width`   | Width for the element to render at. Default is 100% | `string` |
 
 
 ----------------------------------------------

@@ -12,129 +12,26 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 
 ## Properties
 
-#### checked
-
-boolean
-
-If true, the radio is selected. Defaults to `false`.
-
-
-#### color
-
-string
-
-The color to use from your application's color palette.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information on colors, see [theming](/docs/theming/basics).
-
-
-#### disabled
-
-boolean
-
-Indicates that the user cannot interact with the control.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### name
-
-string
-
-The name of the control, which is submitted with the form data.
-
-
-#### value
-
-string
-
-the value of the radio.
-
-
-## Attributes
-
-#### checked
-
-boolean
-
-If true, the radio is selected. Defaults to `false`.
-
-
-#### color
-
-string
-
-The color to use from your application's color palette.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information on colors, see [theming](/docs/theming/basics).
-
-
-#### disabled
-
-boolean
-
-Indicates that the user cannot interact with the control.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### name
-
-string
-
-The name of the control, which is submitted with the form data.
-
-
-#### value
-
-string
-
-the value of the radio.
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type      |
+| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| `checked`  | `checked`  | If true, the radio is selected. Defaults to `false`.                                                                                                                                                                                                                   | `boolean` |
+| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `Color`   |
+| `disabled` | `disabled` |                                                                                                                                                                                                                                                                        | `boolean` |
+| `mode`     | `mode`     | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `Mode`    |
+| `name`     | `name`     | The name of the control, which is submitted with the form data.                                                                                                                                                                                                        | `string`  |
+| `value`    | `value`    | the value of the radio.                                                                                                                                                                                                                                                | `string`  |
 
 
 ## Events
 
-#### ionBlur
-
-Emitted when the radio button loses focus.
-
-
-#### ionFocus
-
-Emitted when the radio button has focus.
-
-
-#### ionRadioDidLoad
-
-Emitted when the radio loads.
-
-
-#### ionRadioDidUnload
-
-Emitted when the radio unloads.
-
-
-#### ionSelect
-
-Emitted when the radio button is selected.
-
-
-#### ionStyle
-
-Emitted when the styles change.
-
+| Event               | Description                                |
+| ------------------- | ------------------------------------------ |
+| `ionBlur`           | Emitted when the radio button loses focus. |
+| `ionFocus`          | Emitted when the radio button has focus.   |
+| `ionRadioDidLoad`   | Emitted when the radio loads.              |
+| `ionRadioDidUnload` | Emitted when the radio unloads.            |
+| `ionSelect`         | Emitted when the radio button is selected. |
+| `ionStyle`          | Emitted when the styles change.            |
 
 
 ----------------------------------------------

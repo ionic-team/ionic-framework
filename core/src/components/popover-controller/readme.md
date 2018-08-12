@@ -8,20 +8,11 @@ Popover controllers programmatically control the popover component. Popovers can
 
 ## Methods
 
-#### create()
-
-Create a popover overlay with popover options.
-
-
-#### dismiss()
-
-Dismiss the open popover overlay.
-
-
-#### getTop()
-
-Get the most recently opened popover overlay.
-
+| Method    | Description                                    |
+| --------- | ---------------------------------------------- |
+| `create`  | Create a popover overlay with popover options. |
+| `dismiss` | Dismiss the open popover overlay.              |
+| `getTop`  | Get the most recently opened popover overlay.  |
 
 
 ----------------------------------------------

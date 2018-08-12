@@ -16,219 +16,41 @@ A button's `role` property can either be `destructive` or `cancel`. Buttons with
 
 ## Properties
 
-#### buttons
-
-ActionSheetButton[]
-
-An array of buttons for the action sheet.
-
-
-#### cssClass
-
-string
-
-Additional classes to apply for custom CSS. If multiple classes are
-provided they should be separated by spaces.
-
-
-#### enableBackdropDismiss
-
-boolean
-
-If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
-
-
-#### enterAnimation
-
-AnimationBuilder
-
-Animation to use when the action sheet is presented.
-
-
-#### header
-
-string
-
-Title for the action sheet.
-
-
-#### keyboardClose
-
-boolean
-
-If the actionSheet should close the keyboard
-
-
-#### leaveAnimation
-
-AnimationBuilder
-
-Animation to use when the action sheet is dismissed.
-
-
-#### overlayId
-
-number
-
-Unique ID to be used with the overlay. Internal only
-
-
-#### subHeader
-
-string
-
-Subtitle for the action sheet.
-
-
-#### translucent
-
-boolean
-
-If true, the action sheet will be translucent. Defaults to `false`.
-
-
-#### willAnimate
-
-boolean
-
-If true, the action sheet will animate. Defaults to `true`.
-
-
-## Attributes
-
-#### buttons
-
-
-
-An array of buttons for the action sheet.
-
-
-#### css-class
-
-string
-
-Additional classes to apply for custom CSS. If multiple classes are
-provided they should be separated by spaces.
-
-
-#### enable-backdrop-dismiss
-
-boolean
-
-If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
-
-
-#### enter-animation
-
-
-
-Animation to use when the action sheet is presented.
-
-
-#### header
-
-string
-
-Title for the action sheet.
-
-
-#### keyboard-close
-
-boolean
-
-If the actionSheet should close the keyboard
-
-
-#### leave-animation
-
-
-
-Animation to use when the action sheet is dismissed.
-
-
-#### overlay-id
-
-number
-
-Unique ID to be used with the overlay. Internal only
-
-
-#### sub-header
-
-string
-
-Subtitle for the action sheet.
-
-
-#### translucent
-
-boolean
-
-If true, the action sheet will be translucent. Defaults to `false`.
-
-
-#### will-animate
-
-boolean
-
-If true, the action sheet will animate. Defaults to `true`.
+| Property                | Attribute                 | Description                                                                                                      | Type                  |
+| ----------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `buttons`               | --                        | An array of buttons for the action sheet.                                                                        | `ActionSheetButton[]` |
+| `cssClass`              | `css-class`               | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string | string[]`   |
+| `enableBackdropDismiss` | `enable-backdrop-dismiss` | If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.                    | `boolean`             |
+| `enterAnimation`        | --                        | Animation to use when the action sheet is presented.                                                             | `AnimationBuilder`    |
+| `header`                | `header`                  | Title for the action sheet.                                                                                      | `string`              |
+| `keyboardClose`         | `keyboard-close`          | If the actionSheet should close the keyboard                                                                     | `boolean`             |
+| `leaveAnimation`        | --                        | Animation to use when the action sheet is dismissed.                                                             | `AnimationBuilder`    |
+| `overlayId`             | `overlay-id`              | Unique ID to be used with the overlay. Internal only                                                             | `number`              |
+| `subHeader`             | `sub-header`              | Subtitle for the action sheet.                                                                                   | `string`              |
+| `translucent`           | `translucent`             | If true, the action sheet will be translucent. Defaults to `false`.                                              | `boolean`             |
+| `willAnimate`           | `will-animate`            | If true, the action sheet will animate. Defaults to `true`.                                                      | `boolean`             |
 
 
 ## Events
 
-#### ionActionSheetDidDismiss
-
-Emitted after the alert has dismissed.
-
-
-#### ionActionSheetDidLoad
-
-Emitted after the alert has loaded.
-
-
-#### ionActionSheetDidPresent
-
-Emitted after the alert has presented.
-
-
-#### ionActionSheetDidUnload
-
-Emitted after the alert has unloaded.
-
-
-#### ionActionSheetWillDismiss
-
-Emitted before the alert has dismissed.
-
-
-#### ionActionSheetWillPresent
-
-Emitted before the alert has presented.
+| Event                       | Description                             |
+| --------------------------- | --------------------------------------- |
+| `ionActionSheetDidDismiss`  | Emitted after the alert has dismissed.  |
+| `ionActionSheetDidLoad`     | Emitted after the alert has loaded.     |
+| `ionActionSheetDidPresent`  | Emitted after the alert has presented.  |
+| `ionActionSheetDidUnload`   | Emitted after the alert has unloaded.   |
+| `ionActionSheetWillDismiss` | Emitted before the alert has dismissed. |
+| `ionActionSheetWillPresent` | Emitted before the alert has presented. |
 
 
 ## Methods
 
-#### dismiss()
-
-Dismiss the action sheet overlay after it has been presented.
-
-
-#### onDidDismiss()
-
-Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback
-that is called in the same circustances.
-
-
-#### onWillDismiss()
-
-Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback
-that is called in the same circustances.
-
-
-#### present()
-
-Present the action sheet overlay after it has been created.
-
+| Method          | Description                                                                                                                             |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| `dismiss`       | Dismiss the action sheet overlay after it has been presented.                                                                           |
+| `onDidDismiss`  | Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback that is called in the same circustances.  |
+| `onWillDismiss` | Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback that is called in the same circustances. |
+| `present`       | Present the action sheet overlay after it has been created.                                                                             |
 
 
 ----------------------------------------------

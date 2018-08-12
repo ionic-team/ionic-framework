@@ -7,20 +7,11 @@ Action Sheet controllers programmatically control the action sheet component. Ac
 
 ## Methods
 
-#### create()
-
-Create an action sheet overlay with action sheet options.
-
-
-#### dismiss()
-
-Dismiss the open action sheet overlay.
-
-
-#### getTop()
-
-Get the most recently opened action sheet overlay.
-
+| Method    | Description                                               |
+| --------- | --------------------------------------------------------- |
+| `create`  | Create an action sheet overlay with action sheet options. |
+| `dismiss` | Dismiss the open action sheet overlay.                    |
+| `getTop`  | Get the most recently opened action sheet overlay.        |
 
 
 ----------------------------------------------

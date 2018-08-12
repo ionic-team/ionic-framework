@@ -9,113 +9,15 @@ If the FAB button is not wrapped with `<ion-fab>`, it will scroll with the conte
 
 ## Properties
 
-#### activated
-
-boolean
-
-If true, the fab button will be show a close icon. Defaults to `false`.
-
-
-#### color
-
-string
-
-The color to use from your application's color palette.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information on colors, see [theming](/docs/theming/basics).
-
-
-#### disabled
-
-boolean
-
-If true, the user cannot interact with the fab button. Defaults to `false`.
-
-
-#### href
-
-string
-
-Contains a URL or a URL fragment that the hyperlink points to.
-If this property is set, an anchor tag will be rendered.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### show
-
-boolean
-
-If true, the fab button will show when in a fab-list.
-
-
-#### translucent
-
-boolean
-
-If true, the fab button will be translucent. Defaults to `false`.
-
-
-## Attributes
-
-#### activated
-
-boolean
-
-If true, the fab button will be show a close icon. Defaults to `false`.
-
-
-#### color
-
-string
-
-The color to use from your application's color palette.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information on colors, see [theming](/docs/theming/basics).
-
-
-#### disabled
-
-boolean
-
-If true, the user cannot interact with the fab button. Defaults to `false`.
-
-
-#### href
-
-string
-
-Contains a URL or a URL fragment that the hyperlink points to.
-If this property is set, an anchor tag will be rendered.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### show
-
-boolean
-
-If true, the fab button will show when in a fab-list.
-
-
-#### translucent
-
-boolean
-
-If true, the fab button will be translucent. Defaults to `false`.
-
+| Property      | Attribute     | Description                                                                                                                                                                                                                                                            | Type      |
+| ------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| `activated`   | `activated`   | If true, the fab button will be show a close icon. Defaults to `false`.                                                                                                                                                                                                | `boolean` |
+| `color`       | `color`       | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `Color`   |
+| `disabled`    | `disabled`    | If true, the user cannot interact with the fab button. Defaults to `false`.                                                                                                                                                                                            | `boolean` |
+| `href`        | `href`        | Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.                                                                                                                                                | `string`  |
+| `mode`        | `mode`        | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `Mode`    |
+| `show`        | `show`        | If true, the fab button will show when in a fab-list.                                                                                                                                                                                                                  | `boolean` |
+| `translucent` | `translucent` | If true, the fab button will be translucent. Defaults to `false`.                                                                                                                                                                                                      | `boolean` |
 
 
 ----------------------------------------------

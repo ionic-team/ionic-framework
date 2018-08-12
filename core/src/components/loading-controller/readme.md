@@ -10,20 +10,11 @@ Loading controllers programmatically control the loading component. Loadings can
 
 ## Methods
 
-#### create()
-
-Create a loading overlay with loading options.
-
-
-#### dismiss()
-
-Dismiss the open loading overlay.
-
-
-#### getTop()
-
-Get the most recently opened loading overlay.
-
+| Method    | Description                                    |
+| --------- | ---------------------------------------------- |
+| `create`  | Create a loading overlay with loading options. |
+| `dismiss` | Dismiss the open loading overlay.              |
+| `getTop`  | Get the most recently opened loading overlay.  |
 
 
 ----------------------------------------------
