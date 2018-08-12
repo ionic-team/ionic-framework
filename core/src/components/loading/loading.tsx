@@ -55,11 +55,6 @@ export class Loading implements OverlayInterface {
   @Prop() cssClass?: string | string[];
 
   /**
-   * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
-   */
-  @Prop() dismissOnPageChange = false;
-
-  /**
    * Number of milliseconds to wait before dismissing the loading indicator.
    */
   @Prop() duration?: number;

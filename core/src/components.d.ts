@@ -1201,10 +1201,6 @@ declare global {
        */
       'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
       /**
-       * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
-       */
-      'dismissOnPageChange': boolean;
-      /**
        * Number of milliseconds to wait before dismissing the loading indicator.
        */
       'duration': number;
@@ -4734,10 +4730,6 @@ declare global {
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
       'cssClass'?: string | string[];
-      /**
-       * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
-       */
-      'dismissOnPageChange'?: boolean;
       /**
        * Number of milliseconds to wait before dismissing the loading indicator.
        */

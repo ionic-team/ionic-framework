@@ -36,6 +36,7 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Item Sliding](#item-sliding)
 - [Label](#label)
 - [List Header](#list-header)
+- [Loading](#loading)
 - [Menu Toggle](#menu-toggle)
 - [Modal](#modal)
 - [Nav](#nav)
@@ -806,6 +807,13 @@ Previously an `ion-label` would automatically get added to an `ion-list-header` 
   <ion-label>List Header Label</ion-label>
 </ion-list-header>
 ```
+
+## Loading
+
+`dismissOnPageChange` was removed. Fortunatelly all the navigation API is promise based and there are global events  (`ionNavWillChange`) you can listen in order to detect when navigation occurs.
+
+You should take advantage of these APIs in order to dismiss your loading overlay explicitally.
+
 
 ## Menu Toggle
 
