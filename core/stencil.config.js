@@ -41,7 +41,7 @@ exports.config = {
     { components: ['ion-slides', 'ion-slide'] },
     { components: ['ion-spinner'] },
     { components: ['ion-split-pane'] },
-    { components: ['ion-tabs', 'ion-tab', 'ion-tabbar', 'ion-tab-button'] },
+    { components: ['ion-tabs', 'ion-tab', 'ion-tabbar'] },
     { components: ['ion-text'] },
     { components: ['ion-toast', 'ion-toast-controller'] },
     { components: ['ion-toggle'] },

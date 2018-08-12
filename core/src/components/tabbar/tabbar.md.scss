@@ -1,10 +1,14 @@
 @import "./tabbar";
 @import "./tabbar.md.vars";
+@import "./tab-button.md";
 
 :host {
   // default color / background
+  --color: #{$tab-button-md-text-color};
+  --color-selected: #{$tabbar-md-text-color-active};
   --background: #{$tabbar-md-background-color};
-  --color: #{$tabbar-md-text-color-active};
+  --background-focused: #{$tabbar-md-background-color-focused};
+  --icon-transform-selected: #{$tab-button-md-icon-transform-active};
 
   height: $tabbar-md-height;
 
@@ -16,20 +20,20 @@
 // Material Design Tabbar Layout
 // --------------------------------------------------
 
-:host(.layout-icon-top) ion-tab-button {
+:host(.layout-icon-top) .tab-btn {
   --label-margin-bottom: -2px;
 }
 
-:host(.layout-icon-end) ion-tab-button {
+:host(.layout-icon-end) .tab-btn {
   --icon-transform-selected: #{$tab-button-md-icon-right-transform-active};
 }
 
-:host(.layout-icon-bottom) ion-tab-button {
+:host(.layout-icon-bottom) .tab-btn {
   --label-margin-top: -2px;
   --label-transform: transform-origin(center, top);
   --icon-transform-selected: #{$tab-button-md-icon-bottom-transform-active};
 }
 
-:host(.layout-icon-start) ion-tab-button {
+:host(.layout-icon-start) .tab-btn {
   --icon-transform-selected: #{$tab-button-md-icon-left-transform-active};
 }

@@ -13,11 +13,12 @@
   background: var(--background);
   color: var(--color);
 
+  user-select: none;
+
   z-index: $z-index-toolbar;
 }
 
-:host(.ion-color),
-:host(.ion-color) ion-tab-button {
+:host(.ion-color) {
   --background: #{current-color(base)};
   --color: #{current-color(contrast, .7)};
   --color-selected: #{current-color(contrast)};
@@ -35,7 +36,6 @@
 :host(.placement-bottom) {
   padding-bottom: var(--ion-safe-area-bottom);
 }
-
 
 
 // Tab Highlight
@@ -75,40 +75,40 @@
 // Tab Layout
 // --------------------------------------------------
 
-:host(.layout-icon-start) ion-tab-button {
+:host(.layout-icon-start) .tab-btn {
   --flex-direction: row;
 }
 
-:host(.layout-icon-end) ion-tab-button {
+:host(.layout-icon-end) .tab-btn {
   --flex-direction: row-reverse;
 }
 
-:host(.layout-icon-bottom) ion-tab-button {
+:host(.layout-icon-bottom) .tab-btn {
   --flex-direction: column-reverse;
 }
 
-:host(.layout-icon-start) ion-tab-button,
-:host(.layout-icon-end) ion-tab-button,
-:host(.layout-icon-hide) ion-tab-button,
-:host(.layout-label-hide) ion-tab-button {
+:host(.layout-icon-start) .tab-btn,
+:host(.layout-icon-end) .tab-btn,
+:host(.layout-icon-hide) .tab-btn,
+:host(.layout-label-hide) .tab-btn {
   --justify-content: center;
 }
 
-:host(.layout-icon-hide) ion-tab-button {
+:host(.layout-icon-hide) .tab-btn {
   --icon-display: none;
 }
 
-:host(.layout-label-hide) ion-tab-button {
+:host(.layout-label-hide) .tab-btn {
   --label-display: none;
 }
 
-:host(.layout-icon-top) ion-tab-button,
-:host(.layout-icon-bottom) ion-tab-button {
+:host(.layout-icon-top) .tab-btn,
+:host(.layout-icon-bottom) .tab-btn {
   --badge-end: #{calc(50% - 30px)};
 }
 
-:host(.layout-icon-hide) ion-tab-button,
-:host(.layout-icon-start) ion-tab-button,
-:host(.layout-icon-end) ion-tab-button {
+:host(.layout-icon-hide) .tab-btn,
+:host(.layout-icon-start) .tab-btn,
+:host(.layout-icon-end) .tab-btn {
   --badge-end: #{calc(50% - 50px)};
 }

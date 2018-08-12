@@ -1,27 +1,20 @@
 @import "./tab-button";
 @import "./tab-button.ios.vars";
 
-:host {
-  --color: #{$tab-button-ios-text-color};
-  --color-selected: #{$tabbar-ios-text-color-active};
-  --background-focused: #{$tabbar-ios-background-color-focused};
-
+.tab-btn {
+  @include padding($tab-button-ios-padding-top, $tab-button-ios-padding-end, $tab-button-ios-padding-bottom, $tab-button-ios-padding-start);
   max-width: $tab-button-ios-max-width;
 
   font-size: $tab-button-ios-font-size;
 }
 
-.tab-button-native {
-  @include padding($tab-button-ios-padding-top, $tab-button-ios-padding-end, $tab-button-ios-padding-bottom, $tab-button-ios-padding-start);
-}
-
-.tab-button-text {
+.tab-btn-text {
   @include margin(0, null, 1px, null);
 
   min-height: $tab-button-ios-font-size + 1;
 }
 
-:host(.has-label-only) .tab-button-text {
+.tab-btn-has-label-only .tab-btn-text {
   @include margin(2px, 0);
 
   font-size: $tab-button-ios-font-size + 2;
@@ -30,12 +23,12 @@
   line-height: 1.1;
 }
 
-.tab-button-icon {
+.tab-btn-icon {
   @include margin(4px, null, null, null);
 
   font-size: $tab-button-ios-icon-size;
 }
 
-.tab-button-icon::before {
+.tab-btn-icon::before {
   vertical-align: top;
 }

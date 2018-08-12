@@ -2103,7 +2103,7 @@ declare global {
        * The text to display on the ok button. Default: `OK`.
        */
       'okText': string;
-      'open': (ev?: UIEvent | undefined) => Promise<HTMLIonPopoverElement> | Promise<HTMLIonActionSheetElement> | Promise<HTMLIonAlertElement>;
+      'open': (ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement> | Promise<HTMLIonAlertElement> | Promise<HTMLIonPopoverElement>;
       /**
        * The text to display when the select is empty.
        */
@@ -2266,21 +2266,6 @@ declare global {
       'when': string | boolean;
     }
 
-    interface IonTabButton {
-      'badge': string;
-      'badgeColor': string;
-      'color': Color;
-      'disabled': boolean;
-      'href': string;
-      'icon': string;
-      'label': string;
-      'mode': Mode;
-      /**
-       * If true, the tab button will be selected. Defaults to `false`.
-       */
-      'selected': boolean;
-    }
-
     interface IonTab {
       /**
        * If true, sets the tab as the active tab.
@@ -2315,7 +2300,7 @@ declare global {
        */
       'getTabId': () => string | null;
       /**
-       * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
+       * The URL which will be used as the `href` within this tab's button anchor.
        */
       'href': string;
       /**
@@ -3384,14 +3369,6 @@ declare global {
     };
     
 
-    interface HTMLIonTabButtonElement extends StencilComponents.IonTabButton, HTMLStencilElement {}
-
-    var HTMLIonTabButtonElement: {
-      prototype: HTMLIonTabButtonElement;
-      new (): HTMLIonTabButtonElement;
-    };
-    
-
     interface HTMLIonTabElement extends StencilComponents.IonTab, HTMLStencilElement {}
 
     var HTMLIonTabElement: {
@@ -3579,7 +3556,6 @@ declare global {
     'ion-slides': JSXElements.IonSlidesAttributes;
     'ion-spinner': JSXElements.IonSpinnerAttributes;
     'ion-split-pane': JSXElements.IonSplitPaneAttributes;
-    'ion-tab-button': JSXElements.IonTabButtonAttributes;
     'ion-tab': JSXElements.IonTabAttributes;
     'ion-tabbar': JSXElements.IonTabbarAttributes;
     'ion-tabs': JSXElements.IonTabsAttributes;
@@ -5826,21 +5802,6 @@ declare global {
       'when'?: string | boolean;
     }
 
-    export interface IonTabButtonAttributes extends HTMLAttributes {
-      'badge'?: string;
-      'badgeColor'?: string;
-      'color'?: Color;
-      'disabled'?: boolean;
-      'href'?: string;
-      'icon'?: string;
-      'label'?: string;
-      'mode'?: Mode;
-      /**
-       * If true, the tab button will be selected. Defaults to `false`.
-       */
-      'selected'?: boolean;
-    }
-
     export interface IonTabAttributes extends HTMLAttributes {
       /**
        * If true, sets the tab as the active tab.
@@ -5871,7 +5832,7 @@ declare global {
        */
       'disabled'?: boolean;
       /**
-       * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
+       * The URL which will be used as the `href` within this tab's button anchor.
        */
       'href'?: string;
       /**
@@ -6364,7 +6325,6 @@ declare global {
     'ion-slides': HTMLIonSlidesElement
     'ion-spinner': HTMLIonSpinnerElement
     'ion-split-pane': HTMLIonSplitPaneElement
-    'ion-tab-button': HTMLIonTabButtonElement
     'ion-tab': HTMLIonTabElement
     'ion-tabbar': HTMLIonTabbarElement
     'ion-tabs': HTMLIonTabsElement
@@ -6468,7 +6428,6 @@ declare global {
     'ion-slides': HTMLIonSlidesElement;
     'ion-spinner': HTMLIonSpinnerElement;
     'ion-split-pane': HTMLIonSplitPaneElement;
-    'ion-tab-button': HTMLIonTabButtonElement;
     'ion-tab': HTMLIonTabElement;
     'ion-tabbar': HTMLIonTabbarElement;
     'ion-tabs': HTMLIonTabsElement;

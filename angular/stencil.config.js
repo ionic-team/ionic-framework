@@ -46,7 +46,6 @@ exports.config.outputTargets = [
       'ion-router-outlet',
       'ion-anchor',
       'ion-tabbar',
-      'ion-tab-button',
 
       // auxiliar
       'ion-picker-column',

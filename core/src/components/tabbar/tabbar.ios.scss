@@ -1,5 +1,6 @@
 @import "./tabbar";
 @import "./tabbar.ios.vars";
+@import "./tab-button.ios";
 
 // iOS Tabs
 // --------------------------------------------------
@@ -8,7 +9,9 @@
   // default color / background
   --background: #{$tabbar-ios-background-color};
   --background-rgb: var(--ion-tabbar-translucent-background-color-rgb, 248, 248, 248);
-  --color: #{$tabbar-ios-text-color-active};
+  --color: #{$tab-button-ios-text-color};
+  --color-selected: #{$tabbar-ios-text-color-active};
+  --background-focused: #{$tabbar-ios-background-color-focused};
 
   justify-content: center;
 
@@ -36,17 +39,17 @@
 // iOS Tabbar Layout
 // --------------------------------------------------
 
-:host(.layout-icon-end) ion-tab-button,
-:host(.layout-icon-start) ion-tab-button,
-:host(.layout-icon-hide) ion-tab-button {
+:host(.layout-icon-end) .tab-btn,
+:host(.layout-icon-start) .tab-btn,
+:host(.layout-icon-hide) .tab-btn {
   --label-margin-top: 2px;
   --label-margin-bottom: 2px;
   --label-font-size: 14px;
   --label-line-height: 1.1;
 }
 
-:host(.layout-icon-end) ion-tab-button,
-:host(.layout-icon-start) ion-tab-button {
+:host(.layout-icon-end) .tab-btn,
+:host(.layout-icon-start) .tab-btn {
   --icon-margin-top: 2px;
   --icon-margin-bottom: 1px;
   --icon-min-width: 24px;
@@ -54,6 +57,6 @@
   --icon-font-size: 24px;
 }
 
-:host(.layout-label-hide) ion-tab-button {
+:host(.layout-label-hide) .tab-btn {
   --icon-margin: 0;
 }

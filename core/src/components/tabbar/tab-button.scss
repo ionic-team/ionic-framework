@@ -1,55 +1,15 @@
 @import "../../themes/ionic.globals";
 
-:host {
-  @include border-radius(0);
-  @include margin(0);
 
-  display: block;
-  position: relative;
-
-  flex: 1;
-
-  height: 100%;
-
-  border: 0;
-
-  background: var(--background);
-  color: var(--color);
-
-  text-align: center;
-  text-decoration: none;
-
-  overflow: hidden;
-  user-select: none;
-  z-index: 0;
-  box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-:host(.focused) {
-  background: var(--background-focused);
-}
-
-:host(:hover),
-:host(.tab-selected) {
-  color: var(--color-selected);
-}
-
-:host(.tab-hidden) {
-  /* stylelint-disable-next-line declaration-no-important */
-  display: none !important;
-}
-
-a {
-  text-decoration: none;
-}
-
-.tab-button-native {
+.tab-btn {
+  @include text-inherit();
   @include margin(0);
   @include padding(0);
 
   display: flex;
+  position: relative;
 
+  flex: 1;
   flex-direction: var(--flex-direction, column);
   align-items: center;
   justify-content: var(--justify-content, flex-start);
@@ -59,27 +19,38 @@ a {
 
   border: 0;
 
+  outline: none;
+
   background: transparent;
-  color: inherit;
+
+  text-decoration: none;
 
   cursor: pointer;
   box-sizing: border-box;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  -webkit-user-drag: none;
 }
 
-:host(.tab-button-disabled) {
+.tab-btn:focus-visible {
+  background: var(--background-focused);
+}
+
+.tab-btn:hover,
+.tab-btn-selected {
+  color: var(--color-selected);
+}
+
+.tab-btn-hidden {
+  /* stylelint-disable-next-line declaration-no-important */
+  display: none !important;
+}
+
+.tab-btn-disabled {
   pointer-events: none;
-}
 
-:host(.tab-button-disabled) .tab-button-native {
   opacity: .4;
 }
 
-.tab-button-text {
+.tab-btn-text {
   @include margin(var(--label-margin-top), null, var(--label-margin-bottom), null);
 
   display: var(--label-display, block);
@@ -89,7 +60,7 @@ a {
   line-height: var(--label-line-height);
 }
 
-.tab-button-icon {
+.tab-btn-icon {
   @include margin(var(--icon-margin-top), null, var(--icon-margin-bottom), null);
 
   display: var(--icon-display, block);
@@ -100,8 +71,8 @@ a {
   font-size: var(--icon-font-size);
 }
 
-.tab-button-text,
-.tab-button-icon {
+.tab-btn-text,
+.tab-btn-icon {
   align-self: center;
 
   min-width: 26px;
@@ -115,12 +86,12 @@ a {
   box-sizing: border-box;
 }
 
-:host(.has-label-only) .tab-button-text {
+.tab-btn-has-label-only .tab-btn-text {
   white-space: normal;
 }
 
-:host(.has-icon-only) .tab-button-native,
-:host(.has-label-only) .tab-button-native {
+.tab-btn-has-icon-only,
+.tab-btn-has-label-only {
   --justify-content: center;
 }
 
@@ -128,7 +99,7 @@ a {
 // Tab Badges
 // --------------------------------------------------
 
-.tab-badge {
+.tab-btn-badge {
   @include position(6%, 4%, null, null); // 4% fallback
   @include position(null, var(--badge-end, calc(50% - 30px)), null, null);
   @include padding(1px, 6px);
@@ -144,14 +115,14 @@ a {
   line-height: 16px;
 }
 
-:host(.has-label-only) .tab-badge {
+.tab-btn-has-label-only .tab-btn-badge {
   --badge-end: #{calc(50% - 50px)};
 }
 
-:host(.has-icon-only) .tab-badge {
+.tab-btn-has-icon-only .tab-btn-badge {
   --badge-end: #{calc(50% - 30px)};
 }
 
-:host(.tab-selected) .tab-button-icon {
+.tab-btn-selected .tab-btn-icon {
   transform: var(--icon-transform-selected);
 }
