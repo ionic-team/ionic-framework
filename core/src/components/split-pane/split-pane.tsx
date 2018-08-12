@@ -64,7 +64,7 @@ export class SplitPane {
 
   componentDidLoad() {
     this._styleChildren();
-    this.whenChanged();
+    this.updateState();
   }
 
   componentDidUnload() {
@@ -74,8 +74,9 @@ export class SplitPane {
     }
   }
 
+  @Watch('disabled')
   @Watch('when')
-  protected whenChanged() {
+  protected updateState() {
     if (this.isServer) {
       return;
     }
