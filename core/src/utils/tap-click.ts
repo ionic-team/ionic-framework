@@ -148,7 +148,7 @@ export function startTapClick(doc: Document) {
 function getActivatableTarget(ev: any): any {
   if (ev.composedPath) {
     const path = ev.composedPath() as HTMLElement[];
-    for (let i = path.length - 3; i >= 0; i--) {
+    for (let i = 0; i < path.length - 2; i++) {
       const el = path[i];
       if (el.hasAttribute && el.hasAttribute('ion-activable')) {
         return el;
