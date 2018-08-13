@@ -18,21 +18,20 @@ The loading indicator can be dismissed automatically after a specific amount of 
 
 ## Properties
 
-| Property                | Attribute                 | Description                                                                                                                            | Type                |
-| ----------------------- | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `content`               | `content`                 | Optional text content to display in the loading indicator.                                                                             | `string`            |
-| `cssClass`              | `css-class`               | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                       | `string | string[]` |
-| `dismissOnPageChange`   | `dismiss-on-page-change`  | If true, the loading indicator will dismiss when the page changes. Defaults to `false`.                                                | `boolean`           |
-| `duration`              | `duration`                | Number of milliseconds to wait before dismissing the loading indicator.                                                                | `number`            |
-| `enableBackdropDismiss` | `enable-backdrop-dismiss` | If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.                                    | `boolean`           |
-| `enterAnimation`        | --                        | Animation to use when the loading indicator is presented.                                                                              | `AnimationBuilder`  |
-| `keyboardClose`         | `keyboard-close`          | If true, the loading will blur any inputs and hide the keyboard                                                                        | `boolean`           |
-| `leaveAnimation`        | --                        | Animation to use when the loading indicator is dismissed.                                                                              | `AnimationBuilder`  |
-| `overlayId`             | `overlay-id`              |                                                                                                                                        | `number`            |
-| `showBackdrop`          | `show-backdrop`           | If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.                                                | `boolean`           |
-| `spinner`               | `spinner`                 | The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`. | `string`            |
-| `translucent`           | `translucent`             | If true, the loading indicator will be translucent. Defaults to `false`.                                                               | `boolean`           |
-| `willAnimate`           | `will-animate`            | If true, the loading indicator will animate. Defaults to `true`.                                                                       | `boolean`           |
+| Property          | Attribute          | Description                                                                                                                            | Type                |
+| ----------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `backdropDismiss` | `backdrop-dismiss` | If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.                                    | `boolean`           |
+| `content`         | `content`          | Optional text content to display in the loading indicator.                                                                             | `string`            |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                       | `string | string[]` |
+| `duration`        | `duration`         | Number of milliseconds to wait before dismissing the loading indicator.                                                                | `number`            |
+| `enterAnimation`  | --                 | Animation to use when the loading indicator is presented.                                                                              | `AnimationBuilder`  |
+| `keyboardClose`   | `keyboard-close`   | If true, the loading will blur any inputs and hide the keyboard                                                                        | `boolean`           |
+| `leaveAnimation`  | --                 | Animation to use when the loading indicator is dismissed.                                                                              | `AnimationBuilder`  |
+| `overlayId`       | `overlay-id`       |                                                                                                                                        | `number`            |
+| `showBackdrop`    | `show-backdrop`    | If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.                                                | `boolean`           |
+| `spinner`         | `spinner`          | The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`. | `string`            |
+| `translucent`     | `translucent`      | If true, the loading indicator will be translucent. Defaults to `false`.                                                               | `boolean`           |
+| `willAnimate`     | `will-animate`     | If true, the loading indicator will animate. Defaults to `true`.                                                                       | `boolean`           |
 
 
 ## Events

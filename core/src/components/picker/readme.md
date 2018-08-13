@@ -9,19 +9,19 @@ A Picker is a dialog that displays a row of buttons and columns underneath. It a
 
 ## Properties
 
-| Property                | Attribute                 | Description                                                                                                      | Type                |
-| ----------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `buttons`               | --                        | Array of buttons to be displayed at the top of the picker.                                                       | `PickerButton[]`    |
-| `columns`               | --                        | Array of columns to be displayed in the picker.                                                                  | `PickerColumn[]`    |
-| `cssClass`              | `css-class`               | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string | string[]` |
-| `duration`              | `duration`                | Number of milliseconds to wait before dismissing the picker.                                                     | `number`            |
-| `enableBackdropDismiss` | `enable-backdrop-dismiss` | If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.                          | `boolean`           |
-| `enterAnimation`        | --                        | Animation to use when the picker is presented.                                                                   | `AnimationBuilder`  |
-| `keyboardClose`         | `keyboard-close`          | If the keyboard should be able to close the picker. Defaults to true.                                            | `boolean`           |
-| `leaveAnimation`        | --                        | Animation to use when the picker is dismissed.                                                                   | `AnimationBuilder`  |
-| `overlayId`             | `overlay-id`              |                                                                                                                  | `number`            |
-| `showBackdrop`          | `show-backdrop`           | If true, a backdrop will be displayed behind the picker. Defaults to `true`.                                     | `boolean`           |
-| `willAnimate`           | `will-animate`            | If true, the picker will animate. Defaults to `true`.                                                            | `boolean`           |
+| Property          | Attribute          | Description                                                                                                      | Type                |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `backdropDismiss` | `backdrop-dismiss` | If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.                          | `boolean`           |
+| `buttons`         | --                 | Array of buttons to be displayed at the top of the picker.                                                       | `PickerButton[]`    |
+| `columns`         | --                 | Array of columns to be displayed in the picker.                                                                  | `PickerColumn[]`    |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string | string[]` |
+| `duration`        | `duration`         | Number of milliseconds to wait before dismissing the picker.                                                     | `number`            |
+| `enterAnimation`  | --                 | Animation to use when the picker is presented.                                                                   | `AnimationBuilder`  |
+| `keyboardClose`   | `keyboard-close`   | If the keyboard should be able to close the picker. Defaults to true.                                            | `boolean`           |
+| `leaveAnimation`  | --                 | Animation to use when the picker is dismissed.                                                                   | `AnimationBuilder`  |
+| `overlayId`       | `overlay-id`       |                                                                                                                  | `number`            |
+| `showBackdrop`    | `show-backdrop`    | If true, a backdrop will be displayed behind the picker. Defaults to `true`.                                     | `boolean`           |
+| `willAnimate`     | `will-animate`     | If true, the picker will animate. Defaults to `true`.                                                            | `boolean`           |
 
 
 ## Events

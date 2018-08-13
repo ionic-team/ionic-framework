@@ -62,7 +62,7 @@ export class Loading implements OverlayInterface {
   /**
    * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
    */
-  @Prop() enableBackdropDismiss = false;
+  @Prop() backdropDismiss = false;
 
   /**
    * If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.

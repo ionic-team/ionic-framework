@@ -4,7 +4,7 @@ export interface ModalOptions {
   component: ComponentRef;
   componentProps?: ComponentProps;
   showBackdrop?: boolean;
-  enableBackdropDismiss?: boolean;
+  backdropDismiss?: boolean;
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
   cssClass?: string | string[];
