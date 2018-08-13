@@ -5,7 +5,10 @@
 // --------------------------------------------------
 
 :host {
-  @include padding($select-md-padding-top, $select-md-padding-end, $select-md-padding-bottom, $select-md-padding-start);
+  --padding-top: #{$select-md-padding-top};
+  --padding-end: #{$select-md-padding-end};
+  --padding-bottom: #{$select-md-padding-bottom};
+  --padding-start: #{$select-md-padding-start};
 
   color: $select-md-text-color;
 
