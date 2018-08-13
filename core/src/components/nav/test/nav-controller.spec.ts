@@ -838,7 +838,7 @@ describe('NavController', () => {
 
   describe('canSwipeBack', () => {
     it('should not swipe back when its not enabled', () => {
-      nav.swipeBackEnabled = false;
+      nav.swipeGesture = false;
 
       const view1 = mockView();
       const view2 = mockView();
@@ -849,7 +849,7 @@ describe('NavController', () => {
     });
 
     it('should swipe back when has a view to go back to', () => {
-      nav.swipeBackEnabled = true;
+      nav.swipeGesture = true;
       const view1 = mockView();
       const view2 = mockView();
       mockViews(nav, [view1, view2]);

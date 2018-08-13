@@ -9,13 +9,13 @@ Unlike RouterOutlet, Nav is not tied to a particular router. Meaning that if we 
 
 ## Properties
 
-| Property           | Attribute            | Description                                            | Type                |
-| ------------------ | -------------------- | ------------------------------------------------------ | ------------------- |
-| `animated`         | `animated`           | If the nav should animate the components or not        | `boolean`           |
-| `delegate`         | --                   |                                                        | `FrameworkDelegate` |
-| `rootParams`       | --                   | Any parameters for the root component                  | `ComponentProps`    |
-| `root`             | `root`               | Root NavComponent to load                              | `NavComponent`      |
-| `swipeBackEnabled` | `swipe-back-enabled` | If the nav component should allow for swipe-to-go-back | `boolean`           |
+| Property       | Attribute       | Description                                            | Type                |
+| -------------- | --------------- | ------------------------------------------------------ | ------------------- |
+| `animated`     | `animated`      | If the nav should animate the components or not        | `boolean`           |
+| `delegate`     | --              |                                                        | `FrameworkDelegate` |
+| `rootParams`   | --              | Any parameters for the root component                  | `ComponentProps`    |
+| `root`         | `root`          | Root NavComponent to load                              | `NavComponent`      |
+| `swipeGesture` | `swipe-gesture` | If the nav component should allow for swipe-to-go-back | `boolean`           |
 
 
 ## Events

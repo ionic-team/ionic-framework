@@ -1316,7 +1316,7 @@ declare global {
       /**
        * Used to enable or disable the ability to swipe open the menu.
        */
-      'swipeEnable': (shouldEnable: boolean, menuId?: string | undefined) => HTMLIonMenuElement | null;
+      'swipeGesture': (shouldEnable: boolean, menuId?: string | undefined) => HTMLIonMenuElement | null;
       /**
        * Toggle the menu. If it's closed, it will open, and if opened, it will close.
        */
@@ -1364,7 +1364,7 @@ declare global {
       /**
        * If true, swiping the menu is enabled. Default `true`.
        */
-      'swipeEnabled': boolean;
+      'swipeGesture': boolean;
       'toggle': (animated?: boolean) => Promise<boolean>;
       /**
        * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
@@ -1543,7 +1543,7 @@ declare global {
       /**
        * If the nav component should allow for swipe-to-go-back
        */
-      'swipeBackEnabled': boolean;
+      'swipeGesture': boolean;
     }
 
     interface IonNote {
@@ -4839,7 +4839,7 @@ declare global {
       /**
        * If true, swiping the menu is enabled. Default `true`.
        */
-      'swipeEnabled'?: boolean;
+      'swipeGesture'?: boolean;
       /**
        * The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.
        */
@@ -4967,7 +4967,7 @@ declare global {
       /**
        * If the nav component should allow for swipe-to-go-back
        */
-      'swipeBackEnabled'?: boolean;
+      'swipeGesture'?: boolean;
     }
 
     export interface IonNoteAttributes extends HTMLAttributes {

@@ -79,10 +79,10 @@ export class MenuController {
    * Used to enable or disable the ability to swipe open the menu.
    */
   @Method()
-  swipeEnable(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement | null {
+  swipeGesture(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement | null {
     const menu = this.get(menuId);
     if (menu) {
-      menu.swipeEnabled = shouldEnable;
+      menu.swipeGesture = shouldEnable;
     }
     return menu;
   }

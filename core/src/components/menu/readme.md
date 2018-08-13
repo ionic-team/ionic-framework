@@ -20,7 +20,7 @@ These can be controlled from the templates, or programmatically using the MenuCo
 | `maxEdgeStart` | `max-edge-start` | The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered. | `number`  |
 | `menuId`       | `menu-id`        | An id for the menu.                                                                                                | `string`  |
 | `side`         | `side`           | Which side of the view the menu should be placed. Default `"start"`.                                               | `Side`    |
-| `swipeEnabled` | `swipe-enabled`  | If true, swiping the menu is enabled. Default `true`.                                                              | `boolean` |
+| `swipeGesture` | `swipe-gesture`  | If true, swiping the menu is enabled. Default `true`.                                                              | `boolean` |
 | `type`         | `type`           | The display type of the menu. Available options: `"overlay"`, `"reveal"`, `"push"`.                                | `string`  |
 
 

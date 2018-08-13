@@ -37,11 +37,11 @@ export class Nav implements NavOutlet {
   /**
    * If the nav component should allow for swipe-to-go-back
    */
-  @Prop({ mutable: true }) swipeBackEnabled?: boolean;
-  @Watch('swipeBackEnabled')
-  swipeBackEnabledChanged() {
+  @Prop({ mutable: true }) swipeGesture?: boolean;
+  @Watch('swipeGesture')
+  swipeGestureChanged() {
     if (this.gesture) {
-      this.gesture.setDisabled(!this.swipeBackEnabled);
+      this.gesture.setDisabled(!this.swipeGesture);
     }
   }
 
@@ -95,8 +95,8 @@ export class Nav implements NavOutlet {
       !!this.win.document.querySelector('ion-router') &&
       !this.el.closest('[no-router]');
 
-    if (this.swipeBackEnabled === undefined) {
-      this.swipeBackEnabled = this.config.getBoolean(
+    if (this.swipeGesture === undefined) {
+      this.swipeGesture = this.config.getBoolean(
         'swipeBackEnabled',
         this.mode === 'ios'
       );
@@ -121,7 +121,7 @@ export class Nav implements NavOutlet {
       onMove: this.swipeBackProgress.bind(this),
       onEnd: this.swipeBackEnd.bind(this),
     });
-    this.swipeBackEnabledChanged();
+    this.swipeGestureChanged();
   }
 
   componentDidUnload() {
@@ -954,7 +954,7 @@ export class Nav implements NavOutlet {
   }
 
   private canSwipeBack(): boolean {
-    return !!this.swipeBackEnabled && !this.isTransitioning && this.canGoBack();
+    return !!this.swipeGesture && !this.isTransitioning && this.canGoBack();
   }
 
   render() {

@@ -100,10 +100,10 @@ export class Menu {
   /**
    * If true, swiping the menu is enabled. Default `true`.
    */
-  @Prop() swipeEnabled = true;
+  @Prop() swipeGesture = true;
 
-  @Watch('swipeEnabled')
-  protected swipeEnabledChanged() {
+  @Watch('swipeGesture')
+  protected swipeGestureChanged() {
     this.updateState();
   }
   /**
@@ -304,7 +304,7 @@ export class Menu {
   }
 
   private canSwipe(): boolean {
-    return this.swipeEnabled && !this.isAnimating && this.isActive();
+    return this.swipeGesture && !this.isAnimating && this.isActive();
   }
 
   private canStart(detail: GestureDetail): boolean {
@@ -444,7 +444,7 @@ export class Menu {
   private updateState() {
     const isActive = this.isActive();
     if (this.gesture) {
-      this.gesture.setDisabled(!isActive || !this.swipeEnabled);
+      this.gesture.setDisabled(!isActive || !this.swipeGesture);
     }
 
     // Close menu inmediately
