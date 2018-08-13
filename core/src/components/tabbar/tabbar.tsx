@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, QueueApi, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Color, Mode, TabbarLayout, TabbarPlacement } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -41,11 +41,6 @@ export class Tabbar {
   /** The tabs to render */
   @Prop() tabs: HTMLIonTabElement[] = [];
 
-  // @Watch('selectedTab')
-  // selectedTabChanged() {
-  //   this.updateHighlight();
-  // }
-
   /**
    * If true, show the tab highlight bar under the selected tab.
    */
@@ -71,32 +66,28 @@ export class Tabbar {
     }
   }
 
-  // @Listen('window:resize')
-  // onResize() {
-  //   this.updateHighlight();
-  // }
+  componentDidLoad() {
+    this.updateHighlight();
+  }
 
-  // componentDidLoad() {
-  //   this.updateHighlight();
-  // }
+  private getSelectedButton(): HTMLElement | null {
+    return this.el.shadowRoot!.querySelector('.tab-btn-selected');
+  }
 
-  // private getSelectedButton(): HTMLIonTabButtonElement | undefined {
-  //   return Array.from(this.el.querySelectorAll('ion-tab-button'))
-  //     .find(btn => btn.selected);
-  // }
-
-  // private updateHighlight() {
-  //   if (!this.highlight) {
-  //     return;
-  //   }
-  //   this.queue.read(() => {
-  //     const btn = this.getSelectedButton();
-  //     const highlight = this.el.querySelector('div.tabbar-highlight') as HTMLElement;
-  //     if (btn && highlight) {
-  //       highlight.style.transform = `translate3d(${btn.offsetLeft}px,0,0) scaleX(${btn.offsetWidth})`;
-  //     }
-  //   });
-  // }
+  @Watch('selectedTab')
+  @Listen('window:resize')
+  private updateHighlight() {
+    if (!this.highlight) {
+      return;
+    }
+    this.queue.read(() => {
+      const btn = this.getSelectedButton();
+      const highlight = this.el.shadowRoot!.querySelector('.tabbar-highlight') as HTMLElement;
+      if (btn && highlight) {
+        highlight.style.transform = `translate3d(${btn.offsetLeft}px,0,0) scaleX(${btn.offsetWidth})`;
+      }
+    });
+  }
 
   hostData() {
     const { color, translucent, layout, placement, keyboardVisible } = this;
@@ -134,9 +125,9 @@ function renderTabButton(tab: HTMLIonTabElement, selected: boolean, mode: string
   return (
     <a
       role="tab"
+      ion-activable
       aria-selected={selected ? 'true' : null}
       href={href || '#'}
-      ion-activable
       class={{
         'tab-btn': true,
         'tab-btn-selected': selected,
