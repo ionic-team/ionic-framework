@@ -178,12 +178,12 @@ button, a {
 
 :host(.item-label-stacked) ::slotted(ion-select),
 :host(.item-label-floating) ::slotted(ion-select) {
+  --padding-start: 0;
   align-self: stretch;
 
-  max-width: 100%;
   width: 100%;
 
-  --padding-start: 0;
+  max-width: 100%;
 }
 
 :host(.item-multiple-inputs) ::slotted(ion-select) {
