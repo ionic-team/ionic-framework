@@ -58,14 +58,15 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 
 ## Action Sheet
 
-The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectively.
+The `title`, `subTitle` and `enableBackdropDismiss` properties has been renamed to `header`, `subHeader` and `backdropDismiss` respectively.
 
 **Old Usage Example:**
 
 ```js
 const actionSheet = await actionSheetCtrl.create({
   title: 'This is the title',
-  subTitle: 'this is the sub title'
+  subTitle: 'this is the sub title',
+  enableBackdropDismiss: false
 });
 await actionSheet.present();
 ```
@@ -75,7 +76,8 @@ await actionSheet.present();
 ```js
 const actionSheet = await actionSheetCtrl.create({
   header: 'This is the title',
-  subHeader: 'this is the sub title'
+  subHeader: 'this is the sub title',
+  backdropDismiss: false
 });
 await actionSheet.present();
 ```
@@ -83,14 +85,15 @@ await actionSheet.present();
 
 ## Alert
 
-The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectivelly.
+The `title`, `subTitle` and `enableBackdropDismiss` properties has been renamed to `header`, `subHeader` and `backdropDismiss` respectivelly.
 
 **Old Usage Example:**
 
 ```js
 const alert = await alertCtrl.create({
   title: 'This is the title',
-  subTitle: 'this is the sub title'
+  subTitle: 'this is the sub title',
+  enableBackdropDismiss: false
 });
 await alert.present();
 ```
@@ -100,7 +103,8 @@ await alert.present();
 ```js
 const alert = await alertCtrl.create({
   header: 'This is the title',
-  subHeader: 'this is the sub title'
+  subHeader: 'this is the sub title',
+  backdropDismiss: false
 });
 await alert.present();
 ```
@@ -815,6 +819,27 @@ Previously an `ion-label` would automatically get added to an `ion-list-header` 
 You should take advantage of these APIs in order to dismiss your loading overlay explicitally.
 
 
+## Menu
+
+### Prop renamed
+
+The `swipeEnabled` prop has been renamed to `swipeGesture`.
+The `content` prop has been renamed to `contentId` and it points to the DOM id of the content:
+
+**Old Usage Example:**
+
+```html
+<ion-menu swipeEnabled="false" content="nav"> </ion-menu>
+<ion-nav #nav></ion-nav>
+```
+
+**New Usage Example:**
+
+```html
+<ion-menu swipeGesture="false" contentId="nav"> </ion-menu>
+<ion-nav id="nav"></ion-nav>
+```
+
 ## Menu Toggle
 
 ### Markup Changed
@@ -896,8 +921,11 @@ export class MyPage {
 ### Method renamed
 
 The `remove` method has been renamed to `removeIndex` to avoid conflicts with HTML and be more descriptive as to what it does.
-
 The `getActiveChildNavs` method has been renamed to `getChildNavs`.
+
+### Prop renamed
+
+The `swipeBackEnabled` prop has been renamed to `swipeGesture`.
 
 
 ## Navbar
@@ -959,7 +987,11 @@ The class has been renamed from `Option` to `SelectOption` to keep it consistent
 
 ### Markup Changed
 
-Action Sheet, Alert, Loading, Modal, Popover, and Toast should now use `async`/`await`:
+Action Sheet, Alert, Loading, Modal, Popover, and Toast:
+ - Should now use `async`/`await`
+ - `enableBackdropDismiss` has been renamed to `backdropDismiss`.
+
+
 
 **Old Usage Example:**
 
@@ -967,8 +999,9 @@ Action Sheet, Alert, Loading, Modal, Popover, and Toast should now use `async`/`
 presentPopover(ev: any) {
   const popover = this.popoverController.create({
     component: PopoverComponent,
-    ev: event,
-    translucent: true
+    event: event,
+    translucent: true,
+    enableBackdropDismiss: false
   });
   popover.present();
 }
@@ -981,7 +1014,8 @@ async presentPopover(ev: any) {
   const popover = await this.popoverController.create({
     component: PopoverComponent,
     event: event,
-    translucent: true
+    translucent: true,
+    backdropDismiss: false
   });
   return await popover.present();
 }
