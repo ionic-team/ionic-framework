@@ -63,7 +63,7 @@ export class ActionSheet implements OverlayInterface {
   /**
    * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
    */
-  @Prop() enableBackdropDismiss = true;
+  @Prop() backdropDismiss = true;
 
   /**
    * Title for the action sheet.
@@ -224,7 +224,7 @@ export class ActionSheet implements OverlayInterface {
     const buttons = allButtons.filter(b => b.role !== 'cancel');
 
     return [
-      <ion-backdrop tappable={this.enableBackdropDismiss}/>,
+      <ion-backdrop tappable={this.backdropDismiss}/>,
       <div class="action-sheet-wrapper" role="dialog">
         <div class="action-sheet-container">
           <div class="action-sheet-group">

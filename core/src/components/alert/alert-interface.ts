@@ -8,7 +8,7 @@ export interface AlertOptions {
   mode?: string;
   inputs?: AlertInput[];
   buttons?: (AlertButton | string)[];
-  enableBackdropDismiss?: boolean;
+  backdropDismiss?: boolean;
   translucent?: boolean;
 }
 

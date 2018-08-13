@@ -140,7 +140,7 @@
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
       await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
-        enableBackdropDismiss: false,
+        backdropDismiss: false,
         buttons: [{
           text: 'Archive',
           handler: () => {

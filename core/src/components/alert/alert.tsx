@@ -80,7 +80,7 @@ export class Alert implements OverlayInterface {
   /**
    * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
    */
-  @Prop() enableBackdropDismiss = true;
+  @Prop() backdropDismiss = true;
 
   /**
    * If true, the alert will be translucent. Defaults to `false`.
@@ -436,7 +436,7 @@ export class Alert implements OverlayInterface {
     }
 
     return [
-      <ion-backdrop tappable={this.enableBackdropDismiss}/>,
+      <ion-backdrop tappable={this.backdropDismiss}/>,
 
       <div class="alert-wrapper">
 

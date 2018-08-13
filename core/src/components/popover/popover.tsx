@@ -74,7 +74,7 @@ export class Popover implements OverlayInterface {
   /**
    * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
    */
-  @Prop() enableBackdropDismiss = true;
+  @Prop() backdropDismiss = true;
 
   /**
    * The event to pass to the popover animation.
@@ -233,7 +233,7 @@ export class Popover implements OverlayInterface {
     const wrapperClasses = createThemedClasses(this.mode, 'popover-wrapper');
 
     return [
-      <ion-backdrop tappable={this.enableBackdropDismiss}/>,
+      <ion-backdrop tappable={this.backdropDismiss}/>,
       <div class={wrapperClasses}>
         <div class="popover-arrow"></div>
         <div class="popover-content"></div>
