@@ -4,7 +4,7 @@ export interface ActionSheetOptions {
   subHeader?: string;
   cssClass?: string | string[];
   buttons: (ActionSheetButton | string)[];
-  enableBackdropDismiss?: boolean;
+  backdropDismiss?: boolean;
   translucent?: boolean;
 }
 

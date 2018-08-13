@@ -16,19 +16,19 @@ A button's `role` property can either be `destructive` or `cancel`. Buttons with
 
 ## Properties
 
-| Property                | Attribute                 | Description                                                                                                      | Type                  |
-| ----------------------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------- | --------------------- |
-| `buttons`               | --                        | An array of buttons for the action sheet.                                                                        | `ActionSheetButton[]` |
-| `cssClass`              | `css-class`               | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string | string[]`   |
-| `enableBackdropDismiss` | `enable-backdrop-dismiss` | If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.                    | `boolean`             |
-| `enterAnimation`        | --                        | Animation to use when the action sheet is presented.                                                             | `AnimationBuilder`    |
-| `header`                | `header`                  | Title for the action sheet.                                                                                      | `string`              |
-| `keyboardClose`         | `keyboard-close`          | If the actionSheet should close the keyboard                                                                     | `boolean`             |
-| `leaveAnimation`        | --                        | Animation to use when the action sheet is dismissed.                                                             | `AnimationBuilder`    |
-| `overlayId`             | `overlay-id`              | Unique ID to be used with the overlay. Internal only                                                             | `number`              |
-| `subHeader`             | `sub-header`              | Subtitle for the action sheet.                                                                                   | `string`              |
-| `translucent`           | `translucent`             | If true, the action sheet will be translucent. Defaults to `false`.                                              | `boolean`             |
-| `willAnimate`           | `will-animate`            | If true, the action sheet will animate. Defaults to `true`.                                                      | `boolean`             |
+| Property          | Attribute          | Description                                                                                                      | Type                  |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `backdropDismiss` | `backdrop-dismiss` | If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.                    | `boolean`             |
+| `buttons`         | --                 | An array of buttons for the action sheet.                                                                        | `ActionSheetButton[]` |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string | string[]`   |
+| `enterAnimation`  | --                 | Animation to use when the action sheet is presented.                                                             | `AnimationBuilder`    |
+| `header`          | `header`           | Title for the action sheet.                                                                                      | `string`              |
+| `keyboardClose`   | `keyboard-close`   | If the actionSheet should close the keyboard                                                                     | `boolean`             |
+| `leaveAnimation`  | --                 | Animation to use when the action sheet is dismissed.                                                             | `AnimationBuilder`    |
+| `overlayId`       | `overlay-id`       | Unique ID to be used with the overlay. Internal only                                                             | `number`              |
+| `subHeader`       | `sub-header`       | Subtitle for the action sheet.                                                                                   | `string`              |
+| `translucent`     | `translucent`      | If true, the action sheet will be translucent. Defaults to `false`.                                              | `boolean`             |
+| `willAnimate`     | `will-animate`     | If true, the action sheet will animate. Defaults to `true`.                                                      | `boolean`             |
 
 
 ## Events

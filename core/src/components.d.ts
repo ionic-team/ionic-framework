@@ -98,6 +98,10 @@ declare global {
 
     interface IonActionSheet {
       /**
+       * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'backdropDismiss': boolean;
+      /**
        * An array of buttons for the action sheet.
        */
       'buttons': ActionSheetButton[];
@@ -109,10 +113,6 @@ declare global {
        * Dismiss the action sheet overlay after it has been presented.
        */
       'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
-      /**
-       * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
-       */
-      'enableBackdropDismiss': boolean;
       /**
        * Animation to use when the action sheet is presented.
        */
@@ -176,6 +176,10 @@ declare global {
 
     interface IonAlert {
       /**
+       * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'backdropDismiss': boolean;
+      /**
        * Array of buttons to be added to the alert.
        */
       'buttons': (AlertButton | string)[];
@@ -187,10 +191,6 @@ declare global {
        * Dismiss the alert overlay after it has been presented.
        */
       'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
-      /**
-       * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
-       */
-      'enableBackdropDismiss': boolean;
       /**
        * Animation to use when the alert is presented.
        */
@@ -1189,6 +1189,10 @@ declare global {
 
     interface IonLoading {
       /**
+       * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
+       */
+      'backdropDismiss': boolean;
+      /**
        * Optional text content to display in the loading indicator.
        */
       'content': string;
@@ -1204,10 +1208,6 @@ declare global {
        * Number of milliseconds to wait before dismissing the loading indicator.
        */
       'duration': number;
-      /**
-       * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
-       */
-      'enableBackdropDismiss': boolean;
       /**
        * Animation to use when the loading indicator is presented.
        */
@@ -1389,6 +1389,10 @@ declare global {
 
     interface IonModal {
       /**
+       * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'backdropDismiss': boolean;
+      /**
        * The component to display inside of the modal.
        */
       'component': ComponentRef;
@@ -1405,10 +1409,6 @@ declare global {
        * Dismiss the modal overlay after it has been presented.
        */
       'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
-      /**
-       * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
-       */
-      'enableBackdropDismiss': boolean;
       /**
        * Animation to use when the modal is presented.
        */
@@ -1569,6 +1569,10 @@ declare global {
 
     interface IonPicker {
       /**
+       * If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'backdropDismiss': boolean;
+      /**
        * Array of buttons to be displayed at the top of the picker.
        */
       'buttons': PickerButton[];
@@ -1588,10 +1592,6 @@ declare global {
        * Number of milliseconds to wait before dismissing the picker.
        */
       'duration': number;
-      /**
-       * If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
-       */
-      'enableBackdropDismiss': boolean;
       /**
        * Animation to use when the picker is presented.
        */
@@ -1648,6 +1648,10 @@ declare global {
 
     interface IonPopover {
       /**
+       * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'backdropDismiss': boolean;
+      /**
        * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
@@ -1668,10 +1672,6 @@ declare global {
        * Dismiss the popover overlay after it has been presented.
        */
       'dismiss': (data?: any, role?: string | undefined) => Promise<void>;
-      /**
-       * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
-       */
-      'enableBackdropDismiss': boolean;
       /**
        * Animation to use when the popover is presented.
        */
@@ -3603,6 +3603,10 @@ declare global {
 
     export interface IonActionSheetAttributes extends HTMLAttributes {
       /**
+       * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'backdropDismiss'?: boolean;
+      /**
        * An array of buttons for the action sheet.
        */
       'buttons'?: ActionSheetButton[];
@@ -3610,10 +3614,6 @@ declare global {
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
       'cssClass'?: string | string[];
-      /**
-       * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
-       */
-      'enableBackdropDismiss'?: boolean;
       /**
        * Animation to use when the action sheet is presented.
        */
@@ -3678,6 +3678,10 @@ declare global {
 
     export interface IonAlertAttributes extends HTMLAttributes {
       /**
+       * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'backdropDismiss'?: boolean;
+      /**
        * Array of buttons to be added to the alert.
        */
       'buttons'?: (AlertButton | string)[];
@@ -3685,10 +3689,6 @@ declare global {
        * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
        */
       'cssClass'?: string | string[];
-      /**
-       * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
-       */
-      'enableBackdropDismiss'?: boolean;
       /**
        * Animation to use when the alert is presented.
        */
@@ -4723,6 +4723,10 @@ declare global {
 
     export interface IonLoadingAttributes extends HTMLAttributes {
       /**
+       * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
+       */
+      'backdropDismiss'?: boolean;
+      /**
        * Optional text content to display in the loading indicator.
        */
       'content'?: string;
@@ -4734,10 +4738,6 @@ declare global {
        * Number of milliseconds to wait before dismissing the loading indicator.
        */
       'duration'?: number;
-      /**
-       * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
-       */
-      'enableBackdropDismiss'?: boolean;
       /**
        * Animation to use when the loading indicator is presented.
        */
@@ -4876,6 +4876,10 @@ declare global {
 
     export interface IonModalAttributes extends HTMLAttributes {
       /**
+       * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'backdropDismiss'?: boolean;
+      /**
        * The component to display inside of the modal.
        */
       'component'?: ComponentRef;
@@ -4888,10 +4892,6 @@ declare global {
        */
       'cssClass'?: string | string[];
       'delegate'?: FrameworkDelegate;
-      /**
-       * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
-       */
-      'enableBackdropDismiss'?: boolean;
       /**
        * Animation to use when the modal is presented.
        */
@@ -5015,6 +5015,10 @@ declare global {
 
     export interface IonPickerAttributes extends HTMLAttributes {
       /**
+       * If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'backdropDismiss'?: boolean;
+      /**
        * Array of buttons to be displayed at the top of the picker.
        */
       'buttons'?: PickerButton[];
@@ -5030,10 +5034,6 @@ declare global {
        * Number of milliseconds to wait before dismissing the picker.
        */
       'duration'?: number;
-      /**
-       * If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
-       */
-      'enableBackdropDismiss'?: boolean;
       /**
        * Animation to use when the picker is presented.
        */
@@ -5087,6 +5087,10 @@ declare global {
 
     export interface IonPopoverAttributes extends HTMLAttributes {
       /**
+       * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
+       */
+      'backdropDismiss'?: boolean;
+      /**
        * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
@@ -5103,10 +5107,6 @@ declare global {
        */
       'cssClass'?: string | string[];
       'delegate'?: FrameworkDelegate;
-      /**
-       * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
-       */
-      'enableBackdropDismiss'?: boolean;
       /**
        * Animation to use when the popover is presented.
        */

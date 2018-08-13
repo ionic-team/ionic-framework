@@ -76,7 +76,7 @@ export class Picker implements OverlayInterface {
   /**
    * If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
    */
-  @Prop() enableBackdropDismiss = true;
+  @Prop() backdropDismiss = true;
 
   /**
    * If true, the picker will animate. Defaults to `true`.
@@ -270,7 +270,7 @@ export class Picker implements OverlayInterface {
     return [
       <ion-backdrop
         visible={this.showBackdrop}
-        tappable={this.enableBackdropDismiss}
+        tappable={this.backdropDismiss}
       />,
 
       <div class="picker-wrapper" role="dialog">
