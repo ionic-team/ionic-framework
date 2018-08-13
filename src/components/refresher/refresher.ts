@@ -330,7 +330,7 @@ export class Refresher {
 
     // the refresher is actively pulling at this point
     // move the scroll element within the content element
-    this._setCss(this.deltaY, '0ms', true, '');
+    this._setCss(this.pullMax, '1000ms', true, '');
 
     if (!this.deltaY) {
       // don't continue if there's no delta yet
@@ -366,7 +366,7 @@ export class Refresher {
 
     if (this.deltaY > this.pullMax) {
       // they pulled farther than the max, so kick off the refresh
-      this._beginRefresh();
+      //this._beginRefresh();
       return 3;
     }
 
