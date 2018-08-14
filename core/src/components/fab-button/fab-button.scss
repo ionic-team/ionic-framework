@@ -3,55 +3,93 @@
 // Floating Action Buttons
 // --------------------------------------------------
 
-.fab-button {
-  @include text-align(center);
-  @include appearance(none);
-  @include border-radius(50%);
+:host {
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
+  --ion-color-tint: #{ion-color(primary, tint)};
+  --size: #{$fab-size};
+  --background: #{current-color(base)};
+  --transition: background-color, opacity 100ms linear;
+  --padding-start: calc((#{$fab-size} - var(--size)) / 2);
+  --padding-end: calc((#{$fab-size} - var(--size)) / 2);
+  --padding-top: calc((#{$fab-size} - var(--size)) / 2);
+  --padding-bottom: calc((#{$fab-size} - var(--size)) / 2);
 
-  position: relative;
-  z-index: 0;
   display: block;
-  overflow: hidden;
 
-  width: $fab-size;
-  height: $fab-size;
+  color: #{current-color(contrast)};
+
+  font-size: 14px;
+
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: none;
+
+  white-space: nowrap;
+  font-kerning: none;
+}
+
+:host(.fab-button-disabled) {
+  pointer-events: none;
+}
+
+:host(.activated) {
+  --background: #{current-color(tint)};
+}
+
+.fab-button-native {
+  @include text-inherit();
+  @include border-radius(50%);
+  @include margin(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+
+  display: block;
+  position: relative;
+
+  width: var(--size);
+  height: var(--size);
+
+  transform: var(--transform);
+
+  transition: var(--transition);
 
   border: 0;
 
-  font-size: 14px;
-  line-height: $fab-size;
-  text-overflow: ellipsis;
-  text-transform: none;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background-color, opacity 100ms linear;
+  outline: none;
 
+  background: var(--background);
   background-clip: padding-box;
-  font-kerning: none;
-  user-select: none;
 
+  line-height: var(--size);
+
+  box-shadow: var(--box-shadow);
   contain: strict;
-
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  cursor: pointer;
+  overflow: hidden;
+  z-index: 0;
+  appearance: none;
 }
 
-.fab-button ion-icon {
-  font-size: 24px;
+.fab-button-native[disabled] {
+  cursor: default;
+  opacity: .5;
+  pointer-events: none;
+}
+
+::slotted(ion-icon) {
   line-height: 1;
 }
 
 .fab-button-inner {
+  @include position(0, 0, null, 0);
+
   display: flex;
+  position: absolute;
 
   flex-flow: row nowrap;
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
 
-  width: 100%;
   height: 100%;
 
   transition: all ease-in-out 300ms;
@@ -62,13 +100,8 @@
 // FAB Mini
 // --------------------------------------------------
 
-ion-fab-button[mini] .fab-button {
-  @include margin(($fab-size - $fab-mini-size) / 2);
-
-  width: $fab-mini-size;
-  height: $fab-mini-size;
-
-  line-height: $fab-mini-size;
+:host([mini]) {
+  --size: #{$fab-mini-size};
 }
 
 // FAB Close Icon
@@ -77,31 +110,37 @@ ion-fab-button[mini] .fab-button {
 .fab-button-close-icon {
   @include position(0, 0, null, 0);
 
+  display: flex;
   position: absolute;
 
-  display: flex;
+  align-items: center;
+  justify-content: center;
 
   height: 100%;
 
-  opacity: 0;
   transform: scale(.4) rotateZ(-45deg);
+
   transition: all ease-in-out 300ms;
   transition-property: transform, opacity;
-}
 
-.fab-button-close-icon .icon-inner {
-  @include margin(auto);
+  opacity: 0;
 }
 
 // FAB Animation
 // --------------------------------------------------
 
-.fab-button-close-active .fab-button-close-icon {
-  opacity: 1;
+:host(.fab-button-close-active) .fab-button-close-icon {
   transform: scale(1) rotateZ(0deg);
+
+  opacity: 1;
 }
 
-.fab-button-close-active .fab-button-inner {
-  opacity: 0;
+:host(.fab-button-close-active) .fab-button-inner {
   transform: scale(.4) rotateZ(45deg);
+
+  opacity: 0;
+}
+
+ion-ripple-effect {
+  color: var(--ripple-color);
 }

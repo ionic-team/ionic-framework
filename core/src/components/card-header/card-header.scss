@@ -3,11 +3,13 @@
 // Card Header
 // --------------------------------------------------
 
-ion-card-header {
-  position: relative;
+:host {
   display: block;
-  overflow: hidden;
+  position: relative;
 
   text-overflow: ellipsis;
+
   white-space: nowrap;
+
+  overflow: hidden;
 }

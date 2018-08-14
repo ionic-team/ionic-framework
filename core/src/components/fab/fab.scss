@@ -3,8 +3,9 @@
 // Floating Action Button Container
 // --------------------------------------------------
 
-ion-fab {
+:host {
   position: absolute;
+
   z-index: $z-index-fixed-content;
 }
 
@@ -12,17 +13,17 @@ ion-fab {
 // FAB Horizontal Positioning
 // --------------------------------------------------
 
-.fab-horizontal-center {
+:host(.fab-horizontal-center) {
   @include position(null, null, null, 50%);
   @include margin-horizontal(-$fab-size / 2, null);
 }
 
-.fab-horizontal-start {
+:host(.fab-horizontal-start) {
   @include position-horizontal($fab-content-margin, null);
   @include safe-position-horizontal($fab-content-margin, null);
 }
 
-.fab-horizontal-end {
+:host(.fab-horizontal-end) {
   @include position-horizontal(null, $fab-content-margin);
   @include safe-position-horizontal(null, $fab-content-margin);
 }
@@ -31,23 +32,25 @@ ion-fab {
 // FAB Vertical Positioning
 // --------------------------------------------------
 
-.fab-vertical-top {
+:host(.fab-vertical-top) {
   top: $fab-content-margin;
-
-  &.fab-edge {
-    top: -$fab-size / 2;
-  }
 }
 
-.fab-vertical-bottom {
+:host(.fab-vertical-top.fab-edge) {
+  top: -$fab-size / 2;
+}
+
+
+:host(.fab-vertical-bottom) {
   bottom: $fab-content-margin;
-
-  &.fab-edge {
-    bottom: -$fab-size / 2;
-  }
 }
 
-.fab-vertical-center {
+:host(.fab-vertical-bottom.fab-edge) {
+  bottom: -$fab-size / 2;
+}
+
+
+:host(.fab-vertical-center) {
   @include margin(-$fab-size / 2, null, null, null);
 
   top: 50%;

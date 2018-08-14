@@ -6,6 +6,7 @@
   <title>Toast - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
 </head>
 
 <body>
@@ -30,28 +31,28 @@
 
         <ion-grid>
           <ion-row>
-            <ion-col col-6>
+            <ion-col size="6">
               <f class="red"></f>
             </ion-col>
-            <ion-col col-6>
+            <ion-col size="6">
               <f class="green"></f>
             </ion-col>
-            <ion-col col-6>
+            <ion-col size="6">
               <f class="blue"></f>
             </ion-col>
-            <ion-col col-6>
+            <ion-col size="6">
               <f class="yellow"></f>
             </ion-col>
-            <ion-col col-6>
+            <ion-col size="6">
               <f class="pink"></f>
             </ion-col>
-            <ion-col col-6>
+            <ion-col size="6">
               <f class="purple"></f>
             </ion-col>
-            <ion-col col-6>
+            <ion-col size="6">
               <f class="black"></f>
             </ion-col>
-            <ion-col col-6>
+            <ion-col size="6">
               <f class="orange"></f>
             </ion-col>
           </ion-row>
@@ -60,8 +61,8 @@
 
   </ion-app>
   <script>
-    window.addEventListener('ionToastDidDismiss', function(e){console.log('didDismiss', e)})
-    window.addEventListener('ionToastWillDismiss', function(e){console.log('willDismiss', e)})
+    window.addEventListener('ionToastDidDismiss', function (e) { console.log('didDismiss', e) })
+    window.addEventListener('ionToastWillDismiss', function (e) { console.log('willDismiss', e) })
 
     async function presentToast(position) {
       const toastController = document.querySelector('ion-toast-controller');
@@ -83,6 +84,11 @@
   </script>
 
   <style>
+    :root {
+      --ion-safe-area-top: 20px;
+      --ion-safe-area-bottom: 40px;
+    }
+
     f {
       display: block;
       background: blue;

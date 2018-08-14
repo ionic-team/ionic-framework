@@ -4,7 +4,10 @@
 // Material Design Card
 // --------------------------------------------------
 
-.card-md {
+:host {
+  --ion-color-base: var(--ion-item-background-color, transparent);
+  --ion-color-contrast: #{$card-md-text-color};
+
   @include margin($card-md-margin-top, $card-md-margin-end, $card-md-margin-bottom, $card-md-margin-start);
   @include border-radius($card-md-border-radius);
 
@@ -12,102 +15,27 @@
 
   font-family: $card-md-font-family;
   font-size: $card-md-font-size;
-  color: $card-md-text-color;
-  background-color: $card-md-background-color;
+
   box-shadow: $card-md-box-shadow;
 }
 
-.card-md ion-list {
+::slotted(*) ion-list {
   @include margin(null, null, 0, null);
 }
 
-.card-md > .item:last-child,
-.card-md > .item:last-child .item-inner,
-.card-md > .item-sliding:last-child .item {
-  border-bottom: 0;
+::slotted(*) .item {
+  --border-width: 0;
 }
 
-.card-md .item-md .item-inner {
-  border: 0;
+::slotted(*) .item:last-child {
+  --border-width: 0;
+  --inner-border-width: 0;
 }
 
 .card .note-md {
   font-size: 13px;
 }
 
-.card-md h1 {
-  @include margin(0, 0, 2px);
-
-  font-size: 24px;
-  font-weight: normal;
-  color: $card-md-text-color;
-}
-
-.card-md h2 {
-  @include margin(2px, 0);
-
-  font-size: 16px;
-  font-weight: normal;
-  color: $card-md-text-color;
-}
-
-.card-md h3,
-.card-md h4,
-.card-md h5,
-.card-md h6 {
-  @include margin(2px, 0);
-
-  font-size: 14px;
-  font-weight: normal;
-  color: $card-md-text-color;
-}
-
-.card-md p {
-  @include margin(0, 0, 2px);
-
-  font-size: 14px;
-  font-weight: normal;
-  line-height: 1.5;
-  color: $card-md-text-color;
-}
-
-.card-md + ion-card {
+:host + ion-card {
   @include margin(0, null, null, null);
-}
-
-
-// Generate Material Design Card Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-md {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
-
-  .card-md .text-md-#{$color-name} {
-    color: $color-base;
-  }
-
-  .card-md-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6,
-    p {
-      color: $color-contrast;
-    }
-
-    @each $color-name, $color-value in $colors-md {
-      $color-base: ion-color($colors-md, $color-name, base, md);
-
-      .text-md-#{$color-name} {
-        color: $color-base;
-      }
-    }
-  }
-
 }

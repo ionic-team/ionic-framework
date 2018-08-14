@@ -1,0 +1,46 @@
+@import "../themes/ionic.globals";
+@import "../themes/ionic.mixins";
+
+// Text Alignment
+// --------------------------------------------------
+// Creates text alignment attributes based on screen size
+
+@each $breakpoint in map-keys($screen-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $screen-breakpoints);
+
+  @include media-breakpoint-up($breakpoint, $screen-breakpoints) {
+    // Provide `[text-{bp}]` attributes for aligning the text based
+    // on the breakpoint
+    [text#{$infix}-center] {
+      text-align: center !important;
+    }
+
+    [text#{$infix}-justify] {
+      text-align: justify !important;
+    }
+
+    [text#{$infix}-start] {
+      text-align: start !important;
+    }
+
+    [text#{$infix}-end] {
+      text-align: end !important;
+    }
+
+    [text#{$infix}-left] {
+      text-align: left !important;
+    }
+
+    [text#{$infix}-right] {
+      text-align: right !important;
+    }
+
+    [text#{$infix}-nowrap] {
+      white-space: nowrap !important;
+    }
+
+    [text#{$infix}-wrap] {
+      white-space: normal !important;
+    }
+  }
+}

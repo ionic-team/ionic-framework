@@ -1,32 +1,31 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { Color, CssClassMap, Mode } from '../../interface';
-import { createThemedClasses, getElementClassMap } from '../../utils/theme';
 
+import { Color, CssClassMap, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-fab-button',
   styleUrls: {
     ios: 'fab-button.ios.scss',
     md: 'fab-button.md.scss'
-  }
+  },
+  shadow: true
 })
 export class FabButton {
-
   private inList = false;
 
   @Element() el!: HTMLElement;
 
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode!: Mode;
 
@@ -51,13 +50,16 @@ export class FabButton {
    */
   @Prop() translucent = false;
 
+  /**
+   * If true, the fab button will show when in a fab-list.
+   */
   @Prop() show = false;
 
   componentWillLoad() {
     const parentNode = this.el.parentNode;
     const parentTag = parentNode ? parentNode.nodeName : null;
 
-    this.inList = (parentTag === 'ION-FAB-LIST');
+    this.inList = parentTag === 'ION-FAB-LIST';
   }
 
   /**
@@ -66,35 +68,40 @@ export class FabButton {
   private getFabClassMap(): CssClassMap {
     return {
       'fab-button-in-list': this.inList,
-      [`fab-button-${this.mode}-in-list`]: this.inList,
-      [`fab-button-translucent-${this.mode}-in-list`]: (this.inList && this.translucent),
+      'fab-button-translucent-in-list': this.inList && this.translucent,
       'fab-button-close-active': this.activated,
-      'fab-button-show': this.show,
+      'fab-button-show': this.show
+    };
+  }
+
+  hostData() {
+
+    return {
+      'ion-activable': !this.disabled,
+      class: {
+        ...createColorClasses(this.color),
+        ...this.getFabClassMap(),
+        'fab-button-disabled': this.disabled,
+        'fab-button-translucent': this.translucent
+      }
     };
   }
 
   render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'fab-button');
-    const translucentClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'fab-button-translucent') : {};
-    const hostClasses = getElementClassMap(this.el.classList);
     const TagType = this.href ? 'a' : 'button';
-    const fabClasses = {
-      ...this.getFabClassMap(),
-      ...themedClasses,
-      ...translucentClasses,
-      ...hostClasses,
-    };
 
     return (
       <TagType
-        class={fabClasses}
+        class="fab-button-native"
         disabled={this.disabled}
         href={this.href}>
-        <ion-icon name="close" class="fab-button-close-icon"></ion-icon>
+        <span class="fab-button-close-icon">
+          <ion-icon name="close" lazy={false}></ion-icon>
+        </span>
         <span class="fab-button-inner">
           <slot></slot>
         </span>
-        { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+        { this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el}/> }
       </TagType>
     );
   }

@@ -1,5 +1,6 @@
 import { RouteChain } from '../../../interface';
-import { RouterIntent } from './interface';
+
+import { RouterIntent } from './constants';
 
 export function generatePath(segments: string[]): string {
   const path = segments
@@ -9,7 +10,7 @@ export function generatePath(segments: string[]): string {
   return '/' + path;
 }
 
-export function chainToPath(chain: RouteChain): string[]|null {
+export function chainToPath(chain: RouteChain): string[] | null {
   const path = [];
   for (const route of chain) {
     for (const segment of route.path) {
@@ -74,7 +75,7 @@ export function readPath(loc: Location, root: string, useHash: boolean): string[
   return removePrefix(prefix, path);
 }
 
-export function parsePath(path: string|undefined|null): string[] {
+export function parsePath(path: string | undefined | null): string[] {
   if (path == null) {
     return [''];
   }
@@ -88,4 +89,3 @@ export function parsePath(path: string|undefined|null): string[] {
     return segments;
   }
 }
-

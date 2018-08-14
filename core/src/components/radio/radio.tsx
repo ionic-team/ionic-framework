@@ -1,8 +1,8 @@
-import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { CheckedInputChangeEvent, Color, Mode, RadioButtonInput, StyleEvent } from '../../interface';
-import { deferEvent } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
+import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
+import { CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
+import { deferEvent } from '../../utils/helpers';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-radio',
@@ -10,28 +10,27 @@ import { createThemedClasses } from '../../utils/theme';
     ios: 'radio.ios.scss',
     md: 'radio.md.scss'
   },
-  host: {
-    theme: 'radio'
-  }
+  shadow: true
 })
-export class Radio implements RadioButtonInput {
+export class Radio {
 
   private inputId = `ion-rb-${radioButtonIds++}`;
   private nativeInput!: HTMLInputElement;
 
   @State() keyFocus = false;
 
+  @Element() el!: HTMLElement;
+
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode!: Mode;
 
@@ -84,7 +83,6 @@ export class Radio implements RadioButtonInput {
    * Emitted when the radio button loses focus.
    */
   @Event() ionBlur!: EventEmitter<void>;
-
 
   componentWillLoad() {
     this.ionSelect = deferEvent(this.ionSelect);
@@ -143,9 +141,8 @@ export class Radio implements RadioButtonInput {
 
   emitStyle() {
     this.ionStyle.emit({
-      ...createThemedClasses(this.mode, this.color, 'radio'),
       'radio-checked': this.checked,
-      'radio-disabled': this.disabled
+      'interactive-disabled': this.disabled,
     });
   }
 
@@ -173,7 +170,10 @@ export class Radio implements RadioButtonInput {
 
   hostData() {
     return {
-      'class': {
+      class: {
+        ...createColorClasses(this.color),
+        'in-item': hostContext('.item', this.el),
+        'interactive': true,
         'radio-checked': this.checked,
         'radio-disabled': this.disabled,
         'radio-key': this.keyFocus

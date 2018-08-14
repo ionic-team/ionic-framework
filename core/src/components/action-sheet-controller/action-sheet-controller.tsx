@@ -1,6 +1,7 @@
 import { Component, Listen, Method, Prop } from '@stencil/core';
-import { ActionSheetOptions } from '../../interface';
-import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+
+import { ActionSheetOptions, OverlayController } from '../../interface';
+import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-action-sheet-controller'
@@ -27,7 +28,7 @@ export class ActionSheetController implements OverlayController {
     removeLastOverlay(this.actionSheets);
   }
 
-  /*
+  /**
    * Create an action sheet overlay with action sheet options.
    */
   @Method()
@@ -35,7 +36,7 @@ export class ActionSheetController implements OverlayController {
     return createOverlay(this.doc.createElement('ion-action-sheet'), opts);
   }
 
-  /*
+  /**
    * Dismiss the open action sheet overlay.
    */
   @Method()
@@ -43,7 +44,7 @@ export class ActionSheetController implements OverlayController {
     return dismissOverlay(data, role, this.actionSheets, actionSheetId);
   }
 
-  /*
+  /**
    * Get the most recently opened action sheet overlay.
    */
   @Method()

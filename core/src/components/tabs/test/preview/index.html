@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Tab</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
 </head>
+
 <body>
 
   <ion-app>
     <ion-tabs>
       <ion-tab label="Plain List" icon="star" path="">
 
-        <ion-header>
+        <ion-header translucent>
           <ion-toolbar>
             <ion-title>Tab One</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content padding>
+        <ion-content padding fullscreen>
           Tab One
         </ion-content>
 
@@ -25,12 +28,12 @@
 
       <ion-tab label="Schedule" icon="globe" path="tab2">
 
-        <ion-header>
+        <ion-header translucent>
           <ion-toolbar>
             <ion-title>Tab Two</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content padding>
+        <ion-content padding fullscreen>
           Tab Two
         </ion-content>
 
@@ -38,24 +41,27 @@
 
       <ion-tab label="Stopwatch" icon="logo-facebook" path="tab3">
 
-        <ion-header>
+        <ion-header translucent>
           <ion-toolbar>
             <ion-title>Tab Three</ion-title>
           </ion-toolbar>
         </ion-header>
-        <ion-content padding>
+        <ion-content padding fullscreen>
           Tab Three
         </ion-content>
 
       </ion-tab>
 
-      <ion-tab disabled
-        label="Messages"
-        icon="chatboxes"
-        component="page-one"
-        path="tab4">
+      <ion-tab disabled label="Messages" icon="chatboxes" component="page-one" path="tab4">
       </ion-tab>
     </ion-tabs>
+
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
   </ion-app>
 </body>
+
 </html>

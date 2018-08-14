@@ -1,7 +1,8 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { CheckboxInput, CheckedInputChangeEvent, Color, CssClassMap, Mode, StyleEvent } from '../../interface';
-import { deferEvent } from '../../utils/helpers';
 
+import { CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
+import { deferEvent, renderHiddenInput } from '../../utils/helpers';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-checkbox',
@@ -9,11 +10,9 @@ import { deferEvent } from '../../utils/helpers';
     ios: 'checkbox.ios.scss',
     md: 'checkbox.md.scss'
   },
-  host: {
-    theme: 'checkbox'
-  }
+  shadow: true
 })
-export class Checkbox implements CheckboxInput {
+export class Checkbox {
 
   private inputId = `ion-cb-${checkboxIds++}`;
   private labelId = `${this.inputId}-lbl`;
@@ -23,8 +22,9 @@ export class Checkbox implements CheckboxInput {
   @State() keyFocus = false;
 
   /**
-   * The color to use.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -50,7 +50,7 @@ export class Checkbox implements CheckboxInput {
   @Prop() disabled = false;
 
   /**
-   * the value of the checkbox.
+   * The value of the checkbox.
    */
   @Prop() value = 'on';
 
@@ -74,7 +74,6 @@ export class Checkbox implements CheckboxInput {
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
 
-
   componentWillLoad() {
     this.emitStyle();
   }
@@ -95,8 +94,8 @@ export class Checkbox implements CheckboxInput {
   @Watch('disabled')
   emitStyle() {
     this.ionStyle.emit({
-      'checkbox-disabled': this.disabled,
       'checkbox-checked': this.checked,
+      'interactive-disabled': this.disabled,
     });
   }
 
@@ -120,21 +119,21 @@ export class Checkbox implements CheckboxInput {
   hostData() {
     return {
       class: {
+        ...createColorClasses(this.color),
+        'in-item': hostContext('.item', this.el),
         'checkbox-checked': this.checked,
         'checkbox-disabled': this.disabled,
-        'checkbox-key': this.keyFocus
+        'checkbox-key': this.keyFocus,
+        'interactive': true
       }
     };
   }
 
   render() {
-    const checkboxClasses: CssClassMap = {
-      'checkbox-icon': true,
-      'checkbox-checked': this.checked
-    };
+    renderHiddenInput(this.el, this.name, this.value, this.disabled);
 
     return [
-      <div class={checkboxClasses}>
+      <div class="checkbox-icon">
         <div class="checkbox-inner"></div>
       </div>,
       <input

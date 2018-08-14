@@ -8,32 +8,36 @@
   @include padding($card-ios-padding-top, $card-ios-padding-end, $card-ios-padding-bottom, $card-ios-padding-start);
 
   font-size: $card-ios-font-size;
+
   line-height: 1.4;
-}
 
+  h1 {
+    @include margin(0, 0, 2px);
 
-// Generate iOS Card Content Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-
-  .card-ios-#{$color-name} {
-    .card-content-ios {
-      color: $color-contrast;
-    }
-
-    @each $color-name, $color-value in $colors-ios {
-      $color-base: ion-color($colors-ios, $color-name, base, ios);
-
-      .card-content-ios-#{$color-name} {
-        color: $color-base;
-      }
-    }
+    font-size: 24px;
+    font-weight: normal;
   }
 
-  .card-content-ios-#{$color-name} {
-    color: $color-base;
+  h2 {
+    @include margin(2px, 0);
+
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  h3,
+  h4,
+  h5,
+  h6 {
+    @include margin(2px, 0);
+
+    font-size: 14px;
+    font-weight: normal;
+  }
+
+  p {
+    @include margin(0, 0, 2px);
+
+    font-size: 14px;
   }
 }

@@ -2,7 +2,7 @@
  * Deploy script adopted from https://github.com/sindresorhus/np
  * MIT License (c) Sindre Sorhus (sindresorhus.com)
  */
-const chalk = require('chalk');
+const tc = require('turbocolor');
 const execa = require('execa');
 const Listr = require('listr');
 const octokit = require('@octokit/rest')()
@@ -27,14 +27,14 @@ async function main() {
     publishPackages(tasks, common.packages, version);
 
     // push tag to git remote
-    publishGit(tasks, version);
+    publishGit(tasks, version, changelog);
 
     const listr = new Listr(tasks);
     await listr.run();
     console.log(`\nionic ${version} published!! 🎉\n`);
 
   } catch (err) {
-    console.log('\n', chalk.red(err), '\n');
+    console.log('\n', tc.red(err), '\n');
     process.exit(1);
   }
 }
@@ -75,7 +75,7 @@ function publishGit(tasks, version, changelog) {
 
   tasks.push(
     {
-      title: `Tag latest commit ${chalk.dim(`(${tag})`)}`,
+      title: `Tag latest commit ${tc.dim(`(${tag})`)}`,
       task: () => execa('git', ['tag', `${tag}`], { cwd: common.rootDir })
     },
     {

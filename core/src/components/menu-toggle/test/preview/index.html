@@ -6,6 +6,7 @@
   <title>Menu Toggle</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
 </head>
 
 <body>
@@ -60,25 +61,21 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-menu-toggle>
-              <ion-button>
-                <ion-icon slot="icon-only" name="menu"></ion-icon>
-              </ion-button>
-            </ion-menu-toggle>
+            <ion-menu-button></ion-menu-button>
           </ion-buttons>
           <ion-title>Menu Toggle</ion-title>
         </ion-toolbar>
       </ion-header>
 
       <ion-content padding>
-          <div>
-              <ion-button onclick="openDefault()">Menu Button Will Open Default</ion-button>
-          </div>
         <div>
-            <ion-button onclick="openStart()">Menu Button Will Open start</ion-button>
+          <ion-button onclick="openDefault()">Menu Button Will Open Default</ion-button>
         </div>
         <div>
-            <ion-button onclick="openEnd()">Menu Button Will Open end</ion-button>
+          <ion-button onclick="openStart()">Menu Button Will Open start</ion-button>
+        </div>
+        <div>
+          <ion-button onclick="openEnd()">Menu Button Will Open end</ion-button>
         </div>
       </ion-content>
 
@@ -107,6 +104,9 @@
     }
   </script>
   <style>
+
+
   </style>
 </body>
+
 </html>

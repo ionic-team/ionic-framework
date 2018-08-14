@@ -1,8 +1,9 @@
-import { Component, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { CheckboxInput, CheckedInputChangeEvent, Color, GestureDetail, Mode, StyleEvent } from '../../interface';
-import { hapticSelection } from '../../utils/haptic';
-import { deferEvent } from '../../utils/helpers';
+import { Component, Element, Event, EventEmitter, Prop, QueueApi, State, Watch } from '@stencil/core';
 
+import { CheckedInputChangeEvent, Color, Gesture, GestureDetail, Mode, StyleEvent } from '../../interface';
+import { hapticSelection } from '../../utils/haptic';
+import { deferEvent, renderHiddenInput } from '../../utils/helpers';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-toggle',
@@ -10,31 +11,32 @@ import { deferEvent } from '../../utils/helpers';
     ios: 'toggle.ios.scss',
     md: 'toggle.md.scss'
   },
-  host: {
-    theme: 'toggle'
-  }
+  shadow: true
 })
-export class Toggle implements CheckboxInput {
+export class Toggle {
 
   private inputId = `ion-tg-${toggleIds++}`;
   private nativeInput!: HTMLInputElement;
   private pivotX = 0;
+  private gesture?: Gesture;
+
+  @Element() el!: HTMLElement;
+
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   @State() activated = false;
-
   @State() keyFocus = false;
 
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode!: Mode;
 
@@ -78,31 +80,29 @@ export class Toggle implements CheckboxInput {
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
 
-
   @Watch('checked')
   checkedChanged(isChecked: boolean) {
     this.ionChange.emit({
       checked: isChecked,
       value: this.value
     });
-    this.emitStyle();
   }
 
   @Watch('disabled')
-  emitStyle() {
+  disabledChanged() {
     this.ionStyle.emit({
-      'toggle-disabled': this.disabled,
-      'toggle-checked': this.checked,
-      'toggle-activated': this.activated
+      'interactive-disabled': this.disabled,
     });
+    if (this.gesture) {
+      this.gesture.setDisabled(this.disabled);
+    }
   }
 
   componentWillLoad() {
     this.ionStyle = deferEvent(this.ionStyle);
-    this.emitStyle();
   }
 
-  componentDidLoad() {
+  async componentDidLoad() {
     const parentItem = this.nativeInput.closest('ion-item');
     if (parentItem) {
       const itemLabel = parentItem.querySelector('ion-label');
@@ -111,6 +111,18 @@ export class Toggle implements CheckboxInput {
         this.nativeInput.setAttribute('aria-labelledby', itemLabel.id);
       }
     }
+
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+      el: this.el,
+      queue: this.queue,
+      gestureName: 'toggle',
+      gesturePriority: 100,
+      threshold: 0,
+      onStart: this.onDragStart.bind(this),
+      onMove: this.onDragMove.bind(this),
+      onEnd: this.onDragEnd.bind(this),
+    });
+    this.disabledChanged();
   }
 
   private onDragStart(detail: GestureDetail) {
@@ -162,33 +174,24 @@ export class Toggle implements CheckboxInput {
   hostData() {
     return {
       class: {
+        ...createColorClasses(this.color),
+        'in-item': hostContext('.item', this.el),
         'toggle-activated': this.activated,
         'toggle-checked': this.checked,
         'toggle-disabled': this.disabled,
-        'toggle-key': this.keyFocus
+        'toggle-key': this.keyFocus,
+        'interactive': true
       }
     };
   }
 
   render() {
+    renderHiddenInput(this.el, this.name, this.value, this.disabled);
+
     return [
-      <ion-gesture
-        onStart={this.onDragStart.bind(this)}
-        onMove={this.onDragMove.bind(this)}
-        onEnd={this.onDragEnd.bind(this)}
-        gestureName="toggle"
-        passive={false}
-        gesturePriority={30}
-        direction="x"
-        threshold={0}
-        attachTo="parent"
-        disabled={this.disabled}
-        tabIndex={-1}>
-        <div class="toggle-icon">
-          <div class="toggle-inner"/>
-        </div>
-        <div class="toggle-cover"/>
-      </ion-gesture>,
+      <div class="toggle-icon">
+        <div class="toggle-inner"/>
+      </div>,
       <input
         type="checkbox"
         onChange={this.onChange.bind(this)}
@@ -200,7 +203,8 @@ export class Toggle implements CheckboxInput {
         name={this.name}
         value={this.value}
         disabled={this.disabled}
-        ref={r => this.nativeInput = (r as any)}/>
+        ref={r => this.nativeInput = (r as any)}/>,
+      <slot></slot>
     ];
   }
 }

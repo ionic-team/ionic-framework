@@ -1,5 +1,6 @@
 # ion-tabbar
 
+Tabbar is an internal component for Tabs. Please see the [Tabs documentation](../tabs).
 
 
 <!-- Auto Generated Below -->
@@ -7,81 +8,23 @@
 
 ## Properties
 
-#### highlight
-
-boolean
-
-
-#### layout
-
-string
-
-
-#### placement
-
-string
+| Property      | Attribute     | Description                                                                                                                                                       | Type                  |
+| ------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `color`       | `color`       |                                                                                                                                                                   | `Color`               |
+| `highlight`   | `highlight`   | If true, show the tab highlight bar under the selected tab.                                                                                                       | `boolean`             |
+| `layout`      | `layout`      | Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`. | `TabbarLayout`        |
+| `mode`        | `mode`        |                                                                                                                                                                   | `Mode`                |
+| `placement`   | `placement`   | Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.                                                                  | `TabbarPlacement`     |
+| `selectedTab` | --            | The selected tab component                                                                                                                                        | `HTMLIonTabElement`   |
+| `tabs`        | --            | The tabs to render                                                                                                                                                | `HTMLIonTabElement[]` |
+| `translucent` | `translucent` | If true, the tabbar will be translucent. Defaults to `false`.                                                                                                     | `boolean`             |
 
 
-#### scrollable
+## Events
 
-boolean
-
-
-#### selectedTab
-
-
-
-
-#### tabs
-
-
-
-
-#### translucent
-
-boolean
-
-If true, the tabbar will be translucent. Defaults to `false`.
-
-
-## Attributes
-
-#### highlight
-
-boolean
-
-
-#### layout
-
-string
-
-
-#### placement
-
-string
-
-
-#### scrollable
-
-boolean
-
-
-#### selected-tab
-
-
-
-
-#### tabs
-
-
-
-
-#### translucent
-
-boolean
-
-If true, the tabbar will be translucent. Defaults to `false`.
-
+| Event            | Description                         |
+| ---------------- | ----------------------------------- |
+| `ionTabbarClick` | Emitted when the tab bar is clicked |
 
 
 ----------------------------------------------

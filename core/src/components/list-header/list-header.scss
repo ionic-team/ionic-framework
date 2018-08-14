@@ -4,17 +4,21 @@
 // List Header
 // --------------------------------------------------
 
-ion-list-header {
+:host {
   @include font-smoothing();
   @include margin(0);
   @include padding(0);
 
   display: flex;
-  overflow: hidden;
 
   align-items: center;
   justify-content: space-between;
 
   width: 100%;
   min-height: 40px;
+
+  background: #{current-color(base)};
+  color: #{current-color(contrast)};
+
+  overflow: hidden;
 }

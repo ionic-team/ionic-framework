@@ -1,0 +1,17 @@
+@import "../../themes/ionic.globals";
+@import "../grid/grid.mixins";
+
+// Grid Column
+// --------------------------------------------------
+
+/// @prop - The padding for the grid column
+$grid-column-padding:        var(--ion-grid-column-padding, 5px) !default;
+
+/// @prop - The padding for the column at different breakpoints
+$grid-column-paddings: (
+  xs: var(--ion-grid-column-padding-xs, $grid-column-padding),
+  sm: var(--ion-grid-column-padding-sm, $grid-column-padding),
+  md: var(--ion-grid-column-padding-md, $grid-column-padding),
+  lg: var(--ion-grid-column-padding-lg, $grid-column-padding),
+  xl: var(--ion-grid-column-padding-xl, $grid-column-padding)
+) !default;

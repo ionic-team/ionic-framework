@@ -3,49 +3,47 @@
 // Back Button
 // --------------------------------------------------
 
-.back-button {
+:host {
   display: none;
-}
 
-.can-go-back > ion-header .back-button,
-.back-button.show-back-button {
-  display: inline-block;
-}
+  color: #{current-color(base)};
+  pointer-events: all;
 
-.back-button button {
-  @include font-smoothing();
-  @include text-align(center);
-  @include appearance(none);
-
-  position: relative;
-  z-index: 0;
-  display: inline-flex;
-
-  flex-flow: row nowrap;
-  flex-shrink: 0;
-
-  align-items: center;
-  justify-content: center;
-
-  border: 0;
-  outline: none;
-
-  line-height: 1;
-
+  text-align: center;
   text-decoration: none;
   text-overflow: ellipsis;
   text-transform: none;
 
   white-space: nowrap;
-  cursor: pointer;
-
-  vertical-align: top; // the better option for most scenarios
-  vertical-align: -webkit-baseline-middle; // the best for those that support it
-
-  transition: background-color, opacity 100ms linear;
 
   user-select: none;
   font-kerning: none;
+}
+
+:host-context(.can-go-back > ion-header),
+:host(.show-back-button) {
+  display: block;
+}
+
+.back-button-native {
+  @include text-inherit();
+  @include font-smoothing();
+
+  display: block;
+  position: relative;
+
+  transition: background-color, opacity 100ms linear;
+
+  border: 0;
+
+  outline: none;
+
+  line-height: 1;
+
+  cursor: pointer;
+  user-select: none;
+  z-index: 0;
+  appearance: none;
 }
 
 .back-button-inner {

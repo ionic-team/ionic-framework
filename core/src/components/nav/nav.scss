@@ -1,0 +1,30 @@
+@import "../../themes/ionic.globals";
+
+:host {
+  @include position(0, 0, 0, 0);
+
+  position: absolute;
+
+  contain: layout size style;
+  overflow: hidden;
+  z-index: $z-index-page-container;
+}
+
+.nav-decor {
+  display: none;
+}
+
+:host(.show-decor) .nav-decor {
+  @include position(0, 0, 0, 0);
+
+  display: block;
+
+  // when ios pages transition, the leaving page grays out
+  // this is the black square behind all pages so they gray out
+  position: absolute;
+
+  background: #000;
+
+  z-index: 0;
+  pointer-events: none;
+}

@@ -1,6 +1,7 @@
 import { Component, Prop } from '@stencil/core';
-import { Color, Mode } from '../../interface';
 
+import { Color, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-chip',
@@ -8,14 +9,13 @@ import { Color, Mode } from '../../interface';
     ios: 'chip.ios.scss',
     md: 'chip.md.scss'
   },
-  host: {
-    theme: 'chip'
-  }
+  scoped: true
 })
 export class Chip {
   /**
-   * The color to use.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -25,4 +25,9 @@ export class Chip {
    */
   @Prop() mode!: Mode;
 
+  hostData() {
+    return {
+      class: createColorClasses(this.color),
+    };
+  }
 }

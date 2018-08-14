@@ -1,6 +1,7 @@
 import { Component, Listen, Method, Prop } from '@stencil/core';
-import { AlertOptions } from '../../interface';
-import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+
+import { AlertOptions, OverlayController } from '../../interface';
+import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-alert-controller'
@@ -27,15 +28,15 @@ export class AlertController implements OverlayController {
     removeLastOverlay(this.alerts);
   }
 
-  /*
-   * Create an alert overlay with alert options.
+  /**
+   * Create an alert overlay with alert options
    */
   @Method()
   create(opts?: AlertOptions): Promise<HTMLIonAlertElement> {
     return createOverlay(this.doc.createElement('ion-alert'), opts);
   }
 
-  /*
+  /**
    * Dismiss the open alert overlay.
    */
   @Method()
@@ -43,7 +44,7 @@ export class AlertController implements OverlayController {
     return dismissOverlay(data, role, this.alerts, alertId);
   }
 
-  /*
+  /**
    * Get the most recently opened alert overlay.
    */
   @Method()

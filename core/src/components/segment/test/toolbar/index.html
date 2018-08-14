@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html dir="ltr">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Segment - Colors</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+</head>
+
+<body onload="listenForEvent()">
+  <ion-app>
+
+    <ion-header no-border>
+      <ion-toolbar>
+        <ion-title>Segment - Colors</ion-title>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-segment value="Top">
+          <ion-segment-button value="Paid">
+            Paid
+          </ion-segment-button>
+          <ion-segment-button value="Free">
+            Free
+          </ion-segment-button>
+          <ion-segment-button value="Top">
+            Top
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar color="primary">
+        <ion-segment value="Free">
+          <ion-segment-button value="Paid">
+            Paid
+          </ion-segment-button>
+          <ion-segment-button value="Free">
+            Free
+          </ion-segment-button>
+          <ion-segment-button value="Top">
+            Top
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar color="secondary">
+        <ion-segment value="Top">
+          <ion-segment-button value="Paid">
+            Paid
+          </ion-segment-button>
+          <ion-segment-button value="Free">
+            Free
+          </ion-segment-button>
+          <ion-segment-button value="Top">
+            Top
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar color="danger">
+        <ion-segment name="dynamicPropDisable" disabled>
+          <ion-segment-button value="Bookmarks">
+            Bookmarks
+          </ion-segment-button>
+          <ion-segment-button value="Reading List">
+            Reading List
+          </ion-segment-button>
+          <ion-segment-button value="Shared Links">
+            Shared Links
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar color="dark">
+        <ion-segment color="secondary" name="dynamicAttrElem" value="active">
+          <ion-segment-button value="active">
+            Active
+          </ion-segment-button>
+          <ion-segment-button name="dynamicAttrDisable" value="disabled" disabled="true">
+            Disabled
+          </ion-segment-button>
+          <ion-segment-button value="inactive" disabled="false">
+            Inactive
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+
+      <ion-toolbar>
+        <ion-segment color="light">
+          <ion-segment-button value="sunny">
+            Sunny
+          </ion-segment-button>
+          <ion-segment-button value="rainy" checked>
+            Rainy
+          </ion-segment-button>
+        </ion-segment>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content padding>
+      Segment in Toolbar
+    </ion-content>
+
+  </ion-app>
+</body>
+
+</html>

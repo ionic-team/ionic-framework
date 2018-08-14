@@ -1,6 +1,7 @@
 import { Component, Listen, Method, Prop } from '@stencil/core';
-import { PopoverOptions } from '../../interface';
-import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+
+import { OverlayController, PopoverOptions } from '../../interface';
+import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-popover-controller'
@@ -27,7 +28,7 @@ export class PopoverController implements OverlayController {
     removeLastOverlay(this.popovers);
   }
 
-  /*
+  /**
    * Create a popover overlay with popover options.
    */
   @Method()
@@ -35,7 +36,7 @@ export class PopoverController implements OverlayController {
     return createOverlay(this.doc.createElement('ion-popover'), opts);
   }
 
-  /*
+  /**
    * Dismiss the open popover overlay.
    */
   @Method()
@@ -43,7 +44,7 @@ export class PopoverController implements OverlayController {
     return dismissOverlay(data, role, this.popovers, popoverId);
   }
 
-  /*
+  /**
    * Get the most recently opened popover overlay.
    */
   @Method()

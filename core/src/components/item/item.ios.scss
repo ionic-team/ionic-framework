@@ -4,131 +4,70 @@
 // iOS Item
 // --------------------------------------------------
 
-.item-ios {
-  @include padding-horizontal($item-ios-padding-start, null);
-  @include safe-area-padding-horizontal($item-ios-padding-start, null);
-  @include border-radius(0);
-
-  position: relative;
+:host {
+  --ion-color-base: var(--ion-item-background-color, transparent);
+  --ion-color-contrast: #{$item-ios-text-color};
+  --ion-color-tint: #{$item-ios-background-color-active};
+  --ion-color-shade: #{$item-ios-border-bottom-color};
+  --transition: background-color 200ms linear;
+  --padding-start: #{$item-ios-padding-start};
+  --inner-padding-end: #{$item-ios-padding-end / 2};
+  --inner-border-width: #{0 0 $item-ios-border-bottom-width 0};
 
   font-family: $item-ios-font-family;
-
   font-size: $item-ios-font-size;
-  color: $item-ios-text-color;
-  background-color: $item-ios-background-color;
-  transition: background-color 200ms linear;
 }
 
-.item-ios.activated {
-  background-color: $item-ios-background-color-active;
-  transition-duration: 0ms;
-}
-
-.item-ios h1 {
-  @include margin(0, 0, 2px);
-
-  font-size: 24px;
-  font-weight: normal;
-}
-
-.item-ios h2 {
-  @include margin(0, 0, 2px);
-
-  font-size: 17px;
-  font-weight: normal;
-}
-
-.item-ios h3,
-.item-ios h4,
-.item-ios h5,
-.item-ios h6 {
-  @include margin(0, 0, 3px);
-
-  font-size: 14px;
-  font-weight: normal;
-  line-height: normal;
-}
-
-.item-ios p {
-  @include margin($item-ios-paragraph-margin-top, $item-ios-paragraph-margin-end, $item-ios-paragraph-margin-bottom, $item-ios-paragraph-margin-start);
-
-  overflow: inherit;
-
-  font-size: $item-ios-paragraph-font-size;
-  line-height: normal;
-  text-overflow: inherit;
-  color: $item-ios-paragraph-text-color;
-}
-
-.item-ios h2:last-child,
-.item-ios h3:last-child,
-.item-ios h4:last-child,
-.item-ios h5:last-child,
-.item-ios h6:last-child,
-.item-ios p:last-child {
-  @include margin(null, null, 0, null);
-}
-
-.item-ios .item-inner {
-  @include padding-horizontal(null, $item-ios-padding-end / 2);
-
-  @media screen and (orientation: landscape) {
-    @include safe-area-padding-horizontal(null, $item-ios-padding-end / 2);
-  }
+:host(.activated) {
+  --transition: none;
 }
 
 
 // iOS Item Lines
 // --------------------------------------------------
 
-.item-ios,
-.item-ios .item-inner {
-  border-bottom-width: 0;
-  border-bottom-style: $item-ios-border-bottom-style;
-  border-bottom-color: $item-ios-border-bottom-color;
-}
-
-// Default item has inset border bottom
-.item-ios .item-inner {
-  border-bottom-width: $item-ios-border-bottom-width;
-}
-
 // Full lines - apply the border to the item
 // Inset lines - apply the border to the item inner
-.item-ios-lines-full,
-.item-ios-lines-inset .item-inner {
-  border-bottom-width: $item-ios-border-bottom-width;
+:host(.item-lines-full) {
+  --border-width: #{0 0 $item-ios-border-bottom-width 0};
+}
+
+:host(.item-lines-inset) {
+  --inner-border-width: #{0 0 $item-ios-border-bottom-width 0};
 }
 
 // Full lines - remove the border from the item inner (inset list items)
 // Inset lines - remove the border on the item (full list items)
 // No lines - remove the border on both (full / inset list items)
-.item-ios-lines-inset,
-.item-ios-lines-full .item-inner,
-.item-ios-lines-none,
-.item-ios-lines-none .item-inner {
-  border-bottom-width: 0;
+:host(.item-lines-inset),
+:host(.item-lines-none) {
+  --border-width: 0;
+}
+
+:host(.item-lines-full),
+:host(.item-lines-none) {
+  --inner-border-width: 0;
 }
 
 
 // iOS Item Slots
 // --------------------------------------------------
 
-.item-ios [slot="start"] {
+::slotted(:not(.interactive)[slot="start"]) {
   @include margin($item-ios-slot-start-margin-top, $item-ios-slot-start-margin-end, $item-ios-slot-start-margin-bottom, $item-ios-slot-start-margin-start);
 }
 
-.item-ios [slot="end"] {
+::slotted(:not(.interactive)[slot="end"]) {
   @include margin($item-ios-slot-end-margin-top, $item-ios-slot-end-margin-end, $item-ios-slot-end-margin-bottom, $item-ios-slot-end-margin-start);
 }
 
-.item-ios > ion-icon[slot="start"],
-.item-ios > ion-icon[slot="end"] {
+::slotted(ion-icon[slot="start"]),
+::slotted(ion-icon[slot="end"]) {
   @include margin($item-ios-icon-slot-margin-top, $item-ios-icon-slot-margin-end, $item-ios-icon-slot-margin-bottom, $item-ios-icon-slot-margin-start);
 }
 
-.item-ios.item-label-stacked [slot="end"],
-.item-ios.item-label-floating [slot="end"] {
+:host(.item-label-stacked) ::slotted([slot="end"]),
+:host(.item-label-floating) ::slotted([slot="end"]) {
   @include margin($item-ios-label-slot-end-margin-top, $item-ios-label-slot-end-margin-end, $item-ios-label-slot-end-margin-bottom, $item-ios-label-slot-end-margin-start);
 }
 
@@ -136,86 +75,109 @@
 // iOS Item Button
 // --------------------------------------------------
 
-.item-ios .button-small-ios {
-  @include padding(0, .5em);
-
-  height: 24px;
+::slotted(.button-small) {
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-start: .5em;
+  --padding-end: .5em;
+  --height: 24px;
 
   font-size: 13px;
 }
 
-.item-ios .button-small-ios ion-icon[slot="icon-only"] {
-  @include padding(0, 1px);
-}
+// TODO
+// .item-ios .button-small-ios ion-icon[slot="icon-only"] {
+//   @include padding(0, 1px);
+// }
 
 
 // iOS Item Avatar & Thumbnail
 // --------------------------------------------------
 
-.item-ios ion-avatar {
+::slotted(ion-avatar) {
   width: $item-ios-avatar-width;
   height: $item-ios-avatar-height;
 }
 
-.item-ios ion-thumbnail {
+::slotted(ion-thumbnail) {
   width: $item-ios-thumbnail-width;
   height: $item-ios-thumbnail-height;
 }
 
-.item-ios ion-avatar[slot="end"],
-.item-ios ion-thumbnail[slot="end"] {
+::slotted(ion-avatar[slot="end"]),
+::slotted(ion-thumbnail[slot="end"]) {
   @include margin(($item-ios-padding-end / 2));
 }
-
 
 // iOS Item Detail Push
 // --------------------------------------------------
 
-// Only show the forward arrow icon if true
-.item-ios.item-detail-push .item-inner {
-  $safe-area-position: calc(#{$item-ios-padding-end - 2} + constant(safe-area-inset-right));
-  $safe-area-position-env: calc(#{$item-ios-padding-end - 2} + env(safe-area-inset-right));
+.item-detail-icon {
+  color: var(--detail-push-color);
 
-  @include item-push-svg-url($item-ios-detail-push-color);
-  @include padding-horizontal(null, 32px);
-  @include background-position(end, $item-ios-padding-end - 2, center);
-  @include background-position(end, $safe-area-position, center);
-  @include background-position(end, $safe-area-position-env, center);
-
-  background-repeat: no-repeat;
-  background-size: 14px 14px;
+  font-size: 20px;
 }
 
 
-// Generate iOS Item and Item Divider Colors
+// TODO: MOVE FROM RADIO
+// iOS Radio Item Label: Checked
+// -----------------------------------------
+
+// :host(.item-radio-checked) ::slotted(ion-label) {
+//   color: $radio-ios-color-on;
+// }
+
+
+:host(.item-radio) ::slotted(ion-label),
+:host(.item-toggle) ::slotted(ion-label) {
+  @include margin-horizontal(0, null);
+}
+
+
+// iOS Stacked & Floating Inputs
 // --------------------------------------------------
 
-@each $color-name, $color-value in $colors-ios {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-  $color-shade: ion-color($colors-ios, $color-name, shade, ios);
-  $color-tint: ion-color($colors-ios, $color-name, tint, ios);
-
-  .item-ios-#{$color-name} {
-    border-bottom-color: $color-shade;
-
-    color: $color-contrast;
-    background-color: $color-base;
-
-    .item-inner {
-      border-bottom-color: $color-shade;
-    }
-
-    p {
-      color: $color-contrast;
-    }
-
-    &.activated {
-      background-color: $color-tint;
-    }
-  }
-
-  .item-ios-#{$color-name}.item-detail-push .item-inner {
-    @include item-push-svg-url($color-shade);
-  }
+:host(.item-label-stacked) ::slotted(ion-input),
+:host(.item-label-floating) ::slotted(ion-input),
+:host(.item-label-stacked) ::slotted(ion-textarea),
+:host(.item-label-floating) ::slotted(ion-textarea) {
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  --padding-start: 0;
 }
+
+
+// TODO
+// .item-ios.item-label-stacked .label-ios + .input + .cloned-input,
+// .item-ios.item-label-floating .label-ios + .input + .cloned-input {
+//   @include margin-horizontal(0, null);
+// }
+
+// FROM TEXTAREA
+// iOS Stacked & Floating Textarea
+// --------------------------------------------------
+
+// TODO
+// .item-ios.item-label-stacked .label-ios + .input + .cloned-input,
+// .item-ios.item-label-floating .label-ios + .input + .cloned-input {
+//   @include margin-horizontal(0, null);
+// }
+
+
+// iOS Input After Label
+// --------------------------------------------------
+
+// .label-ios + .input .native-input,
+// .label-ios + .input + .cloned-input {
+//   @include margin-horizontal($input-ios-by-label-margin-start, null);
+// }
+
+// iOS Textarea After Label
+// --------------------------------------------------
+
+// .label-ios + ion-textarea .native-textarea,
+// .label-ios + .input + .cloned-input {
+//   @include margin-horizontal($textarea-ios-by-label-margin-start, null);
+
+//   width: calc(100% - (#{$item-ios-padding-end} / 2) - #{$item-ios-padding-start});
+// }

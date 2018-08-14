@@ -3,22 +3,32 @@
 // Item Option
 // --------------------------------------------------
 
-.item-option-button {
+:host {
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
+
+  color: #{current-color(contrast)};
+}
+
+.item-option-native {
+  @include text-inherit();
   @include padding(0, .7em);
 
   width: 100%;
   height: 100%;
 
   border: 0;
-  font-size: 1em;
 
-  color: inherit;
-  background: none;
+  outline: none;
 
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  background: #{current-color(base)};
+
+  cursor: pointer;
+  appearance: none;
+}
+
+.item-option-native:hover {
+  opacity: 0.8;
 }
 
 .item-option-button-inner {
@@ -32,10 +42,18 @@
 
   width: 100%;
   height: 100%;
+
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+
+  letter-spacing: inherit;
+
 }
 
-.item-option-button [slot="icon-only"] {
+::slotted([slot="icon-only"]) {
   @include padding(0);
+  @include margin(0, 10px);
 
   min-width: .9em;
 
@@ -46,46 +64,10 @@
 // Item Expandable Animation
 // --------------------------------------------------
 
-.item-option-expandable {
+:host(.item-option-expandable) {
   flex-shrink: 0;
 
   transition-duration: 0;
   transition-property: none;
   transition-timing-function: cubic-bezier(.65, .05, .36, 1);
-}
-
-.item-sliding-active-swipe-right .item-options-end .item-option-expandable {
-  transition-duration: .6s;
-  transition-property: padding-left;
-
-  @include multi-dir() {
-    // scss-lint:disable PropertySpelling
-    padding-left: 90%;
-  }
-
-  @include ltr() {
-    order: 1;
-  }
-
-  @include rtl() {
-    order: -1;
-  }
-}
-
-.item-sliding-active-swipe-left .item-options-start .item-option-expandable {
-  transition-duration: .6s;
-  transition-property: padding-right;
-
-  @include multi-dir() {
-    // scss-lint:disable PropertySpelling
-    padding-right: 90%;
-  }
-
-  @include ltr() {
-    order: -1;
-  }
-
-  @include rtl() {
-    order: 1;
-  }
 }

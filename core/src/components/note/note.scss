@@ -1,0 +1,8 @@
+@import "./note.ios.vars";
+
+// iOS Note
+// --------------------------------------------------
+
+:host {
+  color: #{current-color(base)};
+}

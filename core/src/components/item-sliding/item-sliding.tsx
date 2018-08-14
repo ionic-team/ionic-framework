@@ -1,65 +1,93 @@
-import { Component, Element, Event, EventEmitter, Method, State } from '@stencil/core';
-import { GestureDetail } from '../../interface';
+import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
+import { Gesture, GestureDetail } from '../../interface';
 
 const SWIPE_MARGIN = 30;
 const ELASTIC_FACTOR = 0.55;
 
 const enum ItemSide {
   None = 0,
-  Left = 1 << 0,
-  Right = 1 << 1,
-  Both = Left | Right
+  Start = 1 << 0,
+  End = 1 << 1,
+  Both = Start | End
 }
 
 const enum SlidingState {
   Disabled = 1 << 1,
   Enabled = 1 << 2,
-  Right = 1 << 3,
-  Left = 1 << 4,
+  End = 1 << 3,
+  Start = 1 << 4,
 
-  SwipeRight = 1 << 5,
-  SwipeLeft = 1 << 6,
+  SwipeEnd = 1 << 5,
+  SwipeStart = 1 << 6,
 }
-
 
 @Component({
   tag: 'ion-item-sliding',
-  styleUrls: {
-    ios: 'item-sliding.ios.scss',
-    md: 'item-sliding.md.scss'
-  }
+  styleUrl: 'item-sliding.scss'
 })
 export class ItemSliding {
-  private item: HTMLIonItemElement|null = null;
-  private list: HTMLIonListElement|null = null;
+
+  private item: HTMLIonItemElement | null = null;
+  private list: HTMLIonListElement | null = null;
   private openAmount = 0;
   private initialOpenAmount = 0;
   private optsWidthRightSide = 0;
   private optsWidthLeftSide = 0;
   private sides = ItemSide.None;
-  private tmr: number|undefined;
+  private tmr: number | undefined;
   private leftOptions?: HTMLIonItemOptionsElement;
   private rightOptions?: HTMLIonItemOptionsElement;
   private optsDirty = true;
+  private gesture?: Gesture;
 
   @Element() el!: HTMLIonItemSlidingElement;
 
   @State() private state: SlidingState = SlidingState.Disabled;
+
+  @Prop({ context: 'queue' }) queue!: QueueApi;
+
+  /**
+   * If true, the user cannot interact with the sliding-item. Defaults to `false`.
+   */
+  @Prop() disabled = false;
+  @Watch('disabled')
+  disabledChanged() {
+    if (this.gesture) {
+      this.gesture.setDisabled(this.disabled);
+    }
+  }
 
   /**
    * Emitted when the sliding position changes.
    */
   @Event() ionDrag!: EventEmitter;
 
-  componentDidLoad() {
+  async componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
     this.list = this.el.closest('ion-list');
 
     this.updateOptions();
+
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+      el: this.el,
+      queue: this.queue,
+      gestureName: 'item-swipe',
+      gesturePriority: 20,
+      threshold: 5,
+      canStart: this.canStart.bind(this),
+      onStart: this.onDragStart.bind(this),
+      onMove: this.onDragMove.bind(this),
+      onEnd: this.onDragEnd.bind(this),
+    });
+    this.disabledChanged();
   }
 
   componentDidUnload() {
+    if (this.gesture) {
+      this.gesture.destroy();
+    }
+
     this.item = this.list = null;
     this.leftOptions = this.rightOptions = undefined;
   }
@@ -90,7 +118,6 @@ export class ItemSliding {
     }
   }
 
-
   /**
    * Close the sliding item. Items can also be closed from the [List](../../list/List).
    */
@@ -120,10 +147,10 @@ export class ItemSliding {
 
       if (option.isEndSide()) {
         this.rightOptions = option;
-        sides |= ItemSide.Right;
+        sides |= ItemSide.End;
       } else {
         this.leftOptions = option;
-        sides |= ItemSide.Left;
+        sides |= ItemSide.Start;
       }
     }
     this.optsDirty = true;
@@ -136,11 +163,13 @@ export class ItemSliding {
       this.closeOpened();
       return false;
     }
-    return true;
+    return !!(this.rightOptions || this.leftOptions);
   }
 
   private onDragStart() {
-    this.list && this.list.setOpenItem(this.el);
+    if (this.list) {
+      this.list.setOpenItem(this.el);
+    }
 
     if (this.tmr) {
       clearTimeout(this.tmr);
@@ -163,8 +192,8 @@ export class ItemSliding {
     let openAmount = this.initialOpenAmount - gesture.deltaX;
 
     switch (this.sides) {
-      case ItemSide.Right: openAmount = Math.max(0, openAmount); break;
-      case ItemSide.Left: openAmount = Math.min(0, openAmount); break;
+      case ItemSide.End: openAmount = Math.max(0, openAmount); break;
+      case ItemSide.Start: openAmount = Math.min(0, openAmount); break;
       case ItemSide.Both: break;
       case ItemSide.None: return;
       default: console.warn('invalid ItemSideFlags value', this.sides); break;
@@ -201,9 +230,9 @@ export class ItemSliding {
 
     this.setOpenAmount(restingPoint, true);
 
-    if (this.state & SlidingState.SwipeRight && this.rightOptions) {
+    if (this.state & SlidingState.SwipeEnd && this.rightOptions) {
       this.rightOptions.fireSwipeEvent();
-    } else if (this.state & SlidingState.SwipeLeft && this.leftOptions) {
+    } else if (this.state & SlidingState.SwipeStart && this.leftOptions) {
       this.leftOptions.fireSwipeEvent();
     }
   }
@@ -238,18 +267,20 @@ export class ItemSliding {
 
     if (openAmount > 0) {
       this.state = (openAmount >= (this.optsWidthRightSide + SWIPE_MARGIN))
-        ? SlidingState.Right | SlidingState.SwipeRight
-        : SlidingState.Right;
+        ? SlidingState.End | SlidingState.SwipeEnd
+        : SlidingState.End;
     } else if (openAmount < 0) {
       this.state = (openAmount <= (-this.optsWidthLeftSide - SWIPE_MARGIN))
-        ? SlidingState.Left | SlidingState.SwipeLeft
-        : SlidingState.Left;
+        ? SlidingState.Start | SlidingState.SwipeStart
+        : SlidingState.Start;
     } else {
       this.tmr = window.setTimeout(() => {
         this.state = SlidingState.Disabled;
         this.tmr = undefined;
       }, 600);
-      this.list && this.list.setOpenItem(undefined);
+      if (this.list) {
+        this.list.setOpenItem(undefined);
+      }
       style.transform = '';
       return;
     }
@@ -265,37 +296,17 @@ export class ItemSliding {
       class: {
         'item-sliding': true,
         'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
-        'item-sliding-active-options-right': !!(this.state & SlidingState.Right),
-        'item-sliding-active-options-left': !!(this.state & SlidingState.Left),
-        'item-sliding-active-swipe-right': !!(this.state & SlidingState.SwipeRight),
-        'item-sliding-active-swipe-left': !!(this.state & SlidingState.SwipeLeft)
+        'item-sliding-active-options-end': !!(this.state & SlidingState.End),
+        'item-sliding-active-options-start': !!(this.state & SlidingState.Start),
+        'item-sliding-active-swipe-end': !!(this.state & SlidingState.SwipeEnd),
+        'item-sliding-active-swipe-start': !!(this.state & SlidingState.SwipeStart)
       }
     };
-  }
-
-  render() {
-    return (
-      <ion-gesture {...{
-        'canStart': this.canStart.bind(this),
-        'onStart': this.onDragStart.bind(this),
-        'onMove': this.onDragMove.bind(this),
-        'onEnd': this.onDragEnd.bind(this),
-        'gestureName': 'item-swipe',
-        'gesturePriority': -10,
-        'type': 'pan',
-        'direction': 'x',
-        'maxAngle': 20,
-        'threshold': 5,
-        'attachTo': 'parent'
-      }}>
-        <slot></slot>
-      </ion-gesture>
-    );
   }
 }
 
 /** @hidden */
-export function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
+function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
   // The logic required to know when the sliding item should close (openAmount=0)
   // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)
   // and it ended up being too complicated to be written manually without errors

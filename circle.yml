@@ -29,4 +29,4 @@ jobs:
          - ~/ionic/core/node_modules/
       - run:
           name: Validate Core
-          command: npm --prefix core/ run validate
+          command: npm --prefix core/ run validate.ci

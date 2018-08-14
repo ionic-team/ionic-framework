@@ -1,3 +1,7 @@
+
+// String Util Functions
+// --------------------------------------------------
+
 // String Replace Function
 // --------------------------------------------------
 
@@ -36,24 +40,8 @@
   @return $split-arr;
 }
 
-@function str-last-index($str, $search) {
-  $split: str-split($str, $search);
-  $len: length($split);
 
-  @if ($len > 1) {
-    $count: 0;
-    @for $i from 1 through ($len - 1) {
-      $item: nth($split, $i);
-      $count: $count + str-length($item);
-    }
-
-    @return $count + $len;
-  } @else {
-    @error "str-last-index was unable to find any instances of '#{$search}' inside '#{$str}'";
-  }
-}
-
-// Str extract between start and end
+// Str Extract Function
 // --------------------------------------------------
 
 @function str-extract($string, $start, $end) {
@@ -71,10 +59,23 @@
   @return null;
 }
 
+
+// Str Contains Function
+// --------------------------------------------------
+
 @function str-contains($string, $needle) {
   @if (type-of($string) == string) {
     @return str-index($string, $needle) != null;
   }
 
   @return false;
+}
+
+// URL Encode Function
+// --------------------------------------------------
+
+@function url-encode($val) {
+  $spaces: str-replace($val, " ", "%20");
+  $encoded: str-replace($spaces, "#", "%23");
+  @return $encoded;
 }

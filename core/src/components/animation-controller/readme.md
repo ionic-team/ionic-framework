@@ -1,5 +1,7 @@
 # ion-animation-controller
+Internal to `ionic/core`.
 
+Used to create an animation instance.
 
 
 <!-- Auto Generated Below -->
@@ -7,8 +9,9 @@
 
 ## Methods
 
-#### create()
-
+| Method   | Description                   |
+| -------- | ----------------------------- |
+| `create` | Creates an animation instance |
 
 
 ----------------------------------------------

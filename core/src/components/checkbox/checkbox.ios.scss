@@ -4,76 +4,57 @@
 // iOS Checkbox
 // --------------------------------------------------
 
-// iOS Checkbox Outer Circle: Unchecked
-// -----------------------------------------
+:host {
+  --size: #{$checkbox-ios-icon-size};
 
-.checkbox-ios .checkbox-icon {
-  @include border-radius($checkbox-ios-icon-border-radius);
+  // Border
+  --border-radius: #{$checkbox-ios-icon-border-radius};
+  --border-width: #{$checkbox-ios-icon-border-width};
+  --border-style: #{$checkbox-ios-icon-border-style};
+  --border-color: #{$checkbox-ios-icon-border-color-off};
 
-  position: relative;
-
-  width: $checkbox-ios-icon-size;
-  height: $checkbox-ios-icon-size;
-
-  border-width: $checkbox-ios-icon-border-width;
-  border-style: $checkbox-ios-icon-border-style;
-  border-color: $checkbox-ios-icon-border-color-off;
-  background-color: $checkbox-ios-background-color-off;
-
-  contain: strict;
+  // Background
+  --background: #{$checkbox-ios-background-color-off};
 }
-
-
-// iOS Checkbox Outer Circle: Checked
-// -----------------------------------------
-
-.checkbox-ios .checkbox-checked {
-  border-color: $checkbox-ios-icon-border-color-on;
-  background-color: $checkbox-ios-background-color-on;
-}
-
 
 // iOS Checkbox Inner Checkmark: Checked
 // -----------------------------------------
 
-.checkbox-ios .checkbox-checked .checkbox-inner {
-  @include position($checkbox-ios-checkmark-top, null, null, $checkbox-ios-checkmark-start);
+.checkbox-inner {
+  @include position(calc(var(--size) / 6), null, null, calc(var(--size) / 2.5 - 1px));
 
   position: absolute;
 
-  width: $checkbox-ios-checkmark-width;
-  height: $checkbox-ios-checkmark-height;
+  width: calc(var(--size) / 6 + 1px);
+  height: calc(var(--size) / 2);
+
+  transform: rotate(45deg);
 
   border-width: $checkbox-ios-checkmark-border-width;
   border-top-width: 0;
   border-left-width: 0;
   border-style: $checkbox-ios-checkmark-border-style;
-  border-color: $checkbox-ios-checkmark-border-color;
-  transform: rotate(45deg);
 }
 
 
 // iOS Checkbox: Disabled
 // -----------------------------------------
 
-.checkbox-ios.checkbox-disabled,
-.item-ios.item-checkbox-disabled ion-label {
+// TODO: .item-ios.item-checkbox-disabled ion-labe
+:host(.checkbox-disabled) {
   opacity: $checkbox-ios-disabled-opacity;
-
-  pointer-events: none;
 }
 
 
 // iOS Checkbox Keyboard Focus
 // -----------------------------------------
 
-.checkbox-key .checkbox-icon::after {
+:host(.checkbox-key) .checkbox-icon::after {
   @include border-radius(50%);
   @include position(-9px, null, null, -9px);
 
-  position: absolute;
-
   display: block;
+  position: absolute;
 
   width: 36px;
   height: 36px;
@@ -81,7 +62,6 @@
   background: $checkbox-ios-background-color-focused;
 
   content: "";
-
   opacity: .2;
 }
 
@@ -89,39 +69,14 @@
 // iOS Checkbox Within An Item
 // -----------------------------------------
 
-.item.item-ios .checkbox-ios {
+// :host-context(.item)
+:host(.in-item) {
   @include margin($checkbox-ios-item-start-margin-top, $checkbox-ios-item-start-margin-end, $checkbox-ios-item-start-margin-bottom, $checkbox-ios-item-start-margin-start);
 
-  position: static;
   display: block;
+  position: static;
 }
 
-.item.item-ios .checkbox-ios[slot="end"] {
+:host(.in-item[slot="end"]) {
   @include margin($checkbox-ios-item-end-margin-top, $checkbox-ios-item-end-margin-end, $checkbox-ios-item-end-margin-bottom, $checkbox-ios-item-end-margin-start);
-}
-
-
-// iOS Checkbox Color Mixin
-// --------------------------------------------------
-
-@mixin checkbox-theme-ios($color-name) {
-  $color-base: ion-color($colors-ios, $color-name, base, ios);
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-
-  .checkbox-ios-#{$color-name} .checkbox-checked {
-    border-color: $color-base;
-    background-color: $color-base;
-  }
-
-  .checkbox-ios-#{$color-name} .checkbox-checked .checkbox-inner {
-    border-color: $color-contrast;
-  }
-}
-
-
-// Generate iOS Checkbox Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  @include checkbox-theme-ios($color-name);
 }

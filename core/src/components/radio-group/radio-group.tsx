@@ -1,11 +1,11 @@
-import { Component, ComponentDidLoad, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
-import { InputChangeEvent, RadioGroupInput } from '../../interface';
+import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
+import { TextInputChangeEvent } from '../../interface';
 
 @Component({
   tag: 'ion-radio-group'
 })
-export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
+export class RadioGroup {
 
   private inputId = `ion-rg-${radioGroupIds++}`;
   private labelId = `${this.inputId}-lbl`;
@@ -49,7 +49,7 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<InputChangeEvent>;
+  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
 
   @Listen('ionRadioDidLoad')
   onRadioDidLoad(ev: Event) {

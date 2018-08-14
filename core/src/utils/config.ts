@@ -1,5 +1,6 @@
+import { IonicConfig } from '../interface';
 
-export function setupConfig(config: {[key: string]: any}) {
+export function setupConfig(config: IonicConfig) {
   const win = window as any;
   const Ionic = win.Ionic;
   if (Ionic && Ionic.config && Ionic.config.constructor.name !== 'Object') {
@@ -14,16 +15,34 @@ export function setupConfig(config: {[key: string]: any}) {
   return win.Ionic.config;
 }
 
+const IONIC_PREFIX = 'ionic:';
+const IONIC_SESSION_KEY = 'ionic-persist-config';
+
+export function configFromSession(): any {
+  const configStr = window.sessionStorage.getItem(IONIC_SESSION_KEY);
+  return configStr ? JSON.parse(configStr) : {};
+}
+
+export function saveConfig(config: any) {
+  window.sessionStorage.setItem(IONIC_SESSION_KEY, JSON.stringify(config));
+}
+
 export function configFromURL() {
   const config: any = {};
   const win = window;
   win.location.search.slice(1)
     .split('&')
-    .filter(entryText => entryText.startsWith('ionic:'))
-    .map(entryText => entryText.split('='))
-    .forEach(entry => {
-      config[entry[0].slice(6)] = decodeURIComponent(entry[1]);
+    .map(entry => entry.split('='))
+    .map(([key, value]) => [decodeURIComponent(key), decodeURIComponent(value)])
+    .filter(([key]) => startsWith(key, IONIC_PREFIX))
+    .map(([key, value]) => [key.slice(IONIC_PREFIX.length), value])
+    .forEach(([key, value]) => {
+      config[key] = value;
     });
 
   return config;
+}
+
+function startsWith(input: string, search: string): boolean {
+  return input.substr(0, search.length) === search;
 }

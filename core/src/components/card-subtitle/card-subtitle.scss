@@ -3,7 +3,9 @@
 // Card Subtitle
 // --------------------------------------------------
 
-ion-card-subtitle {
-  position: relative;
+:host {
   display: block;
+  position: relative;
+
+  color: #{current-color(base)};
 }

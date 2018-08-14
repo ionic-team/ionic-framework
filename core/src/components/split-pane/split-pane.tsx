@@ -1,8 +1,11 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
+import { Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
+
 const SPLIT_PANE_MAIN = 'split-pane-main';
 const SPLIT_PANE_SIDE = 'split-pane-side';
-const QUERY: { [key: string]: string }  = {
+const QUERY: { [key: string]: string } = {
   'xs': '(min-width: 0px)',
   'sm': '(min-width: 576px)',
   'md': '(min-width: 768px)',
@@ -11,25 +14,23 @@ const QUERY: { [key: string]: string }  = {
   'never': ''
 };
 
-
 @Component({
   tag: 'ion-split-pane',
   styleUrls: {
     ios: 'split-pane.ios.scss',
     md: 'split-pane.md.scss'
-  },
-  host: {
-    theme: 'split-pane'
   }
 })
 export class SplitPane {
 
   private rmL: any;
 
+  mode!: Mode;
+
   @Element() el!: HTMLElement;
   @State() visible = false;
 
-  @Prop({context: 'isServer'}) isServer!: boolean;
+  @Prop({ context: 'isServer' }) isServer!: boolean;
   @Prop({ context: 'window' }) win!: Window;
 
   /**
@@ -63,21 +64,26 @@ export class SplitPane {
 
   componentDidLoad() {
     this._styleChildren();
-    this.whenChanged();
+    this.updateState();
   }
 
   componentDidUnload() {
-    this.rmL && this.rmL();
-    this.rmL = null;
+    if (this.rmL) {
+      this.rmL();
+      this.rmL = undefined;
+    }
   }
 
+  @Watch('disabled')
   @Watch('when')
-  protected whenChanged() {
+  protected updateState() {
     if (this.isServer) {
       return;
     }
-    this.rmL && this.rmL();
-    this.rmL = null;
+    if (this.rmL) {
+      this.rmL();
+      this.rmL = undefined;
+    }
 
     // Check if the split-pane is disabled
     if (this.disabled) {
@@ -112,11 +118,13 @@ export class SplitPane {
     this.visible = mediaList.matches;
   }
 
+  /** Returns if the split pane is toggled or not */
   @Method()
   isVisible(): boolean {
     return this.visible;
   }
 
+  /** @hidden */
   @Method()
   isPane(element: HTMLElement): boolean {
     if (!this.visible) {
@@ -153,13 +161,13 @@ export class SplitPane {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, 'split-pane'),
         'split-pane-visible': this.visible
       }
     };
   }
 
 }
-
 
 function setPaneClass(el: HTMLElement, isMain: boolean) {
   let toAdd;

@@ -1,12 +1,8 @@
 @import "./title";
-@import "./title.ios.vars";
 
-// iOS Title
-// --------------------------------------------------
-
-.toolbar-ios ion-title {
+:host {
   @include position(0, null, null, 0);
-  @include padding(0, 90px, 1px);
+  @include padding(0, 90px, 0);
 
   position: absolute;
 
@@ -15,26 +11,12 @@
 
   transform: translateZ(0);
 
-  pointer-events: none;
-}
-
-.toolbar-title-ios {
-  @include text-align($toolbar-ios-title-text-align);
-
-  font-size: $toolbar-ios-title-font-size;
-  font-weight: $toolbar-ios-title-font-weight;
+  font-size: 17px;
+  font-weight: 600;
 
   letter-spacing: -.03em;
 
-  color: $toolbar-ios-title-text-color;
-
-  pointer-events: auto;
-}
-
-@each $color-name, $color-value in $colors-ios {
-  $color-contrast: ion-color($colors-ios, $color-name, contrast, ios);
-
-  .toolbar-#{$color-name} .toolbar-title-ios {
-    color: $color-contrast;
-  }
+  text-align: center;
+  box-sizing: border-box;
+  pointer-events: none;
 }

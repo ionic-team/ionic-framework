@@ -1,4 +1,5 @@
 import { Component, Prop } from '@stencil/core';
+
 import { Config } from '../../interface';
 
 @Component({
@@ -28,13 +29,12 @@ export class RefresherContent {
    */
   @Prop() refreshingText?: string;
 
-
   protected componentDidLoad() {
     if (!this.pullingIcon) {
-      this.pullingIcon = this.config.get('ionPullIcon', 'arrow-down');
+      this.pullingIcon = this.config.get('refreshingIcon', 'arrow-down');
     }
     if (!this.refreshingSpinner) {
-      this.refreshingSpinner = this.config.get('ionRefreshingSpinner', this.config.get('spinner', 'lines'));
+      this.refreshingSpinner = this.config.get('refreshingSpinner', this.config.get('spinner', 'lines'));
     }
   }
 
@@ -43,7 +43,7 @@ export class RefresherContent {
       <div class="refresher-pulling">
         {this.pullingIcon &&
           <div class="refresher-pulling-icon">
-            <ion-icon name={this.pullingIcon}></ion-icon>
+            <ion-icon icon={this.pullingIcon} lazy={false}></ion-icon>
           </div>
         }
         {this.pullingText &&

@@ -1,5 +1,7 @@
 # ion-nav-push
 
+`NavPush` is a component used to navigate to the specified component.
+It is the element from of `NavController.push()`
 
 
 <!-- Auto Generated Below -->
@@ -7,27 +9,10 @@
 
 ## Properties
 
-#### component
-
-string
-
-
-#### componentProps
-
-
-
-
-## Attributes
-
-#### component
-
-string
-
-
-#### component-props
-
-
-
+| Property         | Attribute   | Description                                     | Type             |
+| ---------------- | ----------- | ----------------------------------------------- | ---------------- |
+| `componentProps` | --          | Data you want to pass to the component as props | `ComponentProps` |
+| `component`      | `component` | Component to navigate to                        | `NavComponent`   |
 
 
 ----------------------------------------------

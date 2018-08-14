@@ -52,13 +52,9 @@ Please see our [Contributor Code of Conduct](https://github.com/ionic-team/ionic
 
 #### Sass Changes
 
-1. If the css property is something that the user may want to override and it won't break the component layout, it should be given a Sass variable. See our [doc on naming Sass variables](https://docs.google.com/document/d/1OyOyrRE5lpB_9mdkF0HWVQLV97fHma450N8XqE4mjZQ/edit?usp=sharing).
-2. After any changes to the Sass files run the [Sass Linter](https://github.com/brigade/scss-lint):
- - Requires [Ruby](https://www.ruby-lang.org/en/documentation/installation/). **Skip this step entirely if you are unable to install Ruby.**
- - Install the linter: `gem install scss_lint`
- - Make sure to run the linter at the root of the repository.
- - Run `gulp lint.sass` and fix any linter errors.
-
+1. After any changes to the Sass files run [stylelint](https://stylelint.io/):
+  - Switch to the `core` directory
+  - Run `npm run lint.sass` and manually fix the errors or `npm run lint.fix` to autofix the errors
 
 #### Viewing Changes
 

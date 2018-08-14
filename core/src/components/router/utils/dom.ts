@@ -1,7 +1,14 @@
 import { NavOutletElement, RouteChain, RouteID } from '../../../interface';
-import { RouterIntent } from './interface';
 
-export async function writeNavState(root: HTMLElement | undefined, chain: RouteChain, intent: RouterIntent, index: number, changed = false): Promise<boolean> {
+import { RouterIntent } from './constants';
+
+export async function writeNavState(
+  root: HTMLElement | undefined,
+  chain: RouteChain,
+  intent: RouterIntent,
+  index: number,
+  changed = false
+): Promise<boolean> {
   try {
     // find next navigation outlet in the DOM
     const outlet = searchNavNode(root);
@@ -41,6 +48,7 @@ export function readNavState(root: HTMLElement | undefined) {
   const ids: RouteID[] = [];
   let outlet: NavOutletElement | undefined;
   let node: HTMLElement | undefined = root;
+  // tslint:disable-next-line:no-constant-condition
   while (true) {
     outlet = searchNavNode(node);
     if (outlet) {
@@ -56,14 +64,14 @@ export function readNavState(root: HTMLElement | undefined) {
       break;
     }
   }
-  return {ids, outlet};
+  return { ids, outlet };
 }
 
 export function waitUntilNavNode(win: Window) {
   if (searchNavNode(win.document.body)) {
     return Promise.resolve();
   }
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     win.addEventListener('ionNavWillLoad', resolve, { once: true });
   });
 }

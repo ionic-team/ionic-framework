@@ -1,60 +1,83 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Tab - Basic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
 </head>
+
 <body>
 
   <ion-app>
     <ion-tabs>
       <ion-tab label="Plain List" icon="star">
-
         <ion-header>
           <ion-toolbar>
             <ion-title>Tab One</ion-title>
           </ion-toolbar>
         </ion-header>
         <ion-content padding>
-          Tab One
-        </ion-content>
+          <h1>Tab One</h1>
 
+          <ion-button expand="block" onclick="updateBadgeCount()">Update Badge Count</ion-button>
+          <ion-button color="secondary" expand="block" onclick="updateBadgeColor()">Update Badge Color</ion-button>
+        </ion-content>
       </ion-tab>
 
       <ion-tab label="Schedule" icon="globe">
-
         <ion-header>
           <ion-toolbar>
             <ion-title>Tab Two</ion-title>
           </ion-toolbar>
         </ion-header>
         <ion-content padding>
-          Tab Two
+          <h1>Tab Two</h1>
         </ion-content>
-
       </ion-tab>
 
-      <ion-tab label="Stopwatch" icon="logo-facebook">
-
+      <ion-tab id="tabWithBadge" badge="6" badge-color="primary" label="Stopwatch" icon="logo-facebook">
         <ion-header>
           <ion-toolbar>
             <ion-title>Tab Three</ion-title>
           </ion-toolbar>
         </ion-header>
         <ion-content padding>
-          Tab Three
+          <h1>Tab Three</h1>
         </ion-content>
-
       </ion-tab>
 
-      <ion-tab disabled
-        label="Messages"
-        icon="chatboxes"
-        component="page-one">
+      <ion-tab id="hiddenTab" label="Hidden" icon="alert" show="false">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>Hidden Tab</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content padding>
+          <h1>Hidden Tab</h1>
+        </ion-content>
+      </ion-tab>
+
+      <ion-tab disabled label="Messages" icon="chatboxes" component="page-one">
       </ion-tab>
     </ion-tabs>
   </ion-app>
+
+  <script>
+    var tab = document.getElementById('tabWithBadge');
+
+    function updateBadgeCount() {
+      var current = parseInt(tab.badge);
+      tab.badge = ++current;
+    }
+
+    function updateBadgeColor() {
+      var current = tab.badgeColor;
+      tab.badgeColor = current === 'primary' ? 'danger' : 'primary';
+    }
+  </script>
 </body>
+
 </html>

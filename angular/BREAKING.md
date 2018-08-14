@@ -1,7 +1,20 @@
 
 # Breaking Changes
 
-A list of the breaking changes introduced in Ionic Angular v4.
+## Migrating
+
+### Migration Guide
+
+If you aren't sure where to start in upgrading to v4, we recommend reading through our [migration guide](https://beta.ionicframework.com/docs/building/migration) first.
+
+### Migration Linter
+
+Looking for a tool that automatically warns (and sometimes fixes) the breaking changes listed? Check out our [migration linter](https://github.com/ionic-team/v4-migration-tslint)!
+
+
+## Components
+
+A list of the breaking changes introduced to each component in Ionic Angular v4.
 
 - [Action Sheet](#action-sheet)
 - [Alert](#alert)
@@ -9,23 +22,31 @@ A list of the breaking changes introduced in Ionic Angular v4.
 - [Button](#button)
 - [Chip](#chip)
 - [Colors](#colors)
+- [Content](#content)
 - [Datetime](#datetime)
 - [Dynamic Mode](#dynamic-mode)
 - [FAB](#fab)
 - [Fixed Content](#fixed-content)
+- [Grid](#grid)
 - [Icon](#icon)
-- [Input](#Input)
+- [Infinite Scroll](#infinite-scroll)
 - [Item](#item)
 - [Item Divider](#item-divider)
 - [Item Options](#item-options)
 - [Item Sliding](#item-sliding)
+- [Label](#label)
 - [List Header](#list-header)
+- [Loading](#loading)
 - [Menu Toggle](#menu-toggle)
+- [Modal](#modal)
 - [Nav](#nav)
 - [Navbar](#navbar)
 - [Option](#option)
+- [Overlays](#overlays)
 - [Radio](#radio)
 - [Range](#range)
+- [Refresher](#refresher)
+- [Scroll](#scroll)
 - [Segment](#segment)
 - [Select](#select)
 - [Spinner](#spinner)
@@ -37,14 +58,15 @@ A list of the breaking changes introduced in Ionic Angular v4.
 
 ## Action Sheet
 
-The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectivelly.
+The `title`, `subTitle` and `enableBackdropDismiss` properties has been renamed to `header`, `subHeader` and `backdropDismiss` respectively.
 
 **Old Usage Example:**
 
 ```js
 const actionSheet = await actionSheetCtrl.create({
   title: 'This is the title',
-  subTitle: 'this is the sub title'
+  subTitle: 'this is the sub title',
+  enableBackdropDismiss: false
 });
 await actionSheet.present();
 ```
@@ -54,7 +76,8 @@ await actionSheet.present();
 ```js
 const actionSheet = await actionSheetCtrl.create({
   header: 'This is the title',
-  subHeader: 'this is the sub title'
+  subHeader: 'this is the sub title',
+  backdropDismiss: false
 });
 await actionSheet.present();
 ```
@@ -62,14 +85,15 @@ await actionSheet.present();
 
 ## Alert
 
-The `title` and `subTitle` properties has been renamed to `header` and `subHeader` respectivelly.
+The `title`, `subTitle` and `enableBackdropDismiss` properties has been renamed to `header`, `subHeader` and `backdropDismiss` respectivelly.
 
 **Old Usage Example:**
 
 ```js
 const alert = await alertCtrl.create({
   title: 'This is the title',
-  subTitle: 'this is the sub title'
+  subTitle: 'this is the sub title',
+  enableBackdropDismiss: false
 });
 await alert.present();
 ```
@@ -79,7 +103,8 @@ await alert.present();
 ```js
 const alert = await alertCtrl.create({
   header: 'This is the title',
-  subHeader: 'this is the sub title'
+  subHeader: 'this is the sub title',
+  backdropDismiss: false
 });
 await alert.present();
 ```
@@ -282,6 +307,23 @@ dark:            #222428
 The `secondary` color saw the largest change. If you were previously using our `secondary` color we recommend switching to `success` instead.
 
 
+## Content
+
+Content is now a drop-in replacement for `ion-scroll`, that means `ion-content` is much more flexible today, they can be used anywhere, even in a nested fashion.
+
+### resize() was removed
+
+In Ionic 4, `ion-content` layout is based in flex, that means their size will automatically adjust without requiring to call resize() programatically.
+
+
+### Attributes Renamed
+
+
+| Old Property | New Property          | Property Behavior |
+|--------------|-----------------------|-------------------------------------------------------------------------|
+| no-bounce    | forceOverflow="false" | If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. |
+
+
 ## Datetime
 
 The Datetime classes and interfaces have changed capitalization from `DateTime` to `Datetime`. This is more consistent with other components and their tags.
@@ -295,7 +337,7 @@ import { DateTime } from 'ionic-angular';
 **New Usage Example:**
 
 ```javascript
-import { Datetime } from 'ionic-angular';
+import { Datetime } from '@ionic/angular';
 ```
 
 
@@ -427,6 +469,21 @@ The `<ion-fab>` container was previously placed inside of the fixed content by d
 </ion-content>
 ```
 
+## Grid
+
+### Markup Changed
+
+The Grid has been refactored in order to support css variables and a dynamic number of columns. The following column attributes have been changed.
+
+_In the following examples, `{breakpoint}` refers to the optional screen breakpoint (xs, sm, md, lg, xl) and `{value}` refers to the number of columns._
+
+- `col-{breakpoint}-{value}` attributes have been renamed to `size-{breakpoint}=“{value}”`
+- `offset-{breakpoint}-{value}` attributes have been renamed to `offset-{breakpoint}=“{value}”`
+- `push-{breakpoint}-{value}` attributes have been renamed to `push-{breakpoint}=“{value}”`
+- `pull-{breakpoint}-{value}` attributes have been renamed to `pull-{breakpoint}=“{value}”`
+
+Customizing the padding and width of a grid should now be done with css variables. For more information, see [Grid Layout](https://github.com/ionic-team/ionic-docs/blob/master/src/content/layout/grid.md).
+
 ## Icon
 
 ### Fonts Removed
@@ -446,29 +503,66 @@ If any `CSS` is being overridden for an icon it will need to change to override 
 **New Usage Example:**
 
 ```css
-.icon {
+ion-icon {
   fill: #000;
 }
 ```
+
+_Note: we are no longer adding the `icon` class to an `ion-icon`, so the element should be targeted instead._
+
 
 ### Property Removed
 
 The `isActive` property has been removed. It only worked for `ios` icons previously. If you would like to switch between an outline and solid icon you should set it in the `name`, or `ios`/`md` attribute and then change it when needed.
 
-## Input
+## Infinite Scroll
 
-The Sass variables were all renamed from having `$text-input` as the prefix to `$input`.
+### Method Removed
+
+The `enable()` method has been removed in favor of using the `disabled` property on the `ion-infinite-scroll` element.
 
 **Old Usage Example:**
 
-```css
-$text-input-highlight-color-valid:       #32db64;
+```html
+<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>
+```
+
+```javascript
+doInfinite(infiniteScroll) {
+  console.log('Begin async operation');
+
+  setTimeout(() => {
+    console.log('Async operation has ended');
+    infiniteScroll.complete();
+
+    // To disable the infinite scroll
+    infiniteScroll.enable(false);
+  }, 500);
+}
 ```
 
 **New Usage Example:**
 
-```css
-$input-highlight-color-valid:       #32db64;
+```html
+<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>
+```
+
+```javascript
+doInfinite(event) {
+  console.log('Begin async operation');
+
+  setTimeout(() => {
+    console.log('Async operation has ended');
+    event.target.complete();
+
+    // To disable the infinite scroll
+    event.target.disabled = true;
+  }, 500);
+}
 ```
 
 
@@ -665,6 +759,47 @@ The option component should not be written as a `button` with an `ion-button` di
 The `getSlidingPercent` method has been renamed to `getSlidingRatio` since the function is returning a ratio of the open amount of the item compared to the width of the options.
 
 
+## Label
+
+### Attributes Renamed
+
+The attributes to set label position for input are now combined under the `position` attribute:
+
+| Old Property | New Property         | Property Behavior                                                            |
+|--------------|----------------------|------------------------------------------------------------------------------|
+| fixed        | `position="fixed"`   | A persistent label that sits next the input.                                 |
+| floating     | `position="floating"`| A label that will float above the input if the input is empty or loses focus.|
+| stacked      | `position="stacked"` | A stacked label will always appear on top of the input.                      |
+
+**Old Usage Example:**
+
+```html
+<ion-item>
+  <ion-label floating>Floating Label</ion-label>
+  <!-- input -->
+</ion-item>
+
+<ion-item>
+  <ion-label fixed>Fixed Label</ion-label>
+  <!-- input -->
+</ion-item>
+```
+
+**New Usage Example:**
+
+```html
+<ion-item>
+  <ion-label position="floating">Floating Label</ion-label>
+  <!-- input -->
+</ion-item>
+
+<ion-item>
+  <ion-label position="fixed">Fixed Label</ion-label>
+  <!-- input -->
+</ion-item>
+```
+
+
 ## List Header
 
 ### Label Required
@@ -675,6 +810,34 @@ Previously an `ion-label` would automatically get added to an `ion-list-header` 
 <ion-list-header>
   <ion-label>List Header Label</ion-label>
 </ion-list-header>
+```
+
+## Loading
+
+`dismissOnPageChange` was removed. Fortunatelly all the navigation API is promise based and there are global events  (`ionNavWillChange`) you can listen in order to detect when navigation occurs.
+
+You should take advantage of these APIs in order to dismiss your loading overlay explicitally.
+
+
+## Menu
+
+### Prop renamed
+
+The `swipeEnabled` prop has been renamed to `swipeGesture`.
+The `content` prop has been renamed to `contentId` and it points to the DOM id of the content:
+
+**Old Usage Example:**
+
+```html
+<ion-menu swipeEnabled="false" content="nav"> </ion-menu>
+<ion-nav #nav></ion-nav>
+```
+
+**New Usage Example:**
+
+```html
+<ion-menu swipeGesture="false" contentId="nav"> </ion-menu>
+<ion-nav id="nav"></ion-nav>
 ```
 
 ## Menu Toggle
@@ -701,14 +864,68 @@ The `menuToggle` attribute should not be added to an element anymore. Elements t
 </ion-menu-toggle>
 ```
 
+## Modal
+
+### Arguments Changed
+
+The component is no longer the first argument in the `create` method. Instead, a single argument of type `ModalOptions` is passed in with a `component` property and the value is the component as part of the passed object.
+
+**Old Usage Example:**
+
+```javascript
+import { Component } from '@angular/core';
+import { ModalController } from 'ionic-angular';
+
+import { ModalPage } from './modal-page';
+
+@Component({
+  ...
+})
+export class MyPage {
+
+  constructor(public modalCtrl: ModalController) { }
+
+  presentModal() {
+    const modal = this.modalCtrl.create(ModalPage);
+    modal.present();
+  }
+}
+```
+
+**New Usage Example:**
+
+```javascript
+import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+
+import { ModalPage } from './modal-page';
+
+@Component({
+  ...
+})
+export class MyPage {
+
+  constructor(public modalCtrl: ModalController) { }
+
+  async presentModal() {
+    const modal = await this.modalCtrl.create({
+      component: ModalPage
+    });
+    return await modal.present();
+  }
+}
+```
 
 ## Nav
 
 ### Method renamed
 
 The `remove` method has been renamed to `removeIndex` to avoid conflicts with HTML and be more descriptive as to what it does.
-
 The `getActiveChildNavs` method has been renamed to `getChildNavs`.
+
+### Prop renamed
+
+The `swipeBackEnabled` prop has been renamed to `swipeGesture`.
 
 
 ## Navbar
@@ -765,6 +982,46 @@ Select's option element should now be written as `<ion-select-option>`. This mak
 ### Class Changed
 
 The class has been renamed from `Option` to `SelectOption` to keep it consistent with the element tag name.
+
+## Overlays
+
+### Markup Changed
+
+Action Sheet, Alert, Loading, Modal, Popover, and Toast:
+ - Should now use `async`/`await`
+ - `enableBackdropDismiss` has been renamed to `backdropDismiss`.
+
+
+
+**Old Usage Example:**
+
+```javascript
+presentPopover(ev: any) {
+  const popover = this.popoverController.create({
+    component: PopoverComponent,
+    event: event,
+    translucent: true,
+    enableBackdropDismiss: false
+  });
+  popover.present();
+}
+```
+
+**New Usage Example:**
+
+```javascript
+async presentPopover(ev: any) {
+  const popover = await this.popoverController.create({
+    component: PopoverComponent,
+    event: event,
+    translucent: true,
+    backdropDismiss: false
+  });
+  return await popover.present();
+}
+```
+
+
 
 ## Radio
 
@@ -897,6 +1154,44 @@ These have been renamed to the following:
 ```
 
 
+## Refresher
+
+The `enabled` property (with a default value of `true`) has been renamed to `disabled` (with a default value of `false`).
+
+**Old Usage Example:**
+
+```html
+<ion-refresher enabled="false">
+  ...
+</ion-refresher>
+```
+
+**New Usage Example:**
+
+```html
+<ion-refresher disabled="true">
+  ...
+</ion-refresher>
+```
+
+## Scroll
+
+`ion-scroll` has been removed, fortunatelly `ion-content` can work as a drop-in replacement:
+
+```diff
+- <ion-scroll scrollX="true">
++ <ion-content scrollX="true">
+```
+
+Another very good option is to style a `div` to become scrollable using CSS:
+
+```css
+div.scrollable {
+  overflow: scroll
+}
+```
+
+
 ## Segment
 
 The markup hasn't changed for Segments, but now writing `<ion-segment-button>` will render a native button element inside of it.
@@ -961,19 +1256,55 @@ The `ios` and `ios-small` spinner's have been renamed to `lines` and `lines-smal
 
 ## Tabs
 
-Some properties in `ion-tab` changed:
+### Attributes Renamed
 
-- [tabTitle] -> [label]
-- [tabIcon] -> [icon]
-- [tabBadge] -> [badge]
-- [tabBadgeStyle] -> [badgeStyle]
+#### `ion-tabs`
+
+The attributes to position the tabs, change the tab layout, enable the tab highlight and hide the tabs have been renamed.
+
+| Old Property        | New Property         | Notes                                           |
+|---------------------|----------------------|-------------------------------------------------|
+| `tabsHighlight`     | `tabbarHighlight`    |                                                 |
+| `tabsLayout`        | `tabbarLayout`       | Value `title-hide` was renamed to `label-hide`  |
+| `tabsPlacement`     | `tabbarPlacement`    |                                                 |
+| `hidden`            | `tabbarHidden`       |                                                 |
+
+**Old Usage Example:**
+
+```html
+<ion-tabs tabsLayout="icon-top" tabsPlacement="bottom" tabsHighlight="true" hidden>
+  ...
+</ion-tabs>
+```
+
+**New Usage Example:**
+
+```html
+<ion-tabs tabbarLayout="icon-top" tabbarPlacement="bottom" tabbarHighlight="true" tabbarHidden>
+  ...
+</ion-tabs>
+```
+
+
+#### `ion-tab`
+
+The attributes for the tab title, icon, and badge customization have been renamed.
+
+| Old Property        | New Property         |
+|---------------------|----------------------|
+| `tabTitle`          | `label`              |
+| `tabIcon`           | `icon`               |
+| `tabBadge`          | `badge`              |
+| `tabBadgeStyle`     | `badgeColor`         |
+| `enabled`           | `disabled`           |
+| `tabUrlPath`        | `href`               |
 
 **Old Usage Example:**
 
 ```html
 <ion-tabs>
   <ion-tab tabTitle="Schedule" tabIcon="add"></ion-tab>
-  <ion-tab tabTitle="Map" tabIcon="mao" tabBadge="2"></ion-tab>
+  <ion-tab tabTitle="Map" tabIcon="map" tabBadge="2" tabBadgeStyle="danger" enabled="false"></ion-tab>
 </ion-tabs>
 ```
 
@@ -982,7 +1313,7 @@ Some properties in `ion-tab` changed:
 ```html
 <ion-tabs>
   <ion-tab label="Schedule" icon="add"></ion-tab>
-  <ion-tab label="Map" icon="mao" badge="2"></ion-tab>
+  <ion-tab label="Map" icon="map" badge="2" badgeColor="danger" disabled="true"></ion-tab>
 </ion-tabs>
 ```
 
@@ -1036,6 +1367,96 @@ Typography should now be written as an `<ion-text>` element. Previously the `ion
 
 ## Theming
 
+### Global CSS
+
+Many of the components in Ionic 4 have self-contained styles thanks to [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_shadow_DOM).
+
+However, there are still global styles that need to be included in order for an Ionic app to look and behave properly. The global styles include normalizing elements, typography, colors, and more.
+
+#### Basic CSS Files
+
+The basic set of CSS files should be included to ensure the Ionic application behaves natively.
+
+- **normalize.css**
+Normalizes the CSS differences between browsers, it's based on https://necolas.github.io/normalize.css/
+
+- **structure.css**
+Applies styles to the `<html>` element and defaults `box-sizing` to `border-box`. It's used to ensure scrolling behaves natively on mobile devices.
+
+- **typography.css**
+Changes the `font-family` of the whole page based on the mode selected (iOS or Material Design). It also applies global styles to native HTML elements.
+
+- **colors.css**
+Allows the `color` property to work across all Ionic components.
+
+
+#### Additional CSS Files
+
+The following set of CSS files are optional and can safely be commented out if the application is not using any of the features.
+
+- **padding.css**
+Adds utility attributes that allow adding `padding` and `margin` attributes to any element. See [content space](https://beta.ionicframework.com/docs/layout/css-utilities#content-space) for what this includes.
+
+- **float-elements.css**
+Adds utility attributes that allow adding `float` attributes to any element. See [element placement](https://beta.ionicframework.com/docs/layout/css-utilities/#element-placement) for what this includes.
+
+- **text-alignment.css**
+Adds utility attributes that allow adding text alignment attributes to any element. See [text alignment](https://beta.ionicframework.com/docs/layout/css-utilities/#text-alignment) for what this includes.
+
+- **text-transformation.css**
+Adds utility attributes that allow adding text transformation attributes to any element. See [text transformation](https://beta.ionicframework.com/docs/layout/css-utilities/#text-transformation) for what this includes.
+
+- **flex-utils.css**
+Adds utility attributes that allow adding flex container and item attributes to any element. See [flex properties](https://beta.ionicframework.com/docs/layout/css-utilities/#flex-properties) for what this includes.
+
+
+#### Including the CSS Files
+
+Official Ionic starters are already properly configured so the following steps are not needed.
+
+#### Testing
+
+To include the stylesheet for testing such as in a Plunker, Codepen, or anywhere else:
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/@ionic/angular/css/ionic.min.css"/>
+```
+
+#### Production
+
+To use the css in production, we recommend importing it into a global file, such as `app/global.scss`:
+
+```css
+/** Basic CSS for Ionic Apps */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/colors.css";
+
+/** Optional CSS utilities that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+```
+
+
+### CSS Utilities
+
+#### Padding
+
+Previously to add padding to the left and right side of elements, the `padding-left` and `padding-right` attributes, respectively, would be added to the element.
+
+These attributes have been renamed to `padding-start` and `padding-end` to better align with our support for RTL.
+
+#### Margin
+
+Previously to add margin to the left and right side of elements, the `margin-left` and `margin-right` attributes, respectively, would be added to the element.
+
+These attributes have been removed in favor of using the `margin-start` and `margin-end` attributes to better align with our support for RTL.
+
+
 ### Including Sass
 
 Previously all `scss` files in the `src` directory were imported. Now each `scss` file should be included for the component via Angular's `styleUrls` metadata. View [Angular's Component Styles](https://angular.io/guide/component-styles) for more information.
@@ -1063,21 +1484,9 @@ p {
 
 ### Sass Variables
 
-Sass variables for changing the cordova statusbar have been renamed to app:
+Sass variables should no longer be used to change Ionic components. We have built Ionic to be customizable using CSS variables, instead.
 
-**Old Usage Example:**
-
-```css
-$cordova-ios-statusbar-padding:   20px;
-$cordova-md-statusbar-padding:    20px;
-```
-
-**New Usage Example:**
-
-```css
-$app-ios-statusbar-padding:   20px;
-$app-md-statusbar-padding:    20px;
-```
+For more information on theming, check out the [theming documentation](https://beta.ionicframework.com/docs/theming/basics).
 
 
 ## Toolbar

@@ -1,12 +1,14 @@
 @import "../../themes/ionic.globals";
 
 ion-virtual-scroll {
-  position: relative;
   display: block;
+  position: relative;
 
   width: 100%;
 
   contain: strict;
+
+  user-select: none;
 }
 
 .virtual-loading {
@@ -19,6 +21,5 @@ ion-virtual-scroll {
   position: absolute;
 
   transition-duration: 0ms;
-
   will-change: transform;
 }

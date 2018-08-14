@@ -4,48 +4,40 @@
 // iOS Back Button
 // --------------------------------------------------
 
-.back-button-ios {
-  @include padding(0);
-  @include margin(0, 0, 0, 0);
+:host {
+  --ion-color-base: #{$back-button-ios-color};
+}
 
-  z-index: $back-button-ios-button-z-index;
-  overflow: visible;
+.back-button-native {
+  @include padding(0);
+  @include margin(0);
 
   min-height: 32px;
 
-  border: 0;
-  font-size: 17px;
-  line-height: 1;
+  transform: translateZ(0);
 
-  color: $back-button-ios-color;
+  border: 0;
+
   background-color: transparent;
 
-  transform: translateZ(0);
+  font-size: 17px;
+
+  line-height: 1;
+
+  overflow: visible;
+  z-index: $back-button-ios-button-z-index;
 
   &.activated {
     opacity: .4;
   }
 }
 
-.back-button-ios ion-icon {
+ion-icon {
   @include padding(0);
   @include margin(0, -5px, 0, -4px);
 
   display: inherit;
 
   font-size: 1.85em;
-
   pointer-events: none;
-}
-
-
-// Generate iOS Back Button Colors
-// --------------------------------------------------
-
-@each $color-name, $color-value in $colors-ios {
-  $base-color: ion-color($colors-ios, $color-name, base, ios);
-
-  .back-button-ios-#{$color-name} {
-    color: $base-color;
-  }
 }

@@ -3,27 +3,41 @@
 // Searchbar
 // --------------------------------------------------
 
-ion-searchbar {
+:host {
+  --placeholder-color: currentColor;
+  --placeholder-weight: inherit;
+  --placeholder-opacity: .5;
+
   @include font-smoothing();
 
-  box-sizing: border-box;
-
-  position: relative;
   display: flex;
+  position: relative;
 
   align-items: center;
 
   width: 100%;
+  box-sizing: border-box;
 }
 
-.searchbar-icon {
+:host(.ion-color) {
+  --background: #{current-color(base)};
+  --color-button-clear: inherit;
+  --color-button-cancel: inherit;
+  --color-icon: inherit;
+
+  color: #{current-color(contrast)};
+}
+
+.searchbar-search-icon {
   // Don't let them tap on the icon
+  color: var(--color-icon);
+
   pointer-events: none;
 }
 
 .searchbar-input-container {
-  position: relative;
   display: block;
+  position: relative;
 
   flex-shrink: 1;
 
@@ -31,7 +45,7 @@ ion-searchbar {
 }
 
 .searchbar-input {
-  @include appearance(none);
+  @include text-inherit();
 
   box-sizing: border-box;
 
@@ -40,11 +54,21 @@ ion-searchbar {
   width: 100%;
 
   border: 0;
-  font-family: inherit;
 
-  &:active,
-  &:focus {
-    outline: none;
+  outline: none;
+
+  background: var(--background);
+
+  font-family: inherit;
+  appearance: none;
+
+  &::placeholder {
+    color: var(--placeholder-color);
+
+    font-family: inherit;
+    font-weight: var(--placeholder-weight);
+
+    opacity: var(--placeholder-opacity);
   }
 
   &::-webkit-search-cancel-button {
@@ -52,15 +76,24 @@ ion-searchbar {
   }
 }
 
-.searchbar-clear-icon {
+.searchbar-cancel-button {
+  color: var(--color-button-cancel);
+}
+
+.searchbar-clear-button {
   @include margin(0);
   @include padding(0);
 
   display: none;
 
   min-height: 0;
+
+  outline: none;
+
+  color: var(--button-color-clear);
+  appearance: none;
 }
 
-.searchbar-has-value.searchbar-has-focus .searchbar-clear-icon {
+:host(.searchbar-has-value.searchbar-has-focus) .searchbar-clear-button {
   display: block;
 }

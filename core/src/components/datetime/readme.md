@@ -6,12 +6,6 @@ months, days, hours and minute values. Datetimes are similar to the native `inpu
 `datetime-local`, however, Ionic's Datetime component makes it easy to display the date and time in a
 preferred format, and manage the datetime values.
 
-```html
-<ion-item>
-  <ion-label>Date</ion-label>
-  <ion-datetime display-format="MM/DD/YYYY"></ion-datetime>
-</ion-item>
-```
 
 ## Display and Picker Formats
 
@@ -109,16 +103,16 @@ more detailed down to the millisecond and timezone. Any of the ISO formats below
 can be used, and after a user selects a new value, Ionic will continue to use
 the same ISO format which datetime value was originally given as.
 
-| Description          | Format                 | Datetime Value Example       |
-| -------------------- | ---------------------- | ---------------------------- |
-| Year                 | YYYY                   | 1994                         |
-| Year and Month       | YYYY-MM                | 1994-12                      |
-| Complete Date        | YYYY-MM-DD             | 1994-12-15                   |
-| Date and Time        | YYYY-MM-DDTHH:mm       | 1994-12-15T13:47             |
-| UTC Timezone         | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20.789Z     |
-| Timezone Offset      | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20.789+5:00 |
-| Hour and Minute      | HH:mm                  | 13:47                        |
-| Hour, Minute, Second | HH:mm:ss               | 13:47:20                     |
+| Description          | Format                 | Datetime Value Example        |
+| -------------------- | ---------------------- | ----------------------------  |
+| Year                 | YYYY                   | 1994                          |
+| Year and Month       | YYYY-MM                | 1994-12                       |
+| Complete Date        | YYYY-MM-DD             | 1994-12-15                    |
+| Date and Time        | YYYY-MM-DDTHH:mm       | 1994-12-15T13:47              |
+| UTC Timezone         | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20.789Z      |
+| Timezone Offset      | YYYY-MM-DDTHH:mm:ssTZD | 1994-12-15T13:47:20.789+05:00 |
+| Hour and Minute      | HH:mm                  | 13:47                         |
+| Hour, Minute, Second | HH:mm:ss               | 13:47:20                      |
 
 Note that the year is always four-digits, milliseconds (if it's added) is always
 three-digits, and all others are always two-digits. So the number representing
@@ -210,377 +204,43 @@ dates in JavaScript.
 
 ## Properties
 
-#### cancelText
-
-string
-
-The text to display on the picker's cancel button. Default: `Cancel`.
-
-
-#### dayNames
-
-string
-
-Full day of the week names. This can be used to provide
-locale names for each day in the week. Defaults to English.
-
-
-#### dayShortNames
-
-string
-
-Short abbreviated day of the week names. This can be used to provide
-locale names for each day in the week. Defaults to English.
-
-
-#### dayValues
-
-any
-
-Values used to create the list of selectable days. By default
-every day is shown for the given month. However, to control exactly which days of
-the month to display, the `dayValues` input can take a number, an array of numbers, or
-a string of comma separated numbers. Note that even if the array days have an invalid
-number for the selected month, like `31` in February, it will correctly not show
-days which are not valid for the selected month.
-
-
-#### disabled
-
-boolean
-
-If true, the user cannot interact with the datetime. Defaults to `false`.
-
-
-#### displayFormat
-
-string
-
-The display format of the date and time as text that shows
-within the item. When the `pickerFormat` input is not used, then the
-`displayFormat` is used for both display the formatted text, and determining
-the datetime picker's columns. See the `pickerFormat` input description for
-more info. Defaults to `MMM D, YYYY`.
-
-
-#### doneText
-
-string
-
-The text to display on the picker's "Done" button. Default: `Done`.
-
-
-#### hourValues
-
-any
-
-Values used to create the list of selectable hours. By default
-the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However,
-to control exactly which hours to display, the `hourValues` input can take a number, an
-array of numbers, or a string of comma separated numbers.
-
-
-#### max
-
-string
-
-The maximum datetime allowed. Value must be a date string
-following the
-[ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime),
-`1996-12-19`. The format does not have to be specific to an exact
-datetime. For example, the maximum could just be the year, such as `1994`.
-Defaults to the end of this year.
-
-
-#### min
-
-string
-
-The minimum datetime allowed. Value must be a date string
-following the
-[ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime),
-such as `1996-12-19`. The format does not have to be specific to an exact
-datetime. For example, the minimum could just be the year, such as `1994`.
-Defaults to the beginning of the year, 100 years ago from today.
-
-
-#### minuteValues
-
-any
-
-Values used to create the list of selectable minutes. By default
-the mintues range from `0` to `59`. However, to control exactly which minutes to display,
-the `minuteValues` input can take a number, an array of numbers, or a string of comma
-separated numbers. For example, if the minute selections should only be every 15 minutes,
-then this input value would be `minuteValues="0,15,30,45"`.
-
-
-#### monthNames
-
-string
-
-Full names for each month name. This can be used to provide
-locale month names. Defaults to English.
-
-
-#### monthShortNames
-
-string
-
-Short abbreviated names for each month name. This can be used to provide
-locale month names. Defaults to English.
-
-
-#### monthValues
-
-any
-
-Values used to create the list of selectable months. By default
-the month values range from `1` to `12`. However, to control exactly which months to
-display, the `monthValues` input can take a number, an array of numbers, or a string of
-comma separated numbers. For example, if only summer months should be shown, then this
-input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a
-zero-based index, meaning January's value is `1`, and December's is `12`.
-
-
-#### pickerFormat
-
-string
-
-The format of the date and time picker columns the user selects.
-A datetime input can have one or many datetime parts, each getting their
-own column which allow individual selection of that particular datetime part. For
-example, year and month columns are two individually selectable columns which help
-choose an exact date from the datetime picker. Each column follows the string
-parse format. Defaults to use `displayFormat`.
-
-
-#### pickerOptions
-
-
-
-Any additional options that the picker interface can accept.
-See the [Picker API docs](../../picker/Picker) for the picker options.
-
-
-#### placeholder
-
-string
-
-The text to display when there's no date selected yet.
-Using lowercase to match the input attribute
-
-
-#### value
-
-string
-
-the value of the datetime.
-
-
-#### yearValues
-
-any
-
-Values used to create the list of selectable years. By default
-the year values range between the `min` and `max` datetime inputs. However, to
-control exactly which years to display, the `yearValues` input can take a number, an array
-of numbers, or string of comma separated numbers. For example, to show upcoming and
-recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
-
-
-## Attributes
-
-#### cancel-text
-
-string
-
-The text to display on the picker's cancel button. Default: `Cancel`.
-
-
-#### day-names
-
-string
-
-Full day of the week names. This can be used to provide
-locale names for each day in the week. Defaults to English.
-
-
-#### day-short-names
-
-string
-
-Short abbreviated day of the week names. This can be used to provide
-locale names for each day in the week. Defaults to English.
-
-
-#### day-values
-
-any
-
-Values used to create the list of selectable days. By default
-every day is shown for the given month. However, to control exactly which days of
-the month to display, the `dayValues` input can take a number, an array of numbers, or
-a string of comma separated numbers. Note that even if the array days have an invalid
-number for the selected month, like `31` in February, it will correctly not show
-days which are not valid for the selected month.
-
-
-#### disabled
-
-boolean
-
-If true, the user cannot interact with the datetime. Defaults to `false`.
-
-
-#### display-format
-
-string
-
-The display format of the date and time as text that shows
-within the item. When the `pickerFormat` input is not used, then the
-`displayFormat` is used for both display the formatted text, and determining
-the datetime picker's columns. See the `pickerFormat` input description for
-more info. Defaults to `MMM D, YYYY`.
-
-
-#### done-text
-
-string
-
-The text to display on the picker's "Done" button. Default: `Done`.
-
-
-#### hour-values
-
-any
-
-Values used to create the list of selectable hours. By default
-the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However,
-to control exactly which hours to display, the `hourValues` input can take a number, an
-array of numbers, or a string of comma separated numbers.
-
-
-#### max
-
-string
-
-The maximum datetime allowed. Value must be a date string
-following the
-[ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime),
-`1996-12-19`. The format does not have to be specific to an exact
-datetime. For example, the maximum could just be the year, such as `1994`.
-Defaults to the end of this year.
-
-
-#### min
-
-string
-
-The minimum datetime allowed. Value must be a date string
-following the
-[ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime),
-such as `1996-12-19`. The format does not have to be specific to an exact
-datetime. For example, the minimum could just be the year, such as `1994`.
-Defaults to the beginning of the year, 100 years ago from today.
-
-
-#### minute-values
-
-any
-
-Values used to create the list of selectable minutes. By default
-the mintues range from `0` to `59`. However, to control exactly which minutes to display,
-the `minuteValues` input can take a number, an array of numbers, or a string of comma
-separated numbers. For example, if the minute selections should only be every 15 minutes,
-then this input value would be `minuteValues="0,15,30,45"`.
-
-
-#### month-names
-
-string
-
-Full names for each month name. This can be used to provide
-locale month names. Defaults to English.
-
-
-#### month-short-names
-
-string
-
-Short abbreviated names for each month name. This can be used to provide
-locale month names. Defaults to English.
-
-
-#### month-values
-
-any
-
-Values used to create the list of selectable months. By default
-the month values range from `1` to `12`. However, to control exactly which months to
-display, the `monthValues` input can take a number, an array of numbers, or a string of
-comma separated numbers. For example, if only summer months should be shown, then this
-input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a
-zero-based index, meaning January's value is `1`, and December's is `12`.
-
-
-#### picker-format
-
-string
-
-The format of the date and time picker columns the user selects.
-A datetime input can have one or many datetime parts, each getting their
-own column which allow individual selection of that particular datetime part. For
-example, year and month columns are two individually selectable columns which help
-choose an exact date from the datetime picker. Each column follows the string
-parse format. Defaults to use `displayFormat`.
-
-
-#### picker-options
-
-
-
-Any additional options that the picker interface can accept.
-See the [Picker API docs](../../picker/Picker) for the picker options.
-
-
-#### placeholder
-
-string
-
-The text to display when there's no date selected yet.
-Using lowercase to match the input attribute
-
-
-#### value
-
-string
-
-the value of the datetime.
-
-
-#### year-values
-
-any
-
-Values used to create the list of selectable years. By default
-the year values range between the `min` and `max` datetime inputs. However, to
-control exactly which years to display, the `yearValues` input can take a number, an array
-of numbers, or string of comma separated numbers. For example, to show upcoming and
-recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
+| Property          | Attribute           | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Type                         |
+| ----------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| `cancelText`      | `cancel-text`       | The text to display on the picker's cancel button. Default: `Cancel`.                                                                                                                                                                                                                                                                                                                                                                                                                             | `string`                     |
+| `dayNames`        | `day-names`         | Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.                                                                                                                                                                                                                                                                                                                                                                               | `string[] | string`          |
+| `dayShortNames`   | `day-short-names`   | Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.                                                                                                                                                                                                                                                                                                                                                                  | `string[] | string`          |
+| `dayValues`       | --                  | Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.                                    | `number[] | number | string` |
+| `disabled`        | `disabled`          | If true, the user cannot interact with the datetime. Defaults to `false`.                                                                                                                                                                                                                                                                                                                                                                                                                         | `boolean`                    |
+| `displayFormat`   | `display-format`    | The display format of the date and time as text that shows within the item. When the `pickerFormat` input is not used, then the `displayFormat` is used for both display the formatted text, and determining the datetime picker's columns. See the `pickerFormat` input description for more info. Defaults to `MMM D, YYYY`.                                                                                                                                                                    | `string`                     |
+| `doneText`        | `done-text`         | The text to display on the picker's "Done" button. Default: `Done`.                                                                                                                                                                                                                                                                                                                                                                                                                               | `string`                     |
+| `hourValues`      | --                  | Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.                                                                                                                                                                                         | `number[] | number | string` |
+| `max`             | `max`               | The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.                                                                                                                                                                  | `string`                     |
+| `min`             | `min`               | The minimum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), such as `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the minimum could just be the year, such as `1994`. Defaults to the beginning of the year, 100 years ago from today.                                                                                                                           | `string`                     |
+| `minuteValues`    | --                  | Values used to create the list of selectable minutes. By default the mintues range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.                                                                                            | `number[] | number | string` |
+| `monthNames`      | `month-names`       | Full names for each month name. This can be used to provide locale month names. Defaults to English.                                                                                                                                                                                                                                                                                                                                                                                              | `string[] | string`          |
+| `monthShortNames` | `month-short-names` | Short abbreviated names for each month name. This can be used to provide locale month names. Defaults to English.                                                                                                                                                                                                                                                                                                                                                                                 | `string[] | string`          |
+| `monthValues`     | --                  | Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`. | `number[] | number | string` |
+| `pickerFormat`    | `picker-format`     | The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.                                                       | `string`                     |
+| `pickerOptions`   | --                  | Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.                                                                                                                                                                                                                                                                                                                                                               | `PickerOptions`              |
+| `placeholder`     | `placeholder`       | The text to display when there's no date selected yet. Using lowercase to match the input attribute                                                                                                                                                                                                                                                                                                                                                                                               | `string`                     |
+| `value`           | --                  | the value of the datetime.                                                                                                                                                                                                                                                                                                                                                                                                                                                                        | `any`                        |
+| `yearValues`      | --                  | Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.                                                                         | `number[] | number | string` |
 
 
 ## Events
 
-#### ionCancel
+| Event       | Description                                         |
+| ----------- | --------------------------------------------------- |
+| `ionCancel` | Emitted when the datetime selection was cancelled.  |
+| `ionChange` | Emitted when the value (selected date) has changed. |
+| `ionStyle`  | Emitted when the styles change.                     |
 
-Emitted when the datetime selection was cancelled.
 
+## Methods
 
-#### ionStyle
-
-Emitted when the styles change.
-
+| Method | Description |
+| ------ | ----------- |
+| `open` |             |
 
 
 ----------------------------------------------

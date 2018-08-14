@@ -1,18 +1,18 @@
 import { Component, Prop } from '@stencil/core';
-import { Config } from '../../interface';
 
+import { Config, Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-infinite-scroll-content',
   styleUrls: {
     ios: 'infinite-scroll-content.ios.scss',
     md: 'infinite-scroll-content.md.scss'
-  },
-  host: {
-    theme: 'infinite-scroll-content'
   }
 })
 export class InfiniteScrollContent {
+
+  mode!: Mode;
 
   @Prop({ context: 'config' }) config!: Config;
 
@@ -26,24 +26,32 @@ export class InfiniteScrollContent {
    */
   @Prop() loadingText?: string;
 
-
   componentDidLoad() {
     if (!this.loadingSpinner) {
-      this.loadingSpinner = this.config.get('infiniteLoadingSpinner', this.config.get('spinner', 'lines'));
+      this.loadingSpinner = this.config.get(
+        'infiniteLoadingSpinner',
+        this.config.get('spinner', 'lines')
+      );
     }
+  }
+
+  hostData() {
+    return {
+      class: createThemedClasses(this.mode, 'infinite-scroll-content')
+    };
   }
 
   render() {
     return (
       <div class="infinite-loading">
-        {this.loadingSpinner &&
+        {this.loadingSpinner && (
           <div class="infinite-loading-spinner">
-            <ion-spinner name={this.loadingSpinner}></ion-spinner>
+            <ion-spinner name={this.loadingSpinner} />
           </div>
-        }
-        {this.loadingText &&
-          <div class="infinite-loading-text" innerHTML={this.loadingText}></div>
-        }
+        )}
+        {this.loadingText && (
+          <div class="infinite-loading-text" innerHTML={this.loadingText} />
+        )}
       </div>
     );
   }

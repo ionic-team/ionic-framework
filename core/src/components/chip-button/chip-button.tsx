@@ -1,20 +1,20 @@
 import { Component, Element, Prop } from '@stencil/core';
-import { Color, CssClassMap, Mode } from '../../interface';
-import { getButtonClassMap, getElementClassMap } from '../../utils/theme';
+
+import { Color, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-chip-button',
-  styleUrls: {
-    ios: 'chip-button.ios.scss',
-    md: 'chip-button.md.scss'
-  },
+  styleUrl: 'chip-button.scss',
+  shadow: true
 })
 export class ChipButton {
   @Element() el!: HTMLElement;
 
   /**
-   * The color to use.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -32,7 +32,7 @@ export class ChipButton {
   /**
    * Set to `"clear"` for a transparent button style.
    */
-  @Prop() fill?: string;
+  @Prop() fill: 'clear' | 'solid' = 'solid';
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -40,29 +40,22 @@ export class ChipButton {
    */
   @Prop() href?: string;
 
-  /**
-   * Get the classes for the style
-   * Chip buttons can only be clear or default (solid)
-   */
-  private getStyleClassMap(buttonType: string): CssClassMap {
-    return getColorClassMap(this.color, buttonType, this.fill || 'default', this.mode);
+  hostData() {
+    return {
+      class: {
+        ...createColorClasses(this.color),
+        [`chip-button-${this.fill}`]: true
+      }
+    };
   }
 
   render() {
-    const buttonType = 'chip-button';
-
-    const hostClasses = getElementClassMap(this.el.classList);
     const TagType = this.href ? 'a' : 'button';
-
-    const buttonClasses = {
-      ...hostClasses,
-      ...getButtonClassMap(buttonType, this.mode),
-      ...this.getStyleClassMap(buttonType),
-    };
 
     return (
       <TagType
-        class={buttonClasses}
+        type="button"
+        class="chip-button-native"
         disabled={this.disabled}
         href={this.href}>
           <span class="chip-button-inner">
@@ -72,20 +65,4 @@ export class ChipButton {
       </TagType>
     );
   }
-}
-
-/**
- * Get the classes for the color
- */
-function getColorClassMap(color: string | undefined, buttonType: string, style: string, mode: Mode): CssClassMap {
-  const className = (style === 'default') ? `${buttonType}` : `${buttonType}-${style}`;
-
-  const map: CssClassMap = {
-    [className]: true,
-    [`${className}-${mode}`]: true
-  };
-  if (color) {
-    map[`${className}-${mode}-${color}`] = true;
-  }
-  return map;
 }

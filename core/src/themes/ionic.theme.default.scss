@@ -1,103 +1,19 @@
 @import "./ionic.globals";
 
-// Default Theme
-// ----------------------------------
-
-// Private color variables, use colors() to override
-$primary:         #3880ff;
-$secondary:       #0cd1e8;
-$tertiary:        #7044ff;
-$success:         #10dc60;
-$warning:         #ffce00;
-$danger:          #f04141;
-$light:           #f4f5f8;
-$medium:          #989aa2;
-$dark:            #222428;
-
-// Allows users to override an individual color
-$colors:              () !default;
-
-// Primary color map should provide
-//   - base: main color to be used.
-//   - contrast: Color that will provide readable text against the base color
-//   - shade: 12% darker version of the base color (mix with black)
-//   - tint: 10% lighter version of the base color (mix with white)
-$ion-colors:  (
-  primary: (
-    base:             $primary,
-    contrast:         #fff,
-    shade:            get-color-shade($primary),
-    tint:             get-color-tint($primary)
-  ),
-  secondary: (
-    base:             $secondary,
-    contrast:         #fff,
-    shade:            get-color-shade($secondary),
-    tint:             get-color-tint($secondary)
-  ),
-  tertiary: (
-    base:             $tertiary,
-    contrast:         #fff,
-    shade:            get-color-shade($tertiary),
-    tint:             get-color-tint($tertiary)
-  ),
-  success: (
-    base:             $success,
-    contrast:         #fff,
-    shade:            get-color-shade($success),
-    tint:             get-color-tint($success)
-  ),
-  warning: (
-    base:             $warning,
-    contrast:         #fff,
-    shade:            get-color-shade($warning),
-    tint:             get-color-tint($warning)
-  ),
-  danger: (
-    base:             $danger,
-    contrast:         #fff,
-    shade:            get-color-shade($danger),
-    tint:             get-color-tint($danger)
-  ),
-  light: (
-    base:             $light,
-    contrast:         #000,
-    shade:            get-color-shade($light),
-    tint:             get-color-tint($light)
-  ),
-  medium: (
-    base:             $medium,
-    contrast:         #fff,
-    shade:            get-color-shade($medium),
-    tint:             get-color-tint($medium)
-  ),
-  dark: (
-    base:             $dark,
-    contrast:         #fff,
-    shade:            get-color-shade($dark),
-    tint:             get-color-tint($dark)
-  )
-);
-$colors:              ion-extend-colors($ion-colors, $colors);
-
-// Default General
-// --------------------------------------------------
-$content-margin:                              16px !default;
-$content-padding:                             16px !default;
-$font-family-base:                            -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Roboto", sans-serif !default;
-$font-size-base:                              14px !default; // TODO: remove
-
 // Default Foreground and Background Colors values
 // Allows users to override an foreground / background colors
 // TODO: @color-mod: remove all this
-$background-color-value:                      #fff !default;
-$text-color-value:                            #000 !default;
+$background-color-value:            #fff !default;
+$background-color-rgb:              255, 255, 255 !default;
+
+$text-color-value:                  #000 !default;
+$text-color-rgb:                    0, 0, 0 !default;
 
 // Default Foreground and Background Colors
 // --------------------------------------------------
-$background-color:                            css-var($background-color-value, background-color) !default;
-$text-color:                                  css-var($text-color-value, text-color) !default;
-$placeholder-text-color:                      css-var(#999, placeholder-text-color) !default;
+$background-color:                  var(--ion-background-color, $background-color-value) !default;
+$text-color:                        var(--ion-text-color, $text-color-value) !default;
+$placeholder-text-color:            var(--ion-placeholder-text-color, #999) !default;
 
 // Default Background & Text Color Steps
 // Color Steps are used to provide variations in text and background colors of elements.
@@ -105,74 +21,72 @@ $placeholder-text-color:                      css-var(#999, placeholder-text-col
 // For example $text-color-step-XXX will be $text-color stepping towards $background-color,
 // but a $background-color-step-XXX will be $background-color stepping towards $text-color.
 // --------------------------------------------------
-$background-color-step-50:                    css-var(mix($text-color-value, $background-color-value, 5%), background-color-step-50) !default;
-$background-color-step-100:                   css-var(mix($text-color-value, $background-color-value, 10%), background-color-step-100) !default;
-$background-color-step-150:                   css-var(mix($text-color-value, $background-color-value, 15%), background-color-step-150) !default;
-$background-color-step-200:                   css-var(mix($text-color-value, $background-color-value, 20%), background-color-step-200) !default;
-$background-color-step-250:                   css-var(mix($text-color-value, $background-color-value, 25%), background-color-step-250) !default;
-$background-color-step-300:                   css-var(mix($text-color-value, $background-color-value, 30%), background-color-step-300) !default;
-$background-color-step-350:                   css-var(mix($text-color-value, $background-color-value, 35%), background-color-step-350) !default;
-$background-color-step-400:                   css-var(mix($text-color-value, $background-color-value, 40%), background-color-step-400) !default;
-$background-color-step-450:                   css-var(mix($text-color-value, $background-color-value, 45%), background-color-step-450) !default;
-$background-color-step-500:                   css-var(mix($text-color-value, $background-color-value, 50%), background-color-step-500) !default;
-$background-color-step-550:                   css-var(mix($text-color-value, $background-color-value, 55%), background-color-step-550) !default;
-$background-color-step-600:                   css-var(mix($text-color-value, $background-color-value, 60%), background-color-step-600) !default;
-$background-color-step-650:                   css-var(mix($text-color-value, $background-color-value, 65%), background-color-step-650) !default;
-$background-color-step-700:                   css-var(mix($text-color-value, $background-color-value, 70%), background-color-step-700) !default;
-$background-color-step-750:                   css-var(mix($text-color-value, $background-color-value, 75%), background-color-step-750) !default;
-$background-color-step-800:                   css-var(mix($text-color-value, $background-color-value, 80%), background-color-step-800) !default;
-$background-color-step-850:                   css-var(mix($text-color-value, $background-color-value, 85%), background-color-step-850) !default;
-$background-color-step-900:                   css-var(mix($text-color-value, $background-color-value, 90%), background-color-step-900) !default;
-$background-color-step-950:                   css-var(mix($text-color-value, $background-color-value, 95%), background-color-step-950) !default;
-$background-color-step-1000:                  css-var(mix($text-color-value, $background-color-value, 100%), background-color-step-1000) !default;
-$text-color-step-50:                          css-var(mix($background-color-value, $text-color-value, 5%), text-color-step-50) !default;
-$text-color-step-100:                         css-var(mix($background-color-value, $text-color-value, 10%), text-color-step-100) !default;
-$text-color-step-150:                         css-var(mix($background-color-value, $text-color-value, 15%), text-color-step-150) !default;
-$text-color-step-200:                         css-var(mix($background-color-value, $text-color-value, 20%), text-color-step-200) !default;
-$text-color-step-250:                         css-var(mix($background-color-value, $text-color-value, 25%), text-color-step-250) !default;
-$text-color-step-300:                         css-var(mix($background-color-value, $text-color-value, 30%), text-color-step-300) !default;
-$text-color-step-350:                         css-var(mix($background-color-value, $text-color-value, 35%), text-color-step-350) !default;
-$text-color-step-400:                         css-var(mix($background-color-value, $text-color-value, 40%), text-color-step-400) !default;
-$text-color-step-450:                         css-var(mix($background-color-value, $text-color-value, 45%), text-color-step-450) !default;
-$text-color-step-500:                         css-var(mix($background-color-value, $text-color-value, 50%), text-color-step-500) !default;
-$text-color-step-550:                         css-var(mix($background-color-value, $text-color-value, 55%), text-color-step-550) !default;
-$text-color-step-600:                         css-var(mix($background-color-value, $text-color-value, 60%), text-color-step-600) !default;
-$text-color-step-650:                         css-var(mix($background-color-value, $text-color-value, 65%), text-color-step-650) !default;
-$text-color-step-700:                         css-var(mix($background-color-value, $text-color-value, 70%), text-color-step-700) !default;
-$text-color-step-750:                         css-var(mix($background-color-value, $text-color-value, 75%), text-color-step-750) !default;
-$text-color-step-800:                         css-var(mix($background-color-value, $text-color-value, 80%), text-color-step-800) !default;
-$text-color-step-850:                         css-var(mix($background-color-value, $text-color-value, 85%), text-color-step-850) !default;
-$text-color-step-900:                         css-var(mix($background-color-value, $text-color-value, 90%), text-color-step-900) !default;
-$text-color-step-950:                         css-var(mix($background-color-value, $text-color-value, 95%), text-color-step-950) !default;
-$text-color-step-1000:                        css-var(mix($background-color-value, $text-color-value, 100%), text-color-step-1000) !default;
+$background-color-step-50:          var(--ion-background-color-step-50, mix($text-color-value, $background-color-value, 5%)) !default;
+$background-color-step-100:         var(--ion-background-color-step-100, mix($text-color-value, $background-color-value, 10%)) !default;
+$background-color-step-150:         var(--ion-background-color-step-150, mix($text-color-value, $background-color-value, 15%)) !default;
+$background-color-step-200:         var(--ion-background-color-step-200, mix($text-color-value, $background-color-value, 20%)) !default;
+$background-color-step-250:         var(--ion-background-color-step-250, mix($text-color-value, $background-color-value, 25%)) !default;
+$background-color-step-300:         var(--ion-background-color-step-300, mix($text-color-value, $background-color-value, 30%)) !default;
+$background-color-step-350:         var(--ion-background-color-step-350, mix($text-color-value, $background-color-value, 35%)) !default;
+$background-color-step-400:         var(--ion-background-color-step-400, mix($text-color-value, $background-color-value, 40%)) !default;
+$background-color-step-450:         var(--ion-background-color-step-450, mix($text-color-value, $background-color-value, 45%)) !default;
+$background-color-step-500:         var(--ion-background-color-step-500, mix($text-color-value, $background-color-value, 50%)) !default;
+$background-color-step-550:         var(--ion-background-color-step-550, mix($text-color-value, $background-color-value, 55%)) !default;
+$background-color-step-600:         var(--ion-background-color-step-600, mix($text-color-value, $background-color-value, 60%)) !default;
+$background-color-step-650:         var(--ion-background-color-step-650, mix($text-color-value, $background-color-value, 65%)) !default;
+$background-color-step-700:         var(--ion-background-color-step-700, mix($text-color-value, $background-color-value, 70%)) !default;
+$background-color-step-750:         var(--ion-background-color-step-750, mix($text-color-value, $background-color-value, 75%)) !default;
+$background-color-step-800:         var(--ion-background-color-step-800, mix($text-color-value, $background-color-value, 80%)) !default;
+$background-color-step-850:         var(--ion-background-color-step-850, mix($text-color-value, $background-color-value, 85%)) !default;
+$background-color-step-900:         var(--ion-background-color-step-900, mix($text-color-value, $background-color-value, 90%)) !default;
+$background-color-step-950:         var(--ion-background-color-step-950, mix($text-color-value, $background-color-value, 95%)) !default;
+$background-color-step-1000:        var(--ion-background-color-step-1000, mix($text-color-value, $background-color-value, 100%)) !default;
+$text-color-step-50:                var(--ion-text-color-step-50, mix($background-color-value, $text-color-value, 5%)) !default;
+$text-color-step-100:               var(--ion-text-color-step-100, mix($background-color-value, $text-color-value, 10%)) !default;
+$text-color-step-150:               var(--ion-text-color-step-150, mix($background-color-value, $text-color-value, 15%)) !default;
+$text-color-step-200:               var(--ion-text-color-step-200, mix($background-color-value, $text-color-value, 20%)) !default;
+$text-color-step-250:               var(--ion-text-color-step-250, mix($background-color-value, $text-color-value, 25%)) !default;
+$text-color-step-300:               var(--ion-text-color-step-300, mix($background-color-value, $text-color-value, 30%)) !default;
+$text-color-step-350:               var(--ion-text-color-step-350, mix($background-color-value, $text-color-value, 35%)) !default;
+$text-color-step-400:               var(--ion-text-color-step-400, mix($background-color-value, $text-color-value, 40%)) !default;
+$text-color-step-450:               var(--ion-text-color-step-450, mix($background-color-value, $text-color-value, 45%)) !default;
+$text-color-step-500:               var(--ion-text-color-step-500, mix($background-color-value, $text-color-value, 50%)) !default;
+$text-color-step-550:               var(--ion-text-color-step-550, mix($background-color-value, $text-color-value, 55%)) !default;
+$text-color-step-600:               var(--ion-text-color-step-600, mix($background-color-value, $text-color-value, 60%)) !default;
+$text-color-step-650:               var(--ion-text-color-step-650, mix($background-color-value, $text-color-value, 65%)) !default;
+$text-color-step-700:               var(--ion-text-color-step-700, mix($background-color-value, $text-color-value, 70%)) !default;
+$text-color-step-750:               var(--ion-text-color-step-750, mix($background-color-value, $text-color-value, 75%)) !default;
+$text-color-step-800:               var(--ion-text-color-step-800, mix($background-color-value, $text-color-value, 80%)) !default;
+$text-color-step-850:               var(--ion-text-color-step-850, mix($background-color-value, $text-color-value, 85%)) !default;
+$text-color-step-900:               var(--ion-text-color-step-900, mix($background-color-value, $text-color-value, 90%)) !default;
+$text-color-step-950:               var(--ion-text-color-step-950, mix($background-color-value, $text-color-value, 95%)) !default;
+$text-color-step-1000:              var(--ion-text-color-step-1000, mix($background-color-value, $text-color-value, 100%)) !default;
 
 // Default General Colors
 // --------------------------------------------------
-$backdrop-color:                              css-var(#000, backdrop-color) !default;
-$border-color:                                css-var(#b2b2b2, border-color) !default;
-$box-shadow-color:                            css-var(#000, box-shadow-color) !default;
-$overlay-background-color:                    css-var(#fafafa, overlay-background-color) !default;
-$ripple-background-color:                     css-var(#000, ripple-background-color) !default;
+$backdrop-color:                    var(--ion-backdrop-color, #000) !default;
+$border-color:                      var(--ion-border-color, #b2b2b2) !default;
+$box-shadow-color:                  var(--ion-box-shadow-color, #000) !default;
 
 // Default Tabs & Tab bar
 // --------------------------------------------------
-$tabbar-background-color:                     css-var(#f8f8f8, tabbar-background-color) !default;
-$tabbar-background-color-focused:             css-var(get-color-shade(#f8f8f8), tabbar-background-color-focused) !default;
-$tabbar-border-color:                         css-var($border-color, tabbar-border-color) !default;
-$tabbar-text-color-active:                    css-var(#488aff, tabbar-text-color-active) !default;
-$tabbar-text-color:                           css-var(#8c8c8c, tabbar-text-color) !default;
+$tabbar-background-color:           var(--ion-tabbar-background-color, #f8f8f8) !default;
+$tabbar-background-color-focused:   var(--ion-tabbar-background-color-focused, get-color-shade(#f8f8f8)) !default;
+$tabbar-border-color:               var(--ion-tabbar-border-color, $border-color) !default;
+$tabbar-text-color-active:          var(--ion-tabbar-text-color-active, #488aff) !default;
+$tabbar-text-color:                 var(--ion-tabbar-text-color, #8c8c8c) !default;
 
 // Default Toolbar
 // --------------------------------------------------
-$toolbar-background-color:                    css-var(#f8f8f8, toolbar-background-color) !default;
-$toolbar-border-color:                        css-var($border-color, toolbar-border-color) !default;
-$toolbar-color-active:                        css-var(#4a4a4a, toolbar-color-active) !default;
-$toolbar-color-inactive:                      css-var(#8c8c8c, toolbar-color-inactive) !default;
-$toolbar-text-color:                          css-var($text-color, toolbar-text-color) !default;
+$toolbar-background-color:          var(--ion-toolbar-background-color, #f8f8f8) !default;
+$toolbar-border-color:              var(--ion-toolbar-border-color, $border-color) !default;
+$toolbar-color-active:              var(--ion-toolbar-color-active, #4a4a4a) !default;
+$toolbar-color-inactive:            var(--ion-toolbar-color-inactive, #8c8c8c) !default;
+$toolbar-text-color:                var(--ion-toolbar-text-color, $text-color) !default;
 
 // Default List & List Items
 // --------------------------------------------------
-$item-background-color:                       css-var($background-color, item-background-color) !default;
-$item-background-color-active:                css-var($background-color, item-background-color-active) !default;
-$item-border-color:                           css-var(#c8c7cc, item-border-color) !default;
-$item-text-color:                             css-var($text-color, item-text-color) !default;
+$item-background-color:             var(--ion-item-background-color, $background-color) !default;
+$item-background-color-active:      var(--ion-item-background-color-active, $background-color) !default;
+$item-border-color:                 var(--ion-item-border-color, #c8c7cc) !default;
+$item-text-color:                   var(--ion-item-text-color, $text-color) !default;

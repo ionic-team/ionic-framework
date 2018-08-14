@@ -3,69 +3,39 @@
 // Toggle
 // --------------------------------------------------
 
-ion-toggle {
+:host {
+  /**
+   * @prop --background: Background of the toggle
+   * @prop --background-checked: Background of the toggle when checked
+   * @prop --handle-background: Background of the toggle handle
+   * @prop --handle-background-checked: Background of the toggle handle when checked
+   */
+
+  // TODO can we remove important here
+  /* stylelint-disable-next-line declaration-no-important */
+  box-sizing: content-box !important;
+
   display: inline-block;
 
   contain: content;
-
   touch-action: none;
   user-select: none;
 }
 
-ion-toggle ion-gesture {
-  display: block;
-
-  width: 100%;
-  height: 100%;
-
-  visibility: inherit;
+:host(.toggle-key) input {
+  border: 2px solid #5e9ed6;
 }
 
-.toggle-cover {
-  @include position-horizontal(0, null);
-
-  position: absolute;
-  top: 0;
-
-  width: 100%;
-  height: 100%;
-
-  border: 0;
+:host(:focus) {
   outline: none;
-
-  font-family: inherit;
-  font-style: inherit;
-  font-variant: inherit;
-
-  line-height: 1;
-  text-transform: none;
-
-  background: transparent;
-  cursor: pointer;
 }
 
-ion-toggle input {
-  @include position(0, null, null, 0);
-  @include margin(0);
+:host(.toggle-disabled) {
+  pointer-events: none;
+}
 
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  border: 0;
-  background: transparent;
-  cursor: pointer;
+input {
+  @include input-cover();
 
   pointer-events: none;
-
-  appearance: none;
-}
-
-ion-toggle :focus {
-  outline: none;
-}
-
-.toggle-key input {
-  border: 2px solid #5e9ed6;
 }

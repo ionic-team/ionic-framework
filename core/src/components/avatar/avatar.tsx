@@ -1,14 +1,17 @@
 import { Component } from '@stencil/core';
 
-
 @Component({
   tag: 'ion-avatar',
   styleUrls: {
     ios: 'avatar.ios.scss',
     md: 'avatar.md.scss'
   },
-  host: {
-    theme: 'avatar'
-  }
+  shadow: true
 })
-export class Avatar {}
+export class Avatar {
+
+  render() {
+    return <slot></slot>;
+  }
+
+}

@@ -18,7 +18,7 @@ export function getScrollData(componentEl: HTMLElement, contentEl: HTMLElement, 
     };
   }
 
-  const itemEl = <HTMLElement>componentEl.closest('ion-item,[ion-item]') || componentEl;
+  const itemEl = componentEl.closest('ion-item,[ion-item]') as HTMLElement || componentEl;
   return calcScrollData(
     itemEl.getBoundingClientRect(),
     contentEl.getBoundingClientRect(),
@@ -26,7 +26,6 @@ export function getScrollData(componentEl: HTMLElement, contentEl: HTMLElement, 
     window.innerHeight
   );
 }
-
 
 function calcScrollData(
   inputRect: ClientRect,
@@ -61,7 +60,7 @@ function calcScrollData(
   const duration = distance / SCROLL_ASSIST_SPEED;
   const scrollDuration = Math.min(400, Math.max(150, duration));
 
-  return  {
+  return {
     scrollAmount,
     scrollDuration,
     scrollPadding: keyboardHeight,

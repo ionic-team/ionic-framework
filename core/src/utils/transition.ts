@@ -1,16 +1,24 @@
+import { QueueApi } from '@stencil/core';
+
 import { ViewLifecycle } from '..';
 import { Animation, AnimationBuilder, NavDirection, NavOptions } from '../interface';
 
 const iosTransitionAnimation = () => import('./animations/ios.transition');
 const mdTransitionAnimation = () => import('./animations/md.transition');
 
-export async function transition(opts: TransitionOptions): Promise<Animation|null> {
-  beforeTransition(opts);
+export function transition(opts: TransitionOptions): Promise<Animation | null> {
+  return new Promise(resolve => {
+    opts.queue.write(async () => {
+      beforeTransition(opts);
 
-  const animationBuilder = await getAnimationBuilder(opts);
-  return (animationBuilder)
-    ? animation(animationBuilder, opts)
-    : noAnimation(opts); // fast path for no animation
+      const animationBuilder = await getAnimationBuilder(opts);
+      const ani = (animationBuilder)
+        ? animation(animationBuilder, opts)
+        : noAnimation(opts); // fast path for no animation
+
+      resolve(ani);
+    });
+  });
 }
 
 async function getAnimationBuilder(opts: TransitionOptions): Promise<AnimationBuilder | undefined> {
@@ -38,9 +46,20 @@ function beforeTransition(opts: TransitionOptions) {
   } else {
     enteringEl.classList.remove('can-go-back');
   }
-  enteringEl.hidden = false;
+  setPageHidden(enteringEl, false);
   if (leavingEl) {
-    leavingEl.hidden = false;
+    setPageHidden(leavingEl, false);
+  }
+}
+
+export function setPageHidden(el: HTMLElement, hidden: boolean) {
+  if (hidden) {
+    el.setAttribute('aria-hidden', 'true');
+    el.classList.add('ion-page-hidden');
+  } else {
+    el.hidden = false;
+    el.removeAttribute('aria-hidden');
+    el.classList.remove('ion-page-hidden');
   }
 }
 
@@ -51,6 +70,8 @@ async function animation(animationBuilder: AnimationBuilder, opts: TransitionOpt
   fireWillEvents(opts.window, opts.enteringEl, opts.leavingEl);
   await playTransition(trns, opts);
 
+  markVisible(opts);
+
   if (trns.hasCompleted) {
     fireDidEvents(opts.window, opts.enteringEl, opts.leavingEl);
   }
@@ -60,17 +81,25 @@ async function animation(animationBuilder: AnimationBuilder, opts: TransitionOpt
 async function noAnimation(opts: TransitionOptions): Promise<null> {
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
-  if (enteringEl) {
-    enteringEl.classList.remove('hide-page');
-  }
-  if (leavingEl) {
-    leavingEl.classList.remove('hide-page');
-  }
+
   await waitForReady(opts, false);
+
+  markVisible(opts);
 
   fireWillEvents(opts.window, enteringEl, leavingEl);
   fireDidEvents(opts.window, enteringEl, leavingEl);
   return null;
+}
+
+async function markVisible(opts: TransitionOptions) {
+  const enteringEl = opts.enteringEl;
+  const leavingEl = opts.leavingEl;
+  if (enteringEl) {
+    enteringEl.classList.remove('ion-page-invisible');
+  }
+  if (leavingEl) {
+    leavingEl.classList.remove('ion-page-invisible');
+  }
 }
 
 async function waitForReady(opts: TransitionOptions, defaultDeep: boolean) {
@@ -93,39 +122,38 @@ async function notifyViewReady(viewIsReady: undefined | ((enteringEl: HTMLElemen
   }
 }
 
-
-function playTransition(transition: Animation, opts: TransitionOptions): Promise<Animation> {
+function playTransition(trans: Animation, opts: TransitionOptions): Promise<Animation> {
   const progressCallback = opts.progressCallback;
-  const promise = new Promise<Animation>(resolve => transition.onFinish(resolve));
+  const promise = new Promise<Animation>(resolve => trans.onFinish(resolve));
 
   // cool, let's do this, start the transition
   if (progressCallback) {
     // this is a swipe to go back, just get the transition progress ready
     // kick off the swipe animation start
-    transition.progressStart();
-    progressCallback(transition);
+    trans.progressStart();
+    progressCallback(trans);
 
   } else {
     // only the top level transition should actually start "play"
     // kick it off and let it play through
     // ******** DOM WRITE ****************
-    transition.play();
+    trans.play();
   }
   // create a callback for when the animation is done
   return promise;
 }
 
-function fireWillEvents(win: Window, enteringEl: HTMLElement|undefined, leavingEl: HTMLElement|undefined) {
+function fireWillEvents(win: Window, enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) {
   lifecycle(win, leavingEl, ViewLifecycle.WillLeave);
   lifecycle(win, enteringEl, ViewLifecycle.WillEnter);
 }
 
-function fireDidEvents(win: Window, enteringEl: HTMLElement|undefined, leavingEl: HTMLElement|undefined) {
+function fireDidEvents(win: Window, enteringEl: HTMLElement | undefined, leavingEl: HTMLElement | undefined) {
   lifecycle(win, enteringEl, ViewLifecycle.DidEnter);
   lifecycle(win, leavingEl, ViewLifecycle.DidLeave);
 }
 
-export function lifecycle(win: Window, el: HTMLElement|undefined, eventName: ViewLifecycle) {
+export function lifecycle(win: Window, el: HTMLElement | undefined, eventName: ViewLifecycle) {
   if (el) {
     const CEvent: typeof CustomEvent = (win as any).CustomEvent;
     const event = new CEvent(eventName, {
@@ -136,32 +164,23 @@ export function lifecycle(win: Window, el: HTMLElement|undefined, eventName: Vie
   }
 }
 
-function shallowReady(el: Element|undefined): Promise<any> {
+function shallowReady(el: Element | undefined): Promise<any> {
   if (el && (el as any).componentOnReady) {
     return (el as any).componentOnReady();
   }
   return Promise.resolve();
 }
 
-function deepReady(el: Element|undefined): Promise<any> {
-  if (!el) {
-    return Promise.resolve();
-  }
-  if (customElements.get) {
-    if (customElements.get(el.tagName.toLowerCase())) {
-      return componentOnReady(el);
-    } else {
-      return Promise.all(Array.from(el.children).map(deepReady));
+async function deepReady(el: Element | undefined): Promise<void> {
+  const element = el as HTMLStencilElement;
+  if (element) {
+    if (element.componentOnReady) {
+      const stencilEl = await element.componentOnReady();
+      if (stencilEl) {
+        return;
+      }
     }
-  }
-  return componentOnReady(el);
-}
-
-function componentOnReady(el: Element) {
-  if ((el as any).componentOnReady) {
-    return (el as any).componentOnReady();
-  } else {
-    return Promise.all(Array.from(el.children).map(deepReady));
+    await Promise.all(Array.from(element.children).map(deepReady));
   }
 }
 
@@ -182,9 +201,10 @@ function setZIndex(
 
 export interface TransitionOptions extends NavOptions {
   animationCtrl: HTMLIonAnimationControllerElement;
+  queue: QueueApi;
   progressCallback?: ((ani: Animation) => void);
   window: Window;
   baseEl: HTMLElement;
   enteringEl: HTMLElement;
-  leavingEl: HTMLElement|undefined;
+  leavingEl: HTMLElement | undefined;
 }

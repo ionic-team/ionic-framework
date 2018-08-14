@@ -1,20 +1,20 @@
 import { Animation } from '../../interface';
-import { TransitionOptions } from '../../utils/transition';
+import { TransitionOptions } from '../transition';
 
 const TRANSLATEY = 'translateY';
 const OFF_BOTTOM = '40px';
 const CENTER = '0px';
 
-export function mdTransitionAnimation(Animation: Animation, _: HTMLElement, opts: TransitionOptions): Promise<Animation> {
+export function mdTransitionAnimation(AnimationC: Animation, _: HTMLElement, opts: TransitionOptions): Promise<Animation> {
 
   const enteringEl = opts.enteringEl;
   const leavingEl = opts.leavingEl;
   const ionPageElement = getIonPageElement(enteringEl);
 
-  const rootTransition = new Animation();
+  const rootTransition = new AnimationC();
   rootTransition
     .addElement(ionPageElement)
-    .beforeRemoveClass('hide-page');
+    .beforeRemoveClass('ion-page-invisible');
 
   const backDirection = (opts.direction === 'back');
   if (enteringEl) {
@@ -36,7 +36,7 @@ export function mdTransitionAnimation(Animation: Animation, _: HTMLElement, opts
     // Animate toolbar if it's there
     const enteringToolbarEle = ionPageElement.querySelector('ion-toolbar');
     if (enteringToolbarEle) {
-      const enteringToolBar = new Animation();
+      const enteringToolBar = new AnimationC();
       enteringToolBar.addElement(enteringToolbarEle);
       rootTransition.add(enteringToolBar);
     }
@@ -49,7 +49,7 @@ export function mdTransitionAnimation(Animation: Animation, _: HTMLElement, opts
       .duration(opts.duration || 200)
       .easing('cubic-bezier(0.47,0,0.745,0.715)');
 
-    const leavingPage = new Animation();
+    const leavingPage = new AnimationC();
     leavingPage
       .addElement(getIonPageElement(leavingEl))
       .fromTo(TRANSLATEY, CENTER, OFF_BOTTOM)

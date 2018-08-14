@@ -4,16 +4,16 @@
 // Skeleton Text
 // --------------------------------------------------
 
-ion-skeleton-text {
+:host {
   display: inline-block;
 
   width: 100%;
-
   pointer-events: none;
+
   user-select: none;
 }
 
-ion-skeleton-text span {
+span {
   display: inline-block;
 
   font-size: 8px;

@@ -9,39 +9,9 @@ It is recommended that any text content for a card should be placed in an `ion-c
 
 ## Properties
 
-#### color
-
-string
-
-The color to use for the text.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-## Attributes
-
-#### color
-
-string
-
-The color to use for the text.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
+| Property | Attribute | Description                                                                               | Type   |
+| -------- | --------- | ----------------------------------------------------------------------------------------- | ------ |
+| `mode`   | `mode`    | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`. | `Mode` |
 
 
 ----------------------------------------------

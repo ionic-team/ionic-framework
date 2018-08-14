@@ -1,31 +1,51 @@
-import { Config as CoreConfig } from '@ionic/core';
+import { Config as CoreConfig, IonicConfig } from '@ionic/core';
 import { InjectionToken } from '@angular/core';
+import { IonicWindow } from '../types/interfaces';
+
 
 export class Config {
 
-  get(key: string, fallback?: any): any {
-    return getConfig().get(key, fallback);
+  get(key: keyof IonicConfig, fallback?: any): any {
+    const c = getConfig();
+    if (c) {
+      return c.get(key, fallback);
+    }
+    return null;
   }
 
-  getBoolean(key: string, fallback?: boolean): boolean {
-    return getConfig().getBoolean(key, fallback);
+  getBoolean(key: keyof IonicConfig, fallback?: boolean): boolean {
+    const c = getConfig();
+    if (c) {
+      return c.getBoolean(key, fallback);
+    }
+    return false;
   }
 
-  getNumber(key: string, fallback?: number): number {
-    return getConfig().getNumber(key, fallback);
+  getNumber(key: keyof IonicConfig, fallback?: number): number {
+    const c = getConfig();
+    if (c) {
+      return c.getNumber(key, fallback);
+    }
+    return 0;
   }
 
-  set(key: string, value?: any) {
-    getConfig().set(key, value);
+  set(key: keyof IonicConfig, value?: any) {
+    const c = getConfig();
+    if (c) {
+      c.set(key, value);
+    }
   }
 }
 
 export const ConfigToken = new InjectionToken<any>('USERCONFIG');
 
-function getConfig(): CoreConfig {
-  const Ionic = (window as any).Ionic;
-  if (Ionic && Ionic.config) {
-    return Ionic.config;
+function getConfig(): CoreConfig | null {
+  const win: IonicWindow = window as any;
+  if (typeof win !== 'undefined') {
+    const Ionic = win.Ionic;
+    if (Ionic && Ionic.config) {
+      return Ionic.config;
+    }
   }
   return null;
 }

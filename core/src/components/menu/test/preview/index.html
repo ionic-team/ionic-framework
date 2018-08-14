@@ -6,6 +6,7 @@
   <title>Menu</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
 
   <style>
     .f {
@@ -14,6 +15,7 @@
       background: blue;
       margin: 20px auto;
     }
+
   </style>
 </head>
 
@@ -122,8 +124,9 @@
       menu.get('end').type = 'reveal';
     }
     function setEnabled() {
-      menu.get('start').swipeEnabled = false;
+      menu.get('start').swipeGesture = false;
     }
   </script>
 </body>
+
 </html>

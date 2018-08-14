@@ -1,7 +1,7 @@
 import { Component, Listen, Method, Prop } from '@stencil/core';
-import { LoadingOptions } from '../../interface';
-import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
+import { LoadingOptions, OverlayController } from '../../interface';
+import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-loading-controller'
@@ -28,7 +28,7 @@ export class LoadingController implements OverlayController {
     removeLastOverlay(this.loadings);
   }
 
-  /*
+  /**
    * Create a loading overlay with loading options.
    */
   @Method()
@@ -36,7 +36,7 @@ export class LoadingController implements OverlayController {
     return createOverlay(this.doc.createElement('ion-loading'), opts);
   }
 
-  /*
+  /**
    * Dismiss the open loading overlay.
    */
   @Method()
@@ -44,7 +44,7 @@ export class LoadingController implements OverlayController {
     return dismissOverlay(data, role, this.loadings, loadingId);
   }
 
-  /*
+  /**
    * Get the most recently opened loading overlay.
    */
   @Method()

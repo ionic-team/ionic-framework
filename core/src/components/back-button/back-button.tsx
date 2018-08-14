@@ -1,6 +1,7 @@
 import { Component, Element, Prop } from '@stencil/core';
+
 import { Color, Config, Mode } from '../../interface';
-import { createThemedClasses, getElementClassMap, openURL } from '../../utils/theme';
+import { createColorClasses, openURL } from '../../utils/theme';
 
 @Component({
   tag: 'ion-back-button',
@@ -8,9 +9,7 @@ import { createThemedClasses, getElementClassMap, openURL } from '../../utils/th
     ios: 'back-button.ios.scss',
     md: 'back-button.md.scss'
   },
-  host: {
-    theme: 'back-button'
-  }
+  scoped: true
 })
 export class BackButton {
 
@@ -20,16 +19,15 @@ export class BackButton {
   @Prop({ context: 'window' }) win!: Window;
 
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode!: Mode;
 
@@ -48,43 +46,44 @@ export class BackButton {
    */
   @Prop() text?: string;
 
-
-  private onClick(ev: Event) {
+  private async onClick(ev: Event) {
     const nav = this.el.closest('ion-nav');
     if (nav && nav.canGoBack()) {
       ev.preventDefault();
-      nav.pop();
+      if (!nav.isAnimating()) {
+        nav.pop();
+      }
     } else if (this.defaultHref) {
       openURL(this.win, this.defaultHref, ev, 'back');
     }
   }
 
   hostData() {
+    const showBackButton = !!this.defaultHref;
+
     return {
       class: {
-        'show-back-button': !!this.defaultHref
-      }
+        ...createColorClasses(this.color),
+        'button': true,
+        'show-back-button': showBackButton
+      },
+      'ion-activable': true,
     };
   }
 
   render() {
     const backButtonIcon = this.icon || this.config.get('backButtonIcon', 'arrow-back');
     const backButtonText = this.text != null ? this.text : this.config.get('backButtonText', 'Back');
-    const themedClasses = createThemedClasses(this.mode, this.color, 'back-button');
-
-    const backButtonClasses = {
-      ...themedClasses,
-      ...getElementClassMap(this.el.classList),
-    };
 
     return (
       <button
-        class={backButtonClasses}
-        onClick={(ev) => this.onClick(ev)}>
+        type="button"
+        class="back-button-native"
+        onClick={ev => this.onClick(ev)}>
         <span class="back-button-inner">
-          { backButtonIcon && <ion-icon name={backButtonIcon}/> }
+          { backButtonIcon && <ion-icon icon={backButtonIcon} lazy={false}/> }
           { this.mode === 'ios' && backButtonText && <span class="button-text">{backButtonText}</span> }
-          { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+          { this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el}/> }
         </span>
       </button>
     );

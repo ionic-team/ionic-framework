@@ -1,7 +1,10 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
-import { BaseInput, Color, GestureDetail, Mode, RangeInputChangeEvent, StyleEvent } from '../../interface';
+import { Component, Element, Event, EventEmitter, Listen, Prop, QueueApi, State, Watch } from '@stencil/core';
+
+import { Color, Gesture, GestureDetail, InputChangeEvent, Mode, RangeValue, StyleEvent } from '../../interface';
 import { clamp, debounceEvent, deferEvent } from '../../utils/helpers';
-import { Knob, RangeEventDetail, RangeValue } from './range-interface';
+import { createColorClasses, hostContext } from '../../utils/theme';
+
+import { Knob, RangeEventDetail } from './range-interface';
 
 @Component({
   tag: 'ion-range',
@@ -9,33 +12,34 @@ import { Knob, RangeEventDetail, RangeValue } from './range-interface';
     ios: 'range.ios.scss',
     md: 'range.md.scss'
   },
-  host: {
-    theme: 'range'
-  }
+  shadow: true
 })
-export class Range implements BaseInput {
+export class Range {
 
   private noUpdate = false;
   private rect!: ClientRect;
   private hasFocus = false;
+  private rangeSlider?: HTMLElement;
+  private gesture?: Gesture;
 
   @Element() el!: HTMLStencilElement;
 
+  @Prop({ context: 'queue' }) queue!: QueueApi;
+
   @State() private ratioA = 0;
   @State() private ratioB = 0;
-  @State() private pressedKnob = Knob.None;
+  @State() private pressedKnob: Knob;
 
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode!: Mode;
 
@@ -93,26 +97,28 @@ export class Range implements BaseInput {
   @Prop() disabled = false;
   @Watch('disabled')
   protected disabledChanged() {
+    if (this.gesture) {
+      this.gesture.setDisabled(this.disabled);
+    }
     this.emitStyle();
   }
 
   /**
    * the value of the range.
    */
-  @Prop({ mutable: true }) value: any = 0;
+  @Prop({ mutable: true }) value: RangeValue = 0;
   @Watch('value')
   protected valueChanged(value: RangeValue) {
     if (!this.noUpdate) {
       this.updateRatio();
     }
-    this.ionChange.emit({value});
+    this.ionChange.emit({ value });
   }
-
 
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange!: EventEmitter<RangeInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<InputChangeEvent>;
 
   /**
    * Emitted when the styles change.
@@ -129,13 +135,26 @@ export class Range implements BaseInput {
    */
   @Event() ionBlur!: EventEmitter<void>;
 
-
   componentWillLoad() {
     this.ionStyle = deferEvent(this.ionStyle);
 
     this.updateRatio();
     this.debounceChanged();
     this.emitStyle();
+  }
+
+  async componentDidLoad() {
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+      el: this.rangeSlider!,
+      queue: this.queue,
+      gestureName: 'range',
+      gesturePriority: 100,
+      threshold: 0,
+      onStart: this.onDragStart.bind(this),
+      onMove: this.onDragMove.bind(this),
+      onEnd: this.onDragEnd.bind(this),
+    });
+    this.gesture.setDisabled(this.disabled);
   }
 
   @Listen('ionIncrease')
@@ -147,11 +166,27 @@ export class Range implements BaseInput {
     if (!ev.detail.isIncrease) {
       step *= -1;
     }
-    if (ev.detail.knob === Knob.A) {
+    if (ev.detail.knob === 'A') {
       this.ratioA += step;
     } else {
       this.ratioB += step;
     }
+    this.updateValue();
+  }
+
+  private handleKeyboard(knob: string, isIncrease: boolean) {
+    let step = this.step;
+    step = step > 0 ? step : 1;
+    step = step / (this.max - this.min);
+    if (!isIncrease) {
+      step *= -1;
+    }
+    if (knob === 'A') {
+      this.ratioA += step;
+    } else {
+      this.ratioB += step;
+    }
+    this.updateValue();
   }
 
   private getValue(): RangeValue {
@@ -162,7 +197,7 @@ export class Range implements BaseInput {
       }
       return {
         lower: 0,
-        upper: value,
+        upper: value
       };
     } else {
       if (typeof value === 'object') {
@@ -174,7 +209,7 @@ export class Range implements BaseInput {
 
   private emitStyle() {
     this.ionStyle.emit({
-      'range-disabled': this.disabled
+      'interactive-disabled': this.disabled
     });
   }
 
@@ -197,15 +232,16 @@ export class Range implements BaseInput {
   private onDragStart(detail: GestureDetail) {
     this.fireFocus();
 
-    const el = this.el.querySelector('.range-slider')!;
-    const rect = this.rect = el.getBoundingClientRect() as any;
+    const rect = this.rect = this.rangeSlider!.getBoundingClientRect() as any;
     const currentX = detail.currentX;
 
     // figure out which knob they started closer to
     const ratio = clamp(0, (currentX - rect.left) / rect.width, 1);
-    this.pressedKnob = (!this.dualKnobs || (Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio)))
-      ? Knob.A
-      : Knob.B;
+    this.pressedKnob =
+      !this.dualKnobs ||
+      Math.abs(this.ratioA - ratio) < Math.abs(this.ratioB - ratio)
+        ? 'A'
+        : 'B';
 
     // update the active knob's position
     this.update(currentX);
@@ -217,7 +253,7 @@ export class Range implements BaseInput {
 
   private onDragEnd(detail: GestureDetail) {
     this.update(detail.currentX);
-    this.pressedKnob = Knob.None;
+    this.pressedKnob = undefined;
     this.fireBlur();
   }
 
@@ -233,7 +269,7 @@ export class Range implements BaseInput {
     }
 
     // update which knob is pressed
-    if (this.pressedKnob === Knob.A) {
+    if (this.pressedKnob === 'A') {
       this.ratioA = ratio;
     } else {
       this.ratioB = ratio;
@@ -267,7 +303,7 @@ export class Range implements BaseInput {
 
   private updateRatio() {
     const value = this.getValue() as any;
-    const {min, max} = this;
+    const { min, max } = this;
     if (this.dualKnobs) {
       this.ratioA = valueToRatio(value.lower, min, max);
       this.ratioB = valueToRatio(value.upper, min, max);
@@ -279,13 +315,13 @@ export class Range implements BaseInput {
   private updateValue() {
     this.noUpdate = true;
 
-    const {valA, valB} = this;
-    this.value = (!this.dualKnobs)
+    const { valA, valB } = this;
+    this.value = !this.dualKnobs
       ? valA
       : {
-        lower: Math.min(valA, valB),
-        upper: Math.max(valA, valB)
-      };
+          lower: Math.min(valA, valB),
+          upper: Math.max(valA, valB)
+        };
 
     this.noUpdate = false;
   }
@@ -293,15 +329,17 @@ export class Range implements BaseInput {
   hostData() {
     return {
       class: {
+        ...createColorClasses(this.color),
+        'in-item': hostContext('.item', this.el),
         'range-disabled': this.disabled,
-        'range-pressed': this.pressedKnob !== Knob.None,
+        'range-pressed': this.pressedKnob !== undefined,
         'range-has-pin': this.pin
       }
     };
   }
 
   render() {
-    const {min, max, step, ratioLower, ratioUpper} = this;
+    const { min, max, step, ratioLower, ratioUpper } = this;
 
     const barL = `${ratioLower * 100}%`;
     const barR = `${100 - ratioUpper * 100}%`;
@@ -320,71 +358,119 @@ export class Range implements BaseInput {
 
     return [
       <slot name="start"></slot>,
-      <ion-gesture
-        disableScroll={true}
-        onStart={this.onDragStart.bind(this)}
-        onMove={this.onDragMove.bind(this)}
-        onEnd={this.onDragEnd.bind(this)}
-        disabled={this.disabled}
-        gestureName="range"
-        gesturePriority={30}
-        direction="x"
-        threshold={0}>
-
-        <div class="range-slider">
-          {ticks.map(t =>
-            <div
-              style={{ left: t.left }}
-              role="presentation"
-              class={{
-                'range-tick': true,
-                'range-tick-active': t.active
-              }}/>
-          )}
-
-          <div class="range-bar" role="presentation" />
+      <div class="range-slider" ref={el => this.rangeSlider = el}>
+        {ticks.map(t => (
           <div
-            class="range-bar range-bar-active"
+            style={{ left: t.left }}
             role="presentation"
-            style={{
-              left: barL,
-              right: barR
+            class={{
+              'range-tick': true,
+              'range-tick-active': t.active
             }}
           />
-          <ion-range-knob
-            knob={Knob.A}
-            pressed={this.pressedKnob === Knob.A}
-            value={this.valA}
-            ratio={this.ratioA}
-            pin={this.pin}
-            min={min}
-            max={max}/>
+        ))}
 
-          { this.dualKnobs &&
-            <ion-range-knob
-              knob={Knob.B}
-              pressed={this.pressedKnob === Knob.B}
-              value={this.valB}
-              ratio={this.ratioB}
-              pin={this.pin}
-              min={min}
-              max={max} /> }
-        </div>
-      </ion-gesture>,
+        <div class="range-bar" role="presentation" />
+        <div
+          class="range-bar range-bar-active"
+          role="presentation"
+          style={{
+            left: barL,
+            right: barR
+          }}
+        />
+
+        { renderKnob({
+          knob: 'A',
+          pressed: this.pressedKnob === 'A',
+          value: this.valA,
+          ratio: this.ratioA,
+          pin: this.pin,
+          disabled: this.disabled,
+          handleKeyboard: this.handleKeyboard.bind(this),
+          min,
+          max
+        })}
+
+        { this.dualKnobs && renderKnob({
+          knob: 'B',
+          pressed: this.pressedKnob === 'B',
+          value: this.valB,
+          ratio: this.ratioB,
+          pin: this.pin,
+          disabled: this.disabled,
+          handleKeyboard: this.handleKeyboard.bind(this),
+          min,
+          max
+        })}
+      </div>,
       <slot name="end"></slot>
     ];
   }
 }
+interface RangeKnob {
+  knob: string;
+  value: number;
+  ratio: number;
+  min: number;
+  max: number;
+  disabled: boolean;
+  pressed: boolean;
+  pin: boolean;
 
+  handleKeyboard: (name: string, isIncrease: boolean) => void;
+}
 
-export function ratioToValue(ratio: number, min: number, max: number, step: number): number {
-  let value = ((max - min) * ratio);
+function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, handleKeyboard }: RangeKnob) {
+  return (
+    <div
+      onKeyDown={(ev: KeyboardEvent) => {
+        const key = ev.key;
+        if (key === 'ArrowLeft' || key === 'ArrowDown') {
+          handleKeyboard(knob, false);
+          ev.preventDefault();
+          ev.stopPropagation();
+
+        } else if (key === 'ArrowRight' || key === 'ArrowUp') {
+          handleKeyboard(knob, true);
+          ev.preventDefault();
+          ev.stopPropagation();
+        }
+      }}
+      class={{
+        'range-knob-handle': true,
+        'range-knob-pressed': pressed,
+        'range-knob-min': value === min,
+        'range-knob-max': value === max
+      }}
+      style={{
+        'left': `${ratio * 100}%`
+      }}
+      role="slider"
+      tabindex={disabled ? -1 : 0}
+      aria-valuemin={min}
+      aria-valuemax={max}
+      aria-disabled={disabled ? 'true' : null}
+      aria-valuenow={value}>
+        { pin && <div class="range-pin" role="presentation">{Math.round(value)}</div>}
+        <div class="range-knob" role="presentation" />
+    </div>
+  );
+}
+
+function ratioToValue(
+  ratio: number,
+  min: number,
+  max: number,
+  step: number
+): number {
+  let value = (max - min) * ratio;
   if (step > 0) {
     value = Math.round(value / step) * step + min;
   }
   return clamp(min, value, max);
 }
 
-export function valueToRatio(value: number, min: number, max: number): number {
+function valueToRatio(value: number, min: number, max: number): number {
   return clamp(0, (value - min) / (max - min), 1);
 }

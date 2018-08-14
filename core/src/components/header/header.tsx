@@ -1,6 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({
@@ -8,14 +8,15 @@ import { createThemedClasses } from '../../utils/theme';
   styleUrls: {
     ios: 'header.ios.scss',
     md: 'header.md.scss'
-  },
-  host: {
-    theme: 'header'
   }
 })
 export class Header {
-  mode!: Mode;
-  color?: Color;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * If true, the header will be translucent.
@@ -26,15 +27,14 @@ export class Header {
   @Prop() translucent = false;
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'header-translucent') : {};
-
-    const hostClasses = {
-      ...themedClasses
-    };
+    const themedClasses = createThemedClasses(this.mode, 'header');
+    const translucentClasses = this.translucent ? createThemedClasses(this.mode, 'header-translucent') : null;
 
     return {
-      class: hostClasses
+      class: {
+        ...themedClasses,
+        ...translucentClasses
+      }
     };
   }
-
 }

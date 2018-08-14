@@ -1,22 +1,41 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+
+import { Mode } from '../../interface.js';
+import { createThemedClasses } from '../../utils/theme.js';
+
 import { Swiper } from './vendor/swiper.js';
+
 @Component({
   tag: 'ion-slides',
   styleUrls: {
     ios: 'slides.ios.scss',
     md: 'slides.md.scss'
   },
-  host: {
-    theme: 'slides'
-  },
-  assetsDir: 'vendor'
+  assetsDir: 'vendor',
+  shadow: true
 })
 export class Slides {
-
   private container!: HTMLElement;
   private swiper: any;
 
-  @Element() el!: HTMLElement;
+  mode!: Mode;
+
+  @Element() el!: HTMLStencilElement;
+
+  /**
+   * Emitted after Swiper initialization
+   */
+  @Event() ionSlidesDidLoad!: EventEmitter;
+
+  /**
+   * Emitted when the user taps/clicks on the slide's container.
+   */
+  @Event() ionSlideTap!: EventEmitter;
+
+  /**
+   * Emitted when the user double taps on the slide's container.
+   */
+  @Event() ionSlideDoubleTap!: EventEmitter;
 
   /**
    * Emitted before the active slide has changed.
@@ -92,36 +111,33 @@ export class Slides {
   @Watch('options')
   updateSwiperOptions() {
     const newOptions = this.normalizeOptions();
-    this.swiper.params = Object.assign({}, this.swiper.params, newOptions);
+    this.swiper.params = { ...this.swiper.params, ...newOptions };
     this.update();
   }
 
   /**
-   * Show or hide the pager
+   * If true, show the pagination. Defaults to `false`.
    */
-  @Prop() pager = true;
+  @Prop() pager = false;
+
+  /**
+   * If true, show the scrollbar. Defaults to `false`.
+   */
+  @Prop() scrollbar = false;
 
   componentDidLoad() {
     setTimeout(this.initSlides.bind(this), 10);
   }
 
   componentDidUnload() {
-    this.enableKeyboardControl(false);
     this.swiper.destroy(true, true);
   }
 
   private initSlides() {
-    console.debug(`ion-slides, init`);
-
-    this.container = this.el.children[0] as HTMLElement;
+    this.container = (this.el.shadowRoot || this.el).querySelector('.swiper-container') as HTMLElement;
     const finalOptions = this.normalizeOptions();
     // init swiper core
     this.swiper = new Swiper(this.container, finalOptions);
-
-    if (finalOptions.keyboardControl) {
-      // init keyboard event listeners
-      this.enableKeyboardControl(true);
-    }
   }
 
   /**
@@ -203,7 +219,7 @@ export class Slides {
    */
   @Method()
   startAutoplay(): void {
-    this.swiper.startAutoplay();
+    this.swiper.autoplay.start();
   }
 
   /**
@@ -211,7 +227,7 @@ export class Slides {
    */
   @Method()
   stopAutoplay(): void {
-    this.swiper.stopAutoplay();
+    this.swiper.autoplay.stop();
   }
 
   /**
@@ -247,28 +263,23 @@ export class Slides {
     this.swiper.unlockSwipes();
   }
 
-  /**
-   * Enable or disable keyboard control.
-   */
-  private enableKeyboardControl(shouldEnableKeyboard: boolean) {
-    if (shouldEnableKeyboard) {
-      return this.swiper.enableKeyboardControl();
-    }
-    this.swiper.disableKeyboardControl();
-  }
-
   private normalizeOptions() {
     // Base options, can be changed
     const swiperOptions = {
       effect: 'slide',
-      autoplay: 0,
       direction: 'horizontal',
       initialSlide: 0,
       loop: false,
       pager: false,
-      pagination: '.swiper-pagination',
-      paginationType: 'bullets',
+      pagination: {
+        el: '.swiper-pagination',
+        type: 'bullets',
+      },
       parallax: false,
+      scrollbar: {
+        el: this.scrollbar ? '.swiper-scrollbar' : null,
+        hide: true,
+      },
       slidesPerView: 1,
       spaceBetween: 0,
       speed: 300,
@@ -323,7 +334,6 @@ export class Slides {
       runCallbacksOnInit: true,
       controlBy: 'slide',
       controlInverse: false,
-      keyboardControl: true,
       coverflow: {
         rotate: 50,
         stretch: 0,
@@ -353,43 +363,48 @@ export class Slides {
     // Keep the event options separate, we dont want users
     // overwriting these
     const eventOptions = {
-      onSlideChangeStart: this.ionSlideWillChange.emit,
-      onSlideChangeEnd: this.ionSlideDidChange.emit,
-      onSlideNextStart: this.ionSlideNextStart.emit,
-      onSlidePrevStart: this.ionSlidePrevStart.emit,
-      onSlideNextEnd: this.ionSlideNextEnd.emit,
-      onSlidePrevEnd: this.ionSlidePrevEnd.emit,
-      onTransitionStart: this.ionSlideTransitionStart.emit,
-      onTransitionEnd: this.ionSlideTransitionEnd.emit,
-      onSliderMove: this.ionSlideDrag.emit,
-      onReachBeginning: this.ionSlideReachStart.emit,
-      onReachEnd: this.ionSlideReachEnd.emit,
-      onTouchStart: this.ionSlideTouchStart.emit,
-      onTouchEnd: this.ionSlideTouchEnd.emit
+      on: {
+        init: () => {
+          setTimeout(() => {
+            this.ionSlidesDidLoad.emit();
+          }, 20);
+        },
+        slideChangeTransitionStart: this.ionSlideWillChange.emit,
+        slideChangeTransitionEnd: this.ionSlideDidChange.emit,
+        slideNextTransitionStart: this.ionSlideNextStart.emit,
+        slidePrevTransitionStart: this.ionSlidePrevStart.emit,
+        slideNextTransitionEnd: this.ionSlideNextEnd.emit,
+        slidePrevTransitionEnd: this.ionSlidePrevEnd.emit,
+        transitionStart: this.ionSlideTransitionStart.emit,
+        transitionEnd: this.ionSlideTransitionEnd.emit,
+        sliderMove: this.ionSlideDrag.emit,
+        reachBeginning: this.ionSlideReachStart.emit,
+        reachEnd: this.ionSlideReachEnd.emit,
+        touchStart: this.ionSlideTouchStart.emit,
+        touchEnd: this.ionSlideTouchEnd.emit,
+        tap: this.ionSlideTap.emit,
+        doubleTap: this.ionSlideDoubleTap.emit
+      }
     };
 
     // Merge the base, user options, and events together then pas to swiper
-    return Object.assign(
-      {},
-      swiperOptions,
-      this.options,
-      eventOptions
-    );
+    return { ...swiperOptions, ...this.options, ...eventOptions };
+  }
 
-}
+  hostData() {
+    return {
+      class: createThemedClasses(this.mode, 'slides')
+    };
+  }
 
   render() {
     return (
-      <div class="swiper-container" data-dir="rtl">
+      <div class="swiper-container" ref={el => this.container = el as HTMLElement }>
         <div class="swiper-wrapper">
-          <slot />
+          <slot></slot>
         </div>
-        <div
-          class={{
-            'swiper-pagination': true,
-            hide: !this.pager
-          }}
-        />
+        { this.pager ? <div class="swiper-pagination"></div> : null }
+        { this.scrollbar ? <div class="swiper-scrollbar"></div> : null }
       </div>
     );
   }

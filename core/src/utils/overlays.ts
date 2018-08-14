@@ -1,17 +1,8 @@
-import { EventEmitter } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, Mode } from '../interface';
+import { AnimationBuilder, HTMLIonOverlayElement, IonicConfig, OverlayInterface, OverlayMap } from '../interface';
 
 let lastId = 1;
 
-/**
- * Convert an interface where all the properties are optional to mandatory.
- */
-export type Requires<K extends string> = {
-  [P in K]: any;
-};
-
-export function createOverlay<T extends HTMLIonOverlayElement & Requires<keyof B>, B>
-(element: T, opts: B): Promise<T> {
+export function createOverlay<T extends HTMLIonOverlayElement & Required<B>, B>(element: T, opts: B): Promise<T> {
   // convert the passed in overlay options into props
   // that get passed down into the new overlay
   Object.assign(element, opts);
@@ -26,7 +17,7 @@ export function createOverlay<T extends HTMLIonOverlayElement & Requires<keyof B
   return element.componentOnReady();
 }
 
-export function dismissOverlay(data: any, role: string|undefined, overlays: OverlayMap, id: number): Promise<void> {
+export function dismissOverlay(data: any, role: string | undefined, overlays: OverlayMap, id: number): Promise<void> {
   id = id >= 0 ? id : getHighestId(overlays);
   const overlay = overlays.get(id);
   if (!overlay) {
@@ -56,7 +47,7 @@ export function removeLastOverlay(overlays: OverlayMap) {
 
 export async function present(
   overlay: OverlayInterface,
-  name: string,
+  name: keyof IonicConfig,
   iosEnterAnimation: AnimationBuilder,
   mdEnterAnimation: AnimationBuilder,
   opts?: any
@@ -79,9 +70,9 @@ export async function present(
 
 export async function dismiss(
   overlay: OverlayInterface,
-  data: any|undefined,
-  role: string|undefined,
-  name: string,
+  data: any | undefined,
+  role: string | undefined,
+  name: keyof IonicConfig,
   iosLeaveAnimation: AnimationBuilder,
   mdLeaveAnimation: AnimationBuilder,
   opts?: any
@@ -91,7 +82,7 @@ export async function dismiss(
   }
   overlay.presented = false;
 
-  overlay.willDismiss.emit({data, role});
+  overlay.willDismiss.emit({ data, role });
 
   const animationBuilder = (overlay.leaveAnimation)
     ? overlay.leaveAnimation
@@ -99,10 +90,9 @@ export async function dismiss(
 
   await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
 
-  overlay.didDismiss.emit({data, role});
+  overlay.didDismiss.emit({ data, role });
   overlay.el.remove();
 }
-
 
 async function overlayAnimation(
   overlay: OverlayInterface,
@@ -112,13 +102,17 @@ async function overlayAnimation(
 ): Promise<void> {
   if (overlay.keyboardClose) {
     const activeElement = baseEl.ownerDocument.activeElement as HTMLElement;
-    activeElement && activeElement.blur && activeElement.blur();
+    if (activeElement) {
+      activeElement.blur();
+    }
   }
   if (overlay.animation) {
     overlay.animation.destroy();
     overlay.animation = undefined;
   }
-  const animation = overlay.animation = await overlay.animationCtrl.create(animationBuilder, baseEl, opts);
+
+  const aniRoot = baseEl.shadowRoot || overlay.el;
+  const animation = overlay.animation = await overlay.animationCtrl.create(animationBuilder, aniRoot, opts);
   overlay.animation = animation;
   if (!overlay.willAnimate) {
     animation.duration(0);
@@ -129,7 +123,7 @@ async function overlayAnimation(
   overlay.animation = undefined;
 }
 
-export function autoFocus(containerEl: HTMLElement): HTMLElement|null {
+export function autoFocus(containerEl: HTMLElement): HTMLElement | null {
   const focusableEls = containerEl.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
   if (focusableEls.length > 0) {
     const el = focusableEls[0] as HTMLInputElement;
@@ -140,11 +134,13 @@ export function autoFocus(containerEl: HTMLElement): HTMLElement|null {
 }
 
 export function eventMethod<T>(element: HTMLElement, eventName: string, callback?: (detail: T) => void): Promise<T> {
-  let resolve: Function;
+  let resolve: (detail: T) => void;
   const promise = new Promise<T>(r => resolve = r);
   onceEvent(element, eventName, (event: any) => {
     const detail = event.detail;
-    callback && callback(detail);
+    if (callback) {
+      callback(detail);
+    }
     resolve(detail);
   });
   return promise;
@@ -158,49 +154,8 @@ export function onceEvent(element: HTMLElement, eventName: string, callback: (ev
   element.addEventListener(eventName, handler);
 }
 
-export function isCancel(role: string|undefined): boolean {
+export function isCancel(role: string | undefined): boolean {
   return role === 'cancel' || role === BACKDROP;
 }
-
-export interface OverlayEventDetail {
-  data?: any;
-  role?: string;
-}
-
-export interface OverlayInterface {
-  mode: Mode;
-  el: HTMLElement;
-  willAnimate: boolean;
-  keyboardClose: boolean;
-  config: Config;
-  overlayId: number;
-  presented: boolean;
-  animation?: Animation;
-  animationCtrl: HTMLIonAnimationControllerElement;
-
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
-
-  didPresent: EventEmitter<void>;
-  willPresent: EventEmitter<void>;
-  willDismiss: EventEmitter<OverlayEventDetail>;
-  didDismiss: EventEmitter<OverlayEventDetail>;
-
-  present(): Promise<void>;
-  dismiss(data?: any, role?: string): Promise<void>;
-}
-
-export interface OverlayController {
-  create(opts?: any): Promise<HTMLElement>;
-  dismiss(data?: any, role?: string, alertId?: number): Promise<void>;
-  getTop(): HTMLElement;
-}
-
-export interface HTMLIonOverlayElement extends HTMLStencilElement {
-  overlayId: number;
-  dismiss(data?: any, role?: string): Promise<void>;
-}
-
-export type OverlayMap = Map<number, HTMLIonOverlayElement>;
 
 export const BACKDROP = 'backdrop';

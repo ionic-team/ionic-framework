@@ -1,4 +1,5 @@
 import { TestWindow } from '@stencil/core/dist/testing';
+
 import { RouteRedirect, RouteTree } from '../utils/interface';
 import { flattenRouterTree, readRedirects, readRouteNodes } from '../utils/parser';
 
@@ -51,11 +52,11 @@ describe('parser', () => {
       root.appendChild(r5);
 
       const expected: RouteRedirect[] = [
-        {from: [''], to: undefined},
-        {from: [''], to: ['workout']},
-        {from: ['*'], to: undefined},
-        {from: ['workout', '*'], to: ['']},
-        {from: ['path', 'hey'], to: ['path', 'to', 'login']}
+        { from: [''], to: undefined },
+        { from: [''], to: ['workout'] },
+        { from: ['*'], to: undefined },
+        { from: ['workout', '*'], to: [''] },
+        { from: ['path', 'hey'], to: ['path', 'to', 'login'] }
 
       ];
       expect(readRedirects(root)).toEqual(expected);
@@ -78,8 +79,8 @@ describe('parser', () => {
       expect(routes).toEqual([
         [{ path: [''], id: 'hola' }],
         [{ path: ['one-page'], id: 'one-page' }],
-        [{ path: ['secondpage'], id: 'second-page'}, { path: ['5', 'hola'], id: '4'}, { path: ['path', 'to', 'five'], id: '5'}],
-        [{ path: ['secondpage'], id: 'second-page'}, { path: ['5', 'hola'], id: '4'}, { path: ['path', 'to', 'five2'], id: '6'}],
+        [{ path: ['secondpage'], id: 'second-page' }, { path: ['5', 'hola'], id: '4' }, { path: ['path', 'to', 'five'], id: '5' }],
+        [{ path: ['secondpage'], id: 'second-page' }, { path: ['5', 'hola'], id: '4' }, { path: ['path', 'to', 'five2'], id: '6' }],
       ]);
     });
   });
@@ -97,7 +98,7 @@ export function mockRouteElement(win: Window, path: string, component: string) {
   return el;
 }
 
-export function mockRedirectElement(win: Window, from: string|undefined, to: string|undefined|null) {
+export function mockRedirectElement(win: Window, from: string | undefined, to: string | undefined | null) {
   const el = win.document.createElement('ion-route-redirect');
   if (from != null) {
     el.setAttribute('from', from);
@@ -107,4 +108,3 @@ export function mockRedirectElement(win: Window, from: string|undefined, to: str
   }
   return el;
 }
-

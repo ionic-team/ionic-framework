@@ -3,26 +3,28 @@
 // Grid
 // --------------------------------------------------
 
-ion-grid {
-  @include make-grid();
+:host {
+  @include make-breakpoint-padding($grid-paddings);
+  @include margin-horizontal(auto);
 
-  &[fixed] {
-    @include make-grid-max-widths();
-  }
+  display: block;
 }
 
-// Row
+// Fixed Grid
 // --------------------------------------------------
 
-ion-row {
-  @include make-row();
+:host(.grid-fixed) {
+  @include make-grid-widths();
 }
 
-// Columns
+// Grid Padding
 // --------------------------------------------------
 
-ion-col {
-  @include make-column-base();
+// Remove the padding from grid and all immediate children columns
+:host([no-padding]) {
+  @include padding(0);
 }
 
-@include make-grid-columns();
+:host([no-padding]) ::slotted(ion-col) {
+  @include padding(0);
+}

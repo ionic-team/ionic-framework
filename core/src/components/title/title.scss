@@ -3,7 +3,7 @@
 // Title
 // --------------------------------------------------
 
-ion-title {
+:host {
   display: flex;
 
   flex: 1;
@@ -12,12 +12,19 @@ ion-title {
   transform: translateZ(0);
 }
 
+:host(.ion-color) {
+  color: #{current-color(base)};
+}
+
 .toolbar-title {
   display: block;
-  overflow: hidden;
 
   width: 100%;
 
   text-overflow: ellipsis;
+
   white-space: nowrap;
+
+  overflow: hidden;
+  pointer-events: auto;
 }

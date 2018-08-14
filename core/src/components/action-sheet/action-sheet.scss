@@ -3,15 +3,19 @@
 // Action Sheet
 // --------------------------------------------------
 
-ion-action-sheet {
+:host {
+  --width: #{$action-sheet-width};
+  --max-width: #{$action-sheet-max-width};
+
   @include font-smoothing();
   @include position(0, 0, 0, 0);
 
-  position: fixed;
-  z-index: $z-index-overlay;
   display: block;
+  position: fixed;
 
   touch-action: none;
+  user-select: none;
+  z-index: $z-index-overlay;
 }
 
 .action-sheet-wrapper {
@@ -19,27 +23,24 @@ ion-action-sheet {
   @include margin(auto);
   @include transform(translate3d(0, 100%, 0));
 
-  position: absolute;
-  z-index: $z-index-overlay-wrapper;
   display: block;
+  position: absolute;
 
-  width: $action-sheet-width;
-  max-width: $action-sheet-max-width;
+  width: var(--width);
+  max-width: var(--max-width);
 
+  z-index: $z-index-overlay-wrapper;
   pointer-events: none;
 }
 
 .action-sheet-button {
-  width: $action-sheet-width;
+  width: var(--width);
 
   border: 0;
 
-  font-family: inherit;
+  outline: none;
 
-  &:active,
-  &:focus {
-    outline: none;
-  }
+  font-family: inherit;
 }
 
 .action-sheet-button-inner {
@@ -58,7 +59,6 @@ ion-action-sheet {
   display: flex;
 
   flex-flow: column;
-
   justify-content: flex-end;
 
   height: 100%;
@@ -66,17 +66,19 @@ ion-action-sheet {
 }
 
 .action-sheet-group {
-  overflow: scroll;
-
-  overscroll-behavior: contain;
-
   flex-shrink: 2;
-
+  overscroll-behavior-y: contain;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   pointer-events: all;
 }
 
-.action-sheet-group-cancel {
-  overflow: hidden;
+.action-sheet-group::-webkit-scrollbar {
+  display: none;
+}
 
+.action-sheet-group-cancel {
   flex-shrink: 0;
+
+  overflow: hidden;
 }

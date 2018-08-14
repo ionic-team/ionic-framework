@@ -1,59 +1,39 @@
 @import "./tabbar";
 @import "./tabbar.md.vars";
+@import "./tab-button.md";
 
-.tabbar-md {
+:host {
+  // default color / background
+  --color: #{$tab-button-md-text-color};
+  --color-selected: #{$tabbar-md-text-color-active};
+  --background: #{$tabbar-md-background-color};
+  --background-focused: #{$tabbar-md-background-color-focused};
+  --icon-transform-selected: #{$tab-button-md-icon-transform-active};
+
   height: $tabbar-md-height;
 
   border-top: $tabbar-md-border;
-  background: $tabbar-md-background-color;
 
   contain: strict;
 }
 
-.tabbar-md .tabbar-highlight {
-  background: $tabbar-md-text-color-active;
-}
-
-.tabbar-md.scrollable ion-scroll {
-  @include margin(0, 8px);
-
-  max-width: 650px;
-}
-
-// Material Design Tabs Color Mixin
+// Material Design Tabbar Layout
 // --------------------------------------------------
 
-@mixin tabbar-md($color-name) {
-  $color-base: ion-color($colors-md, $color-name, base, md);
-  $color-contrast: ion-color($colors-md, $color-name, contrast, md);
-  $color-shade: ion-color($colors-md, $color-name, shade, md);
-
-  .tabbar-md-#{$color-name} {
-    color: $color-contrast;
-    background-color: $color-base;
-
-    fill: $color-contrast;
-  }
-
-  .tabbar-md-#{$color-name} .tab-button.focused {
-    background: $color-shade;
-  }
-
-  .tabbar-md-#{$color-name} .tab-button:hover,
-  .tabbar-md-#{$color-name} .tab-button.tab-selected {
-    color: $color-contrast;
-
-    fill: $color-contrast;
-  }
-
-  .tabbar-md-#{$color-name} .tabbar-highlight {
-    background: $color-contrast;
-  }
+:host(.layout-icon-top) .tab-btn {
+  --label-margin-bottom: -2px;
 }
 
-// Material Design Tabbar Color Generation
-// --------------------------------------------------
+:host(.layout-icon-end) .tab-btn {
+  --icon-transform-selected: #{$tab-button-md-icon-right-transform-active};
+}
 
-@each $color-name, $color-value in $colors-md {
-  @include tabbar-md($color-name);
+:host(.layout-icon-bottom) .tab-btn {
+  --label-margin-top: -2px;
+  --label-transform: transform-origin(center, top);
+  --icon-transform-selected: #{$tab-button-md-icon-bottom-transform-active};
+}
+
+:host(.layout-icon-start) .tab-btn {
+  --icon-transform-selected: #{$tab-button-md-icon-left-transform-active};
 }

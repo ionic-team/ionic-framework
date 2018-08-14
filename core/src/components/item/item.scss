@@ -3,42 +3,110 @@
 // Item
 // --------------------------------------------------
 
-ion-item {
+:host {
+  --min-height: #{$item-min-height};
+  --background: #{current-color(base)};
+  --background-active: #{current-color(tint)};
+  --color: #{current-color(contrast)};
+  --detail-push-color: #{current-color(shade)};
+  --border-radius: 0;
+  --border-width: 0;
+  --border-style: solid;
+  --border-color: #{current-color(shade)};
+  --inner-border-width: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  --padding-end: 0;
+  --padding-start: 0;
+  --inner-padding-top: 0px;
+  --inner-padding-bottom: 0px;
+  --inner-padding-start: 0px;
+  --inner-padding-end: 0px;
+  --box-shadow: none;
+  --inner-box-shadow: none;
+  --highlight-color-focus: #{ion-color(primary, base)};
+  --highlight-color-valid: #{ion-color(success, base)};
+  --highlight-color-invalid: #{ion-color(danger, base)};
+  --highlight-height: 2px;
+
   @include font-smoothing();
 
   display: block;
+
+  color: #{current-color(contrast)};
+
+  text-align: initial;
+  text-decoration: none;
+
+  box-sizing: border-box;
 }
 
-.item {
-  @include border-radius(0);
+:host(.activated) {
+  --background: var(--background-active);
+}
+
+:host(.item-disabled) {
+  cursor: default;
+  opacity: .3;
+  pointer-events: none;
+}
+
+
+.item-native {
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include border-radius(var(--border-radius));
   @include margin(0);
-  @include padding(0);
-  @include text-align(initial);
+  @include text-inherit();
 
   display: flex;
-  overflow: hidden;
+  position: relative;
 
   align-items: center;
   justify-content: space-between;
 
   width: 100%;
-  min-height: $item-min-height;
+  min-height: var(--min-height);
 
-  border: 0;
+  transition: var(--transition);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
   outline: none;
 
-  font-weight: normal;
-  line-height: normal;
-  text-decoration: none;
-  color: inherit;
+  background-color: var(--background);
+
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+button, a {
+  cursor: pointer;
+  user-select: none;
+
+  -webkit-user-drag: none;
+}
+
+.item-state {
+  @include position(null, 0, 0, 0);
+
+  position: absolute;
+
+  height: var(--highlight-height);
 }
 
 .item-inner {
   @include margin(0);
-  @include padding(0);
+  @include padding(
+    var(--inner-padding-top),
+    calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
+    var(--inner-padding-bottom),
+    calc(var(--ion-safe-area-left, 0px) + var(--inner-padding-start))
+  );
 
   display: flex;
-  overflow: hidden;
 
   flex: 1;
   flex-direction: inherit;
@@ -47,12 +115,17 @@ ion-item {
 
   min-height: inherit;
 
-  border: 0;
+  border-width: var(--inner-border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  box-shadow: var(--inner-box-shadow);
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
 .input-wrapper {
   display: flex;
-  overflow: hidden;
 
   flex: 1;
   flex-direction: inherit;
@@ -60,41 +133,75 @@ ion-item {
   align-self: stretch;
 
   text-overflow: ellipsis;
+
+  overflow: hidden;
+  box-sizing: border-box;
 }
 
-ion-item-group {
-  display: block;
-}
-
-[vertical-align-top],
-.input.item {
+:host([vertical-align-top]),
+:host(.item-input) {
   align-items: flex-start;
 }
 
-.item-cover {
-  @include position(0, null, null, 0);
-
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
-
-  background: transparent;
-  cursor: pointer;
-}
-
-.item > ion-icon,
-.item-inner > ion-icon {
+::slotted(ion-icon) {
   font-size: 1.6em;
 }
 
-.item .button {
-  @include margin(0);
+::slotted(ion-button) {
+  --margin-top: 0;
+  --margin-bottom: 0;
+  --margin-start: 0;
+  --margin-end: 0;
+
+  z-index: 1;
 }
 
-.item-disabled {
-  cursor: default;
-  opacity: .4;
 
-  pointer-events: none;
+// Item Input
+// -----------------------------------------
+
+:host(.item-label-stacked) .input-wrapper,
+:host(.item-label-floating) .input-wrapper {
+  flex: 1;
+  flex-direction: column;
+}
+
+// :host(.item-input-has-focus) a,
+// :host(.item-input-has-focus) button,
+// :host(.item-input-has-focus) textarea {
+//   pointer-events: auto;
+// }
+
+
+// Item Select
+// -----------------------------------------
+
+:host(.item-label-stacked) ::slotted(ion-select),
+:host(.item-label-floating) ::slotted(ion-select) {
+  --padding-start: 0;
+  align-self: stretch;
+
+  width: 100%;
+
+  max-width: 100%;
+}
+
+:host(.item-multiple-inputs) ::slotted(ion-select) {
+  position: relative;
+}
+
+
+// Item Textarea
+// -----------------------------------------
+
+:host(.item-textarea) {
+  align-items: stretch;
+}
+
+
+// Item Reorder
+// --------------------------------------------------
+
+::slotted(ion-reorder[slot]) {
+  @include margin(0, null);
 }

@@ -1,53 +1,62 @@
-import { Component, Element, Prop } from '@stencil/core';
-import { Config, Mode } from '../../interface';
-import { isDevice, isHybrid, needInputShims } from '../../utils/platform';
+import { Component, Element, Prop, QueueApi } from '@stencil/core';
+
+import { Config } from '../../interface';
+import { isDevice, isHybrid, isStandaloneMode, needInputShims } from '../../utils/platform';
 
 @Component({
   tag: 'ion-app',
-  styleUrls: {
-    ios: 'app.ios.scss',
-    md: 'app.md.scss'
-  },
-  host: {
-    theme: 'app'
-  }
+  styleUrl: 'app.scss'
 })
 export class App {
 
-  mode!: Mode;
+  private isDevice = false;
 
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;
   @Prop({ context: 'config' }) config!: Config;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
+
+  componentWillLoad() {
+    this.isDevice = this.config.getBoolean('isDevice', isDevice(this.win));
+  }
 
   componentDidLoad() {
-    loadInputShims(this.win, this.config);
+    setTimeout(() => {
+      importTapClick(this.win);
+      importInputShims(this.win, this.config);
+      importStatusTap(this.win, this.isDevice, this.queue);
+    }, 32);
   }
 
   hostData() {
     const hybrid = isHybrid(this.win);
-    const statusBar = this.config.getBoolean('statusbarPadding', hybrid);
+    const isStandalone = isStandaloneMode(this.win);
+    const statusbarPadding = this.config.get('statusbarPadding', hybrid || isStandalone);
 
     return {
       class: {
-        [this.mode]: true,
-        'statusbar-padding': statusBar
+        'ion-page': true,
+        'is-device': this.isDevice,
+        'is-hydrid': hybrid,
+        'is-standalone': isStandalone,
+        'statusbar-padding': statusbarPadding
       }
     };
   }
+}
 
-  render() {
-    const device = this.config.getBoolean('isDevice', isDevice(this.win));
-    return [
-      <ion-tap-click></ion-tap-click>,
-      device && <ion-status-tap></ion-status-tap>,
-      <slot></slot>
-    ];
+async function importStatusTap(win: Window, device: boolean, queue: QueueApi) {
+  if (device) {
+    (await import('../../utils/status-tap')).startStatusTap(win, queue);
   }
 }
 
-async function loadInputShims(win: Window, config: Config) {
+async function importTapClick(win: Window) {
+  (await import('../../utils/tap-click')).startTapClick(win.document);
+}
+
+async function importInputShims(win: Window, config: Config) {
   const inputShims = config.getBoolean('inputShims', needInputShims(win));
   if (inputShims) {
     (await import('../../utils/input-shims/input-shims')).startInputShims(win.document, config);

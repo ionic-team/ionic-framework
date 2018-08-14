@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * iOS Popover Enter Animation
  */
-export function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
+export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
   let originY = 'top';
   let originX = 'left';
 
@@ -100,30 +100,22 @@ export function iosEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?
   contentEl.style.left = popoverCSS.left + 'px';
 
   if (checkSafeAreaLeft) {
-    if (CSS.supports('left', 'constant(safe-area-inset-left)')) {
-      contentEl.style.left = `calc(${popoverCSS.left}px + constant(safe-area-inset-left)`;
-    } else if (CSS.supports('left', 'env(safe-area-inset-left)')) {
-      contentEl.style.left = `calc(${popoverCSS.left}px + env(safe-area-inset-left)`;
-    }
+    contentEl.style.left = `calc(${popoverCSS.left}px + var(--ion-safe-area-left, 0px)`;
   }
 
   if (checkSafeAreaRight) {
-    if (CSS.supports('right', 'constant(safe-area-inset-right)')) {
-      contentEl.style.left = `calc(${popoverCSS.left}px - constant(safe-area-inset-right)`;
-    } else if (CSS.supports('right', 'env(safe-area-inset-right)')) {
-      contentEl.style.left = `calc(${popoverCSS.left}px - env(safe-area-inset-right)`;
-    }
+    contentEl.style.left = `calc(${popoverCSS.left}px + var(--ion-safe-area-right, 0px)`;
   }
 
   contentEl.style.transformOrigin = originY + ' ' + originX;
 
-  const baseAnimation = new Animation();
+  const baseAnimation = new AnimationC();
 
-  const backdropAnimation = new Animation();
+  const backdropAnimation = new AnimationC();
   backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
   backdropAnimation.fromTo('opacity', 0.01, 0.08);
 
-  const wrapperAnimation = new Animation();
+  const wrapperAnimation = new AnimationC();
   wrapperAnimation.addElement(baseEl.querySelector('.popover-wrapper'));
   wrapperAnimation.fromTo('opacity', 0.01, 1);
 

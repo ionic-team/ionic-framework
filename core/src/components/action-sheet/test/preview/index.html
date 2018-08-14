@@ -6,18 +6,19 @@
   <title>Action Sheet</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
 </head>
 
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Action Sheet</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content padding>
+    <ion-content padding fullscreen>
       <ion-action-sheet-controller></ion-action-sheet-controller>
 
       <ion-button expand="block" id="basic" onclick="presentBasic()">Basic</ion-button>
@@ -31,10 +32,15 @@
 
     </ion-content>
 
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
   </ion-app>
 
   <script>
-    window.addEventListener('ionActionSheetDidDismiss', function(e){console.log('didDismiss', e)})
+    window.addEventListener('ionActionSheetDidDismiss', function (e) { console.log('didDismiss', e) })
 
     async function presentBasic() {
       const mode = Ionic.mode;
@@ -129,7 +135,7 @@
       const actionSheetController = document.querySelector('ion-action-sheet-controller');
       await actionSheetController.componentOnReady();
       const actionSheetElement = await actionSheetController.create({
-        enableBackdropDismiss: false,
+        backdropDismiss: false,
         buttons: [{
           text: 'Archive',
           handler: () => {

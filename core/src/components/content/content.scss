@@ -1,22 +1,88 @@
-@import "../../themes/ionic.globals";
+@import "../../themes/ionic.theme.default";
 
 // Content
 // --------------------------------------------------
 
-ion-content {
-  position: relative;
+:host {
+  --ion-color-base: #{$background-color};
+  --ion-color-contrast: #{$text-color};
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+  --keyboard-offset: 0px;
+  --offset-top: 0px;
+  --offset-bottom: 0px;
+
   display: block;
+  position: relative;
 
   flex: 1;
 
-  width: 100%;
+  /* stylelint-disable */
+  padding: 0 !important;
+  margin: 0 !important;
+  /* stylelint-enable */
+
+  background-color: #{current-color(base)};
+  color: #{current-color(contrast)};
 
   contain: layout size style;
+}
 
-  margin: 0 !important; // scss-lint:disable all
-  padding: 0 !important; // scss-lint:disable all
+:host(.ion-color-outer),
+:host(.outer-content) {
+  --ion-color-base: #{$background-color-step-50};
+}
 
-  > .scroll-inner {
-    min-height: 100%;
-  }
+.inner-scroll {
+  @include position(
+    calc(var(--offset-top) * -1), 0,
+    calc(var(--offset-bottom) * -1), 0
+  );
+  @include padding(
+    calc(var(--padding-top) + var(--offset-top)),
+    var(--padding-end),
+    calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom)),
+    var(--padding-start)
+  );
+
+  position: absolute;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+}
+
+.scroll-y,
+.scroll-x {
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
+  overscroll-behavior: contain;
+}
+
+.scroll-y {
+  overflow-y: auto;
+}
+
+.scroll-x {
+  overflow-x: auto;
+}
+
+.overscroll::before,
+.overscroll::after {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  content: "";
+}
+
+.overscroll::before {
+  bottom: -1px;
+}
+
+.overscroll::after {
+  top: -1px;
 }

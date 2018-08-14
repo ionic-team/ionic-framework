@@ -1,5 +1,6 @@
 # ion-skeleton-text
 
+Skeleton Text is a component for rendering placeholder content. The element will render a gray block at the specified width.
 
 
 <!-- Auto Generated Below -->
@@ -7,17 +8,9 @@
 
 ## Properties
 
-#### width
-
-string
-
-
-## Attributes
-
-#### width
-
-string
-
+| Property | Attribute | Description                                         | Type     |
+| -------- | --------- | --------------------------------------------------- | -------- |
+| `width`  | `width`   | Width for the element to render at. Default is 100% | `string` |
 
 
 ----------------------------------------------

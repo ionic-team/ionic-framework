@@ -4,25 +4,29 @@
 // iOS Select
 // --------------------------------------------------
 
-.select-ios {
-  @include padding($select-ios-padding-top, $select-ios-padding-end, $select-ios-padding-bottom, $select-ios-padding-start);
+:host {
+  --padding-top: #{$select-ios-padding-top};
+  --padding-end: #{$select-ios-padding-end};
+  --padding-bottom: #{$select-ios-padding-bottom};
+  --padding-start: #{$select-ios-padding-start};
+
+  color: $select-ios-text-color;
 
   font-family: $select-ios-font-family;
-  color: $select-ios-text-color;
 }
 
-.select-ios .select-placeholder {
+.select-placeholder {
   color: $select-ios-placeholder-color;
 }
 
-.select-ios .select-icon {
+.select-icon {
   position: relative;
 
   width: 12px;
   height: 18px;
 }
 
-.select-ios .select-icon .select-icon-inner {
+.select-icon .select-icon-inner {
   @include position(50%, null, null, 5px);
   @include margin(-2px, null, null, null);
 
@@ -34,8 +38,8 @@
   border-top: 5px solid;
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
-  color: $select-ios-icon-color;
 
+  color: $select-ios-icon-color;
   pointer-events: none;
 }
 

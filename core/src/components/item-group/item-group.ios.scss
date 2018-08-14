@@ -5,11 +5,7 @@
 // iOS Item Group
 // --------------------------------------------------
 
-.item-group-ios ion-item:first-child .item-inner {
-  border-top-width: 0;
-}
-
-.item-group-ios ion-item:last-child .item-inner,
-.item-group-ios ion-item-sliding:last-child .item .item-inner {
-  border: 0;
+.item-group-ios ion-item:last-child,
+.item-group-ios ion-item-sliding:last-child .item {
+  --border-width: 0;
 }

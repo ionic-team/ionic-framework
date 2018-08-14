@@ -1,8 +1,9 @@
 import { Component, Listen, Method, Prop } from '@stencil/core';
-import { PickerOptions } from '../../interface';
-import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
+import { OverlayController, PickerOptions } from '../../interface';
+import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
+/** @hidden */
 @Component({
   tag: 'ion-picker-controller'
 })

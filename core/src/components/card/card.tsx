@@ -1,5 +1,7 @@
 import { Component, Prop } from '@stencil/core';
+
 import { Color, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-card',
@@ -7,15 +9,14 @@ import { Color, Mode } from '../../interface';
     ios: 'card.ios.scss',
     md: 'card.md.scss'
   },
-  host: {
-    theme: 'card'
-  }
+  scoped: true
 })
 export class Card {
 
   /**
-   * The color to use for the background.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -25,4 +26,9 @@ export class Card {
    */
   @Prop() mode!: Mode;
 
+  hostData() {
+    return {
+      class: createColorClasses(this.color)
+    };
+  }
 }

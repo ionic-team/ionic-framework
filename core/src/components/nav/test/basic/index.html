@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>Nav</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
   <script>
     class PageOne extends HTMLElement {
       connectedCallback() {
@@ -27,7 +29,7 @@
       connectedCallback() {
         this.innerHTML = `
           <ion-header>
-            <ion-toolbar>
+            <ion-toolbar color="primary">
               <ion-buttons slot="start">
                 <ion-back-button text="Page One"></ion-back-button>
               </ion-buttons>
@@ -67,9 +69,11 @@
     customElements.define('page-three', PageThree);
   </script>
 </head>
+
 <body>
   <ion-app>
     <ion-nav root="page-one"></ion-nav>
   </ion-app>
 </body>
+
 </html>

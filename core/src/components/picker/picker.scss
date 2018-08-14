@@ -7,22 +7,22 @@ ion-picker {
   @include font-smoothing();
   @include position(0, null, null, 0);
 
-  position: absolute;
-  z-index: $z-index-overlay;
   display: block;
+  position: absolute;
 
   width: $picker-width;
   height: $picker-width;
 
   contain: strict;
+  user-select: none;
+  z-index: $z-index-overlay;
 }
 
 .picker-toolbar {
-  z-index: 1;
-
   width: 100%;
 
   contain: strict;
+  z-index: 1;
 }
 
 .picker-wrapper {
@@ -30,11 +30,8 @@ ion-picker {
   @include margin(auto);
   @include transform(translate3d(0, 100%, 0));
 
-  position: absolute;
-  z-index: $z-index-overlay-wrapper;
   display: flex;
-
-  overflow: hidden;
+  position: absolute;
 
   flex-direction: column;
 
@@ -42,36 +39,36 @@ ion-picker {
   max-width: $picker-max-width;
 
   contain: strict;
+  overflow: hidden;
+  z-index: $z-index-overlay-wrapper;
 }
 
 .picker-columns {
-  @include margin(null, null, constant(safe-area-inset-bottom), null);
-  @include margin(null, null, env(safe-area-inset-bottom), null);
-
-  position: relative;
-  display: flex;
-
-  overflow: hidden;
-
-  justify-content: center;
-
-  contain: strict;
-
   @include rtl() {
     // Date is the same format in both directions
     flex-direction: row-reverse;
   }
+
+  display: flex;
+  position: relative;
+
+  justify-content: center;
+
+  margin-bottom: var(--ion-safe-area-bottom);
+
+  contain: strict;
+  overflow: hidden;
 }
 
 .picker-col {
-  box-sizing: content-box;
-  position: relative;
   display: flex;
+  position: relative;
 
   flex: 1;
   justify-content: center;
 
   height: 100%;
+  box-sizing: content-box;
 
   contain: content;
 }
@@ -85,27 +82,27 @@ ion-picker {
 }
 
 .picker-prefix {
-  @include text-align(end);
-
   position: relative;
 
   flex: 2;
 
   min-width: 45%;
   max-width: 50%;
+
+  text-align: end;
 
   white-space: nowrap;
 }
 
 .picker-suffix {
-  @include text-align(start);
-
   position: relative;
 
   flex: 2;
 
   min-width: 45%;
   max-width: 50%;
+
+  text-align: start;
 
   white-space: nowrap;
 }
@@ -113,22 +110,22 @@ ion-picker {
 // contain property is supported by Chrome
 .picker-opt {
   @include position(0, null, null, 0);
-  @include text-align(center);
-
-  position: absolute;
 
   display: block;
-  overflow: hidden;
+  position: absolute;
 
   width: 100%;
 
   border: 0;
 
+  text-align: center;
   text-overflow: ellipsis;
+
   white-space: nowrap;
 
-  will-change: transform;
   contain: strict;
+  overflow: hidden;
+  will-change: transform;
 }
 
 .picker-opt.picker-opt-disabled {
@@ -162,12 +159,12 @@ ion-picker {
 .picker-above-highlight,
 .picker-below-highlight {
   display: none;
-
   pointer-events: none;
 }
 
 .picker-button {
   border: 0;
+
   font-family: inherit;
 }
 

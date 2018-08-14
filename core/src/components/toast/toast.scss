@@ -4,27 +4,47 @@
 // --------------------------------------------------
 
 ion-toast {
+  /**
+   * @prop --background: Background of the toast
+   * @prop --button-color: Color of the button text
+   * @prop --color: Color of the toast text
+   */
   @include position(0, null, null, 0);
 
-  position: absolute;
-
-  z-index: $z-index-overlay;
-
   display: block;
+  position: absolute;
 
   width: $toast-width;
   height: $toast-width;
 
-  pointer-events: none;
+  color: var(--color);
 
   contain: strict;
+  z-index: $z-index-overlay;
+  pointer-events: none;
 }
+
+.toast-wrapper {
+  background: var(--background);
+}
+
+.toast-wrapper.toast-top {
+  @include transform(translate3d(0, -100%, 0));
+
+  top: 0;
+}
+
+.toast-wrapper.toast-bottom {
+  @include transform(translate3d(0, 100%, 0));
+
+  bottom: 0;
+}
+
 
 .toast-container {
   display: flex;
 
   align-items: center;
-
   pointer-events: auto;
 
   contain: content;

@@ -4,19 +4,11 @@
 // --------------------------------------------------
 
 ion-item-options {
-  position: absolute;
-  z-index: $z-index-item-options;
-  display: none;
-
-  height: 100%;
-
-  font-size: 14px;
-
   @include multi-dir() {
-    // scss-lint:disable PropertySpelling
+    /* stylelint-disable property-blacklist */
     top: 0;
-
     right: 0;
+    /* stylelint-enable property-blacklist */
   }
 
   @include ltr() {
@@ -27,13 +19,24 @@ ion-item-options {
     justify-content: flex-start;
 
     &:not(.item-options-end) {
-      // scss-lint:disable PropertySpelling
+      /* stylelint-disable property-blacklist */
       right: auto;
       left: 0;
+      /* stylelint-enable property-blacklist */
 
       justify-content: flex-end;
     }
   }
+
+  display: none;
+  position: absolute;
+
+  height: 100%;
+
+  font-size: 14px;
+
+  user-select: none;
+  z-index: $z-index-item-options;
 
   &.hydrated {
     visibility: hidden;
@@ -42,9 +45,10 @@ ion-item-options {
 
 .item-options-start {
   @include multi-dir() {
-    // scss-lint:disable PropertySpelling
+    /* stylelint-disable property-blacklist */
     right: auto;
     left: 0;
+    /* stylelint-enable property-blacklist */
   }
 
   @include ltr() {
@@ -58,7 +62,7 @@ ion-item-options {
 
 .item-sliding-active-slide {
   @include rtl() {
-    &.item-sliding-active-options-left ion-item-options:not(.item-options-end) {
+    &.item-sliding-active-options-start ion-item-options:not(.item-options-end) {
       width: 100%;
 
       visibility: visible;
@@ -69,8 +73,8 @@ ion-item-options {
     display: flex;
   }
 
-  &.item-sliding-active-options-left .item-options-start,
-  &.item-sliding-active-options-right ion-item-options:not(.item-options-start) {
+  &.item-sliding-active-options-start .item-options-start,
+  &.item-sliding-active-options-end ion-item-options:not(.item-options-start) {
     width: 100%;
 
     visibility: visible;

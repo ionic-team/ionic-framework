@@ -16,279 +16,45 @@ To present a popover, call the `present` method on a popover instance. In order 
 
 ## Properties
 
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
-
-
-#### component
-
-string
-
-The component to display inside of the popover.
-
-
-#### componentProps
-
-
-
-The data to pass to the popover component.
-
-
-#### cssClass
-
-string
-
-Additional classes to apply for custom CSS. If multiple classes are
-provided they should be separated by spaces.
-
-
-#### delegate
-
-
-
-
-#### enableBackdropDismiss
-
-boolean
-
-If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
-
-
-#### enterAnimation
-
-
-
-Animation to use when the popover is presented.
-
-
-#### ev
-
-any
-
-The event to pass to the popover animation.
-
-
-#### keyboardClose
-
-boolean
-
-
-#### leaveAnimation
-
-
-
-Animation to use when the popover is dismissed.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
-
-#### overlayId
-
-number
-
-
-#### showBackdrop
-
-boolean
-
-If true, a backdrop will be displayed behind the popover. Defaults to `true`.
-
-
-#### translucent
-
-boolean
-
-If true, the popover will be translucent. Defaults to `false`.
-
-
-#### willAnimate
-
-boolean
-
-If true, the popover will animate. Defaults to `true`.
-
-
-## Attributes
-
-#### color
-
-string
-
-The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information, see [Theming your App](/docs/theming/theming-your-app).
-
-
-#### component
-
-string
-
-The component to display inside of the popover.
-
-
-#### component-props
-
-
-
-The data to pass to the popover component.
-
-
-#### css-class
-
-string
-
-Additional classes to apply for custom CSS. If multiple classes are
-provided they should be separated by spaces.
-
-
-#### delegate
-
-
-
-
-#### enable-backdrop-dismiss
-
-boolean
-
-If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
-
-
-#### enter-animation
-
-
-
-Animation to use when the popover is presented.
-
-
-#### ev
-
-any
-
-The event to pass to the popover animation.
-
-
-#### keyboard-close
-
-boolean
-
-
-#### leave-animation
-
-
-
-Animation to use when the popover is dismissed.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
-
-
-#### overlay-id
-
-number
-
-
-#### show-backdrop
-
-boolean
-
-If true, a backdrop will be displayed behind the popover. Defaults to `true`.
-
-
-#### translucent
-
-boolean
-
-If true, the popover will be translucent. Defaults to `false`.
-
-
-#### will-animate
-
-boolean
-
-If true, the popover will animate. Defaults to `true`.
+| Property          | Attribute          | Description                                                                                                                                                                                                                                                            | Type                |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `backdropDismiss` | `backdrop-dismiss` | If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.                                                                                                                                                                               | `boolean`           |
+| `color`           | `color`            | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `Color`             |
+| `componentProps`  | --                 | The data to pass to the popover component.                                                                                                                                                                                                                             | `ComponentProps`    |
+| `component`       | `component`        | The component to display inside of the popover.                                                                                                                                                                                                                        | `ComponentRef`      |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                                                                                                                                                       | `string | string[]` |
+| `delegate`        | --                 |                                                                                                                                                                                                                                                                        | `FrameworkDelegate` |
+| `enterAnimation`  | --                 | Animation to use when the popover is presented.                                                                                                                                                                                                                        | `AnimationBuilder`  |
+| `event`           | --                 | The event to pass to the popover animation.                                                                                                                                                                                                                            | `any`               |
+| `keyboardClose`   | `keyboard-close`   |                                                                                                                                                                                                                                                                        | `boolean`           |
+| `leaveAnimation`  | --                 | Animation to use when the popover is dismissed.                                                                                                                                                                                                                        | `AnimationBuilder`  |
+| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `Mode`              |
+| `overlayId`       | `overlay-id`       |                                                                                                                                                                                                                                                                        | `number`            |
+| `showBackdrop`    | `show-backdrop`    | If true, a backdrop will be displayed behind the popover. Defaults to `true`.                                                                                                                                                                                          | `boolean`           |
+| `translucent`     | `translucent`      | If true, the popover will be translucent. Defaults to `false`.                                                                                                                                                                                                         | `boolean`           |
+| `willAnimate`     | `will-animate`     | If true, the popover will animate. Defaults to `true`.                                                                                                                                                                                                                 | `boolean`           |
 
 
 ## Events
 
-#### ionPopoverDidDismiss
-
-Emitted after the popover has dismissed.
-
-
-#### ionPopoverDidLoad
-
-Emitted after the popover has loaded.
-
-
-#### ionPopoverDidPresent
-
-Emitted after the popover has presented.
-
-
-#### ionPopoverDidUnload
-
-Emitted after the popover has unloaded.
-
-
-#### ionPopoverWillDismiss
-
-Emitted before the popover has dismissed.
-
-
-#### ionPopoverWillPresent
-
-Emitted before the popover has presented.
+| Event                   | Description                               |
+| ----------------------- | ----------------------------------------- |
+| `ionPopoverDidDismiss`  | Emitted after the popover has dismissed.  |
+| `ionPopoverDidLoad`     | Emitted after the popover has loaded.     |
+| `ionPopoverDidPresent`  | Emitted after the popover has presented.  |
+| `ionPopoverDidUnload`   | Emitted after the popover has unloaded.   |
+| `ionPopoverWillDismiss` | Emitted before the popover has dismissed. |
+| `ionPopoverWillPresent` | Emitted before the popover has presented. |
 
 
 ## Methods
 
-#### dismiss()
-
-Dismiss the popover overlay after it has been presented.
-
-
-#### onDidDismiss()
-
-Returns a promise that resolves when the popover did dismiss. It also accepts a callback
-that is called in the same circustances.
-
-```
-const {data, role} = await popover.onDidDismiss();
-```
-
-
-#### onWillDismiss()
-
-Returns a promise that resolves when the popover will dismiss. It also accepts a callback
-that is called in the same circustances.
-
-```
-const {data, role} = await popover.onWillDismiss();
-```
-
-
-#### present()
-
-Present the popover overlay after it has been created.
-
+| Method          | Description                                                                                                                        |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `dismiss`       | Dismiss the popover overlay after it has been presented.                                                                           |
+| `onDidDismiss`  | Returns a promise that resolves when the popover did dismiss. It also accepts a callback that is called in the same circustances.  |
+| `onWillDismiss` | Returns a promise that resolves when the popover will dismiss. It also accepts a callback that is called in the same circustances. |
+| `present`       | Present the popover overlay after it has been created.                                                                             |
 
 
 ----------------------------------------------

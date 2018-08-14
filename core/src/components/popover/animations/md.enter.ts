@@ -3,7 +3,7 @@ import { Animation } from '../../../interface';
 /**
  * Md Popover Enter Animation
  */
-export function mdEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
+export function mdEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev?: Event): Promise<Animation> {
   let originY = 'top';
   let originX = 'left';
 
@@ -67,21 +67,21 @@ export function mdEnterAnimation(Animation: Animation, baseEl: HTMLElement, ev?:
   contentEl.style.left = popoverCSS.left + 'px';
   contentEl.style.transformOrigin = originY + ' ' + originX;
 
-  const baseAnimation = new Animation();
+  const baseAnimation = new AnimationC();
 
-  const backdropAnimation = new Animation();
+  const backdropAnimation = new AnimationC();
   backdropAnimation.addElement(baseEl.querySelector('ion-backdrop'));
   backdropAnimation.fromTo('opacity', 0.01, 0.08);
 
-  const wrapperAnimation = new Animation();
+  const wrapperAnimation = new AnimationC();
   wrapperAnimation.addElement(baseEl.querySelector('.popover-wrapper'));
   wrapperAnimation.fromTo('opacity', 0.01, 1);
 
-  const contentAnimation = new Animation();
+  const contentAnimation = new AnimationC();
   contentAnimation.addElement(baseEl.querySelector('.popover-content'));
   contentAnimation.fromTo('scale', 0.001, 1);
 
-  const viewportAnimation = new Animation();
+  const viewportAnimation = new AnimationC();
   viewportAnimation.addElement(baseEl.querySelector('.popover-viewport'));
   viewportAnimation.fromTo('opacity', 0.01, 1);
 

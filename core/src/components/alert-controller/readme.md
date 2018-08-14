@@ -1,6 +1,6 @@
 # ion-alert-controller
 
-Alert controllers programmatically control the alert component. Alerts can be created and dismissed from the alert controller. View the [Alert](../../alert/Alert) documentation for a full list of options to pass upon creation.
+Alert controllers programmatically control the alert component. Alerts can be created and dismissed from the alert controller. View the [Alert](../alert) documentation for a full list of options to pass upon creation.
 
 
 ```javascript
@@ -24,14 +24,11 @@ async function presentAlert() {
 
 ## Methods
 
-#### create()
-
-
-#### dismiss()
-
-
-#### getTop()
-
+| Method    | Description                                 |
+| --------- | ------------------------------------------- |
+| `create`  | Create an alert overlay with alert options  |
+| `dismiss` | Dismiss the open alert overlay.             |
+| `getTop`  | Get the most recently opened alert overlay. |
 
 
 ----------------------------------------------

@@ -1,29 +1,30 @@
-import { Component, Prop } from '@stencil/core';
-import { Color, Mode } from '../../interface';
+import { Component, Element, Prop } from '@stencil/core';
 
+import { Color, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-item-option',
-  host: {
-    theme: 'item-option'
-  },
   styleUrls: {
     ios: 'item-option.ios.scss',
     md: 'item-option.md.scss'
-  }
+  },
+  shadow: true
 })
 export class ItemOption {
+
+  @Element() el!: HTMLElement;
+
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode!: Mode;
 
@@ -51,6 +52,7 @@ export class ItemOption {
   hostData() {
     return {
       class: {
+        ...createColorClasses(this.color),
         'item-option-expandable': this.expandable
       }
     };
@@ -61,20 +63,21 @@ export class ItemOption {
 
     return (
       <TagType
-        class="item-option-button"
+        type="button"
+        class="item-option-native"
         disabled={this.disabled}
         href={this.href}
-        onClick={this.clickedOptionButton.bind(this)}>
+        onClick={this.clickedOptionButton.bind(this)}
+      >
         <span class="item-option-button-inner">
           <slot name="start"></slot>
-          <slot name="top"></slot>
-          <slot name="icon-only"></slot>
+          <slot name="top" />
+          <slot name="icon-only" />
           <slot></slot>
-          <slot name="bottom"></slot>
+          <slot name="bottom" />
           <slot name="end"></slot>
         </span>
       </TagType>
     );
   }
-
 }

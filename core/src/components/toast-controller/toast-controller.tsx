@@ -1,7 +1,7 @@
 import { Component, Listen, Method, Prop } from '@stencil/core';
-import { ToastOptions } from '../../interface';
-import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
+import { OverlayController, ToastOptions } from '../../interface';
+import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-toast-controller'
@@ -28,7 +28,7 @@ export class ToastController implements OverlayController {
     removeLastOverlay(this.toasts);
   }
 
-  /*
+  /**
    * Create a toast overlay with toast options.
    */
   @Method()
@@ -36,7 +36,7 @@ export class ToastController implements OverlayController {
     return createOverlay(this.doc.createElement('ion-toast'), opts);
   }
 
-  /*
+  /**
    * Dismiss the open toast overlay.
    */
   @Method()
@@ -44,7 +44,7 @@ export class ToastController implements OverlayController {
     return dismissOverlay(data, role, this.toasts, toastId);
   }
 
-  /*
+  /**
    * Get the most recently opened toast overlay.
    */
   @Method()

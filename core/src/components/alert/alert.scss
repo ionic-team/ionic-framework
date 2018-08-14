@@ -3,42 +3,46 @@
 // Alert
 // --------------------------------------------------
 
-ion-alert {
+:host {
+  --min-width: #{$alert-min-width};
+  --max-height: #{$alert-max-height};
+
   @include font-smoothing();
   @include position(0, 0, 0, 0);
 
-  position: fixed;
-
-  z-index: $z-index-overlay;
-
   display: flex;
+  position: fixed;
 
   align-items: center;
   justify-content: center;
 
-  touch-action: none;
-
   contain: strict;
+  touch-action: none;
+  user-select: none;
+  z-index: $z-index-overlay;
 }
 
-ion-alert.alert-top {
+:host(.alert-top) {
   @include padding(50px, null, null, null);
 
   align-items: flex-start;
 }
 
 .alert-wrapper {
-  z-index: $z-index-overlay-wrapper;
   display: flex;
 
   flex-direction: column;
 
-  min-width: $alert-min-width;
-  max-height: $alert-max-height;
+  min-width: var(--min-width);
+  max-width: var(--max-width);
 
-  opacity: 0;
+  max-height: var(--max-height);
+
+  background: var(--background);
 
   contain: content;
+  opacity: 0;
+  z-index: $z-index-overlay-wrapper;
 }
 
 .alert-title {
@@ -55,25 +59,26 @@ ion-alert.alert-top {
 
 .alert-message {
   box-sizing: border-box;
-
   -webkit-overflow-scrolling: touch;
-
   overflow-y: scroll;
-
   overscroll-behavior-y: contain;
+}
+
+.alert-message::-webkit-scrollbar {
+  display: none;
 }
 
 .alert-input {
   @include padding(10px, 0);
 
-  box-sizing: border-box;
-
   width: 100%;
 
   border: 0;
-  font: inherit;
 
   background: inherit;
+
+  font: inherit;
+  box-sizing: border-box;
 }
 
 .alert-button-group {
@@ -92,13 +97,15 @@ ion-alert.alert-top {
 .alert-button {
   @include margin(0);
 
-  z-index: 0;
   display: block;
 
   border: 0;
 
   font-size: $alert-button-font-size;
+
   line-height: $alert-button-line-height;
+
+  z-index: 0;
 }
 
 .alert-button-inner {
@@ -114,8 +121,6 @@ ion-alert.alert-top {
 }
 
 .alert-tappable {
-  @include text-align(start);
-  @include appearance(none);
   @include margin(0);
   @include padding(0);
 
@@ -123,9 +128,14 @@ ion-alert.alert-top {
 
   border: 0;
 
-  font-size: inherit;
-  line-height: initial;
   background: transparent;
+
+  font-size: inherit;
+
+  line-height: initial;
+
+  text-align: start;
+  appearance: none;
 }
 
 .alert-button,

@@ -1,25 +1,13 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, State } from '@stencil/core';
-import { GestureDetail, QueueController } from '../../interface';
+import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-const enum RefresherState {
-  Inactive = 1 << 0,
-  Pulling = 1 << 1,
-  Ready = 1 << 2,
-  Refreshing = 1 << 3,
-  Cancelling = 1 << 4,
-  Completing = 1 << 5,
-
-  _BUSY_ = Refreshing | Cancelling | Completing,
-}
+import { Gesture, GestureDetail, Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-refresher',
   styleUrls: {
     ios: 'refresher.ios.scss',
     md: 'refresher.md.scss'
-  },
-  host: {
-    theme: 'refresher'
   }
 })
 export class Refresher {
@@ -27,9 +15,12 @@ export class Refresher {
   private appliedStyles = false;
   private didStart = false;
   private progress = 0;
-  private scrollEl: HTMLElement | null = null;
+  private scrollEl?: HTMLElement;
+  private gesture?: Gesture;
 
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  mode!: Mode;
+
+  @Prop({ context: 'queue' }) queue!: QueueApi;
 
   /**
    * The current state which the refresher is in. The refresher's states include:
@@ -39,10 +30,9 @@ export class Refresher {
    * - `cancelling` - The user pulled down the refresher and let go, but did not pull down far enough to kick off the `refreshing` state. After letting go, the refresher is in the `cancelling` state while it is closing, and will go back to the `inactive` state once closed.
    * - `ready` - The user has pulled down the refresher far enough that if they let go, it'll begin the `refreshing` state.
    * - `refreshing` - The refresher is actively waiting on the async operation to end. Once the refresh handler calls `complete()` it will begin the `completing` state.
-   * - `completing` - The `refreshing` state has finished and the refresher is in the process of closing itself. Once closed, the refresher will go back to the `inactive` state.
+   * - `completing` - The `refreshing` state has finished and the refresher is in the way of closing itself. Once closed, the refresher will go back to the `inactive` state.
    */
   @State() private state: RefresherState = RefresherState.Inactive;
-
 
   @Element() el!: HTMLElement;
 
@@ -71,9 +61,15 @@ export class Refresher {
   @Prop() snapbackDuration = '280ms';
 
   /**
-   * If true, the refresher will be hidden. Defaults to `true`.
+   * If true, the refresher will be hidden. Defaults to `false`.
    */
-  @Prop() disabled = true;
+  @Prop() disabled = false;
+  @Watch('disabled')
+  disabledChanged() {
+    if (this.gesture) {
+      this.gesture.setDisabled(this.disabled);
+    }
+  }
 
   /**
    * Emitted when the user lets go of the content and has pulled down
@@ -93,24 +89,38 @@ export class Refresher {
    */
   @Event() ionStart!: EventEmitter<void>;
 
-  componentDidLoad() {
+  async componentDidLoad() {
     if (this.el.getAttribute('slot') !== 'fixed') {
       console.error('Make sure you use: <ion-refresher slot="fixed">');
       return;
     }
-    const parentElement = this.el.parentElement;
-    if (!parentElement) {
-      console.error('ion-refresher is not attached');
-      return;
+    const contentEl = this.el.closest('ion-content');
+    if (contentEl) {
+      await contentEl.componentOnReady();
+      this.scrollEl = contentEl.getScrollElement();
+    } else {
+      console.error('ion-refresher did not attach, make sure the parent is an ion-content.');
     }
-    this.scrollEl = parentElement.querySelector('ion-scroll') as HTMLElement;
-    if (!this.scrollEl) {
-      console.error('ion-refresher didn\'t attached, make sure if parent is a ion-content');
-    }
+
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+      el: this.el.closest('ion-content') as any,
+      queue: this.queue,
+      gestureName: 'refresher',
+      gesturePriority: 10,
+      direction: 'y',
+      threshold: 10,
+      passive: false,
+      canStart: this.canStart.bind(this),
+      onStart: this.onStart.bind(this),
+      onMove: this.onMove.bind(this),
+      onEnd: this.onEnd.bind(this),
+    });
+
+    this.disabledChanged();
   }
 
   componentDidUnload() {
-    this.scrollEl = null;
+    this.scrollEl = undefined;
   }
 
   /**
@@ -165,6 +175,8 @@ export class Refresher {
   }
 
   private onStart() {
+    console.log('start');
+
     this.progress = 0;
     this.state = RefresherState.Inactive;
   }
@@ -183,7 +195,7 @@ export class Refresher {
     }
 
     // do nothing if it's actively refreshing
-    // or it's in the process of closing
+    // or it's in the way of closing
     // or this was never a startY
     if (this.state & RefresherState._BUSY_) {
       return 2;
@@ -224,7 +236,6 @@ export class Refresher {
     }
 
     // prevent native scroll events
-    console.log('preventDefault');
     ev.preventDefault();
 
     // the refresher is actively pulling at this point
@@ -322,7 +333,7 @@ export class Refresher {
     this.queue.write(() => {
       if (this.scrollEl) {
         const style = this.scrollEl.style;
-        style.transform = ((y > 0) ? 'translateY(' + y + 'px) translateZ(0px)' : 'translateZ(0px)');
+        style.transform = ((y > 0) ? `translateY(${y}px) translateZ(0px)` : 'translateZ(0px)');
         style.transitionDuration = duration;
         style.transitionDelay = delay;
         style.overflow = (overflowVisible ? 'hidden' : '');
@@ -332,7 +343,10 @@ export class Refresher {
 
   hostData() {
     return {
+      slot: 'fixed',
       class: {
+        ...createThemedClasses(this.mode, 'refresher'),
+
         'refresher-active': this.state !== RefresherState.Inactive,
         'refresher-pulling': this.state === RefresherState.Pulling,
         'refresher-ready': this.state === RefresherState.Ready,
@@ -342,21 +356,15 @@ export class Refresher {
       }
     };
   }
+}
 
-  render() {
-    return <ion-gesture
-      canStart={this.canStart.bind(this)}
-      onStart={this.onStart.bind(this)}
-      onMove={this.onMove.bind(this)}
-      onEnd={this.onEnd.bind(this)}
-      gestureName="refresher"
-      gesturePriority={10}
-      passive={false}
-      direction="y"
-      threshold={5}
-      attachTo={this.el.closest('ion-content') as any}
-      disabled={this.disabled}>
-      <slot></slot>
-    </ion-gesture>;
-  }
+const enum RefresherState {
+  Inactive = 1 << 0,
+  Pulling = 1 << 1,
+  Ready = 1 << 2,
+  Refreshing = 1 << 3,
+  Cancelling = 1 << 4,
+  Completing = 1 << 5,
+
+  _BUSY_ = Refreshing | Cancelling | Completing,
 }

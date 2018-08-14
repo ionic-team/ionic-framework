@@ -4,12 +4,11 @@
 // iOS Card Header
 // --------------------------------------------------
 
-.card-header-ios {
+:host {
   @include padding($card-ios-header-padding-top, $card-ios-header-padding-end, $card-ios-header-padding-bottom, $card-ios-header-padding-start);
 }
 
-.card-header-translucent-ios {
+:host(.card-header-translucent) {
   background-color: $card-ios-header-translucent-background-color;
-
   backdrop-filter: $card-ios-header-translucent-filter;
 }

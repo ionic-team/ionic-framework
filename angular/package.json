@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "4.0.0-alpha.6",
+  "version": "4.0.0-beta.2",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -20,47 +20,46 @@
     "url": "https://github.com/ionic-team/ionic.git"
   },
   "scripts": {
-    "build": "npm run clean && npm run compile && npm run clean-generated && npm run ionic-core",
+    "build": "npm run clean && npm run build.core && npm run build.ng && npm run clean-generated",
+    "build.dev": "npm run clean && npm run build.core.dev && npm run build.ng && npm run clean-generated",
+    "build.core": "node scripts/build-core.js",
+    "build.core.dev": "node scripts/build-core.js --dev",
     "build.link": "npm run build && node scripts/link-copy.js",
+    "build.ng": "./node_modules/.bin/ngc",
     "clean": "node scripts/clean.js",
     "clean-generated": "node ./scripts/clean-generated.js",
-    "compile": "./node_modules/.bin/ngc",
-    "ionic-core": "node ../core/node_modules/.bin/stencil build",
-    "ionic-core-dev": "node ../core/node_modules/.bin/stencil build --dev",
-    "lint": "tslint --project .",
+    "lint": "echo TODO",
+    "lint.ts": "tslint --project .",
+    "lint.fix": "tslint --project . --fix",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
     "test": "echo 'angular no tests yet'",
     "tsc": "tsc -p .",
     "validate": "npm i && npm run lint && npm run test && npm run build"
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "dist/"
+    "dist/",
+    "css/"
   ],
   "dependencies": {
-    "@ionic/core": "4.0.0-alpha.6"
+    "@ionic/core": "4.0.0-beta.2"
   },
   "devDependencies": {
-    "@angular/common": "^6.0.0",
-    "@angular/compiler": "^6.0.0",
-    "@angular/compiler-cli": "^6.0.0",
-    "@angular/core": "^6.0.0",
-    "@angular/forms": "^6.0.0",
-    "@angular/platform-browser": "^6.0.0",
-    "@angular/platform-browser-dynamic": "^6.0.0",
-    "@angular/router": "^6.0.0",
-    "chalk": "^2.3.2",
-    "execa": "^0.10.0",
-    "fs-extra": "^5.0.0",
-    "glob": "7.1.2",
-    "inquirer": "^5.2.0",
-    "listr": "^0.13.0",
-    "rxjs": "^6.0.0",
-    "semver": "^5.5.0",
-    "tslint": "^5.8.0",
-    "tslint-ionic-rules": "0.0.14",
-    "typescript": "2.7.2",
-    "zone.js": "^0.8.20"
+    "@angular/common": "^6.1.0",
+    "@angular/compiler": "^6.1.0",
+    "@angular/compiler-cli": "^6.1.0",
+    "@angular/core": "^6.1.0",
+    "@angular/forms": "^6.1.0",
+    "@angular/platform-browser": "^6.1.0",
+    "@angular/platform-browser-dynamic": "^6.1.0",
+    "@angular/router": "^6.1.0",
+    "fs-extra": "^7.0.0",
+    "glob": "^7.1.2",
+    "rxjs": "^6.2.0",
+    "tslint": "^5.10.0",
+    "tslint-ionic-rules": "0.0.17",
+    "typescript": "2.9.2",
+    "zone.js": "^0.8.26"
   }
 }

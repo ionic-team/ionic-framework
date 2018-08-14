@@ -6,11 +6,18 @@
   <title>Label - Standalone</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
+
+  <style>
+    ion-label {
+      color: red;
+    }
+  </style>
 </head>
 
 <body>
   <ion-label>Default</ion-label>
-  <ion-label>Wrap label this label just goes on and on and on</ion-label>
+  <ion-label color="primary">Wrap label this label just goes on and on and on</ion-label>
   <ion-label position="fixed">Fixed</ion-label>
   <ion-label position="floating">Floating</ion-label>
   <ion-label position="stacked">Stacked</ion-label>

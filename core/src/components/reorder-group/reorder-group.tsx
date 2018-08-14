@@ -1,23 +1,21 @@
-import { Component, Element, Prop, State, Watch } from '@stencil/core';
-import { GestureDetail, QueueController } from '../../interface';
-import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart} from '../../utils/haptic';
+import { Component, Element, Prop, QueueApi, State, Watch } from '@stencil/core';
 
+import { Gesture, GestureDetail, Mode } from '../../interface';
+import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
+import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-reorder-group',
-  styleUrl: 'reorder-group.scss',
-  host: {
-    theme: 'reorder-group'
-  }
+  styleUrl: 'reorder-group.scss'
 })
 export class ReorderGroup {
 
-  private selectedItemEl: HTMLElement|undefined;
+  private selectedItemEl: HTMLElement | undefined;
   private selectedItemHeight!: number;
   private lastToIndex!: number;
   private cachedHeights: number[] = [];
-  private containerEl!: HTMLElement;
-  private scrollEl: HTMLElement|null = null;
+  private scrollEl?: HTMLElement;
+  private gesture?: Gesture;
 
   private scrollElTop = 0;
   private scrollElBottom = 0;
@@ -26,38 +24,48 @@ export class ReorderGroup {
   private containerTop = 0;
   private containerBottom = 0;
 
-  @State() enabled = false;
-  @State() iconVisible = false;
+  mode!: Mode;
+
   @State() activated = false;
 
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'queue' }) queue!: QueueController;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
+  @Prop({ context: 'document' }) doc!: Document;
 
   /**
    * If true, the reorder will be hidden. Defaults to `true`.
    */
   @Prop() disabled = true;
-
   @Watch('disabled')
-  protected disabledChanged(disabled: boolean) {
-    if (!disabled) {
-      this.enabled = true;
-      this.queue.read(() => {
-        this.iconVisible = true;
-      });
-    } else {
-      this.iconVisible = false;
-      setTimeout(() => this.enabled = false, 400);
+  disabledChanged() {
+    if (this.gesture) {
+      this.gesture.setDisabled(this.disabled);
     }
   }
 
-  componentDidLoad() {
-    this.containerEl = this.el.querySelector('ion-gesture')!;
-    this.scrollEl = this.el.closest('ion-scroll');
-    if (!this.disabled) {
-      this.disabledChanged(false);
+  async componentDidLoad() {
+    const contentEl = this.el.closest('ion-content');
+    if (contentEl) {
+      await contentEl.componentOnReady();
+      this.scrollEl = contentEl.getScrollElement();
     }
+
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+      el: this.doc.body,
+      queue: this.queue,
+      gestureName: 'reorder',
+      gesturePriority: 90,
+      disableScroll: true,
+      threshold: 0,
+      direction: 'y',
+      passive: false,
+      canStart: this.canStart.bind(this),
+      onStart: this.onDragStart.bind(this),
+      onMove: this.onDragMove.bind(this),
+      onEnd: this.onDragEnd.bind(this),
+    });
+    this.disabledChanged();
   }
 
   componentDidUnload() {
@@ -73,7 +81,7 @@ export class ReorderGroup {
     if (!reorderEl) {
       return false;
     }
-    const item = findReorderItem(reorderEl, this.containerEl);
+    const item = findReorderItem(reorderEl, this.el);
     if (!item) {
       console.error('reorder node not found');
       return false;
@@ -83,10 +91,12 @@ export class ReorderGroup {
   }
 
   private onDragStart(ev: GestureDetail) {
+    ev.event.preventDefault();
+
     const item = this.selectedItemEl = ev.data;
     const heights = this.cachedHeights;
     heights.length = 0;
-    const el = this.containerEl;
+    const el = this.el;
     const children: any = el.children;
     if (!children || children.length === 0) {
       return;
@@ -100,7 +110,7 @@ export class ReorderGroup {
       child.$ionIndex = i;
     }
 
-    const box = this.containerEl.getBoundingClientRect();
+    const box = this.el.getBoundingClientRect();
     this.containerTop = box.top;
     this.containerBottom = box.bottom;
 
@@ -158,7 +168,7 @@ export class ReorderGroup {
       return;
     }
 
-    const children = this.containerEl.children as any;
+    const children = this.el.children as any;
     const toIndex = this.lastToIndex;
     const fromIndex = indexForItem(selectedItem);
 
@@ -166,7 +176,7 @@ export class ReorderGroup {
       ? children[toIndex + 1]
       : children[toIndex];
 
-    this.containerEl.insertBefore(selectedItem, ref);
+    this.el.insertBefore(selectedItem, ref);
 
     const len = children.length;
     for (let i = 0; i < len; i++) {
@@ -208,7 +218,7 @@ export class ReorderGroup {
   /********* DOM WRITE ********* */
   private reorderMove(fromIndex: number, toIndex: number) {
     const itemHeight = this.selectedItemHeight;
-    const children = this.containerEl.children;
+    const children = this.el.children;
     for (let i = 0; i < children.length; i++) {
       const style = (children[i] as any).style;
       let value = '';
@@ -241,32 +251,12 @@ export class ReorderGroup {
   hostData() {
     return {
       class: {
-        'reorder-enabled': this.enabled,
+        ...createThemedClasses(this.mode, 'reorder-group'),
+
+        'reorder-enabled': !this.disabled,
         'reorder-list-active': this.activated,
-        'reorder-visible': this.iconVisible
       }
     };
-  }
-
-  render() {
-    return (
-      <ion-gesture {...{
-        canStart: this.canStart.bind(this),
-        onStart: this.onDragStart.bind(this),
-        onMove: this.onDragMove.bind(this),
-        onEnd: this.onDragEnd.bind(this),
-        disabled: this.disabled,
-        disableScroll: true,
-        gestureName: 'reorder',
-        gesturePriority: 30,
-        type: 'pan',
-        direction: 'y',
-        threshold: 0,
-        attachTo: 'window'
-      }}>
-        <slot></slot>
-      </ion-gesture>
-    );
   }
 }
 
@@ -274,7 +264,7 @@ function indexForItem(element: any): number {
   return element['$ionIndex'];
 }
 
-function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement|null {
+function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement | null {
   let nested = 0;
   let parent;
   while (node && nested < 6) {

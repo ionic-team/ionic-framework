@@ -4,7 +4,7 @@ async function presentLoading() {
   await loadingController.componentOnReady();
 
   const loading = await loadingController.create({
-    message: 'Hellooo',
+    content: 'Hellooo',
     duration: 2000
   });
   return await loading.present();

@@ -10,7 +10,7 @@ export class NavPop {
   @Listen('child:click')
   pop(): Promise<any> {
     const nav = this.el.closest('ion-nav');
-    if (nav) {
+    if (nav && !nav.isAnimating()) {
       return nav.pop();
     }
     return Promise.resolve(null);

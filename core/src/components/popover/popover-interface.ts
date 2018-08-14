@@ -4,11 +4,11 @@ export interface PopoverOptions {
   component: ComponentRef;
   componentProps?: ComponentProps;
   showBackdrop?: boolean;
-  enableBackdropDismiss?: boolean;
+  backdropDismiss?: boolean;
   translucent?: boolean;
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
   cssClass?: string | string[];
-  ev: Event;
+  event?: Event;
   delegate?: FrameworkDelegate;
 }

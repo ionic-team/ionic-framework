@@ -1,5 +1,4 @@
 @import "../../themes/ionic.globals.md";
-
 @import "../item/item.md.vars";
 
 // Material Design Select
@@ -18,13 +17,13 @@ $select-md-padding-bottom:      $item-md-padding-bottom !default;
 $select-md-padding-start:       $item-md-padding-start !default;
 
 /// @prop - Font family of the select
-$select-md-font-family:         $font-family-md-base !default;
+$select-md-font-family:         $font-family-base !default;
 
 /// @prop - Color of the select icon
-$select-md-icon-color:          $text-md-color-step-600 !default;
+$select-md-icon-color:          $text-color-step-600 !default;
 
 /// @prop - Color of the select placeholder
 $select-md-placeholder-color:   $select-md-icon-color !default;
 
 /// @prop - Text Color of the selected item
-$select-md-text-color:          $text-md-color !default;
+$select-md-text-color:          $text-color !default;

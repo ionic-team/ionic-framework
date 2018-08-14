@@ -5,7 +5,12 @@
 // --------------------------------------------------
 
 .toast-ios {
+  --background: #{$toast-ios-background-color};
+  --button-color: #{$toast-ios-button-color};
+  --color: #{$toast-ios-title-color};
+
   font-family: $toast-ios-font-family;
+  font-size: $toast-ios-title-font-size;
 }
 
 .toast-ios .toast-wrapper {
@@ -13,32 +18,17 @@
   @include margin(auto);
   @include border-radius($toast-ios-border-radius);
 
-  position: absolute;
-
-  z-index: $z-index-overlay-wrapper;
   display: block;
+  position: absolute;
 
   max-width: $toast-max-width;
 
-  background: $toast-ios-background-color;
+  z-index: $z-index-overlay-wrapper;
 }
 
 .toast-translucent-ios .toast-wrapper {
   background: $toast-ios-translucent-background-color;
-
   backdrop-filter: $toast-ios-translucent-filter;
-}
-
-.toast-ios .toast-wrapper.toast-top {
-  @include transform(translate3d(0, -100%, 0));
-
-  top: 0;
-}
-
-.toast-ios .toast-wrapper.toast-bottom {
-  @include transform(translate3d(0, 100%, 0));
-
-  bottom: 0;
 }
 
 .toast-ios .toast-wrapper.toast-middle {
@@ -47,12 +37,8 @@
 
 .toast-ios .toast-message {
   @include padding($toast-ios-title-padding-top, $toast-ios-title-padding-end, $toast-ios-title-padding-bottom, $toast-ios-title-padding-start);
-
-  font-size: $toast-ios-title-font-size;
-
-  color: $toast-ios-title-color;
 }
 
 .toast-ios .toast-button {
-  color: $toast-ios-button-color;
+  color: var(--button-color);
 }

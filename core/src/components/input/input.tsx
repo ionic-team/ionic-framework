@@ -1,9 +1,10 @@
-import { Component, Element, Event, EventEmitter, Prop, Watch } from '@stencil/core';
-import { Color, InputChangeEvent, Mode, StyleEvent  } from '../../interface';
-import { debounceEvent, deferEvent } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
-import { InputComponent } from './input-base';
+import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
+import { Color, Mode, StyleEvent, TextFieldTypes, TextInputChangeEvent } from '../../interface';
+import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
+import { createColorClasses, hostContext } from '../../utils/theme';
+
+import { InputComponent } from './input-base';
 
 @Component({
   tag: 'ion-input',
@@ -11,17 +12,15 @@ import { InputComponent } from './input-base';
     ios: 'input.ios.scss',
     md: 'input.md.scss'
   },
-  host: {
-    theme: 'input'
-  }
+  shadow: true
 })
 export class Input implements InputComponent {
 
-  private nativeInput: HTMLInputElement|undefined;
+  private nativeInput?: HTMLInputElement;
+  private inputId = `ion-input-${inputIds++}`;
   didBlurAfterEdit = false;
 
-  mode!: Mode;
-  color?: Color;
+  @State() hasFocus = false;
 
   @Element() el!: HTMLElement;
 
@@ -33,7 +32,7 @@ export class Input implements InputComponent {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<InputChangeEvent>;
+  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
 
   /**
    * Emitted when the styles change.
@@ -59,6 +58,19 @@ export class Input implements InputComponent {
    * Emitted when the input has been removed.
    */
   @Event() ionInputDidUnload!: EventEmitter<void>;
+
+  /**
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
+   */
+  @Prop() color?: Color;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
@@ -148,7 +160,7 @@ export class Input implements InputComponent {
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop() name?: string;
+  @Prop() name: string = this.inputId;
 
   /**
    * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
@@ -193,13 +205,12 @@ export class Input implements InputComponent {
   /**
    * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
    */
-  @Prop() type = 'text';
+  @Prop() type: TextFieldTypes = 'text';
 
   /**
    * The value of the input.
    */
   @Prop({ mutable: true }) value = '';
-
 
   /**
    * Update the native input element when the value changes
@@ -212,7 +223,7 @@ export class Input implements InputComponent {
       inputEl.value = value;
     }
     this.emitStyle();
-    this.ionChange.emit({value});
+    this.ionChange.emit({ value });
   }
 
   componentWillLoad() {
@@ -239,9 +250,9 @@ export class Input implements InputComponent {
     this.ionStyle.emit({
       'interactive': true,
       'input': true,
-      'input-disabled': this.disabled,
-      'input-has-value': this.hasValue(),
-      'input-has-focus': this.hasFocus()
+      'has-value': this.hasValue(),
+      'has-focus': this.hasFocus,
+      'interactive-disabled': this.disabled,
     });
   }
 
@@ -254,6 +265,7 @@ export class Input implements InputComponent {
   }
 
   private onBlur() {
+    this.hasFocus = false;
     this.focusChanged();
     this.emitStyle();
 
@@ -261,6 +273,7 @@ export class Input implements InputComponent {
   }
 
   private onFocus() {
+    this.hasFocus = true;
     this.focusChanged();
     this.emitStyle();
 
@@ -269,19 +282,15 @@ export class Input implements InputComponent {
 
   private focusChanged() {
     // If clearOnEdit is enabled and the input blurred but has a value, set a flag
-    if (this.clearOnEdit && !this.hasFocus() && this.hasValue()) {
+    if (this.clearOnEdit && !this.hasFocus && this.hasValue()) {
       this.didBlurAfterEdit = true;
     }
-  }
-
-  private inputKeydown() {
-    this.checkClearOnEdit();
   }
 
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  private checkClearOnEdit() {
+  private onKeydown() {
     if (!this.clearOnEdit) {
       return;
     }
@@ -300,29 +309,35 @@ export class Input implements InputComponent {
     this.value = '';
   }
 
-  private hasFocus(): boolean {
-    // check if an input has focus or not
-    return this.nativeInput === document.activeElement;
+  private hasValue(): boolean {
+    return !!this.value;
   }
 
-  private hasValue(): boolean {
-    return (this.value !== '');
+  hostData() {
+    return {
+      class: {
+        ...createColorClasses(this.color),
+
+        'in-item': hostContext('.item', this.el),
+        'has-value': this.hasValue(),
+        'has-focus': this.hasFocus
+      }
+    };
   }
 
   render() {
-    const themedClasses = createThemedClasses(this.mode, this.color, 'native-input');
-    // TODO aria-labelledby={this.item.labelId}
+    renderHiddenInput(this.el, this.name, this.value, this.disabled);
 
     return [
       <input
         ref={input => this.nativeInput = input as any}
-        aria-disabled={this.disabled ? 'true' : false}
+        aria-disabled={this.disabled ? 'true' : null}
         accept={this.accept}
         autoCapitalize={this.autocapitalize}
         autoComplete={this.autocomplete}
         autoCorrect={this.autocorrect}
         autoFocus={this.autofocus}
-        class={themedClasses}
+        class="native-input"
         disabled={this.disabled}
         inputMode={this.inputmode}
         min={this.min}
@@ -344,14 +359,16 @@ export class Input implements InputComponent {
         onInput={this.onInput.bind(this)}
         onBlur={this.onBlur.bind(this)}
         onFocus={this.onFocus.bind(this)}
-        onKeyDown={this.inputKeydown.bind(this)}
+        onKeyDown={this.onKeydown.bind(this)}
       />,
-      <button
+      <slot></slot>,
+      (this.clearInput && !this.readonly && !this.disabled) && <button
         type="button"
         class="input-clear-icon"
-        hidden={!this.clearInput}
         onClick={this.clearTextInput.bind(this)}
         onMouseDown={this.clearTextInput.bind(this)}/>
     ];
   }
 }
+
+let inputIds = 0;

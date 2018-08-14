@@ -1,5 +1,4 @@
 @import "../../themes/ionic.globals.md";
-
 @import "../item/item.md.vars";
 
 // Material Design Datetime
@@ -18,7 +17,7 @@ $datetime-md-padding-bottom:      $item-md-padding-bottom !default;
 $datetime-md-padding-start:       $item-md-padding-start !default;
 
 /// @prop - Font family of the datetime
-$datetime-md-font-family:         $font-family-md-base !default;
+$datetime-md-font-family:         $font-family-base !default;
 
 /// @prop - Color of the datetime placeholder
-$datetime-md-placeholder-color:   $placeholder-text-md-color !default;
+$datetime-md-placeholder-color:   $placeholder-text-color !default;

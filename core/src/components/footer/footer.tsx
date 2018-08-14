@@ -1,6 +1,6 @@
 import { Component, Prop } from '@stencil/core';
 
-import { Color, Mode } from '../../interface';
+import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
 
 @Component({
@@ -8,14 +8,15 @@ import { createThemedClasses } from '../../utils/theme';
   styleUrls: {
     ios: 'footer.ios.scss',
     md: 'footer.md.scss'
-  },
-  host: {
-    theme: 'footer'
   }
 })
 export class Footer {
-  mode!: Mode;
-  color?: Color;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * If true, the footer will be translucent.
@@ -26,15 +27,14 @@ export class Footer {
   @Prop() translucent = false;
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, this.color, 'header-translucent') : {};
-
-    const hostClasses = {
-      ...themedClasses
-    };
+    const themedClasses = createThemedClasses(this.mode, 'footer');
+    const translucentClasses = this.translucent ? createThemedClasses(this.mode, 'footer-translucent') : null;
 
     return {
-      class: hostClasses
+      class: {
+        ...themedClasses,
+        ...translucentClasses
+      }
     };
   }
-
 }

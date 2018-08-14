@@ -11,14 +11,13 @@
 
 .loading-ios .loading-wrapper {
   @include border-radius($loading-ios-border-radius);
-
   @include padding($loading-ios-padding-top, $loading-ios-padding-end, $loading-ios-padding-bottom, $loading-ios-padding-start);
 
   max-width: $loading-ios-max-width;
   max-height: $loading-ios-max-height;
 
-  color: $loading-ios-text-color;
   background-color: $loading-ios-background-color;
+  color: $loading-ios-text-color;
 }
 
 
@@ -27,7 +26,6 @@
 
 .loading-translucent-ios .loading-wrapper {
   background-color: $loading-ios-translucent-background-color;
-
   backdrop-filter: $loading-ios-translucent-filter;
 }
 

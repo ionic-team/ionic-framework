@@ -1,11 +1,22 @@
 import { ChangeDetectorRef, ContentChild, Directive, ElementRef, EmbeddedViewRef } from '@angular/core';
+import { proxyInputs } from '../proxies';
 import { VirtualItem } from './virtual-item';
 import { VirtualHeader } from './virtual-header';
 import { VirtualFooter } from './virtual-footer';
 import { VirtualContext } from './virtual-utils';
 
+
 @Directive({
-  selector: 'ion-virtual-scroll'
+  selector: 'ion-virtual-scroll',
+  inputs: [
+    'approxItemHeight',
+    'approxHeaderHeight',
+    'approxFooterHeight',
+    'headerFn',
+    'footerFn',
+    'items',
+    'itemHeight'
+  ]
 })
 export class VirtualScroll {
 
@@ -17,21 +28,31 @@ export class VirtualScroll {
     private el: ElementRef,
     public cd: ChangeDetectorRef,
   ) {
-    this.el.nativeElement.nodeRender = this.nodeRender.bind(this);
+    el.nativeElement.nodeRender = this.nodeRender.bind(this);
+
+    proxyInputs(this, this.el, [
+      'approxItemHeight',
+      'approxHeaderHeight',
+      'approxFooterHeight',
+      'headerFn',
+      'footerFn',
+      'items',
+      'itemHeight'
+    ]);
   }
 
-  private nodeRender(el: HTMLElement|null, cell: any, index?: number) {
+  private nodeRender(el: HTMLElement | null, cell: any, index: number) {
     if (!el) {
-      const node = this.itmTmp.viewContainer.createEmbeddedView(
+      const view = this.itmTmp.viewContainer.createEmbeddedView(
         this.getComponent(cell.type),
-        new VirtualContext(null, null, null),
+        { $implicit: null, index },
         index
       );
-      el = getElement(node);
-      (el as any)['$ionView'] = node;
+      el = getElement(view);
+      (el as any)['$ionView'] = view;
     }
     const node = (el as any)['$ionView'];
-    const ctx = node.context;
+    const ctx = node.context as VirtualContext;
     ctx.$implicit = cell.value;
     ctx.index = cell.index;
     node.detectChanges();
@@ -44,11 +65,11 @@ export class VirtualScroll {
       case 1: return this.hdrTmp.templateRef;
       case 2: return this.ftrTmp.templateRef;
     }
-    return null;
+    throw new Error('template for virtual item was not provided');
   }
 }
 
-function getElement(view: EmbeddedViewRef<VirtualContext>): HTMLElement {
+function getElement(view: EmbeddedViewRef<VirtualContext>): HTMLElement | null {
   const rootNodes = view.rootNodes;
   for (let i = 0; i < rootNodes.length; i++) {
     if (rootNodes[i].nodeType === 1) {

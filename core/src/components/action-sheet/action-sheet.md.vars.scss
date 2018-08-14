@@ -4,7 +4,7 @@
 // --------------------------------------------------
 
 /// @prop - Font family of the action sheet
-$action-sheet-md-font-family:                           $font-family-md-base !default;
+$action-sheet-md-font-family:                           $font-family-base !default;
 
 /// @prop - Text align of the action sheet
 $action-sheet-md-text-align:                            start !default;
@@ -19,7 +19,7 @@ $action-sheet-md-padding-top:                           8px !default;
 $action-sheet-md-padding-bottom:                        8px !default;
 
 /// @prop - Color of the action sheet title
-$action-sheet-md-title-color:                           $text-md-color-step-400 !default;
+$action-sheet-md-title-color:                           $text-color-step-400 !default;
 
 /// @prop - Font size of the action sheet title
 $action-sheet-md-title-font-size:                       16px !default;
@@ -55,7 +55,7 @@ $action-sheet-md-sub-title-padding-start:               $action-sheet-md-sub-tit
 $action-sheet-md-button-height:                         48px !default;
 
 /// @prop - Text color of the action sheet button
-$action-sheet-md-button-text-color:                     $text-md-color-step-150 !default;
+$action-sheet-md-button-text-color:                     $text-color-step-150 !default;
 
 /// @prop - Font size of the action sheet button
 $action-sheet-md-button-font-size:                      16px !default;
@@ -76,7 +76,7 @@ $action-sheet-md-button-padding-start:                  $action-sheet-md-button-
 $action-sheet-md-button-background:                     transparent !default;
 
 /// @prop - Background color of the action sheet activated button
-$action-sheet-md-button-background-activated:           $background-md-color-step-50 !default;
+$action-sheet-md-button-background-activated:           $background-color-step-50 !default;
 
 /// @prop - Background color of the selected action sheet button
 $action-sheet-md-button-background-selected:            null !default;

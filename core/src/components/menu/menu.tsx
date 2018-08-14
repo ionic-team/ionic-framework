@@ -1,6 +1,7 @@
-import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, State, Watch } from '@stencil/core';
-import { Animation, Color, Config, GestureDetail, MenuChangeEventDetail, Mode } from '../../interface';
-import { Side, assert, isEndSide } from '../../utils/helpers';
+import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+
+import { Animation, Config, Gesture, GestureDetail, MenuChangeEventDetail, Mode, Side } from '../../interface';
+import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
 @Component({
   tag: 'ion-menu',
@@ -8,21 +9,19 @@ import { Side, assert, isEndSide } from '../../utils/helpers';
     ios: 'menu.ios.scss',
     md: 'menu.md.scss'
   },
-  host: {
-    theme: 'menu'
-  }
+  shadow: true
 })
 export class Menu {
 
   private animation?: Animation;
-  private isPane = false;
   private _isOpen = false;
   private lastOnEnd = 0;
+  private gesture?: Gesture;
 
   mode!: Mode;
-  color?: Color;
+
   isAnimating = false;
-  width!: number; // TOOD
+  width!: number; // TODO
 
   backdropEl?: HTMLElement;
   menuInnerEl?: HTMLElement;
@@ -31,6 +30,7 @@ export class Menu {
 
   @Element() el!: HTMLIonMenuElement;
 
+  @State() isPaneVisible = false;
   @State() isEndSide = false;
 
   @Prop({ context: 'config' }) config!: Config;
@@ -38,6 +38,8 @@ export class Menu {
   @Prop({ connect: 'ion-menu-controller' }) lazyMenuCtrl!: HTMLIonMenuControllerElement;
   @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
   @Prop({ context: 'window' }) win!: Window;
+  @Prop({ context: 'queue' }) queue!: QueueApi;
+  @Prop({ context: 'document' }) doc!: Document;
 
   /**
    * The content's id the menu should use.
@@ -50,9 +52,8 @@ export class Menu {
   @Prop() menuId?: string;
 
   /**
-   * The display type of the menu. Default varies based on the mode,
-   * see the `menuType` in the [config](../../config/Config). Available options:
-   * `"overlay"`, `"reveal"`, `"push"`.
+   * The display type of the menu.
+   * Available options: `"overlay"`, `"reveal"`, `"push"`.
    */
   @Prop({ mutable: true }) type!: string;
 
@@ -77,36 +78,38 @@ export class Menu {
   @Prop({ mutable: true }) disabled = false;
 
   @Watch('disabled')
-  protected disabledChanged(disabled: boolean) {
+  protected disabledChanged() {
     this.updateState();
-    this.ionMenuChange.emit({ disabled: disabled, open: this._isOpen});
+
+    this.ionMenuChange.emit({
+      disabled: this.disabled,
+      open: this._isOpen
+    });
   }
 
   /**
    * Which side of the view the menu should be placed. Default `"start"`.
    */
-  @Prop() side: Side = 'start';
+  @Prop({ reflectToAttr: true }) side: Side = 'start';
 
   @Watch('side')
   protected sideChanged() {
-    this.isEndSide = isEndSide(this.win, this.side);
+    this.isEndSide = isEnd(this.win, this.side);
   }
 
   /**
    * If true, swiping the menu is enabled. Default `true`.
    */
-  @Prop() swipeEnabled = true;
+  @Prop() swipeGesture = true;
 
-  @Watch('swipeEnabled')
-  protected swipeEnabledChanged() {
+  @Watch('swipeGesture')
+  protected swipeGestureChanged() {
     this.updateState();
   }
-
   /**
-   * If true, the menu will persist on child pages.
+   * The edge threshold for dragging the menu open.
+   * If a drag/swipe happens over this value, the menu is not triggered.
    */
-  @Prop() persistent = false;
-
   @Prop() maxEdgeStart = 50;
 
   /**
@@ -119,12 +122,14 @@ export class Menu {
    */
   @Event() ionClose!: EventEmitter<void>;
 
-
+  /**
+   * Emitted when the menu state is changed.
+   */
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
   async componentWillLoad() {
     if (this.type == null) {
-      this.type = this.mode === 'ios' ? 'reveal' : 'overlay';
+      this.type = this.config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
     }
     if (this.isServer) {
       this.disabled = true;
@@ -133,19 +138,21 @@ export class Menu {
     }
   }
 
-  componentDidLoad() {
+  async componentDidLoad() {
     if (this.isServer) {
       return;
     }
     const el = this.el;
     const parent = el.parentNode as any;
-    const content = (this.contentId)
+    const content = this.contentId
       ? document.getElementById(this.contentId)
       : parent && parent.querySelector && parent.querySelector('[main]');
 
     if (!content || !content.tagName) {
       // requires content element
-      console.error('Menu: must have a "content" element to listen for drag events on.');
+      console.error(
+        'Menu: must have a "content" element to listen for drag events on.'
+      );
       return;
     }
     this.contentEl = content as HTMLElement;
@@ -159,39 +166,64 @@ export class Menu {
     let isEnabled = !this.disabled;
     if (isEnabled === true || typeof isEnabled === 'undefined') {
       const menus = this.menuCtrl!.getMenus();
-      isEnabled = !menus.some(m => {
+      isEnabled = !menus.some((m: any) => {
         return m.side === this.side && !m.disabled;
       });
     }
+
     // register this menu with the app's menu controller
     this.menuCtrl!._register(this);
-    this.ionMenuChange.emit({ disabled: !isEnabled, open: this._isOpen});
+    this.ionMenuChange.emit({ disabled: !isEnabled, open: this._isOpen });
+
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+      el: this.doc,
+      queue: this.queue,
+      gestureName: 'menu-swipe',
+      gesturePriority: 40,
+      threshold: 10,
+      canStart: this.canStart.bind(this),
+      onWillStart: this.onWillStart.bind(this),
+      onStart: this.onDragStart.bind(this),
+      onMove: this.onDragMove.bind(this),
+      onEnd: this.onDragEnd.bind(this),
+    });
 
     // mask it as enabled / disabled
     this.disabled = !isEnabled;
+    this.updateState();
   }
 
   componentDidUnload() {
     this.menuCtrl!._unregister(this);
-    this.animation && this.animation.destroy();
+    if (this.animation) {
+      this.animation.destroy();
+    }
+    if (this.gesture) {
+      this.gesture.destroy();
+    }
 
     this.animation = undefined;
     this.contentEl = this.backdropEl = this.menuInnerEl = undefined;
   }
 
   @Listen('body:ionSplitPaneVisible')
-  splitPaneChanged(ev: CustomEvent) {
-    this.isPane = (ev.target as any).isPane(this.el);
+  onSplitPaneChanged(ev: CustomEvent) {
+    this.isPaneVisible = (ev.target as HTMLIonSplitPaneElement).isPane(this.el);
     this.updateState();
   }
 
   @Listen('body:click', { enabled: false, capture: true })
-  onBackdropClick(ev: UIEvent) {
-    const el = ev.target as HTMLElement;
-    if (!el.closest('.menu-inner') && this.lastOnEnd < (ev.timeStamp - 100)) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      this.close();
+  onBackdropClick(ev: any) {
+    if (this.lastOnEnd < ev.timeStamp - 100) {
+      const shouldClose = (ev.composedPath)
+        ? !ev.composedPath().includes(this.menuInnerEl)
+        : false;
+
+      if (shouldClose) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.close();
+      }
     }
   }
 
@@ -221,8 +253,8 @@ export class Menu {
   }
 
   async _setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
-    // If the menu is disabled or it is currenly being animated, let's do nothing
-    if (!this.isActive() || this.isAnimating || (shouldOpen === this._isOpen)) {
+    // If the menu is disabled or it is currently being animated, let's do nothing
+    if (!this.isActive() || this.isAnimating || shouldOpen === this._isOpen) {
       return this._isOpen;
     }
 
@@ -236,7 +268,12 @@ export class Menu {
 
   @Method()
   isActive(): boolean {
-    return !this.disabled && !this.isPane;
+    return !this.disabled && !this.isPaneVisible;
+  }
+
+  @Method()
+  getWidth(): number {
+    return this.width;
   }
 
   private async loadAnimation(): Promise<void> {
@@ -267,9 +304,7 @@ export class Menu {
   }
 
   private canSwipe(): boolean {
-    return this.swipeEnabled &&
-      !this.isAnimating &&
-      this.isActive();
+    return this.swipeGesture && !this.isAnimating && this.isActive();
   }
 
   private canStart(detail: GestureDetail): boolean {
@@ -281,7 +316,12 @@ export class Menu {
     } else if (this.menuCtrl!.getOpen()) {
       return false;
     }
-    return checkEdgeSide(this.win, detail.currentX, this.isEndSide, this.maxEdgeStart);
+    return checkEdgeSide(
+      this.win,
+      detail.currentX,
+      this.isEndSide,
+      this.maxEdgeStart
+    );
   }
 
   private onWillStart(): Promise<void> {
@@ -296,9 +336,7 @@ export class Menu {
     }
 
     // the cloned animation should not use an easing curve during seek
-    this.animation
-      .reverse(this._isOpen)
-      .progressStart();
+    this.animation.reverse(this._isOpen).progressStart();
   }
 
   private onDragMove(detail: GestureDetail) {
@@ -324,17 +362,17 @@ export class Menu {
     const stepValue = delta / width;
     const velocity = detail.velocityX;
     const z = width / 2.0;
-    const shouldCompleteRight = (velocity >= 0)
-      && (velocity > 0.2 || detail.deltaX > z);
+    const shouldCompleteRight =
+      velocity >= 0 && (velocity > 0.2 || detail.deltaX > z);
 
-    const shouldCompleteLeft = (velocity <= 0)
-      && (velocity < -0.2 || detail.deltaX < -z);
+    const shouldCompleteLeft =
+      velocity <= 0 && (velocity < -0.2 || detail.deltaX < -z);
 
-    const shouldComplete = (isOpen)
+    const shouldComplete = isOpen
       ? isEndSide ? shouldCompleteRight : shouldCompleteLeft
       : isEndSide ? shouldCompleteLeft : shouldCompleteRight;
 
-    let shouldOpen = (!isOpen && shouldComplete);
+    let shouldOpen = !isOpen && shouldComplete;
     if (isOpen && !shouldComplete) {
       shouldOpen = true;
     }
@@ -349,7 +387,9 @@ export class Menu {
 
     this.lastOnEnd = detail.timeStamp;
     this.animation
-      .onFinish(() => this.afterAnimation(shouldOpen), { clearExistingCallacks: true })
+      .onFinish(() => this.afterAnimation(shouldOpen), {
+        clearExistingCallacks: true
+      })
       .progressEnd(shouldComplete, stepValue, realDur);
   }
 
@@ -359,7 +399,9 @@ export class Menu {
     // this places the menu into the correct location before it animates in
     // this css class doesn't actually kick off any animations
     this.el.classList.add(SHOW_MENU);
-    this.backdropEl && this.backdropEl.classList.add(SHOW_BACKDROP);
+    if (this.backdropEl) {
+      this.backdropEl.classList.add(SHOW_BACKDROP);
+    }
     this.isAnimating = true;
   }
 
@@ -378,16 +420,21 @@ export class Menu {
 
     if (isOpen) {
       // add css class
-      this.contentEl && this.contentEl.classList.add(MENU_CONTENT_OPEN);
+      if (this.contentEl) {
+        this.contentEl.classList.add(MENU_CONTENT_OPEN);
+      }
 
       // emit open event
       this.ionOpen.emit();
-
     } else {
       // remove css classes
       this.el.classList.remove(SHOW_MENU);
-      this.contentEl && this.contentEl.classList.remove(MENU_CONTENT_OPEN);
-      this.backdropEl && this.backdropEl.classList.remove(SHOW_BACKDROP);
+      if (this.contentEl) {
+        this.contentEl.classList.remove(MENU_CONTENT_OPEN);
+      }
+      if (this.backdropEl) {
+        this.backdropEl.classList.remove(SHOW_BACKDROP);
+      }
 
       // emit close event
       this.ionClose.emit();
@@ -396,6 +443,9 @@ export class Menu {
 
   private updateState() {
     const isActive = this.isActive();
+    if (this.gesture) {
+      this.gesture.setDisabled(!isActive || !this.swipeGesture);
+    }
 
     // Close menu inmediately
     if (!isActive && this._isOpen) {
@@ -418,21 +468,25 @@ export class Menu {
   }
 
   hostData() {
-    const isEndSide = this.isEndSide;
+    const { isEndSide, type, disabled, isPaneVisible } = this;
     return {
       role: 'complementary',
       class: {
-        [`menu-type-${this.type}`]: true,
-        'menu-enabled': !this.disabled,
-        'menu-side-right': isEndSide,
-        'menu-side-left': !isEndSide,
+        [`menu-type-${type}`]: true,
+        'menu-enabled': !disabled,
+        'menu-side-end': isEndSide,
+        'menu-side-start': !isEndSide,
+        'menu-pane-visible': isPaneVisible
       }
     };
   }
 
   render() {
-    return ([
-      <div class="menu-inner" ref={el => this.menuInnerEl = el}>
+    return [
+      <div
+        class="menu-inner"
+        ref={el => this.menuInnerEl = el}
+      >
         <slot></slot>
       </div>,
 
@@ -440,30 +494,26 @@ export class Menu {
         ref={el => this.backdropEl = el}
         class="menu-backdrop"
         tappable={false}
-        stopPropagation={false}/>,
-
-      <ion-gesture
-        canStart={this.canStart.bind(this)}
-        onWillStart={this.onWillStart.bind(this)}
-        onStart={this.onDragStart.bind(this)}
-        onMove={this.onDragMove.bind(this)}
-        onEnd={this.onDragEnd.bind(this)}
-        disabled={!this.isActive() || !this.swipeEnabled}
-        gestureName="menu-swipe"
-        gesturePriority={10}
-        direction="x"
-        threshold={10}
-        attachTo="window"
-        disableScroll={true} />
-    ]);
+        stopPropagation={false}
+      />
+    ];
   }
 }
 
-function computeDelta(deltaX: number, isOpen: boolean, isEndSide: boolean): number {
-  return Math.max(0, (isOpen !== isEndSide) ? -deltaX : deltaX);
+function computeDelta(
+  deltaX: number,
+  isOpen: boolean,
+  isEndSide: boolean
+): number {
+  return Math.max(0, isOpen !== isEndSide ? -deltaX : deltaX);
 }
 
-function checkEdgeSide(win: Window, posX: number, isEndSide: boolean, maxEdgeStart: number): boolean {
+function checkEdgeSide(
+  win: Window,
+  posX: number,
+  isEndSide: boolean,
+  maxEdgeStart: number
+): boolean {
   if (isEndSide) {
     return posX >= win.innerWidth - maxEdgeStart;
   } else {

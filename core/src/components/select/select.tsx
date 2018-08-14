@@ -1,9 +1,8 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
-import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions,
-  CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent
-} from '../../interface';
-import { deferEvent } from '../../utils/helpers';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
+import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
+import { deferEvent, renderHiddenInput } from '../../utils/helpers';
+import { createThemedClasses, hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-select',
@@ -11,14 +10,12 @@ import { deferEvent } from '../../utils/helpers';
     ios: 'select.ios.scss',
     md: 'select.md.scss'
   },
-  host: {
-    theme: 'select'
-  }
+  shadow: true
 })
 export class Select {
 
   private childOpts: HTMLIonSelectOptionElement[] = [];
-  private selectId = `ion-sel-${selectIds++}`;
+  private inputId = `ion-sel-${selectIds++}`;
   private labelId?: string;
   private overlay?: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
 
@@ -57,7 +54,7 @@ export class Select {
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop({ mutable: true }) name?: string;
+  @Prop() name: string = this.inputId;
 
   /**
    * The text to display instead of the selected option's value.
@@ -112,7 +109,6 @@ export class Select {
    * Emitted when the styles change.
    */
   @Event() ionStyle!: EventEmitter<StyleEvent>;
-
 
   @Watch('disabled')
   disabledChanged() {
@@ -223,12 +219,10 @@ export class Select {
     });
   }
 
-
   componentWillLoad() {
     if (!this.value) {
       this.value = this.multiple ? [] : undefined;
     }
-    this.name = this.name || this.selectId;
   }
 
   componentDidLoad() {
@@ -262,15 +256,8 @@ export class Select {
     this.emitStyle();
   }
 
-  private getLabel() {
-    const item = this.el.closest('ion-item');
-    if (item) {
-      return item.querySelector('ion-label');
-    }
-    return null;
-  }
-
-  private open(ev: UIEvent) {
+  @Method()
+  open(ev?: UIEvent) {
     let selectInterface = this.interface;
 
     if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {
@@ -284,7 +271,7 @@ export class Select {
     }
 
     if (selectInterface === 'popover') {
-      return this.openPopover(ev);
+      return this.openPopover(ev!);
     }
 
     if (selectInterface === 'action-sheet') {
@@ -294,6 +281,14 @@ export class Select {
     return this.openAlert();
   }
 
+  private getLabel() {
+    const item = this.el.closest('ion-item');
+    if (item) {
+      return item.querySelector('ion-label');
+    }
+    return null;
+  }
+
   private async openPopover(ev: UIEvent) {
     const interfaceOptions = this.interfaceOptions;
 
@@ -301,6 +296,8 @@ export class Select {
       ...interfaceOptions,
 
       component: 'ion-select-popover',
+      cssClass: ['select-popover', interfaceOptions.cssClass],
+      event: ev,
       componentProps: {
         header: interfaceOptions.header,
         subHeader: interfaceOptions.subHeader,
@@ -318,9 +315,7 @@ export class Select {
             }
           } as SelectPopoverOption;
         })
-      },
-      cssClass: ['select-popover', interfaceOptions.cssClass],
-      ev: ev
+      }
     };
 
     const popover = this.overlay = await this.popoverCtrl.create(popoverOpts);
@@ -382,20 +377,23 @@ export class Select {
           disabled: o.disabled
         } as AlertInput;
       }),
-      buttons: [{
-        text: this.cancelText,
-        role: 'cancel',
-        handler: () => {
-          this.ionCancel.emit();
+      buttons: [
+        {
+          text: this.cancelText,
+          role: 'cancel',
+          handler: () => {
+            this.ionCancel.emit();
+          }
+        },
+        {
+          text: this.okText,
+          handler: (selectedValues: any) => {
+            this.value = selectedValues;
+          }
         }
-      }, {
-        text: this.okText,
-        handler: (selectedValues: any) => {
-          this.value = selectedValues;
-        }
-      }],
+      ],
       cssClass: ['select-alert', interfaceOptions.cssClass,
-                (this.multiple ? 'multiple-select-alert' : 'single-select-alert')]
+                 (this.multiple ? 'multiple-select-alert' : 'single-select-alert')]
     };
 
     const alert = this.overlay = await this.alertCtrl.create(alertOpts);
@@ -445,14 +443,17 @@ export class Select {
     this.ionStyle.emit({
       'interactive': true,
       'select': true,
-      'select-disabled': this.disabled,
-      'input-has-value': this.hasValue()
+      'has-value': this.hasValue(),
+      'interactive-disabled': this.disabled,
+      'select-disabled': this.disabled
     });
   }
 
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, 'select'),
+        'in-item': hostContext('.item', this.el),
         'select-disabled': this.disabled,
         'select-key': this.keyFocus
       }
@@ -460,6 +461,8 @@ export class Select {
   }
 
   render() {
+    renderHiddenInput(this.el, this.name, parseValue(this.value), this.disabled);
+
     let addPlaceholderClass = false;
 
     let selectText = this.selectedText || this.text;
@@ -486,9 +489,9 @@ export class Select {
         type="button"
         role="combobox"
         aria-haspopup="dialog"
-        aria-expanded={this.isExpanded}
         aria-labelledby={this.labelId}
-        aria-disabled={this.disabled ? 'true' : false}
+        aria-expanded={this.isExpanded ? 'true' : null}
+        aria-disabled={this.disabled ? 'true' : null}
         onClick={this.open.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
         onFocus={this.onFocus.bind(this)}
@@ -496,8 +499,7 @@ export class Select {
         class="select-cover">
         <slot></slot>
         { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
-      </button>,
-      <input type="hidden" name={this.name} value={parseValue(this.value)}/>
+      </button>
     ];
   }
 }

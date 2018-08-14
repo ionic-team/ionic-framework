@@ -3,44 +3,68 @@
 // Input
 // --------------------------------------------------
 
-.input {
+:host {
+  --placeholder-color: currentColor;
+  --placeholder-weight: inherit;
+  --placeholder-opacity: .5;
+  --padding-top: 0;
+  --padding-end: 0;
+  --padding-bottom: 0;
+  --padding-start: 0;
+  --border-radius: 0;
+
+  display: flex;
   position: relative;
-  display: block;
 
   flex: 1;
+  align-items: center;
 
   width: 100%;
+
+  /* stylelint-disable */
+  /* TODO: find a better solution in padding.css, that does not require !important, */
+  padding: 0 !important;
+  /* stylelint-enable */
 }
 
-// Input Within An Item
-// --------------------------------------------------
-
-.item-input .input {
-  position: static;
+:host(.ion-color) {
+  color: #{current-color(base)};
 }
-
 
 // Native Text Input
 // --------------------------------------------------
 
 .native-input {
-  @include appearance(none);
-  @include border-radius(0);
+  @include border-radius(var(--border-radius));
+  @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include text-inherit();
 
   display: inline-block;
 
   flex: 1;
 
-  width: 92%;
-  width: calc(100% - 10px);
+  width: 100%;
 
   border: 0;
 
+  outline: none;
+
   background: transparent;
 
-  &:active,
-  &:focus {
-    outline: none;
+  box-sizing: border-box;
+  appearance: none;
+
+  &::placeholder {
+    color: var(--placeholder-color);
+
+    font-family: inherit;
+    font-weight: var(--placeholder-weight);
+
+    opacity: var(--placeholder-opacity);
+  }
+
+  &:-webkit-autofill {
+    background-color: transparent;
   }
 }
 
@@ -48,9 +72,6 @@
   opacity: .4;
 }
 
-input.native-input:-webkit-autofill {
-  background-color: transparent;
-}
 
 
 // Input Cover: Unfocused
@@ -71,47 +92,7 @@ input.native-input:-webkit-autofill {
   height: 100%;
 }
 
-.input[disabled] .input-cover {
-  pointer-events: none;
-}
-
-
-// Input Cover: Focused
-// --------------------------------------------------
-// When the input has focus, then the input cover should be hidden
-
-.item-input-has-focus .input-cover {
-  display: none;
-}
-
-.item-input-has-focus {
-  pointer-events: none;
-}
-
-.item-input-has-focus input,
-.item-input-has-focus a,
-.item-input-has-focus button {
-  pointer-events: auto;
-}
-
-
-// Scroll Assist Input
-// --------------------------------------------------
-// This input is used to help the app handle
-// Next and Previous input tabbing
-
-[next-input] {
-  @include padding(0);
-
-  position: absolute;
-  bottom: 20px;
-
-  width: 1px;
-  height: 1px;
-
-  border: 0;
-  background: transparent;
-
+:host([disabled]) .input-cover {
   pointer-events: none;
 }
 
@@ -124,15 +105,36 @@ input.native-input:-webkit-autofill {
   @include padding(0);
   @include background-position(center);
 
-  position: absolute;
-  top: 0;
-  display: none;
+  border: 0;
 
-  height: 100%;
+  outline: none;
 
+  background-color: transparent;
   background-repeat: no-repeat;
+
+  visibility: hidden;
+  appearance: none;
 }
 
-.item-input-has-focus.item-input-has-value .input-clear-icon {
-  display: block;
+:host(.has-focus.has-value) .input-clear-icon {
+  visibility: visible;
+}
+
+
+// Input Has focus
+// --------------------------------------------------
+// When the input has focus, then the input cover should be hidden
+
+:host(.has-focus) .input-cover {
+  display: none;
+}
+
+:host(.has-focus) {
+  pointer-events: none;
+}
+
+:host(.has-focus) input,
+:host(.has-focus) a,
+:host(.has-focus) button {
+  pointer-events: auto;
 }

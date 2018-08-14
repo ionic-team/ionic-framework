@@ -1,25 +1,40 @@
 @import "../../themes/ionic.globals";
 
-ion-tabbar {
-  position: relative;
-
-  z-index: $z-index-toolbar;
+:host {
   display: flex;
+  position: relative;
 
   align-items: center;
   justify-content: center;
-
   order: 1;
 
   width: 100%;
+
+  background: var(--background);
+  color: var(--color);
+
+  user-select: none;
+
+  z-index: $z-index-toolbar;
 }
 
-ion-tabbar.tabbar-hidden {
-  display: none;
+:host(.ion-color) {
+  --background: #{current-color(base)};
+  --color: #{current-color(contrast, .7)};
+  --color-selected: #{current-color(contrast)};
 }
 
-ion-tabbar.placement-top {
+:host(.tabbar-hidden) {
+  /* stylelint-disable-next-line declaration-no-important */
+  display: none !important;
+}
+
+:host(.placement-top) {
   order: -1;
+}
+
+:host(.placement-bottom) {
+  padding-bottom: var(--ion-safe-area-bottom);
 }
 
 
@@ -30,49 +45,70 @@ ion-tabbar.placement-top {
   @include position(null, null, 0, 0);
   @include transform-origin(0, 0);
 
-  position: absolute;
-
   display: block;
+  position: absolute;
 
   width: 1px;
   height: 2px;
 
   transform: translateZ(0);
 
+  background: currentColor;
+
   &.animated {
     transition-duration: 300ms;
     transition-property: transform;
     transition-timing-function: cubic-bezier(.4, 0, .2, 1);
-
     will-change: transform;
   }
 }
 
-.placement-top .tabbar-highlight {
+:host(.placement-top) .tabbar-highlight {
   bottom: 0;
 }
 
-.placement-bottom .tabbar-highlight {
+:host(.placement-bottom) .tabbar-highlight {
   top: 0;
 }
 
 
-// Overflow Scrolling
+// Tab Layout
 // --------------------------------------------------
 
-ion-tabbar.scrollable {
-  ion-scroll {
-    overflow: hidden;
-  }
+:host(.layout-icon-start) .tab-btn {
+  --flex-direction: row;
+}
 
-  .scroll-inner {
-    position: relative;
-    display: flex;
+:host(.layout-icon-end) .tab-btn {
+  --flex-direction: row-reverse;
+}
 
-    flex-direction: row;
-  }
+:host(.layout-icon-bottom) .tab-btn {
+  --flex-direction: column-reverse;
+}
 
-  ion-button.inactive {
-    visibility: hidden;
-  }
+:host(.layout-icon-start) .tab-btn,
+:host(.layout-icon-end) .tab-btn,
+:host(.layout-icon-hide) .tab-btn,
+:host(.layout-label-hide) .tab-btn {
+  --justify-content: center;
+}
+
+:host(.layout-icon-hide) .tab-btn {
+  --icon-display: none;
+}
+
+:host(.layout-label-hide) .tab-btn {
+  --label-display: none;
+}
+
+:host(.layout-icon-top) .tab-btn,
+:host(.layout-icon-bottom) .tab-btn {
+  --badge-end: #{calc(50% - 30px)};
+}
+
+:host(.layout-icon-hide) .tab-btn,
+:host(.layout-icon-start) .tab-btn,
+:host(.layout-icon-end) .tab-btn {
+  --badge-end: #{calc(50% - 50px)};
 }

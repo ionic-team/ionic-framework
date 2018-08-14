@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html dir="ltr">
+
 <head>
   <meta charset="UTF-8">
   <title>App - Cordova</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <script src="/dist/ionic.js"></script>
+  <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
   <script type="text/javascript">
     window.Ionic.config = { statusbarPadding: true };
   </script>
 </head>
+
 <body onload="initialize()">
   <ion-app>
     <ion-menu side="start">
@@ -109,11 +112,7 @@
           <ion-header>
             <ion-toolbar color='primary'>
               <ion-buttons slot='start'>
-                <ion-menu-toggle>
-                  <ion-button>
-                    <ion-icon slot="icon-only" name="menu"></ion-icon>
-                  </ion-button>
-                </ion-menu-toggle>
+                <ion-menu-button></ion-menu-button>
               </ion-buttons>
               <ion-segment color='light'>
                 <ion-segment-button checked>All</ion-segment-button>
@@ -343,4 +342,5 @@
 
   </script>
 </body>
+
 </html>

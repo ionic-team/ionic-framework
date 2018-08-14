@@ -1,8 +1,9 @@
 import { Component, Prop } from '@stencil/core';
-import { Color, Config, Mode } from '../../interface';
-import { createThemedClasses } from '../../utils/theme';
-import { SPINNERS, SpinnerConfig } from './spinner-configs';
 
+import { Color, Config, Mode } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
+
+import { SPINNERS, SpinnerConfig } from './spinner-configs';
 
 @Component({
   tag: 'ion-spinner',
@@ -10,24 +11,21 @@ import { SPINNERS, SpinnerConfig } from './spinner-configs';
     ios: 'spinner.ios.scss',
     md: 'spinner.md.scss'
   },
-  host: {
-    theme: 'spinner'
-  }
+  shadow: true
 })
 export class Spinner {
   @Prop({ context: 'config' }) config!: Config;
 
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information, see [Theming your App](/docs/theming/theming-your-app).
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
-   * For more information, see [Platform Styles](/docs/theming/platform-specific-styles).
    */
   @Prop() mode!: Mode;
 
@@ -47,7 +45,6 @@ export class Spinner {
    * If true, the spinner's animation will be paused. Defaults to `false`.
    */
   @Prop() paused = false;
-
 
   private getName(): string {
     let name = this.name || this.config.get('spinner');
@@ -72,15 +69,13 @@ export class Spinner {
   }
 
   hostData() {
-    const themedClasses = createThemedClasses(this.mode, this.color, `spinner spinner-${this.getName()}`);
-
-    const spinnerClasses = {
-      ...themedClasses,
-      'spinner-paused': this.paused
-    };
-
     return {
-      class: spinnerClasses
+      class: {
+        ...createColorClasses(this.color),
+
+        [`spinner-${this.getName()}`]: true,
+        'spinner-paused': !!this.paused
+      }
     };
   }
 
@@ -88,9 +83,7 @@ export class Spinner {
     const name = this.getName();
 
     const spinner = SPINNERS[name] || SPINNERS['lines'];
-
     const duration = (typeof this.duration === 'number' && this.duration > 10 ? this.duration : spinner.dur);
-
     const svgs: any[] = [];
 
     if (spinner.circles) {
@@ -108,10 +101,9 @@ export class Spinner {
   }
 }
 
-
 function buildCircle(spinner: SpinnerConfig, duration: number, index: number, total: number) {
   const data = spinner.fn(duration, index, total);
-  data.style.animationDuration = duration + 'ms';
+  data.style['animation-duration'] = `${duration}ms`;
 
   return (
     <svg viewBox="0 0 64 64" style={data.style}>
@@ -120,10 +112,9 @@ function buildCircle(spinner: SpinnerConfig, duration: number, index: number, to
   );
 }
 
-
 function buildLine(spinner: SpinnerConfig, duration: number, index: number, total: number) {
   const data = spinner.fn(duration, index, total);
-  data.style.animationDuration = duration + 'ms';
+  data.style['animation-duration'] = `${duration}ms`;
 
   return (
     <svg viewBox="0 0 64 64" style={data.style}>

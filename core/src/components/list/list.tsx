@@ -1,27 +1,33 @@
 import { Component, Method, Prop } from '@stencil/core';
+
 import { Mode } from '../../interface';
+import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-list',
   styleUrls: {
     ios: 'list.ios.scss',
     md: 'list.md.scss'
-  },
-  host: {
-    theme: 'list'
   }
 })
 export class List {
-  private mode!: Mode;
   private openItem?: HTMLIonItemSlidingElement;
+
+  mode!: Mode;
 
   /**
    * How the bottom border should be displayed on all items.
+   * Available options: `"full"`, `"inset"`, `"none"`.
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
 
   /**
-   * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently opene.
+   * If true, the list will have margin around it and rounded corners. Defaults to `false`.
+   */
+  @Prop() inset = false;
+
+  /**
+   * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently open.
    */
   @Method()
   getOpenItem() {
@@ -53,10 +59,11 @@ export class List {
   hostData() {
     return {
       class: {
+        ...createThemedClasses(this.mode, 'list'),
         [`list-lines-${this.lines}`]: !!this.lines,
+        'list-inset': this.inset,
         [`list-${this.mode}-lines-${this.lines}`]: !!this.lines
       }
     };
   }
-
 }

@@ -13,7 +13,7 @@ export class TranslucentPageTab {
   @Element() element!: HTMLElement;
 
   getTabs() {
-    return this.element.closest('ion-tabs');
+    return this.element.closest('ion-tabs')!;
   }
 
   setLayout(value: string) {
@@ -45,14 +45,14 @@ export class TranslucentPageTab {
       <ion-content fullscreen={true}>
         <ion-grid>
           <ion-row>
-            <ion-col col-6><f class="red"></f></ion-col>
-            <ion-col col-6><f class="green"></f></ion-col>
-            <ion-col col-6><f class="blue"></f></ion-col>
-            <ion-col col-6><f class="yellow"></f></ion-col>
-            <ion-col col-6><f class="pink"></f></ion-col>
-            <ion-col col-6><f class="purple"></f></ion-col>
-            <ion-col col-6><f class="black"></f></ion-col>
-            <ion-col col-6><f class="orange"></f></ion-col>
+            <ion-col size="6"><f class="red"></f></ion-col>
+            <ion-col size="6"><f class="green"></f></ion-col>
+            <ion-col size="6"><f class="blue"></f></ion-col>
+            <ion-col size="6"><f class="yellow"></f></ion-col>
+            <ion-col size="6"><f class="pink"></f></ion-col>
+            <ion-col size="6"><f class="purple"></f></ion-col>
+            <ion-col size="6"><f class="black"></f></ion-col>
+            <ion-col size="6"><f class="orange"></f></ion-col>
           </ion-row>
         </ion-grid>
       </ion-content>

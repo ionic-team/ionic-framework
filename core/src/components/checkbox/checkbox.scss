@@ -3,24 +3,61 @@
 // Checkbox
 // --------------------------------------------------
 
-ion-checkbox {
-  position: relative;
+:host {
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
+
+  // Checked colors
+  --background-checked: #{current-color(base)};
+  --border-color-checked: #{current-color(base)};
+  --checkmark-color: #{current-color(contrast)};
+
   display: inline-block;
+  position: relative;
+
+  user-select: none;
 }
 
-ion-checkbox input {
-  @include position(0, null, null, 0);
-  @include margin(0);
+:host(.checkbox-disabled) {
+  pointer-events: none;
+}
 
-  position: absolute;
+:host(.checkbox-checked) .checkbox-icon {
+  border-color: var(--border-color-checked);
 
-  width: 100%;
-  height: 100%;
+  background: var(--background-checked);
+}
 
-  border: 0;
-  background: transparent;
-  cursor: pointer;
+:host(.checkbox-checked) .checkbox-inner {
+  opacity: 1;
+}
 
-  appearance: none;
+input {
+  @include input-cover();
+}
+
+.checkbox-icon {
+  @include border-radius(var(--border-radius));
+
+  position: relative;
+
+  width: var(--size);
+  height: var(--size);
+
+  transition: var(--transition);
+
+  border-width: var(--border-width);
+  border-style: var(--border-style);
+  border-color: var(--border-color);
+
+  background: var(--background);
+
+  contain: strict;
+}
+
+.checkbox-inner {
+  border-color: var(--checkmark-color);
+
+  opacity: 0;
 }
 

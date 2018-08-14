@@ -1,0 +1,24 @@
+@import "../../themes/ionic.globals";
+
+:host {
+  @include border-radius(50%);
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: var(--size, 32px);
+  height: var(--size, 32px);
+
+
+  background: #{ion-color(primary, base)};
+  color: #{ion-color(primary, contrast)};
+
+  font-size: 18px;
+}
+
+:host(.ion-color) {
+  background: #{current-color(base)};
+  color: #{current-color(contrast)};
+}

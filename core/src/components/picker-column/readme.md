@@ -7,17 +7,9 @@
 
 ## Properties
 
-#### col
-
-
-
-
-## Attributes
-
-#### col
-
-
-
+| Property | Attribute | Description | Type           |
+| -------- | --------- | ----------- | -------------- |
+| `col`    | --        |             | `PickerColumn` |
 
 
 ----------------------------------------------
