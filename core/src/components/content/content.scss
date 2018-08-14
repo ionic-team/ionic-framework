@@ -11,20 +11,17 @@
   --padding-start: 0px;
   --padding-end: 0px;
   --keyboard-offset: 0px;
+  --offset-top: 0px;
+  --offset-bottom: 0px;
 
   display: block;
   position: relative;
 
   flex: 1;
 
-  width: 100%;
-  height: 100%;
-
   /* stylelint-disable */
-  /* TODO: find a better solution in padding.css, that does not require !important, */
-  margin: 0 !important;
-
   padding: 0 !important;
+  margin: 0 !important;
   /* stylelint-enable */
 
   background-color: #{current-color(base)};
@@ -38,11 +35,54 @@
   --ion-color-base: #{$background-color-step-50};
 }
 
-.scroll-inner {
-  @include padding(var(--padding-top), var(--padding-end), calc(var(--padding-bottom) + var(--keyboard-offset)), var(--padding-start));
+.inner-scroll {
+  @include position(
+    calc(var(--offset-top) * -1), 0,
+    calc(var(--offset-bottom) * -1), 0
+  );
+  @include padding(
+    calc(var(--padding-top) + var(--offset-top)),
+    var(--padding-end),
+    calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom)),
+    var(--padding-start)
+  );
+
+  position: absolute;
 
   box-sizing: border-box;
 
-  min-height: 100%;
-  -webkit-margin-collapse: discard;
+  overflow: hidden;
+}
+
+.scroll-y,
+.scroll-x {
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
+  overscroll-behavior: contain;
+}
+
+.scroll-y {
+  overflow-y: auto;
+}
+
+.scroll-x {
+  overflow-x: auto;
+}
+
+.overscroll::before,
+.overscroll::after {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  content: "";
+}
+
+.overscroll::before {
+  bottom: -1px;
+}
+
+.overscroll::after {
+  top: -1px;
 }

@@ -20,227 +20,51 @@ The toast can be dismissed automatically after a specific amount of time by pass
 
 ## Properties
 
-#### closeButtonText
-
-string
-
-Text to display in the close button.
-
-
-#### cssClass
-
-string
-
-Additional classes to apply for custom CSS. If multiple classes are
-provided they should be separated by spaces.
-
-
-#### duration
-
-number
-
-How many milliseconds to wait before hiding the toast. By default, it will show
-until `dismiss()` is called.
-
-
-#### enterAnimation
-
-AnimationBuilder
-
-Animation to use when the toast is presented.
-
-
-#### keyboardClose
-
-boolean
-
-
-#### leaveAnimation
-
-AnimationBuilder
-
-Animation to use when the toast is dismissed.
-
-
-#### message
-
-string
-
-Message to be shown in the toast.
-
-
-#### overlayId
-
-number
-
-
-#### position
-
-string
-
-The position of the toast on the screen. Possible values: "top", "middle", "bottom".
-
-
-#### showCloseButton
-
-boolean
-
-If true, the close button will be displayed. Defaults to `false`.
-
-
-#### translucent
-
-boolean
-
-If true, the toast will be translucent. Defaults to `false`.
-
-
-#### willAnimate
-
-boolean
-
-If true, the toast will animate. Defaults to `true`.
-
-
-## Attributes
-
-#### close-button-text
-
-string
-
-Text to display in the close button.
-
-
-#### css-class
-
-string
-
-Additional classes to apply for custom CSS. If multiple classes are
-provided they should be separated by spaces.
-
-
-#### duration
-
-number
-
-How many milliseconds to wait before hiding the toast. By default, it will show
-until `dismiss()` is called.
-
-
-#### enter-animation
-
-
-
-Animation to use when the toast is presented.
-
-
-#### keyboard-close
-
-boolean
-
-
-#### leave-animation
-
-
-
-Animation to use when the toast is dismissed.
-
-
-#### message
-
-string
-
-Message to be shown in the toast.
-
-
-#### overlay-id
-
-number
-
-
-#### position
-
-string
-
-The position of the toast on the screen. Possible values: "top", "middle", "bottom".
-
-
-#### show-close-button
-
-boolean
-
-If true, the close button will be displayed. Defaults to `false`.
-
-
-#### translucent
-
-boolean
-
-If true, the toast will be translucent. Defaults to `false`.
-
-
-#### will-animate
-
-boolean
-
-If true, the toast will animate. Defaults to `true`.
+| Property          | Attribute           | Description                                                                                                      | Type                |
+| ----------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `closeButtonText` | `close-button-text` | Text to display in the close button.                                                                             | `string`            |
+| `cssClass`        | `css-class`         | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string | string[]` |
+| `duration`        | `duration`          | How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.     | `number`            |
+| `enterAnimation`  | --                  | Animation to use when the toast is presented.                                                                    | `AnimationBuilder`  |
+| `keyboardClose`   | `keyboard-close`    |                                                                                                                  | `boolean`           |
+| `leaveAnimation`  | --                  | Animation to use when the toast is dismissed.                                                                    | `AnimationBuilder`  |
+| `message`         | `message`           | Message to be shown in the toast.                                                                                | `string`            |
+| `overlayId`       | `overlay-id`        |                                                                                                                  | `number`            |
+| `position`        | `position`          | The position of the toast on the screen. Possible values: "top", "middle", "bottom".                             | `string`            |
+| `showCloseButton` | `show-close-button` | If true, the close button will be displayed. Defaults to `false`.                                                | `boolean`           |
+| `translucent`     | `translucent`       | If true, the toast will be translucent. Defaults to `false`.                                                     | `boolean`           |
+| `willAnimate`     | `will-animate`      | If true, the toast will animate. Defaults to `true`.                                                             | `boolean`           |
 
 
 ## Events
 
-#### ionToastDidDismiss
-
-Emitted after the toast has dismissed.
-
-
-#### ionToastDidLoad
-
-Emitted after the toast has loaded.
-
-
-#### ionToastDidPresent
-
-Emitted after the toast has presented.
-
-
-#### ionToastDidUnload
-
-Emitted after the toast has unloaded.
-
-
-#### ionToastWillDismiss
-
-Emitted before the toast has dismissed.
-
-
-#### ionToastWillPresent
-
-Emitted before the toast has presented.
+| Event                 | Description                             |
+| --------------------- | --------------------------------------- |
+| `ionToastDidDismiss`  | Emitted after the toast has dismissed.  |
+| `ionToastDidLoad`     | Emitted after the toast has loaded.     |
+| `ionToastDidPresent`  | Emitted after the toast has presented.  |
+| `ionToastDidUnload`   | Emitted after the toast has unloaded.   |
+| `ionToastWillDismiss` | Emitted before the toast has dismissed. |
+| `ionToastWillPresent` | Emitted before the toast has presented. |
 
 
 ## Methods
 
-#### dismiss()
-
-Dismiss the toast overlay after it has been presented.
-
-
-#### onDidDismiss()
-
-Returns a promise that resolves when the toast did dismiss. It also accepts a callback
-that is called in the same circustances.
+| Method          | Description                                                                                                                      |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| `dismiss`       | Dismiss the toast overlay after it has been presented.                                                                           |
+| `onDidDismiss`  | Returns a promise that resolves when the toast did dismiss. It also accepts a callback that is called in the same circustances.  |
+| `onWillDismiss` | Returns a promise that resolves when the toast will dismiss. It also accepts a callback that is called in the same circustances. |
+| `present`       | Present the toast overlay after it has been created.                                                                             |
 
 
-#### onWillDismiss()
+## CSS Custom Properties
 
-Returns a promise that resolves when the toast will dismiss. It also accepts a callback
-that is called in the same circustances.
-
-
-#### present()
-
-Present the toast overlay after it has been created.
-
+| Name             | Description              |
+| ---------------- | ------------------------ |
+| `--background`   | Background of the toast  |
+| `--button-color` | Color of the button text |
+| `--color`        | Color of the toast text  |
 
 
 ----------------------------------------------

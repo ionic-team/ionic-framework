@@ -90,7 +90,7 @@ export class Menu {
   /**
    * Which side of the view the menu should be placed. Default `"start"`.
    */
-  @Prop() side: Side = 'start';
+  @Prop({ reflectToAttr: true }) side: Side = 'start';
 
   @Watch('side')
   protected sideChanged() {
@@ -100,10 +100,10 @@ export class Menu {
   /**
    * If true, swiping the menu is enabled. Default `true`.
    */
-  @Prop() swipeEnabled = true;
+  @Prop() swipeGesture = true;
 
-  @Watch('swipeEnabled')
-  protected swipeEnabledChanged() {
+  @Watch('swipeGesture')
+  protected swipeGestureChanged() {
     this.updateState();
   }
   /**
@@ -175,11 +175,11 @@ export class Menu {
     this.menuCtrl!._register(this);
     this.ionMenuChange.emit({ disabled: !isEnabled, open: this._isOpen });
 
-    this.gesture = (await import('../../utils/gesture/gesture')).create({
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
       el: this.doc,
       queue: this.queue,
       gestureName: 'menu-swipe',
-      gesturePriority: 10,
+      gesturePriority: 40,
       threshold: 10,
       canStart: this.canStart.bind(this),
       onWillStart: this.onWillStart.bind(this),
@@ -214,11 +214,16 @@ export class Menu {
 
   @Listen('body:click', { enabled: false, capture: true })
   onBackdropClick(ev: any) {
-    const path = ev.path;
-    if (path && !path.includes(this.menuInnerEl) && this.lastOnEnd < ev.timeStamp - 100) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      this.close();
+    if (this.lastOnEnd < ev.timeStamp - 100) {
+      const shouldClose = (ev.composedPath)
+        ? !ev.composedPath().includes(this.menuInnerEl)
+        : false;
+
+      if (shouldClose) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.close();
+      }
     }
   }
 
@@ -299,7 +304,7 @@ export class Menu {
   }
 
   private canSwipe(): boolean {
-    return this.swipeEnabled && !this.isAnimating && this.isActive();
+    return this.swipeGesture && !this.isAnimating && this.isActive();
   }
 
   private canStart(detail: GestureDetail): boolean {
@@ -439,7 +444,7 @@ export class Menu {
   private updateState() {
     const isActive = this.isActive();
     if (this.gesture) {
-      this.gesture.disabled = !isActive || !this.swipeEnabled;
+      this.gesture.setDisabled(!isActive || !this.swipeGesture);
     }
 
     // Close menu inmediately
@@ -481,7 +486,6 @@ export class Menu {
       <div
         class="menu-inner"
         ref={el => this.menuInnerEl = el}
-        onClick={this.onBackdropClick.bind(this)}
       >
         <slot></slot>
       </div>,

@@ -17,6 +17,7 @@
   <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true})">Show Toast with Close Button</button>
   <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, closeButtonText: 'closing time'})">Show Toast with Custom Close Button Text</button>
   <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, translucent: true})">Show Translucent Toast</button>
+  <button onclick="presentToastWithOptions({message: 'click to close', showCloseButton: true, cssClass: 'custom'})">Show Toast with Custom Properties</button>
 
   <ion-toast-controller></ion-toast-controller>
 
@@ -31,6 +32,12 @@
       border: 1px solid #eee;
       border-radius: 4px;
       margin-bottom: 8px;
+    }
+
+    .custom {
+      --background: papayawhip;
+      --button-color: blue;
+      --color: red;
     }
   </style>
 

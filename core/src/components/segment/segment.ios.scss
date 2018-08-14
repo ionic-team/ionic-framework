@@ -10,7 +10,6 @@
 
 :host(.segment-disabled) {
   opacity: $segment-ios-opacity-disabled;
-  pointer-events: none;
 }
 
 // iOS Segment Button
@@ -42,7 +41,6 @@
 
 ::slotted(.segment-button-disabled) {
   color: #{current-color(base, $segment-button-ios-background-color-alpha-disabled)};
-  pointer-events: none;
 }
 
 ::slotted(ion-segment-button):hover:not(.segment-checked) {

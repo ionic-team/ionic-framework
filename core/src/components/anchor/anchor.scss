@@ -4,16 +4,19 @@
 // --------------------------------------------------
 
 :host {
-  // default background / color
-  --color: #{ion-color(primary, base)};
+  /**
+   * @prop --background: Background of the badge
+   * @prop --color: Text color of the badge
+   */
   --background: transparent;
+  --color: #{ion-color(primary, base)};
 
   background: var(--background);
   color: var(--color);
 }
 
 :host(.ion-color) {
-  --color: #{current-color(base)};
+  color: current-color(base);
 }
 
 a {

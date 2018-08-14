@@ -9,10 +9,9 @@ Used to create an animation instance.
 
 ## Methods
 
-#### create()
-
-Creates an animation instance
-
+| Method   | Description                   |
+| -------- | ----------------------------- |
+| `create` | Creates an animation instance |
 
 
 ----------------------------------------------

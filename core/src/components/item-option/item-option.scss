@@ -4,10 +4,14 @@
 // --------------------------------------------------
 
 :host {
+  --ion-color-base: #{ion-color(primary, base)};
+  --ion-color-contrast: #{ion-color(primary, contrast)};
+
   color: #{current-color(contrast)};
 }
 
 .item-option-native {
+  @include text-inherit();
   @include padding(0, .7em);
 
   width: 100%;
@@ -18,15 +22,13 @@
   outline: none;
 
   background: #{current-color(base)};
-  color: inherit;
 
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-
-  letter-spacing: inherit;
+  cursor: pointer;
   appearance: none;
+}
 
+.item-option-native:hover {
+  opacity: 0.8;
 }
 
 .item-option-button-inner {

@@ -4,6 +4,7 @@
 // --------------------------------------------------
 
 :host {
+  --knob-handle-size: calc(var(--knob-size) * 2);
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
 
@@ -12,6 +13,8 @@
 
   flex: 1;
   align-items: center;
+
+  user-select: none;
 }
 
 ::slotted(ion-label) {
@@ -22,23 +25,97 @@
   font-size: 24px;
 }
 
+
+
+
 .range-slider {
   position: relative;
 
   flex: 1;
 
-  cursor: pointer;
+  width: 100%;
+  height: var(--height);
+
+  contain: size layout style;
+
+  cursor: grab;
+}
+
+:host(.range-pressed) .range-slider {
+  cursor: grabbing;
 }
 
 .range-pin {
+  position: absolute;
+
+  background: current-color(base);
+  color: current-color(contrast);
+
+  text-align: center;
   box-sizing: border-box;
 }
 
 .range-knob-handle {
+  @include position(
+    calc((var(--height) - var(--knob-handle-size)) / 2),
+    null, null, 0
+  );
+  @include margin-horizontal(
+    calc(0px - var(--knob-handle-size) / 2),
+    null
+  );
+
+  position: absolute;
+
+  width: var(--knob-handle-size);
+  height: var(--knob-handle-size);
+
+  text-align: center;
+
   &:active,
   &:focus {
     outline: none;
   }
+}
+
+.range-bar {
+  @include position(calc((var(--height) - var(--bar-height)) / 2), null, null, 0);
+  position: absolute;
+
+  width: 100%;
+  height: var(--bar-height);
+
+  background: var(--bar-background);
+
+  pointer-events: none;
+}
+
+.range-knob {
+  @include border-radius(var(--knob-border-radius));
+  @include position(
+    calc(50% - var(--knob-size) / 2),
+    null, null,
+    calc(50% - var(--knob-size) / 2)
+  );
+
+  position: absolute;
+
+  width: var(--knob-size);
+  height: var(--knob-size);
+
+  background: var(--knob-background);
+
+  box-shadow: var(--knob-box-shadow);
+  z-index: 2;
+  pointer-events: none;
+}
+
+:host(.range-pressed) .range-bar-active {
+  will-change: left, right;
+}
+
+:host(.range-pressed) .range-knob-handle {
+  will-change: left;
 }
 
 // Range in Item
@@ -57,6 +134,8 @@
 
 //   width: 100%;
 // }
+
+
 
 :host(.in-item) {
   width: 100%;

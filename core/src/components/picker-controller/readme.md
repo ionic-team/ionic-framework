@@ -7,14 +7,11 @@
 
 ## Methods
 
-#### create()
-
-
-#### dismiss()
-
-
-#### getTop()
-
+| Method    | Description |
+| --------- | ----------- |
+| `create`  |             |
+| `dismiss` |             |
+| `getTop`  |             |
 
 
 ----------------------------------------------

@@ -1,6 +1,6 @@
 import 'ionicons';
 
-import { configFromURL } from '../utils/config';
+import { configFromSession, configFromURL, saveConfig } from '../utils/config';
 import { isIOS } from '../utils/platform';
 
 import { Config } from './config';
@@ -16,10 +16,16 @@ Object.defineProperty(Ionic, 'queue', {
 
 // create the Ionic.config from raw config object (if it exists)
 // and convert Ionic.config into a ConfigApi that has a get() fn
-const config = Ionic['config'] = Context['config'] = new Config({
+const configObj = {
+  ...configFromSession(),
+  persistConfig: false,
   ...Ionic['config'],
   ...configFromURL()
-});
+};
+const config = Ionic['config'] = Context['config'] = new Config(configObj);
+if (config.getBoolean('persistConfig')) {
+  saveConfig(configObj);
+}
 
 // first see if the mode was set as an attribute on <html>
 // which could have been set by the user, or by prerendering

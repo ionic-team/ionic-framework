@@ -30,7 +30,7 @@ export class Tab {
   @Prop() label?: string;
 
   /**
-   * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
+   * The URL which will be used as the `href` within this tab's button anchor.
    */
   @Prop() href?: string;
 

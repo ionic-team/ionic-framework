@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
-import { CheckboxInput, CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
+import { CheckedInputChangeEvent, Color, Mode, StyleEvent } from '../../interface';
 import { deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
@@ -12,7 +12,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   },
   shadow: true
 })
-export class Checkbox implements CheckboxInput {
+export class Checkbox {
 
   private inputId = `ion-cb-${checkboxIds++}`;
   private labelId = `${this.inputId}-lbl`;

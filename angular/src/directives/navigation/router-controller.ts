@@ -39,7 +39,6 @@ export class StackController {
     const leavingView = this.getActive();
     this.insertView(enteringView, direction);
     await this.transition(enteringView, leavingView, direction, animated, this.canGoBack(1));
-
     this.cleanup();
   }
 

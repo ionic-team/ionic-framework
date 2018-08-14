@@ -57,6 +57,10 @@ export function isElectron(win: Window): boolean {
   return testUserAgent(win, /electron/);
 }
 
+export function isStandaloneMode(win: Window): boolean {
+  return win.matchMedia('(display-mode: standalone)').matches;
+}
+
 export function needInputShims(win: Window) {
   return isIOS(win) && isDevice(win);
 }

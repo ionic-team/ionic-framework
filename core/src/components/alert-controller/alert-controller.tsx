@@ -1,7 +1,7 @@
 import { Component, Listen, Method, Prop } from '@stencil/core';
 
-import { AlertOptions } from '../../interface';
-import { OverlayController, createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+import { AlertOptions, OverlayController } from '../../interface';
+import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-alert-controller'

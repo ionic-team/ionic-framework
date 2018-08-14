@@ -15,7 +15,6 @@ The `<ion-buttons>` element can be positioned inside of the toolbar using a name
 <!-- Auto Generated Below -->
 
 
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

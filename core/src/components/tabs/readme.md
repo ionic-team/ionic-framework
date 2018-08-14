@@ -9,188 +9,37 @@ The component is a container of individual [Tab](../Tab/) components.
 
 ## Properties
 
-#### color
-
-string
-
-The color to use from your application's color palette.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information on colors, see [theming](/docs/theming/basics).
-
-
-#### name
-
-string
-
-A unique name for the tabs.
-
-
-#### scrollable
-
-boolean
-
-If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-
-
-#### tabbarHidden
-
-boolean
-
-If true, the tabbar will be hidden. Defaults to `false`.
-
-
-#### tabbarHighlight
-
-boolean
-
-If true, show the tab highlight bar under the selected tab.
-
-
-#### tabbarLayout
-
-string
-
-Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
-
-
-#### tabbarPlacement
-
-string
-
-Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
-
-
-#### translucent
-
-boolean
-
-If true, the tabs will be translucent.
-Note: In order to scroll content behind the tabs, the `fullscreen`
-attribute needs to be set on the content.
-Defaults to `false`.
-
-
-#### useRouter
-
-boolean
-
-If true, the tabs will use the router and `selectedTab` will not do anything.
-
-
-## Attributes
-
-#### color
-
-string
-
-The color to use from your application's color palette.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-For more information on colors, see [theming](/docs/theming/basics).
-
-
-#### name
-
-string
-
-A unique name for the tabs.
-
-
-#### scrollable
-
-boolean
-
-If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-
-
-#### tabbar-hidden
-
-boolean
-
-If true, the tabbar will be hidden. Defaults to `false`.
-
-
-#### tabbar-highlight
-
-boolean
-
-If true, show the tab highlight bar under the selected tab.
-
-
-#### tabbar-layout
-
-string
-
-Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
-
-
-#### tabbar-placement
-
-string
-
-Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
-
-
-#### translucent
-
-boolean
-
-If true, the tabs will be translucent.
-Note: In order to scroll content behind the tabs, the `fullscreen`
-attribute needs to be set on the content.
-Defaults to `false`.
-
-
-#### use-router
-
-boolean
-
-If true, the tabs will use the router and `selectedTab` will not do anything.
+| Property          | Attribute          | Description                                                                                                                                                                                                                                                            | Type              |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| `color`           | `color`            | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `Color`           |
+| `name`            | `name`             | A unique name for the tabs.                                                                                                                                                                                                                                            | `string`          |
+| `tabbarHidden`    | `tabbar-hidden`    | If true, the tabbar will be hidden. Defaults to `false`.                                                                                                                                                                                                               | `boolean`         |
+| `tabbarHighlight` | `tabbar-highlight` | If true, show the tab highlight bar under the selected tab.                                                                                                                                                                                                            | `boolean`         |
+| `tabbarLayout`    | `tabbar-layout`    | Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.                                                                                                      | `TabbarLayout`    |
+| `tabbarPlacement` | `tabbar-placement` | Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.                                                                                                                                                                       | `TabbarPlacement` |
+| `translucent`     | `translucent`      | If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.                                                                                               | `boolean`         |
+| `useRouter`       | `use-router`       | If true, the tabs will use the router and `selectedTab` will not do anything.                                                                                                                                                                                          | `boolean`         |
 
 
 ## Events
 
-#### ionChange
-
-Emitted when the tab changes.
-
-
-#### ionNavDidChange
-
-Emitted when the navigation has finished transitioning to a new component.
-
-
-#### ionNavWillChange
-
-Emitted when the navigation is about to transition to a new component.
-
-
-#### ionNavWillLoad
-
-Emitted when the navigation will load a component.
+| Event              | Description                                                                |
+| ------------------ | -------------------------------------------------------------------------- |
+| `ionChange`        | Emitted when the tab changes.                                              |
+| `ionNavDidChange`  | Emitted when the navigation has finished transitioning to a new component. |
+| `ionNavWillChange` | Emitted when the navigation is about to transition to a new component.     |
+| `ionNavWillLoad`   | Emitted when the navigation will load a component.                         |
 
 
 ## Methods
 
-#### getRouteId()
-
-
-#### getSelected()
-
-Get the currently selected tab
-
-
-#### getTab()
-
-Get the tab at the given index
-
-
-#### select()
-
-Index or the Tab instance, of the tab to select.
-
-
-#### setRouteId()
-
+| Method        | Description                                      |
+| ------------- | ------------------------------------------------ |
+| `getRouteId`  |                                                  |
+| `getSelected` | Get the currently selected tab                   |
+| `getTab`      | Get the tab at the given index                   |
+| `select`      | Index or the Tab instance, of the tab to select. |
+| `setRouteId`  |                                                  |
 
 
 ----------------------------------------------

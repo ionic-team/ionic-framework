@@ -76,6 +76,15 @@ wrongRepo:
 
 
         Thank you for using Ionic!
+    - label: "ionitron: docs"
+      repo: ionic-docs
+      message: >
+        Thanks for the issue! We use this issue tracker exclusively for bug reports and feature requests
+        associated with the Ionic Framework. It appears that this issue is associated with the Ionic Documentation.
+        I am moving this issue to the Ionic Docs repository. Please track this issue over there.
+
+
+        Thank you for using Ionic!
     - label: "ionitron: stencil"
       repo: stencil
       message: >

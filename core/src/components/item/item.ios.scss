@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: var(--ion-item-background, transparent);
+  --ion-color-base: var(--ion-item-background-color, transparent);
   --ion-color-contrast: #{$item-ios-text-color};
   --ion-color-tint: #{$item-ios-background-color-active};
   --ion-color-shade: #{$item-ios-border-bottom-color};
@@ -20,12 +20,6 @@
 
 :host(.activated) {
   --transition: none;
-}
-
-@media screen and (orientation: landscape) {
-  .item-inner {
-    @include safe-area-padding-horizontal(var(--inner-padding-start), var(--inner-padding-end));
-  }
 }
 
 

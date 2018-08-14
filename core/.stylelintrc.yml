@@ -45,10 +45,6 @@ rules:
   declaration-no-important:
     - true
 
-  length-zero-no-unit:
-    - true
-    - ignore:
-      - custom-properties
 
   order/order:
     - custom-properties
@@ -265,13 +261,9 @@ rules:
     - padding
     - padding-left
     - padding-right
-    - padding-top
-    - padding-bottom
     - margin
     - margin-left
     - margin-right
-    - margin-top
-    - margin-bottom
     - border-radius
     - border-top-left-radius
     - border-top-right-radius

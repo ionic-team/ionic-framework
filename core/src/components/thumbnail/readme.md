@@ -8,6 +8,13 @@ Thumbnails can be used by themselves or inside of any element. If placed inside 
 <!-- Auto Generated Below -->
 
 
+## CSS Custom Properties
+
+| Name              | Description                    |
+| ----------------- | ------------------------------ |
+| `--border-radius` | Border radius of the thumbnail |
+| `--size`          | Size of the thumbnail          |
+
 
 ----------------------------------------------
 

@@ -55,11 +55,6 @@ export class Loading implements OverlayInterface {
   @Prop() cssClass?: string | string[];
 
   /**
-   * If true, the loading indicator will dismiss when the page changes. Defaults to `false`.
-   */
-  @Prop() dismissOnPageChange = false;
-
-  /**
    * Number of milliseconds to wait before dismissing the loading indicator.
    */
   @Prop() duration?: number;
@@ -67,7 +62,7 @@ export class Loading implements OverlayInterface {
   /**
    * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
    */
-  @Prop() enableBackdropDismiss = false;
+  @Prop() backdropDismiss = false;
 
   /**
    * If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.

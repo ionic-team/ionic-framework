@@ -21,6 +21,8 @@
   user-select: none;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
+
+  font-kerning: none;
 }
 
 :host([disabled]) {
@@ -127,6 +129,8 @@
   border-style: var(--border-style);
   border-color: var(--border-color);
 
+  outline: none;
+
   background: var(--background);
 
   line-height: 1;
@@ -136,11 +140,9 @@
   cursor: pointer;
   opacity: var(--opacity);
   overflow: var(--overflow);
-  vertical-align: top; // the better option for most scenarios
-  vertical-align: -webkit-baseline-middle; // the best for those that support it
+
   z-index: 0;
   box-sizing: border-box;
-  font-kerning: none;
   appearance: none;
 }
 
@@ -153,11 +155,6 @@
 // .button > .button-container:hover {
 //   opacity: var(--opacity-hover);
 // }
-
-.button-native:active,
-.button-native:focus {
-  outline: none;
-}
 
 .button-inner {
   display: flex;

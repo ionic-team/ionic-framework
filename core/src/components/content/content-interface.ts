@@ -5,7 +5,6 @@ export interface ScrollBaseDetail {
 }
 
 export interface ScrollDetail extends GestureDetail, ScrollBaseDetail {
-  positions: number[];
   scrollTop: number;
   scrollLeft: number;
 }

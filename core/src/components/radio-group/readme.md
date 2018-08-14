@@ -13,66 +13,19 @@ radio button within the same group.
 
 ## Properties
 
-#### allowEmptySelection
-
-boolean
-
-
-#### disabled
-
-boolean
-
-Indicates that the user cannot interact with the control.
-
-
-#### name
-
-string
-
-The name of the control, which is submitted with the form data.
-
-
-#### value
-
-string
-
-the value of the radio group.
-
-
-## Attributes
-
-#### allow-empty-selection
-
-boolean
-
-
-#### disabled
-
-boolean
-
-Indicates that the user cannot interact with the control.
-
-
-#### name
-
-string
-
-The name of the control, which is submitted with the form data.
-
-
-#### value
-
-string
-
-the value of the radio group.
+| Property              | Attribute               | Description                                                     | Type      |
+| --------------------- | ----------------------- | --------------------------------------------------------------- | --------- |
+| `allowEmptySelection` | `allow-empty-selection` |                                                                 | `boolean` |
+| `disabled`            | `disabled`              |                                                                 | `boolean` |
+| `name`                | `name`                  | The name of the control, which is submitted with the form data. | `string`  |
+| `value`               | `value`                 | the value of the radio group.                                   | `string`  |
 
 
 ## Events
 
-#### ionChange
-
-Emitted when the value has changed.
-
+| Event       | Description                         |
+| ----------- | ----------------------------------- |
+| `ionChange` | Emitted when the value has changed. |
 
 
 ----------------------------------------------

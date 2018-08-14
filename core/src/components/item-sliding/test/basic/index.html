@@ -26,6 +26,12 @@
 
     <ion-content>
 
+      <ion-refresher id="refresher">
+        <ion-refresher-content pulling-text="Pull to refresh..." refreshing-spinner="bubbles" refreshing-text="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
+
+
       <div padding>
         <ion-button expand="block" onclick="toggleSliding()">Toggle sliding</ion-button>
         <ion-button expand="block" onclick="toggleDynamicOptions()">Toggle Dynamic Options</ion-button>

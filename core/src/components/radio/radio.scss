@@ -13,6 +13,11 @@
   user-select: none;
 }
 
+:host(.radio-disabled) {
+  pointer-events: none;
+}
+
+
 .radio-icon {
   display: block;
   position: relative;

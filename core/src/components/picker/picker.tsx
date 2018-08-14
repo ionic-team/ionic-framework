@@ -76,7 +76,7 @@ export class Picker implements OverlayInterface {
   /**
    * If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
    */
-  @Prop() enableBackdropDismiss = true;
+  @Prop() backdropDismiss = true;
 
   /**
    * If true, the picker will animate. Defaults to `true`.
@@ -91,26 +91,22 @@ export class Picker implements OverlayInterface {
   /**
    * Emitted after the picker has presented.
    */
-  @Event({ eventName: 'ionPickerDidPresent' })
-  didPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionPickerDidPresent' }) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the picker has presented.
    */
-  @Event({ eventName: 'ionPickerWillPresent' })
-  willPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionPickerWillPresent' }) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the picker has dismissed.
    */
-  @Event({ eventName: 'ionPickerWillDismiss' })
-  willDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionPickerWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the picker has dismissed.
    */
-  @Event({ eventName: 'ionPickerDidDismiss' })
-  didDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionPickerDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the picker has unloaded.
@@ -206,35 +202,11 @@ export class Picker implements OverlayInterface {
   }
 
   /**
-   * Add a new PickerButton to the picker
-   */
-  @Method()
-  addButton(button: PickerButton) {
-    this.buttons.push(button);
-  }
-
-  /**
-   * Add a new PickerColumn to the picker
-   */
-  @Method()
-  addColumn(column: PickerColumn) {
-    this.columns.push(column);
-  }
-
-  /**
    * Returns the column the matches the specified name
    */
   @Method()
   getColumn(name: string): PickerColumn | undefined {
     return this.columns.find(column => column.name === name);
-  }
-
-  /**
-   * Returns all the PickerColumns
-   */
-  @Method()
-  getColumns(): PickerColumn[] {
-    return this.columns;
   }
 
   private buttonClick(button: PickerButton) {
@@ -262,7 +234,7 @@ export class Picker implements OverlayInterface {
   private getSelected() {
     const selected: { [k: string]: any } = {};
     this.columns.forEach((col, index) => {
-      const selectedColumn = typeof (col.selectedIndex) !== 'undefined'
+      const selectedColumn = col.selectedIndex != null
         ? col.options[col.selectedIndex]
         : null;
       selected[col.name] = {
@@ -295,58 +267,33 @@ export class Picker implements OverlayInterface {
 
     const columns = this.columns;
 
-    // // clean up dat data
-    // data.columns = data.columns.map(column => {
-    //   if (!isPresent(column.options)) {
-    //     column.options = [];
-    //   }
-    //   column.selectedIndex = column.selectedIndex || 0;
-    //   column.options = column.options.map(inputOpt => {
-    //     let opt: PickerColumnOption = {
-    //       text: '',
-    //       value: '',
-    //       disabled: inputOpt.disabled,
-    //     };
-
-    //     if (isPresent(inputOpt)) {
-    //       if (isString(inputOpt) || isNumber(inputOpt)) {
-    //         opt.text = inputOpt.toString();
-    //         opt.value = inputOpt;
-
-    //       } else {
-    //         opt.text = isPresent(inputOpt.text) ? inputOpt.text : inputOpt.value;
-    //         opt.value = isPresent(inputOpt.value) ? inputOpt.value : inputOpt.text;
-    //       }
-    //     }
-
-    //     return opt;
-    //   });
-    //   return column;
-    // });
-
     return [
       <ion-backdrop
         visible={this.showBackdrop}
-        tappable={this.enableBackdropDismiss}
+        tappable={this.backdropDismiss}
       />,
+
       <div class="picker-wrapper" role="dialog">
+
         <div class="picker-toolbar">
           {buttons.map(b => (
             <div class={buttonWrapperClass(b)}>
               <button
+                type="button"
                 onClick={() => this.buttonClick(b)}
-                class={buttonClass(b)}
-              >
+                class={buttonClass(b)}>
                 {b.text}
               </button>
             </div>
           ))}
         </div>
+
         <div class="picker-columns">
           <div class="picker-above-highlight" />
-          {columns.map(c => <ion-picker-column col={c} />)}
+            { columns.map(c => <ion-picker-column col={c} />) }
           <div class="picker-below-highlight" />
         </div>
+
       </div>
     ];
   }

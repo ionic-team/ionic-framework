@@ -8,46 +8,17 @@ Img is a tag that will lazyily load an image when ever the tag is in the viewpor
 
 ## Properties
 
-#### alt
-
-string
-
-This attribute defines the alternative text describing the image.
-Users will see this text displayed if the image URL is wrong,
-the image is not in one of the supported formats, or if the image is not yet downloaded.
-
-
-#### src
-
-string
-
-The image URL. This attribute is mandatory for the <img> element.
-
-
-## Attributes
-
-#### alt
-
-string
-
-This attribute defines the alternative text describing the image.
-Users will see this text displayed if the image URL is wrong,
-the image is not in one of the supported formats, or if the image is not yet downloaded.
-
-
-#### src
-
-string
-
-The image URL. This attribute is mandatory for the <img> element.
+| Property | Attribute | Description                                                                                                                                                                                                              | Type     |
+| -------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `alt`    | `alt`     | This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded. | `string` |
+| `src`    | `src`     | The image URL. This attribute is mandatory for the <img> element.                                                                                                                                                        | `string` |
 
 
 ## Events
 
-#### ionImgDidLoad
-
-Emitted when the img src is loaded
-
+| Event           | Description                        |
+| --------------- | ---------------------------------- |
+| `ionImgDidLoad` | Emitted when the img src is loaded |
 
 
 ----------------------------------------------

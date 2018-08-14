@@ -6,7 +6,6 @@ Reorder is a component that allows an item to be dragged to change its order. It
 <!-- Auto Generated Below -->
 
 
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

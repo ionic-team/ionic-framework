@@ -12,7 +12,7 @@ export function startStatusTap(win: Window, queue: QueueApi) {
     if (contentEl) {
       await contentEl.componentOnReady();
       queue.write(() => {
-        contentEl.getScrollElement().scrollToTop(300);
+        contentEl.scrollToTop(300);
       });
     }
   });

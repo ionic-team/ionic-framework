@@ -13,66 +13,30 @@ While RouterOutlet has methods for navigating around, it's recommended to use th
 
 ## Properties
 
-#### animated
-
-boolean
-
-
-#### animationBuilder
-
-AnimationBuilder
-
-
-#### delegate
-
-FrameworkDelegate
-
-
-## Attributes
-
-#### animated
-
-boolean
-
-
-#### animation-builder
-
-
-
-
-#### delegate
-
-
+| Property           | Attribute  | Description | Type                |
+| ------------------ | ---------- | ----------- | ------------------- |
+| `animated`         | `animated` |             | `boolean`           |
+| `animationBuilder` | --         |             | `AnimationBuilder`  |
+| `delegate`         | --         |             | `FrameworkDelegate` |
 
 
 ## Events
 
-#### ionNavDidChange
-
-
-#### ionNavWillChange
-
-
-#### ionNavWillLoad
+| Event              | Description |
+| ------------------ | ----------- |
+| `ionNavDidChange`  |             |
+| `ionNavWillChange` |             |
+| `ionNavWillLoad`   |             |
 
 
 ## Methods
 
-#### commit()
-
-
-#### getRouteId()
-
-Returns the ID for the current route
-
-
-#### setRoot()
-
-Set the root component for the given navigation stack
-
-
-#### setRouteId()
-
+| Method       | Description                                           |
+| ------------ | ----------------------------------------------------- |
+| `commit`     |                                                       |
+| `getRouteId` | Returns the ID for the current route                  |
+| `setRoot`    | Set the root component for the given navigation stack |
+| `setRouteId` |                                                       |
 
 
 ----------------------------------------------

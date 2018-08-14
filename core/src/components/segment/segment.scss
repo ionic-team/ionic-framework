@@ -18,4 +18,14 @@
   justify-content: center;
 
   width: 100%;
+
+  text-align: center;
+}
+
+:host(.segment-disabled) {
+  pointer-events: none;
+}
+
+::slotted(.segment-button-disabled) {
+  pointer-events: none;
 }

@@ -63,7 +63,7 @@ export class Modal implements OverlayInterface {
   /**
    * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
    */
-  @Prop() enableBackdropDismiss = true;
+  @Prop() backdropDismiss = true;
 
   /**
    * If true, a backdrop will be displayed behind the modal. Defaults to `true`.
@@ -209,7 +209,7 @@ export class Modal implements OverlayInterface {
     const dialogClasses = createThemedClasses(this.mode, 'modal-wrapper');
 
     return [
-      <ion-backdrop visible={this.showBackdrop} tappable={this.enableBackdropDismiss}/>,
+      <ion-backdrop visible={this.showBackdrop} tappable={this.backdropDismiss}/>,
       <div role="dialog" class={dialogClasses}></div>
     ];
   }

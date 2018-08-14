@@ -65,7 +65,6 @@
 // .item-md.item-radio-disabled ion-label {
 :host(.radio-disabled) {
   opacity: $radio-md-disabled-opacity;
-  pointer-events: none;
 }
 
 

@@ -31,10 +31,10 @@ export class RefresherContent {
 
   protected componentDidLoad() {
     if (!this.pullingIcon) {
-      this.pullingIcon = this.config.get('ionPullIcon', 'arrow-down');
+      this.pullingIcon = this.config.get('refreshingIcon', 'arrow-down');
     }
     if (!this.refreshingSpinner) {
-      this.refreshingSpinner = this.config.get('ionRefreshingSpinner', this.config.get('spinner', 'lines'));
+      this.refreshingSpinner = this.config.get('refreshingSpinner', this.config.get('spinner', 'lines'));
     }
   }
 

@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: var(--ion-item-background, transparent);
+  --ion-color-base: var(--ion-item-background-color, transparent);
   --ion-color-contrast: #{$card-ios-text-color};
 
   @include margin($card-ios-margin-top, $card-ios-margin-end, $card-ios-margin-bottom, $card-ios-margin-start);

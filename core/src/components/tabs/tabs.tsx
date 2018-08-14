@@ -1,6 +1,6 @@
 import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
 
-import { Color, Config, NavOutlet, RouteID, RouteWrite, TabbarLayout, TabbarPlacement } from '../../interface';
+import { Color, Config, IonicConfig, NavOutlet, RouteID, RouteWrite, TabbarLayout, TabbarPlacement } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
 @Component({
@@ -21,7 +21,6 @@ export class Tabs implements NavOutlet {
   @State() selectedTab?: HTMLIonTabElement;
 
   @Prop({ context: 'config' }) config!: Config;
-
   @Prop({ context: 'document' }) doc!: Document;
 
   /**
@@ -65,11 +64,6 @@ export class Tabs implements NavOutlet {
   @Prop() translucent = false;
 
   /**
-   * If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-   */
-  @Prop() scrollable = false;
-
-  /**
    * If true, the tabs will use the router and `selectedTab` will not do anything.
    */
   @Prop({ mutable: true }) useRouter = false;
@@ -99,7 +93,7 @@ export class Tabs implements NavOutlet {
       this.useRouter = !!this.doc.querySelector('ion-router') && !this.el.closest('[no-router]');
     }
 
-    this.loadConfig('tabbarLayout', 'bottom');
+    this.loadConfig('tabbarPlacement', 'bottom');
     this.loadConfig('tabbarLayout', 'icon-top');
     this.loadConfig('tabbarHighlight', false);
 
@@ -235,7 +229,7 @@ export class Tabs implements NavOutlet {
     }
   }
 
-  private loadConfig(attrKey: string, fallback: any) {
+  private loadConfig(attrKey: keyof IonicConfig, fallback: any) {
     const val = (this as any)[attrKey];
     if (typeof val === 'undefined') {
       (this as any)[attrKey] = this.config.get(attrKey, fallback);
@@ -307,14 +301,12 @@ export class Tabs implements NavOutlet {
   }
 
   render() {
-    const dom = [
+    return [
       <div class="tabs-inner">
         <slot></slot>
-      </div>
-    ];
+      </div>,
 
-    if (!this.tabbarHidden) {
-      dom.push(
+      !this.tabbarHidden && (
         <ion-tabbar
           tabs={this.tabs.slice()}
           color={this.color}
@@ -322,12 +314,10 @@ export class Tabs implements NavOutlet {
           highlight={this.tabbarHighlight}
           placement={this.tabbarPlacement}
           layout={this.tabbarLayout}
-          translucent={this.translucent}
-          scrollable={this.scrollable}>
+          translucent={this.translucent}>
         </ion-tabbar>
-      );
-    }
-    return dom;
+      )
+    ];
   }
 }
 

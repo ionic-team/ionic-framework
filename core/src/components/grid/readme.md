@@ -12,21 +12,9 @@ See [Grid Layout](/docs/layout/grid) for more information.
 
 ## Properties
 
-#### fixed
-
-boolean
-
-If true, the grid will have a fixed width based on the screen size. Defaults to `false`.
-
-
-## Attributes
-
-#### fixed
-
-boolean
-
-If true, the grid will have a fixed width based on the screen size. Defaults to `false`.
-
+| Property | Attribute | Description                                                                              | Type      |
+| -------- | --------- | ---------------------------------------------------------------------------------------- | --------- |
+| `fixed`  | `fixed`   | If true, the grid will have a fixed width based on the screen size. Defaults to `false`. | `boolean` |
 
 
 ----------------------------------------------

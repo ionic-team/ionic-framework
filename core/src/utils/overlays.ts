@@ -1,10 +1,8 @@
-import { EventEmitter } from '@stencil/core';
-
-import { Animation, AnimationBuilder, Config, Mode } from '../interface';
+import { AnimationBuilder, HTMLIonOverlayElement, IonicConfig, OverlayInterface, OverlayMap } from '../interface';
 
 let lastId = 1;
 
-export function createOverlay<T extends HTMLIonOverlayElement, B>(element: T, opts: B): Promise<T> {
+export function createOverlay<T extends HTMLIonOverlayElement & Required<B>, B>(element: T, opts: B): Promise<T> {
   // convert the passed in overlay options into props
   // that get passed down into the new overlay
   Object.assign(element, opts);
@@ -49,7 +47,7 @@ export function removeLastOverlay(overlays: OverlayMap) {
 
 export async function present(
   overlay: OverlayInterface,
-  name: string,
+  name: keyof IonicConfig,
   iosEnterAnimation: AnimationBuilder,
   mdEnterAnimation: AnimationBuilder,
   opts?: any
@@ -74,7 +72,7 @@ export async function dismiss(
   overlay: OverlayInterface,
   data: any | undefined,
   role: string | undefined,
-  name: string,
+  name: keyof IonicConfig,
   iosLeaveAnimation: AnimationBuilder,
   mdLeaveAnimation: AnimationBuilder,
   opts?: any
@@ -159,46 +157,5 @@ export function onceEvent(element: HTMLElement, eventName: string, callback: (ev
 export function isCancel(role: string | undefined): boolean {
   return role === 'cancel' || role === BACKDROP;
 }
-
-export interface OverlayEventDetail<T = any> {
-  data?: T;
-  role?: string;
-}
-
-export interface OverlayInterface {
-  mode: Mode;
-  el: HTMLElement;
-  willAnimate: boolean;
-  keyboardClose: boolean;
-  config: Config;
-  overlayId: number;
-  presented: boolean;
-  animation?: Animation;
-  animationCtrl: HTMLIonAnimationControllerElement;
-
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
-
-  didPresent: EventEmitter<void>;
-  willPresent: EventEmitter<void>;
-  willDismiss: EventEmitter<OverlayEventDetail>;
-  didDismiss: EventEmitter<OverlayEventDetail>;
-
-  present(): Promise<void>;
-  dismiss(data?: any, role?: string): Promise<void>;
-}
-
-export interface OverlayController {
-  create(opts?: any): Promise<HTMLElement>;
-  dismiss(data?: any, role?: string, alertId?: number): Promise<void>;
-  getTop(): HTMLElement;
-}
-
-export interface HTMLIonOverlayElement extends HTMLStencilElement {
-  overlayId: number;
-  dismiss(data?: any, role?: string): Promise<void>;
-}
-
-export type OverlayMap = Map<number, HTMLIonOverlayElement>;
 
 export const BACKDROP = 'backdrop';

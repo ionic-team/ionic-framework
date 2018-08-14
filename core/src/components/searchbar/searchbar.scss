@@ -19,8 +19,19 @@
   box-sizing: border-box;
 }
 
-.searchbar-icon {
+:host(.ion-color) {
+  --background: #{current-color(base)};
+  --color-button-clear: inherit;
+  --color-button-cancel: inherit;
+  --color-icon: inherit;
+
+  color: #{current-color(contrast)};
+}
+
+.searchbar-search-icon {
   // Don't let them tap on the icon
+  color: var(--color-icon);
+
   pointer-events: none;
 }
 
@@ -46,6 +57,8 @@
 
   outline: none;
 
+  background: var(--background);
+
   font-family: inherit;
   appearance: none;
 
@@ -64,7 +77,7 @@
 }
 
 .searchbar-cancel-button {
-  color: var(--cancel-button-color);
+  color: var(--color-button-cancel);
 }
 
 .searchbar-clear-button {
@@ -77,7 +90,7 @@
 
   outline: none;
 
-  color: var(--clear-button-color);
+  color: var(--button-color-clear);
   appearance: none;
 }
 

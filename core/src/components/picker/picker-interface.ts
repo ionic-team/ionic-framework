@@ -10,7 +10,7 @@ export interface PickerOptions {
   buttons?: PickerButton[];
   columns?: PickerColumn[];
   cssClass?: string | string[];
-  enableBackdropDismiss?: boolean;
+  backdropDismiss?: boolean;
 }
 
 export interface PickerColumn {

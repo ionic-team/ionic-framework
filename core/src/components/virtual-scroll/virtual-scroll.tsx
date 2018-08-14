@@ -1,4 +1,4 @@
-import { Component, Element, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, Element, EventListenerEnable, FunctionalComponent, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
@@ -11,7 +11,8 @@ import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, g
 })
 export class VirtualScroll {
 
-  private scrollEl?: HTMLIonScrollElement;
+  private contentEl?: HTMLElement;
+  private scrollEl?: HTMLElement;
   private range: Range = { offset: 0, length: 0 };
   private timerUpdate: any;
   private heightIndex?: Uint32Array;
@@ -113,17 +114,18 @@ export class VirtualScroll {
     this.calcCells();
   }
 
-  componentDidLoad() {
+  async componentDidLoad() {
     const contentEl = this.el.closest('ion-content');
     if (!contentEl) {
-      console.error('virtual-scroll must be used inside ion-scroll/ion-content');
+      console.error('virtual-scroll must be used inside ion-content');
       return;
     }
-    contentEl.componentOnReady().then(() => {
-      this.scrollEl = contentEl.getScrollElement();
-      this.calcCells();
-      this.updateState();
-    });
+    await contentEl.componentOnReady();
+
+    this.contentEl = contentEl;
+    this.scrollEl = contentEl.getScrollElement();
+    this.calcCells();
+    this.updateState();
   }
 
   componentDidUpdate() {
@@ -141,8 +143,6 @@ export class VirtualScroll {
 
   @Listen('window:resize')
   onResize() {
-    this.indexDirty = 0;
-    this.calcCells();
     this.updateVirtualScroll();
   }
 
@@ -217,14 +217,15 @@ export class VirtualScroll {
   }
 
   private readVS() {
-    const { scrollEl, el } = this;
+    const { contentEl, scrollEl, el } = this;
     let topOffset = 0;
     let node: HTMLElement | null = el;
-    while (node && node !== scrollEl) {
+    while (node && node !== contentEl) {
       topOffset += node.offsetTop;
       node = node.parentElement;
     }
     this.viewportOffset = topOffset;
+    console.log(this.viewportOffset);
     if (scrollEl) {
       this.viewportHeight = scrollEl.offsetHeight;
       this.currentScrollTop = scrollEl.scrollTop;
@@ -378,25 +379,36 @@ export class VirtualScroll {
   }
 
   render() {
-    const renderItem = this.renderItem;
-    if (renderItem) {
-      return this.virtualDom.map(node => {
-        const item = this.renderVirtualNode(node) as any;
-        const classes = ['virtual-item'];
-        if (!item.vattrs) {
-          item.vattrs = {};
-        }
-        if (!node.visible) {
-          classes.push('virtual-loading');
-        }
-        item.vattrs.class += classes.join(' ');
-        if (!item.vattrs.style) {
-          item.vattrs.style = {};
-        }
-        item.vattrs.style['transform'] = `translate3d(0,${node.top}px,0)`;
-        return item;
-      });
+    if (this.renderItem) {
+      return (
+        <VirtualProxy dom={this.virtualDom}>
+          { this.virtualDom.map(node => this.renderVirtualNode(node)) }
+        </VirtualProxy>
+      );
     }
     return undefined;
   }
 }
+
+const VirtualProxy: FunctionalComponent<{dom: VirtualNode[]}> = ({ dom }, children, utils) => {
+  return utils.map(children, (child, i) => {
+    const node = dom[i];
+    const vattrs = child.vattrs || {};
+    let classes = vattrs.class || '';
+    classes += 'virtual-item ';
+    if (!node.visible) {
+      classes += 'virtual-loading';
+    }
+    return {
+      ...child,
+      vattrs: {
+        ...vattrs,
+        class: classes,
+        style: {
+          ...vattrs.style,
+          transform: `translate3d(0,${node.top}px,0)`
+        }
+      }
+    };
+  });
+};

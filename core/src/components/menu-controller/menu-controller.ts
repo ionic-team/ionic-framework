@@ -7,7 +7,8 @@ import { menuPushAnimation } from './animations/push';
 import { menuRevealAnimation } from './animations/reveal';
 
 @Component({
-  tag: 'ion-menu-controller'
+  tag: 'ion-menu-controller',
+  styleUrl: 'menu-controller.scss'
 })
 export class MenuController {
   private menus: Menu[] = [];
@@ -78,10 +79,10 @@ export class MenuController {
    * Used to enable or disable the ability to swipe open the menu.
    */
   @Method()
-  swipeEnable(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement | null {
+  swipeGesture(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement | null {
     const menu = this.get(menuId);
     if (menu) {
-      menu.swipeEnabled = shouldEnable;
+      menu.swipeGesture = shouldEnable;
     }
     return menu;
   }

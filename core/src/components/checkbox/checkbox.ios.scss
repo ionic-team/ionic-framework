@@ -43,7 +43,6 @@
 // TODO: .item-ios.item-checkbox-disabled ion-labe
 :host(.checkbox-disabled) {
   opacity: $checkbox-ios-disabled-opacity;
-  pointer-events: none;
 }
 
 

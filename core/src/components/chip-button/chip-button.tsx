@@ -32,7 +32,7 @@ export class ChipButton {
   /**
    * Set to `"clear"` for a transparent button style.
    */
-  @Prop() fill = 'default';
+  @Prop() fill: 'clear' | 'solid' = 'solid';
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -54,6 +54,7 @@ export class ChipButton {
 
     return (
       <TagType
+        type="button"
         class="chip-button-native"
         disabled={this.disabled}
         href={this.href}>

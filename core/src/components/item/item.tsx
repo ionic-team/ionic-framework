@@ -60,6 +60,7 @@ export class Item {
 
   /**
    * How the bottom border should be displayed on the item.
+   * Available options: `"full"`, `"inset"`, `"none"`.
    */
   @Prop() lines?: 'full' | 'inset' | 'none';
 
@@ -120,12 +121,12 @@ export class Item {
 
   hostData() {
     const childStyles = {};
-    for (const value of this.itemStyles.values()) {
+    this.itemStyles.forEach(value => {
       Object.assign(childStyles, value);
-    }
+    });
 
     return {
-      'tappable': this.isClickable(),
+      'ion-activable': this.isClickable(),
       class: {
         ...childStyles,
         ...createColorClasses(this.color),

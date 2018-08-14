@@ -5,7 +5,12 @@
 // --------------------------------------------------
 
 .toast-ios {
+  --background: #{$toast-ios-background-color};
+  --button-color: #{$toast-ios-button-color};
+  --color: #{$toast-ios-title-color};
+
   font-family: $toast-ios-font-family;
+  font-size: $toast-ios-title-font-size;
 }
 
 .toast-ios .toast-wrapper {
@@ -18,8 +23,6 @@
 
   max-width: $toast-max-width;
 
-  background: $toast-ios-background-color;
-
   z-index: $z-index-overlay-wrapper;
 }
 
@@ -28,30 +31,14 @@
   backdrop-filter: $toast-ios-translucent-filter;
 }
 
-.toast-ios .toast-wrapper.toast-top {
-  @include transform(translate3d(0, -100%, 0));
-
-  top: 0;
-}
-
-.toast-ios .toast-wrapper.toast-bottom {
-  @include transform(translate3d(0, 100%, 0));
-
-  bottom: 0;
-}
-
 .toast-ios .toast-wrapper.toast-middle {
   opacity: .01;
 }
 
 .toast-ios .toast-message {
   @include padding($toast-ios-title-padding-top, $toast-ios-title-padding-end, $toast-ios-title-padding-bottom, $toast-ios-title-padding-start);
-
-  color: $toast-ios-title-color;
-
-  font-size: $toast-ios-title-font-size;
 }
 
 .toast-ios .toast-button {
-  color: $toast-ios-button-color;
+  color: var(--button-color);
 }

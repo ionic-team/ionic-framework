@@ -11,7 +11,7 @@ export * from './components/popover/popover-interface';
 export * from './components/nav/nav-interface';
 export * from './components/router/utils/interface';
 export * from './components/range/range-interface';
-export * from './components/scroll/scroll-interface';
+export * from './components/content/content-interface';
 export * from './components/select/select-interface';
 export * from './components/select-popover/select-popover-interface';
 export * from './components/tabbar/tabbar-interface';
@@ -26,7 +26,7 @@ export { Gesture, GestureDetail } from './utils/gesture/gesture';
 
 export * from './utils/input-interface';
 export * from './global/config';
-export { OverlayEventDetail, OverlayInterface } from './utils/overlays';
+export * from './utils/overlays-interface';
 
 
 // Global types
@@ -53,6 +53,7 @@ declare global {
       // for ion-menu and ion-split-pane
       main?: boolean;
       tappable?: boolean;
+      'ion-activable'?: boolean;
 
       padding?: boolean;
       ['padding-top']?: boolean;

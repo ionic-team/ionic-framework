@@ -12,227 +12,38 @@ See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.
 
 ## Properties
 
-#### active
-
-boolean
-
-If true, sets the tab as the active tab.
-
-
-#### badge
-
-string
-
-The badge for the tab.
-
-
-#### badgeColor
-
-string
-
-The badge color for the tab button.
-
-
-#### btnId
-
-string
-
-hidden
-
-
-#### component
-
-string
-
-The component to display inside of the tab.
-
-
-#### delegate
-
-FrameworkDelegate
-
-hidden
-
-
-#### disabled
-
-boolean
-
-If true, the user cannot interact with the tab. Defaults to `false`.
-
-
-#### href
-
-string
-
-The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
-
-
-#### icon
-
-string
-
-The icon for the tab.
-
-
-#### label
-
-string
-
-The label of the tab.
-
-
-#### name
-
-string
-
-The name of the tab.
-
-
-#### selected
-
-boolean
-
-If true, the tab will be selected. Defaults to `false`.
-
-
-#### show
-
-boolean
-
-If true, the tab button is visible within the tabbar. Defaults to `true`.
-
-
-#### tabsHideOnSubPages
-
-boolean
-
-If true, hide the tabs on child pages.
-
-
-## Attributes
-
-#### active
-
-boolean
-
-If true, sets the tab as the active tab.
-
-
-#### badge
-
-string
-
-The badge for the tab.
-
-
-#### badge-color
-
-string
-
-The badge color for the tab button.
-
-
-#### btn-id
-
-string
-
-hidden
-
-
-#### component
-
-string
-
-The component to display inside of the tab.
-
-
-#### delegate
-
-
-
-hidden
-
-
-#### disabled
-
-boolean
-
-If true, the user cannot interact with the tab. Defaults to `false`.
-
-
-#### href
-
-string
-
-The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
-
-
-#### icon
-
-string
-
-The icon for the tab.
-
-
-#### label
-
-string
-
-The label of the tab.
-
-
-#### name
-
-string
-
-The name of the tab.
-
-
-#### selected
-
-boolean
-
-If true, the tab will be selected. Defaults to `false`.
-
-
-#### show
-
-boolean
-
-If true, the tab button is visible within the tabbar. Defaults to `true`.
-
-
-#### tabs-hide-on-sub-pages
-
-boolean
-
-If true, hide the tabs on child pages.
+| Property             | Attribute                | Description                                                               | Type                |
+| -------------------- | ------------------------ | ------------------------------------------------------------------------- | ------------------- |
+| `active`             | `active`                 | If true, sets the tab as the active tab.                                  | `boolean`           |
+| `badgeColor`         | `badge-color`            | The badge color for the tab button.                                       | `Color`             |
+| `badge`              | `badge`                  | The badge for the tab.                                                    | `string`            |
+| `btnId`              | `btn-id`                 | hidden                                                                    | `string`            |
+| `component`          | `component`              | The component to display inside of the tab.                               | `ComponentRef`      |
+| `delegate`           | --                       | hidden                                                                    | `FrameworkDelegate` |
+| `disabled`           | `disabled`               | If true, the user cannot interact with the tab. Defaults to `false`.      | `boolean`           |
+| `href`               | `href`                   | The URL which will be used as the `href` within this tab's button anchor. | `string`            |
+| `icon`               | `icon`                   | The icon for the tab.                                                     | `string`            |
+| `label`              | `label`                  | The label of the tab.                                                     | `string`            |
+| `name`               | `name`                   | The name of the tab.                                                      | `string`            |
+| `selected`           | `selected`               | If true, the tab will be selected. Defaults to `false`.                   | `boolean`           |
+| `show`               | `show`                   | If true, the tab button is visible within the tabbar. Defaults to `true`. | `boolean`           |
+| `tabsHideOnSubPages` | `tabs-hide-on-sub-pages` | If true, hide the tabs on child pages.                                    | `boolean`           |
 
 
 ## Events
 
-#### ionSelect
-
-Emitted when the current tab is selected.
-
-
-#### ionTabMutated
-
-Emitted when the tab props mutates. Used internally.
+| Event           | Description                                          |
+| --------------- | ---------------------------------------------------- |
+| `ionSelect`     | Emitted when the current tab is selected.            |
+| `ionTabMutated` | Emitted when the tab props mutates. Used internally. |
 
 
 ## Methods
 
-#### getTabId()
-
-Get the Id for the tab
-
-
-#### setActive()
-
-Set the active component for the tab
-
+| Method      | Description                          |
+| ----------- | ------------------------------------ |
+| `getTabId`  | Get the Id for the tab               |
+| `setActive` | Set the active component for the tab |
 
 
 ----------------------------------------------

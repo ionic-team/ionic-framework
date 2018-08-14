@@ -5,8 +5,10 @@
 // -----------------------------------------
 
 :host {
-  --checked-background: #{current-color(base, $toggle-md-track-background-color-alpha-on)};
-  --checked-knob: #{current-color(base)};
+  --background: #{$toggle-md-track-background-color-off};
+  --background-checked: #{ion-color(primary, base, $toggle-md-track-background-color-alpha-on)};
+  --handle-background: #{$toggle-md-handle-background-color-off};
+  --handle-background-checked: #{ion-color(primary, base)};
 
   @include padding($toggle-md-padding-top, $toggle-md-padding-end, $toggle-md-padding-bottom, $toggle-md-padding-start);
 
@@ -20,6 +22,13 @@
   contain: strict;
 }
 
+:host(.ion-color.toggle-checked) .toggle-icon {
+  background: current-color(base, $toggle-md-track-background-color-alpha-on);
+}
+
+:host(.ion-color.toggle-checked) .toggle-inner {
+  background: current-color(base);
+}
 
 // Material Design Toggle Background Track: Unchecked
 // -----------------------------------------
@@ -35,7 +44,7 @@
 
   transition: background-color $toggle-md-transition-duration;
 
-  background-color: $toggle-md-track-background-color-off;
+  background: var(--background);
   pointer-events: none;
 }
 
@@ -55,7 +64,7 @@
   transition-duration: $toggle-md-transition-duration;
   transition-property: transform, background-color;
 
-  background-color: $toggle-md-handle-background-color-off;
+  background: var(--handle-background);
 
   box-shadow: $toggle-md-handle-box-shadow;
   will-change: transform, background-color;
@@ -67,7 +76,7 @@
 // -----------------------------------------
 
 :host(.toggle-checked) .toggle-icon {
-  background-color: var(--checked-background);
+  background: var(--background-checked);
 }
 
 // Material Design Toggle Inner Knob: Checked
@@ -76,7 +85,7 @@
 :host(.toggle-checked) .toggle-inner {
   @include transform(translate3d($toggle-md-track-width - $toggle-md-handle-width, 0, 0));
 
-  background-color: var(--checked-knob);
+  background: var(--handle-background-checked);
 }
 
 
@@ -85,7 +94,6 @@
 
 :host(.toggle-disabled) {
   opacity: $toggle-md-disabled-opacity;
-  pointer-events: none;
 }
 
 

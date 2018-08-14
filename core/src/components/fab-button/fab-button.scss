@@ -15,17 +15,30 @@
   --padding-top: calc((#{$fab-size} - var(--size)) / 2);
   --padding-bottom: calc((#{$fab-size} - var(--size)) / 2);
 
+  display: block;
+
   color: #{current-color(contrast)};
 
   font-size: 14px;
+
+  text-align: center;
+  text-overflow: ellipsis;
+  text-transform: none;
+
+  white-space: nowrap;
+  font-kerning: none;
 }
 
+:host(.fab-button-disabled) {
+  pointer-events: none;
+}
 
 :host(.activated) {
   --background: #{current-color(tint)};
 }
 
 .fab-button-native {
+  @include text-inherit();
   @include border-radius(50%);
   @include margin(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
@@ -45,25 +58,14 @@
 
   background: var(--background);
   background-clip: padding-box;
-  color: inherit;
-
-  font-size: inherit;
-  font-weight: inherit;
 
   line-height: var(--size);
-
-  text-align: center;
-  text-overflow: ellipsis;
-  text-transform: none;
-
-  white-space: nowrap;
 
   box-shadow: var(--box-shadow);
   contain: strict;
   cursor: pointer;
   overflow: hidden;
   z-index: 0;
-  font-kerning: none;
   appearance: none;
 }
 
@@ -86,8 +88,6 @@
   flex-flow: row nowrap;
   flex-shrink: 0;
   align-items: center;
-  align-items: center;
-  justify-content: center;
   justify-content: center;
 
   height: 100%;

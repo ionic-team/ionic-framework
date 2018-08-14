@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "4.0.0-beta.1",
+  "version": "4.0.0-beta.2",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -24,10 +24,10 @@
     "css/"
   ],
   "dependencies": {
-    "ionicons": "4.2.6"
+    "ionicons": "4.3.0"
   },
   "devDependencies": {
-    "@stencil/core": "0.11.0",
+    "@stencil/core": "0.11.4",
     "@stencil/dev-server": "latest",
     "@stencil/sass": "0.1.0",
     "@stencil/utils": "latest",

@@ -34,19 +34,21 @@
 
 :host(.fab-vertical-top) {
   top: $fab-content-margin;
-
-  &.fab-edge {
-    top: -$fab-size / 2;
-  }
 }
+
+:host(.fab-vertical-top.fab-edge) {
+  top: -$fab-size / 2;
+}
+
 
 :host(.fab-vertical-bottom) {
   bottom: $fab-content-margin;
-
-  &.fab-edge {
-    bottom: -$fab-size / 2;
-  }
 }
+
+:host(.fab-vertical-bottom.fab-edge) {
+  bottom: -$fab-size / 2;
+}
+
 
 :host(.fab-vertical-center) {
   @include margin(-$fab-size / 2, null, null, null);

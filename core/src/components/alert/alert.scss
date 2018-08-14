@@ -18,6 +18,7 @@
 
   contain: strict;
   touch-action: none;
+  user-select: none;
   z-index: $z-index-overlay;
 }
 

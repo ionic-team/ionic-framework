@@ -5,15 +5,6 @@
 // --------------------------------------------------
 
 :host {
-  @include border-radius($thumbnail-md-border-radius);
-
-  width: $thumbnail-md-width;
-  height: $thumbnail-md-height;
-}
-
-::slotted(ion-img),
-::slotted(img) {
-  @include border-radius($thumbnail-md-border-radius);
-
-  overflow: hidden;
+  --size: #{$thumbnail-md-width};
+  --border-radius: #{$thumbnail-md-border-radius};
 }

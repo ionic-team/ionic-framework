@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, Watch } from '@stencil/core';
 
 import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
 import { deferEvent, renderHiddenInput } from '../../utils/helpers';
@@ -256,15 +256,8 @@ export class Select {
     this.emitStyle();
   }
 
-  private getLabel() {
-    const item = this.el.closest('ion-item');
-    if (item) {
-      return item.querySelector('ion-label');
-    }
-    return null;
-  }
-
-  private open(ev: UIEvent) {
+  @Method()
+  open(ev?: UIEvent) {
     let selectInterface = this.interface;
 
     if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {
@@ -278,7 +271,7 @@ export class Select {
     }
 
     if (selectInterface === 'popover') {
-      return this.openPopover(ev);
+      return this.openPopover(ev!);
     }
 
     if (selectInterface === 'action-sheet') {
@@ -288,6 +281,14 @@ export class Select {
     return this.openAlert();
   }
 
+  private getLabel() {
+    const item = this.el.closest('ion-item');
+    if (item) {
+      return item.querySelector('ion-label');
+    }
+    return null;
+  }
+
   private async openPopover(ev: UIEvent) {
     const interfaceOptions = this.interfaceOptions;
 
@@ -295,6 +296,8 @@ export class Select {
       ...interfaceOptions,
 
       component: 'ion-select-popover',
+      cssClass: ['select-popover', interfaceOptions.cssClass],
+      event: ev,
       componentProps: {
         header: interfaceOptions.header,
         subHeader: interfaceOptions.subHeader,
@@ -312,9 +315,7 @@ export class Select {
             }
           } as SelectPopoverOption;
         })
-      },
-      cssClass: ['select-popover', interfaceOptions.cssClass],
-      ev
+      }
     };
 
     const popover = this.overlay = await this.popoverCtrl.create(popoverOpts);
@@ -442,7 +443,7 @@ export class Select {
     this.ionStyle.emit({
       'interactive': true,
       'select': true,
-      'input-has-value': this.hasValue(),
+      'has-value': this.hasValue(),
       'interactive-disabled': this.disabled,
       'select-disabled': this.disabled
     });

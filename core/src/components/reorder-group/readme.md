@@ -7,21 +7,9 @@ The reorder group is a wrapper component for items with the `ion-reorder` compon
 
 ## Properties
 
-#### disabled
-
-boolean
-
-If true, the reorder will be hidden. Defaults to `true`.
-
-
-## Attributes
-
-#### disabled
-
-boolean
-
-If true, the reorder will be hidden. Defaults to `true`.
-
+| Property   | Attribute  | Description                                              | Type      |
+| ---------- | ---------- | -------------------------------------------------------- | --------- |
+| `disabled` | `disabled` | If true, the reorder will be hidden. Defaults to `true`. | `boolean` |
 
 
 ----------------------------------------------

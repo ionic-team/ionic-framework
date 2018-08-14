@@ -77,10 +77,11 @@ export class FabButton {
   hostData() {
 
     return {
-      'tappable': !this.disabled,
+      'ion-activable': !this.disabled,
       class: {
         ...createColorClasses(this.color),
         ...this.getFabClassMap(),
+        'fab-button-disabled': this.disabled,
         'fab-button-translucent': this.translucent
       }
     };

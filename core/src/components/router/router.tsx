@@ -19,6 +19,7 @@ export class Router {
   private busy = false;
   private state = 0;
   private lastState = 0;
+  private waitPromise?: Promise<void>;
 
   @Element() el!: HTMLElement;
 
@@ -82,10 +83,10 @@ export class Router {
   /** Navigate to the specified URL */
   @Method()
   push(url: string, direction: RouterDirection = 'forward') {
-    const path = parsePath(url);
-    const intent = DIRECTION_TO_INTENT[direction];
     console.debug('[ion-router] URL pushed -> updating nav', url, direction);
 
+    const path = parsePath(url);
+    const intent = DIRECTION_TO_INTENT[direction];
     this.setPath(path, intent);
     return this.writeNavStateRoot(path, intent);
   }
@@ -103,6 +104,7 @@ export class Router {
   @Method()
   async navChanged(intent: number): Promise<boolean> {
     if (this.busy) {
+      console.warn('[ion-router] router is busy, navChanged was cancelled');
       return false;
     }
     const { ids, outlet } = readNavState(this.win.document.body);
@@ -122,7 +124,7 @@ export class Router {
     console.debug('[ion-router] nav changed -> update URL', ids, path);
     this.setPath(path, intent);
 
-    await this.writeNavState(outlet, chain, RouterIntent.None, path, null, ids.length);
+    await this.safeWriteNavState(outlet, chain, RouterIntent.None, path, null, ids.length);
     return true;
   }
 
@@ -157,9 +159,6 @@ export class Router {
   }
 
   private async writeNavStateRoot(path: string[] | null, intent: RouterIntent): Promise<boolean> {
-    if (this.busy) {
-      return false;
-    }
     if (!path) {
       console.error('[ion-router] URL is not part of the routing set');
       return false;
@@ -184,7 +183,34 @@ export class Router {
     }
 
     // write DOM give
-    return this.writeNavState(this.win.document.body, chain, intent, path, redirectFrom);
+    return this.safeWriteNavState(this.win.document.body, chain, intent, path, redirectFrom);
+  }
+
+  private async safeWriteNavState(
+    node: HTMLElement | undefined, chain: RouteChain, intent: RouterIntent,
+    path: string[], redirectFrom: string[] | null,
+    index = 0
+  ): Promise<boolean> {
+    const unlock = await this.lock();
+    let changed = false;
+    try {
+      changed = await this.writeNavState(node, chain, intent, path, redirectFrom, index);
+    } catch (e) {
+      console.error(e);
+    }
+    unlock();
+    return changed;
+  }
+
+  private async lock() {
+    const p = this.waitPromise;
+    let resolve!: () => void;
+    this.waitPromise = new Promise(r => resolve = r);
+
+    if (p) {
+      await p;
+    }
+    return resolve;
   }
 
   private async writeNavState(
@@ -193,6 +219,7 @@ export class Router {
     index = 0
   ): Promise<boolean> {
     if (this.busy) {
+      console.warn('[ion-router] router is busy, transition was cancelled');
       return false;
     }
     this.busy = true;

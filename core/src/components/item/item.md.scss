@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: var(--ion-item-background, transparent);
+  --ion-color-base: var(--ion-item-background-color, transparent);
   --ion-color-contrast: #{$item-md-text-color};
   --ion-color-tint: #{$item-md-background-color-active};
   --ion-color-shade: #{$item-md-border-bottom-color};
