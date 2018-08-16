@@ -23,7 +23,7 @@ export interface IonicConfig {
   menuType?: string;
   scrollPadding?: string;
   inputBlurring?: string;
-  scrollAssist?: string;
+  scrollAssist?: boolean;
   hideCaretOnScroll?: string;
   infiniteLoadingSpinner?: string;
   keyboardHeight?: number;
