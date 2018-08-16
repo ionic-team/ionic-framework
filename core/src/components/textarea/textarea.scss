@@ -20,6 +20,7 @@
   --color: currentColor;
   --placeholder-color: currentColor;
   --placeholder-weight: inherit;
+  --placeholder-style: inherit;
   --placeholder-opacity: .5;
   --padding-top: 0;
   --padding-end: 0;
@@ -84,6 +85,7 @@
 
     font-family: inherit;
     font-weight: var(--placeholder-weight);
+    font-style: var(--placeholder-style);
 
     opacity: var(--placeholder-opacity);
   }
