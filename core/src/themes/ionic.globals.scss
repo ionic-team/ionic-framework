@@ -11,6 +11,8 @@
 // Global Mixins
 @import "./ionic.mixins";
 
+// Default Theme
+@import "./ionic.theme.default";
 
 // Global app direction
 $app-direction: ltr !default;
