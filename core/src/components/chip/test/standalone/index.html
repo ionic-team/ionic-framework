@@ -30,11 +30,42 @@
   </ion-chip>
 
   <ion-chip color="secondary">
+    <ion-chip-icon name="heart"></ion-chip-icon>
     <ion-label color="dark">Secondary w/ Dark label</ion-label>
   </ion-chip>
 
   <ion-chip color="danger">
     <ion-label>Danger</ion-label>
+  </ion-chip>
+
+  <h2>Custom Chips</h2>
+
+  <ion-chip class="custom-color">
+    <ion-chip-icon name="heart"></ion-chip-icon>
+    <ion-label>Custom Color</ion-label>
+  </ion-chip>
+
+  <ion-chip class="custom-avatar">
+    <ion-avatar>
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+    </ion-avatar>
+    <ion-label>Custom Avatar</ion-label>
+  </ion-chip>
+
+  <ion-chip class="custom-height custom-avatar">
+    <ion-avatar>
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==">
+    </ion-avatar>
+    <ion-label>Custom Height</ion-label>
+    <ion-chip-icon name="pin" class="custom-icon"></ion-chip-icon>
+  </ion-chip>
+
+  <ion-chip class="custom-height custom-avatar custom-color">
+    <ion-chip-icon class="custom-icon" name="pin"></ion-chip-icon>
+    <ion-label>Custom Everything</ion-label>
+    <ion-chip-button fill="solid" class="custom-button">
+      <ion-icon name="close-circle"></ion-icon>
+    </ion-chip-button>
   </ion-chip>
 
   <h2>Icon Chips</h2>
@@ -116,6 +147,32 @@
       margin: 0;
       padding: 16px;
       text-align: center;
+    }
+
+    .custom-color {
+      --background: yellow;
+      --color: orange;
+    }
+
+    .custom-avatar {
+      --avatar-width: 41px;
+      --avatar-height: 41px;
+    }
+
+    .custom-height {
+      margin-top: 10px;
+      height: 50px;
+      border-radius: 25px;
+    }
+
+    .custom-height ion-chip-button {
+      --width: 50px;
+    }
+
+    .custom-icon {
+      width: 50px;
+      height: 50px;
+      font-size: 30px;
     }
   </style>
 

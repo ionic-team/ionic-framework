@@ -30,9 +30,10 @@ export class ChipButton {
   @Prop() disabled = false;
 
   /**
-   * Set to `"clear"` for a transparent button style.
+   * Set to `"clear"` for a transparent button or to `"solid"` for a filled background.
+   * Defaults to `"clear"`.
    */
-  @Prop() fill: 'clear' | 'solid' = 'solid';
+  @Prop() fill: 'clear' | 'solid' = 'clear';
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.

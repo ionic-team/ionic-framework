@@ -1,7 +1,7 @@
 ```html
 <ion-chip>
   <ion-label>Button Chip</ion-label>
-  <ion-chip-button fill="clear" color="light">
+  <ion-chip-button fill="solid" color="light">
     <ion-icon name="close-circle"></ion-icon>
   </ion-chip-button>
 </ion-chip>
@@ -19,7 +19,7 @@
     <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
   </ion-avatar>
   <ion-label>Avatar Chip</ion-label>
-  <ion-chip-button fill="clear" color="dark">
+  <ion-chip-button color="dark">
     <ion-icon name="close-circle"></ion-icon>
   </ion-chip-button>
 </ion-chip>

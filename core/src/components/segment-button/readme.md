@@ -33,7 +33,7 @@ Segment buttons are groups of related buttons inside of a [Segment](../../segmen
 | `--border-radius`  | Radius of the button border  |
 | `--border-style`   | Style of the button border   |
 | `--border-width`   | Width of the button border   |
-| `--color`          | Color of the buton text      |
+| `--color`          | Color of the button text     |
 | `--icon-size`      | Size of the button icon      |
 | `--margin-bottom`  | Bottom margin of the button  |
 | `--margin-end`     | End margin of the button     |

@@ -5,8 +5,22 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{$chip-ios-background-color};
-  --ion-color-contrast: #{$chip-ios-text-color};
+  --background: #{$chip-ios-background-color};
+  --color: #{$chip-ios-text-color};
+
+  // Chip label
+  --label-margin-top: #{$chip-ios-label-margin-top};
+  --label-margin-end: #{$chip-ios-label-margin-end};
+  --label-margin-bottom: #{$chip-ios-label-margin-bottom};
+  --label-margin-start: #{$chip-ios-label-margin-start};
+
+  // Chip avatar
+  --avatar-width: #{$chip-ios-avatar-width};
+  --avatar-height: #{$chip-ios-avatar-height};
+  --avatar-margin-top: #{$chip-ios-avatar-margin-top};
+  --avatar-margin-end: #{$chip-ios-avatar-margin-end};
+  --avatar-margin-bottom: #{$chip-ios-avatar-margin-bottom};
+  --avatar-margin-start: #{$chip-ios-avatar-margin-start};
 
   @include border-radius($chip-ios-border-radius);
   @include margin($chip-ios-margin-top, $chip-ios-margin-end, $chip-ios-margin-bottom, $chip-ios-margin-start);
@@ -15,18 +29,4 @@
 
   font-family: $chip-ios-font-family;
   font-size: $chip-ios-font-size;
-}
-
-::slotted(*) ion-label {
-  @include margin($chip-ios-label-margin-top, $chip-ios-label-margin-end, $chip-ios-label-margin-bottom, $chip-ios-label-margin-start);
-}
-
-::slotted(ion-icon) {
-  background-color: $chip-ios-icon-background-color;
-  color: $chip-ios-icon-fill-color;
-}
-
-::slotted(*) ion-avatar {
-  width: $chip-ios-avatar-width;
-  height: $chip-ios-avatar-height;
 }

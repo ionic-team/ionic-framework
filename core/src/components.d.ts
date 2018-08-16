@@ -466,7 +466,7 @@ declare global {
        */
       'disabled': boolean;
       /**
-       * Set to `"clear"` for a transparent button style.
+       * Set to `"clear"` for a transparent button or to `"solid"` for a filled background. Defaults to `"clear"`.
        */
       'fill': 'clear' | 'solid';
       /**
@@ -484,6 +484,10 @@ declare global {
        * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
+      /**
+       * Set to `"clear"` for a transparent icon or to `"solid"` for a filled background. Defaults to `"clear"`.
+       */
+      'fill': 'clear' | 'solid';
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */
@@ -3977,7 +3981,7 @@ declare global {
        */
       'disabled'?: boolean;
       /**
-       * Set to `"clear"` for a transparent button style.
+       * Set to `"clear"` for a transparent button or to `"solid"` for a filled background. Defaults to `"clear"`.
        */
       'fill'?: 'clear' | 'solid';
       /**
@@ -3995,6 +3999,10 @@ declare global {
        * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
+      /**
+       * Set to `"clear"` for a transparent icon or to `"solid"` for a filled background. Defaults to `"clear"`.
+       */
+      'fill'?: 'clear' | 'solid';
       /**
        * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
        */

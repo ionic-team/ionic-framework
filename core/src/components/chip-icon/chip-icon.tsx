@@ -23,6 +23,12 @@ export class ChipIcon {
   @Prop() mode!: Mode;
 
   /**
+   * Set to `"clear"` for a transparent icon or to `"solid"` for a filled background.
+   * Defaults to `"clear"`.
+   */
+  @Prop() fill: 'clear' | 'solid' = 'clear';
+
+  /**
    * The icon to use.
    * Possible values are the same as `"ion-icon"`.
    */
@@ -37,12 +43,13 @@ export class ChipIcon {
   hostData() {
     return {
       class: {
-        ...createColorClasses(this.color)
+        ...createColorClasses(this.color),
+        [`chip-icon-${this.fill}`]: true
       }
     };
   }
 
   render() {
-    return <ion-icon name={this.name} src={this.src} mode={this.mode}/>;
+    return <ion-icon name={this.name} src={this.src} mode={this.mode}></ion-icon>;
   }
 }
