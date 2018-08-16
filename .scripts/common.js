@@ -77,16 +77,14 @@ function preparePackage(tasks, package, version) {
         }
       }
     });
+    projectTasks.push({
+      title: `${pkg.name}: install npm dependencies`,
+      task: async () => {
+        await fs.remove(path.join(projectRoot, 'node_modules'))
+        await execa('npm', ['i'], { cwd: projectRoot });
+      }
+    });
   }
-
-
-  projectTasks.push({
-    title: `${pkg.name}: install npm dependencies`,
-    task: async () => {
-      await fs.remove(path.join(projectRoot, 'node_modules'))
-      await execa('npm', ['i'], { cwd: projectRoot });
-    }
-  });
 
   if (package !== 'core') {
     projectTasks.push({
