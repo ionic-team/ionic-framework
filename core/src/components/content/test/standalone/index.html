@@ -8,14 +8,86 @@
   <link rel="stylesheet" type="text/css" href="/css/ionic.min.css">
 </head>
 <body>
-  <ion-content padding>
-    <h1>Heading</h1>
-    <h2>Heading</h2>
-    <h3>Heading</h3>
-    <h4>Heading</h4>
-    <h5>Heading</h5>
-    <h6>Heading</h6>
-    <p>Paragraph</p>
-  </ion-content>
+  <div class="content-height">
+    <ion-content padding>
+      <h1>Heading</h1>
+      <h2>Heading</h2>
+      <h3>Heading</h3>
+      <hr>
+      <h4>Heading</h4>
+      <h5>Heading</h5>
+      <h6>Heading</h6>
+      <p>Paragraph</p>
+    </ion-content>
+  </div>
+
+  <div class="content-height">
+    <ion-content padding color="secondary">
+      <h1>Heading</h1>
+      <h2>Heading</h2>
+      <h3>Heading</h3>
+      <hr>
+      <h4>Heading</h4>
+      <h5>Heading</h5>
+      <h6>Heading</h6>
+      <p>Paragraph</p>
+    </ion-content>
+  </div>
+
+  <div class="content-height">
+    <ion-content padding class="custom-color">
+      <h1>Heading</h1>
+      <h2>Heading</h2>
+      <h3>Heading</h3>
+      <hr>
+      <h4>Heading</h4>
+      <h5>Heading</h5>
+      <h6>Heading</h6>
+      <p>Paragraph</p>
+    </ion-content>
+  </div>
+
+  <div class="content-height">
+    <ion-content padding class="outer-content">
+      <h1>Heading</h1>
+      <h2>Heading</h2>
+      <h3>Heading</h3>
+      <hr>
+      <h4>Heading</h4>
+      <h5>Heading</h5>
+      <h6>Heading</h6>
+      <p>Paragraph</p>
+    </ion-content>
+  </div>
+
+  <div class="content-height">
+    <ion-content padding class="outer-content">
+      <h1>Heading</h1>
+      <h2>Heading</h2>
+      <h3>Heading</h3>
+      <hr>
+      <h4>Heading</h4>
+      <h5>Heading</h5>
+      <h6>Heading</h6>
+      <p>Paragraph</p>
+    </ion-content>
+  </div>
+
+  <style>
+    .content-height {
+      height: 200px;
+    }
+
+    /* TODO should this be in content? */
+    ion-content {
+      height: 100%;
+    }
+
+    .custom-color {
+      --background: blue;
+      --color: white;
+      --hr-background: purple;
+    }
+  </style>
 </body>
 </html>

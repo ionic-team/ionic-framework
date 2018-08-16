@@ -5,11 +5,8 @@
 // --------------------------------------------------
 
 :host {
+  --hr-height: #{$hairlines-width};
+  --hr-background: #{$content-ios-horizontal-rule-background};
+
   font-family: $content-ios-font-family;
-}
-
-::slotted(hr) {
-  height: $hairlines-width;
-
-  background-color: rgba(var(--ion-text-color-rgb, $text-color-rgb), $content-ios-horizontal-rule-background-color-alpha);
 }

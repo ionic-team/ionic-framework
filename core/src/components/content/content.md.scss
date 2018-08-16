@@ -5,9 +5,8 @@
 // --------------------------------------------------
 
 :host {
+  --hr-background: #{$background-color-step-50};
+
   font-family: $content-md-font-family;
 }
 
-::slotted(hr) {
-  background-color: $background-color-step-50;
-}
