@@ -47,6 +47,16 @@ export class BackButton {
   }
 }
 
+export declare interface Backdrop extends StencilComponents.IonBackdrop {}
+@Directive({ selector: 'ion-backdrop', inputs: ['visible', 'tappable', 'stopPropagation'], outputs: ['ionBackdropTap'] })
+export class Backdrop {
+  ionBackdropTap: EventEmitter<any>;
+  constructor(r: ElementRef) {
+    proxyInputs(this, r, ['visible', 'tappable', 'stopPropagation']);
+    proxyOutputs(this, ['ionBackdropTap']);
+  }
+}
+
 export declare interface Badge extends StencilComponents.IonBadge {}
 @Directive({ selector: 'ion-badge', inputs: ['color', 'mode'] })
 export class Badge {
@@ -157,11 +167,15 @@ export class Col {
 }
 
 export declare interface Content extends StencilComponents.IonContent {}
-@Directive({ selector: 'ion-content', inputs: ['color', 'fullscreen', 'forceOverscroll', 'scrollEnabled', 'scrollEvents'] })
+@Directive({ selector: 'ion-content', inputs: ['color', 'fullscreen', 'forceOverscroll', 'scrollX', 'scrollY', 'scrollEvents'], outputs: ['ionScrollStart', 'ionScroll', 'ionScrollEnd'] })
 export class Content {
+  ionScrollStart: EventEmitter<any>;
+  ionScroll: EventEmitter<any>;
+  ionScrollEnd: EventEmitter<any>;
   constructor(r: ElementRef) {
-    proxyMethods(this, r, ['getScrollElement']);
-    proxyInputs(this, r, ['color', 'fullscreen', 'forceOverscroll', 'scrollEnabled', 'scrollEvents']);
+    proxyMethods(this, r, ['getScrollElement', 'scrollToTop', 'scrollToBottom', 'scrollByPoint', 'scrollToPoint']);
+    proxyInputs(this, r, ['color', 'fullscreen', 'forceOverscroll', 'scrollX', 'scrollY', 'scrollEvents']);
+    proxyOutputs(this, ['ionScrollStart', 'ionScroll', 'ionScrollEnd']);
   }
 }
 
@@ -172,6 +186,7 @@ export class Datetime {
   ionChange: EventEmitter<any>;
   ionStyle: EventEmitter<any>;
   constructor(r: ElementRef) {
+    proxyMethods(this, r, ['open']);
     proxyInputs(this, r, ['disabled', 'min', 'max', 'displayFormat', 'pickerFormat', 'cancelText', 'doneText', 'yearValues', 'monthValues', 'dayValues', 'hourValues', 'minuteValues', 'monthNames', 'monthShortNames', 'dayNames', 'dayShortNames', 'pickerOptions', 'placeholder', 'value']);
     proxyOutputs(this, ['ionCancel', 'ionChange', 'ionStyle']);
   }
@@ -367,14 +382,14 @@ export class ListHeader {
 }
 
 export declare interface Menu extends StencilComponents.IonMenu {}
-@Directive({ selector: 'ion-menu', inputs: ['contentId', 'menuId', 'type', 'disabled', 'side', 'swipeEnabled', 'maxEdgeStart'], outputs: ['ionOpen', 'ionClose', 'ionMenuChange'] })
+@Directive({ selector: 'ion-menu', inputs: ['contentId', 'menuId', 'type', 'disabled', 'side', 'swipeGesture', 'maxEdgeStart'], outputs: ['ionOpen', 'ionClose', 'ionMenuChange'] })
 export class Menu {
   ionOpen: EventEmitter<any>;
   ionClose: EventEmitter<any>;
   ionMenuChange: EventEmitter<any>;
   constructor(r: ElementRef) {
     proxyMethods(this, r, ['isOpen', 'open', 'close', 'toggle', 'setOpen', 'isActive', 'getWidth']);
-    proxyInputs(this, r, ['contentId', 'menuId', 'type', 'disabled', 'side', 'swipeEnabled', 'maxEdgeStart']);
+    proxyInputs(this, r, ['contentId', 'menuId', 'type', 'disabled', 'side', 'swipeGesture', 'maxEdgeStart']);
     proxyOutputs(this, ['ionOpen', 'ionClose', 'ionMenuChange']);
   }
 }
@@ -396,14 +411,14 @@ export class MenuToggle {
 }
 
 export declare interface Nav extends StencilComponents.IonNav {}
-@Directive({ selector: 'ion-nav', inputs: ['swipeBackEnabled', 'animated', 'delegate', 'rootParams', 'root'], outputs: ['ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange'] })
+@Directive({ selector: 'ion-nav', inputs: ['swipeGesture', 'animated', 'delegate', 'rootParams', 'root'], outputs: ['ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange'] })
 export class Nav {
   ionNavWillLoad: EventEmitter<any>;
   ionNavWillChange: EventEmitter<any>;
   ionNavDidChange: EventEmitter<any>;
   constructor(r: ElementRef) {
     proxyMethods(this, r, ['push', 'insert', 'insertPages', 'pop', 'popTo', 'popToRoot', 'removeIndex', 'setRoot', 'setPages', 'setRouteId', 'getRouteId', 'canGoBack', 'getActive', 'getByIndex', 'getPrevious', 'isAnimating', 'getLength']);
-    proxyInputs(this, r, ['swipeBackEnabled', 'animated', 'delegate', 'rootParams', 'root']);
+    proxyInputs(this, r, ['swipeGesture', 'animated', 'delegate', 'rootParams', 'root']);
     proxyOutputs(this, ['ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
   }
 }
@@ -523,19 +538,6 @@ export declare interface Row extends StencilComponents.IonRow {}
 export class Row {
 }
 
-export declare interface Scroll extends StencilComponents.IonScroll {}
-@Directive({ selector: 'ion-scroll', inputs: ['mode', 'forceOverscroll', 'scrollEvents'], outputs: ['ionScrollStart', 'ionScroll', 'ionScrollEnd'] })
-export class Scroll {
-  ionScrollStart: EventEmitter<any>;
-  ionScroll: EventEmitter<any>;
-  ionScrollEnd: EventEmitter<any>;
-  constructor(r: ElementRef) {
-    proxyMethods(this, r, ['scrollToTop', 'scrollToBottom', 'scrollByPoint', 'scrollToPoint']);
-    proxyInputs(this, r, ['mode', 'forceOverscroll', 'scrollEvents']);
-    proxyOutputs(this, ['ionScrollStart', 'ionScroll', 'ionScrollEnd']);
-  }
-}
-
 export declare interface Searchbar extends StencilComponents.IonSearchbar {}
 @Directive({ selector: 'ion-searchbar', inputs: ['color', 'mode', 'animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'debounce', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value'], outputs: ['ionInput', 'ionChange', 'ionCancel', 'ionClear', 'ionBlur', 'ionFocus'] })
 export class Searchbar {
@@ -580,6 +582,7 @@ export class Select {
   ionBlur: EventEmitter<any>;
   ionStyle: EventEmitter<any>;
   constructor(r: ElementRef) {
+    proxyMethods(this, r, ['open']);
     proxyInputs(this, r, ['disabled', 'cancelText', 'okText', 'placeholder', 'name', 'selectedText', 'multiple', 'interface', 'interfaceOptions', 'value']);
     proxyOutputs(this, ['ionChange', 'ionCancel', 'ionFocus', 'ionBlur', 'ionStyle']);
   }
@@ -684,7 +687,7 @@ export class Tab {
 }
 
 export declare interface Tabs extends StencilComponents.IonTabs {}
-@Directive({ selector: 'ion-tabs', inputs: ['color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'scrollable', 'useRouter'], outputs: ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange'] })
+@Directive({ selector: 'ion-tabs', inputs: ['color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'useRouter'], outputs: ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange'] })
 export class Tabs {
   ionChange: EventEmitter<any>;
   ionNavWillLoad: EventEmitter<any>;
@@ -692,7 +695,7 @@ export class Tabs {
   ionNavDidChange: EventEmitter<any>;
   constructor(r: ElementRef) {
     proxyMethods(this, r, ['select', 'setRouteId', 'getRouteId', 'getTab', 'getSelected']);
-    proxyInputs(this, r, ['color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'scrollable', 'useRouter']);
+    proxyInputs(this, r, ['color', 'name', 'tabbarHidden', 'tabbarHighlight', 'tabbarLayout', 'tabbarPlacement', 'translucent', 'useRouter']);
     proxyOutputs(this, ['ionChange', 'ionNavWillLoad', 'ionNavWillChange', 'ionNavDidChange']);
   }
 }
