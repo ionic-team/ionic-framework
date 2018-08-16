@@ -62,6 +62,9 @@ export function matches(view: ViewController | undefined, id: string, params: Co
   const currentParams = view.params;
   const null1 = (currentParams == null);
   const null2 = (params == null);
+  if (currentParams === params) {
+    return true;
+  }
   if (null1 !== null2) {
     return false;
   }

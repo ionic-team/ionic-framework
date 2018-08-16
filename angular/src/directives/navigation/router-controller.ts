@@ -80,9 +80,11 @@ export class StackController {
       .forEach(view => destroyView(view));
 
     for (let i = 0; i < views.length - 1; i++) {
-      const element = views[i].element;
+      const view = views[i];
+      const element = view.element;
       element.setAttribute('aria-hidden', 'true');
       element.classList.add('ion-page-hidden');
+      // view.ref.changeDetectorRef.detach();
     }
 
     this.viewsSnapshot = views.slice();
@@ -149,4 +151,5 @@ export interface RouteView {
   element: HTMLElement;
   ref: ComponentRef<any>;
   deactivatedId: number;
+  savedData?: any;
 }
