@@ -17,6 +17,14 @@ sub-components to reflect this. Please see `ion-card-content`,
 | `mode`   | `mode`    | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `Mode`  |
 
 
+## CSS Custom Properties
+
+| Name           | Description            |
+| -------------- | ---------------------- |
+| `--background` | Background of the card |
+| `--color`      | Color of the card      |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

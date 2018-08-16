@@ -14,6 +14,13 @@
 | `mode`   | `mode`    | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `Mode`  |
 
 
+## CSS Custom Properties
+
+| Name      | Description             |
+| --------- | ----------------------- |
+| `--color` | Color of the card title |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
