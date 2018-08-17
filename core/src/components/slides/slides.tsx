@@ -130,7 +130,9 @@ export class Slides {
   }
 
   componentDidUnload() {
-    this.swiper.destroy(true, true);
+    if (this.swiper) {
+      this.swiper.destroy(true, true);
+    }
   }
 
   private initSlides() {
