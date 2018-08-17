@@ -112,6 +112,7 @@ export class VirtualScroll {
   @Watch('items')
   itemsChanged() {
     this.calcCells();
+    this.updateVirtualScroll();
   }
 
   async componentDidLoad() {
