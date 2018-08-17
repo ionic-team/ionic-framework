@@ -5,19 +5,13 @@
 // --------------------------------------------------
 
 :host {
-  color: $segment-button-md-text-color;
+  --background: transparent;
+  --background-checked: transparent;
+  --border-color: #{$segment-button-md-border-bottom-color};
+  --color: #{$segment-button-md-text-color};
+  --color-checked: #{$segment-button-md-text-color};
 
   font-family: $segment-md-font-family;
-}
-
-:host(.ion-color) {
-  // TODO can we remove important here
-  /* stylelint-disable-next-line declaration-no-important */
-  color: #{current-color(base)} !important;
-}
-
-:host(.in-color-toolbar) {
-  color: inherit;
 }
 
 :host(.segment-disabled) {
@@ -32,8 +26,6 @@
   --padding-end: #{$segment-button-md-padding-end};
   --padding-bottom: #{$segment-button-md-padding-bottom};
   --padding-start: #{$segment-button-md-padding-start};
-  --background: transparent;
-  --border-color: #{$segment-button-md-border-bottom-color};
   --border-width: #{0 0 $segment-button-md-border-bottom-width 0};
   --border-style: solid;
   --opacity: #{$segment-button-md-opacity};
@@ -41,8 +33,6 @@
   --icon-size: #{$segment-button-md-icon-size};
 
   height: $segment-button-md-height;
-
-  color: inherit;
 
   font-size: $segment-button-md-font-size;
   font-weight: $segment-button-md-font-weight;
@@ -57,10 +47,13 @@
 // Checked Segment Button
 // --------------------------------------------------
 
-::slotted(.activated),
-::slotted(.segment-checked) {
-  --border-color: currentColor;
+:host(.ion-color) ::slotted(.segment-button-checked) {
+  --background: transparent;
+  --color: #{current-color(base)};
+}
 
+::slotted(.activated),
+::slotted(.segment-button-checked) {
   opacity: $segment-button-md-opacity-activated;
 }
 
@@ -69,4 +62,11 @@
 
 ::slotted(.segment-button-disabled) {
   opacity: $segment-button-md-opacity-disabled;
+}
+
+// In Toolbar
+// --------------------------------------------------
+
+:host(.in-color-toolbar:not(.ion-color)) {
+  --color: #{current-color(contrast)};
 }

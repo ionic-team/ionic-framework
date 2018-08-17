@@ -60,7 +60,7 @@ export class SegmentButton {
       class: {
         ...createColorClasses(color),
         'segment-button-disabled': disabled,
-        'segment-checked': checked,
+        'segment-button-checked': checked,
       },
       'ion-activable': true,
     };

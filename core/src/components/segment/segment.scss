@@ -4,10 +4,16 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{ion-color(primary, base)};
-  --ion-color-base-rgb: #{ion-color(primary, base, null, true)};
-  --ion-color-contrast: #{ion-color(primary, contrast)};
-  --ion-color-shade: #{ion-color(primary, shade)};
+  /**
+   * @prop --background: Background of segment
+   * @prop --background-checked: Background of checked segment
+   * @prop --border-color: Color of segment border
+   * @prop --border-color-checked: Color of checked segment border
+   * @prop --border-color-disabled: Color of disabled segment border
+   * @prop --color: Color of segment text
+   * @prop --color-checked: Color of checked segment text
+   * @prop --color-disabled: Color of disabled segment text
+   */
 
   @include font-smoothing();
 
@@ -24,6 +30,28 @@
 
 :host(.segment-disabled) {
   pointer-events: none;
+}
+
+::slotted(ion-segment-button) {
+  --color: inherit;
+  --background: inherit;
+  --border-color: inherit;
+}
+
+:host(.ion-color) ::slotted(ion-segment-button) {
+  --color: #{current-color(base)};
+}
+
+::slotted(.segment-button-checked) {
+  --color: var(--color-checked);
+  --background: var(--background-checked);
+  --border-color: var(--border-color-checked);
+}
+
+:host(.ion-color) ::slotted(.segment-button-checked) {
+  --background: #{current-color(base)};
+  --border-color: #{current-color(base)};
+  --color: #{current-color(contrast)};
 }
 
 ::slotted(.segment-button-disabled) {

@@ -25,6 +25,20 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 | `ionChange` | Emitted when the value property has changed. |
 
 
+## CSS Custom Properties
+
+| Name                      | Description                      |
+| ------------------------- | -------------------------------- |
+| `--background`            | Background of segment            |
+| `--background-checked`    | Background of checked segment    |
+| `--border-color`          | Color of segment border          |
+| `--border-color-checked`  | Color of checked segment border  |
+| `--border-color-disabled` | Color of disabled segment border |
+| `--color`                 | Color of segment text            |
+| `--color-checked`         | Color of checked segment text    |
+| `--color-disabled`        | Color of disabled segment text   |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
