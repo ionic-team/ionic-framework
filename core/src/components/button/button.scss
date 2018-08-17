@@ -8,6 +8,7 @@
   --ion-color-contrast: #{ion-color(primary, contrast)};
   --ion-color-shade: #{ion-color(primary, shade)};
   --overflow: hidden;
+  --contain: content;
   --ripple-color: currentColor;
 
   display: inline-block;
@@ -136,7 +137,7 @@
   line-height: 1;
 
   box-shadow: var(--box-shadow);
-  contain: content;
+  contain: var(--contain);
   cursor: pointer;
   opacity: var(--opacity);
   overflow: var(--overflow);
