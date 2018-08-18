@@ -64,6 +64,7 @@ There are several attributes that can be added to a column to customize this beh
 | `--ion-grid-column-padding-sm` | Padding for the Column on sm screens and up |
 | `--ion-grid-column-padding-xl` | Padding for the Column on xl screens and up |
 | `--ion-grid-column-padding-xs` | Padding for the Column on xs screens and up |
+| `--ion-grid-columns`           | The number of total Columns in the Grid     |
 
 
 ----------------------------------------------
