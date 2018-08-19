@@ -68,11 +68,6 @@ export class Textarea implements TextareaComponent {
   @Prop() autocapitalize = 'none';
 
   /**
-   * Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
-   */
-  @Prop() autocomplete = 'off';
-
-  /**
    * This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
    */
   @Prop() autofocus = false;
@@ -256,7 +251,6 @@ export class Textarea implements TextareaComponent {
         class="native-textarea"
         ref={el => this.inputEl = el as HTMLTextAreaElement}
         autoCapitalize={this.autocapitalize}
-        // autoComplete={this.autocomplete}
         autoFocus={this.autofocus}
         disabled={this.disabled}
         maxLength={this.maxlength}

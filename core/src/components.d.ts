@@ -2432,10 +2432,6 @@ declare global {
        */
       'autocapitalize': string;
       /**
-       * Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
-       */
-      'autocomplete': string;
-      /**
        * This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
        */
       'autofocus': boolean;
@@ -5977,10 +5973,6 @@ declare global {
        * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
        */
       'autocapitalize'?: string;
-      /**
-       * Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
-       */
-      'autocomplete'?: string;
       /**
        * This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
        */
