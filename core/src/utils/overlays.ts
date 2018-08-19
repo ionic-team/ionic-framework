@@ -100,12 +100,6 @@ async function overlayAnimation(
   baseEl: HTMLElement,
   opts: any
 ): Promise<void> {
-  if (overlay.keyboardClose) {
-    const activeElement = baseEl.ownerDocument.activeElement as HTMLElement;
-    if (activeElement) {
-      activeElement.blur();
-    }
-  }
   if (overlay.animation) {
     overlay.animation.destroy();
     overlay.animation = undefined;
@@ -116,6 +110,14 @@ async function overlayAnimation(
   overlay.animation = animation;
   if (!overlay.willAnimate) {
     animation.duration(0);
+  }
+  if (overlay.keyboardClose) {
+    animation.beforeAddWrite(() => {
+      const activeElement = baseEl.ownerDocument.activeElement as HTMLElement;
+      if (activeElement && activeElement.matches('input, ion-input, ion-textarea')) {
+        activeElement.blur();
+      }
+    });
   }
   await animation.playAsync();
 
