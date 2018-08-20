@@ -142,17 +142,18 @@ export class Content {
 
   private onScroll(ev: UIEvent) {
     const timeStamp = Date.now();
-    const didStart = !this.isScrolling;
+    const shouldStart = !this.isScrolling;
     this.lastScroll = timeStamp;
-    if (didStart) {
+    if (shouldStart) {
       this.onScrollStart();
+
     }
     if (!this.queued && this.scrollEvents) {
       this.queued = true;
       this.queue.read(ts => {
         this.queued = false;
         this.detail.event = ev;
-        updateScrollDetail(this.detail, this.el, ts, didStart);
+        updateScrollDetail(this.detail, this.scrollEl, ts, shouldStart);
         this.ionScroll.emit(this.detail);
       });
     }
@@ -337,21 +338,22 @@ function getPageElement(el: HTMLElement) {
 // ******** DOM READ ****************
 function updateScrollDetail(
   detail: ScrollDetail,
-  el: HTMLElement,
+  el: Element,
   timestamp: number,
-  didStart: boolean
+  shouldStart: boolean
 ) {
   const prevX = detail.currentX;
   const prevY = detail.currentY;
   const prevT = detail.timeStamp;
   const currentX = el.scrollLeft;
   const currentY = el.scrollTop;
-  if (didStart) {
+  if (shouldStart) {
     // remember the start positions
     detail.startTimeStamp = timestamp;
     detail.startX = currentX;
     detail.startY = currentY;
     detail.velocityX = detail.velocityY = 0;
+    console.log('hhhhhh');
   }
   detail.timeStamp = timestamp;
   detail.currentX = detail.scrollLeft = currentX;
