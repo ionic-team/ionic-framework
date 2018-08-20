@@ -4,10 +4,6 @@
 // Material Design Toolbar Button Default
 // --------------------------------------------------
 
-:host {
-  @include margin(0, 2px);
-}
-
 ::slotted(*) .button {
   --padding-top: 0;
   --padding-bottom: 0;

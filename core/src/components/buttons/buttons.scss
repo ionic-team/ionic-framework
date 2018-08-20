@@ -25,6 +25,8 @@
   --padding-end: 0;
   --box-shadow: none;
 
+  @include margin-horizontal(2px, 2px);
+
   pointer-events: auto;
 }
 
