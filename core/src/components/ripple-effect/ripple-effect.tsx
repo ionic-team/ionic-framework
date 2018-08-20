@@ -52,7 +52,7 @@ export class RippleEffect {
   }
 
   /**
-   * Adds the ripple effect to the parent elment
+   * Adds the ripple effect to the parent element
    */
   @Method()
   addRipple(pageX: number, pageY: number) {

@@ -1,8 +1,0 @@
-@import "./title";
-
-:host {
-  @include padding(0, 12px);
-
-  font-size: 20px;
-  font-weight: 500;
-}

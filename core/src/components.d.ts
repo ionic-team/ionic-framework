@@ -1872,7 +1872,7 @@ declare global {
 
     interface IonRippleEffect {
       /**
-       * Adds the ripple effect to the parent elment
+       * Adds the ripple effect to the parent element
        */
       'addRipple': (pageX: number, pageY: number) => void;
       'parent': HTMLElement | string;
@@ -2107,7 +2107,7 @@ declare global {
        * The text to display on the ok button. Default: `OK`.
        */
       'okText': string;
-      'open': (ev?: UIEvent | undefined) => Promise<HTMLIonPopoverElement> | Promise<HTMLIonActionSheetElement> | Promise<HTMLIonAlertElement>;
+      'open': (ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement> | Promise<HTMLIonAlertElement> | Promise<HTMLIonPopoverElement>;
       /**
        * The text to display when the select is empty.
        */
@@ -2510,10 +2510,6 @@ declare global {
        * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color': Color;
-      /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-       */
-      'mode': Mode;
     }
 
     interface IonToastController {
@@ -6072,10 +6068,6 @@ declare global {
        * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
        */
       'color'?: Color;
-      /**
-       * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-       */
-      'mode'?: Mode;
     }
 
     export interface IonToastControllerAttributes extends HTMLAttributes {
