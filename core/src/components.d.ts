@@ -622,7 +622,7 @@ declare global {
        * If true, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.
        */
       'fullscreen': boolean;
-      'getScrollElement': () => HTMLElement;
+      'getScrollElement': () => Promise<HTMLElement>;
       /**
        * Scroll by a specified X/Y distance in the component
        */
@@ -2107,7 +2107,7 @@ declare global {
        * The text to display on the ok button. Default: `OK`.
        */
       'okText': string;
-      'open': (ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement> | Promise<HTMLIonAlertElement> | Promise<HTMLIonPopoverElement>;
+      'open': (ev?: UIEvent | undefined) => Promise<HTMLIonPopoverElement> | Promise<HTMLIonActionSheetElement> | Promise<HTMLIonAlertElement>;
       /**
        * The text to display when the select is empty.
        */

@@ -160,8 +160,8 @@ export class Content {
   }
 
   @Method()
-  getScrollElement(): HTMLElement {
-    return this.scrollEl;
+  getScrollElement(): Promise<HTMLElement> {
+    return Promise.resolve(this.scrollEl);
   }
 
   /**

@@ -124,7 +124,7 @@ export class VirtualScroll {
     await contentEl.componentOnReady();
 
     this.contentEl = contentEl;
-    this.scrollEl = contentEl.getScrollElement();
+    this.scrollEl = await contentEl.getScrollElement();
     this.calcCells();
     this.updateState();
   }
