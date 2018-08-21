@@ -64,6 +64,13 @@ SplitPane also provides some predefined media queries that can be used.
 | `isVisible` | Returns if the split pane is toggled or not |
 
 
+## CSS Custom Properties
+
+| Name       | Description          |
+| ---------- | -------------------- |
+| `--border` | Border between panes |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

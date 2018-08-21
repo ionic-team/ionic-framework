@@ -4,6 +4,10 @@
 // --------------------------------------------------
 
 .split-pane {
+  /**
+   * @prop --border: Border between panes
+   */
+
   @include position(0, 0, 0, 0);
 
   display: flex;
