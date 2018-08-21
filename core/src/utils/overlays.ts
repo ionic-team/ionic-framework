@@ -1,8 +1,11 @@
-import { AnimationBuilder, HTMLIonOverlayElement, IonicConfig, OverlayInterface, OverlayMap } from '../interface';
+import { AnimationBuilder, HTMLIonOverlayElement, IonicConfig, OverlayInterface } from '../interface';
 
-let lastId = 1;
+let lastId = 0;
 
 export function createOverlay<T extends HTMLIonOverlayElement & Required<B>, B>(element: T, opts: B): Promise<T> {
+  const doc = element.ownerDocument;
+  connectListeners(doc);
+
   // convert the passed in overlay options into props
   // that get passed down into the new overlay
   Object.assign(element, opts);
@@ -10,39 +13,59 @@ export function createOverlay<T extends HTMLIonOverlayElement & Required<B>, B>(
   element.overlayId = lastId++;
 
   // append the overlay element to the document body
-  const doc = element.ownerDocument;
-  const appRoot = doc.querySelector('ion-app') || doc.body;
-  appRoot.appendChild(element);
+  getAppRoot(doc).appendChild(element);
+
+  doc.body.addEventListener('keyup', ev => {
+    if (ev.key === 'Escape') {
+      const lastOverlay = getOverlay(doc);
+      if (lastOverlay && lastOverlay.backdropDismiss) {
+        lastOverlay.dismiss(null, BACKDROP);
+      }
+    }
+  });
 
   return element.componentOnReady();
 }
 
-export function dismissOverlay(data: any, role: string | undefined, overlays: OverlayMap, id: number): Promise<void> {
-  id = id >= 0 ? id : getHighestId(overlays);
-  const overlay = overlays.get(id);
+export function connectListeners(doc: Document) {
+  if (lastId === 0) {
+    lastId = 1;
+    doc.body.addEventListener('keyup', ev => {
+      if (ev.key === 'Escape') {
+        const lastOverlay = getOverlay(doc);
+        if (lastOverlay && lastOverlay.backdropDismiss === true) {
+          lastOverlay.dismiss('backdrop');
+        }
+      }
+    });
+  }
+}
+
+export function dismissOverlay(doc: Document, data: any, role: string | undefined, overlayTag: string, id: number): Promise<void> {
+  const overlay = getOverlay(doc, overlayTag, id);
   if (!overlay) {
     return Promise.reject('overlay does not exist');
   }
   return overlay.dismiss(data, role);
 }
 
-export function getTopOverlay<T extends HTMLIonOverlayElement>(overlays: OverlayMap): T {
-  return overlays.get(getHighestId(overlays)) as T;
+export function getOverlays(doc: Document, overlayTag?: string): HTMLIonOverlayElement[] {
+  const overlays = Array.from(getAppRoot(doc).children) as HTMLIonOverlayElement[];
+  if (overlayTag == null) {
+    return overlays;
+  }
+  overlayTag = overlayTag.toUpperCase();
+  return overlays.filter(c => c.tagName === overlayTag);
 }
 
-export function getHighestId(overlays: OverlayMap) {
-  let minimum = -1;
-  overlays.forEach((_, id) => {
-    if (id > minimum) {
-      minimum = id;
-    }
-  });
-  return minimum;
-}
-
-export function removeLastOverlay(overlays: OverlayMap) {
-  const toRemove = getTopOverlay(overlays);
-  return toRemove ? toRemove.dismiss() : Promise.resolve();
+export function getOverlay(doc: Document, overlayTag?: string, id?: number): HTMLIonOverlayElement | undefined {
+  const overlays = getOverlays(doc, overlayTag);
+  if (id != null) {
+    return overlays.find(o => o.overlayId === id);
+  }
+  return (id == null)
+    ? overlays[overlays.length - 1]
+    : overlays.find(o => o.overlayId === id);
 }
 
 export async function present(
@@ -92,6 +115,10 @@ export async function dismiss(
 
   overlay.didDismiss.emit({ data, role });
   overlay.el.remove();
+}
+
+function getAppRoot(doc: Document) {
+  return doc.querySelector('ion-app') || doc.body;
 }
 
 async function overlayAnimation(

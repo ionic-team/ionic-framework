@@ -1,32 +1,14 @@
-import { Component, Listen, Method, Prop } from '@stencil/core';
+import { Component, Method, Prop } from '@stencil/core';
 
 import { OverlayController, PopoverOptions } from '../../interface';
-import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-popover-controller'
 })
 export class PopoverController implements OverlayController {
 
-  private popovers = new Map<number, HTMLIonPopoverElement>();
-
   @Prop({ context: 'document' }) doc!: Document;
-
-  @Listen('body:ionPopoverWillPresent')
-  protected popoverWillPresent(ev: any) {
-    this.popovers.set(ev.target.overlayId, ev.target);
-  }
-
-  @Listen('body:ionPopoverWillDismiss')
-  @Listen('body:ionPopoverDidUnload')
-  protected popoverWillDismiss(ev: any) {
-    this.popovers.delete(ev.target.overlayId);
-  }
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastOverlay(this.popovers);
-  }
 
   /**
    * Create a popover overlay with popover options.
@@ -41,7 +23,7 @@ export class PopoverController implements OverlayController {
    */
   @Method()
   dismiss(data?: any, role?: string, popoverId = -1) {
-    return dismissOverlay(data, role, this.popovers, popoverId);
+    return dismissOverlay(this.doc, data, role, 'ion-popover', popoverId);
   }
 
   /**
@@ -49,6 +31,6 @@ export class PopoverController implements OverlayController {
    */
   @Method()
   getTop(): HTMLIonPopoverElement {
-    return getTopOverlay(this.popovers);
+    return getOverlay(this.doc, 'ion-popover') as HTMLIonPopoverElement;
   }
 }

@@ -1,32 +1,14 @@
-import { Component, Listen, Method, Prop } from '@stencil/core';
+import { Component, Method, Prop } from '@stencil/core';
 
 import { ActionSheetOptions, OverlayController } from '../../interface';
-import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-action-sheet-controller'
 })
 export class ActionSheetController implements OverlayController {
 
-  private actionSheets = new Map<number, HTMLIonActionSheetElement>();
-
   @Prop({ context: 'document' }) doc!: Document;
-
-  @Listen('body:ionActionSheetWillPresent')
-  protected actionSheetWillPresent(ev: any) {
-    this.actionSheets.set(ev.target.overlayId, ev.target);
-  }
-
-  @Listen('body:ionActionSheetWillDismiss')
-  @Listen('body:ionActionSheetDidUnload')
-  protected actionSheetWillDismiss(ev: any) {
-    this.actionSheets.delete(ev.target.overlayId);
-  }
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastOverlay(this.actionSheets);
-  }
 
   /**
    * Create an action sheet overlay with action sheet options.
@@ -41,7 +23,7 @@ export class ActionSheetController implements OverlayController {
    */
   @Method()
   dismiss(data?: any, role?: string, actionSheetId = -1) {
-    return dismissOverlay(data, role, this.actionSheets, actionSheetId);
+    return dismissOverlay(this.doc, data, role, 'ion-action-sheet', actionSheetId);
   }
 
   /**
@@ -49,6 +31,6 @@ export class ActionSheetController implements OverlayController {
    */
   @Method()
   getTop(): HTMLIonActionSheetElement {
-    return getTopOverlay(this.actionSheets);
+    return getOverlay(this.doc, 'ion-action-sheet') as HTMLIonActionSheetElement;
   }
 }

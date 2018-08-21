@@ -1,32 +1,14 @@
-import { Component, Listen, Method, Prop } from '@stencil/core';
+import { Component, Method, Prop } from '@stencil/core';
 
 import { OverlayController, ToastOptions } from '../../interface';
-import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-toast-controller'
 })
 export class ToastController implements OverlayController {
 
-  private toasts = new Map<number, HTMLIonToastElement>();
-
   @Prop({ context: 'document' }) doc!: Document;
-
-  @Listen('body:ionToastWillPresent')
-  protected toastWillPresent(ev: any) {
-    this.toasts.set(ev.target.overlayId, ev.target);
-  }
-
-  @Listen('body:ionToastWillDismiss')
-  @Listen('body:ionToastDidUnload')
-  protected toastWillDismiss(ev: any) {
-    this.toasts.delete(ev.target.overlayId);
-  }
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastOverlay(this.toasts);
-  }
 
   /**
    * Create a toast overlay with toast options.
@@ -41,7 +23,7 @@ export class ToastController implements OverlayController {
    */
   @Method()
   dismiss(data?: any, role?: string, toastId = -1) {
-    return dismissOverlay(data, role, this.toasts, toastId);
+    return dismissOverlay(this.doc, data, role, 'ion-toast', toastId);
   }
 
   /**
@@ -49,6 +31,6 @@ export class ToastController implements OverlayController {
    */
   @Method()
   getTop(): HTMLIonToastElement {
-    return getTopOverlay(this.toasts);
+    return getOverlay(this.doc, 'ion-toast') as HTMLIonToastElement;
   }
 }

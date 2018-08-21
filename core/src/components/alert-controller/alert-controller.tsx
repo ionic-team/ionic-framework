@@ -1,32 +1,14 @@
-import { Component, Listen, Method, Prop } from '@stencil/core';
+import { Component, Method, Prop } from '@stencil/core';
 
 import { AlertOptions, OverlayController } from '../../interface';
-import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-alert-controller'
 })
 export class AlertController implements OverlayController {
 
-  private alerts = new Map<number, HTMLIonAlertElement>();
-
   @Prop({ context: 'document' }) doc!: Document;
-
-  @Listen('body:ionAlertWillPresent')
-  protected alertWillPresent(ev: any) {
-    this.alerts.set(ev.target.overlayId, ev.target);
-  }
-
-  @Listen('body:ionAlertWillDismiss')
-  @Listen('body:ionAlertDidUnload')
-  protected alertWillDismiss(ev: any) {
-    this.alerts.delete(ev.target.overlayId);
-  }
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastOverlay(this.alerts);
-  }
 
   /**
    * Create an alert overlay with alert options
@@ -41,7 +23,7 @@ export class AlertController implements OverlayController {
    */
   @Method()
   dismiss(data?: any, role?: string, alertId = -1) {
-    return dismissOverlay(data, role, this.alerts, alertId);
+    return dismissOverlay(this.doc, data, role, 'ion-alert', alertId);
   }
 
   /**
@@ -49,6 +31,6 @@ export class AlertController implements OverlayController {
    */
   @Method()
   getTop(): HTMLIonAlertElement {
-    return getTopOverlay(this.alerts);
+    return getOverlay(this.doc, 'ion-alert') as HTMLIonAlertElement;
   }
 }

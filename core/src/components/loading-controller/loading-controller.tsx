@@ -1,32 +1,14 @@
-import { Component, Listen, Method, Prop } from '@stencil/core';
+import { Component, Method, Prop } from '@stencil/core';
 
 import { LoadingOptions, OverlayController } from '../../interface';
-import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 @Component({
   tag: 'ion-loading-controller'
 })
 export class LoadingController implements OverlayController {
 
-  private loadings = new Map<number, HTMLIonLoadingElement>();
-
   @Prop({ context: 'document' }) doc!: Document;
-
-  @Listen('body:ionLoadingWillPresent')
-  protected loadingWillPresent(ev: any) {
-    this.loadings.set(ev.target.overlayId, ev.target);
-  }
-
-  @Listen('body:ionLoadingWillDismiss')
-  @Listen('body:ionLoadingDidUnload')
-  protected loadingWillDismiss(ev: any) {
-    this.loadings.delete(ev.target.overlayId);
-  }
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastOverlay(this.loadings);
-  }
 
   /**
    * Create a loading overlay with loading options.
@@ -41,7 +23,7 @@ export class LoadingController implements OverlayController {
    */
   @Method()
   dismiss(data?: any, role?: string, loadingId = -1) {
-    return dismissOverlay(data, role, this.loadings, loadingId);
+    return dismissOverlay(this.doc, data, role, 'ion-loading', loadingId);
   }
 
   /**
@@ -49,6 +31,6 @@ export class LoadingController implements OverlayController {
    */
   @Method()
   getTop(): HTMLIonLoadingElement {
-    return getTopOverlay(this.loadings);
+    return getOverlay(this.doc, 'ion-loading') as HTMLIonLoadingElement;
   }
 }

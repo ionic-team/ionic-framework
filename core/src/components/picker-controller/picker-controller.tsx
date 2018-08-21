@@ -1,7 +1,7 @@
-import { Component, Listen, Method, Prop } from '@stencil/core';
+import { Component, Method, Prop } from '@stencil/core';
 
 import { OverlayController, PickerOptions } from '../../interface';
-import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from '../../utils/overlays';
+import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 /** @hidden */
 @Component({
@@ -9,25 +9,7 @@ import { createOverlay, dismissOverlay, getTopOverlay, removeLastOverlay } from 
 })
 export class PickerController implements OverlayController {
 
-  private pickers = new Map<number, HTMLIonPickerElement>();
-
   @Prop({ context: 'document' }) doc!: Document;
-
-  @Listen('body:ionPickerWillPresent')
-  protected pickerWillPresent(ev: any) {
-    this.pickers.set(ev.target.overlayId, ev.target);
-  }
-
-  @Listen('body:ionPickerWillDismiss')
-  @Listen('body:ionPickerDidUnload')
-  protected pickerWillDismiss(ev: any) {
-    this.pickers.delete(ev.target.overlayId);
-  }
-
-  @Listen('body:keyup.escape')
-  protected escapeKeyUp() {
-    removeLastOverlay(this.pickers);
-  }
 
   /*
    * Create a picker overlay with picker options.
@@ -42,7 +24,7 @@ export class PickerController implements OverlayController {
    */
   @Method()
   dismiss(data?: any, role?: string, pickerId = -1) {
-    return dismissOverlay(data, role, this.pickers, pickerId);
+    return dismissOverlay(this.doc, data, role, 'ion-picker', pickerId);
   }
 
   /*
@@ -50,6 +32,6 @@ export class PickerController implements OverlayController {
    */
   @Method()
   getTop(): HTMLIonPickerElement {
-    return getTopOverlay(this.pickers);
+    return getOverlay(this.doc, 'ion-picker') as HTMLIonPickerElement;
   }
 }

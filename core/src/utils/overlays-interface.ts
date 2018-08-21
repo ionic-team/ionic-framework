@@ -38,7 +38,7 @@ export interface OverlayController {
 
 export interface HTMLIonOverlayElement extends HTMLStencilElement {
   overlayId: number;
+  backdropDismiss?: boolean;
+
   dismiss(data?: any, role?: string): Promise<void>;
 }
-
-export type OverlayMap = Map<number, HTMLIonOverlayElement>;
