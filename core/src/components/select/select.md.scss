@@ -5,18 +5,21 @@
 // --------------------------------------------------
 
 :host {
+  --color: #{$select-md-text-color};
+  --icon-color: #{$select-md-icon-color};
   --padding-top: #{$select-md-padding-top};
   --padding-end: #{$select-md-padding-end};
   --padding-bottom: #{$select-md-padding-bottom};
   --padding-start: #{$select-md-padding-start};
+  --placeholder-color: #{$select-md-placeholder-color};
 
-  color: $select-md-text-color;
+  color: var(--color);
 
   font-family: $select-md-font-family;
 }
 
 .select-placeholder {
-  color: $select-md-placeholder-color;
+  color: var(--placeholder-color);
 }
 
 .select-md .item-select ion-label {
@@ -43,7 +46,7 @@
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
 
-  color: $select-md-icon-color;
+  color: var(--icon-color);
   pointer-events: none;
 }
 

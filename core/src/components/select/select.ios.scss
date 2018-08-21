@@ -5,18 +5,21 @@
 // --------------------------------------------------
 
 :host {
+  --color: #{$select-ios-text-color};
+  --icon-color: #{$select-ios-icon-color};
   --padding-top: #{$select-ios-padding-top};
   --padding-end: #{$select-ios-padding-end};
   --padding-bottom: #{$select-ios-padding-bottom};
   --padding-start: #{$select-ios-padding-start};
+  --placeholder-color: #{$select-ios-placeholder-color};
 
-  color: $select-ios-text-color;
+  color: var(--color);
 
   font-family: $select-ios-font-family;
 }
 
 .select-placeholder {
-  color: $select-ios-placeholder-color;
+  color: var(--placeholder-color);
 }
 
 .select-icon {
@@ -39,7 +42,7 @@
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
 
-  color: $select-ios-icon-color;
+  color: var(--icon-color);
   pointer-events: none;
 }
 

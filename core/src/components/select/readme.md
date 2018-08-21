@@ -73,6 +73,19 @@ Since select uses the alert, action sheet and popover interfaces, options can be
 | `open` |             |
 
 
+## CSS Custom Properties
+
+| Name                  | Description                          |
+| --------------------- | ------------------------------------ |
+| `--color`             | Color of the select text             |
+| `--icon-color`        | Color of the select icon             |
+| `--padding-bottom`    | Bottom padding of the select         |
+| `--padding-end`       | End padding of the select            |
+| `--padding-start`     | Start padding of the select          |
+| `--padding-top`       | Top padding of the select            |
+| `--placeholder-color` | Color of the select placeholder text |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
