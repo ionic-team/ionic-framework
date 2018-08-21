@@ -16,9 +16,9 @@ The ripple effect component adds the [Material Design ink ripple interaction eff
 
 ## Methods
 
-| Method      | Description                                 |
-| ----------- | ------------------------------------------- |
-| `addRipple` | Adds the ripple effect to the parent elment |
+| Method      | Description                                  |
+| ----------- | -------------------------------------------- |
+| `addRipple` | Adds the ripple effect to the parent element |
 
 
 ----------------------------------------------

@@ -206,7 +206,7 @@ export class Content {
     }
 
     let resolve!: () => void;
-    let startTime: number;
+    let startTime = 0;
     const promise = new Promise<void>(r => resolve = r);
     const fromY = el.scrollTop;
     const fromX = el.scrollLeft;
@@ -216,11 +216,11 @@ export class Content {
 
     // scroll loop
     const step = (timeStamp: number) => {
-      let linearTime = Math.min(1, ((timeStamp - startTime) / duration));
-      const easedT = (--linearTime) * linearTime * linearTime + 1;
+      const linearTime = Math.min(1, ((timeStamp - startTime) / duration)) - 1;
+      const easedT = Math.pow(linearTime, 3) + 1;
 
       if (deltaY !== 0) {
-        el.scrollTop = (easedT * deltaY) + fromY;
+        el.scrollTop = Math.floor((easedT * deltaY) + fromY);
       }
       if (deltaX !== 0) {
         el.scrollLeft = Math.floor((easedT * deltaX) + fromX);
@@ -233,14 +233,9 @@ export class Content {
         requestAnimationFrame(step);
 
       } else {
-        this.isScrolling = false;
         resolve();
       }
     };
-
-    // start scroll loop
-    this.isScrolling = true;
-
     // chill out for a frame first
     requestAnimationFrame(ts => {
       startTime = ts;
@@ -353,7 +348,6 @@ function updateScrollDetail(
     detail.startX = currentX;
     detail.startY = currentY;
     detail.velocityX = detail.velocityY = 0;
-    console.log('hhhhhh');
   }
   detail.timeStamp = timestamp;
   detail.currentX = detail.scrollLeft = currentX;
