@@ -21,20 +21,25 @@ export class NavController {
     @Optional() private router?: Router
   ) {}
 
-  goForward(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
+  navigateForward(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
     this.setIntent(NavIntent.Forward, animated);
     return this.router!.navigateByUrl(url, extras);
   }
 
-  goBack(animated?: boolean) {
+  navigateBack(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
     this.setIntent(NavIntent.Back, animated);
-    return this.location.back();
+    return this.router!.navigateByUrl(url, { replaceUrl: true, ...extras });
   }
 
-  goRoot(url: string, animated?: boolean) {
+  navigateRoot(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
     this.setIntent(NavIntent.Root, animated);
-    return this.location.replaceState(url)
+    return this.router!.navigateByUrl(url, extras);
   }
+
+  goBack(animated?: boolean) {
+     this.setIntent(NavIntent.Back, animated);
+     return this.location.back();
+   }
 
   setIntent(intent: NavIntent, animated?: boolean) {
     this.intent = intent;
