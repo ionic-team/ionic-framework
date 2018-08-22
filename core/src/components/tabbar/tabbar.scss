@@ -77,10 +77,12 @@
 
 :host(.layout-icon-start) .tab-btn {
   --flex-direction: row;
+  --text-align: left;
 }
 
 :host(.layout-icon-end) .tab-btn {
   --flex-direction: row-reverse;
+  --text-align: right;
 }
 
 :host(.layout-icon-bottom) .tab-btn {
