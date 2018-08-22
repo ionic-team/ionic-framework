@@ -19,12 +19,20 @@ const IONIC_PREFIX = 'ionic:';
 const IONIC_SESSION_KEY = 'ionic-persist-config';
 
 export function configFromSession(): any {
-  const configStr = window.sessionStorage.getItem(IONIC_SESSION_KEY);
-  return configStr ? JSON.parse(configStr) : {};
+  try {
+    const configStr = window.sessionStorage.getItem(IONIC_SESSION_KEY);
+    return configStr ? JSON.parse(configStr) : {};
+  } catch {
+    return {};
+  }
 }
 
 export function saveConfig(config: any) {
-  window.sessionStorage.setItem(IONIC_SESSION_KEY, JSON.stringify(config));
+  try {
+    window.sessionStorage.setItem(IONIC_SESSION_KEY, JSON.stringify(config));
+  } catch {
+    return;
+  }
 }
 
 export function configFromURL() {
