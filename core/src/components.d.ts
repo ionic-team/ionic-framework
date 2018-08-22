@@ -622,7 +622,7 @@ declare global {
        * If true, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.
        */
       'fullscreen': boolean;
-      'getScrollElement': () => HTMLElement;
+      'getScrollElement': () => Promise<HTMLElement>;
       /**
        * Scroll by a specified X/Y distance in the component
        */
