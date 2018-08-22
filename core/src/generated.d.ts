@@ -3978,7 +3978,7 @@ declare namespace StencilComponents {
     * The text to display on the ok button. Default: `OK`.
     */
     'okText': string;
-    'open': (ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement> | Promise<HTMLIonAlertElement> | Promise<HTMLIonPopoverElement>;
+    'open': (ev?: UIEvent | undefined) => Promise<HTMLIonPopoverElement> | Promise<HTMLIonActionSheetElement> | Promise<HTMLIonAlertElement>;
     /**
     * The text to display when the select is empty.
     */
@@ -4645,9 +4645,6 @@ declare namespace StencilComponents {
     'useRouter'?: boolean;
   }
 
-  interface TranslucentPageTab {}
-  interface TranslucentPageTabAttributes extends JSXElements.HTMLAttributes {}
-
   interface IonText {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
@@ -5244,7 +5241,6 @@ export interface LocalIntrinsicElements {
   'ion-tab': StencilComponents.IonTabAttributes;
   'ion-tabbar': StencilComponents.IonTabbarAttributes;
   'ion-tabs': StencilComponents.IonTabsAttributes;
-  'translucent-page-tab': StencilComponents.TranslucentPageTabAttributes;
   'ion-text': StencilComponents.IonTextAttributes;
   'ion-textarea': StencilComponents.IonTextareaAttributes;
   'ion-thumbnail': StencilComponents.IonThumbnailAttributes;
@@ -5804,12 +5800,6 @@ declare global {
     new (): HTMLIonTabsElement;
   };
 
-  interface HTMLTranslucentPageTabElement extends StencilComponents.TranslucentPageTab, HTMLStencilElement {}
-  var HTMLTranslucentPageTabElement: {
-    prototype: HTMLTranslucentPageTabElement;
-    new (): HTMLTranslucentPageTabElement;
-  };
-
   interface HTMLIonTextElement extends StencilComponents.IonText, HTMLStencilElement {}
   var HTMLIonTextElement: {
     prototype: HTMLIonTextElement;
@@ -5956,7 +5946,6 @@ declare global {
     'ion-tab': HTMLIonTabElement
     'ion-tabbar': HTMLIonTabbarElement
     'ion-tabs': HTMLIonTabsElement
-    'translucent-page-tab': HTMLTranslucentPageTabElement
     'ion-text': HTMLIonTextElement
     'ion-textarea': HTMLIonTextareaElement
     'ion-thumbnail': HTMLIonThumbnailElement
@@ -6060,7 +6049,6 @@ declare global {
     'ion-tab': HTMLIonTabElement;
     'ion-tabbar': HTMLIonTabbarElement;
     'ion-tabs': HTMLIonTabsElement;
-    'translucent-page-tab': HTMLTranslucentPageTabElement;
     'ion-text': HTMLIonTextElement;
     'ion-textarea': HTMLIonTextareaElement;
     'ion-thumbnail': HTMLIonThumbnailElement;
