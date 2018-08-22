@@ -48,7 +48,7 @@ export class AlertExample {
         }, {
           text: 'Okay',
           handler: () => {
-            console.log('Confirm Okay')
+            console.log('Confirm Okay');
           }
         }
       ]
@@ -109,12 +109,12 @@ export class AlertExample {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Confirm Cancel')
+            console.log('Confirm Cancel');
           }
         }, {
           text: 'Ok',
           handler: () => {
-            console.log('Confirm Ok')
+            console.log('Confirm Ok');
           }
         }
       ]
@@ -171,12 +171,12 @@ export class AlertExample {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Confirm Cancel')
+            console.log('Confirm Cancel');
           }
         }, {
           text: 'Ok',
           handler: () => {
-            console.log('Confirm Ok')
+            console.log('Confirm Ok');
           }
         }
       ]
@@ -238,12 +238,12 @@ export class AlertExample {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Confirm Cancel')
+            console.log('Confirm Cancel');
           }
         }, {
           text: 'Ok',
           handler: () => {
-            console.log('Confirm Ok')
+            console.log('Confirm Ok');
           }
         }
       ]
