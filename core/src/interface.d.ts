@@ -1,5 +1,6 @@
 // Components interfaces
-export * from './components';
+export * from './generated';
+export * from './index';
 export * from './components/animation-controller/animation-interface';
 export * from './components/alert/alert-interface';
 export * from './components/action-sheet/action-sheet-interface';

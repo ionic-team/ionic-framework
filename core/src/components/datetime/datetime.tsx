@@ -232,7 +232,9 @@ export class Datetime {
     const pickerOptions = this.generatePickerOptions();
     this.picker = await this.pickerCtrl.create(pickerOptions);
     this.validate();
-    await this.picker.present();
+    if (this.picker) {
+      await this.picker.present();
+    }
   }
 
   private emitStyle() {

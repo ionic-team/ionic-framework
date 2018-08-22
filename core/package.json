@@ -16,7 +16,7 @@
   ],
   "module": "dist/collection/index.js",
   "main": "dist/index.js",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/types/interface.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "unpkg": "dist/ionic.js",
   "files": [
@@ -27,7 +27,7 @@
     "ionicons": "4.3.0"
   },
   "devDependencies": {
-    "@stencil/core": "0.11.4",
+    "@stencil/core": "^0.12.0-3",
     "@stencil/dev-server": "latest",
     "@stencil/sass": "0.1.0",
     "@stencil/utils": "latest",
