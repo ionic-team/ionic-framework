@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { Color, Mode, TextInputChangeEvent } from '../../interface';
 import { debounceEvent } from '../../utils/helpers';
@@ -150,6 +150,13 @@ export class Searchbar {
   componentDidLoad() {
     this.positionElements();
     this.debounceChanged();
+  }
+
+  @Method()
+  focus() {
+    if (this.nativeInput) {
+      this.nativeInput.focus();
+    }
   }
 
   /**

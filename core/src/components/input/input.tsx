@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { Color, Mode, StyleEvent, TextFieldTypes, TextInputChangeEvent } from '../../interface';
 import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
@@ -244,6 +244,13 @@ export class Input implements InputComponent {
   componentDidUnload() {
     this.nativeInput = undefined;
     this.ionInputDidUnload.emit();
+  }
+
+  @Method()
+  focus() {
+    if (this.nativeInput) {
+      this.nativeInput.focus();
+    }
   }
 
   private emitStyle() {
