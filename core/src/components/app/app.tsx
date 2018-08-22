@@ -32,7 +32,7 @@ export class App {
   hostData() {
     const hybrid = isHybrid(this.win);
     const isStandalone = isStandaloneMode(this.win);
-    const statusbarPadding = this.config.get('statusbarPadding', hybrid || isStandalone);
+    const statusbarPadding = this.config.getBoolean('statusbarPadding', hybrid || isStandalone);
 
     return {
       class: {
