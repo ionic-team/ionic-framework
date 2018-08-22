@@ -257,7 +257,7 @@ export class Select {
   }
 
   @Method()
-  open(ev?: UIEvent) {
+  open(ev?: UIEvent): Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement>{
     let selectInterface = this.interface;
 
     if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {
