@@ -29,7 +29,7 @@ Alerts can also include several different inputs whose data can be passed back t
 | ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | -------------------------- |
 | `backdropDismiss` | `backdrop-dismiss` | If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.                           | `boolean`                  |
 | `buttons`         | --                 | Array of buttons to be added to the alert.                                                                       | `(AlertButton | string)[]` |
-| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string | string[]`        |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string`, `string[]`       |
 | `enterAnimation`  | --                 | Animation to use when the alert is presented.                                                                    | `AnimationBuilder`         |
 | `header`          | `header`           | The main title in the heading of the alert.                                                                      | `string`                   |
 | `inputs`          | --                 | Array of input to show in the alert.                                                                             | `AlertInput[]`             |

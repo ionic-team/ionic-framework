@@ -11,10 +11,10 @@ Lists support several interactions including swiping items to reveal options, dr
 
 ## Properties
 
-| Property | Attribute | Description                                                                                               | Type                        |
-| -------- | --------- | --------------------------------------------------------------------------------------------------------- | --------------------------- |
-| `inset`  | `inset`   | If true, the list will have margin around it and rounded corners. Defaults to `false`.                    | `boolean`                   |
-| `lines`  | `lines`   | How the bottom border should be displayed on all items. Available options: `"full"`, `"inset"`, `"none"`. | `'full' | 'inset' | 'none'` |
+| Property | Attribute | Description                                                                                               | Type                          |
+| -------- | --------- | --------------------------------------------------------------------------------------------------------- | ----------------------------- |
+| `inset`  | `inset`   | If true, the list will have margin around it and rounded corners. Defaults to `false`.                    | `boolean`                     |
+| `lines`  | `lines`   | How the bottom border should be displayed on all items. Available options: `"full"`, `"inset"`, `"none"`. | `"full"`, `"inset"`, `"none"` |
 
 
 ## Methods

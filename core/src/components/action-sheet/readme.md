@@ -20,7 +20,7 @@ A button's `role` property can either be `destructive` or `cancel`. Buttons with
 | ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | --------------------- |
 | `backdropDismiss` | `backdrop-dismiss` | If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.                    | `boolean`             |
 | `buttons`         | --                 | An array of buttons for the action sheet.                                                                        | `ActionSheetButton[]` |
-| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string | string[]`   |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string`, `string[]`  |
 | `enterAnimation`  | --                 | Animation to use when the action sheet is presented.                                                             | `AnimationBuilder`    |
 | `header`          | `header`           | Title for the action sheet.                                                                                      | `string`              |
 | `keyboardClose`   | `keyboard-close`   | If the actionSheet should close the keyboard                                                                     | `boolean`             |

@@ -1,6 +1,6 @@
 import { Build, Component, Method, Prop } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Menu } from '../../interface';
+import { Animation, AnimationBuilder, MenuI } from '../../interface';
 
 import { menuOverlayAnimation } from './animations/overlay';
 import { menuPushAnimation } from './animations/push';
@@ -11,7 +11,7 @@ import { menuRevealAnimation } from './animations/reveal';
   styleUrl: 'menu-controller.scss'
 })
 export class MenuController {
-  private menus: Menu[] = [];
+  private menus: MenuI[] = [];
   private menuAnimations = new Map<string, AnimationBuilder>();
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
@@ -183,14 +183,14 @@ export class MenuController {
   }
 
   @Method()
-  _register(menu: Menu) {
+  _register(menu: MenuI) {
     if (this.menus.indexOf(menu) < 0) {
       this.menus.push(menu);
     }
   }
 
   @Method()
-  _unregister(menu: Menu) {
+  _unregister(menu: MenuI) {
     const index = this.menus.indexOf(menu);
     if (index > -1) {
       this.menus.splice(index, 1);
@@ -198,7 +198,7 @@ export class MenuController {
   }
 
   @Method()
-  _setActiveMenu(menu: Menu) {
+  _setActiveMenu(menu: MenuI) {
     // if this menu should be enabled
     // then find all the other menus on this same side
     // and automatically disable other same side menus
@@ -209,7 +209,7 @@ export class MenuController {
   }
 
   @Method()
-  _setOpen(menu: Menu, shouldOpen: boolean, animated: boolean): Promise<boolean> {
+  _setOpen(menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean> {
     if (this.isAnimating()) {
       return Promise.resolve(false);
     }
@@ -223,7 +223,7 @@ export class MenuController {
   }
 
   @Method()
-  createAnimation(type: string, menuCmp: Menu): Promise<Animation> {
+  createAnimation(type: string, menuCmp: MenuI): Promise<Animation> {
     const animationBuilder = this.menuAnimations.get(type);
     if (!animationBuilder) {
       return Promise.reject('animation not registered');
@@ -236,7 +236,7 @@ export class MenuController {
     this.menuAnimations.set(name, animation);
   }
 
-  private find(predicate: (menu: Menu) => boolean): HTMLIonMenuElement | null {
+  private find(predicate: (menu: MenuI) => boolean): HTMLIonMenuElement | null {
     const instance = this.menus.find(predicate);
     if (instance) {
       return instance.el;

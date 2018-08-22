@@ -1,4 +1,4 @@
-import { ComponentProps, FrameworkDelegate, Nav } from '../../interface';
+import { ComponentProps, FrameworkDelegate } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 import { assert } from '../../utils/helpers';
 
@@ -11,7 +11,7 @@ export const enum ViewState {
 export class ViewController {
 
   state: ViewState = ViewState.New;
-  nav?: Nav;
+  nav?: any;
   element?: HTMLElement;
   delegate?: FrameworkDelegate;
 

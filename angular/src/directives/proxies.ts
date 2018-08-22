@@ -1,6 +1,7 @@
 /* auto-generated angular directive proxies */
 /* tslint:disable */
 import { Directive, ElementRef, EventEmitter } from '@angular/core';
+import { StencilComponents } from '@ionic/core';
 
 export function proxyInputs(instance: any, el: ElementRef, props: string[]) {
   props.forEach(propName => {

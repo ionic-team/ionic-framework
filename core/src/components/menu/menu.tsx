@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Animation, Config, Gesture, GestureDetail, MenuChangeEventDetail, Mode, Side } from '../../interface';
+import { Animation, Config, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Mode, Side } from '../../interface';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
 @Component({
@@ -11,7 +11,7 @@ import { assert, isEndSide as isEnd } from '../../utils/helpers';
   },
   shadow: true
 })
-export class Menu {
+export class Menu implements MenuI {
 
   private animation?: Animation;
   private _isOpen = false;

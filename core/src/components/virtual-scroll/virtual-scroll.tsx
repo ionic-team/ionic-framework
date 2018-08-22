@@ -100,9 +100,9 @@ export class VirtualScroll {
   @Prop() itemHeight?: ItemHeightFn;
 
   // JSX API
-  @Prop() renderItem?: (item: any, index: number) => JSX.Element;
-  @Prop() renderHeader?: (item: any, index: number) => JSX.Element;
-  @Prop() renderFooter?: (item: any, index: number) => JSX.Element;
+  @Prop() renderItem?: (item: any, index: number) => any;
+  @Prop() renderHeader?: (item: any, index: number) => any;
+  @Prop() renderFooter?: (item: any, index: number) => any;
 
   // Low level API
   @Prop() nodeRender?: ItemRenderFn;
@@ -271,7 +271,7 @@ export class VirtualScroll {
     }
   }
 
-  private updateCellHeight(cell: Cell, node: HTMLElement) {
+  private updateCellHeight(cell: Cell, node: HTMLStencilElement) {
     const update = () => {
       if ((node as any)['$ionCell'] === cell) {
         const style = this.win.getComputedStyle(node);

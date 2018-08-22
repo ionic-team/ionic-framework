@@ -14,19 +14,19 @@ Modals can be created using a [Modal Controller](../../modal-controller/ModalCon
 
 ## Properties
 
-| Property          | Attribute          | Description                                                                                                      | Type                |
-| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | ------------------- |
-| `backdropDismiss` | `backdrop-dismiss` | If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.                           | `boolean`           |
-| `componentProps`  | --                 | The data to pass to the modal component.                                                                         | `ComponentProps`    |
-| `component`       | `component`        | The component to display inside of the modal.                                                                    | `ComponentRef`      |
-| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string | string[]` |
-| `delegate`        | --                 |                                                                                                                  | `FrameworkDelegate` |
-| `enterAnimation`  | --                 | Animation to use when the modal is presented.                                                                    | `AnimationBuilder`  |
-| `keyboardClose`   | `keyboard-close`   |                                                                                                                  | `boolean`           |
-| `leaveAnimation`  | --                 | Animation to use when the modal is dismissed.                                                                    | `AnimationBuilder`  |
-| `overlayId`       | `overlay-id`       |                                                                                                                  | `number`            |
-| `showBackdrop`    | `show-backdrop`    | If true, a backdrop will be displayed behind the modal. Defaults to `true`.                                      | `boolean`           |
-| `willAnimate`     | `will-animate`     | If true, the modal will animate. Defaults to `true`.                                                             | `boolean`           |
+| Property          | Attribute          | Description                                                                                                      | Type                 |
+| ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `backdropDismiss` | `backdrop-dismiss` | If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.                           | `boolean`            |
+| `componentProps`  | --                 | The data to pass to the modal component.                                                                         | `ComponentProps`     |
+| `component`       | `component`        | The component to display inside of the modal.                                                                    | `ComponentRef`       |
+| `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string`, `string[]` |
+| `delegate`        | --                 |                                                                                                                  | `FrameworkDelegate`  |
+| `enterAnimation`  | --                 | Animation to use when the modal is presented.                                                                    | `AnimationBuilder`   |
+| `keyboardClose`   | `keyboard-close`   |                                                                                                                  | `boolean`            |
+| `leaveAnimation`  | --                 | Animation to use when the modal is dismissed.                                                                    | `AnimationBuilder`   |
+| `overlayId`       | `overlay-id`       |                                                                                                                  | `number`             |
+| `showBackdrop`    | `show-backdrop`    | If true, a backdrop will be displayed behind the modal. Defaults to `true`.                                      | `boolean`            |
+| `willAnimate`     | `will-animate`     | If true, the modal will animate. Defaults to `true`.                                                             | `boolean`            |
 
 
 ## Events

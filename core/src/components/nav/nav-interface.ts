@@ -1,7 +1,5 @@
 import { Animation, AnimationBuilder, ComponentRef, FrameworkDelegate, Mode, ViewController } from '../../interface';
 
-export { Nav } from './nav';
-
 export type NavDirection = 'back' | 'forward';
 
 export type NavComponent = ComponentRef | ViewController;

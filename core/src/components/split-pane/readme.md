@@ -42,10 +42,10 @@ SplitPane also provides some predefined media queries that can be used.
 
 ## Properties
 
-| Property   | Attribute  | Description                                                                                                                           | Type               |
-| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
-| `disabled` | `disabled` | If true, the split pane will be hidden. Defaults to `false`.                                                                          | `boolean`          |
-| `when`     | --         | When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression. | `string | boolean` |
+| Property   | Attribute  | Description                                                                                                                           | Type                |
+| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| `disabled` | `disabled` | If true, the split pane will be hidden. Defaults to `false`.                                                                          | `boolean`           |
+| `when`     | --         | When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression. | `string`, `boolean` |
 
 
 ## Events

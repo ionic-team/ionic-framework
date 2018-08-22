@@ -6,7 +6,7 @@
 
 import { JSXElements } from '@stencil/core';
 
-import 'ionicons'
+import { LocalIntrinsicElements as DependentIntrinsicElements1 } from 'ionicons';
 import {
   ActionSheetButton,
   ActionSheetOptions,
@@ -26,8 +26,8 @@ import {
   ItemHeightFn,
   ItemRenderFn,
   LoadingOptions,
-  Menu,
   MenuChangeEventDetail,
+  MenuI,
   ModalOptions,
   Mode,
   NavComponent,
@@ -64,7 +64,7 @@ import {
 } from '@stencil/core';
 
 
-declare namespace StencilComponents {
+export namespace StencilComponents {
 
   interface IonActionSheetController {
     /**
@@ -2407,15 +2407,15 @@ declare namespace StencilComponents {
   }
 
   interface IonMenuController {
-    '_register': (menu: Menu) => void;
-    '_setActiveMenu': (menu: Menu) => void;
-    '_setOpen': (menu: Menu, shouldOpen: boolean, animated: boolean) => Promise<boolean>;
-    '_unregister': (menu: Menu) => void;
+    '_register': (menu: MenuI) => void;
+    '_setActiveMenu': (menu: MenuI) => void;
+    '_setOpen': (menu: MenuI, shouldOpen: boolean, animated: boolean) => Promise<boolean>;
+    '_unregister': (menu: MenuI) => void;
     /**
     * Close the menu. If no menu is specified, then it will close any menu that is open. If a menu is specified, it will close that menu.
     */
     'close': (menuId?: string | undefined) => Promise<boolean>;
-    'createAnimation': (type: string, menuCmp: Menu) => Promise<Animation>;
+    'createAnimation': (type: string, menuCmp: MenuI) => Promise<Animation>;
     /**
     * Used to enable or disable a menu. For example, there could be multiple left menus, but only one of them should be able to be opened at the same time. If there are multiple menus on the same side, then enabling one menu will also automatically disable all the others that are on the same side.
     */
@@ -5111,9 +5111,9 @@ declare namespace StencilComponents {
     'markDirtyTail': () => void;
     'nodeRender': ItemRenderFn;
     'positionForItem': (index: number) => number;
-    'renderFooter': (item: any, index: number) => JSX.Element;
-    'renderHeader': (item: any, index: number) => JSX.Element;
-    'renderItem': (item: any, index: number) => JSX.Element;
+    'renderFooter': (item: any, index: number) => any;
+    'renderHeader': (item: any, index: number) => any;
+    'renderItem': (item: any, index: number) => any;
   }
   interface IonVirtualScrollAttributes extends JSXElements.HTMLAttributes {
     /**
@@ -5143,9 +5143,9 @@ declare namespace StencilComponents {
     */
     'items'?: any[];
     'nodeRender'?: ItemRenderFn;
-    'renderFooter'?: (item: any, index: number) => JSX.Element;
-    'renderHeader'?: (item: any, index: number) => JSX.Element;
-    'renderItem'?: (item: any, index: number) => JSX.Element;
+    'renderFooter'?: (item: any, index: number) => any;
+    'renderHeader'?: (item: any, index: number) => any;
+    'renderItem'?: (item: any, index: number) => any;
   }
 }
 
@@ -6067,7 +6067,7 @@ import { DefaultIntrinsicElements } from '@stencil/core';
 declare global {
   export namespace JSX {
     export interface Element {}
-    export interface IntrinsicElements extends LocalIntrinsicElements, DefaultIntrinsicElements {
+    export interface IntrinsicElements extends LocalIntrinsicElements, DefaultIntrinsicElements, DependentIntrinsicElements1 {
       [tagName: string]: any;
     }
   }

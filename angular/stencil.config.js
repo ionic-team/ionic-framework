@@ -14,6 +14,7 @@ exports.config.globalScript = '../core/src/global/ionic-global.ts';
 exports.config.outputTargets = [
   {
     type: 'angular',
+    componentCorePackage: '@ionic/core',
     directivesProxyFile: 'src/directives/proxies.ts',
     directivesArrayFile: 'src/directives/proxies-list.txt',
     empty: false,
