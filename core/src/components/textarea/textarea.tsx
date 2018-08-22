@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { Color, Mode, StyleEvent, TextInputChangeEvent } from '../../interface';
 import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
@@ -15,7 +15,7 @@ import { TextareaComponent } from '../input/input-base';
 })
 export class Textarea implements TextareaComponent {
 
-  private inputEl?: HTMLTextAreaElement;
+  private nativeInput?: HTMLTextAreaElement;
   private inputId = `ion-input-${textareaIds++}`;
 
   didBlurAfterEdit = false;
@@ -157,9 +157,9 @@ export class Textarea implements TextareaComponent {
    */
   @Watch('value')
   protected valueChanged() {
-    const { inputEl, value } = this;
-    if (inputEl!.value !== value) {
-      inputEl!.value = value;
+    const { nativeInput, value } = this;
+    if (nativeInput!.value !== value) {
+      nativeInput!.value = value;
     }
     this.ionChange.emit({ value });
   }
@@ -168,6 +168,13 @@ export class Textarea implements TextareaComponent {
     this.ionStyle = deferEvent(this.ionStyle);
     this.debounceChanged();
     this.emitStyle();
+  }
+
+  @Method()
+  focus() {
+    if (this.nativeInput) {
+      this.nativeInput.focus();
+    }
   }
 
   private emitStyle() {
@@ -182,7 +189,7 @@ export class Textarea implements TextareaComponent {
   }
 
   private onInput(ev: KeyboardEvent) {
-    this.value = this.inputEl!.value;
+    this.value = this.nativeInput!.value;
     this.emitStyle();
     this.ionInput.emit(ev);
   }
@@ -249,7 +256,7 @@ export class Textarea implements TextareaComponent {
     return (
       <textarea
         class="native-textarea"
-        ref={el => this.inputEl = el as HTMLTextAreaElement}
+        ref={el => this.nativeInput = el as HTMLTextAreaElement}
         autoCapitalize={this.autocapitalize}
         autoFocus={this.autofocus}
         disabled={this.disabled}
