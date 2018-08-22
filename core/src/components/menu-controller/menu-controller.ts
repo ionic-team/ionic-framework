@@ -244,5 +244,3 @@ export class MenuController {
     return null;
   }
 }
-
-export { menuOverlayAnimation, menuPushAnimation, menuRevealAnimation };
