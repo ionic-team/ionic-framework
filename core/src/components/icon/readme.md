@@ -25,7 +25,7 @@ Specifies the label to use for accessibility. Defaults to the icon name.
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"dark"`, `"medium"`, `"light"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
@@ -48,7 +48,7 @@ Specifies which icon to use on `md` mode.
 string
 
 Specifies which icon to use. The appropriate icon will be used based on the mode.
-For more information, see [Ionicons](/docs/ionicons/).
+For more information, see [Ionicons](https://github.com/ionic-team/ionicons).
 
 
 #### size
@@ -73,7 +73,7 @@ Specifies the label to use for accessibility. Defaults to the icon name.
 string
 
 The color to use from your Sass `$colors` map.
-Default options are: `"primary"`, `"secondary"`, `"danger"`, `"light"`, and `"dark"`.
+Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"dark"`, `"medium"`, `"light"`.
 For more information, see [Theming your App](/docs/theming/theming-your-app).
 
 
@@ -96,7 +96,7 @@ Specifies which icon to use on `md` mode.
 string
 
 Specifies which icon to use. The appropriate icon will be used based on the mode.
-For more information, see [Ionicons](/docs/ionicons/).
+For more information, see [Ionicons](https://github.com/ionic-team/ionicons).
 
 
 #### size

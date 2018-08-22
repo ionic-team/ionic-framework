@@ -248,18 +248,3 @@ const LIFECYCLE_MAP: any = {
   'ionPopoverWillDismiss': 'ionViewWillDismiss',
   'ionPopoverDidDismiss': 'ionViewDidDismiss',
 };
-
-export const POPOVER_POSITION_PROPERTIES: any = {
-  ios: {
-    padding: 2,
-    unit: '%',
-    showArrow: true,
-    centerTarget: true
-  },
-  md: {
-    padding: 12,
-    unit: 'px',
-    showArrow: false,
-    centerTarget: false
-  }
-};
