@@ -1,4 +1,5 @@
 import { Component, Element } from '@stencil/core';
+import { TabbarLayout, TabbarPlacement } from '../../../../interface';
 
 export interface Route {
   path: string | null;
@@ -16,11 +17,11 @@ export class TranslucentPageTab {
     return this.element.closest('ion-tabs')!;
   }
 
-  setLayout(value: string) {
+  setLayout(value: TabbarLayout) {
     this.getTabs().tabbarLayout = value;
   }
 
-  setPlacement(value: string) {
+  setPlacement(value: TabbarPlacement) {
     this.getTabs().tabbarPlacement = value;
   }
 
