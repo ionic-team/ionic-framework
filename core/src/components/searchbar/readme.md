@@ -42,6 +42,13 @@ A Searchbar should be used instead of an input to search lists. A clear button i
 | `ionInput`  | Emitted when a keyboard input ocurred.          |
 
 
+## Methods
+
+| Method  | Description |
+| ------- | ----------- |
+| `focus` |             |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

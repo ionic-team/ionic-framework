@@ -46,6 +46,13 @@ The textarea component accepts the [native textarea attributes](https://develope
 | `ionStyle`  | Emitted when the styles change.           |
 
 
+## Methods
+
+| Method  | Description |
+| ------- | ----------- |
+| `focus` |             |
+
+
 ## CSS Custom Properties
 
 | Name                    | Description                     |

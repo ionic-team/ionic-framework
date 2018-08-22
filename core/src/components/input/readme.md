@@ -55,6 +55,13 @@ It is meant for text `type` inputs only, such as `"text"`, `"password"`, `"email
 | `ionStyle`          | Emitted when the styles change.          |
 
 
+## Methods
+
+| Method  | Description |
+| ------- | ----------- |
+| `focus` |             |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
