@@ -31,7 +31,7 @@ export class PopoverPageComponent {
   async clickMe(event?: Event) {
     const popover = await this.popoverController.create({
       component: PopoverPageToPresent,
-      ev: event
+      event
     });
     return popover.present();
   }
