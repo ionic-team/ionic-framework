@@ -226,7 +226,6 @@ export class VirtualScroll {
       node = node.parentElement;
     }
     this.viewportOffset = topOffset;
-    console.log(this.viewportOffset);
     if (scrollEl) {
       this.viewportHeight = scrollEl.offsetHeight;
       this.currentScrollTop = scrollEl.scrollTop;
