@@ -1,4 +1,5 @@
 import { Injectable, Optional } from '@angular/core';
+import { Location } from '@angular/common';
 import { NavigationExtras, Router, UrlTree } from '@angular/router';
 
 export const enum NavIntent {
@@ -16,6 +17,7 @@ export class NavController {
   private stack: string[] = [];
 
   constructor(
+    private location: Location,
     @Optional() private router?: Router
   ) {}
 
@@ -24,14 +26,14 @@ export class NavController {
     return this.router!.navigateByUrl(url, extras);
   }
 
-  goBack(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
+  goBack(animated?: boolean) {
     this.setIntent(NavIntent.Back, animated);
-    return this.router!.navigateByUrl(url, extras);
+    return this.location.back();
   }
 
-  goRoot(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
+  goRoot(url: string, animated?: boolean) {
     this.setIntent(NavIntent.Root, animated);
-    return this.router!.navigateByUrl(url, extras);
+    return this.location.replaceState(url)
   }
 
   setIntent(intent: NavIntent, animated?: boolean) {

@@ -1,6 +1,6 @@
 import { Attribute, ChangeDetectorRef, ComponentFactoryResolver, ComponentRef, Directive, ElementRef, EventEmitter, Injector, Input, OnDestroy, OnInit, Optional, Output, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute, ChildrenOutletContexts, OutletContext, PRIMARY_OUTLET, Router } from '@angular/router';
-import { StackController, RouteView } from './router-controller';
+import { RouteView, StackController } from './router-controller';
 import { NavController } from '../../providers/nav-controller';
 import { bindLifecycleEvents } from '../../providers/angular-delegate';
 

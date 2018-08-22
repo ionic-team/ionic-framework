@@ -151,10 +151,10 @@ export class ChipButton {
 }
 
 export declare interface ChipIcon extends StencilComponents.IonChipIcon {}
-@Directive({ selector: 'ion-chip-icon', inputs: ['color', 'mode', 'name', 'src'] })
+@Directive({ selector: 'ion-chip-icon', inputs: ['color', 'mode', 'fill', 'name', 'src'] })
 export class ChipIcon {
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'name', 'src']);
+    proxyInputs(this, r, ['color', 'mode', 'fill', 'name', 'src']);
   }
 }
 
@@ -709,7 +709,7 @@ export class Text {
 }
 
 export declare interface Textarea extends StencilComponents.IonTextarea {}
-@Directive({ selector: 'ion-textarea', inputs: ['color', 'mode', 'autocapitalize', 'autocomplete', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value'], outputs: ['ionChange', 'ionInput', 'ionStyle', 'ionBlur', 'ionFocus'] })
+@Directive({ selector: 'ion-textarea', inputs: ['color', 'mode', 'autocapitalize', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value'], outputs: ['ionChange', 'ionInput', 'ionStyle', 'ionBlur', 'ionFocus'] })
 export class Textarea {
   ionChange: EventEmitter<any>;
   ionInput: EventEmitter<any>;
@@ -717,7 +717,7 @@ export class Textarea {
   ionBlur: EventEmitter<any>;
   ionFocus: EventEmitter<any>;
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['color', 'mode', 'autocapitalize', 'autocomplete', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value']);
+    proxyInputs(this, r, ['color', 'mode', 'autocapitalize', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value']);
     proxyOutputs(this, ['ionChange', 'ionInput', 'ionStyle', 'ionBlur', 'ionFocus']);
   }
 }
@@ -749,9 +749,9 @@ export class Toolbar {
 }
 
 export declare interface ToolbarTitle extends StencilComponents.IonTitle {}
-@Directive({ selector: 'ion-title', inputs: ['mode', 'color'] })
+@Directive({ selector: 'ion-title', inputs: ['color'] })
 export class ToolbarTitle {
   constructor(r: ElementRef) {
-    proxyInputs(this, r, ['mode', 'color']);
+    proxyInputs(this, r, ['color']);
   }
 }
