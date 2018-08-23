@@ -47,7 +47,7 @@ export interface FrameworkDelegate {
 
 
 declare global {
-  interface HTMLAttributes {
+  interface StencilAttributeEscapeHatch {
     // for ion-menu and ion-split-pane
     main?: boolean;
     tappable?: boolean;

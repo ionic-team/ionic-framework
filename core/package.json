@@ -27,7 +27,7 @@
     "ionicons": "4.4.1"
   },
   "devDependencies": {
-    "@stencil/core": "^0.12.0-5",
+    "@stencil/core": "^0.12.0-7",
     "@stencil/dev-server": "latest",
     "@stencil/sass": "0.1.0",
     "@stencil/utils": "latest",
