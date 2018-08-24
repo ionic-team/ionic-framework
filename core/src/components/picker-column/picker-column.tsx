@@ -262,7 +262,7 @@ export class PickerColumnCmp {
       return;
     }
 
-    this.velocity = clamp(-MAX_PICKER_SPEED, detail.velocityY * 17, MAX_PICKER_SPEED);
+    this.velocity = clamp(-MAX_PICKER_SPEED, detail.velocityY * 23, MAX_PICKER_SPEED);
     if (this.velocity === 0 && detail.deltaY === 0) {
       const opt = (detail.event.target as Element).closest('.picker-opt');
       if (opt && opt.hasAttribute('opt-index')) {
@@ -341,4 +341,4 @@ export class PickerColumnCmp {
 
 const PICKER_OPT_SELECTED = 'picker-opt-selected';
 const DECELERATION_FRICTION = 0.97;
-const MAX_PICKER_SPEED = 60;
+const MAX_PICKER_SPEED = 90;
