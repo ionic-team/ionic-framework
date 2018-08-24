@@ -37,6 +37,7 @@ A list of the breaking changes introduced to each component in Ionic Angular v4.
 - [Label](#label)
 - [List Header](#list-header)
 - [Loading](#loading)
+- [Menu](#menu)
 - [Menu Toggle](#menu-toggle)
 - [Modal](#modal)
 - [Nav](#nav)
