@@ -55,18 +55,19 @@ The textarea component accepts the [native textarea attributes](https://develope
 
 ## CSS Custom Properties
 
-| Name                    | Description                     |
-| ----------------------- | ------------------------------- |
-| `--background`          | Background of the textarea      |
-| `--border-radius`       | Border radius of the textarea   |
-| `--color`               | Color of the text               |
-| `--padding-bottom`      | Bottom padding of the textarea  |
-| `--padding-end`         | End padding of the textarea     |
-| `--padding-start`       | Start padding of the textarea   |
-| `--padding-top`         | Top padding of the textarea     |
-| `--placeholder-color`   | Color of the placeholder text   |
-| `--placeholder-opacity` | Opacity of the placeholder text |
-| `--placeholder-weight`  | Weight of the placeholder text  |
+| Name                        | Description                     |
+| --------------------------- | ------------------------------- |
+| `--background`              | Background of the textarea      |
+| `--border-radius`           | Border radius of the textarea   |
+| `--color`                   | Color of the text               |
+| `--padding-bottom`          | Bottom padding of the textarea  |
+| `--padding-end`             | End padding of the textarea     |
+| `--padding-start`           | Start padding of the textarea   |
+| `--padding-top`             | Top padding of the textarea     |
+| `--placeholder-color`       | Color of the placeholder text   |
+| `--placeholder-font-style`  | Style of the placeholder text   |
+| `--placeholder-font-weight` | Weight of the placeholder text  |
+| `--placeholder-opacity`     | Opacity of the placeholder text |
 
 
 ----------------------------------------------

@@ -5,7 +5,8 @@
 
 :host {
   --placeholder-color: currentColor;
-  --placeholder-weight: inherit;
+  --placeholder-font-style: inherit;
+  --placeholder-font-weight: inherit;
   --placeholder-opacity: .5;
   --padding-top: 0;
   --padding-end: 0;
@@ -60,7 +61,8 @@
     color: var(--placeholder-color);
 
     font-family: inherit;
-    font-weight: var(--placeholder-weight);
+    font-style: var(--placeholder-font-style);
+    font-weight: var(--placeholder-font-weight);
 
     opacity: var(--placeholder-opacity);
   }
