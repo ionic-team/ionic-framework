@@ -18,6 +18,10 @@
 
   display: flex;
 
+  color: var(--color);
+
+  font-family: $font-family-base;
+
   overflow: hidden;
 }
 

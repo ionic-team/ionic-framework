@@ -13,6 +13,8 @@ ion-loading {
   align-items: center;
   justify-content: center;
 
+  font-family: $font-family-base;
+
   contain: strict;
   touch-action: none;
   user-select: none;

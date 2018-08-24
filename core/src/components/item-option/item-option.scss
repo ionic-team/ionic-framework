@@ -8,6 +8,8 @@
   --ion-color-contrast: #{ion-color(primary, contrast)};
 
   color: #{current-color(contrast)};
+
+  font-family: $font-family-base;
 }
 
 .item-option-native {

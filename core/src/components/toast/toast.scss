@@ -19,6 +19,8 @@ ion-toast {
 
   color: var(--color);
 
+  font-family: $font-family-base;
+
   contain: strict;
   z-index: $z-index-overlay;
   pointer-events: none;

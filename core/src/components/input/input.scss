@@ -25,6 +25,8 @@
   /* TODO: find a better solution in padding.css, that does not require !important, */
   padding: 0 !important;
   /* stylelint-enable */
+
+  font-family: $font-family-base;
 }
 
 :host(.ion-color) {

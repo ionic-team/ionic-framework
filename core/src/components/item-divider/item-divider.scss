@@ -30,6 +30,8 @@
   background-color: #{current-color(base)};
   color: #{current-color(contrast)};
 
+  font-family: $font-family-base;
+
   overflow: hidden;
   z-index: $z-index-item-divider;
   box-sizing: border-box;

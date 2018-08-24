@@ -37,6 +37,8 @@
 
   background: var(--background);
   color: var(--color);
+
+  font-family: $font-family-base;
 }
 
 :host(.ion-color) {

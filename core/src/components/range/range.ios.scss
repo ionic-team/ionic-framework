@@ -14,8 +14,6 @@
   --height: #{$range-ios-slider-height};
 
   @include padding($range-ios-padding-vertical, $range-ios-padding-horizontal);
-
-  font-family: $range-ios-font-family;
 }
 
 

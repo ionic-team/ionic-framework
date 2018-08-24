@@ -10,8 +10,6 @@
   --border-color: #{$segment-button-md-border-bottom-color};
   --color: #{$segment-button-md-text-color};
   --color-checked: #{$segment-button-md-text-color};
-
-  font-family: $segment-md-font-family;
 }
 
 :host(.segment-disabled) {

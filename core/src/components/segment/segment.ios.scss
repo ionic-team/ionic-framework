@@ -13,8 +13,6 @@
   --color: #{ion-color(primary, base)};
   --color-checked: #{ion-color(primary, contrast)};
   --color-disabled: #{ion-color(primary, base, $segment-button-ios-opacity-disabled)};
-
-  font-family: $segment-ios-font-family;
 }
 
 :host(.segment-disabled) {

@@ -41,19 +41,17 @@ view component.
 
 ## CSS Custom Properties
 
-| Name                | Description                         |
-| ------------------- | ----------------------------------- |
-| `--background`      | Background of the Content           |
-| `--color`           | Color of the Content                |
-| `--hr-background`   | Background of the hr in the Content |
-| `--hr-height`       | Height of the hr in the Content     |
-| `--keyboard-offset` | Keyboard offset of the Content      |
-| `--offset-bottom`   | Offset bottom of the Content        |
-| `--offset-top`      | Offset top of the Content           |
-| `--padding-bottom`  | Padding bottom of the Content       |
-| `--padding-end`     | Padding end of the Content          |
-| `--padding-start`   | Padding start of the Content        |
-| `--padding-top`     | Padding top of the Content          |
+| Name                | Description                    |
+| ------------------- | ------------------------------ |
+| `--background`      | Background of the Content      |
+| `--color`           | Color of the Content           |
+| `--keyboard-offset` | Keyboard offset of the Content |
+| `--offset-bottom`   | Offset bottom of the Content   |
+| `--offset-top`      | Offset top of the Content      |
+| `--padding-bottom`  | Padding bottom of the Content  |
+| `--padding-end`     | Padding end of the Content     |
+| `--padding-start`   | Padding start of the Content   |
+| `--padding-top`     | Padding top of the Content     |
 
 
 ----------------------------------------------

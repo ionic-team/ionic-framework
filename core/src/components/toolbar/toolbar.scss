@@ -31,6 +31,8 @@
 
   color: var(--color);
 
+  font-family: $font-family-base;
+
   contain: content;
 
   z-index: $z-index-toolbar;

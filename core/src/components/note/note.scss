@@ -5,4 +5,6 @@
 
 :host {
   color: #{current-color(base)};
+
+  font-family: $font-family-base;
 }
