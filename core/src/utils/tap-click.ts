@@ -109,11 +109,10 @@ export function startTapClick(doc: Document) {
     lastActivated = Date.now();
     el.classList.add(ACTIVATED);
 
-    const event = new CustomEvent('ionActivated', {
-      bubbles: false,
-      detail: { x, y }
-    });
-    el.dispatchEvent(event);
+    const rippleEffect = getRippleEffect(el);
+    if (rippleEffect && rippleEffect.addRipple) {
+      rippleEffect.addRipple(x, y);
+    }
   }
 
   function removeActivated(smooth: boolean) {
@@ -157,6 +156,16 @@ function getActivatableTarget(ev: any): any {
   } else {
     return ev.target.closest('[ion-activable]');
   }
+}
+
+function getRippleEffect(el: HTMLElement) {
+  if (el.shadowRoot) {
+    const ripple = el.shadowRoot.querySelector('ion-ripple-effect');
+    if (ripple) {
+      return ripple;
+    }
+  }
+  return el.querySelector('ion-ripple-effect');
 }
 
 const ACTIVATED = 'activated';

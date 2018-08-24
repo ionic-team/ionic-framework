@@ -500,7 +500,7 @@ export class Select {
         onBlur={this.onBlur.bind(this)}
         class="select-cover">
         <slot></slot>
-        { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+        { this.mode === 'md' && <ion-ripple-effect /> }
       </button>
     ];
   }

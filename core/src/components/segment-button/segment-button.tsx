@@ -75,7 +75,7 @@ export class SegmentButton {
         disabled={this.disabled}
         onClick={() => this.checked = true }>
           <slot></slot>
-          { this.mode === 'md' && <ion-ripple-effect tapClick={true} parent={this.el}/> }
+          { this.mode === 'md' && <ion-ripple-effect /> }
       </button>
     ];
   }

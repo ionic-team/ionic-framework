@@ -1,6 +1,4 @@
-import { Component, Element, EventListenerEnable, Listen, Method, Prop, QueueApi, Watch } from '@stencil/core';
-
-import { now } from '../../utils/helpers';
+import { Component, Element, Method, Prop, QueueApi } from '@stencil/core';
 
 @Component({
   tag: 'ion-ripple-effect',
@@ -9,47 +7,10 @@ import { now } from '../../utils/helpers';
 })
 export class RippleEffect {
 
-  private lastClick = -10000;
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
-  @Prop({ context: 'enableListener' }) enableListener!: EventListenerEnable;
   @Prop({ context: 'window' }) win!: Window;
-
-  @Prop() parent?: HTMLElement | string = 'parent';
-
-  /** If true, the ripple effect will listen to any click events and animate */
-  @Prop() tapClick = false;
-  @Watch('tapClick')
-  tapClickChanged(tapClick: boolean) {
-    this.enableListener(this, 'ionActivated', tapClick, this.parent);
-    this.enableListener(this, 'touchstart', !tapClick);
-    this.enableListener(this, 'mousedown', !tapClick);
-  }
-
-  @Listen('ionActivated', { enabled: false })
-  ionActivated(ev: CustomEvent) {
-    this.addRipple(ev.detail.x, ev.detail.y);
-  }
-
-  @Listen('touchstart', { passive: true, enabled: false })
-  touchStart(ev: TouchEvent) {
-    this.lastClick = now(ev);
-    const touches = ev.touches[0];
-    this.addRipple(touches.clientX, touches.clientY);
-  }
-
-  @Listen('mousedown', { passive: true, enabled: false })
-  mouseDown(ev: MouseEvent) {
-    const timeStamp = now(ev);
-    if (this.lastClick < (timeStamp - 1000)) {
-      this.addRipple(ev.pageX, ev.pageY);
-    }
-  }
-
-  componentDidLoad() {
-    this.tapClickChanged(this.tapClick);
-  }
 
   /**
    * Adds the ripple effect to the parent element

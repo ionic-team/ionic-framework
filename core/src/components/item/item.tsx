@@ -139,7 +139,7 @@ export class Item {
   }
 
   render() {
-    const { href, detail, mode, win, state, detailIcon, el, routerDirection, type } = this;
+    const { href, detail, mode, win, state, detailIcon, routerDirection, type } = this;
 
     const clickable = this.isClickable();
     const TagType = clickable ? (href ? 'a' : 'button') : 'div';
@@ -161,7 +161,7 @@ export class Item {
           { showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon> }
         </div>
         { state && <div class="item-state"></div> }
-        { clickable && mode === 'md' && <ion-ripple-effect tapClick={true} parent={el} /> }
+        { clickable && mode === 'md' && <ion-ripple-effect /> }
       </TagType>
     );
   }

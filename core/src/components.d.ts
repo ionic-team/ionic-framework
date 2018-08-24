@@ -3517,19 +3517,8 @@ export namespace Components {
     * Adds the ripple effect to the parent element
     */
     'addRipple': (pageX: number, pageY: number) => void;
-    'parent': HTMLElement | string;
-    /**
-    * If true, the ripple effect will listen to any click events and animate
-    */
-    'tapClick': boolean;
   }
-  interface IonRippleEffectAttributes extends StencilHTMLAttributes {
-    'parent'?: HTMLElement | string;
-    /**
-    * If true, the ripple effect will listen to any click events and animate
-    */
-    'tapClick'?: boolean;
-  }
+  interface IonRippleEffectAttributes extends StencilHTMLAttributes {}
 
   interface IonRouteRedirect {
     /**

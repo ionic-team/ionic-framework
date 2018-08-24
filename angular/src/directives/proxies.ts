@@ -340,7 +340,7 @@ export class InfiniteScroll {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyMethods(this, el, ['complete', 'waitFor']);
+    proxyMethods(this, el, ['complete']);
     proxyInputs(this, el, ['threshold', 'disabled', 'position']);
     proxyOutputs(this, el, ['ionInfinite']);
   }
@@ -640,13 +640,12 @@ export class ReorderGroup {
 }
 
 export declare interface RippleEffect extends Promisify<StencilComponents<'IonRippleEffect'>> {}
-@Component({ selector: 'ion-ripple-effect', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['parent', 'tapClick'] })
+@Component({ selector: 'ion-ripple-effect', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>' })
 export class RippleEffect {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
     proxyMethods(this, el, ['addRipple']);
-    proxyInputs(this, el, ['parent', 'tapClick']);
   }
 }
 
