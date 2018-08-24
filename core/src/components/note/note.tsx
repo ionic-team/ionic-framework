@@ -27,9 +27,7 @@ export class Note {
 
   hostData() {
     return {
-      class: {
-        ...createColorClasses(this.color)
-      }
+      class: createColorClasses(this.color)
     };
   }
 
