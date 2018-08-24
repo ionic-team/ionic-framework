@@ -108,7 +108,7 @@ export class Refresher {
       gestureName: 'refresher',
       gesturePriority: 10,
       direction: 'y',
-      threshold: 10,
+      threshold: 20,
       passive: false,
       canStart: this.canStart.bind(this),
       onStart: this.onStart.bind(this),
