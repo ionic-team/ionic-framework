@@ -257,11 +257,11 @@ export class Select {
   }
 
   @Method()
-  open(ev?: UIEvent): Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement>{
+  open(ev?: UIEvent): Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement> {
     let selectInterface = this.interface;
 
     if ((selectInterface === 'action-sheet' || selectInterface === 'popover') && this.multiple) {
-      console.warn('Select interface cannot be "' + selectInterface + '" with a multi-value select. Using the "alert" interface instead.');
+      console.warn(`Select interface cannot be "${selectInterface}" with a multi-value select. Using the "alert" interface instead.`);
       selectInterface = 'alert';
     }
 

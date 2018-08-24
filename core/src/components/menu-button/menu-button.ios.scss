@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{ion-color(primary, base)};
+  color: #{ion-color(primary, base)};
 }
 
 button {

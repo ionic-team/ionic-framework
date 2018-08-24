@@ -4,10 +4,6 @@
 // MD Menu Button
 // --------------------------------------------------
 
-:host {
-  --ion-color-base: currentColor;
-}
-
 button {
   @include padding(0, 8px);
 }
