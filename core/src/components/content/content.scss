@@ -14,9 +14,6 @@
    * @prop --keyboard-offset: Keyboard offset of the Content
    * @prop --offset-top: Offset top of the Content
    * @prop --offset-bottom: Offset bottom of the Content
-   *
-   * @prop --hr-height: Height of the hr in the Content
-   * @prop --hr-background: Background of the hr in the Content
    */
   --background: #{$background-color};
   --color: #{$text-color};
@@ -41,12 +38,12 @@
   background: var(--background);
   color: var(--color);
 
+  font-family: $font-family-base;
+
   contain: layout size style;
 }
 
 :host(.ion-color) {
-  --hr-background: #{current-color(shade)};
-
   background: current-color(base);
   color: current-color(contrast);
 }
@@ -54,7 +51,6 @@
 // TODO we should remove outer-content in favor of a color
 :host(.outer-content) {
   --background: #{$background-color-step-50};
-  --hr-background: #{$background-color-step-150};
 }
 
 .inner-scroll {
@@ -99,10 +95,4 @@
 
 .overscroll::after {
   top: -1px;
-}
-
-::slotted(hr) {
-  height: var(--hr-height);
-
-  background: var(--hr-background);
 }

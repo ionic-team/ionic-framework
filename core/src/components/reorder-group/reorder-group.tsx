@@ -1,8 +1,7 @@
 import { Component, Element, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Gesture, GestureDetail, Mode } from '../../interface';
+import { Gesture, GestureDetail } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
-import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-reorder-group',
@@ -10,7 +9,7 @@ import { createThemedClasses } from '../../utils/theme';
 })
 export class ReorderGroup {
 
-  private selectedItemEl: HTMLElement | undefined;
+  private selectedItemEl?: HTMLElement;
   private selectedItemHeight!: number;
   private lastToIndex!: number;
   private cachedHeights: number[] = [];
@@ -23,8 +22,6 @@ export class ReorderGroup {
 
   private containerTop = 0;
   private containerBottom = 0;
-
-  mode!: Mode;
 
   @State() activated = false;
 
@@ -251,8 +248,6 @@ export class ReorderGroup {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, 'reorder-group'),
-
         'reorder-enabled': !this.disabled,
         'reorder-list-active': this.activated,
       }

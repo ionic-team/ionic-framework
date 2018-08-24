@@ -5,10 +5,7 @@ import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-content',
-  styleUrls: {
-    ios: 'content.ios.scss',
-    md: 'content.md.scss'
-  },
+  styleUrl: 'content.scss',
   shadow: true
 })
 export class Content {
