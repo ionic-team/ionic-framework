@@ -21,13 +21,6 @@ The ripple effect component adds the [Material Design ink ripple interaction eff
 | `addRipple` | Adds the ripple effect to the parent element |
 
 
-## CSS Custom Properties
-
-| Name           | Description                     |
-| -------------- | ------------------------------- |
-| `--background` | Background of the ripple effect |
-
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

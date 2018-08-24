@@ -5,11 +5,6 @@
 // --------------------------------------------------
 
 :host {
-  /**
-   * @prop --background: Background of the ripple effect
-   */
-  --background: currentColor;
-
   @include position(0, 0, 0, 0);
 
   position: absolute;
@@ -22,7 +17,8 @@
 
   position: absolute;
 
-  background: var(--background);
+  // Should remain static for performance reasons
+  background-color: currentColor;
   color: inherit;
 
   contain: strict;
