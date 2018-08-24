@@ -1646,10 +1646,6 @@ export namespace Components {
     * The threshold distance from the bottom of the content to call the `infinite` output event when scrolled. The threshold value can be either a percent, or in pixels. For example, use the value of `10%` for the `infinite` output event to get called when the user has scrolled 10% from the bottom of the page. Use the value `100px` when the scroll is within 100 pixels from the bottom of the page. Defaults to `15%`.
     */
     'threshold': string;
-    /**
-    * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to change state of infiniteScroll to "complete"
-    */
-    'waitFor': (action: Promise<any>) => void;
   }
   interface IonInfiniteScrollAttributes extends StencilHTMLAttributes {
     /**

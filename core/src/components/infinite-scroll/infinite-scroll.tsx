@@ -188,16 +188,6 @@ export class InfiniteScroll {
     // }
   }
 
-  /**
-   * Pass a promise inside `waitFor()` within the `infinite` output event handler in order to
-   * change state of infiniteScroll to "complete"
-   */
-  @Method()
-  waitFor(action: Promise<any>) {
-    const enable = this.complete.bind(this);
-    action.then(enable, enable);
-  }
-
   private canStart(): boolean {
     return (
       !this.disabled &&
