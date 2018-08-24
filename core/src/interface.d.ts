@@ -1,5 +1,5 @@
 // Components interfaces
-export * from './generated';
+export * from './components';
 export * from './index';
 export * from './components/animation-controller/animation-interface';
 export * from './components/alert/alert-interface';
@@ -47,7 +47,7 @@ export interface FrameworkDelegate {
 
 
 declare global {
-  interface StencilAttributeEscapeHatch {
+  interface StencilGlobalHTMLAttributes {
     // for ion-menu and ion-split-pane
     main?: boolean;
     tappable?: boolean;
