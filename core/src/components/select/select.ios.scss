@@ -14,39 +14,7 @@
   --placeholder-color: #{$select-ios-placeholder-color};
 }
 
-.select-placeholder {
-  color: var(--placeholder-color);
-}
-
 .select-icon {
-  position: relative;
-
   width: 12px;
   height: 18px;
-}
-
-.select-icon .select-icon-inner {
-  @include position(50%, null, null, 5px);
-  @include margin(-2px, null, null, null);
-
-  position: absolute;
-
-  width: 0;
-  height: 0;
-
-  border-top: 5px solid;
-  border-right: 5px solid transparent;
-  border-left: 5px solid transparent;
-
-  color: var(--icon-color);
-  pointer-events: none;
-}
-
-
-// Stacked & Floating Select
-// --------------------------------------------------
-
-.item-label-stacked .select-ios,
-.item-label-floating .select-ios {
-  @include padding(8px, null, 8px, 0);
 }

@@ -2,7 +2,7 @@ import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State, W
 
 import { ActionSheetButton, ActionSheetOptions, AlertInput, AlertOptions, CssClassMap, Mode, PopoverOptions, SelectInputChangeEvent, SelectInterface, SelectPopoverOption, StyleEvent } from '../../interface';
 import { deferEvent, renderHiddenInput } from '../../utils/helpers';
-import { createThemedClasses, hostContext } from '../../utils/theme';
+import { hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-select',
@@ -18,9 +18,6 @@ export class Select {
   private inputId = `ion-sel-${selectIds++}`;
   private labelId?: string;
   private overlay?: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
-
-  mode!: Mode;
-
   @Element() el!: HTMLIonSelectElement;
 
   @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl!: HTMLIonActionSheetControllerElement;
@@ -30,6 +27,12 @@ export class Select {
   @State() isExpanded = false;
   @State() keyFocus = false;
   @State() text?: string;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * If true, the user cannot interact with the select. Defaults to `false`.
@@ -452,7 +455,6 @@ export class Select {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, 'select'),
         'in-item': hostContext('.item', this.el),
         'select-disabled': this.disabled,
         'select-key': this.keyFocus

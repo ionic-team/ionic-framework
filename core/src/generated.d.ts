@@ -269,6 +269,9 @@ interface IonAlert {
   * The main message to be displayed in the alert.
   */
   'message': string;
+  /**
+  * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+  */
   'mode': Mode;
   /**
   * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circumstances.
@@ -330,6 +333,9 @@ interface IonAlertAttributes extends JSXElements.HTMLAttributes {
   * The main message to be displayed in the alert.
   */
   'message'?: string;
+  /**
+  * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+  */
   'mode'?: Mode;
   /**
   * Emitted after the alert has dismissed.
@@ -3889,7 +3895,7 @@ interface IonSelectOption {
   /**
   * The text value of the option.
   */
-  'value': string;
+  'value': any;
 }
 interface IonSelectOptionAttributes extends JSXElements.HTMLAttributes {
   /**
@@ -3911,7 +3917,7 @@ interface IonSelectOptionAttributes extends JSXElements.HTMLAttributes {
   /**
   * The text value of the option.
   */
-  'value'?: string;
+  'value'?: any;
 }
 
 interface IonSelectPopover {
@@ -3969,6 +3975,10 @@ interface IonSelect {
   */
   'interfaceOptions': any;
   /**
+  * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+  */
+  'mode': Mode;
+  /**
   * If true, the select can accept multiple values.
   */
   'multiple': boolean;
@@ -4011,6 +4021,10 @@ interface IonSelectAttributes extends JSXElements.HTMLAttributes {
   * Any additional options that the `alert`, `action-sheet` or `popover` interface can take. See the [AlertController API docs](../../alert/AlertController/#create), the [ActionSheetController API docs](../../action-sheet/ActionSheetController/#create) and the [PopoverController API docs](../../popover/PopoverController/#create) for the create options for each interface.
   */
   'interfaceOptions'?: any;
+  /**
+  * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+  */
+  'mode'?: Mode;
   /**
   * If true, the select can accept multiple values.
   */

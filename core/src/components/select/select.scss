@@ -29,8 +29,25 @@
   max-width: 45%;
 }
 
+:host(.select-disabled) {
+  opacity: .4;
+  pointer-events: none;
+}
+
+:host(.select-key) button {
+  border: 2px solid #5e9ed6;
+}
+
+.select-placeholder {
+  color: var(--placeholder-color);
+}
+
 .select-cover {
   @include input-cover();
+}
+
+.select-icon {
+  position: relative;
 }
 
 .select-text {
@@ -47,8 +64,20 @@
   overflow: hidden;
 }
 
-:host(.select-disabled) {
-  opacity: .4;
+.select-icon-inner {
+  @include position(50%, null, null, 5px);
+  @include margin(-3px, null, null, null);
+
+  position: absolute;
+
+  width: 0;
+  height: 0;
+
+  border-top: 5px solid;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+
+  color: var(--icon-color);
   pointer-events: none;
 }
 
@@ -58,8 +87,4 @@
 
 button:focus {
   outline: none;
-}
-
-:host(.select-key) button {
-  border: 2px solid #5e9ed6;
 }

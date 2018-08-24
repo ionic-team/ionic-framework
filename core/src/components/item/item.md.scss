@@ -153,7 +153,9 @@
 :host(.item-label-stacked) ::slotted(ion-input),
 :host(.item-label-floating) ::slotted(ion-input),
 :host(.item-label-stacked) ::slotted(ion-textarea),
-:host(.item-label-floating) ::slotted(ion-textarea) {
+:host(.item-label-floating) ::slotted(ion-textarea),
+:host(.item-label-stacked) ::slotted(ion-select),
+:host(.item-label-floating) ::slotted(ion-select) {
   --padding-top: 8px;
   --padding-bottom: 8px;
   --padding-start: 0;

@@ -27,14 +27,18 @@ export class Alert implements OverlayInterface {
   presented = false;
   animation?: Animation;
 
-  @Prop() mode!: Mode;
-
   @Element() el!: HTMLStencilElement;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
   @Prop() overlayId!: number;
   @Prop() keyboardClose = true;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * Animation to use when the alert is presented.

@@ -36,7 +36,7 @@ Alerts can also include several different inputs whose data can be passed back t
 | `keyboardClose`   | `keyboard-close`   |                                                                                                                  | `boolean`                  |
 | `leaveAnimation`  | --                 | Animation to use when the alert is dismissed.                                                                    | `AnimationBuilder`         |
 | `message`         | `message`          | The main message to be displayed in the alert.                                                                   | `string`                   |
-| `mode`            | `mode`             |                                                                                                                  | `Mode`                     |
+| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                        | `Mode`                     |
 | `overlayId`       | `overlay-id`       |                                                                                                                  | `number`                   |
 | `subHeader`       | `sub-header`       | The subtitle in the heading of the alert. Displayed under the title.                                             | `string`                   |
 | `translucent`     | `translucent`      | If true, the alert will be translucent. Defaults to `false`.                                                     | `boolean`                  |

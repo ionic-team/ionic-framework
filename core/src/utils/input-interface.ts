@@ -11,7 +11,7 @@ export interface InputChangeEvent {
 }
 
 export interface SelectInputChangeEvent {
-  value: string | string[] | undefined;
+  value: any | any[] | undefined;
   text: string;
 }
 

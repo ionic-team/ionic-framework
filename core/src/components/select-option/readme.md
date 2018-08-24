@@ -12,7 +12,7 @@ SelectOption is a component that is a child element of Select. For more informat
 | ---------- | ---------- | ------------------------------------------------------------------------------ | --------- |
 | `disabled` | `disabled` | If true, the user cannot interact with the select option. Defaults to `false`. | `boolean` |
 | `selected` | `selected` | If true, the element is selected.                                              | `boolean` |
-| `value`    | `value`    | The text value of the option.                                                  | `string`  |
+| `value`    | --         | The text value of the option.                                                  | `any`     |
 
 
 ## Events
