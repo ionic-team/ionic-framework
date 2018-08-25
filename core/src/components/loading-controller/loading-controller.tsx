@@ -22,7 +22,7 @@ export class LoadingController implements OverlayController {
    * Dismiss the open loading overlay.
    */
   @Method()
-  dismiss(data?: any, role?: string, loadingId = -1) {
+  dismiss(data?: any, role?: string, loadingId?: number) {
     return dismissOverlay(this.doc, data, role, 'ion-loading', loadingId);
   }
 

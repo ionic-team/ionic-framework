@@ -74,7 +74,7 @@ export namespace Components {
     /**
     * Dismiss the open action sheet overlay.
     */
-    'dismiss': (data?: any, role?: string | undefined, actionSheetId?: number) => Promise<void>;
+    'dismiss': (data?: any, role?: string | undefined, actionSheetId?: number | undefined) => Promise<void>;
     /**
     * Get the most recently opened action sheet overlay.
     */
@@ -223,7 +223,7 @@ export namespace Components {
     /**
     * Dismiss the open alert overlay.
     */
-    'dismiss': (data?: any, role?: string | undefined, alertId?: number) => Promise<void>;
+    'dismiss': (data?: any, role?: string | undefined, alertId?: number | undefined) => Promise<void>;
     /**
     * Get the most recently opened alert overlay.
     */
@@ -2229,7 +2229,7 @@ export namespace Components {
     /**
     * Dismiss the open loading overlay.
     */
-    'dismiss': (data?: any, role?: string | undefined, loadingId?: number) => Promise<void>;
+    'dismiss': (data?: any, role?: string | undefined, loadingId?: number | undefined) => Promise<void>;
     /**
     * Get the most recently opened loading overlay.
     */
@@ -2572,7 +2572,7 @@ export namespace Components {
     /**
     * Dismiss the open modal overlay.
     */
-    'dismiss': (data?: any, role?: string | undefined, modalId?: number) => Promise<void>;
+    'dismiss': (data?: any, role?: string | undefined, modalId?: number | undefined) => Promise<void>;
     /**
     * Get the most recently opened modal overlay.
     */
@@ -2880,7 +2880,7 @@ export namespace Components {
 
   interface IonPickerController {
     'create': (opts?: PickerOptions | undefined) => Promise<HTMLIonPickerElement>;
-    'dismiss': (data?: any, role?: string | undefined, pickerId?: number) => Promise<void>;
+    'dismiss': (data?: any, role?: string | undefined, pickerId?: number | undefined) => Promise<void>;
     'getTop': () => HTMLIonPickerElement;
   }
   interface IonPickerControllerAttributes extends StencilHTMLAttributes {}
@@ -3024,7 +3024,7 @@ export namespace Components {
     /**
     * Dismiss the open popover overlay.
     */
-    'dismiss': (data?: any, role?: string | undefined, popoverId?: number) => Promise<void>;
+    'dismiss': (data?: any, role?: string | undefined, popoverId?: number | undefined) => Promise<void>;
     /**
     * Get the most recently opened popover overlay.
     */
@@ -4861,7 +4861,7 @@ export namespace Components {
     /**
     * Dismiss the open toast overlay.
     */
-    'dismiss': (data?: any, role?: string | undefined, toastId?: number) => Promise<void>;
+    'dismiss': (data?: any, role?: string | undefined, toastId?: number | undefined) => Promise<void>;
     /**
     * Get the most recently opened toast overlay.
     */

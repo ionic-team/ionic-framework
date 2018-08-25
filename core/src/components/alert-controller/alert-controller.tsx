@@ -22,7 +22,7 @@ export class AlertController implements OverlayController {
    * Dismiss the open alert overlay.
    */
   @Method()
-  dismiss(data?: any, role?: string, alertId = -1) {
+  dismiss(data?: any, role?: string, alertId?: number) {
     return dismissOverlay(this.doc, data, role, 'ion-alert', alertId);
   }
 

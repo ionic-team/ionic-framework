@@ -22,7 +22,7 @@ export class ModalController implements OverlayController {
    * Dismiss the open modal overlay.
    */
   @Method()
-  dismiss(data?: any, role?: string, modalId = -1) {
+  dismiss(data?: any, role?: string, modalId?: number) {
     return dismissOverlay(this.doc, data, role, 'ion-modal', modalId);
   }
 

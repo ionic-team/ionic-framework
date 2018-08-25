@@ -41,7 +41,7 @@ export function connectListeners(doc: Document) {
   }
 }
 
-export function dismissOverlay(doc: Document, data: any, role: string | undefined, overlayTag: string, id: number): Promise<void> {
+export function dismissOverlay(doc: Document, data: any, role: string | undefined, overlayTag: string, id?: number): Promise<void> {
   const overlay = getOverlay(doc, overlayTag, id);
   if (!overlay) {
     return Promise.reject('overlay does not exist');

@@ -22,7 +22,7 @@ export class PopoverController implements OverlayController {
    * Dismiss the open popover overlay.
    */
   @Method()
-  dismiss(data?: any, role?: string, popoverId = -1) {
+  dismiss(data?: any, role?: string, popoverId?: number) {
     return dismissOverlay(this.doc, data, role, 'ion-popover', popoverId);
   }
 
