@@ -56,7 +56,7 @@ ion-picker {
 
   justify-content: center;
 
-  margin-bottom: var(--ion-safe-area-bottom);
+  margin-bottom: var(--ion-safe-area-bottom, 0);
 
   contain: strict;
   overflow: hidden;

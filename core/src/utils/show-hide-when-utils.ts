@@ -1,76 +1,69 @@
 import { Config, Mode } from '../interface';
 
-import { SIZE_TO_MEDIA } from './media';
-import { isAndroid, isCordova, isElectron, isIOS, isIpad, isIphone, isPhablet, isTablet, matchMedia } from './platform';
+import { matchBreakpoint } from './media';
+import { isPlatform } from './platform';
+
+export interface DisplayWhen {
+  config: Config;
+  win: Window;
+  mediaQuery?: string;
+  mode: Mode;
+  or: boolean;
+  orientation?: string;
+  platform?: string;
+  size?: string;
+}
 
 export function updateTestResults(displayWhen: DisplayWhen) {
-  displayWhen.passesTest = getTestResult(displayWhen);
+  return getTestResult(displayWhen);
 }
 
-export function isPlatformMatch(platforms: string[], multiPlatformString: string) {
-  const userProvidedPlatforms = multiPlatformString.replace(/\s/g, '').split(',');
-  for (const userProvidedPlatform of userProvidedPlatforms) {
-    for (const platform of platforms) {
-      if (userProvidedPlatform === platform) {
-        return true;
-      }
-    }
-  }
-  return false;
+function isPlatformMatch(win: Window, multiPlatformString: string) {
+  const platforms = split(multiPlatformString);
+  return platforms.some(p => isPlatform(win, p as any));
 }
 
-export function isModeMatch(config: Config, multiModeString: string) {
-  // you can only ever be in one mode, so if an entry from the list matches, return true
-  const modes = multiModeString.replace(/\s/g, '').split(',');
+function isModeMatch(config: Config, multiModeString: string) {
+  const modes = split(multiModeString);
   const currentMode = config.get('mode');
-  return modes.indexOf(currentMode) >= 0;
+  return modes.includes(currentMode);
 }
 
-export function isSizeMatch(win: Window, multiSizeString: string) {
-  const sizes = multiSizeString.replace(/\s/g, '').split(',');
-  for (const size of sizes) {
-    const mediaQuery = SIZE_TO_MEDIA[size];
-    if (mediaQuery && matchMedia(win, mediaQuery)) {
-      return true;
-    }
-  }
-  return false;
+function isSizeMatch(win: Window, multiSizeString: string) {
+  const sizes = split(multiSizeString);
+  return sizes.some(s => matchBreakpoint(win, s));
 }
 
-export function getTestResult(displayWhen: DisplayWhen) {
-  const resultsToConsider: boolean[] = [];
+function split(multiOptions: string): string[] {
+  return multiOptions.replace(/\s/g, '').split(',');
+}
+
+function getTestResult(displayWhen: DisplayWhen) {
+  const results: boolean[] = [];
   if (displayWhen.mediaQuery) {
-    resultsToConsider.push(matchMedia(displayWhen.win, displayWhen.mediaQuery));
+    results.push(matchMedia(displayWhen.win, displayWhen.mediaQuery));
   }
   if (displayWhen.size) {
-    resultsToConsider.push(isSizeMatch(displayWhen.win, displayWhen.size));
+    results.push(isSizeMatch(displayWhen.win, displayWhen.size));
   }
   if (displayWhen.mode) {
-    resultsToConsider.push(isModeMatch(displayWhen.config, displayWhen.mode));
+    results.push(isModeMatch(displayWhen.config, displayWhen.mode));
   }
   if (displayWhen.platform) {
-    const platformNames = displayWhen.calculatedPlatforms.map(platformConfig => platformConfig.name);
-    resultsToConsider.push(isPlatformMatch(platformNames, displayWhen.platform));
+    results.push(isPlatformMatch(displayWhen.win, displayWhen.platform));
   }
   if (displayWhen.orientation) {
-    resultsToConsider.push(isOrientationMatch(displayWhen.win, displayWhen.orientation));
+    results.push(isOrientationMatch(displayWhen.win, displayWhen.orientation));
   }
 
-  if (!resultsToConsider.length) {
-    return true;
+  if (displayWhen.or) {
+    return results.some(r => r);
+  } else {
+    return results.every(r => r);
   }
-  if (resultsToConsider.length === 1) {
-    return resultsToConsider[0];
-  }
-  return resultsToConsider.reduce((prev: boolean, current: boolean) => {
-    if (displayWhen.or) {
-      return prev || current;
-    }
-    return prev && current;
-  });
 }
 
-export function isOrientationMatch(win: Window, orientation: string) {
+function isOrientationMatch(win: Window, orientation: string) {
   if (orientation === 'portrait') {
     return isPortrait(win);
   } else if (orientation === 'landscape') {
@@ -80,67 +73,10 @@ export function isOrientationMatch(win: Window, orientation: string) {
   return false;
 }
 
-export function isPortrait(win: Window): boolean {
+function isPortrait(win: Window): boolean {
   return matchMedia(win, '(orientation: portrait)');
 }
 
-// order from most specifc to least specific
-export const PLATFORM_CONFIGS: PlatformConfig[] = [
-
-  {
-    name: 'ipad',
-    isMatch: isIpad
-  },
-  {
-    name: 'iphone',
-    isMatch: isIphone
-  },
-  {
-    name: 'ios',
-    isMatch: isIOS
-  },
-  {
-    name: 'android',
-    isMatch: isAndroid
-  },
-  {
-    name: 'phablet',
-    isMatch: isPhablet
-  },
-  {
-    name: 'tablet',
-    isMatch: isTablet
-  },
-  {
-    name: 'cordova',
-    isMatch: isCordova
-  },
-  {
-    name: 'electron',
-    isMatch: isElectron
-  }
-
-];
-
-export interface PlatformConfig {
-  name: string;
-  isMatch: (win: Window) => boolean;
-}
-
-export function detectPlatforms(win: Window, platforms: PlatformConfig[]) {
-  // bracket notation to ensure they're not property renamed
-  return platforms.filter(p => p.isMatch(win));
-}
-
-export interface DisplayWhen {
-  calculatedPlatforms: PlatformConfig[];
-  config: Config;
-  win: Window;
-  mediaQuery?: string;
-  mode: Mode;
-  or: boolean;
-  orientation?: string;
-  passesTest: boolean;
-  platform?: string;
-  size?: string;
+function matchMedia(win: Window, query: string): boolean {
+  return win.matchMedia(query).matches;
 }

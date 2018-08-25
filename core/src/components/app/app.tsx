@@ -1,7 +1,7 @@
 import { Component, Element, Prop, QueueApi } from '@stencil/core';
 
 import { Config } from '../../interface';
-import { isDevice, isHybrid, isStandaloneMode, needInputShims } from '../../utils/platform';
+import { isPlatform } from '../../utils/platform';
 
 @Component({
   tag: 'ion-app',
@@ -9,45 +9,31 @@ import { isDevice, isHybrid, isStandaloneMode, needInputShims } from '../../util
 })
 export class App {
 
-  private isDevice = false;
-
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;
   @Prop({ context: 'config' }) config!: Config;
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
-  componentWillLoad() {
-    this.isDevice = this.config.getBoolean('isDevice', isDevice(this.win));
-  }
-
   componentDidLoad() {
     setTimeout(() => {
       importTapClick(this.win);
       importInputShims(this.win, this.config);
-      importStatusTap(this.win, this.isDevice, this.queue);
+      importStatusTap(this.win, this.queue);
     }, 32);
   }
 
   hostData() {
-    const hybrid = isHybrid(this.win);
-    const isStandalone = isStandaloneMode(this.win);
-    const statusbarPadding = this.config.getBoolean('statusbarPadding', hybrid || isStandalone);
-
     return {
       class: {
         'ion-page': true,
-        'is-device': this.isDevice,
-        'is-hydrid': hybrid,
-        'is-standalone': isStandalone,
-        'statusbar-padding': statusbarPadding
       }
     };
   }
 }
 
-async function importStatusTap(win: Window, device: boolean, queue: QueueApi) {
-  if (device) {
+async function importStatusTap(win: Window, queue: QueueApi) {
+  if (isPlatform(win, 'hybrid')) {
     (await import('../../utils/status-tap')).startStatusTap(win, queue);
   }
 }
@@ -61,4 +47,8 @@ async function importInputShims(win: Window, config: Config) {
   if (inputShims) {
     (await import('../../utils/input-shims/input-shims')).startInputShims(win.document, config);
   }
+}
+
+function needInputShims(win: Window) {
+  return isPlatform(win, 'ios') && isPlatform(win, 'mobile');
 }

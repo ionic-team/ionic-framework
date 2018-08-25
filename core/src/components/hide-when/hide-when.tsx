@@ -1,15 +1,13 @@
 import { Component, Element, Listen, Prop, State } from '@stencil/core';
 
 import { Config, Mode } from '../../interface';
-import { DisplayWhen, PLATFORM_CONFIGS, PlatformConfig, detectPlatforms, updateTestResults } from '../../utils/show-hide-when-utils';
+import { DisplayWhen, updateTestResults } from '../../utils/show-hide-when-utils';
 
 @Component({
   tag: 'ion-hide-when',
   styleUrl: './hide-when.scss'
 })
 export class HideWhen implements DisplayWhen {
-
-  calculatedPlatforms!: PlatformConfig[];
 
   @Element() element!: HTMLElement;
   @Prop({ context: 'config' }) config!: Config;
@@ -52,13 +50,12 @@ export class HideWhen implements DisplayWhen {
   @State() passesTest = false;
 
   componentWillLoad() {
-    this.calculatedPlatforms = detectPlatforms(this.win, PLATFORM_CONFIGS);
     this.onResize();
   }
 
   @Listen('window:resize')
   onResize() {
-    updateTestResults(this);
+    this.passesTest = updateTestResults(this);
   }
 
   hostData() {

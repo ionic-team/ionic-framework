@@ -797,27 +797,19 @@ export class Nav implements NavOutlet {
 
       ...opts
     };
-    const trns = await transition(animationOpts);
-    return this.transitionFinish(trns, enteringView, leavingView, opts);
+    const { hasCompleted } = await transition(animationOpts);
+    return this.transitionFinish(hasCompleted, enteringView, leavingView, opts);
   }
 
   private transitionFinish(
-    trans: Animation | null,
+    hasCompleted: boolean,
     enteringView: ViewController,
     leavingView: ViewController | undefined,
     opts: NavOptions
   ): NavResult {
-    const hasCompleted = trans ? trans.hasCompleted : true;
-
     const cleanupView = hasCompleted ? enteringView : leavingView;
     if (cleanupView) {
       this.cleanup(cleanupView);
-    }
-
-    // this is the root transition
-    // it's safe to destroy this transition
-    if (trans) {
-      trans.destroy();
     }
 
     return {

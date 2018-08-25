@@ -1,12 +1,11 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { PlatformConfig, detectPlatforms } from '@ionic/core';
+import { Platforms, getPlatforms, isPlatform } from '@ionic/core';
 import { proxyEvent } from '../util/util';
 
 
 @Injectable()
 export class Platform {
 
-  private _platforms = detectPlatforms(window);
   private _readyPromise: Promise<string>;
 
   /**
@@ -94,20 +93,8 @@ export class Platform {
    * | electron        | in Electron on a desktop device.   |
    *
    */
-  is(platformName: string): boolean {
-    return this._platforms.some(p => p.name === platformName);
-  }
-
-  /**
-   * @param win the window object
-   * @param platforms an array of platforms (platform configs)
-   * to get the appropriate platforms according to the configs provided.
-   * @description
-   * Detects the platforms using window and the platforms config provided.
-   * Populates the platforms array so they can be used later on for platform detection.
-   */
-  detectPlatforms(platforms: PlatformConfig[]) {
-    return detectPlatforms(window, platforms);
+  is(platformName: Platforms): boolean {
+    return isPlatform(window, platformName);
   }
 
   /**
@@ -130,31 +117,8 @@ export class Platform {
    * ```
    */
   platforms(): string[] {
-    return this._platforms.map(platform => platform.name);
+    return getPlatforms(window);
   }
-
-  /**
-   * Returns an object containing version information about all of the platforms.
-   *
-   * ```
-   * import { Platform } from 'ionic-angular';
-   *
-   * @Component({...})
-   * export MyPage {
-   *   constructor(public platform: Platform) {
-   *     // This will print an object containing
-   *     // all of the platforms and their versions
-   *     console.log(platform.versions());
-   *   }
-   * }
-   * ```
-   *
-   * @returns An object containing all of the platforms and their versions.
-   */
-  versions(): PlatformConfig[] {
-    return this._platforms.slice();
-  }
-
 
   ready(): Promise<string> {
     return this._readyPromise;
@@ -163,7 +127,6 @@ export class Platform {
   get isRTL(): boolean {
     return document.dir === 'rtl';
   }
-
 
   /**
    * Get the query string parameter

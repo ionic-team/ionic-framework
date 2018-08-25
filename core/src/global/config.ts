@@ -8,8 +8,6 @@ export interface IonicConfig {
   mode?: Mode;
   persistConfig?: boolean;
 
-  isDevice?: boolean;
-  statusbarPadding?: boolean;
   inputShims?: boolean;
   backButtonIcon?: string;
   backButtonText?: string;

@@ -1,6 +1,6 @@
 import { Component, Element, Listen, Prop } from '@stencil/core';
 
-import { isMatch } from '../../utils/media';
+import { matchBreakpoint } from '../../utils/media';
 
 const SUPPORTS_VARS = !!(CSS && CSS.supports && CSS.supports('--a', '0'));
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
@@ -11,7 +11,7 @@ const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
   shadow: true
 })
 export class Col {
-  [key: string]: any;
+  @Prop({ context: 'window' }) win!: Window;
 
   @Element() el!: HTMLStencilElement;
 
@@ -166,11 +166,11 @@ export class Col {
     let matched;
 
     for (const breakpoint of BREAKPOINTS) {
-      const matches = isMatch(breakpoint);
+      const matches = matchBreakpoint(this.win, breakpoint);
 
       // Grab the value of the property, if it exists and our
       // media query matches we return the value
-      const columns = this[property + breakpoint.charAt(0).toUpperCase() + breakpoint.slice(1)];
+      const columns = (this as any)[property + breakpoint.charAt(0).toUpperCase() + breakpoint.slice(1)];
 
       if (matches && columns !== undefined) {
         matched = columns;
