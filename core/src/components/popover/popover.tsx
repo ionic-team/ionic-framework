@@ -4,6 +4,7 @@ import { Animation, AnimationBuilder, Color, ComponentProps, ComponentRef, Confi
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { deepReady } from '../../utils/transition';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -181,6 +182,7 @@ export class Popover implements OverlayInterface {
       popover: this.el
     };
     this.usersElement = await attachComponent(this.delegate, container, this.component, ['popover-viewport'], data);
+    await deepReady(this.usersElement);
     return present(this, 'popoverEnter', iosEnterAnimation, mdEnterAnimation, this.event);
   }
 
