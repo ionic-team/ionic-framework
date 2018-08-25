@@ -76,9 +76,9 @@ export class ItemSliding {
       gesturePriority: 20,
       threshold: 5,
       canStart: this.canStart.bind(this),
-      onStart: this.onDragStart.bind(this),
-      onMove: this.onDragMove.bind(this),
-      onEnd: this.onDragEnd.bind(this),
+      onStart: this.onStart.bind(this),
+      onMove: this.onMove.bind(this),
+      onEnd: this.onEnd.bind(this),
     });
     this.disabledChanged();
   }
@@ -166,7 +166,7 @@ export class ItemSliding {
     return !!(this.rightOptions || this.leftOptions);
   }
 
-  private onDragStart() {
+  private onStart() {
     if (this.list) {
       this.list.setOpenItem(this.el);
     }
@@ -185,7 +185,7 @@ export class ItemSliding {
     }
   }
 
-  private onDragMove(gesture: GestureDetail) {
+  private onMove(gesture: GestureDetail) {
     if (this.optsDirty) {
       this.calculateOptsWidth();
     }
@@ -212,7 +212,7 @@ export class ItemSliding {
     this.setOpenAmount(openAmount, false);
   }
 
-  private onDragEnd(gesture: GestureDetail) {
+  private onEnd(gesture: GestureDetail) {
     const velocity = gesture.velocityX;
 
     let restingPoint = (this.openAmount > 0)

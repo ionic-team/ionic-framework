@@ -58,9 +58,9 @@ export class PickerColumnCmp {
       gestureName: 'picker-swipe',
       gesturePriority: 100,
       threshold: 0,
-      onStart: this.onDragStart.bind(this),
-      onMove: this.onDragMove.bind(this),
-      onEnd: this.onDragEnd.bind(this),
+      onStart: this.onStart.bind(this),
+      onMove: this.onMove.bind(this),
+      onEnd: this.onEnd.bind(this),
     });
     this.gesture.setDisabled(false);
   }
@@ -200,7 +200,7 @@ export class PickerColumnCmp {
 
   // TODO should this check disabled?
 
-  private onDragStart(detail: GestureDetail) {
+  private onStart(detail: GestureDetail) {
     // We have to prevent default in order to block scrolling under the picker
     // but we DO NOT have to stop propagation, since we still want
     // some "click" events to capture
@@ -225,7 +225,7 @@ export class PickerColumnCmp {
     this.maxY = -(maxY * this.optHeight);
   }
 
-  private onDragMove(detail: GestureDetail) {
+  private onMove(detail: GestureDetail) {
     if (detail.event) {
       detail.event.preventDefault();
       detail.event.stopPropagation();
@@ -251,7 +251,7 @@ export class PickerColumnCmp {
     this.update(y, 0, false);
   }
 
-  private onDragEnd(detail: GestureDetail) {
+  private onEnd(detail: GestureDetail) {
     if (this.bounceFrom > 0) {
       // bounce back up
       this.update(this.minY, 100, true);

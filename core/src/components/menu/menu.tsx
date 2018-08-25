@@ -183,9 +183,9 @@ export class Menu implements MenuI {
       threshold: 10,
       canStart: this.canStart.bind(this),
       onWillStart: this.onWillStart.bind(this),
-      onStart: this.onDragStart.bind(this),
-      onMove: this.onDragMove.bind(this),
-      onEnd: this.onDragEnd.bind(this),
+      onStart: this.onStart.bind(this),
+      onMove: this.onMove.bind(this),
+      onEnd: this.onEnd.bind(this),
     });
 
     // mask it as enabled / disabled
@@ -329,7 +329,7 @@ export class Menu implements MenuI {
     return this.loadAnimation();
   }
 
-  private onDragStart() {
+  private onStart() {
     if (!this.isAnimating || !this.animation) {
       assert(false, 'isAnimating has to be true');
       return;
@@ -339,7 +339,7 @@ export class Menu implements MenuI {
     this.animation.reverse(this._isOpen).progressStart();
   }
 
-  private onDragMove(detail: GestureDetail) {
+  private onMove(detail: GestureDetail) {
     if (!this.isAnimating || !this.animation) {
       assert(false, 'isAnimating has to be true');
       return;
@@ -350,7 +350,7 @@ export class Menu implements MenuI {
     this.animation.progressStep(stepValue);
   }
 
-  private onDragEnd(detail: GestureDetail) {
+  private onEnd(detail: GestureDetail) {
     if (!this.isAnimating || !this.animation) {
       assert(false, 'isAnimating has to be true');
       return;

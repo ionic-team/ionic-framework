@@ -58,15 +58,15 @@ export class ReorderGroup {
       direction: 'y',
       passive: false,
       canStart: this.canStart.bind(this),
-      onStart: this.onDragStart.bind(this),
-      onMove: this.onDragMove.bind(this),
-      onEnd: this.onDragEnd.bind(this),
+      onStart: this.onStart.bind(this),
+      onMove: this.onMove.bind(this),
+      onEnd: this.onEnd.bind(this),
     });
     this.disabledChanged();
   }
 
   componentDidUnload() {
-    this.onDragEnd();
+    this.onEnd();
   }
 
   private canStart(ev: GestureDetail): boolean {
@@ -87,7 +87,7 @@ export class ReorderGroup {
     return true;
   }
 
-  private onDragStart(ev: GestureDetail) {
+  private onStart(ev: GestureDetail) {
     ev.event.preventDefault();
 
     const item = this.selectedItemEl = ev.data;
@@ -131,7 +131,7 @@ export class ReorderGroup {
     hapticSelectionStart();
   }
 
-  private onDragMove(ev: GestureDetail) {
+  private onMove(ev: GestureDetail) {
     const selectedItem = this.selectedItemEl;
     if (!selectedItem) {
       return;
@@ -158,7 +158,7 @@ export class ReorderGroup {
     selectedItem.style.transform = `translateY(${deltaY}px)`;
   }
 
-  private onDragEnd() {
+  private onEnd() {
     this.activated = false;
     const selectedItem = this.selectedItemEl;
     if (!selectedItem) {

@@ -150,9 +150,9 @@ export class Range {
       gestureName: 'range',
       gesturePriority: 100,
       threshold: 0,
-      onStart: this.onDragStart.bind(this),
-      onMove: this.onDragMove.bind(this),
-      onEnd: this.onDragEnd.bind(this),
+      onStart: this.onStart.bind(this),
+      onMove: this.onMove.bind(this),
+      onEnd: this.onEnd.bind(this),
     });
     this.gesture.setDisabled(this.disabled);
   }
@@ -229,7 +229,7 @@ export class Range {
     }
   }
 
-  private onDragStart(detail: GestureDetail) {
+  private onStart(detail: GestureDetail) {
     this.fireFocus();
 
     const rect = this.rect = this.rangeSlider!.getBoundingClientRect() as any;
@@ -247,11 +247,11 @@ export class Range {
     this.update(currentX);
   }
 
-  private onDragMove(detail: GestureDetail) {
+  private onMove(detail: GestureDetail) {
     this.update(detail.currentX);
   }
 
-  private onDragEnd(detail: GestureDetail) {
+  private onEnd(detail: GestureDetail) {
     this.update(detail.currentX);
     this.pressedKnob = undefined;
     this.fireBlur();

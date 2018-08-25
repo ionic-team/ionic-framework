@@ -116,10 +116,10 @@ export class Nav implements NavOutlet {
       gestureName: 'goback-swipe',
       gesturePriority: 30,
       threshold: 10,
-      canStart: this.canSwipeBack.bind(this),
-      onStart: this.swipeBackStart.bind(this),
-      onMove: this.swipeBackProgress.bind(this),
-      onEnd: this.swipeBackEnd.bind(this),
+      canStart: this.canStart.bind(this),
+      onStart: this.onStart.bind(this),
+      onMove: this.onMove.bind(this),
+      onEnd: this.onEnd.bind(this),
     });
     this.swipeGestureChanged();
   }
@@ -888,7 +888,13 @@ export class Nav implements NavOutlet {
     }
   }
 
-  private swipeBackStart() {
+  private canStart(): boolean {
+    return !!this.swipeGesture &&
+      !this.isTransitioning &&
+      this.canGoBack();
+  }
+
+  private onStart() {
     if (this.isTransitioning || this.transInstr.length > 0) {
       return;
     }
@@ -909,7 +915,7 @@ export class Nav implements NavOutlet {
     );
   }
 
-  private swipeBackProgress(detail: GestureDetail) {
+  private onMove(detail: GestureDetail) {
     if (this.sbTrns) {
       // continue to disable the app while actively dragging
       this.isTransitioning = true;
@@ -922,7 +928,7 @@ export class Nav implements NavOutlet {
     }
   }
 
-  private swipeBackEnd(detail: GestureDetail) {
+  private onEnd(detail: GestureDetail) {
     if (this.sbTrns) {
       // the swipe back gesture has ended
       const delta = detail.deltaX;
@@ -943,10 +949,6 @@ export class Nav implements NavOutlet {
 
       this.sbTrns.progressEnd(shouldComplete, stepValue, realDur);
     }
-  }
-
-  private canSwipeBack(): boolean {
-    return !!this.swipeGesture && !this.isTransitioning && this.canGoBack();
   }
 
   render() {

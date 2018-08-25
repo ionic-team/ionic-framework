@@ -118,14 +118,14 @@ export class Toggle {
       gestureName: 'toggle',
       gesturePriority: 100,
       threshold: 0,
-      onStart: this.onDragStart.bind(this),
-      onMove: this.onDragMove.bind(this),
-      onEnd: this.onDragEnd.bind(this),
+      onStart: this.onStart.bind(this),
+      onMove: this.onMove.bind(this),
+      onEnd: this.onEnd.bind(this),
     });
     this.disabledChanged();
   }
 
-  private onDragStart(detail: GestureDetail) {
+  private onStart(detail: GestureDetail) {
     this.pivotX = detail.currentX;
     this.activated = true;
 
@@ -134,7 +134,7 @@ export class Toggle {
     return true;
   }
 
-  private onDragMove(detail: GestureDetail) {
+  private onMove(detail: GestureDetail) {
     const currentX = detail.currentX;
     if (shouldToggle(this.checked, currentX - this.pivotX, -15)) {
       this.checked = !this.checked;
@@ -143,7 +143,7 @@ export class Toggle {
     }
   }
 
-  private onDragEnd(detail: GestureDetail) {
+  private onEnd(detail: GestureDetail) {
     const delta = detail.currentX - this.pivotX;
     if (shouldToggle(this.checked, delta, 4)) {
       this.checked = !this.checked;
