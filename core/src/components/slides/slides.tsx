@@ -1,7 +1,6 @@
 import { Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 
 import { Mode } from '../../interface.js';
-import { createThemedClasses } from '../../utils/theme.js';
 
 import { Swiper } from './vendor/swiper.js';
 
@@ -15,6 +14,7 @@ import { Swiper } from './vendor/swiper.js';
   shadow: true
 })
 export class Slides {
+
   private container!: HTMLElement;
   private swiper: any;
 
@@ -389,12 +389,6 @@ export class Slides {
 
     // Merge the base, user options, and events together then pas to swiper
     return { ...swiperOptions, ...this.options, ...eventOptions };
-  }
-
-  hostData() {
-    return {
-      class: createThemedClasses(this.mode, 'slides')
-    };
   }
 
   render() {
