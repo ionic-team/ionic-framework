@@ -1,6 +1,12 @@
 import { ComponentRef, FrameworkDelegate } from '../interface';
 
-export async function attachComponent(delegate: FrameworkDelegate | undefined, container: Element, component: ComponentRef, cssClasses?: string[], componentProps?: {[key: string]: any}): Promise<HTMLElement> {
+export async function attachComponent(
+  delegate: FrameworkDelegate | undefined,
+  container: Element,
+  component: ComponentRef,
+  cssClasses?: string[],
+  componentProps?: {[key: string]: any}
+): Promise<HTMLElement> {
   if (delegate) {
     return delegate.attachViewToDom(container, component, componentProps, cssClasses);
   }

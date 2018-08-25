@@ -4,6 +4,7 @@ import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, Fram
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
+import { deepReady } from '../../utils/transition';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -134,12 +135,12 @@ export class Modal implements OverlayInterface {
     const el = this.usersElement;
     const name = LIFECYCLE_MAP[modalEvent.type];
     if (el && name) {
-      const event = new CustomEvent(name, {
+      const ev = new CustomEvent(name, {
         bubbles: false,
         cancelable: false,
         detail: modalEvent.detail
       });
-      el.dispatchEvent(event);
+      el.dispatchEvent(ev);
     }
   }
 
@@ -160,6 +161,7 @@ export class Modal implements OverlayInterface {
       modal: this.el
     };
     this.usersElement = await attachComponent(this.delegate, container, this.component, ['ion-page'], componentProps);
+    await deepReady(this.usersElement);
     return present(this, 'modalEnter', iosEnterAnimation, mdEnterAnimation);
   }
 

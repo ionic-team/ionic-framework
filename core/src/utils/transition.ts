@@ -174,7 +174,7 @@ function shallowReady(el: Element | undefined): Promise<any> {
   return Promise.resolve();
 }
 
-async function deepReady(el: Element | undefined): Promise<void> {
+export async function deepReady(el: Element | undefined): Promise<void> {
   const element = el as HTMLStencilElement;
   if (element) {
     if (element.componentOnReady) {
