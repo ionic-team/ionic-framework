@@ -1539,7 +1539,7 @@ export namespace Components {
     /**
     * If the current platform matches the given value, the element will hide. Accepts a comma separated list of modes to match against.
     */
-    'mode': Mode;
+    'modes': string;
     /**
     * If false, and two or more conditions are set, the element will hide when all are true. If true, and two or more conditions are set, the element will hide when at least one is true.
     */
@@ -1549,7 +1549,7 @@ export namespace Components {
     */
     'orientation': string;
     /**
-    * If the current platform matches the given value, the element will hide. Accepts a comma separated list of platform to match against.
+    * If the current platform matches the given value, the element will hide. Accepts a comma separated list of platforms to match against.
     */
     'platform': string;
     /**
@@ -1565,7 +1565,7 @@ export namespace Components {
     /**
     * If the current platform matches the given value, the element will hide. Accepts a comma separated list of modes to match against.
     */
-    'mode'?: Mode;
+    'modes'?: string;
     /**
     * If false, and two or more conditions are set, the element will hide when all are true. If true, and two or more conditions are set, the element will hide when at least one is true.
     */
@@ -1575,7 +1575,7 @@ export namespace Components {
     */
     'orientation'?: string;
     /**
-    * If the current platform matches the given value, the element will hide. Accepts a comma separated list of platform to match against.
+    * If the current platform matches the given value, the element will hide. Accepts a comma separated list of platforms to match against.
     */
     'platform'?: string;
     /**
@@ -4065,7 +4065,7 @@ export namespace Components {
     /**
     * If the current platform matches the given value, the element will show. Accepts a comma separated list of modes to match against.
     */
-    'mode': Mode;
+    'modes': string;
     /**
     * If false, and two or more conditions are set, the element will show when all are true. If true, and two or more conditions are set, the element will show when at least one is true.
     */
@@ -4091,7 +4091,7 @@ export namespace Components {
     /**
     * If the current platform matches the given value, the element will show. Accepts a comma separated list of modes to match against.
     */
-    'mode'?: Mode;
+    'modes'?: string;
     /**
     * If false, and two or more conditions are set, the element will show when all are true. If true, and two or more conditions are set, the element will show when at least one is true.
     */

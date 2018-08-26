@@ -4,8 +4,6 @@ import { Color, Mode, StyleEvent, TextFieldTypes, TextInputChangeEvent } from '.
 import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses, hostContext } from '../../utils/theme';
 
-import { InputComponent } from './input-base';
-
 @Component({
   tag: 'ion-input',
   styleUrls: {
@@ -14,50 +12,15 @@ import { InputComponent } from './input-base';
   },
   shadow: true
 })
-export class Input implements InputComponent {
+export class Input {
 
   private nativeInput?: HTMLInputElement;
   private inputId = `ion-input-${inputIds++}`;
-  didBlurAfterEdit = false;
+  private didBlurAfterEdit = false;
 
   @State() hasFocus = false;
 
   @Element() el!: HTMLElement;
-
-  /**
-   * Emitted when a keyboard input ocurred.
-   */
-  @Event() ionInput!: EventEmitter<KeyboardEvent>;
-
-  /**
-   * Emitted when the value has changed.
-   */
-  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
-
-  /**
-   * Emitted when the styles change.
-   */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
-
-  /**
-   * Emitted when the input loses focus.
-   */
-  @Event() ionBlur!: EventEmitter<void>;
-
-  /**
-   * Emitted when the input has focus.
-   */
-  @Event() ionFocus!: EventEmitter<void>;
-
-  /**
-   * Emitted when the input has been created.
-   */
-  @Event() ionInputDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted when the input has been removed.
-   */
-  @Event() ionInputDidUnload!: EventEmitter<void>;
 
   /**
    * The color to use from your application's color palette.
@@ -225,6 +188,41 @@ export class Input implements InputComponent {
     this.emitStyle();
     this.ionChange.emit({ value });
   }
+
+  /**
+   * Emitted when a keyboard input ocurred.
+   */
+  @Event() ionInput!: EventEmitter<KeyboardEvent>;
+
+  /**
+   * Emitted when the value has changed.
+   */
+  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
+
+  /**
+   * Emitted when the styles change.
+   */
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
+
+  /**
+   * Emitted when the input loses focus.
+   */
+  @Event() ionBlur!: EventEmitter<void>;
+
+  /**
+   * Emitted when the input has focus.
+   */
+  @Event() ionFocus!: EventEmitter<void>;
+
+  /**
+   * Emitted when the input has been created.
+   */
+  @Event() ionInputDidLoad!: EventEmitter<void>;
+
+  /**
+   * Emitted when the input has been removed.
+   */
+  @Event() ionInputDidUnload!: EventEmitter<void>;
 
   componentWillLoad() {
     // By default, password inputs clear after focus when they have content

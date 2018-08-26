@@ -1,4 +1,4 @@
-import { Config, Mode } from '../interface';
+import { Config } from '../interface';
 
 import { matchBreakpoint } from './media';
 import { isPlatform } from './platform';
@@ -7,15 +7,11 @@ export interface DisplayWhen {
   config: Config;
   win: Window;
   mediaQuery?: string;
-  mode: Mode;
+  modes?: string;
   or: boolean;
   orientation?: string;
   platform?: string;
   size?: string;
-}
-
-export function updateTestResults(displayWhen: DisplayWhen) {
-  return getTestResult(displayWhen);
 }
 
 function isPlatformMatch(win: Window, multiPlatformString: string) {
@@ -38,7 +34,7 @@ function split(multiOptions: string): string[] {
   return multiOptions.replace(/\s/g, '').split(',');
 }
 
-function getTestResult(displayWhen: DisplayWhen) {
+export function getTestResult(displayWhen: DisplayWhen) {
   const results: boolean[] = [];
   if (displayWhen.mediaQuery) {
     results.push(matchMedia(displayWhen.win, displayWhen.mediaQuery));
@@ -46,8 +42,8 @@ function getTestResult(displayWhen: DisplayWhen) {
   if (displayWhen.size) {
     results.push(isSizeMatch(displayWhen.win, displayWhen.size));
   }
-  if (displayWhen.mode) {
-    results.push(isModeMatch(displayWhen.config, displayWhen.mode));
+  if (displayWhen.modes) {
+    results.push(isModeMatch(displayWhen.config, displayWhen.modes));
   }
   if (displayWhen.platform) {
     results.push(isPlatformMatch(displayWhen.win, displayWhen.platform));

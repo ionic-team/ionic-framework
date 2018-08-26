@@ -3,7 +3,6 @@ import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } f
 import { Color, Mode, StyleEvent, TextInputChangeEvent } from '../../interface';
 import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
 import { createColorClasses } from '../../utils/theme';
-import { TextareaComponent } from '../input/input-base';
 
 @Component({
   tag: 'ion-textarea',
@@ -13,41 +12,21 @@ import { TextareaComponent } from '../input/input-base';
   },
   shadow: true
 })
-export class Textarea implements TextareaComponent {
+export class Textarea {
 
   private nativeInput?: HTMLTextAreaElement;
   private inputId = `ion-input-${textareaIds++}`;
-
-  didBlurAfterEdit = false;
+  private didBlurAfterEdit = false;
 
   @Element() el!: HTMLElement;
 
   @State() hasFocus = false;
 
   /**
-   * Emitted when the input value has changed.
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
    */
-  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
-
-  /**
-   * Emitted when a keyboard input ocurred.
-   */
-  @Event() ionInput!: EventEmitter<KeyboardEvent>;
-
-  /**
-   * Emitted when the styles change.
-   */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
-
-  /**
-   * Emitted when the input loses focus.
-   */
-  @Event() ionBlur!: EventEmitter<void>;
-
-  /**
-   * Emitted when the input has focus.
-   */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Prop() mode!: Mode;
 
   /**
    * The color to use from your application's color palette.
@@ -55,12 +34,6 @@ export class Textarea implements TextareaComponent {
    * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
-
-  /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   */
-  @Prop() mode!: Mode;
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
@@ -163,6 +136,31 @@ export class Textarea implements TextareaComponent {
     }
     this.ionChange.emit({ value });
   }
+
+  /**
+   * Emitted when the input value has changed.
+   */
+  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
+
+  /**
+   * Emitted when a keyboard input ocurred.
+   */
+  @Event() ionInput!: EventEmitter<KeyboardEvent>;
+
+  /**
+   * Emitted when the styles change.
+   */
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
+
+  /**
+   * Emitted when the input loses focus.
+   */
+  @Event() ionBlur!: EventEmitter<void>;
+
+  /**
+   * Emitted when the input has focus.
+   */
+  @Event() ionFocus!: EventEmitter<void>;
 
   componentDidLoad() {
     this.ionStyle = deferEvent(this.ionStyle);

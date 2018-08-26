@@ -1,7 +1,7 @@
 import { Component, Element, Listen, Prop, State } from '@stencil/core';
 
-import { Config, Mode } from '../../interface';
-import { DisplayWhen, updateTestResults } from '../../utils/show-hide-when-utils';
+import { Config } from '../../interface';
+import { DisplayWhen, getTestResult } from '../../utils/show-hide-when-utils';
 
 @Component({
   tag: 'ion-hide-when',
@@ -17,7 +17,7 @@ export class HideWhen implements DisplayWhen {
    * If the current platform matches the given value, the element will hide.
    * Accepts a comma separated list of modes to match against.
    */
-  @Prop() mode!: Mode;
+  @Prop() modes!: string;
 
   /**
    * If the current orientation matches this value, the element will hide.
@@ -37,7 +37,7 @@ export class HideWhen implements DisplayWhen {
 
   /**
    * If the current platform matches the given value, the element will hide.
-   * Accepts a comma separated list of platform to match against.
+   * Accepts a comma separated list of platforms to match against.
    */
   @Prop() platform?: string;
 
@@ -55,7 +55,7 @@ export class HideWhen implements DisplayWhen {
 
   @Listen('window:resize')
   onResize() {
-    this.passesTest = updateTestResults(this);
+    this.passesTest = getTestResult(this);
   }
 
   hostData() {

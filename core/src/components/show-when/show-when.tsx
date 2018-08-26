@@ -1,7 +1,7 @@
 import { Component, Element, Listen, Prop, State } from '@stencil/core';
 
-import { Config, Mode } from '../../interface';
-import { DisplayWhen, updateTestResults } from '../../utils/show-hide-when-utils';
+import { Config } from '../../interface';
+import { DisplayWhen, getTestResult } from '../../utils/show-hide-when-utils';
 
 @Component({
   tag: 'ion-show-when',
@@ -18,7 +18,7 @@ export class ShowWhen implements DisplayWhen {
    * If the current platform matches the given value, the element will show.
    * Accepts a comma separated list of modes to match against.
    */
-  @Prop() mode!: Mode;
+  @Prop() modes!: string;
 
   /**
    * If the current orientation matches this value, the element will show.
@@ -56,7 +56,7 @@ export class ShowWhen implements DisplayWhen {
 
   @Listen('window:resize')
   onResize() {
-    this.passesTest = updateTestResults(this);
+    this.passesTest = getTestResult(this);
   }
 
   hostData() {
