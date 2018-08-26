@@ -21,19 +21,32 @@ export class NavController {
     @Optional() private router?: Router
   ) {}
 
-  navigateForward(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
+  navigateForward(url: string | UrlTree | any[], animated?: boolean, extras?: NavigationExtras) {
     this.setIntent(NavIntent.Forward, animated);
-    return this.router!.navigateByUrl(url, extras);
+    if (Array.isArray(url)) {
+      return this.router!.navigate(url, extras);
+    } else {
+      return this.router!.navigateByUrl(url, extras);
+    }
   }
 
   navigateBack(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
     this.setIntent(NavIntent.Back, animated);
-    return this.router!.navigateByUrl(url, { replaceUrl: true, ...extras });
+    extras = { replaceUrl: true, ...extras };
+    if (Array.isArray(url)) {
+      return this.router!.navigate(url, extras);
+    } else {
+      return this.router!.navigateByUrl(url, extras);
+    }
   }
 
   navigateRoot(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
     this.setIntent(NavIntent.Root, animated);
-    return this.router!.navigateByUrl(url, extras);
+    if (Array.isArray(url)) {
+      return this.router!.navigate(url, extras);
+    } else {
+      return this.router!.navigateByUrl(url, extras);
+    }
   }
 
   goBack(animated?: boolean) {
