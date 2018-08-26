@@ -30,22 +30,16 @@ export * from './utils/input-interface';
 export * from './global/config';
 export * from './utils/overlays-interface';
 
-
 // Global types
 export type TextFieldTypes = 'date' | 'email' | 'number' | 'password' | 'search' | 'tel' | 'text' | 'url';
 export type Side = 'start' | 'end';
 export type PredefinedColors = 'primary' | 'secondary' | 'tertiary' | 'success' | 'warning' | 'danger' | 'light' | 'medium' | 'dark';
 export type Color = PredefinedColors | string;
 export type Mode = 'ios' | 'md';
+export type ComponentTags = keyof StencilIntrinsicElements;
 export type ComponentRef = Function | HTMLElement | string;
-export type ComponentProps = {[key: string]: any};
+export type ComponentProps<T = null> = T extends ComponentTags ? StencilIntrinsicElements[T] : {[key: string]: any};
 export type CssClassMap = { [className: string]: boolean };
-
-export interface FrameworkDelegate {
-  attachViewToDom(container: any, component: any, propsOrDataObj?: any, cssClasses?: string[]): Promise<HTMLElement>;
-  removeViewFromDom(container: any, component: any): Promise<void>;
-}
-
 
 declare global {
   interface StencilGlobalHTMLAttributes {

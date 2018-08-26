@@ -1,6 +1,6 @@
 import { Component, Method, Prop } from '@stencil/core';
 
-import { OverlayController, PopoverOptions } from '../../interface';
+import { ComponentRef, OverlayController, PopoverOptions } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 @Component({
@@ -14,7 +14,7 @@ export class PopoverController implements OverlayController {
    * Create a popover overlay with popover options.
    */
   @Method()
-  create(opts?: PopoverOptions): Promise<HTMLIonPopoverElement> {
+  create<T extends ComponentRef>(opts: PopoverOptions<T>): Promise<HTMLIonPopoverElement> {
     return createOverlay(this.doc.createElement('ion-popover'), opts);
   }
 

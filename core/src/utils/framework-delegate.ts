@@ -1,4 +1,9 @@
-import { ComponentRef, FrameworkDelegate } from '../interface';
+import { ComponentRef } from '../interface';
+
+export interface FrameworkDelegate {
+  attachViewToDom(container: any, component: any, propsOrDataObj?: any, cssClasses?: string[]): Promise<HTMLElement>;
+  removeViewFromDom(container: any, component: any): Promise<void>;
+}
 
 export async function attachComponent(
   delegate: FrameworkDelegate | undefined,

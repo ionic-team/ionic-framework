@@ -71,7 +71,7 @@ export namespace Components {
     /**
     * Create an action sheet overlay with action sheet options.
     */
-    'create': (opts?: ActionSheetOptions | undefined) => Promise<HTMLIonActionSheetElement>;
+    'create': (opts: ActionSheetOptions) => Promise<HTMLIonActionSheetElement>;
     /**
     * Dismiss the open action sheet overlay.
     */
@@ -220,7 +220,7 @@ export namespace Components {
     /**
     * Create an alert overlay with alert options
     */
-    'create': (opts?: AlertOptions | undefined) => Promise<HTMLIonAlertElement>;
+    'create': (opts: AlertOptions) => Promise<HTMLIonAlertElement>;
     /**
     * Dismiss the open alert overlay.
     */
@@ -2569,7 +2569,7 @@ export namespace Components {
     /**
     * Create a modal overlay with modal options.
     */
-    'create': (opts?: ModalOptions | undefined) => Promise<HTMLIonModalElement>;
+    'create': <T extends ComponentRef>(opts: ModalOptions<T>) => Promise<HTMLIonModalElement>;
     /**
     * Dismiss the open modal overlay.
     */
@@ -2768,7 +2768,7 @@ export namespace Components {
     /**
     * Inserts a component into the nav stack at the specified index. This is useful if you need to add a component at any point in your navigation stack.
     */
-    'insert': (insertIndex: number, component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+    'insert': <T extends NavComponent>(insertIndex: number, component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
     * Inserts an array of components into the nav stack at the specified index. The last component in the array will become instantiated as a view, and animate in to become the active view.
     */
@@ -2792,7 +2792,7 @@ export namespace Components {
     /**
     * Push a new component onto the current navigation stack. Pass any aditional information along as an object. This additional information is accessible through NavParams
     */
-    'push': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+    'push': <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     /**
     * Removes a page from the nav stack at the specified index.
     */
@@ -2812,7 +2812,7 @@ export namespace Components {
     /**
     * Set the root for the current navigation stack.
     */
-    'setRoot': (component: NavComponent, componentProps?: ComponentProps | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
+    'setRoot': <T extends NavComponent>(component: T, componentProps?: ComponentProps<T> | null | undefined, opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
     'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
     /**
     * If the nav component should allow for swipe-to-go-back
@@ -2880,7 +2880,7 @@ export namespace Components {
   }
 
   interface IonPickerController {
-    'create': (opts?: PickerOptions | undefined) => Promise<HTMLIonPickerElement>;
+    'create': (opts: PickerOptions) => Promise<HTMLIonPickerElement>;
     'dismiss': (data?: any, role?: string | undefined, pickerId?: number | undefined) => Promise<void>;
     'getTop': () => HTMLIonPickerElement;
   }
@@ -3021,7 +3021,7 @@ export namespace Components {
     /**
     * Create a popover overlay with popover options.
     */
-    'create': (opts?: PopoverOptions | undefined) => Promise<HTMLIonPopoverElement>;
+    'create': <T extends ComponentRef>(opts: PopoverOptions<T>) => Promise<HTMLIonPopoverElement>;
     /**
     * Dismiss the open popover overlay.
     */
@@ -3591,7 +3591,7 @@ export namespace Components {
     /**
     * Set the root component for the given navigation stack
     */
-    'setRoot': (component: ComponentRef, params?: ComponentProps | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
+    'setRoot': (component: ComponentRef, params?: { [key: string]: any; } | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
     'setRouteId': (id: string, params: any, direction: number) => Promise<RouteWrite>;
   }
   interface IonRouterOutletAttributes extends StencilHTMLAttributes {

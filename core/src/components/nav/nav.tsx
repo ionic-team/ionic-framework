@@ -145,9 +145,9 @@ export class Nav implements NavOutlet {
    * Push a new component onto the current navigation stack. Pass any aditional information along as an object. This additional information is accessible through NavParams
    */
   @Method()
-  push(
-    component: NavComponent,
-    componentProps?: ComponentProps | null,
+  push<T extends NavComponent>(
+    component: T,
+    componentProps?: ComponentProps<T> | null,
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {
@@ -165,10 +165,10 @@ export class Nav implements NavOutlet {
    * Inserts a component into the nav stack at the specified index. This is useful if you need to add a component at any point in your navigation stack.
    */
   @Method()
-  insert(
+  insert<T extends NavComponent>(
     insertIndex: number,
-    component: NavComponent,
-    componentProps?: ComponentProps | null,
+    component: T,
+    componentProps?: ComponentProps<T> | null,
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {
@@ -282,9 +282,9 @@ export class Nav implements NavOutlet {
    * Set the root for the current navigation stack.
    */
   @Method()
-  setRoot(
-    component: NavComponent,
-    componentProps?: ComponentProps | null,
+  setRoot<T extends NavComponent>(
+    component: T,
+    componentProps?: ComponentProps<T> | null,
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {

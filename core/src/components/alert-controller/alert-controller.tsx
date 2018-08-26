@@ -14,7 +14,7 @@ export class AlertController implements OverlayController {
    * Create an alert overlay with alert options
    */
   @Method()
-  create(opts?: AlertOptions): Promise<HTMLIonAlertElement> {
+  create(opts: AlertOptions): Promise<HTMLIonAlertElement> {
     return createOverlay(this.doc.createElement('ion-alert'), opts);
   }
 

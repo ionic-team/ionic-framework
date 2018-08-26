@@ -2,7 +2,7 @@ import { AnimationBuilder, HTMLIonOverlayElement, IonicConfig, OverlayInterface 
 
 let lastId = 0;
 
-export function createOverlay<T extends HTMLIonOverlayElement & Required<B>, B>(element: T, opts: B): Promise<T> {
+export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts: object | undefined): Promise<T> {
   const doc = element.ownerDocument;
   connectListeners(doc);
 

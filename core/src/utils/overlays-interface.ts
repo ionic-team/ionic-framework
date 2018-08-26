@@ -1,6 +1,6 @@
 import { EventEmitter } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Config, Mode } from '../interface';
+import { ActionSheetOptions, AlertOptions, Animation, AnimationBuilder, Config, Conforms, LoadingOptions, ModalOptions, Mode, PickerOptions, PopoverOptions, ToastOptions } from '../interface';
 
 export interface OverlayEventDetail<T = any> {
   data?: T;
@@ -42,3 +42,14 @@ export interface HTMLIonOverlayElement extends HTMLStencilElement {
 
   dismiss(data?: any, role?: string): Promise<void>;
 }
+
+// Overlay checks
+export type Conforms<T extends Required<B>, B> = T;
+export type HTMLOverlaysElement =
+  Conforms<HTMLIonModalElement, ModalOptions> |
+  Conforms<HTMLIonToastElement, ToastOptions> |
+  Conforms<HTMLIonActionSheetElement, ActionSheetOptions> |
+  Conforms<HTMLIonAlertElement, AlertOptions> |
+  Conforms<HTMLIonPopoverElement, PopoverOptions> |
+  Conforms<HTMLIonPickerElement, PickerOptions> |
+  Conforms<HTMLIonLoadingElement, LoadingOptions>;

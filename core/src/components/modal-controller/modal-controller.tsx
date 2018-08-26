@@ -1,6 +1,6 @@
 import { Component, Method, Prop } from '@stencil/core';
 
-import { ModalOptions, OverlayController } from '../../interface';
+import { ComponentRef, ModalOptions, OverlayController } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
 
 @Component({
@@ -14,7 +14,7 @@ export class ModalController implements OverlayController {
    * Create a modal overlay with modal options.
    */
   @Method()
-  create(opts?: ModalOptions): Promise<HTMLIonModalElement> {
+  create<T extends ComponentRef>(opts: ModalOptions<T>): Promise<HTMLIonModalElement> {
     return createOverlay(this.doc.createElement('ion-modal'), opts);
   }
 

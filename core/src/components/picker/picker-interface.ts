@@ -1,7 +1,7 @@
 
 export interface PickerOptions {
+  columns: PickerColumn[];
   buttons?: PickerButton[];
-  columns?: PickerColumn[];
   cssClass?: string | string[];
   backdropDismiss?: boolean;
   animated?: boolean;
