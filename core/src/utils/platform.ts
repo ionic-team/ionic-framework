@@ -7,6 +7,7 @@ export const PLATFORMS_MAP = {
   'phablet': isPhablet,
   'tablet': isTablet,
   'cordova': isCordova,
+  'capacitor': isCapacitorNative,
   'electron': isElectron,
   'pwa': isPWA,
   'mobile': isMobile,
