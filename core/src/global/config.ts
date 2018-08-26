@@ -14,7 +14,7 @@ export interface IonicConfig {
   spinner?: string;
   loadingSpinner?: string;
   menuIcon?: string;
-  animate?: boolean;
+  animated?: boolean;
   pickerSpinner?: string;
   refreshingIcon?: string;
   refreshingSpinner?: string;

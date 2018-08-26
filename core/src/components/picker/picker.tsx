@@ -81,7 +81,7 @@ export class Picker implements OverlayInterface {
   /**
    * If true, the picker will animate. Defaults to `true`.
    */
-  @Prop() willAnimate = true;
+  @Prop() animated = true;
 
   /**
    * Emitted after the picker has loaded.

@@ -37,7 +37,7 @@
       const loadingController = document.querySelector('ion-loading-controller');
       await loadingController.componentOnReady();
       const loadingElement = await loadingController.create({
-        content: 'Hellooo',
+        message: 'Hellooo',
         duration: 2000
       });
       return await loadingElement.present();

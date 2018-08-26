@@ -16,6 +16,7 @@ Modals can be created using a [Modal Controller](../../modal-controller/ModalCon
 
 | Property          | Attribute          | Description                                                                                                      | Type                 |
 | ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | -------------------- |
+| `animated`        | `animated`         | If true, the modal will animate. Defaults to `true`.                                                             | `boolean`            |
 | `backdropDismiss` | `backdrop-dismiss` | If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.                           | `boolean`            |
 | `componentProps`  | --                 | The data to pass to the modal component.                                                                         | `ComponentProps`     |
 | `component`       | `component`        | The component to display inside of the modal.                                                                    | `ComponentRef`       |
@@ -26,7 +27,6 @@ Modals can be created using a [Modal Controller](../../modal-controller/ModalCon
 | `leaveAnimation`  | --                 | Animation to use when the modal is dismissed.                                                                    | `AnimationBuilder`   |
 | `overlayId`       | `overlay-id`       |                                                                                                                  | `number`             |
 | `showBackdrop`    | `show-backdrop`    | If true, a backdrop will be displayed behind the modal. Defaults to `true`.                                      | `boolean`            |
-| `willAnimate`     | `will-animate`     | If true, the modal will animate. Defaults to `true`.                                                             | `boolean`            |
 
 
 ## Events

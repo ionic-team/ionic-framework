@@ -836,7 +836,7 @@ describe('NavController', () => {
 
   });
 
-  describe('canSwipeBack', () => {
+  describe('canStart', () => {
     it('should not swipe back when its not enabled', () => {
       nav.swipeGesture = false;
 
@@ -844,7 +844,7 @@ describe('NavController', () => {
       const view2 = mockView();
       mockViews(nav, [view1, view2]);
 
-      const result = nav['canSwipeBack']();
+      const result = nav['canStart']();
       expect(result).toEqual(false);
     });
 
@@ -854,7 +854,7 @@ describe('NavController', () => {
       const view2 = mockView();
       mockViews(nav, [view1, view2]);
 
-      const result = nav['canSwipeBack']();
+      const result = nav['canStart']();
       expect(result).toEqual(true);
     });
   });

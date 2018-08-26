@@ -71,7 +71,7 @@ export class Toast implements OverlayInterface {
   /**
    * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
    */
-  @Prop() position?: string;
+  @Prop() position?: 'top' | 'bottom';
 
   /**
    * If true, the close button will be displayed. Defaults to `false`.
@@ -86,7 +86,7 @@ export class Toast implements OverlayInterface {
   /**
    * If true, the toast will animate. Defaults to `true`.
    */
-  @Prop() willAnimate = true;
+  @Prop() animated = true;
 
   /**
    * Emitted after the toast has loaded.

@@ -74,7 +74,7 @@ export class Modal implements OverlayInterface {
   /**
    * If true, the modal will animate. Defaults to `true`.
    */
-  @Prop() willAnimate = true;
+  @Prop() animated = true;
 
   /**
    * Emitted after the modal has loaded.

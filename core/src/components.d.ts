@@ -49,6 +49,7 @@ import {
   SelectInterface,
   SelectPopoverOption,
   Side,
+  SpinnerTypes,
   StyleEvent,
   TabbarLayout,
   TabbarPlacement,
@@ -83,6 +84,10 @@ export namespace Components {
   interface IonActionSheetControllerAttributes extends StencilHTMLAttributes {}
 
   interface IonActionSheet {
+    /**
+    * If true, the action sheet will animate. Defaults to `true`.
+    */
+    'animated': boolean;
     /**
     * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
     */
@@ -139,12 +144,12 @@ export namespace Components {
     * If true, the action sheet will be translucent. Defaults to `false`.
     */
     'translucent': boolean;
+  }
+  interface IonActionSheetAttributes extends StencilHTMLAttributes {
     /**
     * If true, the action sheet will animate. Defaults to `true`.
     */
-    'willAnimate': boolean;
-  }
-  interface IonActionSheetAttributes extends StencilHTMLAttributes {
+    'animated'?: boolean;
     /**
     * If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.
     */
@@ -209,10 +214,6 @@ export namespace Components {
     * If true, the action sheet will be translucent. Defaults to `false`.
     */
     'translucent'?: boolean;
-    /**
-    * If true, the action sheet will animate. Defaults to `true`.
-    */
-    'willAnimate'?: boolean;
   }
 
   interface IonAlertController {
@@ -232,6 +233,10 @@ export namespace Components {
   interface IonAlertControllerAttributes extends StencilHTMLAttributes {}
 
   interface IonAlert {
+    /**
+    * If true, the alert will animate. Defaults to `true`.
+    */
+    'animated': boolean;
     /**
     * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
     */
@@ -294,12 +299,12 @@ export namespace Components {
     * If true, the alert will be translucent. Defaults to `false`.
     */
     'translucent': boolean;
+  }
+  interface IonAlertAttributes extends StencilHTMLAttributes {
     /**
     * If true, the alert will animate. Defaults to `true`.
     */
-    'willAnimate': boolean;
-  }
-  interface IonAlertAttributes extends StencilHTMLAttributes {
+    'animated'?: boolean;
     /**
     * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
     */
@@ -370,10 +375,6 @@ export namespace Components {
     * If true, the alert will be translucent. Defaults to `false`.
     */
     'translucent'?: boolean;
-    /**
-    * If true, the alert will animate. Defaults to `true`.
-    */
-    'willAnimate'?: boolean;
   }
 
   interface IonAnchor {
@@ -2239,13 +2240,13 @@ export namespace Components {
 
   interface IonLoading {
     /**
+    * If true, the loading indicator will animate. Defaults to `true`.
+    */
+    'animated': boolean;
+    /**
     * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
     */
     'backdropDismiss': boolean;
-    /**
-    * Optional text content to display in the loading indicator.
-    */
-    'content': string;
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
@@ -2271,6 +2272,10 @@ export namespace Components {
     */
     'leaveAnimation': AnimationBuilder;
     /**
+    * Optional text content to display in the loading indicator.
+    */
+    'message': string;
+    /**
     * Returns a promise that resolves when the loading did dismiss. It also accepts a callback that is called in the same circumstances.
     */
     'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
@@ -2295,20 +2300,16 @@ export namespace Components {
     * If true, the loading indicator will be translucent. Defaults to `false`.
     */
     'translucent': boolean;
+  }
+  interface IonLoadingAttributes extends StencilHTMLAttributes {
     /**
     * If true, the loading indicator will animate. Defaults to `true`.
     */
-    'willAnimate': boolean;
-  }
-  interface IonLoadingAttributes extends StencilHTMLAttributes {
+    'animated'?: boolean;
     /**
     * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
     */
     'backdropDismiss'?: boolean;
-    /**
-    * Optional text content to display in the loading indicator.
-    */
-    'content'?: string;
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
@@ -2329,6 +2330,10 @@ export namespace Components {
     * Animation to use when the loading indicator is dismissed.
     */
     'leaveAnimation'?: AnimationBuilder;
+    /**
+    * Optional text content to display in the loading indicator.
+    */
+    'message'?: string;
     /**
     * Emitted after the loading has dismissed.
     */
@@ -2366,10 +2371,6 @@ export namespace Components {
     * If true, the loading indicator will be translucent. Defaults to `false`.
     */
     'translucent'?: boolean;
-    /**
-    * If true, the loading indicator will animate. Defaults to `true`.
-    */
-    'willAnimate'?: boolean;
   }
 
   interface IonMenuButton {
@@ -2582,6 +2583,10 @@ export namespace Components {
 
   interface IonModal {
     /**
+    * If true, the modal will animate. Defaults to `true`.
+    */
+    'animated': boolean;
+    /**
     * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
     */
     'backdropDismiss': boolean;
@@ -2628,12 +2633,12 @@ export namespace Components {
     * If true, a backdrop will be displayed behind the modal. Defaults to `true`.
     */
     'showBackdrop': boolean;
+  }
+  interface IonModalAttributes extends StencilHTMLAttributes {
     /**
     * If true, the modal will animate. Defaults to `true`.
     */
-    'willAnimate': boolean;
-  }
-  interface IonModalAttributes extends StencilHTMLAttributes {
+    'animated'?: boolean;
     /**
     * If true, the modal will be dismissed when the backdrop is clicked. Defaults to `true`.
     */
@@ -2689,10 +2694,6 @@ export namespace Components {
     * If true, a backdrop will be displayed behind the modal. Defaults to `true`.
     */
     'showBackdrop'?: boolean;
-    /**
-    * If true, the modal will animate. Defaults to `true`.
-    */
-    'willAnimate'?: boolean;
   }
 
   interface IonNavPop {}
@@ -2887,6 +2888,10 @@ export namespace Components {
 
   interface IonPicker {
     /**
+    * If true, the picker will animate. Defaults to `true`.
+    */
+    'animated': boolean;
+    /**
     * If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
     */
     'backdropDismiss': boolean;
@@ -2943,12 +2948,12 @@ export namespace Components {
     * If true, a backdrop will be displayed behind the picker. Defaults to `true`.
     */
     'showBackdrop': boolean;
+  }
+  interface IonPickerAttributes extends StencilHTMLAttributes {
     /**
     * If true, the picker will animate. Defaults to `true`.
     */
-    'willAnimate': boolean;
-  }
-  interface IonPickerAttributes extends StencilHTMLAttributes {
+    'animated'?: boolean;
     /**
     * If true, the picker will be dismissed when the backdrop is clicked. Defaults to `true`.
     */
@@ -3010,10 +3015,6 @@ export namespace Components {
     * If true, a backdrop will be displayed behind the picker. Defaults to `true`.
     */
     'showBackdrop'?: boolean;
-    /**
-    * If true, the picker will animate. Defaults to `true`.
-    */
-    'willAnimate'?: boolean;
   }
 
   interface IonPopoverController {
@@ -3033,6 +3034,10 @@ export namespace Components {
   interface IonPopoverControllerAttributes extends StencilHTMLAttributes {}
 
   interface IonPopover {
+    /**
+    * If true, the popover will animate. Defaults to `true`.
+    */
+    'animated': boolean;
     /**
     * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
     */
@@ -3096,12 +3101,12 @@ export namespace Components {
     * If true, the popover will be translucent. Defaults to `false`.
     */
     'translucent': boolean;
+  }
+  interface IonPopoverAttributes extends StencilHTMLAttributes {
     /**
     * If true, the popover will animate. Defaults to `true`.
     */
-    'willAnimate': boolean;
-  }
-  interface IonPopoverAttributes extends StencilHTMLAttributes {
+    'animated'?: boolean;
     /**
     * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
     */
@@ -3173,10 +3178,6 @@ export namespace Components {
     * If true, the popover will be translucent. Defaults to `false`.
     */
     'translucent'?: boolean;
-    /**
-    * If true, the popover will animate. Defaults to `true`.
-    */
-    'willAnimate'?: boolean;
   }
 
   interface IonRadioGroup {
@@ -4284,13 +4285,9 @@ export namespace Components {
     */
     'duration': number;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-    */
-    'mode': Mode;
-    /**
     * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
     */
-    'name': string;
+    'name': SpinnerTypes;
     /**
     * If true, the spinner's animation will be paused. Defaults to `false`.
     */
@@ -4306,13 +4303,9 @@ export namespace Components {
     */
     'duration'?: number;
     /**
-    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
-    */
-    'mode'?: Mode;
-    /**
     * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
     */
-    'name'?: string;
+    'name'?: SpinnerTypes;
     /**
     * If true, the spinner's animation will be paused. Defaults to `false`.
     */
@@ -4871,6 +4864,10 @@ export namespace Components {
 
   interface IonToast {
     /**
+    * If true, the toast will animate. Defaults to `true`.
+    */
+    'animated': boolean;
+    /**
     * Text to display in the close button.
     */
     'closeButtonText': string;
@@ -4911,7 +4908,7 @@ export namespace Components {
     /**
     * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
     */
-    'position': string;
+    'position': 'top' | 'bottom';
     /**
     * Present the toast overlay after it has been created.
     */
@@ -4924,12 +4921,12 @@ export namespace Components {
     * If true, the toast will be translucent. Defaults to `false`.
     */
     'translucent': boolean;
+  }
+  interface IonToastAttributes extends StencilHTMLAttributes {
     /**
     * If true, the toast will animate. Defaults to `true`.
     */
-    'willAnimate': boolean;
-  }
-  interface IonToastAttributes extends StencilHTMLAttributes {
+    'animated'?: boolean;
     /**
     * Text to display in the close button.
     */
@@ -4983,7 +4980,7 @@ export namespace Components {
     /**
     * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
     */
-    'position'?: string;
+    'position'?: 'top' | 'bottom';
     /**
     * If true, the close button will be displayed. Defaults to `false`.
     */
@@ -4992,10 +4989,6 @@ export namespace Components {
     * If true, the toast will be translucent. Defaults to `false`.
     */
     'translucent'?: boolean;
-    /**
-    * If true, the toast will animate. Defaults to `true`.
-    */
-    'willAnimate'?: boolean;
   }
 
   interface IonToggle {

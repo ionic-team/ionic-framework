@@ -1,9 +1,11 @@
+import { SpinnerTypes } from '../../interface';
 
 export interface LoadingOptions {
-  spinner?: string;
-  content?: string;
+  spinner?: SpinnerTypes;
+  message?: string;
   cssClass?: string | string[];
   showBackdrop?: boolean;
   duration?: number;
   translucent?: boolean;
+  animated?: boolean;
 }

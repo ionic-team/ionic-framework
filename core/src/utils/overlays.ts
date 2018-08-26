@@ -135,7 +135,7 @@ async function overlayAnimation(
   const aniRoot = baseEl.shadowRoot || overlay.el;
   const animation = overlay.animation = await overlay.animationCtrl.create(animationBuilder, aniRoot, opts);
   overlay.animation = animation;
-  if (!overlay.willAnimate) {
+  if (!overlay.animated) {
     animation.duration(0);
   }
   if (overlay.keyboardClose) {

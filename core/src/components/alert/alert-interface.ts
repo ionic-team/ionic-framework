@@ -10,6 +10,7 @@ export interface AlertOptions {
   buttons?: (AlertButton | string)[];
   backdropDismiss?: boolean;
   translucent?: boolean;
+  animated?: boolean;
 }
 
 export interface AlertInput {

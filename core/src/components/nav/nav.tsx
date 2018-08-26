@@ -48,7 +48,7 @@ export class Nav implements NavOutlet {
   /**
    * If the nav should animate the components or not
    */
-  @Prop({ mutable: true }) animated?: boolean;
+  @Prop() animated = true;
 
   /** @hidden */
   @Prop() delegate?: FrameworkDelegate;
@@ -101,9 +101,7 @@ export class Nav implements NavOutlet {
         this.mode === 'ios'
       );
     }
-    if (this.animated === undefined) {
-      this.animated = this.config.getBoolean('animate', true);
-    }
+
     this.ionNavWillLoad.emit();
   }
 
@@ -783,15 +781,17 @@ export class Nav implements NavOutlet {
 
     const enteringEl = enteringView.element!;
     const leavingEl = leavingView && leavingView.element!;
+    const animated = this.animated && this.config.getBoolean('animated', true);
     const animationOpts: TransitionOptions = {
       mode: this.mode,
-      animated: this.animated,
       showGoBack: this.canGoBack(enteringView),
       animationCtrl: this.animationCtrl,
-      progressCallback,
       queue: this.queue,
       window: this.win,
       baseEl: this.el,
+      progressCallback,
+      animated,
+
       enteringEl,
       leavingEl,
 

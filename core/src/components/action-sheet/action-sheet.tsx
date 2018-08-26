@@ -83,7 +83,7 @@ export class ActionSheet implements OverlayInterface {
   /**
    * If true, the action sheet will animate. Defaults to `true`.
    */
-  @Prop() willAnimate = true;
+  @Prop() animated = true;
 
   /**
    * Emitted after the alert has loaded.

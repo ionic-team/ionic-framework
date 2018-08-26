@@ -18,6 +18,7 @@ A button's `role` property can either be `destructive` or `cancel`. Buttons with
 
 | Property          | Attribute          | Description                                                                                                      | Type                  |
 | ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `animated`        | `animated`         | If true, the action sheet will animate. Defaults to `true`.                                                      | `boolean`             |
 | `backdropDismiss` | `backdrop-dismiss` | If true, the action sheet will be dismissed when the backdrop is clicked. Defaults to `true`.                    | `boolean`             |
 | `buttons`         | --                 | An array of buttons for the action sheet.                                                                        | `ActionSheetButton[]` |
 | `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string`, `string[]`  |
@@ -28,7 +29,6 @@ A button's `role` property can either be `destructive` or `cancel`. Buttons with
 | `overlayId`       | `overlay-id`       | Unique ID to be used with the overlay. Internal only                                                             | `number`              |
 | `subHeader`       | `sub-header`       | Subtitle for the action sheet.                                                                                   | `string`              |
 | `translucent`     | `translucent`      | If true, the action sheet will be translucent. Defaults to `false`.                                              | `boolean`             |
-| `willAnimate`     | `will-animate`     | If true, the action sheet will animate. Defaults to `true`.                                                      | `boolean`             |
 
 
 ## Events

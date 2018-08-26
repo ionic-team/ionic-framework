@@ -10,7 +10,7 @@ export interface OverlayEventDetail<T = any> {
 export interface OverlayInterface {
   mode: Mode;
   el: HTMLElement;
-  willAnimate: boolean;
+  animated: boolean;
   keyboardClose: boolean;
   config: Config;
   overlayId: number;

@@ -11,4 +11,5 @@ export interface PopoverOptions {
   cssClass?: string | string[];
   event?: Event;
   delegate?: FrameworkDelegate;
+  animated?: boolean;
 }

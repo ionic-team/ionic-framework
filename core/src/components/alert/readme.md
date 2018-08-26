@@ -27,6 +27,7 @@ Alerts can also include several different inputs whose data can be passed back t
 
 | Property          | Attribute          | Description                                                                                                      | Type                       |
 | ----------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| `animated`        | `animated`         | If true, the alert will animate. Defaults to `true`.                                                             | `boolean`                  |
 | `backdropDismiss` | `backdrop-dismiss` | If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.                           | `boolean`                  |
 | `buttons`         | --                 | Array of buttons to be added to the alert.                                                                       | `(AlertButton | string)[]` |
 | `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string`, `string[]`       |
@@ -40,7 +41,6 @@ Alerts can also include several different inputs whose data can be passed back t
 | `overlayId`       | `overlay-id`       |                                                                                                                  | `number`                   |
 | `subHeader`       | `sub-header`       | The subtitle in the heading of the alert. Displayed under the title.                                             | `string`                   |
 | `translucent`     | `translucent`      | If true, the alert will be translucent. Defaults to `false`.                                                     | `boolean`                  |
-| `willAnimate`     | `will-animate`     | If true, the alert will animate. Defaults to `true`.                                                             | `boolean`                  |
 
 
 ## Events

@@ -46,7 +46,7 @@ export class Loading implements OverlayInterface {
   /**
    * Optional text content to display in the loading indicator.
    */
-  @Prop() content?: string;
+  @Prop() message?: string;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
@@ -83,7 +83,7 @@ export class Loading implements OverlayInterface {
   /**
    * If true, the loading indicator will animate. Defaults to `true`.
    */
-  @Prop() willAnimate = true;
+  @Prop() animated = true;
 
   /**
    * Emitted after the loading has unloaded.
@@ -205,7 +205,7 @@ export class Loading implements OverlayInterface {
           </div>
         )}
 
-        {this.content && <div class="loading-content">{this.content}</div>}
+        {this.message && <div class="loading-content">{this.message}</div>}
       </div>
     ];
   }

@@ -9,4 +9,5 @@ export interface ModalOptions {
   leaveAnimation?: AnimationBuilder;
   cssClass?: string | string[];
   delegate?: FrameworkDelegate;
+  animated?: boolean;
 }

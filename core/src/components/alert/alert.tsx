@@ -94,7 +94,7 @@ export class Alert implements OverlayInterface {
   /**
    * If true, the alert will animate. Defaults to `true`.
    */
-  @Prop() willAnimate = true;
+  @Prop() animated = true;
 
   /**
    * Emitted after the alert has presented.

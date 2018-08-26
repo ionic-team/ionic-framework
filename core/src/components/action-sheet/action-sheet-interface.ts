@@ -6,6 +6,7 @@ export interface ActionSheetOptions {
   buttons: (ActionSheetButton | string)[];
   backdropDismiss?: boolean;
   translucent?: boolean;
+  animated?: boolean;
 }
 
 export interface ActionSheetButton {

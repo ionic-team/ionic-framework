@@ -1,16 +1,17 @@
 
-export interface PickerButton {
-  text?: string;
-  role?: string;
-  cssClass?: string | string[];
-  handler?: (value: any) => boolean | void;
-}
-
 export interface PickerOptions {
   buttons?: PickerButton[];
   columns?: PickerColumn[];
   cssClass?: string | string[];
   backdropDismiss?: boolean;
+  animated?: boolean;
+}
+
+export interface PickerButton {
+  text?: string;
+  role?: string;
+  cssClass?: string | string[];
+  handler?: (value: any) => boolean | void;
 }
 
 export interface PickerColumn {

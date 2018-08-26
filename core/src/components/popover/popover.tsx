@@ -95,7 +95,7 @@ export class Popover implements OverlayInterface {
   /**
    * If true, the popover will animate. Defaults to `true`.
    */
-  @Prop() willAnimate = true;
+  @Prop() animated = true;
 
   /**
    * Emitted after the popover has loaded.
