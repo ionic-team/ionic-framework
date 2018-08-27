@@ -367,18 +367,19 @@ export class Select {
     const labelText = (label) ? label.textContent : null;
 
     const interfaceOptions = this.interfaceOptions;
+    const inputType = (this.multiple ? 'checkbox' : 'radio');
     const alertOpts: AlertOptions = {
       ...interfaceOptions,
 
       header: interfaceOptions.header ? interfaceOptions.header : labelText,
       inputs: this.childOpts.map(o => {
         return {
-          type: (this.multiple ? 'checkbox' : 'radio'),
+          type: inputType,
           label: o.textContent,
           value: o.value,
           checked: o.selected,
           disabled: o.disabled
-        } as AlertInput;
+        };
       }),
       buttons: [
         {

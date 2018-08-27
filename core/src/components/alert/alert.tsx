@@ -143,7 +143,7 @@ export class Alert implements OverlayInterface {
     // An alert can be created with several different inputs. Radios,
     // checkboxes and inputs are all accepted, but they cannot be mixed.
     const inputTypes = new Set(inputs.map(i => i.type));
-    if (inputTypes.has('checkbox') || inputTypes.has('radio')) {
+    if (inputTypes.has('checkbox') && inputTypes.has('radio')) {
       console.warn(`Alert cannot mix input types: ${(Array.from(inputTypes.values()).join('/'))}. Please see alert docs for more info.`);
     }
     this.inputType = inputTypes.values().next().value;
