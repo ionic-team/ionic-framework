@@ -70,6 +70,14 @@ Licensed under MIT
 | `update`           | Update the underlying slider implementation. Call this if you've added or removed child slides. |
 
 
+## CSS Custom Properties
+
+| Name                         | Description                                |
+| ---------------------------- | ------------------------------------------ |
+| `--bullet-background`        | Background of the pagination bullets       |
+| `--bullet-background-active` | Background of the active pagination bullet |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
