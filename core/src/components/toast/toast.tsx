@@ -71,7 +71,7 @@ export class Toast implements OverlayInterface {
   /**
    * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
    */
-  @Prop() position?: 'top' | 'bottom';
+  @Prop() position: 'top' | 'bottom' | 'middle' = 'bottom';
 
   /**
    * If true, the close button will be displayed. Defaults to `false`.
@@ -190,10 +190,9 @@ export class Toast implements OverlayInterface {
   }
 
   render() {
-    const position = this.position ? this.position : 'bottom';
     const wrapperClass = {
       'toast-wrapper': true,
-      [`toast-${position}`]: true
+      [`toast-${this.position}`]: true
     };
     return (
       <div class={wrapperClass}>

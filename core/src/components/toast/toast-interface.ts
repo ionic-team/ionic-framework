@@ -6,7 +6,7 @@ export interface ToastOptions {
   duration?: number;
   showCloseButton?: boolean;
   closeButtonText?: string;
-  position?: 'top' | 'bottom';
+  position?: 'top' | 'bottom' | 'middle';
   translucent?: boolean;
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
