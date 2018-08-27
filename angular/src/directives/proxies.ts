@@ -302,12 +302,12 @@ export class Header {
 }
 
 export declare interface HideWhen extends Promisify<StencilComponents<'IonHideWhen'>> {}
-@Component({ selector: 'ion-hide-when', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'orientation', 'mediaQuery', 'size', 'platform', 'or'] })
+@Component({ selector: 'ion-hide-when', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['modes', 'orientation', 'mediaQuery', 'size', 'platform', 'or'] })
 export class HideWhen {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyInputs(this, el, ['mode', 'orientation', 'mediaQuery', 'size', 'platform', 'or']);
+    proxyInputs(this, el, ['modes', 'orientation', 'mediaQuery', 'size', 'platform', 'or']);
   }
 }
 
@@ -737,12 +737,12 @@ export class SelectPopover {
 }
 
 export declare interface ShowWhen extends Promisify<StencilComponents<'IonShowWhen'>> {}
-@Component({ selector: 'ion-show-when', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'orientation', 'mediaQuery', 'size', 'platform', 'or'] })
+@Component({ selector: 'ion-show-when', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['modes', 'orientation', 'mediaQuery', 'size', 'platform', 'or'] })
 export class ShowWhen {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyInputs(this, el, ['mode', 'orientation', 'mediaQuery', 'size', 'platform', 'or']);
+    proxyInputs(this, el, ['modes', 'orientation', 'mediaQuery', 'size', 'platform', 'or']);
   }
 }
 
@@ -790,12 +790,12 @@ export class Slides {
 }
 
 export declare interface Spinner extends Promisify<StencilComponents<'IonSpinner'>> {}
-@Component({ selector: 'ion-spinner', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'duration', 'name', 'paused'] })
+@Component({ selector: 'ion-spinner', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'duration', 'name', 'paused'] })
 export class Spinner {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyInputs(this, el, ['color', 'mode', 'duration', 'name', 'paused']);
+    proxyInputs(this, el, ['color', 'duration', 'name', 'paused']);
   }
 }
 
@@ -854,7 +854,7 @@ export class Text {
 }
 
 export declare interface Textarea extends Promisify<StencilComponents<'IonTextarea'>> {}
-@Component({ selector: 'ion-textarea', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['color', 'mode', 'autocapitalize', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value'] })
+@Component({ selector: 'ion-textarea', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'color', 'autocapitalize', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value'] })
 export class Textarea {
   ionChange: EventEmitter<CustomEvent>;
   ionInput: EventEmitter<CustomEvent>;
@@ -865,7 +865,7 @@ export class Textarea {
   constructor(r: ElementRef) {
     const el = r.nativeElement;
     proxyMethods(this, el, ['focus']);
-    proxyInputs(this, el, ['color', 'mode', 'autocapitalize', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value']);
+    proxyInputs(this, el, ['mode', 'color', 'autocapitalize', 'autofocus', 'clearOnEdit', 'debounce', 'disabled', 'maxlength', 'minlength', 'name', 'placeholder', 'readonly', 'required', 'spellcheck', 'cols', 'rows', 'wrap', 'value']);
     proxyOutputs(this, el, ['ionChange', 'ionInput', 'ionStyle', 'ionBlur', 'ionFocus']);
   }
 }
