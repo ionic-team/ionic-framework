@@ -1,3 +1,16 @@
+<a name="4.0.0-beta.5"></a>
+# [4.0.0-beta.5](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.4...v4.0.0-beta.5) (2018-08-27)
+
+### Bug Fixes
+
+- Ionic/angular compiler error
+
+### Breaking Changes
+
+- Update Angular to 6.1
+- Update Typescript to 2.9.2
+
+
 <a name="4.0.0-beta.4"></a>
 # [4.0.0-beta.4](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.3...v4.0.0-beta.4) (2018-08-27)
 
