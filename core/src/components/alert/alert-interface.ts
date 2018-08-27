@@ -1,7 +1,7 @@
 import { TextFieldTypes } from '../../interface';
 
 export interface AlertOptions {
-  header: string;
+  header?: string;
   subHeader?: string;
   message?: string;
   cssClass?: string | string[];
