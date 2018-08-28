@@ -67,4 +67,5 @@
 
 :host(.in-color-toolbar:not(.ion-color)) {
   --color: #{current-color(contrast)};
+  --color-checked: #{current-color(contrast)};
 }
