@@ -33,7 +33,7 @@ export interface OverlayInterface {
 export interface OverlayController {
   create(opts?: any): Promise<HTMLElement>;
   dismiss(data?: any, role?: string, alertId?: number): Promise<void>;
-  getTop(): Promise<HTMLElement>;
+  getTop(): Promise<HTMLIonOverlayElement | undefined>;
 }
 
 export interface HTMLIonOverlayElement extends HTMLStencilElement {

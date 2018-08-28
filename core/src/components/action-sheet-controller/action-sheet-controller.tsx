@@ -30,7 +30,7 @@ export class ActionSheetController implements OverlayController {
    * Get the most recently opened action sheet overlay.
    */
   @Method()
-  async getTop(): Promise<HTMLIonActionSheetElement> {
+  async getTop(): Promise<HTMLIonActionSheetElement | undefined> {
     return getOverlay(this.doc, 'ion-action-sheet') as HTMLIonActionSheetElement;
   }
 }

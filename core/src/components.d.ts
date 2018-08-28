@@ -6,7 +6,7 @@
 
 import '@stencil/core';
 
-import 'ionicons'
+import 'ionicons';
 import {
   ActionSheetButton,
   ActionSheetOptions,
@@ -79,7 +79,7 @@ export namespace Components {
     /**
     * Get the most recently opened action sheet overlay.
     */
-    'getTop': () => Promise<HTMLIonActionSheetElement>;
+    'getTop': () => Promise<HTMLIonActionSheetElement | undefined>;
   }
   interface IonActionSheetControllerAttributes extends StencilHTMLAttributes {}
 
@@ -228,7 +228,7 @@ export namespace Components {
     /**
     * Get the most recently opened alert overlay.
     */
-    'getTop': () => Promise<HTMLIonAlertElement>;
+    'getTop': () => Promise<HTMLIonAlertElement | undefined>;
   }
   interface IonAlertControllerAttributes extends StencilHTMLAttributes {}
 
@@ -2219,7 +2219,7 @@ export namespace Components {
     /**
     * Get the most recently opened loading overlay.
     */
-    'getTop': () => Promise<HTMLIonLoadingElement>;
+    'getTop': () => Promise<HTMLIonLoadingElement | undefined>;
   }
   interface IonLoadingControllerAttributes extends StencilHTMLAttributes {}
 
@@ -2561,7 +2561,7 @@ export namespace Components {
     /**
     * Get the most recently opened modal overlay.
     */
-    'getTop': () => Promise<HTMLIonModalElement>;
+    'getTop': () => Promise<HTMLIonModalElement | undefined>;
   }
   interface IonModalControllerAttributes extends StencilHTMLAttributes {}
 
@@ -2861,7 +2861,7 @@ export namespace Components {
   interface IonPickerController {
     'create': (opts: PickerOptions) => Promise<HTMLIonPickerElement>;
     'dismiss': (data?: any, role?: string | undefined, pickerId?: number | undefined) => Promise<void>;
-    'getTop': () => Promise<HTMLIonPickerElement>;
+    'getTop': () => Promise<HTMLIonPickerElement | undefined>;
   }
   interface IonPickerControllerAttributes extends StencilHTMLAttributes {}
 
@@ -3008,7 +3008,7 @@ export namespace Components {
     /**
     * Get the most recently opened popover overlay.
     */
-    'getTop': () => Promise<HTMLIonPopoverElement>;
+    'getTop': () => Promise<HTMLIonPopoverElement | undefined>;
   }
   interface IonPopoverControllerAttributes extends StencilHTMLAttributes {}
 
@@ -4828,7 +4828,7 @@ export namespace Components {
     /**
     * Get the most recently opened toast overlay.
     */
-    'getTop': () => Promise<HTMLIonToastElement>;
+    'getTop': () => Promise<HTMLIonToastElement | undefined>;
   }
   interface IonToastControllerAttributes extends StencilHTMLAttributes {}
 

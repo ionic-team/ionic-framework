@@ -30,7 +30,7 @@ export class ToastController implements OverlayController {
    * Get the most recently opened toast overlay.
    */
   @Method()
-  async getTop(): Promise<HTMLIonToastElement> {
+  async getTop(): Promise<HTMLIonToastElement | undefined> {
     return getOverlay(this.doc, 'ion-toast') as HTMLIonToastElement;
   }
 }

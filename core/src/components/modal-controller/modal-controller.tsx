@@ -30,7 +30,7 @@ export class ModalController implements OverlayController {
    * Get the most recently opened modal overlay.
    */
   @Method()
-  async getTop(): Promise<HTMLIonModalElement> {
+  async getTop(): Promise<HTMLIonModalElement | undefined> {
     return getOverlay(this.doc, 'ion-modal') as HTMLIonModalElement;
   }
 }
