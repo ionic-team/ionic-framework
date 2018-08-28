@@ -218,9 +218,7 @@ export class Slides {
    * Start auto play.
    */
   @Method()
-  startAutoplay()
-
-  {
+  startAutoplay() {
     this.swiper.autoplay.start();
   }
 
