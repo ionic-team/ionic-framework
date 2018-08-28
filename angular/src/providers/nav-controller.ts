@@ -30,7 +30,7 @@ export class NavController {
     }
   }
 
-  navigateBack(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
+  navigateBack(url: string | UrlTree | any[], animated?: boolean, extras?: NavigationExtras) {
     this.setIntent(NavIntent.Back, animated);
     extras = { replaceUrl: true, ...extras };
     if (Array.isArray(url)) {
@@ -40,7 +40,7 @@ export class NavController {
     }
   }
 
-  navigateRoot(url: string | UrlTree, animated?: boolean, extras?: NavigationExtras) {
+  navigateRoot(url: string | UrlTree | any[], animated?: boolean, extras?: NavigationExtras) {
     this.setIntent(NavIntent.Root, animated);
     if (Array.isArray(url)) {
       return this.router!.navigate(url, extras);
