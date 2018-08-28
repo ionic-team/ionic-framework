@@ -7,8 +7,24 @@
 
 ### Breaking Changes
 
-- Update Angular to 6.1
+#### NavController
+
+Changes are required to accommodate some new useful routing APIs and match the ng router ones closely:
+
+```
+goForward() -> navigateForward()
+goBack() -> navigateBack()
+goRoot() -> navigateRoot()
+```
+
+#### Dependencies
+
+The following dependencies need to be updated to resolve build errors
+
+- Update Angular to 6.1 or higher
+  - [Angular changelog](https://github.com/angular/angular/blob/master/CHANGELOG.md#610-2018-07-25)
 - Update Typescript to 2.9.2
+  - `"typescript": "~2.9.2"`
 
 
 <a name="4.0.0-beta.4"></a>
