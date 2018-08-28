@@ -9,7 +9,7 @@ export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts:
   // convert the passed in overlay options into props
   // that get passed down into the new overlay
   Object.assign(element, opts);
-
+  element.classList.add('ion-page-hidden');
   element.overlayId = lastId++;
 
   // append the overlay element to the document body
@@ -131,6 +131,9 @@ async function overlayAnimation(
     overlay.animation.destroy();
     overlay.animation = undefined;
   }
+
+  // Make overlay visible in case it's hidden
+  baseEl.classList.remove('ion-page-hidden');
 
   const aniRoot = baseEl.shadowRoot || overlay.el;
   const animation = overlay.animation = await overlay.animationCtrl.create(animationBuilder, aniRoot, opts);
