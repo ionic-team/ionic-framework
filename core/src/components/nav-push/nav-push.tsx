@@ -19,12 +19,11 @@ export class NavPush {
   @Prop() componentProps?: ComponentProps;
 
   @Listen('child:click')
-  push(): Promise<any> {
+  push() {
     const nav = this.el.closest('ion-nav');
     const toPush = this.component;
-    if (nav && toPush && !nav.isAnimating()) {
-      return nav.push(toPush, this.componentProps);
+    if (nav && toPush) {
+      nav.push(toPush, this.componentProps, { skipIfBusy: true });
     }
-    return Promise.resolve(null);
   }
 }

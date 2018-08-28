@@ -231,7 +231,7 @@ export class Datetime {
 
     const pickerOptions = this.generatePickerOptions();
     this.picker = await this.pickerCtrl.create(pickerOptions);
-    this.validate();
+    await this.validate();
     if (this.picker) {
       await this.picker.present();
     }
@@ -344,11 +344,11 @@ export class Datetime {
     return divyColumns(columns);
   }
 
-  private validate() {
+  private async validate() {
     const today = new Date();
     const minCompareVal = dateDataSortValue(this.datetimeMin);
     const maxCompareVal = dateDataSortValue(this.datetimeMax);
-    const yearCol = this.picker!.getColumn('year');
+    const yearCol = await this.picker!.getColumn('year');
 
     let selectedYear: number = today.getFullYear();
     if (yearCol) {
@@ -367,7 +367,7 @@ export class Datetime {
       }
     }
 
-    const selectedMonth = this.validateColumn(
+    const selectedMonth = await this.validateColumn(
       'month', 1,
       minCompareVal, maxCompareVal,
       [selectedYear, 0, 0, 0, 0],
@@ -375,21 +375,21 @@ export class Datetime {
     );
 
     const numDaysInMonth = daysInMonth(selectedMonth, selectedYear);
-    const selectedDay = this.validateColumn(
+    const selectedDay = await this.validateColumn(
       'day', 2,
       minCompareVal, maxCompareVal,
       [selectedYear, selectedMonth, 0, 0, 0],
       [selectedYear, selectedMonth, numDaysInMonth, 23, 59]
     );
 
-    const selectedHour = this.validateColumn(
+    const selectedHour = await this.validateColumn(
       'hour', 3,
       minCompareVal, maxCompareVal,
       [selectedYear, selectedMonth, selectedDay, 0, 0],
       [selectedYear, selectedMonth, selectedDay, 23, 59]
     );
 
-    this.validateColumn(
+    await this.validateColumn(
       'minute', 4,
       minCompareVal, maxCompareVal,
       [selectedYear, selectedMonth, selectedDay, selectedHour, 0],
@@ -449,8 +449,8 @@ export class Datetime {
     }
   }
 
-  private validateColumn(name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): number {
-    const column = this.picker!.getColumn(name);
+  private async validateColumn(name: string, index: number, min: number, max: number, lowerBounds: number[], upperBounds: number[]): Promise<number> {
+    const column = await this.picker!.getColumn(name);
     if (!column) {
       return 0;
     }

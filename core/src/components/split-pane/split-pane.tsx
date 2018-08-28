@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
@@ -48,22 +48,22 @@ export class SplitPane {
   /**
    * Emitted when the split pane is visible.
    */
-  @Event() ionChange!: EventEmitter<{visible: boolean}>;
+  @Event({ bubbles: false }) ionChange!: EventEmitter<{visible: boolean}>;
 
   /**
    * Expression to be called when the split-pane visibility has changed
    */
-  @Event() protected ionSplitPaneVisible!: EventEmitter;
+  @Event() ionSplitPaneVisible!: EventEmitter;
 
   @Watch('visible')
   visibleChanged(visible: boolean) {
-    const detail = { visible };
+    const detail = { visible, isPane: this.isPane.bind(this) };
     this.ionChange.emit(detail);
     this.ionSplitPaneVisible.emit(detail);
   }
 
   componentDidLoad() {
-    this._styleChildren();
+    this.styleChildren();
     this.updateState();
   }
 
@@ -118,15 +118,7 @@ export class SplitPane {
     this.visible = mediaList.matches;
   }
 
-  /** Returns if the split pane is toggled or not */
-  @Method()
-  isVisible(): boolean {
-    return this.visible;
-  }
-
-  /** @hidden */
-  @Method()
-  isPane(element: HTMLElement): boolean {
+  private isPane(element: HTMLElement): boolean {
     if (!this.visible) {
       return false;
     }
@@ -134,7 +126,7 @@ export class SplitPane {
       && element.classList.contains(SPLIT_PANE_SIDE);
   }
 
-  private _styleChildren() {
+  private styleChildren() {
     if (this.isServer) {
       return;
     }
@@ -166,7 +158,6 @@ export class SplitPane {
       }
     };
   }
-
 }
 
 function setPaneClass(el: HTMLElement, isMain: boolean) {

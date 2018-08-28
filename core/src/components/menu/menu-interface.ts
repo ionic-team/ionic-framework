@@ -9,20 +9,19 @@ export interface MenuI {
   isAnimating: boolean;
   width: number;
   isEndSide: boolean;
+  _isOpen: boolean;
 
   backdropEl?: HTMLElement;
   menuInnerEl?: HTMLElement;
   contentEl?: HTMLElement;
   menuCtrl?: HTMLIonMenuControllerElement;
 
-  isOpen(): boolean;
+  isActive(): Promise<boolean>;
   open(animated?: boolean): Promise<boolean>;
   close(animated?: boolean): Promise<boolean>;
   toggle(animated?: boolean): Promise<boolean>;
   setOpen(shouldOpen: boolean, animated?: boolean): Promise<boolean>;
   _setOpen(shouldOpen: boolean, animated?: boolean): Promise<boolean>;
-  isActive(): boolean;
-  getWidth(): number;
 }
 
 export interface MenuChangeEvent {

@@ -180,8 +180,8 @@ export class Modal implements OverlayInterface {
    *
    */
   @Method()
-  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionModalDidDismiss', callback);
+  onDidDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionModalDidDismiss');
   }
 
   /**
@@ -190,8 +190,8 @@ export class Modal implements OverlayInterface {
    *
    */
   @Method()
-  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionModalWillDismiss', callback);
+  onWillDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionModalWillDismiss');
   }
 
   hostData() {

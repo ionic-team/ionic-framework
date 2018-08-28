@@ -38,7 +38,6 @@ These can be controlled from the templates, or programmatically using the MenuCo
 | Method     | Description |
 | ---------- | ----------- |
 | `close`    |             |
-| `getWidth` |             |
 | `isActive` |             |
 | `isOpen`   |             |
 | `open`     |             |

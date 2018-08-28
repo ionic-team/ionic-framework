@@ -79,7 +79,7 @@ export namespace Components {
     /**
     * Get the most recently opened action sheet overlay.
     */
-    'getTop': () => HTMLIonActionSheetElement;
+    'getTop': () => Promise<HTMLIonActionSheetElement>;
   }
   interface IonActionSheetControllerAttributes extends StencilHTMLAttributes {}
 
@@ -123,11 +123,11 @@ export namespace Components {
     /**
     * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback that is called in the same circustances.
     */
-    'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+    'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
     * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback that is called in the same circustances.
     */
-    'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+    'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
     * Unique ID to be used with the overlay. Internal only
     */
@@ -228,7 +228,7 @@ export namespace Components {
     /**
     * Get the most recently opened alert overlay.
     */
-    'getTop': () => HTMLIonAlertElement;
+    'getTop': () => Promise<HTMLIonAlertElement>;
   }
   interface IonAlertControllerAttributes extends StencilHTMLAttributes {}
 
@@ -281,11 +281,11 @@ export namespace Components {
     /**
     * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circumstances.
     */
-    'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+    'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
     * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circumstances.
     */
-    'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+    'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayId': number;
     /**
     * Present the alert overlay after it has been created.
@@ -1123,11 +1123,11 @@ export namespace Components {
     * If true, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.
     */
     'fullscreen': boolean;
-    'getScrollElement': () => HTMLElement;
+    'getScrollElement': () => Promise<HTMLElement>;
     /**
     * Scroll by a specified X/Y distance in the component
     */
-    'scrollByPoint': (x: number, y: number, duration: number) => Promise<any>;
+    'scrollByPoint': (x: number, y: number, duration: number) => Promise<void>;
     /**
     * Because of performance reasons, ionScroll events are disabled by default, in order to enable them and start listening from (ionScroll), set this property to `true`.
     */
@@ -1996,12 +1996,10 @@ export namespace Components {
 
   interface IonItemOptions {
     'fireSwipeEvent': () => void;
-    'isEndSide': () => boolean;
     /**
     * The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
     */
     'side': Side;
-    'width': () => number;
   }
   interface IonItemOptionsAttributes extends StencilHTMLAttributes {
     /**
@@ -2018,11 +2016,11 @@ export namespace Components {
     /**
     * Close the sliding item. Items can also be closed from the [List](../../list/List).
     */
-    'close': () => void;
+    'close': () => Promise<void>;
     /**
     * Close all of the sliding items in the list. Items can also be closed from the [List](../../list/List).
     */
-    'closeOpened': () => boolean;
+    'closeOpened': () => Promise<boolean>;
     /**
     * If true, the user cannot interact with the sliding-item. Defaults to `false`.
     */
@@ -2030,11 +2028,11 @@ export namespace Components {
     /**
     * Get the amount the item is open in pixels.
     */
-    'getOpenAmount': () => number;
+    'getOpenAmount': () => Promise<number>;
     /**
     * Get the ratio of the open amount of the item compared to the width of the options. If the number returned is positive, then the options on the right side are open. If the number returned is negative, then the options on the left side are open. If the absolute value of the number is greater than 1, the item is open more than the width of the options.
     */
-    'getSlidingRatio': () => number;
+    'getSlidingRatio': () => Promise<number>;
   }
   interface IonItemSlidingAttributes extends StencilHTMLAttributes {
     /**
@@ -2139,7 +2137,6 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color': Color;
-    'getText': () => string;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -2191,14 +2188,6 @@ export namespace Components {
 
   interface IonList {
     /**
-    * Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding). Returns a boolean value of whether it closed an item or not.
-    */
-    'closeSlidingItems': () => boolean;
-    /**
-    * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently open.
-    */
-    'getOpenItem': () => HTMLIonItemSlidingElement | undefined;
-    /**
     * If true, the list will have margin around it and rounded corners. Defaults to `false`.
     */
     'inset': boolean;
@@ -2206,10 +2195,6 @@ export namespace Components {
     * How the bottom border should be displayed on all items. Available options: `"full"`, `"inset"`, `"none"`.
     */
     'lines': 'full' | 'inset' | 'none';
-    /**
-    * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
-    */
-    'setOpenItem': (itemSliding: HTMLIonItemSlidingElement | undefined) => void;
   }
   interface IonListAttributes extends StencilHTMLAttributes {
     /**
@@ -2234,7 +2219,7 @@ export namespace Components {
     /**
     * Get the most recently opened loading overlay.
     */
-    'getTop': () => HTMLIonLoadingElement;
+    'getTop': () => Promise<HTMLIonLoadingElement>;
   }
   interface IonLoadingControllerAttributes extends StencilHTMLAttributes {}
 
@@ -2278,11 +2263,11 @@ export namespace Components {
     /**
     * Returns a promise that resolves when the loading did dismiss. It also accepts a callback that is called in the same circumstances.
     */
-    'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+    'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
     * Returns a promise that resolves when the loading will dismiss. It also accepts a callback that is called in the same circumstances.
     */
-    'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+    'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayId': number;
     /**
     * Present the loading overlay after it has been created.
@@ -2423,31 +2408,31 @@ export namespace Components {
     /**
     * Used to enable or disable a menu. For example, there could be multiple left menus, but only one of them should be able to be opened at the same time. If there are multiple menus on the same side, then enabling one menu will also automatically disable all the others that are on the same side.
     */
-    'enable': (shouldEnable: boolean, menuId?: string | undefined) => HTMLIonMenuElement | null;
+    'enable': (shouldEnable: boolean, menuId?: string | undefined) => Promise<HTMLIonMenuElement | null>;
     /**
     * Used to get a menu instance. If a menu is not provided then it will return the first menu found. If the specified menu is `left` or `right`, then it will return the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `null`.
     */
-    'get': (menuId?: string | undefined) => HTMLIonMenuElement | null;
+    'get': (menuId?: string | undefined) => Promise<HTMLIonMenuElement | null>;
     /**
     * Returns an array of all menu instances.
     */
-    'getMenus': () => HTMLIonMenuElement[];
+    'getMenus': () => Promise<HTMLIonMenuElement[]>;
     /**
     * Returns the instance of the menu already opened, otherwise `null`.
     */
-    'getOpen': () => HTMLIonMenuElement | null;
+    'getOpen': () => Promise<HTMLIonMenuElement | null>;
     /**
     * Returns true if any menu is currently animating.
     */
-    'isAnimating': () => boolean;
+    'isAnimating': () => Promise<boolean>;
     /**
     * Returns true if the specified menu is enabled.
     */
-    'isEnabled': (menuId?: string | undefined) => boolean;
+    'isEnabled': (menuId?: string | undefined) => Promise<boolean>;
     /**
     * Returns true if the specified menu is open. If the menu is not specified, it will return true if any menu is currently open.
     */
-    'isOpen': (menuId?: string | undefined) => boolean;
+    'isOpen': (menuId?: string | undefined) => Promise<boolean>;
     /**
     * Open the menu.
     */
@@ -2456,7 +2441,7 @@ export namespace Components {
     /**
     * Used to enable or disable the ability to swipe open the menu.
     */
-    'swipeGesture': (shouldEnable: boolean, menuId?: string | undefined) => HTMLIonMenuElement | null;
+    'swipeGesture': (shouldEnable: boolean, menuId?: string | undefined) => Promise<HTMLIonMenuElement | null>;
     /**
     * Toggle the menu. If it's closed, it will open, and if opened, it will close.
     */
@@ -2495,9 +2480,8 @@ export namespace Components {
     * If true, the menu is disabled. Default `false`.
     */
     'disabled': boolean;
-    'getWidth': () => number;
-    'isActive': () => boolean;
-    'isOpen': () => boolean;
+    'isActive': () => Promise<boolean>;
+    'isOpen': () => Promise<boolean>;
     /**
     * The edge threshold for dragging the menu open. If a drag/swipe happens over this value, the menu is not triggered.
     */
@@ -2577,7 +2561,7 @@ export namespace Components {
     /**
     * Get the most recently opened modal overlay.
     */
-    'getTop': () => HTMLIonModalElement;
+    'getTop': () => Promise<HTMLIonModalElement>;
   }
   interface IonModalControllerAttributes extends StencilHTMLAttributes {}
 
@@ -2619,11 +2603,11 @@ export namespace Components {
     /**
     * Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circustances.
     */
-    'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+    'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
     * Returns a promise that resolves when the modal will dismiss. It also accepts a callback that is called in the same circustances.
     */
-    'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+    'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayId': number;
     /**
     * Present the modal overlay after it has been created.
@@ -2749,22 +2733,21 @@ export namespace Components {
     /**
     * Returns true or false if the current view can go back
     */
-    'canGoBack': (view?: ViewController | undefined) => boolean;
+    'canGoBack': (view?: ViewController | undefined) => Promise<boolean>;
     'delegate': FrameworkDelegate;
     /**
     * Gets the active view
     */
-    'getActive': () => ViewController | undefined;
+    'getActive': () => Promise<ViewController | undefined>;
     /**
     * Returns the view at the index
     */
-    'getByIndex': (index: number) => ViewController | undefined;
-    'getLength': () => number;
+    'getByIndex': (index: number) => Promise<ViewController | undefined>;
     /**
     * Gets the previous view
     */
-    'getPrevious': (view?: ViewController | undefined) => ViewController | undefined;
-    'getRouteId': () => RouteID | undefined;
+    'getPrevious': (view?: ViewController | undefined) => Promise<ViewController | undefined>;
+    'getRouteId': () => Promise<RouteID | undefined>;
     /**
     * Inserts a component into the nav stack at the specified index. This is useful if you need to add a component at any point in your navigation stack.
     */
@@ -2773,10 +2756,6 @@ export namespace Components {
     * Inserts an array of components into the nav stack at the specified index. The last component in the array will become instantiated as a view, and animate in to become the active view.
     */
     'insertPages': (insertIndex: number, insertComponents: NavComponent[], opts?: NavOptions | null | undefined, done?: TransitionDoneFn | undefined) => Promise<boolean>;
-    /**
-    * Returns the length of navigation stack
-    */
-    'isAnimating': () => boolean;
     /**
     * Call to navigate back from a current component. Similar to push(), you can also pass navigation options.
     */
@@ -2882,7 +2861,7 @@ export namespace Components {
   interface IonPickerController {
     'create': (opts: PickerOptions) => Promise<HTMLIonPickerElement>;
     'dismiss': (data?: any, role?: string | undefined, pickerId?: number | undefined) => Promise<void>;
-    'getTop': () => HTMLIonPickerElement;
+    'getTop': () => Promise<HTMLIonPickerElement>;
   }
   interface IonPickerControllerAttributes extends StencilHTMLAttributes {}
 
@@ -2922,7 +2901,7 @@ export namespace Components {
     /**
     * Returns the column the matches the specified name
     */
-    'getColumn': (name: string) => PickerColumn | undefined;
+    'getColumn': (name: string) => Promise<PickerColumn | undefined>;
     /**
     * If the keyboard should be able to close the picker. Defaults to true.
     */
@@ -2934,11 +2913,11 @@ export namespace Components {
     /**
     * Returns a promise that resolves when the picker did dismiss. It also accepts a callback that is called in the same circustances.
     */
-    'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+    'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
     * Returns a promise that resolves when the picker will dismiss. It also accepts a callback that is called in the same circustances.
     */
-    'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+    'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayId': number;
     /**
     * Present the picker overlay after it has been created.
@@ -3029,7 +3008,7 @@ export namespace Components {
     /**
     * Get the most recently opened popover overlay.
     */
-    'getTop': () => HTMLIonPopoverElement;
+    'getTop': () => Promise<HTMLIonPopoverElement>;
   }
   interface IonPopoverControllerAttributes extends StencilHTMLAttributes {}
 
@@ -3083,11 +3062,11 @@ export namespace Components {
     /**
     * Returns a promise that resolves when the popover did dismiss. It also accepts a callback that is called in the same circustances.
     */
-    'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+    'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
     * Returns a promise that resolves when the popover will dismiss. It also accepts a callback that is called in the same circustances.
     */
-    'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+    'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayId': number;
     /**
     * Present the popover overlay after it has been created.
@@ -3448,7 +3427,7 @@ export namespace Components {
     /**
     * A number representing how far down the user has pulled. The number `0` represents the user hasn't pulled down at all. The number `1`, and anything greater than `1`, represents that the user has pulled far enough down that when they let go then the refresh will happen. If they let go and the number is less than `1`, then the refresh will not happen, and the content will return to it's original position.
     */
-    'getProgress': () => number;
+    'getProgress': () => Promise<number>;
     /**
     * The maximum distance of the pull until the refresher will automatically go into the `refreshing` state. Defaults to the result of `pullMin + 60`.
     */
@@ -3587,7 +3566,7 @@ export namespace Components {
     /**
     * Returns the ID for the current route
     */
-    'getRouteId': () => RouteID | undefined;
+    'getRouteId': () => Promise<RouteID | undefined>;
     /**
     * Set the root component for the given navigation stack
     */
@@ -4130,35 +4109,35 @@ export namespace Components {
     /**
     * Get the index of the active slide.
     */
-    'getActiveIndex': () => number;
+    'getActiveIndex': () => Promise<number>;
     /**
     * Get the index of the previous slide.
     */
-    'getPreviousIndex': () => number;
+    'getPreviousIndex': () => Promise<number>;
     /**
     * Get whether or not the current slide is the first slide.
     */
-    'isBeginning': () => boolean;
+    'isBeginning': () => Promise<boolean>;
     /**
     * Get whether or not the current slide is the last slide.
     */
-    'isEnd': () => boolean;
+    'isEnd': () => Promise<ConstrainBoolean>;
     /**
     * Get the total number of slides.
     */
-    'length': () => number;
+    'length': () => Promise<number>;
     /**
     * Lock or unlock the ability to slide to the next slides.
     */
-    'lockSwipeToNext': (shouldLockSwipeToNext: boolean) => any;
+    'lockSwipeToNext': (shouldLockSwipeToNext: boolean) => void;
     /**
     * Lock or unlock the ability to slide to the previous slides.
     */
-    'lockSwipeToPrev': (shouldLockSwipeToPrev: boolean) => any;
+    'lockSwipeToPrev': (shouldLockSwipeToPrev: boolean) => void;
     /**
     * Lock or unlock the ability to slide to change slides.
     */
-    'lockSwipes': (shouldLockSwipes: boolean) => any;
+    'lockSwipes': (shouldLockSwipes: boolean) => void;
     /**
     * Options to pass to the swiper instance. See http://idangero.us/swiper/api/ for valid options
     */
@@ -4317,11 +4296,6 @@ export namespace Components {
     * If true, the split pane will be hidden. Defaults to `false`.
     */
     'disabled': boolean;
-    'isPane': (element: HTMLElement) => boolean;
-    /**
-    * Returns if the split pane is toggled or not
-    */
-    'isVisible': () => boolean;
     /**
     * When the split-pane should be shown. Can be a CSS media query expression, or a shortcut expression. Can also be a boolean expression.
     */
@@ -4375,10 +4349,6 @@ export namespace Components {
     * If true, the user cannot interact with the tab. Defaults to `false`.
     */
     'disabled': boolean;
-    /**
-    * Get the Id for the tab
-    */
-    'getTabId': () => string | null;
     /**
     * The URL which will be used as the `href` within this tab's button anchor.
     */
@@ -4545,15 +4515,15 @@ export namespace Components {
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color': Color;
-    'getRouteId': () => RouteID | undefined;
+    'getRouteId': () => Promise<RouteID | undefined>;
     /**
     * Get the currently selected tab
     */
-    'getSelected': () => HTMLIonTabElement | undefined;
+    'getSelected': () => Promise<HTMLIonTabElement | undefined>;
     /**
     * Get the tab at the given index
     */
-    'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => HTMLIonTabElement | undefined;
+    'getTab': (tabOrIndex: string | number | HTMLIonTabElement) => Promise<HTMLIonTabElement | undefined>;
     /**
     * A unique name for the tabs.
     */
@@ -4858,7 +4828,7 @@ export namespace Components {
     /**
     * Get the most recently opened toast overlay.
     */
-    'getTop': () => HTMLIonToastElement;
+    'getTop': () => Promise<HTMLIonToastElement>;
   }
   interface IonToastControllerAttributes extends StencilHTMLAttributes {}
 
@@ -4899,16 +4869,16 @@ export namespace Components {
     /**
     * Returns a promise that resolves when the toast did dismiss. It also accepts a callback that is called in the same circustances.
     */
-    'onDidDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+    'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
     * Returns a promise that resolves when the toast will dismiss. It also accepts a callback that is called in the same circustances.
     */
-    'onWillDismiss': (callback?: ((detail: OverlayEventDetail<any>) => void) | undefined) => Promise<OverlayEventDetail<any>>;
+    'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayId': number;
     /**
     * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
     */
-    'position': 'top' | 'bottom';
+    'position': 'top' | 'bottom' | 'middle';
     /**
     * Present the toast overlay after it has been created.
     */
@@ -4980,7 +4950,7 @@ export namespace Components {
     /**
     * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
     */
-    'position'?: 'top' | 'bottom';
+    'position'?: 'top' | 'bottom' | 'middle';
     /**
     * If true, the close button will be displayed. Defaults to `false`.
     */
@@ -5105,7 +5075,7 @@ export namespace Components {
     'markDirty': (offset: number, len?: number) => void;
     'markDirtyTail': () => void;
     'nodeRender': ItemRenderFn;
-    'positionForItem': (index: number) => number;
+    'positionForItem': (index: number) => Promise<number>;
     'renderFooter': (item: any, index: number) => any;
     'renderHeader': (item: any, index: number) => any;
     'renderItem': (item: any, index: number) => any;

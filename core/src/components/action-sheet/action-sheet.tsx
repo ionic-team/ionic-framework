@@ -159,8 +159,8 @@ export class ActionSheet implements OverlayInterface {
    *
    */
   @Method()
-  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionActionSheetDidDismiss', callback);
+  onDidDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionActionSheetDidDismiss');
   }
 
   /**
@@ -169,8 +169,8 @@ export class ActionSheet implements OverlayInterface {
    *
    */
   @Method()
-  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionActionSheetWillDismiss', callback);
+  onWillDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionActionSheetWillDismiss');
   }
 
   private buttonClick(button: ActionSheetButton) {

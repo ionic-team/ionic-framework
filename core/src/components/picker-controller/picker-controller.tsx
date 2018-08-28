@@ -31,7 +31,7 @@ export class PickerController implements OverlayController {
    * Get the most recently opened picker overlay.
    */
   @Method()
-  getTop(): HTMLIonPickerElement {
+  async getTop(): Promise<HTMLIonPickerElement> {
     return getOverlay(this.doc, 'ion-picker') as HTMLIonPickerElement;
   }
 }

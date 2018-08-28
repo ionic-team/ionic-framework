@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
 import { Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
@@ -22,9 +22,6 @@ export class Picker implements OverlayInterface {
   animation?: Animation;
 
   @Element() el!: HTMLElement;
-
-  @State() private showSpinner!: boolean;
-  @State() private spinner!: string;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
@@ -113,16 +110,6 @@ export class Picker implements OverlayInterface {
    */
   @Event() ionPickerDidUnload!: EventEmitter<void>;
 
-  componentWillLoad() {
-    if (!this.spinner) {
-      const defaultSpinner = this.mode === 'ios' ? 'lines' : 'crescent';
-      this.spinner = this.config.get('pickerSpinner', defaultSpinner);
-    }
-    if (this.showSpinner === undefined) {
-      this.showSpinner = !!(this.spinner && this.spinner !== 'hide');
-    }
-  }
-
   componentDidLoad() {
     this.ionPickerDidLoad.emit();
   }
@@ -183,10 +170,8 @@ export class Picker implements OverlayInterface {
    *
    */
   @Method()
-  onDidDismiss(
-    callback?: (detail: OverlayEventDetail) => void
-  ): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionPickerDidDismiss', callback);
+  onDidDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionPickerDidDismiss');
   }
 
   /**
@@ -195,18 +180,16 @@ export class Picker implements OverlayInterface {
    *
    */
   @Method()
-  onWillDismiss(
-    callback?: (detail: OverlayEventDetail) => void
-  ): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionPickerWillDismiss', callback);
+  onWillDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionPickerWillDismiss');
   }
 
   /**
    * Returns the column the matches the specified name
    */
   @Method()
-  getColumn(name: string): PickerColumn | undefined {
-    return this.columns.find(column => column.name === name);
+  getColumn(name: string): Promise<PickerColumn | undefined> {
+    return Promise.resolve(this.columns.find(column => column.name === name));
   }
 
   private buttonClick(button: PickerButton) {

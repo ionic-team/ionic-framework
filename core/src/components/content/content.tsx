@@ -157,8 +157,8 @@ export class Content {
   }
 
   @Method()
-  getScrollElement(): HTMLElement {
-    return this.scrollEl;
+  getScrollElement(): Promise<HTMLElement> {
+    return Promise.resolve(this.scrollEl);
   }
 
   /**
@@ -182,7 +182,7 @@ export class Content {
    * Scroll by a specified X/Y distance in the component
    */
   @Method()
-  scrollByPoint(x: number, y: number, duration: number): Promise<any> {
+  scrollByPoint(x: number, y: number, duration: number): Promise<void> {
     return this.scrollToPoint(x + this.scrollEl.scrollLeft, y + this.scrollEl.scrollTop, duration);
   }
 

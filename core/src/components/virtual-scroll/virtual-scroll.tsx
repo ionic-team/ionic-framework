@@ -124,7 +124,7 @@ export class VirtualScroll {
     await contentEl.componentOnReady();
 
     this.contentEl = contentEl;
-    this.scrollEl = contentEl.getScrollElement();
+    this.scrollEl = await contentEl.getScrollElement();
     this.calcCells();
     this.updateState();
   }
@@ -148,8 +148,8 @@ export class VirtualScroll {
   }
 
   @Method()
-  positionForItem(index: number): number {
-    return positionForIndex(index, this.cells, this.getHeightIndex());
+  positionForItem(index: number): Promise<number> {
+    return Promise.resolve(positionForIndex(index, this.cells, this.getHeightIndex()));
   }
 
   @Method()

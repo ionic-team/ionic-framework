@@ -56,14 +56,6 @@ SplitPane also provides some predefined media queries that can be used.
 | `ionSplitPaneVisible` | Expression to be called when the split-pane visibility has changed |
 
 
-## Methods
-
-| Method      | Description                                 |
-| ----------- | ------------------------------------------- |
-| `isPane`    |                                             |
-| `isVisible` | Returns if the split pane is toggled or not |
-
-
 ## CSS Custom Properties
 
 | Name       | Description          |

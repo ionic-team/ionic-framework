@@ -27,22 +27,12 @@ export class ItemOptions {
   @Event() ionSwipe!: EventEmitter<void>;
 
   @Method()
-  isEndSide() {
-    return isEndSide(this.win, this.side);
-  }
-
-  @Method()
-  width(): number {
-    return this.el.offsetWidth;
-  }
-
-  @Method()
   fireSwipeEvent() {
     this.ionSwipe.emit();
   }
 
   hostData() {
-    const isEnd = this.isEndSide();
+    const isEnd = isEndSide(this.win, this.side);
     return {
       class: {
         'item-options-start': !isEnd,

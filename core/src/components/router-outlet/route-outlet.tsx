@@ -92,7 +92,7 @@ export class RouterOutlet implements NavOutlet {
 
   /** Returns the ID for the current route */
   @Method()
-  getRouteId(): RouteID | undefined {
+  async getRouteId(): Promise<RouteID | undefined> {
     const active = this.activeEl;
     return active ? {
       id: active.tagName,

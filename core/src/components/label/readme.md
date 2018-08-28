@@ -22,13 +22,6 @@ Label is a wrapper element that can be used in combination with `ion-item`, `ion
 | `ionStyle` | Emitted when the styles change. |
 
 
-## Methods
-
-| Method    | Description |
-| --------- | ----------- |
-| `getText` |             |
-
-
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

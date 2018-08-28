@@ -102,8 +102,8 @@ export class Tabs implements NavOutlet {
     this.ionNavWillLoad.emit();
   }
 
-  async componentDidLoad() {
-    await this.initSelect();
+  componentDidLoad() {
+    this.initSelect();
   }
 
   componentDidUnload() {
@@ -134,7 +134,7 @@ export class Tabs implements NavOutlet {
    */
   @Method()
   async select(tabOrIndex: number | HTMLIonTabElement): Promise<boolean> {
-    const selectedTab = this.getTab(tabOrIndex);
+    const selectedTab = await this.getTab(tabOrIndex);
     if (!this.shouldSwitch(selectedTab)) {
       return false;
     }
@@ -148,7 +148,7 @@ export class Tabs implements NavOutlet {
   /** @hidden */
   @Method()
   async setRouteId(id: string): Promise<RouteWrite> {
-    const selectedTab = this.getTab(id);
+    const selectedTab = await this.getTab(id);
     if (!this.shouldSwitch(selectedTab)) {
       return { changed: false, element: this.selectedTab };
     }
@@ -163,16 +163,16 @@ export class Tabs implements NavOutlet {
 
   /** @hidden */
   @Method()
-  getRouteId(): RouteID | undefined {
-    const id = this.selectedTab && this.selectedTab.getTabId();
+  async getRouteId(): Promise<RouteID | undefined> {
+    const id = this.selectedTab && this.selectedTab.name;
     return id ? { id, element: this.selectedTab } : undefined;
   }
 
   /** Get the tab at the given index */
   @Method()
-  getTab(tabOrIndex: string | number | HTMLIonTabElement): HTMLIonTabElement | undefined {
+  async getTab(tabOrIndex: string | number | HTMLIonTabElement): Promise<HTMLIonTabElement | undefined> {
     if (typeof tabOrIndex === 'string') {
-      return this.tabs.find(tab => tab.getTabId() === tabOrIndex);
+      return this.tabs.find(tab => tab.name === tabOrIndex);
     }
     if (typeof tabOrIndex === 'number') {
       return this.tabs[tabOrIndex];
@@ -184,8 +184,8 @@ export class Tabs implements NavOutlet {
    * Get the currently selected tab
    */
   @Method()
-  getSelected(): HTMLIonTabElement | undefined {
-    return this.selectedTab;
+  getSelected(): Promise<HTMLIonTabElement | undefined> {
+    return Promise.resolve(this.selectedTab);
   }
 
   private initTabs() {

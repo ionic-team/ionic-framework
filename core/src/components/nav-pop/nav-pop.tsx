@@ -8,12 +8,11 @@ export class NavPop {
   @Element() el!: HTMLElement;
 
   @Listen('child:click')
-  pop(): Promise<any> {
+  pop() {
     const nav = this.el.closest('ion-nav');
-    if (nav && !nav.isAnimating()) {
-      return nav.pop();
+    if (nav) {
+      nav.pop({ skipIfBusy: true });
     }
-    return Promise.resolve(null);
   }
 
 }

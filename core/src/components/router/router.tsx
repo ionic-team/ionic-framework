@@ -107,7 +107,7 @@ export class Router {
       console.warn('[ion-router] router is busy, navChanged was cancelled');
       return false;
     }
-    const { ids, outlet } = readNavState(this.win.document.body);
+    const { ids, outlet } = await readNavState(this.win.document.body);
     const routes = readRoutes(this.el);
     const chain = routerIDsToChain(ids, routes);
     if (!chain) {

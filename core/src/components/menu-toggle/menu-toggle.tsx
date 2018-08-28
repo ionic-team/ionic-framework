@@ -37,8 +37,8 @@ export class MenuToggle {
   async onClick() {
     const menuCtrl = await getMenuController(this.doc);
     if (menuCtrl) {
-      const menu = menuCtrl.get(this.menu);
-      if (menu && menu.isActive()) {
+      const menu = await menuCtrl.get(this.menu);
+      if (menu) {
         return menuCtrl.toggle(this.menu);
       }
     }
@@ -50,8 +50,8 @@ export class MenuToggle {
   async updateVisibility() {
     const menuCtrl = await getMenuController(this.doc);
     if (menuCtrl) {
-      const menu = menuCtrl.get(this.menu);
-      if (menu && menu.isActive()) {
+      const menu = await menuCtrl.get(this.menu);
+      if (menu && await menu.isActive()) {
         this.visible = true;
         return;
       }

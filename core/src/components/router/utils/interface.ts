@@ -1,7 +1,7 @@
 
 export interface NavOutlet {
   setRouteId(id: string, data: any, direction: number): Promise<RouteWrite>;
-  getRouteId(): RouteID | undefined;
+  getRouteId(): Promise<RouteID | undefined>;
 }
 
 export interface RouterEventDetail {

@@ -30,7 +30,7 @@ export class PopoverController implements OverlayController {
    * Get the most recently opened popover overlay.
    */
   @Method()
-  getTop(): HTMLIonPopoverElement {
+  async getTop(): Promise<HTMLIonPopoverElement> {
     return getOverlay(this.doc, 'ion-popover') as HTMLIonPopoverElement;
   }
 }

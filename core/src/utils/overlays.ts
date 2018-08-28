@@ -162,15 +162,11 @@ export function autoFocus(containerEl: HTMLElement): HTMLElement | null {
   return null;
 }
 
-export function eventMethod<T>(element: HTMLElement, eventName: string, callback?: (detail: T) => void): Promise<T> {
+export function eventMethod<T>(element: HTMLElement, eventName: string): Promise<T> {
   let resolve: (detail: T) => void;
   const promise = new Promise<T>(r => resolve = r);
   onceEvent(element, eventName, (event: any) => {
-    const detail = event.detail;
-    if (callback) {
-      callback(detail);
-    }
-    resolve(detail);
+    resolve(event.detail);
   });
   return promise;
 }

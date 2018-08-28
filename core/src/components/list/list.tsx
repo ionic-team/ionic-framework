@@ -1,4 +1,4 @@
-import { Component, Method, Prop } from '@stencil/core';
+import { Component, Prop } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
@@ -11,8 +11,6 @@ import { createThemedClasses } from '../../utils/theme';
   }
 })
 export class List {
-  private openItem?: HTMLIonItemSlidingElement;
-
   mode!: Mode;
 
   /**
@@ -25,36 +23,6 @@ export class List {
    * If true, the list will have margin around it and rounded corners. Defaults to `false`.
    */
   @Prop() inset = false;
-
-  /**
-   * Get the [Item Sliding](../../item-sliding/ItemSliding) that is currently open.
-   */
-  @Method()
-  getOpenItem() {
-    return this.openItem;
-  }
-
-  /**
-   * Set an [Item Sliding](../../item-sliding/ItemSliding) as the open item.
-   */
-  @Method()
-  setOpenItem(itemSliding: HTMLIonItemSlidingElement | undefined) {
-    this.openItem = itemSliding;
-  }
-
-  /**
-   * Close the sliding items. Items can also be closed from the [Item Sliding](../../item-sliding/ItemSliding).
-   * Returns a boolean value of whether it closed an item or not.
-   */
-  @Method()
-  closeSlidingItems(): boolean {
-    if (this.openItem) {
-      this.openItem.close();
-      this.openItem = undefined;
-      return true;
-    }
-    return false;
-  }
 
   hostData() {
     return {

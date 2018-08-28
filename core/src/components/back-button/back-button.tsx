@@ -48,11 +48,10 @@ export class BackButton {
 
   private async onClick(ev: Event) {
     const nav = this.el.closest('ion-nav');
+    ev.preventDefault();
+
     if (nav && nav.canGoBack()) {
-      ev.preventDefault();
-      if (!nav.isAnimating()) {
-        nav.pop();
-      }
+      nav.pop({ skipIfBusy: true });
     } else if (this.defaultHref) {
       openURL(this.win, this.defaultHref, ev, 'back');
     }

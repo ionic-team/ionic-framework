@@ -34,8 +34,6 @@ You can combine the `ionSwipe` event plus the `expandable` directive to create a
 | Method           | Description |
 | ---------------- | ----------- |
 | `fireSwipeEvent` |             |
-| `isEndSide`      |             |
-| `width`          |             |
 
 
 ----------------------------------------------

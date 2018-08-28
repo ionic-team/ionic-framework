@@ -26,12 +26,12 @@ export class MenuController {
    * Open the menu.
    */
   @Method()
-  open(menuId?: string): Promise<boolean> {
-    const menu = this.get(menuId);
+  async open(menuId?: string): Promise<boolean> {
+    const menu = await this.get(menuId);
     if (menu) {
       return menu.open();
     }
-    return Promise.resolve(false);
+    return false;
   }
 
   /**
@@ -39,12 +39,12 @@ export class MenuController {
    * that is open. If a menu is specified, it will close that menu.
    */
   @Method()
-  close(menuId?: string): Promise<boolean> {
-    const menu = menuId ? this.get(menuId) : this.getOpen();
+  async close(menuId?: string): Promise<boolean> {
+    const menu = await (menuId ? this.get(menuId) : this.getOpen());
     if (menu) {
       return menu.close();
     }
-    return Promise.resolve(false);
+    return false;
   }
 
   /**
@@ -52,12 +52,12 @@ export class MenuController {
    * will close.
    */
   @Method()
-  toggle(menuId?: string): Promise<boolean> {
-    const menu = this.get(menuId);
+  async toggle(menuId?: string): Promise<boolean> {
+    const menu = await this.get(menuId);
     if (menu) {
       return menu.toggle();
     }
-    return Promise.resolve(false);
+    return false;
   }
 
   /**
@@ -67,8 +67,8 @@ export class MenuController {
    * will also automatically disable all the others that are on the same side.
    */
   @Method()
-  enable(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement | null {
-    const menu = this.get(menuId);
+  async enable(shouldEnable: boolean, menuId?: string): Promise<HTMLIonMenuElement | null> {
+    const menu = await this.get(menuId);
     if (menu) {
       menu.disabled = !shouldEnable;
     }
@@ -79,8 +79,8 @@ export class MenuController {
    * Used to enable or disable the ability to swipe open the menu.
    */
   @Method()
-  swipeGesture(shouldEnable: boolean, menuId?: string): HTMLIonMenuElement | null {
-    const menu = this.get(menuId);
+  async swipeGesture(shouldEnable: boolean, menuId?: string): Promise<HTMLIonMenuElement | null> {
+    const menu = await this.get(menuId);
     if (menu) {
       menu.swipeGesture = shouldEnable;
     }
@@ -92,9 +92,9 @@ export class MenuController {
    * will return true if any menu is currently open.
    */
   @Method()
-  isOpen(menuId?: string): boolean {
+  async isOpen(menuId?: string): Promise<boolean> {
     if (menuId) {
-      const menu = this.get(menuId);
+      const menu = await this.get(menuId);
       return (menu && menu.isOpen()) || false;
     }
     return !!this.getOpen();
@@ -104,8 +104,8 @@ export class MenuController {
    * Returns true if the specified menu is enabled.
    */
   @Method()
-  isEnabled(menuId?: string): boolean {
-    const menu = this.get(menuId);
+  async isEnabled(menuId?: string): Promise<boolean> {
+    const menu = await this.get(menuId);
     if (menu) {
       return !menu.disabled;
     }
@@ -120,7 +120,7 @@ export class MenuController {
    * return `null`.
    */
   @Method()
-  get(menuId?: string): HTMLIonMenuElement | null {
+  async get(menuId?: string): Promise<HTMLIonMenuElement | null> {
     if (Build.isDev) {
       if (menuId === 'left') {
         console.error('menu.side=left is deprecated, use "start" instead');
@@ -162,15 +162,15 @@ export class MenuController {
    * Returns the instance of the menu already opened, otherwise `null`.
    */
   @Method()
-  getOpen(): HTMLIonMenuElement | null {
-    return this.find(m => m.isOpen());
+  async getOpen(): Promise<HTMLIonMenuElement | null> {
+    return this.find(m => m._isOpen);
   }
 
   /**
    * Returns an array of all menu instances.
    */
   @Method()
-  getMenus(): HTMLIonMenuElement[] {
+  async getMenus(): Promise<HTMLIonMenuElement[]> {
     return this.menus.map(menu => menu.el);
   }
 
@@ -178,7 +178,7 @@ export class MenuController {
    * Returns true if any menu is currently animating.
    */
   @Method()
-  isAnimating(): boolean {
+  async isAnimating(): Promise<boolean> {
     return this.menus.some(menu => menu.isAnimating);
   }
 
@@ -209,12 +209,12 @@ export class MenuController {
   }
 
   @Method()
-  _setOpen(menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean> {
+  async _setOpen(menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean> {
     if (this.isAnimating()) {
-      return Promise.resolve(false);
+      return false;
     }
     if (shouldOpen) {
-      const openedMenu = this.getOpen();
+      const openedMenu = await this.getOpen();
       if (openedMenu && menu.el !== openedMenu) {
         openedMenu.setOpen(false, false);
       }

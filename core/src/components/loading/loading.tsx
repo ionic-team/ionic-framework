@@ -165,8 +165,8 @@ export class Loading implements OverlayInterface {
    * that is called in the same circumstances.
    */
   @Method()
-  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionLoadingDidDismiss', callback);
+  onDidDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionLoadingDidDismiss');
   }
 
   /**
@@ -174,8 +174,8 @@ export class Loading implements OverlayInterface {
    * that is called in the same circumstances.
    */
   @Method()
-  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionLoadingWillDismiss', callback);
+  onWillDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionLoadingWillDismiss');
   }
 
   hostData() {

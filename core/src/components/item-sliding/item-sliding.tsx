@@ -22,6 +22,8 @@ const enum SlidingState {
   SwipeStart = 1 << 6,
 }
 
+let openSlidingItem: HTMLIonItemSlidingElement | undefined;
+
 @Component({
   tag: 'ion-item-sliding',
   styleUrl: 'item-sliding.scss'
@@ -29,7 +31,6 @@ const enum SlidingState {
 export class ItemSliding {
 
   private item: HTMLIonItemElement | null = null;
-  private list: HTMLIonListElement | null = null;
   private openAmount = 0;
   private initialOpenAmount = 0;
   private optsWidthRightSide = 0;
@@ -43,7 +44,7 @@ export class ItemSliding {
 
   @Element() el!: HTMLIonItemSlidingElement;
 
-  @State() private state: SlidingState = SlidingState.Disabled;
+  @State() state: SlidingState = SlidingState.Disabled;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
@@ -65,7 +66,6 @@ export class ItemSliding {
 
   async componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
-    this.list = this.el.closest('ion-list');
 
     this.updateOptions();
 
@@ -88,7 +88,7 @@ export class ItemSliding {
       this.gesture.destroy();
     }
 
-    this.item = this.list = null;
+    this.item = null;
     this.leftOptions = this.rightOptions = undefined;
   }
 
@@ -96,8 +96,8 @@ export class ItemSliding {
    * Get the amount the item is open in pixels.
    */
   @Method()
-  getOpenAmount(): number {
-    return this.openAmount;
+  getOpenAmount(): Promise<number> {
+    return Promise.resolve(this.openAmount);
   }
 
   /**
@@ -108,7 +108,7 @@ export class ItemSliding {
    * the width of the options.
    */
   @Method()
-  getSlidingRatio(): number {
+  async getSlidingRatio(): Promise<number> {
     if (this.openAmount > 0) {
       return this.openAmount / this.optsWidthRightSide;
     } else if (this.openAmount < 0) {
@@ -122,7 +122,7 @@ export class ItemSliding {
    * Close the sliding item. Items can also be closed from the [List](../../list/List).
    */
   @Method()
-  close() {
+  async close() {
     this.setOpenAmount(0, true);
   }
 
@@ -130,8 +130,12 @@ export class ItemSliding {
    * Close all of the sliding items in the list. Items can also be closed from the [List](../../list/List).
    */
   @Method()
-  closeOpened(): boolean {
-    return !!(this.list && this.list.closeSlidingItems());
+  async closeOpened(): Promise<boolean> {
+    if (openSlidingItem) {
+      openSlidingItem.close();
+      return true;
+    }
+    return false;
   }
 
   private updateOptions() {
@@ -145,7 +149,7 @@ export class ItemSliding {
     for (let i = 0; i < options.length; i++) {
       const option = options.item(i);
 
-      if (option.isEndSide()) {
+      if (option.side === 'end') {
         this.rightOptions = option;
         sides |= ItemSide.End;
       } else {
@@ -158,8 +162,9 @@ export class ItemSliding {
   }
 
   private canStart(): boolean {
-    const selected = this.list && this.list.getOpenItem();
+    const selected = openSlidingItem;
     if (selected && selected !== this.el) {
+
       this.closeOpened();
       return false;
     }
@@ -167,9 +172,7 @@ export class ItemSliding {
   }
 
   private onStart() {
-    if (this.list) {
-      this.list.setOpenItem(this.el);
-    }
+    openSlidingItem = this.el;
 
     if (this.tmr) {
       clearTimeout(this.tmr);
@@ -240,12 +243,12 @@ export class ItemSliding {
   private calculateOptsWidth() {
     this.optsWidthRightSide = 0;
     if (this.rightOptions) {
-      this.optsWidthRightSide = this.rightOptions.width();
+      this.optsWidthRightSide = this.rightOptions.offsetWidth;
     }
 
     this.optsWidthLeftSide = 0;
     if (this.leftOptions) {
-      this.optsWidthLeftSide = this.leftOptions.width();
+      this.optsWidthLeftSide = this.leftOptions.offsetWidth;
     }
     this.optsDirty = false;
   }
@@ -278,9 +281,8 @@ export class ItemSliding {
         this.state = SlidingState.Disabled;
         this.tmr = undefined;
       }, 600);
-      if (this.list) {
-        this.list.setOpenItem(undefined);
-      }
+
+      openSlidingItem = undefined;
       style.transform = '';
       return;
     }

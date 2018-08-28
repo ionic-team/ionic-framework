@@ -20,12 +20,11 @@ export class NavSetRoot {
   @Prop() componentProps?: ComponentProps;
 
   @Listen('child:click')
-  push(): Promise<any> {
+  push() {
     const nav = this.el.closest('ion-nav');
     const toPush = this.component;
     if (nav && toPush) {
-      return nav.setRoot(toPush, this.componentProps);
+      nav.setRoot(toPush, this.componentProps, { skipIfBusy: true });
     }
-    return Promise.resolve(null);
   }
 }

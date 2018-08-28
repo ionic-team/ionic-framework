@@ -177,24 +177,24 @@ export class Slides {
    * Get the index of the active slide.
    */
   @Method()
-  getActiveIndex(): number {
-    return this.swiper.activeIndex;
+  getActiveIndex(): Promise<number> {
+    return Promise.resolve(this.swiper.activeIndex);
   }
 
   /**
    * Get the index of the previous slide.
    */
   @Method()
-  getPreviousIndex(): number {
-    return this.swiper.previousIndex;
+  getPreviousIndex(): Promise<number> {
+    return Promise.resolve(this.swiper.previousIndex);
   }
 
   /**
    * Get the total number of slides.
    */
   @Method()
-  length(): number {
-    return this.swiper.slides.length;
+  length(): Promise<number> {
+    return Promise.resolve(this.swiper.slides.length);
   }
 
   /**
@@ -202,23 +202,25 @@ export class Slides {
    *
    */
   @Method()
-  isEnd(): boolean {
-    return this.swiper.isEnd;
+  isEnd(): Promise<ConstrainBoolean> {
+    return Promise.resolve(this.swiper.isEnd);
   }
 
   /**
    * Get whether or not the current slide is the first slide.
    */
   @Method()
-  isBeginning(): boolean {
-    return this.swiper.isBeginning;
+  isBeginning(): Promise<boolean> {
+    return Promise.resolve(this.swiper.isBeginning);
   }
 
   /**
    * Start auto play.
    */
   @Method()
-  startAutoplay(): void {
+  startAutoplay()
+
+  {
     this.swiper.autoplay.start();
   }
 
@@ -226,7 +228,7 @@ export class Slides {
    * Stop auto play.
    */
   @Method()
-  stopAutoplay(): void {
+  stopAutoplay() {
     this.swiper.autoplay.stop();
   }
 
@@ -236,9 +238,10 @@ export class Slides {
   @Method()
   lockSwipeToNext(shouldLockSwipeToNext: boolean) {
     if (shouldLockSwipeToNext) {
-      return this.swiper.lockSwipeToNext();
+      this.swiper.lockSwipeToNext();
+    } else {
+      this.swiper.unlockSwipeToNext();
     }
-    this.swiper.unlockSwipeToNext();
   }
 
   /**
@@ -247,9 +250,10 @@ export class Slides {
   @Method()
   lockSwipeToPrev(shouldLockSwipeToPrev: boolean) {
     if (shouldLockSwipeToPrev) {
-      return this.swiper.lockSwipeToPrev();
+      this.swiper.lockSwipeToPrev();
+    } else {
+      this.swiper.unlockSwipeToPrev();
     }
-    this.swiper.unlockSwipeToPrev();
   }
 
   /**
@@ -258,9 +262,10 @@ export class Slides {
   @Method()
   lockSwipes(shouldLockSwipes: boolean) {
     if (shouldLockSwipes) {
-      return this.swiper.lockSwipes();
+      this.swiper.lockSwipes();
+    } else {
+      this.swiper.unlockSwipes();
     }
-    this.swiper.unlockSwipes();
   }
 
   private normalizeOptions() {

@@ -42,7 +42,6 @@ See the [Tabs API Docs](../Tabs/) for more details on configuring Tabs.
 
 | Method      | Description                          |
 | ----------- | ------------------------------------ |
-| `getTabId`  | Get the Id for the tab               |
 | `setActive` | Set the active component for the tab |
 
 

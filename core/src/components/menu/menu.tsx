@@ -14,7 +14,6 @@ import { assert, isEndSide as isEnd } from '../../utils/helpers';
 export class Menu implements MenuI {
 
   private animation?: Animation;
-  private _isOpen = false;
   private lastOnEnd = 0;
   private gesture?: Gesture;
 
@@ -22,6 +21,7 @@ export class Menu implements MenuI {
 
   isAnimating = false;
   width!: number; // TODO
+  _isOpen = false;
 
   backdropEl?: HTMLElement;
   menuInnerEl?: HTMLElement;
@@ -165,7 +165,7 @@ export class Menu implements MenuI {
 
     let isEnabled = !this.disabled;
     if (isEnabled === true || typeof isEnabled === 'undefined') {
-      const menus = this.menuCtrl!.getMenus();
+      const menus = await this.menuCtrl!.getMenus();
       isEnabled = !menus.some((m: any) => {
         return m.side === this.side && !m.disabled;
       });
@@ -208,7 +208,7 @@ export class Menu implements MenuI {
 
   @Listen('body:ionSplitPaneVisible')
   onSplitPaneChanged(ev: CustomEvent) {
-    this.isPaneVisible = (ev.target as HTMLIonSplitPaneElement).isPane(this.el);
+    this.isPaneVisible = ev.detail.isPane(this.el);
     this.updateState();
   }
 
@@ -228,8 +228,13 @@ export class Menu implements MenuI {
   }
 
   @Method()
-  isOpen(): boolean {
-    return this._isOpen;
+  isOpen(): Promise<boolean> {
+    return Promise.resolve(this._isOpen);
+  }
+
+  @Method()
+  isActive(): Promise<boolean> {
+    return Promise.resolve(this._isActive());
   }
 
   @Method()
@@ -254,7 +259,7 @@ export class Menu implements MenuI {
 
   async _setOpen(shouldOpen: boolean, animated = true): Promise<boolean> {
     // If the menu is disabled or it is currently being animated, let's do nothing
-    if (!this.isActive() || this.isAnimating || shouldOpen === this._isOpen) {
+    if (!this._isActive() || this.isAnimating || shouldOpen === this._isOpen) {
       return this._isOpen;
     }
 
@@ -264,16 +269,6 @@ export class Menu implements MenuI {
     this.afterAnimation(shouldOpen);
 
     return shouldOpen;
-  }
-
-  @Method()
-  isActive(): boolean {
-    return !this.disabled && !this.isPaneVisible;
-  }
-
-  @Method()
-  getWidth(): number {
-    return this.width;
   }
 
   private async loadAnimation(): Promise<void> {
@@ -303,8 +298,12 @@ export class Menu implements MenuI {
     }
   }
 
+  private _isActive() {
+    return !this.disabled && !this.isPaneVisible;
+  }
+
   private canSwipe(): boolean {
-    return this.swipeGesture && !this.isAnimating && this.isActive();
+    return this.swipeGesture && !this.isAnimating && this._isActive();
   }
 
   private canStart(detail: GestureDetail): boolean {
@@ -442,7 +441,7 @@ export class Menu implements MenuI {
   }
 
   private updateState() {
-    const isActive = this.isActive();
+    const isActive = this._isActive();
     if (this.gesture) {
       this.gesture.setDisabled(!isActive || !this.swipeGesture);
     }

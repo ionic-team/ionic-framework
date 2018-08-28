@@ -30,7 +30,7 @@ export class AlertController implements OverlayController {
    * Get the most recently opened alert overlay.
    */
   @Method()
-  getTop(): HTMLIonAlertElement {
+  async getTop(): Promise<HTMLIonAlertElement> {
     return getOverlay(this.doc, 'ion-alert') as HTMLIonAlertElement;
   }
 }

@@ -22,6 +22,7 @@ export interface RouterOutletOptions {
   deepWait?: boolean;
   mode?: Mode;
   keyboardClose?: boolean;
+  skipIfBusy?: boolean;
 }
 
 export interface NavOptions extends RouterOutletOptions {

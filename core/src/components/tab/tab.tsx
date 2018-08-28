@@ -97,6 +97,11 @@ export class Tab {
   @Event() ionTabMutated!: EventEmitter<void>;
 
   componentWillLoad() {
+    // Set default name
+    if (!this.name && typeof this.component === 'string') {
+      this.name = this.component;
+    }
+
     if (Build.isDev) {
       if (this.component && this.el.childElementCount > 0) {
         console.error('You can not use a lazy-loaded component in a tab and inlined content at the same time.' +
@@ -116,18 +121,6 @@ export class Tab {
   @Watch('icon')
   onPropChanged() {
     this.ionTabMutated.emit();
-  }
-
-  /** Get the Id for the tab */
-  @Method()
-  getTabId(): string | null {
-    if (this.name) {
-      return this.name;
-    }
-    if (typeof this.component === 'string') {
-      return this.component;
-    }
-    return null;
   }
 
   /** Set the active component for the tab */

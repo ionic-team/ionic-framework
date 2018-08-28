@@ -30,7 +30,7 @@ export class LoadingController implements OverlayController {
    * Get the most recently opened loading overlay.
    */
   @Method()
-  getTop(): HTMLIonLoadingElement {
+  async getTop(): Promise<HTMLIonLoadingElement> {
     return getOverlay(this.doc, 'ion-loading') as HTMLIonLoadingElement;
   }
 }

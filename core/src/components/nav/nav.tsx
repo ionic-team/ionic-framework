@@ -330,7 +330,7 @@ export class Nav implements NavOutlet {
     params: any,
     direction: number
   ): Promise<RouteWrite> {
-    const active = this.getActive();
+    const active = this.getActiveSync();
     if (matches(active, id, params)) {
       return Promise.resolve({
         changed: false,
@@ -383,8 +383,8 @@ export class Nav implements NavOutlet {
 
   /** @hidden */
   @Method()
-  getRouteId(): RouteID | undefined {
-    const active = this.getActive();
+  async getRouteId(): Promise<RouteID | undefined> {
+    const active = this.getActiveSync();
     return active
       ? {
           id: active.element!.tagName,
@@ -395,53 +395,56 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Returns true or false if the current view can go back
-   */
-  @Method()
-  canGoBack(view = this.getActive()): boolean {
-    return !!(view && this.getPrevious(view));
-  }
-
-  /**
    * Gets the active view
    */
   @Method()
-  getActive(): ViewController | undefined {
-    return this.views[this.views.length - 1];
+  getActive(): Promise<ViewController | undefined> {
+    return Promise.resolve(this.getActiveSync());
   }
 
   /**
    * Returns the view at the index
    */
   @Method()
-  getByIndex(index: number): ViewController | undefined {
-    return this.views[index];
+  getByIndex(index: number): Promise<ViewController | undefined> {
+    return Promise.resolve(this.views[index]);
+  }
+
+  /**
+   * Returns true or false if the current view can go back
+   */
+  @Method()
+  canGoBack(view?: ViewController): Promise<boolean> {
+    return Promise.resolve(this.canGoBackSync(view));
   }
 
   /**
    * Gets the previous view
    */
   @Method()
-  getPrevious(view = this.getActive()): ViewController | undefined {
+  getPrevious(view?: ViewController): Promise<ViewController | undefined> {
+    return Promise.resolve(this.getPreviousSync(view));
+  }
+
+  getLength() {
+    return this.views.length;
+  }
+
+  private getActiveSync(): ViewController | undefined {
+    return this.views[this.views.length - 1];
+  }
+
+  private canGoBackSync(view = this.getActiveSync()): boolean {
+    return !!(view && this.getPrevious(view));
+  }
+
+  private getPreviousSync(view = this.getActiveSync()): ViewController | undefined {
     if (!view) {
       return undefined;
     }
     const views = this.views;
     const index = views.indexOf(view);
     return index > 0 ? views[index - 1] : undefined;
-  }
-
-  /**
-   * Returns the length of navigation stack
-   */
-  @Method()
-  isAnimating() {
-    return this.isTransitioning;
-  }
-
-  @Method()
-  getLength() {
-    return this.views.length;
   }
 
   // _queueTrns() adds a navigation stack change to the queue and schedules it to run:
@@ -458,6 +461,10 @@ export class Nav implements NavOutlet {
     ti: TransitionInstruction,
     done: TransitionDoneFn | undefined
   ): Promise<boolean> {
+    if (this.isTransitioning && ti.opts && ti.opts.skipIfBusy === true) {
+      return Promise.resolve(false);
+    }
+
     const promise = new Promise<boolean>((resolve, reject) => {
       ti.resolve = resolve;
       ti.reject = reject;
@@ -551,7 +558,7 @@ export class Nav implements NavOutlet {
       this.isTransitioning = true;
       this.prepareTI(ti);
 
-      const leavingView = this.getActive();
+      const leavingView = this.getActiveSync();
       const enteringView = this.getEnteringView(ti, leavingView);
 
       if (!leavingView && !enteringView) {
@@ -784,7 +791,7 @@ export class Nav implements NavOutlet {
     const animated = this.animated && this.config.getBoolean('animated', true);
     const animationOpts: TransitionOptions = {
       mode: this.mode,
-      showGoBack: this.canGoBack(enteringView),
+      showGoBack: this.canGoBackSync(enteringView),
       animationCtrl: this.animationCtrl,
       queue: this.queue,
       window: this.win,
@@ -891,7 +898,7 @@ export class Nav implements NavOutlet {
   private canStart(): boolean {
     return !!this.swipeGesture &&
       !this.isTransitioning &&
-      this.canGoBack();
+      this.canGoBackSync();
   }
 
   private onStart() {

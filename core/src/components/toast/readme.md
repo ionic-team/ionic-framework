@@ -20,20 +20,20 @@ The toast can be dismissed automatically after a specific amount of time by pass
 
 ## Properties
 
-| Property          | Attribute           | Description                                                                                                      | Type                 |
-| ----------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------- | -------------------- |
-| `animated`        | `animated`          | If true, the toast will animate. Defaults to `true`.                                                             | `boolean`            |
-| `closeButtonText` | `close-button-text` | Text to display in the close button.                                                                             | `string`             |
-| `cssClass`        | `css-class`         | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string`, `string[]` |
-| `duration`        | `duration`          | How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.     | `number`             |
-| `enterAnimation`  | --                  | Animation to use when the toast is presented.                                                                    | `AnimationBuilder`   |
-| `keyboardClose`   | `keyboard-close`    |                                                                                                                  | `boolean`            |
-| `leaveAnimation`  | --                  | Animation to use when the toast is dismissed.                                                                    | `AnimationBuilder`   |
-| `message`         | `message`           | Message to be shown in the toast.                                                                                | `string`             |
-| `overlayId`       | `overlay-id`        |                                                                                                                  | `number`             |
-| `position`        | `position`          | The position of the toast on the screen. Possible values: "top", "middle", "bottom".                             | `"top"`, `"bottom"`  |
-| `showCloseButton` | `show-close-button` | If true, the close button will be displayed. Defaults to `false`.                                                | `boolean`            |
-| `translucent`     | `translucent`       | If true, the toast will be translucent. Defaults to `false`.                                                     | `boolean`            |
+| Property          | Attribute           | Description                                                                                                      | Type                            |
+| ----------------- | ------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------- |
+| `animated`        | `animated`          | If true, the toast will animate. Defaults to `true`.                                                             | `boolean`                       |
+| `closeButtonText` | `close-button-text` | Text to display in the close button.                                                                             | `string`                        |
+| `cssClass`        | `css-class`         | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string`, `string[]`            |
+| `duration`        | `duration`          | How many milliseconds to wait before hiding the toast. By default, it will show until `dismiss()` is called.     | `number`                        |
+| `enterAnimation`  | --                  | Animation to use when the toast is presented.                                                                    | `AnimationBuilder`              |
+| `keyboardClose`   | `keyboard-close`    |                                                                                                                  | `boolean`                       |
+| `leaveAnimation`  | --                  | Animation to use when the toast is dismissed.                                                                    | `AnimationBuilder`              |
+| `message`         | `message`           | Message to be shown in the toast.                                                                                | `string`                        |
+| `overlayId`       | `overlay-id`        |                                                                                                                  | `number`                        |
+| `position`        | `position`          | The position of the toast on the screen. Possible values: "top", "middle", "bottom".                             | `"top"`, `"bottom"`, `"middle"` |
+| `showCloseButton` | `show-close-button` | If true, the close button will be displayed. Defaults to `false`.                                                | `boolean`                       |
+| `translucent`     | `translucent`       | If true, the toast will be translucent. Defaults to `false`.                                                     | `boolean`                       |
 
 
 ## Events
