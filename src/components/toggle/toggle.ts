@@ -21,7 +21,7 @@ import { ToggleGesture } from './toggle-gesture';
  * Toggles can also have colors assigned to them, by adding any color
  * attribute.
  *
- * See the [Angular Docs](https://angular.io/docs/ts/latest/guide/forms.html)
+ * See the [Angular Docs](https://angular.io/docs/ts/latest/guide/forms)
  * for more info on forms and inputs.
  *
  * @usage
