@@ -30,7 +30,7 @@ export class VirtualScroll {
   ) {
     el.nativeElement.nodeRender = this.nodeRender.bind(this);
 
-    proxyInputs(this, this.el, [
+    proxyInputs(this, this.el.nativeElement, [
       'approxItemHeight',
       'approxHeaderHeight',
       'approxFooterHeight',
