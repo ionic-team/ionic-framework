@@ -105,7 +105,7 @@ export function dateValueRange(format: string, min: DatetimeData, max: DatetimeD
       throw new Error('min and max year is undefined');
     }
 
-    for (let i = max.year - 1; i >= min.year; i--) {
+    for (let i = max.year; i >= min.year; i--) {
       opts.push(i);
     }
 
