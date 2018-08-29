@@ -1,3 +1,63 @@
+<a name="4.0.0-beta.6"></a>
+# [4.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.5...v4.0.0-beta.6) (2018-08-29)
+
+### Breaking Changes
+
+- All methods of all ionic components return a promise.
+- `css/colors.css` has been removed, `global.css` needs to be outdated:
+
+#### Stencil
+
+```diff
++ @import "~@ionic/core/css/core.css";
+  @import "~@ionic/core/css/normalize.css";
+  @import "~@ionic/core/css/structure.css";
+  @import "~@ionic/core/css/typography.css";
+- @import "~@ionic/core/css/colors.css";
+
+  @import "~@ionic/core/css/padding.css";
+  @import "~@ionic/core/css/float-elements.css";
+  @import "~@ionic/core/css/text-alignment.css";
+  @import "~@ionic/core/css/flex-utils.css";
+```
+
+#### Angular
+
+```diff
++ @import "~@ionic/angular/css/core.css";
+  @import "~@ionic/angular/css/normalize.css";
+  @import "~@ionic/angular/css/structure.css";
+  @import "~@ionic/angular/css/typography.css";
+- @import "~@ionic/angular/css/colors.css";
+
+  @import "~@ionic/angular/css/padding.css";
+  @import "~@ionic/angular/css/float-elements.css";
+  @import "~@ionic/angular/css/text-alignment.css";
+  @import "~@ionic/angular/css/flex-utils.css";
+```
+
+### Bug Fixes
+
+* **alert:** header is not mandatory ([1f71f76](https://github.com/ionic-team/ionic/commit/1f71f76))
+* **alert:** name is non-null ([2268346](https://github.com/ionic-team/ionic/commit/2268346))
+* **alert:** type and name props are optional ([#14815](https://github.com/ionic-team/ionic/issues/14815)) ([99a2925](https://github.com/ionic-team/ionic/commit/99a2925))
+* **angular:** NavController signatures ([6fdeb31](https://github.com/ionic-team/ionic/commit/6fdeb31)), closes [#15353](https://github.com/ionic-team/ionic/issues/15353)
+* **angular:** overlay not found ([8dfc52f](https://github.com/ionic-team/ionic/commit/8dfc52f)), closes [#15349](https://github.com/ionic-team/ionic/issues/15349)
+* **angular:** platform does not crash ([82f9fd4](https://github.com/ionic-team/ionic/commit/82f9fd4)), closes [#15348](https://github.com/ionic-team/ionic/issues/15348)
+* **angular:** virtual-scroll ([f9bf5c0](https://github.com/ionic-team/ionic/commit/f9bf5c0)), closes [#15355](https://github.com/ionic-team/ionic/issues/15355)
+* **css:** add core.css ([#15220](https://github.com/ionic-team/ionic/issues/15220)) ([096d9a7](https://github.com/ionic-team/ionic/commit/096d9a7)), closes [#15170](https://github.com/ionic-team/ionic/issues/15170)
+* **datetime:** fix year to allow current and max year ([f30ae88](https://github.com/ionic-team/ionic/commit/f30ae88)), closes [#14895](https://github.com/ionic-team/ionic/issues/14895)
+* **grid:** working check for CSS custom variables in Safari ([#15228](https://github.com/ionic-team/ionic/issues/15228)) ([baefda3](https://github.com/ionic-team/ionic/commit/baefda3))
+* **ion-reorder-group:** adds ionItemReorder event  ([7fc170c](https://github.com/ionic-team/ionic/commit/7fc170c)), closes [#14640](https://github.com/ionic-team/ionic/issues/14640)
+* **overlay:** overlay is not hidden ([89ba55d](https://github.com/ionic-team/ionic/commit/89ba55d))
+* **overlay:** overlays are hidden until presented ([ba428cd](https://github.com/ionic-team/ionic/commit/ba428cd)), closes [#15345](https://github.com/ionic-team/ionic/issues/15345)
+* **overlays:** expose mode, id, keyboardClose ([cc960c3](https://github.com/ionic-team/ionic/commit/cc960c3)), closes [#15366](https://github.com/ionic-team/ionic/issues/15366)
+* **radio-group:** accept any value ([16452b2](https://github.com/ionic-team/ionic/commit/16452b2)), closes [#15334](https://github.com/ionic-team/ionic/issues/15334)
+* **segment:** set --color-checked in md color toolbar ([5d32115](https://github.com/ionic-team/ionic/commit/5d32115)), closes [#14850](https://github.com/ionic-team/ionic/issues/14850)
+* **toast:** add position middle ([25479e4](https://github.com/ionic-team/ionic/commit/25479e4))
+
+
+
 <a name="4.0.0-beta.5"></a>
 # [4.0.0-beta.5](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.4...v4.0.0-beta.5) (2018-08-27)
 

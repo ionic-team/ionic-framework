@@ -1,6 +1,6 @@
 {
   "name": "@ionic/angular",
-  "version": "4.0.0-beta.5",
+  "version": "4.0.0-beta.6",
   "description": "Angular specific wrappers for @ionic/core",
   "keywords": [
     "ionic",
@@ -43,7 +43,7 @@
     "css/"
   ],
   "dependencies": {
-    "@ionic/core": "4.0.0-beta.5"
+    "@ionic/core": "4.0.0-beta.6"
   },
   "devDependencies": {
     "@angular/common": "^6.1.0",
