@@ -300,7 +300,7 @@ export class Alert implements OverlayInterface {
     // return an object of all the values with the input name as the key
     const values: {[k: string]: string} = {};
     this.processedInputs.forEach(i => {
-      values[i.name] = i.value || '';
+      values[i.name!] = i.value || '';
     });
     return values;
   }
