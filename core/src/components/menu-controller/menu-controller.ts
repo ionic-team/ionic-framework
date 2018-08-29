@@ -210,7 +210,7 @@ export class MenuController {
 
   @Method()
   async _setOpen(menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean> {
-    if (this.isAnimating()) {
+    if (await this.isAnimating()) {
       return false;
     }
     if (shouldOpen) {
