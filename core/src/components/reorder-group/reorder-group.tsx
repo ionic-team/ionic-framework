@@ -1,4 +1,4 @@
-import { Component, Element, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, Element, Event, EventEmitter, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Gesture, GestureDetail } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
@@ -41,6 +41,8 @@ export class ReorderGroup {
     }
   }
 
+  @Event() ionItemReorder!: EventEmitter;
+
   async componentDidLoad() {
     const contentEl = this.el.closest('ion-content');
     if (contentEl) {
@@ -62,6 +64,7 @@ export class ReorderGroup {
       onMove: this.onMove.bind(this),
       onEnd: this.onEnd.bind(this),
     });
+
     this.disabledChanged();
   }
 
@@ -192,6 +195,10 @@ export class ReorderGroup {
       setTimeout(reorderInactive, 200);
     } else {
       reorderInactive();
+      this.ionItemReorder.emit({
+        from: fromIndex,
+        to: toIndex
+      });
     }
 
     hapticSelectionEnd();
