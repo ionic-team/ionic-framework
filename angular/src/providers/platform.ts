@@ -81,16 +81,16 @@ export class Platform {
    * |-----------------|------------------------------------|
    * | android         | on a device running Android.       |
    * | cordova         | on a device running Cordova.       |
-   * | core            | on a desktop device.               |
    * | ios             | on a device running iOS.           |
    * | ipad            | on an iPad device.                 |
-   * | iphone          | on an iPhone device.               |
-   * | mobile          | on a mobile device.                |
-   * | mobileweb       | in a browser on a mobile device.   |
+   * | iphone          | on an iPhone device.               |   
    * | phablet         | on a phablet device.               |
-   * | tablet          | on a tablet device.                |
-   * | windows         | on a device running Windows.       |
+   * | tablet          | on a tablet device.                |   
    * | electron        | in Electron on a desktop device.   |
+   * | pwa             | as a PWA app.   |
+   * | mobile          | on a mobile device.                |
+   * | desktop         | on a desktop device.               |
+   * | hybrid          | is a cordova or capacitor app.     |   
    *
    */
   is(platformName: Platforms): boolean {
