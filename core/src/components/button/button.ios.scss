@@ -18,7 +18,6 @@
   --height: #{$button-ios-height};
   --transition: background-color, opacity 100ms linear;
 
-  font-family: #{$button-ios-font-family};
   font-size: #{$button-ios-font-size};
   font-weight: #{$button-ios-font-weight};
 
@@ -62,7 +61,7 @@
 
 :host(.button-outline.activated.focused) {
   --border-color: #{current-color(shade)};
-  --background-color: #{current-color(shade)};
+  --background: #{current-color(shade)};
 }
 
 // iOS Clear Button

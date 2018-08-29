@@ -8,6 +8,16 @@
 
   color: #{current-color(base)};
   pointer-events: all;
+
+  text-align: center;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  text-transform: none;
+
+  white-space: nowrap;
+
+  user-select: none;
+  font-kerning: none;
 }
 
 :host-context(.can-go-back > ion-header),
@@ -16,6 +26,7 @@
 }
 
 .back-button-native {
+  @include text-inherit();
   @include font-smoothing();
 
   display: block;
@@ -27,21 +38,11 @@
 
   outline: none;
 
-  color: inherit;
-
   line-height: 1;
-
-  text-align: center;
-  text-decoration: none;
-  text-overflow: ellipsis;
-  text-transform: none;
-
-  white-space: nowrap;
 
   cursor: pointer;
   user-select: none;
   z-index: 0;
-  font-kerning: none;
   appearance: none;
 }
 

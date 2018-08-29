@@ -4,7 +4,9 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: currentColor;
+  /**
+   * @prop --color: Color of the spinner
+   */
 
   display: inline-block;
   position: relative;
@@ -12,7 +14,13 @@
   width: 28px;
   height: 28px;
 
-  color: #{current-color(base)};
+  color: var(--color);
+
+  user-select: none;
+}
+
+:host(.ion-color) {
+  color: current-color(base);
 }
 
 svg {
@@ -24,10 +32,6 @@ svg {
   height: 100%;
 
   transform: translateZ(0);
-}
-
-:host(.spinner-paused) svg {
-  animation-play-state: paused;
 }
 
 
@@ -93,6 +97,14 @@ svg {
   @include transform-origin(center);
 
   animation: spinner-dots 1s linear infinite;
+}
+
+
+// Spinner: paused
+// --------------------------------------------------
+
+:host(.spinner-paused) svg {
+  animation-play-state: paused;
 }
 
 

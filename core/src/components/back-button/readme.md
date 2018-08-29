@@ -10,79 +10,13 @@ To change what is displayed in the back button, use the `text` and `icon` proper
 
 ## Properties
 
-#### color
-
-string
-
-The color the button should be.
-
-
-#### defaultHref
-
-string
-
-The url to navigate back to by default when there is no history.
-
-
-#### icon
-
-string
-
-The icon name to use for the back button.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### text
-
-string
-
-The text to display in the back button.
-
-
-## Attributes
-
-#### color
-
-string
-
-The color the button should be.
-
-
-#### default-href
-
-string
-
-The url to navigate back to by default when there is no history.
-
-
-#### icon
-
-string
-
-The icon name to use for the back button.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### text
-
-string
-
-The text to display in the back button.
-
+| Property      | Attribute      | Description                                                                                                                                                                                                                                                            | Type     |
+| ------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| `color`       | `color`        | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `Color`  |
+| `defaultHref` | `default-href` | The url to navigate back to by default when there is no history.                                                                                                                                                                                                       | `string` |
+| `icon`        | `icon`         | The icon name to use for the back button.                                                                                                                                                                                                                              | `string` |
+| `mode`        | `mode`         | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `Mode`   |
+| `text`        | `text`         | The text to display in the back button.                                                                                                                                                                                                                                | `string` |
 
 
 ----------------------------------------------

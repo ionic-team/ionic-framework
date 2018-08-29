@@ -1,9 +1,8 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { Color, InputChangeEvent, Mode, StyleEvent  } from '../../interface';
-import { debounceEvent, deferEvent } from '../../utils/helpers';
-import { hostContext } from '../../utils/theme';
-import { InputComponent } from './input-base';
+import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
+import { Color, Mode, StyleEvent, TextFieldTypes, TextInputChangeEvent } from '../../interface';
+import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-input',
@@ -13,52 +12,28 @@ import { InputComponent } from './input-base';
   },
   shadow: true
 })
-export class Input implements InputComponent {
+export class Input {
 
   private nativeInput?: HTMLInputElement;
-  didBlurAfterEdit = false;
-
-  mode!: Mode;
-  color?: Color;
+  private inputId = `ion-input-${inputIds++}`;
+  private didBlurAfterEdit = false;
 
   @State() hasFocus = false;
 
   @Element() el!: HTMLElement;
 
   /**
-   * Emitted when a keyboard input ocurred.
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Event() ionInput!: EventEmitter<KeyboardEvent>;
+  @Prop() color?: Color;
 
   /**
-   * Emitted when the value has changed.
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
    */
-  @Event() ionChange!: EventEmitter<InputChangeEvent>;
-
-  /**
-   * Emitted when the styles change.
-   */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
-
-  /**
-   * Emitted when the input loses focus.
-   */
-  @Event() ionBlur!: EventEmitter<void>;
-
-  /**
-   * Emitted when the input has focus.
-   */
-  @Event() ionFocus!: EventEmitter<void>;
-
-  /**
-   * Emitted when the input has been created.
-   */
-  @Event() ionInputDidLoad!: EventEmitter<void>;
-
-  /**
-   * Emitted when the input has been removed.
-   */
-  @Event() ionInputDidUnload!: EventEmitter<void>;
+  @Prop() mode!: Mode;
 
   /**
    * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
@@ -148,7 +123,7 @@ export class Input implements InputComponent {
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop() name?: string;
+  @Prop() name: string = this.inputId;
 
   /**
    * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
@@ -193,13 +168,12 @@ export class Input implements InputComponent {
   /**
    * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
    */
-  @Prop() type = 'text';
+  @Prop() type: TextFieldTypes = 'text';
 
   /**
    * The value of the input.
    */
   @Prop({ mutable: true }) value = '';
-
 
   /**
    * Update the native input element when the value changes
@@ -212,8 +186,43 @@ export class Input implements InputComponent {
       inputEl.value = value;
     }
     this.emitStyle();
-    this.ionChange.emit({value});
+    this.ionChange.emit({ value });
   }
+
+  /**
+   * Emitted when a keyboard input ocurred.
+   */
+  @Event() ionInput!: EventEmitter<KeyboardEvent>;
+
+  /**
+   * Emitted when the value has changed.
+   */
+  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
+
+  /**
+   * Emitted when the styles change.
+   */
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
+
+  /**
+   * Emitted when the input loses focus.
+   */
+  @Event() ionBlur!: EventEmitter<void>;
+
+  /**
+   * Emitted when the input has focus.
+   */
+  @Event() ionFocus!: EventEmitter<void>;
+
+  /**
+   * Emitted when the input has been created.
+   */
+  @Event() ionInputDidLoad!: EventEmitter<void>;
+
+  /**
+   * Emitted when the input has been removed.
+   */
+  @Event() ionInputDidUnload!: EventEmitter<void>;
 
   componentWillLoad() {
     // By default, password inputs clear after focus when they have content
@@ -233,6 +242,13 @@ export class Input implements InputComponent {
   componentDidUnload() {
     this.nativeInput = undefined;
     this.ionInputDidUnload.emit();
+  }
+
+  @Method()
+  focus() {
+    if (this.nativeInput) {
+      this.nativeInput.focus();
+    }
   }
 
   private emitStyle() {
@@ -276,14 +292,10 @@ export class Input implements InputComponent {
     }
   }
 
-  private inputKeydown() {
-    this.checkClearOnEdit();
-  }
-
   /**
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
-  private checkClearOnEdit() {
+  private onKeydown() {
     if (!this.clearOnEdit) {
       return;
     }
@@ -309,6 +321,8 @@ export class Input implements InputComponent {
   hostData() {
     return {
       class: {
+        ...createColorClasses(this.color),
+
         'in-item': hostContext('.item', this.el),
         'has-value': this.hasValue(),
         'has-focus': this.hasFocus
@@ -317,12 +331,12 @@ export class Input implements InputComponent {
   }
 
   render() {
-    // TODO aria-labelledby={this.item.labelId}
+    renderHiddenInput(this.el, this.name, this.value, this.disabled);
 
     return [
       <input
         ref={input => this.nativeInput = input as any}
-        aria-disabled={this.disabled ? 'true' : false}
+        aria-disabled={this.disabled ? 'true' : null}
         accept={this.accept}
         autoCapitalize={this.autocapitalize}
         autoComplete={this.autocomplete}
@@ -350,13 +364,16 @@ export class Input implements InputComponent {
         onInput={this.onInput.bind(this)}
         onBlur={this.onBlur.bind(this)}
         onFocus={this.onFocus.bind(this)}
-        onKeyDown={this.inputKeydown.bind(this)}
+        onKeyDown={this.onKeydown.bind(this)}
       />,
-      this.clearInput && <button
+      <slot></slot>,
+      (this.clearInput && !this.readonly && !this.disabled) && <button
         type="button"
         class="input-clear-icon"
-        onClick={this.clearTextInput.bind(this)}
+        onTouchStart={this.clearTextInput.bind(this)}
         onMouseDown={this.clearTextInput.bind(this)}/>
     ];
   }
 }
+
+let inputIds = 0;

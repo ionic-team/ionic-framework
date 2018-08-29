@@ -45,6 +45,7 @@ rules:
   declaration-no-important:
     - true
 
+
   order/order:
     - custom-properties
     - dollar-variables
@@ -260,13 +261,9 @@ rules:
     - padding
     - padding-left
     - padding-right
-    - padding-top
-    - padding-bottom
     - margin
     - margin-left
     - margin-right
-    - margin-top
-    - margin-bottom
     - border-radius
     - border-top-left-radius
     - border-top-right-radius

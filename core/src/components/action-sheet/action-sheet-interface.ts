@@ -4,8 +4,12 @@ export interface ActionSheetOptions {
   subHeader?: string;
   cssClass?: string | string[];
   buttons: (ActionSheetButton | string)[];
-  enableBackdropDismiss?: boolean;
+  backdropDismiss?: boolean;
   translucent?: boolean;
+  animated?: boolean;
+  mode?: string;
+  keyboardClose?: boolean;
+  id?: string;
 }
 
 export interface ActionSheetButton {
@@ -15,4 +19,3 @@ export interface ActionSheetButton {
   cssClass?: string | string[];
   handler?: () => boolean | void;
 }
-

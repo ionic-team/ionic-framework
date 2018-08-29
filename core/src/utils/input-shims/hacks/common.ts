@@ -32,20 +32,18 @@ export function relocateInput(
   (componentEl as any)[RELOCATED_KEY] = shouldRelocate;
 }
 
-
 export function isFocused(input: HTMLInputElement): boolean {
   return input === input.ownerDocument.activeElement;
 }
 
 function removeClone(componentEl: HTMLElement, inputEl: HTMLElement) {
   if (componentEl && componentEl.parentElement) {
-    const clonedInputEles = componentEl.parentElement.querySelectorAll('.cloned-input');
-    for (let i = 0; i < clonedInputEles.length; i++) {
-      clonedInputEles[i].remove();
-    }
+    Array.from(componentEl.parentElement.querySelectorAll('.cloned-input'))
+      .forEach(clon => clon.remove());
+
     componentEl.style.pointerEvents = '';
   }
-  (<any>inputEl.style)['transform'] = '';
+  (inputEl.style as any)['transform'] = '';
   inputEl.style.opacity = '';
 }
 

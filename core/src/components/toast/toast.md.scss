@@ -5,7 +5,10 @@
 // --------------------------------------------------
 
 .toast-md {
-  font-family: $toast-md-font-family;
+  --background: #{$toast-md-background};
+  --color: #{$toast-md-title-color};
+
+  font-size: $toast-md-title-font-size;
 }
 
 .toast-md .toast-wrapper {
@@ -18,21 +21,15 @@
   width: $toast-width;
   max-width: $toast-max-width;
 
-  background: $toast-md-background;
-
   z-index: $z-index-overlay-wrapper;
 }
 
 .toast-md .toast-wrapper.toast-top {
-  @include transform(translate3d(0, -100%, 0));
-
-  top: 0;
+  padding-top: var(--ion-safe-area-top, 0);
 }
 
 .toast-md .toast-wrapper.toast-bottom {
-  @include transform(translate3d(0, 100%, 0));
-
-  bottom: 0;
+  padding-bottom: var(--ion-safe-area-bottom, 0);
 }
 
 .toast-md .toast-wrapper.toast-middle {
@@ -41,8 +38,4 @@
 
 .toast-md .toast-message {
   @include padding($toast-md-title-padding-top, $toast-md-title-padding-end, $toast-md-title-padding-bottom, $toast-md-title-padding-start);
-
-  color: $toast-md-title-color;
-
-  font-size: $toast-md-title-font-size;
 }

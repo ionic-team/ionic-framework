@@ -1,6 +1,6 @@
+import { SpinnerConfigs } from './spinner-interface';
 
-
-export const SPINNERS: SpinnerConfigs = {
+const spinners = {
 
   'lines': {
     dur: 1000,
@@ -86,8 +86,8 @@ export const SPINNERS: SpinnerConfigs = {
   'dots': {
     dur: 750,
     circles: 3,
-    fn: (dur: number, index: number) => {
-      const animationDelay = -(110 * index) + 'ms'; dur;
+    fn: (_: number, index: number) => {
+      const animationDelay = -(110 * index) + 'ms';
       return {
         r: 6,
         style: {
@@ -99,21 +99,5 @@ export const SPINNERS: SpinnerConfigs = {
   }
 };
 
-
-export interface SpinnerConfigs {
-  [spinnerName: string]: SpinnerConfig;
-}
-
-export interface SpinnerConfig {
-  dur: number;
-  circles?: number;
-  lines?: number;
-  fn: (dur: number, index: number, total: number) => SpinnerData;
-}
-
-export interface SpinnerData {
-  r?: number;
-  y1?: number;
-  y2?: number;
-  style: any;
-}
+export const SPINNERS: SpinnerConfigs = spinners;
+export type SpinnerTypes = keyof typeof SPINNERS;

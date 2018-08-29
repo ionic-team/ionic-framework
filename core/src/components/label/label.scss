@@ -5,16 +5,13 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: currentColor;
-
   @include margin(0);
 
   display: block;
 
   flex: 1;
 
-  color: #{current-color(base)};
-
+  font-family: $font-family-base;
   font-size: inherit;
 
   text-overflow: ellipsis;
@@ -23,6 +20,10 @@
 
   overflow: hidden;
   box-sizing: border-box;
+}
+
+:host(.ion-color) {
+  color: #{current-color(base)};
 }
 
 :host([text-wrap]) {

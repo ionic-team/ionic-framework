@@ -13,7 +13,7 @@ export class ActionSheetExample {
 
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({
-      header: "Albums",
+      header: 'Albums',
       buttons: [{
         text: 'Delete',
         role: 'destructive',

@@ -4,31 +4,60 @@
 // --------------------------------------------------
 
 :host {
-  --background: var(--ion-color-base);
-  --color: var(--ion-color-contrast);
-  --size: #{$chip-button-size};
-  --icon-size: 18px;
-  --ion-color-base: #{ion-color(primary, base)};
-  --ion-color-contrast: #{ion-color(primary, contrast)};
+  /**
+   * @prop --background: Background of the Chip Button
+   * @prop --color: Color of the Chip Button
+   * @prop --border-radius: Border radius of the Chip Button
+   * @prop --margin-top: Margin top of the Chip Button
+   * @prop --margin-end: Margin end of the Chip Button
+   * @prop --margin-bottom: Margin bottom of the Chip Button
+   * @prop --margin-start: Margin start of the Chip Button
+   * @prop --width: Width of the Chip Button
+   * @prop --height: Height of the Chip Button
+   */
+  --border-radius: #{$chip-button-border-radius};
+  --margin-top: #{$chip-button-margin-top};
+  --margin-end: #{$chip-button-margin-end};
+  --margin-bottom: #{$chip-button-margin-bottom};
+  --margin-start: #{$chip-button-margin-start};
+  --width: #{$chip-button-width};
+  --height: #{$chip-button-height};
+
+  width: var(--width);
+  height: var(--height);
+
+  font-size: #{$chip-button-font-size};
 }
 
 :host(.chip-button-clear) {
-  --color: var(--ion-color-base);
   --background: transparent;
+  --color: #{$chip-button-clear-color};
 }
 
-::slotted(ion-icon) {
-  font-size: var(--icon-size);
+:host(.chip-button-solid) {
+  --background: #{ion-color(primary, base)};
+  --color: #{ion-color(primary, contrast)};
+}
+
+:host(.chip-button-solid.ion-color) .chip-button-native {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+:host(.chip-button-clear.ion-color) .chip-button-native {
+  background: transparent;
+  color: current-color(base);
 }
 
 .chip-button-native {
-  @include border-radius($chip-button-border-radius);
-  @include margin($chip-button-margin-top, $chip-button-margin-end, $chip-button-margin-bottom, $chip-button-margin-start);
+  @include text-inherit();
+  @include border-radius(var(--border-radius));
+  @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
 
   position: relative;
 
-  width: var(--size);
-  height: var(--size);
+  width: var(--width);
+  height: var(--height);
 
   border: 0;
 

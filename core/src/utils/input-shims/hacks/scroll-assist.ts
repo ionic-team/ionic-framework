@@ -1,7 +1,7 @@
-import { pointerCoord } from '../../../utils/helpers';
+import { pointerCoord } from '../../helpers';
+
 import { isFocused, relocateInput } from './common';
 import { getScrollData } from './scroll-data';
-
 
 export function enableScrollAssist(
   componentEl: HTMLElement,
@@ -64,7 +64,7 @@ function jsSetFocus(
   inputEl.focus();
 
   // scroll the input into place
-  contentEl.getScrollElement().scrollByPoint(0, scrollData.scrollAmount, scrollData.scrollDuration, () => {
+  contentEl.scrollByPoint(0, scrollData.scrollAmount, scrollData.scrollDuration).then(() => {
     // the scroll view is in the correct position now
     // give the native text input focus
     relocateInput(componentEl, inputEl, false, scrollData.inputSafeY);

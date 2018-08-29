@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
-import { Color, InputChangeEvent, Mode } from '../../interface';
-import { createColorClasses, hostContext } from '../../utils/theme';
 
+import { Color, Mode, TextInputChangeEvent } from '../../interface';
+import { createColorClasses, hostContext } from '../../utils/theme';
 
 @Component({
   tag: 'ion-segment',
@@ -16,8 +16,9 @@ export class Segment {
   @Element() el!: HTMLElement;
 
   /**
-   * The color to use for the text color.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -40,13 +41,13 @@ export class Segment {
   @Watch('value')
   protected valueChanged(value: string | undefined) {
     this.updateButtons();
-    this.ionChange.emit({value});
+    this.ionChange.emit({ value });
   }
 
   /**
    * Emitted when the value property has changed.
    */
-  @Event() ionChange!: EventEmitter<InputChangeEvent>;
+  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
 
   @Listen('ionSelect')
   segmentClick(ev: CustomEvent) {

@@ -8,132 +8,23 @@ Tabbar is an internal component for Tabs. Please see the [Tabs documentation](..
 
 ## Properties
 
-#### color
-
-string
-
-
-#### highlight
-
-boolean
-
-If true, show the tab highlight bar under the selected tab.
-
-
-#### layout
-
-string
-
-Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
-
-
-#### mode
-
-string
-
-
-#### placement
-
-string
-
-Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
-
-
-#### scrollable
-
-boolean
-
-If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-
-
-#### selectedTab
-
-HTMLIonTabElement
-
-The selected tab component
-
-
-#### tabs
-
-HTMLIonTabElement[]
-
-The tabs to render
-
-
-#### translucent
-
-boolean
-
-If true, the tabbar will be translucent. Defaults to `false`.
-
-
-## Attributes
-
-#### color
-
-string
-
-
-#### highlight
-
-boolean
-
-If true, show the tab highlight bar under the selected tab.
-
-
-#### layout
-
-string
-
-Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
-
-
-#### mode
-
-string
-
-
-#### placement
-
-string
-
-Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
-
-
-#### scrollable
-
-boolean
-
-If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-
-
-#### selected-tab
-
-
-
-The selected tab component
-
-
-#### tabs
-
-
-
-The tabs to render
-
-
-#### translucent
-
-boolean
-
-If true, the tabbar will be translucent. Defaults to `false`.
+| Property      | Attribute     | Description                                                                                                                                                       | Type                  |
+| ------------- | ------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| `color`       | `color`       |                                                                                                                                                                   | `Color`               |
+| `highlight`   | `highlight`   | If true, show the tab highlight bar under the selected tab.                                                                                                       | `boolean`             |
+| `layout`      | `layout`      | Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`. | `TabbarLayout`        |
+| `mode`        | `mode`        |                                                                                                                                                                   | `Mode`                |
+| `placement`   | `placement`   | Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.                                                                  | `TabbarPlacement`     |
+| `selectedTab` | --            | The selected tab component                                                                                                                                        | `HTMLIonTabElement`   |
+| `tabs`        | --            | The tabs to render                                                                                                                                                | `HTMLIonTabElement[]` |
+| `translucent` | `translucent` | If true, the tabbar will be translucent. Defaults to `false`.                                                                                                     | `boolean`             |
 
 
 ## Events
 
-#### ionTabbarClick
-
-Emitted when the tab bar is clicked
-
+| Event            | Description                         |
+| ---------------- | ----------------------------------- |
+| `ionTabbarClick` | Emitted when the tab bar is clicked |
 
 
 ----------------------------------------------

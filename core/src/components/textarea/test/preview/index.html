@@ -12,14 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Input - Textarea</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content">
-
+    <ion-content id="content" fullscreen>
       <ion-list>
         <ion-item>
           <ion-label color="primary">Inline Label</ion-label>
@@ -94,6 +93,12 @@
         </ion-button>
       </div>
     </ion-content>
+
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
 
     <script>
       function toggleBoolean(id, prop) {

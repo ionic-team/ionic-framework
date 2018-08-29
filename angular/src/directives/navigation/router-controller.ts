@@ -21,11 +21,12 @@ export class StackController {
       ref: enteringRef,
       element: (enteringRef && enteringRef.location && enteringRef.location.nativeElement) as HTMLElement,
       url: this.getUrl(route),
+      fullpath: document.location.pathname,
       deactivatedId: -1
     };
   }
 
-  getExistingView(activatedRoute: ActivatedRoute): RouteView|null {
+  getExistingView(activatedRoute: ActivatedRoute): RouteView | undefined {
     const activatedUrlKey = this.getUrl(activatedRoute);
     return this.views.find(vw => vw.url === activatedUrlKey);
   }
@@ -38,13 +39,12 @@ export class StackController {
     const leavingView = this.getActive();
     this.insertView(enteringView, direction);
     await this.transition(enteringView, leavingView, direction, animated, this.canGoBack(1));
-
     this.cleanup();
   }
 
   pop(deep: number) {
     const view = this.views[this.views.length - deep - 1];
-    this.navCtrl.goBack(view.url);
+    this.navCtrl.navigateBack(view.url);
   }
 
   private insertView(enteringView: RouteView, direction: number) {
@@ -55,7 +55,7 @@ export class StackController {
     }
 
     // stack setRoot
-    if (direction === 0) {
+    if (direction === 0) {
       this.views = [enteringView];
       return;
     }
@@ -74,23 +74,30 @@ export class StackController {
   }
 
   private cleanup() {
+    const views = this.views;
     this.viewsSnapshot
-      .filter(view => !this.views.includes(view))
+      .filter(view => !views.includes(view))
       .forEach(view => destroyView(view));
 
-    for (let i = 0; i < this.views.length - 1; i++) {
-      this.views[i].element.hidden = true;
+    for (let i = 0; i < views.length - 1; i++) {
+      const view = views[i];
+      const element = view.element;
+      element.setAttribute('aria-hidden', 'true');
+      element.classList.add('ion-page-hidden');
+      // view.ref.changeDetectorRef.detach();
     }
-    this.viewsSnapshot = this.views.slice();
+
+    this.viewsSnapshot = views.slice();
   }
 
-  getActive(): RouteView | null {
-    return this.views.length > 0 ? this.views[this.views.length - 1] : null;
+  getActive(): RouteView | undefined {
+    const views = this.views;
+    return views.length > 0 ? views[views.length - 1] : undefined;
   }
 
   private async transition(
-    enteringView: RouteView,
-    leavingView: RouteView,
+    enteringView: RouteView | undefined,
+    leavingView: RouteView | undefined,
     direction: number,
     animated: boolean,
     showGoBack: boolean
@@ -99,7 +106,7 @@ export class StackController {
     const leavingEl = leavingView ? leavingView.element : undefined;
     const containerEl = this.containerEl;
     if (enteringEl && enteringEl !== leavingEl) {
-      enteringEl.classList.add('ion-page', 'hide-page');
+      enteringEl.classList.add('ion-page', 'ion-page-invisible');
       containerEl.appendChild(enteringEl);
 
       await containerEl.componentOnReady();
@@ -140,7 +147,9 @@ export function getLastDeactivatedRef(views: RouteView[]) {
 
 export interface RouteView {
   url: string;
+  fullpath: string;
   element: HTMLElement;
   ref: ComponentRef<any>;
   deactivatedId: number;
+  savedData?: any;
 }

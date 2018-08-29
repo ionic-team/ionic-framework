@@ -1,11 +1,11 @@
-import { Component, ComponentDidLoad, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
-import { InputChangeEvent, RadioGroupInput } from '../../interface';
+import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
+import { InputChangeEvent } from '../../interface';
 
 @Component({
   tag: 'ion-radio-group'
 })
-export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
+export class RadioGroup {
 
   private inputId = `ion-rg-${radioGroupIds++}`;
   private labelId = `${this.inputId}-lbl`;
@@ -38,10 +38,10 @@ export class RadioGroup implements ComponentDidLoad, RadioGroupInput {
   /**
    * the value of the radio group.
    */
-  @Prop({ mutable: true }) value?: string;
+  @Prop({ mutable: true }) value?: any;
 
   @Watch('value')
-  valueChanged(value: string | undefined) {
+  valueChanged(value: any | undefined) {
     this.updateRadios();
     this.ionChange.emit({ value });
   }

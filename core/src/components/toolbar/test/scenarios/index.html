@@ -177,11 +177,7 @@
 
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-menu-toggle auto-hide="false">
-            <ion-button>
-              <ion-icon slot="icon-only" name="menu"></ion-icon>
-            </ion-button>
-          </ion-menu-toggle>
+            <ion-menu-button auto-hide="false"></ion-menu-button>
         </ion-buttons>
         <ion-buttons slot="secondary">
           <ion-button>
@@ -199,11 +195,7 @@
         </ion-buttons>
         <ion-title>Right side menu toggle</ion-title>
         <ion-buttons slot="end">
-          <ion-menu-toggle auto-hide="false">
-            <ion-button>
-              <ion-icon slot="icon-only" name="menu"></ion-icon>
-            </ion-button>
-          </ion-menu-toggle>
+          <ion-menu-button auto-hide="false"></ion-menu-button>
         </ion-buttons>
       </ion-toolbar>
 
@@ -235,6 +227,12 @@
             Default Segment
           </ion-segment-button>
         </ion-segment>
+      </ion-toolbar>
+      <ion-toolbar mode="ios">
+        <ion-title>This is an iOS toolbar</ion-title>
+      </ion-toolbar>
+      <ion-toolbar mode="md">
+        <ion-title>This is an MD toolbar</ion-title>
       </ion-toolbar>
     </ion-content>
   </ion-app>

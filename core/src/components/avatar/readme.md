@@ -8,6 +8,12 @@ Avatars can be used by themselves or inside of any element. If placed inside of 
 <!-- Auto Generated Below -->
 
 
+## CSS Custom Properties
+
+| Name              | Description                                 |
+| ----------------- | ------------------------------------------- |
+| `--border-radius` | Border radius of the avatar and inner image |
+
 
 ----------------------------------------------
 

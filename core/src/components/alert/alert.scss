@@ -4,6 +4,9 @@
 // --------------------------------------------------
 
 :host {
+  --min-width: #{$alert-min-width};
+  --max-height: #{$alert-max-height};
+
   @include font-smoothing();
   @include position(0, 0, 0, 0);
 
@@ -13,8 +16,11 @@
   align-items: center;
   justify-content: center;
 
+  font-family: $font-family-base;
+
   contain: strict;
   touch-action: none;
+  user-select: none;
   z-index: $z-index-overlay;
 }
 
@@ -29,8 +35,12 @@
 
   flex-direction: column;
 
-  min-width: $alert-min-width;
-  max-height: $alert-max-height;
+  min-width: var(--min-width);
+  max-width: var(--max-width);
+
+  max-height: var(--max-height);
+
+  background: var(--background);
 
   contain: content;
   opacity: 0;

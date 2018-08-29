@@ -4,7 +4,7 @@ async function presentLoading() {
   await loadingController.componentOnReady();
 
   const loadingElement = await loadingController.create({
-    content: 'Please wait...',
+    message: 'Please wait...',
     spinner: 'crescent',
     duration: 2000
   });

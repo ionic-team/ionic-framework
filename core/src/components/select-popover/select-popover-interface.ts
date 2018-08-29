@@ -4,5 +4,5 @@ export interface SelectPopoverOption {
   value: string;
   disabled: boolean;
   checked: boolean;
-  handler?: Function;
+  handler?: () => void;
 }

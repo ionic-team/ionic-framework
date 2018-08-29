@@ -11,8 +11,6 @@
 
 <body>
   <ion-app>
-
-
     <ion-header>
       <ion-toolbar>
         <ion-title>Pull To Refresh</ion-title>
@@ -20,21 +18,18 @@
     </ion-header>
 
     <ion-content>
-      <ion-refresher id="refresher" disabled="false" slot="fixed">
+      <ion-refresher id="refresher" slot="fixed">
         <ion-refresher-content pulling-text="Pull to refresh..." refreshing-spinner="bubbles" refreshing-text="Refreshing...">
         </ion-refresher-content>
       </ion-refresher>
 
       <ion-list id="list"></ion-list>
-
     </ion-content>
-
-
-
   </ion-app>
   <ion-menu-controller></ion-menu-controller>
 
   <script>
+
     let items = [];
     for (var i = 0; i < 30; i++) {
       items.push(i + 1);

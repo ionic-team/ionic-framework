@@ -1,8 +1,7 @@
 
-
 export interface NavOutlet {
   setRouteId(id: string, data: any, direction: number): Promise<RouteWrite>;
-  getRouteId(): RouteID | undefined;
+  getRouteId(): Promise<RouteID | undefined>;
 }
 
 export interface RouterEventDetail {
@@ -19,7 +18,7 @@ export interface RouteRedirect {
 export interface RouteWrite {
   changed: boolean;
   element: HTMLElement | undefined;
-  markVisible?: () => void|Promise<void>;
+  markVisible?: () => void | Promise<void>;
 }
 
 export interface RouteID {
@@ -31,7 +30,7 @@ export interface RouteID {
 export interface RouteEntry {
   id: string;
   path: string[];
-  params: any|undefined;
+  params: any | undefined;
 }
 
 export interface RouteNode extends RouteEntry {

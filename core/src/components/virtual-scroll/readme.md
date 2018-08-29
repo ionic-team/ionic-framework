@@ -9,17 +9,17 @@ instead a small subset of records (enough to fill the viewport) are rendered
 and reused as the user scrolls.
 
 ### The Basics
-The array of records should be passed to the `virtualScroll` property.
-The data given to the `virtualScroll` property must be an array. An item
-template with the `*virtualItem` property is required in the `virtualScroll`.
-The `virtualScroll` and `*virtualItem` properties can be added to any element.
+The array of records should be passed to the `item` property on the `ion-virtual-scroll` element.
+The data given to the `item` property must be an array. An item
+template with the `*virtualItem` property is required in the `ion-virtual-scroll`.
+The `*virtualItem` property can be added to any element.
 
 ```html
-<ion-list [virtualScroll]="items">
+<ion-virtual-scroll [items]="items">
   <ion-item *virtualItem="let item">
     {{ item }}
   </ion-item>
-</ion-list>
+</ion-virtual-scroll>
 ```
 
 ### Section Headers and Footers
@@ -33,14 +33,14 @@ and what data to provide to the template. The custom function should
 return `null` if a template shouldn't be created.
 
 ```html
-<ion-list [virtualScroll]="items" [headerFn]="myHeaderFn">
+<ion-virtual-scroll [items]="items" [headerFn]="myHeaderFn">
   <ion-item-divider *virtualHeader="let header">
-    Header: {% raw %}{{ header }}{% endraw %}
+    {{ header }}
   </ion-item-divider>
   <ion-item *virtualItem="let item">
-    Item: {% raw %}{{ item }}{% endraw %}
+    Item: {{ item }}
   </ion-item>
-</ion-list>
+</ion-virtual-scroll>
 ```
 
 Below is an example of a custom function called on every record. It
@@ -99,12 +99,12 @@ renders whenever it wants which could be while the user is scrolling. However,
 images while scrolling quickly.
 
 ```html
-<ion-list [virtualScroll]="items">
+<ion-virtual-scroll [items]="items">
   <ion-item *virtualItem="let item">
     <ion-avatar item-start>
       <ion-img [src]="item.avatarUrl"></ion-img>
     </ion-avatar>
-   {% raw %} {{ item.firstName }} {{ item.lastName }}{% endraw %}
+    {{ item.firstName }} {{ item.lastName }}
   </ion-item>
 </ion-list>
 ```
@@ -118,10 +118,10 @@ quite different, wrapping within a `<div>` is a safe way to make sure
 dimensions are measured correctly.
 
 ```html
-<ion-list [virtualScroll]="items">
+<ion-virtual-scroll [items]="items">
   <div *virtualItem="let item">
     <my-custom-item [item]="item">
-      {% raw %} {{ item }}{% endraw %}
+      {{ item }}
     </my-custom-item>
   </div>
 </ion-list>
@@ -183,232 +183,29 @@ dataset, so please make sure they're performant.
 
 ## Properties
 
-#### approxFooterHeight
-
-number
-
-The approximate width of each footer template's cell.
-This dimension is used to help determine how many cells should
-be created when initialized, and to help calculate the height of
-the scrollable area. This value can use either `px` or `%` units.
-Note that the actual rendered size of each cell comes from the
-app's CSS, whereas this approximation is used to help calculate
-initial dimensions before the item has been rendered. Default is `100%`.
-
-
-#### approxHeaderHeight
-
-number
-
-The approximate height of each header template's cell.
-This dimension is used to help determine how many cells should
-be created when initialized, and to help calculate the height of
-the scrollable area. This height value can only use `px` units.
-Note that the actual rendered size of each cell comes from the
-app's CSS, whereas this approximation is used to help calculate
-initial dimensions before the item has been rendered. Default is `40px`.
-
-
-#### approxItemHeight
-
-number
-
-It is important to provide this
-if virtual item height will be significantly larger than the default
-The approximate height of each virtual item template's cell.
-This dimension is used to help determine how many cells should
-be created when initialized, and to help calculate the height of
-the scrollable area. This height value can only use `px` units.
-Note that the actual rendered size of each cell comes from the
-app's CSS, whereas this approximation is used to help calculate
-initial dimensions before the item has been rendered. Default is
-`45`.
-
-
-#### domRender
-
-DomRenderFn
-
-
-#### footerFn
-
-HeaderFn
-
-Section footers and the data used within its given
-template can be dynamically created by passing a function to `footerFn`.
-The logic within the footer function can decide if the footer template
-should be used, and what data to give to the footer template. The function
-must return `null` if a footer cell shouldn't be created.
-
-
-#### headerFn
-
-HeaderFn
-
-Section headers and the data used within its given
-template can be dynamically created by passing a function to `headerFn`.
-For example, a large list of contacts usually has dividers between each
-letter in the alphabet. App's can provide their own custom `headerFn`
-which is called with each record within the dataset. The logic within
-the header function can decide if the header template should be used,
-and what data to give to the header template. The function must return
-`null` if a header cell shouldn't be created.
-
-
-#### itemHeight
-
-ItemHeightFn
-
-
-#### items
-
-any[]
-
-The data that builds the templates within the virtual scroll.
-It's important to note that when this data has changed, then the
-entire virtual scroll is reset, which is an expensive operation and
-should be avoided if possible.
-
-
-#### nodeRender
-
-ItemRenderFn
-
-
-#### renderFooter
-
-(item: any, index: number) => JSX.Element
-
-
-#### renderHeader
-
-(item: any, index: number) => JSX.Element
-
-
-#### renderItem
-
-(item: any, index: number) => JSX.Element
-
-
-## Attributes
-
-#### approx-footer-height
-
-number
-
-The approximate width of each footer template's cell.
-This dimension is used to help determine how many cells should
-be created when initialized, and to help calculate the height of
-the scrollable area. This value can use either `px` or `%` units.
-Note that the actual rendered size of each cell comes from the
-app's CSS, whereas this approximation is used to help calculate
-initial dimensions before the item has been rendered. Default is `100%`.
-
-
-#### approx-header-height
-
-number
-
-The approximate height of each header template's cell.
-This dimension is used to help determine how many cells should
-be created when initialized, and to help calculate the height of
-the scrollable area. This height value can only use `px` units.
-Note that the actual rendered size of each cell comes from the
-app's CSS, whereas this approximation is used to help calculate
-initial dimensions before the item has been rendered. Default is `40px`.
-
-
-#### approx-item-height
-
-number
-
-It is important to provide this
-if virtual item height will be significantly larger than the default
-The approximate height of each virtual item template's cell.
-This dimension is used to help determine how many cells should
-be created when initialized, and to help calculate the height of
-the scrollable area. This height value can only use `px` units.
-Note that the actual rendered size of each cell comes from the
-app's CSS, whereas this approximation is used to help calculate
-initial dimensions before the item has been rendered. Default is
-`45`.
-
-
-#### dom-render
-
-
-
-
-#### footer-fn
-
-
-
-Section footers and the data used within its given
-template can be dynamically created by passing a function to `footerFn`.
-The logic within the footer function can decide if the footer template
-should be used, and what data to give to the footer template. The function
-must return `null` if a footer cell shouldn't be created.
-
-
-#### header-fn
-
-
-
-Section headers and the data used within its given
-template can be dynamically created by passing a function to `headerFn`.
-For example, a large list of contacts usually has dividers between each
-letter in the alphabet. App's can provide their own custom `headerFn`
-which is called with each record within the dataset. The logic within
-the header function can decide if the header template should be used,
-and what data to give to the header template. The function must return
-`null` if a header cell shouldn't be created.
-
-
-#### item-height
-
-
-
-
-#### items
-
-
-
-The data that builds the templates within the virtual scroll.
-It's important to note that when this data has changed, then the
-entire virtual scroll is reset, which is an expensive operation and
-should be avoided if possible.
-
-
-#### node-render
-
-
-
-
-#### render-footer
-
-
-
-
-#### render-header
-
-
-
-
-#### render-item
-
-
+| Property             | Attribute              | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | Type                                |
+| -------------------- | ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| `approxFooterHeight` | `approx-footer-height` | The approximate width of each footer template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This value can use either `px` or `%` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `100%`.                                                                                                         | `number`                            |
+| `approxHeaderHeight` | `approx-header-height` | The approximate height of each header template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `40px`.                                                                                                          | `number`                            |
+| `approxItemHeight`   | `approx-item-height`   | It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `45`. | `number`                            |
+| `domRender`          | --                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `DomRenderFn`                       |
+| `footerFn`           | --                     | Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.                                                                                                                                                                                                                                 | `HeaderFn`                          |
+| `headerFn`           | --                     | Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.                              | `HeaderFn`                          |
+| `itemHeight`         | --                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `ItemHeightFn`                      |
+| `items`              | --                     | The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.                                                                                                                                                                                                                                                                                                                                       | `any[]`                             |
+| `nodeRender`         | --                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `ItemRenderFn`                      |
+| `renderFooter`       | --                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `(item: any, index: number) => any` |
+| `renderHeader`       | --                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `(item: any, index: number) => any` |
+| `renderItem`         | --                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `(item: any, index: number) => any` |
 
 
 ## Methods
 
-#### markDirty()
-
-
-#### markDirtyTail()
-
-
-#### positionForItem()
-
+| Method            | Description |
+| ----------------- | ----------- |
+| `markDirty`       |             |
+| `markDirtyTail`   |             |
+| `positionForItem` |             |
 
 
 ----------------------------------------------

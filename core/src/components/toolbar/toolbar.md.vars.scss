@@ -15,9 +15,6 @@ $toolbar-order-md: (
   menu-toggle-end: 7,
 );
 
-/// @prop - Font family of the toolbar
-$toolbar-md-font-family:                          $font-family-base !default;
-
 /// @prop - Font size of the toolbar button
 $toolbar-md-button-font-size:                     14px !default;
 
@@ -29,9 +26,6 @@ $toolbar-md-button-background-color:              $toolbar-md-background-color !
 
 /// @prop - Background color of the toolbar button when activated
 $toolbar-md-button-background-color-activated:    $toolbar-md-color-active !default;
-
-/// @prop - Border radius of the toolbar button
-$toolbar-md-button-border-radius:                 2px !default;
 
 /// @prop - Fill color of the toolbar button icon
 $toolbar-md-button-icon-fill-color:               currentColor !default;

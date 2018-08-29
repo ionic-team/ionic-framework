@@ -1,7 +1,8 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, Watch } from '@stencil/core';
-import { AlertButton, AlertInput, Animation, AnimationBuilder, Color, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
+
+import { AlertButton, AlertInput, Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
-import { createColorClasses, getClassMap } from '../../utils/theme';
+import { getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
@@ -26,14 +27,21 @@ export class Alert implements OverlayInterface {
   presented = false;
   animation?: Animation;
 
-  color!: Color;
-  @Prop() mode!: Mode;
-
   @Element() el!: HTMLStencilElement;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
-  @Prop() overlayId!: number;
+  @Prop() overlayIndex!: number;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
+
+  /**
+   * If true, the keyboard will be automatically dismissed when the overlay is presented.
+   */
   @Prop() keyboardClose = true;
 
   /**
@@ -80,7 +88,7 @@ export class Alert implements OverlayInterface {
   /**
    * If true, the alert will be dismissed when the backdrop is clicked. Defaults to `true`.
    */
-  @Prop() enableBackdropDismiss = true;
+  @Prop() backdropDismiss = true;
 
   /**
    * If true, the alert will be translucent. Defaults to `false`.
@@ -90,7 +98,7 @@ export class Alert implements OverlayInterface {
   /**
    * If true, the alert will animate. Defaults to `true`.
    */
-  @Prop() willAnimate = true;
+  @Prop() animated = true;
 
   /**
    * Emitted after the alert has presented.
@@ -105,22 +113,22 @@ export class Alert implements OverlayInterface {
   /**
    * Emitted after the alert has presented.
    */
-  @Event({eventName: 'ionAlertDidPresent'}) didPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionAlertDidPresent' }) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the alert has presented.
    */
-  @Event({eventName: 'ionAlertWillPresent'}) willPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionAlertWillPresent' }) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the alert has dismissed.
    */
-  @Event({eventName: 'ionAlertWillDismiss'}) willDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionAlertWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the alert has dismissed.
    */
-  @Event({eventName: 'ionAlertDidDismiss'}) didDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionAlertDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   @Watch('buttons')
   buttonsChanged() {
@@ -139,22 +147,22 @@ export class Alert implements OverlayInterface {
     // An alert can be created with several different inputs. Radios,
     // checkboxes and inputs are all accepted, but they cannot be mixed.
     const inputTypes = new Set(inputs.map(i => i.type));
-    if (inputTypes.has('checkbox') || inputTypes.has('radio')) {
+    if (inputTypes.has('checkbox') && inputTypes.has('radio')) {
       console.warn(`Alert cannot mix input types: ${(Array.from(inputTypes.values()).join('/'))}. Please see alert docs for more info.`);
     }
     this.inputType = inputTypes.values().next().value;
     this.processedInputs = inputs.map((i, index) => ({
-        type: i.type || 'text',
-        name: i.name ? i.name : index + '',
-        placeholder: i.placeholder ? i.placeholder : '',
-        value: i.value ? i.value : '',
-        label: i.label,
-        checked: !!i.checked,
-        disabled: !!i.disabled,
-        id: i.id ? i.id : `alert-input-${this.overlayId}-${index}`,
-        handler: i.handler ? i.handler : null,
-        min: i.min ? i.min : null,
-        max: i.max ? i.max : null
+      type: i.type || 'text',
+      name: i.name ? i.name : index + '',
+      placeholder: i.placeholder ? i.placeholder : '',
+      value: i.value ? i.value : '',
+      label: i.label,
+      checked: !!i.checked,
+      disabled: !!i.disabled,
+      id: i.id ? i.id : `alert-input-${this.overlayIndex}-${index}`,
+      handler: i.handler,
+      min: i.min,
+      max: i.max
     }) as AlertInput);
   }
 
@@ -207,8 +215,8 @@ export class Alert implements OverlayInterface {
    *
    */
   @Method()
-  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionAlertDidDismiss', callback);
+  onDidDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionAlertDidDismiss');
   }
 
   /**
@@ -217,8 +225,8 @@ export class Alert implements OverlayInterface {
    *
    */
   @Method()
-  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionAlertWillDismiss', callback);
+  onWillDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionAlertWillDismiss');
   }
 
   private rbClick(selectedInput: AlertInput) {
@@ -244,16 +252,16 @@ export class Alert implements OverlayInterface {
     const role = button.role;
     const values = this.getValues();
     if (isCancel(role)) {
-      this.dismiss({values}, role);
+      this.dismiss({ values }, role);
       return;
     }
     const returnData = this.callButtonHandler(button, values);
     if (returnData !== false) {
-      this.dismiss({values, ...returnData}, button.role);
+      this.dismiss({ values, ...returnData }, button.role);
     }
   }
 
-  private callButtonHandler(button: AlertButton|undefined, data: any = undefined) {
+  private callButtonHandler(button: AlertButton | undefined, data?: any) {
     if (button && button.handler) {
       // a handler has been provided, execute it
       // pass the handler the values from the inputs
@@ -312,15 +320,24 @@ export class Alert implements OverlayInterface {
     }
     return (
       <div class="alert-checkbox-group" aria-labelledby={labelledby}>
-        { inputs.map((i) => (
-          <button onClick={() => this.cbClick(i)} aria-checked={i.checked} id={i.id} disabled={i.disabled} tabIndex={0} role="checkbox" class="alert-tappable alert-checkbox alert-checkbox-button">
+        { inputs.map(i => (
+          <button
+            type="button"
+            onClick={() => this.cbClick(i)}
+            aria-checked={i.checked ? 'true' : null}
+            id={i.id}
+            disabled={i.disabled}
+            tabIndex={0}
+            role="checkbox"
+            class="alert-tappable alert-checkbox alert-checkbox-button">
+
             <div class="alert-button-inner">
               <div class="alert-checkbox-icon"><div class="alert-checkbox-inner"></div></div>
               <div class="alert-checkbox-label">
                 {i.label}
               </div>
             </div>
-            { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+            { this.mode === 'md' && <ion-ripple-effect /> }
           </button>
         ))}
       </div>
@@ -334,15 +351,22 @@ export class Alert implements OverlayInterface {
     }
     return (
       <div class="alert-radio-group" role="radiogroup" aria-labelledby={labelledby} aria-activedescendant={this.activeId}>
-        { inputs.map((i) => (
-          <button onClick={() => this.rbClick(i)} aria-checked={i.checked} disabled={i.disabled} id={i.id} tabIndex={0} class="alert-radio-button alert-tappable alert-radio" role="radio">
+        { inputs.map(i => (
+          <button
+            type="button"
+            onClick={() => this.rbClick(i)}
+            aria-checked={i.checked ? 'true' : null}
+            disabled={i.disabled}
+            id={i.id} tabIndex={0}
+            class="alert-radio-button alert-tappable alert-radio"
+            role="radio">
             <div class="alert-button-inner">
               <div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>
               <div class="alert-radio-label">
                 {i.label}
               </div>
             </div>
-            { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+            { this.mode === 'md' && <ion-ripple-effect /> }
           </button>
         ))}
       </div>
@@ -379,10 +403,9 @@ export class Alert implements OverlayInterface {
     return {
       role: 'alertdialog',
       style: {
-        zIndex: 20000 + this.overlayId,
+        zIndex: 20000 + this.overlayIndex,
       },
       class: {
-        ...createColorClasses(this.color),
         ...getClassMap(this.cssClass),
         'alert-translucent': this.translucent
       }
@@ -398,7 +421,7 @@ export class Alert implements OverlayInterface {
     return (
       <div class={alertButtonGroupClass}>
         {buttons.map(button =>
-          <button class={buttonClass(button)} tabIndex={0} onClick={() => this.buttonClick(button)}>
+          <button type="button" ion-activable class={buttonClass(button)} tabIndex={0} onClick={() => this.buttonClick(button)}>
             <span class="alert-button-inner">
               {button.text}
             </span>
@@ -409,11 +432,11 @@ export class Alert implements OverlayInterface {
   }
 
   render() {
-    const hdrId = `alert-${this.overlayId}-hdr`;
-    const subHdrId = `alert-${this.overlayId}-sub-hdr`;
-    const msgId = `alert-${this.overlayId}-msg`;
+    const hdrId = `alert-${this.overlayIndex}-hdr`;
+    const subHdrId = `alert-${this.overlayIndex}-sub-hdr`;
+    const msgId = `alert-${this.overlayIndex}-msg`;
 
-    let labelledById: string|undefined = undefined;
+    let labelledById: string | undefined;
     if (this.header) {
       labelledById = hdrId;
     } else if (this.subHeader) {
@@ -421,7 +444,7 @@ export class Alert implements OverlayInterface {
     }
 
     return [
-      <ion-backdrop tappable={this.enableBackdropDismiss}/>,
+      <ion-backdrop tappable={this.backdropDismiss}/>,
 
       <div class="alert-wrapper">
 

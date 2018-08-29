@@ -7,9 +7,12 @@
   --ion-color-base: #{ion-color(primary, base)};
   --ion-color-contrast: #{ion-color(primary, contrast)};
   --ion-color-shade: #{ion-color(primary, shade)};
+  --overflow: hidden;
   --ripple-color: currentColor;
 
   display: inline-block;
+
+  font-family: $font-family-base;
 
   text-align: center;
   text-decoration: none;
@@ -17,8 +20,11 @@
 
   white-space: nowrap;
 
+  user-select: none;
   vertical-align: top; // the better option for most scenarios
   vertical-align: -webkit-baseline-middle; // the best for those that support it
+
+  font-kerning: none;
 }
 
 :host([disabled]) {
@@ -108,12 +114,13 @@
 
 
 .button-native {
+  @include text-inherit();
   @include border-radius(var(--border-radius));
   @include font-smoothing();
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
 
-  display: inline-block;
+  display: block;
   position: relative;
 
   height: var(--height);
@@ -124,34 +131,20 @@
   border-style: var(--border-style);
   border-color: var(--border-color);
 
+  outline: none;
+
   background: var(--background);
-  color: inherit;
 
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-
-  letter-spacing: inherit;
   line-height: 1;
-
-  text-align: inherit;
-  text-decoration: inherit;
-  text-overflow: inherit;
-  text-transform: inherit;
-
-  white-space: inherit;
 
   box-shadow: var(--box-shadow);
   contain: content;
   cursor: pointer;
   opacity: var(--opacity);
-  overflow: hidden;
-  user-select: none;
-  vertical-align: top; // the better option for most scenarios
-  vertical-align: -webkit-baseline-middle; // the best for those that support it
+  overflow: var(--overflow);
+
   z-index: 0;
   box-sizing: border-box;
-  font-kerning: none;
   appearance: none;
 }
 
@@ -164,11 +157,6 @@
 // .button > .button-container:hover {
 //   opacity: var(--opacity-hover);
 // }
-
-.button-native:active,
-.button-native:focus {
-  outline: none;
-}
 
 .button-inner {
   display: flex;

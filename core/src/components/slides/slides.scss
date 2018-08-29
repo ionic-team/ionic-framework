@@ -5,7 +5,16 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --bullet-background: Background of the pagination bullets
+   * @prop --bullet-background-active: Background of the active pagination bullet
+   */
+
+  // TODO: document progress and scroll bar properties once they're working
+
   display: block;
+
+  user-select: none;
 }
 
 .swiper-container {

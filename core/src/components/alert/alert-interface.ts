@@ -1,28 +1,33 @@
+import { TextFieldTypes } from '../../interface';
 
 export interface AlertOptions {
   header?: string;
   subHeader?: string;
   message?: string;
   cssClass?: string | string[];
-  mode?: string;
   inputs?: AlertInput[];
-  buttons?: (AlertButton|string)[];
-  enableBackdropDismiss?: boolean;
+  buttons?: (AlertButton | string)[];
+  backdropDismiss?: boolean;
   translucent?: boolean;
+  animated?: boolean;
+
+  mode?: string;
+  keyboardClose?: boolean;
+  id?: string;
 }
 
 export interface AlertInput {
-  type?: string;
-  name?: string | number;
+  type?: TextFieldTypes | 'checkbox' | 'radio';
+  name?: string;
   placeholder?: string;
   value?: string;
   label?: string;
   checked?: boolean;
   disabled?: boolean;
   id?: string;
-  handler?: Function;
-  min?: string | number;
-  max?: string | number;
+  handler?: (input: AlertInput) => void;
+  min?: number;
+  max?: number;
 }
 
 export interface AlertButton {

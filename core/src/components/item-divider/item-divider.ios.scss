@@ -7,14 +7,12 @@
 :host {
   --ion-color-base: #{$item-ios-divider-background};
   --ion-color-contrast: #{$item-ios-divider-color};
+  --padding-start: #{$item-ios-divider-padding-start};
 
-  @include padding-horizontal($item-ios-divider-padding-start, null);
-  @include safe-area-padding-horizontal($item-ios-divider-padding-start, null);
   @include border-radius(0);
 
   position: relative;
 
-  font-family: $item-ios-divider-font-family;
   font-size: $item-ios-divider-font-size;
 }
 

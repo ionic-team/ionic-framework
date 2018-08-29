@@ -1,6 +1,7 @@
 import { Component, Element, Prop, QueueApi } from '@stencil/core';
+
 import { Config } from '../../interface';
-import { isDevice, isHybrid, needInputShims } from '../../utils/platform';
+import { isPlatform } from '../../utils/platform';
 
 @Component({
   tag: 'ion-app',
@@ -15,34 +16,30 @@ export class App {
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
   componentDidLoad() {
-    importInputShims(this.win, this.config);
-    importStatusTap(this.win, this.config, this.queue);
+    setTimeout(() => {
+      importTapClick(this.win);
+      importInputShims(this.win, this.config);
+      importStatusTap(this.win, this.queue);
+    }, 32);
   }
 
   hostData() {
-    const hybrid = isHybrid(this.win);
-    const statusBar = this.config.getBoolean('statusbarPadding', hybrid);
-
     return {
       class: {
-        'statusbar-padding': statusBar
+        'ion-page': true,
       }
     };
   }
+}
 
-  render() {
-    return [
-      <ion-tap-click></ion-tap-click>,
-      <slot></slot>
-    ];
+async function importStatusTap(win: Window, queue: QueueApi) {
+  if (isPlatform(win, 'hybrid')) {
+    (await import('../../utils/status-tap')).startStatusTap(win, queue);
   }
 }
 
-async function importStatusTap(win: Window, config: Config, queue: QueueApi) {
-  const device = config.getBoolean('isDevice', isDevice(win));
-  if (device) {
-    (await import('../../utils/status-tap')).startStatusTap(win, queue);
-  }
+async function importTapClick(win: Window) {
+  (await import('../../utils/tap-click')).startTapClick(win.document);
 }
 
 async function importInputShims(win: Window, config: Config) {
@@ -50,4 +47,8 @@ async function importInputShims(win: Window, config: Config) {
   if (inputShims) {
     (await import('../../utils/input-shims/input-shims')).startInputShims(win.document, config);
   }
+}
+
+function needInputShims(win: Window) {
+  return isPlatform(win, 'ios') && isPlatform(win, 'mobile');
 }

@@ -1,8 +1,10 @@
 import { TestWindow } from '@stencil/core/dist/testing';
+
 import { RouteChain, RouteID } from '../utils/interface';
 import { routerIDsToChain, routerPathToChain } from '../utils/matching';
 import { readRoutes } from '../utils/parser';
 import { chainToPath, generatePath, parsePath } from '../utils/path';
+
 import { mockRouteElement } from './parser.spec';
 
 describe('ionic-conference-app', () => {
@@ -18,29 +20,29 @@ describe('ionic-conference-app', () => {
     expect(getRouteIDs('/tutorial', routes)).toEqual(['page-tutorial']);
 
     expect(getRoutePath([
-      {id: 'PAGE-TABS'},
-      {id: 'tab-schedule'},
-      {id: 'page-schedule'}], routes)).toEqual('/');
+      { id: 'PAGE-TABS' },
+      { id: 'tab-schedule' },
+      { id: 'page-schedule' }], routes)).toEqual('/');
 
     expect(getRoutePath([
-      {id: 'page-tabs'},
-      {id: 'TAB-SPEAKER'}], routes)).toEqual('/speaker');
+      { id: 'page-tabs' },
+      { id: 'TAB-SPEAKER' }], routes)).toEqual('/speaker');
 
     expect(getRoutePath([
-      {id: 'page-tabs'},
-      {id: 'TAB-SPEAKER'},
-      {id: 'page-speaker-list'}], routes)).toEqual('/speaker');
+      { id: 'page-tabs' },
+      { id: 'TAB-SPEAKER' },
+      { id: 'page-speaker-list' }], routes)).toEqual('/speaker');
 
     expect(getRoutePath([
-      {id: 'page-tabs'},
-      {id: 'PAGE-MAP'}], routes)).toEqual('/map');
+      { id: 'page-tabs' },
+      { id: 'PAGE-MAP' }], routes)).toEqual('/map');
 
     expect(getRoutePath([
-      {id: 'page-tabs'},
-      {id: 'page-about'}], routes)).toEqual('/about');
+      { id: 'page-tabs' },
+      { id: 'page-about' }], routes)).toEqual('/about');
 
     expect(getRoutePath([
-      {id: 'page-tutorial'}], routes)).toEqual('/tutorial');
+      { id: 'page-tutorial' }], routes)).toEqual('/tutorial');
   });
 
   let win: Window;
@@ -48,8 +50,7 @@ describe('ionic-conference-app', () => {
     win = new TestWindow() as any;
   });
 
-
-function conferenceAppRouting() {
+  function conferenceAppRouting() {
   const p2 = mockRouteElement(win, '/', 'tab-schedule');
   const p3 = mockRouteElement(win, '/', 'PAGE-SCHEDULE');
   p2.appendChild(p3);
@@ -74,7 +75,6 @@ function conferenceAppRouting() {
   return container;
 }
 });
-
 
 export function getRouteIDs(path: string, routes: RouteChain[]): string[] {
   return routerPathToChain(parsePath(path), routes)!.map(r => r.id);

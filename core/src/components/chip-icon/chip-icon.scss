@@ -1,9 +1,10 @@
-@import "../../themes/ionic.globals";
+@import "./chip-icon.vars";
 
 :host {
-  --ion-color-base: #{ion-color(primary, base)};
-  --ion-color-contrast: #{ion-color(primary, contrast)};
-
+  /**
+   * @prop --background: Background of the Chip Icon
+   * @prop --color: Color of the Chip Icon
+   */
   @include border-radius(50%);
 
   display: inline-flex;
@@ -11,14 +12,31 @@
   align-items: center;
   justify-content: center;
 
-  width: var(--size, 32px);
-  height: var(--size, 32px);
+  width: var(--width, 32px);
+  height: var(--height, 32px);
 
-  background-color: var(--ion-color-base);
+  background: var(--background);
+  color: var(--color);
+
+  font-size: 18px;
 }
 
-ion-icon {
-  color: var(--ion-color-contrast);
+:host(.chip-icon-clear) {
+  --background: transparent;
+  --color: #{$chip-icon-clear-color};
+}
 
-  font-size: var(--icon-size, 18px);
+:host(.chip-icon-solid) {
+  --background: #{ion-color(primary, base)};
+  --color: #{ion-color(primary, contrast)};
+}
+
+:host(.chip-icon-solid.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+:host(.chip-icon-clear.ion-color) {
+  background: transparent;
+  color: current-color(base);
 }

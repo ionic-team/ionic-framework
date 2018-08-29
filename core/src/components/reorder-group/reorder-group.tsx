@@ -1,8 +1,7 @@
-import { Component, Element, Prop, QueueApi, State } from '@stencil/core';
-import { GestureDetail, Mode } from '../../interface';
-import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart} from '../../utils/haptic';
-import { createThemedClasses } from '../../utils/theme';
+import { Component, Element, Event, EventEmitter, Prop, QueueApi, State, Watch } from '@stencil/core';
 
+import { Gesture, GestureDetail } from '../../interface';
+import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
 
 @Component({
   tag: 'ion-reorder-group',
@@ -10,12 +9,12 @@ import { createThemedClasses } from '../../utils/theme';
 })
 export class ReorderGroup {
 
-  private selectedItemEl: HTMLElement|undefined;
+  private selectedItemEl?: HTMLElement;
   private selectedItemHeight!: number;
   private lastToIndex!: number;
   private cachedHeights: number[] = [];
-  private containerEl!: HTMLElement;
-  private scrollEl?: HTMLIonScrollElement;
+  private scrollEl?: HTMLElement;
+  private gesture?: Gesture;
 
   private scrollElTop = 0;
   private scrollElBottom = 0;
@@ -24,30 +23,53 @@ export class ReorderGroup {
   private containerTop = 0;
   private containerBottom = 0;
 
-  mode!: Mode;
-
   @State() activated = false;
 
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'queue' }) queue!: QueueApi;
+  @Prop({ context: 'document' }) doc!: Document;
 
   /**
    * If true, the reorder will be hidden. Defaults to `true`.
    */
   @Prop() disabled = true;
-
-  async componentDidLoad() {
-    this.containerEl = this.el.querySelector('ion-gesture')!;
-    const contentEl = this.el.closest('ion-content');
-    if (contentEl) {
-      await contentEl.componentOnReady();
-      this.scrollEl = contentEl.getScrollElement();
+  @Watch('disabled')
+  disabledChanged() {
+    if (this.gesture) {
+      this.gesture.setDisabled(this.disabled);
     }
   }
 
+  @Event() ionItemReorder!: EventEmitter;
+
+  async componentDidLoad() {
+    const contentEl = this.el.closest('ion-content');
+    if (contentEl) {
+      await contentEl.componentOnReady();
+      this.scrollEl = await contentEl.getScrollElement();
+    }
+
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+      el: this.doc.body,
+      queue: this.queue,
+      gestureName: 'reorder',
+      gesturePriority: 90,
+      disableScroll: true,
+      threshold: 0,
+      direction: 'y',
+      passive: false,
+      canStart: this.canStart.bind(this),
+      onStart: this.onStart.bind(this),
+      onMove: this.onMove.bind(this),
+      onEnd: this.onEnd.bind(this),
+    });
+
+    this.disabledChanged();
+  }
+
   componentDidUnload() {
-    this.onDragEnd();
+    this.onEnd();
   }
 
   private canStart(ev: GestureDetail): boolean {
@@ -59,7 +81,7 @@ export class ReorderGroup {
     if (!reorderEl) {
       return false;
     }
-    const item = findReorderItem(reorderEl, this.containerEl);
+    const item = findReorderItem(reorderEl, this.el);
     if (!item) {
       console.error('reorder node not found');
       return false;
@@ -68,11 +90,13 @@ export class ReorderGroup {
     return true;
   }
 
-  private onDragStart(ev: GestureDetail) {
+  private onStart(ev: GestureDetail) {
+    ev.event.preventDefault();
+
     const item = this.selectedItemEl = ev.data;
     const heights = this.cachedHeights;
     heights.length = 0;
-    const el = this.containerEl;
+    const el = this.el;
     const children: any = el.children;
     if (!children || children.length === 0) {
       return;
@@ -86,7 +110,7 @@ export class ReorderGroup {
       child.$ionIndex = i;
     }
 
-    const box = this.containerEl.getBoundingClientRect();
+    const box = this.el.getBoundingClientRect();
     this.containerTop = box.top;
     this.containerBottom = box.bottom;
 
@@ -110,7 +134,7 @@ export class ReorderGroup {
     hapticSelectionStart();
   }
 
-  private onDragMove(ev: GestureDetail) {
+  private onMove(ev: GestureDetail) {
     const selectedItem = this.selectedItemEl;
     if (!selectedItem) {
       return;
@@ -137,14 +161,14 @@ export class ReorderGroup {
     selectedItem.style.transform = `translateY(${deltaY}px)`;
   }
 
-  private onDragEnd() {
+  private onEnd() {
     this.activated = false;
     const selectedItem = this.selectedItemEl;
     if (!selectedItem) {
       return;
     }
 
-    const children = this.containerEl.children as any;
+    const children = this.el.children as any;
     const toIndex = this.lastToIndex;
     const fromIndex = indexForItem(selectedItem);
 
@@ -152,7 +176,7 @@ export class ReorderGroup {
       ? children[toIndex + 1]
       : children[toIndex];
 
-    this.containerEl.insertBefore(selectedItem, ref);
+    this.el.insertBefore(selectedItem, ref);
 
     const len = children.length;
     for (let i = 0; i < len; i++) {
@@ -171,6 +195,10 @@ export class ReorderGroup {
       setTimeout(reorderInactive, 200);
     } else {
       reorderInactive();
+      this.ionItemReorder.emit({
+        from: fromIndex,
+        to: toIndex
+      });
     }
 
     hapticSelectionEnd();
@@ -194,7 +222,7 @@ export class ReorderGroup {
   /********* DOM WRITE ********* */
   private reorderMove(fromIndex: number, toIndex: number) {
     const itemHeight = this.selectedItemHeight;
-    const children = this.containerEl.children;
+    const children = this.el.children;
     for (let i = 0; i < children.length; i++) {
       const style = (children[i] as any).style;
       let value = '';
@@ -227,32 +255,10 @@ export class ReorderGroup {
   hostData() {
     return {
       class: {
-        ...createThemedClasses(this.mode, 'reorder-group'),
-
         'reorder-enabled': !this.disabled,
         'reorder-list-active': this.activated,
       }
     };
-  }
-
-  render() {
-    return (
-      <ion-gesture
-        canStart={this.canStart.bind(this)}
-        onStart={this.onDragStart.bind(this)}
-        onMove={this.onDragMove.bind(this)}
-        onEnd={this.onDragEnd.bind(this)}
-        disabled={this.disabled}
-        disableScroll={true}
-        gestureName="reorder"
-        gesturePriority={30}
-        direction="y"
-        threshold={0}
-        attachTo="window"
-      >
-        <slot></slot>
-      </ion-gesture>
-    );
   }
 }
 
@@ -260,7 +266,7 @@ function indexForItem(element: any): number {
   return element['$ionIndex'];
 }
 
-function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement|null {
+function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement | null {
   let nested = 0;
   let parent;
   while (node && nested < 6) {

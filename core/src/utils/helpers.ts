@@ -1,4 +1,5 @@
 import { EventEmitter } from '@stencil/core';
+
 import { Side } from '../interface';
 
 export function reorderArray(array: any[], indexes: {from: number, to: number}): any[] {
@@ -6,6 +7,25 @@ export function reorderArray(array: any[], indexes: {from: number, to: number}):
   array.splice(indexes.from, 1);
   array.splice(indexes.to, 0, element);
   return array;
+}
+
+export function hasShadowDom(el: HTMLElement) {
+  return !!el.shadowRoot && !!el.attachShadow;
+}
+
+export function renderHiddenInput(container: HTMLElement, name: string, value: string, disabled: boolean) {
+  if (hasShadowDom(container)) {
+    let input = container.querySelector('input.aux-input') as HTMLInputElement;
+    if (!input) {
+      input = container.ownerDocument.createElement('input');
+      input.type = 'hidden';
+      input.classList.add('aux-input');
+      container.appendChild(input);
+    }
+    input.disabled = disabled;
+    input.name = name;
+    input.value = value;
+  }
 }
 
 export function clamp(min: number, n: number, max: number) {
@@ -32,13 +52,13 @@ export function pointerCoord(ev: any): {x: number, y: number} {
     const changedTouches = ev.changedTouches;
     if (changedTouches && changedTouches.length > 0) {
       const touch = changedTouches[0];
-      return {x: touch.clientX, y: touch.clientY};
+      return { x: touch.clientX, y: touch.clientY };
     }
     if (ev.pageX !== undefined) {
-      return {x: ev.pageX, y: ev.pageY};
+      return { x: ev.pageX, y: ev.pageY };
     }
   }
-  return {x: 0, y: 0};
+  return { x: 0, y: 0 };
 }
 
 /**
@@ -70,8 +90,8 @@ export function debounceEvent(event: EventEmitter, wait: number): EventEmitter {
   } as EventEmitter;
 }
 
-export function debounce(func: Function, wait = 0) {
-  let timer: number;
+export function debounce(func: (...args: any[]) => void, wait = 0) {
+  let timer: any;
   return (...args: any[]): void => {
     clearTimeout(timer);
     timer = setTimeout(func, wait, ...args);

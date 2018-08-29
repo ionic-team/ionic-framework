@@ -1,54 +1,80 @@
-import { EventEmitter } from '@stencil/core';
-import { Animation, AnimationBuilder, Config, Mode } from '../interface';
+import { AnimationBuilder, HTMLIonOverlayElement, IonicConfig, OverlayInterface } from '../interface';
 
-let lastId = 1;
+let lastId = 0;
 
-export function createOverlay<T extends HTMLIonOverlayElement, B>(element: T, opts: B): Promise<T> {
+export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts: object | undefined): Promise<T> {
+  const doc = element.ownerDocument;
+  connectListeners(doc);
+
   // convert the passed in overlay options into props
   // that get passed down into the new overlay
   Object.assign(element, opts);
-
-  element.overlayId = lastId++;
+  element.classList.add('ion-page-hidden');
+  const overlayIndex = lastId++;
+  element.overlayIndex = overlayIndex;
+  if (!element.hasAttribute('id')) {
+    element.id = `ion-overlay-${overlayIndex}`;
+  }
 
   // append the overlay element to the document body
-  const doc = element.ownerDocument;
-  const appRoot = doc.querySelector('ion-app') || doc.body;
-  appRoot.appendChild(element);
+  getAppRoot(doc).appendChild(element);
+
+  doc.body.addEventListener('keyup', ev => {
+    if (ev.key === 'Escape') {
+      const lastOverlay = getOverlay(doc);
+      if (lastOverlay && lastOverlay.backdropDismiss) {
+        lastOverlay.dismiss(null, BACKDROP);
+      }
+    }
+  });
 
   return element.componentOnReady();
 }
 
-export function dismissOverlay(data: any, role: string|undefined, overlays: OverlayMap, id: number): Promise<void> {
-  id = id >= 0 ? id : getHighestId(overlays);
-  const overlay = overlays.get(id);
+export function connectListeners(doc: Document) {
+  if (lastId === 0) {
+    lastId = 1;
+    doc.body.addEventListener('keyup', ev => {
+      if (ev.key === 'Escape') {
+        const lastOverlay = getOverlay(doc);
+        if (lastOverlay && lastOverlay.backdropDismiss === true) {
+          lastOverlay.dismiss('backdrop');
+        }
+      }
+    });
+  }
+}
+
+export function dismissOverlay(doc: Document, data: any, role: string | undefined, overlayTag: string, id?: string): Promise<void> {
+  const overlay = getOverlay(doc, overlayTag, id);
   if (!overlay) {
     return Promise.reject('overlay does not exist');
   }
   return overlay.dismiss(data, role);
 }
 
-export function getTopOverlay<T extends HTMLIonOverlayElement>(overlays: OverlayMap): T {
-  return overlays.get(getHighestId(overlays)) as T;
+export function getOverlays(doc: Document, overlayTag?: string): HTMLIonOverlayElement[] {
+  const overlays = Array.from(getAppRoot(doc).children) as HTMLIonOverlayElement[];
+  if (overlayTag == null) {
+    return overlays;
+  }
+  overlayTag = overlayTag.toUpperCase();
+  return overlays.filter(c => c.tagName === overlayTag);
 }
 
-export function getHighestId(overlays: OverlayMap) {
-  let minimum = -1;
-  overlays.forEach((_, id) => {
-    if (id > minimum) {
-      minimum = id;
-    }
-  });
-  return minimum;
-}
-
-export function removeLastOverlay(overlays: OverlayMap) {
-  const toRemove = getTopOverlay(overlays);
-  return toRemove ? toRemove.dismiss() : Promise.resolve();
+export function getOverlay(doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined {
+  const overlays = getOverlays(doc, overlayTag);
+  if (id != null) {
+    return overlays.find(o => o.id === id);
+  }
+  return (id == null)
+    ? overlays[overlays.length - 1]
+    : overlays.find(o => o.overlayIndex === id);
 }
 
 export async function present(
   overlay: OverlayInterface,
-  name: string,
+  name: keyof IonicConfig,
   iosEnterAnimation: AnimationBuilder,
   mdEnterAnimation: AnimationBuilder,
   opts?: any
@@ -71,9 +97,9 @@ export async function present(
 
 export async function dismiss(
   overlay: OverlayInterface,
-  data: any|undefined,
-  role: string|undefined,
-  name: string,
+  data: any | undefined,
+  role: string | undefined,
+  name: keyof IonicConfig,
   iosLeaveAnimation: AnimationBuilder,
   mdLeaveAnimation: AnimationBuilder,
   opts?: any
@@ -83,7 +109,7 @@ export async function dismiss(
   }
   overlay.presented = false;
 
-  overlay.willDismiss.emit({data, role});
+  overlay.willDismiss.emit({ data, role });
 
   const animationBuilder = (overlay.leaveAnimation)
     ? overlay.leaveAnimation
@@ -91,10 +117,13 @@ export async function dismiss(
 
   await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
 
-  overlay.didDismiss.emit({data, role});
+  overlay.didDismiss.emit({ data, role });
   overlay.el.remove();
 }
 
+function getAppRoot(doc: Document) {
+  return doc.querySelector('ion-app') || doc.body;
+}
 
 async function overlayAnimation(
   overlay: OverlayInterface,
@@ -102,20 +131,27 @@ async function overlayAnimation(
   baseEl: HTMLElement,
   opts: any
 ): Promise<void> {
-  if (overlay.keyboardClose) {
-    const activeElement = baseEl.ownerDocument.activeElement as HTMLElement;
-    activeElement && activeElement.blur && activeElement.blur();
-  }
   if (overlay.animation) {
     overlay.animation.destroy();
     overlay.animation = undefined;
   }
 
+  // Make overlay visible in case it's hidden
+  baseEl.classList.remove('ion-page-hidden');
+
   const aniRoot = baseEl.shadowRoot || overlay.el;
   const animation = overlay.animation = await overlay.animationCtrl.create(animationBuilder, aniRoot, opts);
   overlay.animation = animation;
-  if (!overlay.willAnimate) {
+  if (!overlay.animated) {
     animation.duration(0);
+  }
+  if (overlay.keyboardClose) {
+    animation.beforeAddWrite(() => {
+      const activeElement = baseEl.ownerDocument.activeElement as HTMLElement;
+      if (activeElement && activeElement.matches('input, ion-input, ion-textarea')) {
+        activeElement.blur();
+      }
+    });
   }
   await animation.playAsync();
 
@@ -123,7 +159,7 @@ async function overlayAnimation(
   overlay.animation = undefined;
 }
 
-export function autoFocus(containerEl: HTMLElement): HTMLElement|null {
+export function autoFocus(containerEl: HTMLElement): HTMLElement | null {
   const focusableEls = containerEl.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
   if (focusableEls.length > 0) {
     const el = focusableEls[0] as HTMLInputElement;
@@ -133,13 +169,11 @@ export function autoFocus(containerEl: HTMLElement): HTMLElement|null {
   return null;
 }
 
-export function eventMethod<T>(element: HTMLElement, eventName: string, callback?: (detail: T) => void): Promise<T> {
-  let resolve: Function;
+export function eventMethod<T>(element: HTMLElement, eventName: string): Promise<T> {
+  let resolve: (detail: T) => void;
   const promise = new Promise<T>(r => resolve = r);
   onceEvent(element, eventName, (event: any) => {
-    const detail = event.detail;
-    callback && callback(detail);
-    resolve(detail);
+    resolve(event.detail);
   });
   return promise;
 }
@@ -152,49 +186,8 @@ export function onceEvent(element: HTMLElement, eventName: string, callback: (ev
   element.addEventListener(eventName, handler);
 }
 
-export function isCancel(role: string|undefined): boolean {
+export function isCancel(role: string | undefined): boolean {
   return role === 'cancel' || role === BACKDROP;
 }
-
-export interface OverlayEventDetail<T = any> {
-  data?: T;
-  role?: string;
-}
-
-export interface OverlayInterface {
-  mode: Mode;
-  el: HTMLElement;
-  willAnimate: boolean;
-  keyboardClose: boolean;
-  config: Config;
-  overlayId: number;
-  presented: boolean;
-  animation?: Animation;
-  animationCtrl: HTMLIonAnimationControllerElement;
-
-  enterAnimation?: AnimationBuilder;
-  leaveAnimation?: AnimationBuilder;
-
-  didPresent: EventEmitter<void>;
-  willPresent: EventEmitter<void>;
-  willDismiss: EventEmitter<OverlayEventDetail>;
-  didDismiss: EventEmitter<OverlayEventDetail>;
-
-  present(): Promise<void>;
-  dismiss(data?: any, role?: string): Promise<void>;
-}
-
-export interface OverlayController {
-  create(opts?: any): Promise<HTMLElement>;
-  dismiss(data?: any, role?: string, alertId?: number): Promise<void>;
-  getTop(): HTMLElement;
-}
-
-export interface HTMLIonOverlayElement extends HTMLStencilElement {
-  overlayId: number;
-  dismiss(data?: any, role?: string): Promise<void>;
-}
-
-export type OverlayMap = Map<number, HTMLIonOverlayElement>;
 
 export const BACKDROP = 'backdrop';

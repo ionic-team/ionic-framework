@@ -5,37 +5,15 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: var(--ion-item-background, transparent);
-  --ion-color-contrast: #{$card-ios-text-color};
+  --background: var(--ion-item-background-color, transparent);
+  --color: #{$card-ios-text-color};
 
   @include margin($card-ios-margin-top, $card-ios-margin-end, $card-ios-margin-bottom, $card-ios-margin-start);
   @include border-radius($card-ios-border-radius);
 
-  width: calc(100% - #{($card-ios-margin-end + $card-ios-margin-start)});
-
   transform: translateZ(0);
 
-  font-family: $card-ios-font-family;
   font-size: $card-ios-font-size;
 
   box-shadow: $card-ios-box-shadow;
 }
-
-::slotted(*) ion-list {
-  @include margin(null, null, 0, null);
-}
-
-
-::slotted(*) .item {
-  --border-width: 0;
-  --inner-border-width: 0;
-}
-
-
-// .card .note-ios {
-//   font-size: 13px;
-// }
-
-// .card-ios + ion-card {
-//   @include margin(0, null, null, null);
-// }

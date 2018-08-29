@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Checkbox</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content">
+    <ion-content id="content" fullscreen>
       <ion-item>
         <ion-label>Default</ion-label>
         <ion-checkbox checked></ion-checkbox>
@@ -80,6 +80,11 @@
       </ion-item>
     </ion-content>
 
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
   </ion-app>
 </body>
 

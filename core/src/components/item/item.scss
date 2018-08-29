@@ -18,10 +18,10 @@
   --padding-bottom: 0;
   --padding-end: 0;
   --padding-start: 0;
-  --inner-padding-top: 0;
-  --inner-padding-bottom: 0;
-  --inner-padding-start: 0;
-  --inner-padding-end: 0;
+  --inner-padding-top: 0px;
+  --inner-padding-bottom: 0px;
+  --inner-padding-start: 0px;
+  --inner-padding-end: 0px;
   --box-shadow: none;
   --inner-box-shadow: none;
   --highlight-color-focus: #{ion-color(primary, base)};
@@ -35,7 +35,11 @@
 
   color: #{current-color(contrast)};
 
+  font-family: $font-family-base;
+
+  text-align: initial;
   text-decoration: none;
+
   box-sizing: border-box;
 }
 
@@ -54,7 +58,7 @@
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
   @include border-radius(var(--border-radius));
   @include margin(0);
-  @include text-align(initial);
+  @include text-inherit();
 
   display: flex;
   position: relative;
@@ -74,19 +78,17 @@
   outline: none;
 
   background-color: var(--background);
-  color: inherit;
-
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-
-  text-decoration: inherit;
-  text-transform: inherit;
 
   box-shadow: var(--box-shadow);
-  cursor: pointer;
   overflow: hidden;
   box-sizing: border-box;
+}
+
+button, a {
+  cursor: pointer;
+  user-select: none;
+
+  -webkit-user-drag: none;
 }
 
 .item-state {
@@ -99,7 +101,12 @@
 
 .item-inner {
   @include margin(0);
-  @include padding(var(--inner-padding-top), var(--inner-padding-end), var(--inner-padding-bottom), var(--inner-padding-start));
+  @include padding(
+    var(--inner-padding-top),
+    calc(var(--ion-safe-area-right, 0px) + var(--inner-padding-end)),
+    var(--inner-padding-bottom),
+    calc(var(--ion-safe-area-left, 0px) + var(--inner-padding-start))
+  );
 
   display: flex;
 
@@ -152,27 +159,13 @@
 }
 
 
-// FROM LABEL
+// Item Input
+// -----------------------------------------
+
 :host(.item-label-stacked) .input-wrapper,
 :host(.item-label-floating) .input-wrapper {
   flex: 1;
   flex-direction: column;
-}
-
-:host(.item-label-stacked)::slotted(ion-select),
-:host(.item-label-floating)::slotted(ion-select) {
-  align-self: stretch;
-
-  max-width: 100%;
-}
-
-
-
-
-// TODO: FROM textarea
-
-:host(.item-textarea) {
-  align-items: stretch;
 }
 
 // :host(.item-input-has-focus) a,
@@ -182,15 +175,31 @@
 // }
 
 
-// FROM SELECT
+// Item Select
+// -----------------------------------------
+
+:host(.item-label-stacked) ::slotted(ion-select),
+:host(.item-label-floating) ::slotted(ion-select) {
+  --padding-start: 0;
+  align-self: stretch;
+
+  width: 100%;
+
+  max-width: 100%;
+}
+
 :host(.item-multiple-inputs) ::slotted(ion-select) {
   position: relative;
 }
 
-:host(.item-label-stacked) ::slotted(ion-select),
-:host(.item-label-floating) ::slotted(ion-select) {
-  max-width: 100%;
+
+// Item Textarea
+// -----------------------------------------
+
+:host(.item-textarea) {
+  align-items: stretch;
 }
+
 
 // Item Reorder
 // --------------------------------------------------

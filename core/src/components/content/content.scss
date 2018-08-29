@@ -1,48 +1,98 @@
-@import "../../themes/ionic.theme.default";
+@import "../../themes/ionic.globals";
 
 // Content
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{$background-color};
-  --ion-color-contrast: #{$text-color};
-  --padding-top: 0;
-  --padding-bottom: 0;
-  --padding-start: 0;
-  --padding-end: 0;
-  --keyboard-offset: 0;
+  /**
+   * @prop --background: Background of the Content
+   * @prop --color: Color of the Content
+   * @prop --padding-top: Padding top of the Content
+   * @prop --padding-bottom: Padding bottom of the Content
+   * @prop --padding-start: Padding start of the Content
+   * @prop --padding-end: Padding end of the Content
+   * @prop --keyboard-offset: Keyboard offset of the Content
+   * @prop --offset-top: Offset top of the Content
+   * @prop --offset-bottom: Offset bottom of the Content
+   */
+  --background: #{$background-color};
+  --color: #{$text-color};
+  --padding-top: 0px;
+  --padding-bottom: 0px;
+  --padding-start: 0px;
+  --padding-end: 0px;
+  --keyboard-offset: 0px;
+  --offset-top: 0px;
+  --offset-bottom: 0px;
 
   display: block;
   position: relative;
 
   flex: 1;
 
-  width: 100%;
-  height: 100%;
-
   /* stylelint-disable */
-  margin: 0 !important;
-
   padding: 0 !important;
+  margin: 0 !important;
   /* stylelint-enable */
 
-  background-color: #{current-color(base)};
-  color: #{current-color(contrast)};
+  background: var(--background);
+  color: var(--color);
+
+  font-family: $font-family-base;
 
   contain: layout size style;
 }
 
-:host(.ion-color-outer),
-:host(.outer-content) {
-  --ion-color-base: #{$background-color-step-50};
+:host(.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
 }
 
-.scroll-inner {
-  @include padding(var(--padding-top), var(--padding-end), calc(var(--padding-bottom) + var(--keyboard-offset)), var(--padding-start));
+// TODO we should remove outer-content in favor of a color
+:host(.outer-content) {
+  --background: #{$background-color-step-50};
+}
+
+.inner-scroll {
+  @include position(calc(var(--offset-top) * -1), 0,calc(var(--offset-bottom) * -1), 0);
+  @include padding(calc(var(--padding-top) + var(--offset-top)), var(--padding-end), calc(var(--padding-bottom) + var(--keyboard-offset) + var(--offset-bottom)), var(--padding-start));
+
+  position: absolute;
 
   box-sizing: border-box;
 
-  height: 100%;
-  min-height: 100%;
-  -webkit-margin-collapse: discard;
+  overflow: hidden;
+}
+
+.scroll-y,
+.scroll-x {
+  -webkit-overflow-scrolling: touch;
+  will-change: scroll-position;
+  overscroll-behavior: contain;
+}
+
+.scroll-y {
+  overflow-y: auto;
+}
+
+.scroll-x {
+  overflow-x: auto;
+}
+
+.overscroll::before,
+.overscroll::after {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+
+  content: "";
+}
+
+.overscroll::before {
+  bottom: -1px;
+}
+
+.overscroll::after {
+  top: -1px;
 }

@@ -4,15 +4,22 @@
 // Split Pane
 // --------------------------------------------------
 
+.split-pane-md {
+  --border: #{$split-pane-md-border};
+}
+
 .split-pane-md.split-pane-visible > .split-pane-side {
   min-width: $split-pane-md-side-min-width;
   max-width: $split-pane-md-side-max-width;
 
-  border-right: $split-pane-md-border;
+  border-right: var(--border);
   border-left: 0;
 }
 
-.split-pane-md.split-pane-visible > .split-pane-side[side=right] {
+.split-pane-md.split-pane-visible > .split-pane-side[side=end] {
+  min-width: $split-pane-md-side-min-width;
+  max-width: $split-pane-md-side-max-width;
+
   border-right: 0;
-  border-left: $split-pane-md-border;
+  border-left: var(--border);
 }

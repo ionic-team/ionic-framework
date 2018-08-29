@@ -1,9 +1,12 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+
 import { Color, ComponentRef, FrameworkDelegate } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
 
 @Component({
-  tag: 'ion-tab'
+  tag: 'ion-tab',
+  styleUrl: 'tab.scss',
+  shadow: true
 })
 export class Tab {
 
@@ -27,7 +30,7 @@ export class Tab {
   @Prop() label?: string;
 
   /**
-   * The URL which will be used as the `href` within this tab's `<ion-tab-button>` anchor.
+   * The URL which will be used as the `href` within this tab's button anchor.
    */
   @Prop() href?: string;
 
@@ -94,6 +97,11 @@ export class Tab {
   @Event() ionTabMutated!: EventEmitter<void>;
 
   componentWillLoad() {
+    // Set default name
+    if (!this.name && typeof this.component === 'string') {
+      this.name = this.component;
+    }
+
     if (Build.isDev) {
       if (this.component && this.el.childElementCount > 0) {
         console.error('You can not use a lazy-loaded component in a tab and inlined content at the same time.' +
@@ -104,20 +112,15 @@ export class Tab {
     }
   }
 
-  componentWillUpdate() {
+  @Watch('label')
+  @Watch('href')
+  @Watch('show')
+  @Watch('disabled')
+  @Watch('badge')
+  @Watch('badgeColor')
+  @Watch('icon')
+  onPropChanged() {
     this.ionTabMutated.emit();
-  }
-
-  /** Get the Id for the tab */
-  @Method()
-  getTabId(): string|null {
-    if (this.name) {
-      return this.name;
-    }
-    if (typeof this.component === 'string') {
-      return this.component;
-    }
-    return null;
   }
 
   /** Set the active component for the tab */
@@ -127,7 +130,7 @@ export class Tab {
     this.active = true;
   }
 
-  private prepareLazyLoaded(): Promise<HTMLElement|void> {
+  private prepareLazyLoaded(): Promise<HTMLElement | void> {
     if (!this.loaded && this.component) {
       this.loaded = true;
       return attachComponent(this.delegate, this.el, this.component, ['ion-page']);
@@ -136,13 +139,19 @@ export class Tab {
   }
 
   hostData() {
+    const { btnId, active, component } = this;
     return {
-      'aria-labelledby': this.btnId,
+      'aria-labelledby': btnId,
+      'aria-hidden': !active ? 'true' : null,
       'role': 'tabpanel',
-      'hidden': !this.active,
       'class': {
-        'ion-page': !this.component
+        'ion-page': !component,
+        'tab-hidden': !active
       }
     };
+  }
+
+  render() {
+    return <slot></slot>;
   }
 }

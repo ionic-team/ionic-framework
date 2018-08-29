@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Label</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content>
+    <ion-content fullscreen>
       <ion-list>
         <ion-item>
           <ion-label>Default</ion-label>
@@ -42,6 +42,12 @@
         </ion-item>
       </ion-list>
     </ion-content>
+
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
   </ion-app>
 </body>
 

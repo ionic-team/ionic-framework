@@ -35,6 +35,7 @@ ion-item-options {
 
   font-size: 14px;
 
+  user-select: none;
   z-index: $z-index-item-options;
 
   &.hydrated {

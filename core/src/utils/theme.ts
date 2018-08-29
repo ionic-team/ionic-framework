@@ -21,7 +21,6 @@ export function createThemedClasses(mode: Mode | undefined, name: string): CssCl
   };
 }
 
-
 export function getClassList(classes: string | string[] | undefined): string[] {
   if (classes) {
     const array = Array.isArray(classes) ? classes : classes.split(' ');
@@ -39,24 +38,16 @@ export function getClassMap(classes: string | string[] | undefined): CssClassMap
   return map;
 }
 
-export async function openURL(win: Window, url: string|undefined, ev: Event, direction?: RouterDirection) {
+export async function openURL(win: Window, url: string | undefined, ev: Event, direction?: RouterDirection) {
   if (url && url[0] !== '#' && url.indexOf('://') === -1) {
     const router = win.document.querySelector('ion-router');
     if (router) {
-      ev && ev.preventDefault();
+      if (ev) {
+        ev.preventDefault();
+      }
       await router.componentOnReady();
       return router.push(url, direction);
     }
   }
   return Promise.resolve();
-}
-
-export function getParentNode(node: Node) {
-  // this also checks for host elements of shadow root node
-  // if the parent node is a document fragment (shadow root)
-  // then use the "host" property on it
-  // otherwise use the parent node
-  // DOCUMENT_FRAGMENT_NODE nodeType === 11
-  const parentNode: any = node.parentNode;
-  return (parentNode && parentNode.NODE_TYPE === 11 ? parentNode.host : parentNode);
 }

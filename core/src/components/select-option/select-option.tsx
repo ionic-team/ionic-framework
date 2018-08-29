@@ -1,6 +1,5 @@
 import { Component, Element, Event, EventEmitter, Prop } from '@stencil/core';
 
-
 @Component({
   tag: 'ion-select-option'
 })
@@ -23,7 +22,7 @@ export class SelectOption {
   /**
    * The text value of the option.
    */
-  @Prop({ mutable: true }) value!: string;
+  @Prop({ mutable: true }) value!: any;
 
   /**
    * Emitted when the select option loads.

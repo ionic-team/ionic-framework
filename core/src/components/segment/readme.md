@@ -10,70 +10,33 @@ Their functionality is similar to tabs, where selecting one will deselect all ot
 
 ## Properties
 
-#### color
-
-string
-
-The color to use for the text color.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-
-
-#### disabled
-
-boolean
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### value
-
-string
-
-the value of the segment.
-
-
-## Attributes
-
-#### color
-
-string
-
-The color to use for the text color.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-
-
-#### disabled
-
-boolean
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### value
-
-string
-
-the value of the segment.
+| Property   | Attribute  | Description                                                                                                                                                                                                                                                            | Type      |
+| ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- |
+| `color`    | `color`    | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `Color`   |
+| `disabled` | `disabled` |                                                                                                                                                                                                                                                                        | `boolean` |
+| `mode`     | `mode`     | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `Mode`    |
+| `value`    | `value`    | the value of the segment.                                                                                                                                                                                                                                              | `string`  |
 
 
 ## Events
 
-#### ionChange
+| Event       | Description                                  |
+| ----------- | -------------------------------------------- |
+| `ionChange` | Emitted when the value property has changed. |
 
-Emitted when the value property has changed.
 
+## CSS Custom Properties
+
+| Name                      | Description                      |
+| ------------------------- | -------------------------------- |
+| `--background`            | Background of segment            |
+| `--background-checked`    | Background of checked segment    |
+| `--border-color`          | Color of segment border          |
+| `--border-color-checked`  | Color of checked segment border  |
+| `--border-color-disabled` | Color of disabled segment border |
+| `--color`                 | Color of segment text            |
+| `--color-checked`         | Color of checked segment text    |
+| `--color-disabled`        | Color of disabled segment text   |
 
 
 ----------------------------------------------

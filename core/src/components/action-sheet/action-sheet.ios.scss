@@ -5,14 +5,11 @@
 // --------------------------------------------------
 
 :host {
-  font-family: $action-sheet-ios-font-family;
-
   text-align: $action-sheet-ios-text-align;
 }
 
 .action-sheet-wrapper {
-  @include margin(constant(safe-area-inset-top), auto, constant(safe-area-inset-bottom), auto);
-  @include margin(env(safe-area-inset-top), auto, env(safe-area-inset-bottom), auto);
+  @include margin(var(--ion-safe-area-top, 0), auto, var(--ion-safe-area-bottom, 0), auto);
 }
 
 

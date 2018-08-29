@@ -1,0 +1,18 @@
+@import "../menu/menu.ios.vars";
+@import "../menu/menu.md.vars";
+
+.ios .menu-content-reveal {
+  box-shadow: $menu-ios-box-shadow-reveal;
+}
+
+.ios .menu-content-push {
+  box-shadow: $menu-ios-box-shadow-push;
+}
+
+.md .menu-content-reveal {
+  box-shadow: $menu-md-box-shadow;
+}
+
+.md .menu-content-push {
+  box-shadow: $menu-md-box-shadow;
+}

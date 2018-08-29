@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: var(--ion-item-background, transparent);
+  --ion-color-base: var(--ion-item-background-color, transparent);
   --ion-color-contrast: #{$item-md-text-color};
   --ion-color-tint: #{$item-md-background-color-active};
   --ion-color-shade: #{$item-md-border-bottom-color};
@@ -14,7 +14,6 @@
   --inner-padding-end: #{$item-md-padding-end / 2};
   --padding-start: #{$item-md-padding-start};
 
-  font-family: $item-md-font-family;
   font-size: $item-md-font-size;
   font-weight: normal;
 
@@ -154,7 +153,9 @@
 :host(.item-label-stacked) ::slotted(ion-input),
 :host(.item-label-floating) ::slotted(ion-input),
 :host(.item-label-stacked) ::slotted(ion-textarea),
-:host(.item-label-floating) ::slotted(ion-textarea) {
+:host(.item-label-floating) ::slotted(ion-textarea),
+:host(.item-label-stacked) ::slotted(ion-select),
+:host(.item-label-floating) ::slotted(ion-select) {
   --padding-top: 8px;
   --padding-bottom: 8px;
   --padding-start: 0;

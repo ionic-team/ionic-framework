@@ -3,7 +3,7 @@ const path = require('path');
 const execa = require('execa');
 const Listr = require('listr');
 const semver = require('semver');
-const chalk = require('chalk');
+const tc = require('turbocolor');
 
 const rootDir = path.join(__dirname, '../');
 
@@ -77,16 +77,14 @@ function preparePackage(tasks, package, version) {
         }
       }
     });
+    projectTasks.push({
+      title: `${pkg.name}: install npm dependencies`,
+      task: async () => {
+        await fs.remove(path.join(projectRoot, 'node_modules'))
+        await execa('npm', ['i'], { cwd: projectRoot });
+      }
+    });
   }
-
-
-  projectTasks.push({
-    title: `${pkg.name}: install npm dependencies`,
-    task: async () => {
-      await fs.remove(path.join(projectRoot, 'node_modules'))
-      await execa('npm', ['i'], { cwd: projectRoot });
-    }
-  });
 
   if (package !== 'core') {
     projectTasks.push({
@@ -132,7 +130,7 @@ function preparePackage(tasks, package, version) {
 
   // Add project tasks
   tasks.push({
-    title: `Prepare ${chalk.bold(pkg.name)}`,
+    title: `Prepare ${tc.bold(pkg.name)}`,
     task: () => new Listr(projectTasks)
   });
 }

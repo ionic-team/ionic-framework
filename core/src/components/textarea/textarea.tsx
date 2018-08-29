@@ -1,8 +1,8 @@
-import { Component, Element, Event, EventEmitter, Prop, State, Watch } from '@stencil/core';
-import { Color, InputChangeEvent, Mode, StyleEvent } from '../../interface';
-import { debounceEvent, deferEvent } from '../../utils/helpers';
-import { TextareaComponent } from '../input/input-base';
+import { Component, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
+import { Color, Mode, StyleEvent, TextInputChangeEvent } from '../../interface';
+import { debounceEvent, deferEvent, renderHiddenInput } from '../../utils/helpers';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-textarea',
@@ -12,53 +12,33 @@ import { TextareaComponent } from '../input/input-base';
   },
   shadow: true
 })
-export class Textarea implements TextareaComponent {
+export class Textarea {
 
-  private inputEl?: HTMLTextAreaElement;
-
-  mode!: Mode;
-  color?: Color;
-
-  didBlurAfterEdit = false;
+  private nativeInput?: HTMLTextAreaElement;
+  private inputId = `ion-input-${textareaIds++}`;
+  private didBlurAfterEdit = false;
 
   @Element() el!: HTMLElement;
 
   @State() hasFocus = false;
 
   /**
-   * Emitted when the input value has changed.
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
    */
-  @Event() ionChange!: EventEmitter<InputChangeEvent>;
+  @Prop() mode!: Mode;
 
   /**
-   * Emitted when a keyboard input ocurred.
+   * The color to use from your application's color palette.
+   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
-  @Event() ionInput!: EventEmitter<KeyboardEvent>;
-
-  /**
-   * Emitted when the styles change.
-   */
-  @Event() ionStyle!: EventEmitter<StyleEvent>;
-
-  /**
-   * Emitted when the input loses focus.
-   */
-  @Event() ionBlur!: EventEmitter<void>;
-
-  /**
-   * Emitted when the input has focus.
-   */
-  @Event() ionFocus!: EventEmitter<void>;
+  @Prop() color?: Color;
 
   /**
    * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
    */
   @Prop() autocapitalize = 'none';
-
-  /**
-   * Indicates whether the value of the control can be automatically completed by the browser. Defaults to `"off"`.
-   */
-  @Prop() autocomplete = 'off';
 
   /**
    * This Boolean attribute lets you specify that a form control should have input focus when the page loads. Defaults to `false`.
@@ -103,7 +83,7 @@ export class Textarea implements TextareaComponent {
   /**
    * The name of the control, which is submitted with the form data.
    */
-  @Prop() name?: string;
+  @Prop() name: string = this.inputId;
 
   /**
    * Instructional text that shows before the input has a value.
@@ -150,17 +130,49 @@ export class Textarea implements TextareaComponent {
    */
   @Watch('value')
   protected valueChanged() {
-    const { inputEl, value } = this;
-    if (inputEl!.value !== value) {
-      inputEl!.value = value;
+    const { nativeInput, value } = this;
+    if (nativeInput!.value !== value) {
+      nativeInput!.value = value;
     }
-    this.ionChange.emit({value});
+    this.ionChange.emit({ value });
   }
+
+  /**
+   * Emitted when the input value has changed.
+   */
+  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
+
+  /**
+   * Emitted when a keyboard input ocurred.
+   */
+  @Event() ionInput!: EventEmitter<KeyboardEvent>;
+
+  /**
+   * Emitted when the styles change.
+   */
+  @Event() ionStyle!: EventEmitter<StyleEvent>;
+
+  /**
+   * Emitted when the input loses focus.
+   */
+  @Event() ionBlur!: EventEmitter<void>;
+
+  /**
+   * Emitted when the input has focus.
+   */
+  @Event() ionFocus!: EventEmitter<void>;
 
   componentDidLoad() {
     this.ionStyle = deferEvent(this.ionStyle);
     this.debounceChanged();
     this.emitStyle();
+  }
+
+  @Method()
+  focus() {
+    if (this.nativeInput) {
+      this.nativeInput.focus();
+    }
   }
 
   private emitStyle() {
@@ -175,7 +187,7 @@ export class Textarea implements TextareaComponent {
   }
 
   private onInput(ev: KeyboardEvent) {
-    this.value = this.inputEl!.value;
+    this.value = this.nativeInput!.value;
     this.emitStyle();
     this.ionInput.emit(ev);
   }
@@ -228,13 +240,22 @@ export class Textarea implements TextareaComponent {
     return this.value !== '';
   }
 
+  hostData() {
+    return {
+      class: {
+        ...createColorClasses(this.color)
+      }
+    };
+  }
+
   render() {
+    renderHiddenInput(this.el, this.name, this.value, this.disabled);
+
     return (
       <textarea
         class="native-textarea"
-        ref={(el) => this.inputEl = el as HTMLTextAreaElement}
+        ref={el => this.nativeInput = el as HTMLTextAreaElement}
         autoCapitalize={this.autocapitalize}
-        // autoComplete={this.autocomplete}
         autoFocus={this.autofocus}
         disabled={this.disabled}
         maxLength={this.maxlength}
@@ -257,3 +278,5 @@ export class Textarea implements TextareaComponent {
     );
   }
 }
+
+let textareaIds = 0;

@@ -6,40 +6,11 @@ The ripple effect component adds the [Material Design ink ripple interaction eff
 <!-- Auto Generated Below -->
 
 
-## Properties
-
-#### parent
-
-string
-
-
-#### tapClick
-
-boolean
-
-If true, the ripple effect will listen to any click events and animate
-
-
-## Attributes
-
-#### parent
-
-string
-
-
-#### tap-click
-
-boolean
-
-If true, the ripple effect will listen to any click events and animate
-
-
 ## Methods
 
-#### addRipple()
-
-Adds the ripple effect to the parent elment
-
+| Method      | Description                                  |
+| ----------- | -------------------------------------------- |
+| `addRipple` | Adds the ripple effect to the parent element |
 
 
 ----------------------------------------------

@@ -6,8 +6,6 @@
 
 :host {
   @include margin($label-md-margin-top, $label-md-margin-end, $label-md-margin-bottom, $label-md-margin-start);
-
-  font-family: $label-md-font-family;
 }
 
 :host([text-wrap]) {

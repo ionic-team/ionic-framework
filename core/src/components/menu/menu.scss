@@ -4,6 +4,9 @@
 // --------------------------------------------------
 
 :host {
+  --width: #{$menu-width};
+  --width-small: #{$menu-small-width};
+
   @include position(0, 0, 0, 0);
 
   display: none;
@@ -27,7 +30,7 @@
   flex-direction: column;
   justify-content: space-between;
 
-  width: $menu-width;
+  width: var(--width);
   height: 100%;
 
   contain: strict;
@@ -63,22 +66,16 @@ ion-backdrop {
 .menu-content-open {
   cursor: pointer;
   touch-action: manipulation;
-}
 
-.menu-content-open ion-pane,
-.menu-content-open .ion-pane,
-.menu-content-open ion-content,
-.menu-content-open .toolbar {
   // the containing element itself should be clickable but
   // everything inside of it should not clickable when menu is open
   pointer-events: none;
 }
 
-
 @media (max-width: 340px) {
 
   .menu-inner {
-    width: $menu-small-width;
+    width: var(--width-small);
   }
 
 }

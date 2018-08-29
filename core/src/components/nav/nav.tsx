@@ -1,8 +1,10 @@
 import { Build, Component, Element, Event, EventEmitter, Method, Prop, QueueApi, Watch } from '@stencil/core';
+
 import { ViewLifecycle } from '../..';
-import { Animation, ComponentProps, Config, FrameworkDelegate, GestureDetail, Mode, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
+import { Animation, ComponentProps, Config, FrameworkDelegate, Gesture, GestureDetail, Mode, NavComponent, NavOptions, NavOutlet, NavResult, RouteID, RouteWrite, TransitionDoneFn, TransitionInstruction, ViewController } from '../../interface';
 import { assert } from '../../utils/helpers';
-import { TransitionOptions, lifecycle, transition } from '../../utils/transition';
+import { TransitionOptions, lifecycle, setPageHidden, transition } from '../../utils/transition';
+
 import { ViewState, convertToViews, matches } from './view-controller';
 
 @Component({
@@ -11,12 +13,14 @@ import { ViewState, convertToViews, matches } from './view-controller';
   shadow: true
 })
 export class Nav implements NavOutlet {
+
   private transInstr: TransitionInstruction[] = [];
   private sbTrns?: Animation;
   private useRouter = false;
   private isTransitioning = false;
   private destroyed = false;
   private views: ViewController[] = [];
+  private gesture?: Gesture;
 
   mode!: Mode;
 
@@ -33,12 +37,18 @@ export class Nav implements NavOutlet {
   /**
    * If the nav component should allow for swipe-to-go-back
    */
-  @Prop({ mutable: true }) swipeBackEnabled?: boolean;
+  @Prop({ mutable: true }) swipeGesture?: boolean;
+  @Watch('swipeGesture')
+  swipeGestureChanged() {
+    if (this.gesture) {
+      this.gesture.setDisabled(!this.swipeGesture);
+    }
+  }
 
   /**
    * If the nav should animate the components or not
    */
-  @Prop({ mutable: true }) animated?: boolean;
+  @Prop() animated = true;
 
   /** @hidden */
   @Prop() delegate?: FrameworkDelegate;
@@ -84,20 +94,32 @@ export class Nav implements NavOutlet {
     this.useRouter =
       !!this.win.document.querySelector('ion-router') &&
       !this.el.closest('[no-router]');
-    if (this.swipeBackEnabled === undefined) {
-      this.swipeBackEnabled = this.config.getBoolean(
+
+    if (this.swipeGesture === undefined) {
+      this.swipeGesture = this.config.getBoolean(
         'swipeBackEnabled',
         this.mode === 'ios'
       );
     }
-    if (this.animated === undefined) {
-      this.animated = this.config.getBoolean('animate', true);
-    }
+
     this.ionNavWillLoad.emit();
   }
 
-  componentDidLoad() {
+  async componentDidLoad() {
     this.rootChanged();
+
+    this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
+      el: this.win.document.body,
+      queue: this.queue,
+      gestureName: 'goback-swipe',
+      gesturePriority: 30,
+      threshold: 10,
+      canStart: this.canStart.bind(this),
+      onStart: this.onStart.bind(this),
+      onMove: this.onMove.bind(this),
+      onEnd: this.onEnd.bind(this),
+    });
+    this.swipeGestureChanged();
   }
 
   componentDidUnload() {
@@ -106,8 +128,14 @@ export class Nav implements NavOutlet {
       view._destroy();
     }
 
+    if (this.gesture) {
+      this.gesture.destroy();
+    }
+
     // release swipe back gesture and transition
-    this.sbTrns && this.sbTrns.destroy();
+    if (this.sbTrns) {
+      this.sbTrns.destroy();
+    }
     this.transInstr.length = this.views.length = 0;
     this.sbTrns = undefined;
     this.destroyed = true;
@@ -117,9 +145,9 @@ export class Nav implements NavOutlet {
    * Push a new component onto the current navigation stack. Pass any aditional information along as an object. This additional information is accessible through NavParams
    */
   @Method()
-  push(
-    component: NavComponent,
-    componentProps?: ComponentProps | null,
+  push<T extends NavComponent>(
+    component: T,
+    componentProps?: ComponentProps<T> | null,
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {
@@ -127,7 +155,7 @@ export class Nav implements NavOutlet {
       {
         insertStart: -1,
         insertViews: [{ page: component, params: componentProps }],
-        opts: opts
+        opts
       },
       done
     );
@@ -137,10 +165,10 @@ export class Nav implements NavOutlet {
    * Inserts a component into the nav stack at the specified index. This is useful if you need to add a component at any point in your navigation stack.
    */
   @Method()
-  insert(
+  insert<T extends NavComponent>(
     insertIndex: number,
-    component: NavComponent,
-    componentProps?: ComponentProps | null,
+    component: T,
+    componentProps?: ComponentProps<T> | null,
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {
@@ -148,7 +176,7 @@ export class Nav implements NavOutlet {
       {
         insertStart: insertIndex,
         insertViews: [{ page: component, params: componentProps }],
-        opts: opts
+        opts
       },
       done
     );
@@ -168,7 +196,7 @@ export class Nav implements NavOutlet {
       {
         insertStart: insertIndex,
         insertViews: insertComponents,
-        opts: opts
+        opts
       },
       done
     );
@@ -183,7 +211,7 @@ export class Nav implements NavOutlet {
       {
         removeStart: -1,
         removeCount: 1,
-        opts: opts
+        opts
       },
       done
     );
@@ -201,7 +229,7 @@ export class Nav implements NavOutlet {
     const config: TransitionInstruction = {
       removeStart: -1,
       removeCount: -1,
-      opts: opts
+      opts
     };
     if (typeof indexOrViewCtrl === 'object' && (indexOrViewCtrl as ViewController).component) {
       config.removeView = indexOrViewCtrl;
@@ -224,7 +252,7 @@ export class Nav implements NavOutlet {
       {
         removeStart: 1,
         removeCount: -1,
-        opts: opts
+        opts
       },
       done
     );
@@ -243,8 +271,8 @@ export class Nav implements NavOutlet {
     return this.queueTrns(
       {
         removeStart: startIndex,
-        removeCount: removeCount,
-        opts: opts
+        removeCount,
+        opts
       },
       done
     );
@@ -254,9 +282,9 @@ export class Nav implements NavOutlet {
    * Set the root for the current navigation stack.
    */
   @Method()
-  setRoot(
-    component: NavComponent,
-    componentProps?: ComponentProps | null,
+  setRoot<T extends NavComponent>(
+    component: T,
+    componentProps?: ComponentProps<T> | null,
     opts?: NavOptions | null,
     done?: TransitionDoneFn
   ): Promise<boolean> {
@@ -289,7 +317,7 @@ export class Nav implements NavOutlet {
         insertViews: views,
         removeStart: 0,
         removeCount: -1,
-        opts: opts
+        opts
       },
       done
     );
@@ -302,7 +330,7 @@ export class Nav implements NavOutlet {
     params: any,
     direction: number
   ): Promise<RouteWrite> {
-    const active = this.getActive();
+    const active = this.getActiveSync();
     if (matches(active, id, params)) {
       return Promise.resolve({
         changed: false,
@@ -316,8 +344,8 @@ export class Nav implements NavOutlet {
     const commonOpts: NavOptions = {
       updateURL: false,
       viewIsReady: enteringEl => {
-        let mark: Function;
-        const p = new Promise(r => (mark = r));
+        let mark: () => void;
+        const p = new Promise<void>(r => (mark = r));
         resolve({
           changed: true,
           element: enteringEl,
@@ -355,8 +383,8 @@ export class Nav implements NavOutlet {
 
   /** @hidden */
   @Method()
-  getRouteId(): RouteID | undefined {
-    const active = this.getActive();
+  async getRouteId(): Promise<RouteID | undefined> {
+    const active = this.getActiveSync();
     return active
       ? {
           id: active.element!.tagName,
@@ -367,53 +395,56 @@ export class Nav implements NavOutlet {
   }
 
   /**
-   * Returns true or false if the current view can go back
-   */
-  @Method()
-  canGoBack(view = this.getActive()): boolean {
-    return !!(view && this.getPrevious(view));
-  }
-
-  /**
    * Gets the active view
    */
   @Method()
-  getActive(): ViewController | undefined {
-    return this.views[this.views.length - 1];
+  getActive(): Promise<ViewController | undefined> {
+    return Promise.resolve(this.getActiveSync());
   }
 
   /**
    * Returns the view at the index
    */
   @Method()
-  getByIndex(index: number): ViewController | undefined {
-    return this.views[index];
+  getByIndex(index: number): Promise<ViewController | undefined> {
+    return Promise.resolve(this.views[index]);
+  }
+
+  /**
+   * Returns true or false if the current view can go back
+   */
+  @Method()
+  canGoBack(view?: ViewController): Promise<boolean> {
+    return Promise.resolve(this.canGoBackSync(view));
   }
 
   /**
    * Gets the previous view
    */
   @Method()
-  getPrevious(view = this.getActive()): ViewController | undefined {
+  getPrevious(view?: ViewController): Promise<ViewController | undefined> {
+    return Promise.resolve(this.getPreviousSync(view));
+  }
+
+  getLength() {
+    return this.views.length;
+  }
+
+  private getActiveSync(): ViewController | undefined {
+    return this.views[this.views.length - 1];
+  }
+
+  private canGoBackSync(view = this.getActiveSync()): boolean {
+    return !!(view && this.getPrevious(view));
+  }
+
+  private getPreviousSync(view = this.getActiveSync()): ViewController | undefined {
     if (!view) {
       return undefined;
     }
     const views = this.views;
     const index = views.indexOf(view);
     return index > 0 ? views[index - 1] : undefined;
-  }
-
-  /**
-   * Returns the length of navigation stack
-   */
-  @Method()
-  isAnimating() {
-    return this.isTransitioning;
-  }
-
-  @Method()
-  length() {
-    return this.views.length;
   }
 
   // _queueTrns() adds a navigation stack change to the queue and schedules it to run:
@@ -430,6 +461,10 @@ export class Nav implements NavOutlet {
     ti: TransitionInstruction,
     done: TransitionDoneFn | undefined
   ): Promise<boolean> {
+    if (this.isTransitioning && ti.opts && ti.opts.skipIfBusy === true) {
+      return Promise.resolve(false);
+    }
+
     const promise = new Promise<boolean>((resolve, reject) => {
       ti.resolve = resolve;
       ti.reject = reject;
@@ -523,7 +558,7 @@ export class Nav implements NavOutlet {
       this.isTransitioning = true;
       this.prepareTI(ti);
 
-      const leavingView = this.getActive();
+      const leavingView = this.getActiveSync();
       const enteringView = this.getEnteringView(ti, leavingView);
 
       if (!leavingView && !enteringView) {
@@ -663,7 +698,7 @@ export class Nav implements NavOutlet {
     const insertViews = ti.insertViews;
     const removeStart = ti.removeStart;
     const removeCount = ti.removeCount;
-    let destroyQueue: ViewController[] | undefined = undefined;
+    let destroyQueue: ViewController[] | undefined;
 
     // there are views to remove
     if (removeStart != null && removeCount != null) {
@@ -753,43 +788,39 @@ export class Nav implements NavOutlet {
 
     const enteringEl = enteringView.element!;
     const leavingEl = leavingView && leavingView.element!;
+    const animated = this.animated && this.config.getBoolean('animated', true);
     const animationOpts: TransitionOptions = {
       mode: this.mode,
-      animated: this.animated,
-      showGoBack: this.canGoBack(enteringView),
+      showGoBack: this.canGoBackSync(enteringView),
       animationCtrl: this.animationCtrl,
-      progressCallback,
       queue: this.queue,
       window: this.win,
       baseEl: this.el,
+      progressCallback,
+      animated,
+
       enteringEl,
       leavingEl,
 
       ...opts
     };
-    const trns = await transition(animationOpts);
-    return this.transitionFinish(trns, enteringView, leavingView, opts);
+    const { hasCompleted } = await transition(animationOpts);
+    return this.transitionFinish(hasCompleted, enteringView, leavingView, opts);
   }
 
   private transitionFinish(
-    transition: Animation | null,
+    hasCompleted: boolean,
     enteringView: ViewController,
     leavingView: ViewController | undefined,
     opts: NavOptions
   ): NavResult {
-    const hasCompleted = transition ? transition.hasCompleted : true;
-
     const cleanupView = hasCompleted ? enteringView : leavingView;
     if (cleanupView) {
       this.cleanup(cleanupView);
     }
 
-    // this is the root transition
-    // it's safe to destroy this transition
-    transition && transition.destroy();
-
     return {
-      hasCompleted: hasCompleted,
+      hasCompleted,
       requiresTransition: true,
       enteringView,
       leavingView,
@@ -850,20 +881,27 @@ export class Nav implements NavOutlet {
 
     for (let i = views.length - 1; i >= 0; i--) {
       const view = views[i];
+      const element = view.element;
       if (i > activeViewIndex) {
         // this view comes after the active view
         // let's unload it
-        lifecycle(this.win, view.element, ViewLifecycle.WillUnload);
+        lifecycle(this.win, element, ViewLifecycle.WillUnload);
         this.destroyView(view);
       } else if (i < activeViewIndex) {
         // this view comes before the active view
         // and it is not a portal then ensure it is hidden
-        view.element!.hidden = true;
+        setPageHidden(element!, true);
       }
     }
   }
 
-  private swipeBackStart() {
+  private canStart(): boolean {
+    return !!this.swipeGesture &&
+      !this.isTransitioning &&
+      this.canGoBackSync();
+  }
+
+  private onStart() {
     if (this.isTransitioning || this.transInstr.length > 0) {
       return;
     }
@@ -878,13 +916,13 @@ export class Nav implements NavOutlet {
       {
         removeStart: -1,
         removeCount: 1,
-        opts: opts
+        opts
       },
       undefined
     );
   }
 
-  private swipeBackProgress(detail: GestureDetail) {
+  private onMove(detail: GestureDetail) {
     if (this.sbTrns) {
       // continue to disable the app while actively dragging
       this.isTransitioning = true;
@@ -897,7 +935,7 @@ export class Nav implements NavOutlet {
     }
   }
 
-  private swipeBackEnd(detail: GestureDetail) {
+  private onEnd(detail: GestureDetail) {
     if (this.sbTrns) {
       // the swipe back gesture has ended
       const delta = detail.deltaX;
@@ -920,25 +958,8 @@ export class Nav implements NavOutlet {
     }
   }
 
-  private canSwipeBack(): boolean {
-    return !!this.swipeBackEnabled && !this.isTransitioning && this.canGoBack();
-  }
-
   render() {
     return [
-      this.swipeBackEnabled && (
-        <ion-gesture
-          canStart={this.canSwipeBack.bind(this)}
-          onStart={this.swipeBackStart.bind(this)}
-          onMove={this.swipeBackProgress.bind(this)}
-          onEnd={this.swipeBackEnd.bind(this)}
-          gestureName="goback-swipe"
-          gesturePriority={10}
-          direction="x"
-          threshold={10}
-          attachTo="body"
-        />
-      ),
       this.mode === 'ios' && <div class="nav-decor" />,
       <slot></slot>
     ];

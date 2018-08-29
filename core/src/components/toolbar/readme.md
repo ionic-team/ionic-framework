@@ -26,59 +26,27 @@ In `md` mode, the `<ion-header>` will receive a box-shadow on the bottom, and th
 
 ## Properties
 
-#### color
-
-string
-
-The color to use for the background.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+| Property | Attribute | Description                                                                                                                                                                                                                                                            | Type    |
+| -------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| `color`  | `color`   | The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics). | `Color` |
+| `mode`   | `mode`    | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `Mode`  |
 
 
-#### mode
+## CSS Custom Properties
 
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### translucent
-
-boolean
-
-If true, the toolbar will be translucent.
-Note: In order to scroll content behind the toolbar, the `fullscreen`
-attribute needs to be set on the content.
-Defaults to `false`.
-
-
-## Attributes
-
-#### color
-
-string
-
-The color to use for the background.
-Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-
-
-#### mode
-
-string
-
-The mode determines which platform styles to use.
-Possible values are: `"ios"` or `"md"`.
-
-
-#### translucent
-
-boolean
-
-If true, the toolbar will be translucent.
-Note: In order to scroll content behind the toolbar, the `fullscreen`
-attribute needs to be set on the content.
-Defaults to `false`.
-
+| Name               | Description                       |
+| ------------------ | --------------------------------- |
+| `--background`     | Background of the toolbar         |
+| `--border-color`   | Color of the toolbar border       |
+| `--border-style`   | Style of the toolbar border       |
+| `--border-width`   | Width of the toolbar border       |
+| `--color`          | Color of the toolbar text         |
+| `--min-height`     | Minimum height of the toolbar     |
+| `--opacity`        | Opacity of the toolbar background |
+| `--padding-bottom` | Bottom padding of the toolbar     |
+| `--padding-end`    | End padding of the toolbar        |
+| `--padding-start`  | Start padding of the toolbar      |
+| `--padding-top`    | Top padding of the toolbar        |
 
 
 ----------------------------------------------

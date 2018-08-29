@@ -12,7 +12,7 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Datetime</ion-title>
         <ion-buttons slot="primary">
@@ -23,7 +23,7 @@
         </ion-toolbar>
       </ion-header>
 
-      <ion-content id="content" class="outer-content test-content">
+      <ion-content id="content" fullscreen class="outer-content test-content">
         <ion-list>
           <ion-item>
             <ion-label>MMMM</ion-label>
@@ -124,6 +124,12 @@
         </ion-list>
 
       </ion-content>
+
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
 
     <script>
       var yearValuesArray = [2020, 2016, 2008, 2004, 2000, 1996];

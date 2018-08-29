@@ -12,13 +12,13 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Button</ion-title>
       </ion-toolbar>
     </ion-header>
 
-    <ion-content id="content" padding no-bounce text-center>
+    <ion-content id="content" padding no-bounce text-center fullscreen>
       <p>
         <ion-button>Default</ion-button>
         <ion-button class="activated">Default.activated</ion-button>
@@ -81,6 +81,11 @@
 
     </ion-content>
 
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+    </style>
   </ion-app>
 
   <script>

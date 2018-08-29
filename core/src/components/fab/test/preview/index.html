@@ -12,7 +12,7 @@
 <body>
   <ion-app>
 
-    <ion-header>
+    <ion-header translucent>
       <ion-toolbar>
         <ion-title>Floating Action Button</ion-title>
       </ion-toolbar>
@@ -148,6 +148,25 @@
       </ion-toolbar>
     </ion-footer>
 
+    <style>
+      ion-toolbar {
+        --background: white;
+      }
+
+      f {
+        display: block;
+        margin: 15px auto;
+        max-width: 150px;
+        height: 150px;
+        background: blue;
+      }
+
+      f:last-of-type {
+        background: yellow;
+      }
+
+    </style>
+
     <script>
       function insertAfter(el, referenceNode) {
         referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
@@ -200,21 +219,6 @@
         }
       }
     </script>
-
-    <style>
-      f {
-        display: block;
-        margin: 15px auto;
-        max-width: 150px;
-        height: 150px;
-        background: blue;
-      }
-
-      f:last-of-type {
-        background: yellow;
-      }
-
-    </style>
   </ion-app>
 </body>
 

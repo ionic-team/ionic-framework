@@ -5,16 +5,14 @@
 // --------------------------------------------------
 
 :host {
-  font-family: $alert-ios-font-family;
+  --background: #{$alert-ios-background-color};
+  --max-width: #{$alert-ios-max-width};
+
   font-size: $alert-ios-font-size;
 }
 
 .alert-wrapper {
   @include border-radius($alert-ios-border-radius);
-
-  max-width: $alert-ios-max-width;
-
-  background-color: $alert-ios-background-color;
 
   box-shadow: $alert-ios-box-shadow;
   overflow: hidden;
@@ -82,7 +80,6 @@
 // --------------------------------------------------
 
 .alert-input {
-  @include placeholder($alert-ios-input-placeholder-color);
   @include border-radius($alert-ios-input-border-radius);
   @include margin($alert-ios-input-margin-top, null, null, null);
   @include padding($alert-ios-input-padding-top, $alert-ios-input-padding-end, $alert-ios-input-padding-bottom, $alert-ios-input-padding-start);
@@ -91,6 +88,14 @@
 
   background-color: $alert-ios-input-background-color;
   appearance: none;
+
+  &::placeholder {
+    color: $alert-ios-input-placeholder-color;
+
+    font-family: inherit;
+    font-weight: inherit;
+  }
+
 }
 
 

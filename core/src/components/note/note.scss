@@ -4,5 +4,11 @@
 // --------------------------------------------------
 
 :host {
+  color: var(--color);
+
+  font-family: $font-family-base;
+}
+
+:host(.ion-color) {
   color: #{current-color(base)};
 }

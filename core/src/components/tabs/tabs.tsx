@@ -1,7 +1,7 @@
 import { Build, Component, Element, Event, EventEmitter, Listen, Method, Prop, State } from '@stencil/core';
-import { Color, Config, NavOutlet, RouteID, RouteWrite, TabbarLayout, TabbarPlacement } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
 
+import { Color, Config, IonicConfig, NavOutlet, RouteID, RouteWrite, TabbarLayout, TabbarPlacement } from '../../interface';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-tabs',
@@ -21,12 +21,12 @@ export class Tabs implements NavOutlet {
   @State() selectedTab?: HTMLIonTabElement;
 
   @Prop({ context: 'config' }) config!: Config;
-
   @Prop({ context: 'document' }) doc!: Document;
 
   /**
-   * The color to use from your Sass `$colors` map.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -64,11 +64,6 @@ export class Tabs implements NavOutlet {
   @Prop() translucent = false;
 
   /**
-   * If true, the tabs will be scrollable when there are enough tabs to overflow the width of the screen.
-   */
-  @Prop() scrollable = false;
-
-  /**
    * If true, the tabs will use the router and `selectedTab` will not do anything.
    */
   @Prop({ mutable: true }) useRouter = false;
@@ -98,7 +93,7 @@ export class Tabs implements NavOutlet {
       this.useRouter = !!this.doc.querySelector('ion-router') && !this.el.closest('[no-router]');
     }
 
-    this.loadConfig('tabbarLayout', 'bottom');
+    this.loadConfig('tabbarPlacement', 'bottom');
     this.loadConfig('tabbarLayout', 'icon-top');
     this.loadConfig('tabbarHighlight', false);
 
@@ -107,8 +102,8 @@ export class Tabs implements NavOutlet {
     this.ionNavWillLoad.emit();
   }
 
-  async componentDidLoad() {
-    await this.initSelect();
+  componentDidLoad() {
+    this.initSelect();
   }
 
   componentDidUnload() {
@@ -139,7 +134,7 @@ export class Tabs implements NavOutlet {
    */
   @Method()
   async select(tabOrIndex: number | HTMLIonTabElement): Promise<boolean> {
-    const selectedTab = this.getTab(tabOrIndex);
+    const selectedTab = await this.getTab(tabOrIndex);
     if (!this.shouldSwitch(selectedTab)) {
       return false;
     }
@@ -153,9 +148,9 @@ export class Tabs implements NavOutlet {
   /** @hidden */
   @Method()
   async setRouteId(id: string): Promise<RouteWrite> {
-    const selectedTab = this.getTab(id);
+    const selectedTab = await this.getTab(id);
     if (!this.shouldSwitch(selectedTab)) {
-      return {changed: false, element: this.selectedTab};
+      return { changed: false, element: this.selectedTab };
     }
 
     await this.setActive(selectedTab);
@@ -168,16 +163,16 @@ export class Tabs implements NavOutlet {
 
   /** @hidden */
   @Method()
-  getRouteId(): RouteID|undefined {
-    const id = this.selectedTab && this.selectedTab.getTabId();
-    return id ? {id, element: this.selectedTab} : undefined;
+  async getRouteId(): Promise<RouteID | undefined> {
+    const id = this.selectedTab && this.selectedTab.name;
+    return id ? { id, element: this.selectedTab } : undefined;
   }
 
   /** Get the tab at the given index */
   @Method()
-  getTab(tabOrIndex: string | number | HTMLIonTabElement): HTMLIonTabElement|undefined {
+  async getTab(tabOrIndex: string | number | HTMLIonTabElement): Promise<HTMLIonTabElement | undefined> {
     if (typeof tabOrIndex === 'string') {
-      return this.tabs.find(tab => tab.getTabId() === tabOrIndex);
+      return this.tabs.find(tab => tab.name === tabOrIndex);
     }
     if (typeof tabOrIndex === 'number') {
       return this.tabs[tabOrIndex];
@@ -189,8 +184,8 @@ export class Tabs implements NavOutlet {
    * Get the currently selected tab
    */
   @Method()
-  getSelected(): HTMLIonTabElement | undefined {
-    return this.selectedTab;
+  getSelected(): Promise<HTMLIonTabElement | undefined> {
+    return Promise.resolve(this.selectedTab);
   }
 
   private initTabs() {
@@ -206,8 +201,8 @@ export class Tabs implements NavOutlet {
     const tabs = this.tabs;
     if (this.useRouter) {
       if (Build.isDev) {
-        const selectedTab = tabs.find(t => t.selected);
-        if (selectedTab) {
+        const tab = tabs.find(t => t.selected);
+        if (tab) {
           console.warn('When using a router (ion-router) <ion-tab selected="true"> makes no difference' +
           'Define routes properly the define which tab is selected');
         }
@@ -234,7 +229,7 @@ export class Tabs implements NavOutlet {
     }
   }
 
-  private loadConfig(attrKey: string, fallback: any) {
+  private loadConfig(attrKey: keyof IonicConfig, fallback: any) {
     const val = (this as any)[attrKey];
     if (typeof val === 'undefined') {
       (this as any)[attrKey] = this.config.get(attrKey, fallback);
@@ -279,7 +274,7 @@ export class Tabs implements NavOutlet {
       if (leavingTab) {
         leavingTab.active = false;
       }
-      this.ionChange.emit({tab: selectedTab});
+      this.ionChange.emit({ tab: selectedTab });
       this.ionNavDidChange.emit();
     }
   }
@@ -294,7 +289,7 @@ export class Tabs implements NavOutlet {
     return Promise.resolve(false);
   }
 
-  private shouldSwitch(selectedTab: HTMLIonTabElement|undefined): selectedTab is HTMLIonTabElement {
+  private shouldSwitch(selectedTab: HTMLIonTabElement | undefined): selectedTab is HTMLIonTabElement {
     const leavingTab = this.selectedTab;
     return !!(selectedTab && selectedTab !== leavingTab && !this.transitioning);
   }
@@ -306,14 +301,12 @@ export class Tabs implements NavOutlet {
   }
 
   render() {
-    const dom = [
+    return [
       <div class="tabs-inner">
         <slot></slot>
-      </div>
-    ];
+      </div>,
 
-    if (!this.tabbarHidden) {
-      dom.push(
+      !this.tabbarHidden && (
         <ion-tabbar
           tabs={this.tabs.slice()}
           color={this.color}
@@ -321,15 +314,11 @@ export class Tabs implements NavOutlet {
           highlight={this.tabbarHighlight}
           placement={this.tabbarPlacement}
           layout={this.tabbarLayout}
-          translucent={this.translucent}
-          scrollable={this.scrollable}>
+          translucent={this.translucent}>
         </ion-tabbar>
-      );
-    }
-    return dom;
+      )
+    ];
   }
 }
 
 let tabIds = -1;
-
-

@@ -61,6 +61,19 @@
       Inactive
     </ion-segment-button>
   </ion-segment>
+
+  <ion-segment class="custom" value="active">
+    <ion-segment-button value="active">
+      Active
+    </ion-segment-button>
+    <ion-segment-button value="disabled" disabled="true">
+      Disabled
+    </ion-segment-button>
+    <ion-segment-button value="inactive" disabled="false">
+      Inactive
+    </ion-segment-button>
+  </ion-segment>
+
 </body>
 
 <script>
@@ -119,6 +132,17 @@
     word-wrap: normal;
     white-space: pre;
     color: #314361;
+  }
+
+  .custom {
+    --background-checked: navy;
+    --background: papayawhip;
+    --border-color-checked: navy;
+    --border-color-disabled: navy;
+    --border-color: navy;
+    --color-checked: papayawhip;
+    --color-disabled: rgba(0,0,0,0.3);
+    --color: navy;
   }
 </style>
 </html>

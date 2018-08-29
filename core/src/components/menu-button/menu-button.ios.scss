@@ -4,37 +4,14 @@
 // iOS Menu Button
 // --------------------------------------------------
 
-.menu-button-inner {
-  @include padding(0);
-  @include margin(2px, 0, 0, 0);
+:host {
+  color: #{ion-color(primary, base)};
+}
 
-  min-height: 32px;
-
-  transform: translateZ(0);
-
-  border: 0;
-
-  background-color: transparent;
-  color: $menu-button-ios-color;
-
-  font-size: 17px;
-
-  line-height: 1;
-
-  overflow: visible;
-  z-index: $menu-button-ios-button-z-index;
-
-  &.activated {
-    opacity: .4;
-  }
+button {
+  @include padding(0, 5px);
 }
 
 ion-icon {
-  @include padding(0);
-  @include margin(0, -3px, 0, 0);
-
-  display: inherit;
-
-  font-size: 1.75em;
-  pointer-events: none;
+  font-size: 31px;
 }

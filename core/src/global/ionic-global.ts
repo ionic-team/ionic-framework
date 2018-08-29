@@ -1,10 +1,12 @@
 import 'ionicons';
-import { configFromURL } from '../utils/config';
-import { isIOS } from '../utils/platform';
+
+import { configFromSession, configFromURL, saveConfig } from '../utils/config';
+import { isPlatform, setupPlatforms } from '../utils/platform';
+
 import { Config } from './config';
 
-
-const Ionic = (window as any)['Ionic'] = (window as any)['Ionic'] || {};
+const win = window;
+const Ionic = (win as any)['Ionic'] = (win as any)['Ionic'] || {};
 declare const Context: any;
 
 // queue used to coordinate DOM reads and
@@ -13,18 +15,28 @@ Object.defineProperty(Ionic, 'queue', {
   get: () => Context['queue']
 });
 
+// Setup platforms
+setupPlatforms(win);
+Context.isPlatform = isPlatform;
+
 // create the Ionic.config from raw config object (if it exists)
 // and convert Ionic.config into a ConfigApi that has a get() fn
-const config = Ionic['config'] = Context['config'] = new Config({
+const configObj = {
+  ...configFromSession(),
+  persistConfig: false,
   ...Ionic['config'],
   ...configFromURL()
-});
+};
+const config = Ionic['config'] = Context['config'] = new Config(configObj);
+if (config.getBoolean('persistConfig')) {
+  saveConfig(configObj);
+}
 
 // first see if the mode was set as an attribute on <html>
 // which could have been set by the user, or by prerendering
 // otherwise get the mode via config settings, and fallback to md
 const documentElement = document.documentElement;
-const mode = config.get('mode', documentElement.getAttribute('mode') || (isIOS(window) ? 'ios' : 'md'));
+const mode = config.get('mode', documentElement.getAttribute('mode') || (isPlatform(win, 'ios') ? 'ios' : 'md'));
 Ionic.mode = Context.mode = mode;
 config.set('mode', mode);
 documentElement.setAttribute('mode', mode);

@@ -1,4 +1,5 @@
 import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+
 import { Side } from '../../interface';
 import { isEndSide } from '../../utils/helpers';
 
@@ -12,8 +13,7 @@ import { isEndSide } from '../../utils/helpers';
 export class ItemOptions {
   @Element() el!: HTMLElement;
 
-  @Prop({ context: 'window' })
-  win!: Window;
+  @Prop({ context: 'window' }) win!: Window;
 
   /**
    * The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
@@ -27,22 +27,12 @@ export class ItemOptions {
   @Event() ionSwipe!: EventEmitter<void>;
 
   @Method()
-  isEndSide() {
-    return isEndSide(this.win, this.side);
-  }
-
-  @Method()
-  width(): number {
-    return this.el.offsetWidth;
-  }
-
-  @Method()
   fireSwipeEvent() {
     this.ionSwipe.emit();
   }
 
   hostData() {
-    const isEnd = this.isEndSide();
+    const isEnd = isEndSide(this.win, this.side);
     return {
       class: {
         'item-options-start': !isEnd,

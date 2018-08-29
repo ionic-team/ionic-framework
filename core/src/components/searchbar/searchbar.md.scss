@@ -5,11 +5,16 @@
 // --------------------------------------------------
 
 :host {
+  --color-button-clear: currentColor;
+  --color-button-cancel: #{$searchbar-md-cancel-button-color};
+  --color-icon: #{$searchbar-md-input-search-icon-color};
+  --background: #{$searchbar-md-input-background-color};
+
   @include padding($searchbar-md-padding-top, $searchbar-md-padding-end, $searchbar-md-padding-bottom, $searchbar-md-padding-start);
 
   background: $searchbar-md-background;
 
-  font-family: $searchbar-md-font-family;
+  color: $searchbar-md-input-text-color;
 }
 
 
@@ -21,8 +26,6 @@
 
   width: $searchbar-md-input-search-icon-size + 1;
   height: $searchbar-md-input-search-icon-size + 1;
-
-  color: $searchbar-md-input-search-icon-color;
 }
 
 
@@ -40,7 +43,6 @@
   border: 0;
 
   background-color: $searchbar-md-cancel-button-background-color;
-  color: $searchbar-md-cancel-button-color;
 
   font-size: $searchbar-md-cancel-button-font-size;
 }
@@ -63,15 +65,11 @@
 // -----------------------------------------
 
 .searchbar-input {
-  @include placeholder($searchbar-md-input-placeholder-color);
   @include padding(6px, 55px);
   @include border-radius($searchbar-md-input-border-radius);
   @include background-position(start, 8px, center);
 
   height: $searchbar-md-input-height;
-
-  background-color: $searchbar-md-input-background-color;
-  color: $searchbar-md-input-text-color;
 
   font-size: 16px;
   font-weight: 400;
@@ -105,8 +103,6 @@
 .searchbar-clear-icon {
   width: $searchbar-md-input-clear-icon-size;
   height: 100%;
-
-  color: $searchbar-md-input-clear-icon-color;
 }
 
 

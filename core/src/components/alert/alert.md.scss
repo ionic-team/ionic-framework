@@ -5,16 +5,14 @@
 // --------------------------------------------------
 
 :host {
-  font-family: $alert-md-font-family;
+  --background: #{$alert-md-background-color};
+  --max-width: #{$alert-md-max-width};
+
   font-size: $alert-md-font-size;
 }
 
 .alert-wrapper {
   @include border-radius($alert-md-border-radius);
-
-  max-width: $alert-md-max-width;
-
-  background-color: $alert-md-background-color;
 
   box-shadow: $alert-md-box-shadow;
 }
@@ -67,12 +65,18 @@
 // --------------------------------------------------
 
 .alert-input {
-  @include placeholder($alert-md-input-placeholder-color);
   @include margin($alert-md-input-margin-top, $alert-md-input-margin-end, $alert-md-input-margin-bottom, $alert-md-input-margin-start);
 
   border-bottom: $alert-md-input-border-width $alert-md-input-border-style $alert-md-input-border-color;
 
   color: $alert-md-input-text-color;
+
+  &::placeholder {
+    color: $alert-md-input-placeholder-color;
+
+    font-family: inherit;
+    font-weight: inherit;
+  }
 }
 
 .alert-input:focus {

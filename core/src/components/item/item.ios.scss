@@ -5,7 +5,7 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: var(--ion-item-background, transparent);
+  --ion-color-base: var(--ion-item-background-color, transparent);
   --ion-color-contrast: #{$item-ios-text-color};
   --ion-color-tint: #{$item-ios-background-color-active};
   --ion-color-shade: #{$item-ios-border-bottom-color};
@@ -14,18 +14,11 @@
   --inner-padding-end: #{$item-ios-padding-end / 2};
   --inner-border-width: #{0 0 $item-ios-border-bottom-width 0};
 
-  font-family: $item-ios-font-family;
   font-size: $item-ios-font-size;
 }
 
 :host(.activated) {
   --transition: none;
-}
-
-@media screen and (orientation: landscape) {
-  .item-inner {
-    @include safe-area-padding-horizontal(var(--inner-padding-start), var(--inner-padding-end));
-  }
 }
 
 
@@ -146,11 +139,14 @@
 :host(.item-label-stacked) ::slotted(ion-input),
 :host(.item-label-floating) ::slotted(ion-input),
 :host(.item-label-stacked) ::slotted(ion-textarea),
-:host(.item-label-floating) ::slotted(ion-textarea) {
+:host(.item-label-floating) ::slotted(ion-textarea),
+:host(.item-label-stacked) ::slotted(ion-select),
+:host(.item-label-floating) ::slotted(ion-select) {
   --padding-top: 8px;
   --padding-bottom: 8px;
   --padding-start: 0;
 }
+
 
 
 // TODO

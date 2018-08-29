@@ -50,8 +50,7 @@ export class Route {
       this.onUpdate(newValue);
       return;
     }
-    for (let i = 0; i < keys1.length; i++) {
-      const key = keys1[i];
+    for (const key of keys1) {
       if (newValue[key] !== oldValue[key]) {
         this.onUpdate(newValue);
         return;

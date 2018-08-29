@@ -1,12 +1,11 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
-import { Animation, AnimationBuilder, Color, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 
+import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
 import { iosEnterAnimation } from './animations/ios.enter';
 import { iosLeaveAnimation } from './animations/ios.leave';
-
 import { mdEnterAnimation } from './animations/md.enter';
 import { mdLeaveAnimation } from './animations/md.leave';
 
@@ -25,18 +24,17 @@ export class Toast implements OverlayInterface {
 
   @Element() el!: HTMLElement;
 
-  mode!: Mode;
-  color?: Color;
   animation: Animation | undefined;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
+  @Prop() overlayIndex!: number;
 
-  /** @hidden */
-  @Prop() overlayId!: number;
-
-  /** @hidden */
-  @Prop() keyboardClose = false;
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * Animation to use when the toast is presented.
@@ -71,9 +69,14 @@ export class Toast implements OverlayInterface {
   @Prop() message?: string;
 
   /**
+   * If true, the keyboard will be automatically dismissed when the overlay is presented.
+   */
+  @Prop() keyboardClose = false;
+
+  /**
    * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
    */
-  @Prop() position?: string;
+  @Prop() position: 'top' | 'bottom' | 'middle' = 'bottom';
 
   /**
    * If true, the close button will be displayed. Defaults to `false`.
@@ -88,7 +91,7 @@ export class Toast implements OverlayInterface {
   /**
    * If true, the toast will animate. Defaults to `true`.
    */
-  @Prop() willAnimate = true;
+  @Prop() animated = true;
 
   /**
    * Emitted after the toast has loaded.
@@ -98,22 +101,22 @@ export class Toast implements OverlayInterface {
   /**
    * Emitted after the toast has presented.
    */
-  @Event({eventName: 'ionToastDidPresent'}) didPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionToastDidPresent' }) didPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the toast has presented.
    */
-  @Event({eventName: 'ionToastWillPresent'}) willPresent!: EventEmitter<void>;
+  @Event({ eventName: 'ionToastWillPresent' }) willPresent!: EventEmitter<void>;
 
   /**
    * Emitted before the toast has dismissed.
    */
-  @Event({eventName: 'ionToastWillDismiss'}) willDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionToastWillDismiss' }) willDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the toast has dismissed.
    */
-  @Event({eventName: 'ionToastDidDismiss'}) didDismiss!: EventEmitter<OverlayEventDetail>;
+  @Event({ eventName: 'ionToastDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   /**
    * Emitted after the toast has unloaded.
@@ -165,8 +168,8 @@ export class Toast implements OverlayInterface {
    *
    */
   @Method()
-  onDidDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionToastDidDismiss', callback);
+  onDidDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionToastDidDismiss');
   }
 
   /**
@@ -175,8 +178,8 @@ export class Toast implements OverlayInterface {
    *
    */
   @Method()
-  onWillDismiss(callback?: (detail: OverlayEventDetail) => void): Promise<OverlayEventDetail> {
-    return eventMethod(this.el, 'ionToastWillDismiss', callback);
+  onWillDismiss(): Promise<OverlayEventDetail> {
+    return eventMethod(this.el, 'ionToastWillDismiss');
   }
 
   hostData() {
@@ -192,10 +195,9 @@ export class Toast implements OverlayInterface {
   }
 
   render() {
-    const position = this.position ? this.position : 'bottom';
     const wrapperClass = {
       'toast-wrapper': true,
-      [`toast-${position}`]: true
+      [`toast-${this.position}`]: true
     };
     return (
       <div class={wrapperClass}>
@@ -204,7 +206,7 @@ export class Toast implements OverlayInterface {
             ? <div class="toast-message">{this.message}</div>
             : null}
           {this.showCloseButton
-            ? <ion-button fill="clear" color="light" class="toast-button" onClick={() => this.dismiss()}>
+            ? <ion-button fill="clear" color="light" ion-activable class="toast-button" onClick={() => this.dismiss()}>
                 {this.closeButtonText || 'Close'}
               </ion-button>
             : null}

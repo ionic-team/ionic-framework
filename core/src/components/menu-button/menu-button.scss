@@ -5,29 +5,6 @@
 
 :host {
   pointer-events: all;
-}
-
-button {
-  @include margin(0);
-  @include padding(0);
-  @include font-smoothing();
-
-  display: flex;
-  position: relative;
-
-  flex-flow: row nowrap;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-
-  border: 0;
-
-  outline: none;
-
-  background: transparent;
-  color: inherit;
-
-  line-height: 1;
 
   text-align: center;
   text-decoration: none;
@@ -35,10 +12,43 @@ button {
   text-transform: none;
 
   white-space: nowrap;
+  font-kerning: none;
+}
+
+button {
+  @include text-inherit();
+  @include margin(0);
+  @include padding(0);
+  @include font-smoothing();
+
+  display: flex;
+
+  position: relative;
+
+  flex-flow: row nowrap;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+
+  height: 32px;
+
+  border: 0;
+
+  outline: none;
+
+  background: transparent;
+
+  line-height: 1;
 
   cursor: pointer;
   user-select: none;
   z-index: 0;
-  font-kerning: none;
   appearance: none;
+}
+
+ion-icon {
+  @include margin(0);
+  @include padding(0);
+
+  pointer-events: none;
 }

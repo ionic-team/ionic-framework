@@ -5,8 +5,10 @@
 // -----------------------------------------
 
 :host {
-  --checked-background: #{current-color(base)};
-  --checked-knob: #{current-color(base)};
+  --background: #{$toggle-ios-background-color-off};
+  --background-checked: #{ion-color(primary, base)};
+  --handle-background: #{$toggle-ios-handle-background-color};
+  --handle-background-checked: #{$toggle-ios-handle-background-color};
 
   box-sizing: content-box;
 
@@ -18,6 +20,13 @@
   contain: strict;
 }
 
+:host(.ion-color.toggle-checked) .toggle-icon {
+  background: current-color(base);
+}
+
+:host(.ion-color.toggle-checked) .toggle-inner {
+  background: current-color(contrast);
+}
 
 // iOS Toggle Background Track: Unchecked
 // -----------------------------------------
@@ -53,7 +62,7 @@
 
   transition: transform $toggle-ios-transition-duration;
 
-  background-color: $toggle-ios-background-color-off;
+  background: var(--background);
 
   content: "";
 }
@@ -73,7 +82,7 @@
 
   transition: transform $toggle-ios-transition-duration, width 120ms ease-in-out 80ms, left 110ms ease-in-out 80ms, right 110ms ease-in-out 80ms;
 
-  background-color: $toggle-ios-handle-background-color;
+  background: var(--handle-background);
 
   box-shadow: $toggle-ios-handle-box-shadow;
   will-change: transform;
@@ -85,7 +94,7 @@
 // -----------------------------------------
 
 :host(.toggle-checked) .toggle-icon {
-  background-color: var(--checked-knob);
+  background: var(--background-checked);
 }
 
 
@@ -103,6 +112,8 @@
 
 :host(.toggle-checked) .toggle-inner {
   @include transform(translate3d($toggle-ios-width - $toggle-ios-handle-width - ($toggle-ios-border-width * 2), 0, 0));
+
+  background: var(--handle-background-checked);
 }
 
 
@@ -140,7 +151,6 @@
 
 :host(.toggle-disabled) {
   opacity: $toggle-ios-disabled-opacity;
-  pointer-events: none;
 }
 
 

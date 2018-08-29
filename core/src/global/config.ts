@@ -1,19 +1,67 @@
+import { Mode } from '../interface';
+
+export interface IonicConfig {
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  mode?: Mode;
+  persistConfig?: boolean;
+
+  inputShims?: boolean;
+  backButtonIcon?: string;
+  backButtonText?: string;
+  spinner?: string;
+  loadingSpinner?: string;
+  menuIcon?: string;
+  animated?: boolean;
+  pickerSpinner?: string;
+  refreshingIcon?: string;
+  refreshingSpinner?: string;
+  menuType?: string;
+  scrollPadding?: string;
+  inputBlurring?: string;
+  scrollAssist?: boolean;
+  hideCaretOnScroll?: string;
+  infiniteLoadingSpinner?: string;
+  keyboardHeight?: number;
+  swipeBackEnabled?: boolean;
+
+  tabbarPlacement?: string;
+  tabbarLayout?: string;
+  tabbarHighlight?: boolean;
+
+  actionSheetEnter?: string;
+  alertEnter?: string;
+  loadingEnter?: string;
+  modalEnter?: string;
+  popoverEnter?: string;
+  toastEnter?: string;
+  pickerEnter?: string;
+
+  actionSheetLeave?: string;
+  alertLeave?: string;
+  loadingLeave?: string;
+  modalLeave?: string;
+  popoverLeave?: string;
+  toastLeave?: string;
+  pickerLeave?: string;
+}
 
 export class Config {
 
-  private m: Map<string, any>;
+  private m: Map<keyof IonicConfig, any>;
 
-  constructor(configObj: {[key: string]: any}) {
-    this.m = new Map<string, any>(Object.entries(configObj));
-
+  constructor(configObj: IonicConfig) {
+    this.m = new Map<keyof IonicConfig, any>(Object.entries(configObj) as any);
   }
 
-  get(key: string, fallback?: any): any {
+  get(key: keyof IonicConfig, fallback?: any): any {
     const value = this.m.get(key);
     return (value !== undefined) ? value : fallback;
   }
 
-  getBoolean(key: string, fallback = false): boolean {
+  getBoolean(key: keyof IonicConfig, fallback = false): boolean {
     const val = this.m.get(key);
     if (val === undefined) {
       return fallback;
@@ -24,12 +72,12 @@ export class Config {
     return !!val;
   }
 
-  getNumber(key: string, fallback?: number): number {
+  getNumber(key: keyof IonicConfig, fallback?: number): number {
     const val = parseFloat(this.m.get(key));
     return isNaN(val) ? (fallback !== undefined ? fallback : NaN) : val;
   }
 
-  set(key: string, value: any) {
+  set(key: keyof IonicConfig, value: any) {
     this.m.set(key, value);
   }
 }

@@ -4,17 +4,30 @@
 // --------------------------------------------------
 
 :host {
-  --ion-card-text: currentColor;
+  /**
+   * @prop --background: Background of the card
+   * @prop --color: Color of the card
+   */
 
   @include font-smoothing();
 
   display: block;
   position: relative;
 
-  background: #{current-color(base)};
-  color: #{current-color(contrast)};
+  background: var(--background);
+  color: var(--color);
+
+  font-family: $font-family-base;
 
   overflow: hidden;
+}
+
+// Card Colors
+// ---------------------------------------------
+
+:host(.ion-color) {
+  background: current-color(base);
+  color: current-color(contrast);
 }
 
 :host(.ion-color)::slotted(*) ion-card-title,
@@ -22,8 +35,15 @@
   color: currentColor;
 }
 
+// Slotted Content
+// ---------------------------------------------
+
 ::slotted(*) img {
   display: block;
 
   width: 100%;
+}
+
+::slotted(*) ion-list {
+  @include margin(0);
 }

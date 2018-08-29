@@ -1,4 +1,5 @@
 import { Component, Element, Prop } from '@stencil/core';
+
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
 
@@ -11,8 +12,9 @@ export class ChipButton {
   @Element() el!: HTMLElement;
 
   /**
-   * The color to use.
+   * The color to use from your application's color palette.
    * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
+   * For more information on colors, see [theming](/docs/theming/basics).
    */
   @Prop() color?: Color;
 
@@ -28,16 +30,16 @@ export class ChipButton {
   @Prop() disabled = false;
 
   /**
-   * Set to `"clear"` for a transparent button style.
+   * Set to `"clear"` for a transparent button or to `"solid"` for a filled background.
+   * Defaults to `"clear"`.
    */
-  @Prop() fill = 'default';
+  @Prop() fill: 'clear' | 'solid' = 'clear';
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
    * If this property is set, an anchor tag will be rendered.
    */
   @Prop() href?: string;
-
 
   hostData() {
     return {
@@ -53,13 +55,14 @@ export class ChipButton {
 
     return (
       <TagType
+        type="button"
         class="chip-button-native"
         disabled={this.disabled}
         href={this.href}>
           <span class="chip-button-inner">
             <slot></slot>
           </span>
-          { this.mode === 'md' && <ion-ripple-effect tapClick={true}/> }
+          { this.mode === 'md' && <ion-ripple-effect /> }
       </TagType>
     );
   }

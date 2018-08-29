@@ -1,6 +1,5 @@
 import { Component, Element, Listen, Method, Prop, Watch } from '@stencil/core';
 
-
 @Component({
   tag: 'ion-fab',
   styleUrl: 'fab.scss',
@@ -67,7 +66,7 @@ export class Fab {
       class: {
         [`fab-horizontal-${this.horizontal}`]: !!this.horizontal,
         [`fab-vertical-${this.vertical}`]: !!this.vertical,
-        ['fab-edge']: this.edge
+        'fab-edge': this.edge
       }
     };
   }

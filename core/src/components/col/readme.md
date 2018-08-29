@@ -26,391 +26,45 @@ There are several attributes that can be added to a column to customize this beh
 
 ## Properties
 
-#### offset
-
-string
-
-The amount to offset the column, in terms of how many columns it should shift to the right
-of the total available.
-
-
-#### offsetLg
-
-string
-
-The amount to offset the column for lg screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### offsetMd
-
-string
-
-The amount to offset the column for md screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### offsetSm
-
-string
-
-The amount to offset the column for sm screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### offsetXl
-
-string
-
-The amount to offset the column for xl screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### offsetXs
-
-string
-
-The amount to offset the column for xs screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### pull
-
-string
-
-The amount to pull the column, in terms of how many columns it should shift to the left of
-the total available.
-
-
-#### pullLg
-
-string
-
-The amount to pull the column for lg screens, in terms of how many columns it should shift
-to the left of the total available.
-
-
-#### pullMd
-
-string
-
-The amount to pull the column for md screens, in terms of how many columns it should shift
-to the left of the total available.
-
-
-#### pullSm
-
-string
-
-The amount to pull the column for sm screens, in terms of how many columns it should shift
-to the left of the total available.
-
-
-#### pullXl
-
-string
-
-The amount to pull the column for xl screens, in terms of how many columns it should shift
-to the left of the total available.
-
-
-#### pullXs
-
-string
-
-The amount to pull the column for xs screens, in terms of how many columns it should shift
-to the left of the total available.
-
-
-#### push
-
-string
-
-The amount to push the column, in terms of how many columns it should shift to the right
-of the total available.
-
-
-#### pushLg
-
-string
-
-The amount to push the column for lg screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### pushMd
-
-string
-
-The amount to push the column for md screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### pushSm
-
-string
-
-The amount to push the column for sm screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### pushXl
-
-string
-
-The amount to push the column for xl screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### pushXs
-
-string
-
-The amount to push the column for xs screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### size
-
-string
-
-The size of the column, in terms of how many columns it should take up out of the total
-available. If `"auto"` is passed, the column will be the size of its content.
-
-
-#### sizeLg
-
-string
-
-The size of the column for lg screens, in terms of how many columns it should take up out
-of the total available. If `"auto"` is passed, the column will be the size of its content.
-
-
-#### sizeMd
-
-string
-
-The size of the column for md screens, in terms of how many columns it should take up out
-of the total available. If `"auto"` is passed, the column will be the size of its content.
-
-
-#### sizeSm
-
-string
-
-The size of the column for sm screens, in terms of how many columns it should take up out
-of the total available. If `"auto"` is passed, the column will be the size of its content.
-
-
-#### sizeXl
-
-string
-
-The size of the column for xl screens, in terms of how many columns it should take up out
-of the total available. If `"auto"` is passed, the column will be the size of its content.
-
-
-#### sizeXs
-
-string
-
-The size of the column for xs screens, in terms of how many columns it should take up out
-of the total available. If `"auto"` is passed, the column will be the size of its content.
-
-
-## Attributes
-
-#### offset
-
-string
-
-The amount to offset the column, in terms of how many columns it should shift to the right
-of the total available.
-
-
-#### offset-lg
-
-string
-
-The amount to offset the column for lg screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### offset-md
-
-string
-
-The amount to offset the column for md screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### offset-sm
-
-string
-
-The amount to offset the column for sm screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### offset-xl
-
-string
-
-The amount to offset the column for xl screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### offset-xs
-
-string
-
-The amount to offset the column for xs screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### pull
-
-string
-
-The amount to pull the column, in terms of how many columns it should shift to the left of
-the total available.
-
-
-#### pull-lg
-
-string
-
-The amount to pull the column for lg screens, in terms of how many columns it should shift
-to the left of the total available.
-
-
-#### pull-md
-
-string
-
-The amount to pull the column for md screens, in terms of how many columns it should shift
-to the left of the total available.
-
-
-#### pull-sm
-
-string
-
-The amount to pull the column for sm screens, in terms of how many columns it should shift
-to the left of the total available.
-
-
-#### pull-xl
-
-string
-
-The amount to pull the column for xl screens, in terms of how many columns it should shift
-to the left of the total available.
-
-
-#### pull-xs
-
-string
-
-The amount to pull the column for xs screens, in terms of how many columns it should shift
-to the left of the total available.
-
-
-#### push
-
-string
-
-The amount to push the column, in terms of how many columns it should shift to the right
-of the total available.
-
-
-#### push-lg
-
-string
-
-The amount to push the column for lg screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### push-md
-
-string
-
-The amount to push the column for md screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### push-sm
-
-string
-
-The amount to push the column for sm screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### push-xl
-
-string
-
-The amount to push the column for xl screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### push-xs
-
-string
-
-The amount to push the column for xs screens, in terms of how many columns it should shift
-to the right of the total available.
-
-
-#### size
-
-string
-
-The size of the column, in terms of how many columns it should take up out of the total
-available. If `"auto"` is passed, the column will be the size of its content.
-
-
-#### size-lg
-
-string
-
-The size of the column for lg screens, in terms of how many columns it should take up out
-of the total available. If `"auto"` is passed, the column will be the size of its content.
-
-
-#### size-md
-
-string
-
-The size of the column for md screens, in terms of how many columns it should take up out
-of the total available. If `"auto"` is passed, the column will be the size of its content.
-
-
-#### size-sm
-
-string
-
-The size of the column for sm screens, in terms of how many columns it should take up out
-of the total available. If `"auto"` is passed, the column will be the size of its content.
-
-
-#### size-xl
-
-string
-
-The size of the column for xl screens, in terms of how many columns it should take up out
-of the total available. If `"auto"` is passed, the column will be the size of its content.
-
-
-#### size-xs
-
-string
-
-The size of the column for xs screens, in terms of how many columns it should take up out
-of the total available. If `"auto"` is passed, the column will be the size of its content.
-
+| Property   | Attribute   | Description                                                                                                                                                                          | Type     |
+| ---------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- |
+| `offsetLg` | `offset-lg` | The amount to offset the column for lg screens, in terms of how many columns it should shift to the right of the total available.                                                    | `string` |
+| `offsetMd` | `offset-md` | The amount to offset the column for md screens, in terms of how many columns it should shift to the right of the total available.                                                    | `string` |
+| `offsetSm` | `offset-sm` | The amount to offset the column for sm screens, in terms of how many columns it should shift to the right of the total available.                                                    | `string` |
+| `offsetXl` | `offset-xl` | The amount to offset the column for xl screens, in terms of how many columns it should shift to the right of the total available.                                                    | `string` |
+| `offsetXs` | `offset-xs` | The amount to offset the column for xs screens, in terms of how many columns it should shift to the right of the total available.                                                    | `string` |
+| `offset`   | `offset`    | The amount to offset the column, in terms of how many columns it should shift to the right of the total available.                                                                   | `string` |
+| `pullLg`   | `pull-lg`   | The amount to pull the column for lg screens, in terms of how many columns it should shift to the left of the total available.                                                       | `string` |
+| `pullMd`   | `pull-md`   | The amount to pull the column for md screens, in terms of how many columns it should shift to the left of the total available.                                                       | `string` |
+| `pullSm`   | `pull-sm`   | The amount to pull the column for sm screens, in terms of how many columns it should shift to the left of the total available.                                                       | `string` |
+| `pullXl`   | `pull-xl`   | The amount to pull the column for xl screens, in terms of how many columns it should shift to the left of the total available.                                                       | `string` |
+| `pullXs`   | `pull-xs`   | The amount to pull the column for xs screens, in terms of how many columns it should shift to the left of the total available.                                                       | `string` |
+| `pull`     | `pull`      | The amount to pull the column, in terms of how many columns it should shift to the left of the total available.                                                                      | `string` |
+| `pushLg`   | `push-lg`   | The amount to push the column for lg screens, in terms of how many columns it should shift to the right of the total available.                                                      | `string` |
+| `pushMd`   | `push-md`   | The amount to push the column for md screens, in terms of how many columns it should shift to the right of the total available.                                                      | `string` |
+| `pushSm`   | `push-sm`   | The amount to push the column for sm screens, in terms of how many columns it should shift to the right of the total available.                                                      | `string` |
+| `pushXl`   | `push-xl`   | The amount to push the column for xl screens, in terms of how many columns it should shift to the right of the total available.                                                      | `string` |
+| `pushXs`   | `push-xs`   | The amount to push the column for xs screens, in terms of how many columns it should shift to the right of the total available.                                                      | `string` |
+| `push`     | `push`      | The amount to push the column, in terms of how many columns it should shift to the right of the total available.                                                                     | `string` |
+| `sizeLg`   | `size-lg`   | The size of the column for lg screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content. | `string` |
+| `sizeMd`   | `size-md`   | The size of the column for md screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content. | `string` |
+| `sizeSm`   | `size-sm`   | The size of the column for sm screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content. | `string` |
+| `sizeXl`   | `size-xl`   | The size of the column for xl screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content. | `string` |
+| `sizeXs`   | `size-xs`   | The size of the column for xs screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content. | `string` |
+| `size`     | `size`      | The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.                | `string` |
+
+
+## CSS Custom Properties
+
+| Name                           | Description                                 |
+| ------------------------------ | ------------------------------------------- |
+| `--ion-grid-column-padding`    | Padding for the Column                      |
+| `--ion-grid-column-padding-lg` | Padding for the Column on lg screens and up |
+| `--ion-grid-column-padding-md` | Padding for the Column on md screens and up |
+| `--ion-grid-column-padding-sm` | Padding for the Column on sm screens and up |
+| `--ion-grid-column-padding-xl` | Padding for the Column on xl screens and up |
+| `--ion-grid-column-padding-xs` | Padding for the Column on xs screens and up |
+| `--ion-grid-columns`           | The number of total Columns in the Grid     |
 
 
 ----------------------------------------------

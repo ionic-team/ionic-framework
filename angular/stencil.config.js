@@ -14,6 +14,7 @@ exports.config.globalScript = '../core/src/global/ionic-global.ts';
 exports.config.outputTargets = [
   {
     type: 'angular',
+    componentCorePackage: '@ionic/core',
     directivesProxyFile: 'src/directives/proxies.ts',
     directivesArrayFile: 'src/directives/proxies-list.txt',
     empty: false,
@@ -38,8 +39,6 @@ exports.config.outputTargets = [
       // controllers
       'ion-menu-controller',
       'ion-animation-controller',
-      'ion-animation-controller',
-      'ion-gesture-controller',
 
       // navigation
       'ion-router',
@@ -48,14 +47,9 @@ exports.config.outputTargets = [
       'ion-router-outlet',
       'ion-anchor',
       'ion-tabbar',
-      'ion-tab-button',
 
       // auxiliar
-      'ion-gesture',
-      'ion-tap-click',
       'ion-picker-column',
-      'ion-range-knob',
-      'ion-backdrop',
       'ion-anchor',
       'ion-virtual-scroll'
     ]

@@ -74,43 +74,58 @@ $margin: var(--ion-margin, 16px);
 // --------------------------------------------------
 
 [no-margin] {
+  --margin-start: 0;
+  --margin-end: 0;
+  --margin-top: 0;
+  --margin-bottom: 0;
+
   @include margin(0);
 }
 
 [margin] {
+  --margin-start: #{$margin};
+  --margin-end: #{$margin};
+  --margin-top: #{$margin};
+  --margin-bottom: #{$margin};
+
   @include margin($margin);
 }
 
 [margin-top] {
+  --margin-top: #{$margin};
+
   @include margin($margin, null, null, null);
 }
 
-[margin-left] {
-  /* stylelint-disable-next-line property-blacklist */
-  margin-left: $margin;
-}
 
 [margin-start] {
+  --margin-start: #{$margin};
+
   @include margin-horizontal($margin, null);
 }
 
-[margin-right] {
-  /* stylelint-disable-next-line property-blacklist */
-  margin-right: $margin;
-}
-
 [margin-end] {
+  --margin-end: #{$margin};
+
   @include margin-horizontal(null, $margin);
 }
 
 [margin-bottom] {
+  --margin-bottom: #{$margin};
+
   @include margin(null, null, $margin, null);
 }
 
 [margin-vertical] {
+  --margin-top: #{$margin};
+  --margin-bottom: #{$margin};
+
   @include margin($margin, null, $margin, null);
 }
 
 [margin-horizontal] {
+  --margin-start: #{$margin};
+  --margin-end: #{$margin};
+
   @include margin-horizontal($margin);
 }
