@@ -87,10 +87,10 @@ export class Platform {
    * | phablet         | on a phablet device.               |
    * | tablet          | on a tablet device.                |   
    * | electron        | in Electron on a desktop device.   |
-   * | pwa             | in Electron on a desktop device.   |
+   * | pwa             | as a PWA app.   |
    * | mobile          | on a mobile device.                |
    * | desktop         | on a desktop device.               |
-   * | hybrid          | in Electron on a desktop device.   |   
+   * | hybrid          | is a cordova or capacitor app.     |   
    *
    */
   is(platformName: Platforms): boolean {
