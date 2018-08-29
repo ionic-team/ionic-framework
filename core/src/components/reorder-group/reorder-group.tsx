@@ -195,20 +195,13 @@ export class ReorderGroup {
       setTimeout(reorderInactive, 200);
     } else {
       reorderInactive();
+      this.ionItemReorder.emit({
+        from: fromIndex,
+        to: toIndex
+      });
     }
-    this.onEmit(fromIndex, toIndex);
 
     hapticSelectionEnd();
-  }
-
-  private onEmit(fromIndex: number, toIndex: number) {
-    if (fromIndex !== toIndex) {
-      const indexes = {
-        fromIndex,
-        toIndex
-      };
-      this.ionItemReorder.emit(indexes);
-    }
   }
 
   private itemIndexForTop(deltaY: number): number {
