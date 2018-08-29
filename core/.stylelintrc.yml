@@ -3,7 +3,7 @@
 # See documentation at https://stylelint.io/
 
 ignoreFiles:
-  - src/css/colors.scss
+  - src/css/core.scss
   - src/css/flex-utils.scss
   - src/css/normalize.scss
   - src/css/text-alignment.scss
