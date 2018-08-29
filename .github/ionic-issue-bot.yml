@@ -39,7 +39,6 @@ stale:
   exemptLabels:
     - good first issue
     - triage
-    - has reply
   exemptProjects: true
   exemptMilestones: true
   label: "ionitron: stale issue"
@@ -58,7 +57,7 @@ noReply:
   days: 30
   maxIssuesPerRun: 100
   label: needs reply
-  responseLabel: has reply
+  responseLabel: triage
   exemptProjects: true
   exemptMilestones: true
   message: >
