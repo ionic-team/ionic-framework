@@ -6,7 +6,7 @@
 
 import '@stencil/core';
 
-import 'ionicons';
+import 'ionicons'
 import {
   ActionSheetButton,
   ActionSheetOptions,
@@ -3169,7 +3169,7 @@ export namespace Components {
     /**
     * the value of the radio group.
     */
-    'value': string;
+    'value': any;
   }
   interface IonRadioGroupAttributes extends StencilHTMLAttributes {
     'allowEmptySelection'?: boolean;
@@ -3181,11 +3181,11 @@ export namespace Components {
     /**
     * Emitted when the value has changed.
     */
-    'onIonChange'?: (event: CustomEvent<TextInputChangeEvent>) => void;
+    'onIonChange'?: (event: CustomEvent<InputChangeEvent>) => void;
     /**
     * the value of the radio group.
     */
-    'value'?: string;
+    'value'?: any;
   }
 
   interface IonRadio {
@@ -3209,7 +3209,7 @@ export namespace Components {
     /**
     * the value of the radio.
     */
-    'value': string;
+    'value': any;
   }
   interface IonRadioAttributes extends StencilHTMLAttributes {
     /**
@@ -3256,7 +3256,7 @@ export namespace Components {
     /**
     * the value of the radio.
     */
-    'value'?: string;
+    'value'?: any;
   }
 
   interface IonRange {

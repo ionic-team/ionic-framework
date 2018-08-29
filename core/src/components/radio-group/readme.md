@@ -18,7 +18,7 @@ radio button within the same group.
 | `allowEmptySelection` | `allow-empty-selection` |                                                                 | `boolean` |
 | `disabled`            | `disabled`              |                                                                 | `boolean` |
 | `name`                | `name`                  | The name of the control, which is submitted with the form data. | `string`  |
-| `value`               | `value`                 | the value of the radio group.                                   | `string`  |
+| `value`               | --                      | the value of the radio group.                                   | `any`     |
 
 
 ## Events

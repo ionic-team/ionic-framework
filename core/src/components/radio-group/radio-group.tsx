@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
-import { TextInputChangeEvent } from '../../interface';
+import { InputChangeEvent } from '../../interface';
 
 @Component({
   tag: 'ion-radio-group'
@@ -38,10 +38,10 @@ export class RadioGroup {
   /**
    * the value of the radio group.
    */
-  @Prop({ mutable: true }) value?: string;
+  @Prop({ mutable: true }) value?: any;
 
   @Watch('value')
-  valueChanged(value: string | undefined) {
+  valueChanged(value: any | undefined) {
     this.updateRadios();
     this.ionChange.emit({ value });
   }
@@ -49,7 +49,7 @@ export class RadioGroup {
   /**
    * Emitted when the value has changed.
    */
-  @Event() ionChange!: EventEmitter<TextInputChangeEvent>;
+  @Event() ionChange!: EventEmitter<InputChangeEvent>;
 
   @Listen('ionRadioDidLoad')
   onRadioDidLoad(ev: Event) {

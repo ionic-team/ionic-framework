@@ -52,7 +52,7 @@ export class Radio {
   /**
    * the value of the radio.
    */
-  @Prop({ mutable: true }) value!: string;
+  @Prop({ mutable: true }) value!: any;
 
   /**
    * Emitted when the radio loads.
