@@ -43,6 +43,20 @@ left or right of the range.
 | `ionStyle`  | Emitted when the styles change.              |
 
 
+## CSS Custom Properties
+
+| Name                      | Description                        |
+| ------------------------- | ---------------------------------- |
+| `--bar-background`        | Background of the range bar        |
+| `--bar-background-active` | Background of the active range bar |
+| `--bar-height`            | Height of the range bar            |
+| `--height`                | Height of the range                |
+| `--knob-background`       | Background of the range knob       |
+| `--knob-border-radius`    | Border radius of the range knob    |
+| `--knob-box-shadow`       | Box shadow of the range knob       |
+| `--knob-size`             | Size of the range knob             |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

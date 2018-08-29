@@ -4,9 +4,17 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --bar-background: Background of the range bar
+   * @prop --bar-background-active: Background of the active range bar
+   * @prop --bar-height: Height of the range bar
+   * @prop --height: Height of the range
+   * @prop --knob-background: Background of the range knob
+   * @prop --knob-border-radius: Border radius of the range knob
+   * @prop --knob-box-shadow: Box shadow of the range knob
+   * @prop --knob-size: Size of the range knob
+   */
   --knob-handle-size: calc(var(--knob-size) * 2);
-  --ion-color-base: #{ion-color(primary, base)};
-  --ion-color-contrast: #{ion-color(primary, contrast)};
 
   display: flex;
   position: relative;

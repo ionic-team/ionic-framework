@@ -6,16 +6,27 @@
 
 :host {
   --knob-border-radius: 50%;
-  --knob-background: #{$range-md-knob-background-color};
+  --knob-background: var(--bar-background-active);
   --knob-box-shadow: none;
   --knob-size: 18px;
   --bar-height: #{$range-md-bar-height};
   --bar-background: #{$range-md-bar-background-color};
+  --bar-background-active: #{ion-color(primary, base)};
   --height: #{$range-md-slider-height};
+  --pin-background: #{ion-color(primary, base)};
+  --pin-color: #{ion-color(primary, contrast)};
 
   @include padding($range-md-padding-vertical, $range-md-padding-horizontal);
 
   font-size: $range-md-pin-font-size;
+}
+
+:host(.ion-color) .range-bar-active,
+:host(.ion-color) .range-knob,
+:host(.ion-color) .range-pin,
+:host(.ion-color) .range-pin::before {
+  background: current-color(base);
+  color: current-color(contrast);
 }
 
 // TODO: REVIEW
@@ -36,7 +47,7 @@
 
   width: auto;
 
-  background: $range-md-bar-active-background-color;
+  background: var(--bar-background-active);
 }
 
 .range-knob {
@@ -78,10 +89,13 @@
   position: relative;
   top: -20px;
 
+  background: var(--pin-background);
+  color: var(--pin-color);
+
   min-width: 28px;
   height: 28px;
 
-  transition: transform 120ms ease, background-color 120ms ease;
+  transition: transform 120ms ease, background 120ms ease;
 
   text-align: center;
 
@@ -97,9 +111,9 @@
 
     transform: rotate(-45deg);
 
-    transition: background-color 120ms ease;
+    transition: background 120ms ease;
 
-    background: $range-md-pin-background-color;
+    background: var(--pin-background);
 
     content: "";
     z-index: -1;
