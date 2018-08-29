@@ -2,7 +2,7 @@ import { Component, Element, Listen, Prop } from '@stencil/core';
 
 import { matchBreakpoint } from '../../utils/media';
 
-const SUPPORTS_VARS = !!(CSS && CSS.supports && CSS.supports('--a', '0'));
+const SUPPORTS_VARS = !!(CSS && CSS.supports && CSS.supports('--a: 0'));
 const BREAKPOINTS = ['', 'xs', 'sm', 'md', 'lg', 'xl'];
 
 @Component({
