@@ -4,7 +4,7 @@
 ### Breaking Changes
 
 - All methods of all ionic components return a promise.
-- `css/colors.css` has been removed, `global.css` needs to be outdated:
+- `colors.css` has been renamed to `core.css`, the global stylesheet needs to be updated:
 
 #### Stencil
 
