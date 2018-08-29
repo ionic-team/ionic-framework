@@ -24,17 +24,17 @@ export class Toast implements OverlayInterface {
 
   @Element() el!: HTMLElement;
 
-  mode!: Mode;
   animation: Animation | undefined;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
+  @Prop() overlayIndex!: number;
 
-  /** @hidden */
-  @Prop() overlayId!: number;
-
-  /** @hidden */
-  @Prop() keyboardClose = false;
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * Animation to use when the toast is presented.
@@ -67,6 +67,11 @@ export class Toast implements OverlayInterface {
    * Message to be shown in the toast.
    */
   @Prop() message?: string;
+
+  /**
+   * If true, the keyboard will be automatically dismissed when the overlay is presented.
+   */
+  @Prop() keyboardClose = false;
 
   /**
    * The position of the toast on the screen. Possible values: "top", "middle", "bottom".

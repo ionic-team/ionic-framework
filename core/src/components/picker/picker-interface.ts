@@ -5,6 +5,10 @@ export interface PickerOptions {
   cssClass?: string | string[];
   backdropDismiss?: boolean;
   animated?: boolean;
+
+  mode?: string;
+  keyboardClose?: boolean;
+  id?: string;
 }
 
 export interface PickerButton {

@@ -31,14 +31,18 @@ export class Alert implements OverlayInterface {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
-  @Prop() overlayId!: number;
-  @Prop() keyboardClose = true;
+  @Prop() overlayIndex!: number;
 
   /**
    * The mode determines which platform styles to use.
    * Possible values are: `"ios"` or `"md"`.
    */
   @Prop() mode!: Mode;
+
+  /**
+   * If true, the keyboard will be automatically dismissed when the overlay is presented.
+   */
+  @Prop() keyboardClose = true;
 
   /**
    * Animation to use when the alert is presented.
@@ -155,7 +159,7 @@ export class Alert implements OverlayInterface {
       label: i.label,
       checked: !!i.checked,
       disabled: !!i.disabled,
-      id: i.id ? i.id : `alert-input-${this.overlayId}-${index}`,
+      id: i.id ? i.id : `alert-input-${this.overlayIndex}-${index}`,
       handler: i.handler,
       min: i.min,
       max: i.max
@@ -399,7 +403,7 @@ export class Alert implements OverlayInterface {
     return {
       role: 'alertdialog',
       style: {
-        zIndex: 20000 + this.overlayId,
+        zIndex: 20000 + this.overlayIndex,
       },
       class: {
         ...getClassMap(this.cssClass),
@@ -428,9 +432,9 @@ export class Alert implements OverlayInterface {
   }
 
   render() {
-    const hdrId = `alert-${this.overlayId}-hdr`;
-    const subHdrId = `alert-${this.overlayId}-sub-hdr`;
-    const msgId = `alert-${this.overlayId}-msg`;
+    const hdrId = `alert-${this.overlayIndex}-hdr`;
+    const subHdrId = `alert-${this.overlayIndex}-sub-hdr`;
+    const msgId = `alert-${this.overlayIndex}-msg`;
 
     let labelledById: string | undefined;
     if (this.header) {

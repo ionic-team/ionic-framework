@@ -11,4 +11,8 @@ export interface ToastOptions {
   enterAnimation?: AnimationBuilder;
   leaveAnimation?: AnimationBuilder;
   animated?: boolean;
+
+  mode?: string;
+  keyboardClose?: boolean;
+  id?: string;
 }

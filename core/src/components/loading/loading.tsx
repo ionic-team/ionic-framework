@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Color, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
 
@@ -21,16 +21,22 @@ export class Loading implements OverlayInterface {
 
   presented = false;
   animation?: Animation;
-  color?: Color;
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
-  @Prop() overlayId!: number;
+  @Prop() overlayIndex!: number;
 
-  /** If true, the loading will blur any inputs and hide the keyboard */
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
+
+  /**
+   * If true, the keyboard will be automatically dismissed when the overlay is presented.
+   */
   @Prop() keyboardClose = true;
 
   /**
@@ -185,7 +191,7 @@ export class Loading implements OverlayInterface {
 
     return {
       style: {
-        zIndex: 20000 + this.overlayId
+        zIndex: 20000 + this.overlayIndex
       },
       class: {
         ...createThemedClasses(this.mode, 'loading'),

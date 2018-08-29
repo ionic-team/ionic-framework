@@ -75,7 +75,7 @@ export namespace Components {
     /**
     * Dismiss the open action sheet overlay.
     */
-    'dismiss': (data?: any, role?: string | undefined, actionSheetId?: number | undefined) => Promise<void>;
+    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<void>;
     /**
     * Get the most recently opened action sheet overlay.
     */
@@ -113,13 +113,17 @@ export namespace Components {
     */
     'header': string;
     /**
-    * If the actionSheet should close the keyboard
+    * If true, the keyboard will be automatically dismissed when the overlay is presented.
     */
     'keyboardClose': boolean;
     /**
     * Animation to use when the action sheet is dismissed.
     */
     'leaveAnimation': AnimationBuilder;
+    /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode': Mode;
     /**
     * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback that is called in the same circustances.
     */
@@ -128,10 +132,7 @@ export namespace Components {
     * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback that is called in the same circustances.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
-    /**
-    * Unique ID to be used with the overlay. Internal only
-    */
-    'overlayId': number;
+    'overlayIndex': number;
     /**
     * Present the action sheet overlay after it has been created.
     */
@@ -171,13 +172,17 @@ export namespace Components {
     */
     'header'?: string;
     /**
-    * If the actionSheet should close the keyboard
+    * If true, the keyboard will be automatically dismissed when the overlay is presented.
     */
     'keyboardClose'?: boolean;
     /**
     * Animation to use when the action sheet is dismissed.
     */
     'leaveAnimation'?: AnimationBuilder;
+    /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode'?: Mode;
     /**
     * Emitted after the alert has dismissed.
     */
@@ -202,10 +207,7 @@ export namespace Components {
     * Emitted before the alert has presented.
     */
     'onIonActionSheetWillPresent'?: (event: CustomEvent<void>) => void;
-    /**
-    * Unique ID to be used with the overlay. Internal only
-    */
-    'overlayId'?: number;
+    'overlayIndex'?: number;
     /**
     * Subtitle for the action sheet.
     */
@@ -224,7 +226,7 @@ export namespace Components {
     /**
     * Dismiss the open alert overlay.
     */
-    'dismiss': (data?: any, role?: string | undefined, alertId?: number | undefined) => Promise<void>;
+    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<void>;
     /**
     * Get the most recently opened alert overlay.
     */
@@ -265,6 +267,9 @@ export namespace Components {
     * Array of input to show in the alert.
     */
     'inputs': AlertInput[];
+    /**
+    * If true, the keyboard will be automatically dismissed when the overlay is presented.
+    */
     'keyboardClose': boolean;
     /**
     * Animation to use when the alert is dismissed.
@@ -286,7 +291,7 @@ export namespace Components {
     * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circumstances.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
-    'overlayId': number;
+    'overlayIndex': number;
     /**
     * Present the alert overlay after it has been created.
     */
@@ -329,6 +334,9 @@ export namespace Components {
     * Array of input to show in the alert.
     */
     'inputs'?: AlertInput[];
+    /**
+    * If true, the keyboard will be automatically dismissed when the overlay is presented.
+    */
     'keyboardClose'?: boolean;
     /**
     * Animation to use when the alert is dismissed.
@@ -366,7 +374,7 @@ export namespace Components {
     * Emitted before the alert has presented.
     */
     'onIonAlertWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayId'?: number;
+    'overlayIndex'?: number;
     /**
     * The subtitle in the heading of the alert. Displayed under the title.
     */
@@ -2215,7 +2223,7 @@ export namespace Components {
     /**
     * Dismiss the open loading overlay.
     */
-    'dismiss': (data?: any, role?: string | undefined, loadingId?: number | undefined) => Promise<void>;
+    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<void>;
     /**
     * Get the most recently opened loading overlay.
     */
@@ -2249,7 +2257,7 @@ export namespace Components {
     */
     'enterAnimation': AnimationBuilder;
     /**
-    * If true, the loading will blur any inputs and hide the keyboard
+    * If true, the keyboard will be automatically dismissed when the overlay is presented.
     */
     'keyboardClose': boolean;
     /**
@@ -2261,6 +2269,10 @@ export namespace Components {
     */
     'message': string;
     /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode': Mode;
+    /**
     * Returns a promise that resolves when the loading did dismiss. It also accepts a callback that is called in the same circumstances.
     */
     'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
@@ -2268,7 +2280,7 @@ export namespace Components {
     * Returns a promise that resolves when the loading will dismiss. It also accepts a callback that is called in the same circumstances.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
-    'overlayId': number;
+    'overlayIndex': number;
     /**
     * Present the loading overlay after it has been created.
     */
@@ -2308,7 +2320,7 @@ export namespace Components {
     */
     'enterAnimation'?: AnimationBuilder;
     /**
-    * If true, the loading will blur any inputs and hide the keyboard
+    * If true, the keyboard will be automatically dismissed when the overlay is presented.
     */
     'keyboardClose'?: boolean;
     /**
@@ -2319,6 +2331,10 @@ export namespace Components {
     * Optional text content to display in the loading indicator.
     */
     'message'?: string;
+    /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode'?: Mode;
     /**
     * Emitted after the loading has dismissed.
     */
@@ -2343,7 +2359,7 @@ export namespace Components {
     * Emitted before the loading has presented.
     */
     'onIonLoadingWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayId'?: number;
+    'overlayIndex'?: number;
     /**
     * If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.
     */
@@ -2557,7 +2573,7 @@ export namespace Components {
     /**
     * Dismiss the open modal overlay.
     */
-    'dismiss': (data?: any, role?: string | undefined, modalId?: number | undefined) => Promise<void>;
+    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<void>;
     /**
     * Get the most recently opened modal overlay.
     */
@@ -2595,11 +2611,18 @@ export namespace Components {
     * Animation to use when the modal is presented.
     */
     'enterAnimation': AnimationBuilder;
+    /**
+    * If true, the keyboard will be automatically dismissed when the overlay is presented.
+    */
     'keyboardClose': boolean;
     /**
     * Animation to use when the modal is dismissed.
     */
     'leaveAnimation': AnimationBuilder;
+    /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode': Mode;
     /**
     * Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circustances.
     */
@@ -2608,7 +2631,7 @@ export namespace Components {
     * Returns a promise that resolves when the modal will dismiss. It also accepts a callback that is called in the same circustances.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
-    'overlayId': number;
+    'overlayIndex': number;
     /**
     * Present the modal overlay after it has been created.
     */
@@ -2644,11 +2667,18 @@ export namespace Components {
     * Animation to use when the modal is presented.
     */
     'enterAnimation'?: AnimationBuilder;
+    /**
+    * If true, the keyboard will be automatically dismissed when the overlay is presented.
+    */
     'keyboardClose'?: boolean;
     /**
     * Animation to use when the modal is dismissed.
     */
     'leaveAnimation'?: AnimationBuilder;
+    /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode'?: Mode;
     /**
     * Emitted after the modal has dismissed.
     */
@@ -2673,7 +2703,7 @@ export namespace Components {
     * Emitted before the modal has presented.
     */
     'onIonModalWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayId'?: number;
+    'overlayIndex'?: number;
     /**
     * If true, a backdrop will be displayed behind the modal. Defaults to `true`.
     */
@@ -2860,7 +2890,7 @@ export namespace Components {
 
   interface IonPickerController {
     'create': (opts: PickerOptions) => Promise<HTMLIonPickerElement>;
-    'dismiss': (data?: any, role?: string | undefined, pickerId?: number | undefined) => Promise<void>;
+    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<void>;
     'getTop': () => Promise<HTMLIonPickerElement | undefined>;
   }
   interface IonPickerControllerAttributes extends StencilHTMLAttributes {}
@@ -2903,13 +2933,17 @@ export namespace Components {
     */
     'getColumn': (name: string) => Promise<PickerColumn | undefined>;
     /**
-    * If the keyboard should be able to close the picker. Defaults to true.
+    * If true, the keyboard will be automatically dismissed when the overlay is presented.
     */
     'keyboardClose': boolean;
     /**
     * Animation to use when the picker is dismissed.
     */
     'leaveAnimation': AnimationBuilder;
+    /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode': Mode;
     /**
     * Returns a promise that resolves when the picker did dismiss. It also accepts a callback that is called in the same circustances.
     */
@@ -2918,7 +2952,7 @@ export namespace Components {
     * Returns a promise that resolves when the picker will dismiss. It also accepts a callback that is called in the same circustances.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
-    'overlayId': number;
+    'overlayIndex': number;
     /**
     * Present the picker overlay after it has been created.
     */
@@ -2958,13 +2992,17 @@ export namespace Components {
     */
     'enterAnimation'?: AnimationBuilder;
     /**
-    * If the keyboard should be able to close the picker. Defaults to true.
+    * If true, the keyboard will be automatically dismissed when the overlay is presented.
     */
     'keyboardClose'?: boolean;
     /**
     * Animation to use when the picker is dismissed.
     */
     'leaveAnimation'?: AnimationBuilder;
+    /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode'?: Mode;
     /**
     * Emitted after the picker has dismissed.
     */
@@ -2989,7 +3027,7 @@ export namespace Components {
     * Emitted before the picker has presented.
     */
     'onIonPickerWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayId'?: number;
+    'overlayIndex'?: number;
     /**
     * If true, a backdrop will be displayed behind the picker. Defaults to `true`.
     */
@@ -3004,7 +3042,7 @@ export namespace Components {
     /**
     * Dismiss the open popover overlay.
     */
-    'dismiss': (data?: any, role?: string | undefined, popoverId?: number | undefined) => Promise<void>;
+    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<void>;
     /**
     * Get the most recently opened popover overlay.
     */
@@ -3021,10 +3059,6 @@ export namespace Components {
     * If true, the popover will be dismissed when the backdrop is clicked. Defaults to `true`.
     */
     'backdropDismiss': boolean;
-    /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color': Color;
     /**
     * The component to display inside of the popover.
     */
@@ -3050,6 +3084,9 @@ export namespace Components {
     * The event to pass to the popover animation.
     */
     'event': any;
+    /**
+    * If true, the keyboard will be automatically dismissed when the overlay is presented.
+    */
     'keyboardClose': boolean;
     /**
     * Animation to use when the popover is dismissed.
@@ -3067,7 +3104,7 @@ export namespace Components {
     * Returns a promise that resolves when the popover will dismiss. It also accepts a callback that is called in the same circustances.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
-    'overlayId': number;
+    'overlayIndex': number;
     /**
     * Present the popover overlay after it has been created.
     */
@@ -3091,10 +3128,6 @@ export namespace Components {
     */
     'backdropDismiss'?: boolean;
     /**
-    * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
-    */
-    'color'?: Color;
-    /**
     * The component to display inside of the popover.
     */
     'component'?: ComponentRef;
@@ -3115,6 +3148,9 @@ export namespace Components {
     * The event to pass to the popover animation.
     */
     'event'?: any;
+    /**
+    * If true, the keyboard will be automatically dismissed when the overlay is presented.
+    */
     'keyboardClose'?: boolean;
     /**
     * Animation to use when the popover is dismissed.
@@ -3148,7 +3184,7 @@ export namespace Components {
     * Emitted before the popover has presented.
     */
     'onIonPopoverWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayId'?: number;
+    'overlayIndex'?: number;
     /**
     * If true, a backdrop will be displayed behind the popover. Defaults to `true`.
     */
@@ -3487,6 +3523,7 @@ export namespace Components {
     * If true, the reorder will be hidden. Defaults to `true`.
     */
     'disabled'?: boolean;
+    'onIonItemReorder'?: (event: CustomEvent) => void;
   }
 
   interface IonReorder {}
@@ -4824,7 +4861,7 @@ export namespace Components {
     /**
     * Dismiss the open toast overlay.
     */
-    'dismiss': (data?: any, role?: string | undefined, toastId?: number | undefined) => Promise<void>;
+    'dismiss': (data?: any, role?: string | undefined, id?: string | undefined) => Promise<void>;
     /**
     * Get the most recently opened toast overlay.
     */
@@ -4857,6 +4894,9 @@ export namespace Components {
     * Animation to use when the toast is presented.
     */
     'enterAnimation': AnimationBuilder;
+    /**
+    * If true, the keyboard will be automatically dismissed when the overlay is presented.
+    */
     'keyboardClose': boolean;
     /**
     * Animation to use when the toast is dismissed.
@@ -4867,6 +4907,10 @@ export namespace Components {
     */
     'message': string;
     /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode': Mode;
+    /**
     * Returns a promise that resolves when the toast did dismiss. It also accepts a callback that is called in the same circustances.
     */
     'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
@@ -4874,7 +4918,7 @@ export namespace Components {
     * Returns a promise that resolves when the toast will dismiss. It also accepts a callback that is called in the same circustances.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
-    'overlayId': number;
+    'overlayIndex': number;
     /**
     * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
     */
@@ -4913,6 +4957,9 @@ export namespace Components {
     * Animation to use when the toast is presented.
     */
     'enterAnimation'?: AnimationBuilder;
+    /**
+    * If true, the keyboard will be automatically dismissed when the overlay is presented.
+    */
     'keyboardClose'?: boolean;
     /**
     * Animation to use when the toast is dismissed.
@@ -4922,6 +4969,10 @@ export namespace Components {
     * Message to be shown in the toast.
     */
     'message'?: string;
+    /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode'?: Mode;
     /**
     * Emitted after the toast has dismissed.
     */
@@ -4946,7 +4997,7 @@ export namespace Components {
     * Emitted before the toast has presented.
     */
     'onIonToastWillPresent'?: (event: CustomEvent<void>) => void;
-    'overlayId'?: number;
+    'overlayIndex'?: number;
     /**
     * The position of the toast on the screen. Possible values: "top", "middle", "bottom".
     */

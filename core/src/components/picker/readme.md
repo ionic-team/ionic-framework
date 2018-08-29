@@ -18,9 +18,10 @@ A Picker is a dialog that displays a row of buttons and columns underneath. It a
 | `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string`, `string[]` |
 | `duration`        | `duration`         | Number of milliseconds to wait before dismissing the picker.                                                     | `number`             |
 | `enterAnimation`  | --                 | Animation to use when the picker is presented.                                                                   | `AnimationBuilder`   |
-| `keyboardClose`   | `keyboard-close`   | If the keyboard should be able to close the picker. Defaults to true.                                            | `boolean`            |
+| `keyboardClose`   | `keyboard-close`   | If true, the keyboard will be automatically dismissed when the overlay is presented.                             | `boolean`            |
 | `leaveAnimation`  | --                 | Animation to use when the picker is dismissed.                                                                   | `AnimationBuilder`   |
-| `overlayId`       | `overlay-id`       |                                                                                                                  | `number`             |
+| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                        | `Mode`               |
+| `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`             |
 | `showBackdrop`    | `show-backdrop`    | If true, a backdrop will be displayed behind the picker. Defaults to `true`.                                     | `boolean`            |
 
 

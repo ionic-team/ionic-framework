@@ -23,8 +23,8 @@ export class PickerController implements OverlayController {
    * Dismiss the open picker overlay.
    */
   @Method()
-  dismiss(data?: any, role?: string, pickerId?: number) {
-    return dismissOverlay(this.doc, data, role, 'ion-picker', pickerId);
+  dismiss(data?: any, role?: string, id?: string) {
+    return dismissOverlay(this.doc, data, role, 'ion-picker', id);
   }
 
   /*

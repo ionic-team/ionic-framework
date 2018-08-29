@@ -10,4 +10,8 @@ export interface ModalOptions<T extends ComponentRef = ComponentRef> {
   cssClass?: string | string[];
   delegate?: FrameworkDelegate;
   animated?: boolean;
+
+  mode?: string;
+  keyboardClose?: boolean;
+  id?: string;
 }

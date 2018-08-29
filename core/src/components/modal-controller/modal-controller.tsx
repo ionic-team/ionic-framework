@@ -22,8 +22,8 @@ export class ModalController implements OverlayController {
    * Dismiss the open modal overlay.
    */
   @Method()
-  dismiss(data?: any, role?: string, modalId?: number) {
-    return dismissOverlay(this.doc, data, role, 'ion-modal', modalId);
+  dismiss(data?: any, role?: string, id?: string) {
+    return dismissOverlay(this.doc, data, role, 'ion-modal', id);
   }
 
   /**

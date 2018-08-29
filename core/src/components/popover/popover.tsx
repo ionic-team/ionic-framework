@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
-import { Animation, AnimationBuilder, Color, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
+import { Animation, AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { attachComponent, detachComponent } from '../../utils/framework-delegate';
 import { BACKDROP, dismiss, eventMethod, present } from '../../utils/overlays';
 import { createThemedClasses, getClassMap } from '../../utils/theme';
@@ -30,15 +30,7 @@ export class Popover implements OverlayInterface {
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
   @Prop() delegate?: FrameworkDelegate;
-  @Prop() overlayId!: number;
-  @Prop() keyboardClose = true;
-
-  /**
-   * The color to use from your application's color palette.
-   * Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`.
-   * For more information on colors, see [theming](/docs/theming/basics).
-   */
-  @Prop() color?: Color;
+  @Prop() overlayIndex!: number;
 
   /**
    * The mode determines which platform styles to use.
@@ -65,6 +57,11 @@ export class Popover implements OverlayInterface {
    * The data to pass to the popover component.
    */
   @Prop() componentProps?: ComponentProps;
+
+  /**
+   * If true, the keyboard will be automatically dismissed when the overlay is presented.
+   */
+  @Prop() keyboardClose = true;
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
@@ -220,7 +217,7 @@ export class Popover implements OverlayInterface {
 
     return {
       style: {
-        zIndex: 20000 + this.overlayId,
+        zIndex: 20000 + this.overlayIndex,
       },
       'no-router': true,
       class: {

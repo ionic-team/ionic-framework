@@ -24,9 +24,10 @@ A button's `role` property can either be `destructive` or `cancel`. Buttons with
 | `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string`, `string[]`  |
 | `enterAnimation`  | --                 | Animation to use when the action sheet is presented.                                                             | `AnimationBuilder`    |
 | `header`          | `header`           | Title for the action sheet.                                                                                      | `string`              |
-| `keyboardClose`   | `keyboard-close`   | If the actionSheet should close the keyboard                                                                     | `boolean`             |
+| `keyboardClose`   | `keyboard-close`   | If true, the keyboard will be automatically dismissed when the overlay is presented.                             | `boolean`             |
 | `leaveAnimation`  | --                 | Animation to use when the action sheet is dismissed.                                                             | `AnimationBuilder`    |
-| `overlayId`       | `overlay-id`       | Unique ID to be used with the overlay. Internal only                                                             | `number`              |
+| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                        | `Mode`                |
+| `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`              |
 | `subHeader`       | `sub-header`       | Subtitle for the action sheet.                                                                                   | `string`              |
 | `translucent`     | `translucent`      | If true, the action sheet will be translucent. Defaults to `false`.                                              | `boolean`             |
 

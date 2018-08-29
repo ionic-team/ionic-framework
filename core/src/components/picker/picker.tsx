@@ -17,7 +17,6 @@ import { iosLeaveAnimation } from './animations/ios.leave';
 export class Picker implements OverlayInterface {
   private durationTimeout: any;
 
-  mode!: Mode;
   presented = false;
   animation?: Animation;
 
@@ -27,10 +26,16 @@ export class Picker implements OverlayInterface {
   @Prop({ context: 'config' }) config!: Config;
 
   /** @hidden */
-  @Prop() overlayId!: number;
+  @Prop() overlayIndex!: number;
 
   /**
-   * If the keyboard should be able to close the picker. Defaults to true.
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
+
+  /**
+   * If true, the keyboard will be automatically dismissed when the overlay is presented.
    */
   @Prop() keyboardClose = true;
 
@@ -236,7 +241,7 @@ export class Picker implements OverlayInterface {
         ...getClassMap(this.cssClass)
       },
       style: {
-        zIndex: 20000 + this.overlayId
+        zIndex: 20000 + this.overlayIndex
       }
     };
   }

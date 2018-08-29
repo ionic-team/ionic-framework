@@ -7,6 +7,9 @@ export interface ActionSheetOptions {
   backdropDismiss?: boolean;
   translucent?: boolean;
   animated?: boolean;
+  mode?: string;
+  keyboardClose?: boolean;
+  id?: string;
 }
 
 export interface ActionSheetButton {

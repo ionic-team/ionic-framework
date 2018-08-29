@@ -13,7 +13,7 @@ export interface OverlayInterface {
   animated: boolean;
   keyboardClose: boolean;
   config: Config;
-  overlayId: number;
+  overlayIndex: number;
   presented: boolean;
   animation?: Animation;
   animationCtrl: HTMLIonAnimationControllerElement;
@@ -32,12 +32,12 @@ export interface OverlayInterface {
 
 export interface OverlayController {
   create(opts?: any): Promise<HTMLElement>;
-  dismiss(data?: any, role?: string, alertId?: number): Promise<void>;
+  dismiss(data?: any, role?: string, id?: string): Promise<void>;
   getTop(): Promise<HTMLIonOverlayElement | undefined>;
 }
 
 export interface HTMLIonOverlayElement extends HTMLStencilElement {
-  overlayId: number;
+  overlayIndex: number;
   backdropDismiss?: boolean;
 
   dismiss(data?: any, role?: string): Promise<void>;

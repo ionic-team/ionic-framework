@@ -23,9 +23,10 @@ Modals can be created using a [Modal Controller](../../modal-controller/ModalCon
 | `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces. | `string`, `string[]` |
 | `delegate`        | --                 |                                                                                                                  | `FrameworkDelegate`  |
 | `enterAnimation`  | --                 | Animation to use when the modal is presented.                                                                    | `AnimationBuilder`   |
-| `keyboardClose`   | `keyboard-close`   |                                                                                                                  | `boolean`            |
+| `keyboardClose`   | `keyboard-close`   | If true, the keyboard will be automatically dismissed when the overlay is presented.                             | `boolean`            |
 | `leaveAnimation`  | --                 | Animation to use when the modal is dismissed.                                                                    | `AnimationBuilder`   |
-| `overlayId`       | `overlay-id`       |                                                                                                                  | `number`             |
+| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                        | `Mode`               |
+| `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`             |
 | `showBackdrop`    | `show-backdrop`    | If true, a backdrop will be displayed behind the modal. Defaults to `true`.                                      | `boolean`            |
 
 

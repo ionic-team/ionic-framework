@@ -22,8 +22,8 @@ export class ActionSheetController implements OverlayController {
    * Dismiss the open action sheet overlay.
    */
   @Method()
-  dismiss(data?: any, role?: string, actionSheetId?: number) {
-    return dismissOverlay(this.doc, data, role, 'ion-action-sheet', actionSheetId);
+  dismiss(data?: any, role?: string, id?: string) {
+    return dismissOverlay(this.doc, data, role, 'ion-action-sheet', id);
   }
 
   /**

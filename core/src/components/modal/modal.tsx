@@ -24,15 +24,23 @@ export class Modal implements OverlayInterface {
 
   animation: Animation | undefined;
   presented = false;
-  mode!: Mode;
 
   @Element() el!: HTMLElement;
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
-
-  @Prop() overlayId!: number;
+  @Prop() overlayIndex!: number;
   @Prop() delegate?: FrameworkDelegate;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
+
+  /**
+   * If true, the keyboard will be automatically dismissed when the overlay is presented.
+   */
   @Prop() keyboardClose = true;
 
   /**
@@ -202,7 +210,7 @@ export class Modal implements OverlayInterface {
         ...getClassMap(this.cssClass)
       },
       style: {
-        zIndex: 20000 + this.overlayId,
+        zIndex: 20000 + this.overlayIndex,
       }
     };
   }

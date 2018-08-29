@@ -34,11 +34,11 @@ Alerts can also include several different inputs whose data can be passed back t
 | `enterAnimation`  | --                 | Animation to use when the alert is presented.                                                                    | `AnimationBuilder`         |
 | `header`          | `header`           | The main title in the heading of the alert.                                                                      | `string`                   |
 | `inputs`          | --                 | Array of input to show in the alert.                                                                             | `AlertInput[]`             |
-| `keyboardClose`   | `keyboard-close`   |                                                                                                                  | `boolean`                  |
+| `keyboardClose`   | `keyboard-close`   | If true, the keyboard will be automatically dismissed when the overlay is presented.                             | `boolean`                  |
 | `leaveAnimation`  | --                 | Animation to use when the alert is dismissed.                                                                    | `AnimationBuilder`         |
 | `message`         | `message`          | The main message to be displayed in the alert.                                                                   | `string`                   |
 | `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                        | `Mode`                     |
-| `overlayId`       | `overlay-id`       |                                                                                                                  | `number`                   |
+| `overlayIndex`    | `overlay-index`    |                                                                                                                  | `number`                   |
 | `subHeader`       | `sub-header`       | The subtitle in the heading of the alert. Displayed under the title.                                             | `string`                   |
 | `translucent`     | `translucent`      | If true, the alert will be translucent. Defaults to `false`.                                                     | `boolean`                  |
 

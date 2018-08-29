@@ -8,4 +8,8 @@ export interface LoadingOptions {
   duration?: number;
   translucent?: boolean;
   animated?: boolean;
+
+  mode?: string;
+  keyboardClose?: boolean;
+  id?: string;
 }

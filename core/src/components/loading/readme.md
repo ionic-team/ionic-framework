@@ -25,10 +25,11 @@ The loading indicator can be dismissed automatically after a specific amount of 
 | `cssClass`        | `css-class`        | Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.                       | `string`, `string[]` |
 | `duration`        | `duration`         | Number of milliseconds to wait before dismissing the loading indicator.                                                                | `number`             |
 | `enterAnimation`  | --                 | Animation to use when the loading indicator is presented.                                                                              | `AnimationBuilder`   |
-| `keyboardClose`   | `keyboard-close`   | If true, the loading will blur any inputs and hide the keyboard                                                                        | `boolean`            |
+| `keyboardClose`   | `keyboard-close`   | If true, the keyboard will be automatically dismissed when the overlay is presented.                                                   | `boolean`            |
 | `leaveAnimation`  | --                 | Animation to use when the loading indicator is dismissed.                                                                              | `AnimationBuilder`   |
 | `message`         | `message`          | Optional text content to display in the loading indicator.                                                                             | `string`             |
-| `overlayId`       | `overlay-id`       |                                                                                                                                        | `number`             |
+| `mode`            | `mode`             | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                              | `Mode`               |
+| `overlayIndex`    | `overlay-index`    |                                                                                                                                        | `number`             |
 | `showBackdrop`    | `show-backdrop`    | If true, a backdrop will be displayed behind the loading indicator. Defaults to `true`.                                                | `boolean`            |
 | `spinner`         | `spinner`          | The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`. | `string`             |
 | `translucent`     | `translucent`      | If true, the loading indicator will be translucent. Defaults to `false`.                                                               | `boolean`            |

@@ -5,12 +5,15 @@ export interface AlertOptions {
   subHeader?: string;
   message?: string;
   cssClass?: string | string[];
-  mode?: string;
   inputs?: AlertInput[];
   buttons?: (AlertButton | string)[];
   backdropDismiss?: boolean;
   translucent?: boolean;
   animated?: boolean;
+
+  mode?: string;
+  keyboardClose?: boolean;
+  id?: string;
 }
 
 export interface AlertInput {

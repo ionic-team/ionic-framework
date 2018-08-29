@@ -10,7 +10,11 @@ export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts:
   // that get passed down into the new overlay
   Object.assign(element, opts);
   element.classList.add('ion-page-hidden');
-  element.overlayId = lastId++;
+  const overlayIndex = lastId++;
+  element.overlayIndex = overlayIndex;
+  if (!element.hasAttribute('id')) {
+    element.id = `ion-overlay-${overlayIndex}`;
+  }
 
   // append the overlay element to the document body
   getAppRoot(doc).appendChild(element);
@@ -41,7 +45,7 @@ export function connectListeners(doc: Document) {
   }
 }
 
-export function dismissOverlay(doc: Document, data: any, role: string | undefined, overlayTag: string, id?: number): Promise<void> {
+export function dismissOverlay(doc: Document, data: any, role: string | undefined, overlayTag: string, id?: string): Promise<void> {
   const overlay = getOverlay(doc, overlayTag, id);
   if (!overlay) {
     return Promise.reject('overlay does not exist');
@@ -58,14 +62,14 @@ export function getOverlays(doc: Document, overlayTag?: string): HTMLIonOverlayE
   return overlays.filter(c => c.tagName === overlayTag);
 }
 
-export function getOverlay(doc: Document, overlayTag?: string, id?: number): HTMLIonOverlayElement | undefined {
+export function getOverlay(doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined {
   const overlays = getOverlays(doc, overlayTag);
   if (id != null) {
-    return overlays.find(o => o.overlayId === id);
+    return overlays.find(o => o.id === id);
   }
   return (id == null)
     ? overlays[overlays.length - 1]
-    : overlays.find(o => o.overlayId === id);
+    : overlays.find(o => o.overlayIndex === id);
 }
 
 export async function present(

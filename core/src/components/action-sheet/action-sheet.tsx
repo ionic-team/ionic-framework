@@ -19,8 +19,6 @@ import { mdLeaveAnimation } from './animations/md.leave';
 })
 export class ActionSheet implements OverlayInterface {
 
-  mode!: Mode;
-
   presented = false;
   animation?: Animation;
 
@@ -28,14 +26,16 @@ export class ActionSheet implements OverlayInterface {
 
   @Prop({ connect: 'ion-animation-controller' }) animationCtrl!: HTMLIonAnimationControllerElement;
   @Prop({ context: 'config' }) config!: Config;
+  @Prop() overlayIndex!: number;
 
   /**
-   * Unique ID to be used with the overlay. Internal only
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
    */
-  @Prop() overlayId!: number;
+  @Prop() mode!: Mode;
 
   /**
-   * If the actionSheet should close the keyboard
+   * If true, the keyboard will be automatically dismissed when the overlay is presented.
    */
   @Prop() keyboardClose = true;
 
@@ -204,7 +204,7 @@ export class ActionSheet implements OverlayInterface {
   hostData() {
     return {
       style: {
-        zIndex: 20000 + this.overlayId,
+        zIndex: 20000 + this.overlayIndex,
       },
       class: {
         ...getClassMap(this.cssClass),

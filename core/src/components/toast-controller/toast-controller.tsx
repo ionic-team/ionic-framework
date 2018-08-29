@@ -22,8 +22,8 @@ export class ToastController implements OverlayController {
    * Dismiss the open toast overlay.
    */
   @Method()
-  dismiss(data?: any, role?: string, toastId?: number) {
-    return dismissOverlay(this.doc, data, role, 'ion-toast', toastId);
+  dismiss(data?: any, role?: string, id?: string) {
+    return dismissOverlay(this.doc, data, role, 'ion-toast', id);
   }
 
   /**

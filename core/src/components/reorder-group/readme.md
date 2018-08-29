@@ -12,6 +12,13 @@ The reorder group is a wrapper component for items with the `ion-reorder` compon
 | `disabled` | `disabled` | If true, the reorder will be hidden. Defaults to `true`. | `boolean` |
 
 
+## Events
+
+| Event            | Description |
+| ---------------- | ----------- |
+| `ionItemReorder` |             |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
