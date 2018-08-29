@@ -30,7 +30,7 @@ Issues and pull requests that need review. Pull requests will automatically move
 
 Issues and pull requests that are completed. Issues will automatically move here when they are closed. Pull requests will automatically moved here when they are merged or closed with unmerged commits.
 
-## Triaging Issues
+## Managing Issues
 
 ### Issues to Triage
 
