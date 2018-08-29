@@ -64,8 +64,8 @@ export function renderTextFormat(format: string, value: any, date: DatetimeData 
   }
 
   if (format === FORMAT_YY || format === FORMAT_MM ||
-      format === FORMAT_DD || format === FORMAT_HH ||
-      format === FORMAT_mm || format === FORMAT_ss) {
+    format === FORMAT_DD || format === FORMAT_HH ||
+    format === FORMAT_mm || format === FORMAT_ss) {
     return twoDigit(value);
   }
 
@@ -110,8 +110,8 @@ export function dateValueRange(format: string, min: DatetimeData, max: DatetimeD
     }
 
   } else if (format === FORMAT_MMMM || format === FORMAT_MMM ||
-             format === FORMAT_MM || format === FORMAT_M ||
-             format === FORMAT_hh || format === FORMAT_h) {
+    format === FORMAT_MM || format === FORMAT_M ||
+    format === FORMAT_hh || format === FORMAT_h) {
 
     // month or 12-hour
     for (let i = 1; i < 13; i++) {
@@ -119,7 +119,7 @@ export function dateValueRange(format: string, min: DatetimeData, max: DatetimeD
     }
 
   } else if (format === FORMAT_DDDD || format === FORMAT_DDD ||
-             format === FORMAT_DD || format === FORMAT_D) {
+    format === FORMAT_DD || format === FORMAT_D) {
     // day
     for (let i = 1; i < 32; i++) {
       opts.push(i);
@@ -292,7 +292,7 @@ export function parseTemplate(template: string): string[] {
         if (word === FORMAT_A || word === FORMAT_a) {
           // this format is an am/pm format, so it's an "a" or "A"
           if ((formats.indexOf(FORMAT_h) < 0 && formats.indexOf(FORMAT_hh) < 0) ||
-              VALID_AMPM_PREFIX.indexOf(words[i - 1]) === -1) {
+            VALID_AMPM_PREFIX.indexOf(words[i - 1]) === -1) {
             // template does not already have a 12-hour format
             // or this am/pm format doesn't have a hour, minute, or second format immediately before it
             // so do not treat this word "a" or "A" as the am/pm format
