@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, Element, Method, Prop } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
@@ -11,7 +11,14 @@ import { createThemedClasses } from '../../utils/theme';
   }
 })
 export class List {
-  mode!: Mode;
+
+  @Element() el!: HTMLElement;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * How the bottom border should be displayed on all items.
@@ -23,6 +30,15 @@ export class List {
    * If true, the list will have margin around it and rounded corners. Defaults to `false`.
    */
   @Prop() inset = false;
+
+  @Method()
+  async closeSlidingItems(): Promise<boolean> {
+    const item = this.el.querySelector('ion-item-sliding');
+    if (item && item.closeOpened) {
+      return item.closeOpened();
+    }
+    return false;
+  }
 
   hostData() {
     return {
