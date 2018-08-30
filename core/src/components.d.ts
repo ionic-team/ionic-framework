@@ -2195,6 +2195,7 @@ export namespace Components {
   }
 
   interface IonList {
+    'closeSlidingItems': () => Promise<boolean>;
     /**
     * If true, the list will have margin around it and rounded corners. Defaults to `false`.
     */
@@ -2203,6 +2204,10 @@ export namespace Components {
     * How the bottom border should be displayed on all items. Available options: `"full"`, `"inset"`, `"none"`.
     */
     'lines': 'full' | 'inset' | 'none';
+    /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode': Mode;
   }
   interface IonListAttributes extends StencilHTMLAttributes {
     /**
@@ -2213,6 +2218,10 @@ export namespace Components {
     * How the bottom border should be displayed on all items. Available options: `"full"`, `"inset"`, `"none"`.
     */
     'lines'?: 'full' | 'inset' | 'none';
+    /**
+    * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
+    */
+    'mode'?: Mode;
   }
 
   interface IonLoadingController {
@@ -4158,7 +4167,7 @@ export namespace Components {
     /**
     * Get whether or not the current slide is the last slide.
     */
-    'isEnd': () => Promise<ConstrainBoolean>;
+    'isEnd': () => Promise<boolean>;
     /**
     * Get the total number of slides.
     */

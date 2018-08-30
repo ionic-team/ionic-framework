@@ -89,13 +89,13 @@
   position: relative;
   top: -20px;
 
-  background: var(--pin-background);
-  color: var(--pin-color);
-
   min-width: 28px;
   height: 28px;
 
   transition: transform 120ms ease, background 120ms ease;
+
+  background: var(--pin-background);
+  color: var(--pin-color);
 
   text-align: center;
 

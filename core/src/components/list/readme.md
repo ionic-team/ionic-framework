@@ -15,6 +15,14 @@ Lists support several interactions including swiping items to reveal options, dr
 | -------- | --------- | --------------------------------------------------------------------------------------------------------- | ----------------------------- |
 | `inset`  | `inset`   | If true, the list will have margin around it and rounded corners. Defaults to `false`.                    | `boolean`                     |
 | `lines`  | `lines`   | How the bottom border should be displayed on all items. Available options: `"full"`, `"inset"`, `"none"`. | `"full"`, `"inset"`, `"none"` |
+| `mode`   | `mode`    | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                 | `Mode`                        |
+
+
+## Methods
+
+| Method              | Description |
+| ------------------- | ----------- |
+| `closeSlidingItems` |             |
 
 
 ----------------------------------------------
