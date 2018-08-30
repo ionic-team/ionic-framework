@@ -159,6 +159,10 @@
 // Searchbar in Toolbar Color
 // -----------------------------------------
 
+:host-context(ion-toolbar.ion-color) {
+  color: inherit;
+}
+
 :host-context(ion-toolbar.ion-color) .searchbar-cancel-button {
   color: currentColor;
 }
