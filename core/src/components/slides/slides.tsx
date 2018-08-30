@@ -162,7 +162,7 @@ export class Slides {
    */
   @Method()
   slideNext(speed?: number, runCallbacks?: boolean) {
-    this.swiper.slideNext(runCallbacks, speed);
+    this.swiper.slideNext(speed, runCallbacks);
   }
 
   /**
@@ -170,7 +170,7 @@ export class Slides {
    */
   @Method()
   slidePrev(speed?: number, runCallbacks?: boolean) {
-    this.swiper.slidePrev(runCallbacks, speed);
+    this.swiper.slidePrev(speed, runCallbacks);
   }
 
   /**
