@@ -202,7 +202,7 @@ export class Slides {
    *
    */
   @Method()
-  isEnd(): Promise<ConstrainBoolean> {
+  isEnd(): Promise<boolean> {
     return Promise.resolve(this.swiper.isEnd);
   }
 
