@@ -1,3 +1,16 @@
+<a name="4.0.0-beta.7"></a>
+# [4.0.0-beta.7](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.6...v4.0.0-beta.7) (2018-08-30)
+
+
+### Bug Fixes
+
+* **list:** add closeSlidingItems() ([81fbbb8](https://github.com/ionic-team/ionic/commit/81fbbb8)), closes [#15378](https://github.com/ionic-team/ionic/issues/15378)
+* **menu:** await animation check ([f00db59](https://github.com/ionic-team/ionic/commit/f00db59)), closes [#15377](https://github.com/ionic-team/ionic/issues/15377)
+* **range:** add and document custom properties ([cf35445](https://github.com/ionic-team/ionic/commit/cf35445)), closes [#14850](https://github.com/ionic-team/ionic/issues/14850) [#14808](https://github.com/ionic-team/ionic/issues/14808)
+* **slides:** isEnd() returns a boolean ([771c517](https://github.com/ionic-team/ionic/commit/771c517)), closes [#15376](https://github.com/ionic-team/ionic/issues/15376)
+
+
+
 <a name="4.0.0-beta.6"></a>
 # [4.0.0-beta.6](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.5...v4.0.0-beta.6) (2018-08-29)
 

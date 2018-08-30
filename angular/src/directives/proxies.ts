@@ -436,12 +436,13 @@ export class Label {
 }
 
 export declare interface List extends StencilComponents<'IonList'> {}
-@Component({ selector: 'ion-list', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['lines', 'inset'] })
+@Component({ selector: 'ion-list', changeDetection: ChangeDetectionStrategy.OnPush, encapsulation: ViewEncapsulation.None, template: '<ng-content></ng-content>', inputs: ['mode', 'lines', 'inset'] })
 export class List {
 
   constructor(r: ElementRef) {
     const el = r.nativeElement;
-    proxyInputs(this, el, ['lines', 'inset']);
+    proxyMethods(this, el, ['closeSlidingItems']);
+    proxyInputs(this, el, ['mode', 'lines', 'inset']);
   }
 }
 
