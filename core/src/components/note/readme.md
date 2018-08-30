@@ -14,6 +14,13 @@ Notes are text elements generally used as subtitles that provide more informatio
 | `mode`   | `mode`    | The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.                                                                                                                                                                              | `Mode`  |
 
 
+## CSS Custom Properties
+
+| Name      | Description       |
+| --------- | ----------------- |
+| `--color` | Color of the note |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
