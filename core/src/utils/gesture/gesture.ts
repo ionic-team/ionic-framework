@@ -98,7 +98,7 @@ export function createGesture(config: GestureConfig): Gesture {
 
   function pointerMove(ev: UIEvent) {
     // fast path, if gesture is currently captured
-    // do minimun job to get user-land even dispatched
+    // do minimum job to get user-land even dispatched
     if (hasCapturedPan) {
       if (!isMoveQueued && hasFiredStart) {
         isMoveQueued = true;
@@ -137,11 +137,11 @@ export function createGesture(config: GestureConfig): Gesture {
     hasFiredStart = false;
 
     // reset start position since the real user-land event starts here
-    // If the pan detector threshold is big, not reseting the start position
+    // If the pan detector threshold is big, not resetting the start position
     // will cause a jump in the animation equal to the detector threshold.
     // the array of positions used to calculate the gesture velocity does not
     // need to be cleaned, more points in the positions array always results in a
-    // more acurate value of the velocity.
+    // more accurate value of the velocity.
     detail.startX = detail.currentX;
     detail.startY = detail.currentY;
     detail.startTimeStamp = detail.timeStamp;

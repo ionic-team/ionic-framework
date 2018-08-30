@@ -363,7 +363,7 @@ export class Animator {
 
   playAsync(opts?: PlayOptions): Promise<Animator> {
     return new Promise(resolve => {
-      this.onFinish(resolve, { oneTimeCallback: true, clearExistingCallacks: true });
+      this.onFinish(resolve, { oneTimeCallback: true, clearExistingCallbacks: true });
       this.play(opts);
       return this;
     });
@@ -1120,8 +1120,8 @@ export class Animator {
   /**
    * Add a callback to fire when the animation has finished.
    */
-  onFinish(callback: (animation?: any) => void, opts?: {oneTimeCallback?: boolean, clearExistingCallacks?: boolean}): Animator {
-    if (opts && opts.clearExistingCallacks) {
+  onFinish(callback: (animation?: any) => void, opts?: {oneTimeCallback?: boolean, clearExistingCallbacks?: boolean}): Animator {
+    if (opts && opts.clearExistingCallbacks) {
       this._onFinishCallbacks = this._onFinishOneTimeCallbacks = undefined;
     }
     if (opts && opts.oneTimeCallback) {

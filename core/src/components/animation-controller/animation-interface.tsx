@@ -35,7 +35,7 @@ export interface Animation {
   progressStart(): void;
   progressStep(stepValue: number): void;
   progressEnd(shouldComplete: boolean, currentStepValue: number, dur: number): void;
-  onFinish(callback: (animation?: Animation) => void, opts?: {oneTimeCallback?: boolean, clearExistingCallacks?: boolean}): Animation;
+  onFinish(callback: (animation?: Animation) => void, opts?: {oneTimeCallback?: boolean, clearExistingCallbacks?: boolean}): Animation;
   destroy(): void;
   isRoot(): boolean;
   hasCompleted: boolean;

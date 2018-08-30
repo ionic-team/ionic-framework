@@ -387,7 +387,7 @@ export class Menu implements MenuI {
     this.lastOnEnd = detail.timeStamp;
     this.animation
       .onFinish(() => this.afterAnimation(shouldOpen), {
-        clearExistingCallacks: true
+        clearExistingCallbacks: true
       })
       .progressEnd(shouldComplete, stepValue, realDur);
   }

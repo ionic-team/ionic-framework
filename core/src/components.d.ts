@@ -2633,11 +2633,11 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circustances.
+    * Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circumstances.
     */
     'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
-    * Returns a promise that resolves when the modal will dismiss. It also accepts a callback that is called in the same circustances.
+    * Returns a promise that resolves when the modal will dismiss. It also accepts a callback that is called in the same circumstances.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayIndex': number;

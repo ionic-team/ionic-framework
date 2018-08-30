@@ -184,7 +184,7 @@ export class Modal implements OverlayInterface {
 
   /**
    * Returns a promise that resolves when the modal did dismiss. It also accepts a callback
-   * that is called in the same circustances.
+   * that is called in the same circumstances.
    *
    */
   @Method()
@@ -194,7 +194,7 @@ export class Modal implements OverlayInterface {
 
   /**
    * Returns a promise that resolves when the modal will dismiss. It also accepts a callback
-   * that is called in the same circustances.
+   * that is called in the same circumstances.
    *
    */
   @Method()
