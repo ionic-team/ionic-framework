@@ -33,6 +33,17 @@ closeAndLock:
   lock: true
   dryRun: false
 
+lockClosed:
+  days: 30
+  maxIssuesPerRun: 100
+  message: >
+    This closed issue is now locked to further comment.  If this is still an issue with the latest version of Ionic,
+    please create a new issue and ensure the template is fully filled out.
+
+
+    Thank you for using Ionic!
+  dryRun: false
+
 stale:
   days: 365
   maxIssuesPerRun: 100
