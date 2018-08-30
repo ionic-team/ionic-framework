@@ -4,7 +4,10 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{ion-color(primary, base)};
+  /**
+   * @prop --color: Color of the radio
+   * @prop --color-checked: Color of the checked radio
+   */
 
   display: inline-block;
   position: relative;

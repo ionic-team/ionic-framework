@@ -40,11 +40,22 @@
     <ion-radio checked color="secondary" disabled></ion-radio>
   </p>
 
+  <p>
+    <ion-radio class="custom"></ion-radio>
+    <ion-radio class="custom" checked></ion-radio>
+    <ion-radio class="custom" checked color="primary"></ion-radio>
+  </p>
+
   <style>
     /* to be able to see the radio buttons */
     .radio-ios {
       border: 1px solid #dedede;
       padding: 10px 5px;
+    }
+
+    .custom {
+      --color: orange;
+      --color-checked: hotpink;
     }
   </style>
 </body>

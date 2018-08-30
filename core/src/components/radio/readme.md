@@ -34,6 +34,14 @@ An `ion-radio-group` can be used to group a set of radios. When radios are insid
 | `ionStyle`          | Emitted when the styles change.            |
 
 
+## CSS Custom Properties
+
+| Name              | Description                |
+| ----------------- | -------------------------- |
+| `--color`         | Color of the radio         |
+| `--color-checked` | Color of the checked radio |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

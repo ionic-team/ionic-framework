@@ -5,10 +5,14 @@
 // --------------------------------------------------
 
 :host {
+  --color-checked: #{ion-color(primary, base)};
   --width: #{$radio-ios-icon-width};
   --height: #{$radio-ios-icon-height};
 }
 
+:host(.ion-color.radio-checked) .radio-inner {
+  border-color: current-color(base);
+}
 
 .item-radio.item-ios ion-label {
   @include margin-horizontal(0, null);
@@ -32,7 +36,7 @@
   border-top-width: 0;
   border-left-width: 0;
   border-style: $radio-ios-icon-border-style;
-  border-color: $radio-ios-color-on;
+  border-color: var(--color-checked);
 }
 
 

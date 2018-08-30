@@ -5,8 +5,18 @@
 // --------------------------------------------------
 
 :host {
+  --color: #{$radio-md-color-off};
+  --color-checked: #{ion-color(primary, base)};
   --width: #{$radio-md-icon-width};
   --height: #{$radio-md-icon-height};
+}
+
+:host(.ion-color) .radio-inner {
+  background: current-color(base);
+}
+
+:host(.ion-color.radio-checked) .radio-icon {
+  border-color: current-color(base);
 }
 
 // Material Design Radio Outer Circle: Unchecked
@@ -19,7 +29,7 @@
 
   border-width: $radio-md-icon-border-width;
   border-style: $radio-md-icon-border-style;
-  border-color: $radio-md-color-off;
+  border-color: var(--color);
 }
 
 
@@ -39,7 +49,7 @@
 
   transition: transform $radio-md-transition-duration $radio-md-transition-easing;
 
-  background-color: $radio-md-color-on;
+  background: var(--color-checked);
 }
 
 
@@ -47,7 +57,7 @@
 // -----------------------------------------
 
 :host(.radio-checked) .radio-icon {
-  border-color: $radio-md-color-on;
+  border-color: var(--color-checked);
 }
 
 
