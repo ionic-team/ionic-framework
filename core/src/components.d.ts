@@ -1239,7 +1239,7 @@ export namespace Components {
     */
     'min': string;
     /**
-    * Values used to create the list of selectable minutes. By default the mintues range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.
+    * Values used to create the list of selectable minutes. By default the minutes range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.
     */
     'minuteValues': number[] | number | string;
     /**
@@ -1318,7 +1318,7 @@ export namespace Components {
     */
     'min'?: string;
     /**
-    * Values used to create the list of selectable minutes. By default the mintues range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.
+    * Values used to create the list of selectable minutes. By default the minutes range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.
     */
     'minuteValues'?: number[] | number | string;
     /**
@@ -2958,7 +2958,7 @@ export namespace Components {
     */
     'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
-    * Returns a promise that resolves when the picker will dismiss. It also accepts a callback that is called in the same circustances.
+    * Returns a promise that resolves when the picker will dismiss. It also accepts a callback that is called in the same circumstances.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayIndex': number;

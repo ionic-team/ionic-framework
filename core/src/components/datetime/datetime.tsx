@@ -128,7 +128,7 @@ export class Datetime {
 
   /**
    * Values used to create the list of selectable minutes. By default
-   * the mintues range from `0` to `59`. However, to control exactly which minutes to display,
+   * the minutes range from `0` to `59`. However, to control exactly which minutes to display,
    * the `minuteValues` input can take a number, an array of numbers, or a string of comma
    * separated numbers. For example, if the minute selections should only be every 15 minutes,
    * then this input value would be `minuteValues="0,15,30,45"`.

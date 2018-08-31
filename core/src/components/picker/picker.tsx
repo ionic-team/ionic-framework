@@ -181,7 +181,7 @@ export class Picker implements OverlayInterface {
 
   /**
    * Returns a promise that resolves when the picker will dismiss. It also accepts a callback
-   * that is called in the same circustances.
+   * that is called in the same circumstances.
    *
    */
   @Method()
@@ -258,11 +258,10 @@ export class Picker implements OverlayInterface {
     return [
       <ion-backdrop
         visible={this.showBackdrop}
-        tappable={this.backdropDismiss}
-      />,
+        tappable={this.backdropDismiss}>
+      </ion-backdrop>,
 
       <div class="picker-wrapper" role="dialog">
-
         <div class="picker-toolbar">
           {buttons.map(b => (
             <div class={buttonWrapperClass(b)}>
@@ -281,7 +280,6 @@ export class Picker implements OverlayInterface {
             { columns.map(c => <ion-picker-column col={c} />) }
           <div class="picker-below-highlight" />
         </div>
-
       </div>
     ];
   }
