@@ -21,7 +21,7 @@ const IONIC_SESSION_KEY = 'ionic-persist-config';
 export function configFromSession(): any {
   try {
     const configStr = window.sessionStorage.getItem(IONIC_SESSION_KEY);
-    return configStr ? JSON.parse(configStr) : {};
+    return configStr !== null ? JSON.parse(configStr) : {};
   } catch {
     return {};
   }

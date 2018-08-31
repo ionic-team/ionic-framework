@@ -137,12 +137,12 @@ export class Popover implements OverlayInterface {
     ev.stopPropagation();
     ev.preventDefault();
 
-    this.dismiss();
+    return this.dismiss();
   }
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss(null, BACKDROP);
+    return this.dismiss(null, BACKDROP);
   }
 
   @Listen('ionPopoverDidPresent')
@@ -187,9 +187,12 @@ export class Popover implements OverlayInterface {
    * Dismiss the popover overlay after it has been presented.
    */
   @Method()
-  async dismiss(data?: any, role?: string): Promise<void> {
-    await dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.event);
-    await detachComponent(this.delegate, this.usersElement);
+  async dismiss(data?: any, role?: string): Promise<boolean> {
+    const shouldDismiss = await dismiss(this, data, role, 'popoverLeave', iosLeaveAnimation, mdLeaveAnimation, this.event);
+    if (shouldDismiss) {
+      await detachComponent(this.delegate, this.usersElement);
+    }
+    return shouldDismiss;
   }
 
   /**

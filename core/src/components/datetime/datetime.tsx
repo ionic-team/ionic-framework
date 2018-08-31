@@ -1,6 +1,6 @@
 import { Component, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
-import { CssClassMap, InputChangeEvent, PickerColumn, PickerOptions, StyleEvent } from '../../interface';
+import { InputChangeEvent, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEvent } from '../../interface';
 import { clamp, deferEvent } from '../../utils/helpers';
 import { createThemedClasses } from '../../utils/theme';
 
@@ -14,21 +14,24 @@ import { DatetimeData, LocaleData, convertFormatToKey, convertToArrayOfNumbers, 
   }
 })
 export class Datetime {
-  [key: string]: any;
 
   private inputId = `ion-dt-${datetimeIds++}`;
   private labelId = `${this.inputId}-lbl`;
-
   private picker?: HTMLIonPickerElement;
+  private locale: LocaleData = {};
+  private datetimeMin: DatetimeData = {};
+  private datetimeMax: DatetimeData = {};
+  private datetimeValue: DatetimeData = {};
 
-  locale: LocaleData = {};
-  datetimeMin: DatetimeData = {};
-  datetimeMax: DatetimeData = {};
-  datetimeValue: DatetimeData = {};
-
-  @State() text: any;
+  @State() text?: string;
 
   @Prop({ connect: 'ion-picker-controller' }) pickerCtrl!: HTMLIonPickerControllerElement;
+
+  /**
+   * The mode determines which platform styles to use.
+   * Possible values are: `"ios"` or `"md"`.
+   */
+  @Prop() mode!: Mode;
 
   /**
    * If true, the user cannot interact with the datetime. Defaults to `false`.
@@ -280,7 +283,7 @@ export class Datetime {
     // if a picker format wasn't provided, then fallback
     // to use the display format
     let template = this.pickerFormat || this.displayFormat || DEFAULT_FORMAT;
-    if (!template) {
+    if (template.length === 0) {
       return [];
     }
     // make sure we've got up to date sizing information
@@ -306,14 +309,15 @@ export class Datetime {
 
       // check if they have exact values to use for this date part
       // otherwise use the default date part values
-      values = this[key + 'Values']
-        ? convertToArrayOfNumbers(this[key + 'Values'], key)
+      const self = this as any;
+      values = self[key + 'Values']
+        ? convertToArrayOfNumbers(self[key + 'Values'], key)
         : dateValueRange(format, this.datetimeMin, this.datetimeMax);
 
       const colOptions = values.map(val => {
         return {
           value: val,
-          text: renderTextFormat(format, val, null, this.locale),
+          text: renderTextFormat(format, val, undefined, this.locale),
         };
       });
 
@@ -330,8 +334,8 @@ export class Datetime {
     });
 
     // Normalize min/max
-    const min = this.datetimeMin;
-    const max = this.datetimeMax;
+    const min = this.datetimeMin as any;
+    const max = this.datetimeMax as any;
     ['month', 'day', 'hour', 'minute']
       .filter(name => !columns.find(column => column.name === name))
       .forEach(name => {
@@ -356,8 +360,8 @@ export class Datetime {
       }
 
       const selectedIndex = yearCol.selectedIndex;
-      if (selectedIndex != null) {
-        const yearOpt = yearCol.options[selectedIndex];
+      if (selectedIndex !== undefined) {
+        const yearOpt = yearCol.options[selectedIndex] as PickerColumnOption | undefined;
         if (yearOpt) {
           // they have a selected year value
           selectedYear = yearOpt.value;
@@ -398,19 +402,19 @@ export class Datetime {
   private calcMinMax(now?: Date) {
     const todaysYear = (now || new Date()).getFullYear();
 
-    if (this.yearValues) {
+    if (this.yearValues !== undefined) {
       const years = convertToArrayOfNumbers(this.yearValues, 'year');
-      if (this.min == null) {
+      if (this.min === undefined) {
         this.min = Math.min.apply(Math, years);
       }
-      if (this.max == null) {
+      if (this.max === undefined) {
         this.max = Math.max.apply(Math, years);
       }
     } else {
-      if (this.min == null) {
+      if (this.min === undefined) {
         this.min = (todaysYear - 100).toString();
       }
-      if (this.max == null) {
+      if (this.max === undefined) {
         this.max = todaysYear.toString();
       }
     }
@@ -477,7 +481,7 @@ export class Datetime {
       }
     }
     const selectedIndex = column.selectedIndex = clamp(indexMin, column.selectedIndex!, indexMax);
-    const opt = column.options[selectedIndex];
+    const opt = column.options[selectedIndex] as PickerColumnOption | undefined;
     if (opt) {
       return opt.value;
     }
@@ -492,9 +496,7 @@ export class Datetime {
 
   hasValue(): boolean {
     const val = this.datetimeValue;
-    return val
-      && typeof val === 'object'
-      && Object.keys(val).length > 0;
+    return Object.keys(val).length > 0;
   }
 
   hostData() {
@@ -511,8 +513,8 @@ export class Datetime {
 
     // If selected text has been passed in, use that first
     let datetimeText = this.text;
-    if (datetimeText == null) {
-      if (this.placeholder) {
+    if (datetimeText === undefined) {
+      if (this.placeholder !== undefined) {
         datetimeText = this.placeholder;
         addPlaceholderClass = true;
       } else {
@@ -520,17 +522,17 @@ export class Datetime {
       }
     }
 
-    const datetimeTextClasses: CssClassMap = {
+    const datetimeTextClasses = {
       'datetime-text': true,
       'datetime-placeholder': addPlaceholderClass
     };
 
     return [
-      <div class={ datetimeTextClasses }>{ datetimeText }</div>,
+      <div class={datetimeTextClasses}>{ datetimeText }</div>,
       <button
         type="button"
         aria-haspopup="true"
-        id={this.datetimeId}
+        // id={this.datetimeId}
         aria-labelledby={this.labelId}
         aria-disabled={this.disabled ? 'true' : null}
         onClick={this.open.bind(this)}

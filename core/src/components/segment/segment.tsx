@@ -36,7 +36,7 @@ export class Segment {
   /**
    * the value of the segment.
    */
-  @Prop({ mutable: true }) value?: string;
+  @Prop({ mutable: true }) value?: string | null;
 
   @Watch('value')
   protected valueChanged(value: string | undefined) {
@@ -56,7 +56,7 @@ export class Segment {
   }
 
   componentDidLoad() {
-    if (this.value === undefined) {
+    if (this.value == null) {
       const checked = this.getButtons().find(b => b.checked);
       if (checked) {
         this.value = checked.value;

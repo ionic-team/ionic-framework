@@ -38,7 +38,7 @@ export class RadioGroup {
   /**
    * the value of the radio group.
    */
-  @Prop({ mutable: true }) value?: any;
+  @Prop({ mutable: true }) value?: any | null;
 
   @Watch('value')
   valueChanged(value: any | undefined) {
@@ -62,7 +62,7 @@ export class RadioGroup {
     // this radio-group does not have a value
     // but this radio is checked, so let's set the
     // radio-group's value from the checked radio
-    if (this.value === undefined && radio.checked) {
+    if (this.value == null && radio.checked) {
       this.value = radio.value;
     } else {
       this.updateRadios();
@@ -79,7 +79,7 @@ export class RadioGroup {
 
   @Listen('ionSelect')
   onRadioSelect(ev: Event) {
-    const selectedRadio = ev.target as HTMLIonRadioElement;
+    const selectedRadio = ev.target as HTMLIonRadioElement | null;
     if (selectedRadio) {
       this.value = selectedRadio.value;
     }
@@ -122,15 +122,11 @@ export class RadioGroup {
   }
 
   hostData() {
-    const hostAttrs: any = {
-      'role': 'radiogroup'
+    return {
+      'role': 'radiogroup',
+      'aria-labelledby': this.labelId
     };
-    if (this.labelId) {
-      hostAttrs['aria-labelledby'] = this.labelId;
-    }
-    return hostAttrs;
   }
-
 }
 
 let radioGroupIds = 0;

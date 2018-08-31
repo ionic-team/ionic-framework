@@ -209,7 +209,7 @@ export class VirtualScroll {
     // unschedule future updates
     if (this.timerUpdate) {
       clearTimeout(this.timerUpdate);
-      this.timerUpdate = null;
+      this.timerUpdate = undefined;
     }
 
     // schedule DOM operations into the stencil queue
@@ -280,6 +280,7 @@ export class VirtualScroll {
       }
     };
     if (node && node.componentOnReady) {
+      // tslint:disable-next-line:no-floating-promises
       node.componentOnReady().then(update);
     } else {
       update();

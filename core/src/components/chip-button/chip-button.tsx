@@ -51,7 +51,7 @@ export class ChipButton {
   }
 
   render() {
-    const TagType = this.href ? 'a' : 'button';
+    const TagType = this.href === undefined ? 'button' : 'a';
 
     return (
       <TagType

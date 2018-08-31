@@ -46,19 +46,18 @@ export class BackButton {
    */
   @Prop() text?: string;
 
-  private async onClick(ev: Event) {
+  private onClick(ev: Event) {
     const nav = this.el.closest('ion-nav');
     ev.preventDefault();
 
     if (nav && nav.canGoBack()) {
-      nav.pop({ skipIfBusy: true });
-    } else if (this.defaultHref) {
-      openURL(this.win, this.defaultHref, ev, 'back');
+      return nav.pop({ skipIfBusy: true });
     }
+    return openURL(this.win, this.defaultHref, ev, 'back');
   }
 
   hostData() {
-    const showBackButton = !!this.defaultHref;
+    const showBackButton = this.defaultHref !== undefined;
 
     return {
       class: {
@@ -72,7 +71,7 @@ export class BackButton {
 
   render() {
     const backButtonIcon = this.icon || this.config.get('backButtonIcon', 'arrow-back');
-    const backButtonText = this.text != null ? this.text : this.config.get('backButtonText', 'Back');
+    const backButtonText = this.text !== undefined ? this.text : this.config.get('backButtonText', 'Back');
 
     return (
       <button

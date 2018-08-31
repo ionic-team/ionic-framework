@@ -68,7 +68,7 @@ export class Picker implements OverlayInterface {
   /**
    * Number of milliseconds to wait before dismissing the picker.
    */
-  @Prop() duration?: number;
+  @Prop() duration = 0;
 
   /**
    * If true, a backdrop will be displayed behind the picker. Defaults to `true`.
@@ -127,9 +127,9 @@ export class Picker implements OverlayInterface {
   protected onBackdropTap() {
     const cancelBtn = this.buttons.find(b => b.role === 'cancel');
     if (cancelBtn) {
-      this.buttonClick(cancelBtn);
+      return this.buttonClick(cancelBtn);
     } else {
-      this.dismiss();
+      return this.dismiss();
     }
   }
 
@@ -146,7 +146,7 @@ export class Picker implements OverlayInterface {
       undefined
     );
 
-    if (this.duration) {
+    if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
     }
   }
@@ -155,7 +155,7 @@ export class Picker implements OverlayInterface {
    * Dismiss the picker overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<void> {
+  dismiss(data?: any, role?: string): Promise<boolean> {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
@@ -215,19 +215,20 @@ export class Picker implements OverlayInterface {
     }
 
     if (shouldDismiss) {
-      this.dismiss();
+      return this.dismiss();
     }
+    return Promise.resolve(false);
   }
 
   private getSelected() {
     const selected: { [k: string]: any } = {};
     this.columns.forEach((col, index) => {
-      const selectedColumn = col.selectedIndex != null
+      const selectedColumn = col.selectedIndex !== undefined
         ? col.options[col.selectedIndex]
-        : null;
+        : undefined;
       selected[col.name] = {
-        text: selectedColumn ? selectedColumn.text : null,
-        value: selectedColumn ? selectedColumn.value : null,
+        text: selectedColumn ? selectedColumn.text : undefined,
+        value: selectedColumn ? selectedColumn.value : undefined,
         columnIndex: index
       };
     });
@@ -247,14 +248,6 @@ export class Picker implements OverlayInterface {
   }
 
   render() {
-    const buttons = this.buttons.map(b => {
-      return (typeof b === 'string')
-        ? { text: b }
-        : b;
-    });
-
-    const columns = this.columns;
-
     return [
       <ion-backdrop
         visible={this.showBackdrop}
@@ -263,7 +256,7 @@ export class Picker implements OverlayInterface {
 
       <div class="picker-wrapper" role="dialog">
         <div class="picker-toolbar">
-          {buttons.map(b => (
+          {this.buttons.map(b => (
             <div class={buttonWrapperClass(b)}>
               <button
                 type="button"
@@ -277,7 +270,7 @@ export class Picker implements OverlayInterface {
 
         <div class="picker-columns">
           <div class="picker-above-highlight" />
-            { columns.map(c => <ion-picker-column col={c} />) }
+            { this.columns.map(c => <ion-picker-column col={c} />) }
           <div class="picker-below-highlight" />
         </div>
       </div>
@@ -287,7 +280,7 @@ export class Picker implements OverlayInterface {
 
 function buttonWrapperClass(button: PickerButton): CssClassMap {
   return {
-    [`picker-toolbar-${button.role}`]: !!button.role,
+    [`picker-toolbar-${button.role}`]: button.role !== undefined,
     'picker-toolbar-button': true
   };
 }

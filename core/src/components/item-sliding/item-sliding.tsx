@@ -75,10 +75,10 @@ export class ItemSliding {
       gestureName: 'item-swipe',
       gesturePriority: 20,
       threshold: 5,
-      canStart: this.canStart.bind(this),
-      onStart: this.onStart.bind(this),
-      onMove: this.onMove.bind(this),
-      onEnd: this.onEnd.bind(this),
+      canStart: () => this.canStart(),
+      onStart: () => this.onStart(),
+      onMove: ev => this.onMove(ev),
+      onEnd: ev => this.onEnd(ev),
     });
     this.disabledChanged();
   }
@@ -131,7 +131,8 @@ export class ItemSliding {
    */
   @Method()
   async closeOpened(): Promise<boolean> {
-    if (openSlidingItem) {
+    if (openSlidingItem !== undefined) {
+      // tslint:disable-next-line:no-floating-promises
       openSlidingItem.close();
       return true;
     }
@@ -164,7 +165,7 @@ export class ItemSliding {
   private canStart(): boolean {
     const selected = openSlidingItem;
     if (selected && selected !== this.el) {
-
+      // tslint:disable-next-line:no-floating-promises
       this.closeOpened();
       return false;
     }
@@ -174,7 +175,7 @@ export class ItemSliding {
   private onStart() {
     openSlidingItem = this.el;
 
-    if (this.tmr) {
+    if (this.tmr !== undefined) {
       clearTimeout(this.tmr);
       this.tmr = undefined;
     }
@@ -254,7 +255,7 @@ export class ItemSliding {
   }
 
   private setOpenAmount(openAmount: number, isFinal: boolean) {
-    if (this.tmr) {
+    if (this.tmr !== undefined) {
       clearTimeout(this.tmr);
       this.tmr = undefined;
     }
@@ -298,10 +299,10 @@ export class ItemSliding {
       class: {
         'item-sliding': true,
         'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
-        'item-sliding-active-options-end': !!(this.state & SlidingState.End),
-        'item-sliding-active-options-start': !!(this.state & SlidingState.Start),
-        'item-sliding-active-swipe-end': !!(this.state & SlidingState.SwipeEnd),
-        'item-sliding-active-swipe-start': !!(this.state & SlidingState.SwipeStart)
+        'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
+        'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,
+        'item-sliding-active-swipe-end': (this.state & SlidingState.SwipeEnd) !== 0,
+        'item-sliding-active-swipe-start': (this.state & SlidingState.SwipeStart) !== 0
       }
     };
   }

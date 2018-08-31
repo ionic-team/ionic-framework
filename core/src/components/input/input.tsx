@@ -68,7 +68,7 @@ export class Input {
   /**
    * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
    */
-  @Prop({ mutable: true }) clearOnEdit!: boolean;
+  @Prop({ mutable: true }) clearOnEdit?: boolean;
 
   /**
    * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
@@ -262,9 +262,9 @@ export class Input {
   }
 
   private onInput(ev: KeyboardEvent) {
-    const input = ev.target as HTMLInputElement;
+    const input = ev.target as HTMLInputElement | null;
     if (input) {
-      this.value = ev.target && (ev.target as HTMLInputElement).value || '';
+      this.value = input.value || '';
     }
     this.ionInput.emit(ev);
   }
@@ -296,18 +296,16 @@ export class Input {
    * Check if we need to clear the text input if clearOnEdit is enabled
    */
   private onKeydown() {
-    if (!this.clearOnEdit) {
-      return;
-    }
+    if (this.clearOnEdit) {
+      // Did the input value change after it was blurred and edited?
+      if (this.didBlurAfterEdit && this.hasValue()) {
+        // Clear the input
+        this.clearTextInput();
+      }
 
-    // Did the input value change after it was blurred and edited?
-    if (this.didBlurAfterEdit && this.hasValue()) {
-      // Clear the input
-      this.clearTextInput();
+      // Reset the flag
+      this.didBlurAfterEdit = false;
     }
-
-    // Reset the flag
-    this.didBlurAfterEdit = false;
   }
 
   private clearTextInput() {
@@ -315,7 +313,7 @@ export class Input {
   }
 
   private hasValue(): boolean {
-    return !!this.value;
+    return this.value.length > 0;
   }
 
   hostData() {

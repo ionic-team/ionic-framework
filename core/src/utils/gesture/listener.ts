@@ -12,7 +12,7 @@ function supportsPassive(node: Node) {
       node.addEventListener('optsTest', () => { return; }, opts);
     } catch {
       _sPassive = false;
-     }
+    }
   }
   return !!_sPassive;
 }

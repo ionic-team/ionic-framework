@@ -7,11 +7,11 @@ export function hostContext(selector: string, el: HTMLElement): boolean {
 /**
  * Create the mode and color classes for the component based on the classes passed in
  */
-export function createColorClasses(color: string | undefined): CssClassMap | null {
-  return (color) ? {
+export function createColorClasses(color: string | undefined): CssClassMap | undefined {
+  return (color !== undefined) ? {
     'ion-color': true,
     [`ion-color-${color}`]: true
-  } : null;
+  } : undefined;
 }
 
 export function createThemedClasses(mode: Mode | undefined, name: string): CssClassMap {
@@ -21,12 +21,12 @@ export function createThemedClasses(mode: Mode | undefined, name: string): CssCl
   };
 }
 
-export function getClassList(classes: string | string[] | undefined): string[] {
-  if (classes) {
+export function getClassList(classes: string | (string | null | undefined)[] | undefined): string[] {
+  if (classes !== undefined) {
     const array = Array.isArray(classes) ? classes : classes.split(' ');
     return array
       .filter(c => c != null)
-      .map(c => c.trim())
+      .map(c => (c as string).trim())
       .filter(c => c !== '');
   }
   return [];
@@ -38,16 +38,16 @@ export function getClassMap(classes: string | string[] | undefined): CssClassMap
   return map;
 }
 
-export async function openURL(win: Window, url: string | undefined, ev: Event, direction?: RouterDirection) {
+export async function openURL(win: Window, url: string | undefined, ev: Event | undefined | null, direction?: RouterDirection): Promise<boolean> {
   if (url && url[0] !== '#' && url.indexOf('://') === -1) {
     const router = win.document.querySelector('ion-router');
     if (router) {
-      if (ev) {
+      if (ev != null) {
         ev.preventDefault();
       }
       await router.componentOnReady();
       return router.push(url, direction);
     }
   }
-  return Promise.resolve();
+  return false;
 }

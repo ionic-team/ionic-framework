@@ -11,7 +11,7 @@ export class ReorderGroup {
 
   private selectedItemEl?: HTMLElement;
   private selectedItemHeight!: number;
-  private lastToIndex!: number;
+  private lastToIndex = -1;
   private cachedHeights: number[] = [];
   private scrollEl?: HTMLElement;
   private gesture?: Gesture;
@@ -39,6 +39,8 @@ export class ReorderGroup {
     if (this.gesture) {
       this.gesture.setDisabled(this.disabled);
     }
+    const a = { a: 2 };
+    delete a.a;
   }
 
   @Event() ionItemReorder!: EventEmitter;
@@ -59,10 +61,10 @@ export class ReorderGroup {
       threshold: 0,
       direction: 'y',
       passive: false,
-      canStart: this.canStart.bind(this),
-      onStart: this.onStart.bind(this),
-      onMove: this.onMove.bind(this),
-      onEnd: this.onEnd.bind(this),
+      canStart: detail => this.canStart(detail),
+      onStart: ev => this.onStart(ev),
+      onMove: ev => this.onMove(ev),
+      onEnd: () => this.onEnd(),
     });
 
     this.disabledChanged();
@@ -149,7 +151,7 @@ export class ReorderGroup {
     const deltaY = scroll + currentY - ev.startY;
     const normalizedY = currentY - top;
     const toIndex = this.itemIndexForTop(normalizedY);
-    if (toIndex !== undefined && (toIndex !== this.lastToIndex)) {
+    if (toIndex !== this.lastToIndex) {
       const fromIndex = indexForItem(selectedItem);
       this.lastToIndex = toIndex;
 
@@ -266,7 +268,7 @@ function indexForItem(element: any): number {
   return element['$ionIndex'];
 }
 
-function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement | null {
+function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement | undefined {
   let nested = 0;
   let parent;
   while (node && nested < 6) {
@@ -277,7 +279,7 @@ function findReorderItem(node: HTMLElement, container: HTMLElement): HTMLElement
     node = parent;
     nested++;
   }
-  return null;
+  return undefined;
 }
 
 const AUTO_SCROLL_MARGIN = 60;

@@ -5,7 +5,7 @@ export class GestureController {
   private requestedStart = new Map<number, number>();
   private disabledGestures = new Map<string, Set<number>>();
   private disabledScroll = new Set<number>();
-  private capturedId: number | null = null;
+  private capturedId?: number;
 
   constructor(
     private doc: Document
@@ -19,7 +19,7 @@ export class GestureController {
       this,
       this.newID(),
       config.name,
-      config.priority ? config.priority : 0,
+      config.priority || 0,
       !!config.disableScroll
     );
   }
@@ -72,14 +72,14 @@ export class GestureController {
   release(id: number) {
     this.requestedStart.delete(id);
 
-    if (this.capturedId && id === this.capturedId) {
-      this.capturedId = null;
+    if (this.capturedId === id) {
+      this.capturedId = undefined;
     }
   }
 
   disableGesture(gestureName: string, id: number) {
     let set = this.disabledGestures.get(gestureName);
-    if (!set) {
+    if (set === undefined) {
       set = new Set<number>();
       this.disabledGestures.set(gestureName, set);
     }
@@ -88,7 +88,7 @@ export class GestureController {
 
   enableGesture(gestureName: string, id: number) {
     const set = this.disabledGestures.get(gestureName);
-    if (set) {
+    if (set !== undefined) {
       set.delete(id);
     }
   }
@@ -102,7 +102,7 @@ export class GestureController {
   }
 
   canStart(gestureName: string): boolean {
-    if (this.capturedId) {
+    if (this.capturedId !== undefined) {
       // a gesture already captured
       return false;
     }
@@ -115,7 +115,7 @@ export class GestureController {
   }
 
   isCaptured(): boolean {
-    return !!this.capturedId;
+    return this.capturedId !== undefined;
   }
 
   isScrollDisabled(): boolean {

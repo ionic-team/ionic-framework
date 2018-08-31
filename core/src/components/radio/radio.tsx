@@ -52,7 +52,7 @@ export class Radio {
   /**
    * the value of the radio.
    */
-  @Prop({ mutable: true }) value!: any;
+  @Prop({ mutable: true }) value!: any | null;
 
   /**
    * Emitted when the radio loads.
@@ -88,7 +88,7 @@ export class Radio {
     this.ionSelect = deferEvent(this.ionSelect);
     this.ionStyle = deferEvent(this.ionStyle);
 
-    if (this.value === undefined) {
+    if (this.value == null) {
       this.value = this.inputId;
     }
     this.emitStyle();

@@ -17,29 +17,27 @@ export function mdTransitionAnimation(AnimationC: Animation, _: HTMLElement, opt
     .beforeRemoveClass('ion-page-invisible');
 
   const backDirection = (opts.direction === 'back');
-  if (enteringEl) {
 
-    // animate the component itself
-    if (backDirection) {
-      rootTransition
-        .duration(opts.duration || 200)
-        .easing('cubic-bezier(0.47,0,0.745,0.715)');
+  // animate the component itself
+  if (backDirection) {
+    rootTransition
+      .duration(opts.duration || 200)
+      .easing('cubic-bezier(0.47,0,0.745,0.715)');
 
-    } else {
-      rootTransition
-        .duration(opts.duration || 280)
-        .easing('cubic-bezier(0.36,0.66,0.04,1)')
-        .fromTo(TRANSLATEY, OFF_BOTTOM, CENTER, true)
-        .fromTo('opacity', 0.01, 1, true);
-    }
+  } else {
+    rootTransition
+      .duration(opts.duration || 280)
+      .easing('cubic-bezier(0.36,0.66,0.04,1)')
+      .fromTo(TRANSLATEY, OFF_BOTTOM, CENTER, true)
+      .fromTo('opacity', 0.01, 1, true);
+  }
 
-    // Animate toolbar if it's there
-    const enteringToolbarEle = ionPageElement.querySelector('ion-toolbar');
-    if (enteringToolbarEle) {
-      const enteringToolBar = new AnimationC();
-      enteringToolBar.addElement(enteringToolbarEle);
-      rootTransition.add(enteringToolBar);
-    }
+  // Animate toolbar if it's there
+  const enteringToolbarEle = ionPageElement.querySelector('ion-toolbar');
+  if (enteringToolbarEle) {
+    const enteringToolBar = new AnimationC();
+    enteringToolBar.addElement(enteringToolbarEle);
+    rootTransition.add(enteringToolBar);
   }
 
   // setup leaving view

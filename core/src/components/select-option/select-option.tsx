@@ -22,7 +22,7 @@ export class SelectOption {
   /**
    * The text value of the option.
    */
-  @Prop({ mutable: true }) value!: any;
+  @Prop({ mutable: true }) value!: any | null;
 
   /**
    * Emitted when the select option loads.
@@ -35,7 +35,7 @@ export class SelectOption {
   @Event() ionSelectOptionDidUnload!: EventEmitter<void>;
 
   componentWillLoad() {
-    if (this.value === undefined) {
+    if (this.value == null) {
       this.value = this.el.textContent || '';
     }
   }

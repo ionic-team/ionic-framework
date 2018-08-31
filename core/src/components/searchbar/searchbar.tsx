@@ -141,7 +141,7 @@ export class Searchbar {
   protected valueChanged() {
     const inputEl = this.nativeInput;
     const value = this.value;
-    if (inputEl && inputEl.value !== value) {
+    if (inputEl.value !== value) {
       inputEl.value = value;
     }
     this.ionChange.emit({ value });
@@ -154,9 +154,7 @@ export class Searchbar {
 
   @Method()
   focus() {
-    if (this.nativeInput) {
-      this.nativeInput.focus();
-    }
+    this.nativeInput.focus();
   }
 
   /**
@@ -174,7 +172,7 @@ export class Searchbar {
     // wait for 4 frames
     setTimeout(() => {
       const value = this.value;
-      if (value !== undefined && value !== '') {
+      if (value !== '') {
         this.value = '';
         this.ionInput.emit();
       }
@@ -195,7 +193,7 @@ export class Searchbar {
    * Update the Searchbar input value when the input changes
    */
   private onInput(ev: KeyboardEvent) {
-    const input = ev.target as HTMLInputElement;
+    const input = ev.target as HTMLInputElement | null;
     if (input) {
       this.value = input.value;
     }
@@ -227,7 +225,7 @@ export class Searchbar {
    */
   private positionElements() {
     const prevAlignLeft = this.shouldAlignLeft;
-    const shouldAlignLeft = (!this.animated || (this.value && this.value.toString().trim() !== '') || this.focused === true);
+    const shouldAlignLeft = (!this.animated || (this.value && this.value.toString().trim() !== '') || !!this.focused);
     this.shouldAlignLeft = shouldAlignLeft;
 
     if (this.mode !== 'ios') {

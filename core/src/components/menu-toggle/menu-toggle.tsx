@@ -30,7 +30,7 @@ export class MenuToggle {
   @Prop() autoHide = true;
 
   componentDidLoad() {
-    this.updateVisibility();
+    return this.updateVisibility();
   }
 
   @Listen('click')

@@ -150,9 +150,9 @@ export class Range {
       gestureName: 'range',
       gesturePriority: 100,
       threshold: 0,
-      onStart: this.onStart.bind(this),
-      onMove: this.onMove.bind(this),
-      onEnd: this.onEnd.bind(this),
+      onStart: ev => this.onStart(ev),
+      onMove: ev => this.onMove(ev),
+      onEnd: ev => this.onEnd(ev),
     });
     this.gesture.setDisabled(this.disabled);
   }

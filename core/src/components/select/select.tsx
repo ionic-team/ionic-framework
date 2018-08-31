@@ -86,7 +86,7 @@ export class Select {
   /**
    * the value of the select.
    */
-  @Prop({ mutable: true }) value?: any;
+  @Prop({ mutable: true }) value?: any | null;
 
   /**
    * Emitted when the value has changed.
@@ -314,6 +314,7 @@ export class Select {
             disabled: o.disabled,
             handler: () => {
               this.value = o.value;
+              // tslint:disable-next-line:no-floating-promises
               this.close();
             }
           } as SelectPopoverOption;
@@ -410,10 +411,10 @@ export class Select {
   /**
    * Close the select interface.
    */
-  private close(): Promise<void> {
+  private close(): Promise<boolean> {
     // TODO check !this.overlay || !this.isFocus()
     if (!this.overlay) {
-      return Promise.resolve();
+      return Promise.resolve(false);
     }
 
     const overlay = this.overlay;
@@ -440,7 +441,7 @@ export class Select {
     if (Array.isArray(this.value)) {
       return this.value.length > 0;
     }
-    return (this.value !== null && this.value !== undefined && this.value !== '');
+    return (this.value != null && this.value !== undefined && this.value !== '');
   }
 
   private emitStyle() {
@@ -469,7 +470,7 @@ export class Select {
     let addPlaceholderClass = false;
 
     let selectText = this.selectedText || this.text;
-    if (!selectText && this.placeholder) {
+    if (selectText === undefined && this.placeholder) {
       selectText = this.placeholder;
       addPlaceholderClass = true;
     }

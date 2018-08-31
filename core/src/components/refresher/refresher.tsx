@@ -110,10 +110,10 @@ export class Refresher {
       direction: 'y',
       threshold: 20,
       passive: false,
-      canStart: this.canStart.bind(this),
-      onStart: this.onStart.bind(this),
-      onMove: this.onMove.bind(this),
-      onEnd: this.onEnd.bind(this),
+      canStart: () => this.canStart(),
+      onStart: () => this.onStart(),
+      onMove: ev => this.onMove(ev),
+      onEnd: () => this.onEnd(),
     });
 
     this.disabledChanged();
@@ -183,7 +183,7 @@ export class Refresher {
 
   private onMove(detail: GestureDetail) {
     if (!this.scrollEl) {
-      return 0;
+      return;
     }
     // this method can get called like a bazillion times per second,
     // so it's built to be as efficient as possible, and does its
@@ -191,14 +191,14 @@ export class Refresher {
     // if multitouch then get out immediately
     const ev = detail.event as TouchEvent;
     if (ev.touches && ev.touches.length > 1) {
-      return 1;
+      return;
     }
 
     // do nothing if it's actively refreshing
     // or it's in the way of closing
     // or this was never a startY
-    if (this.state & RefresherState._BUSY_) {
-      return 2;
+    if ((this.state & RefresherState._BUSY_) !== 0) {
+      return;
     }
 
     const deltaY = detail.deltaY;
@@ -213,10 +213,10 @@ export class Refresher {
       if (this.appliedStyles) {
         // reset the styles only if they were applied
         this.setCss(0, '', false, '');
-        return 5;
+        return;
       }
 
-      return 6;
+      return;
     }
 
     if (this.state === RefresherState.Inactive) {
@@ -228,7 +228,7 @@ export class Refresher {
       // not possible to pull the content down yet
       if (scrollHostScrollTop > 0) {
         this.progress = 0;
-        return 7;
+        return;
       }
 
       // content scrolled all the way to the top, and dragging down
@@ -242,10 +242,10 @@ export class Refresher {
     // move the scroll element within the content element
     this.setCss(deltaY, '0ms', true, '');
 
-    if (!deltaY) {
+    if (deltaY === 0) {
       // don't continue if there's no delta yet
       this.progress = 0;
-      return 8;
+      return;
     }
 
     const pullMin = this.pullMin;
@@ -265,13 +265,13 @@ export class Refresher {
     if (deltaY < pullMin) {
       // ensure it stays in the pulling state, cuz its not ready yet
       this.state = RefresherState.Pulling;
-      return 2;
+      return;
     }
 
     if (deltaY > this.pullMax) {
       // they pulled farther than the max, so kick off the refresh
       this.beginRefresh();
-      return 3;
+      return;
     }
 
     // pulled farther than the pull min!!
@@ -279,7 +279,7 @@ export class Refresher {
     // if they let go then it'll refresh, kerpow!!
     this.state = RefresherState.Ready;
 
-    return 4;
+    return;
   }
 
   private onEnd() {

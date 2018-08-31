@@ -23,6 +23,7 @@ export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts:
     if (ev.key === 'Escape') {
       const lastOverlay = getOverlay(doc);
       if (lastOverlay && lastOverlay.backdropDismiss) {
+        // tslint:disable-next-line:no-floating-promises
         lastOverlay.dismiss(null, BACKDROP);
       }
     }
@@ -37,7 +38,8 @@ export function connectListeners(doc: Document) {
     doc.body.addEventListener('keyup', ev => {
       if (ev.key === 'Escape') {
         const lastOverlay = getOverlay(doc);
-        if (lastOverlay && lastOverlay.backdropDismiss === true) {
+        if (lastOverlay && lastOverlay.backdropDismiss) {
+          // tslint:disable-next-line:no-floating-promises
           lastOverlay.dismiss('backdrop');
         }
       }
@@ -45,7 +47,7 @@ export function connectListeners(doc: Document) {
   }
 }
 
-export function dismissOverlay(doc: Document, data: any, role: string | undefined, overlayTag: string, id?: string): Promise<void> {
+export function dismissOverlay(doc: Document, data: any, role: string | undefined, overlayTag: string, id?: string): Promise<boolean> {
   const overlay = getOverlay(doc, overlayTag, id);
   if (!overlay) {
     return Promise.reject('overlay does not exist');
@@ -55,7 +57,7 @@ export function dismissOverlay(doc: Document, data: any, role: string | undefine
 
 export function getOverlays(doc: Document, overlayTag?: string): HTMLIonOverlayElement[] {
   const overlays = Array.from(getAppRoot(doc).children) as HTMLIonOverlayElement[];
-  if (overlayTag == null) {
+  if (overlayTag === undefined) {
     return overlays;
   }
   overlayTag = overlayTag.toUpperCase();
@@ -64,12 +66,9 @@ export function getOverlays(doc: Document, overlayTag?: string): HTMLIonOverlayE
 
 export function getOverlay(doc: Document, overlayTag?: string, id?: string): HTMLIonOverlayElement | undefined {
   const overlays = getOverlays(doc, overlayTag);
-  if (id != null) {
-    return overlays.find(o => o.id === id);
-  }
-  return (id == null)
+  return (id === undefined)
     ? overlays[overlays.length - 1]
-    : overlays.find(o => o.overlayIndex === id);
+    : overlays.find(o => o.id === id);
 }
 
 export async function present(
@@ -103,9 +102,9 @@ export async function dismiss(
   iosLeaveAnimation: AnimationBuilder,
   mdLeaveAnimation: AnimationBuilder,
   opts?: any
-): Promise<void> {
+): Promise<boolean> {
   if (!overlay.presented) {
-    return;
+    return false;
   }
   overlay.presented = false;
 
@@ -119,6 +118,7 @@ export async function dismiss(
 
   overlay.didDismiss.emit({ data, role });
   overlay.el.remove();
+  return true;
 }
 
 function getAppRoot(doc: Document) {
@@ -159,14 +159,14 @@ async function overlayAnimation(
   overlay.animation = undefined;
 }
 
-export function autoFocus(containerEl: HTMLElement): HTMLElement | null {
+export function autoFocus(containerEl: HTMLElement): HTMLElement | undefined {
   const focusableEls = containerEl.querySelectorAll('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex="0"]');
   if (focusableEls.length > 0) {
     const el = focusableEls[0] as HTMLInputElement;
     el.focus();
     return el;
   }
-  return null;
+  return undefined;
 }
 
 export function eventMethod<T>(element: HTMLElement, eventName: string): Promise<T> {

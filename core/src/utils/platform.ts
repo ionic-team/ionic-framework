@@ -28,7 +28,7 @@ export function isPlatform(win: Window, platform: Platforms) {
 export function setupPlatforms(win: any) {
   win.Ionic = win.Ionic || {};
 
-  let platforms: string[] = win.Ionic.platforms;
+  let platforms: string[] | undefined | null = win.Ionic.platforms;
   if (platforms == null) {
     platforms = win.Ionic.platforms = detectPlatforms(win);
     const classList = win.document.documentElement.classList;

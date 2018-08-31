@@ -37,7 +37,7 @@ export class Img {
   }
 
   private addIO() {
-    if (!this.src) {
+    if (this.src === undefined) {
       return;
     }
     if ('IntersectionObserver' in window) {

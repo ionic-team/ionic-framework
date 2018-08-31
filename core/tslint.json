@@ -8,6 +8,9 @@
     "trailing-comma": false,
     "no-null-keyword": false,
     "no-console": false,
-    "no-floating-promises": false
+
+    "strict-type-predicates": true,
+    "await-promise": true,
+    "strict-boolean-expressions": [true, "allow-null-union", "allow-undefined-union", "allow-boolean-or-undefined"]
   }
 }

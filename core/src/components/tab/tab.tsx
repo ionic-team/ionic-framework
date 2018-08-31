@@ -98,12 +98,12 @@ export class Tab {
 
   componentWillLoad() {
     // Set default name
-    if (!this.name && typeof this.component === 'string') {
+    if (this.name === undefined && typeof this.component === 'string') {
       this.name = this.component;
     }
 
     if (Build.isDev) {
-      if (this.component && this.el.childElementCount > 0) {
+      if (this.component !== undefined && this.el.childElementCount > 0) {
         console.error('You can not use a lazy-loaded component in a tab and inlined content at the same time.' +
       `- Remove the component attribute in: <ion-tab component="${this.component}">` +
       ` or` +
@@ -145,7 +145,7 @@ export class Tab {
       'aria-hidden': !active ? 'true' : null,
       'role': 'tabpanel',
       'class': {
-        'ion-page': !component,
+        'ion-page': component === undefined,
         'tab-hidden': !active
       }
     };

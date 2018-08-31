@@ -147,6 +147,7 @@ export function createGesture(config: GestureConfig): Gesture {
     detail.startTimeStamp = detail.timeStamp;
 
     if (onWillStart) {
+      // tslint:disable-next-line:no-floating-promises
       onWillStart(detail).then(fireOnStart);
     } else {
       fireOnStart();
@@ -277,7 +278,7 @@ export interface GestureDetail {
   data?: any;
 }
 
-export type GestureCallback = (detail?: GestureDetail) => boolean | void;
+export type GestureCallback = (detail: GestureDetail) => boolean | void;
 
 export interface Gesture {
   setDisabled(disabled: boolean): void;

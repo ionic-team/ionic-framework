@@ -27,12 +27,12 @@ export interface OverlayInterface {
   didDismiss: EventEmitter<OverlayEventDetail>;
 
   present(): Promise<void>;
-  dismiss(data?: any, role?: string): Promise<void>;
+  dismiss(data?: any, role?: string): Promise<boolean>;
 }
 
 export interface OverlayController {
   create(opts?: any): Promise<HTMLElement>;
-  dismiss(data?: any, role?: string, id?: string): Promise<void>;
+  dismiss(data?: any, role?: string, id?: string): Promise<boolean>;
   getTop(): Promise<HTMLIonOverlayElement | undefined>;
 }
 
@@ -40,16 +40,16 @@ export interface HTMLIonOverlayElement extends HTMLStencilElement {
   overlayIndex: number;
   backdropDismiss?: boolean;
 
-  dismiss(data?: any, role?: string): Promise<void>;
+  dismiss(data?: any, role?: string): Promise<boolean>;
 }
 
 // Overlay checks
 export type Conforms<T extends Required<B>, B> = T;
 export type HTMLOverlaysElement =
-  Conforms<HTMLIonModalElement, ModalOptions> |
-  Conforms<HTMLIonToastElement, ToastOptions> |
-  Conforms<HTMLIonActionSheetElement, ActionSheetOptions> |
-  Conforms<HTMLIonAlertElement, AlertOptions> |
-  Conforms<HTMLIonPopoverElement, PopoverOptions> |
-  Conforms<HTMLIonPickerElement, PickerOptions> |
-  Conforms<HTMLIonLoadingElement, LoadingOptions>;
+  Conforms<Required<HTMLIonModalElement>, ModalOptions> |
+  Conforms<Required<HTMLIonToastElement>, ToastOptions> |
+  Conforms<Required<HTMLIonActionSheetElement>, ActionSheetOptions> |
+  Conforms<Required<HTMLIonAlertElement>, AlertOptions> |
+  Conforms<Required<HTMLIonPopoverElement>, PopoverOptions> |
+  Conforms<Required<HTMLIonPickerElement>, PickerOptions> |
+  Conforms<Required<HTMLIonLoadingElement>, LoadingOptions>;
