@@ -55,7 +55,7 @@ let json = [{
   "email": "paul@example.com"
 }, {
   "name": "Rachel Rabbit",
-  "img": "preview/assets/rabbit.jpg",
+  "img": "preview/assets/rabbit.JPG",
   "description": "Rachel is a Rabbit.",
   "email": "rachel@example.com"
 }];
