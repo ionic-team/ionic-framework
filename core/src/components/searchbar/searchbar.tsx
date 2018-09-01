@@ -328,17 +328,19 @@ export class Searchbar {
     const clearIcon = this.clearIcon || (this.mode === 'ios' ? 'ios-close-circle' : 'md-close');
     const searchIcon = this.searchIcon || 'search';
 
-    const cancelButton = (this.showCancelButton)
-      ? <button
+    const cancelButton = this.showCancelButton && (
+      <button
         type="button"
         tabIndex={this.mode === 'ios' && !this.focused ? -1 : undefined}
         onClick={this.cancelSearchbar.bind(this)}
-        class="searchbar-cancel-button">
-          { this.mode === 'md'
-            ? <ion-icon mode={this.mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
-            : this.cancelButtonText }
+        class="searchbar-cancel-button"
+      >
+        { this.mode === 'md'
+          ? <ion-icon mode={this.mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
+          : this.cancelButtonText
+        }
       </button>
-      : null;
+    );
 
     return [
       <div class="searchbar-input-container">
@@ -353,20 +355,22 @@ export class Searchbar {
           value={this.value}
           autoComplete={this.autocomplete}
           autoCorrect={this.autocorrect}
-          spellCheck={this.spellcheck}/>
+          spellCheck={this.spellcheck}
+        />
 
-        { this.mode === 'md' && cancelButton }
+        {this.mode === 'md' && cancelButton}
 
         <ion-icon mode={this.mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
 
         <button
           type="button"
-          no-blur={true}
+          no-blur
           class="searchbar-clear-button"
           onClick={this.clearInput.bind(this)}
           onMouseDown={this.clearInput.bind(this)}
-          onTouchStart={this.clearInput.bind(this)}>
-            <ion-icon mode={this.mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
+          onTouchStart={this.clearInput.bind(this)}
+        >
+          <ion-icon mode={this.mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
         </button>
       </div>,
       this.mode === 'ios' && cancelButton

@@ -243,9 +243,9 @@ export function calcCells(
 
 export function calcHeightIndex(buf: Uint32Array, cells: Cell[], index: number): number {
   let acum = buf[index];
-  for (; index < buf.length; index++) {
-    buf[index] = acum;
-    acum += cells[index].height;
+  for (let i = index; i < buf.length; i++) {
+    buf[i] = acum;
+    acum += cells[i].height;
   }
   return acum;
 }

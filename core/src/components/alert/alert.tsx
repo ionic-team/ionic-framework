@@ -329,8 +329,8 @@ export class Alert implements OverlayInterface {
             disabled={i.disabled}
             tabIndex={0}
             role="checkbox"
-            class="alert-tappable alert-checkbox alert-checkbox-button">
-
+            class="alert-tappable alert-checkbox alert-checkbox-button"
+          >
             <div class="alert-button-inner">
               <div class="alert-checkbox-icon">
                 <div class="alert-checkbox-inner"></div>
@@ -339,7 +339,7 @@ export class Alert implements OverlayInterface {
                 {i.label}
               </div>
             </div>
-            { this.mode === 'md' && <ion-ripple-effect /> }
+            {this.mode === 'md' && <ion-ripple-effect />}
           </button>
         ))}
       </div>
@@ -359,16 +359,18 @@ export class Alert implements OverlayInterface {
             onClick={() => this.rbClick(i)}
             aria-checked={i.checked ? 'true' : null}
             disabled={i.disabled}
-            id={i.id} tabIndex={0}
+            id={i.id}
+            tabIndex={0}
             class="alert-radio-button alert-tappable alert-radio"
-            role="radio">
+            role="radio"
+          >
             <div class="alert-button-inner">
               <div class="alert-radio-icon"><div class="alert-radio-inner"></div></div>
               <div class="alert-radio-label">
                 {i.label}
               </div>
             </div>
-            { this.mode === 'md' && <ion-ripple-effect /> }
+            {this.mode === 'md' && <ion-ripple-effect />}
           </button>
         ))}
       </div>
@@ -394,7 +396,8 @@ export class Alert implements OverlayInterface {
               id={i.id}
               disabled={i.disabled}
               tabIndex={0}
-              class="alert-input"/>
+              class="alert-input"
+            />
           </div>
         ))}
       </div>
@@ -451,14 +454,14 @@ export class Alert implements OverlayInterface {
       <div class="alert-wrapper">
 
         <div class="alert-head">
-          { this.header && <h2 id={hdrId} class="alert-title">{this.header}</h2> }
-          { this.subHeader && <h2 id={subHdrId} class="alert-sub-title">{this.subHeader}</h2> }
+          {this.header && <h2 id={hdrId} class="alert-title">{this.header}</h2>}
+          {this.subHeader && <h2 id={subHdrId} class="alert-sub-title">{this.subHeader}</h2>}
         </div>
 
         <div id={msgId} class="alert-message" innerHTML={this.message}></div>
 
-        { this.renderAlertInputs(labelledById) }
-        { this.renderAlertButtons() }
+        {this.renderAlertInputs(labelledById)}
+        {this.renderAlertButtons()}
 
       </div>
     ];

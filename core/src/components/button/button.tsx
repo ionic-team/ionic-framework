@@ -177,14 +177,15 @@ export class Button {
         onFocus={this.onFocus.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
         onBlur={this.onBlur.bind(this)}
-        onClick={this.onClick.bind(this)}>
-          <span class="button-inner">
-            <slot name="icon-only"></slot>
-            <slot name="start"></slot>
-            <slot></slot>
-            <slot name="end"></slot>
-          </span>
-         { this.mode === 'md' && <ion-ripple-effect /> }
+        onClick={this.onClick.bind(this)}
+      >
+        <span class="button-inner">
+          <slot name="icon-only"></slot>
+          <slot name="start"></slot>
+          <slot></slot>
+          <slot name="end"></slot>
+        </span>
+        {this.mode === 'md' && <ion-ripple-effect />}
       </TagType>
     );
   }
@@ -212,7 +213,6 @@ function getButtonTypeClassMap(buttonType: string, type: string | undefined, mod
   if (type === undefined) {
     return {};
   }
-  type = type.toLocaleLowerCase();
   return {
     [`${buttonType}-${type}`]: true,
     [`${buttonType}-${type}-${mode}`]: true

@@ -94,14 +94,15 @@ export class FabButton {
       <TagType
         class="fab-button-native"
         disabled={this.disabled}
-        href={this.href}>
+        href={this.href}
+      >
         <span class="fab-button-close-icon">
           <ion-icon name="close" lazy={false}></ion-icon>
         </span>
         <span class="fab-button-inner">
           <slot></slot>
         </span>
-        { this.mode === 'md' && <ion-ripple-effect /> }
+        {this.mode === 'md' && <ion-ripple-effect />}
       </TagType>
     );
   }

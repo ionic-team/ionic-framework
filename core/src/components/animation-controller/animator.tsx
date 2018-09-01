@@ -25,7 +25,9 @@ export const TRANSFORM_PROPS: {[key: string]: number} = {
   'perspective': 1
 };
 
-const raf = window.requestAnimationFrame || ((f: FrameRequestCallback) => f(Date.now()));
+const raf = window.requestAnimationFrame
+  ? window.requestAnimationFrame.bind(window)
+  : (f: FrameRequestCallback) => f(Date.now());
 
 export class Animator {
 
@@ -627,10 +629,7 @@ export class Animator {
   /**
    * Immediately stop at the end of the animation.
    */
-  stop(stepValue?: number) {
-    if (stepValue === undefined) {
-      stepValue = 1;
-    }
+  stop(stepValue = 1) {
     // ensure all past transition end events have been cleared
     this._clearAsync();
     this._hasDur = true;
@@ -1045,7 +1044,7 @@ export class Animator {
   /**
    * End the progress animation.
    */
-  progressEnd(shouldComplete: boolean, currentStepValue: number, dur?: number) {
+  progressEnd(shouldComplete: boolean, currentStepValue: number, dur = -1) {
     if (this._isReverse) {
       // if the animation is going in reverse then
       // flip the step value: 0 becomes 1, 1 becomes 0
@@ -1053,9 +1052,6 @@ export class Animator {
     }
     const stepValue = shouldComplete ? 1 : 0;
     const diff = Math.abs(currentStepValue - stepValue);
-    if (dur === undefined) {
-      dur = -1;
-    }
     if (dur < 0) {
       dur = this._duration || 0;
     } else if (diff < 0.05) {
@@ -1178,10 +1174,7 @@ export class Animator {
   /**
    * Reverse the animation.
    */
-  reverse(shouldReverse?: boolean): Animator {
-    if (shouldReverse === undefined) {
-      shouldReverse = true;
-    }
+  reverse(shouldReverse = true): Animator {
     const children = this._childAnimations;
     if (children) {
       for (const child of children) {

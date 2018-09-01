@@ -2439,15 +2439,15 @@ export namespace Components {
     /**
     * Close the menu. If no menu is specified, then it will close any menu that is open. If a menu is specified, it will close that menu.
     */
-    'close': (menuId?: string | undefined) => Promise<boolean>;
+    'close': (menuId?: string | null | undefined) => Promise<boolean>;
     /**
     * Used to enable or disable a menu. For example, there could be multiple left menus, but only one of them should be able to be opened at the same time. If there are multiple menus on the same side, then enabling one menu will also automatically disable all the others that are on the same side.
     */
-    'enable': (shouldEnable: boolean, menuId?: string | undefined) => Promise<HTMLIonMenuElement | null>;
+    'enable': (shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
     /**
     * Used to get a menu instance. If a menu is not provided then it will return the first menu found. If the specified menu is `left` or `right`, then it will return the enabled menu on that side. Otherwise, it will try to find the menu using the menu's `id` property. If a menu is not found then it will return `null`.
     */
-    'get': (menuId?: string | undefined) => Promise<HTMLIonMenuElement | null>;
+    'get': (menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
     /**
     * Returns an array of all menu instances.
     */
@@ -2455,7 +2455,7 @@ export namespace Components {
     /**
     * Returns the instance of the menu already opened, otherwise `null`.
     */
-    'getOpen': () => Promise<HTMLIonMenuElement | null>;
+    'getOpen': () => Promise<HTMLIonMenuElement | undefined>;
     /**
     * Returns true if any menu is currently animating.
     */
@@ -2463,23 +2463,23 @@ export namespace Components {
     /**
     * Returns true if the specified menu is enabled.
     */
-    'isEnabled': (menuId?: string | undefined) => Promise<boolean>;
+    'isEnabled': (menuId?: string | null | undefined) => Promise<boolean>;
     /**
     * Returns true if the specified menu is open. If the menu is not specified, it will return true if any menu is currently open.
     */
-    'isOpen': (menuId?: string | undefined) => Promise<boolean>;
+    'isOpen': (menuId?: string | null | undefined) => Promise<boolean>;
     /**
     * Open the menu.
     */
-    'open': (menuId?: string | undefined) => Promise<boolean>;
+    'open': (menuId?: string | null | undefined) => Promise<boolean>;
     /**
     * Used to enable or disable the ability to swipe open the menu.
     */
-    'swipeGesture': (shouldEnable: boolean, menuId?: string | undefined) => Promise<HTMLIonMenuElement | null>;
+    'swipeGesture': (shouldEnable: boolean, menuId?: string | null | undefined) => Promise<HTMLIonMenuElement | undefined>;
     /**
     * Toggle the menu. If it's closed, it will open, and if opened, it will close.
     */
-    'toggle': (menuId?: string | undefined) => Promise<boolean>;
+    'toggle': (menuId?: string | null | undefined) => Promise<boolean>;
   }
   interface IonMenuControllerAttributes extends StencilHTMLAttributes {}
 
@@ -3915,7 +3915,7 @@ export namespace Components {
     /**
     * The text value of the option.
     */
-    'value': any | null;
+    'value'?: any | null;
   }
   interface IonSelectOptionAttributes extends StencilHTMLAttributes {
     /**

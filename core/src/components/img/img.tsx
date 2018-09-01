@@ -72,7 +72,8 @@ export class Img {
       <img
         src={this.loadSrc}
         alt={this.alt}
-        decoding="async"></img>
+        decoding="async"
+      />
     );
   }
 }

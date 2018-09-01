@@ -295,7 +295,8 @@ export class Content {
           'overscroll': (scrollX || scrollY) && !!forceOverscroll
         }}
         ref={el => this.scrollEl = el!}
-        onScroll={ev => this.onScroll(ev)}>
+        onScroll={ev => this.onScroll(ev)}
+      >
         <slot></slot>
       </div>,
       <slot name="fixed"></slot>

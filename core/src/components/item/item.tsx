@@ -158,10 +158,10 @@ export class Item {
             <slot></slot>
           </div>
           <slot name="end"></slot>
-          { showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon> }
+          {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
         </div>
-        { state && <div class="item-state"></div> }
-        { clickable && mode === 'md' && <ion-ripple-effect /> }
+        {state && <div class="item-state"></div>}
+        {clickable && mode === 'md' && <ion-ripple-effect />}
       </TagType>
     );
   }

@@ -58,11 +58,12 @@ export class ChipButton {
         type="button"
         class="chip-button-native"
         disabled={this.disabled}
-        href={this.href}>
-          <span class="chip-button-inner">
-            <slot></slot>
-          </span>
-          { this.mode === 'md' && <ion-ripple-effect /> }
+        href={this.href}
+      >
+        <span class="chip-button-inner">
+          <slot></slot>
+        </span>
+        {this.mode === 'md' && <ion-ripple-effect />}
       </TagType>
     );
   }

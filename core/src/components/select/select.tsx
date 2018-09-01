@@ -369,6 +369,7 @@ export class Select {
 
     const interfaceOptions = this.interfaceOptions;
     const inputType = (this.multiple ? 'checkbox' : 'radio');
+
     const alertOpts: AlertOptions = {
       ...interfaceOptions,
 
@@ -484,7 +485,9 @@ export class Select {
       <div
         role="textbox"
         aria-multiline="false"
-        class={ selectTextClasses }>{ selectText }
+        class={selectTextClasses}
+      >
+        {selectText}
       </div>,
       <div class="select-icon" role="presentation">
         <div class="select-icon-inner"></div>
@@ -500,9 +503,10 @@ export class Select {
         onKeyUp={this.onKeyUp.bind(this)}
         onFocus={this.onFocus.bind(this)}
         onBlur={this.onBlur.bind(this)}
-        class="select-cover">
+        class="select-cover"
+      >
         <slot></slot>
-        { this.mode === 'md' && <ion-ripple-effect /> }
+        {this.mode === 'md' && <ion-ripple-effect />}
       </button>
     ];
   }

@@ -147,7 +147,8 @@ export class Checkbox {
         checked={this.checked}
         name={this.name}
         value={this.value}
-        disabled={this.disabled} />
+        disabled={this.disabled}
+      />
     ];
   }
 }
