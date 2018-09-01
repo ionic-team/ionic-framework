@@ -251,7 +251,8 @@ export class Picker implements OverlayInterface {
     return [
       <ion-backdrop
         visible={this.showBackdrop}
-        tappable={this.backdropDismiss}>
+        tappable={this.backdropDismiss}
+      >
       </ion-backdrop>,
 
       <div class="picker-wrapper" role="dialog">

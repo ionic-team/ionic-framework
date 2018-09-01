@@ -60,8 +60,10 @@ export class Menu implements MenuI {
   @Watch('type')
   typeChanged(type: string, oldType: string | undefined) {
     const contentEl = this.contentEl;
-    if (contentEl && oldType) {
-      contentEl.classList.remove(`menu-content-${oldType}`);
+    if (contentEl) {
+      if (oldType) {
+        contentEl.classList.remove(`menu-content-${oldType}`);
+      }
       contentEl.classList.add(`menu-content-${type}`);
       contentEl.removeAttribute('style');
     }

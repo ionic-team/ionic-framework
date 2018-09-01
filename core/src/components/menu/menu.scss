@@ -6,6 +6,7 @@
 :host {
   --width: #{$menu-width};
   --width-small: #{$menu-small-width};
+  --background: #{$background-color};
 
   @include position(0, 0, 0, 0);
 
@@ -32,6 +33,8 @@
 
   width: var(--width);
   height: 100%;
+
+  background: var(--background);
 
   contain: strict;
 }
