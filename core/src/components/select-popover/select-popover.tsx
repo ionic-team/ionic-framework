@@ -40,15 +40,15 @@ export class SelectPopover {
   render() {
     return (
       <ion-list>
-        { this.header ? <ion-list-header>{this.header}</ion-list-header> : null }
-        { this.subHeader || this.message
-          ? <ion-item>
-              <ion-label text-wrap>
-                { this.subHeader ? <h3>{this.subHeader}</h3> : null }
-                { this.message ? <p>{this.message}</p> : null }
-              </ion-label>
-            </ion-item>
-            : null}
+        {this.header !== undefined && <ion-list-header>{this.header}</ion-list-header>}
+        { (this.subHeader !== undefined || this.message !== undefined) &&
+          <ion-item>
+            <ion-label text-wrap>
+              {this.subHeader !== undefined && <h3>{this.subHeader}</h3>}
+              {this.message !== undefined && <p>{this.message}</p>}
+            </ion-label>
+          </ion-item>
+        }
         <ion-radio-group>
           {this.options.map(option =>
             <ion-item>
@@ -58,7 +58,8 @@ export class SelectPopover {
               <ion-radio
                 checked={option.checked}
                 value={option.value}
-                disabled={option.disabled}>
+                disabled={option.disabled}
+              >
               </ion-radio>
             </ion-item>
           )}

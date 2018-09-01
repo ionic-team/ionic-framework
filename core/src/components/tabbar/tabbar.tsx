@@ -107,8 +107,8 @@ export class Tabbar {
   renderTabButton(tab: HTMLIonTabElement) {
     const { icon, label, disabled, badge, badgeColor, href } = tab;
     const selected = tab === this.selectedTab;
-    const hasLabel = !!label;
-    const hasIcon = !!icon;
+    const hasLabel = label !== undefined;
+    const hasIcon = icon !== undefined;
     return (
       <a
         role="tab"
@@ -122,20 +122,21 @@ export class Tabbar {
           'tab-btn-has-icon': hasIcon,
           'tab-btn-has-label-only': hasLabel && !hasIcon,
           'tab-btn-has-icon-only': hasIcon && !hasLabel,
-          'tab-btn-has-badge': !!badge,
+          'tab-btn-has-badge': badge !== undefined,
           'tab-btn-disabled': disabled,
-          'tab-btn-hidden': !tab.show
+          'tab-btn-hidden': !!tab.show
         }}
         onClick={ev => {
           if (!tab.disabled) {
             this.ionTabbarClick.emit(tab);
           }
           ev.preventDefault();
-        }}>
-          { icon && <ion-icon class="tab-btn-icon" icon={icon} lazy={false}></ion-icon> }
-          { label && <span class="tab-btn-text">{label}</span> }
-          { badge && <ion-badge class="tab-btn-badge" color={badgeColor}>{badge}</ion-badge> }
-          { this.mode === 'md' && <ion-ripple-effect /> }
+        }}
+      >
+        {icon && <ion-icon class="tab-btn-icon" icon={icon} lazy={false}></ion-icon>}
+        {label && <span class="tab-btn-text">{label}</span>}
+        {badge && <ion-badge class="tab-btn-badge" color={badgeColor}>{badge}</ion-badge>}
+        {this.mode === 'md' && <ion-ripple-effect />}
       </a>
     );
   }

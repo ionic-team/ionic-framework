@@ -108,22 +108,22 @@ export class Button {
     }
   }
 
-  onFocus() {
+  private onFocus() {
     this.ionFocus.emit();
   }
 
-  onKeyUp() {
+  private onKeyUp() {
     this.keyFocus = true;
   }
 
-  onBlur() {
+  private onBlur() {
     this.keyFocus = false;
     this.ionBlur.emit();
   }
 
-  onClick(ev: Event) {
+  private onClick(ev: Event) {
     if (this.type === 'button') {
-      openURL(this.win, this.href, ev, this.routerDirection);
+      return openURL(this.win, this.href, ev, this.routerDirection);
 
     } else if (hasShadowDom(this.el)) {
       // this button wants to specifically submit a form
@@ -142,6 +142,7 @@ export class Button {
         fakeButton.remove();
       }
     }
+    return Promise.resolve(false);
   }
 
   hostData() {
@@ -163,7 +164,7 @@ export class Button {
 
   protected render() {
 
-    const TagType = this.href ? 'a' : 'button';
+    const TagType = this.href === undefined ? 'button' : 'a';
     const attrs = (TagType === 'button')
       ? { type: this.type }
       : { href: this.href };
@@ -176,14 +177,15 @@ export class Button {
         onFocus={this.onFocus.bind(this)}
         onKeyUp={this.onKeyUp.bind(this)}
         onBlur={this.onBlur.bind(this)}
-        onClick={this.onClick.bind(this)}>
-          <span class="button-inner">
-            <slot name="icon-only"></slot>
-            <slot name="start"></slot>
-            <slot></slot>
-            <slot name="end"></slot>
-          </span>
-         { this.mode === 'md' && <ion-ripple-effect /> }
+        onClick={this.onClick.bind(this)}
+      >
+        <span class="button-inner">
+          <slot name="icon-only"></slot>
+          <slot name="start"></slot>
+          <slot></slot>
+          <slot name="end"></slot>
+        </span>
+        {this.mode === 'md' && <ion-ripple-effect />}
       </TagType>
     );
   }
@@ -194,7 +196,7 @@ export class Button {
  * e.g. alert-button, action-sheet-button
  */
 function getButtonClassMap(buttonType: string | undefined, mode: Mode): CssClassMap {
-  if (!buttonType) {
+  if (buttonType === undefined) {
     return {};
   }
   return {
@@ -208,10 +210,9 @@ function getButtonClassMap(buttonType: string | undefined, mode: Mode): CssClass
  * e.g. block, full, round, large
  */
 function getButtonTypeClassMap(buttonType: string, type: string | undefined, mode: Mode): CssClassMap {
-  if (!type) {
+  if (type === undefined) {
     return {};
   }
-  type = type.toLocaleLowerCase();
   return {
     [`${buttonType}-${type}`]: true,
     [`${buttonType}-${type}-${mode}`]: true
@@ -221,7 +222,7 @@ function getButtonTypeClassMap(buttonType: string, type: string | undefined, mod
 function getColorClassMap(buttonType: string, color: string | undefined, fill: string | undefined, mode: Mode): CssClassMap {
   let className = buttonType;
 
-  if (fill) {
+  if (fill !== undefined) {
     className += `-${fill.toLowerCase()}`;
   }
 
@@ -229,7 +230,7 @@ function getColorClassMap(buttonType: string, color: string | undefined, fill: s
     [className]: true,
     [`${className}-${mode}`]: true,
   };
-  if (color) {
+  if (color !== undefined) {
     map[`ion-color-${color}`] = true;
   }
   return map;

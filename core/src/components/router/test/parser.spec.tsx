@@ -98,7 +98,7 @@ export function mockRouteElement(win: Window, path: string, component: string) {
   return el;
 }
 
-export function mockRedirectElement(win: Window, from: string | undefined, to: string | undefined | null) {
+export function mockRedirectElement(win: Window, from: string | undefined | null, to: string | undefined | null) {
   const el = win.document.createElement('ion-route-redirect');
   if (from != null) {
     el.setAttribute('from', from);

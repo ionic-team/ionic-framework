@@ -116,7 +116,7 @@ export class Item {
   }
 
   private isClickable(): boolean {
-    return !!(this.href || this.el.onclick || this.button);
+    return (this.href !== undefined || this.button);
   }
 
   hostData() {
@@ -142,9 +142,9 @@ export class Item {
     const { href, detail, mode, win, state, detailIcon, routerDirection, type } = this;
 
     const clickable = this.isClickable();
-    const TagType = clickable ? (href ? 'a' : 'button') : 'div';
+    const TagType = clickable ? (href === undefined ? 'button' : 'a') : 'div';
     const attrs = TagType === 'button' ? { type } : { href };
-    const showDetail = detail != null ? detail : mode === 'ios' && clickable;
+    const showDetail = detail !== undefined ? detail : mode === 'ios' && clickable;
 
     return (
       <TagType
@@ -158,10 +158,10 @@ export class Item {
             <slot></slot>
           </div>
           <slot name="end"></slot>
-          { showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon> }
+          {showDetail && <ion-icon icon={detailIcon} lazy={false} class="item-detail-icon"></ion-icon>}
         </div>
-        { state && <div class="item-state"></div> }
-        { clickable && mode === 'md' && <ion-ripple-effect /> }
+        {state && <div class="item-state"></div>}
+        {clickable && mode === 'md' && <ion-ripple-effect />}
       </TagType>
     );
   }

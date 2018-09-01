@@ -131,6 +131,7 @@ export class Router {
   private onRedirectChanged() {
     const path = this.getPath();
     if (path && routeRedirect(path, readRedirects(this.el))) {
+      // tslint:disable-next-line:no-floating-promises
       this.writeNavStateRoot(path, RouterIntent.None);
     }
   }

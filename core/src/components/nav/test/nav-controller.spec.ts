@@ -1,6 +1,7 @@
 import { TestWindow } from '@stencil/core/dist/testing';
 
 import { Config } from '../../../global/config';
+import { ComponentProps } from '../../../interface';
 import { AnimationControllerImpl } from '../../animation-controller/animation-controller';
 import { Nav } from '../nav';
 import { NavOptions } from '../nav-interface';
@@ -912,12 +913,12 @@ describe('NavController', () => {
   const MockView4 = 'mock-view4';
   const MockView5 = 'mock-view5';
 
-  function mockView(component ?: any, data ?: any) {
+  function mockView(component?: any, params?: ComponentProps) {
     if (!component) {
       component = MockView;
     }
 
-    const view = new ViewController(component, data);
+    const view = new ViewController(component, params);
     view.element = win.document.createElement(component) as HTMLElement;
     return view;
   }

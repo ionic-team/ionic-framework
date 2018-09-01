@@ -73,9 +73,10 @@ export class SegmentButton {
         aria-pressed={this.checked ? 'true' : null}
         class="segment-button-native"
         disabled={this.disabled}
-        onClick={() => this.checked = true }>
-          <slot></slot>
-          { this.mode === 'md' && <ion-ripple-effect /> }
+        onClick={() => this.checked = true}
+      >
+        <slot></slot>
+        {this.mode === 'md' && <ion-ripple-effect />}
       </button>
     ];
   }

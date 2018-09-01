@@ -24,7 +24,8 @@ export class NavSetRoot {
     const nav = this.el.closest('ion-nav');
     const toPush = this.component;
     if (nav && toPush) {
-      nav.setRoot(toPush, this.componentProps, { skipIfBusy: true });
+      return nav.setRoot(toPush, this.componentProps, { skipIfBusy: true });
     }
+    return Promise.resolve(false);
   }
 }

@@ -63,7 +63,7 @@ export class Loading implements OverlayInterface {
   /**
    * Number of milliseconds to wait before dismissing the loading indicator.
    */
-  @Prop() duration?: number;
+  @Prop() duration = 0;
 
   /**
    * If true, the loading indicator will be dismissed when the backdrop is clicked. Defaults to `false`.
@@ -122,7 +122,7 @@ export class Loading implements OverlayInterface {
   @Event({ eventName: 'ionLoadingDidDismiss' }) didDismiss!: EventEmitter<OverlayEventDetail>;
 
   componentWillLoad() {
-    if (!this.spinner) {
+    if (this.spinner === undefined) {
       this.spinner = this.config.get('loadingSpinner', this.mode === 'ios' ? 'lines' : 'crescent');
     }
   }
@@ -137,7 +137,7 @@ export class Loading implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss(null, BACKDROP);
+    return this.dismiss(null, BACKDROP);
   }
 
   /**
@@ -147,7 +147,7 @@ export class Loading implements OverlayInterface {
   async present(): Promise<void> {
     await present(this, 'loadingEnter', iosEnterAnimation, mdEnterAnimation, undefined);
 
-    if (this.duration) {
+    if (this.duration > 0) {
       this.durationTimeout = setTimeout(
         () => this.dismiss(),
         this.duration + 10
@@ -159,7 +159,7 @@ export class Loading implements OverlayInterface {
    * Dismiss the loading overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<void> {
+  dismiss(data?: any, role?: string): Promise<boolean> {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }

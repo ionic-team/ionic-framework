@@ -118,9 +118,9 @@ export class Toggle {
       gestureName: 'toggle',
       gesturePriority: 100,
       threshold: 0,
-      onStart: this.onStart.bind(this),
-      onMove: this.onMove.bind(this),
-      onEnd: this.onEnd.bind(this),
+      onStart: ev => this.onStart(ev),
+      onMove: ev => this.onMove(ev),
+      onEnd: ev => this.onEnd(ev),
     });
     this.disabledChanged();
   }
@@ -203,7 +203,8 @@ export class Toggle {
         name={this.name}
         value={this.value}
         disabled={this.disabled}
-        ref={r => this.nativeInput = (r as any)}/>,
+        ref={r => this.nativeInput = (r as any)}
+      />,
       <slot></slot>
     ];
   }

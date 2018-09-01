@@ -29,7 +29,7 @@ export interface VirtualNode {
   visible: boolean;
 }
 
-export type HeaderFn = (item: any, index: number, items: any[]) => string | null;
+export type HeaderFn = (item: any, index: number, items: any[]) => string | null | undefined;
 export type ItemHeightFn = (item: any, index: number) => number;
 export type ItemRenderFn = (el: HTMLElement | null, cell: Cell, domIndex: number) => HTMLElement;
 export type DomRenderFn = (dom: VirtualNode[]) => void;

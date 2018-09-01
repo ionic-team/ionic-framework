@@ -65,12 +65,12 @@ export class Spinner {
     const duration = (typeof this.duration === 'number' && this.duration > 10 ? this.duration : spinner.dur);
     const svgs: any[] = [];
 
-    if (spinner.circles) {
+    if (spinner.circles !== undefined) {
       for (let i = 0; i < spinner.circles; i++) {
         svgs.push(buildCircle(spinner, duration, i, spinner.circles));
       }
 
-    } else if (spinner.lines) {
+    } else if (spinner.lines !== undefined) {
       for (let i = 0; i < spinner.lines; i++) {
         svgs.push(buildLine(spinner, duration, i, spinner.lines));
       }

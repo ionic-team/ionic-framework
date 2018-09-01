@@ -32,20 +32,23 @@ export class App {
   }
 }
 
-async function importStatusTap(win: Window, queue: QueueApi) {
+function importStatusTap(win: Window, queue: QueueApi) {
   if (isPlatform(win, 'hybrid')) {
-    (await import('../../utils/status-tap')).startStatusTap(win, queue);
+    // tslint:disable-next-line:no-floating-promises
+    import('../../utils/status-tap').then(module => module.startStatusTap(win, queue));
   }
 }
 
-async function importTapClick(win: Window) {
-  (await import('../../utils/tap-click')).startTapClick(win.document);
+function importTapClick(win: Window) {
+  // tslint:disable-next-line:no-floating-promises
+  import('../../utils/tap-click').then(module => module.startTapClick(win.document));
 }
 
-async function importInputShims(win: Window, config: Config) {
+function importInputShims(win: Window, config: Config) {
   const inputShims = config.getBoolean('inputShims', needInputShims(win));
   if (inputShims) {
-    (await import('../../utils/input-shims/input-shims')).startInputShims(win.document, config);
+    // tslint:disable-next-line:no-floating-promises
+    import('../../utils/input-shims/input-shims').then(module => module.startInputShims(win.document, config));
   }
 }
 
