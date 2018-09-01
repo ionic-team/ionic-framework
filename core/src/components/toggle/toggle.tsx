@@ -203,7 +203,8 @@ export class Toggle {
         name={this.name}
         value={this.value}
         disabled={this.disabled}
-        ref={r => this.nativeInput = (r as any)}/>,
+        ref={r => this.nativeInput = (r as any)}
+      />,
       <slot></slot>
     ];
   }

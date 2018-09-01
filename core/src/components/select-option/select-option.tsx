@@ -22,7 +22,7 @@ export class SelectOption {
   /**
    * The text value of the option.
    */
-  @Prop({ mutable: true }) value!: any | null;
+  @Prop({ mutable: true }) value?: any;
 
   /**
    * Emitted when the select option loads.

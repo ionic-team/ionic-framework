@@ -396,12 +396,12 @@ export class Slides {
 
   render() {
     return (
-      <div class="swiper-container" ref={el => this.container = el as HTMLElement }>
+      <div class="swiper-container" ref={el => this.container = el as HTMLElement}>
         <div class="swiper-wrapper">
           <slot></slot>
         </div>
-        { this.pager ? <div class="swiper-pagination"></div> : null }
-        { this.scrollbar ? <div class="swiper-scrollbar"></div> : null }
+        {this.pager ? <div class="swiper-pagination"></div> : null}
+        {this.scrollbar ? <div class="swiper-scrollbar"></div> : null}
       </div>
     );
   }

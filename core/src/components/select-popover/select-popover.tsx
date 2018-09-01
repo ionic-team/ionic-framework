@@ -40,12 +40,12 @@ export class SelectPopover {
   render() {
     return (
       <ion-list>
-        { this.header !== undefined && <ion-list-header>{this.header}</ion-list-header> }
+        {this.header !== undefined && <ion-list-header>{this.header}</ion-list-header>}
         { (this.subHeader !== undefined || this.message !== undefined) &&
           <ion-item>
             <ion-label text-wrap>
-              { this.subHeader !== undefined && <h3>{this.subHeader}</h3> }
-              { this.message !== undefined && <p>{this.message}</p> }
+              {this.subHeader !== undefined && <h3>{this.subHeader}</h3>}
+              {this.message !== undefined && <p>{this.message}</p>}
             </ion-label>
           </ion-item>
         }
@@ -58,7 +58,8 @@ export class SelectPopover {
               <ion-radio
                 checked={option.checked}
                 value={option.value}
-                disabled={option.disabled}>
+                disabled={option.disabled}
+              >
               </ion-radio>
             </ion-item>
           )}

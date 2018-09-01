@@ -369,7 +369,8 @@ export class Input {
         type="button"
         class="input-clear-icon"
         onTouchStart={this.clearTextInput.bind(this)}
-        onMouseDown={this.clearTextInput.bind(this)}/>
+        onMouseDown={this.clearTextInput.bind(this)}
+      />
     ];
   }
 }

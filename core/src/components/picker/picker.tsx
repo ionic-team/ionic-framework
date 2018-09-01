@@ -260,8 +260,10 @@ export class Picker implements OverlayInterface {
             <div class={buttonWrapperClass(b)}>
               <button
                 type="button"
+                ion-activable
                 onClick={() => this.buttonClick(b)}
-                class={buttonClass(b)}>
+                class={buttonClass(b)}
+              >
                 {b.text}
               </button>
             </div>
@@ -270,7 +272,7 @@ export class Picker implements OverlayInterface {
 
         <div class="picker-columns">
           <div class="picker-above-highlight" />
-            { this.columns.map(c => <ion-picker-column col={c} />) }
+            {this.columns.map(c => <ion-picker-column col={c} />)}
           <div class="picker-below-highlight" />
         </div>
       </div>

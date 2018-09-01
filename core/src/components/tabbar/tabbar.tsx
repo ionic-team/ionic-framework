@@ -131,11 +131,12 @@ export class Tabbar {
             this.ionTabbarClick.emit(tab);
           }
           ev.preventDefault();
-        }}>
-          { icon && <ion-icon class="tab-btn-icon" icon={icon} lazy={false}></ion-icon> }
-          { label && <span class="tab-btn-text">{label}</span> }
-          { badge && <ion-badge class="tab-btn-badge" color={badgeColor}>{badge}</ion-badge> }
-          { this.mode === 'md' && <ion-ripple-effect /> }
+        }}
+      >
+        {icon && <ion-icon class="tab-btn-icon" icon={icon} lazy={false}></ion-icon>}
+        {label && <span class="tab-btn-text">{label}</span>}
+        {badge && <ion-badge class="tab-btn-badge" color={badgeColor}>{badge}</ion-badge>}
+        {this.mode === 'md' && <ion-ripple-effect />}
       </a>
     );
   }

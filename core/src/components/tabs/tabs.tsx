@@ -312,7 +312,8 @@ export class Tabs implements NavOutlet {
           highlight={this.tabbarHighlight}
           placement={this.tabbarPlacement}
           layout={this.tabbarLayout}
-          translucent={this.translucent}>
+          translucent={this.translucent}
+        >
         </ion-tabbar>
       )
     ];

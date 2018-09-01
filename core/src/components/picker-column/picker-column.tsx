@@ -315,13 +315,14 @@ export class PickerColumnCmp {
       <div
         class="picker-opts"
         style={{ maxWidth: col.optionsWidth! }}
-        ref={ el => this.optsEl = el }>
+        ref={el => this.optsEl = el}
+      >
         { col.options.map((o, index) =>
           <Button
             type="button"
             class={{ 'picker-opt': true, 'picker-opt-disabled': !!o.disabled }}
-            disable-activated
-            opt-index={index}>
+            opt-index={index}
+          >
             {o.text}
           </Button>
         )}

@@ -451,9 +451,10 @@ function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, hand
       aria-valuemin={min}
       aria-valuemax={max}
       aria-disabled={disabled ? 'true' : null}
-      aria-valuenow={value}>
-        { pin && <div class="range-pin" role="presentation">{Math.round(value)}</div>}
-        <div class="range-knob" role="presentation" />
+      aria-valuenow={value}
+    >
+      {pin && <div class="range-pin" role="presentation">{Math.round(value)}</div>}
+      <div class="range-knob" role="presentation" />
     </div>
   );
 }
