@@ -3638,6 +3638,7 @@ export namespace Components {
   }
 
   interface IonRouter {
+    'goBack': () => Promise<void> | undefined;
     'navChanged': (intent: number) => Promise<boolean>;
     'printDebug': () => void;
     /**

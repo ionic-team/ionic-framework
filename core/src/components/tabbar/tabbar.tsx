@@ -124,7 +124,7 @@ export class Tabbar {
           'tab-btn-has-icon-only': hasIcon && !hasLabel,
           'tab-btn-has-badge': badge !== undefined,
           'tab-btn-disabled': disabled,
-          'tab-btn-hidden': !!tab.show
+          'tab-btn-hidden': !tab.show
         }}
         onClick={ev => {
           if (!tab.disabled) {

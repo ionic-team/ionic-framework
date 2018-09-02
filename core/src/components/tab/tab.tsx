@@ -57,7 +57,7 @@ export class Tab {
   /**
    * The name of the tab.
    */
-  @Prop() name?: string;
+  @Prop({ mutable: true }) name?: string;
 
   /**
    * If true, the user cannot interact with the tab. Defaults to `false`.

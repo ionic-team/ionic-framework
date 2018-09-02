@@ -1,6 +1,7 @@
 import { Component, Element, Prop, QueueApi } from '@stencil/core';
 
 import { Config } from '../../interface';
+import { rIC } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 
 @Component({
@@ -16,11 +17,12 @@ export class App {
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
   componentDidLoad() {
-    setTimeout(() => {
+    rIC(() => {
       importTapClick(this.win);
       importInputShims(this.win, this.config);
       importStatusTap(this.win, this.queue);
-    }, 32);
+      importHardwareBackButton(this.win);
+    });
   }
 
   hostData() {
@@ -29,6 +31,13 @@ export class App {
         'ion-page': true,
       }
     };
+  }
+}
+
+function importHardwareBackButton(win: Window) {
+  if (isPlatform(win, 'hybrid')) {
+    // tslint:disable-next-line:no-floating-promises
+    import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton(win));
   }
 }
 

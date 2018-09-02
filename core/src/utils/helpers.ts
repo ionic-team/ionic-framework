@@ -9,6 +9,14 @@ export function reorderArray(array: any[], indexes: {from: number, to: number}):
   return array;
 }
 
+export function rIC(callback: () => void) {
+  if ('requestIdleCallback' in window) {
+    (window as any).requestIdleCallback(callback);
+  } else {
+    setTimeout(callback, 32);
+  }
+}
+
 export function hasShadowDom(el: HTMLElement) {
   return !!el.shadowRoot && !!(el as any).attachShadow;
 }
