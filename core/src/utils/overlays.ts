@@ -1,4 +1,4 @@
-import { AnimationBuilder, HTMLIonOverlayElement, IonicConfig, OverlayInterface, BackButtonEvent } from '../interface';
+import { AnimationBuilder, BackButtonEvent, HTMLIonOverlayElement, IonicConfig, OverlayInterface } from '../interface';
 
 let lastId = 0;
 
