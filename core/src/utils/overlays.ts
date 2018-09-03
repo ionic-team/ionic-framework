@@ -1,4 +1,4 @@
-import { AnimationBuilder, HTMLIonOverlayElement, IonicConfig, OverlayInterface } from '../interface';
+import { AnimationBuilder, HTMLIonOverlayElement, IonicConfig, OverlayInterface, BackButtonEvent } from '../interface';
 
 let lastId = 0;
 
@@ -19,17 +19,26 @@ export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts:
   // append the overlay element to the document body
   getAppRoot(doc).appendChild(element);
 
+  doc.body.addEventListener('ionBackButton', ev => {
+    (ev as BackButtonEvent).detail.register(100, () => closeTopOverlay(doc));
+  });
+
   doc.body.addEventListener('keyup', ev => {
     if (ev.key === 'Escape') {
-      const lastOverlay = getOverlay(doc);
-      if (lastOverlay && lastOverlay.backdropDismiss) {
-        // tslint:disable-next-line:no-floating-promises
-        lastOverlay.dismiss(null, BACKDROP);
-      }
+      // tslint:disable-next-line:no-floating-promises
+      closeTopOverlay(doc);
     }
   });
 
   return element.componentOnReady();
+}
+
+function closeTopOverlay(doc: Document) {
+  const lastOverlay = getOverlay(doc);
+  if (lastOverlay && lastOverlay.backdropDismiss) {
+    return lastOverlay.dismiss(null, BACKDROP);
+  }
+  return Promise.resolve();
 }
 
 export function connectListeners(doc: Document) {

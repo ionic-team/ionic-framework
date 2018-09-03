@@ -41,7 +41,7 @@ export type ComponentRef = Function | HTMLElement | string;
 export type ComponentProps<T = null> = T extends ComponentTags ? StencilIntrinsicElements[T] : {[key: string]: any};
 export type CssClassMap = { [className: string]: boolean };
 export type BackButtonEvent = CustomEvent<{
-  register(priority: number, handler: () => Promise<void> | void): void;
+  register(priority: number, handler: () => Promise<any> | void): void;
 }>
 
 declare global {

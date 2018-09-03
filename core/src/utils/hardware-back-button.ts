@@ -1,6 +1,6 @@
 import { BackButtonEvent } from '../interface';
 
-type Handler = () => Promise<void> | void;
+type Handler = () => Promise<any> | void;
 
 interface HandlerRegister {
   priority: number;
