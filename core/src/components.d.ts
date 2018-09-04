@@ -4011,7 +4011,7 @@ export namespace Components {
     * The text to display on the ok button. Default: `OK`.
     */
     'okText': string;
-    'open': (ev?: UIEvent | undefined) => Promise<HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement>;
+    'open': (ev?: UIEvent | undefined) => Promise<HTMLIonPopoverElement | HTMLIonActionSheetElement | HTMLIonAlertElement>;
     /**
     * The text to display when the select is empty.
     */

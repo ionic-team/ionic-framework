@@ -21,6 +21,15 @@
 }
 
 
+// Material Design Toolbar w/ Color Default Button
+// --------------------------------------------------
+
+:host-context(.ion-color)::slotted(*) .button {
+  --color: currentColor;
+  --color-activated: currentColor;
+}
+
+
 // Material Design Toolbar Solid Button
 // --------------------------------------------------
 
@@ -47,12 +56,14 @@
 // Material Design Toolbar Clear Button
 // --------------------------------------------------
 
-::slotted(*) .button.button-clear .button-native {
-  height: 45px;
+::slotted(*) .button.button-clear {
+  --color: #{$toolbar-md-text-color};
+  --color-activated: #{$toolbar-md-text-color};
+  --background: transparent;
 }
 
-::slotted(*) .button.button-clear.activated {
-  color: currentColor;
+::slotted(*) .button.button-clear .button-native {
+  height: 45px;
 }
 
 
