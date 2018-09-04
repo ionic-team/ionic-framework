@@ -99,7 +99,7 @@ export class Router {
   @Method()
   goBack() {
     this.win.history.back(1);
-    return this.waitPromise;
+    return Promise.resolve(this.waitPromise);
   }
 
   /** @hidden */

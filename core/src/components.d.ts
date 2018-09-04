@@ -100,7 +100,7 @@ export namespace Components {
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
-    'cssClass': string | string[];
+    'cssClass'?: string | string[];
     /**
     * Dismiss the action sheet overlay after it has been presented.
     */
@@ -108,11 +108,11 @@ export namespace Components {
     /**
     * Animation to use when the action sheet is presented.
     */
-    'enterAnimation': AnimationBuilder;
+    'enterAnimation'?: AnimationBuilder;
     /**
     * Title for the action sheet.
     */
-    'header': string;
+    'header'?: string;
     /**
     * If true, the keyboard will be automatically dismissed when the overlay is presented.
     */
@@ -120,7 +120,7 @@ export namespace Components {
     /**
     * Animation to use when the action sheet is dismissed.
     */
-    'leaveAnimation': AnimationBuilder;
+    'leaveAnimation'?: AnimationBuilder;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -141,7 +141,7 @@ export namespace Components {
     /**
     * Subtitle for the action sheet.
     */
-    'subHeader': string;
+    'subHeader'?: string;
     /**
     * If true, the action sheet will be translucent. Defaults to `false`.
     */
@@ -251,7 +251,7 @@ export namespace Components {
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
-    'cssClass': string | string[];
+    'cssClass'?: string | string[];
     /**
     * Dismiss the alert overlay after it has been presented.
     */
@@ -259,11 +259,11 @@ export namespace Components {
     /**
     * Animation to use when the alert is presented.
     */
-    'enterAnimation': AnimationBuilder;
+    'enterAnimation'?: AnimationBuilder;
     /**
     * The main title in the heading of the alert.
     */
-    'header': string;
+    'header'?: string;
     /**
     * Array of input to show in the alert.
     */
@@ -275,11 +275,11 @@ export namespace Components {
     /**
     * Animation to use when the alert is dismissed.
     */
-    'leaveAnimation': AnimationBuilder;
+    'leaveAnimation'?: AnimationBuilder;
     /**
     * The main message to be displayed in the alert.
     */
-    'message': string;
+    'message'?: string;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -300,7 +300,7 @@ export namespace Components {
     /**
     * The subtitle in the heading of the alert. Displayed under the title.
     */
-    'subHeader': string;
+    'subHeader'?: string;
     /**
     * If true, the alert will be translucent. Defaults to `false`.
     */
@@ -390,15 +390,15 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href': string;
+    'href'?: string;
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
-    'routerDirection': RouterDirection;
+    'routerDirection'?: RouterDirection;
   }
   interface IonAnchorAttributes extends StencilHTMLAttributes {
     /**
@@ -433,15 +433,15 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * The url to navigate back to by default when there is no history.
     */
-    'defaultHref': string;
+    'defaultHref'?: string;
     /**
     * The icon name to use for the back button.
     */
-    'icon': string;
+    'icon'?: string;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -449,7 +449,7 @@ export namespace Components {
     /**
     * The text to display in the back button.
     */
-    'text': string;
+    'text'?: string;
   }
   interface IonBackButtonAttributes extends StencilHTMLAttributes {
     /**
@@ -511,7 +511,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -536,7 +536,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * If true, the user cannot interact with the button. Defaults to `false`.
     */
@@ -544,15 +544,15 @@ export namespace Components {
     /**
     * Set to `"block"` for a full-width button or to `"full"` for a full-width button without left and right borders.
     */
-    'expand': 'full' | 'block';
+    'expand'?: 'full' | 'block';
     /**
     * Set to `"clear"` for a transparent button, to `"outline"` for a transparent button with a border, or to `"solid"`. The default style is `"solid"` except inside of a toolbar, where the default is `"clear"`.
     */
-    'fill': 'clear' | 'outline' | 'solid' | 'default';
+    'fill'?: 'clear' | 'outline' | 'solid' | 'default';
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href': string;
+    'href'?: string;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -560,15 +560,15 @@ export namespace Components {
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
-    'routerDirection': RouterDirection;
+    'routerDirection'?: RouterDirection;
     /**
     * The button shape. Possible values are: `"round"`.
     */
-    'shape': 'round';
+    'shape'?: 'round';
     /**
     * The button size. Possible values are: `"small"`, `"default"`, `"large"`.
     */
-    'size': 'small' | 'default' | 'large';
+    'size'?: 'small' | 'default' | 'large';
     /**
     * If true, activates a button with a heavier font weight.
     */
@@ -657,7 +657,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -686,7 +686,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -707,7 +707,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -728,7 +728,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -753,7 +753,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * If true, the user cannot interact with the checkbox. Defaults to `false`.
     */
@@ -818,7 +818,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * If true, the user cannot interact with the chip button. Defaults to `false`.
     */
@@ -830,7 +830,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href': string;
+    'href'?: string;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -863,7 +863,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * Set to `"clear"` for a transparent icon or to `"solid"` for a filled background. Defaults to `"clear"`.
     */
@@ -875,11 +875,11 @@ export namespace Components {
     /**
     * The icon to use. Possible values are the same as `"ion-icon"`.
     */
-    'name': string;
+    'name'?: string;
     /**
     * The icon src to use. Possible values are the same as `"ion-icon"`.
     */
-    'src': string;
+    'src'?: string;
   }
   interface IonChipIconAttributes extends StencilHTMLAttributes {
     /**
@@ -908,7 +908,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -929,99 +929,99 @@ export namespace Components {
     /**
     * The amount to offset the column, in terms of how many columns it should shift to the right of the total available.
     */
-    'offset': string;
+    'offset'?: string;
     /**
     * The amount to offset the column for lg screens, in terms of how many columns it should shift to the right of the total available.
     */
-    'offsetLg': string;
+    'offsetLg'?: string;
     /**
     * The amount to offset the column for md screens, in terms of how many columns it should shift to the right of the total available.
     */
-    'offsetMd': string;
+    'offsetMd'?: string;
     /**
     * The amount to offset the column for sm screens, in terms of how many columns it should shift to the right of the total available.
     */
-    'offsetSm': string;
+    'offsetSm'?: string;
     /**
     * The amount to offset the column for xl screens, in terms of how many columns it should shift to the right of the total available.
     */
-    'offsetXl': string;
+    'offsetXl'?: string;
     /**
     * The amount to offset the column for xs screens, in terms of how many columns it should shift to the right of the total available.
     */
-    'offsetXs': string;
+    'offsetXs'?: string;
     /**
     * The amount to pull the column, in terms of how many columns it should shift to the left of the total available.
     */
-    'pull': string;
+    'pull'?: string;
     /**
     * The amount to pull the column for lg screens, in terms of how many columns it should shift to the left of the total available.
     */
-    'pullLg': string;
+    'pullLg'?: string;
     /**
     * The amount to pull the column for md screens, in terms of how many columns it should shift to the left of the total available.
     */
-    'pullMd': string;
+    'pullMd'?: string;
     /**
     * The amount to pull the column for sm screens, in terms of how many columns it should shift to the left of the total available.
     */
-    'pullSm': string;
+    'pullSm'?: string;
     /**
     * The amount to pull the column for xl screens, in terms of how many columns it should shift to the left of the total available.
     */
-    'pullXl': string;
+    'pullXl'?: string;
     /**
     * The amount to pull the column for xs screens, in terms of how many columns it should shift to the left of the total available.
     */
-    'pullXs': string;
+    'pullXs'?: string;
     /**
     * The amount to push the column, in terms of how many columns it should shift to the right of the total available.
     */
-    'push': string;
+    'push'?: string;
     /**
     * The amount to push the column for lg screens, in terms of how many columns it should shift to the right of the total available.
     */
-    'pushLg': string;
+    'pushLg'?: string;
     /**
     * The amount to push the column for md screens, in terms of how many columns it should shift to the right of the total available.
     */
-    'pushMd': string;
+    'pushMd'?: string;
     /**
     * The amount to push the column for sm screens, in terms of how many columns it should shift to the right of the total available.
     */
-    'pushSm': string;
+    'pushSm'?: string;
     /**
     * The amount to push the column for xl screens, in terms of how many columns it should shift to the right of the total available.
     */
-    'pushXl': string;
+    'pushXl'?: string;
     /**
     * The amount to push the column for xs screens, in terms of how many columns it should shift to the right of the total available.
     */
-    'pushXs': string;
+    'pushXs'?: string;
     /**
     * The size of the column, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
     */
-    'size': string;
+    'size'?: string;
     /**
     * The size of the column for lg screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
     */
-    'sizeLg': string;
+    'sizeLg'?: string;
     /**
     * The size of the column for md screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
     */
-    'sizeMd': string;
+    'sizeMd'?: string;
     /**
     * The size of the column for sm screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
     */
-    'sizeSm': string;
+    'sizeSm'?: string;
     /**
     * The size of the column for xl screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
     */
-    'sizeXl': string;
+    'sizeXl'?: string;
     /**
     * The size of the column for xs screens, in terms of how many columns it should take up out of the total available. If `"auto"` is passed, the column will be the size of its content.
     */
-    'sizeXs': string;
+    'sizeXs'?: string;
   }
   interface IonColAttributes extends StencilHTMLAttributes {
     /**
@@ -1123,11 +1123,11 @@ export namespace Components {
   }
 
   interface IonContent {
-    'color': Color;
+    'color'?: Color;
     /**
     * If true and the content does not cause an overflow scroll, the scroll interaction will cause a bounce. If the content exceeds the bounds of ionContent, nothing will change. Note, the does not disable the system bounce on iOS. That is an OS level setting.
     */
-    'forceOverscroll': boolean;
+    'forceOverscroll'?: boolean;
     /**
     * If true, the content will scroll behind the headers and footers. This effect can easily be seen by setting the toolbar to transparent.
     */
@@ -1206,15 +1206,15 @@ export namespace Components {
     /**
     * Full day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
     */
-    'dayNames': string[] | string;
+    'dayNames'?: string[] | string;
     /**
     * Short abbreviated day of the week names. This can be used to provide locale names for each day in the week. Defaults to English.
     */
-    'dayShortNames': string[] | string;
+    'dayShortNames'?: string[] | string;
     /**
     * Values used to create the list of selectable days. By default every day is shown for the given month. However, to control exactly which days of the month to display, the `dayValues` input can take a number, an array of numbers, or a string of comma separated numbers. Note that even if the array days have an invalid number for the selected month, like `31` in February, it will correctly not show days which are not valid for the selected month.
     */
-    'dayValues': number[] | number | string;
+    'dayValues'?: number[] | number | string;
     /**
     * If true, the user cannot interact with the datetime. Defaults to `false`.
     */
@@ -1230,19 +1230,19 @@ export namespace Components {
     /**
     * Values used to create the list of selectable hours. By default the hour values range from `0` to `23` for 24-hour, or `1` to `12` for 12-hour. However, to control exactly which hours to display, the `hourValues` input can take a number, an array of numbers, or a string of comma separated numbers.
     */
-    'hourValues': number[] | number | string;
+    'hourValues'?: number[] | number | string;
     /**
     * The maximum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the maximum could just be the year, such as `1994`. Defaults to the end of this year.
     */
-    'max': string;
+    'max'?: string;
     /**
     * The minimum datetime allowed. Value must be a date string following the [ISO 8601 datetime format standard](https://www.w3.org/TR/NOTE-datetime), such as `1996-12-19`. The format does not have to be specific to an exact datetime. For example, the minimum could just be the year, such as `1994`. Defaults to the beginning of the year, 100 years ago from today.
     */
-    'min': string;
+    'min'?: string;
     /**
     * Values used to create the list of selectable minutes. By default the minutes range from `0` to `59`. However, to control exactly which minutes to display, the `minuteValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if the minute selections should only be every 15 minutes, then this input value would be `minuteValues="0,15,30,45"`.
     */
-    'minuteValues': number[] | number | string;
+    'minuteValues'?: number[] | number | string;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -1250,36 +1250,36 @@ export namespace Components {
     /**
     * Full names for each month name. This can be used to provide locale month names. Defaults to English.
     */
-    'monthNames': string[] | string;
+    'monthNames'?: string[] | string;
     /**
     * Short abbreviated names for each month name. This can be used to provide locale month names. Defaults to English.
     */
-    'monthShortNames': string[] | string;
+    'monthShortNames'?: string[] | string;
     /**
     * Values used to create the list of selectable months. By default the month values range from `1` to `12`. However, to control exactly which months to display, the `monthValues` input can take a number, an array of numbers, or a string of comma separated numbers. For example, if only summer months should be shown, then this input value would be `monthValues="6,7,8"`. Note that month numbers do *not* have a zero-based index, meaning January's value is `1`, and December's is `12`.
     */
-    'monthValues': number[] | number | string;
+    'monthValues'?: number[] | number | string;
     'open': () => Promise<void>;
     /**
     * The format of the date and time picker columns the user selects. A datetime input can have one or many datetime parts, each getting their own column which allow individual selection of that particular datetime part. For example, year and month columns are two individually selectable columns which help choose an exact date from the datetime picker. Each column follows the string parse format. Defaults to use `displayFormat`.
     */
-    'pickerFormat': string;
+    'pickerFormat'?: string;
     /**
     * Any additional options that the picker interface can accept. See the [Picker API docs](../../picker/Picker) for the picker options.
     */
-    'pickerOptions': PickerOptions;
+    'pickerOptions'?: PickerOptions;
     /**
     * The text to display when there's no date selected yet. Using lowercase to match the input attribute
     */
-    'placeholder': string;
+    'placeholder'?: string;
     /**
     * the value of the datetime.
     */
-    'value': any;
+    'value'?: any;
     /**
     * Values used to create the list of selectable years. By default the year values range between the `min` and `max` datetime inputs. However, to control exactly which years to display, the `yearValues` input can take a number, an array of numbers, or string of comma separated numbers. For example, to show upcoming and recent leap years, then this input's value would be `yearValues="2024,2020,2016,2012,2008"`.
     */
-    'yearValues': number[] | number | string;
+    'yearValues'?: number[] | number | string;
   }
   interface IonDatetimeAttributes extends StencilHTMLAttributes {
     /**
@@ -1384,7 +1384,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * If true, the user cannot interact with the fab button. Defaults to `false`.
     */
@@ -1392,7 +1392,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href': string;
+    'href'?: string;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -1471,11 +1471,11 @@ export namespace Components {
     /**
     * Where to align the fab horizontally in the viewport. Possible values are: `"center"`, `"start"`, `"end"`.
     */
-    'horizontal': 'start' | 'end' | 'center';
+    'horizontal'?: 'start' | 'end' | 'center';
     /**
     * Where to align the fab vertically in the viewport. Possible values are: `"top"`, `"center"`, `"bottom"`.
     */
-    'vertical': 'top' | 'bottom' | 'center';
+    'vertical'?: 'top' | 'bottom' | 'center';
   }
   interface IonFabAttributes extends StencilHTMLAttributes {
     'activated'?: boolean;
@@ -1552,7 +1552,7 @@ export namespace Components {
     /**
     * If the current media query matches this value, the element will hide.
     */
-    'mediaQuery': string;
+    'mediaQuery'?: string;
     /**
     * If the current platform matches the given value, the element will hide. Accepts a comma separated list of modes to match against.
     */
@@ -1564,15 +1564,15 @@ export namespace Components {
     /**
     * If the current orientation matches this value, the element will hide.
     */
-    'orientation': string;
+    'orientation'?: string;
     /**
     * If the current platform matches the given value, the element will hide. Accepts a comma separated list of platforms to match against.
     */
-    'platform': string;
+    'platform'?: string;
     /**
     * If the current screen width matches the given size, the element will hide. Uses the build in sizes of xs, sm, md, lg, xl.
     */
-    'size': string;
+    'size'?: string;
   }
   interface IonHideWhenAttributes extends StencilHTMLAttributes {
     /**
@@ -1605,11 +1605,11 @@ export namespace Components {
     /**
     * This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the supported formats, or if the image is not yet downloaded.
     */
-    'alt': string;
+    'alt'?: string;
     /**
     * The image URL. This attribute is mandatory for the <img> element.
     */
-    'src': string;
+    'src'?: string;
   }
   interface IonImgAttributes extends StencilHTMLAttributes {
     /**
@@ -1630,11 +1630,11 @@ export namespace Components {
     /**
     * An animated SVG spinner that shows while loading.
     */
-    'loadingSpinner': string;
+    'loadingSpinner'?: string;
     /**
     * Optional text to display while loading.
     */
-    'loadingText': string;
+    'loadingText'?: string;
   }
   interface IonInfiniteScrollContentAttributes extends StencilHTMLAttributes {
     /**
@@ -1688,7 +1688,7 @@ export namespace Components {
     /**
     * If the value of the type attribute is `"file"`, then this attribute will indicate the types of files that the server accepts, otherwise it will be ignored. The value must be a comma-separated list of unique content type specifiers.
     */
-    'accept': string;
+    'accept'?: string;
     /**
     * Indicates whether and how the text value should be automatically capitalized as it is entered/edited by the user. Defaults to `"none"`.
     */
@@ -1712,11 +1712,11 @@ export namespace Components {
     /**
     * If true, the value will be cleared after focus upon edit. Defaults to `true` when `type` is `"password"`, `false` for all other types.
     */
-    'clearOnEdit': boolean;
+    'clearOnEdit'?: boolean;
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
     */
@@ -1729,23 +1729,23 @@ export namespace Components {
     /**
     * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
     */
-    'inputmode': string;
+    'inputmode'?: string;
     /**
     * The maximum value, which must not be less than its minimum (min attribute) value.
     */
-    'max': string;
+    'max'?: string;
     /**
     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
     */
-    'maxlength': number;
+    'maxlength'?: number;
     /**
     * The minimum value, which must not be greater than its maximum (max attribute) value.
     */
-    'min': string;
+    'min'?: string;
     /**
     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
     */
-    'minlength': number;
+    'minlength'?: number;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -1753,7 +1753,7 @@ export namespace Components {
     /**
     * If true, the user can enter more than one value. This attribute applies when the type attribute is set to `"email"` or `"file"`, otherwise it is ignored.
     */
-    'multiple': boolean;
+    'multiple'?: boolean;
     /**
     * The name of the control, which is submitted with the form data.
     */
@@ -1761,11 +1761,11 @@ export namespace Components {
     /**
     * A regular expression that the value is checked against. The pattern must match the entire value, not just some subset. Use the title attribute to describe the pattern to help the user. This attribute applies when the value of the type attribute is `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
     */
-    'pattern': string;
+    'pattern'?: string;
     /**
     * Instructional text that shows before the input has a value.
     */
-    'placeholder': string;
+    'placeholder'?: string;
     /**
     * If true, the user cannot modify the value. Defaults to `false`.
     */
@@ -1777,11 +1777,11 @@ export namespace Components {
     /**
     * This is a nonstandard attribute supported by Safari that only applies when the type is `"search"`. Its value should be a nonnegative decimal integer.
     */
-    'results': number;
+    'results'?: number;
     /**
     * The initial size of the control. This value is in pixels unless the value of the type attribute is `"text"` or `"password"`, in which case it is an integer number of characters. This attribute applies only when the `type` attribute is set to `"text"`, `"search"`, `"tel"`, `"url"`, `"email"`, or `"password"`, otherwise it is ignored.
     */
-    'size': number;
+    'size'?: number;
     /**
     * If true, the element will have its spelling and grammar checked. Defaults to `false`.
     */
@@ -1789,7 +1789,7 @@ export namespace Components {
     /**
     * Works with the min and max attributes to limit the increments at which a value can be set. Possible values are: `"any"` or a positive floating point number.
     */
-    'step': string;
+    'step'?: string;
     /**
     * The type of control to display. The default type is text. Possible values are: `"text"`, `"password"`, `"email"`, `"number"`, `"search"`, `"tel"`, or `"url"`.
     */
@@ -1946,7 +1946,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -1970,7 +1970,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * If true, the user cannot interact with the item option. Defaults to `false`.
     */
@@ -1982,7 +1982,7 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href': string;
+    'href'?: string;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -2070,11 +2070,11 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * If true, a detail arrow will appear on the item. Defaults to `false` unless the `mode` is `ios` and an `href`, `onclick` or `button` property is present.
     */
-    'detail': boolean;
+    'detail'?: boolean;
     /**
     * The icon to use when `detail` is set to `true`. Defaults to `"ios-arrow-forward"`.
     */
@@ -2086,11 +2086,11 @@ export namespace Components {
     /**
     * Contains a URL or a URL fragment that the hyperlink points to. If this property is set, an anchor tag will be rendered.
     */
-    'href': string;
+    'href'?: string;
     /**
     * How the bottom border should be displayed on the item. Available options: `"full"`, `"inset"`, `"none"`.
     */
-    'lines': 'full' | 'inset' | 'none';
+    'lines'?: 'full' | 'inset' | 'none';
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -2098,8 +2098,8 @@ export namespace Components {
     /**
     * When using a router, it specifies the transition direction when navigating to another page using `href`.
     */
-    'routerDirection': RouterDirection;
-    'state': 'valid' | 'invalid' | 'focus';
+    'routerDirection'?: RouterDirection;
+    'state'?: 'valid' | 'invalid' | 'focus';
     /**
     * The type of the button. Only used when an `onclick` or `button` property is present. Possible values are: `"submit"`, `"reset"` and `"button"`. Default value is: `"button"`
     */
@@ -2153,7 +2153,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -2161,7 +2161,7 @@ export namespace Components {
     /**
     * The position determines where and how the label behaves inside an item. Possible values are: 'inline' | 'fixed' | 'stacked' | 'floating'
     */
-    'position': 'fixed' | 'stacked' | 'floating';
+    'position'?: 'fixed' | 'stacked' | 'floating';
   }
   interface IonLabelAttributes extends StencilHTMLAttributes {
     /**
@@ -2186,7 +2186,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -2212,7 +2212,7 @@ export namespace Components {
     /**
     * How the bottom border should be displayed on all items. Available options: `"full"`, `"inset"`, `"none"`.
     */
-    'lines': 'full' | 'inset' | 'none';
+    'lines'?: 'full' | 'inset' | 'none';
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -2261,7 +2261,7 @@ export namespace Components {
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
-    'cssClass': string | string[];
+    'cssClass'?: string | string[];
     /**
     * Dismiss the loading overlay after it has been presented.
     */
@@ -2273,7 +2273,7 @@ export namespace Components {
     /**
     * Animation to use when the loading indicator is presented.
     */
-    'enterAnimation': AnimationBuilder;
+    'enterAnimation'?: AnimationBuilder;
     /**
     * If true, the keyboard will be automatically dismissed when the overlay is presented.
     */
@@ -2281,11 +2281,11 @@ export namespace Components {
     /**
     * Animation to use when the loading indicator is dismissed.
     */
-    'leaveAnimation': AnimationBuilder;
+    'leaveAnimation'?: AnimationBuilder;
     /**
     * Optional text content to display in the loading indicator.
     */
-    'message': string;
+    'message'?: string;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -2310,7 +2310,7 @@ export namespace Components {
     /**
     * The name of the spinner to display. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
     */
-    'spinner': string;
+    'spinner'?: string;
     /**
     * If true, the loading indicator will be translucent. Defaults to `false`.
     */
@@ -2400,11 +2400,11 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * Optional property that maps to a Menu's `menuId` prop. Can also be `left` or `right` for the menu side. This is used to find the correct menu to toggle
     */
-    'menu': string;
+    'menu'?: string;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -2491,7 +2491,7 @@ export namespace Components {
     /**
     * Optional property that maps to a Menu's `menuId` prop. Can also be `start` or `end` for the menu side. This is used to find the correct menu to toggle.  If this property is not used, `ion-menu-toggle` will toggle the first menu that is active.
     */
-    'menu': string;
+    'menu'?: string;
   }
   interface IonMenuToggleAttributes extends StencilHTMLAttributes {
     /**
@@ -2509,7 +2509,7 @@ export namespace Components {
     /**
     * The content's id the menu should use.
     */
-    'contentId': string;
+    'contentId'?: string;
     /**
     * If true, the menu is disabled. Default `false`.
     */
@@ -2523,7 +2523,7 @@ export namespace Components {
     /**
     * An id for the menu.
     */
-    'menuId': string;
+    'menuId'?: string;
     'open': (animated?: boolean) => Promise<boolean>;
     'setOpen': (shouldOpen: boolean, animated?: boolean) => Promise<boolean>;
     /**
@@ -2615,12 +2615,12 @@ export namespace Components {
     /**
     * The data to pass to the modal component.
     */
-    'componentProps': ComponentProps;
+    'componentProps'?: ComponentProps;
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
-    'cssClass': string | string[];
-    'delegate': FrameworkDelegate;
+    'cssClass'?: string | string[];
+    'delegate'?: FrameworkDelegate;
     /**
     * Dismiss the modal overlay after it has been presented.
     */
@@ -2628,7 +2628,7 @@ export namespace Components {
     /**
     * Animation to use when the modal is presented.
     */
-    'enterAnimation': AnimationBuilder;
+    'enterAnimation'?: AnimationBuilder;
     /**
     * If true, the keyboard will be automatically dismissed when the overlay is presented.
     */
@@ -2636,7 +2636,7 @@ export namespace Components {
     /**
     * Animation to use when the modal is dismissed.
     */
-    'leaveAnimation': AnimationBuilder;
+    'leaveAnimation'?: AnimationBuilder;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -2735,11 +2735,11 @@ export namespace Components {
     /**
     * Component to navigate to
     */
-    'component': NavComponent;
+    'component'?: NavComponent;
     /**
     * Data you want to pass to the component as props
     */
-    'componentProps': ComponentProps;
+    'componentProps'?: ComponentProps;
   }
   interface IonNavPushAttributes extends StencilHTMLAttributes {
     /**
@@ -2756,11 +2756,11 @@ export namespace Components {
     /**
     * Component you want to make root for the navigation stack
     */
-    'component': NavComponent;
+    'component'?: NavComponent;
     /**
     * Data you want to pass to the component as props
     */
-    'componentProps': ComponentProps;
+    'componentProps'?: ComponentProps;
   }
   interface IonNavSetRootAttributes extends StencilHTMLAttributes {
     /**
@@ -2782,7 +2782,7 @@ export namespace Components {
     * Returns true or false if the current view can go back
     */
     'canGoBack': (view?: ViewController | undefined) => Promise<boolean>;
-    'delegate': FrameworkDelegate;
+    'delegate'?: FrameworkDelegate;
     /**
     * Gets the active view
     */
@@ -2827,11 +2827,11 @@ export namespace Components {
     /**
     * Root NavComponent to load
     */
-    'root': NavComponent;
+    'root'?: NavComponent;
     /**
     * Any parameters for the root component
     */
-    'rootParams': ComponentProps;
+    'rootParams'?: ComponentProps;
     /**
     * Set the views of the current navigation stack and navigate to the last view. By default animations are disabled, but they can be enabled by passing options to the navigation controller.You can also pass any navigation params to the individual pages in the array.
     */
@@ -2844,7 +2844,7 @@ export namespace Components {
     /**
     * If the nav component should allow for swipe-to-go-back
     */
-    'swipeGesture': boolean;
+    'swipeGesture'?: boolean;
   }
   interface IonNavAttributes extends StencilHTMLAttributes {
     /**
@@ -2882,7 +2882,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -2933,7 +2933,7 @@ export namespace Components {
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
-    'cssClass': string | string[];
+    'cssClass'?: string | string[];
     /**
     * Dismiss the picker overlay after it has been presented.
     */
@@ -2945,7 +2945,7 @@ export namespace Components {
     /**
     * Animation to use when the picker is presented.
     */
-    'enterAnimation': AnimationBuilder;
+    'enterAnimation'?: AnimationBuilder;
     /**
     * Returns the column the matches the specified name
     */
@@ -2957,7 +2957,7 @@ export namespace Components {
     /**
     * Animation to use when the picker is dismissed.
     */
-    'leaveAnimation': AnimationBuilder;
+    'leaveAnimation'?: AnimationBuilder;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -3084,12 +3084,12 @@ export namespace Components {
     /**
     * The data to pass to the popover component.
     */
-    'componentProps': ComponentProps;
+    'componentProps'?: ComponentProps;
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
-    'cssClass': string | string[];
-    'delegate': FrameworkDelegate;
+    'cssClass'?: string | string[];
+    'delegate'?: FrameworkDelegate;
     /**
     * Dismiss the popover overlay after it has been presented.
     */
@@ -3097,7 +3097,7 @@ export namespace Components {
     /**
     * Animation to use when the popover is presented.
     */
-    'enterAnimation': AnimationBuilder;
+    'enterAnimation'?: AnimationBuilder;
     /**
     * The event to pass to the popover animation.
     */
@@ -3109,7 +3109,7 @@ export namespace Components {
     /**
     * Animation to use when the popover is dismissed.
     */
-    'leaveAnimation': AnimationBuilder;
+    'leaveAnimation'?: AnimationBuilder;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -3223,7 +3223,7 @@ export namespace Components {
     /**
     * the value of the radio group.
     */
-    'value': any | null;
+    'value'?: any | null;
   }
   interface IonRadioGroupAttributes extends StencilHTMLAttributes {
     'allowEmptySelection'?: boolean;
@@ -3250,7 +3250,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     'disabled': boolean;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
@@ -3317,7 +3317,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * How long, in milliseconds, to wait to trigger the `ionChange` event after each change in the range value. Default `0`.
     */
@@ -3428,19 +3428,19 @@ export namespace Components {
     /**
     * A static icon to display when you begin to pull down
     */
-    'pullingIcon': string;
+    'pullingIcon'?: string;
     /**
     * The text you want to display when you begin to pull down
     */
-    'pullingText': string;
+    'pullingText'?: string;
     /**
     * An animated SVG spinner that shows when refreshing begins
     */
-    'refreshingSpinner': string;
+    'refreshingSpinner'?: string;
     /**
     * The text you want to display when performing a refresh
     */
-    'refreshingText': string;
+    'refreshingText'?: string;
   }
   interface IonRefresherContentAttributes extends StencilHTMLAttributes {
     /**
@@ -3563,7 +3563,7 @@ export namespace Components {
     /**
     * A redirect route, redirects "from" a URL "to" another URL. This property is that "to" URL. When the defined `ion-route-redirect` rule matches, the router will redirect to the path specified in this property.  The value of this property is always an absolute path inside the scope of routes defined in `ion-router` it can't be used with another router or to perfom a redirection to a different domain.  Note that this is a virtual redirect, it will not cause a real browser refresh, again, it's a redirect inside the context of ion-router.  When this property is not specified or his value is `undefined` the whole redirect route is noop, even if the "from" value matches.
     */
-    'to': string;
+    'to'?: string;
   }
   interface IonRouteRedirectAttributes extends StencilHTMLAttributes {
     /**
@@ -3588,7 +3588,7 @@ export namespace Components {
     /**
     * A key value `{ 'red': true, 'blue': 'white'}` containing props that should be passed to the defined component when rendered.
     */
-    'componentProps': {[key: string]: any};
+    'componentProps'?: {[key: string]: any};
     /**
     * Relative path that needs to match in order for this route to apply.  Accepts paths similar to expressjs so that you can define parameters in the url /foo/:bar where bar would be available in incoming props.
     */
@@ -3615,9 +3615,9 @@ export namespace Components {
 
   interface IonRouterOutlet {
     'animated': boolean;
-    'animationBuilder': AnimationBuilder;
+    'animationBuilder'?: AnimationBuilder;
     'commit': (enteringEl: HTMLElement, leavingEl: HTMLElement | undefined, opts?: RouterOutletOptions | undefined) => Promise<boolean>;
-    'delegate': FrameworkDelegate;
+    'delegate'?: FrameworkDelegate;
     /**
     * Returns the ID for the current route
     */
@@ -3638,7 +3638,7 @@ export namespace Components {
   }
 
   interface IonRouter {
-    'goBack': () => Promise<void> | undefined;
+    'goBack': () => Promise<void>;
     'navChanged': (intent: number) => Promise<boolean>;
     'printDebug': () => void;
     /**
@@ -3700,11 +3700,11 @@ export namespace Components {
     /**
     * Set the clear icon. Defaults to `"close-circle"` for `ios` and `"close"` for `md`.
     */
-    'clearIcon': string;
+    'clearIcon'?: string;
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `250`.
     */
@@ -3721,7 +3721,7 @@ export namespace Components {
     /**
     * The icon to use as the search icon. Defaults to `"search"`.
     */
-    'searchIcon': string;
+    'searchIcon'?: string;
     /**
     * If true, show the cancel button. Default `false`.
     */
@@ -3834,7 +3834,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     'disabled': boolean;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
@@ -3873,7 +3873,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     'disabled': boolean;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
@@ -3882,7 +3882,7 @@ export namespace Components {
     /**
     * the value of the segment.
     */
-    'value': string | null;
+    'value'?: string | null;
   }
   interface IonSegmentAttributes extends StencilHTMLAttributes {
     /**
@@ -3916,7 +3916,7 @@ export namespace Components {
     /**
     * The text value of the option.
     */
-    'value': any;
+    'value'?: any;
   }
   interface IonSelectOptionAttributes extends StencilHTMLAttributes {
     /**
@@ -3945,11 +3945,11 @@ export namespace Components {
     /**
     * Header text for the popover
     */
-    'header': string;
+    'header'?: string;
     /**
     * Text for popover body
     */
-    'message': string;
+    'message'?: string;
     /**
     * Array of options for the popover
     */
@@ -3957,7 +3957,7 @@ export namespace Components {
     /**
     * Subheader text for the popover
     */
-    'subHeader': string;
+    'subHeader'?: string;
   }
   interface IonSelectPopoverAttributes extends StencilHTMLAttributes {
     /**
@@ -4015,15 +4015,15 @@ export namespace Components {
     /**
     * The text to display when the select is empty.
     */
-    'placeholder': string;
+    'placeholder'?: string;
     /**
     * The text to display instead of the selected option's value.
     */
-    'selectedText': string;
+    'selectedText'?: string;
     /**
     * the value of the select.
     */
-    'value': any | null;
+    'value'?: any | null;
   }
   interface IonSelectAttributes extends StencilHTMLAttributes {
     /**
@@ -4096,7 +4096,7 @@ export namespace Components {
     /**
     * If the current media query matches this value, the element will show.
     */
-    'mediaQuery': string;
+    'mediaQuery'?: string;
     /**
     * If the current platform matches the given value, the element will show. Accepts a comma separated list of modes to match against.
     */
@@ -4108,15 +4108,15 @@ export namespace Components {
     /**
     * If the current orientation matches this value, the element will show.
     */
-    'orientation': string;
+    'orientation'?: string;
     /**
     * If the current platform matches the given value, the element will show. Accepts a comma separated list of platform to match against.
     */
-    'platform': string;
+    'platform'?: string;
     /**
     * If the current screen width matches the given size, the element will show. Uses the build in sizes of xs, sm, md, lg, xl.
     */
-    'size': string;
+    'size'?: string;
   }
   interface IonShowWhenAttributes extends StencilHTMLAttributes {
     /**
@@ -4314,15 +4314,15 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * Duration of the spinner animation in milliseconds. The default varies based on the spinner.
     */
-    'duration': number;
+    'duration'?: number;
     /**
     * The name of the SVG spinner to use. If a name is not provided, the platform's default spinner will be used. Possible values are: `"lines"`, `"lines-small"`, `"dots"`, `"bubbles"`, `"circles"`, `"crescent"`.
     */
-    'name': SpinnerTypes;
+    'name'?: SpinnerTypes;
     /**
     * If true, the spinner's animation will be paused. Defaults to `false`.
     */
@@ -4384,23 +4384,23 @@ export namespace Components {
     /**
     * The badge for the tab.
     */
-    'badge': string;
+    'badge'?: string;
     /**
     * The badge color for the tab button.
     */
-    'badgeColor': Color;
+    'badgeColor'?: Color;
     /**
     * hidden
     */
-    'btnId': string;
+    'btnId'?: string;
     /**
     * The component to display inside of the tab.
     */
-    'component': ComponentRef;
+    'component'?: ComponentRef;
     /**
     * hidden
     */
-    'delegate': FrameworkDelegate;
+    'delegate'?: FrameworkDelegate;
     /**
     * If true, the user cannot interact with the tab. Defaults to `false`.
     */
@@ -4408,19 +4408,19 @@ export namespace Components {
     /**
     * The URL which will be used as the `href` within this tab's button anchor.
     */
-    'href': string;
+    'href'?: string;
     /**
     * The icon for the tab.
     */
-    'icon': string;
+    'icon'?: string;
     /**
     * The label of the tab.
     */
-    'label': string;
+    'label'?: string;
     /**
     * The name of the tab.
     */
-    'name': string;
+    'name'?: string;
     /**
     * If true, the tab will be selected. Defaults to `false`.
     */
@@ -4506,7 +4506,7 @@ export namespace Components {
   }
 
   interface IonTabbar {
-    'color': Color;
+    'color'?: Color;
     /**
     * If true, show the tab highlight bar under the selected tab.
     */
@@ -4523,7 +4523,7 @@ export namespace Components {
     /**
     * The selected tab component
     */
-    'selectedTab': HTMLIonTabElement;
+    'selectedTab'?: HTMLIonTabElement;
     /**
     * The tabs to render
     */
@@ -4570,7 +4570,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     'getRouteId': () => Promise<RouteID | undefined>;
     /**
     * Get the currently selected tab
@@ -4583,7 +4583,7 @@ export namespace Components {
     /**
     * A unique name for the tabs.
     */
-    'name': string;
+    'name'?: string;
     /**
     * Index or the Tab instance, of the tab to select.
     */
@@ -4596,15 +4596,15 @@ export namespace Components {
     /**
     * If true, show the tab highlight bar under the selected tab.
     */
-    'tabbarHighlight': boolean;
+    'tabbarHighlight'?: boolean;
     /**
     * Set the layout of the text and icon in the tabbar. Available options: `"icon-top"`, `"icon-start"`, `"icon-end"`, `"icon-bottom"`, `"icon-hide"`, `"label-hide"`.
     */
-    'tabbarLayout': TabbarLayout;
+    'tabbarLayout'?: TabbarLayout;
     /**
     * Set the position of the tabbar, relative to the content. Available options: `"top"`, `"bottom"`.
     */
-    'tabbarPlacement': TabbarPlacement;
+    'tabbarPlacement'?: TabbarPlacement;
     /**
     * If true, the tabs will be translucent. Note: In order to scroll content behind the tabs, the `fullscreen` attribute needs to be set on the content. Defaults to `false`.
     */
@@ -4669,7 +4669,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -4702,11 +4702,11 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * The visible width of the text control, in average character widths. If it is specified, it must be a positive integer.
     */
-    'cols': number;
+    'cols'?: number;
     /**
     * Set the amount of time, in milliseconds, to wait to trigger the `ionChange` event after each keystroke. Default `0`.
     */
@@ -4719,11 +4719,11 @@ export namespace Components {
     /**
     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the maximum number of characters that the user can enter.
     */
-    'maxlength': number;
+    'maxlength'?: number;
     /**
     * If the value of the type attribute is `text`, `email`, `search`, `password`, `tel`, or `url`, this attribute specifies the minimum number of characters that the user can enter.
     */
-    'minlength': number;
+    'minlength'?: number;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -4735,7 +4735,7 @@ export namespace Components {
     /**
     * Instructional text that shows before the input has a value.
     */
-    'placeholder': string;
+    'placeholder'?: string;
     /**
     * If true, the user cannot modify the value. Defaults to `false`.
     */
@@ -4747,7 +4747,7 @@ export namespace Components {
     /**
     * The number of visible text lines for the control.
     */
-    'rows': number;
+    'rows'?: number;
     /**
     * If true, the element will have its spelling and grammar checked. Defaults to `false`.
     */
@@ -4759,7 +4759,7 @@ export namespace Components {
     /**
     * Indicates how the control wraps text. Possible values are: `"hard"`, `"soft"`, `"off"`.
     */
-    'wrap': string;
+    'wrap'?: string;
   }
   interface IonTextareaAttributes extends StencilHTMLAttributes {
     /**
@@ -4863,7 +4863,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
   }
   interface IonTitleAttributes extends StencilHTMLAttributes {
     /**
@@ -4896,11 +4896,11 @@ export namespace Components {
     /**
     * Text to display in the close button.
     */
-    'closeButtonText': string;
+    'closeButtonText'?: string;
     /**
     * Additional classes to apply for custom CSS. If multiple classes are provided they should be separated by spaces.
     */
-    'cssClass': string | string[];
+    'cssClass'?: string | string[];
     /**
     * Dismiss the toast overlay after it has been presented.
     */
@@ -4912,7 +4912,7 @@ export namespace Components {
     /**
     * Animation to use when the toast is presented.
     */
-    'enterAnimation': AnimationBuilder;
+    'enterAnimation'?: AnimationBuilder;
     /**
     * If true, the keyboard will be automatically dismissed when the overlay is presented.
     */
@@ -4920,11 +4920,11 @@ export namespace Components {
     /**
     * Animation to use when the toast is dismissed.
     */
-    'leaveAnimation': AnimationBuilder;
+    'leaveAnimation'?: AnimationBuilder;
     /**
     * Message to be shown in the toast.
     */
-    'message': string;
+    'message'?: string;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -5039,7 +5039,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     'disabled': boolean;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
@@ -5098,7 +5098,7 @@ export namespace Components {
     /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
-    'color': Color;
+    'color'?: Color;
     /**
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
@@ -5128,27 +5128,27 @@ export namespace Components {
     * It is important to provide this if virtual item height will be significantly larger than the default The approximate height of each virtual item template's cell. This dimension is used to help determine how many cells should be created when initialized, and to help calculate the height of the scrollable area. This height value can only use `px` units. Note that the actual rendered size of each cell comes from the app's CSS, whereas this approximation is used to help calculate initial dimensions before the item has been rendered. Default is `45`.
     */
     'approxItemHeight': number;
-    'domRender': DomRenderFn;
+    'domRender'?: DomRenderFn;
     /**
     * Section footers and the data used within its given template can be dynamically created by passing a function to `footerFn`. The logic within the footer function can decide if the footer template should be used, and what data to give to the footer template. The function must return `null` if a footer cell shouldn't be created.
     */
-    'footerFn': HeaderFn;
+    'footerFn'?: HeaderFn;
     /**
     * Section headers and the data used within its given template can be dynamically created by passing a function to `headerFn`. For example, a large list of contacts usually has dividers between each letter in the alphabet. App's can provide their own custom `headerFn` which is called with each record within the dataset. The logic within the header function can decide if the header template should be used, and what data to give to the header template. The function must return `null` if a header cell shouldn't be created.
     */
-    'headerFn': HeaderFn;
-    'itemHeight': ItemHeightFn;
+    'headerFn'?: HeaderFn;
+    'itemHeight'?: ItemHeightFn;
     /**
     * The data that builds the templates within the virtual scroll. It's important to note that when this data has changed, then the entire virtual scroll is reset, which is an expensive operation and should be avoided if possible.
     */
-    'items': any[];
+    'items'?: any[];
     'markDirty': (offset: number, len?: number) => void;
     'markDirtyTail': () => void;
-    'nodeRender': ItemRenderFn;
+    'nodeRender'?: ItemRenderFn;
     'positionForItem': (index: number) => Promise<number>;
-    'renderFooter': (item: any, index: number) => any;
-    'renderHeader': (item: any, index: number) => any;
-    'renderItem': (item: any, index: number) => any;
+    'renderFooter'?: (item: any, index: number) => any;
+    'renderHeader'?: (item: any, index: number) => any;
+    'renderItem'?: (item: any, index: number) => any;
   }
   interface IonVirtualScrollAttributes extends StencilHTMLAttributes {
     /**
