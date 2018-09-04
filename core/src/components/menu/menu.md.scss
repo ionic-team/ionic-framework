@@ -4,10 +4,6 @@
 // Material Design Menu
 // --------------------------------------------------
 
-.menu-inner {
-  background: $menu-md-background;
-}
-
 :host(.menu-type-overlay) .menu-inner {
   box-shadow: $menu-md-box-shadow;
 }

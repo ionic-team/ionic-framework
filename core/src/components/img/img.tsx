@@ -37,7 +37,7 @@ export class Img {
   }
 
   private addIO() {
-    if (!this.src) {
+    if (this.src === undefined) {
       return;
     }
     if ('IntersectionObserver' in window) {
@@ -72,7 +72,8 @@ export class Img {
       <img
         src={this.loadSrc}
         alt={this.alt}
-        decoding="async"></img>
+        decoding="async"
+      />
     );
   }
 }

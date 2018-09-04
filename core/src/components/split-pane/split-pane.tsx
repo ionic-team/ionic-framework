@@ -99,13 +99,10 @@ export class SplitPane {
     }
 
     // When query is a string, let's find first if it is a shortcut
-    const defaultQuery = QUERY[query];
-    const mediaQuery = (defaultQuery)
-      ? defaultQuery
-      : query;
+    const mediaQuery = QUERY[query] || query;
 
     // Media query is empty or null, we hide it
-    if (!mediaQuery || mediaQuery.length === 0) {
+    if (mediaQuery.length === 0) {
       this.visible = false;
       return;
     }

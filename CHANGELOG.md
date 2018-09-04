@@ -31,6 +31,7 @@
   @import "~@ionic/core/css/padding.css";
   @import "~@ionic/core/css/float-elements.css";
   @import "~@ionic/core/css/text-alignment.css";
+  @import "~@ionic/core/css/text-transformation.css";
   @import "~@ionic/core/css/flex-utils.css";
 ```
 
@@ -46,6 +47,7 @@
   @import "~@ionic/angular/css/padding.css";
   @import "~@ionic/angular/css/float-elements.css";
   @import "~@ionic/angular/css/text-alignment.css";
+  @import "~@ionic/angular/css/text-transformation.css";
   @import "~@ionic/angular/css/flex-utils.css";
 ```
 

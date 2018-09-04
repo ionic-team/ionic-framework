@@ -60,7 +60,7 @@ export class VariableSelector {
     }
   }
 
-  render () {
+  render() {
     if (this.value instanceof Color || this.value == null) {
       const color = this.value && this.value as Color,
         value = color.hex, {r, g, b} = color.rgb;

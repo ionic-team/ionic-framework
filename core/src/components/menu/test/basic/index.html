@@ -111,20 +111,20 @@
       console.log('Open end menu');
       menu.open('end');
     }
-    function setPush() {
-      menu.get('start').type = 'push';
-      menu.get('end').type = 'push';
+    async function setPush() {
+      (await menu.get('start')).type = 'push';
+      (await menu.get('end')).type = 'push';
     }
-    function setOverlay() {
-      menu.get('start').type = 'overlay';
-      menu.get('end').type = 'overlay';
+    async function setOverlay() {
+      (await menu.get('start')).type = 'overlay';
+      (await menu.get('end')).type = 'overlay';
     }
-    function setReveal() {
-      menu.get('start').type = 'reveal';
-      menu.get('end').type = 'reveal';
+    async function setReveal() {
+      (await menu.get('start')).type = 'reveal';
+      (await menu.get('end')).type = 'reveal';
     }
-    function setEnabled() {
-      menu.get('start').swipeGesture = false;
+    async function setEnabled() {
+      (await menu.get('start')).swipeGesture = false;
     }
   </script>
 </body>

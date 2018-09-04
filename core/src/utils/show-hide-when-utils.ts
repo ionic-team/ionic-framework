@@ -36,19 +36,19 @@ function split(multiOptions: string): string[] {
 
 export function getTestResult(displayWhen: DisplayWhen) {
   const results: boolean[] = [];
-  if (displayWhen.mediaQuery) {
+  if (displayWhen.mediaQuery !== undefined) {
     results.push(matchMedia(displayWhen.win, displayWhen.mediaQuery));
   }
-  if (displayWhen.size) {
+  if (displayWhen.size !== undefined) {
     results.push(isSizeMatch(displayWhen.win, displayWhen.size));
   }
-  if (displayWhen.modes) {
+  if (displayWhen.modes !== undefined) {
     results.push(isModeMatch(displayWhen.config, displayWhen.modes));
   }
-  if (displayWhen.platform) {
+  if (displayWhen.platform !== undefined) {
     results.push(isPlatformMatch(displayWhen.win, displayWhen.platform));
   }
-  if (displayWhen.orientation) {
+  if (displayWhen.orientation !== undefined) {
     results.push(isOrientationMatch(displayWhen.win, displayWhen.orientation));
   }
 

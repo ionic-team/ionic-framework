@@ -39,13 +39,13 @@ A Picker is a dialog that displays a row of buttons and columns underneath. It a
 
 ## Methods
 
-| Method          | Description                                                                                                                       |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `dismiss`       | Dismiss the picker overlay after it has been presented.                                                                           |
-| `getColumn`     | Returns the column the matches the specified name                                                                                 |
-| `onDidDismiss`  | Returns a promise that resolves when the picker did dismiss. It also accepts a callback that is called in the same circustances.  |
-| `onWillDismiss` | Returns a promise that resolves when the picker will dismiss. It also accepts a callback that is called in the same circustances. |
-| `present`       | Present the picker overlay after it has been created.                                                                             |
+| Method          | Description                                                                                                                        |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `dismiss`       | Dismiss the picker overlay after it has been presented.                                                                            |
+| `getColumn`     | Returns the column the matches the specified name                                                                                  |
+| `onDidDismiss`  | Returns a promise that resolves when the picker did dismiss. It also accepts a callback that is called in the same circustances.   |
+| `onWillDismiss` | Returns a promise that resolves when the picker will dismiss. It also accepts a callback that is called in the same circumstances. |
+| `present`       | Present the picker overlay after it has been created.                                                                              |
 
 
 ----------------------------------------------

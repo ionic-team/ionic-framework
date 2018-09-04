@@ -102,14 +102,14 @@ export class InfiniteScroll {
     }
 
     const infiniteHeight = this.el.offsetHeight;
-    if (!infiniteHeight) {
+    if (infiniteHeight === 0) {
       // if there is no height of this element then do nothing
       return 2;
     }
     const scrollTop = scrollEl.scrollTop;
     const scrollHeight = scrollEl.scrollHeight;
     const height = scrollEl.offsetHeight;
-    const threshold = this.thrPc ? (height * this.thrPc) : this.thrPx;
+    const threshold = this.thrPc !== 0 ? (height * this.thrPc) : this.thrPx;
 
     const distanceFromInfinite = (this.position === 'bottom')
       ? scrollHeight - infiniteHeight - scrollTop - threshold - height

@@ -1,6 +1,7 @@
 import { Component, Element, Prop, QueueApi } from '@stencil/core';
 
 import { Config } from '../../interface';
+import { rIC } from '../../utils/helpers';
 import { isPlatform } from '../../utils/platform';
 
 @Component({
@@ -16,11 +17,12 @@ export class App {
   @Prop({ context: 'queue' }) queue!: QueueApi;
 
   componentDidLoad() {
-    setTimeout(() => {
+    rIC(() => {
       importTapClick(this.win);
       importInputShims(this.win, this.config);
       importStatusTap(this.win, this.queue);
-    }, 32);
+      importHardwareBackButton(this.win);
+    });
   }
 
   hostData() {
@@ -32,20 +34,30 @@ export class App {
   }
 }
 
-async function importStatusTap(win: Window, queue: QueueApi) {
+function importHardwareBackButton(win: Window) {
   if (isPlatform(win, 'hybrid')) {
-    (await import('../../utils/status-tap')).startStatusTap(win, queue);
+    // tslint:disable-next-line:no-floating-promises
+    import('../../utils/hardware-back-button').then(module => module.startHardwareBackButton(win));
   }
 }
 
-async function importTapClick(win: Window) {
-  (await import('../../utils/tap-click')).startTapClick(win.document);
+function importStatusTap(win: Window, queue: QueueApi) {
+  if (isPlatform(win, 'hybrid')) {
+    // tslint:disable-next-line:no-floating-promises
+    import('../../utils/status-tap').then(module => module.startStatusTap(win, queue));
+  }
 }
 
-async function importInputShims(win: Window, config: Config) {
+function importTapClick(win: Window) {
+  // tslint:disable-next-line:no-floating-promises
+  import('../../utils/tap-click').then(module => module.startTapClick(win.document));
+}
+
+function importInputShims(win: Window, config: Config) {
   const inputShims = config.getBoolean('inputShims', needInputShims(win));
   if (inputShims) {
-    (await import('../../utils/input-shims/input-shims')).startInputShims(win.document, config);
+    // tslint:disable-next-line:no-floating-promises
+    import('../../utils/input-shims/input-shims').then(module => module.startInputShims(win.document, config));
   }
 }
 

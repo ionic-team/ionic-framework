@@ -44,12 +44,12 @@ Modals can be created using a [Modal Controller](../../modal-controller/ModalCon
 
 ## Methods
 
-| Method          | Description                                                                                                                      |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `dismiss`       | Dismiss the modal overlay after it has been presented.                                                                           |
-| `onDidDismiss`  | Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circustances.  |
-| `onWillDismiss` | Returns a promise that resolves when the modal will dismiss. It also accepts a callback that is called in the same circustances. |
-| `present`       | Present the modal overlay after it has been created.                                                                             |
+| Method          | Description                                                                                                                       |
+| --------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `dismiss`       | Dismiss the modal overlay after it has been presented.                                                                            |
+| `onDidDismiss`  | Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circumstances.  |
+| `onWillDismiss` | Returns a promise that resolves when the modal will dismiss. It also accepts a callback that is called in the same circumstances. |
+| `present`       | Present the modal overlay after it has been created.                                                                              |
 
 
 ----------------------------------------------

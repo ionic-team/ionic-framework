@@ -1,5 +1,7 @@
 import { Component, Element, Method, Prop, QueueApi } from '@stencil/core';
 
+import { rIC } from '../../utils/helpers';
+
 @Component({
   tag: 'ion-ripple-effect',
   styleUrl: 'ripple-effect.scss',
@@ -17,11 +19,6 @@ export class RippleEffect {
    */
   @Method()
   addRipple(pageX: number, pageY: number) {
-    let rIC = (this.win as any).requestIdleCallback;
-    if (!rIC) {
-      rIC = window.requestAnimationFrame;
-    }
-
     rIC(() => this.prepareRipple(pageX, pageY));
   }
 

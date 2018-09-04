@@ -58,7 +58,7 @@ export class RouterOutlet implements NavOutlet {
 
     // commit animation
     await this.commit(enteringEl, leavingEl, opts);
-    detachComponent(this.delegate, leavingEl);
+    await detachComponent(this.delegate, leavingEl);
 
     return true;
   }
@@ -79,7 +79,7 @@ export class RouterOutlet implements NavOutlet {
 
   /** @hidden */
   @Method()
-  async setRouteId(id: string, params: any, direction: number): Promise<RouteWrite> {
+  async setRouteId(id: string, params: ComponentProps | undefined, direction: number): Promise<RouteWrite> {
     const changed = await this.setRoot(id, params, {
       duration: direction === 0 ? 0 : undefined,
       direction: direction === -1 ? 'back' : 'forward',

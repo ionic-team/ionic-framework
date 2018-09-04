@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
 
-import { Config, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
+import { BackButtonEvent, Config, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
 import { debounce } from '../../utils/helpers';
 
 import { RouterIntent } from './utils/constants';
@@ -80,6 +80,11 @@ export class Router {
     return this.writeNavStateRoot(path, direction);
   }
 
+  @Listen('window:ionBackButton')
+  protected onBackButton(ev: BackButtonEvent) {
+    ev.detail.register(0, () => this.goBack());
+  }
+
   /** Navigate to the specified URL */
   @Method()
   push(url: string, direction: RouterDirection = 'forward') {
@@ -89,6 +94,12 @@ export class Router {
     const intent = DIRECTION_TO_INTENT[direction];
     this.setPath(path, intent);
     return this.writeNavStateRoot(path, intent);
+  }
+
+  @Method()
+  goBack() {
+    this.win.history.back(1);
+    return Promise.resolve(this.waitPromise);
   }
 
   /** @hidden */
@@ -131,6 +142,7 @@ export class Router {
   private onRedirectChanged() {
     const path = this.getPath();
     if (path && routeRedirect(path, readRedirects(this.el))) {
+      // tslint:disable-next-line:no-floating-promises
       this.writeNavStateRoot(path, RouterIntent.None);
     }
   }

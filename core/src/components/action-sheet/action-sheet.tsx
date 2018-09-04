@@ -52,7 +52,7 @@ export class ActionSheet implements OverlayInterface {
   /**
    * An array of buttons for the action sheet.
    */
-  @Prop() buttons!: ActionSheetButton[];
+  @Prop() buttons!: (ActionSheetButton | string)[];
 
   /**
    * Additional classes to apply for custom CSS. If multiple classes are
@@ -125,14 +125,14 @@ export class ActionSheet implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    this.dismiss(null, BACKDROP);
+    return this.dismiss(null, BACKDROP);
   }
 
   @Listen('ionActionSheetWillDismiss')
   protected dispatchCancelHandler(ev: CustomEvent) {
     const role = ev.detail.role;
     if (isCancel(role)) {
-      const cancelButton = this.buttons.find(b => b.role === 'cancel');
+      const cancelButton = this.getButtons().find(b => b.role === 'cancel');
       this.callButtonHandler(cancelButton);
     }
   }
@@ -149,7 +149,7 @@ export class ActionSheet implements OverlayInterface {
    * Dismiss the action sheet overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<void> {
+  dismiss(data?: any, role?: string): Promise<boolean> {
     return dismiss(this, data, role, 'actionSheetLeave', iosLeaveAnimation, mdLeaveAnimation);
   }
 
@@ -176,13 +176,13 @@ export class ActionSheet implements OverlayInterface {
   private buttonClick(button: ActionSheetButton) {
     const role = button.role;
     if (isCancel(role)) {
-      this.dismiss(undefined, role);
-      return;
+      return this.dismiss(undefined, role);
     }
     const shouldDismiss = this.callButtonHandler(button);
     if (shouldDismiss) {
-      this.dismiss(undefined, button.role);
+      return this.dismiss(undefined, button.role);
     }
+    return Promise.resolve();
   }
 
   private callButtonHandler(button: ActionSheetButton | undefined): boolean {
@@ -201,6 +201,14 @@ export class ActionSheet implements OverlayInterface {
     return true;
   }
 
+  private getButtons(): ActionSheetButton[] {
+    return this.buttons.map(b => {
+      return (typeof b === 'string')
+        ? { text: b }
+        : b;
+    });
+  }
+
   hostData() {
     return {
       style: {
@@ -214,12 +222,7 @@ export class ActionSheet implements OverlayInterface {
   }
 
   render() {
-    // TODO: move to processedButtons
-    const allButtons = this.buttons.map(b => {
-      return (typeof b === 'string')
-        ? { text: b }
-        : b;
-    });
+    const allButtons = this.getButtons();
     const cancelButton = allButtons.find(b => b.role === 'cancel');
     const buttons = allButtons.filter(b => b.role !== 'cancel');
 
@@ -228,7 +231,7 @@ export class ActionSheet implements OverlayInterface {
       <div class="action-sheet-wrapper" role="dialog">
         <div class="action-sheet-container">
           <div class="action-sheet-group">
-            {this.header &&
+            {this.header !== undefined &&
               <div class="action-sheet-title">
                 {this.header}
                 {this.subHeader && <div class="action-sheet-sub-title">{this.subHeader}</div>}
@@ -273,7 +276,7 @@ export class ActionSheet implements OverlayInterface {
 function buttonClass(button: ActionSheetButton): CssClassMap {
   return {
     'action-sheet-button': true,
-    [`action-sheet-${button.role}`]: !!button.role,
+    [`action-sheet-${button.role}`]: button.role !== undefined,
     ...getClassMap(button.cssClass),
   };
 }

@@ -51,18 +51,19 @@ export class ChipButton {
   }
 
   render() {
-    const TagType = this.href ? 'a' : 'button';
+    const TagType = this.href === undefined ? 'button' : 'a';
 
     return (
       <TagType
         type="button"
         class="chip-button-native"
         disabled={this.disabled}
-        href={this.href}>
-          <span class="chip-button-inner">
-            <slot></slot>
-          </span>
-          { this.mode === 'md' && <ion-ripple-effect /> }
+        href={this.href}
+      >
+        <span class="chip-button-inner">
+          <slot></slot>
+        </span>
+        {this.mode === 'md' && <ion-ripple-effect />}
       </TagType>
     );
   }

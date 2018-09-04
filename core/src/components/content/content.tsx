@@ -190,7 +190,7 @@ export class Content {
    * Scroll to a specified X/Y location in the component
    */
   @Method()
-  async scrollToPoint(x: number | undefined, y: number | undefined, duration = 0): Promise<void> {
+  async scrollToPoint(x: number | undefined | null, y: number | undefined | null, duration = 0): Promise<void> {
     const el = this.scrollEl;
     if (duration < 32) {
       if (y != null) {
@@ -295,7 +295,8 @@ export class Content {
           'overscroll': (scrollX || scrollY) && !!forceOverscroll
         }}
         ref={el => this.scrollEl = el!}
-        onScroll={ev => this.onScroll(ev)}>
+        onScroll={ev => this.onScroll(ev)}
+      >
         <slot></slot>
       </div>,
       <slot name="fixed"></slot>
