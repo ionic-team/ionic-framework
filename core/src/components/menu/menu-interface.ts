@@ -1,4 +1,4 @@
-import { Side } from '../../interface';
+import { Animation, Side } from '../../interface';
 
 export interface MenuI {
 
@@ -14,7 +14,7 @@ export interface MenuI {
   backdropEl?: HTMLElement;
   menuInnerEl?: HTMLElement;
   contentEl?: HTMLElement;
-  menuCtrl?: HTMLIonMenuControllerElement;
+  menuCtrl?: MenuControllerI;
 
   isActive(): Promise<boolean>;
   open(animated?: boolean): Promise<boolean>;
@@ -22,6 +22,17 @@ export interface MenuI {
   toggle(animated?: boolean): Promise<boolean>;
   setOpen(shouldOpen: boolean, animated?: boolean): Promise<boolean>;
   _setOpen(shouldOpen: boolean, animated?: boolean): Promise<boolean>;
+}
+
+export interface MenuControllerI {
+  _createAnimation(type: string, menuCmp: MenuI): Promise<Animation>;
+  _setOpen(menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean>;
+  _register(menu: MenuI): void;
+  _unregister(menu: MenuI): void;
+  _setActiveMenu(menu: MenuI): void;
+
+  getMenusSync(): HTMLIonMenuElement[];
+  getOpenSync(): HTMLIonMenuElement | undefined;
 }
 
 export interface MenuChangeEvent {

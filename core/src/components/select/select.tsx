@@ -86,7 +86,7 @@ export class Select {
   /**
    * the value of the select.
    */
-  @Prop({ mutable: true }) value?: any;
+  @Prop({ mutable: true }) value?: any | null;
 
   /**
    * Emitted when the value has changed.
@@ -314,6 +314,7 @@ export class Select {
             disabled: o.disabled,
             handler: () => {
               this.value = o.value;
+              // tslint:disable-next-line:no-floating-promises
               this.close();
             }
           } as SelectPopoverOption;
@@ -368,6 +369,7 @@ export class Select {
 
     const interfaceOptions = this.interfaceOptions;
     const inputType = (this.multiple ? 'checkbox' : 'radio');
+
     const alertOpts: AlertOptions = {
       ...interfaceOptions,
 
@@ -410,10 +412,10 @@ export class Select {
   /**
    * Close the select interface.
    */
-  private close(): Promise<void> {
+  private close(): Promise<boolean> {
     // TODO check !this.overlay || !this.isFocus()
     if (!this.overlay) {
-      return Promise.resolve();
+      return Promise.resolve(false);
     }
 
     const overlay = this.overlay;
@@ -440,7 +442,7 @@ export class Select {
     if (Array.isArray(this.value)) {
       return this.value.length > 0;
     }
-    return (this.value !== null && this.value !== undefined && this.value !== '');
+    return (this.value != null && this.value !== undefined && this.value !== '');
   }
 
   private emitStyle() {
@@ -469,7 +471,7 @@ export class Select {
     let addPlaceholderClass = false;
 
     let selectText = this.selectedText || this.text;
-    if (!selectText && this.placeholder) {
+    if (selectText === undefined && this.placeholder) {
       selectText = this.placeholder;
       addPlaceholderClass = true;
     }
@@ -483,7 +485,9 @@ export class Select {
       <div
         role="textbox"
         aria-multiline="false"
-        class={ selectTextClasses }>{ selectText }
+        class={selectTextClasses}
+      >
+        {selectText}
       </div>,
       <div class="select-icon" role="presentation">
         <div class="select-icon-inner"></div>
@@ -499,9 +503,10 @@ export class Select {
         onKeyUp={this.onKeyUp.bind(this)}
         onFocus={this.onFocus.bind(this)}
         onBlur={this.onBlur.bind(this)}
-        class="select-cover">
+        class="select-cover"
+      >
         <slot></slot>
-        { this.mode === 'md' && <ion-ripple-effect /> }
+        {this.mode === 'md' && <ion-ripple-effect />}
       </button>
     ];
   }

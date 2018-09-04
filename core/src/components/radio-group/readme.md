@@ -13,12 +13,12 @@ radio button within the same group.
 
 ## Properties
 
-| Property              | Attribute               | Description                                                     | Type      |
-| --------------------- | ----------------------- | --------------------------------------------------------------- | --------- |
-| `allowEmptySelection` | `allow-empty-selection` |                                                                 | `boolean` |
-| `disabled`            | `disabled`              |                                                                 | `boolean` |
-| `name`                | `name`                  | The name of the control, which is submitted with the form data. | `string`  |
-| `value`               | --                      | the value of the radio group.                                   | `any`     |
+| Property              | Attribute               | Description                                                     | Type          |
+| --------------------- | ----------------------- | --------------------------------------------------------------- | ------------- |
+| `allowEmptySelection` | `allow-empty-selection` |                                                                 | `boolean`     |
+| `disabled`            | `disabled`              |                                                                 | `boolean`     |
+| `name`                | `name`                  | The name of the control, which is submitted with the form data. | `string`      |
+| `value`               | --                      | the value of the radio group.                                   | `any`, `null` |
 
 
 ## Events

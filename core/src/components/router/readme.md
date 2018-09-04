@@ -38,6 +38,7 @@ If you're using Angular, please see [ion-router-outlet](../router-outlet) instea
 
 | Method       | Description                   |
 | ------------ | ----------------------------- |
+| `goBack`     |                               |
 | `navChanged` |                               |
 | `printDebug` |                               |
 | `push`       | Navigate to the specified URL |

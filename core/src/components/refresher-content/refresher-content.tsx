@@ -30,10 +30,10 @@ export class RefresherContent {
   @Prop() refreshingText?: string;
 
   protected componentDidLoad() {
-    if (!this.pullingIcon) {
+    if (this.pullingIcon === undefined) {
       this.pullingIcon = this.config.get('refreshingIcon', 'arrow-down');
     }
-    if (!this.refreshingSpinner) {
+    if (this.refreshingSpinner === undefined) {
       this.refreshingSpinner = this.config.get('refreshingSpinner', this.config.get('spinner', 'lines'));
     }
   }

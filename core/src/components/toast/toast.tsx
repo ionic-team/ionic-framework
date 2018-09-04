@@ -61,7 +61,7 @@ export class Toast implements OverlayInterface {
    * How many milliseconds to wait before hiding the toast. By default, it will show
    * until `dismiss()` is called.
    */
-  @Prop() duration?: number;
+  @Prop() duration = 0;
 
   /**
    * Message to be shown in the toast.
@@ -136,7 +136,7 @@ export class Toast implements OverlayInterface {
     ev.stopPropagation();
     ev.preventDefault();
 
-    this.dismiss();
+    return this.dismiss();
   }
 
   /**
@@ -146,7 +146,7 @@ export class Toast implements OverlayInterface {
   async present(): Promise<void> {
     await present(this, 'toastEnter', iosEnterAnimation, mdEnterAnimation, this.position);
 
-    if (this.duration) {
+    if (this.duration > 0) {
       this.durationTimeout = setTimeout(() => this.dismiss(), this.duration);
     }
   }
@@ -155,7 +155,7 @@ export class Toast implements OverlayInterface {
    * Dismiss the toast overlay after it has been presented.
    */
   @Method()
-  dismiss(data?: any, role?: string): Promise<void> {
+  dismiss(data?: any, role?: string): Promise<boolean> {
     if (this.durationTimeout) {
       clearTimeout(this.durationTimeout);
     }
@@ -202,14 +202,14 @@ export class Toast implements OverlayInterface {
     return (
       <div class={wrapperClass}>
         <div class="toast-container">
-          {this.message
-            ? <div class="toast-message">{this.message}</div>
-            : null}
-          {this.showCloseButton
-            ? <ion-button fill="clear" color="light" ion-activable class="toast-button" onClick={() => this.dismiss()}>
-                {this.closeButtonText || 'Close'}
-              </ion-button>
-            : null}
+          {this.message !== undefined &&
+            <div class="toast-message">{this.message}</div>
+          }
+          {this.showCloseButton &&
+            <ion-button fill="clear" color="light" ion-activable class="toast-button" onClick={() => this.dismiss()}>
+              {this.closeButtonText || 'Close'}
+            </ion-button>
+          }
         </div>
       </div>
     );

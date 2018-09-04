@@ -75,7 +75,7 @@ export function doRender(
   dom: VirtualNode[],
   updateCellHeight: (cell: Cell, node: HTMLElement) => void
 ) {
-  const children = el.children;
+  const children = Array.from(el.children).filter(n => n.tagName !== 'TEMPLATE');
   const childrenNu = children.length;
   let child: HTMLElement;
   for (let i = 0; i < dom.length; i++) {
@@ -88,9 +88,10 @@ export function doRender(
         child = children[i] as HTMLElement;
         nodeRender(child, cell, i);
       } else {
-        child = nodeRender(null, cell, i);
+        const newChild = createNode(el, cell.type);
+        child = nodeRender(newChild, cell, i) || newChild;
         child.classList.add('virtual-item');
-        el.appendChild(child);
+        el.appendChild(child!);
       }
       (child as any)['$ionCell'] = cell;
     } else {
@@ -118,6 +119,22 @@ export function doRender(
       updateCellHeight(cell, child);
       cell.reads--;
     }
+  }
+}
+
+function createNode(el: HTMLElement, type: CellType): HTMLElement | null {
+  const template = getTemplate(el, type);
+  if (template) {
+    return el.ownerDocument.importNode(template.content, true).children[0] as HTMLElement;
+  }
+  return null;
+}
+
+function getTemplate(el: HTMLElement, type: CellType): HTMLTemplateElement | null {
+  switch (type) {
+    case CellType.Item: return el.querySelector('template:not([name])');
+    case CellType.Header: return el.querySelector('template[name=header]');
+    case CellType.Footer: return el.querySelector('template[name=footer]');
   }
 }
 
@@ -243,9 +260,9 @@ export function calcCells(
 
 export function calcHeightIndex(buf: Uint32Array, cells: Cell[], index: number): number {
   let acum = buf[index];
-  for (; index < buf.length; index++) {
-    buf[index] = acum;
-    acum += cells[index].height;
+  for (let i = index; i < buf.length; i++) {
+    buf[i] = acum;
+    acum += cells[i].height;
   }
   return acum;
 }

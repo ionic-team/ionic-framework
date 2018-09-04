@@ -6,8 +6,8 @@ import { Component, Listen, Prop, State } from '@stencil/core';
   shadow: true
 })
 export class MenuToggle {
-  @Prop({ context: 'document' })
-  doc!: Document;
+
+  @Prop({ context: 'document' }) doc!: Document;
 
   @State() visible = false;
 
@@ -30,7 +30,7 @@ export class MenuToggle {
   @Prop() autoHide = true;
 
   componentDidLoad() {
-    this.updateVisibility();
+    return this.updateVisibility();
   }
 
   @Listen('click')

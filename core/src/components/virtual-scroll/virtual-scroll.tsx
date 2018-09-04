@@ -159,9 +159,10 @@ export class VirtualScroll {
     if (!this.items) {
       return;
     }
-    if (len === -1) {
-      len = this.items.length - offset;
-    }
+    const length = (len === -1)
+      ? this.items.length - offset
+      : len;
+
     const max = this.lastItemLen;
     let j = 0;
     if (offset > 0 && offset < max) {
@@ -182,7 +183,7 @@ export class VirtualScroll {
       this.approxHeaderHeight,
       this.approxFooterHeight,
       this.approxItemHeight,
-      j, offset, len
+      j, offset, length
     );
     console.debug('[virtual] cells recalculated', cells.length);
     this.cells = inplaceUpdate(this.cells, cells, offset);
@@ -209,7 +210,7 @@ export class VirtualScroll {
     // unschedule future updates
     if (this.timerUpdate) {
       clearTimeout(this.timerUpdate);
-      this.timerUpdate = null;
+      this.timerUpdate = undefined;
     }
 
     // schedule DOM operations into the stencil queue
@@ -280,6 +281,7 @@ export class VirtualScroll {
       }
     };
     if (node && node.componentOnReady) {
+      // tslint:disable-next-line:no-floating-promises
       node.componentOnReady().then(update);
     } else {
       update();
@@ -382,7 +384,7 @@ export class VirtualScroll {
     if (this.renderItem) {
       return (
         <VirtualProxy dom={this.virtualDom}>
-          { this.virtualDom.map(node => this.renderVirtualNode(node)) }
+          {this.virtualDom.map(node => this.renderVirtualNode(node))}
         </VirtualProxy>
       );
     }

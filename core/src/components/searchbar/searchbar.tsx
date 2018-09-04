@@ -141,7 +141,7 @@ export class Searchbar {
   protected valueChanged() {
     const inputEl = this.nativeInput;
     const value = this.value;
-    if (inputEl && inputEl.value !== value) {
+    if (inputEl.value !== value) {
       inputEl.value = value;
     }
     this.ionChange.emit({ value });
@@ -154,9 +154,7 @@ export class Searchbar {
 
   @Method()
   focus() {
-    if (this.nativeInput) {
-      this.nativeInput.focus();
-    }
+    this.nativeInput.focus();
   }
 
   /**
@@ -174,7 +172,7 @@ export class Searchbar {
     // wait for 4 frames
     setTimeout(() => {
       const value = this.value;
-      if (value !== undefined && value !== '') {
+      if (value !== '') {
         this.value = '';
         this.ionInput.emit();
       }
@@ -195,7 +193,7 @@ export class Searchbar {
    * Update the Searchbar input value when the input changes
    */
   private onInput(ev: KeyboardEvent) {
-    const input = ev.target as HTMLInputElement;
+    const input = ev.target as HTMLInputElement | null;
     if (input) {
       this.value = input.value;
     }
@@ -227,7 +225,7 @@ export class Searchbar {
    */
   private positionElements() {
     const prevAlignLeft = this.shouldAlignLeft;
-    const shouldAlignLeft = (!this.animated || (this.value && this.value.toString().trim() !== '') || this.focused === true);
+    const shouldAlignLeft = (!this.animated || (this.value && this.value.toString().trim() !== '') || !!this.focused);
     this.shouldAlignLeft = shouldAlignLeft;
 
     if (this.mode !== 'ios') {
@@ -330,17 +328,19 @@ export class Searchbar {
     const clearIcon = this.clearIcon || (this.mode === 'ios' ? 'ios-close-circle' : 'md-close');
     const searchIcon = this.searchIcon || 'search';
 
-    const cancelButton = (this.showCancelButton)
-      ? <button
+    const cancelButton = this.showCancelButton && (
+      <button
         type="button"
         tabIndex={this.mode === 'ios' && !this.focused ? -1 : undefined}
         onClick={this.cancelSearchbar.bind(this)}
-        class="searchbar-cancel-button">
-          { this.mode === 'md'
-            ? <ion-icon mode={this.mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
-            : this.cancelButtonText }
+        class="searchbar-cancel-button"
+      >
+        { this.mode === 'md'
+          ? <ion-icon mode={this.mode} icon={this.cancelButtonIcon} lazy={false}></ion-icon>
+          : this.cancelButtonText
+        }
       </button>
-      : null;
+    );
 
     return [
       <div class="searchbar-input-container">
@@ -355,20 +355,22 @@ export class Searchbar {
           value={this.value}
           autoComplete={this.autocomplete}
           autoCorrect={this.autocorrect}
-          spellCheck={this.spellcheck}/>
+          spellCheck={this.spellcheck}
+        />
 
-        { this.mode === 'md' && cancelButton }
+        {this.mode === 'md' && cancelButton}
 
         <ion-icon mode={this.mode} icon={searchIcon} lazy={false} class="searchbar-search-icon"></ion-icon>
 
         <button
           type="button"
-          no-blur={true}
+          no-blur
           class="searchbar-clear-button"
           onClick={this.clearInput.bind(this)}
           onMouseDown={this.clearInput.bind(this)}
-          onTouchStart={this.clearInput.bind(this)}>
-            <ion-icon mode={this.mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
+          onTouchStart={this.clearInput.bind(this)}
+        >
+          <ion-icon mode={this.mode} icon={clearIcon} lazy={false} class="searchbar-clear-icon"></ion-icon>
         </button>
       </div>,
       this.mode === 'ios' && cancelButton

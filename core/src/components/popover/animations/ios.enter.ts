@@ -20,11 +20,11 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev
     ev && ev.target && (ev.target as HTMLElement).getBoundingClientRect();
 
   const targetTop =
-    targetDim && 'top' in targetDim
+    targetDim != null && 'top' in targetDim
       ? targetDim.top
       : bodyHeight / 2 - contentHeight / 2;
   const targetLeft =
-    targetDim && 'left' in targetDim ? targetDim.left : bodyWidth / 2;
+    targetDim != null && 'left' in targetDim ? targetDim.left : bodyWidth / 2;
   const targetWidth = (targetDim && targetDim.width) || 0;
   const targetHeight = (targetDim && targetDim.height) || 0;
 
@@ -34,7 +34,7 @@ export function iosEnterAnimation(AnimationC: Animation, baseEl: HTMLElement, ev
   const arrowWidth = arrowDim.width;
   const arrowHeight = arrowDim.height;
 
-  if (!targetDim) {
+  if (targetDim != null) {
     arrowEl.style.display = 'none';
   }
 

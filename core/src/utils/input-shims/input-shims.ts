@@ -32,12 +32,12 @@ export function startInputShims(
       return;
     }
 
-    if (HIDE_CARET && scrollEl && hideCaret && !hideCaretMap.has(componentEl)) {
+    if (HIDE_CARET && !!scrollEl && hideCaret && !hideCaretMap.has(componentEl)) {
       const rmFn = enableHideCaretOnScroll(componentEl, inputEl, scrollEl);
       hideCaretMap.set(componentEl, rmFn);
     }
 
-    if (SCROLL_ASSIST && scrollEl && scrollAssist && !scrollAssistMap.has(componentEl)) {
+    if (SCROLL_ASSIST && !!scrollEl && scrollAssist && !scrollAssistMap.has(componentEl)) {
       const rmFn = enableScrollAssist(componentEl, inputEl, scrollEl, keyboardHeight);
       scrollAssistMap.set(componentEl, rmFn);
     }

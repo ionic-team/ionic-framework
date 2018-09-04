@@ -14,6 +14,10 @@ html {
   --ion-font-family: var(--ion-default-font);
 }
 
+body.backdrop-no-scroll {
+  overflow: hidden;
+}
+
 
 // Ionic Colors
 // --------------------------------------------------

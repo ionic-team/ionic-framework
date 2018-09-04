@@ -1,6 +1,6 @@
 import { Component, Element, Event, EventEmitter, EventListenerEnable, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
-import { Animation, Config, Gesture, GestureDetail, MenuChangeEventDetail, MenuI, Mode, Side } from '../../interface';
+import { Animation, Config, Gesture, GestureDetail, MenuChangeEventDetail, MenuControllerI, MenuI, Mode, Side } from '../../interface';
 import { assert, isEndSide as isEnd } from '../../utils/helpers';
 
 @Component({
@@ -26,7 +26,7 @@ export class Menu implements MenuI {
   backdropEl?: HTMLElement;
   menuInnerEl?: HTMLElement;
   contentEl?: HTMLElement;
-  menuCtrl?: HTMLIonMenuControllerElement;
+  menuCtrl?: MenuControllerI;
 
   @Element() el!: HTMLIonMenuElement;
 
@@ -58,10 +58,12 @@ export class Menu implements MenuI {
   @Prop({ mutable: true }) type!: string;
 
   @Watch('type')
-  typeChanged(type: string, oldType: string | null) {
+  typeChanged(type: string, oldType: string | undefined) {
     const contentEl = this.contentEl;
-    if (contentEl && oldType) {
-      contentEl.classList.remove(`menu-content-${oldType}`);
+    if (contentEl) {
+      if (oldType !== undefined) {
+        contentEl.classList.remove(`menu-content-${oldType}`);
+      }
       contentEl.classList.add(`menu-content-${type}`);
       contentEl.removeAttribute('style');
     }
@@ -128,13 +130,12 @@ export class Menu implements MenuI {
   @Event() protected ionMenuChange!: EventEmitter<MenuChangeEventDetail>;
 
   async componentWillLoad() {
-    if (this.type == null) {
-      this.type = this.config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
-    }
+    this.type = this.type || this.config.get('menuType', this.mode === 'ios' ? 'reveal' : 'overlay');
+
     if (this.isServer) {
       this.disabled = true;
     } else {
-      this.menuCtrl = await this.lazyMenuCtrl.componentOnReady();
+      this.menuCtrl = await this.lazyMenuCtrl.componentOnReady().then(p => p._getInstance());
     }
   }
 
@@ -144,7 +145,7 @@ export class Menu implements MenuI {
     }
     const el = this.el;
     const parent = el.parentNode as any;
-    const content = this.contentId
+    const content = this.contentId !== undefined
       ? document.getElementById(this.contentId)
       : parent && parent.querySelector && parent.querySelector('[main]');
 
@@ -160,12 +161,12 @@ export class Menu implements MenuI {
     // add menu's content classes
     content.classList.add('menu-content');
 
-    this.typeChanged(this.type, null);
+    this.typeChanged(this.type, undefined);
     this.sideChanged();
 
     let isEnabled = !this.disabled;
-    if (isEnabled === true || typeof isEnabled === 'undefined') {
-      const menus = await this.menuCtrl!.getMenus();
+    if (isEnabled) {
+      const menus = this.menuCtrl!.getMenusSync();
       isEnabled = !menus.some((m: any) => {
         return m.side === this.side && !m.disabled;
       });
@@ -181,11 +182,11 @@ export class Menu implements MenuI {
       gestureName: 'menu-swipe',
       gesturePriority: 40,
       threshold: 10,
-      canStart: this.canStart.bind(this),
-      onWillStart: this.onWillStart.bind(this),
-      onStart: this.onStart.bind(this),
-      onMove: this.onMove.bind(this),
-      onEnd: this.onEnd.bind(this),
+      canStart: ev => this.canStart(ev),
+      onWillStart: () => this.onWillStart(),
+      onStart: () => this.onStart(),
+      onMove: ev => this.onMove(ev),
+      onEnd: ev => this.onEnd(ev),
     });
 
     // mask it as enabled / disabled
@@ -222,9 +223,10 @@ export class Menu implements MenuI {
       if (shouldClose) {
         ev.preventDefault();
         ev.stopPropagation();
-        this.close();
+        return this.close();
       }
     }
+    return Promise.resolve(false);
   }
 
   @Method()
@@ -286,7 +288,7 @@ export class Menu implements MenuI {
       this.animation = undefined;
     }
     // Create new animation
-    this.animation = await this.menuCtrl!.createAnimation(this.type, this);
+    this.animation = await this.menuCtrl!._createAnimation(this.type, this);
   }
 
   private async startAnimation(shouldOpen: boolean, animated: boolean): Promise<void> {
@@ -312,7 +314,8 @@ export class Menu implements MenuI {
     }
     if (this._isOpen) {
       return true;
-    } else if (this.menuCtrl!.getOpen()) {
+    // TODO error
+    } else if (this.menuCtrl!.getOpenSync()) {
       return false;
     }
     return checkEdgeSide(
@@ -462,7 +465,8 @@ export class Menu implements MenuI {
     assert(this._isOpen, 'menu cannot be closed');
 
     this.isAnimating = true;
-    this.startAnimation(false, false);
+    const ani = this.animation!.reverse(true);
+    ani.playSync();
     this.afterAnimation(false);
   }
 

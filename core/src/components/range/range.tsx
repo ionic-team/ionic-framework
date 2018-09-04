@@ -150,9 +150,9 @@ export class Range {
       gestureName: 'range',
       gesturePriority: 100,
       threshold: 0,
-      onStart: this.onStart.bind(this),
-      onMove: this.onMove.bind(this),
-      onEnd: this.onEnd.bind(this),
+      onStart: ev => this.onStart(ev),
+      onMove: ev => this.onMove(ev),
+      onEnd: ev => this.onEnd(ev),
     });
     this.gesture.setDisabled(this.disabled);
   }
@@ -451,9 +451,10 @@ function renderKnob({ knob, value, ratio, min, max, disabled, pressed, pin, hand
       aria-valuemin={min}
       aria-valuemax={max}
       aria-disabled={disabled ? 'true' : null}
-      aria-valuenow={value}>
-        { pin && <div class="range-pin" role="presentation">{Math.round(value)}</div>}
-        <div class="range-knob" role="presentation" />
+      aria-valuenow={value}
+    >
+      {pin && <div class="range-pin" role="presentation">{Math.round(value)}</div>}
+      <div class="range-knob" role="presentation" />
     </div>
   );
 }

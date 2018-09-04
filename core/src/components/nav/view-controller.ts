@@ -17,7 +17,7 @@ export class ViewController {
 
   constructor(
     public component: any,
-    public params: any
+    public params: ComponentProps | undefined
   ) {}
 
   /**
@@ -42,6 +42,7 @@ export class ViewController {
     const element = this.element;
     if (element) {
       if (this.delegate) {
+        // tslint:disable-next-line:no-floating-promises
         this.delegate.removeViewFromDom(element.parentElement, element);
       } else {
         element.remove();
@@ -52,7 +53,7 @@ export class ViewController {
   }
 }
 
-export function matches(view: ViewController | undefined, id: string, params: ComponentProps): view is ViewController {
+export function matches(view: ViewController | undefined, id: string, params: ComponentProps | undefined): view is ViewController {
   if (!view) {
     return false;
   }
@@ -60,18 +61,15 @@ export function matches(view: ViewController | undefined, id: string, params: Co
     return false;
   }
   const currentParams = view.params;
-  const null1 = (currentParams == null);
-  const null2 = (params == null);
+  if (!currentParams && !params) {
+    return false;
+  }
   if (currentParams === params) {
     return true;
   }
-  if (null1 !== null2) {
+  if (!currentParams || !params) {
     return false;
   }
-  if (null1 && null2) {
-    return true;
-  }
-
   const keysA = Object.keys(currentParams);
   const keysB = Object.keys(params);
   if (keysA.length !== keysB.length) {
@@ -87,7 +85,7 @@ export function matches(view: ViewController | undefined, id: string, params: Co
   return true;
 }
 
-export function convertToView(page: any, params: any): ViewController | null {
+export function convertToView(page: any, params: ComponentProps | undefined): ViewController | null {
   if (!page) {
     return null;
   }

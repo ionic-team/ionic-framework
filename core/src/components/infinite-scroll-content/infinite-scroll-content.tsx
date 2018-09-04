@@ -27,7 +27,7 @@ export class InfiniteScrollContent {
   @Prop() loadingText?: string;
 
   componentDidLoad() {
-    if (!this.loadingSpinner) {
+    if (this.loadingSpinner === undefined) {
       this.loadingSpinner = this.config.get(
         'infiniteLoadingSpinner',
         this.config.get('spinner', 'lines')
