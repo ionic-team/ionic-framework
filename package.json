@@ -26,20 +26,21 @@
     "tsc": "tsc --outdir .tmp"
   },
   "dependencies": {
-    "@angular/common": "4.4.6",
-    "@angular/compiler": "4.4.6",
-    "@angular/compiler-cli": "4.4.6",
-    "@angular/core": "4.4.6",
-    "@angular/forms": "4.4.6",
-    "@angular/http": "4.4.6",
-    "@angular/platform-browser": "4.4.6",
-    "@angular/platform-browser-dynamic": "4.4.6",
-    "ionicons": "~3.0.0",
-    "rxjs": "5.5.2",
-    "zone.js": "0.8.18"
+    "@angular/common": "6.1.0",
+    "@angular/compiler": "6.1.0",
+    "@angular/compiler-cli": "6.1.0",
+    "@angular/core": "6.1.0",
+    "@angular/forms": "6.1.0",
+    "@angular/http": "6.1.0",
+    "@angular/platform-browser": "6.1.0",
+    "@angular/platform-browser-dynamic": "6.1.0",
+    "ionicons": "3.0.0",
+    "rxjs": "6.2.2",
+    "rxjs-compat": "^6.3.1",
+    "zone.js": "0.8.26"
   },
   "devDependencies": {
-    "@ionic/app-scripts": "3.1.2",
+    "@ionic/app-scripts": "3.1.7",
     "@ionic/commit-hooks": "1.0.3",
     "@types/connect": "3.4.30",
     "@types/del": "2.2.31",
@@ -134,7 +135,7 @@
     "ts-node": "3.3.0",
     "tslint": "^5.4.3",
     "tslint-ionic-rules": "0.0.11",
-    "typescript": "~2.4.2",
+    "typescript": "2.9.2",
     "vinyl": "1.2.0",
     "yargs": "5.0.0"
   },
