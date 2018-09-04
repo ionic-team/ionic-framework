@@ -1,4 +1,4 @@
-import { CssClassMap, Mode, RouterDirection } from '../interface';
+import { Color, CssClassMap, Mode, RouterDirection } from '../interface';
 
 export function hostContext(selector: string, el: HTMLElement): boolean {
   return !!el.closest(selector);
@@ -7,8 +7,8 @@ export function hostContext(selector: string, el: HTMLElement): boolean {
 /**
  * Create the mode and color classes for the component based on the classes passed in
  */
-export function createColorClasses(color: string | undefined): CssClassMap | undefined {
-  return (color !== undefined) ? {
+export function createColorClasses(color: Color | undefined | null): CssClassMap | undefined {
+  return (color != null) ? {
     'ion-color': true,
     [`ion-color-${color}`]: true
   } : undefined;

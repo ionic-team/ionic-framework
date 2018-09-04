@@ -61,7 +61,7 @@ export class Menu implements MenuI {
   typeChanged(type: string, oldType: string | undefined) {
     const contentEl = this.contentEl;
     if (contentEl) {
-      if (oldType) {
+      if (oldType !== undefined) {
         contentEl.classList.remove(`menu-content-${oldType}`);
       }
       contentEl.classList.add(`menu-content-${type}`);

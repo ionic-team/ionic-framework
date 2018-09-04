@@ -25,7 +25,7 @@ export const TRANSFORM_PROPS: {[key: string]: number} = {
   'perspective': 1
 };
 
-const raf = window.requestAnimationFrame
+const raf = (window as any).requestAnimationFrame
   ? window.requestAnimationFrame.bind(window)
   : (f: FrameRequestCallback) => f(Date.now());
 
