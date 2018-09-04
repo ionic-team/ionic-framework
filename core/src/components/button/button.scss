@@ -4,6 +4,40 @@
 // --------------------------------------------------
 
 :host {
+  /**
+   * @prop --background: Background of the button
+   * @prop --background-activated: Background of the button when activated
+   * @prop --background-focused: Background of the button when focused
+   *
+   * @prop --color: Text color of the button
+   * @prop --color-activated: Text color of the button when activated
+   * @prop --color-focused: Text color of the button when focused
+   *
+   * @prop --width: Width of the button
+   * @prop --height: Height of the button
+   *
+   * @prop --transition: Transition of the button
+   *
+   * @prop --border-radius: Border radius of the button
+   * @prop --border-width: Border width of the button
+   * @prop --border-style: Border style of the button
+   * @prop --border-color: Border color of the button
+   *
+   * @prop --ripple-color: Color of the button ripple effect
+   *
+   * @prop --box-shadow: Box shadow of the button
+   * @prop --opacity: Opacity of the button
+   *
+   * @prop --margin-top: Margin top of the button
+   * @prop --margin-end: Margin end of the button
+   * @prop --margin-bottom: Margin bottom of the button
+   * @prop --margin-start: Margin start of the button
+   *
+   * @prop --padding-top: Padding top of the button
+   * @prop --padding-end: Padding end of the button
+   * @prop --padding-bottom: Padding bottom of the button
+   * @prop --padding-start: Padding start of the button
+   */
   --overflow: hidden;
   --ripple-color: currentColor;
 
