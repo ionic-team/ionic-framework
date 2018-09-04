@@ -1,7 +1,7 @@
 @import "./buttons.md.vars";
 @import "./buttons";
 
-// Material Design Toolbar Button Default
+// Material Design Toolbar Default Button
 // --------------------------------------------------
 
 ::slotted(*) .button {
@@ -19,6 +19,42 @@
 ::slotted(*) .button:not(.button-round) {
   --border-radius: #{$toolbar-md-button-border-radius};
 }
+
+
+// Material Design Toolbar Solid Button
+// --------------------------------------------------
+
+::slotted(*) .button.button-solid {
+  --color: #{$toolbar-md-background-color};
+  --color-activated: #{$toolbar-md-background-color};
+  --background: #{$toolbar-md-text-color};
+  --background-activated: #{$toolbar-md-text-color};
+}
+
+
+// Material Design Toolbar Outline Button
+// --------------------------------------------------
+
+::slotted(*) .button.button-outline {
+  --color: #{$toolbar-md-text-color};
+  --color-activated: #{$toolbar-md-text-color};
+  --background: transparent;
+  --background-activated: transparent;
+  --border-color: #{$toolbar-md-text-color};
+}
+
+
+// Material Design Toolbar Clear Button
+// --------------------------------------------------
+
+::slotted(*) .button.button-clear .button-native {
+  height: 45px;
+}
+
+::slotted(*) .button.button-clear.activated {
+  color: currentColor;
+}
+
 
 // Material Design Toolbar Button Icon
 // --------------------------------------------------
@@ -44,18 +80,6 @@
 
   font-size: 1.8em;
   pointer-events: none;
-}
-
-::slotted(*) .button.button-solid,
-::slotted(*) .button.button-outline {
-  --ion-color-base: #{$toolbar-md-text-color};
-  --ion-color-contrast: #{$toolbar-md-background-color};
-  --ion-color-shade: #{$toolbar-md-text-color};
-}
-
-::slotted(*) .button.button-clear {
-  --ion-color-base: currentColor;
-  --height: 45px;
 }
 
 

@@ -4,9 +4,6 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{ion-color(primary, base)};
-  --ion-color-contrast: #{ion-color(primary, contrast)};
-  --ion-color-shade: #{ion-color(primary, shade)};
   --overflow: hidden;
   --ripple-color: currentColor;
 
@@ -35,32 +32,78 @@
 // Solid Button
 // --------------------------------------------------
 
+// Default Solid Color
 :host(.button-solid) {
-  --background: #{current-color(base)};
+  --background: #{ion-color(primary, base)};
+  --background-activated: #{ion-color(primary, shade)};
+  --background-focused: #{ion-color(primary, shade)};
+  --color: #{ion-color(primary, contrast)};
+  --color-activated: #{ion-color(primary, contrast)};
+}
 
-  color: #{current-color(contrast)};
+// Solid Button with Color
+:host(.button-solid.ion-color) .button-native {
+  background: current-color(base);
+  color: current-color(contrast);
+}
+
+// Focused/Activated Solid Button with Color
+:host(.button-solid.ion-color.focused) .button-native,
+:host(.button-solid.ion-color.activated) .button-native {
+  background: #{current-color(shade)};
 }
 
 
 // Outline Button
 // --------------------------------------------------
 
+// Default Outline Color
 :host(.button-outline) {
-  --border-color: #{current-color(base)};
+  --border-color: #{ion-color(primary, base)};
   --background: transparent;
+  --color: #{ion-color(primary, base)};
+  --color-focused: #{ion-color(primary, base)};
+}
 
-  color: #{current-color(base)};
+// Outline Button with Color
+:host(.button-outline.ion-color) .button-native {
+  border-color: current-color(base);
+
+  background: transparent;
+  color: current-color(base);
+}
+
+:host(.button-outline.focused.ion-color) .button-native {
+  background: current-color(base, .1);
+  color: current-color(base);
 }
 
 
 // Clear Button
 // --------------------------------------------------
 
+// Default Clear Color
 :host(.button-clear) {
   --border-width: 0;
   --background: transparent;
+  --color: #{ion-color(primary, base)};
+}
 
-  color: #{current-color(base)};
+// Clear Button with Color
+:host(.button-clear.ion-color) .button-native {
+  background: transparent;
+  color: current-color(base);
+}
+
+// Focused Clear Button with Color
+:host(.button-clear.focused.ion-color) .button-native {
+  background: current-color(base, .1);
+  color: current-color(base);
+}
+
+// Activated Clear Button with Color
+:host(.button-clear.activated.ion-color) .button-native {
+  background: transparent;
 }
 
 
@@ -112,17 +155,17 @@
   border-left-width: 0;
 }
 
-
 .button-native {
-  @include text-inherit();
   @include border-radius(var(--border-radius));
   @include font-smoothing();
   @include margin(var(--margin-top), var(--margin-end), var(--margin-bottom), var(--margin-start));
   @include padding(var(--padding-top), var(--padding-end), var(--padding-bottom), var(--padding-start));
+  @include text-inherit();
 
   display: block;
   position: relative;
 
+  width: var(--width);
   height: var(--height);
 
   transition: var(--transition);
@@ -134,6 +177,7 @@
   outline: none;
 
   background: var(--background);
+  color: var(--color);
 
   line-height: 1;
 
@@ -153,6 +197,17 @@
   opacity: .5;
   pointer-events: none;
 }
+
+:host(.focused) .button-native {
+  background: var(--background-focused);
+  color: var(--color-focused);
+}
+
+:host(.activated) .button-native {
+  background: var(--background-activated);
+  color: var(--color-activated);
+}
+
 
 // .button > .button-container:hover {
 //   opacity: var(--opacity-hover);
