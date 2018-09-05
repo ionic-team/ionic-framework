@@ -57,12 +57,12 @@ export class SegmentButton {
   hostData() {
     const { disabled, checked, color } = this;
     return {
+      'ion-activatable': true,
       class: {
         ...createColorClasses(color),
         'segment-button-disabled': disabled,
         'segment-button-checked': checked,
-      },
-      'ion-activable': true,
+      }
     };
   }
 

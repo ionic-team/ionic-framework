@@ -149,6 +149,7 @@ export class Button {
     const { buttonType, color, expand, fill, mode, shape, size, strong } = this;
 
     return {
+      'ion-activatable': true,
       class: {
         ...createColorClasses(color),
         ...getButtonClassMap(buttonType, mode),
@@ -158,8 +159,7 @@ export class Button {
         ...getButtonTypeClassMap(buttonType, strong ? 'strong' : undefined, mode),
         ...getButtonTypeClassMap(buttonType, fill, mode),
         'focused': this.keyFocus,
-      },
-      'ion-activable': true,
+      }
     };
   }
 

@@ -75,9 +75,8 @@ export class FabButton {
   }
 
   hostData() {
-
     return {
-      'ion-activable': !this.disabled,
+      'ion-activatable': true,
       class: {
         ...createColorClasses(this.color),
         ...this.getFabClassMap(),
@@ -102,7 +101,7 @@ export class FabButton {
         <span class="fab-button-inner">
           <slot></slot>
         </span>
-        {this.mode === 'md' && <ion-ripple-effect />}
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
     );
   }

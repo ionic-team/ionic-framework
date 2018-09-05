@@ -126,7 +126,7 @@ export class Item {
     });
 
     return {
-      'ion-activable': this.isClickable(),
+      'ion-activatable': this.isClickable(),
       class: {
         ...childStyles,
         ...createColorClasses(this.color),

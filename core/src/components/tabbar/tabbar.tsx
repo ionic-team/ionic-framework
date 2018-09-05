@@ -112,7 +112,7 @@ export class Tabbar {
     return (
       <a
         role="tab"
-        ion-activable
+        ion-activatable
         aria-selected={selected ? 'true' : null}
         href={href || '#'}
         class={{

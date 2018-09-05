@@ -257,7 +257,7 @@ export class Picker implements OverlayInterface {
             <div class={buttonWrapperClass(b)}>
               <button
                 type="button"
-                ion-activable
+                ion-activatable
                 onClick={() => this.buttonClick(b)}
                 class={buttonClass(b)}
               >

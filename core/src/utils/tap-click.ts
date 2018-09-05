@@ -149,12 +149,12 @@ function getActivatableTarget(ev: any): any {
     const path = ev.composedPath() as HTMLElement[];
     for (let i = 0; i < path.length - 2; i++) {
       const el = path[i];
-      if (el.hasAttribute && el.hasAttribute('ion-activable')) {
+      if (el.hasAttribute && el.hasAttribute('ion-activatable')) {
         return el;
       }
     }
   } else {
-    return ev.target.closest('[ion-activable]');
+    return ev.target.closest('[ion-activatable]');
   }
 }
 

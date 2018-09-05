@@ -235,7 +235,7 @@ export class ActionSheet implements OverlayInterface {
               </div>
             }
             {buttons.map(b =>
-              <button type="button" ion-activable class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
+              <button type="button" ion-activatable class={buttonClass(b)} onClick={() => this.buttonClick(b)}>
                 <span class="action-sheet-button-inner">
                   {b.icon && <ion-icon icon={b.icon} lazy={false} class="action-sheet-icon" />}
                   {b.text}
@@ -247,7 +247,7 @@ export class ActionSheet implements OverlayInterface {
           {cancelButton &&
             <div class="action-sheet-group action-sheet-group-cancel">
               <button
-                ion-activable
+                ion-activatable
                 type="button"
                 class={buttonClass(cancelButton)}
                 onClick={() => this.buttonClick(cancelButton)}
