@@ -61,6 +61,36 @@ This attribute specifies the size of the button. Setting this attribute will cha
 | `ionFocus` | Emitted when the button has focus.   |
 
 
+## CSS Custom Properties
+
+| Name                     | Description                             |
+| ------------------------ | --------------------------------------- |
+| `--background`           | Background of the button                |
+| `--background-activated` | Background of the button when activated |
+| `--background-focused`   | Background of the button when focused   |
+| `--border-color`         | Border color of the button              |
+| `--border-radius`        | Border radius of the button             |
+| `--border-style`         | Border style of the button              |
+| `--border-width`         | Border width of the button              |
+| `--box-shadow`           | Box shadow of the button                |
+| `--color`                | Text color of the button                |
+| `--color-activated`      | Text color of the button when activated |
+| `--color-focused`        | Text color of the button when focused   |
+| `--height`               | Height of the button                    |
+| `--margin-bottom`        | Margin bottom of the button             |
+| `--margin-end`           | Margin end of the button                |
+| `--margin-start`         | Margin start of the button              |
+| `--margin-top`           | Margin top of the button                |
+| `--opacity`              | Opacity of the button                   |
+| `--padding-bottom`       | Padding bottom of the button            |
+| `--padding-end`          | Padding end of the button               |
+| `--padding-start`        | Padding start of the button             |
+| `--padding-top`          | Padding top of the button               |
+| `--ripple-color`         | Color of the button ripple effect       |
+| `--transition`           | Transition of the button                |
+| `--width`                | Width of the button                     |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

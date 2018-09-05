@@ -31,12 +31,7 @@
   --opacity: #{$button-ios-opacity-hover};
 }
 
-:host(.button-solid.focused) {
-  --background: #{current-color(shade)};
-}
-
 :host(.button-solid.activated) {
-  --background: #{current-color(shade)};
   --opacity: #{$button-ios-opacity-activated};
 }
 
@@ -47,22 +42,16 @@
   --border-radius: #{$button-ios-outline-border-radius};
   --border-width: #{$button-ios-outline-border-width};
   --border-style: #{$button-ios-outline-border-style};
+  --background-activated: #{ion-color(primary, base)};
+  --background-focused: #{ion-color(primary, base, .1)};
+  --color-activated: #{ion-color(primary, contrast)};
 }
 
-:host(.button-outline.activated) {
-  --background: #{current-color(base)};
-
-  color: #{current-color(contrast)};
+:host(.button-outline.activated.ion-color) .button-native {
+  background: current-color(base);
+  color: current-color(contrast);
 }
 
-:host(.button-outline.focused) {
-  --background: #{current-color(base, .1)};
-}
-
-:host(.button-outline.activated.focused) {
-  --border-color: #{current-color(shade)};
-  --background: #{current-color(shade)};
-}
 
 // iOS Clear Button
 // --------------------------------------------------
@@ -75,8 +64,11 @@
   --opacity: #{$button-ios-clear-opacity-activated};
 }
 
-:host(.button-clear.focused) {
-  --background: #{current-color(base, .1)};
+:host(.button-clear) {
+  --background-activated: transparent;
+  --background-focused: #{ion-color(primary, base, .1)};
+  --color-activated: #{ion-color(primary, base)};
+  --color-focused: #{ion-color(primary, base)};
 }
 
 
