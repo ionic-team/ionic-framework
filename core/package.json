@@ -32,6 +32,7 @@
     "@stencil/sass": "0.1.0",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.1",
+    "agadoo": "^1.0.0",
     "autoprefixer": "^9.0.2",
     "chromedriver": "^2.38.3",
     "clean-css-cli": "^4.1.11",
@@ -77,8 +78,9 @@
     "theme-builder:dev": "sd concurrent \"npm run theme-app-build -- --watch\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
     "theme-server": "node scripts/theme-builder/server.js",
     "tsc": "./node_modules/.bin/tsc -p .",
-    "validate": "npm run lint && npm run test && npm run build",
-    "validate.ci": "npm run lint && npm run test && npm run build --max-workers 1 --debug"
+    "test.treeshake": "agadoo dist/collection/index.js",
+    "validate": "npm run test.treeshake && npm run lint && npm run test && npm run build",
+    "validate.ci": "npm run test.treeshake && npm run lint && npm run test && npm run build --max-workers 1 --debug"
   },
   "author": "Ionic Team",
   "license": "MIT",
