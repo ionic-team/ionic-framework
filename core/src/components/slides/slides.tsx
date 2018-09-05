@@ -235,11 +235,7 @@ export class Slides {
    */
   @Method()
   lockSwipeToNext(shouldLockSwipeToNext: boolean) {
-    if (shouldLockSwipeToNext) {
-      this.swiper.lockSwipeToNext();
-    } else {
-      this.swiper.unlockSwipeToNext();
-    }
+    this.swiper.allowSlideNext = !shouldLockSwipeToNext;
   }
 
   /**
@@ -247,11 +243,7 @@ export class Slides {
    */
   @Method()
   lockSwipeToPrev(shouldLockSwipeToPrev: boolean) {
-    if (shouldLockSwipeToPrev) {
-      this.swiper.lockSwipeToPrev();
-    } else {
-      this.swiper.unlockSwipeToPrev();
-    }
+    this.swiper.allowSlidePrev = !shouldLockSwipeToPrev;
   }
 
   /**
@@ -259,11 +251,9 @@ export class Slides {
    */
   @Method()
   lockSwipes(shouldLockSwipes: boolean) {
-    if (shouldLockSwipes) {
-      this.swiper.lockSwipes();
-    } else {
-      this.swiper.unlockSwipes();
-    }
+    this.swiper.allowSlideNext = !shouldLockSwipes;
+    this.swiper.allowSlidePrev = !shouldLockSwipes;
+    this.swiper.allowTouchMove = !shouldLockSwipes;
   }
 
   private normalizeOptions() {
