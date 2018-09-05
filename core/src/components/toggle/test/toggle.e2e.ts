@@ -44,7 +44,7 @@ describe('toggle', () => {
     });
 
     // set unchecked
-    await toggle.setProperty('checked', false);
+    toggle.setProperty('checked', false);
 
     // wait for the changes to apply
     await page.waitForChanges();
@@ -97,7 +97,7 @@ describe('toggle', () => {
     expect(checkedValue).toBe(true);
 
     // set checked true again, no actual change
-    await toggle.setProperty('checked', true);
+    toggle.setProperty('checked', true);
 
     // wait for the changes to apply
     await page.waitForChanges();
