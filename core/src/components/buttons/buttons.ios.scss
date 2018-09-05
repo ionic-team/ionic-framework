@@ -32,12 +32,16 @@
 // iOS Toolbar Clear Button
 // --------------------------------------------------
 
-::slotted(*) .button.button-clear .button-native {
-  height: 35px;
+::slotted(*) .button-clear.activated {
+  color: $toolbar-ios-button-color;
 }
 
-::slotted(*) .button.button-clear.activated {
-  color: $toolbar-ios-button-color;
+
+// iOS Toolbar Button Solid
+// --------------------------------------------------
+
+::slotted(*) .button-solid-ios:hover {
+  opacity: .4;
 }
 
 
@@ -73,13 +77,6 @@
   pointer-events: none;
 }
 
-
-// iOS Toolbar Button Solid
-// --------------------------------------------------
-
-::slotted(*) .button.button-solid-ios:hover {
-  opacity: .4;
-}
 
 // iOS Toolbar Menu Toggle
 // --------------------------------------------------

@@ -33,7 +33,7 @@
 // Material Design Toolbar Solid Button
 // --------------------------------------------------
 
-::slotted(*) .button.button-solid {
+::slotted(*) .button-solid {
   --color: #{$toolbar-md-background-color};
   --color-activated: #{$toolbar-md-background-color};
   --background: #{$toolbar-md-text-color};
@@ -44,7 +44,7 @@
 // Material Design Toolbar Outline Button
 // --------------------------------------------------
 
-::slotted(*) .button.button-outline {
+::slotted(*) .button-outline {
   --color: #{$toolbar-md-text-color};
   --color-activated: #{$toolbar-md-text-color};
   --background: transparent;
@@ -56,14 +56,10 @@
 // Material Design Toolbar Clear Button
 // --------------------------------------------------
 
-::slotted(*) .button.button-clear {
+::slotted(*) .button-clear {
   --color: #{$toolbar-md-text-color};
   --color-activated: #{$toolbar-md-text-color};
   --background: transparent;
-}
-
-::slotted(*) .button.button-clear .button-native {
-  height: 45px;
 }
 
 
