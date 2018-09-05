@@ -186,7 +186,7 @@ export class Toggle {
   }
 
   render() {
-    renderHiddenInput(this.el, this.name, this.value, this.disabled);
+    renderHiddenInput(this.el, this.name, (this.checked ? this.value : ''), this.disabled);
 
     return [
       <div class="toggle-icon">
