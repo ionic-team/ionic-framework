@@ -5,7 +5,7 @@ import { assert, isTrueProperty } from '../../util/util';
 /**
  * @name Scroll
  * @description
- * Scroll is a non-flexboxed scroll area that can scroll horizontally or vertically. `ion-Scroll` Can be used in places where you may not need a full page scroller, but a highly customized one, such as image scubber or comment scroller.
+ * Scroll is a non-flexboxed scroll area that can scroll horizontally or vertically. `ion-scroll` Can be used in places where you may not need a full page scroller, but a highly customized one, such as image scubber or comment scroller.
  * @usage
  * ```html
  * <ion-scroll scrollX="true">
