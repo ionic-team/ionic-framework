@@ -25,14 +25,14 @@
   display: flex;
   position: relative;
 
-  color: var(--color);
-
   align-items: center;
 
   width: 100%;
-  box-sizing: border-box;
+
+  color: var(--color);
 
   font-family: $font-family-base;
+  box-sizing: border-box;
 }
 
 :host(.ion-color) {
