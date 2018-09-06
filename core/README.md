@@ -39,6 +39,10 @@ The `@ionic/core` package can by used in simple HTML, or by vanilla JavaScript w
 * [@ionic/angular](https://www.npmjs.com/package/@ionic/angular)
 
 
+## How to contribute
+
+[Check out the CONTRIBUTE guide](CONTRIBUTING.md)
+
 ## Related
 
 * [Ionic Documentation](https://ionicframework.com/docs/)
