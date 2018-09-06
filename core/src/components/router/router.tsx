@@ -66,10 +66,11 @@ export class Router {
     console.debug('[ion-router] found nav');
 
     await this.onRoutesChanged();
+  }
 
+  componentDidLoad() {
     this.win.addEventListener('ionRouteRedirectChanged', debounce(this.onRedirectChanged.bind(this), 10));
     this.win.addEventListener('ionRouteDataChanged', debounce(this.onRoutesChanged.bind(this), 100));
-    this.onRedirectChanged();
   }
 
   @Listen('window:popstate')
