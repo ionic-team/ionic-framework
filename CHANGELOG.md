@@ -1,3 +1,28 @@
+<a name="4.0.0-beta.8"></a>
+# [4.0.0-beta.8](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.7...v4.0.0-beta.8) (2018-09-06)
+
+
+### Bug Fixes
+
+* **button:** add custom properties and remove --ion-color overrides ([#15463](https://github.com/ionic-team/ionic/issues/15463)) ([3af4361](https://github.com/ionic-team/ionic/commit/3af4361)), closes [#14808](https://github.com/ionic-team/ionic/issues/14808) [#14853](https://github.com/ionic-team/ionic/issues/14853) [#14850](https://github.com/ionic-team/ionic/issues/14850)
+* **menu:** ios styles ([281f9a3](https://github.com/ionic-team/ionic/commit/281f9a3))
+* **radio:** add and document custom properties ([0f9a7b4](https://github.com/ionic-team/ionic/commit/0f9a7b4)), closes [#14850](https://github.com/ionic-team/ionic/issues/14850)
+* **searchbar:** inherit color from color toolbar ([3042f57](https://github.com/ionic-team/ionic/commit/3042f57))
+* **slides:** correct order of parameters ([6442dfc](https://github.com/ionic-team/ionic/commit/6442dfc)), closes [#15407](https://github.com/ionic-team/ionic/issues/15407)
+* **test:** treeshake check runs last ([b56f136](https://github.com/ionic-team/ionic/commit/b56f136))
+* **test:** workaround for nav tests ([a4b1179](https://github.com/ionic-team/ionic/commit/a4b1179))
+* **toggle:** empty hidden input value when not checked ([1f19862](https://github.com/ionic-team/ionic/commit/1f19862))
+
+
+### Features
+
+* **angular:** integrate back-button with ng router ([1bcca01](https://github.com/ionic-team/ionic/commit/1bcca01))
+* **app:** hardware back button support ([dfac9dc](https://github.com/ionic-team/ionic/commit/dfac9dc))
+* **overlays:** close overlay with back-button ([4ccbefa](https://github.com/ionic-team/ionic/commit/4ccbefa))
+* **virtual-scroller:** add <template> support ([d40d0a7](https://github.com/ionic-team/ionic/commit/d40d0a7))
+
+
+
 <a name="4.0.0-beta.7"></a>
 # [4.0.0-beta.7](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.6...v4.0.0-beta.7) (2018-08-30)
 
