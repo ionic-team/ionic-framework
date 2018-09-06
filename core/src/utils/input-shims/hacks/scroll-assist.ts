@@ -75,7 +75,7 @@ function jsSetFocus(
   });
 }
 
-function hasPointerMoved(threshold: number, startCoord: PointerCoordinates, endCoord: PointerCoordinates) {
+function hasPointerMoved(threshold: number, startCoord: PointerCoordinates | undefined, endCoord: PointerCoordinates | undefined) {
   if (startCoord && endCoord) {
     const deltaX = (startCoord.x - endCoord.x);
     const deltaY = (startCoord.y - endCoord.y);

@@ -234,9 +234,9 @@ export class ItemSliding {
 
     this.setOpenAmount(restingPoint, true);
 
-    if (this.state & SlidingState.SwipeEnd && this.rightOptions) {
+    if ((this.state & SlidingState.SwipeEnd) !== 0 && this.rightOptions) {
       this.rightOptions.fireSwipeEvent();
-    } else if (this.state & SlidingState.SwipeStart && this.leftOptions) {
+    } else if ((this.state & SlidingState.SwipeStart) !== 0 && this.leftOptions) {
       this.leftOptions.fireSwipeEvent();
     }
   }

@@ -1,7 +1,7 @@
 import { Color, CssClassMap, Mode, RouterDirection } from '../interface';
 
 export function hostContext(selector: string, el: HTMLElement): boolean {
-  return !!el.closest(selector);
+  return el.closest(selector) !== null;
 }
 
 /**
@@ -38,8 +38,8 @@ export function getClassMap(classes: string | string[] | undefined): CssClassMap
   return map;
 }
 
-export async function openURL(win: Window, url: string | undefined, ev: Event | undefined | null, direction?: RouterDirection): Promise<boolean> {
-  if (url && url[0] !== '#' && url.indexOf('://') === -1) {
+export async function openURL(win: Window, url: string | undefined | null, ev: Event | undefined | null, direction?: RouterDirection): Promise<boolean> {
+  if (url != null && url[0] !== '#' && url.indexOf('://') === -1) {
     const router = win.document.querySelector('ion-router');
     if (router) {
       if (ev != null) {

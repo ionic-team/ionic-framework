@@ -219,7 +219,7 @@ export class Router {
     let resolve!: () => void;
     this.waitPromise = new Promise(r => resolve = r);
 
-    if (p) {
+    if (p !== undefined) {
       await p;
     }
     return resolve;

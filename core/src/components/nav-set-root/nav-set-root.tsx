@@ -23,7 +23,7 @@ export class NavSetRoot {
   push() {
     const nav = this.el.closest('ion-nav');
     const toPush = this.component;
-    if (nav && toPush) {
+    if (nav && toPush !== undefined) {
       return nav.setRoot(toPush, this.componentProps, { skipIfBusy: true });
     }
     return Promise.resolve(false);

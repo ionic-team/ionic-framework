@@ -27,7 +27,7 @@
     "ionicons": "4.4.3"
   },
   "devDependencies": {
-    "@stencil/core": "0.13.0-3",
+    "@stencil/core": "0.13.0-4",
     "@stencil/dev-server": "latest",
     "@stencil/sass": "0.1.0",
     "@stencil/utils": "latest",
@@ -44,7 +44,7 @@
     "stylelint": "^9.4.0",
     "stylelint-order": "^0.8.1",
     "tslint": "^5.10.0",
-    "tslint-ionic-rules": "0.0.18",
+    "tslint-ionic-rules": "0.0.19",
     "tslint-react": "^3.6.0",
     "typescript": "^2.9.2",
     "yargs": "^12.0.1"
