@@ -1,4 +1,4 @@
-import { TestWindow } from '@stencil/core/dist/testing';
+import { mockWindow } from '@stencil/core/testing';
 
 import { RouteChain, RouteID } from '../utils/interface';
 import { routerIDsToChain, routerPathToChain } from '../utils/matching';
@@ -47,7 +47,7 @@ describe('ionic-conference-app', () => {
 
   let win: Window;
   beforeEach(() => {
-    win = new TestWindow() as any;
+    win = mockWindow();
   });
 
   function conferenceAppRouting() {

@@ -1,6 +1,7 @@
 import { Injectable, Optional } from '@angular/core';
 import { Location } from '@angular/common';
 import { NavigationExtras, Router, UrlTree } from '@angular/router';
+import { BackButtonEvent } from '@ionic/core';
 
 export const enum NavIntent {
   Auto,
@@ -19,7 +20,11 @@ export class NavController {
   constructor(
     private location: Location,
     @Optional() private router?: Router
-  ) {}
+  ) {
+    window && window.addEventListener('ionBackButton', (ev) => {
+      (ev as BackButtonEvent).detail.register(0, () => this.goBack());
+    });
+  }
 
   navigateForward(url: string | UrlTree | any[], animated?: boolean, extras?: NavigationExtras) {
     this.setIntent(NavIntent.Forward, animated);

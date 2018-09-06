@@ -131,7 +131,7 @@ export class Tab {
   }
 
   private prepareLazyLoaded(): Promise<HTMLElement | void> {
-    if (!this.loaded && this.component) {
+    if (!this.loaded && this.component != null) {
       this.loaded = true;
       return attachComponent(this.delegate, this.el, this.component, ['ion-page']);
     }

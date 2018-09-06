@@ -471,7 +471,7 @@ export class Select {
     let addPlaceholderClass = false;
 
     let selectText = this.selectedText || this.text;
-    if (selectText === undefined && this.placeholder) {
+    if (selectText === undefined && this.placeholder !== undefined) {
       selectText = this.placeholder;
       addPlaceholderClass = true;
     }

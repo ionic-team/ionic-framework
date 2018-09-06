@@ -11,11 +11,11 @@ export function renderDatetime(template: string, value: DatetimeData | undefined
       const token = '{' + index + '}';
       const text = renderTextFormat(format.f, (value as any)[format.k], value, locale);
 
-      if (!hasText && text && (value as any)[format.k] != null) {
+      if (!hasText && text !== undefined && (value as any)[format.k] != null) {
         hasText = true;
       }
 
-      tokens.push(token, text);
+      tokens.push(token, text || '');
 
       template = template.replace(format.f, token);
     }
@@ -32,7 +32,7 @@ export function renderDatetime(template: string, value: DatetimeData | undefined
   return template;
 }
 
-export function renderTextFormat(format: string, value: any, date: DatetimeData | undefined, locale: LocaleData): string {
+export function renderTextFormat(format: string, value: any, date: DatetimeData | undefined, locale: LocaleData): string | undefined {
   if ((format === FORMAT_DDDD || format === FORMAT_DDD)) {
     try {
       value = (new Date(date!.year!, date!.month! - 1, date!.day)).getDay();
@@ -47,7 +47,7 @@ export function renderTextFormat(format: string, value: any, date: DatetimeData 
       // ignore
     }
 
-    return '';
+    return undefined;
   }
 
   if (format === FORMAT_A) {

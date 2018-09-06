@@ -59,6 +59,12 @@ exports.config = {
       file: 'stats.json'
     }
   ],
+  testing: {
+    emulate: [
+      { device: 'iPhone X' },
+      { device: 'Pixel 2' }
+    ]
+  },
   copy: [{ src: '**/*.scss' }],
   preamble: '(C) Ionic http://ionicframework.com - MIT License',
   globalScript: 'src/global/ionic-global.ts',

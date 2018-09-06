@@ -436,7 +436,7 @@ export class Nav implements NavOutlet {
   }
 
   private canGoBackSync(view = this.getActiveSync()): boolean {
-    return !!(view && this.getPrevious(view));
+    return !!(view && this.getPreviousSync(view));
   }
 
   private getPreviousSync(view = this.getActiveSync()): ViewController | undefined {

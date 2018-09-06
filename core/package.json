@@ -1,6 +1,6 @@
 {
   "name": "@ionic/core",
-  "version": "4.0.0-beta.7",
+  "version": "4.0.0-beta.8",
   "description": "Base components for Ionic",
   "keywords": [
     "ionic",
@@ -27,22 +27,24 @@
     "ionicons": "4.4.3"
   },
   "devDependencies": {
-    "@stencil/core": "0.13.0-0",
+    "@stencil/core": "0.13.0-4",
     "@stencil/dev-server": "latest",
     "@stencil/sass": "0.1.0",
     "@stencil/utils": "latest",
     "@types/jest": "^23.3.1",
+    "agadoo": "^1.0.0",
     "autoprefixer": "^9.0.2",
     "chromedriver": "^2.38.3",
     "clean-css-cli": "^4.1.11",
-    "jest": "^23.4.2",
+    "jest": "23.5.0",
     "mocha": "^4.0.1",
     "np": "^3.0.4",
+    "puppeteer": "1.7.0",
     "selenium-webdriver": "^3.6.0",
     "stylelint": "^9.4.0",
     "stylelint-order": "^0.8.1",
     "tslint": "^5.10.0",
-    "tslint-ionic-rules": "0.0.18",
+    "tslint-ionic-rules": "0.0.19",
     "tslint-react": "^3.6.0",
     "typescript": "^2.9.2",
     "yargs": "^12.0.1"
@@ -67,15 +69,18 @@
     "lint.ts.fix": "tslint --project . --fix",
     "prerelease": "npm run validate && np prerelease --yolo --any-branch --tag next",
     "snapshot": "node ./scripts/e2e --snapshot",
-    "test": "jest",
+    "test": "stencil test --spec",
+    "test.e2e": "stencil test --e2e",
+    "test.screenshot": "stencil test --e2e --screenshot --compare",
     "test.watch": "jest --watch --no-cache",
     "theme-app-build": "stencil build --dev --config scripts/theme-builder/stencil.config.js",
     "theme-builder": "sd concurrent \"npm run theme-app-build\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
     "theme-builder:dev": "sd concurrent \"npm run theme-app-build -- --watch\" \"stencil build --dev --watch\" \"stencil-dev-server\" \"npm run theme-server\" ",
     "theme-server": "node scripts/theme-builder/server.js",
     "tsc": "./node_modules/.bin/tsc -p .",
-    "validate": "npm run lint && npm run test && npm run build",
-    "validate.ci": "npm run lint && npm run test && npm run build --max-workers 1 --debug"
+    "test.treeshake": "agadoo dist/collection/index.js",
+    "validate": "npm run lint && npm run test && npm run build && npm run test.treeshake",
+    "validate.ci": "npm run lint && npm run test && npm run build --max-workers 1 --debug && npm run test.treeshake"
   },
   "author": "Ionic Team",
   "license": "MIT",
@@ -86,18 +91,5 @@
   "bugs": {
     "url": "https://github.com/ionic-team/ionic/issues"
   },
-  "homepage": "https://github.com/ionic-team/ionic#readme",
-  "jest": {
-    "transform": {
-      "^.+\\.(js|ts|tsx)$": "<rootDir>/node_modules/@stencil/core/testing/jest.preprocessor.js"
-    },
-    "testRegex": "src/.*\\.spec\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "d.ts"
-    ]
-  }
+  "homepage": "https://github.com/ionic-team/ionic#readme"
 }

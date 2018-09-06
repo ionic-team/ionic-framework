@@ -1,4 +1,4 @@
-import { TestWindow } from '@stencil/core/dist/testing';
+import { mockWindow } from '@stencil/core/testing';
 
 import { Config } from '../../../global/config';
 import { ComponentProps } from '../../../interface';
@@ -888,11 +888,15 @@ describe('NavController', () => {
       ionViewWillUnload: jest.spyOn(element, 'ionViewWillUnload'),
     };
 
-    element.addEventListener('ionViewWillEnter', element.ionViewWillEnter);
-    element.addEventListener('ionViewDidEnter', element.ionViewDidEnter);
-    element.addEventListener('ionViewWillLeave', element.ionViewWillLeave);
-    element.addEventListener('ionViewDidLeave', element.ionViewDidLeave);
-    element.addEventListener('ionViewWillUnload', element.ionViewWillUnload);
+    element.dispatchEvent = (ev: CustomEvent) => {
+      switch(ev.type) {
+        case 'ionViewWillEnter': element.ionViewWillEnter(); break;
+        case 'ionViewDidEnter': element.ionViewDidEnter(); break;
+        case 'ionViewWillLeave': element.ionViewWillLeave(); break;
+        case 'ionViewDidLeave': element.ionViewDidLeave(); break;
+        case 'ionViewWillUnload': element.ionViewWillUnload(); break;
+      }
+    };
     return instance;
   }
 
@@ -902,7 +906,7 @@ describe('NavController', () => {
 
   beforeEach(async () => {
     trnsDone = jest.fn();
-    win = new TestWindow();
+    win = mockWindow();
     nav = mockNavController();
   });
 

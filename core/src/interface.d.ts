@@ -37,7 +37,7 @@ export type PredefinedColors = 'primary' | 'secondary' | 'tertiary' | 'success' 
 export type Color = PredefinedColors | string;
 export type Mode = 'ios' | 'md';
 export type ComponentTags = keyof StencilIntrinsicElements;
-export type ComponentRef = Function | HTMLElement | string;
+export type ComponentRef = Function | HTMLElement | string | null;
 export type ComponentProps<T = null> = T extends ComponentTags ? StencilIntrinsicElements[T] : {[key: string]: any};
 export type CssClassMap = { [className: string]: boolean };
 export type BackButtonEvent = CustomEvent<{
