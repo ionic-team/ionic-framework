@@ -89,6 +89,9 @@ export class Router {
   /** Navigate to the specified URL */
   @Method()
   push(url: string, direction: RouterDirection = 'forward') {
+    if (url.startsWith('.')) {
+      url = (new URL(url, window.location.href)).pathname;
+    }
     console.debug('[ion-router] URL pushed -> updating nav', url, direction);
 
     const path = parsePath(url);
