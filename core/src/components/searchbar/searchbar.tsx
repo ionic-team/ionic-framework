@@ -184,9 +184,15 @@ export class Searchbar {
    * the clearInput function doesn't want the input to blur
    * then calls the custom cancel function if the user passed one in.
    */
-  private cancelSearchbar() {
+  private cancelSearchbar(ev?: Event) {
+    if (ev) {
+      ev.preventDefault();
+      ev.stopPropagation();
+    }
     this.ionCancel.emit();
     this.clearInput();
+
+    this.nativeInput.blur();
   }
 
   /**
@@ -332,7 +338,8 @@ export class Searchbar {
       <button
         type="button"
         tabIndex={this.mode === 'ios' && !this.focused ? -1 : undefined}
-        onClick={this.cancelSearchbar.bind(this)}
+        onMouseDown={this.cancelSearchbar.bind(this)}
+        onTouchStart={this.cancelSearchbar.bind(this)}
         class="searchbar-cancel-button"
       >
         { this.mode === 'md'
@@ -366,7 +373,6 @@ export class Searchbar {
           type="button"
           no-blur
           class="searchbar-clear-button"
-          onClick={this.clearInput.bind(this)}
           onMouseDown={this.clearInput.bind(this)}
           onTouchStart={this.clearInput.bind(this)}
         >

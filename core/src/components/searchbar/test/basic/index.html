@@ -114,12 +114,16 @@
           dynamicProp.spellcheck = propIsSpellcheck;
         }
 
-        const searchbars = document.querySelectorAll('ion-searchbar')
-        for (let i = 0; i < searchbars.length; i++) {
-          searchbars[i].addEventListener('ionChange', (ev) => {
-            console.log(ev);
-          })
-        }
+        const content = document.querySelector('#content')
+        content.addEventListener('ionChange', (ev) => {
+          console.log(ev);
+        });
+        content.addEventListener('ionCancel', (ev) => {
+          console.log(ev);
+        });
+        content.addEventListener('ionClear', (ev) => {
+          console.log(ev);
+        });
       </script>
     </ion-content>
 
