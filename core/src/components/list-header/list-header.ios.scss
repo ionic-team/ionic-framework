@@ -5,8 +5,8 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: #{$list-ios-header-background-color};
-  --ion-color-contrast: #{$list-ios-header-color};
+  --background: #{$list-ios-header-background-color};
+  --color: #{$list-ios-header-color};
 
   @include padding-horizontal($list-ios-header-padding-start, null);
 

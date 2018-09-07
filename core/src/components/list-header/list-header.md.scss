@@ -5,8 +5,8 @@
 // --------------------------------------------------
 
 :host {
-  --ion-color-base: transparent;
-  --ion-color-contrast: #{$list-md-header-color};
+  --background: transparent;
+  --color: #{$list-md-header-color};
 
   @include padding-horizontal($list-md-header-padding-start, null);
   @include margin(null, null, $list-md-header-margin-bottom, null);
