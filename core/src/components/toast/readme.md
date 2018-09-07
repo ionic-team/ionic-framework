@@ -51,12 +51,12 @@ The toast can be dismissed automatically after a specific amount of time by pass
 
 ## Methods
 
-| Method          | Description                                                                                                                      |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| `dismiss`       | Dismiss the toast overlay after it has been presented.                                                                           |
-| `onDidDismiss`  | Returns a promise that resolves when the toast did dismiss. It also accepts a callback that is called in the same circustances.  |
-| `onWillDismiss` | Returns a promise that resolves when the toast will dismiss. It also accepts a callback that is called in the same circustances. |
-| `present`       | Present the toast overlay after it has been created.                                                                             |
+| Method          | Description                                                  |
+| --------------- | ------------------------------------------------------------ |
+| `dismiss`       | Dismiss the toast overlay after it has been presented.       |
+| `onDidDismiss`  | Returns a promise that resolves when the toast did dismiss.  |
+| `onWillDismiss` | Returns a promise that resolves when the toast will dismiss. |
+| `present`       | Present the toast overlay after it has been created.         |
 
 
 ## CSS Custom Properties

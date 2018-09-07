@@ -126,11 +126,11 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback that is called in the same circustances.
+    * Returns a promise that resolves when the action-sheet did dismiss.
     */
     'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
-    * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback that is called in the same circustances.
+    * Returns a promise that resolves when the action-sheet will dismiss.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayIndex': number;
@@ -285,11 +285,11 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circumstances.
+    * Returns a promise that resolves when the alert did dismiss.
     */
     'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
-    * Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circumstances.
+    * Returns a promise that resolves when the alert will dismiss.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayIndex': number;
@@ -2291,11 +2291,11 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * Returns a promise that resolves when the loading did dismiss. It also accepts a callback that is called in the same circumstances.
+    * Returns a promise that resolves when the loading did dismiss.
     */
     'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
-    * Returns a promise that resolves when the loading will dismiss. It also accepts a callback that is called in the same circumstances.
+    * Returns a promise that resolves when the loading will dismiss.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayIndex': number;
@@ -2642,11 +2642,11 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * Returns a promise that resolves when the modal did dismiss. It also accepts a callback that is called in the same circumstances.
+    * Returns a promise that resolves when the modal did dismiss.
     */
     'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
-    * Returns a promise that resolves when the modal will dismiss. It also accepts a callback that is called in the same circumstances.
+    * Returns a promise that resolves when the modal will dismiss.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayIndex': number;
@@ -2963,11 +2963,11 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * Returns a promise that resolves when the picker did dismiss. It also accepts a callback that is called in the same circustances.
+    * Returns a promise that resolves when the picker did dismiss.
     */
     'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
-    * Returns a promise that resolves when the picker will dismiss. It also accepts a callback that is called in the same circumstances.
+    * Returns a promise that resolves when the picker will dismiss.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayIndex': number;
@@ -3115,11 +3115,11 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * Returns a promise that resolves when the popover did dismiss. It also accepts a callback that is called in the same circustances.
+    * Returns a promise that resolves when the popover did dismiss.
     */
     'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
-    * Returns a promise that resolves when the popover will dismiss. It also accepts a callback that is called in the same circustances.
+    * Returns a promise that resolves when the popover will dismiss.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayIndex': number;
@@ -4930,11 +4930,11 @@ export namespace Components {
     */
     'mode': Mode;
     /**
-    * Returns a promise that resolves when the toast did dismiss. It also accepts a callback that is called in the same circustances.
+    * Returns a promise that resolves when the toast did dismiss.
     */
     'onDidDismiss': () => Promise<OverlayEventDetail<any>>;
     /**
-    * Returns a promise that resolves when the toast will dismiss. It also accepts a callback that is called in the same circustances.
+    * Returns a promise that resolves when the toast will dismiss.
     */
     'onWillDismiss': () => Promise<OverlayEventDetail<any>>;
     'overlayIndex': number;

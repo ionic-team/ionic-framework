@@ -57,12 +57,12 @@ Alerts can also include several different inputs whose data can be passed back t
 
 ## Methods
 
-| Method          | Description                                                                                                                       |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `dismiss`       | Dismiss the alert overlay after it has been presented.                                                                            |
-| `onDidDismiss`  | Returns a promise that resolves when the alert did dismiss. It also accepts a callback that is called in the same circumstances.  |
-| `onWillDismiss` | Returns a promise that resolves when the alert will dismiss. It also accepts a callback that is called in the same circumstances. |
-| `present`       | Present the alert overlay after it has been created.                                                                              |
+| Method          | Description                                                  |
+| --------------- | ------------------------------------------------------------ |
+| `dismiss`       | Dismiss the alert overlay after it has been presented.       |
+| `onDidDismiss`  | Returns a promise that resolves when the alert did dismiss.  |
+| `onWillDismiss` | Returns a promise that resolves when the alert will dismiss. |
+| `present`       | Present the alert overlay after it has been created.         |
 
 
 ----------------------------------------------

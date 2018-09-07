@@ -36,7 +36,7 @@ export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts:
 function closeTopOverlay(doc: Document) {
   const lastOverlay = getOverlay(doc);
   if (lastOverlay && lastOverlay.backdropDismiss) {
-    return lastOverlay.dismiss(null, BACKDROP);
+    return lastOverlay.dismiss(undefined, BACKDROP);
   }
   return Promise.resolve();
 }

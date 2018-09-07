@@ -181,7 +181,7 @@ export class Alert implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    return this.dismiss(null, BACKDROP);
+    return this.dismiss(undefined, BACKDROP);
   }
 
   @Listen('ionAlertWillDismiss')
@@ -210,8 +210,7 @@ export class Alert implements OverlayInterface {
   }
 
   /**
-   * Returns a promise that resolves when the alert did dismiss. It also accepts a callback
-   * that is called in the same circumstances.
+   * Returns a promise that resolves when the alert did dismiss.
    *
    */
   @Method()
@@ -220,8 +219,7 @@ export class Alert implements OverlayInterface {
   }
 
   /**
-   * Returns a promise that resolves when the alert will dismiss. It also accepts a callback
-   * that is called in the same circumstances.
+   * Returns a promise that resolves when the alert will dismiss.
    *
    */
   @Method()

@@ -46,12 +46,12 @@ A button's `role` property can either be `destructive` or `cancel`. Buttons with
 
 ## Methods
 
-| Method          | Description                                                                                                                             |
-| --------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| `dismiss`       | Dismiss the action sheet overlay after it has been presented.                                                                           |
-| `onDidDismiss`  | Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback that is called in the same circustances.  |
-| `onWillDismiss` | Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback that is called in the same circustances. |
-| `present`       | Present the action sheet overlay after it has been created.                                                                             |
+| Method          | Description                                                         |
+| --------------- | ------------------------------------------------------------------- |
+| `dismiss`       | Dismiss the action sheet overlay after it has been presented.       |
+| `onDidDismiss`  | Returns a promise that resolves when the action-sheet did dismiss.  |
+| `onWillDismiss` | Returns a promise that resolves when the action-sheet will dismiss. |
+| `present`       | Present the action sheet overlay after it has been created.         |
 
 
 ----------------------------------------------

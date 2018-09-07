@@ -137,7 +137,7 @@ export class Loading implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    return this.dismiss(null, BACKDROP);
+    return this.dismiss(undefined, BACKDROP);
   }
 
   /**
@@ -167,8 +167,7 @@ export class Loading implements OverlayInterface {
   }
 
   /**
-   * Returns a promise that resolves when the loading did dismiss. It also accepts a callback
-   * that is called in the same circumstances.
+   * Returns a promise that resolves when the loading did dismiss.
    */
   @Method()
   onDidDismiss(): Promise<OverlayEventDetail> {
@@ -176,8 +175,7 @@ export class Loading implements OverlayInterface {
   }
 
   /**
-   * Returns a promise that resolves when the loading will dismiss. It also accepts a callback
-   * that is called in the same circumstances.
+   * Returns a promise that resolves when the loading will dismiss.
    */
   @Method()
   onWillDismiss(): Promise<OverlayEventDetail> {

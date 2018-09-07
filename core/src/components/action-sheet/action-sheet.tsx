@@ -125,7 +125,7 @@ export class ActionSheet implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    return this.dismiss(null, BACKDROP);
+    return this.dismiss(undefined, BACKDROP);
   }
 
   @Listen('ionActionSheetWillDismiss')
@@ -154,9 +154,7 @@ export class ActionSheet implements OverlayInterface {
   }
 
   /**
-   * Returns a promise that resolves when the action-sheet did dismiss. It also accepts a callback
-   * that is called in the same circustances.
-   *
+   * Returns a promise that resolves when the action-sheet did dismiss.
    */
   @Method()
   onDidDismiss(): Promise<OverlayEventDetail> {
@@ -164,8 +162,7 @@ export class ActionSheet implements OverlayInterface {
   }
 
   /**
-   * Returns a promise that resolves when the action-sheet will dismiss. It also accepts a callback
-   * that is called in the same circustances.
+   * Returns a promise that resolves when the action-sheet will dismiss.
    *
    */
   @Method()

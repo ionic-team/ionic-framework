@@ -142,7 +142,7 @@ export class Popover implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    return this.dismiss(null, BACKDROP);
+    return this.dismiss(undefined, BACKDROP);
   }
 
   @Listen('ionPopoverDidPresent')
@@ -196,9 +196,7 @@ export class Popover implements OverlayInterface {
   }
 
   /**
-   * Returns a promise that resolves when the popover did dismiss. It also accepts a callback
-   * that is called in the same circustances.
-   *
+   * Returns a promise that resolves when the popover did dismiss.
    */
   @Method()
   onDidDismiss(): Promise<OverlayEventDetail> {
@@ -206,9 +204,7 @@ export class Popover implements OverlayInterface {
   }
 
   /**
-   * Returns a promise that resolves when the popover will dismiss. It also accepts a callback
-   * that is called in the same circustances.
-   *
+   * Returns a promise that resolves when the popover will dismiss.
    */
   @Method()
   onWillDismiss(): Promise<OverlayEventDetail> {

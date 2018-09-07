@@ -48,12 +48,12 @@ To present a popover, call the `present` method on a popover instance. In order 
 
 ## Methods
 
-| Method          | Description                                                                                                                        |
-| --------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
-| `dismiss`       | Dismiss the popover overlay after it has been presented.                                                                           |
-| `onDidDismiss`  | Returns a promise that resolves when the popover did dismiss. It also accepts a callback that is called in the same circustances.  |
-| `onWillDismiss` | Returns a promise that resolves when the popover will dismiss. It also accepts a callback that is called in the same circustances. |
-| `present`       | Present the popover overlay after it has been created.                                                                             |
+| Method          | Description                                                    |
+| --------------- | -------------------------------------------------------------- |
+| `dismiss`       | Dismiss the popover overlay after it has been presented.       |
+| `onDidDismiss`  | Returns a promise that resolves when the popover did dismiss.  |
+| `onWillDismiss` | Returns a promise that resolves when the popover will dismiss. |
+| `present`       | Present the popover overlay after it has been created.         |
 
 
 ----------------------------------------------

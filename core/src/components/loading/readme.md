@@ -49,12 +49,12 @@ The loading indicator can be dismissed automatically after a specific amount of 
 
 ## Methods
 
-| Method          | Description                                                                                                                         |
-| --------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `dismiss`       | Dismiss the loading overlay after it has been presented.                                                                            |
-| `onDidDismiss`  | Returns a promise that resolves when the loading did dismiss. It also accepts a callback that is called in the same circumstances.  |
-| `onWillDismiss` | Returns a promise that resolves when the loading will dismiss. It also accepts a callback that is called in the same circumstances. |
-| `present`       | Present the loading overlay after it has been created.                                                                              |
+| Method          | Description                                                    |
+| --------------- | -------------------------------------------------------------- |
+| `dismiss`       | Dismiss the loading overlay after it has been presented.       |
+| `onDidDismiss`  | Returns a promise that resolves when the loading did dismiss.  |
+| `onWillDismiss` | Returns a promise that resolves when the loading will dismiss. |
+| `present`       | Present the loading overlay after it has been created.         |
 
 
 ----------------------------------------------
