@@ -99,6 +99,21 @@
       </ion-list>
 
       <ion-button onclick="elTest()">Test</ion-button>
+
+      <ion-list>
+        <ion-list-header>
+          Coupled sliders
+        </ion-list-header>
+        <ion-item>
+          <ion-range min="0" value="0" max="50" id="minRange"></ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-range min="50" value="100" max="100" id="maxRange"></ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-range min="0" value="50" max="100" id="targetRange"></ion-range>
+        </ion-item>
+      </ion-list>
     </ion-content>
 
   </ion-app>
@@ -168,6 +183,18 @@
       var range = document.getElementById('range');
       range.disabled = !range.disabled;
     }
+
+    const minRange = document.getElementById('minRange');
+    const maxRange = document.getElementById('maxRange');
+    const targetRange = document.getElementById('targetRange');
+
+    minRange.addEventListener('ionChange', function(ev) {
+      targetRange.min = ev.detail.value;
+    })
+
+    maxRange.addEventListener('ionChange', function(ev) {
+      targetRange.max = ev.detail.value;
+    })
   </script>
 </body>
 
