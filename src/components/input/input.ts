@@ -12,8 +12,8 @@ import {
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
-import { Subject } from 'rxjs/Subject';
-import 'rxjs/add/operator/takeUntil';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { App } from '../app/app';
 import { Config } from '../../config/config';
@@ -546,11 +546,15 @@ export class TextInput extends BaseInput<string> implements IonicFormInput {
     console.debug('Input: enableHideCaretOnScroll');
 
     content.ionScrollStart
-      .takeUntil(this._onDestroy)
+      .pipe(
+        takeUntil(this._onDestroy)
+      )
       .subscribe(() => scrollHideCaret(true));
 
     content.ionScrollEnd
-      .takeUntil(this._onDestroy)
+      .pipe(
+        takeUntil(this._onDestroy)
+      )
       .subscribe(() => scrollHideCaret(false));
 
     this.ionBlur.subscribe(() => this._relocateInput(false));
