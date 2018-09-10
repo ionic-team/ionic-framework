@@ -16,7 +16,8 @@
 ```
 
 ```typescript
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { InfiniteScroll } from '@ionic/angular';
 
 @Component({
   selector: 'infinite-scroll-example',
