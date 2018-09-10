@@ -47,6 +47,7 @@ stale:
   exemptLabels:
     - good first issue
     - triage
+  exemptAssigned: true
   exemptProjects: true
   exemptMilestones: true
   label: "ionitron: stale issue"
