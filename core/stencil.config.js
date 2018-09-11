@@ -52,7 +52,8 @@ exports.config = {
   ],
   outputTargets: [
     {
-      type: 'dist'
+      type: 'dist',
+      esmLoaderPath: '../loader'
     },
     {
       type: 'stats',
