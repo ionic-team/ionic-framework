@@ -107,7 +107,9 @@ export class StackController {
     const containerEl = this.containerEl;
     if (enteringEl && enteringEl !== leavingEl) {
       enteringEl.classList.add('ion-page', 'ion-page-invisible');
-      containerEl.appendChild(enteringEl);
+      if (enteringEl.parentElement !== containerEl) {
+        containerEl.appendChild(enteringEl);
+      }
 
       await containerEl.componentOnReady();
       await containerEl.commit(enteringEl, leavingEl, {
