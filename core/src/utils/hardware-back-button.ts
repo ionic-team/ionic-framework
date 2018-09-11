@@ -23,7 +23,7 @@ export function startHardwareBackButton(win: Window) {
         }
       }
     });
-    win.dispatchEvent(ev);
+    win.document.body.dispatchEvent(ev);
 
     if (handlers.length > 0) {
       let selectedPriority = Number.MIN_SAFE_INTEGER;

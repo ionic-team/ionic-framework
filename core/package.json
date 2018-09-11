@@ -21,7 +21,8 @@
   "unpkg": "dist/ionic.js",
   "files": [
     "dist/",
-    "css/"
+    "css/",
+    "loader/"
   ],
   "dependencies": {
     "ionicons": "4.4.3"
