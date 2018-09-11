@@ -44,6 +44,11 @@ export type BackButtonEvent = CustomEvent<{
   register(priority: number, handler: () => Promise<any> | void): void;
 }>
 
+export interface FrameworkDelegate {
+  attachViewToDom(container: any, component: any, propsOrDataObj?: any, cssClasses?: string[]): Promise<HTMLElement>;
+  removeViewFromDom(container: any, component: any): Promise<void>;
+}
+
 declare global {
   interface StencilGlobalHTMLAttributes {
     // for ion-menu and ion-split-pane

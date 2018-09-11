@@ -1,52 +1,4 @@
-import { Mode } from '../interface';
-
-export interface IonicConfig {
-  /**
-   * The mode determines which platform styles to use.
-   * Possible values are: `"ios"` or `"md"`.
-   */
-  mode?: Mode;
-  persistConfig?: boolean;
-
-  inputShims?: boolean;
-  backButtonIcon?: string;
-  backButtonText?: string;
-  spinner?: string;
-  loadingSpinner?: string;
-  menuIcon?: string;
-  animated?: boolean;
-  pickerSpinner?: string;
-  refreshingIcon?: string;
-  refreshingSpinner?: string;
-  menuType?: string;
-  scrollPadding?: string;
-  inputBlurring?: string;
-  scrollAssist?: boolean;
-  hideCaretOnScroll?: string;
-  infiniteLoadingSpinner?: string;
-  keyboardHeight?: number;
-  swipeBackEnabled?: boolean;
-
-  tabbarPlacement?: string;
-  tabbarLayout?: string;
-  tabbarHighlight?: boolean;
-
-  actionSheetEnter?: string;
-  alertEnter?: string;
-  loadingEnter?: string;
-  modalEnter?: string;
-  popoverEnter?: string;
-  toastEnter?: string;
-  pickerEnter?: string;
-
-  actionSheetLeave?: string;
-  alertLeave?: string;
-  loadingLeave?: string;
-  modalLeave?: string;
-  popoverLeave?: string;
-  toastLeave?: string;
-  pickerLeave?: string;
-}
+import { IonicConfig } from '../interface';
 
 export class Config {
 
@@ -80,4 +32,44 @@ export class Config {
   set(key: keyof IonicConfig, value: any) {
     this.m.set(key, value);
   }
+}
+
+const IONIC_PREFIX = 'ionic:';
+const IONIC_SESSION_KEY = 'ionic-persist-config';
+
+export function configFromSession(): any {
+  try {
+    const configStr = window.sessionStorage.getItem(IONIC_SESSION_KEY);
+    return configStr !== null ? JSON.parse(configStr) : {};
+  } catch {
+    return {};
+  }
+}
+
+export function saveConfig(config: any) {
+  try {
+    window.sessionStorage.setItem(IONIC_SESSION_KEY, JSON.stringify(config));
+  } catch {
+    return;
+  }
+}
+
+export function configFromURL() {
+  const config: any = {};
+  const win = window;
+  win.location.search.slice(1)
+    .split('&')
+    .map(entry => entry.split('='))
+    .map(([key, value]) => [decodeURIComponent(key), decodeURIComponent(value)])
+    .filter(([key]) => startsWith(key, IONIC_PREFIX))
+    .map(([key, value]) => [key.slice(IONIC_PREFIX.length), value])
+    .forEach(([key, value]) => {
+      config[key] = value;
+    });
+
+  return config;
+}
+
+function startsWith(input: string, search: string): boolean {
+  return input.substr(0, search.length) === search;
 }

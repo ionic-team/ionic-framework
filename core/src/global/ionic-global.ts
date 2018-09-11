@@ -1,9 +1,8 @@
 import 'ionicons';
 
-import { configFromSession, configFromURL, saveConfig } from '../utils/config';
 import { isPlatform, setupPlatforms } from '../utils/platform';
 
-import { Config } from './config';
+import { Config, configFromSession, configFromURL, saveConfig } from './config';
 
 const win = window;
 const Ionic = (win as any)['Ionic'] = (win as any)['Ionic'] || {};
