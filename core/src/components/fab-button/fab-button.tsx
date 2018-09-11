@@ -1,7 +1,7 @@
 import { Component, Element, Prop } from '@stencil/core';
 
-import { Color, CssClassMap, Mode } from '../../interface';
-import { createColorClasses } from '../../utils/theme';
+import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
+import { createColorClasses, openURL } from '../../utils/theme';
 
 @Component({
   tag: 'ion-fab-button',
@@ -13,6 +13,8 @@ import { createColorClasses } from '../../utils/theme';
 })
 export class FabButton {
   private inList = false;
+
+  @Prop({ context: 'window' }) win!: Window;
 
   @Element() el!: HTMLElement;
 
@@ -38,6 +40,12 @@ export class FabButton {
    * If true, the user cannot interact with the fab button. Defaults to `false`.
    */
   @Prop() disabled = false;
+
+  /**
+   * When using a router, it specifies the transition direction when navigating to
+   * another page using `href`.
+   */
+  @Prop() routerDirection?: RouterDirection;
 
   /**
    * Contains a URL or a URL fragment that the hyperlink points to.
@@ -94,6 +102,7 @@ export class FabButton {
         class="fab-button-native"
         disabled={this.disabled}
         href={this.href}
+        onClick={ev => openURL(this.win, this.href, ev, this.routerDirection)}
       >
         <span class="fab-button-close-icon">
           <ion-icon name="close" lazy={false}></ion-icon>

@@ -1398,6 +1398,10 @@ export namespace Components {
     */
     'mode': Mode;
     /**
+    * When using a router, it specifies the transition direction when navigating to another page using `href`.
+    */
+    'routerDirection'?: RouterDirection;
+    /**
     * If true, the fab button will show when in a fab-list.
     */
     'show': boolean;
@@ -1427,6 +1431,10 @@ export namespace Components {
     * The mode determines which platform styles to use. Possible values are: `"ios"` or `"md"`.
     */
     'mode'?: Mode;
+    /**
+    * When using a router, it specifies the transition direction when navigating to another page using `href`.
+    */
+    'routerDirection'?: RouterDirection;
     /**
     * If true, the fab button will show when in a fab-list.
     */
