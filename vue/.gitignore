@@ -9,6 +9,7 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+test-report.xml
 
 !.gitignore
 !.editorconfig
