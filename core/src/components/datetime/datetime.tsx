@@ -538,7 +538,7 @@ export class Datetime {
         onClick={this.open.bind(this)}
         class="datetime-cover"
       >
-        {this.mode === 'md' && <ion-ripple-effect />}
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </button>
     ];
   }

@@ -506,7 +506,7 @@ export class Select {
         class="select-cover"
       >
         <slot></slot>
-        {this.mode === 'md' && <ion-ripple-effect />}
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </button>
     ];
   }

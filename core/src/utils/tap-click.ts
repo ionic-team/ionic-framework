@@ -77,7 +77,7 @@ export function startTapClick(doc: Document) {
 
     const { x, y } = pointerCoord(ev);
 
-    // unactivate selected
+    // deactivate selected
     if (activatableEle) {
       if (clearDefers.has(activatableEle)) {
         throw new Error('internal error');

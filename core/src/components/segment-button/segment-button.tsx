@@ -76,7 +76,7 @@ export class SegmentButton {
         onClick={() => this.checked = true}
       >
         <slot></slot>
-        {this.mode === 'md' && <ion-ripple-effect />}
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </button>
     ];
   }
