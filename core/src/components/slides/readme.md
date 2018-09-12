@@ -76,6 +76,7 @@ Licensed under MIT
 | ---------------------------- | ------------------------------------------ |
 | `--bullet-background`        | Background of the pagination bullets       |
 | `--bullet-background-active` | Background of the active pagination bullet |
+| `--pagination-bottom`        | Value of the pagination bottom property    |
 
 
 ----------------------------------------------

@@ -55,3 +55,13 @@
 .swiper-scrollbar-drag {
   background: var(--scroll-bar-background-active);
 }
+
+
+// Pagination
+// Rewrite vendor styles
+// --------------------------------------------------
+.swiper-pagination-fraction,
+.swiper-pagination-custom,
+.swiper-container-horizontal > .swiper-pagination-bullets {
+  bottom: var(--pagination-bottom);
+}

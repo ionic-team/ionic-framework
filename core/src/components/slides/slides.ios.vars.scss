@@ -26,3 +26,6 @@ $slides-ios-scroll-bar-drag-background-alpha:     .5 !default;
 
 /// @prop - Background color of the scroll bar drag handle
 $slides-ios-scroll-bar-drag-background:           rgba(var(--ion-text-color-rgb, $text-color-rgb), $slides-ios-scroll-bar-drag-background-alpha) !default;
+
+/// @prop - Value of the pagination bottom property
+$slides-ios-pagination-bottom:                     10px !default;

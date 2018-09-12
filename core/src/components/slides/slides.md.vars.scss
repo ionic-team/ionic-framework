@@ -26,3 +26,6 @@ $slides-md-scroll-bar-drag-background-alpha:    .5 !default;
 
 /// @prop - Background color of the scroll bar drag handle
 $slides-md-scroll-bar-drag-background:          rgba(var(--ion-text-color-rgb, $text-color-rgb), $slides-md-scroll-bar-drag-background-alpha) !default;
+
+/// @prop - Value of the pagination bottom property
+$slides-md-pagination-bottom:                   10px !default;
