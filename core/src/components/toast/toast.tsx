@@ -174,6 +174,9 @@ export class Toast implements OverlayInterface {
     const themedClasses = this.translucent ? createThemedClasses(this.mode, 'toast-translucent') : {};
 
     return {
+      style: {
+        zIndex: 60000 + this.overlayIndex,
+      },
       class: {
         ...themedClasses,
         ...createThemedClasses(this.mode, 'toast'),

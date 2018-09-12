@@ -189,7 +189,7 @@ export class Loading implements OverlayInterface {
 
     return {
       style: {
-        zIndex: 20000 + this.overlayIndex
+        zIndex: 40000 + this.overlayIndex
       },
       class: {
         ...createThemedClasses(this.mode, 'loading'),
