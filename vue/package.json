@@ -36,9 +36,10 @@
     "delegate"
   ],
   "scripts": {
-    "dev": "rollup -c ./build/rollup.config.js",
-    "watch": "rollup -w -c ./build/rollup.config.js",
-    "prod": "NODE_ENV=production rollup -c ./build/rollup.config.js --configProd",
+    "dev": "rollup -c",
+    "watch": "rollup -c -w",
+    "build": "NODE_ENV=production rollup -c --configProd",
+    "clean": "node scripts/clean.js",
     "lint": "eslint src/**/* test/**/*",
     "test": "jest --coverage --verbose"
   },
@@ -52,24 +53,19 @@
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-vue": "^4.5.0",
+    "fs-extra": "^7.0.0",
     "jest": "^23.4.2",
     "jest-sonar-reporter": "^2.0.0",
     "jest-vue-preprocessor": "^1.4.0",
     "rollup": "^0.62.0",
     "rollup-plugin-buble": "^0.19.2",
     "rollup-plugin-terser": "^1.0.1",
-    "rollup-plugin-vue": "^4.3.0",
-    "@vue/test-utils": "^1.0.0-beta.24"
+    "rollup-plugin-vue": "^4.3.0"
   },
-  "peerDependencies": {
-    "vue": "^2.5.16",
-    "vue-template-compiler": "^2.5.16",
+  "dependencies": {
+    "vue": "^2.5.17",
+    "vue-template-compiler": "^2.5.17",
     "vue-router": "^3.0.1",
     "@ionic/core": "4.0.0-beta.8"
-  },
-  "jestSonar": {
-    "reportPath": "reports",
-    "reportFile": "test-report.xml",
-    "indent": 4
   }
 }
