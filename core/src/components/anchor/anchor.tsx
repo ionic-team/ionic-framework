@@ -33,7 +33,8 @@ export class Anchor {
 
   hostData() {
     return {
-      class: createColorClasses(this.color)
+      class: createColorClasses(this.color),
+      'ion-activatable': true
     };
   }
 
