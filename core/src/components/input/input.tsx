@@ -181,7 +181,7 @@ export class Input {
   @Watch('value')
   protected valueChanged() {
     const inputEl = this.nativeInput;
-    const value = this.value;
+    const value = this.getValue();
     if (inputEl && inputEl.value !== value) {
       inputEl.value = value;
     }
@@ -251,6 +251,10 @@ export class Input {
     }
   }
 
+  private getValue(): string {
+    return this.value || '';
+  }
+
   private emitStyle() {
     this.ionStyle.emit({
       'interactive': true,
@@ -313,7 +317,7 @@ export class Input {
   }
 
   private hasValue(): boolean {
-    return this.value.length > 0;
+    return this.getValue().length > 0;
   }
 
   hostData() {
@@ -329,7 +333,7 @@ export class Input {
   }
 
   render() {
-    renderHiddenInput(this.el, this.name, this.value, this.disabled);
+    renderHiddenInput(this.el, this.name, this.getValue(), this.disabled);
 
     return [
       <input
@@ -358,7 +362,7 @@ export class Input {
         step={this.step}
         size={this.size}
         type={this.type}
-        value={this.value}
+        value={this.getValue()}
         onInput={this.onInput.bind(this)}
         onBlur={this.onBlur.bind(this)}
         onFocus={this.onFocus.bind(this)}
