@@ -145,20 +145,12 @@ export class Slides {
   }
 
   /**
-   * Calls true if the swiper core is initialized
-   */
-  @Method()
-  ready(): Promise<boolean> {
-    return this.readyPromise;
-  }
-
-  /**
    * Update the underlying slider implementation. Call this if you've added or removed
    * child slides.
    */
   @Method()
   async update() {
-    await this.ready();
+    await this.waitUntilReady();
     this.swiper.update();
   }
 
@@ -167,7 +159,7 @@ export class Slides {
    */
   @Method()
   async slideTo(index: number, speed?: number, runCallbacks?: boolean) {
-    await this.ready();
+    await this.waitUntilReady();
     this.swiper.slideTo(index, speed, runCallbacks);
   }
 
@@ -176,7 +168,7 @@ export class Slides {
    */
   @Method()
   async slideNext(speed?: number, runCallbacks?: boolean) {
-    await this.ready();
+    await this.waitUntilReady();
     this.swiper.slideNext(speed, runCallbacks);
   }
 
@@ -185,7 +177,7 @@ export class Slides {
    */
   @Method()
   async slidePrev(speed?: number, runCallbacks?: boolean) {
-    await this.ready();
+    await this.waitUntilReady();
     this.swiper.slidePrev(speed, runCallbacks);
   }
 
@@ -194,7 +186,7 @@ export class Slides {
    */
   @Method()
   async getActiveIndex(): Promise<number> {
-    await this.ready();
+    await this.waitUntilReady();
     return Promise.resolve(this.swiper.activeIndex);
   }
 
@@ -203,7 +195,7 @@ export class Slides {
    */
   @Method()
   async getPreviousIndex(): Promise<number> {
-    await this.ready();
+    await this.waitUntilReady();
     return Promise.resolve(this.swiper.previousIndex);
   }
 
@@ -212,7 +204,7 @@ export class Slides {
    */
   @Method()
   async length(): Promise<number> {
-    await this.ready();
+    await this.waitUntilReady();
     return Promise.resolve(this.swiper.slides.length);
   }
 
@@ -222,7 +214,7 @@ export class Slides {
    */
   @Method()
   async isEnd(): Promise<boolean> {
-    await this.ready();
+    await this.waitUntilReady();
     return Promise.resolve(this.swiper.isEnd);
   }
 
@@ -231,7 +223,7 @@ export class Slides {
    */
   @Method()
   async isBeginning(): Promise<boolean> {
-    await this.ready();
+    await this.waitUntilReady();
     return Promise.resolve(this.swiper.isBeginning);
   }
 
@@ -240,7 +232,7 @@ export class Slides {
    */
   @Method()
   async startAutoplay() {
-    await this.ready();
+    await this.waitUntilReady();
     this.swiper.autoplay.start();
   }
 
@@ -249,7 +241,7 @@ export class Slides {
    */
   @Method()
   async stopAutoplay() {
-    await this.ready();
+    await this.waitUntilReady();
     this.swiper.autoplay.stop();
   }
 
@@ -258,7 +250,7 @@ export class Slides {
    */
   @Method()
   async lockSwipeToNext(shouldLockSwipeToNext: boolean) {
-    await this.ready();
+    await this.waitUntilReady();
     this.swiper.allowSlideNext = !shouldLockSwipeToNext;
   }
 
@@ -267,7 +259,7 @@ export class Slides {
    */
   @Method()
   async lockSwipeToPrev(shouldLockSwipeToPrev: boolean) {
-    await this.ready();
+    await this.waitUntilReady();
     this.swiper.allowSlidePrev = !shouldLockSwipeToPrev;
   }
 
@@ -276,11 +268,18 @@ export class Slides {
    */
   @Method()
   async lockSwipes(shouldLockSwipes: boolean) {
-    await this.ready();
+    await this.waitUntilReady();
     this.swiper.allowSlideNext = !shouldLockSwipes;
     this.swiper.allowSlidePrev = !shouldLockSwipes;
     this.swiper.allowTouchMove = !shouldLockSwipes;
 
+  }
+
+  /**
+   * Calls true if the swiper core is initialized
+   */
+  private waitUntilReady(): Promise<boolean> {
+    return this.readyPromise;
   }
 
   private normalizeOptions() {
