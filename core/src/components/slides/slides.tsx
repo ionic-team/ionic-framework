@@ -18,6 +18,9 @@ export class Slides {
   private container!: HTMLElement;
   private swiper: any;
 
+  private readyResolve: any;
+  private readyPromise: Promise<boolean> = new Promise(resolve => { this.readyResolve = resolve; });
+
   mode!: Mode;
 
   @Element() el!: HTMLStencilElement;
@@ -138,6 +141,15 @@ export class Slides {
     const finalOptions = this.normalizeOptions();
     // init swiper core
     this.swiper = new Swiper(this.container, finalOptions);
+    this.readyResolve(true);
+  }
+
+  /**
+   * Calls true if the swiper core is initialized
+   */
+  @Method()
+  ready(): Promise<boolean> {
+    return this.readyPromise;
   }
 
   /**
@@ -145,7 +157,8 @@ export class Slides {
    * child slides.
    */
   @Method()
-  update() {
+  async update() {
+    await this.ready();
     this.swiper.update();
   }
 
@@ -153,7 +166,8 @@ export class Slides {
    * Transition to the specified slide.
    */
   @Method()
-  slideTo(index: number, speed?: number, runCallbacks?: boolean) {
+  async slideTo(index: number, speed?: number, runCallbacks?: boolean) {
+    await this.ready();
     this.swiper.slideTo(index, speed, runCallbacks);
   }
 
@@ -161,7 +175,8 @@ export class Slides {
    * Transition to the next slide.
    */
   @Method()
-  slideNext(speed?: number, runCallbacks?: boolean) {
+  async slideNext(speed?: number, runCallbacks?: boolean) {
+    await this.ready();
     this.swiper.slideNext(speed, runCallbacks);
   }
 
@@ -169,7 +184,8 @@ export class Slides {
    * Transition to the previous slide.
    */
   @Method()
-  slidePrev(speed?: number, runCallbacks?: boolean) {
+  async slidePrev(speed?: number, runCallbacks?: boolean) {
+    await this.ready();
     this.swiper.slidePrev(speed, runCallbacks);
   }
 
@@ -177,7 +193,8 @@ export class Slides {
    * Get the index of the active slide.
    */
   @Method()
-  getActiveIndex(): Promise<number> {
+  async getActiveIndex(): Promise<number> {
+    await this.ready();
     return Promise.resolve(this.swiper.activeIndex);
   }
 
@@ -185,7 +202,8 @@ export class Slides {
    * Get the index of the previous slide.
    */
   @Method()
-  getPreviousIndex(): Promise<number> {
+  async getPreviousIndex(): Promise<number> {
+    await this.ready();
     return Promise.resolve(this.swiper.previousIndex);
   }
 
@@ -193,7 +211,8 @@ export class Slides {
    * Get the total number of slides.
    */
   @Method()
-  length(): Promise<number> {
+  async length(): Promise<number> {
+    await this.ready();
     return Promise.resolve(this.swiper.slides.length);
   }
 
@@ -202,7 +221,8 @@ export class Slides {
    *
    */
   @Method()
-  isEnd(): Promise<boolean> {
+  async isEnd(): Promise<boolean> {
+    await this.ready();
     return Promise.resolve(this.swiper.isEnd);
   }
 
@@ -210,7 +230,8 @@ export class Slides {
    * Get whether or not the current slide is the first slide.
    */
   @Method()
-  isBeginning(): Promise<boolean> {
+  async isBeginning(): Promise<boolean> {
+    await this.ready();
     return Promise.resolve(this.swiper.isBeginning);
   }
 
@@ -218,7 +239,8 @@ export class Slides {
    * Start auto play.
    */
   @Method()
-  startAutoplay() {
+  async startAutoplay() {
+    await this.ready();
     this.swiper.autoplay.start();
   }
 
@@ -226,7 +248,8 @@ export class Slides {
    * Stop auto play.
    */
   @Method()
-  stopAutoplay() {
+  async stopAutoplay() {
+    await this.ready();
     this.swiper.autoplay.stop();
   }
 
@@ -234,7 +257,8 @@ export class Slides {
    * Lock or unlock the ability to slide to the next slides.
    */
   @Method()
-  lockSwipeToNext(shouldLockSwipeToNext: boolean) {
+  async lockSwipeToNext(shouldLockSwipeToNext: boolean) {
+    await this.ready();
     this.swiper.allowSlideNext = !shouldLockSwipeToNext;
   }
 
@@ -242,7 +266,8 @@ export class Slides {
    * Lock or unlock the ability to slide to the previous slides.
    */
   @Method()
-  lockSwipeToPrev(shouldLockSwipeToPrev: boolean) {
+  async lockSwipeToPrev(shouldLockSwipeToPrev: boolean) {
+    await this.ready();
     this.swiper.allowSlidePrev = !shouldLockSwipeToPrev;
   }
 
@@ -250,10 +275,12 @@ export class Slides {
    * Lock or unlock the ability to slide to change slides.
    */
   @Method()
-  lockSwipes(shouldLockSwipes: boolean) {
+  async lockSwipes(shouldLockSwipes: boolean) {
+    await this.ready();
     this.swiper.allowSlideNext = !shouldLockSwipes;
     this.swiper.allowSlidePrev = !shouldLockSwipes;
     this.swiper.allowTouchMove = !shouldLockSwipes;
+
   }
 
   private normalizeOptions() {
