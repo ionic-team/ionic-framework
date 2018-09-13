@@ -2030,7 +2030,7 @@ export namespace Components {
     /**
     * Emitted when the item has been fully swiped.
     */
-    'onIonSwipe'?: (event: CustomEvent<void>) => void;
+    'onIonSwipe'?: (event: CustomEvent<any>) => void;
     /**
     * The side the option button should be on. Possible values: `"start"` and `"end"`. Defaults to `"end"`. If you have multiple `ion-item-options`, a side must be provided for each.
     */

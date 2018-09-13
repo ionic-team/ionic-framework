@@ -24,11 +24,13 @@ export class ItemOptions {
   /**
    * Emitted when the item has been fully swiped.
    */
-  @Event() ionSwipe!: EventEmitter<void>;
+  @Event() ionSwipe!: EventEmitter<any>;
 
   @Method()
   fireSwipeEvent() {
-    this.ionSwipe.emit();
+    this.ionSwipe.emit({
+      side: this.side
+    });
   }
 
   hostData() {

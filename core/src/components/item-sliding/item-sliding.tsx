@@ -108,14 +108,8 @@ export class ItemSliding {
    * the width of the options.
    */
   @Method()
-  async getSlidingRatio(): Promise<number> {
-    if (this.openAmount > 0) {
-      return this.openAmount / this.optsWidthRightSide;
-    } else if (this.openAmount < 0) {
-      return this.openAmount / this.optsWidthLeftSide;
-    } else {
-      return 0;
-    }
+  getSlidingRatio(): Promise<number> {
+    return Promise.resolve(this.getSlidingRatioSync());
   }
 
   /**
@@ -232,11 +226,12 @@ export class ItemSliding {
       restingPoint = 0;
     }
 
+    const state = this.state;
     this.setOpenAmount(restingPoint, true);
 
-    if ((this.state & SlidingState.SwipeEnd) !== 0 && this.rightOptions) {
+    if ((state & SlidingState.SwipeEnd) !== 0 && this.rightOptions) {
       this.rightOptions.fireSwipeEvent();
-    } else if ((this.state & SlidingState.SwipeStart) !== 0 && this.leftOptions) {
+    } else if ((state & SlidingState.SwipeStart) !== 0 && this.leftOptions) {
       this.leftOptions.fireSwipeEvent();
     }
   }
@@ -290,14 +285,24 @@ export class ItemSliding {
 
     style.transform = `translate3d(${-openAmount}px,0,0)`;
     this.ionDrag.emit({
-      amount: openAmount
+      amount: openAmount,
+      ratio: this.getSlidingRatioSync()
     });
+  }
+
+  private getSlidingRatioSync(): number {
+    if (this.openAmount > 0) {
+      return this.openAmount / this.optsWidthRightSide;
+    } else if (this.openAmount < 0) {
+      return this.openAmount / this.optsWidthLeftSide;
+    } else {
+      return 0;
+    }
   }
 
   hostData() {
     return {
       class: {
-        'item-sliding': true,
         'item-sliding-active-slide': (this.state !== SlidingState.Disabled),
         'item-sliding-active-options-end': (this.state & SlidingState.End) !== 0,
         'item-sliding-active-options-start': (this.state & SlidingState.Start) !== 0,
@@ -308,7 +313,6 @@ export class ItemSliding {
   }
 }
 
-/** @hidden */
 function swipeShouldReset(isResetDirection: boolean, isMovingFast: boolean, isOnResetZone: boolean): boolean {
   // The logic required to know when the sliding item should close (openAmount=0)
   // depends on three booleans (isCloseDirection, isMovingFast, isOnCloseZone)
