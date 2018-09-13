@@ -106,7 +106,7 @@ export class Slides {
    * Options to pass to the swiper instance.
    * See http://idangero.us/swiper/api/ for valid options
    */
-  @Prop() options: any; // SwiperOptions;  // TODO
+  @Prop() options: any = {}; // SwiperOptions;  // TODO
 
   @Watch('options')
   updateSwiperOptions() {
@@ -258,25 +258,26 @@ export class Slides {
 
   private normalizeOptions() {
     // Base options, can be changed
+    // TODO Add interface SwiperOptions
     const swiperOptions = {
       effect: 'slide',
       direction: 'horizontal',
       initialSlide: 0,
       loop: false,
-      pager: false,
       pagination: {
         el: '.swiper-pagination',
         type: 'bullets',
+        clickable: false,
+        hideOnClick: false,
       },
       parallax: false,
       scrollbar: {
-        el: this.scrollbar ? '.swiper-scrollbar' : null,
+        el: this.scrollbar ? '.swiper-scrollbar' : undefined,
         hide: true,
       },
       slidesPerView: 1,
       spaceBetween: 0,
       speed: 300,
-      zoom: false,
       slidesPerColumn: 1,
       slidesPerColumnFill: 'column',
       slidesPerGroup: 1,
@@ -284,8 +285,10 @@ export class Slides {
       slidesOffsetBefore: 0,
       slidesOffsetAfter: 0,
       touchEventsTarget: 'container',
-      autoplayDisableOnInteraction: true,
-      autoplayStopOnLast: false,
+      autoplay: {
+        disableOnInteraction: true,
+        stopOnLastSlide: false,
+      },
       freeMode: false,
       freeModeMomentum: true,
       freeModeMomentumRatio: 1,
@@ -296,9 +299,11 @@ export class Slides {
       freeModeMinimumVelocity: 0.02,
       autoHeight: false,
       setWrapperSize: false,
-      zoomMax: 3,
-      zoomMin: 1,
-      zoomToggle: true,
+      zoom: {
+        maxRatio: 3,
+        minRatio: 1,
+        toggle: true,
+      },
       touchRatio: 1,
       touchAngle: 45,
       simulateTouch: true,
@@ -307,14 +312,11 @@ export class Slides {
       longSwipesRatio: 0.5,
       longSwipesMs: 300,
       followFinger: true,
-      onlyExternal: false,
       threshold: 0,
       touchMoveStopPropagation: true,
       touchReleaseOnEdges: false,
       iOSEdgeSwipeDetection: false,
       iOSEdgeSwipeThreshold: 20,
-      paginationClickable: false,
-      paginationHide: false,
       resistance: true,
       resistanceRatio: 0.85,
       watchSlidesProgress: false,
@@ -325,32 +327,37 @@ export class Slides {
       loopAdditionalSlides: 0,
       noSwiping: true,
       runCallbacksOnInit: true,
-      controlBy: 'slide',
-      controlInverse: false,
-      coverflow: {
+      controller: {
+        control: this.swiper,
+        by: 'slide',
+        inverse: false,
+      },
+      coverflowEffect: {
         rotate: 50,
         stretch: 0,
         depth: 100,
         modifier: 1,
         slideShadows: true
       },
-      flip: {
+      flipEffect: {
         slideShadows: true,
         limitRotation: true
       },
-      cube: {
+      cubeEffect: {
         slideShadows: true,
         shadow: true,
         shadowOffset: 20,
         shadowScale: 0.94
       },
-      fade: {
+      fadeEffect: {
         crossFade: false
       },
-      prevSlideMessage: 'Previous slide',
-      nextSlideMessage: 'Next slide',
-      firstSlideMessage: 'This is the first slide',
-      lastSlideMessage: 'This is the last slide'
+      a11y: {
+        prevSlideMessage: 'Previous slide',
+        nextSlideMessage: 'Next slide',
+        firstSlideMessage: 'This is the first slide',
+        lastSlideMessage: 'This is the last slide'
+      }
     };
 
     // Keep the event options separate, we dont want users
