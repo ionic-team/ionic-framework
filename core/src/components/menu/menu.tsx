@@ -449,7 +449,7 @@ export class Menu implements MenuI {
       this.gesture.setDisabled(!isActive || !this.swipeGesture);
     }
 
-    // Close menu inmediately
+    // Close menu immediately
     if (!isActive && this._isOpen) {
       // close if this menu is open, and should not be enabled
       this.forceClosing();

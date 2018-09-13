@@ -325,7 +325,7 @@ export class Input {
       class: {
         ...createColorClasses(this.color),
 
-        'in-item': hostContext('.item', this.el),
+        'in-item': hostContext('ion-item', this.el),
         'has-value': this.hasValue(),
         'has-focus': this.hasFocus
       }

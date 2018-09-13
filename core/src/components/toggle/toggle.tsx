@@ -175,7 +175,7 @@ export class Toggle {
     return {
       class: {
         ...createColorClasses(this.color),
-        'in-item': hostContext('.item', this.el),
+        'in-item': hostContext('ion-item', this.el),
         'toggle-activated': this.activated,
         'toggle-checked': this.checked,
         'toggle-disabled': this.disabled,

@@ -458,7 +458,7 @@ export class Select {
   hostData() {
     return {
       class: {
-        'in-item': hostContext('.item', this.el),
+        'in-item': hostContext('ion-item', this.el),
         'select-disabled': this.disabled,
         'select-key': this.keyFocus
       }

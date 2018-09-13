@@ -172,7 +172,7 @@ export class Radio {
     return {
       class: {
         ...createColorClasses(this.color),
-        'in-item': hostContext('.item', this.el),
+        'in-item': hostContext('ion-item', this.el),
         'interactive': true,
         'radio-checked': this.checked,
         'radio-disabled': this.disabled,

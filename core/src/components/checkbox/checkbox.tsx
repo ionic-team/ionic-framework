@@ -120,7 +120,7 @@ export class Checkbox {
     return {
       class: {
         ...createColorClasses(this.color),
-        'in-item': hostContext('.item', this.el),
+        'in-item': hostContext('ion-item', this.el),
         'checkbox-checked': this.checked,
         'checkbox-disabled': this.disabled,
         'checkbox-key': this.keyFocus,
