@@ -14,10 +14,11 @@
   --padding-bottom: #{$button-md-padding-bottom};
   --padding-start: #{$button-md-padding-start};
   --padding-end: #{$button-md-padding-end};
-  --height: #{$button-md-height};
   --transition: #{box-shadow $button-md-transition-duration $button-md-transition-timing-function,
-                  background-color $button-md-transition-duration $button-md-transition-timing-function,
-                  color $button-md-transition-duration $button-md-transition-timing-function};
+    background-color $button-md-transition-duration $button-md-transition-timing-function,
+    color $button-md-transition-duration $button-md-transition-timing-function};
+
+  height: #{$button-md-height};
 
   font-size: #{$button-md-font-size};
   font-weight: #{$button-md-font-weight};
@@ -87,7 +88,8 @@
   --padding-start: #{$button-md-large-padding-start};
   --padding-end: #{$button-md-large-padding-end};
   --padding-bottom: #{$button-md-large-padding-bottom};
-  --height: #{$button-md-large-height};
+
+  height: #{$button-md-large-height};
 
   font-size: #{$button-md-large-font-size};
 }
@@ -97,7 +99,8 @@
   --padding-start: #{$button-md-small-padding-start};
   --padding-end: #{$button-md-small-padding-end};
   --padding-bottom: #{$button-md-small-padding-bottom};
-  --height: #{$button-md-small-height};
+
+  height: #{$button-md-small-height};
 
   font-size: #{$button-md-small-font-size};
 }
