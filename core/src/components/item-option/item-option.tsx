@@ -51,9 +51,10 @@ export class ItemOption {
 
   hostData() {
     return {
+      'ion-activatable': true,
       class: {
         ...createColorClasses(this.color),
-        'item-option-expandable': this.expandable
+        'item-option-expandable': this.expandable,
       }
     };
   }
@@ -77,6 +78,7 @@ export class ItemOption {
           <slot name="bottom" />
           <slot name="end"></slot>
         </span>
+        {this.mode === 'md' && <ion-ripple-effect />}
       </TagType>
     );
   }
