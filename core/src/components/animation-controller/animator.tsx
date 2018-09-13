@@ -1152,6 +1152,9 @@ export class Animator {
    * NO RECURSION
    */
   _didFinish(hasCompleted: boolean) {
+    if (!this.isPlaying) {
+      return;
+    }
     this.isPlaying = false;
     this.hasCompleted = hasCompleted;
 
@@ -1189,6 +1192,7 @@ export class Animator {
    * Recursively destroy this animation and all child animations.
    */
   destroy() {
+    this._didFinish(false);
     this._destroyed = true;
 
     const children = this._childAnimations;

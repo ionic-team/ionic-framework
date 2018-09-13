@@ -96,9 +96,10 @@ export async function present(
     ? overlay.enterAnimation
     : overlay.config.get(name, overlay.mode === 'ios' ? iosEnterAnimation : mdEnterAnimation);
 
-  await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
-
-  overlay.didPresent.emit();
+  const completed = await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
+  if (completed) {
+    overlay.didPresent.emit();
+  }
 }
 
 export async function dismiss(
@@ -115,15 +116,20 @@ export async function dismiss(
   }
   overlay.presented = false;
 
-  overlay.willDismiss.emit({ data, role });
+  try {
+    overlay.willDismiss.emit({ data, role });
 
-  const animationBuilder = (overlay.leaveAnimation)
-    ? overlay.leaveAnimation
-    : overlay.config.get(name, overlay.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
+    const animationBuilder = (overlay.leaveAnimation)
+      ? overlay.leaveAnimation
+      : overlay.config.get(name, overlay.mode === 'ios' ? iosLeaveAnimation : mdLeaveAnimation);
 
-  await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
+    await overlayAnimation(overlay, animationBuilder, overlay.el, opts);
+    overlay.didDismiss.emit({ data, role });
 
-  overlay.didDismiss.emit({ data, role });
+  } catch (err) {
+    console.error(err);
+  }
+
   overlay.el.remove();
   return true;
 }
@@ -137,33 +143,35 @@ async function overlayAnimation(
   animationBuilder: AnimationBuilder,
   baseEl: HTMLElement,
   opts: any
-): Promise<void> {
+): Promise<boolean> {
   if (overlay.animation) {
     overlay.animation.destroy();
     overlay.animation = undefined;
-  }
+    return false;
 
-  // Make overlay visible in case it's hidden
-  baseEl.classList.remove('ion-page-invisible');
+  } else {
+    // Make overlay visible in case it's hidden
+    baseEl.classList.remove('ion-page-invisible');
 
-  const aniRoot = baseEl.shadowRoot || overlay.el;
-  const animation = overlay.animation = await overlay.animationCtrl.create(animationBuilder, aniRoot, opts);
-  overlay.animation = animation;
-  if (!overlay.animated) {
-    animation.duration(0);
+    const aniRoot = baseEl.shadowRoot || overlay.el;
+    const animation = overlay.animation = await overlay.animationCtrl.create(animationBuilder, aniRoot, opts);
+    overlay.animation = animation;
+    if (!overlay.animated) {
+      animation.duration(0);
+    }
+    if (overlay.keyboardClose) {
+      animation.beforeAddWrite(() => {
+        const activeElement = baseEl.ownerDocument.activeElement as HTMLElement;
+        if (activeElement && activeElement.matches('input, ion-input, ion-textarea')) {
+          activeElement.blur();
+        }
+      });
+    }
+    await animation.playAsync();
+    animation.destroy();
+    overlay.animation = undefined;
+    return animation.hasCompleted;
   }
-  if (overlay.keyboardClose) {
-    animation.beforeAddWrite(() => {
-      const activeElement = baseEl.ownerDocument.activeElement as HTMLElement;
-      if (activeElement && activeElement.matches('input, ion-input, ion-textarea')) {
-        activeElement.blur();
-      }
-    });
-  }
-  await animation.playAsync();
-
-  animation.destroy();
-  overlay.animation = undefined;
 }
 
 export function autoFocus(containerEl: HTMLElement): HTMLElement | undefined {
