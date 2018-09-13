@@ -67,7 +67,7 @@ export class ItemSliding {
   async componentDidLoad() {
     this.item = this.el.querySelector('ion-item');
 
-    this.updateOptions();
+    await this.updateOptions();
 
     this.gesture = (await import('../../utils/gesture/gesture')).createGesture({
       el: this.el,
@@ -139,7 +139,7 @@ export class ItemSliding {
     return false;
   }
 
-  private updateOptions() {
+  private async updateOptions() {
     const options = this.el.querySelectorAll('ion-item-options');
 
     let sides = 0;
@@ -148,14 +148,14 @@ export class ItemSliding {
     this.leftOptions = this.rightOptions = undefined;
 
     for (let i = 0; i < options.length; i++) {
-      const option = options.item(i);
+      const option = await options.item(i).componentOnReady();
 
-      if (option.side === 'end') {
-        this.rightOptions = option;
-        sides |= ItemSide.End;
-      } else {
+      if (option.side === 'start') {
         this.leftOptions = option;
         sides |= ItemSide.Start;
+      } else {
+        this.rightOptions = option;
+        sides |= ItemSide.End;
       }
     }
     this.optsDirty = true;

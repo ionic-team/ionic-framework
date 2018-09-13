@@ -37,10 +37,6 @@ ion-item-options {
 
   user-select: none;
   z-index: $z-index-item-options;
-
-  &.hydrated {
-    visibility: hidden;
-  }
 }
 
 .item-options-start {
