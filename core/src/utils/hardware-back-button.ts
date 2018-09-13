@@ -36,7 +36,6 @@ export function startHardwareBackButton(win: Window) {
       });
       const result = handler!();
       if (result != null) {
-        // tslint:disable-next-line:no-floating-promises
         result.then(() => busy = false);
       }
     }

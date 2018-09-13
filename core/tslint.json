@@ -15,7 +15,7 @@
     "no-null-keyword": false,
     "no-console": false,
     "no-unbound-method": true,
-    "no-floating-promises": true,
+    "no-floating-promises": false,
 
     "jsx-key": false,
     "jsx-self-close": false,

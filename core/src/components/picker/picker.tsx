@@ -127,9 +127,9 @@ export class Picker implements OverlayInterface {
   protected onBackdropTap() {
     const cancelBtn = this.buttons.find(b => b.role === 'cancel');
     if (cancelBtn) {
-      return this.buttonClick(cancelBtn);
+      this.buttonClick(cancelBtn);
     } else {
-      return this.dismiss();
+      this.dismiss();
     }
   }
 

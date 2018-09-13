@@ -42,7 +42,6 @@ export class ViewController {
     const element = this.element;
     if (element) {
       if (this.delegate) {
-        // tslint:disable-next-line:no-floating-promises
         this.delegate.removeViewFromDom(element.parentElement, element);
       } else {
         element.remove();

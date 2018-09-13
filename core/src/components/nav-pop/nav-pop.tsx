@@ -11,9 +11,8 @@ export class NavPop {
   pop() {
     const nav = this.el.closest('ion-nav');
     if (nav) {
-      return nav.pop({ skipIfBusy: true });
+      nav.pop({ skipIfBusy: true });
     }
-    return Promise.resolve(false);
   }
 
 }

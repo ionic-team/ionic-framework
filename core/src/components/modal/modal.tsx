@@ -127,12 +127,12 @@ export class Modal implements OverlayInterface {
     ev.stopPropagation();
     ev.preventDefault();
 
-    return this.dismiss();
+    this.dismiss();
   }
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    return this.dismiss(undefined, BACKDROP);
+    this.dismiss(undefined, BACKDROP);
   }
 
   @Listen('ionModalDidPresent')

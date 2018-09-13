@@ -25,7 +25,6 @@ export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts:
 
   doc.body.addEventListener('keyup', ev => {
     if (ev.key === 'Escape') {
-      // tslint:disable-next-line:no-floating-promises
       closeTopOverlay(doc);
     }
   });
@@ -48,7 +47,6 @@ export function connectListeners(doc: Document) {
       if (ev.key === 'Escape') {
         const lastOverlay = getOverlay(doc);
         if (lastOverlay && lastOverlay.backdropDismiss) {
-          // tslint:disable-next-line:no-floating-promises
           lastOverlay.dismiss('backdrop');
         }
       }

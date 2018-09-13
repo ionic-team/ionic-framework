@@ -137,7 +137,7 @@ export class Loading implements OverlayInterface {
 
   @Listen('ionBackdropTap')
   protected onBackdropTap() {
-    return this.dismiss(undefined, BACKDROP);
+    this.dismiss(undefined, BACKDROP);
   }
 
   /**

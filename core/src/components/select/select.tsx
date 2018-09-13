@@ -314,7 +314,6 @@ export class Select {
             disabled: o.disabled,
             handler: () => {
               this.value = o.value;
-              // tslint:disable-next-line:no-floating-promises
               this.close();
             }
           } as SelectPopoverOption;

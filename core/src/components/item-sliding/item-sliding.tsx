@@ -126,7 +126,6 @@ export class ItemSliding {
   @Method()
   async closeOpened(): Promise<boolean> {
     if (openSlidingItem !== undefined) {
-      // tslint:disable-next-line:no-floating-promises
       openSlidingItem.close();
       return true;
     }
@@ -159,7 +158,6 @@ export class ItemSliding {
   private canStart(): boolean {
     const selected = openSlidingItem;
     if (selected && selected !== this.el) {
-      // tslint:disable-next-line:no-floating-promises
       this.closeOpened();
       return false;
     }

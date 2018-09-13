@@ -39,10 +39,9 @@ export class MenuToggle {
     if (menuCtrl) {
       const menu = await menuCtrl.get(this.menu);
       if (menu) {
-        return menuCtrl.toggle(this.menu);
+        menuCtrl.toggle(this.menu);
       }
     }
-    return false;
   }
 
   @Listen('body:ionMenuChange')

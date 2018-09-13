@@ -223,10 +223,9 @@ export class Menu implements MenuI {
       if (shouldClose) {
         ev.preventDefault();
         ev.stopPropagation();
-        return this.close();
+        this.close();
       }
     }
-    return Promise.resolve(false);
   }
 
   @Method()
