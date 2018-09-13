@@ -1,7 +1,7 @@
 import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
 import { Color, Mode, TextInputChangeEvent } from '../../interface';
-import { createColorClasses, hostContext } from '../../utils/theme';
+import { createColorClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-segment',
@@ -9,7 +9,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
     ios: 'segment.ios.scss',
     md: 'segment.md.scss'
   },
-  shadow: true
+  scoped: true
 })
 export class Segment {
 
@@ -81,15 +81,8 @@ export class Segment {
       class: {
         ...createColorClasses(this.color),
 
-        'segment-disabled': this.disabled,
-        'in-toolbar': hostContext('ion-toolbar', this.el),
-        'in-color-toolbar': hostContext('ion-toolbar.ion-color', this.el)
+        'segment-disabled': this.disabled
       }
     };
   }
-
-  render() {
-    return <slot></slot>;
-  }
-
 }

@@ -26,24 +26,23 @@ Segment buttons are groups of related buttons inside of a [Segment](../../segmen
 
 ## CSS Custom Properties
 
-| Name               | Description                  |
-| ------------------ | ---------------------------- |
-| `--background`     | Background of the button     |
-| `--border-color`   | Color of the button border   |
-| `--border-radius`  | Radius of the button border  |
-| `--border-style`   | Style of the button border   |
-| `--border-width`   | Width of the button border   |
-| `--color`          | Color of the button text     |
-| `--icon-size`      | Size of the button icon      |
-| `--margin-bottom`  | Bottom margin of the button  |
-| `--margin-end`     | End margin of the button     |
-| `--margin-start`   | Start margin of the button   |
-| `--margin-top`     | Top margin of the button     |
-| `--padding-bottom` | Bottom padding of the button |
-| `--padding-end`    | End padding of the button    |
-| `--padding-start`  | Start padding of the button  |
-| `--padding-top`    | Top padding of the button    |
-| `--transition`     | Transition of the button     |
+| Name                 | Description                  |
+| -------------------- | ---------------------------- |
+| `--border-radius`    | Radius of the button border  |
+| `--border-style`     | Style of the button border   |
+| `--border-width`     | Width of the button border   |
+| `--btn-background`   | Background of the button     |
+| `--btn-border-color` | Color of the button border   |
+| `--icon-size`        | Size of the button icon      |
+| `--margin-bottom`    | Bottom margin of the button  |
+| `--margin-end`       | End margin of the button     |
+| `--margin-start`     | Start margin of the button   |
+| `--margin-top`       | Top margin of the button     |
+| `--padding-bottom`   | Bottom padding of the button |
+| `--padding-end`      | End padding of the button    |
+| `--padding-start`    | Start padding of the button  |
+| `--padding-top`      | Top padding of the button    |
+| `--transition`       | Transition of the button     |
 
 
 ----------------------------------------------
