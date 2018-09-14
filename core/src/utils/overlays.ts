@@ -19,16 +19,6 @@ export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts:
   // append the overlay element to the document body
   getAppRoot(doc).appendChild(element);
 
-  doc.addEventListener('ionBackButton', ev => {
-    (ev as BackButtonEvent).detail.register(100, () => closeTopOverlay(doc));
-  });
-
-  doc.body.addEventListener('keyup', ev => {
-    if (ev.key === 'Escape') {
-      closeTopOverlay(doc);
-    }
-  });
-
   return element.componentOnReady();
 }
 
@@ -43,12 +33,13 @@ function closeTopOverlay(doc: Document) {
 export function connectListeners(doc: Document) {
   if (lastId === 0) {
     lastId = 1;
-    doc.body.addEventListener('keyup', ev => {
+    doc.addEventListener('ionBackButton', ev => {
+      (ev as BackButtonEvent).detail.register(100, () => closeTopOverlay(doc));
+    });
+
+    doc.addEventListener('keyup', ev => {
       if (ev.key === 'Escape') {
-        const lastOverlay = getOverlay(doc);
-        if (lastOverlay && lastOverlay.backdropDismiss) {
-          lastOverlay.dismiss('backdrop');
-        }
+        closeTopOverlay(doc);
       }
     });
   }
