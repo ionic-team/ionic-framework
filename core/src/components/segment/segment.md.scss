@@ -20,8 +20,12 @@
 // --------------------------------------------------
 
 :host-context(ion-toolbar.ion-color):not(.ion-color) {
-  --color: currentColor;
-  --color-checked: currentColor;
+  --color: #{current-color(contrast)};
+  --color-checked: #{current-color(contrast)};
+}
+
+:host(.ion-color)::slotted(ion-segment-button) {
+  --color: #{current-color(base)};
 }
 
 :host(.ion-color)::slotted(.segment-button-checked) {
