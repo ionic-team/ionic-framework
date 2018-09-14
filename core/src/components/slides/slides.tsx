@@ -11,7 +11,8 @@ import { SwiperInterface, SwiperOptions } from './swiper/swiper-interface';
   styleUrls: {
     ios: 'slides.ios.scss',
     md: 'slides.md.scss'
-  }
+  },
+  assetsDir: 'swiper',
 })
 export class Slides implements ComponentInterface {
 
