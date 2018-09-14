@@ -16,7 +16,8 @@ import { mdLeaveAnimation } from './animations/md.leave';
   styleUrls: {
     ios: 'popover.ios.scss',
     md: 'popover.md.scss'
-  }
+  },
+  scoped: true
 })
 export class Popover implements OverlayInterface {
 
@@ -212,7 +213,6 @@ export class Popover implements OverlayInterface {
   }
 
   hostData() {
-    const themedClasses = this.translucent ? createThemedClasses(this.mode, 'popover-translucent') : {};
 
     return {
       style: {
@@ -220,9 +220,9 @@ export class Popover implements OverlayInterface {
       },
       'no-router': true,
       class: {
-        ...createThemedClasses(this.mode, 'popover'),
+        'popover-translucent': this.translucent,
+
         ...getClassMap(this.cssClass),
-        ...themedClasses,
       }
     };
   }

@@ -96,3 +96,10 @@
 .overscroll::after {
   top: -1px;
 }
+
+:host(.content-sizing) {
+  contain: none;
+}
+:host(.content-sizing) .inner-scroll {
+  position: relative;
+}
