@@ -182,8 +182,8 @@ export class MenuController implements MenuControllerI {
    * Returns true if any menu is currently animating.
    */
   @Method()
-  async isAnimating(): Promise<boolean> {
-    return this.menus.some(menu => menu.isAnimating);
+  isAnimating(): Promise<boolean> {
+    return Promise.resolve(this.isAnimatingSync());
   }
 
   @Method()
@@ -214,7 +214,7 @@ export class MenuController implements MenuControllerI {
 
   @Method()
   async _setOpen(menu: MenuI, shouldOpen: boolean, animated: boolean): Promise<boolean> {
-    if (await this.isAnimating()) {
+    if (this.isAnimatingSync()) {
       return false;
     }
     if (shouldOpen) {
@@ -246,6 +246,10 @@ export class MenuController implements MenuControllerI {
 
   getMenusSync(): HTMLIonMenuElement[] {
     return this.menus.map(menu => menu.el);
+  }
+
+  isAnimatingSync(): boolean {
+    return this.menus.some(menu => menu.isAnimating);
   }
 
   private registerAnimation(name: string, animation: AnimationBuilder) {

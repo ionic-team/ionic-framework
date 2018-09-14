@@ -1152,9 +1152,6 @@ export class Animator {
    * NO RECURSION
    */
   _didFinish(hasCompleted: boolean) {
-    if (!this.isPlaying) {
-      return;
-    }
     this.isPlaying = false;
     this.hasCompleted = hasCompleted;
 
