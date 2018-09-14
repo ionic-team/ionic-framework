@@ -26,25 +26,30 @@ export function startHardwareBackButton(win: Window) {
     win.document.dispatchEvent(ev);
 
     if (handlers.length > 0) {
-      busy = true;
       let selectedPriority = Number.MIN_SAFE_INTEGER;
-      let handler: Handler;
+      let handler: Handler | undefined;
       handlers.forEach(h => {
         if (h.priority >= selectedPriority) {
           selectedPriority = h.priority;
           handler = h.handler;
         }
       });
-      try {
-        const result = handler!();
-        if (result != null) {
-          result.then(() => (busy = false), () => (busy = false));
-        } else {
-          busy = false;
-        }
-      } catch (ev) {
-        busy = false;
-      }
+
+      busy = true;
+      executeAction(handler).then(() => busy = false);
     }
   });
+}
+
+async function executeAction(handler: Handler | undefined) {
+  try {
+    if (handler) {
+      const result = handler();
+      if (result) {
+        await result;
+      }
+    }
+  } catch (e) {
+    console.error(e);
+  }
 }
