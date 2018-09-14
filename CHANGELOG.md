@@ -1,3 +1,16 @@
+<a name="4.0.0-beta.10"></a>
+# [4.0.0-beta.10](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.9...v4.0.0-beta.10) (2018-09-14)
+
+
+### Bug Fixes
+
+* **animation:** always call onFinish() ([c23c5a4](https://github.com/ionic-team/ionic/commit/c23c5a4))
+* **button:** vanilla color is usable ([b8b9b83](https://github.com/ionic-team/ionic/commit/b8b9b83))
+* **segment:** unselected color ([b9e42eb](https://github.com/ionic-team/ionic/commit/b9e42eb))
+* **slides:** swiper is not required as dependency ([29f324b](https://github.com/ionic-team/ionic/commit/29f324b))
+
+
+
 <a name="4.0.0-beta.9"></a>
 # [4.0.0-beta.9](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.7...v4.0.0-beta.9) (2018-09-14)
 
