@@ -9,11 +9,11 @@ interface HandlerRegister {
 
 export function startHardwareBackButton(win: Window) {
   let busy = false;
-  win.addEventListener('backbutton', () => {
+  win.document.addEventListener('backbutton', () => {
     if (busy) {
       return;
     }
-    busy = true;
+
     const handlers: HandlerRegister[] = [];
     const ev: BackButtonEvent = new CustomEvent('ionBackButton', {
       bubbles: false,
@@ -23,9 +23,10 @@ export function startHardwareBackButton(win: Window) {
         }
       }
     });
-    win.document.body.dispatchEvent(ev);
+    win.document.dispatchEvent(ev);
 
     if (handlers.length > 0) {
+      busy = true;
       let selectedPriority = Number.MIN_SAFE_INTEGER;
       let handler: Handler;
       handlers.forEach(h => {
@@ -34,9 +35,15 @@ export function startHardwareBackButton(win: Window) {
           handler = h.handler;
         }
       });
-      const result = handler!();
-      if (result != null) {
-        result.then(() => busy = false);
+      try {
+        const result = handler!();
+        if (result != null) {
+          result.then(() => (busy = false), () => (busy = false));
+        } else {
+          busy = false;
+        }
+      } catch (ev) {
+        busy = false;
       }
     }
   });

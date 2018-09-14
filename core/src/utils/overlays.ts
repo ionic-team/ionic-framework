@@ -19,7 +19,7 @@ export function createOverlay<T extends HTMLIonOverlayElement>(element: T, opts:
   // append the overlay element to the document body
   getAppRoot(doc).appendChild(element);
 
-  doc.body.addEventListener('ionBackButton', ev => {
+  doc.addEventListener('ionBackButton', ev => {
     (ev as BackButtonEvent).detail.register(100, () => closeTopOverlay(doc));
   });
 

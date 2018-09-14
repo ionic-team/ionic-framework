@@ -81,7 +81,7 @@ export class Router {
     return this.writeNavStateRoot(path, direction);
   }
 
-  @Listen('window:ionBackButton')
+  @Listen('document:ionBackButton')
   protected onBackButton(ev: BackButtonEvent) {
     ev.detail.register(0, () => this.goBack());
   }
