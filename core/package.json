@@ -38,6 +38,7 @@
     "autoprefixer": "^9.0.2",
     "chromedriver": "^2.38.3",
     "clean-css-cli": "^4.1.11",
+    "fs-extra": "^7.0.0",
     "jest": "23.5.0",
     "mocha": "^4.0.1",
     "np": "^3.0.4",
