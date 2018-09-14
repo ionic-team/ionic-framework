@@ -287,7 +287,8 @@ export class Slides implements ComponentInterface {
     const finalOptions = this.normalizeOptions();
 
     // init swiper core
-    const { Swiper } = await import('./swiper/swiper');
+    // @ts-ignore
+    const { Swiper } = await import('./swiper/swiper.bundle.js');
     const swiper = new Swiper(this.el, finalOptions);
     this.didInit = true;
     this.readySwiper(swiper);
