@@ -78,7 +78,7 @@ export class ItemOption implements ComponentInterface {
           <slot name="bottom" />
           <slot name="end"></slot>
         </span>
-        {this.mode === 'md' && <ion-ripple-effect />}
+        {this.mode === 'md' && <ion-ripple-effect></ion-ripple-effect>}
       </TagType>
     );
   }

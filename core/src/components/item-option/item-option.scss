@@ -17,6 +17,8 @@
   @include text-inherit();
   @include padding(0, .7em);
 
+  position: relative;
+
   width: 100%;
   height: 100%;
 
