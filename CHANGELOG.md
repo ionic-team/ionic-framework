@@ -1,3 +1,13 @@
+<a name="4.0.0-beta.11"></a>
+# [4.0.0-beta.11](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.10...v4.0.0-beta.11) (2018-09-14)
+
+
+### Bug Fixes
+
+* **slides:** swiper must be a vendor ([3435473](https://github.com/ionic-team/ionic/commit/3435473))
+
+
+
 <a name="4.0.0-beta.10"></a>
 # [4.0.0-beta.10](https://github.com/ionic-team/ionic/compare/v4.0.0-beta.9...v4.0.0-beta.10) (2018-09-14)
 
