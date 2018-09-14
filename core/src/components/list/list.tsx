@@ -1,4 +1,4 @@
-import { Component, Element, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Method, Prop } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
@@ -10,7 +10,7 @@ import { createThemedClasses } from '../../utils/theme';
     md: 'list.md.scss'
   }
 })
-export class List {
+export class List implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 

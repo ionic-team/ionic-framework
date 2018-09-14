@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
 
 import { BackButtonEvent, Config, RouteChain, RouterDirection, RouterEventDetail } from '../../interface';
 import { debounce } from '../../utils/helpers';
@@ -13,7 +13,7 @@ import { chainToPath, generatePath, parsePath, readPath, writePath } from './uti
 @Component({
   tag: 'ion-router'
 })
-export class Router {
+export class Router implements ComponentInterface {
 
   private previousPath: string | null = null;
   private busy = false;

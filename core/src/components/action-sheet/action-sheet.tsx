@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
 import { ActionSheetButton, Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { BACKDROP, dismiss, eventMethod, isCancel, present } from '../../utils/overlays';
@@ -17,7 +17,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
   },
   scoped: true
 })
-export class ActionSheet implements OverlayInterface {
+export class ActionSheet implements ComponentInterface, OverlayInterface {
 
   presented = false;
   animation?: Animation;

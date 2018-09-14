@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi } from '@stencil/core';
 
 import { AnimationBuilder, ComponentProps, ComponentRef, Config, FrameworkDelegate, Mode, NavOutlet, RouteID, RouteWrite, RouterOutletOptions } from '../../interface';
 import { transition } from '../../utils';
@@ -9,7 +9,7 @@ import { attachComponent, detachComponent } from '../../utils/framework-delegate
   styleUrl: 'route-outlet.scss',
   shadow: true
 })
-export class RouterOutlet implements NavOutlet {
+export class RouterOutlet implements ComponentInterface, NavOutlet {
 
   private activeEl: HTMLElement | undefined;
   private activeComponent: any;

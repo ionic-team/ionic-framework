@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 @Component({
   tag: 'ion-skeleton-text',
@@ -8,7 +8,7 @@ import { Component, Prop } from '@stencil/core';
   },
   shadow: true
 })
-export class SkeletonText {
+export class SkeletonText implements ComponentInterface {
 
   /** Width for the element to render at. Default is 100% */
   @Prop() width = '100%';

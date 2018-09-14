@@ -1,4 +1,4 @@
-import { Component, Element, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop, QueueApi } from '@stencil/core';
 
 import { Config } from '../../interface';
 import { rIC } from '../../utils/helpers';
@@ -8,7 +8,7 @@ import { isPlatform } from '../../utils/platform';
   tag: 'ion-app',
   styleUrl: 'app.scss'
 })
-export class App {
+export class App implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 

@@ -1,9 +1,9 @@
-import { Component, Event, EventEmitter, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Event, EventEmitter, Prop, Watch } from '@stencil/core';
 
 @Component({
   tag: 'ion-route'
 })
-export class Route {
+export class Route implements ComponentInterface {
 
   /**
    * Relative path that needs to match in order for this route to apply.

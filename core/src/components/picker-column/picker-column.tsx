@@ -1,4 +1,4 @@
-import { Component, Element, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop, QueueApi } from '@stencil/core';
 
 import { Gesture, GestureDetail, Mode, PickerColumn } from '../../interface';
 import { hapticSelectionChanged } from '../../utils';
@@ -8,7 +8,7 @@ import { clamp } from '../../utils/helpers';
 @Component({
   tag: 'ion-picker-column'
 })
-export class PickerColumnCmp {
+export class PickerColumnCmp implements ComponentInterface {
   mode!: Mode;
 
   private bounceFrom!: number;

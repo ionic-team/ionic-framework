@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop } from '@stencil/core';
 
 import { Animation, AnimationBuilder, Config, Mode, OverlayEventDetail, OverlayInterface } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
@@ -16,7 +16,7 @@ import { mdLeaveAnimation } from './animations/md.leave';
     md: 'toast.md.scss'
   }
 })
-export class Toast implements OverlayInterface {
+export class Toast implements ComponentInterface, OverlayInterface {
 
   private durationTimeout: any;
 

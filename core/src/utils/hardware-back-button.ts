@@ -45,7 +45,7 @@ async function executeAction(handler: Handler | undefined) {
   try {
     if (handler) {
       const result = handler();
-      if (result) {
+      if (result != null) {
         await result;
       }
     }

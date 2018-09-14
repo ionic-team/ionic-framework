@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop } from '@stencil/core';
 
 import { Animation, AnimationBuilder, Config, CssClassMap, Mode, OverlayEventDetail, OverlayInterface, PickerButton, PickerColumn } from '../../interface';
 import { dismiss, eventMethod, present } from '../../utils/overlays';
@@ -14,7 +14,7 @@ import { iosLeaveAnimation } from './animations/ios.leave';
     md: 'picker.md.scss'
   }
 })
-export class Picker implements OverlayInterface {
+export class Picker implements ComponentInterface, OverlayInterface {
   private durationTimeout: any;
 
   presented = false;

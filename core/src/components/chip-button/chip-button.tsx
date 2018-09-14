@@ -1,4 +1,4 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
 
 import { Color, Mode } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -8,7 +8,7 @@ import { createColorClasses } from '../../utils/theme';
   styleUrl: 'chip-button.scss',
   shadow: true
 })
-export class ChipButton {
+export class ChipButton implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**

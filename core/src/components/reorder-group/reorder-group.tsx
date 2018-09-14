@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Gesture, GestureDetail } from '../../interface';
 import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from '../../utils/haptic';
@@ -7,7 +7,7 @@ import { hapticSelectionChanged, hapticSelectionEnd, hapticSelectionStart } from
   tag: 'ion-reorder-group',
   styleUrl: 'reorder-group.scss'
 })
-export class ReorderGroup {
+export class ReorderGroup implements ComponentInterface {
 
   private selectedItemEl?: HTMLElement;
   private selectedItemHeight!: number;

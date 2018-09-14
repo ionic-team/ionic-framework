@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Method, Prop, QueueApi } from '@stencil/core';
 
 import { Color, Config, Mode, ScrollBaseDetail, ScrollDetail } from '../../interface';
 import { createColorClasses, hostContext } from '../../utils/theme';
@@ -8,7 +8,7 @@ import { createColorClasses, hostContext } from '../../utils/theme';
   styleUrl: 'content.scss',
   shadow: true
 })
-export class Content {
+export class Content implements ComponentInterface {
 
   private watchDog: any;
   private isScrolling = false;
@@ -273,7 +273,7 @@ export class Content {
       class: {
         ...createColorClasses(this.color),
         'content-sizing': hostContext('ion-popover', this.el),
-        'overscroll': this.forceOverscroll,
+        'overscroll': !!this.forceOverscroll,
       },
       style: {
         '--offset-top': `${this.cTop}px`,

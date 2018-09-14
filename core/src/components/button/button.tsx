@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Prop, State } from '@stencil/core';
 
 import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
 import { hasShadowDom } from '../../utils/helpers';
@@ -12,7 +12,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
   },
   shadow: true,
 })
-export class Button {
+export class Button implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   @Prop({ context: 'window' }) win!: Window;
@@ -163,7 +163,7 @@ export class Button {
     };
   }
 
-  protected render() {
+  render() {
 
     const TagType = this.href === undefined ? 'button' : 'a';
     const attrs = (TagType === 'button')

@@ -1,11 +1,11 @@
-import { Component, Element, Listen, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop } from '@stencil/core';
 
 import { ComponentProps, NavComponent } from '../../interface';
 
 @Component({
   tag: 'ion-nav-push'
 })
-export class NavPush {
+export class NavPush implements ComponentInterface {
   @Element() el!: HTMLElement;
 
   /**

@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Gesture, GestureDetail } from '../../interface';
 
@@ -28,7 +28,7 @@ let openSlidingItem: HTMLIonItemSlidingElement | undefined;
   tag: 'ion-item-sliding',
   styleUrl: 'item-sliding.scss'
 })
-export class ItemSliding {
+export class ItemSliding implements ComponentInterface {
 
   private item: HTMLIonItemElement | null = null;
   private openAmount = 0;

@@ -1,4 +1,4 @@
-import { Component, Element, EventListenerEnable, FunctionalComponent, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, EventListenerEnable, FunctionalComponent, Listen, Method, Prop, QueueApi, State, Watch } from '@stencil/core';
 
 import { Cell, DomRenderFn, HeaderFn, ItemHeightFn, ItemRenderFn, VirtualNode } from '../../interface';
 
@@ -9,7 +9,7 @@ import { Range, calcCells, calcHeightIndex, doRender, findCellIndex, getRange, g
   tag: 'ion-virtual-scroll',
   styleUrl: 'virtual-scroll.scss'
 })
-export class VirtualScroll {
+export class VirtualScroll implements ComponentInterface {
 
   private contentEl?: HTMLElement;
   private scrollEl?: HTMLElement;

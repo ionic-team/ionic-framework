@@ -1,4 +1,4 @@
-import { Component, Element, Listen, Prop, State } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen, Prop, State } from '@stencil/core';
 
 import { Config } from '../../interface';
 import { DisplayWhen, getTestResult } from '../../utils/show-hide-when-utils';
@@ -7,7 +7,7 @@ import { DisplayWhen, getTestResult } from '../../utils/show-hide-when-utils';
   tag: 'ion-hide-when',
   styleUrl: './hide-when.scss'
 })
-export class HideWhen implements DisplayWhen {
+export class HideWhen implements ComponentInterface, DisplayWhen {
 
   @Element() element!: HTMLElement;
   @Prop({ context: 'config' }) config!: Config;

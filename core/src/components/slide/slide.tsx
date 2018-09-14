@@ -1,11 +1,11 @@
-import { Component, Event } from '@stencil/core';
+import { Component, ComponentInterface, Event } from '@stencil/core';
 import { EventEmitter } from 'ionicons/dist/types/stencil.core';
 
 @Component({
   tag: 'ion-slide',
   styleUrl: 'slide.scss'
 })
-export class Slide {
+export class Slide implements ComponentInterface {
 
   @Event() ionSlideChanged!: EventEmitter<void>;
 

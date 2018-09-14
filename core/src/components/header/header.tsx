@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
@@ -10,7 +10,7 @@ import { createThemedClasses } from '../../utils/theme';
     md: 'header.md.scss'
   }
 })
-export class Header {
+export class Header implements ComponentInterface {
 
   /**
    * The mode determines which platform styles to use.

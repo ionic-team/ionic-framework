@@ -1,4 +1,4 @@
-import { Build, Component, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
+import { Build, Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, Watch } from '@stencil/core';
 
 import { Color, ComponentRef, FrameworkDelegate } from '../../interface';
 import { attachComponent } from '../../utils/framework-delegate';
@@ -8,7 +8,7 @@ import { attachComponent } from '../../utils/framework-delegate';
   styleUrl: 'tab.scss',
   shadow: true
 })
-export class Tab {
+export class Tab implements ComponentInterface {
 
   private loaded = false;
   @Element() el!: HTMLIonTabElement;

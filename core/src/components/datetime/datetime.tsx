@@ -1,4 +1,4 @@
-import { Component, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { InputChangeEvent, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEvent } from '../../interface';
 import { clamp, deferEvent } from '../../utils/helpers';
@@ -13,7 +13,7 @@ import { DatetimeData, LocaleData, convertFormatToKey, convertToArrayOfNumbers, 
     md: 'datetime.md.scss'
   }
 })
-export class Datetime {
+export class Datetime implements ComponentInterface {
 
   private inputId = `ion-dt-${datetimeIds++}`;
   private labelId = `${this.inputId}-lbl`;

@@ -1,9 +1,9 @@
-import { Component, Element, Listen } from '@stencil/core';
+import { Component, ComponentInterface, Element, Listen } from '@stencil/core';
 
 @Component({
   tag: 'ion-nav-pop',
 })
-export class NavPop {
+export class NavPop implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 

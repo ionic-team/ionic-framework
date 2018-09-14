@@ -1,4 +1,4 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
 
 import { Color, Config, Mode } from '../../interface';
 import { createColorClasses, openURL } from '../../utils/theme';
@@ -11,7 +11,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
   },
   scoped: true
 })
-export class BackButton {
+export class BackButton implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 

@@ -1,4 +1,4 @@
-import { Component, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
 
 import { OverlayController, PickerOptions } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
@@ -7,7 +7,7 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
 @Component({
   tag: 'ion-picker-controller'
 })
-export class PickerController implements OverlayController {
+export class PickerController implements ComponentInterface, OverlayController {
 
   @Prop({ context: 'document' }) doc!: Document;
 

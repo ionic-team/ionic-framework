@@ -1,4 +1,4 @@
-import { Component, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Listen, Prop, Watch } from '@stencil/core';
 
 import { Color, Mode, TextInputChangeEvent } from '../../interface';
 import { createColorClasses } from '../../utils/theme';
@@ -11,7 +11,7 @@ import { createColorClasses } from '../../utils/theme';
   },
   scoped: true
 })
-export class Segment {
+export class Segment implements ComponentInterface {
 
   @Element() el!: HTMLElement;
 

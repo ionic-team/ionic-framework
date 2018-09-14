@@ -1,4 +1,4 @@
-import { Component, Method, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Method, Prop } from '@stencil/core';
 
 import { ComponentRef, OverlayController, PopoverOptions } from '../../interface';
 import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays';
@@ -6,7 +6,7 @@ import { createOverlay, dismissOverlay, getOverlay } from '../../utils/overlays'
 @Component({
   tag: 'ion-popover-controller',
 })
-export class PopoverController implements OverlayController {
+export class PopoverController implements ComponentInterface, OverlayController {
 
   @Prop({ context: 'document' }) doc!: Document;
 

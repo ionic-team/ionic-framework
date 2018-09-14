@@ -1,4 +1,4 @@
-import { Component, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Prop } from '@stencil/core';
 
 import { Config, Mode } from '../../interface';
 import { createThemedClasses } from '../../utils/theme';
@@ -10,7 +10,7 @@ import { createThemedClasses } from '../../utils/theme';
     md: 'infinite-scroll-content.md.scss'
   }
 })
-export class InfiniteScrollContent {
+export class InfiniteScrollContent implements ComponentInterface {
 
   mode!: Mode;
 

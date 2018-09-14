@@ -1,7 +1,7 @@
-import { Component, Element, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Element, Prop } from '@stencil/core';
 
-import { Color, CssClassMap, Mode, RouterDirection } from '../../interface';
-import { createColorClasses, openURL } from '../../utils/theme';
+import { Color, Mode, RouterDirection } from '../../interface';
+import { createColorClasses, hostContext, openURL } from '../../utils/theme';
 
 @Component({
   tag: 'ion-fab-button',
@@ -11,8 +11,7 @@ import { createColorClasses, openURL } from '../../utils/theme';
   },
   shadow: true
 })
-export class FabButton {
-  private inList = false;
+export class FabButton implements ComponentInterface {
 
   @Prop({ context: 'window' }) win!: Window;
 
@@ -63,31 +62,16 @@ export class FabButton {
    */
   @Prop() show = false;
 
-  componentWillLoad() {
-    const parentNode = this.el.parentNode;
-    const parentTag = parentNode ? parentNode.nodeName : null;
-
-    this.inList = parentTag === 'ION-FAB-LIST';
-  }
-
-  /**
-   * Get the classes for fab buttons in lists
-   */
-  private getFabClassMap(): CssClassMap {
-    return {
-      'fab-button-in-list': this.inList,
-      'fab-button-translucent-in-list': this.inList && this.translucent,
-      'fab-button-close-active': this.activated,
-      'fab-button-show': this.show
-    };
-  }
-
   hostData() {
+    const inList = hostContext('ion-fab-list', this.el);
     return {
       'ion-activatable': true,
       class: {
         ...createColorClasses(this.color),
-        ...this.getFabClassMap(),
+        'fab-button-in-list': inList,
+        'fab-button-translucent-in-list': inList && this.translucent,
+        'fab-button-close-active': this.activated,
+        'fab-button-show': this.show,
         'fab-button-disabled': this.disabled,
         'fab-button-translucent': this.translucent
       }
