@@ -228,11 +228,9 @@ export class Popover implements OverlayInterface {
   }
 
   render() {
-    const wrapperClasses = createThemedClasses(this.mode, 'popover-wrapper');
-
     return [
       <ion-backdrop tappable={this.backdropDismiss}/>,
-      <div class={wrapperClasses}>
+      <div class="popover-wrapper">
         <div class="popover-arrow"></div>
         <div class="popover-content"></div>
       </div>
