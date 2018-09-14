@@ -60,10 +60,10 @@ export function matches(view: ViewController | undefined, id: string, params: Co
     return false;
   }
   const currentParams = view.params;
-  if (!currentParams && !params) {
-    return false;
-  }
   if (currentParams === params) {
+    return true;
+  }
+  if (!currentParams && !params) {
     return true;
   }
   if (!currentParams || !params) {
