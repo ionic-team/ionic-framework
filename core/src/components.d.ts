@@ -4223,7 +4223,7 @@ export namespace Components {
     /**
     * Transition to the next slide.
     */
-    'slideNext': (speed: number, runCallbacks: boolean) => Promise<void>;
+    'slideNext': (speed?: number | undefined, runCallbacks?: boolean | undefined) => Promise<void>;
     /**
     * Transition to the previous slide.
     */
