@@ -38,10 +38,12 @@ export class Slides implements ComponentInterface {
   @Prop() options: any = {}; // SwiperOptions;  // TODO
 
   @Watch('options')
-  async updateSwiperOptions() {
-    const swiper = await this.getSwiper();
-    swiper.params = this.normalizeOptions();
-    await this.update();
+  async optionsChanged() {
+    if (this.didInit) {
+      const swiper = await this.getSwiper();
+      Object.assign(swiper.params, this.options);
+      await this.update();
+    }
   }
 
   /**
@@ -173,9 +175,9 @@ export class Slides implements ComponentInterface {
    * Transition to the next slide.
    */
   @Method()
-  async slideNext(speed: number, runCallbacks: boolean) {
+  async slideNext(speed?: number, runCallbacks?: boolean) {
     const swiper = await this.getSwiper();
-    swiper.slideNext(speed, runCallbacks);
+    swiper.slideNext(speed!, runCallbacks!);
   }
 
   /**

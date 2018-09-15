@@ -46,7 +46,7 @@
     "selenium-webdriver": "^3.6.0",
     "stylelint": "^9.4.0",
     "stylelint-order": "^0.8.1",
-    "swiper": "4.3.5",
+    "swiper": "4.4.1",
     "tslint": "^5.10.0",
     "tslint-ionic-rules": "0.0.19",
     "tslint-react": "^3.6.0",

@@ -233,9 +233,9 @@ export class Datetime implements ComponentInterface {
     }
 
     const pickerOptions = this.generatePickerOptions();
-    this.picker = await this.pickerCtrl.create(pickerOptions);
+    const picker = this.picker = await this.pickerCtrl.create(pickerOptions);
     await this.validate();
-    await this.picker.present();
+    await picker.present();
   }
 
   private emitStyle() {

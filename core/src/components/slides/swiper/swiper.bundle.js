@@ -762,7 +762,7 @@ function add(...args) {
 }
 
 /**
- * Swiper 4.3.5
+ * Swiper 4.4.1
  * Most modern mobile touch slider and framework with hardware accelerated transitions
  * http://www.idangero.us/swiper/
  *
@@ -770,7 +770,7 @@ function add(...args) {
  *
  * Released under the MIT License
  *
- * Released on: July 31, 2018
+ * Released on: September 14, 2018
  */
 
 const Methods = {
@@ -1021,7 +1021,7 @@ class SwiperClass {
     events.split(' ').forEach((event) => {
       if (typeof handler === 'undefined') {
         self.eventsListeners[event] = [];
-      } else {
+      } else if (self.eventsListeners[event] && self.eventsListeners[event].length) {
         self.eventsListeners[event].forEach((eventHandler, index$$1) => {
           if (eventHandler === handler) {
             self.eventsListeners[event].splice(index$$1, 1);
@@ -1288,14 +1288,21 @@ function updateSlides () {
       if (currentWebKitTransform) {
         slide[0].style.webkitTransform = 'none';
       }
-      if (swiper.isHorizontal()) {
-        slideSize = slide[0].getBoundingClientRect().width
-          + parseFloat(slideStyles.getPropertyValue('margin-left'))
-          + parseFloat(slideStyles.getPropertyValue('margin-right'));
+      if (params.roundLengths) {
+        slideSize = swiper.isHorizontal()
+          ? slide.outerWidth(true)
+          : slide.outerHeight(true);
       } else {
-        slideSize = slide[0].getBoundingClientRect().height
-          + parseFloat(slideStyles.getPropertyValue('margin-top'))
-          + parseFloat(slideStyles.getPropertyValue('margin-bottom'));
+        // eslint-disable-next-line
+        if (swiper.isHorizontal()) {
+          slideSize = slide[0].getBoundingClientRect().width
+            + parseFloat(slideStyles.getPropertyValue('margin-left'))
+            + parseFloat(slideStyles.getPropertyValue('margin-right'));
+        } else {
+          slideSize = slide[0].getBoundingClientRect().height
+            + parseFloat(slideStyles.getPropertyValue('margin-top'))
+            + parseFloat(slideStyles.getPropertyValue('margin-bottom'));
+        }
       }
       if (currentTransform) {
         slide[0].style.transform = currentTransform;
@@ -1395,6 +1402,23 @@ function updateSlides () {
     } else slides.css({ marginBottom: `${spaceBetween}px` });
   }
 
+  if (params.centerInsufficientSlides) {
+    let allSlidesSize = 0;
+    slidesSizesGrid.forEach((slideSizeValue) => {
+      allSlidesSize += slideSizeValue + (params.spaceBetween ? params.spaceBetween : 0);
+    });
+    allSlidesSize -= params.spaceBetween;
+    if (allSlidesSize < swiperSize) {
+      const allSlidesOffset = (swiperSize - allSlidesSize) / 2;
+      snapGrid.forEach((snap, snapIndex) => {
+        snapGrid[snapIndex] = snap - allSlidesOffset;
+      });
+      slidesGrid.forEach((snap, snapIndex) => {
+        slidesGrid[snapIndex] = snap + allSlidesOffset;
+      });
+    }
+  }
+
   Utils.extend(swiper, {
     slides,
     snapGrid,
@@ -1474,6 +1498,9 @@ function updateSlidesProgress (translate = (this && this.translate) || 0) {
   // Visible Slides
   slides.removeClass(params.slideVisibleClass);
 
+  swiper.visibleSlidesIndexes = [];
+  swiper.visibleSlides = [];
+
   for (let i = 0; i < slides.length; i += 1) {
     const slide = slides[i];
     const slideProgress = (
@@ -1486,11 +1513,14 @@ function updateSlidesProgress (translate = (this && this.translate) || 0) {
                 || (slideAfter > 0 && slideAfter <= swiper.size)
                 || (slideBefore <= 0 && slideAfter >= swiper.size);
       if (isVisible) {
+        swiper.visibleSlides.push(slide);
+        swiper.visibleSlidesIndexes.push(i);
         slides.eq(i).addClass(params.slideVisibleClass);
       }
     }
     slide.progress = rtl ? -slideProgress : slideProgress;
   }
+  swiper.visibleSlides = $(swiper.visibleSlides);
 }
 
 function updateProgress (translate = (this && this.translate) || 0) {
@@ -2443,6 +2473,7 @@ function onTouchStart (event) {
   if (e.originalEvent) e = e.originalEvent;
   data$$1.isTouchEvent = e.type === 'touchstart';
   if (!data$$1.isTouchEvent && 'which' in e && e.which === 3) return;
+  if (!data$$1.isTouchEvent && 'button' in e && e.button > 0) return;
   if (data$$1.isTouched && data$$1.isMoved) return;
   if (params.noSwiping && $(e.target).closest(params.noSwipingSelector ? params.noSwipingSelector : `.${params.noSwipingClass}`)[0]) {
     swiper.allowClick = true;
@@ -2494,7 +2525,7 @@ function onTouchStart (event) {
     ) {
       doc.activeElement.blur();
     }
-    if (preventDefault && swiper.allowTouchMove) {
+    if (preventDefault && swiper.allowTouchMove && params.touchStartPreventDefault) {
       e.preventDefault();
     }
   }
@@ -3153,6 +3184,7 @@ function setBreakpoint () {
 }
 
 function getBreakpoint (breakpoints) {
+  const swiper = this;
   // Get breakpoint for window width
   if (!breakpoints) return undefined;
   let breakpoint = false;
@@ -3163,7 +3195,11 @@ function getBreakpoint (breakpoints) {
   points.sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
   for (let i = 0; i < points.length; i += 1) {
     const point = points[i];
-    if (point >= win.innerWidth && !breakpoint) {
+    if (swiper.params.breakpointsInverse) {
+      if (point <= win.innerWidth) {
+        breakpoint = point;
+      }
+    } else if (point >= win.innerWidth && !breakpoint) {
       breakpoint = point;
     }
   }
@@ -3179,6 +3215,7 @@ const Browser = (function Browser() {
   }
   return {
     isIE: !!win.navigator.userAgent.match(/Trident/g) || !!win.navigator.userAgent.match(/MSIE/g),
+    isEdge: !!win.navigator.userAgent.match(/Edge/g),
     isSafari: isSafari(),
     isUiWebView: /(iPhone|iPod|iPad).*AppleWebKit(?!.*Safari)/i.test(win.navigator.userAgent),
   };
@@ -3215,7 +3252,7 @@ function addClasses () {
     suffixes.push('ios');
   }
   // WP8 Touch Events Fix
-  if (Browser.isIE && (Support.pointerEvents || Support.prefixedPointerEvents)) {
+  if ((Browser.isIE || Browser.isEdge) && (Support.pointerEvents || Support.prefixedPointerEvents)) {
     suffixes.push(`wp8-${params.direction}`);
   }
 
@@ -3348,6 +3385,7 @@ var defaults = {
 
   // Breakpoints
   breakpoints: undefined,
+  breakpointsInverse: false,
 
   // Slides grid
   spaceBetween: 0,
@@ -3359,6 +3397,7 @@ var defaults = {
   slidesOffsetBefore: 0, // in px
   slidesOffsetAfter: 0, // in px
   normalizeSlideIndex: true,
+  centerInsufficientSlides: false,
 
   // Disable swiper and hide navigation when container not overflow
   watchOverflow: false,
@@ -3378,6 +3417,7 @@ var defaults = {
   allowTouchMove: true,
   threshold: 0,
   touchMoveStopPropagation: true,
+  touchStartPreventDefault: true,
   touchReleaseOnEdges: false,
 
   // Unique Navigation Elements
@@ -3489,7 +3529,7 @@ class Swiper extends SwiperClass {
       if (module.params) {
         const moduleParamName = Object.keys(module.params)[0];
         const moduleParams = module.params[moduleParamName];
-        if (typeof moduleParams !== 'object') return;
+        if (typeof moduleParams !== 'object' || moduleParams === null) return;
         if (!(moduleParamName in params && 'enabled' in moduleParams)) return;
         if (params[moduleParamName] === true) {
           params[moduleParamName] = { enabled: true };
@@ -4899,6 +4939,157 @@ var scrollbar = {
   },
 };
 
+/* eslint no-underscore-dangle: "off" */
+
+const Autoplay = {
+  run() {
+    const swiper = this;
+    const $activeSlideEl = swiper.slides.eq(swiper.activeIndex);
+    let delay = swiper.params.autoplay.delay;
+    if ($activeSlideEl.attr('data-swiper-autoplay')) {
+      delay = $activeSlideEl.attr('data-swiper-autoplay') || swiper.params.autoplay.delay;
+    }
+    swiper.autoplay.timeout = Utils.nextTick(() => {
+      if (swiper.params.autoplay.reverseDirection) {
+        if (swiper.params.loop) {
+          swiper.loopFix();
+          swiper.slidePrev(swiper.params.speed, true, true);
+          swiper.emit('autoplay');
+        } else if (!swiper.isBeginning) {
+          swiper.slidePrev(swiper.params.speed, true, true);
+          swiper.emit('autoplay');
+        } else if (!swiper.params.autoplay.stopOnLastSlide) {
+          swiper.slideTo(swiper.slides.length - 1, swiper.params.speed, true, true);
+          swiper.emit('autoplay');
+        } else {
+          swiper.autoplay.stop();
+        }
+      } else if (swiper.params.loop) {
+        swiper.loopFix();
+        swiper.slideNext(swiper.params.speed, true, true);
+        swiper.emit('autoplay');
+      } else if (!swiper.isEnd) {
+        swiper.slideNext(swiper.params.speed, true, true);
+        swiper.emit('autoplay');
+      } else if (!swiper.params.autoplay.stopOnLastSlide) {
+        swiper.slideTo(0, swiper.params.speed, true, true);
+        swiper.emit('autoplay');
+      } else {
+        swiper.autoplay.stop();
+      }
+    }, delay);
+  },
+  start() {
+    const swiper = this;
+    if (typeof swiper.autoplay.timeout !== 'undefined') return false;
+    if (swiper.autoplay.running) return false;
+    swiper.autoplay.running = true;
+    swiper.emit('autoplayStart');
+    swiper.autoplay.run();
+    return true;
+  },
+  stop() {
+    const swiper = this;
+    if (!swiper.autoplay.running) return false;
+    if (typeof swiper.autoplay.timeout === 'undefined') return false;
+
+    if (swiper.autoplay.timeout) {
+      clearTimeout(swiper.autoplay.timeout);
+      swiper.autoplay.timeout = undefined;
+    }
+    swiper.autoplay.running = false;
+    swiper.emit('autoplayStop');
+    return true;
+  },
+  pause(speed) {
+    const swiper = this;
+    if (!swiper.autoplay.running) return;
+    if (swiper.autoplay.paused) return;
+    if (swiper.autoplay.timeout) clearTimeout(swiper.autoplay.timeout);
+    swiper.autoplay.paused = true;
+    if (speed === 0 || !swiper.params.autoplay.waitForTransition) {
+      swiper.autoplay.paused = false;
+      swiper.autoplay.run();
+    } else {
+      swiper.$wrapperEl[0].addEventListener('transitionend', swiper.autoplay.onTransitionEnd);
+      swiper.$wrapperEl[0].addEventListener('webkitTransitionEnd', swiper.autoplay.onTransitionEnd);
+    }
+  },
+};
+
+var autoplay = {
+  name: 'autoplay',
+  params: {
+    autoplay: {
+      enabled: false,
+      delay: 3000,
+      waitForTransition: true,
+      disableOnInteraction: true,
+      stopOnLastSlide: false,
+      reverseDirection: false,
+    },
+  },
+  create() {
+    const swiper = this;
+    Utils.extend(swiper, {
+      autoplay: {
+        running: false,
+        paused: false,
+        run: Autoplay.run.bind(swiper),
+        start: Autoplay.start.bind(swiper),
+        stop: Autoplay.stop.bind(swiper),
+        pause: Autoplay.pause.bind(swiper),
+        onTransitionEnd(e) {
+          if (!swiper || swiper.destroyed || !swiper.$wrapperEl) return;
+          if (e.target !== this) return;
+          swiper.$wrapperEl[0].removeEventListener('transitionend', swiper.autoplay.onTransitionEnd);
+          swiper.$wrapperEl[0].removeEventListener('webkitTransitionEnd', swiper.autoplay.onTransitionEnd);
+          swiper.autoplay.paused = false;
+          if (!swiper.autoplay.running) {
+            swiper.autoplay.stop();
+          } else {
+            swiper.autoplay.run();
+          }
+        },
+      },
+    });
+  },
+  on: {
+    init() {
+      const swiper = this;
+      if (swiper.params.autoplay.enabled) {
+        swiper.autoplay.start();
+      }
+    },
+    beforeTransitionStart(speed, internal) {
+      const swiper = this;
+      if (swiper.autoplay.running) {
+        if (internal || !swiper.params.autoplay.disableOnInteraction) {
+          swiper.autoplay.pause(speed);
+        } else {
+          swiper.autoplay.stop();
+        }
+      }
+    },
+    sliderFirstMove() {
+      const swiper = this;
+      if (swiper.autoplay.running) {
+        if (swiper.params.autoplay.disableOnInteraction) {
+          swiper.autoplay.stop();
+        } else {
+          swiper.autoplay.pause();
+        }
+      }
+    },
+    destroy() {
+      const swiper = this;
+      if (swiper.autoplay.running) {
+        swiper.autoplay.stop();
+      }
+    },
+  },
+};
+
 // Swiper Class
 
 const components = [
@@ -4917,6 +5108,6 @@ if (typeof Swiper.use === 'undefined') {
 
 Swiper.use(components);
 
-Swiper.use([pagination, scrollbar]);
+Swiper.use([pagination, scrollbar, autoplay]);
 
 export { Swiper };
