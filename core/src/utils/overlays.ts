@@ -34,7 +34,11 @@ export function connectListeners(doc: Document) {
   if (lastId === 0) {
     lastId = 1;
     doc.addEventListener('ionBackButton', ev => {
-      (ev as BackButtonEvent).detail.register(100, () => closeTopOverlay(doc));
+      const lastOverlay = getOverlay(doc);
+      // We use the overlayIndex property to be sure this node is an overlay
+      if (lastOverlay && lastOverlay.overlayIndex) {
+        (ev as BackButtonEvent).detail.register(100, () => closeTopOverlay(doc));
+      }
     });
 
     doc.addEventListener('keyup', ev => {
