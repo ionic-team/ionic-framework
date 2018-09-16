@@ -11,3 +11,6 @@ export const enum ViewLifecycle {
 // util functions
 export * from './utils/platform';
 export * from './utils/config';
+
+// for testing purposes
+export { startHardwareBackButton } from './utils/hardware-back-button';
