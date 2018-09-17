@@ -1,5 +1,6 @@
 @import "./item";
 @import "./item.md.vars";
+@import "../label/label.md.vars";
 
 // Material Design Item
 // --------------------------------------------------
@@ -165,4 +166,9 @@
 :host(:not(.item-label)) ::slotted(ion-input),
 :host(:not(.item-label)) ::slotted(ion-textarea) {
   --padding-start: 0;
+}
+
+:host(.item-has-focus:not(.ion-color)) ::slotted(.label-stacked),
+:host(.item-has-focus:not(.ion-color)) ::slotted(.label-floating) {
+  color: $label-md-text-color-focused;
 }
