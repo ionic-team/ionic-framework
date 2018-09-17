@@ -8,8 +8,8 @@ const version = process.env.VERSION || packageVersion
 
 const banner = `
 /*!
- * ionic-vue v${version}
- * ${new Date().getFullYear()} Michael Tintiuc - Modus Create
+ * @ionic/vue v${version}
+ * ${new Date().getFullYear()} Modus Create
  * @license MIT
  */
 `
