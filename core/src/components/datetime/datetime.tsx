@@ -1,8 +1,8 @@
-import { Component, ComponentInterface, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
+import { Component, ComponentInterface, Element, Event, EventEmitter, Method, Prop, State, Watch } from '@stencil/core';
 
 import { InputChangeEvent, Mode, PickerColumn, PickerColumnOption, PickerOptions, StyleEvent } from '../../interface';
 import { clamp, deferEvent } from '../../utils/helpers';
-import { createThemedClasses } from '../../utils/theme';
+import { createThemedClasses, hostContext } from '../../utils/theme';
 
 import { DatetimeData, LocaleData, convertFormatToKey, convertToArrayOfNumbers, convertToArrayOfStrings, dateDataSortValue, dateSortValue, dateValueRange, daysInMonth, getValueFromFormat, parseDate, parseTemplate, renderDatetime, renderTextFormat, updateDate } from './datetime-util';
 
@@ -11,10 +11,10 @@ import { DatetimeData, LocaleData, convertFormatToKey, convertToArrayOfNumbers, 
   styleUrls: {
     ios: 'datetime.ios.scss',
     md: 'datetime.md.scss'
-  }
+  },
+  shadow: true
 })
 export class Datetime implements ComponentInterface {
-
   private inputId = `ion-dt-${datetimeIds++}`;
   private labelId = `${this.inputId}-lbl`;
   private picker?: HTMLIonPickerElement;
@@ -22,6 +22,8 @@ export class Datetime implements ComponentInterface {
   private datetimeMin: DatetimeData = {};
   private datetimeMax: DatetimeData = {};
   private datetimeValue: DatetimeData = {};
+
+  @Element() el!: HTMLIonDatetimeElement;
 
   @State() text?: string;
 
@@ -500,35 +502,29 @@ export class Datetime implements ComponentInterface {
   }
 
   hostData() {
+    const addPlaceholderClass =
+      (this.text === undefined && this.placeholder != null) ? true : false;
+
     return {
       class: {
         ...createThemedClasses(this.mode, 'datetime'),
-        'datetime-disabled': this.disabled
+        'datetime-disabled': this.disabled,
+        'datetime-placeholder': addPlaceholderClass,
+        'in-item': hostContext('ion-item', this.el)
       }
     };
   }
 
   render() {
-    let addPlaceholderClass = false;
-
     // If selected text has been passed in, use that first
+    // otherwise use the placeholder
     let datetimeText = this.text;
     if (datetimeText === undefined) {
-      if (this.placeholder !== undefined) {
-        datetimeText = this.placeholder;
-        addPlaceholderClass = true;
-      } else {
-        datetimeText = '';
-      }
+      datetimeText = this.placeholder ? this.placeholder : '';
     }
 
-    const datetimeTextClasses = {
-      'datetime-text': true,
-      'datetime-placeholder': addPlaceholderClass
-    };
-
     return [
-      <div class={datetimeTextClasses}>{datetimeText}</div>,
+      <div class="datetime-text">{datetimeText}</div>,
       <button
         type="button"
         aria-haspopup="true"
