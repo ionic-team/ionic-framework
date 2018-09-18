@@ -245,7 +245,7 @@ export class Select implements ComponentInterface {
       (this.value as string[]).length = 0;
       checked.forEach(o => {
         // doing this instead of map() so we don't
-        // fire off an unecessary change event
+        // fire off an unnecessary change event
         (this.value as string[]).push(o.value);
       });
       this.text = checked.map(o => o.textContent).join(', ');
