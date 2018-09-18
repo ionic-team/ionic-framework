@@ -5,7 +5,8 @@ import { createThemedClasses } from '../../utils/theme';
 
 @Component({
   tag: 'ion-select-popover',
-  styleUrl: 'select-popover.scss'
+  styleUrl: 'select-popover.scss',
+  scoped: true
 })
 export class SelectPopover implements ComponentInterface {
 
