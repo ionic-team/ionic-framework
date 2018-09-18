@@ -181,6 +181,7 @@ button, a {
 :host(.item-label-stacked) ::slotted(ion-select),
 :host(.item-label-floating) ::slotted(ion-select) {
   --padding-start: 0;
+
   align-self: stretch;
 
   width: 100%;
@@ -188,6 +189,24 @@ button, a {
   max-width: 100%;
 }
 
+
+// Item Datetime
+// -----------------------------------------
+
+:host(.item-label-stacked) ::slotted(ion-datetime),
+:host(.item-label-floating) ::slotted(ion-datetime) {
+  --padding-start: 0;
+
+  width: 100%;
+}
+
+
+// Item w/ Multiple Inputs
+// -----------------------------------------
+// Multiple inputs in an item should have the input cover
+// relative to them instead of the item
+
+:host(.item-multiple-inputs) ::slotted(ion-datetime),
 :host(.item-multiple-inputs) ::slotted(ion-select) {
   position: relative;
 }
