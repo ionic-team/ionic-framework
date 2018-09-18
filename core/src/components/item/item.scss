@@ -6,7 +6,7 @@
 :host {
   --min-height: #{$item-min-height};
   --background: #{current-color(base)};
-  --background-active: #{current-color(tint)};
+  --background-activated: #{current-color(tint)};
   --color: #{current-color(contrast)};
   --detail-push-color: #{current-color(shade)};
   --border-radius: 0;
@@ -33,7 +33,7 @@
 
   display: block;
 
-  color: #{current-color(contrast)};
+  color: var(--color);
 
   font-family: $font-family-base;
 
@@ -43,8 +43,8 @@
   box-sizing: border-box;
 }
 
-:host(.activated) {
-  --background: var(--background-active);
+:host(.activated) .item-native {
+  background: var(--background-activated);
 }
 
 :host(.item-disabled) {
@@ -77,7 +77,7 @@
 
   outline: none;
 
-  background-color: var(--background);
+  background: var(--background);
 
   box-shadow: var(--box-shadow);
   overflow: hidden;
