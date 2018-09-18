@@ -71,7 +71,7 @@ import { RootNode } from '../split-pane/split-pane';
  *
  * ### Navigation Bar Behavior
  *
- * If a [MenuToggle](../MenuToggle) button is added to the [Navbar](../../navbar/Navbar) of
+ * If a [MenuToggle](../MenuToggle) button is added to the [Navbar](../../toolbar/Navbar) of
  * a page, the button will only appear when the page it's in is currently a root page. The
  * root page is the initial page loaded in the app, or a page that has been set as the root
  * using the [setRoot](../../nav/NavController/#setRoot) method on the [NavController](../../nav/NavController).
@@ -84,7 +84,7 @@ import { RootNode } from '../split-pane/split-pane';
  *
  * ### Persistent Menus
  *
- * Persistent menus display the [MenuToggle](../MenuToggle) button in the [Navbar](../../navbar/Navbar)
+ * Persistent menus display the [MenuToggle](../MenuToggle) button in the [Navbar](../../toolbar/Navbar)
  * on all pages in the navigation stack. To make a menu persistent set `persistent` to `true` on the
  * `<ion-menu>` element. Note that this will only affect the `MenuToggle` button in the `Navbar` attached
  * to the `Menu` with `persistent` set to true, any other `MenuToggle` buttons will not be affected.
