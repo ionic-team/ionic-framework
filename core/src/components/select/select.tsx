@@ -18,6 +18,7 @@ export class Select implements ComponentInterface {
   private inputId = `ion-sel-${selectIds++}`;
   private labelId?: string;
   private overlay?: HTMLIonActionSheetElement | HTMLIonAlertElement | HTMLIonPopoverElement;
+
   @Element() el!: HTMLIonSelectElement;
 
   @Prop({ connect: 'ion-action-sheet-controller' }) actionSheetCtrl!: HTMLIonActionSheetControllerElement;
