@@ -73,7 +73,7 @@ export class ItemSliding implements ComponentInterface {
       el: this.el,
       queue: this.queue,
       gestureName: 'item-swipe',
-      gesturePriority: 20,
+      gesturePriority: 100,
       threshold: 5,
       canStart: () => this.canStart(),
       onStart: () => this.onStart(),
