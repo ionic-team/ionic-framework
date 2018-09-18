@@ -503,7 +503,7 @@ export class Datetime implements ComponentInterface {
 
   hostData() {
     const addPlaceholderClass =
-      (this.text === undefined && this.placeholder != null) ? true : false;
+      (this.text == null && this.placeholder != null) ? true : false;
 
     return {
       class: {
@@ -519,8 +519,8 @@ export class Datetime implements ComponentInterface {
     // If selected text has been passed in, use that first
     // otherwise use the placeholder
     let datetimeText = this.text;
-    if (datetimeText === undefined) {
-      datetimeText = this.placeholder ? this.placeholder : '';
+    if (datetimeText == null) {
+      datetimeText = this.placeholder != null ? this.placeholder : '';
     }
 
     return [
