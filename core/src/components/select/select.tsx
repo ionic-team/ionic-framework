@@ -164,7 +164,9 @@ export class Select implements ComponentInterface {
         }
       });
 
-      this.text = texts.join(', ');
+      if (texts.length > 0) {
+        this.text = texts.join(', ');
+      }
     }
 
     // emit the new value
@@ -248,7 +250,9 @@ export class Select implements ComponentInterface {
         // fire off an unnecessary change event
         (this.value as string[]).push(o.value);
       });
-      this.text = checked.map(o => o.textContent).join(', ');
+      if (checked.map(o => o.textContent).length > 0) {
+        this.text = checked.map(o => o.textContent).join(', ');
+      }
 
     } else {
       const checked = this.childOpts.find(o => o.selected);
@@ -471,7 +475,7 @@ export class Select implements ComponentInterface {
     let addPlaceholderClass = false;
 
     let selectText = this.selectedText || this.text;
-    if (selectText === undefined && this.placeholder !== undefined) {
+    if (selectText == null && this.placeholder != null) {
       selectText = this.placeholder;
       addPlaceholderClass = true;
     }
