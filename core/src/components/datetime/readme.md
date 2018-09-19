@@ -244,6 +244,17 @@ dates in JavaScript.
 | `open` |             |
 
 
+## CSS Custom Properties
+
+| Name                  | Description                       |
+| --------------------- | --------------------------------- |
+| `--padding-bottom`    | Padding bottom of the datetime    |
+| `--padding-end`       | Padding end of the datetime       |
+| `--padding-start`     | Padding start of the datetime     |
+| `--padding-top`       | Padding top of the datetime       |
+| `--placeholder-color` | Color of the datetime placeholder |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
