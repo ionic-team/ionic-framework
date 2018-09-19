@@ -29,7 +29,7 @@ export class Route implements ComponentInterface {
   @Prop() componentProps?: {[key: string]: any};
 
   /**
-   * Used internaly by `ion-router` to know when this route did change.
+   * Used internally by `ion-router` to know when this route did change.
    */
   @Event() ionRouteDataChanged!: EventEmitter<any>;
 
