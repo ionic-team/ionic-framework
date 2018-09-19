@@ -314,7 +314,7 @@ Content is now a drop-in replacement for `ion-scroll`, that means `ion-content` 
 
 ### resize() was removed
 
-In Ionic 4, `ion-content` layout is based in flex, that means their size will automatically adjust without requiring to call resize() programatically.
+In Ionic 4, `ion-content` layout is based in flex, that means their size will automatically adjust without requiring to call resize() programmatically.
 
 
 ### Attributes Renamed
