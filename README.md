@@ -10,6 +10,7 @@ Ionic is based on [Web Components](https://www.webcomponents.org/introduction) a
 
 - [Core](core/README.md)
 - [Ionic Angular](angular/README.md)
+- [Ionic Vue](vue/README.md)
 
 
 ### Getting Started
